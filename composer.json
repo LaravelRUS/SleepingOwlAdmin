@@ -1,0 +1,31 @@
+{
+	"name": "sleeping-owl/admin",
+	"description": "Advanced admin module for your eloquent models.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Sleeping Owl",
+			"email": "sleeping-owl@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"illuminate/support": "4.2.*",
+		"intervention/image": "2.*",
+		"intervention/imagecache": "2.*"
+	},
+	"require-dev": {
+		"doctrine/dbal": "~2.3",
+		"phpunit/phpunit": "4.*",
+		"mockery/mockery": "0.9.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"SleepingOwl\\Admin": "src/",
+			"SleepingOwl\\DateFormatter": "src/",
+			"SleepingOwl\\Html": "src/",
+			"SleepingOwl\\Models": "src/",
+			"SleepingOwl\\RandomFilenamer": "src/"
+		}
+	}
+}

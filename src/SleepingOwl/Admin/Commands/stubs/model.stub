@@ -1,0 +1,12 @@
+<?php
+
+Admin::model(:modelClass::class)->title(':title')->with(:with)->filters(function ()
+{
+:filters
+})->columns(function ()
+{
+:columns
+})->form(function ()
+{
+:form
+});
