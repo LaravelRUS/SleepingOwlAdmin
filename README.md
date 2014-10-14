@@ -42,7 +42,7 @@ It includes:
 
 ## Documentation
 
-Documentation can be found at [sleeping owl documentation](http://sleeping-owl.github.io/admin).
+Documentation can be found at [sleeping owl documentation](http://sleeping-owl.github.io).
 You can also find it in the `/src/docs` directory.
 
 ## Copyright and License
