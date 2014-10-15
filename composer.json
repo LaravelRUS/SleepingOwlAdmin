@@ -1,11 +1,12 @@
 {
 	"name": "sleeping-owl/admin",
-	"description": "Advanced admin module for your eloquent models.",
+	"description": "Aministrative interface builder for Laravel.",
+	"homepage": "http://sleeping-owl.github.io",
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "Sleeping Owl",
-			"email": "sleeping-owl@gmail.com"
+			"email": "owl.sleeping@yahoo.com"
 		}
 	],
 	"require": {
