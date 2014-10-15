@@ -115,7 +115,7 @@ class ModelCompiler
 		]);
 		if ($this->hasRelation($column, HasMany::class))
 		{
-			$appendTemplate = ";//->append(Column::filter(':foreignKey')->model(:foreignModel::class);";
+			$appendTemplate = ";//->append(Column::filter(':foreignKey')->model(:foreignModel::class));";
 			$relation = $this->getRelation($column);
 			list($foreignModel, $foreignKey) = explode('.', $relation->getForeignKey());
 			$foreignModel = Str::studly(Str::singular($foreignModel));
