@@ -1,5 +1,8 @@
 <?php namespace SleepingOwl\Admin;
 
+use App;
+use Redirect;
+use SleepingOwl\Admin\Exceptions\ValidationException;
 use SleepingOwl\Html\FormBuilder;
 use SleepingOwl\Html\HtmlBuilder;
 use SleepingOwl\Admin\Menu\MenuItem;
@@ -90,6 +93,8 @@ class Admin
 		$this->models = new Models;
 
 		$this->requireBootstrap();
+
+		$this->registerValidateExceptionHandler();
 	}
 
 	/**
@@ -138,5 +143,15 @@ class Admin
 	public static function menu($model = null)
 	{
 		return new MenuItem($model);
+	}
+
+	/**
+	 *
+	 */
+	protected function registerValidateExceptionHandler()
+	{
+		App::error(function (ValidationException $e) {
+			return Redirect::back()->withInput()->withErrors($e->getErrors());
+		});
 	}
 }
