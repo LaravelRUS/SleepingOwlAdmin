@@ -14,10 +14,10 @@
 		"php": ">=5.4.0",
 		"illuminate/support": "4.2.*",
 		"intervention/image": "2.*",
-		"intervention/imagecache": "2.*"
+		"intervention/imagecache": "2.*",
+		"doctrine/dbal": "~2.3"
 	},
 	"require-dev": {
-		"doctrine/dbal": "~2.3",
 		"phpunit/phpunit": "4.*",
 		"mockery/mockery": "0.9.*"
 	},
