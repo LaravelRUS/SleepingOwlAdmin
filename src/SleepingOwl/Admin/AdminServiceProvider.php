@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\Admin;
 
+use SleepingOwl\Admin\Exceptions\ValidationException;
 use SleepingOwl\AdminAuth\AdminAuthServiceProvider;
 use SleepingOwl\Html\FormBuilder;
 use SleepingOwl\Admin\Validation\Validator;
@@ -37,6 +38,8 @@ class AdminServiceProvider extends ServiceProvider
 			return Admin::instance();
 		});
 		$this->app->singleton('admin', 'SleepingOwl\Admin\Admin');
+
+		$this->registerValidateExceptionHandler();
 	}
 
 	/**
@@ -74,6 +77,13 @@ class AdminServiceProvider extends ServiceProvider
 		\Validator::resolver(function ($translator, $data, $rules, $messages, $customAttributes)
 		{
 			return new Validator($translator, $data, $rules, $messages, $customAttributes);
+		});
+	}
+
+	protected function registerValidateExceptionHandler()
+	{
+		\App::error(function (ValidationException $e) {
+			return \Redirect::back()->withInput()->withErrors($e->getErrors());
 		});
 	}
 
