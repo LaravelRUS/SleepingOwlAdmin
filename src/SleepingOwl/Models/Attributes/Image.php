@@ -89,11 +89,12 @@ class Image
 		$filename = $this->getFullPath();
 		if ( ! $this->exists()) return '';
 
-		$image = InterventionImage::make($filename);
+		list($width, $height) = getimagesize($filename);
+		$extension = \File::extension($filename);
 		return strtr(static::TEMPLATE_INFO, [
-			':type'   => $image->extension,
-			':width'  => $image->width(),
-			':height' => $image->height()
+			':type'   => $extension,
+			':width'  => $width,
+			':height' => $height
 		]);
 	}
 
