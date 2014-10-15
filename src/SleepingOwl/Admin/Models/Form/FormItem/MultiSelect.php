@@ -46,6 +46,10 @@ class MultiSelect extends BaseFormItem
 			$list = array_combine($list, $list);
 		} else
 		{
+			if ( ! method_exists($this->list, 'getList'))
+			{
+				throw new \Exception('You must implement "public static function getList()" in "' . $this->list . '"');
+			}
 			$list = forward_static_call([
 				$this->list,
 				'getList'
