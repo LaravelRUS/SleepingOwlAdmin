@@ -45,6 +45,10 @@ It includes:
 Documentation can be found at [sleeping owl documentation](http://sleeping-owl.github.io).
 You can also find it in the `/src/docs` directory.
 
+## Demo Application
+
+View [live demo](http://sleeping-owl-admin-demo.gopagoda.com).
+
 ## Copyright and License
 
 Admin was written by Sleeping Owl for the Laravel framework and is released under the MIT License. See the LICENSE file for details.
