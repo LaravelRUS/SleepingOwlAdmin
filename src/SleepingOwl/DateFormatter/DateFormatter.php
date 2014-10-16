@@ -17,6 +17,10 @@ class DateFormatter
 		{
 			$date = new Carbon($date);
 		}
+		if ( ! function_exists('datefmt_create'))
+		{
+			throw new \Exception('You must install "intl" php extension.');
+		}
 		$formatter = datefmt_create(App::getLocale(), $dateFormat, $timeFormat);
 		$pattern = $formatter->getPattern();
 		$pattern = str_replace('yy', 'y', $pattern);
