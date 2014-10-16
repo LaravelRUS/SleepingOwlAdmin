@@ -17,7 +17,12 @@ class AdministratorsTableSeeder extends Seeder
 			'name'     => 'SleepingOwl Administrator'
 		];
 
-		Administrator::create($default);
+		try
+		{
+			Administrator::create($default);
+		} catch (\Exception $e)
+		{
+		}
 	}
 
 }
