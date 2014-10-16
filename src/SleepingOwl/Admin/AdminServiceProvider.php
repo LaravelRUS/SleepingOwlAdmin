@@ -1,7 +1,6 @@
 <?php namespace SleepingOwl\Admin;
 
 use SleepingOwl\Admin\Exceptions\ValidationException;
-use SleepingOwl\AdminAuth\AdminAuthServiceProvider;
 use SleepingOwl\Html\FormBuilder;
 use SleepingOwl\Admin\Validation\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -26,8 +25,8 @@ class AdminServiceProvider extends ServiceProvider
 	{
 		$this->registerCommands();
 
-		$this->app->register(ImageServiceProvider::class);
-		$this->app->register(AdminAuthServiceProvider::class);
+		$this->app->register('\Intervention\Image\ImageServiceProvider');
+		$this->app->register('\SleepingOwl\AdminAuth\AdminAuthServiceProvider');
 
 		$this->registerFormBuilder();
 

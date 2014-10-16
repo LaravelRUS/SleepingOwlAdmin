@@ -113,7 +113,7 @@ class ModelCompiler
 			':field' => $column,
 			':title' => $title
 		]);
-		if ($this->hasRelation($column, HasMany::class))
+		if ($this->hasRelation($column, '\Illuminate\Database\Eloquent\Relations\HasMany'))
 		{
 			$appendTemplate = ";//->append(Column::filter(':foreignKey')->model(:foreignModel::class));";
 			$relation = $this->getRelation($column);
@@ -126,7 +126,7 @@ class ModelCompiler
 			return $result;
 		}
 		$first = $this->getFirstPart($column);
-		if ($this->hasRelation($first, BelongsTo::class))
+		if ($this->hasRelation($first, '\Illuminate\Database\Eloquent\Relations\BelongsTo'))
 		{
 			$appendTemplate = "->append(Column::filter(':foreignKey')->value(':first.id'));";
 			$relation = $this->getRelation($first);
@@ -178,11 +178,11 @@ class ModelCompiler
 		{
 			return 'image';
 		}
-		if ($this->hasRelation($column, HasMany::class))
+		if ($this->hasRelation($column, '\Illuminate\Database\Eloquent\Relations\HasMany'))
 		{
 			return 'count';
 		}
-		if ($this->hasRelation($this->getFirstPart($column), BelongsToMany::class))
+		if ($this->hasRelation($this->getFirstPart($column), '\Illuminate\Database\Eloquent\Relations\BelongsToMany'))
 		{
 			return 'lists';
 		}
@@ -198,15 +198,15 @@ class ModelCompiler
 	 */
 	protected function guessWith($column)
 	{
-		if ($this->hasRelation($column, HasMany::class))
+		if ($this->hasRelation($column, '\Illuminate\Database\Eloquent\Relations\HasMany'))
 		{
 			$this->with[] = $column;
 		} else
 		{
 			$first = $this->getFirstPart($column);
 			if ($this->hasRelation($first, [
-				BelongsTo::class,
-				BelongsToMany::class
+				'\Illuminate\Database\Eloquent\Relations\BelongsTo',
+				'\Illuminate\Database\Eloquent\Relations\BelongsToMany'
 			])
 			)
 			{
