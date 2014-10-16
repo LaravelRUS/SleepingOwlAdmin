@@ -222,9 +222,11 @@ class MenuItem
 		{
 			$level++;
 			$content = $this->htmlBuilder->tag('i', [
-				'class' => 'fa',
-				'fa-fw',
-				$this->getIcon()
+				'class' => [
+					'fa',
+					'fa-fw',
+					$this->getIcon()
+				]
 			]);
 			$content .= ' ' . $this->getLabel() . $this->htmlBuilder->tag('span', ['class' => 'fa arrow']);
 			$content = $this->htmlBuilder->tag('a', ['href' => '#'], $content);
