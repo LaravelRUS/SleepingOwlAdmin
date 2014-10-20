@@ -13,17 +13,41 @@ trait ValidationModelTrait
 {
 	/**
 	 * @param $data
-	 * @return bool
+	 * @param array $rules
 	 * @throws ValidationException
+	 * @return bool
 	 */
-	public function validate($data)
+	public function validate($data, $rules = [])
 	{
-		$validator = Validator::make($data, $this->getValidationRules(), Lang::get('admin::validation'), ['id' => $this->id]);
+		$rules = $this->mergeValidationRules($rules);
+		$validator = Validator::make($data, $rules, Lang::get('admin::validation'), ['id' => $this->id]);
 
 		if ($validator->fails())
 		{
 			throw new ValidationException($validator->errors());
 		}
 		return true;
+	}
+
+	/**
+	 * @param $rules
+	 * @return array
+	 */
+	protected function mergeValidationRules($rules)
+	{
+		foreach ($this->getValidationRules() as $field => $rule)
+		{
+			if (!is_array($rule))
+			{
+				$rule = explode('|', $rule);
+			}
+			$rules[$field] = array_merge($rules[$field], $rule);
+		}
+		return $rules;
+	}
+
+	public function getValidationRules()
+	{
+		return [];
 	}
 } 

@@ -149,4 +149,14 @@ class Form
 		$this->items[] = $item;
 	}
 
+	public function getValidationRules()
+	{
+		$rules = [];
+		foreach ($this->items as $item)
+		{
+			$rules[$item->getName()] = $item->getValidationRules();
+		}
+		return $rules;
+	}
+
 }

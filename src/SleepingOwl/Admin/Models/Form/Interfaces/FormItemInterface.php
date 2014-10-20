@@ -8,4 +8,14 @@ interface FormItemInterface
 	 */
 	public function render();
 
+	/**
+	 * @return string
+	 */
+	public function getName();
+
+	/**
+	 * @return array|null
+	 */
+	public function getValidationRules();
+
 } 

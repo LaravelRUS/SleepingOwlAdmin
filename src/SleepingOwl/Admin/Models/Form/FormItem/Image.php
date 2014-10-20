@@ -7,4 +7,11 @@ class Image extends BaseFormItem
 		return $this->formBuilder->imageGroup($this->name, $this->label, $this->form->getInstance());
 	}
 
+	public function getValidationRules()
+	{
+		$rules = parent::getValidationRules();
+		$rules[] = 'image';
+		return $rules;
+	}
+
 } 

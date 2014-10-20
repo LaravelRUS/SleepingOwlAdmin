@@ -199,6 +199,12 @@ class ModelItem
 		return $this->modelClass;
 	}
 
+	public function getModelTable()
+	{
+		$instance = new $this->modelClass;
+		return $instance->getTable();
+	}
+
 	/**
 	 * @return array
 	 */
@@ -356,4 +362,5 @@ class ModelItem
 		}
 		throw new MethodNotFoundException(get_class($this), $method);
 	}
+
 }

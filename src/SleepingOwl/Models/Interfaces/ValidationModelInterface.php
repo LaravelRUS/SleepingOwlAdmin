@@ -4,10 +4,11 @@ interface ValidationModelInterface
 {
 	/**
 	 * @param $data
+	 * @param array $rules
 	 * @throws \SleepingOwl\Admin\Exceptions\ValidationException
 	 * @return void
 	 */
-	public function validate($data);
+	public function validate($data, $rules = []);
 
 	/**
 	 * @return array

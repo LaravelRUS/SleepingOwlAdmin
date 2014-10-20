@@ -94,7 +94,8 @@ class ModelRepository implements ModelRepositoryInterface
 	 */
 	protected function save()
 	{
-		$this->instance->validate($data = $this->request->all());
+		$rules = $this->modelItem->getForm()->getValidationRules();
+		$this->instance->validate($data = $this->request->all(), $rules);
 		foreach ($data as &$value)
 		{
 			if ( ! is_string($value)) continue;
