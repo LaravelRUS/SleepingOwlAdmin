@@ -4,6 +4,8 @@ Creates time input.
 FormItem::timestamp('timestamp', 'DateTime')
 ```
 
+**Important**: you must have [intl](http://php.net/manual/en/book.intl.php) php extension installed to use this form element.
+
 ![](/img/timestamp.png)
 
 ### Opened State

@@ -43,6 +43,7 @@ public function setCategoriesAttribute($categories)
 {
 	$this->categories()->detach();
 	if ( ! $categories) return;
+	if ( ! $this->exists) $this->save();
 	
 	$this->categories()->attach($categories);
 }

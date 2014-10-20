@@ -4,6 +4,8 @@ Creates time input.
 FormItem::time('time', 'Time')
 ```
 
+**Important**: you must have [intl](http://php.net/manual/en/book.intl.php) php extension installed to use this form element.
+
 ![](/img/time.png)
 
 ### Opened State

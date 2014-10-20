@@ -19,6 +19,14 @@ Creates new form element and adds it to the current model configuration.
  - [textarea](textarea.html)
  - [ckeditor](ckeditor.html)
  - [view](view.html)
+ 
+### Validation
+
+```php
+FormItem::text('title')->required()->unique()->validationRule('my-custom-rule')
+```
+
+See [details](../Getting_Started/Validation.html) about validation.
 
 ### Register Custom Type
 

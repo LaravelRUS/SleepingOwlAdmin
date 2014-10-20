@@ -22,3 +22,4 @@
 	```bash
 	$ php artisan admin:install
 	```
+ 5. All done! Now go to the `<your_site_url>/admin` and use default credentials `admin` / `SleepingOwl`.

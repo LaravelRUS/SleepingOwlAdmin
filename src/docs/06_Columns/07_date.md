@@ -4,6 +4,8 @@ Cell content will be date or time value.
 Column::date('{field}')
 ```
 
+**Important**: you must have [intl](http://php.net/manual/en/book.intl.php) php extension installed to use this column.
+
 ### Format Date and Time
 
 ```php
