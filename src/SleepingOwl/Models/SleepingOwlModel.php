@@ -62,8 +62,9 @@ abstract class SleepingOwlModel extends \Eloquent implements ValidationModelInte
 			$result = parent::fromDateTime($value);
 		} catch (InvalidArgumentException $e)
 		{
+			$value = strtotime($value);
 			$format = $this->getDateFormat();
-			$value = new Carbon($value);
+			$value = Carbon::createFromTimestamp($value);
 			return $value->format($format);
 		}
 		return $result;

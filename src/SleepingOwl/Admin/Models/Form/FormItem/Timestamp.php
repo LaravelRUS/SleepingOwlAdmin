@@ -13,4 +13,12 @@ class Timestamp extends Time
 			'data-date-useseconds' => $this->showSeconds,
 		], DateFormatter::SHORT, $this->showSeconds ? DateFormatter::MEDIUM : DateFormatter::SHORT);
 	}
+
+	public function getValidationRules()
+	{
+		$rules = parent::getValidationRules();
+		$rules[] = 'date';
+		return $rules;
+	}
+
 }

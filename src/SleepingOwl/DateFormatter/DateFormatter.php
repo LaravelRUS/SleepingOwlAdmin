@@ -15,7 +15,13 @@ class DateFormatter
 	{
 		if ( ! $date instanceof Carbon)
 		{
-			$date = new Carbon($date);
+			try
+			{
+				$date = new Carbon($date);
+			} catch (\Exception $e)
+			{
+				return null;
+			}
 		}
 		if ( ! function_exists('datefmt_create'))
 		{

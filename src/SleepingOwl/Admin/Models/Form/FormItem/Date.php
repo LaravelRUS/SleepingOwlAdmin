@@ -8,4 +8,11 @@ class Date extends BaseFormItem
 			'data-date-picktime' => false
 		]);
 	}
+
+	public function getValidationRules()
+	{
+		$rules = parent::getValidationRules();
+		$rules[] = 'date';
+		return $rules;
+	}
 } 
