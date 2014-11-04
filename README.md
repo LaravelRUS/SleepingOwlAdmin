@@ -1,5 +1,8 @@
 ## Laravel 4 Admin Module
 
+[![Latest Stable Version](https://poser.pugx.org/sleeping-owl/admin/v/stable.svg)](https://packagist.org/packages/sleeping-owl/admin)
+[![License](https://poser.pugx.org/sleeping-owl/admin/license.svg)](https://packagist.org/packages/sleeping-owl/admin)
+
 SleepingOwl Admin is administrative interface builder for Laravel.
 
 It includes:
