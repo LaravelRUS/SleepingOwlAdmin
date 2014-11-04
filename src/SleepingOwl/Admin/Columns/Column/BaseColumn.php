@@ -227,4 +227,12 @@ abstract class BaseColumn implements ColumnInterface
 		return $this->hidden;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
 }

@@ -1,0 +1,60 @@
+CHANGELOG
+=========
+
+2014-11-04, v1.1.0
+------------------
+
+* New column type: action. Use it to add custom buttons to the tableview. See documentation for details
+
+2014-10-29, v1.0.10
+------------------
+
+* Bugfix: Administrator username maximum length reduced to 190 to support utf8mb4 charset. Fix issue #1
+
+2014-10-20, v1.0.9
+------------------
+
+* Bugfix: Fixed bug with wrong date format
+
+2014-10-20, v1.0.8
+------------------
+
+* New way to add validation rules to form elements and combine it with old method
+
+2014-10-16, v1.0.7
+------------------
+
+* New exception when "intl" extension not installed
+
+2014-10-16, v1.0.6
+------------------
+
+* Bugfix: Default admin credentials seeding fixed
+
+2014-10-16, v1.0.5
+------------------
+
+* PHP 5.4 support added
+
+2014-10-16, v1.0.4
+------------------
+
+* ValidationException handler moved to service provider
+* Bugfix: Menu with subitems icon problem solved
+
+2014-10-15, v1.0.3
+------------------
+
+* Image info speed improvements
+* Model compiler template update
+* Added user-friendly error message for missing getList method
+
+2014-10-15, v1.0.2
+------------------
+
+* Global validation exception handler added
+
+2014-10-13, v1.0.0
+------------------
+
+* Initial Version

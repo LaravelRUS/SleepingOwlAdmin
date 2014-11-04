@@ -20,4 +20,9 @@ interface ColumnInterface
 	 */
 	public function isHidden();
 
+	/**
+	 * @return string
+	 */
+	public function getName();
+
 } 

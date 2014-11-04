@@ -3,6 +3,7 @@
 use App;
 use AdminAuth;
 use SleepingOwl\Admin\Admin;
+use SleepingOwl\Admin\Columns\Column\Action;
 use SleepingOwl\Admin\Repositories\Interfaces\ModelRepositoryInterface;
 use SleepingOwl\Admin\Models\ModelItem;
 use SleepingOwl\Admin\Session\QueryState;
@@ -138,11 +139,42 @@ class AdminController extends BaseController
 		return $this->makeView('page', compact('title', 'content'));
 	}
 
+	protected function checkCustomActionCall()
+	{
+		$action = Input::query('action');
+		$id = Input::query('id');
+		if (is_null($action) || is_null($id))
+		{
+			return;
+		}
+		$column = $this->modelItem->getColumnByName($action);
+		if (is_null($column))
+		{
+			return;
+		}
+		if ( ! $column instanceof Action)
+		{
+			return;
+		}
+		$instance = $this->modelRepository->getInstance($id);
+		$result = $column->call($instance);
+
+		if ( ! $result instanceof RedirectResponse)
+		{
+			$result = Redirect::back();
+		}
+		return $result;
+	}
+
 	/**
 	 * @return View
 	 */
 	public function table()
 	{
+		if ($result = $this->checkCustomActionCall())
+		{
+			return $result;
+		}
 		$this->queryState->save();
 		$data = [
 			'title'         => $this->modelItem->getTitle(),

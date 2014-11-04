@@ -16,6 +16,7 @@ use SleepingOwl\Admin\Models\ModelItem;
  * @method static \SleepingOwl\Admin\Columns\Column\Control control()
  * @method static \SleepingOwl\Admin\Columns\Column\Filter filter($alias)
  * @method static \SleepingOwl\Admin\Columns\Column\Url url($name)
+ * @method static \SleepingOwl\Admin\Columns\Column\Action action($name, $label = null)
  */
 class Column
 {

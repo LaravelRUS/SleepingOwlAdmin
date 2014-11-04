@@ -35,7 +35,7 @@ class ModelItem
 	 */
 	protected $alias;
 	/**
-	 * @var Column[]
+	 * @var ColumnInterface[]
 	 */
 	public $columns;
 	/**
@@ -211,6 +211,18 @@ class ModelItem
 	public function getColumns()
 	{
 		return $this->columns;
+	}
+
+	public function getColumnByName($name)
+	{
+		foreach ($this->columns as $column)
+		{
+			if ($column->getName() === $name)
+			{
+				return $column;
+			}
+		}
+		return null;
 	}
 
 	/**
