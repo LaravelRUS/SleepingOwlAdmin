@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2014-11-08, v1.1.2
+------------------
+
+* Custom column now can be subclass of \SleepingOwl\Admin\Columns\Column\BaseColumn
+
 2014-11-08, v1.1.1
 ------------------
 

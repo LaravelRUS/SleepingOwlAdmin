@@ -35,7 +35,7 @@ class Column
 		$column = null;
 		if ($handler = static::getHandler($method))
 		{
-			$column = App::make($handler);
+			$column = App::make($handler, $params);
 		} else
 		{
 			$className = get_called_class() . '\\' . ucfirst($method);
