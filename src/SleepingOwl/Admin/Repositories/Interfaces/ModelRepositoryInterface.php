@@ -28,9 +28,10 @@ interface ModelRepositoryInterface
 	public function find($id);
 
 	/**
+	 * @param null $params
 	 * @return mixed
 	 */
-	public function tableData();
+	public function tableData($params = null);
 
 	/**
 	 * @return mixed

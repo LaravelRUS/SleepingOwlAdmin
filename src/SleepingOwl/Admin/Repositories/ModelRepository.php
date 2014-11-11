@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Repositories;
 
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use SleepingOwl\Admin\Repositories\Interfaces\ModelRepositoryInterface;
 use SleepingOwl\Admin\Models\ModelItem;
 use Illuminate\Database\Eloquent\Model;
@@ -45,14 +46,23 @@ class ModelRepository implements ModelRepositoryInterface
 	}
 
 	/**
+	 * @param null $params
 	 * @return array
 	 */
-	public function tableData()
+	public function tableData($params = null)
 	{
+		/** @var Builder $query */
 		$query = $this->instance->with($this->modelItem->getWith());
 		$subtitle = $this->applyFilters($query);
+		$totalCount = $query->count();
+		if ( ! is_null($params))
+		{
+			$query->offset($params['offset']);
+			$query->limit($params['limit']);
+			$query->orderBy($params['orderBy'], $params['orderDest']);
+		}
 		$rows = $query->get();
-		return compact('rows', 'subtitle');
+		return compact('rows', 'subtitle', 'totalCount');
 	}
 
 	/**

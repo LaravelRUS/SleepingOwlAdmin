@@ -175,6 +175,10 @@ class AdminController extends BaseController
 		{
 			return $result;
 		}
+		if (Input::get('datatable_request'))
+		{
+			return $this->asyncTable();
+		}
 		$this->queryState->save();
 		$data = [
 			'title'         => $this->modelItem->getTitle(),
@@ -191,7 +195,48 @@ class AdminController extends BaseController
 			App::abort(404);
 		}
 		$data = array_merge($data, $tableData);
+		if ($this->modelItem->isAsync())
+		{
+			$data['rows'] = [];
+		}
 		return $this->makeView('model.table', $data);
+	}
+
+	protected function asyncTable()
+	{
+		$columns = $this->modelItem->getColumns();
+
+		$params = [];
+		$params['offset'] = Input::get('start');
+		$params['limit'] = Input::get('length');
+		$orderData = Input::get('order')[0];
+		$columnToOrder = $columns[intval($orderData['column'])];
+		$params['orderBy'] = $columnToOrder->getName();
+		if (method_exists($columnToOrder, 'getOrderBy'))
+		{
+			$params['orderBy'] = $columnToOrder->getOrderBy();
+		}
+		$params['orderDest'] = $orderData['dir'];
+
+		$data = $this->modelRepository->tableData($params);
+
+		$rowsCount = count($data['rows']);
+
+		$result = [];
+		$result['draw'] = Input::get('draw');
+		$result['recordsTotal'] = $data['totalCount'];
+		$result['recordsFiltered'] = $data['totalCount'];
+		$result['data'] = [];
+		foreach ($data['rows'] as $row)
+		{
+			$_row = [];
+			foreach ($columns as $column)
+			{
+				$_row[] = $column->render($row, $rowsCount);
+			}
+			$result['data'][] = $_row;
+		}
+		return $result;
 	}
 
 	/**

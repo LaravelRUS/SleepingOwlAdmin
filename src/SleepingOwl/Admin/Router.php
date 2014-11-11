@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
  * Class Router
  *
  * @package SleepingOwl\Admin
- * @method string routeToTable()
+ * @method string routeToTable($alias)
  * @method string routeToCreate()
  * @method string routeToStore()
  * @method string routeToEdit()

@@ -1,6 +1,8 @@
-$(function () {
+$(function ()
+{
 	// select active link in menu
-	(function () {
+	(function ()
+	{
 		var currentPage = window.location.href;
 		currentPage = currentPage.replace(window.location.search, '');
 		currentPage = currentPage.replace(/\/create$/, '');
@@ -11,28 +13,34 @@ $(function () {
 	})();
 
 	// initialize datatables
-	(function () {
+	(function ()
+	{
 		var container = $('#dataTable');
 		var order = [];
 		var columns = [];
-		container.find('th').each(function (i) {
+		container.find('th').each(function (i)
+		{
 			var column = {};
 			column.orderable = $(this).data('sortable');
-			if (column.orderable == undefined) {
+			if (column.orderable == undefined)
+			{
 				column.orderable = true;
 			}
 			// disable search in last column
 			var searchable = $(this).data('searchable');
-			if (searchable === undefined) {
+			if (searchable === undefined)
+			{
 				searchable = true;
 			}
-			if (searchable === false) {
+			if (searchable === false)
+			{
 				searchable = false;
 			}
 			column.orderable = column.orderable && !$(this).is(':last-child');
 			column.searchable = searchable && !$(this).is(':last-child');
 
-			if ($(this).data('sortable-default')) {
+			if ($(this).data('sortable-default'))
+			{
 				order.push([i, 'asc']);
 			}
 			columns.push(column);
@@ -47,19 +55,37 @@ $(function () {
 			ordering: container.data('ordering'),
 			columns: columns
 		};
-		if (order.length > 0) {
+		if (order.length > 0)
+		{
 			params.order = order;
+		}
+		var ajax;
+		if (ajax = container.data('ajax'))
+		{
+			params.serverSide = true;
+			params.processing = true;
+			params.ajax = {
+				"url": ajax,
+				"data": function (d)
+				{
+					d.datatable_request = 'true';
+				}
+			};
 		}
 		container.dataTable(params);
 	})();
 
 	// make delete notifications
-	(function () {
-		$('.btn-delete').click(function (e) {
+	(function ()
+	{
+		$('.btn-delete').click(function (e)
+		{
 			e.preventDefault();
 			var form = $(this).closest('form');
-			bootbox.confirm(window.admin.lang.table['delete-confirm'], function (result) {
-				if (result) {
+			bootbox.confirm(window.admin.lang.table['delete-confirm'], function (result)
+			{
+				if (result)
+				{
 					form.submit();
 				}
 			});
@@ -67,7 +93,8 @@ $(function () {
 	})();
 
 	// create tooltips
-	(function () {
+	(function ()
+	{
 		$('html').tooltip({
 			selector: "[data-toggle=tooltip]",
 			container: "body"
@@ -75,7 +102,8 @@ $(function () {
 	})();
 
 	// init multiselect plugin
-	(function () {
+	(function ()
+	{
 		$('.multiselect').multiselect({
 			nonSelectedText: window.admin.lang.select.nothing,
 			nSelectedText: window.admin.lang.select.selected
@@ -83,8 +111,10 @@ $(function () {
 	})();
 
 	// init lightboxes
-	(function () {
-		$(document).delegate('*[data-toggle="lightbox"]', 'click', function (e) {
+	(function ()
+	{
+		$(document).delegate('*[data-toggle="lightbox"]', 'click', function (e)
+		{
 			e.preventDefault();
 			$(this).ekkoLightbox({
 				always_show_close: false
@@ -93,17 +123,20 @@ $(function () {
 	})();
 
 	// autofocus first text input
-	(function () {
+	(function ()
+	{
 		$('input[type="text"]:first').focus();
 	})();
 
 	// set bootbox locale
-	(function () {
+	(function ()
+	{
 		bootbox.setDefaults('locale', window.admin.locale);
 	})();
 
 	// datepickers
-	(function () {
+	(function ()
+	{
 		$('.datepicker').datetimepicker({
 			language: window.admin.locale,
 			icons: {

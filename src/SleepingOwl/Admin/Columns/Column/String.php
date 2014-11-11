@@ -18,6 +18,14 @@ class String extends BaseColumn
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getOrderBy()
+	{
+		return $this->orderBy;
+	}
+
+	/**
 	 * @param $instance
 	 * @return array
 	 */
