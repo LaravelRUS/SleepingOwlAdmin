@@ -212,7 +212,7 @@ class ModelRepository implements ModelRepositoryInterface
 		foreach ($eagerLoads as $with)
 		{
 			if (strpos($name, $with) !== 0) continue;
-			
+
 			$relation = $this->instance->$with();
 			if ($query->isRelationSupported($relation))
 			{
