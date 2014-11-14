@@ -215,7 +215,7 @@ class ModelItem
 	}
 
 	/**
-	 * @return array
+	 * @return ColumnInterface[]
 	 */
 	public function getColumns()
 	{

@@ -2,6 +2,8 @@
 
 use Cache;
 use Carbon\Carbon;
+use DB;
+use Doctrine\DBAL\Schema\Column;
 use Illuminate\Database\Query\Builder;
 use SleepingOwl\Admin\Columns\Interfaces\ColumnInterface;
 use SleepingOwl\Admin\Repositories\Interfaces\ModelRepositoryInterface;
@@ -186,12 +188,17 @@ class ModelRepository implements ModelRepositoryInterface
 	{
 		$table = $this->instance->getTable();
 		$columns = $this->getColumns($table);
-		foreach ($columns as $column)
+		foreach ($columns as $column => $type)
 		{
-			$query->orWhere(implode('.', [
+			$field = implode('.', [
 				$table,
 				$column
-			]), 'like', $search);
+			]);
+			if ($this->isDateColumn($type))
+			{
+				$field = DB::raw('convert(' . $field . ' using utf8)');
+			}
+			$query->orWhere($field, 'like', $search);
 		}
 
 		/** @var ColumnInterface[] $displayColumns */
@@ -206,6 +213,11 @@ class ModelRepository implements ModelRepositoryInterface
 		}
 	}
 
+	/**
+	 * @param $name
+	 * @param WithJoinEloquentBuilder $query
+	 * @return bool
+	 */
 	protected function inWith($name, WithJoinEloquentBuilder $query)
 	{
 		$eagerLoads = $this->modelItem->getWith();
@@ -233,8 +245,24 @@ class ModelRepository implements ModelRepositoryInterface
 		{
 			return $columns;
 		}
-		$columns = $this->instance->getConnection()->getSchemaBuilder()->getColumnListing($table);
+		$columnsFull = DB::getDoctrineSchemaManager()->listTableColumns($table);
+		$columns = array_map(function (Column $column)
+		{
+			return $column->getType()->getName();
+		}, $columnsFull);
 		Cache::put($cacheKey, $columns, 1440);
 		return $columns;
+	}
+
+	/**
+	 * @param $type
+	 * @return bool
+	 */
+	protected function isDateColumn($type)
+	{
+		return in_array($type, [
+			'date',
+			'datetime'
+		]);
 	}
 }
