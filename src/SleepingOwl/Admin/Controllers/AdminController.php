@@ -139,6 +139,9 @@ class AdminController extends BaseController
 		return $this->makeView('page', compact('title', 'content'));
 	}
 
+	/**
+	 * @return RedirectResponse
+	 */
 	protected function checkCustomActionCall()
 	{
 		$action = Input::query('action');
@@ -203,6 +206,9 @@ class AdminController extends BaseController
 		return $this->makeView('model.table', $data);
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function asyncTable()
 	{
 		$columns = $this->modelItem->getColumns();
@@ -210,6 +216,7 @@ class AdminController extends BaseController
 		$params = [];
 		$params['offset'] = Input::get('start');
 		$params['limit'] = Input::get('length');
+		$params['search'] = Input::get('search.value');
 		$orderData = Input::get('order')[0];
 		$columnToOrder = $columns[intval($orderData['column'])];
 		$params['orderBy'] = $columnToOrder->getName();
