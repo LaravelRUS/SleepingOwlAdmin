@@ -67,8 +67,11 @@ class ModelRepository implements ModelRepositoryInterface
 		$totalCount = $query->count();
 		if ( ! is_null($params))
 		{
-			$search = '%' . $params['search'] . '%';
-			$this->addSearchToQuery($query, $search);
+			if (trim($params['search']) != '')
+			{
+				$search = '%' . $params['search'] . '%';
+				$this->addSearchToQuery($query, $search);
+			}
 			if ($params['limit'] != -1)
 			{
 				$query->offset($params['offset']);
@@ -181,36 +184,40 @@ class ModelRepository implements ModelRepositoryInterface
 	}
 
 	/**
-	 * @param $query
+	 * @param WithJoinEloquentBuilder $originalQuery
 	 * @param $search
+	 * @internal param $query
 	 */
-	protected function addSearchToQuery(WithJoinEloquentBuilder $query, $search)
+	protected function addSearchToQuery(WithJoinEloquentBuilder $originalQuery, $search)
 	{
-		$table = $this->instance->getTable();
-		$columns = $this->getColumns($table);
-		foreach ($columns as $column => $type)
+		$originalQuery->getQuery()->whereNested(function (Builder $query) use ($search, $originalQuery)
 		{
-			$field = implode('.', [
-				$table,
-				$column
-			]);
-			if ($this->isDateColumn($type))
+			$table = $this->instance->getTable();
+			$columns = $this->getColumns($table);
+			foreach ($columns as $column => $type)
 			{
-				$field = DB::raw('convert(' . $field . ' using utf8)');
+				$field = implode('.', [
+					$table,
+					$column
+				]);
+				if ($this->isDateColumn($type))
+				{
+					$field = DB::raw('convert(' . $field . ' using utf8)');
+				}
+				$query->orWhere($field, 'like', $search);
 			}
-			$query->orWhere($field, 'like', $search);
-		}
 
-		/** @var ColumnInterface[] $displayColumns */
-		$displayColumns = $this->modelItem->getColumns();
-		foreach ($displayColumns as $column)
-		{
-			$name = $column->getName();
-			if (strpos($name, '.') !== false && $this->inWith($name, $query))
+			/** @var ColumnInterface[] $displayColumns */
+			$displayColumns = $this->modelItem->getColumns();
+			foreach ($displayColumns as $column)
 			{
-				$query->orWhere($name, 'like', $search);
+				$name = $column->getName();
+				if (strpos($name, '.') !== false && $this->inWith($name, $originalQuery))
+				{
+					$query->orWhere($name, 'like', $search);
+				}
 			}
-		}
+		});
 	}
 
 	/**
@@ -240,7 +247,7 @@ class ModelRepository implements ModelRepositoryInterface
 	 */
 	protected function getColumns($table)
 	{
-		$cacheKey = '_admin_columns_' . $table;
+		$cacheKey = '_admin_columns_cache_' . $table;
 		if ($columns = Cache::get($cacheKey))
 		{
 			return $columns;
