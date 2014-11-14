@@ -1493,7 +1493,11 @@
 				// Need to create the HTML if new, or if a rendering function is defined
 				if ( !nTrIn || oCol.mRender || oCol.mData !== i )
 				{
-					nTd.innerHTML = _fnGetCellData( oSettings, iRow, i, 'display' );
+					var data = _fnGetCellData( oSettings, iRow, i, 'display' );
+					var $el = $(data);
+					var $class = $el.attr('class');
+					nTd.className += ' ' + $class;
+					nTd.innerHTML = data;
 				}
 	
 				/* Add user defined class */
