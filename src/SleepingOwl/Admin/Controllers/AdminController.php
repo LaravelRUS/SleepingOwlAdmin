@@ -184,21 +184,22 @@ class AdminController extends BaseController
 			'title'         => $this->modelItem->getTitle(),
 			'columns'       => $this->modelItem->getColumns(),
 			'newEntryRoute' => $this->router->routeToCreate($this->modelName, Input::query()),
-			'modelItem'     => $this->modelItem
+			'modelItem'     => $this->modelItem,
+			'rows'          => []
 		];
-		$tableData = [];
-		try
+		if ( ! $this->modelItem->isAsync())
 		{
-			$tableData = $this->modelRepository->tableData();
-		} catch (ModelNotFoundException $e)
-		{
-			App::abort(404);
+			$tableData = [];
+			try
+			{
+				$tableData = $this->modelRepository->tableData();
+			} catch (ModelNotFoundException $e)
+			{
+				App::abort(404);
+			}
+			$data = array_merge($data, $tableData);
 		}
-		$data = array_merge($data, $tableData);
-		if ($this->modelItem->isAsync())
-		{
-			$data['rows'] = [];
-		}
+		$data['subtitle'] = $this->modelRepository->getSubtitle();
 		return $this->makeView('model.table', $data);
 	}
 

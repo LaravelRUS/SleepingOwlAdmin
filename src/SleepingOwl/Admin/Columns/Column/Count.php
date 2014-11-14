@@ -14,4 +14,9 @@ class Count extends BaseColumn
 		return $this->name;
 	}
 
+	public function isSortable()
+	{
+		return ! $this->modelItem->isAsync();
+	}
+
 } 

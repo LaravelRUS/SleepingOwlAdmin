@@ -42,3 +42,10 @@
 	font-size: 9px;
 	line-height: 12px;
 }
+
+.dataTables_processing {
+	position: absolute;
+	left: 50%;
+	top: 140px;
+	margin-left: -35px;
+}

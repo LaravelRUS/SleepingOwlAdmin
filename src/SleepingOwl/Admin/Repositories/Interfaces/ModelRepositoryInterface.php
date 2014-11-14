@@ -34,6 +34,11 @@ interface ModelRepositoryInterface
 	public function tableData($params = null);
 
 	/**
+	 * @return string
+	 */
+	public function getSubtitle();
+
+	/**
 	 * @return mixed
 	 */
 	public function store();

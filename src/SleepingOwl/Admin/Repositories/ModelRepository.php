@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use SleepingOwl\Models\Interfaces\ModelWithOrderFieldInterface;
 use SleepingOwl\Models\Interfaces\ValidationModelInterface;
+use SleepingOwl\WithJoin\WithJoinEloquentBuilder;
 
 class ModelRepository implements ModelRepositoryInterface
 {
@@ -51,9 +52,14 @@ class ModelRepository implements ModelRepositoryInterface
 	 */
 	public function tableData($params = null)
 	{
-		/** @var Builder $query */
-		$query = $this->instance->with($this->modelItem->getWith());
-		$subtitle = $this->applyFilters($query);
+		$baseQuery = $this->instance->newQuery()->getQuery();
+		/** @var WithJoinEloquentBuilder $query */
+		$query = new WithJoinEloquentBuilder($baseQuery);
+		$with = $this->modelItem->getWith();
+		$query->setModel($this->instance)->with($with)->references($with);
+		$query = $this->instance->applyGlobalScopes($query);
+		$query->getQuery()->orders = null;
+		$this->applyFilters($query);
 		$totalCount = $query->count();
 		if ( ! is_null($params))
 		{
@@ -62,7 +68,16 @@ class ModelRepository implements ModelRepositoryInterface
 			$query->orderBy($params['orderBy'], $params['orderDest']);
 		}
 		$rows = $query->get();
-		return compact('rows', 'subtitle', 'totalCount');
+		return compact('rows', 'totalCount');
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSubtitle()
+	{
+		$query = $this->instance->newQuery();
+		return $this->applyFilters($query);
 	}
 
 	/**

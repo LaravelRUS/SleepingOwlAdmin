@@ -115,7 +115,7 @@ class ModelItem
 		}
 		if ($this->isAsync())
 		{
-			$url = Admin::instance()->router->routeToTable($this->getAlias());
+			$url = Admin::instance()->router->routeToTable($this->getAlias(), \Input::all());
 			$attributes['data-ajax'] = $url;
 		}
 		return $this->htmlBuilder->attributes($attributes);

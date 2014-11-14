@@ -22,7 +22,11 @@ class String extends BaseColumn
 	 */
 	public function getOrderBy()
 	{
-		return $this->orderBy;
+		if ( ! is_null($this->orderBy))
+		{
+			return $this->orderBy;
+		}
+		return $this->name;
 	}
 
 	/**

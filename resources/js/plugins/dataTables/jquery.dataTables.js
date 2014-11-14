@@ -4674,7 +4674,7 @@
 			// Backwards compatibility pre 1.10
 			var ext = DataTable.ext;
 			var type = ext.sErrMode || ext.errMode;
-	
+
 			if ( type == 'alert' ) {
 				alert( msg );
 			}
