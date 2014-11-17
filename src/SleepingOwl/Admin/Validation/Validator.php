@@ -53,10 +53,13 @@ class Validator extends IlluminateValidator
 	 */
 	protected function validateUnique($attribute, $value, $parameters)
 	{
-		$id = $this->customAttributes['id'];
-		if ($id !== null)
+		if (isset($this->customAttributes['id']))
 		{
-			$parameters[] = $id;
+			$id = $this->customAttributes['id'];
+			if ($id !== null)
+			{
+				$parameters[] = $id;
+			}
 		}
 		return parent::validateUnique($attribute, $value, $parameters);
 	}
