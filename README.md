@@ -52,6 +52,10 @@ You can also find it in the `/src/docs` directory.
 
 View [live demo](http://sleeping-owl-admin-demo.gopagoda.com).
 
+## Support Library
+
+You can donate in BTC: 13k36pym383rEmsBSLyWfT3TxCQMN2Lekd
+
 ## Copyright and License
 
 Admin was written by Sleeping Owl for the Laravel framework and is released under the MIT License. See the LICENSE file for details.
