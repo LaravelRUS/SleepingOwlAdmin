@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+2014-11-26, v1.1.4
+------------------
+
+* Bugfix: renamed sort field fixed
+* Bugfix: nullable relation fix
+
 2014-11-17, v1.1.3
 ------------------
 

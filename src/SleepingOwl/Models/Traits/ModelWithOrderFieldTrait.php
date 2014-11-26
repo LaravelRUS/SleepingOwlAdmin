@@ -37,7 +37,7 @@ trait ModelWithOrderFieldTrait
 	 */
 	protected function move($destination)
 	{
-		$previousRow = static::sortModel()->whereSort($this->{$this->getSortField()} - $destination)->first();
+		$previousRow = static::sortModel()->where($this->getSortField(), $this->{$this->getSortField()} - $destination)->first();
 		$previousRow->{$this->getSortField()} += $destination;
 		$previousRow->save();
 
