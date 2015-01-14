@@ -24,9 +24,8 @@ class Time extends BaseFormItem
 	 */
 	public function render()
 	{
-		return $this->formBuilder->datetime($this->name, $this->label, $this->getValueFromForm(), [
-			'data-date-pickdate'   => 'false',
-			'data-date-useseconds' => $this->showSeconds,
-		], DateFormatter::NONE, $this->showSeconds ? DateFormatter::MEDIUM : DateFormatter::SHORT);
+		$this->attributes['data-date-pickdate'] = 'false';
+		$this->attributes['data-date-useseconds'] = $this->showSeconds;
+		return $this->formBuilder->datetime($this->name, $this->label, $this->getValueFromForm(), $this->attributes, DateFormatter::NONE, $this->showSeconds ? DateFormatter::MEDIUM : DateFormatter::SHORT);
 	}
 }

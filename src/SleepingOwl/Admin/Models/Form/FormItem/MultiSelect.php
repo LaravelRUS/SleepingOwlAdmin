@@ -55,10 +55,14 @@ class MultiSelect extends BaseFormItem
 				'getList'
 			]);
 		}
-		return $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->values(), [
-			'class' => 'multiselect',
-			'multiple'
-		]);
+		if ( ! isset($this->attributes['class']))
+		{
+			$this->attributes['class'] = '';
+		}
+		$this->attributes['class'] .= ' multiselect';
+		$this->attributes['multiple'] = true;
+
+		return $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->values(), $this->attributes);
 	}
 
 	/**

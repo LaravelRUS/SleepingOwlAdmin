@@ -4,6 +4,6 @@ class Text extends BaseFormItem
 {
 	public function render()
 	{
-		return $this->formBuilder->textGroup($this->name, $this->label, $this->getValueFromForm());
+		return $this->formBuilder->textGroup($this->name, $this->label, $this->getValueFromForm(), $this->attributes);
 	}
 } 

@@ -4,9 +4,8 @@ class Date extends BaseFormItem
 {
 	public function render()
 	{
-		return $this->formBuilder->datetime($this->name, $this->label, $this->getValueFromForm(), [
-			'data-date-picktime' => false
-		]);
+		$this->attributes['data-date-picktime'] = false;
+		return $this->formBuilder->datetime($this->name, $this->label, $this->getValueFromForm(), $this->attributes);
 	}
 
 	public function getValidationRules()

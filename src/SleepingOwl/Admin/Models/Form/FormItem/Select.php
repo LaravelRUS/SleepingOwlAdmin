@@ -29,10 +29,13 @@ class Select extends BaseFormItem
 				'getList'
 			]);
 		}
-		return $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->getValueFromForm(), [
-			'class' => 'multiselect',
-			'size'  => 2
-		]);
+		if ( ! isset($this->attributes['class']))
+		{
+			$this->attributes['class'] = '';
+		}
+		$this->attributes['class'] .= ' multiselect';
+		$this->attributes['size'] = 2;
+		return $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->getValueFromForm(), $this->attributes);
 	}
 
 	public function enum($values)

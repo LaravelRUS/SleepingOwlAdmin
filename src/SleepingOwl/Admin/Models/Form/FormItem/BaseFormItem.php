@@ -30,6 +30,11 @@ abstract class BaseFormItem implements FormItemInterface
 	protected $validation = [];
 
 	/**
+	 * @var array
+	 */
+	protected $attributes = [];
+
+	/**
 	 * @param null $name
 	 * @param null $label
 	 */
@@ -91,6 +96,11 @@ abstract class BaseFormItem implements FormItemInterface
 	public function getValidationRules()
 	{
 		return $this->validation;
+	}
+
+	public function attributes($attributes)
+	{
+		$this->attributes = $attributes;
 	}
 
 }

@@ -7,7 +7,7 @@ class TextAddon extends BaseFormItem
 
 	public function render()
 	{
-		return $this->formBuilder->textAddonGroup($this->name, $this->label, $this->getAddon(), $this->placement, $this->getValueFromForm());
+		return $this->formBuilder->textAddonGroup($this->name, $this->label, $this->getAddon(), $this->placement, $this->getValueFromForm(), $this->attributes);
 	}
 
 	public function addon($addon)

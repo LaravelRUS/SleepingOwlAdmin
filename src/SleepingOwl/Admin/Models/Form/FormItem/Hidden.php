@@ -4,7 +4,7 @@ class Hidden extends BaseFormItem
 {
 	public function render()
 	{
-		return $this->formBuilder->hidden($this->name, $this->getValueFromForm());
+		return $this->formBuilder->hidden($this->name, $this->getValueFromForm(), $this->attributes);
 	}
 
 } 

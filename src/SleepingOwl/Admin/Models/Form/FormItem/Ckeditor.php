@@ -8,6 +8,11 @@ class Ckeditor extends Textarea
 	public function render()
 	{
 		AssetManager::addScript(Admin::instance()->router->routeToAsset('ckeditor/ckeditor.js'));
-		return parent::render(['class' => 'ckeditor']);
+		if ( ! isset($this->attributes['class']))
+		{
+			$this->attributes['class'] = '';
+		}
+		$this->attributes['class'] .= ' ckeditor';
+		return parent::render();
 	}
 }
