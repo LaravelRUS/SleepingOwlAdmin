@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use SleepingOwl\Models\Interfaces\ModelWithFileFieldsInterface;
 use SleepingOwl\Models\Interfaces\ModelWithImageFieldsInterface;
@@ -416,7 +417,7 @@ class ModelCompiler
 			'time'     => 'time',
 			'datetime' => 'timestamp',
 		];
-		return $lookup[$type];
+		return Arr::get($lookup, $type, 'text');
 	}
 
 	/**
