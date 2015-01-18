@@ -17,7 +17,6 @@ class Select extends BaseFormItem
 		if (is_array($this->list))
 		{
 			$list = $this->list;
-			$list = array_combine($list, $list);
 		} else
 		{
 			if ( ! method_exists($this->list, 'getList'))
