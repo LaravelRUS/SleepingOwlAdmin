@@ -112,6 +112,7 @@ class Image
 	 */
 	public function thumbnail($template)
 	{
+		if ( ! $this->exists()) return null;
 		return route('imagecache', [
 			$template,
 			$this->getPath()
