@@ -42,3 +42,15 @@
 	font-size: 9px;
 	line-height: 12px;
 }
+
+.img-container a {
+	float: left;
+}
+
+.img-container a+a {
+	margin-left: 20px;
+}
+
+.img-container a.img-delete {
+	color: #d9534f;
+}

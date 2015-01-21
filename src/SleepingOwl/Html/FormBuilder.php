@@ -284,10 +284,17 @@ class FormBuilder extends IlluminateFormBuilder
 				'data-toggle' => 'tooltip',
 				'title'       => $model->$name->info()
 			]);
-			$content .= $this->html->tag('a', [
+			$innerContent = $this->html->tag('a', [
 				'href'        => $model->$name->thumbnail('original'),
 				'data-toggle' => 'lightbox'
 			], $img);
+			$innerContent .= $this->html->tag('a', [
+				'href'      => '#',
+				'class'     => 'img-delete',
+				'data-name' => $name,
+			], '<i class="fa fa-times"></i> ' . Lang::get('admin::lang.table.delete'));
+			$innerContent .= '<div class="clearfix"></div>';
+			$content .= $this->html->tag('div', ['class' => 'img-container'], $innerContent);
 		}
 		$content .= $this->file($name, null, $options);
 		return $this->makeGroup($name, $label, $content);

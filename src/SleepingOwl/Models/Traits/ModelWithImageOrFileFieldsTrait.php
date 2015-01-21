@@ -60,11 +60,11 @@ trait ModelWithImageOrFileFieldsTrait
 	 */
 	public function setImage($field, $image)
 	{
-		if ($image == null) return;
+		if (is_null($image)) return;
 		$filename = $image;
+		$this->$field->delete();
 		if ($image instanceof UploadedFile)
 		{
-			$this->$field->delete();
 			$filename = $this->getFilenameFromFile($field, $image);
 			$image->move(Config::get('admin::imagesDirectory') . '/' . $this->getImageFieldDirectory($field), $filename);
 			$this->$field->setFilename($filename);
@@ -179,9 +179,9 @@ trait ModelWithImageOrFileFieldsTrait
 	 */
 	public function __call($method, $parameters)
 	{
-		if (preg_match('/set(?<field>[a-zA-Z]+)Attribute/', $method, $attr))
+		if (preg_match('/set(?<field>[a-zA-Z0-9]+)Attribute/', $method, $attr))
 		{
-			$field = Str::lower($attr['field']);
+			$field = Str::camel($attr['field']);
 			if ($this->hasImageField($field))
 			{
 				return $this->setImage($field, $parameters[0]);

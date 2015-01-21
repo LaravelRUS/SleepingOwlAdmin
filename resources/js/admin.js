@@ -114,4 +114,17 @@ $(function () {
 			}
 		}).trigger('dp.change');
 	})();
+
+	// image delete
+	(function () {
+		$('.img-container a.img-delete').click(function (e)
+		{
+			e.preventDefault();
+			var $this = $(this);
+			var container = $this.closest('.img-container');
+			var name = $this.data('name') + 'ConfirmDelete';
+			$('<input type="checkbox" checked="checked" name="' + name + '" class="hidden"/>').insertAfter(container);
+			container.remove();
+		});
+	})();
 });

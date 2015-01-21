@@ -96,13 +96,21 @@ class ModelRepository implements ModelRepositoryInterface
 	{
 		$rules = $this->modelItem->getForm()->getValidationRules();
 		$this->instance->validate($data = $this->request->all(), $rules);
-		foreach ($data as &$value)
+		foreach ($data as $key => &$value)
 		{
 			if ( ! is_string($value)) continue;
 			if ((strpos($value, 'AM') !== false) || (strpos($value, 'PM') !== false))
 			{
 				$time = new Carbon($value);
 				$value = $time->format('H:i:s');
+			}
+			if (preg_match('/^(?<field>[a-zA-Z0-9]+)ConfirmDelete$/', $key, $matches))
+			{
+				$field = $matches['field'];
+				if (is_null($data[$field]))
+				{
+					$data[$field] = '';
+				}
 			}
 		}
 		$this->instance->fill($data);
