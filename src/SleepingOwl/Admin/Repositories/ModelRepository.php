@@ -63,7 +63,7 @@ class ModelRepository implements ModelRepositoryInterface
 	{
 		$subtitles = $this->modelItem->applyFilters($query, $this->request->query());
 		$subtitle = null;
-		if (!empty($subtitles))
+		if ( ! empty($subtitles))
 		{
 			$subtitle = implode(', ', $subtitles);
 			return $subtitle;
@@ -101,8 +101,13 @@ class ModelRepository implements ModelRepositoryInterface
 			if ( ! is_string($value)) continue;
 			if ((strpos($value, 'AM') !== false) || (strpos($value, 'PM') !== false))
 			{
-				$time = new Carbon($value);
-				$value = $time->format('H:i:s');
+				try
+				{
+					$time = new Carbon($value);
+					$value = $time->format('H:i:s');
+				} catch (\Exception $e)
+				{
+				}
 			}
 			if (preg_match('/^(?<field>[a-zA-Z0-9]+)ConfirmDelete$/', $key, $matches))
 			{
@@ -150,7 +155,7 @@ class ModelRepository implements ModelRepositoryInterface
 	 */
 	public function getInstance($id = null)
 	{
-		if (!is_null($id)) return $this->find($id);
+		if ( ! is_null($id)) return $this->find($id);
 		return $this->instance;
 	}
 }
