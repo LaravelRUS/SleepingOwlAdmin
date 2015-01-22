@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Controllers;
 
 use AdminAuth;
+use Config;
 use Illuminate\Support\MessageBag;
 use Input;
 use Lang;
@@ -31,14 +32,8 @@ class AuthController extends BaseController
 	 */
 	public function postLogin()
 	{
-		$data = Input::only([
-			'username',
-			'password'
-		]);
-		$rules = [
-			'username' => 'required',
-			'password' => 'required'
-		];
+		$rules = Config::get('admin::auth.rules');
+		$data = Input::only(array_keys($rules));
 		$validator = Validator::make($data, $rules, Lang::get('admin::validation'));
 		if ($validator->fails())
 		{

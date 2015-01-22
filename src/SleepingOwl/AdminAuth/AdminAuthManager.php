@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\AdminAuth;
 
+use Config;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Support\Manager;
@@ -25,7 +26,7 @@ class AdminAuthManager extends AuthManager {
 	 */
 	protected function createEloquentProvider()
 	{
-		$model = '\SleepingOwl\AdminAuth\Entities\Administrator';
+		$model = Config::get('admin::auth.model');
 
 		return new EloquentUserProvider($this->app['hash'], $model);
 	}

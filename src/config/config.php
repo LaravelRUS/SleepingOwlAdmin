@@ -40,4 +40,15 @@ return [
 	 * Default: 'uploads'
 	 */
 	'imagesUploadDirectory' => 'uploads',
+
+	/*
+	 * Authentication config
+	 */
+	'auth'                  => [
+		'model'  => '\SleepingOwl\AdminAuth\Entities\Administrator',
+		'rules' => [
+			'username' => 'required',
+			'password' => 'required',
+		]
+	]
 ];
