@@ -78,7 +78,7 @@ $(function ()
 	// make delete notifications
 	(function ()
 	{
-		$('.btn-delete').click(function (e)
+		$(document).delegate('.btn-delete', 'click', function (e)
 		{
 			e.preventDefault();
 			var form = $(this).closest('form');
