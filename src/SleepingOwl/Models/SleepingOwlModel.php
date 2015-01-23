@@ -13,6 +13,7 @@ use SleepingOwl\Models\Traits\ValidationModelTrait;
 abstract class SleepingOwlModel extends \Eloquent implements ValidationModelInterface
 {
 	use DeleteAllModelTrait, ValidationModelTrait, ModelWithImageOrFileFieldsTrait;
+	use \SleepingOwl\WithJoin\WithJoinTrait;
 
 	/**
 	 * @return \Illuminate\Database\Eloquent\Builder
