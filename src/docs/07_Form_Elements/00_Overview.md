@@ -28,6 +28,14 @@ FormItem::text('title')->required()->unique()->validationRule('my-custom-rule')
 
 See [details](../Getting_Started/Validation.html) about validation.
 
+### Custom HTML attributes
+
+You can add custom html attributes to the form element.
+
+```php
+FormItem::text('title')->attributes(['class' => 'my-class', 'my-attribute' => 1])
+```
+
 ### Register Custom Type
 
 See [custom form elements](Custom_Form_Elements.html).

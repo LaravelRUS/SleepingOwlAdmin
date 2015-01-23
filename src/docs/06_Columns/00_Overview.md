@@ -11,6 +11,7 @@ Creates new column and adds it to the current model configuration.
  - [count](count.html)
  - [image](image.html)
  - [date](date.html)
+ - [action](action.html)
  
 ### Register Custom Type
 
