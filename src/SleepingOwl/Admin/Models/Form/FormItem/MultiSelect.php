@@ -62,7 +62,9 @@ class MultiSelect extends BaseFormItem
 		$this->attributes['class'] .= ' multiselect';
 		$this->attributes['multiple'] = true;
 
-		return $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->values(), $this->attributes);
+		$content = $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->values(), $this->attributes);
+		$content .= '<input type="hidden" name="' . $this->name . '" value="__dummy-multiselect-value"/>';
+		return $content;
 	}
 
 	/**
