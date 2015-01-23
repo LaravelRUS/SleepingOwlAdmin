@@ -74,6 +74,10 @@ class ModelItem
 	 * @var \SleepingOwl\Html\HtmlBuilder
 	 */
 	protected $htmlBuilder;
+	/**
+	 * @var bool
+	 */
+	protected $async;
 
 	/**
 	 * @param $modelClass
@@ -108,6 +112,11 @@ class ModelItem
 		if ( ! $this->orderable)
 		{
 			$attributes['data-ordering'] = 'false';
+		}
+		if ($this->isAsync())
+		{
+			$url = Admin::instance()->router->routeToTable($this->getAlias(), \Input::all());
+			$attributes['data-ajax'] = $url;
 		}
 		return $this->htmlBuilder->attributes($attributes);
 	}
@@ -206,7 +215,7 @@ class ModelItem
 	}
 
 	/**
-	 * @return array
+	 * @return ColumnInterface[]
 	 */
 	public function getColumns()
 	{
@@ -373,6 +382,24 @@ class ModelItem
 			return $this;
 		}
 		throw new MethodNotFoundException(get_class($this), $method);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isAsync()
+	{
+		return $this->async;
+	}
+
+	/**
+	 * @param boolean $async
+	 * @return $this
+	 */
+	public function async($async = true)
+	{
+		$this->async = $async;
+		return $this;
 	}
 
 }

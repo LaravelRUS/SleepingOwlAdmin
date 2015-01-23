@@ -139,6 +139,9 @@ class AdminController extends BaseController
 		return $this->makeView('page', compact('title', 'content'));
 	}
 
+	/**
+	 * @return RedirectResponse
+	 */
 	protected function checkCustomActionCall()
 	{
 		$action = Input::query('action');
@@ -175,23 +178,73 @@ class AdminController extends BaseController
 		{
 			return $result;
 		}
+		if (Input::get('datatable_request'))
+		{
+			return $this->asyncTable();
+		}
 		$this->queryState->save();
 		$data = [
 			'title'         => $this->modelItem->getTitle(),
 			'columns'       => $this->modelItem->getColumns(),
 			'newEntryRoute' => $this->router->routeToCreate($this->modelName, Input::query()),
-			'modelItem'     => $this->modelItem
+			'modelItem'     => $this->modelItem,
+			'rows'          => []
 		];
-		$tableData = [];
-		try
+		if ( ! $this->modelItem->isAsync())
 		{
-			$tableData = $this->modelRepository->tableData();
-		} catch (ModelNotFoundException $e)
-		{
-			App::abort(404);
+			$tableData = [];
+			try
+			{
+				$tableData = $this->modelRepository->tableData();
+			} catch (ModelNotFoundException $e)
+			{
+				App::abort(404);
+			}
+			$data = array_merge($data, $tableData);
 		}
-		$data = array_merge($data, $tableData);
+		$data['subtitle'] = $this->modelRepository->getSubtitle();
 		return $this->makeView('model.table', $data);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function asyncTable()
+	{
+		$columns = $this->modelItem->getColumns();
+
+		$params = [];
+		$params['offset'] = Input::get('start');
+		$params['limit'] = Input::get('length');
+		$params['search'] = Input::get('search.value');
+		$orderData = Input::get('order')[0];
+		$columnToOrder = $columns[intval($orderData['column'])];
+		$params['orderBy'] = $columnToOrder->getName();
+		if (method_exists($columnToOrder, 'getOrderBy'))
+		{
+			$params['orderBy'] = $columnToOrder->getOrderBy();
+		}
+		$params['orderDest'] = $orderData['dir'];
+
+		$data = $this->modelRepository->tableData($params);
+
+		$rowsCount = count($data['rows']);
+
+		$result = [];
+		$result['draw'] = Input::get('draw');
+		$result['recordsTotal'] = $data['totalCount'];
+		$result['recordsFiltered'] = $data['totalCount'];
+		$result['data'] = [];
+		foreach ($data['rows'] as $row)
+		{
+			$_row = [];
+			foreach ($columns as $column)
+			{
+				$_row[] = $column->render($row, $rowsCount);
+			}
+			$result['data'][] = $_row;
+		}
+		return $result;
 	}
 
 	/**

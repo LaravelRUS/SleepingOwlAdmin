@@ -43,6 +43,13 @@
 	line-height: 12px;
 }
 
+.dataTables_processing {
+	position: absolute;
+	left: 50%;
+	top: 140px;
+	margin-left: -35px;
+}
+
 .img-container a {
 	float: left;
 }

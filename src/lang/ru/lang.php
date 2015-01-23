@@ -41,7 +41,7 @@ return [
 		'cancel'         => 'Отменить',
 		'download'       => 'Скачать',
 		'all'            => 'Все',
-		'processing'     => 'Подождите...',
+		'processing'     => '<i class="fa fa-5x fa-circle-o-notch fa-spin"></i>',
 		'loadingRecords' => 'Подождите...',
 		'lengthMenu'     => 'Отображать _MENU_ записей',
 		'zeroRecords'    => 'Не найдено подходящих записей.',

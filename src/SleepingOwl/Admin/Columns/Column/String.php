@@ -18,6 +18,18 @@ class String extends BaseColumn
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getOrderBy()
+	{
+		if ( ! is_null($this->orderBy))
+		{
+			return $this->orderBy;
+		}
+		return $this->name;
+	}
+
+	/**
 	 * @param $instance
 	 * @return array
 	 */

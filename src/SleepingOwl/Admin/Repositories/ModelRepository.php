@@ -1,12 +1,18 @@
 <?php namespace SleepingOwl\Admin\Repositories;
 
+use Cache;
 use Carbon\Carbon;
+use DB;
+use Doctrine\DBAL\Schema\Column;
+use Illuminate\Database\Query\Builder;
+use SleepingOwl\Admin\Columns\Interfaces\ColumnInterface;
 use SleepingOwl\Admin\Repositories\Interfaces\ModelRepositoryInterface;
 use SleepingOwl\Admin\Models\ModelItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use SleepingOwl\Models\Interfaces\ModelWithOrderFieldInterface;
 use SleepingOwl\Models\Interfaces\ValidationModelInterface;
+use SleepingOwl\WithJoin\WithJoinEloquentBuilder;
 
 class ModelRepository implements ModelRepositoryInterface
 {
@@ -45,14 +51,49 @@ class ModelRepository implements ModelRepositoryInterface
 	}
 
 	/**
+	 * @param null $params
 	 * @return array
 	 */
-	public function tableData()
+	public function tableData($params = null)
 	{
-		$query = $this->instance->with($this->modelItem->getWith());
-		$subtitle = $this->applyFilters($query);
+		$baseQuery = $this->instance->newQuery()->getQuery();
+		/** @var WithJoinEloquentBuilder $query */
+		$query = new WithJoinEloquentBuilder($baseQuery);
+		$with = $this->modelItem->getWith();
+		$query->setModel($this->instance)->with($with);
+		if ($this->modelItem->isAsync())
+		{
+			$query->references($with);
+		}
+		$query = $this->instance->applyGlobalScopes($query);
+		$query->getQuery()->orders = null;
+		$this->applyFilters($query);
+		$totalCount = $query->count();
+		if ( ! is_null($params))
+		{
+			if (trim($params['search']) != '')
+			{
+				$search = '%' . $params['search'] . '%';
+				$this->addSearchToQuery($query, $search);
+			}
+			if ($params['limit'] != -1)
+			{
+				$query->offset($params['offset']);
+				$query->limit($params['limit']);
+			}
+			$query->orderBy($params['orderBy'], $params['orderDest']);
+		}
 		$rows = $query->get();
-		return compact('rows', 'subtitle');
+		return compact('rows', 'totalCount');
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSubtitle()
+	{
+		$query = $this->instance->newQuery();
+		return $this->applyFilters($query);
 	}
 
 	/**
@@ -157,5 +198,95 @@ class ModelRepository implements ModelRepositoryInterface
 	{
 		if ( ! is_null($id)) return $this->find($id);
 		return $this->instance;
+	}
+
+	/**
+	 * @param WithJoinEloquentBuilder $originalQuery
+	 * @param $search
+	 * @internal param $query
+	 */
+	protected function addSearchToQuery(WithJoinEloquentBuilder $originalQuery, $search)
+	{
+		$originalQuery->getQuery()->whereNested(function (Builder $query) use ($search, $originalQuery)
+		{
+			$table = $this->instance->getTable();
+			$columns = $this->getColumns($table);
+			foreach ($columns as $column => $type)
+			{
+				$field = implode('.', [
+					$table,
+					$column
+				]);
+				if ($this->isDateColumn($type))
+				{
+					$field = DB::raw('convert(' . $field . ' using utf8)');
+				}
+				$query->orWhere($field, 'like', $search);
+			}
+
+			/** @var ColumnInterface[] $displayColumns */
+			$displayColumns = $this->modelItem->getColumns();
+			foreach ($displayColumns as $column)
+			{
+				$name = $column->getName();
+				if (strpos($name, '.') !== false && $this->inWith($name, $originalQuery))
+				{
+					$query->orWhere($name, 'like', $search);
+				}
+			}
+		});
+	}
+
+	/**
+	 * @param $name
+	 * @param WithJoinEloquentBuilder $query
+	 * @return bool
+	 */
+	protected function inWith($name, WithJoinEloquentBuilder $query)
+	{
+		$eagerLoads = $this->modelItem->getWith();
+		foreach ($eagerLoads as $with)
+		{
+			if (strpos($name, $with) !== 0) continue;
+
+			$relation = $this->instance->$with();
+			if ($query->isRelationSupported($relation))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @param $table
+	 * @return array
+	 */
+	protected function getColumns($table)
+	{
+		$cacheKey = '_admin_columns_cache_' . $table;
+		if ($columns = Cache::get($cacheKey))
+		{
+			return $columns;
+		}
+		$columnsFull = DB::getDoctrineSchemaManager()->listTableColumns($table);
+		$columns = array_map(function (Column $column)
+		{
+			return $column->getType()->getName();
+		}, $columnsFull);
+		Cache::put($cacheKey, $columns, 1440);
+		return $columns;
+	}
+
+	/**
+	 * @param $type
+	 * @return bool
+	 */
+	protected function isDateColumn($type)
+	{
+		return in_array($type, [
+			'date',
+			'datetime'
+		]);
 	}
 }

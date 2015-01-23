@@ -2,6 +2,7 @@
 
 class Lists extends BaseColumn
 {
+
 	/**
 	 * @param $instance
 	 * @param int $totalCount
@@ -17,6 +18,11 @@ class Lists extends BaseColumn
 		}
 		$content = $this->htmlBuilder->tag('ul', ['class' => 'list-unstyled'], implode('', $content));
 		return parent::render($instance, $totalCount, $content);
+	}
+
+	public function isSortable()
+	{
+		return false;
 	}
 
 }
