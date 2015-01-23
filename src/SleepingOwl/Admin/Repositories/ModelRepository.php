@@ -60,7 +60,11 @@ class ModelRepository implements ModelRepositoryInterface
 		/** @var WithJoinEloquentBuilder $query */
 		$query = new WithJoinEloquentBuilder($baseQuery);
 		$with = $this->modelItem->getWith();
-		$query->setModel($this->instance)->with($with)->references($with);
+		$query->setModel($this->instance)->with($with);
+		if ($this->modelItem->isAsync())
+		{
+			$query->references($with);
+		}
 		$query = $this->instance->applyGlobalScopes($query);
 		$query->getQuery()->orders = null;
 		$this->applyFilters($query);
