@@ -42,4 +42,15 @@ class String extends BaseColumn
 		return [];
 	}
 
+	public function isSortable()
+	{
+		$sortable = $this->sortable !== false;
+		if ($this->modelItem->isWithJoinEnabled())
+		{
+			return $sortable;
+		}
+		return $sortable && strpos($this->name, '.') === false;
+	}
+
+
 }

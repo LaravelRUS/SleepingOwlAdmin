@@ -78,6 +78,10 @@ class ModelItem
 	 * @var bool
 	 */
 	protected $async;
+	/**
+	 * @var bool
+	 */
+	protected $withjoinEnabled;
 
 	/**
 	 * @param $modelClass
@@ -399,6 +403,23 @@ class ModelItem
 	public function async($async = true)
 	{
 		$this->async = $async;
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isWithJoinEnabled()
+	{
+		return $this->withjoinEnabled;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function disableWithJoin()
+	{
+		$this->withjoinEnabled = false;
 		return $this;
 	}
 
