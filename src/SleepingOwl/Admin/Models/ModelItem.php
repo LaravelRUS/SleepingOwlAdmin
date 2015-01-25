@@ -81,7 +81,7 @@ class ModelItem
 	/**
 	 * @var bool
 	 */
-	protected $withjoinEnabled;
+	protected $withjoinEnabled = true;
 
 	/**
 	 * @param $modelClass
