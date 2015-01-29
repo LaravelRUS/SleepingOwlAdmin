@@ -158,7 +158,7 @@ class ModelRepository implements ModelRepositoryInterface
 				try
 				{
 					$time = new Carbon($value);
-					$value = $time->format('H:i:s');
+					$value = $time->format('Y-m-d H:i:s');
 				} catch (\Exception $e)
 				{
 				}
