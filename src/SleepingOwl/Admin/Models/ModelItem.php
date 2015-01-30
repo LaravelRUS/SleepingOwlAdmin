@@ -82,6 +82,10 @@ class ModelItem
 	 * @var bool
 	 */
 	protected $withjoinEnabled = true;
+	/**
+	 * @var bool
+	 */
+	protected $columnFilter = false;
 
 	/**
 	 * @param $modelClass
@@ -421,6 +425,24 @@ class ModelItem
 	{
 		$this->withjoinEnabled = false;
 		return $this;
+	}
+
+	/**
+	 * @param bool $state
+	 * @return $this
+	 */
+	public function columnFilter($state = true)
+	{
+		$this->columnFilter = $state;
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isColumnFilter()
+	{
+		return $this->columnFilter;
 	}
 
 }

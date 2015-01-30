@@ -38,6 +38,15 @@
 							</tr>
 						@endforeach
 					</tbody>
+					@if ($modelItem->isColumnFilter() && ! $modelItem->isAsync())
+						<tfoot>
+							<tr>
+								@foreach ($columns as $column)
+									<td></td>
+								@endforeach
+							</tr>
+						</tfoot>
+					@endif
 				</table>
 			</div>
 		</div>
