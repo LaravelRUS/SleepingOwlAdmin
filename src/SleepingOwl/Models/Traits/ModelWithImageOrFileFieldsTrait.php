@@ -65,7 +65,8 @@ trait ModelWithImageOrFileFieldsTrait
 		$this->$field->delete();
 		if ($image instanceof UploadedFile)
 		{
-			$filename = $this->getFilenameFromFile($field, $image);
+			$func = $this->getImageFieldNamingFunc($field);
+			$filename = $this->getFilenameFromFile($func, $field, $image);
 			$image->move(Config::get('admin::imagesDirectory') . '/' . $this->getImageFieldDirectory($field), $filename);
 			$this->$field->setFilename($filename);
 		}
@@ -83,7 +84,8 @@ trait ModelWithImageOrFileFieldsTrait
 		if ($file instanceof UploadedFile)
 		{
 			$this->$field->delete();
-			$filename = $this->getFilenameFromFile($field, $file);
+			$func = $this->getFileFieldNamingFunc($field);
+			$filename = $this->getFilenameFromFile($func, $field, $file);
 			$file->move(Config::get('admin::filesDirectory') . '/' . $this->getFileFieldDirectory($field), $filename);
 			$this->$field->setFilename($filename);
 		}
@@ -91,13 +93,21 @@ trait ModelWithImageOrFileFieldsTrait
 	}
 
 	/**
+	 * @param \Closure|null $func
 	 * @param $field
 	 * @param UploadedFile $file
 	 * @return string
 	 */
-	protected function getFilenameFromFile($field, UploadedFile $file)
+	protected function getFilenameFromFile($func, $field, UploadedFile $file)
 	{
-		return RandomFilenamer::get($this->$field->getDirectoryFullPath(), $file->guessClientExtension());
+		if (is_null($func))
+		{
+			$func = function($directory, $originalName, $extension)
+			{
+				return RandomFilenamer::get($directory, $extension);
+			};
+		}
+		return $func($this->$field->getDirectoryFullPath(), $file->getClientOriginalName(), $file->guessClientExtension());
 	}
 
 	/**
@@ -116,7 +126,26 @@ trait ModelWithImageOrFileFieldsTrait
 	 */
 	public function getImageFieldDirectory($field)
 	{
-		return $this->getImageFields()[$field];
+		$data = $this->getImageFields()[$field];
+		if (is_array($data))
+		{
+			return Arr::get($data, 0);
+		}
+		return $data;
+	}
+
+	/**
+	 * @param $field
+	 * @return null|\Closure
+	 */
+	public function getImageFieldNamingFunc($field)
+	{
+		$data = $this->getImageFields()[$field];
+		if (is_array($data))
+		{
+			return Arr::get($data, 1);
+		}
+		return null;
 	}
 
 	/**
@@ -135,7 +164,27 @@ trait ModelWithImageOrFileFieldsTrait
 	 */
 	public function getFileFieldDirectory($field)
 	{
-		return $this->getFileFields()[$field];
+		$data = $this->getFileFields()[$field];
+		if (is_array($data))
+		{
+			return Arr::get($data, 0);
+		}
+		return $data;
+	}
+
+
+	/**
+	 * @param $field
+	 * @return null|\Closure
+	 */
+	public function getFileFieldNamingFunc($field)
+	{
+		$data = $this->getFileFields()[$field];
+		if (is_array($data))
+		{
+			return Arr::get($data, 1);
+		}
+		return null;
 	}
 
 	/**
