@@ -77,7 +77,7 @@ class ModelCommand extends Command
 	protected function saveResult($modelClass, $template)
 	{
 		$filename = class_basename($modelClass) . '.php';
-		$file = Config::get('admin::bootstrapDirectory') . '/' . $filename;
+		$file = Config::get('admin.bootstrapDirectory') . '/' . $filename;
 		if (file_exists($file))
 		{
 			$result = $this->confirm('File "' . $filename . '" already exist in your admin bootstrap directory. Overwrite?', false);

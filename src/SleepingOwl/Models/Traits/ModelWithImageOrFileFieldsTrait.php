@@ -66,7 +66,7 @@ trait ModelWithImageOrFileFieldsTrait
 		if ($image instanceof UploadedFile)
 		{
 			$filename = $this->getFilenameFromFile($field, $image);
-			$image->move(Config::get('admin::imagesDirectory') . '/' . $this->getImageFieldDirectory($field), $filename);
+			$image->move(Config::get('admin.imagesDirectory') . '/' . $this->getImageFieldDirectory($field), $filename);
 			$this->$field->setFilename($filename);
 		}
 		$this->attributes[$field] = $filename;
@@ -84,7 +84,7 @@ trait ModelWithImageOrFileFieldsTrait
 		{
 			$this->$field->delete();
 			$filename = $this->getFilenameFromFile($field, $file);
-			$file->move(Config::get('admin::filesDirectory') . '/' . $this->getFileFieldDirectory($field), $filename);
+			$file->move(Config::get('admin.filesDirectory') . '/' . $this->getFileFieldDirectory($field), $filename);
 			$this->$field->setFilename($filename);
 		}
 		$this->attributes[$field] = $filename;

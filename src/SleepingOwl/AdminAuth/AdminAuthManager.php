@@ -26,7 +26,7 @@ class AdminAuthManager extends AuthManager {
 	 */
 	protected function createEloquentProvider()
 	{
-		$model = Config::get('admin::auth.model');
+		$model = Config::get('admin.auth.model');
 
 		return new EloquentUserProvider($this->app['hash'], $model);
 	}

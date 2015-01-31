@@ -60,7 +60,7 @@ class ImagesController extends \Controller
 	 */
 	protected function getAllFiles()
 	{
-		return $this->finder->create()->exclude('seeds')->files()->in(Config::get('admin::imagesDirectory'));
+		return $this->finder->create()->exclude('seeds')->files()->in(Config::get('admin.imagesDirectory'));
 	}
 
 	/**
@@ -87,8 +87,8 @@ class ImagesController extends \Controller
 	 */
 	public function postUpload()
 	{
-		$imageDirectory = Config::get('admin::imagesUploadDirectory');
-		$upload_dir = Config::get('admin::imagesDirectory') . '/' . $imageDirectory;
+		$imageDirectory = Config::get('admin.imagesUploadDirectory');
+		$upload_dir = Config::get('admin.imagesDirectory') . '/' . $imageDirectory;
 
 		$allowedExtensions = [
 			'bmp',

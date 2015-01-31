@@ -32,7 +32,7 @@ class AuthController extends BaseController
 	 */
 	public function postLogin()
 	{
-		$rules = Config::get('admin::auth.rules');
+		$rules = Config::get('admin.auth.rules');
 		$data = Input::only(array_keys($rules));
 		$validator = Validator::make($data, $rules, Lang::get('admin::validation'));
 		if ($validator->fails())

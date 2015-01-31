@@ -53,7 +53,7 @@ class File
 	 */
 	public function getDirectoryFullPath()
 	{
-		return Config::get('admin::filesDirectory') . '/' . $this->directory;
+		return Config::get('admin.filesDirectory') . '/' . $this->directory;
 	}
 
 	/**

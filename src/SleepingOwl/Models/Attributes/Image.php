@@ -52,7 +52,7 @@ class Image
 	 */
 	public function getDirectoryFullPath()
 	{
-		return Config::get('admin::imagesDirectory') . '/' . $this->directory;
+		return Config::get('admin.imagesDirectory') . '/' . $this->directory;
 	}
 
 	/**
