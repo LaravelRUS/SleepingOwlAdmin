@@ -2,6 +2,7 @@
 
 use Config;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends Command
@@ -46,8 +47,17 @@ class InstallCommand extends Command
 	 */
 	protected function publishDB()
 	{
-		$this->call('migrate:publish', ['package' => 'sleeping-owl/admin']);
-		$this->call('migrate');
+		$app = app('app');
+		$migrations = $app->make('migration.repository');
+		try
+		{
+			$migrations->createRepository();
+		} catch (\Exception $e)
+		{
+		}
+
+		$migrator = $app->make('migrator');
+		$migrator->run(__DIR__ . '/../../../migrations');
 
 		$this->call('db:seed', [
 			'--class' => 'SleepingOwl\\AdminAuth\\Database\\Seeders\\AdministratorsTableSeeder'
@@ -59,7 +69,7 @@ class InstallCommand extends Command
 	 */
 	protected function createBootstrapDirectory()
 	{
-		$directory = Config::get('admin::bootstrapDirectory');
+		$directory = Config::get('admin.bootstrapDirectory');
 
 		if ( ! is_dir($directory))
 		{
@@ -73,7 +83,7 @@ class InstallCommand extends Command
 	 */
 	protected function createMenuFile()
 	{
-		$file = Config::get('admin::bootstrapDirectory') . '/menu.php';
+		$file = Config::get('admin.bootstrapDirectory') . '/menu.php';
 		if ( ! file_exists($file))
 		{
 			$contents = $this->laravel['files']->get(__DIR__ . '/stubs/menu.stub');
@@ -87,7 +97,7 @@ class InstallCommand extends Command
 	 */
 	protected function createBootstrapFile()
 	{
-		$file = Config::get('admin::bootstrapDirectory') . '/bootstrap.php';
+		$file = Config::get('admin.bootstrapDirectory') . '/bootstrap.php';
 		if ( ! file_exists($file))
 		{
 			$contents = $this->laravel['files']->get(__DIR__ . '/stubs/bootstrap.stub');
@@ -101,7 +111,7 @@ class InstallCommand extends Command
 	 */
 	protected function createDummyUserFile()
 	{
-		$file = Config::get('admin::bootstrapDirectory') . '/User.php';
+		$file = Config::get('admin.bootstrapDirectory') . '/User.php';
 		if ( ! file_exists($file))
 		{
 			$contents = $this->laravel['files']->get(__DIR__ . '/stubs/User.stub');
