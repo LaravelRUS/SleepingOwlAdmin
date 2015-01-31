@@ -39,7 +39,7 @@ It includes:
 		'FormItem' 			=> 'SleepingOwl\Admin\Models\Form\FormItem',
 		'ModelItem'			=> 'SleepingOwl\Admin\Models\ModelItem',
 
- 4. Run this command in terminal (if you want to know what exactly this command makes, see [install command documentation](http://sleeping-owl.github.io/admin/Commands/Install.html)):
+ 4. Run this command in terminal (if you want to know what exactly this command makes, see [install command documentation](http://sleeping-owl.github.io/en/Commands/Install.html)):
 
 		$ php artisan admin:install
 
