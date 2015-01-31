@@ -29,6 +29,7 @@ It includes:
  2. After composer update, add service providers to the `app/config/app.php`
 
 	    'SleepingOwl\Admin\AdminServiceProvider',
+	    'Illuminate\Html\HtmlServiceProvider',
 
  3. Add this to the facades in `app/config/app.php`:
 
@@ -38,8 +39,11 @@ It includes:
 		'Column'   			=> 'SleepingOwl\Admin\Columns\Column',
 		'FormItem' 			=> 'SleepingOwl\Admin\Models\Form\FormItem',
 		'ModelItem'			=> 'SleepingOwl\Admin\Models\ModelItem',
+		
+		'Form'      => 'Illuminate\Html\FormFacade',
+		'Html'      => 'Illuminate\Html\HtmlFacade',
 
- 4. Run this command in terminal (if you want to know what exactly this command makes, see [install command documentation](http://sleeping-owl.github.io/admin/Commands/Install.html)):
+ 4. Run this command in terminal (if you want to know what exactly this command makes, see [install command documentation](http://sleeping-owl.github.io/en/Commands/Install.html)):
 
 		$ php artisan admin:install
 
