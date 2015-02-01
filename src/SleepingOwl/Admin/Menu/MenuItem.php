@@ -46,6 +46,10 @@ class MenuItem
 	 * @var Router
 	 */
 	protected $router;
+	/**
+	 * @var bool
+	 */
+	protected $hidden = false;
 
 	/**
 	 * @param string|null $modelClass
@@ -218,6 +222,7 @@ class MenuItem
 	 */
 	public function render($level = 1)
 	{
+		if ($this->isHidden()) return;
 		if ($this->hasSubItems())
 		{
 			$level++;
@@ -268,6 +273,24 @@ class MenuItem
 		]);
 		$content .= ' ' . $this->getLabel();
 		return $this->htmlBuilder->tag('a', ['href' => $this->getUrl()], $content);
+	}
+
+	/**
+	 * @param bool $hidden
+	 * @return $this
+	 */
+	public function hidden($hidden = true)
+	{
+		$this->hidden = $hidden;
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isHidden()
+	{
+		return $this->hidden;
 	}
 
 }
