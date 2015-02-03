@@ -140,10 +140,11 @@ class Router
 				}
 			});
 
-			$this->laravelRouter->get('{wildcard?}', [
+			$wildcardRoute = $this->laravelRouter->get('{wildcard?}', [
 				'as'   => $this->routePrefix . '.wildcard',
 				'uses' => 'AdminController@getWildcard'
 			])->where('wildcard', '.*');
+			$this->setRoutePriority($wildcardRoute, 0);
 		});
 	}
 
@@ -288,6 +289,14 @@ class Router
 			return $this->urlGenerator->route($this->routePrefix . '.table.' . $route, $routeParameters);
 		}
 		throw new MethodNotFoundException(get_class($this), $method);
+	}
+
+	protected function setRoutePriority($wildcardRoute, $priority)
+	{
+		if (method_exists($wildcardRoute, 'setPriority'))
+		{
+			$wildcardRoute->setPriority($priority);
+		}
 	}
 
 }
