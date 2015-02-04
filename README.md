@@ -5,6 +5,8 @@
 
 SleepingOwl Admin is administrative interface builder for Laravel.
 
+*Note: if you are looking for the version for Laravel 5 check out [master branch](https://github.com/sleeping-owl/admin).* 
+
 It includes:
 
  - [sb-admin-2 template](http://startbootstrap.com/template-overviews/sb-admin-2/)
