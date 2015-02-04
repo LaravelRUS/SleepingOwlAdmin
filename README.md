@@ -24,7 +24,7 @@ It includes:
 
  1. Require this package in your composer.json and run composer update (or run `composer require sleeping-owl/admin:dev-laravel-5` directly):
 
-		"sleeping-owl/admin": "dev-laravel-5"
+		"sleeping-owl/admin": "2.*"
 
  2. After composer update, add service providers to the `app/config/app.php`
 
