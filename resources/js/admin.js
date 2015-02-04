@@ -73,6 +73,19 @@ $(function ()
 			};
 		}
 		container.dataTable(params);
+		var table = container.DataTable();
+		$('#dataTable tfoot td').each(function ()
+		{
+			if ($(this).is(':last-child')) return;
+			var index = $(this).index();
+			var title = $('#dataTable thead th').eq(index).text();
+			var input = $('<input type="text" placeholder="' + title + '" />');
+			$(this).html(input);
+			input.on('keyup change', function ()
+			{
+				table.column(index).search(this.value).draw();
+			});
+		});
 	})();
 
 	// make delete notifications
@@ -149,7 +162,8 @@ $(function ()
 	})();
 
 	// image delete
-	(function () {
+	(function ()
+	{
 		$('.img-container a.img-delete').click(function (e)
 		{
 			e.preventDefault();

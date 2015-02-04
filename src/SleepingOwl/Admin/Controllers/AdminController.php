@@ -44,7 +44,7 @@ class AdminController extends BaseController
 	/**
 	 * @param QueryState $queryState
 	 */
-	function __construct(QueryState $queryState)
+	function __construct(QueryState $queryState, $disableFilters = false)
 	{
 		parent::__construct();
 
@@ -60,22 +60,25 @@ class AdminController extends BaseController
 			]
 		]);
 
-		# if there is {model} in route we autoinit it
-		$this->beforeFilter(function (Route $route, Request $request)
+		if ( ! $disableFilters)
 		{
-			if ($model = $route->parameter('model'))
+			# if there is {model} in route we autoinit it
+			$this->beforeFilter(function (Route $route, Request $request)
 			{
-				$this->modelName = $model;
-				$this->getModelItem();
+				if ($model = $route->parameter('model'))
+				{
+					$this->modelName = $model;
+					$this->getModelItem();
 
-				$this->modelRepository = App::make('SleepingOwl\Admin\Repositories\Interfaces\ModelRepositoryInterface', [
-					'modelItem' => $this->modelItem,
-					'request'   => $request
-				]);
+					$this->modelRepository = App::make('SleepingOwl\Admin\Repositories\Interfaces\ModelRepositoryInterface', [
+						'modelItem' => $this->modelItem,
+						'request'   => $request
+					]);
 
-				$this->queryState->setPrefix($model);
-			}
-		});
+					$this->queryState->setPrefix($model);
+				}
+			});
+		}
 	}
 
 	/**
@@ -136,6 +139,11 @@ class AdminController extends BaseController
 		{
 			App::abort(404);
 		}
+		return $this->makeView('page', compact('title', 'content'));
+	}
+
+	public function renderCustomContent($title, $content)
+	{
 		return $this->makeView('page', compact('title', 'content'));
 	}
 

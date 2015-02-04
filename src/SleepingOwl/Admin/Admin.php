@@ -140,4 +140,15 @@ class Admin
 		return new MenuItem($model);
 	}
 
+	/**
+	 * @param string $content
+	 * @param $title
+	 * @return string
+	 */
+	public static function view($content, $title = null)
+	{
+		$controller = \App::make('SleepingOwl\Admin\Controllers\AdminController', ['disableFilters' => true]);
+		return $controller->renderCustomContent($title, $content);
+	}
+
 }
