@@ -4,7 +4,7 @@ You can register your own column types in `bootstrap.php` file within `bootstrap
 Column::register('{type}', \Foo\Bar\MyColumn::class)
 ```
 
-Your class must implement `SleepingOwl\Admin\Columns\Interfaces\ColumnInterface`.
+Your class must implement `SleepingOwl\Admin\Columns\Interfaces\ColumnInterface` or extend `SleepingOwl\Admin\Columns\Column\BaseColumn` class.
 
 ### Example
 
@@ -14,7 +14,7 @@ bootstrap.php
 Column::register('yesNo', \Acme\YesNoColumn::class)
 ```
 
-Acme/YesNoColumn.php
+#### 1. Acme/YesNoColumn.php using interface implementation
 
 ```php
 use SleepingOwl\Admin\Columns\Interfaces\ColumnInterface;
@@ -31,6 +31,11 @@ class YesNoColumn implements ColumnInterface
 	{
 		$content = ($instance->bool) ? 'yes' : 'no';
 		return '<td>' . $content . '</td>';
+	}
+	
+	public function getName()
+	{
+		return 'columng-name';
 	}
 
 	public function isHidden()
@@ -53,5 +58,31 @@ Usage in model configuration
 ->columns(function ()
 {
 	Column::yesNo()->myCustomMethod();
+})
+```
+
+#### 2. Acme/YesNoColumn.php using BaseColumn extend
+
+```php
+use SleepingOwl\Admin\Columns\Column\BaseColumn;
+
+class YesNoColumn extends BaseColumn
+{
+
+	public function render($instance, $totalCount)
+	{
+		$content = ($instance->{$this->name}) ? 'yes' : 'no';
+		return parent::render($instance, $totalCount, $content);
+	}
+
+}
+```
+
+Usage in model configuration
+
+```php
+->columns(function ()
+{
+	Column::yesNo('bool', 'Label')->sortable(false);
 })
 ```

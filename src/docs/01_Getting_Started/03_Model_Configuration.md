@@ -60,6 +60,14 @@ Title will be displayed in headers and menu label.
 
 Alias will be used in urls. Default alias is lowercase plural form of model class.
 
+### Set Async mode
+
+```php
+->async()
+```
+
+You can enable async mode (default is disabled).
+
 ### Eager Loading
 
 ```php
