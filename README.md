@@ -3,6 +3,8 @@
 [![Latest Stable Version](https://poser.pugx.org/sleeping-owl/admin/v/stable.svg)](https://packagist.org/packages/sleeping-owl/admin)
 [![License](https://poser.pugx.org/sleeping-owl/admin/license.svg)](https://packagist.org/packages/sleeping-owl/admin)
 
+*Note: if you are looking for the version for Laravel 4.2 check out [laravel-4.2 branch](https://github.com/sleeping-owl/admin/tree/laravel-4.2).*
+
 SleepingOwl Admin is administrative interface builder for Laravel.
 
 It includes:
