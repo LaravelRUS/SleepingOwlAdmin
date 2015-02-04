@@ -56,15 +56,21 @@ class ModelRepository implements ModelRepositoryInterface
 	 */
 	public function tableData($params = null)
 	{
-		$baseQuery = $this->instance->newQuery()->getQuery();
-		/** @var WithJoinEloquentBuilder $query */
-		$query = new WithJoinEloquentBuilder($baseQuery);
 		$with = $this->modelItem->getWith();
-		$query->setModel($this->instance)->with($with);
-		if ($this->modelItem->isAsync())
+		if ($this->modelItem->isWithJoinEnabled())
 		{
-			$query->references($with);
+			$baseQuery = $this->instance->newQuery()->getQuery();
+			/** @var WithJoinEloquentBuilder $query */
+			$query = new WithJoinEloquentBuilder($baseQuery);
+			if ($this->modelItem->isAsync())
+			{
+				$query->references($with);
+			}
+		} else
+		{
+			$query = $this->instance->newQuery();
 		}
+		$query->setModel($this->instance)->with($with);
 		$query = $this->instance->applyGlobalScopes($query);
 		$query->getQuery()->orders = null;
 		$this->applyFilters($query);
@@ -236,7 +242,7 @@ class ModelRepository implements ModelRepositoryInterface
 			foreach ($displayColumns as $column)
 			{
 				$name = $column->getName();
-				if (strpos($name, '.') !== false && $this->inWith($name, $originalQuery))
+				if (strpos($name, '.') !== false && $this->inWith($name, $originalQuery) && $this->modelItem->isWithJoinEnabled())
 				{
 					$query->orWhere($name, 'like', $search);
 				}
