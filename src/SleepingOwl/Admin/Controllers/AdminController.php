@@ -4,6 +4,7 @@ use App;
 use AdminAuth;
 use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Columns\Column\Action;
+use SleepingOwl\Admin\Exceptions\ValidationException;
 use SleepingOwl\Admin\Repositories\Interfaces\ModelRepositoryInterface;
 use SleepingOwl\Admin\Models\ModelItem;
 use SleepingOwl\Admin\Session\QueryState;
@@ -288,7 +289,13 @@ class AdminController extends BaseController
 		{
 			return $this->redirectToTable();
 		}
-		$this->modelRepository->store();
+		try
+		{
+			$this->modelRepository->store();
+		} catch (ValidationException $e)
+		{
+			return \Redirect::back()->withInput()->withErrors($e->getErrors());
+		}
 		return $this->redirectToTable();
 	}
 
@@ -334,7 +341,13 @@ class AdminController extends BaseController
 			return $this->redirectToTable();
 		}
 
-		$this->modelRepository->update($id);
+		try
+		{
+			$this->modelRepository->update($id);
+		} catch (ValidationException $e)
+		{
+			return \Redirect::back()->withInput()->withErrors($e->getErrors());
+		}
 		return $this->redirectToTable();
 	}
 

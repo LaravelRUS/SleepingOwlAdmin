@@ -96,10 +96,6 @@ class AdminServiceProvider extends ServiceProvider
 
 	protected function registerValidateExceptionHandler()
 	{
-		/* TODO
-		\App::error(function (ValidationException $e) {
-			return \Redirect::back()->withInput()->withErrors($e->getErrors());
-		});*/
 	}
 
 	/**
