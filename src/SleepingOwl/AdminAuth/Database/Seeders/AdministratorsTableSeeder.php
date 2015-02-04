@@ -1,7 +1,7 @@
 <?php namespace SleepingOwl\AdminAuth\Database\Seeders;
 
 use Hash;
-use Seeder;
+use Illuminate\Database\Seeder;
 use SleepingOwl\AdminAuth\Entities\Administrator;
 
 class AdministratorsTableSeeder extends Seeder

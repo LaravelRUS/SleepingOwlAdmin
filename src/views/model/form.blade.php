@@ -8,7 +8,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-			{{ $form->render() }}
+			{!! $form->render() !!}
 		</div>
 	</div>
 @stop

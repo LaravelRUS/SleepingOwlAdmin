@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Controllers;
 
 use App;
+use Illuminate\Routing\Controller;
 use SleepingOwl\Admin\Admin;
 use Illuminate\Foundation\Application;
 use View;
@@ -10,7 +11,7 @@ use View;
  *
  * @package SleepingOwl\Admin\Controllers
  */
-class BaseController extends \Controller
+class BaseController extends Controller
 {
 	/**
 	 * @var Admin
@@ -19,7 +20,7 @@ class BaseController extends \Controller
 	/**
 	 * @var \SleepingOwl\Admin\Router
 	 */
-	protected $router;
+	protected $admin_router;
 
 	/**
 	 *
@@ -27,7 +28,7 @@ class BaseController extends \Controller
 	function __construct()
 	{
 		$this->admin = Admin::instance();
-		$this->router = $this->admin->router;
+		$this->admin_router = $this->admin->router;
 	}
 
 	/**

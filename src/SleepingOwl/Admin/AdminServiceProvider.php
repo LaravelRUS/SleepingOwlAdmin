@@ -65,6 +65,18 @@ class AdminServiceProvider extends ServiceProvider
 		$this->loadTranslationsFrom(__DIR__ . '/../../lang', 'admin');
 		$this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'admin');
 
+		$this->publishes([
+			__DIR__ . '/../../config/config.php' => config_path('sleeping_owl_admin.php'),
+		], 'config');
+
+		$this->publishes([
+			__DIR__ . '/../../migrations/' => base_path('/database/migrations'),
+		], 'migrations');
+
+		$this->publishes([
+			__DIR__.'/../../../public/' => public_path('packages/sleeping-owl/admin/'),
+		], 'assets');
+
 		Admin::instance()->router->registerRoutes();
 		$this->registerValidator();
 

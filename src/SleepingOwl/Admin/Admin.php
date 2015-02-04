@@ -83,9 +83,9 @@ class Admin
 		$this->finder = $finder;
 		$this->filesystem = $filesystem;
 
-		$this->title = $config->get('admin::title');
-		$this->bootstrapDirectory = $config->get('admin::bootstrapDirectory');
-		$this->router = new Router($illuminateRouter, $config, $urlGenerator, $config->get('admin::prefix'));
+		$this->title = $config->get('admin.title');
+		$this->bootstrapDirectory = $config->get('admin.bootstrapDirectory');
+		$this->router = new Router($illuminateRouter, $config, $urlGenerator, $config->get('admin.prefix'));
 		$this->menu = new MenuItem;
 		$this->models = new Models;
 

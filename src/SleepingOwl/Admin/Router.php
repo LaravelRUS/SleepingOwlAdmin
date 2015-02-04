@@ -207,7 +207,7 @@ class Router
 	 */
 	protected function getBeforeFilters()
 	{
-		return $this->config->get('admin::beforeFilters');
+		return $this->config->get('admin.beforeFilters');
 	}
 
 	/**

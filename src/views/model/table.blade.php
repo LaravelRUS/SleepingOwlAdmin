@@ -21,11 +21,11 @@
 		<div class="col-lg-12">
 			<a class="btn btn-primary navbar-btn" {{ $modelItem->isCreatable() ? '' : 'disabled' }} href="{{{ $newEntryRoute }}}"><i class="fa fa-plus"></i> {{{ Lang::get('admin::lang.table.new-entry') }}}</a>
 			<div class="table-responsive">
-				<table class="table table-striped table-hover" id="dataTable" {{ $modelItem->renderTableAttributes() }}>
+				<table class="table table-striped table-hover" id="dataTable" {!! $modelItem->renderTableAttributes() !!}>
 					<thead>
 						<tr>
 							@foreach ($columns as $column)
-								{{ $column->renderHeader() }}
+								{!! $column->renderHeader() !!}
 							@endforeach
 						</tr>
 					</thead>
@@ -33,7 +33,7 @@
 						@foreach ($rows as $row)
 							<tr>
 								@foreach ($columns as $column)
-									{{ $column->render($row, count($rows)) }}
+									{!! $column->render($row, count($rows)) !!}
 								@endforeach
 							</tr>
 						@endforeach

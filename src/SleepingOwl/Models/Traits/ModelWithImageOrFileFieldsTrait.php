@@ -1,12 +1,12 @@
 <?php namespace SleepingOwl\Models\Traits;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use SleepingOwl\Models\Attributes\File;
 use SleepingOwl\Models\Attributes\Image;
 use SleepingOwl\Models\Interfaces\ModelWithFileFieldsInterface;
 use SleepingOwl\Models\Interfaces\ModelWithImageFieldsInterface;
 use SleepingOwl\RandomFilenamer\RandomFilenamer;
-use Str;
 use Config;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

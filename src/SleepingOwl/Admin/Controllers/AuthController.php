@@ -21,9 +21,9 @@ class AuthController extends BaseController
 	{
 		if ( ! AdminAuth::guest())
 		{
-			return Redirect::to($this->router->routeHome());
+			return Redirect::to($this->admin_router->routeHome());
 		}
-		$loginPostUrl = $this->router->routeToAuth('login.post');
+		$loginPostUrl = $this->admin_router->routeToAuth('login.post');
 		return $this->makeView('login', compact('loginPostUrl'));
 	}
 
@@ -42,7 +42,7 @@ class AuthController extends BaseController
 
 		if (AdminAuth::attempt($data))
 		{
-			return Redirect::intended($this->router->routeHome());
+			return Redirect::intended($this->admin_router->routeHome());
 		}
 
 		$message = new MessageBag([
@@ -58,6 +58,6 @@ class AuthController extends BaseController
 	public function getLogout()
 	{
 		AdminAuth::logout();
-		return Redirect::to($this->router->routeToAuth('login'));
+		return Redirect::to($this->admin_router->routeToAuth('login'));
 	}
 }

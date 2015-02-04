@@ -2,9 +2,10 @@
 
 use App;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
 use Lang;
 
-class LangController extends \Controller
+class LangController extends Controller
 {
 	public function getAll()
 	{

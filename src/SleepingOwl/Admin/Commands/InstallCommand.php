@@ -27,12 +27,12 @@ class InstallCommand extends Command
 	{
 		$title = $this->option('title');
 
+		$this->call('vendor:publish');
+
 		$this->publishDB();
 
 		$this->publishImagecacheConfig();
 		$this->publishSelfConfig($title);
-
-		$this->call('asset:publish', ['package' => 'sleeping-owl/admin']);
 
 		$this->createBootstrapDirectory();
 		$this->createMenuFile();
@@ -47,17 +47,7 @@ class InstallCommand extends Command
 	 */
 	protected function publishDB()
 	{
-		$app = app('app');
-		$migrations = $app->make('migration.repository');
-		try
-		{
-			$migrations->createRepository();
-		} catch (\Exception $e)
-		{
-		}
-
-		$migrator = $app->make('migrator');
-		$migrator->run(__DIR__ . '/../../../migrations');
+		$this->call('migrate');
 
 		$this->call('db:seed', [
 			'--class' => 'SleepingOwl\\AdminAuth\\Database\\Seeders\\AdministratorsTableSeeder'
@@ -125,11 +115,9 @@ class InstallCommand extends Command
 	 */
 	protected function publishImagecacheConfig()
 	{
-		$file = app_path('config/packages/intervention/imagecache/config.php');
+		$file = config_path('imagecache.php');
 		if ( ! file_exists($file))
 		{
-			$this->call('config:publish', ['package' => 'intervention/imagecache']);
-
 			$contents = $this->laravel['files']->get($file);
 			$contents = str_replace('\'route\' => null,', '\'route\' => \'img/cache\',', $contents);
 			$this->laravel['files']->put($file, $contents);
@@ -158,17 +146,12 @@ class InstallCommand extends Command
 	 */
 	protected function publishSelfConfig($title = null)
 	{
-		$file = app_path('config/packages/sleeping-owl/admin/config.php');
-		if ( ! file_exists($file))
+		$file = config_path('sleeping_owl_admin.php');
+		if ( ! is_null($title))
 		{
-			$this->call('config:publish', ['package' => 'sleeping-owl/admin']);
-
-			if ( ! is_null($title))
-			{
-				$contents = $this->laravel['files']->get($file);
-				$contents = str_replace('Sleeping Owl administrator', $title, $contents);
-				$this->laravel['files']->put($file, $contents);
-			}
+			$contents = $this->laravel['files']->get($file);
+			$contents = str_replace('Sleeping Owl administrator', $title, $contents);
+			$this->laravel['files']->put($file, $contents);
 		}
 	}
 

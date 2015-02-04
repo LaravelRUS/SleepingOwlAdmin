@@ -1,11 +1,11 @@
 <?php namespace SleepingOwl\AdminAuth\Entities;
 
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\UserTrait;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class Administrator extends \Eloquent implements UserInterface
+class Administrator extends \Eloquent implements AuthenticatableContract
 {
-	use UserTrait;
+	use Authenticatable;
 
 	protected $fillable = [
 		'username',
