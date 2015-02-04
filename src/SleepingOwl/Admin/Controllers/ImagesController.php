@@ -2,6 +2,7 @@
 
 use App;
 use Config;
+use Illuminate\Routing\Controller;
 use SleepingOwl\RandomFilenamer\RandomFilenamer;
 use Exception;
 use Illuminate\Http\Response;
@@ -18,7 +19,7 @@ use URL;
  *
  * @package SleepingOwl\Admin\Controllers
  */
-class ImagesController extends \Controller
+class ImagesController extends Controller
 {
 	/**
 	 * @var Finder
@@ -179,7 +180,7 @@ class ImagesController extends \Controller
 
 		// find file
 		$image_path = false;
-		foreach (Config::get('imagecache::paths') as $path)
+		foreach (Config::get('imagecache.paths') as $path)
 		{
 			// don't allow '..' in filenames
 			$image_path = $path . '/' . str_replace('..', '', $filename);
