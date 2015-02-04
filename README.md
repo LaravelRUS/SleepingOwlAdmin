@@ -1,4 +1,4 @@
-## Laravel 4 Admin Module
+## Laravel 5 Admin Module
 
 [![Latest Stable Version](https://poser.pugx.org/sleeping-owl/admin/v/stable.svg)](https://packagist.org/packages/sleeping-owl/admin)
 [![License](https://poser.pugx.org/sleeping-owl/admin/license.svg)](https://packagist.org/packages/sleeping-owl/admin)
@@ -22,9 +22,9 @@ It includes:
 
 ## Installation
 
- 1. Require this package in your composer.json and run composer update (or run `composer require sleeping-owl/admin:1.x` directly):
+ 1. Require this package in your composer.json and run composer update (or run `composer require sleeping-owl/admin:dev-laravel-5` directly):
 
-		"sleeping-owl/admin": "1.*"
+		"sleeping-owl/admin": "dev-laravel-5"
 
  2. After composer update, add service providers to the `app/config/app.php`
 
