@@ -30,7 +30,7 @@ Column::string('category.title', 'Category')->append(
 Column::url('{field to grab url from}')
 ```
 
-It Will add button to every column cell, taht links to provided in model field url.
+It Will add button to every column cell, that links to provided in model field url.
 
 ### Example
 

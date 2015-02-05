@@ -19,7 +19,11 @@ class Monument extends \Eloquent implements ModelWithImageFieldsInterface
 	{
 		return [
 			'image' => 'monuments/',
-			'photo' => ''
+			'photo' => '',
+			'other' => ['other_images/', function($directory, $originalName, $extension)
+			{
+				return $originalName;
+			}]
 		];
 	}
 }
@@ -30,6 +34,16 @@ class Monument extends \Eloquent implements ModelWithImageFieldsInterface
 `getImageFields()` must return array, where keys is model image fields and values is path to directory within `imagesDirectory` (*see [configuration](../Getting_Started/Configuration.html)*).
 
 If path is empty images will be stored in `imagesDirectory`.
+
+### Custom File Naming Function
+
+Array value can be either string or array:
+
+- `string` &mdash; directory to upload images to, filename generates randomly.
+- `array` &mdash; first item in array is directory to upload images to, second item is naming function closure (`function($directory, $originalName, $extension){}`). Closure must return new filename for the uploaded file.
+	- `$directory` &mdash; absolute path to the upload directory
+	- `$originalName` &mdash; uploaded file original name
+	- `$extension` &mdash; uploaded file extension
 
 ### Field Usage
 

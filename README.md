@@ -28,12 +28,12 @@ It includes:
 
 		"sleeping-owl/admin": "2.*"
 
- 2. After composer update, add service providers to the `app/config/app.php`
+ 2. After composer update, add service providers to the `config/app.php`
 
 	    'SleepingOwl\Admin\AdminServiceProvider',
 	    'Illuminate\Html\HtmlServiceProvider',
 
- 3. Add this to the facades in `app/config/app.php`:
+ 3. Add this to the facades in `config/app.php`:
 
 		'Admin'				=> 'SleepingOwl\Admin\Admin',
 		'AdminAuth'			=> 'SleepingOwl\AdminAuth\Facades\AdminAuth',

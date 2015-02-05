@@ -10,7 +10,7 @@ It includes:
  - [jQuery 1.11.0](http://jquery.org)
  - [Bootstrap v3.2.0](http://getbootstrap.com)
  - [Bootstrap Multiselect v0.9.8](https://github.com/davidstutz/bootstrap-multiselect)
- - [DataTables 1.10.0-dev](http://www.sprymedia.co.uk)
+ - [DataTables 1.10.0-dev](http://www.datatables.net)
  - [Lightbox for Bootstrap 3](https://github.com/ashleydw/lightbox)
  - [Font Awesome 4.1.0](http://fontawesome.io)
  - [Metismenu 1.0.3](https://github.com/onokumus/metisMenu)

@@ -3,8 +3,8 @@ SleepingOwl Admin menu configuration default placement is in `app/admin/menu.php
 Here is simple example how your menu configuration might look like:
 
 ```
-Admin::menu()->url('/')->label('Start Page')->icon('fa-dashboard')->uses('\AdminController@getIndex');
-Admin::menu(\User::class)->icon('fa-user');
+Admin::menu()->url('/')->label('Start Page')->icon('fa-dashboard')->uses('\App\HTTP\Controllers\AdminController@getIndex');
+Admin::menu(\App\User::class)->icon('fa-user');
 Admin::menu()->label('Subitems')->icon('fa-book')->items(function ()
 {
 	Admin::menu(\Acme\Models\Bar\User::class)->icon('fa-user');
@@ -33,7 +33,7 @@ Url for this item will be a link to the model.
 ### Create Menu Item for Custom Controller Action
 
 ```php
-Admin::menu()->url('my-url')->uses('\MyController@getAction')
+Admin::menu()->url('my-url')->uses('\App\HTTP\Controllers\MyController@getAction')
 ```
 
 You must provide url for this item using `url()` and controller action using `uses()`.

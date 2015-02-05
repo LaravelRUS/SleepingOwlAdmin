@@ -1,7 +1,7 @@
 [Install command](../Commands/Install.html) publishes SleepingOwl Admin config automatically. If you want to publish config manually you must run this command in terminal:
 
 ```bash
-$ php artisan config:publish sleeping-owl/admin
+$ php artisan vendor:publish --provider="SleepingOwl\Admin\AdminServiceProvider" --tag="config"
 ```
 
 ## Config Attributes

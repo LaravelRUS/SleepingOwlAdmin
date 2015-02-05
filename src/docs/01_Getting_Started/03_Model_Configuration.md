@@ -5,12 +5,12 @@ You can store all your model configurations in one file or split it as you want.
 Here is example how your model configuration might look like:
 
 ```php
-Admin::model(\District::class)
+Admin::model(\App\District::class)
 	->title('City Districts')
 	->with('streets', 'schools', 'city')
 	->filters(function ()
 {
-	ModelItem::filter('city_id')->title()->from(\City:class);
+	ModelItem::filter('city_id')->title()->from(\App\City:class);
 })
 	->columns(function ()
 {
@@ -19,7 +19,7 @@ Admin::model(\District::class)
 		->append(Column::filter('city_id')->value('city.id'));
 	Column::string('stub', 'Url stub');
 	Column::count('streets', 'Streets')
-		->append(Column::filter('district_id')->model(\Street::class));
+		->append(Column::filter('district_id')->model(\App\Street::class));
 })
 	->form(function ()
 {
@@ -67,6 +67,14 @@ Alias will be used in urls. Default alias is lowercase plural form of model clas
 ```
 
 You can enable async mode (default is disabled).
+
+### Each Column Filter
+
+```php
+->columnFilter()
+```
+
+This will add filter input field at the bottom of each column that will filter only this column values.
 
 ### Eager Loading
 
