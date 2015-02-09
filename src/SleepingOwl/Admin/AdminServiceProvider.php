@@ -66,7 +66,7 @@ class AdminServiceProvider extends ServiceProvider
 		$this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'admin');
 
 		$this->publishes([
-			__DIR__ . '/../../config/config.php' => config_path('sleeping_owl_admin.php'),
+			__DIR__ . '/../../config/config.php' => config_path('admin.php'),
 		], 'config');
 
 		$this->publishes([
