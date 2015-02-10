@@ -11,7 +11,7 @@ class Date extends BaseFormItem
 	public function getValidationRules()
 	{
 		$rules = parent::getValidationRules();
-		$rules[] = 'date';
+		$rules[] = 'date:locale';
 		return $rules;
 	}
 } 

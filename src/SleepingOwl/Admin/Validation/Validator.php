@@ -89,4 +89,23 @@ class Validator extends IlluminateValidator
 		return true;
 	}
 
+	protected function validateDate($attribute, $value)
+	{
+		$parameters = func_get_args()[2];
+		if ($parameters[0] == 'locale')
+		{
+			return $this->validateDateWithLocale($attribute, $value);
+		}
+		return parent::validateDate($attribute, $value);
+	}
+
+
+	protected function validateDateWithLocale($attribute, $value)
+	{
+		$containsTime = (strpos($value, ':') !== false) ? 3 : -1;
+		$formatter = datefmt_create(\App::getLocale(), 3, $containsTime);
+		$value = $formatter->parse($value);
+		return $value !== false;
+	}
+
 }
