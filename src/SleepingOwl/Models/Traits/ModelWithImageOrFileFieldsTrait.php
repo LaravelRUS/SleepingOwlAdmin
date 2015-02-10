@@ -230,7 +230,7 @@ trait ModelWithImageOrFileFieldsTrait
 	{
 		if (preg_match('/set(?<field>[a-zA-Z0-9]+)Attribute/', $method, $attr))
 		{
-			$field = Str::camel($attr['field']);
+			$field = Str::snake($attr['field']);
 			if ($this->hasImageField($field))
 			{
 				return $this->setImage($field, $parameters[0]);
@@ -242,7 +242,7 @@ trait ModelWithImageOrFileFieldsTrait
 		}
 		if (preg_match('/get(?<field>[a-zA-Z]+)Attribute/', $method, $attr))
 		{
-			$field = Str::lower($attr['field']);
+			$field = Str::snake($attr['field']);
 			if ($this->hasImageField($field))
 			{
 				return $this->getImage($field);
