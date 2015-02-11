@@ -1494,7 +1494,7 @@
 				if ( !nTrIn || oCol.mRender || oCol.mData !== i )
 				{
 					var data = _fnGetCellData( oSettings, iRow, i, 'display' );
-					var $el = $(data);
+					var $el = $($.parseHTML(data));
 					var $class = $el.attr('class');
 					nTd.className += ' ' + $class;
 					nTd.innerHTML = data;
