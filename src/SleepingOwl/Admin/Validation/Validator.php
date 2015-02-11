@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\Admin\Validation;
 
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Validator as IlluminateValidator;
 
 /**
@@ -92,7 +93,7 @@ class Validator extends IlluminateValidator
 	protected function validateDate($attribute, $value)
 	{
 		$parameters = func_get_args()[2];
-		if ($parameters[0] == 'locale')
+		if (Arr::get($parameters, 0) == 'locale')
 		{
 			return $this->validateDateWithLocale($attribute, $value);
 		}

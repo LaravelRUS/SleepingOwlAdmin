@@ -16,7 +16,7 @@ class Timestamp extends Time
 	public function getValidationRules()
 	{
 		$rules = parent::getValidationRules();
-		$rules[] = 'date';
+		$rules[] = 'date:locale';
 		return $rules;
 	}
 
