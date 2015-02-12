@@ -64,6 +64,22 @@ class Form
 	public function setInstance($instance)
 	{
 		$this->instance = $instance;
+		$this->setDefaults();
+	}
+
+	/**
+	 * Set default values for instance
+	 */
+	public function setDefaults()
+	{
+		foreach ($this->items as $item)
+		{
+			$name = $item->getName();
+			if ( ! isset($this->instance->$name))
+			{
+				$this->instance->$name = $item->getDefault();
+			}
+		}
 	}
 
 	/**

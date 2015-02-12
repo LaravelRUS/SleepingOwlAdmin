@@ -18,4 +18,9 @@ interface FormItemInterface
 	 */
 	public function getValidationRules();
 
+	/**
+	 * @return mixed
+	 */
+	public function getDefault();
+
 } 
