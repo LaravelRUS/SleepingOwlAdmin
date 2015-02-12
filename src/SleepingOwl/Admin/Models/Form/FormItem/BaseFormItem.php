@@ -6,6 +6,11 @@ use SleepingOwl\Admin\Models\Form\Interfaces\FormItemInterface;
 use SleepingOwl\Admin\Models\Form\Form;
 use SleepingOwl\Admin\Models\ModelItem;
 
+/**
+ * Class BaseFormItem
+ * @package SleepingOwl\Admin\Models\Form\FormItem
+ * @method $this default($value)
+ */
 abstract class BaseFormItem implements FormItemInterface
 {
 	/**
@@ -33,6 +38,11 @@ abstract class BaseFormItem implements FormItemInterface
 	 * @var array
 	 */
 	protected $attributes = [];
+
+	/**
+	 * @var mixed
+	 */
+	protected $default = null;
 
 	/**
 	 * @param null $name
@@ -102,5 +112,32 @@ abstract class BaseFormItem implements FormItemInterface
 	{
 		$this->attributes = $attributes;
 	}
+
+	function __call($name, $arguments)
+	{
+		if ($name == 'default')
+		{
+			return call_user_func_array([$this, 'setDefault'], $arguments);
+		}
+	}
+
+	/**
+	 * @param mixed $default
+	 * @return $this
+	 */
+	public function setDefault($default)
+	{
+		$this->default = $default;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getDefault()
+	{
+		return $this->default;
+	}
+
 
 }
