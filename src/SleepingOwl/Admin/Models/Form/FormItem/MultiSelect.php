@@ -124,6 +124,10 @@ class MultiSelect extends BaseFormItem
 				$result = $result->$part();
 			}
 		}
+		if (count($result) == 0 && ! $this->form->instance->exists)
+		{
+			return $this->getDefault();
+		}
 		return $result;
 	}
 
