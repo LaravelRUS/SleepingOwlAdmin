@@ -49,7 +49,7 @@ class Select extends BaseFormItem
 			$this->list = Arr::get($arguments, 0, null);
 			return $this;
 		}
-		throw new MethodNotFoundException(get_class($this), $name);
+		return parent::__call($name, $arguments);
 	}
 
 
