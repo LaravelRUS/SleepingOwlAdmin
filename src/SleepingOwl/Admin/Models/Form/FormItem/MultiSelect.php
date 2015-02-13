@@ -90,6 +90,7 @@ class MultiSelect extends BaseFormItem
 	/**
 	 * @param $name
 	 * @param $arguments
+	 * @return \SleepingOwl\Admin\Models\Form\FormItem\MultiSelect|void
 	 * @throws MethodNotFoundException
 	 */
 	function __call($name, $arguments)
@@ -98,7 +99,7 @@ class MultiSelect extends BaseFormItem
 		{
 			return $this->setList(Arr::get($arguments, 0, null));
 		}
-		throw new MethodNotFoundException(get_class($this), $name);
+		return parent::__call($name, $arguments);
 	}
 
 	/**

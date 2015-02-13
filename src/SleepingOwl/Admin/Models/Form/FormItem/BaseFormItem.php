@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Models\Form\FormItem;
 
 use SleepingOwl\Admin\Admin;
+use SleepingOwl\Admin\Exceptions\MethodNotFoundException;
 use SleepingOwl\Html\FormBuilder;
 use SleepingOwl\Admin\Models\Form\Interfaces\FormItemInterface;
 use SleepingOwl\Admin\Models\Form\Form;
@@ -119,6 +120,7 @@ abstract class BaseFormItem implements FormItemInterface
 		{
 			return call_user_func_array([$this, 'setDefault'], $arguments);
 		}
+		throw new MethodNotFoundException(get_class($this), $name);
 	}
 
 	/**
