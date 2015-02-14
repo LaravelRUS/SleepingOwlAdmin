@@ -143,6 +143,10 @@ class MenuItem
 	{
 		if ( ! is_null($this->url))
 		{
+			if (strpos($this->url, '://') !== false)
+			{
+				return $this->url;
+			}
 			return $this->router->routeToWildcard($this->url);
 		}
 		if ( ! is_null($this->modelClass))
