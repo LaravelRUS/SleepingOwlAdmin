@@ -52,7 +52,7 @@ You can also find it in the `/src/docs` directory.
 
 ## Demo Application
 
-View [live demo](http://sleeping-owl-admin-demo.gopagoda.com).
+View [live demo](http://sleepingowladmindemo.cloudcontrolled.com).
 
 ## Support Library
 
