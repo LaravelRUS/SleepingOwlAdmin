@@ -50,5 +50,10 @@ return [
 			'username' => 'required',
 			'password' => 'required',
 		]
-	]
+	],
+
+    /*
+	 * Blade template prefix, default admin::
+	 */
+    'bladePrefix'                => 'admin::',
 ];
