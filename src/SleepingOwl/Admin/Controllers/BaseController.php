@@ -2,6 +2,7 @@
 
 use App;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Config;
 use SleepingOwl\Admin\Admin;
 use Illuminate\Foundation\Application;
 use View;
@@ -38,7 +39,7 @@ class BaseController extends Controller
 	 */
 	protected function makeView($name, $data = [])
 	{
-		$view = View::make('admin::' . $name, $data);
+		$view = View::make(Config::get('admin.bladePrefix') . $name, $data);
 		$this->addViewDefaults($view);
 		return $view;
 	}
