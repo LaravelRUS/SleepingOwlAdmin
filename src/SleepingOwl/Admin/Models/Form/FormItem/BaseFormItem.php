@@ -141,5 +141,12 @@ abstract class BaseFormItem implements FormItemInterface
 		return $this->default;
 	}
 
+	/**
+	 * @param array $data
+	 */
+	public function updateRequestData(&$data)
+	{
+
+	}
 
 }

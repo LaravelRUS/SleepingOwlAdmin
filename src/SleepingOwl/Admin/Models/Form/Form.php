@@ -175,4 +175,12 @@ class Form
 		return $rules;
 	}
 
+	public function updateRequestData(&$data)
+	{
+		foreach ($this->items as $item)
+		{
+			$item->updateRequestData($data);
+		}
+	}
+
 }

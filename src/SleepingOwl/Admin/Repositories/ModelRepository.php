@@ -141,38 +141,14 @@ class ModelRepository implements ModelRepositoryInterface
 	 */
 	protected function save()
 	{
+		$data = $this->request->all();
+		$this->modelItem->getForm()->updateRequestData($data);
+
 		$rules = $this->modelItem->getForm()->getValidationRules();
-		$this->instance->validate($data = $this->request->all(), $rules);
-		foreach ($data as $key => &$value)
-		{
-			if (is_array($value))
-			{
-				$value = array_filter($value, function ($item)
-				{
-					return $item !== '__dummy-multiselect-value';
-				});
-			}
-			if ( ! is_string($value)) continue;
-			if ((strpos($value, 'AM') !== false) || (strpos($value, 'PM') !== false))
-			{
-				try
-				{
-					$time = new Carbon($value);
-					$value = $time->format('Y-m-d H:i:s');
-				} catch (\Exception $e)
-				{
-				}
-			}
-			if (preg_match('/^(?<field>[a-zA-Z0-9]+)ConfirmDelete$/', $key, $matches))
-			{
-				$field = $matches['field'];
-				if (is_null($data[$field]))
-				{
-					$data[$field] = '';
-				}
-			}
-		}
+		$this->instance->validate($data, $rules);
+
 		$this->instance->fill($data);
+
 		$this->instance->save();
 	}
 

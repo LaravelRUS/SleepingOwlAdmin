@@ -10,7 +10,15 @@ use Illuminate\Support\Arr;
  */
 class Select extends BaseFormItem
 {
+	/**
+	 * @var array
+	 */
 	protected $list;
+
+	/**
+	 * @var bool
+	 */
+	protected $nullable = false;
 
 	public function render()
 	{
@@ -34,7 +42,17 @@ class Select extends BaseFormItem
 		}
 		$this->attributes['class'] .= ' multiselect';
 		$this->attributes['size'] = 2;
-		return $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->getValueFromForm(), $this->attributes);
+		$this->attributes['data-select-type'] = 'single';
+
+		if ($this->nullable)
+		{
+			$this->attributes['multiple'] = true;
+			$this->attributes['data-nullable'] = true;
+		}
+
+		$select = $this->formBuilder->selectGroup($this->name, $this->label, $list, $this->getValueFromForm(), $this->attributes);
+
+		return $select;
 	}
 
 	public function enum($values)
@@ -52,5 +70,25 @@ class Select extends BaseFormItem
 		return parent::__call($name, $arguments);
 	}
 
+	/**
+	 * @param bool $nullable
+	 * @return $this
+	 */
+	public function nullable($nullable = true)
+	{
+		$this->nullable = $nullable;
+		return $this;
+	}
+
+	/**
+	 * @param array $data
+	 */
+	public function updateRequestData(&$data)
+	{
+		if ($this->nullable && ! isset($data[$this->name]))
+		{
+			$data[$this->name] = null;
+		}
+	}
 
 } 
