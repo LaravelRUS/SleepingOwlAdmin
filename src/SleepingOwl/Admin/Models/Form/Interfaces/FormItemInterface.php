@@ -23,4 +23,9 @@ interface FormItemInterface
 	 */
 	public function getDefault();
 
-} 
+	/**
+	 * @param array $data
+	 */
+	public function updateRequestData(&$data);
+
+}

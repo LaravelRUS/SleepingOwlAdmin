@@ -1,6 +1,6 @@
 <?php namespace SleepingOwl\Admin\Models\Form\FormItem;
 
-class Date extends BaseFormItem
+class Date extends BaseTime
 {
 	public function render()
 	{

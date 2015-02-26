@@ -131,4 +131,21 @@ class MultiSelect extends BaseFormItem
 		return $result;
 	}
 
+	/**
+	 * @param array $data
+	 */
+	public function updateRequestData(&$data)
+	{
+		foreach ($data as $key => &$value)
+		{
+			if (is_array($value))
+			{
+				$value = array_filter($value, function ($item)
+				{
+					return $item !== '__dummy-multiselect-value';
+				});
+			}
+		}
+	}
+
 } 

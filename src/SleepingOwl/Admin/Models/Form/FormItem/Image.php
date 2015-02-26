@@ -14,4 +14,23 @@ class Image extends BaseFormItem
 		return $rules;
 	}
 
+	/**
+	 * @param array $data
+	 */
+	public function updateRequestData(&$data)
+	{
+		foreach ($data as $key => &$value)
+		{
+			if ( ! is_string($value)) continue;
+			if (preg_match('/^(?<field>[a-zA-Z0-9]+)ConfirmDelete$/', $key, $matches))
+			{
+				$field = $matches['field'];
+				if (is_null($data[$field]))
+				{
+					$data[$field] = '';
+				}
+			}
+		}
+	}
+
 } 

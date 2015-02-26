@@ -2,7 +2,7 @@
 
 use SleepingOwl\DateFormatter\DateFormatter;
 
-class Time extends BaseFormItem
+class Time extends BaseTime
 {
 	/**
 	 * @var bool
