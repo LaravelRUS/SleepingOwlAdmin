@@ -49,6 +49,11 @@ class AdminController extends BaseController
 	{
 		parent::__construct();
 
+		if (is_null($this->getRouter()))
+		{
+			$disableFilters = true;
+		}
+
 		$this->queryState = $queryState;
 
 		# if isnt 'get' request add csrf filter
