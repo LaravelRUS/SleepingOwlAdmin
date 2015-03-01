@@ -2,7 +2,7 @@
 
 use SleepingOwl\DateFormatter\DateFormatter;
 
-class Timestamp extends BaseTime
+class Timestamp extends Time
 {
 	/**
 	 * @return mixed
