@@ -103,6 +103,10 @@ class Validator extends IlluminateValidator
 
 	protected function validateDateWithLocale($attribute, $value)
 	{
+		if ($this->validateDate($attribute, $value, []))
+		{
+			return true;
+		}
 		$containsTime = (strpos($value, ':') !== false) ? 3 : -1;
 		$formatter = datefmt_create(\App::getLocale(), 3, $containsTime);
 		$value = $formatter->parse($value);
