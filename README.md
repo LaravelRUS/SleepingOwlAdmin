@@ -60,7 +60,7 @@ View [live demo](http://sleepingowladmindemo.cloudcontrolled.com).
 
 ## Support Library
 
-You can donate in BTC: 13k36pym383rEmsBSLyWfT3TxCQMN2Lekd
+You can donate via [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AXJMWMRPCBGVA) or in BTC: 13k36pym383rEmsBSLyWfT3TxCQMN2Lekd
 
 ## Copyright and License
 
