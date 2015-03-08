@@ -199,10 +199,10 @@ class FormBuilder extends IlluminateFormBuilder
 	 * @return mixed
 	 */
 	public function textAddonGroup($name, $label, $addon = '', $placement = 'before', $value = null,
-								   array $options = [])
+								   array $options = [], array $wrapperAttributes = [])
 	{
 		$options = $this->updateOptions($options);
-		return $this->makeGroup($name, $label, $this->textAddon($name, $value, $addon, $placement, $options));
+		return $this->makeGroup($name, $label, $this->textAddon($name, $value, $addon, $placement, $options, $wrapperAttributes));
 	}
 
 	/**
