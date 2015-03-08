@@ -140,7 +140,7 @@ class Router
 				}
 			});
 
-			$wildcardRoute = $this->laravelRouter->get('{wildcard?}', [
+			$wildcardRoute = $this->laravelRouter->any('{wildcard?}', [
 				'as'   => $this->routePrefix . '.wildcard',
 				'uses' => 'AdminController@getWildcard'
 			])->where('wildcard', '.*');
