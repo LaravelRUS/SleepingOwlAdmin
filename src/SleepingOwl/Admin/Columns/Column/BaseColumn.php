@@ -145,6 +145,7 @@ abstract class BaseColumn implements ColumnInterface
 		{
 			$attributes['data-sortable-default'] = 'true';
 		}
+		$attributes['style'] = 'width:10px;';
 		return $attributes;
 	}
 
