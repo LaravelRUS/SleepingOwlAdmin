@@ -81,7 +81,11 @@ class Date extends BaseColumn
 	public function render($instance, $totalCount)
 	{
 		$date = $this->valueFromInstance($instance, $this->name);
-		$formattedDate = DateFormatter::format($date, $this->formatDate, $this->formatTime);
+		$formattedDate = '';
+		if ( ! is_null($date))
+		{
+			$formattedDate = DateFormatter::format($date, $this->formatDate, $this->formatTime);
+		}
 
 		return parent::render($instance, $totalCount, $formattedDate);
 	}
