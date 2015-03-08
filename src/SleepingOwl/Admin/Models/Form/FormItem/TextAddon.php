@@ -4,10 +4,11 @@ class TextAddon extends BaseFormItem
 {
 	protected $addon;
 	protected $placement = 'before';
+	protected $wrapperAttributes = [];
 
 	public function render()
 	{
-		return $this->formBuilder->textAddonGroup($this->name, $this->label, $this->getAddon(), $this->placement, $this->getValueFromForm(), $this->attributes);
+		return $this->formBuilder->textAddonGroup($this->name, $this->label, $this->getAddon(), $this->placement, $this->getValueFromForm(), $this->attributes, $this->wrapperAttributes);
 	}
 
 	public function addon($addon)
@@ -37,6 +38,16 @@ class TextAddon extends BaseFormItem
 	public function placement($placement)
 	{
 		$this->placement = $placement;
+		return $this;
+	}
+
+	/**
+	 * @param array $wrapperAttributes
+	 * @return $this
+	 */
+	public function wrapperAttributes($wrapperAttributes)
+	{
+		$this->wrapperAttributes = $wrapperAttributes;
 		return $this;
 	}
 
