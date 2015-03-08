@@ -75,7 +75,7 @@ class Form
 		foreach ($this->items as $item)
 		{
 			$name = $item->getName();
-			if ( ! isset($this->instance->$name))
+			if ( ! is_null($name) && ! isset($this->instance->$name))
 			{
 				$this->instance->$name = $item->getDefault();
 			}
