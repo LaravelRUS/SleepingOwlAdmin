@@ -136,7 +136,10 @@ class FormBuilder extends IlluminateFormBuilder
 							 $timeFormat = DateFormatter::NONE)
 	{
 		$value = $this->getValueAttribute($name, $value);
-		$value = DateFormatter::format($value, $dateFormat, $timeFormat);
+		if ( ! is_null($value))
+		{
+			$value = DateFormatter::format($value, $dateFormat, $timeFormat);
+		}
 
 		$options = $this->addClassToOptions('form-control', $options);
 		$content = $this->textAddon($name, $value, '<span></span>', 'after', $options, ['class' => 'datepicker']);
