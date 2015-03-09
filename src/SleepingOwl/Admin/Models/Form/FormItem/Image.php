@@ -25,7 +25,7 @@ class Image extends BaseFormItem
 			if (preg_match('/^(?<field>[a-zA-Z0-9]+)ConfirmDelete$/', $key, $matches))
 			{
 				$field = $matches['field'];
-				if (is_null($data[$field]))
+				if (empty($data[$field]))
 				{
 					$data[$field] = '';
 				}
