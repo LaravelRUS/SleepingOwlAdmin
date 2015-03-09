@@ -72,7 +72,6 @@ class ModelRepository implements ModelRepositoryInterface
 		}
 		$query->setModel($this->instance)->with($with);
 		$query = $this->instance->applyGlobalScopes($query);
-		$query->getQuery()->orders = null;
 		$this->applyFilters($query);
 		$totalCount = $query->count();
 		if ( ! is_null($params))
@@ -87,6 +86,7 @@ class ModelRepository implements ModelRepositoryInterface
 				$query->offset($params['offset']);
 				$query->limit($params['limit']);
 			}
+			$query->getQuery()->orders = null;
 			$query->orderBy($params['orderBy'], $params['orderDest']);
 		}
 		$rows = $query->get();
