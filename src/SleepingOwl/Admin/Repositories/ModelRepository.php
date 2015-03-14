@@ -81,6 +81,7 @@ class ModelRepository implements ModelRepositoryInterface
 				$search = '%' . $params['search'] . '%';
 				$this->addSearchToQuery($query, $search);
 			}
+			$totalCount = $query->count();
 			if ($params['limit'] != -1)
 			{
 				$query->offset($params['offset']);
