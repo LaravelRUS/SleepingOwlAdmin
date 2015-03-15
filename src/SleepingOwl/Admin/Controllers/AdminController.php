@@ -17,6 +17,7 @@ use Input;
 use Lang;
 use Redirect;
 use Session;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AdminController
@@ -130,7 +131,7 @@ class AdminController extends BaseController
 			{
 				list($controller, $action) = explode('@', $action);
 				$content = app($controller)->$action();
-				if ( ! is_string($content))
+				if ($content instanceof Response)
 				{
 					return $content;
 				}
