@@ -136,6 +136,10 @@ class AdminController extends BaseController
 			{
 				list($controller, $action) = explode('@', $action);
 				$content = app($controller)->$action();
+				if ( ! is_string($content))
+				{
+					return $content;
+				}
 				$title = ($wildcard !== '/') ? $menuItem->getLabel() : null;
 			} else
 			{
