@@ -133,9 +133,10 @@ class Router
 					$url = $route['url'];
 					$action = $route['action'];
 					$method = $route['method'];
-					$this->laravelRouter->$method($url, [
+                    			$controller = isset($route['controller']) ? $route['controller'] : 'AdminController';
+                    			$this->laravelRouter->$method($url, [
 						'as'   => $this->routePrefix . '.table.' . $action,
-						'uses' => 'AdminController@' . $action
+						'uses' => $controller . '@' . $action
 					]);
 				}
 			});
