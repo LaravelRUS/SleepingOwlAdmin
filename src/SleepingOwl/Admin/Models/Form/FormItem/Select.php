@@ -55,9 +55,16 @@ class Select extends BaseFormItem
 		return $select;
 	}
 
+	/**
+	 * @param array $values
+	 *
+	 * @return $this
+	 */
 	public function enum($values)
 	{
 		$this->list(array_combine($values, $values));
+
+		return $this;
 	}
 
 	function __call($name, $arguments)
