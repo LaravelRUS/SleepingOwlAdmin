@@ -259,7 +259,10 @@ class ModelRepository implements ModelRepositoryInterface
 		{
 			return $columns;
 		}
-		$columnsFull = DB::getDoctrineSchemaManager()->listTableColumns($table);
+		$schemaManager = DB::getDoctrineSchemaManager();
+		$schemaManager->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
+		$columnsFull = $schemaManager->listTableColumns($table);
 		$columns = array_map(function (Column $column)
 		{
 			return $column->getType()->getName();
