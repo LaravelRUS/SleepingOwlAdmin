@@ -255,7 +255,7 @@ class Router
 	 */
 	public function routeToWildcard($url)
 	{
-		return $this->urlGenerator->route($this->routePrefix . '.wildcard', $url);
+		return $this->urlGenerator->route($this->routePrefix . '.wildcard', ['wildcard' => $url]);
 	}
 
 	/**
