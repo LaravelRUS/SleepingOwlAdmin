@@ -36,6 +36,7 @@ It includes:
 
 		'Admin'				=> 'SleepingOwl\Admin\Admin',
 		'AdminAuth'			=> 'SleepingOwl\AdminAuth\Facades\AdminAuth',
+		'AdminRouter'       => 'SleepingOwl\Admin\Facades\AdminRouter',
 		'AssetManager' 		=> 'SleepingOwl\Admin\AssetManager\AssetManager',
 		'Column'   			=> 'SleepingOwl\Admin\Columns\Column',
 		'FormItem' 			=> 'SleepingOwl\Admin\Models\Form\FormItem',
