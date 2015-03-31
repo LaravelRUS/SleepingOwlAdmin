@@ -37,6 +37,10 @@ class AdminServiceProvider extends ServiceProvider
 			return Admin::instance();
 		});
 		$this->app->singleton('admin', 'SleepingOwl\Admin\Admin');
+		$this->app->bind('admin.router', function ()
+		{
+			return Admin::instance()->router;
+		});
 
 		$this->registerValidateExceptionHandler();
 	}
