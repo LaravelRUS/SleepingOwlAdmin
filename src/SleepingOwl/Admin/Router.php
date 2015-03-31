@@ -288,6 +288,19 @@ class Router
 			array_unshift($routeParameters, $parameters[0]);
 			return $this->urlGenerator->route($this->routePrefix . '.table.' . $route, $routeParameters);
 		}
+		if (method_exists($this->laravelRouter, $method))
+		{
+			return $this->laravelRouter->group([
+				'prefix' => $this->prefix,
+				'before' => $this->getBeforeFilters(),
+			], function () use ($method, $parameters)
+			{
+				call_user_func_array([
+					$this->laravelRouter,
+					$method
+				], $parameters);
+			});
+		}
 		throw new MethodNotFoundException(get_class($this), $method);
 	}
 
