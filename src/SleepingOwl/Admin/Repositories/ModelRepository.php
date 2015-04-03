@@ -87,7 +87,10 @@ class ModelRepository implements ModelRepositoryInterface
 				$query->offset($params['offset']);
 				$query->limit($params['limit']);
 			}
-			$query->getQuery()->orders = null;
+			if ( ! $this->instance instanceof ModelWithOrderFieldInterface)
+			{
+				$query->getQuery()->orders = null;
+			}
 			$query->orderBy($params['orderBy'], $params['orderDest']);
 		}
 		$rows = $query->get();
