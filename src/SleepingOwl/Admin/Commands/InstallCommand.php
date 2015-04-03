@@ -27,7 +27,7 @@ class InstallCommand extends Command
 	{
 		$title = $this->option('title');
 
-		$this->call('vendor:publish');
+		$this->call('vendor:publish', ['--provider' => 'SleepingOwl\Admin\AdminServiceProvider']);
 
 		$this->publishDB();
 
@@ -146,7 +146,7 @@ class InstallCommand extends Command
 	 */
 	protected function publishSelfConfig($title = null)
 	{
-		$file = config_path('sleeping_owl_admin.php');
+		$file = config_path('admin.php');
 		if ( ! is_null($title))
 		{
 			$contents = $this->laravel['files']->get($file);
