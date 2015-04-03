@@ -220,6 +220,10 @@ abstract class BaseColumn implements ColumnInterface
 				$result = $result->$part;
 			}
 		}
+		if (is_string($result))
+		{
+			$result = e($result);
+		}
 		return $result;
 	}
 
