@@ -27,7 +27,7 @@ class InstallCommand extends Command
 	{
 		$title = $this->option('title');
 
-		$this->call('vendor:publish', ['--provider' => 'Intervention\Image\ImageServiceProvider']);
+		$this->call('vendor:publish', ['--provider' => 'Intervention\Image\ImageServiceProviderLaravel5']);
 		$this->call('vendor:publish', ['--provider' => 'SleepingOwl\Admin\AdminServiceProvider']);
 
 		$this->publishDB();
