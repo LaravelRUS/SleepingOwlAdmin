@@ -153,6 +153,7 @@ class MenuItem
 		{
 			return $this->router->routeToModel($this->getModelItem()->getAlias());
 		}
+		return '#';
 	}
 
 	/**
@@ -238,7 +239,7 @@ class MenuItem
 				]
 			]);
 			$content .= ' ' . $this->getLabel() . $this->htmlBuilder->tag('span', ['class' => 'fa arrow']);
-			$content = $this->htmlBuilder->tag('a', ['href' => '#'], $content);
+			$content = $this->htmlBuilder->tag('a', ['href' => $this->getUrl()], $content);
 
 			$subitemsContent = '';
 			foreach ($this->subItems as $item)
