@@ -193,11 +193,11 @@ trait ModelWithImageOrFileFieldsTrait
 	 */
 	public function hasGetMutator($key)
 	{
-		if ($this->hasImageField(Str::lower($key)))
+		if ($this->hasImageField($key))
 		{
 			return true;
 		}
-		if ($this->hasFileField(Str::lower($key)))
+		if ($this->hasFileField($key))
 		{
 			return true;
 		}
@@ -210,11 +210,11 @@ trait ModelWithImageOrFileFieldsTrait
 	 */
 	public function hasSetMutator($key)
 	{
-		if ($this->hasImageField(Str::lower($key)))
+		if ($this->hasImageField($key))
 		{
 			return true;
 		}
-		if ($this->hasFileField(Str::lower($key)))
+		if ($this->hasFileField($key))
 		{
 			return true;
 		}
@@ -230,26 +230,32 @@ trait ModelWithImageOrFileFieldsTrait
 	{
 		if (preg_match('/set(?<field>[a-zA-Z0-9]+)Attribute/', $method, $attr))
 		{
-			$field = Str::snake($attr['field']);
-			if ($this->hasImageField($field))
+			$fields = [Str::lower($attr['field']), Str::camel($attr['field']), Str::snake($attr['field'])];
+			foreach ($fields as $field)
 			{
-				return $this->setImage($field, $parameters[0]);
-			}
-			if ($this->hasFileField($field))
-			{
-				return $this->setFile($field, $parameters[0]);
+				if ($this->hasImageField($field))
+				{
+					return $this->setImage($field, $parameters[0]);
+				}
+				if ($this->hasFileField($field))
+				{
+					return $this->setFile($field, $parameters[0]);
+				}
 			}
 		}
 		if (preg_match('/get(?<field>[a-zA-Z]+)Attribute/', $method, $attr))
 		{
-			$field = Str::snake($attr['field']);
-			if ($this->hasImageField($field))
+			$fields = [Str::lower($attr['field']), Str::camel($attr['field']), Str::snake($attr['field'])];
+			foreach ($fields as $field)
 			{
-				return $this->getImage($field);
-			}
-			if ($this->hasFileField($field))
-			{
-				return $this->getFile($field);
+				if ($this->hasImageField($field))
+				{
+					return $this->getImage($field);
+				}
+				if ($this->hasFileField($field))
+				{
+					return $this->getFile($field);
+				}
 			}
 		}
 		return parent::__call($method, $parameters);
