@@ -1,0 +1,1 @@
+<td>{{{ $value }}} {!! $append !!}</td>

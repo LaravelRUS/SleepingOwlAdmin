@@ -1,0 +1,1 @@
+<li role="presentation" {!! ($active) ? 'class="active"' : '' !!}><a href="#{{ $name }}" aria-controls="{{ $name }}" role="tab" data-toggle="tab">{{ $label }}</a></li>

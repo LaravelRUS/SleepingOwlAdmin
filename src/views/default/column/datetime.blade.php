@@ -1,0 +1,1 @@
+<td data-order="{{ $originalValue }}">{{ $value }} {!! $append !!}</td>
