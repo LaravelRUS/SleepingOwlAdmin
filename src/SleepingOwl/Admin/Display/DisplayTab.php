@@ -114,11 +114,11 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
 		return null;
 	}
 
-	public function save()
+	public function save($model)
 	{
 		if ($this->content instanceof FormInterface)
 		{
-			$this->content->save();
+			$this->content->save($model);
 		}
 	}
 

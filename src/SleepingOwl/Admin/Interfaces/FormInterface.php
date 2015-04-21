@@ -6,6 +6,6 @@ interface FormInterface
 	public function setAction($action);
 	public function setId($id);
 	public function validate($model);
-	public function save();
+	public function save($model);
 
 }

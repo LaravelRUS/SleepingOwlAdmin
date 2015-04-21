@@ -61,9 +61,10 @@ abstract class NamedFormItem extends BaseFormItem
 		{
 			return $value;
 		}
-		if ( ! is_null($value = Input::get($this->name())))
+		$input = Input::all();
+		if (array_key_exists($this->name, $input))
 		{
-			return $value;
+			return Input::get($this->name());
 		}
 		if ( ! is_null($instance) && ! is_null($value = $instance->getAttribute($this->name())))
 		{
@@ -75,6 +76,10 @@ abstract class NamedFormItem extends BaseFormItem
 	public function save()
 	{
 		$name = $this->name();
+		if ( ! Input::has($name))
+		{
+			Input::merge([$name => null]);
+		}
 		$this->instance()->$name = $this->value();
 	}
 

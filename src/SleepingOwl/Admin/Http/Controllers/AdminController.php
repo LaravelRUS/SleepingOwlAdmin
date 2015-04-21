@@ -40,7 +40,7 @@ class AdminController extends Controller
 			{
 				return Redirect::back()->withErrors($validator)->withInput();
 			}
-			$create->save();
+			$create->save($model);
 		}
 		return Redirect::to(Input::get('_redirectBack', $model->displayUrl()));
 	}
@@ -68,7 +68,7 @@ class AdminController extends Controller
 			{
 				return Redirect::back()->withErrors($validator)->withInput();
 			}
-			$edit->save();
+			$edit->save($model);
 		}
 		return Redirect::to(Input::get('_redirectBack', $model->displayUrl()));
 	}

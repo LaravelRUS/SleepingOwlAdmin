@@ -10,6 +10,7 @@ class FormItemServiceProvider extends ServiceProvider
 	{
 		FormItem::register('text', 'SleepingOwl\Admin\FormItems\Text');
 		FormItem::register('select', 'SleepingOwl\Admin\FormItems\Select');
+		FormItem::register('multiselect', 'SleepingOwl\Admin\FormItems\MultiSelect');
 		FormItem::register('hidden', 'SleepingOwl\Admin\FormItems\Hidden');
 		FormItem::register('columns', 'SleepingOwl\Admin\FormItems\Columns');
 	}

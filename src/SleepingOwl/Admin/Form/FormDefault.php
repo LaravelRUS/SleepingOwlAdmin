@@ -88,8 +88,13 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		return Admin::model($this->class);
 	}
 
-	public function save()
+	public function save($model)
 	{
+		if ($this->model() != $model)
+		{
+			return null;
+		}
+
 		foreach ($this->items() as $item)
 		{
 			$item->save();

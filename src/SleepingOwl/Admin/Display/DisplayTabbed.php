@@ -97,13 +97,13 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		return null;
 	}
 
-	public function save()
+	public function save($model)
 	{
 		foreach ($this->tabs as $tab)
 		{
 			if ($tab instanceof FormInterface)
 			{
-				$tab->save();
+				$tab->save($model);
 			}
 		}
 	}

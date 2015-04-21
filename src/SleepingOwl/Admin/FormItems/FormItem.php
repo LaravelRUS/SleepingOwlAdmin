@@ -7,6 +7,7 @@ use SleepingOwl\Admin\Base\AliasBinder;
  * @package SleepingOwl\Admin\Form
  * @method static \SleepingOwl\Admin\FormItems\Text text($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Select select($name, $label = null)
+ * @method static \SleepingOwl\Admin\FormItems\MultiSelect multiselect($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Columns columns()
  * @method static \SleepingOwl\Admin\FormItems\Hidden hidden($name)
  */
