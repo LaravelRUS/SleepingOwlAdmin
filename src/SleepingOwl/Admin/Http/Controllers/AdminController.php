@@ -36,7 +36,7 @@ class AdminController extends Controller
 		}
 		if ($create instanceof FormInterface)
 		{
-			if ($validator = $create->validate())
+			if ($validator = $create->validate($model))
 			{
 				return Redirect::back()->withErrors($validator)->withInput();
 			}
