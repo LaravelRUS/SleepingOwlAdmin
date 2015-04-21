@@ -97,8 +97,13 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		$this->instance()->save();
 	}
 
-	public function validate()
+	public function validate($model)
 	{
+		if ($this->model() != $model)
+		{
+			return null;
+		}
+		
 		$rules = [];
 		foreach ($this->items() as $item)
 		{

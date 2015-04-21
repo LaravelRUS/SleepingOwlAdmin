@@ -32,7 +32,7 @@ class Control extends BaseColumn
 
 	protected function editable()
 	{
-		return ! is_null($this->model()->edit($this->instance->getKey()));
+		return ! $this->trashed() && ! is_null($this->model()->edit($this->instance->getKey()));
 	}
 
 	protected function editUrl()

@@ -105,11 +105,11 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
-	public function validate()
+	public function validate($model)
 	{
 		if ($this->content instanceof FormInterface)
 		{
-			return $this->content->validate();
+			return $this->content->validate($model);
 		}
 		return null;
 	}

@@ -6,7 +6,6 @@ class BaseRepository
 {
 
 	protected $class;
-
 	protected $model;
 
 	protected $with = [];
@@ -14,7 +13,7 @@ class BaseRepository
 	function __construct($class)
 	{
 		$this->class = $class;
-		$this->model = app($this->class);
+		$this->model(app($this->class));
 	}
 
 	public function with($with = null)
@@ -51,6 +50,16 @@ class BaseRepository
 	public function restore($id)
 	{
 		$this->query()->onlyTrashed()->find($id)->restore();
+	}
+
+	public function model($model = null)
+	{
+		if (is_null($model))
+		{
+			return $this->model;
+		}
+		$this->model = $model;
+		return $this;
 	}
 
 }

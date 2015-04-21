@@ -81,13 +81,13 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
-	public function validate()
+	public function validate($model)
 	{
 		foreach ($this->tabs as $tab)
 		{
 			if ($tab instanceof FormInterface)
 			{
-				$result = $tab->validate();
+				$result = $tab->validate($model);
 				if ( ! is_null($result))
 				{
 					return $result;

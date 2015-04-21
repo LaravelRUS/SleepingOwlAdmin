@@ -64,7 +64,7 @@ class AdminController extends Controller
 		}
 		if ($edit instanceof FormInterface)
 		{
-			if ($validator = $edit->validate())
+			if ($validator = $edit->validate($model))
 			{
 				return Redirect::back()->withErrors($validator)->withInput();
 			}
