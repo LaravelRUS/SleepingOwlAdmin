@@ -48,4 +48,9 @@ class BaseRepository
 		$this->find($id)->delete();
 	}
 
+	public function restore($id)
+	{
+		$this->query()->onlyTrashed()->find($id)->restore();
+	}
+
 }

@@ -7,6 +7,8 @@ use SleepingOwl\Admin\AssetManager\AssetManager;
 class Control extends BaseColumn
 {
 
+	protected $view = 'control';
+
 	public function initialize()
 	{
 		parent::initialize();
@@ -17,6 +19,15 @@ class Control extends BaseColumn
 	protected function model()
 	{
 		return Admin::model(get_class($this->instance));
+	}
+
+	protected function trashed()
+	{
+		if (method_exists($this->instance, 'trashed'))
+		{
+			return $this->instance->trashed();
+		}
+		return false;
 	}
 
 	protected function editable()
@@ -31,7 +42,7 @@ class Control extends BaseColumn
 
 	protected function deletable()
 	{
-		return ! is_null($this->model()->delete($this->instance->getKey()));
+		return ! $this->trashed() && ! is_null($this->model()->delete($this->instance->getKey()));
 	}
 
 	protected function deleteUrl()
@@ -39,15 +50,27 @@ class Control extends BaseColumn
 		return $this->model()->deleteUrl($this->instance->getKey());
 	}
 
+	protected function restorable()
+	{
+		return $this->trashed() && ! is_null($this->model()->restore($this->instance->getKey()));
+	}
+
+	protected function restoreUrl()
+	{
+		return $this->model()->restoreUrl($this->instance->getKey());
+	}
+
 	public function render()
 	{
 		$params = [
-			'editable'  => $this->editable(),
-			'editUrl'   => $this->editUrl(),
-			'deletable' => $this->deletable(),
-			'deleteUrl' => $this->deleteUrl(),
+			'editable'   => $this->editable(),
+			'editUrl'    => $this->editUrl(),
+			'deletable'  => $this->deletable(),
+			'deleteUrl'  => $this->deleteUrl(),
+			'restorable' => $this->restorable(),
+			'restoreUrl' => $this->restoreUrl(),
 		];
-		return view(AdminTemplate::view('column.control'), $params);
+		return view(AdminTemplate::view('column.' . $this->view), $params);
 	}
 
 }

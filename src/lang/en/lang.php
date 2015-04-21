@@ -30,6 +30,7 @@ return [
 	'table'    => [
 		'new-entry'      => 'New Entry',
 		'edit'           => 'Edit',
+		'restore'        => 'Restore',
 		'delete'         => 'Delete',
 		'delete-confirm' => 'Are you sure want to delete this entry?',
 		'delete-error'   => 'Error while deleting this entry. You must delete all linked entries first.',

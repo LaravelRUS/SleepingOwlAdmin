@@ -14,7 +14,8 @@ class ModelConfiguration
 	protected $display;
 	protected $create;
 	protected $edit;
-	protected $delete;
+	protected $delete = true;
+	protected $restore = true;
 
 	function __construct($class)
 	{
@@ -94,6 +95,16 @@ class ModelConfiguration
 		return $this;
 	}
 
+	public function restore($restore = null)
+	{
+		if (is_null($restore) || is_numeric($restore))
+		{
+			return $this->getRestore($restore);
+		}
+		$this->restore = $restore;
+		return $this;
+	}
+
 	public function display($display = null)
 	{
 		if (func_num_args() == 0)
@@ -156,11 +167,20 @@ class ModelConfiguration
 
 	protected function getDelete($id)
 	{
-		if (is_null($this->delete))
+		if (is_callable($this->delete))
 		{
-			return true;
+			return call_user_func($this->delete, $id);
 		}
-		return call_user_func($this->delete, $id);
+		return $this->delete;
+	}
+
+	protected function getRestore($id)
+	{
+		if (is_callable($this->restore))
+		{
+			return call_user_func($this->restore, $id);
+		}
+		return $this->restore;
 	}
 
 	public function displayUrl($parameters = [])
@@ -193,6 +213,11 @@ class ModelConfiguration
 	public function deleteUrl($id)
 	{
 		return route('admin.model.destroy', [$this->alias(), $id]);
+	}
+
+	public function restoreUrl($id)
+	{
+		return route('admin.model.restore', [$this->alias(), $id]);
 	}
 
 }

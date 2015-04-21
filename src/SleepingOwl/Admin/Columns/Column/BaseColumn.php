@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Columns\Column;
 
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Interfaces\ColumnInterface;
 
 abstract class BaseColumn implements Renderable, ColumnInterface
@@ -17,6 +18,11 @@ abstract class BaseColumn implements Renderable, ColumnInterface
 
 	public function initialize()
 	{
+	}
+
+	protected function model()
+	{
+		return Admin::model(get_class($this->instance));
 	}
 
 	public function label($title)

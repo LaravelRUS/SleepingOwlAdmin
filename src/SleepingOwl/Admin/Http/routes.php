@@ -30,6 +30,11 @@ Route::delete('{adminModel}/{adminModelId}', [
 	'uses' => 'AdminController@postDestroy',
 ]);
 
+Route::post('{adminModel}/{adminModelId}/restore', [
+	'as'   => 'admin.model.restore',
+	'uses' => 'AdminController@postRestore',
+]);
+
 Route::get('js/lang', [
 	'as'   => 'admin.lang',
 	'uses' => 'AdminController@getLang',

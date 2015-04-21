@@ -17,6 +17,7 @@ class ColumnServiceProvider extends ServiceProvider
 		Column::register('datetime', 'SleepingOwl\Admin\Columns\Column\DateTime');
 		Column::register('control', 'SleepingOwl\Admin\Columns\Column\Control');
 		Column::register('treeControl', 'SleepingOwl\Admin\Columns\Column\TreeControl');
+		Column::register('order', 'SleepingOwl\Admin\Columns\Column\Order');
 	}
 
 }

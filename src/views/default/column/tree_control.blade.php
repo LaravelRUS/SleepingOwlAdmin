@@ -10,3 +10,11 @@
 		</button>
 	</form>
 @endif
+@if ($restorable)
+	<form action="{{ $restoreUrl }}" method="POST" style="display:inline-block;">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+		<button class="btn btn-primary btn-xs" data-toggle="tooltip" title="{{ trans('admin::lang.table.restore') }}">
+			<i class="fa fa-reply"></i>
+		</button>
+	</form>
+@endif

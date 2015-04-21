@@ -84,6 +84,17 @@ class AdminController extends Controller
 		return Redirect::back();
 	}
 
+	public function postRestore($model, $id)
+	{
+		$restore = $model->restore($id);
+		if (is_null($restore))
+		{
+			abort(404);
+		}
+		$model->repository()->restore($id);
+		return Redirect::back();
+	}
+
 	public function render($title, $content)
 	{
 		return view(AdminTemplate::view('_layout.inner'), [
