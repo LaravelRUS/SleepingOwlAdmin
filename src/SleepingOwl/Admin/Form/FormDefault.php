@@ -103,7 +103,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		{
 			return null;
 		}
-		
+
 		$rules = [];
 		foreach ($this->items() as $item)
 		{
@@ -124,7 +124,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 			'items'    => $this->items(),
 			'instance' => $this->instance(),
 			'action'   => $this->action,
-			'backUrl'  => URL::previous(),
+			'backUrl'  => $this->model()->displayUrl(),
 		];
 		return view(AdminTemplate::view('form.default'), $params);
 	}
