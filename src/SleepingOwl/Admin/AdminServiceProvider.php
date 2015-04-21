@@ -6,6 +6,7 @@ class AdminServiceProvider extends ServiceProvider
 {
 
 	protected $providers = [
+		'SleepingOwl\AdminAuth\AdminAuthServiceProvider',
 		'SleepingOwl\Admin\Providers\DisplayServiceProvider',
 		'SleepingOwl\Admin\Providers\ColumnServiceProvider',
 		'SleepingOwl\Admin\Providers\FormServiceProvider',
@@ -30,7 +31,7 @@ class AdminServiceProvider extends ServiceProvider
 		], 'config');
 
 		$this->publishes([
-			__DIR__.'/../../../public/' => public_path('packages/sleeping-owl/admin/'),
+			__DIR__ . '/../../../public/' => public_path('packages/sleeping-owl/admin/'),
 		], 'assets');
 
 		Admin::instance();

@@ -12,10 +12,7 @@ return [
 	 */
 	'prefix'                => 'admin',
 
-	/*
-	 * Before filters to protect admin from unauthorized users
-	 */
-	'beforeFilters'         => ['admin.auth'],
+	'middleware'            => ['admin.auth'],
 
 	/*
 	 * Path to admin bootstrap files directory in app directory

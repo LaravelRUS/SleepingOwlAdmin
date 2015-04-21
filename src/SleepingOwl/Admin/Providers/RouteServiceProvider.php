@@ -10,13 +10,19 @@ class RouteServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->registerPatterns();
+		$this->registerMiddleware();
 
 		Route::group([
 			'prefix'    => config('admin.prefix'),
-			'namespace' => 'SleepingOwl\Admin\Http\Controllers'
+			'namespace' => 'SleepingOwl\Admin\Http\Controllers',
 		], function ()
 		{
-			require config('admin.bootstrapDirectory') . '/routes.php';
+			Route::group([
+				'middleware' => config('admin.middleware'),
+			], function ()
+			{
+				require config('admin.bootstrapDirectory') . '/routes.php';
+			});
 			require __DIR__ . '/../Http/routes.php';
 		});
 	}
@@ -24,7 +30,8 @@ class RouteServiceProvider extends ServiceProvider
 	public static function registerRoutes($callback)
 	{
 		Route::group([
-			'prefix' => config('admin.prefix'),
+			'prefix'     => config('admin.prefix'),
+			'middleware' => config('admin.middleware'),
 		], $callback);
 	}
 
@@ -38,6 +45,11 @@ class RouteServiceProvider extends ServiceProvider
 			return Admin::model($class);
 		});
 		Route::pattern('adminWildcard', '.*');
+	}
+
+	protected function registerMiddleware()
+	{
+		Route::middleware('admin.auth', 'SleepingOwl\Admin\Http\Middleware\Authenticate');
 	}
 
 }

@@ -124,4 +124,9 @@ class AdminController extends Controller
 		return $response;
 	}
 
+	public function getWildcard()
+	{
+		abort(404);
+	}
+
 } 
