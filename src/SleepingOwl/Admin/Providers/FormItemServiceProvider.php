@@ -15,6 +15,7 @@ class FormItemServiceProvider extends ServiceProvider
 		FormItem::register('hidden', 'SleepingOwl\Admin\FormItems\Hidden');
 		FormItem::register('checkbox', 'SleepingOwl\Admin\FormItems\Checkbox');
 		FormItem::register('ckeditor', 'SleepingOwl\Admin\FormItems\CKEditor');
+		FormItem::register('custom', 'SleepingOwl\Admin\FormItems\Custom');
 	}
 
 }
