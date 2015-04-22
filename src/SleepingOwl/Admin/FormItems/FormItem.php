@@ -10,6 +10,7 @@ use SleepingOwl\Admin\Base\AliasBinder;
  * @method static \SleepingOwl\Admin\FormItems\MultiSelect multiselect($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Columns columns()
  * @method static \SleepingOwl\Admin\FormItems\Hidden hidden($name)
+ * @method static \SleepingOwl\Admin\FormItems\Checkbox checkbox($name, $label = null)
  */
 class FormItem extends AliasBinder
 {

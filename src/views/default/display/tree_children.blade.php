@@ -17,7 +17,7 @@
 		</div>
 		@if ($entry->children->count() > 0)
 			<ol class="dd-list">
-				@include('admin::default.display.tree_children', ['children' => $entry->children])
+				@include(AdminTemplate::view('display.tree_children'), ['children' => $entry->children])
 			</ol>
 		@endif
 	</li>

@@ -1,4 +1,4 @@
-@extends('admin::default._layout.base')
+@extends(AdminTemplate::view('_layout.base'))
 
 @section('content')
     <div class="container">

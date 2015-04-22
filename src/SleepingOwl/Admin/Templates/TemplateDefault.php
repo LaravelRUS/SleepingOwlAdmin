@@ -20,14 +20,9 @@ class TemplateDefault implements TemplateInterface
 		AssetManager::addScript('admin::default/js/admin-default.js');
 	}
 
-	public function directory()
-	{
-		return 'default';
-	}
-
 	public function view($view)
 	{
-		return 'admin::' . $this->directory() . '.' . $view;
+		return 'admin::default.' . $view;
 	}
 
 }

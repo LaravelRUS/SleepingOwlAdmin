@@ -3,6 +3,6 @@
 @endif
 <div class="dd nestable" data-url="{{ $url }}/reorder">
 	<ol class="dd-list">
-		@include('admin::default.display.tree_children', ['children' => $items])
+		@include(AdminTemplate::view('display.tree_children'), ['children' => $items])
 	</ol>
 </div>

@@ -1,11 +1,11 @@
-@extends('admin::default._layout.base')
+@extends(AdminTemplate::view('_layout.base'))
 
 @section('content')
 	<div id="wrapper">
 		<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-			@include('admin::default._partials.header')
-			@include('admin::default._partials.user')
-			@include('admin::default._partials.menu')
+			@include(AdminTemplate::view('_partials.header'))
+			@include(AdminTemplate::view('_partials.user'))
+			@include(AdminTemplate::view('_partials.menu'))
 		</nav>
 		<div id="page-wrapper">
 			<div class="row">
