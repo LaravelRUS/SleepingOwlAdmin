@@ -6,6 +6,9 @@ use SleepingOwl\Admin\Base\AliasBinder;
  * Class AdminForm
  * @package SleepingOwl\Admin\Form
  * @method static \SleepingOwl\Admin\FormItems\Text text($name, $label = null)
+ * @method static \SleepingOwl\Admin\FormItems\Time time($name, $label = null)
+ * @method static \SleepingOwl\Admin\FormItems\Date date($name, $label = null)
+ * @method static \SleepingOwl\Admin\FormItems\Timestamp timestamp($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\TextAddon textaddon($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Password password($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Select select($name, $label = null)

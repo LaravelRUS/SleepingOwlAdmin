@@ -14,7 +14,7 @@ class DateTime extends NamedColumn
 		{
 			if (is_null($this->format))
 			{
-				$this->format(config('admin.datetime_format'));
+				$this->format(config('admin.datetimeFormat'));
 			}
 			return $this->format;
 		}

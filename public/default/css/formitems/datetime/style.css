@@ -1,0 +1,7 @@
+.input-group-addon .fa-calendar, .input-group-addon .fa-clock-o {
+	cursor: pointer;
+}
+
+.form-group.datepicker, .form-group.timepicker {
+	width: 250px;
+}
