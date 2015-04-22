@@ -6,6 +6,7 @@ use SleepingOwl\Admin\Base\AliasBinder;
  * Class AdminForm
  * @package SleepingOwl\Admin\Form
  * @method static \SleepingOwl\Admin\FormItems\Text text($name, $label = null)
+ * @method static \SleepingOwl\Admin\FormItems\TextAddon textaddon($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Password password($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Select select($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\MultiSelect multiselect($name, $label = null)
