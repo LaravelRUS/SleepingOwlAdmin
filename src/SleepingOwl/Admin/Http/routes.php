@@ -10,7 +10,7 @@ Route::post('login', [
 	'uses' => 'AuthController@postLogin',
 ]);
 
-Route::get('js/lang', [
+Route::get('assets/lang', [
 	'as'   => 'admin.lang',
 	'uses' => 'AdminController@getLang',
 ]);

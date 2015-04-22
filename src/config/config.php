@@ -24,13 +24,13 @@ return [
 	 * Path to images directory
 	 * Default: 'public/images'
 	 */
-	'imagesDirectory'       => public_path('images'),
+	'imagesDirectory'       => 'images',
 
 	/*
 	 * Path to files directory
  	 * Default: 'public/files'
  	 */
-	'filesDirectory'        => public_path('files'),
+	'filesDirectory'        => 'files',
 
 	/*
 	 * Path to images upload directory within 'imagesDirectory'

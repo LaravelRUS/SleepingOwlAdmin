@@ -106,7 +106,7 @@ class AdminController extends Controller
 	public function getLang()
 	{
 		$lang = trans('admin::lang');
-		$content = 'window.admin={}; window.admin.locale="' . App::getLocale() . '"; window.admin.lang=' . json_encode($lang) . ';';
+		$content = 'window.admin={}; window.admin.locale="' . App::getLocale() . '"; window.admin.token="' . csrf_token() . '"; window.admin.prefix="' . config('admin.prefix') . '"; window.admin.lang=' . json_encode($lang) . ';';
 
 		$response = new Response($content, 200, [
 			'Content-Type' => 'text/javascript',
