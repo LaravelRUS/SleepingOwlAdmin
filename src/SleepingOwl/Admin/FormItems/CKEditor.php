@@ -46,7 +46,7 @@ class CKEditor extends NamedFormItem implements WithRoutesInterface
 
 	protected static function getAllFiles()
 	{
-		$path = public_path(config('admin.imagesDirectory')) . '/' . config('admin.imagesUploadDirectory');
+		$path = public_path(config('admin.ckeditorUploadDirectory'));
 		return Finder::create()->files()->in($path);
 	}
 
@@ -54,7 +54,7 @@ class CKEditor extends NamedFormItem implements WithRoutesInterface
 	{
 		$obj = new StdClass;
 		$path = $file->getRelativePathname();
-		$url = config('admin.imagesDirectory') . '/' . config('admin.imagesUploadDirectory') . '/' . $path;
+		$url = config('admin.ckeditorUploadDirectory') . '/' . $path;
 		$url = asset($url);
 		$obj->url = $url;
 		$obj->thumbnail = $url;
@@ -63,8 +63,7 @@ class CKEditor extends NamedFormItem implements WithRoutesInterface
 
 	protected static function postUpload()
 	{
-		$imageDirectory = config('admin.imagesUploadDirectory');
-		$path = config('admin.imagesDirectory') . '/' . $imageDirectory . '/';
+		$path = config('admin.ckeditorUploadDirectory') . '/';
 		$upload_dir = public_path($path);
 
 		$allowedExtensions = [

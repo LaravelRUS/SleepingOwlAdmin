@@ -20,23 +20,7 @@ return [
 	 */
 	'bootstrapDirectory'    => app_path('admin'),
 
-	/*
-	 * Path to images directory
-	 * Default: 'public/images'
-	 */
-	'imagesDirectory'       => 'images',
-
-	/*
-	 * Path to files directory
- 	 * Default: 'public/files'
- 	 */
-	'filesDirectory'        => 'files',
-
-	/*
-	 * Path to images upload directory within 'imagesDirectory'
-	 * Default: 'uploads'
-	 */
-	'imagesUploadDirectory' => 'uploads',
+	'ckeditorUploadDirectory' => 'images/uploads',
 
 	/*
 	 * Authentication config
