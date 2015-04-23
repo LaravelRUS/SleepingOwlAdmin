@@ -16,6 +16,7 @@ use SleepingOwl\Admin\Base\AliasBinder;
  * @method static \SleepingOwl\Admin\Columns\Column\Control control()
  * @method static \SleepingOwl\Admin\Columns\Column\TreeControl treeControl()
  * @method static \SleepingOwl\Admin\Columns\Column\Order order()
+ * @method static \SleepingOwl\Admin\Columns\Column\Action action($name)
  */
 class Column extends AliasBinder
 {

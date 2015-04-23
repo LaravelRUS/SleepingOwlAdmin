@@ -107,10 +107,10 @@ class DisplayTable implements Renderable, DisplayInterface
 
 	public function initialize()
 	{
-		$this->initializeFilters();
-
 		$this->repository = new BaseRepository($this->class);
 		$this->repository->with($this->with());
+
+		$this->initializeFilters();
 
 		foreach ($this->allColumns() as $column)
 		{
@@ -121,8 +121,25 @@ class DisplayTable implements Renderable, DisplayInterface
 		}
 	}
 
+	protected function initializeAction()
+	{
+		$action = Input::get('_action');
+		$id = Input::get('_id');
+		if ( ! is_null($action) && ! is_null($id))
+		{
+			foreach ($this->columns() as $column)
+			{
+				if ($column->name() == $action)
+				{
+					$column->call($this->repository->find($id));
+				}
+			}
+		}
+	}
+
 	protected function initializeFilters()
 	{
+		$this->initializeAction();
 		foreach ($this->filters() as $filter)
 		{
 			$filter->initialize();

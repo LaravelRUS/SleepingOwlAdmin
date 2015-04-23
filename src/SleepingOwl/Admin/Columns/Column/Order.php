@@ -7,11 +7,6 @@ use SleepingOwl\Admin\Interfaces\WithRoutesInterface;
 class Order extends BaseColumn implements WithRoutesInterface
 {
 
-	public function initialize()
-	{
-		parent::initialize();
-	}
-
 	public static function registerRoutes()
 	{
 		Route::post('{adminModel}/{adminModelId}/up', [
