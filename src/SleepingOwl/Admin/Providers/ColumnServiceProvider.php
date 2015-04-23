@@ -12,6 +12,7 @@ class ColumnServiceProvider extends ServiceProvider
 		Column::register('count', 'SleepingOwl\Admin\Columns\Column\Count');
 		Column::register('lists', 'SleepingOwl\Admin\Columns\Column\Lists');
 		Column::register('action', 'SleepingOwl\Admin\Columns\Column\Action');
+		Column::register('checkbox', 'SleepingOwl\Admin\Columns\Column\Checkbox');
 		Column::register('filter', 'SleepingOwl\Admin\Columns\Column\Filter');
 		Column::register('url', 'SleepingOwl\Admin\Columns\Column\Url');
 		Column::register('custom', 'SleepingOwl\Admin\Columns\Column\Custom');

@@ -27,6 +27,4 @@ $(function ()
 		$('input[type="text"]:first').focus();
 	})();
 
-	bootbox.setDefaults('locale', window.admin.locale);
-
 });

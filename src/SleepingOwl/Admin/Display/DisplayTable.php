@@ -23,6 +23,7 @@ class DisplayTable implements Renderable, DisplayInterface
 	protected $activeFilters = [];
 	protected $controlActive = true;
 	protected $parameters = [];
+	protected $actions = [];
 
 	public function setClass($class)
 	{
@@ -125,13 +126,26 @@ class DisplayTable implements Renderable, DisplayInterface
 	{
 		$action = Input::get('_action');
 		$id = Input::get('_id');
-		if ( ! is_null($action) && ! is_null($id))
+		$ids = Input::get('_ids');
+		if ( ! is_null($action) && ( ! is_null($id) || ! is_null($ids)))
 		{
-			foreach ($this->columns() as $column)
+			$columns = array_merge($this->columns(), $this->actions());
+			foreach ($columns as $column)
 			{
+				if ( ! $column instanceof Column\NamedColumn) continue;
+
 				if ($column->name() == $action)
 				{
-					$column->call($this->repository->find($id));
+					$param = null;
+					if ( ! is_null($id))
+					{
+						$param = $this->repository->find($id);
+					} else
+					{
+						$ids = explode(',', $ids);
+						$param = $this->repository->findMany($ids);
+					}
+					$column->call($param);
 				}
 			}
 		}
@@ -170,6 +184,23 @@ class DisplayTable implements Renderable, DisplayInterface
 		{
 			$filter->apply($query);
 		}
+	}
+
+	public function actions($actions = null)
+	{
+		if (is_null($actions))
+		{
+			foreach ($this->actions as $action)
+			{
+				$action->url($this->model()->displayUrl([
+					'_action' => $action->name(),
+					'_ids'    => '',
+				]));
+			}
+			return $this->actions;
+		}
+		$this->actions = $actions;
+		return $this;
 	}
 
 	public function controlActive($controlActive = null)
@@ -216,6 +247,7 @@ class DisplayTable implements Renderable, DisplayInterface
 			'columns'   => $this->allColumns(),
 			'creatable' => ! is_null($this->model()->create()),
 			'createUrl' => $this->model()->createUrl($this->parameters() + Input::all()),
+			'actions'   => $this->actions(),
 		];
 	}
 

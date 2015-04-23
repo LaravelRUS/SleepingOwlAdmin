@@ -1,4 +1,4 @@
-<td class="text-right" style="width: 110px;">
+<td class="text-right" style="width: 90px;">
 	@if ($editable)
 		<a href="{{ $editUrl }}" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{ trans('admin::lang.table.edit') }}"><i class="fa fa-pencil"></i></a>
 	@endif

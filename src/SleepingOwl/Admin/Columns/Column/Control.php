@@ -12,8 +12,16 @@ class Control extends BaseColumn
 	public function initialize()
 	{
 		parent::initialize();
+
 		AssetManager::addScript('admin::default/js/bootbox.js');
 		AssetManager::addScript('admin::default/js/columns/control.js');
+	}
+
+	function __construct()
+	{
+		parent::__construct();
+
+		$this->orderable(false);
 	}
 
 	protected function model()

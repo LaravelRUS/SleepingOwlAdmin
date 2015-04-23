@@ -14,6 +14,12 @@ class Action extends NamedColumn
 	protected $value;
 	protected $url;
 
+	function __construct($name)
+	{
+		parent::__construct($name);
+		$this->orderable(false);
+	}
+
 	public function icon($icon = null)
 	{
 		if (is_null($icon))
@@ -86,7 +92,11 @@ class Action extends NamedColumn
 				{
 					return call_user_func($this->url, $this->instance);
 				}
-				return strtr($this->url, [':id' => $this->instance->getKey()]);
+				if ( ! is_null($this->instance))
+				{
+					return strtr($this->url, [':id' => $this->instance->getKey()]);
+				}
+				return $this->url;
 			}
 			return $this->model()->displayUrl([
 				'_action' => $this->name(),

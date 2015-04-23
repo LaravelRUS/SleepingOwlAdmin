@@ -15,6 +15,12 @@ class Image extends NamedColumn
 		AssetManager::addScript('admin::default/js/columns/image.js');
 	}
 
+	function __construct($name)
+	{
+		parent::__construct($name);
+		$this->orderable(false);
+	}
+
 	public function render()
 	{
 		$value = $this->getValue($this->instance, $this->name());

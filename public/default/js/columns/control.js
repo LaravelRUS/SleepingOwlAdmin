@@ -12,4 +12,5 @@ $(function ()
 			}
 		});
 	});
-})
+	bootbox.setDefaults('locale', window.admin.locale);
+});

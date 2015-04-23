@@ -56,7 +56,19 @@ class BaseDateTime extends NamedFormItem
 		}
 		if ( ! is_null($value))
 		{
-			$time = Carbon::parse($value);
+			try
+			{
+				$time = Carbon::parse($value);
+			} catch (\Exception $e)
+			{
+				try
+				{
+					$time = Carbon::createFromFormat($this->format(), $value);
+				} catch (\Exception $e)
+				{
+					return null;
+				}
+			}
 			$value = $time->format($this->format());
 		}
 		return $value;

@@ -129,7 +129,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 			'items'    => $this->items(),
 			'instance' => $this->instance(),
 			'action'   => $this->action,
-			'backUrl'  => $this->model()->displayUrl(),
+			'backUrl'  => session('_redirectBack', URL::previous()),
 		];
 		return view(AdminTemplate::view('form.default'), $params);
 	}

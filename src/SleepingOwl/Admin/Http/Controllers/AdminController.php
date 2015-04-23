@@ -38,7 +38,9 @@ class AdminController extends Controller
 		{
 			if ($validator = $create->validate($model))
 			{
-				return Redirect::back()->withErrors($validator)->withInput();
+				return Redirect::back()->withErrors($validator)->withInput()->with([
+					'_redirectBack' => Input::get('_redirectBack'),
+				]);
 			}
 			$create->save($model);
 		}
@@ -66,7 +68,9 @@ class AdminController extends Controller
 		{
 			if ($validator = $edit->validate($model))
 			{
-				return Redirect::back()->withErrors($validator)->withInput();
+				return Redirect::back()->withErrors($validator)->withInput()->with([
+					'_redirectBack' => Input::get('_redirectBack'),
+				]);
 			}
 			$edit->save($model);
 		}

@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Repository;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BaseRepository
 {
@@ -40,6 +41,16 @@ class BaseRepository
 	public function find($id)
 	{
 		return $this->model->find($id);
+	}
+
+	public function findMany($ids)
+	{
+		$query = $this->model->query();
+		if (method_exists($this->model, 'withTrashed'))
+		{
+			$query->withTrashed();
+		}
+		return $query->whereIn($this->model->getKeyName(), $ids)->get();
 	}
 
 	public function delete($id)
