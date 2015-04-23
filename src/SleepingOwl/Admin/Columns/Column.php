@@ -10,6 +10,7 @@ use SleepingOwl\Admin\Base\AliasBinder;
  * @method static \SleepingOwl\Admin\Columns\Column\Filter filter($name)
  * @method static \SleepingOwl\Admin\Columns\Column\Url url($name)
  * @method static \SleepingOwl\Admin\Columns\Column\Lists lists($name)
+ * @method static \SleepingOwl\Admin\Columns\Column\Image image($name)
  * @method static \SleepingOwl\Admin\Columns\Column\DateTime datetime($name)
  * @method static \SleepingOwl\Admin\Columns\Column\Custom custom()
  * @method static \SleepingOwl\Admin\Columns\Column\Control control()

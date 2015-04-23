@@ -66,6 +66,10 @@ class BaseDateTime extends NamedFormItem
 	{
 		$name = $this->name();
 		$value = parent::value();
+		if (empty($value))
+		{
+			$value = null;
+		}
 		if ( ! is_null($value))
 		{
 			$value = Carbon::createFromFormat($this->format(), $value);
