@@ -22,7 +22,7 @@ class Image extends BaseFormItem
 		foreach ($data as $key => &$value)
 		{
 			if ( ! is_string($value)) continue;
-			if (preg_match('/^(?<field>[a-zA-Z0-9]+)ConfirmDelete$/', $key, $matches))
+			if (preg_match('/^(?<field>[-_a-zA-Z0-9]+)ConfirmDelete$/', $key, $matches))
 			{
 				$field = $matches['field'];
 				if (empty($data[$field]))
