@@ -68,4 +68,8 @@ return [
 		'browse' => 'Select Image',
 		'remove' => 'Remove Image',
 	],
+	'file'     => [
+		'browse' => 'Select File',
+		'remove' => 'Remove File',
+	],
 ];

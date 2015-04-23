@@ -26,9 +26,7 @@ class Image extends NamedFormItem implements WithRoutesInterface
 			'as' => 'admin.formitems.image.upload',
 			function ()
 			{
-				$validator = Validator::make(Input::all(), [
-					'file' => 'image',
-				]);
+				$validator = Validator::make(Input::all(), static::uploadValidationRules());
 				if ($validator->fails())
 				{
 					return Response::make($validator->errors()->get('file'), 400);
@@ -46,4 +44,12 @@ class Image extends NamedFormItem implements WithRoutesInterface
 			}
 		]);
 	}
+
+	protected static function uploadValidationRules()
+	{
+		return [
+			'file' => 'image',
+		];
+	}
+
 }

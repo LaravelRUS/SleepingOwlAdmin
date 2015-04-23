@@ -3,7 +3,8 @@
 	<div class="imageUpload" data-target="{{ route('admin.formitems.image.upload') }}" data-token="{{ csrf_token() }}">
 		<div>
 			<div class="thumbnail">
-				<img src="{{ empty($value) ? 'http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image' : asset($value) }}" width="200px" height="150px" />
+				<img class="no-value {{ empty($value) ? '' : 'hidden' }}" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" width="200px" height="150px" />
+				<img class="has-value {{ empty($value) ? 'hidden' : '' }}" src="{{ asset($value) }}" width="200px" height="150px" />
 			</div>
 		</div>
 		<div>
