@@ -14,7 +14,7 @@
 		"php": ">=5.4.0",
 		"illuminate/support": "5.*",
 		"intervention/image": "2.*",
-		"intervention/imagecache": "2.*",
+		"intervention/imagecache": "dev-master",
 		"doctrine/dbal": "~2.3",
 		"sleeping-owl/with-join": "1.*",
 		"illuminate/html": "~5.0"

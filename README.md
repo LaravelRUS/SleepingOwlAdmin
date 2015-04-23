@@ -24,7 +24,7 @@ It includes:
 
 ## Installation
 
- 1. Require this package in your composer.json and run composer update (or run `composer require sleeping-owl/admin:dev-laravel-5` directly):
+ 1. Require this package in your composer.json and run composer update (or run `composer require sleeping-owl/admin` directly):
 
 		"sleeping-owl/admin": "2.*"
 
