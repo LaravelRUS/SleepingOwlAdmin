@@ -23,6 +23,7 @@ class FormItemServiceProvider extends ServiceProvider
 		FormItem::register('password', 'SleepingOwl\Admin\FormItems\Password');
 		FormItem::register('textarea', 'SleepingOwl\Admin\FormItems\Textarea');
 		FormItem::register('view', 'SleepingOwl\Admin\FormItems\View');
+		FormItem::register('image', 'SleepingOwl\Admin\FormItems\Image');
 	}
 
 }

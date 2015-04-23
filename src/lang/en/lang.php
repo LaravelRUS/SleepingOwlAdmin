@@ -63,5 +63,9 @@ return [
 	'select'   => [
 		'nothing'  => 'Nothing selected',
 		'selected' => 'selected'
-	]
+	],
+	'image'    => [
+		'browse' => 'Select Image',
+		'remove' => 'Remove Image',
+	],
 ];

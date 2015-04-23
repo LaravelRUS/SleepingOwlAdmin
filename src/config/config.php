@@ -20,7 +20,7 @@ return [
 	 */
 	'bootstrapDirectory'      => app_path('admin'),
 
-	'ckeditorUploadDirectory' => 'images/uploads',
+	'imagesUploadDirectory' => 'images/uploads',
 
 	/*
 	 * Authentication config
