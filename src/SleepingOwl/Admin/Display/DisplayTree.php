@@ -19,6 +19,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
 	protected $repository;
 	protected $reorderable = true;
 	protected $parameters = [];
+	protected $value = 'title';
 
 	public function setClass($class)
 	{
@@ -90,6 +91,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
 			'items'       => $this->repository->tree(),
 			'reorderable' => $this->reorderable(),
 			'url'         => Admin::model($this->class)->displayUrl(),
+			'value'       => $this->value(),
 			'creatable'   => ! is_null($this->model()->create()),
 			'createUrl'   => $this->model()->createUrl($this->parameters() + Input::all()),
 			'controls'    => [Column::treeControl()],
@@ -109,6 +111,16 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
 			$data = Input::get('data');
 			$model->display()->repository()->reorder($data);
 		});
+	}
+
+	public function value($value = null)
+	{
+		if (is_null($value))
+		{
+			return $this->value;
+		}
+		$this->value = $value;
+		return $this;
 	}
 
 }

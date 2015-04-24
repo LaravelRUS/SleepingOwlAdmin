@@ -4,7 +4,7 @@
 			<div class="dd-handle dd3-handle"></div>
 		@endif
 		<div class="dd3-content">
-			{{{ $entry->title }}}
+			{{{ $entry->$value }}}
 			@foreach ($controls as $control)
 				<?php
 					if ($control instanceof \SleepingOwl\Admin\Interfaces\ColumnInterface)
@@ -12,7 +12,7 @@
 						$control->setInstance($entry);
 					}
 				?>
-				{!! $control !!}
+				{!! $control->render() !!}
 			@endforeach
 		</div>
 		@if ($entry->children->count() > 0)

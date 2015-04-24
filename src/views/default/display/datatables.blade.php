@@ -10,14 +10,14 @@
 @endif
 <div class="pull-right tableActions">
 	@foreach ($actions as $action)
-		{!! $action !!}
+		{!! $action->render() !!}
 	@endforeach
 </div>
 <table class="table table-striped datatables" data-order="{{ json_encode($order) }}">
 	<thead>
 		<tr>
 			@foreach ($columns as $column)
-				{!! $column->header() !!}
+				{!! $column->header()->render() !!}
 			@endforeach
 		</tr>
 	</thead>
@@ -28,7 +28,7 @@
 					<?php
 						$column->setInstance($instance);
 					?>
-					{!! $column !!}
+					{!! $column->render() !!}
 				@endforeach
 			</tr>
 		@endforeach
