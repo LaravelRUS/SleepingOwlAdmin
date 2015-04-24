@@ -65,8 +65,9 @@ return [
 		'selected' => 'selected'
 	],
 	'image'    => [
-		'browse' => 'Select Image',
-		'remove' => 'Remove Image',
+		'browse'         => 'Select Image',
+		'browseMultiple' => 'Select Images',
+		'remove'         => 'Remove Image',
 	],
 	'file'     => [
 		'browse' => 'Select File',

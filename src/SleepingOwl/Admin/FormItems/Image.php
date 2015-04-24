@@ -11,19 +11,20 @@ class Image extends NamedFormItem implements WithRoutesInterface
 {
 
 	protected $view = 'image';
+	protected static $route = 'uploadImage';
 
 	public function initialize()
 	{
 		parent::initialize();
 
-		AssetManager::addScript('admin::default/js/formitems/image/flow.min.js');
 		AssetManager::addScript('admin::default/js/formitems/image/init.js');
+		AssetManager::addScript('admin::default/js/formitems/image/flow.min.js');
 	}
 
 	public static function registerRoutes()
 	{
-		Route::post('formitems/image/upload', [
-			'as' => 'admin.formitems.image.upload',
+		Route::post('formitems/image/' . static::$route, [
+			'as' => 'admin.formitems.image.' . static::$route,
 			function ()
 			{
 				$validator = Validator::make(Input::all(), static::uploadValidationRules());
