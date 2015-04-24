@@ -1,13 +1,11 @@
 $(function ()
 {
-	$('.imageUpload').each(function (index, item)
+	$('.imageUploadMultiple').each(function (index, item)
 	{
 		var $item = $(item);
 		var $group = $item.closest('.form-group');
+		var $innerGroup = $item.find('.form-group');
 		var $errors = $item.find('.errors');
-		var $noValue = $item.find('.no-value');
-		var $hasValue = $item.find('.has-value');
-		var $thumbnail = $item.find('.thumbnail img.has-value');
 		var $input = $item.find('.imageValue');
 		var flow = new Flow({
 			target: $item.data('target'),
@@ -17,7 +15,16 @@ $(function ()
 				_token: $item.data('token')
 			}
 		});
-		flow.assignBrowse($item.find('.imageBrowse'), true);
+		var updateValue = function ()
+		{
+			var values = [];
+			$item.find('img[data-value]').each(function ()
+			{
+				values.push($(this).data('value'));
+			});
+			$input.val(values.join(','));
+		};
+		flow.assignBrowse($item.find('.imageBrowse'));
 		flow.on('filesSubmitted', function(file) {
 			flow.upload();
 		});
@@ -28,11 +35,11 @@ $(function ()
 			$group.removeClass('has-error');
 
 			var result = $.parseJSON(message);
-			$thumbnail.attr('src', result.url);
-			$hasValue.find('span').text(result.value);
-			$input.val(result.value);
-			$noValue.addClass('hidden');
-			$hasValue.removeClass('hidden');
+
+			$innerGroup.append('<div class="col-xs-6 col-md-3"><div class="thumbnail">' +
+				'<img data-value="' + result.value + '" src="' + result.url + '" />' +
+				'<a href="#" class="imageRemove"><i class="fa fa-times"></i> Remove</a></div></div>');
+			updateValue();
 		});
 		flow.on('fileError', function(file, message){
 			flow.removeFile(file);
@@ -46,11 +53,11 @@ $(function ()
 			$errors.html(errors);
 			$group.addClass('has-error');
 		});
-		$item.find('.imageRemove').click(function ()
+		$item.on('click', '.imageRemove', function (e)
 		{
-			$input.val('');
-			$noValue.removeClass('hidden');
-			$hasValue.addClass('hidden');
+			e.preventDefault();
+			$(this).closest('.imageThumbnail').remove();
+			updateValue();
 		});
 	});
 });
