@@ -343,3 +343,7 @@ table.dataTable thead .sorting:after {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+.tab-content {
+	padding: 10px 0;
+}
