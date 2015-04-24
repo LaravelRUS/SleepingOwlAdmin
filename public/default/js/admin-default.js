@@ -11,7 +11,7 @@ $(function ()
 		var currentPageLink = $('#side-menu a[href="' + currentPage + '"]');
 		if ( ! currentPageLink.length)
 		{
-			currentPageLink = $('#side-menu a[href^="' + currentPage + '?"]');
+			currentPageLink = $('#side-menu a[href="' + window.location.href + '"]');
 		}
 		currentPageLink.addClass('active').parents('li').addClass('active').end().parents('ul').addClass('collapse').addClass('in');
 	})();
