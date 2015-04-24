@@ -9,6 +9,10 @@ $(function ()
 		currentPage = currentPage.replace(/\/([0-9]+)\/edit/, '');
 
 		var currentPageLink = $('#side-menu a[href="' + currentPage + '"]');
+		if ( ! currentPageLink.length)
+		{
+			currentPageLink = $('#side-menu a[href^="' + currentPage + '?"]');
+		}
 		currentPageLink.addClass('active').parents('li').addClass('active').end().parents('ul').addClass('collapse').addClass('in');
 	})();
 
