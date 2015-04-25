@@ -60,7 +60,7 @@ class ModelConfiguration
 
 	public function create($create = null)
 	{
-		if (is_null($create))
+		if (func_num_args() == 0)
 		{
 			return $this->getCreate();
 		}
@@ -70,7 +70,7 @@ class ModelConfiguration
 
 	public function edit($edit = null)
 	{
-		if (is_null($edit) || is_numeric($edit))
+		if ((func_num_args() == 0) || is_numeric($edit))
 		{
 			return $this->getEdit($edit);
 		}
