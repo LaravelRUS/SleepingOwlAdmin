@@ -87,7 +87,7 @@ class ModelConfiguration
 
 	public function delete($delete = null)
 	{
-		if (is_null($delete) || is_numeric($delete))
+		if ((func_num_args() == 0) || is_numeric($delete))
 		{
 			return $this->getDelete($delete);
 		}
@@ -97,7 +97,7 @@ class ModelConfiguration
 
 	public function restore($restore = null)
 	{
-		if (is_null($restore) || is_numeric($restore))
+		if ((func_num_args() == 0) || is_numeric($restore))
 		{
 			return $this->getRestore($restore);
 		}
