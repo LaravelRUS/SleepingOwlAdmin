@@ -12,6 +12,9 @@ return [
 	 */
 	'prefix'                  => 'admin',
 
+	/*
+	 * Middleware to use in admin routes
+	 */
 	'middleware'              => ['admin.auth'],
 
 	/*
@@ -20,6 +23,9 @@ return [
 	 */
 	'bootstrapDirectory'      => app_path('admin'),
 
+	/*
+	 * Directory to upload images to (relative to public directory)
+	 */
 	'imagesUploadDirectory' => 'images/uploads',
 
 	/*
@@ -33,8 +39,14 @@ return [
 		]
 	],
 
+	/*
+	 * Template to use
+	 */
 	'template'                => 'SleepingOwl\Admin\Templates\TemplateDefault',
 
+	/*
+	 * Default date and time formats
+	 */
 	'datetimeFormat'          => 'd.m.Y H:i',
 	'dateFormat'              => 'd.m.Y',
 	'timeFormat'              => 'H:i',
