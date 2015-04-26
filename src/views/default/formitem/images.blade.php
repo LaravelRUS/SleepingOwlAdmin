@@ -6,7 +6,7 @@
 				<div class="col-xs-6 col-md-3 imageThumbnail">
 					<div class="thumbnail">
 						<img data-value="{{ $image }}" src="{{ asset($image) }}" />
-						<a href="#" class="imageRemove"><i class="fa fa-times"></i> Remove</a>
+						<a href="#" class="imageRemove">Remove</a>
 					</div>
 				</div>
 			@endforeach

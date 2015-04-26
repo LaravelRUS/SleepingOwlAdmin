@@ -38,7 +38,7 @@ $(function ()
 
 			$innerGroup.append('<div class="col-xs-6 col-md-3"><div class="thumbnail">' +
 				'<img data-value="' + result.value + '" src="' + result.url + '" />' +
-				'<a href="#" class="imageRemove"><i class="fa fa-times"></i> Remove</a></div></div>');
+				'<a href="#" class="imageRemove">Remove</a></div></div>');
 			updateValue();
 		});
 		flow.on('fileError', function(file, message){

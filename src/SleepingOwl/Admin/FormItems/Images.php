@@ -29,4 +29,14 @@ class Images extends Image
 		parent::save();
 	}
 
+	public function value()
+	{
+		$value = parent::value();
+		if (is_null($value))
+		{
+			$value = [];
+		}
+		return $value;
+	}
+
 }
