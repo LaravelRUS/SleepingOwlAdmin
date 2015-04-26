@@ -77,7 +77,6 @@ class ModelCommand extends Command
 	protected function saveResult($modelClass, $template)
 	{
 		$filename = class_basename($modelClass) . '.php';
-		$filename = '_test.php';
 		$file = Config::get('admin.bootstrapDirectory') . '/' . $filename;
 		if (file_exists($file))
 		{
