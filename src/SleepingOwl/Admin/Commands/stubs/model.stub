@@ -1,12 +1,21 @@
 <?php
 
-Admin::model(:modelClass::class)->title(':title')->with(:with)->filters(function ()
+Admin::model('__modelClass')->title('__title')->display(function ()
 {
-:filters
-})->columns(function ()
+	$display = AdminDisplay::datatables();
+	$display->with(__with);
+	$display->filters([
+__filters
+	]);
+	$display->columns([
+__columns
+	]);
+	return $display;
+})->createAndEdit(function ()
 {
-:columns
-})->form(function ()
-{
-:form
+	$form = AdminForm::form();
+	$form->items([
+__form
+	]);
+	return $form;
 });

@@ -21,9 +21,17 @@ class RouteServiceProvider extends ServiceProvider
 				'middleware' => config('admin.middleware'),
 			], function ()
 			{
-				require config('admin.bootstrapDirectory') . '/routes.php';
+				$file = config('admin.bootstrapDirectory') . '/routes.php';
+				if (file_exists($file))
+				{
+					require $file;
+				}
 			});
-			require __DIR__ . '/../Http/routes.php';
+			$routesFile = __DIR__ . '/../Http/routes.php';
+			if (file_exists($routesFile))
+			{
+				require $routesFile;
+			}
 		});
 	}
 

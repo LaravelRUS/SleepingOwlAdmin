@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use SleepingOwl\Models\Interfaces\ModelWithFileFieldsInterface;
-use SleepingOwl\Models\Interfaces\ModelWithImageFieldsInterface;
 
 class ModelCompiler
 {
@@ -104,19 +102,15 @@ class ModelCompiler
 	 */
 	protected function renderColumn($type, $column, $title)
 	{
-		$template = "Column:::type(':field', ':title')";
-		if ($type == 'image')
-		{
-			$template = "Column:::type(':field')->sortable(false)";
-		}
+		$template = "Column:::type(':field')->label(':title')";
 		$result = strtr($template, [
 			':type'  => $type,
 			':field' => $column,
 			':title' => $title
 		]);
-		if ($this->hasRelation($column, '\Illuminate\Database\Eloquent\Relations\HasMany'))
+		if ($this->hasRelation($column, 'Illuminate\Database\Eloquent\Relations\HasMany'))
 		{
-			$appendTemplate = ";//->append(Column::filter(':foreignKey')->model(:foreignModel::class));";
+			$appendTemplate = ",//->append(Column::filter(':foreignKey')->model('App\\:foreignModel')),";
 			$relation = $this->getRelation($column);
 			list($foreignModel, $foreignKey) = explode('.', $relation->getForeignKey());
 			$foreignModel = Str::studly(Str::singular($foreignModel));
@@ -127,9 +121,9 @@ class ModelCompiler
 			return $result;
 		}
 		$first = $this->getFirstPart($column);
-		if ($this->hasRelation($first, '\Illuminate\Database\Eloquent\Relations\BelongsTo'))
+		if ($this->hasRelation($first, 'Illuminate\Database\Eloquent\Relations\BelongsTo'))
 		{
-			$appendTemplate = "->append(Column::filter(':foreignKey')->value(':first.id'));";
+			$appendTemplate = "->append(Column::filter(':foreignKey')),";
 			$relation = $this->getRelation($first);
 			$foreignKey = $relation->getForeignKey();
 			$foreignModel = get_class($relation->getRelated());
@@ -143,30 +137,26 @@ class ModelCompiler
 		}
 		if ($this->isDateTimeColumn($column))
 		{
-			$appendTemplate = "->format(':date', ':time');";
+			$appendTemplate = "->format(':value'),";
 			$columnType = $this->getColumnType($column);
 			switch ($columnType)
 			{
 				case 'date':
-					$date = 'medium';
-					$time = 'none';
+					$value = 'd.m.Y';
 					break;
 				case 'time':
-					$date = 'none';
-					$time = 'short';
+					$value = 'H:i';
 					break;
 				case 'datetime':
-					$date = 'medium';
-					$time = 'short';
+					$value = 'd.m.Y H:i';
 					break;
 			}
 			$result .= strtr($appendTemplate, [
-				':date' => $date,
-				':time' => $time
+				':value' => $value,
 			]);
 			return $result;
 		}
-		return $result . ';';
+		return $result . ',';
 	}
 
 	/**
@@ -175,21 +165,17 @@ class ModelCompiler
 	 */
 	protected function guessType($column)
 	{
-		if ($this->isImageColumn($column))
-		{
-			return 'image';
-		}
-		if ($this->hasRelation($column, '\Illuminate\Database\Eloquent\Relations\HasMany'))
+		if ($this->hasRelation($column, 'Illuminate\Database\Eloquent\Relations\HasMany'))
 		{
 			return 'count';
 		}
-		if ($this->hasRelation($this->getFirstPart($column), '\Illuminate\Database\Eloquent\Relations\BelongsToMany'))
+		if ($this->hasRelation($this->getFirstPart($column), 'Illuminate\Database\Eloquent\Relations\BelongsToMany'))
 		{
 			return 'lists';
 		}
 		if ($this->isDateTimeColumn($column))
 		{
-			return 'date';
+			return 'datetime';
 		}
 		return 'string';
 	}
@@ -199,15 +185,15 @@ class ModelCompiler
 	 */
 	protected function guessWith($column)
 	{
-		if ($this->hasRelation($column, '\Illuminate\Database\Eloquent\Relations\HasMany'))
+		if ($this->hasRelation($column, 'Illuminate\Database\Eloquent\Relations\HasMany'))
 		{
 			$this->with[] = $column;
 		} else
 		{
 			$first = $this->getFirstPart($column);
 			if ($this->hasRelation($first, [
-				'\Illuminate\Database\Eloquent\Relations\BelongsTo',
-				'\Illuminate\Database\Eloquent\Relations\BelongsToMany'
+				'Illuminate\Database\Eloquent\Relations\BelongsTo',
+				'Illuminate\Database\Eloquent\Relations\BelongsToMany'
 			])
 			)
 			{
@@ -266,18 +252,18 @@ class ModelCompiler
 		}, $this->with);
 		$appendTab = function ($entry)
 		{
-			return "\t$entry";
+			return "\t\t$entry";
 		};
 		$columns = array_map($appendTab, $this->columns);
 		$filters = array_map($appendTab, $this->filters);
 		$formItems = array_map($appendTab, $this->formItems);
 		return [
-			':modelClass' => $this->modelClass,
-			':title'      => $this->title,
-			':with'       => implode(', ', $with),
-			':filters'    => implode("\n", $filters),
-			':columns'    => implode("\n", $columns),
-			':form'       => implode("\n", $formItems)
+			'__modelClass' => $this->modelClass,
+			'__title'      => $this->title,
+			'__with'       => implode(', ', $with),
+			'__filters'    => implode("\n", $filters),
+			'__columns'    => implode("\n", $columns),
+			'__form'       => implode("\n", $formItems)
 		];
 	}
 
@@ -295,7 +281,7 @@ class ModelCompiler
 	 */
 	protected function appendFilter($foreignKey, $foreignModel)
 	{
-		$filterTemplate = "ModelItem::filter(':foreignKey')->title()->from(:foreignModel::class);";
+		$filterTemplate = "Filter::related(':foreignKey')->model(':foreignModel'),";
 		$this->filters[] = strtr($filterTemplate, [
 			':foreignKey'   => $foreignKey,
 			':foreignModel' => $foreignModel
@@ -324,7 +310,8 @@ class ModelCompiler
 		$ignoredColumns = [
 			$this->instance->getKeyName(),
 			Model::CREATED_AT,
-			Model::UPDATED_AT
+			Model::UPDATED_AT,
+			'deleted_at',
 		];
 
 		$columns = $this->schemaManager->listTableColumns($this->table);
@@ -365,7 +352,7 @@ class ModelCompiler
 				if ($foreignKey = $this->getForeignKey($name))
 				{
 					$foreignModel = Str::studly(Str::singular($foreignKey->getForeignTableName()));
-					$result .= "->list($foreignModel::class)";
+					$result .= "->model('App\\$foreignModel')->display('title')";
 				}
 				if ($this->isEnumColumn($name))
 				{
@@ -374,12 +361,14 @@ class ModelCompiler
 				}
 				break;
 			case 'time':
+				$result .= '->format(\'H:i\'),//->seconds(true)';
+				break;
 			case 'timestamp':
-				$result .= ';//->seconds(true)';
+				$result .= '->format(\'d.m.Y\'),//->seconds(true)';
 				break;
 		}
 
-		return $result . ';';
+		return $result . ',';
 	}
 
 	/**
@@ -389,14 +378,6 @@ class ModelCompiler
 	protected function guessFormItemType(Column $column)
 	{
 		$name = $column->getName();
-		if ($this->isImageColumn($name))
-		{
-			return 'image';
-		}
-		if ($this->isFileColumn($name))
-		{
-			return 'file';
-		}
 		$foreignKey = $this->getForeignKey($name);
 		if ( ! is_null($foreignKey))
 		{
@@ -418,24 +399,6 @@ class ModelCompiler
 			'datetime' => 'timestamp',
 		];
 		return Arr::get($lookup, $type, 'text');
-	}
-
-	/**
-	 * @param $column
-	 * @return bool
-	 */
-	protected function isImageColumn($column)
-	{
-		return ($this->instance instanceof ModelWithImageFieldsInterface) && $this->instance->hasImageField($column);
-	}
-
-	/**
-	 * @param $column
-	 * @return bool
-	 */
-	protected function isFileColumn($column)
-	{
-		return ($this->instance instanceof ModelWithFileFieldsInterface) && $this->instance->hasFileField($column);
 	}
 
 	/**

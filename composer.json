@@ -5,7 +5,8 @@
 	"keywords": [
 		"laravel",
 		"admin",
-		"administrator"
+		"administrator",
+		"crud"
 	],
 	"license": "MIT",
 	"authors": [
@@ -25,11 +26,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"SleepingOwl\\Admin": "src/",
-			"SleepingOwl\\DateFormatter": "src/",
-			"SleepingOwl\\Html": "src/",
-			"SleepingOwl\\Models": "src/",
-			"SleepingOwl\\RandomFilenamer": "src/"
+			"SleepingOwl\\Admin": "src/"
 		}
 	}
 }
