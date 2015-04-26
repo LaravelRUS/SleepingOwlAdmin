@@ -51,11 +51,11 @@ It includes:
 
 ## Documentation
 
-Documentation can be found at [sleeping owl documentation](http://sleeping-owl.github.io).
+Documentation can be found at [sleeping owl documentation](http://sleeping-owl.github.io/v3).
 
 ## Demo Application
 
-View [live demo](http://sleepingowladmindemo.cloudcontrolled.com).
+View [live demo](http://sleepingowladmindemo2.cloudcontrolled.com).
 
 ## Support Library
 
