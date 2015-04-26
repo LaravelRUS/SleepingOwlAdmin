@@ -16,8 +16,15 @@ class AdminServiceProvider extends ServiceProvider
 		'SleepingOwl\Admin\Providers\RouteServiceProvider',
 	];
 
+	protected $commads = [
+		'AdministratorsCommand',
+		'InstallCommand',
+		'ModelCommand'
+	];
+
 	public function register()
 	{
+		$this->registerCommands();
 	}
 
 	public function boot()
@@ -29,6 +36,10 @@ class AdminServiceProvider extends ServiceProvider
 		$this->publishes([
 			__DIR__ . '/../../config/config.php' => config_path('admin.php'),
 		], 'config');
+
+		$this->publishes([
+			__DIR__ . '/../../migrations/' => base_path('/database/migrations'),
+		], 'migrations');
 
 		$this->publishes([
 			__DIR__ . '/../../../public/' => public_path('packages/sleeping-owl/admin/'),
@@ -67,6 +78,14 @@ class AdminServiceProvider extends ServiceProvider
 		{
 			$provider = app($providerClass, [app()]);
 			$provider->register();
+		}
+	}
+
+	protected function registerCommands()
+	{
+		foreach ($this->commads as $command)
+		{
+			$this->commands('SleepingOwl\Admin\Commands\\' . $command);
 		}
 	}
 
