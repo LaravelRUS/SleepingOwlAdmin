@@ -27,6 +27,7 @@ abstract class BaseColumn implements ColumnInterface
 	 * @var string|boolean
 	 */
 	protected $sortable;
+	protected $sortableDest = 'asc';
 	/**
 	 * Html builder
 	 *
@@ -83,10 +84,12 @@ abstract class BaseColumn implements ColumnInterface
 
 	/**
 	 * Set this column as default sortable for this model item
+	 * @param string $dest
 	 */
-	public function sortableDefault()
+	public function sortableDefault($dest = 'asc')
 	{
 		$this->sortable = 'default';
+		$this->sortableDest = $dest;
 	}
 
 	/**
@@ -143,7 +146,7 @@ abstract class BaseColumn implements ColumnInterface
 		}
 		if ($this->isSortableDefault())
 		{
-			$attributes['data-sortable-default'] = 'true';
+			$attributes['data-sortable-default'] = $this->sortableDest;
 		}
 		$attributes['style'] = 'width:10px;';
 		return $attributes;

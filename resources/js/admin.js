@@ -41,7 +41,7 @@ $(function ()
 
 			if ($(this).data('sortable-default'))
 			{
-				order.push([i, 'asc']);
+				order.push([i, $(this).data('sortable-default')]);
 			}
 			columns.push(column);
 		});
