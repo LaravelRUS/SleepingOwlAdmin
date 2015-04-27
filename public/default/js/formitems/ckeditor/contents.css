@@ -18,6 +18,11 @@ body
 	margin: 20px;
 }
 
+p
+{
+	margin: 10px 0;
+}
+
 .cke_editable
 {
 	font-size: 13px;
