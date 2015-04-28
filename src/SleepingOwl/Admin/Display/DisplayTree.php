@@ -20,6 +20,8 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
 	protected $reorderable = true;
 	protected $parameters = [];
 	protected $value = 'title';
+	protected $parentField = 'parent_id';
+	protected $orderField = 'order';
 
 	public function setClass($class)
 	{
@@ -87,6 +89,8 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
 
 	public function render()
 	{
+		$this->repository()->parentField($this->parentField());
+		$this->repository()->orderField($this->orderField());
 		$params = [
 			'items'       => $this->repository->tree(),
 			'reorderable' => $this->reorderable(),
@@ -120,6 +124,26 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
 			return $this->value;
 		}
 		$this->value = $value;
+		return $this;
+	}
+
+	public function parentField($parentField = null)
+	{
+		if (is_null($parentField))
+		{
+			return $this->parentField;
+		}
+		$this->parentField = $parentField;
+		return $this;
+	}
+
+	public function orderField($orderField = null)
+	{
+		if (is_null($orderField))
+		{
+			return $this->orderField;
+		}
+		$this->orderField = $orderField;
 		return $this;
 	}
 

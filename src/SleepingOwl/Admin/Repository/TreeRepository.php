@@ -1,29 +1,85 @@
 <?php namespace SleepingOwl\Admin\Repository;
 
+use Illuminate\Support\Collection;
+
 class TreeRepository extends BaseRepository
 {
+
+	const TreeTypeBaum = 0;
+	const TreeTypeKalnoy = 1;
+	const TreeTypeSimple = 2;
+
+	protected $type;
+	protected $parentField = 'parent_id';
+	protected $orderField = 'order';
+
+	function __construct($class)
+	{
+		parent::__construct($class);
+
+		$this->detectType();
+	}
+
+	protected function detectType()
+	{
+		if ($this->model() instanceof \Baum\Node)
+		{
+			return $this->type(static::TreeTypeBaum);
+		}
+		if ($this->model() instanceof \Kalnoy\Nestedset\Node)
+		{
+			return $this->type(static::TreeTypeKalnoy);
+		}
+		return $this->type(static::TreeTypeSimple);
+	}
 
 	public function tree()
 	{
 		$collection = $this->query()->get();
-		if (method_exists($collection, 'toHierarchy'))
+		switch ($this->type())
 		{
-			return $collection->toHierarchy();
-		} elseif (method_exists($collection, 'toTree'))
-		{
-			return $collection->toTree();
-		} else
-		{
-			throw new \Exception('Tree type not supported');
+			case static::TreeTypeBaum:
+				return $collection->toHierarchy();
+				break;
+			case static::TreeTypeKalnoy:
+				return $collection->toTree();
+				break;
+			case static::TreeTypeSimple:
+				return $this->createSimpleTree();
+				break;
 		}
 	}
 
 	public function reorder($data)
 	{
-		$left = 1;
-		foreach ($data as $root)
+		if ($this->type() == static::TreeTypeSimple)
 		{
-			$left = $this->recursiveReorder($root, null, $left);
+			$this->recursiveReorderSimple($data, null);
+		} else
+		{
+			$left = 1;
+			foreach ($data as $root)
+			{
+				$left = $this->recursiveReorder($root, null, $left);
+			}
+		}
+	}
+
+	protected function recursiveReorderSimple($data, $parentId)
+	{
+		foreach ($data as $order => $item)
+		{
+			$id = $item['id'];
+
+			$instance = $this->find($id);
+			$instance->{$this->parentField()} = $parentId;
+			$instance->{$this->orderField()} = $order;
+			$instance->save();
+
+			if (isset($item['children']))
+			{
+				$this->recursiveReorderSimple($item['children'], $id);
+			}
 		}
 	}
 
@@ -90,4 +146,56 @@ class TreeRepository extends BaseRepository
 		throw new \Exception('Tree type not supported');
 	}
 
-} 
+	public function parentField($parentField = null)
+	{
+		if (is_null($parentField))
+		{
+			return $this->parentField;
+		}
+		$this->parentField = $parentField;
+		return $this;
+	}
+
+	public function orderField($orderField = null)
+	{
+		if (is_null($orderField))
+		{
+			return $this->orderField;
+		}
+		$this->orderField = $orderField;
+		return $this;
+	}
+
+	protected function createSimpleTree()
+	{
+		$collection = $this->query()->orderBy($this->parentField(), 'asc')->orderBy($this->orderField(), 'asc')->get();
+
+		$parent = null;
+		return $this->getChildren($collection, $parent);
+	}
+
+	protected function getChildren($collection, $id)
+	{
+		$parentField = $this->parentField();
+		$result = [];
+		foreach ($collection as $instance)
+		{
+			if ($instance->$parentField != $id) continue;
+
+			$instance->setRelation('children', $this->getChildren($collection, $instance->getKey()));
+			$result[] = $instance;
+		}
+		return Collection::make($result);
+	}
+
+	public function type($type = null)
+	{
+		if (is_null($type))
+		{
+			return $this->type;
+		}
+		$this->type = $type;
+		return $this;
+	}
+
+}
