@@ -56,6 +56,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 	{
 		$offset = Input::get('start', 0);
 		$limit = Input::get('length', 10);
+		if ($limit == -1)
+		{
+			return;
+		}
 		$query->offset($offset)->limit($limit);
 	}
 
@@ -105,7 +109,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		$columns = $this->allColumns();
 
 		$result = [];
-		$result['draw'] = Input::get('draw');
+		$result['draw'] = Input::get('draw', 0);
 		$result['recordsTotal'] = $totalCount;
 		$result['recordsFiltered'] = $filteredCount;
 		$result['data'] = [];
