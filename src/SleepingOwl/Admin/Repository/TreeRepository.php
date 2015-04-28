@@ -12,6 +12,7 @@ class TreeRepository extends BaseRepository
 	protected $type;
 	protected $parentField = 'parent_id';
 	protected $orderField = 'order';
+	protected $rootParentId = null;
 
 	function __construct($class)
 	{
@@ -54,7 +55,7 @@ class TreeRepository extends BaseRepository
 	{
 		if ($this->type() == static::TreeTypeSimple)
 		{
-			$this->recursiveReorderSimple($data, null);
+			$this->recursiveReorderSimple($data, $this->rootParentId());
 		} else
 		{
 			$left = 1;
@@ -170,7 +171,7 @@ class TreeRepository extends BaseRepository
 	{
 		$collection = $this->query()->orderBy($this->parentField(), 'asc')->orderBy($this->orderField(), 'asc')->get();
 
-		$parent = null;
+		$parent = $this->rootParentId();
 		return $this->getChildren($collection, $parent);
 	}
 
@@ -195,6 +196,16 @@ class TreeRepository extends BaseRepository
 			return $this->type;
 		}
 		$this->type = $type;
+		return $this;
+	}
+
+	public function rootParentId($rootParentId = null)
+	{
+		if (func_num_args() == 0)
+		{
+			return $this->rootParentId;
+		}
+		$this->rootParentId = $rootParentId;
 		return $this;
 	}
 
