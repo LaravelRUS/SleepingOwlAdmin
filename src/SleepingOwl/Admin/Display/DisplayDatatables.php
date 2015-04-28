@@ -14,6 +14,7 @@ class DisplayDatatables extends DisplayTable
 
 		AssetManager::addScript('admin::default/js/datatables/jquery.dataTables.min.js');
 		AssetManager::addScript('admin::default/js/datatables/jquery.dataTables_bootstrap.js');
+		AssetManager::addScript('admin::default/js/notify-combined.min.js');
 		AssetManager::addScript('admin::default/js/datatables/init.js');
 
 		AssetManager::addStyle('admin::default/css/dataTables.bootstrap.css');

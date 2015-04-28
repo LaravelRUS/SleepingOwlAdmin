@@ -10,6 +10,7 @@ class DisplayServiceProvider extends ServiceProvider
 	{
 		AdminDisplay::register('table', 'SleepingOwl\Admin\Display\DisplayTable');
 		AdminDisplay::register('datatables', 'SleepingOwl\Admin\Display\DisplayDatatables');
+		AdminDisplay::register('datatablesAsync', 'SleepingOwl\Admin\Display\DisplayDatatablesAsync');
 		AdminDisplay::register('tree', 'SleepingOwl\Admin\Display\DisplayTree');
 		AdminDisplay::register('tabbed', 'SleepingOwl\Admin\Display\DisplayTabbed');
 		AdminDisplay::register('tab', 'SleepingOwl\Admin\Display\DisplayTab');

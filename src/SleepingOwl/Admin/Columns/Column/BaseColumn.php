@@ -37,6 +37,11 @@ abstract class BaseColumn implements Renderable, ColumnInterface
 		return $this;
 	}
 
+	public function isOrderable()
+	{
+		return $this->header()->orderable();
+	}
+
 	public function header()
 	{
 		return $this->header;

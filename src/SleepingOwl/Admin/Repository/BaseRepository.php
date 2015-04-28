@@ -1,7 +1,9 @@
 <?php namespace SleepingOwl\Admin\Repository;
 
+use Cache;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Schema;
 
 class BaseRepository
 {
@@ -71,6 +73,16 @@ class BaseRepository
 		}
 		$this->model = $model;
 		return $this;
+	}
+
+	public function hasColumn($column)
+	{
+		$table = $this->model->getTable();
+		$columns = Cache::remember('admin.columns.' . $table, 60, function () use ($table)
+		{
+			return Schema::getColumnListing($table);
+		});
+		return array_search($column, $columns) !== false;
 	}
 
 }

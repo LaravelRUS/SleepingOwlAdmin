@@ -36,6 +36,7 @@ return [
 		'delete-error'   => 'Error while deleting this entry. You must delete all linked entries first.',
 		'moveUp'         => 'Move Up',
 		'moveDown'       => 'Move Down',
+		'error'          => 'There was an error during your request',
 		'filter'         => 'Show similar entries',
 		'filter-goto'    => 'Show',
 		'save'           => 'Save',

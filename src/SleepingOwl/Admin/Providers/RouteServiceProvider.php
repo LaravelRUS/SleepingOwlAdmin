@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\Admin\Providers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\ServiceProvider;
 use Route;
 use SleepingOwl\Admin\Admin;
@@ -50,6 +51,10 @@ class RouteServiceProvider extends ServiceProvider
 		Route::bind('adminModel', function ($model)
 		{
 			$class = array_search($model, Admin::modelAliases());
+			if ($class === false)
+			{
+				throw new ModelNotFoundException;
+			}
 			return Admin::model($class);
 		});
 		Route::pattern('adminWildcard', '.*');
