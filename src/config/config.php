@@ -18,10 +18,10 @@ return [
 	'middleware'              => ['admin.auth'],
 
 	/*
-	 * Path to admin bootstrap files directory in app directory
-	 * Default: 'app/admin'
+	 * Path to admin bootstrap files directory
+	 * Default: app_path('Admin')
 	 */
-	'bootstrapDirectory'      => app_path('admin'),
+	'bootstrapDirectory'      => app_path('Admin'),
 
 	/*
 	 * Directory to upload images to (relative to public directory)
