@@ -5,7 +5,7 @@ $(function ()
 		var checked = $(this).is(':checked');
 		$('.adminCheckboxRow').prop('checked', checked).filter(':first').change();
 	});
-	$('.adminCheckboxRow').change(function ()
+	$(document).delegate('.adminCheckboxRow', 'change', function ()
 	{
 		var selected = [];
 		$('.adminCheckboxRow:checked').each(function ()
