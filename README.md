@@ -59,7 +59,7 @@ View [live demo](http://sleepingowladmindemo2.cloudcontrolled.com).
 
 ## Support Library
 
-You can donate via [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AXJMWMRPCBGVA) or in BTC: 13k36pym383rEmsBSLyWfT3TxCQMN2Lekd
+You can donate via [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AXJMWMRPCBGVA), Yandex money (410012943296949) or in BTC: 13k36pym383rEmsBSLyWfT3TxCQMN2Lekd
 
 ## Copyright and License
 
