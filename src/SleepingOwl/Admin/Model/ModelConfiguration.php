@@ -157,6 +157,12 @@ class ModelConfiguration
 			$edit->setClass($this->class);
 			$edit->initialize();
 		}
+		return $edit;
+	}
+
+	public function fullEdit($id)
+	{
+		$edit = $this->edit($id);
 		if ($edit instanceof FormInterface)
 		{
 			$edit->setAction($this->updateUrl($id));

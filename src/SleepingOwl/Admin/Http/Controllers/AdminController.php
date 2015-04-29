@@ -49,7 +49,7 @@ class AdminController extends Controller
 
 	public function getEdit($model, $id)
 	{
-		$edit = $model->edit($id);
+		$edit = $model->fullEdit($id);
 		if (is_null($edit))
 		{
 			abort(404);
@@ -59,7 +59,7 @@ class AdminController extends Controller
 
 	public function postUpdate($model, $id)
 	{
-		$edit = $model->edit($id);
+		$edit = $model->fullEdit($id);
 		if (is_null($edit))
 		{
 			abort(404);
