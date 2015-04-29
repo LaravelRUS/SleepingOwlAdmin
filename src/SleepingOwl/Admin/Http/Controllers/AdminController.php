@@ -2,6 +2,7 @@
 
 use AdminTemplate;
 use App;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Input;
@@ -101,6 +102,10 @@ class AdminController extends Controller
 
 	public function render($title, $content)
 	{
+		if ($content instanceof Renderable)
+		{
+			$content = $content->render();
+		}
 		return view(AdminTemplate::view('_layout.inner'), [
 			'title'   => $title,
 			'content' => $content,
