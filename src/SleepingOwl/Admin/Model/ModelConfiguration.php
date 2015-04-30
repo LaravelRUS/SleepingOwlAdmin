@@ -30,11 +30,7 @@ class ModelConfiguration
 
 	protected function setDefaultAlias()
 	{
-		$alias = $this->class;
-		if (class_exists($this->class))
-		{
-			$alias = Str::snake(Str::plural(class_basename($this->class)));
-		}
+		$alias = Str::snake(Str::plural(class_basename($this->class)));
 		$this->alias($alias);
 	}
 

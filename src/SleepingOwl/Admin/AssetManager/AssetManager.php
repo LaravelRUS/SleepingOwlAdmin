@@ -7,8 +7,8 @@ use SleepingOwl\Admin\Router;
 
 class AssetManager
 {
-	protected static $styles = [];
 
+	protected static $styles = [];
 	protected static $scripts = [];
 
 	public static function styles()
@@ -43,4 +43,5 @@ class AssetManager
 			return $asset;
 		}, array_unique($assets));
 	}
+
 } 
