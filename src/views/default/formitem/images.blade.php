@@ -1,7 +1,7 @@
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
 	<label for="{{ $name }}">{{ $label }}</label>
 	<div class="imageUploadMultiple" data-target="{{ route('admin.formitems.image.uploadImage') }}" data-token="{{ csrf_token() }}">
-		<div class="row form-group">
+		<div class="row form-group images-group">
 			@foreach ($value as $image)
 				<div class="col-xs-6 col-md-3 imageThumbnail">
 					<div class="thumbnail">

@@ -36,7 +36,7 @@ $(function ()
 
 			var result = $.parseJSON(message);
 
-			$innerGroup.append('<div class="col-xs-6 col-md-3"><div class="thumbnail">' +
+			$innerGroup.append('<div class="col-xs-6 col-md-3 imageThumbnail"><div class="thumbnail">' +
 				'<img data-value="' + result.value + '" src="' + result.url + '" />' +
 				'<a href="#" class="imageRemove">Remove</a></div></div>');
 			updateValue();
@@ -59,5 +59,13 @@ $(function ()
 			$(this).closest('.imageThumbnail').remove();
 			updateValue();
 		});
+
+		$innerGroup.sortable({
+			onUpdate: function ()
+			{
+				updateValue();
+			}
+		});
+
 	});
 });

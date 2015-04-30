@@ -12,6 +12,9 @@ class Images extends Image
 	{
 		AssetManager::addScript('admin::default/js/formitems/image/initMultiple.js');
 		AssetManager::addScript('admin::default/js/formitems/image/flow.min.js');
+		AssetManager::addScript('admin::default/js/formitems/image/Sortable.min.js');
+		AssetManager::addScript('admin::default/js/formitems/image/sortable.jquery.binding.js');
+		AssetManager::addStyle('admin::default/css/formitems/image/images.css');
 	}
 
 	public function save()
