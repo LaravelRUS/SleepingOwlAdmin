@@ -2,13 +2,27 @@
 
 use AdminTemplate;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\View\View;
 
 class ColumnHeader implements Renderable
 {
 
+	/**
+	 * Header title
+	 * @var string
+	 */
 	protected $title;
+	/**
+	 * Is column orderable?
+	 * @var bool
+	 */
 	protected $orderable = true;
 
+	/**
+	 * Get or set title
+	 * @param string|null $title
+	 * @return $this|string
+	 */
 	public function title($title = null)
 	{
 		if (is_null($title))
@@ -19,6 +33,11 @@ class ColumnHeader implements Renderable
 		return $this;
 	}
 
+	/**
+	 * Get or set column orderable feature
+	 * @param bool|null $orderable
+	 * @return $this|bool
+	 */
 	public function orderable($orderable = null)
 	{
 		if (is_null($orderable))
@@ -29,6 +48,9 @@ class ColumnHeader implements Renderable
 		return $this;
 	}
 
+	/**
+	 * @return View
+	 */
 	public function render()
 	{
 		$params = [
@@ -38,6 +60,9 @@ class ColumnHeader implements Renderable
 		return view(AdminTemplate::view('column.header'), $params);
 	}
 
+	/**
+	 * @return string
+	 */
 	function __toString()
 	{
 		return (string)$this->render();

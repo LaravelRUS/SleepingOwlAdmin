@@ -2,10 +2,13 @@
 
 use AdminTemplate;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\View\View;
 use Input;
 use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Interfaces\DisplayInterface;
 use SleepingOwl\Admin\Interfaces\FormInterface;
+use SleepingOwl\Admin\Interfaces\FormItemInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use URL;
 use Validator;
@@ -13,30 +16,45 @@ use Validator;
 class FormDefault implements Renderable, DisplayInterface, FormInterface
 {
 
+	/**
+	 * Form related class
+	 * @var string
+	 */
 	protected $class;
+	/**
+	 * Form related repository
+	 * @var BaseRepository
+	 */
 	protected $repository;
+	/**
+	 * Form items
+	 * @var FormItemInterface[]
+	 */
 	protected $items = [];
+	/**
+	 * Form action url
+	 * @var string
+	 */
 	protected $action;
+	/**
+	 * Form related model instance
+	 * @var mixed
+	 */
 	protected $instance;
+	/**
+	 * Currently loaded model id
+	 * @var int
+	 */
 	protected $id;
+	/**
+	 * Is form already initialized?
+	 * @var bool
+	 */
 	protected $initialized = false;
 
-	public function setAction($action)
-	{
-		if (is_null($this->action))
-		{
-			$this->action = $action;
-		}
-	}
-
-	public function setClass($class)
-	{
-		if (is_null($this->class))
-		{
-			$this->class = $class;
-		}
-	}
-
+	/**
+	 * Initialize form
+	 */
 	public function initialize()
 	{
 		if ($this->initialized) return;
@@ -50,6 +68,35 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
+	/**
+	 * Set form action
+	 * @param string $action
+	 */
+	public function setAction($action)
+	{
+		if (is_null($this->action))
+		{
+			$this->action = $action;
+		}
+	}
+
+	/**
+	 * Set form class
+	 * @param string $class
+	 */
+	public function setClass($class)
+	{
+		if (is_null($this->class))
+		{
+			$this->class = $class;
+		}
+	}
+
+	/**
+	 * Get or set form items
+	 * @param FormInterface[]|null $items
+	 * @return $this|FormInterface[]
+	 */
 	public function items($items = null)
 	{
 		if (is_null($items))
@@ -60,6 +107,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		return $this;
 	}
 
+	/**
+	 * Get or set form related model instance
+	 * @param mixed|null $instance
+	 * @return $this|mixed
+	 */
 	public function instance($instance = null)
 	{
 		if (is_null($instance))
@@ -74,6 +126,10 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		return $this;
 	}
 
+	/**
+	 * Set currently loaded model id
+	 * @param int $id
+	 */
 	public function setId($id)
 	{
 		if (is_null($this->id))
@@ -83,11 +139,19 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
+	/**
+	 * Get related form model configuration
+	 * @return ModelConfiguration
+	 */
 	public function model()
 	{
 		return Admin::model($this->class);
 	}
 
+	/**
+	 * Save instance
+	 * @param $model
+	 */
 	public function save($model)
 	{
 		if ($this->model() != $model)
@@ -102,6 +166,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		$this->instance()->save();
 	}
 
+	/**
+	 * Validate data, returns null on success
+	 * @param mixed $model
+	 * @return Validator|null
+	 */
 	public function validate($model)
 	{
 		if ($this->model() != $model)
@@ -123,6 +192,9 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		return null;
 	}
 
+	/**
+	 * @return View
+	 */
 	public function render()
 	{
 		$params = [
@@ -134,8 +206,12 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		return view(AdminTemplate::view('form.default'), $params);
 	}
 
+	/**
+	 * @return string
+	 */
 	function __toString()
 	{
 		return (string)$this->render();
 	}
+
 }

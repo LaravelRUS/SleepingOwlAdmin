@@ -1,16 +1,14 @@
 <?php namespace SleepingOwl\Admin\Columns\Column;
 
 use AdminTemplate;
-use SleepingOwl\Admin\Admin;
+use Illuminate\View\View;
 
 class Url extends NamedColumn
 {
 
-	function __construct($name)
-	{
-		parent::__construct($name);
-	}
-
+	/**
+	 * @return View
+	 */
 	public function render()
 	{
 		$params = [

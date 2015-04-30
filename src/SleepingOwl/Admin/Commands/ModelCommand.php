@@ -1,6 +1,5 @@
 <?php namespace SleepingOwl\Admin\Commands;
 
-use Config;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use SleepingOwl\Admin\Commands\Compilers\ModelCompiler;
@@ -9,12 +8,12 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModelCommand extends Command
 {
+
 	/**
 	 * The console command name.
 	 * @var string
 	 */
 	protected $name = 'admin:model';
-
 	/**
 	 * The console command description.
 	 * @var string
@@ -39,6 +38,7 @@ class ModelCommand extends Command
 	}
 
 	/**
+	 * Get model class
 	 * @return string
 	 */
 	protected function getModelClass()
@@ -53,6 +53,7 @@ class ModelCommand extends Command
 	}
 
 	/**
+	 * Get template stub
 	 * @return string
 	 */
 	protected function getTemplate()
@@ -61,6 +62,7 @@ class ModelCommand extends Command
 	}
 
 	/**
+	 * Make replacements in template
 	 * @param $template
 	 * @param $replacement
 	 * @return string
@@ -71,13 +73,14 @@ class ModelCommand extends Command
 	}
 
 	/**
+	 * Save result file
 	 * @param $modelClass
 	 * @param $template
 	 */
 	protected function saveResult($modelClass, $template)
 	{
 		$filename = class_basename($modelClass) . '.php';
-		$file = Config::get('admin.bootstrapDirectory') . '/' . $filename;
+		$file = config('admin.bootstrapDirectory') . '/' . $filename;
 		if (file_exists($file))
 		{
 			$result = $this->confirm('File "' . $filename . '" already exist in your admin bootstrap directory. Overwrite?', false);

@@ -1,11 +1,15 @@
 <?php namespace SleepingOwl\Admin\Columns\Column;
 
 use AdminTemplate;
+use Illuminate\View\View;
 use SleepingOwl\Admin\AssetManager\AssetManager;
 
 class Image extends NamedColumn
 {
 
+	/**
+	 * Initialize column
+	 */
 	public function initialize()
 	{
 		parent::initialize();
@@ -15,12 +19,19 @@ class Image extends NamedColumn
 		AssetManager::addScript('admin::default/js/columns/image.js');
 	}
 
+	/**
+	 * @param $name
+	 */
 	function __construct($name)
 	{
 		parent::__construct($name);
+
 		$this->orderable(false);
 	}
 
+	/**
+	 * @return View
+	 */
 	public function render()
 	{
 		$value = $this->getValue($this->instance, $this->name());

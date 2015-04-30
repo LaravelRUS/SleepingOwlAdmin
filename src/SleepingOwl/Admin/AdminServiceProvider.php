@@ -5,6 +5,9 @@ use Illuminate\Support\ServiceProvider;
 class AdminServiceProvider extends ServiceProvider
 {
 
+	/**
+	 * Providers to register
+	 */
 	protected $providers = [
 		'SleepingOwl\AdminAuth\AdminAuthServiceProvider',
 		'SleepingOwl\Admin\Providers\DisplayServiceProvider',
@@ -16,17 +19,26 @@ class AdminServiceProvider extends ServiceProvider
 		'SleepingOwl\Admin\Providers\RouteServiceProvider',
 	];
 
+	/**
+	 * Commands to register
+	 */
 	protected $commads = [
 		'AdministratorsCommand',
 		'InstallCommand',
 		'ModelCommand'
 	];
 
+	/**
+	 *
+	 */
 	public function register()
 	{
 		$this->registerCommands();
 	}
 
+	/**
+	 *
+	 */
 	public function boot()
 	{
 		$this->loadViewsFrom(__DIR__ . '/../../views', 'admin');
@@ -59,6 +71,9 @@ class AdminServiceProvider extends ServiceProvider
 		return ['admin'];
 	}
 
+	/**
+	 * Bind current template
+	 */
 	protected function registerTemplate()
 	{
 		app()->bind('adminTemplate', function ()
@@ -67,11 +82,17 @@ class AdminServiceProvider extends ServiceProvider
 		});
 	}
 
+	/**
+	 * Initialize template
+	 */
 	protected function initializeTemplate()
 	{
 		app('adminTemplate');
 	}
 
+	/**
+	 * Register providers
+	 */
 	protected function registerProviders()
 	{
 		foreach ($this->providers as $providerClass)
@@ -81,6 +102,9 @@ class AdminServiceProvider extends ServiceProvider
 		}
 	}
 
+	/**
+	 * Register commands
+	 */
 	protected function registerCommands()
 	{
 		foreach ($this->commads as $command)

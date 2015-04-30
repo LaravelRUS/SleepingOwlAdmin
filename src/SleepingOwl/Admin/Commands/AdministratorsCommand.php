@@ -1,22 +1,20 @@
 <?php namespace SleepingOwl\Admin\Commands;
 
-use Config;
 use Hash;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use SleepingOwl\Admin\Commands\Compilers\ModelCompiler;
 use SleepingOwl\AdminAuth\Entities\Administrator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class AdministratorsCommand extends Command
 {
+
 	/**
 	 * The console command name.
 	 * @var string
 	 */
 	protected $name = 'admin:administrators';
-
 	/**
 	 * The console command description.
 	 * @var string
@@ -82,6 +80,9 @@ class AdministratorsCommand extends Command
 		];
 	}
 
+	/**
+	 * Register new administrator
+	 */
 	protected function createNewAdministrator()
 	{
 		$username = $this->ask('Username:');
@@ -116,6 +117,10 @@ class AdministratorsCommand extends Command
 		$this->info('Administrator ' . $username . ' was successfully created!');
 	}
 
+	/**
+	 * Get all administrators
+	 * @return array
+	 */
 	protected function getAdministrators()
 	{
 		$administrators = Administrator::orderBy('id', 'asc')->get();
@@ -127,6 +132,9 @@ class AdministratorsCommand extends Command
 		return $result;
 	}
 
+	/**
+	 * Render administrators list
+	 */
 	protected function listAdministrators()
 	{
 		$administrators = $this->getAdministrators();
@@ -136,6 +144,9 @@ class AdministratorsCommand extends Command
 		}
 	}
 
+	/**
+	 * Delete administrator
+	 */
 	protected function deleteAdministrator()
 	{
 		$id = $this->selectAdministrator('Select administrator to delete:');
@@ -147,6 +158,9 @@ class AdministratorsCommand extends Command
 		$this->info('Administrator with id ' . $id . ' was deleted.');
 	}
 
+	/**
+	 * Rename administrator
+	 */
 	protected function renameAdministrator()
 	{
 		$id = $this->selectAdministrator('Select administrator to rename:');
@@ -161,6 +175,9 @@ class AdministratorsCommand extends Command
 		$this->info('Administrator with id ' . $id . ' was renamed.');
 	}
 
+	/**
+	 * Change administrator's password
+	 */
 	protected function changePassword()
 	{
 		$id = $this->selectAdministrator('Select administrator to change password:');
@@ -183,7 +200,8 @@ class AdministratorsCommand extends Command
 	}
 
 	/**
-	 * @return mixed
+	 * Select administrator
+	 * @return int
 	 */
 	protected function selectAdministrator($message)
 	{

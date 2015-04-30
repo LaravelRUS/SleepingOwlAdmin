@@ -6,6 +6,9 @@ use SleepingOwl\Admin\Interfaces\TemplateInterface;
 class TemplateDefault implements TemplateInterface
 {
 
+	/**
+	 *
+	 */
 	function __construct()
 	{
 		AssetManager::addStyle('admin::default/css/bootstrap.min.css');
@@ -20,6 +23,11 @@ class TemplateDefault implements TemplateInterface
 		AssetManager::addScript('admin::default/js/admin-default.js');
 	}
 
+	/**
+	 * Get full view name
+	 * @param string $view
+	 * @return string
+	 */
 	public function view($view)
 	{
 		return 'admin::default.' . $view;

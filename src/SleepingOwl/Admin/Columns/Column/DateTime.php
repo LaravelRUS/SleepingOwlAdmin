@@ -2,12 +2,22 @@
 
 use AdminTemplate;
 use Carbon\Carbon;
+use Illuminate\View\View;
 
 class DateTime extends NamedColumn
 {
 
+	/**
+	 * Datetime format
+	 * @var string
+	 */
 	protected $format;
 
+	/**
+	 * Get or set datetime format
+	 * @param string|null $format
+	 * @return $this|string
+	 */
 	public function format($format = null)
 	{
 		if (is_null($format))
@@ -22,6 +32,9 @@ class DateTime extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * @return View
+	 */
 	public function render()
 	{
 		$value = $this->getValue($this->instance, $this->name());

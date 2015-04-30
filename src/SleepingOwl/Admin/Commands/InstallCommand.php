@@ -1,18 +1,17 @@
 <?php namespace SleepingOwl\Admin\Commands;
 
-use Config;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends Command
 {
+
 	/**
 	 * The console command name.
 	 * @var string
 	 */
 	protected $name = 'admin:install';
-
 	/**
 	 * The console command description.
 	 * @var string
@@ -42,7 +41,7 @@ class InstallCommand extends Command
 	}
 
 	/**
-	 *
+	 * Migrate database and default seed
 	 */
 	protected function publishDB()
 	{
@@ -54,7 +53,7 @@ class InstallCommand extends Command
 	}
 
 	/**
-	 *
+	 * Create bootstrap directory
 	 */
 	protected function createBootstrapDirectory()
 	{
@@ -68,11 +67,11 @@ class InstallCommand extends Command
 	}
 
 	/**
-	 *
+	 * Create default menu file
 	 */
 	protected function createMenuFile()
 	{
-		$file = Config::get('admin.bootstrapDirectory') . '/menu.php';
+		$file = config('admin.bootstrapDirectory') . '/menu.php';
 		if ( ! file_exists($file))
 		{
 			$contents = $this->laravel['files']->get(__DIR__ . '/stubs/menu.stub');
@@ -81,9 +80,12 @@ class InstallCommand extends Command
 		}
 	}
 
+	/**
+	 * Create default bootstrap file
+	 */
 	protected function createBootstrapFile()
 	{
-		$file = Config::get('admin.bootstrapDirectory') . '/bootstrap.php';
+		$file = config('admin.bootstrapDirectory') . '/bootstrap.php';
 		if ( ! file_exists($file))
 		{
 			$contents = $this->laravel['files']->get(__DIR__ . '/stubs/bootstrap.stub');
@@ -92,9 +94,12 @@ class InstallCommand extends Command
 		}
 	}
 
+	/**
+	 * Create default routes file
+	 */
 	protected function createRoutesFile()
 	{
-		$file = Config::get('admin.bootstrapDirectory') . '/routes.php';
+		$file = config('admin.bootstrapDirectory') . '/routes.php';
 		if ( ! file_exists($file))
 		{
 			$contents = $this->laravel['files']->get(__DIR__ . '/stubs/routes.stub');
@@ -104,11 +109,11 @@ class InstallCommand extends Command
 	}
 
 	/**
-	 *
+	 * Create dummy user file
 	 */
 	protected function createDummyUserFile()
 	{
-		$file = Config::get('admin.bootstrapDirectory') . '/User.php';
+		$file = config('admin.bootstrapDirectory') . '/User.php';
 		if ( ! file_exists($file))
 		{
 			$contents = $this->laravel['files']->get(__DIR__ . '/stubs/User.stub');
@@ -118,21 +123,7 @@ class InstallCommand extends Command
 	}
 
 	/**
-	 *
-	 */
-	protected function publishImagecacheConfig()
-	{
-		$file = config_path('imagecache.php');
-		if ( ! file_exists($file))
-		{
-			$contents = $this->laravel['files']->get($file);
-			$contents = str_replace('\'route\' => null,', '\'route\' => \'img/cache\',', $contents);
-			$this->laravel['files']->put($file, $contents);
-		}
-	}
-
-	/**
-	 *
+	 * Create public default structure
 	 */
 	protected function createPublicDefaultStructure()
 	{
@@ -144,6 +135,7 @@ class InstallCommand extends Command
 	}
 
 	/**
+	 * Publish package config
 	 * @param string|null $title
 	 */
 	protected function publishConfig($title = null)

@@ -1,19 +1,28 @@
 <?php namespace SleepingOwl\Admin\Columns\Column;
 
 use AdminTemplate;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Admin;
 
 class Filter extends NamedColumn
 {
 
+	/**
+	 * Filter related model
+	 * @var string
+	 */
 	protected $model;
+	/**
+	 * Field to get filter value from
+	 * @var string
+	 */
 	protected $field;
 
-	function __construct($name)
-	{
-		parent::__construct($name);
-	}
-
+	/**
+	 * Get or set filter related model
+	 * @param string|null $model
+	 * @return $this|string
+	 */
 	public function model($model = null)
 	{
 		if (is_null($model))
@@ -28,6 +37,11 @@ class Filter extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Get or set field to get filter value from
+	 * @param string|null $field
+	 * @return $this|string
+	 */
 	public function field($field = null)
 	{
 		if (is_null($field))
@@ -42,17 +56,28 @@ class Filter extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Get filter url
+	 * @return string
+	 */
 	public function getUrl()
 	{
 		$value = $this->getValue($this->instance, $this->field());
 		return Admin::model($this->model)->displayUrl([$this->name() => $value]);
 	}
 
+	/**
+	 * Check if filter applies to the current model
+	 * @return bool
+	 */
 	protected function isSelf()
 	{
 		return get_class($this->instance) == $this->model();
 	}
 
+	/**
+	 * @return View
+	 */
 	public function render()
 	{
 		$params = [

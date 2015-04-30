@@ -5,15 +5,45 @@ use Illuminate\Support\Collection;
 class TreeRepository extends BaseRepository
 {
 
+	/**
+	 * Extrepat/Baum tree type
+	 * https://github.com/etrepat/baum
+	 */
 	const TreeTypeBaum = 0;
+	/**
+	 * Lasychaser/Laravel-nestedset tree type
+	 * https://github.com/lazychaser/laravel-nestedset
+	 */
 	const TreeTypeKalnoy = 1;
+	/**
+	 * Simple tree type (with `parent_id` and `order` fields)
+	 */
 	const TreeTypeSimple = 2;
 
+	/**
+	 * Tree type
+	 * @var int
+	 */
 	protected $type;
+	/**
+	 * Parent field name
+	 * @var string
+	 */
 	protected $parentField = 'parent_id';
+	/**
+	 * Order field name
+	 * @var string
+	 */
 	protected $orderField = 'order';
+	/**
+	 * Root parent id value
+	 * @var null
+	 */
 	protected $rootParentId = null;
 
+	/**
+	 * @param string $class
+	 */
 	function __construct($class)
 	{
 		parent::__construct($class);
@@ -21,6 +51,10 @@ class TreeRepository extends BaseRepository
 		$this->detectType();
 	}
 
+	/**
+	 * Detect tree type
+	 * @return $this
+	 */
 	protected function detectType()
 	{
 		if ($this->model() instanceof \Baum\Node)
@@ -34,6 +68,10 @@ class TreeRepository extends BaseRepository
 		return $this->type(static::TreeTypeSimple);
 	}
 
+	/**
+	 * Get tree structure
+	 * @return mixed
+	 */
 	public function tree()
 	{
 		$collection = $this->query()->get();
@@ -49,8 +87,13 @@ class TreeRepository extends BaseRepository
 				return $this->createSimpleTree();
 				break;
 		}
+		return null;
 	}
 
+	/**
+	 * Reorder tree by $data value
+	 * @param $data
+	 */
 	public function reorder($data)
 	{
 		if ($this->type() == static::TreeTypeSimple)
@@ -66,6 +109,11 @@ class TreeRepository extends BaseRepository
 		}
 	}
 
+	/**
+	 * Recursive reoder simple tree type
+	 * @param $data
+	 * @param $parentId
+	 */
 	protected function recursiveReorderSimple($data, $parentId)
 	{
 		foreach ($data as $order => $item)
@@ -84,6 +132,13 @@ class TreeRepository extends BaseRepository
 		}
 	}
 
+	/**
+	 * Recursive reorder nested-set tree type
+	 * @param $root
+	 * @param $parentId
+	 * @param $left
+	 * @return mixed
+	 */
 	protected function recursiveReorder($root, $parentId, $left)
 	{
 		$right = $left + 1;
@@ -97,6 +152,13 @@ class TreeRepository extends BaseRepository
 		return $left;
 	}
 
+	/**
+	 * Move tree node in nested-set tree type
+	 * @param $id
+	 * @param $parentId
+	 * @param $left
+	 * @param $right
+	 */
 	public function move($id, $parentId, $left, $right)
 	{
 		$instance = $this->find($id);
@@ -108,6 +170,12 @@ class TreeRepository extends BaseRepository
 		$instance->save();
 	}
 
+	/**
+	 * Get left column name
+	 * @param $instance
+	 * @return mixed
+	 * @throws \Exception
+	 */
 	public function getLeftColumn($instance)
 	{
 		$methods = [
@@ -117,6 +185,12 @@ class TreeRepository extends BaseRepository
 		return $this->callMethods($instance, $methods);
 	}
 
+	/**
+	 * Get right column name
+	 * @param $instance
+	 * @return mixed
+	 * @throws \Exception
+	 */
 	public function getRightColumn($instance)
 	{
 		$methods = [
@@ -126,6 +200,12 @@ class TreeRepository extends BaseRepository
 		return $this->callMethods($instance, $methods);
 	}
 
+	/**
+	 * Get parent column name
+	 * @param $instance
+	 * @return mixed
+	 * @throws \Exception
+	 */
 	public function getParentColumn($instance)
 	{
 		$methods = [
@@ -135,6 +215,13 @@ class TreeRepository extends BaseRepository
 		return $this->callMethods($instance, $methods);
 	}
 
+	/**
+	 * Call several methods and get first result
+	 * @param $instance
+	 * @param $methods
+	 * @return mixed
+	 * @throws \Exception
+	 */
 	protected function callMethods($instance, $methods)
 	{
 		foreach ($methods as $method)
@@ -147,6 +234,11 @@ class TreeRepository extends BaseRepository
 		throw new \Exception('Tree type not supported');
 	}
 
+	/**
+	 * Get or set parent field name
+	 * @param string|null $parentField
+	 * @return $this|string
+	 */
 	public function parentField($parentField = null)
 	{
 		if (is_null($parentField))
@@ -157,6 +249,11 @@ class TreeRepository extends BaseRepository
 		return $this;
 	}
 
+	/**
+	 * Get or set order field name
+	 * @param string|null $orderField
+	 * @return $this|string
+	 */
 	public function orderField($orderField = null)
 	{
 		if (is_null($orderField))
@@ -167,6 +264,10 @@ class TreeRepository extends BaseRepository
 		return $this;
 	}
 
+	/**
+	 * Create simple tree type structure
+	 * @return static
+	 */
 	protected function createSimpleTree()
 	{
 		$collection = $this->query()->orderBy($this->parentField(), 'asc')->orderBy($this->orderField(), 'asc')->get();
@@ -175,6 +276,12 @@ class TreeRepository extends BaseRepository
 		return $this->getChildren($collection, $parent);
 	}
 
+	/**
+	 * Get children for simple tree type structure
+	 * @param $collection
+	 * @param $id
+	 * @return static
+	 */
 	protected function getChildren($collection, $id)
 	{
 		$parentField = $this->parentField();
@@ -189,6 +296,11 @@ class TreeRepository extends BaseRepository
 		return Collection::make($result);
 	}
 
+	/**
+	 * Get or set tree type
+	 * @param int|null $type
+	 * @return $this|int
+	 */
 	public function type($type = null)
 	{
 		if (is_null($type))
@@ -199,6 +311,11 @@ class TreeRepository extends BaseRepository
 		return $this;
 	}
 
+	/**
+	 * Get or set parent field name
+	 * @param string|null $rootParentId
+	 * @return $this|string
+	 */
 	public function rootParentId($rootParentId = null)
 	{
 		if (func_num_args() == 0)

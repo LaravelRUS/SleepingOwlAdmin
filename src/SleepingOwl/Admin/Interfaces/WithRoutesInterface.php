@@ -3,6 +3,9 @@
 interface WithRoutesInterface
 {
 
+	/**
+	 * Register router
+	 */
 	public static function registerRoutes();
 
 } 

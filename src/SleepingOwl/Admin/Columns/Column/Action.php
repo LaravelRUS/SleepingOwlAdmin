@@ -1,25 +1,56 @@
 <?php namespace SleepingOwl\Admin\Columns\Column;
 
 use AdminTemplate;
-use Route;
-use SleepingOwl\Admin\Interfaces\WithRoutesInterface;
+use Closure;
 
 class Action extends NamedColumn
 {
 
+	/**
+	 * Action icon class
+	 * @var string
+	 */
 	protected $icon;
+	/**
+	 * Action button style ('long' or 'short')
+	 * @var string
+	 */
 	protected $style = 'long';
+	/**
+	 * Button submit action
+	 * @var Closure
+	 */
 	protected $callback;
+	/**
+	 * Action button target ('_self', '_blank' or any else)
+	 * @var string
+	 */
 	protected $target = '_self';
+	/**
+	 * Action button value (button label)
+	 * @var string
+	 */
 	protected $value;
+	/**
+	 * Action button url
+	 * @var string
+	 */
 	protected $url;
 
+	/**
+	 * @param string $name
+	 */
 	function __construct($name)
 	{
 		parent::__construct($name);
 		$this->orderable(false);
 	}
 
+	/**
+	 * Get or set icon class
+	 * @param string|null $icon
+	 * @return $this|string
+	 */
 	public function icon($icon = null)
 	{
 		if (is_null($icon))
@@ -30,6 +61,11 @@ class Action extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Get or set action button style
+	 * @param string|null $style
+	 * @return $this|string
+	 */
 	public function style($style = null)
 	{
 		if (is_null($style))
@@ -40,6 +76,11 @@ class Action extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Get or set action callback
+	 * @param Closure|null $callback
+	 * @return $this|Closure
+	 */
 	public function callback($callback = null)
 	{
 		if (is_null($callback))
@@ -50,6 +91,11 @@ class Action extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Get or set action button target
+	 * @param string|null $target
+	 * @return $this|string
+	 */
 	public function target($target = null)
 	{
 		if (is_null($target))
@@ -60,6 +106,11 @@ class Action extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Get or set action buttom value (buttom label)
+	 * @param string|null $value
+	 * @return $this|string
+	 */
 	public function value($value = null)
 	{
 		if (is_null($value))
@@ -70,6 +121,10 @@ class Action extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Render action button
+	 * @return \Illuminate\View\View
+	 */
 	public function render()
 	{
 		$params = [
@@ -82,6 +137,11 @@ class Action extends NamedColumn
 		return view(AdminTemplate::view('column.action'), $params);
 	}
 
+	/**
+	 * Get or set action button url
+	 * @param string|null $url
+	 * @return $this|string
+	 */
 	public function url($url = null)
 	{
 		if (is_null($url))
@@ -107,6 +167,10 @@ class Action extends NamedColumn
 		return $this;
 	}
 
+	/**
+	 * Call action button callback
+	 * @param $instance
+	 */
 	public function call($instance)
 	{
 		$callback = $this->callback();
