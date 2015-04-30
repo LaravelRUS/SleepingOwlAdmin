@@ -184,7 +184,10 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 			$rules += $item->getValidationRules();
 		}
 		$data = Input::all();
+		$verifier = app('validation.presence');
+		$verifier->setConnection($this->instance()->getConnectionName());
 		$validator = Validator::make($data, $rules);
+		$validator->setPresenceVerifier($verifier);
 		if ($validator->fails())
 		{
 			return $validator;
