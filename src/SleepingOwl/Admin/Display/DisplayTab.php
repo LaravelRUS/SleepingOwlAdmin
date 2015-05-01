@@ -63,6 +63,11 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
 		return $this;
 	}
 
+	public function getOriginalContent()
+	{
+		return $this->content;
+	}
+
 	public function content()
 	{
 		$params = [
