@@ -26,6 +26,7 @@ class FormItemServiceProvider extends ServiceProvider
 		FormItem::register('image', 'SleepingOwl\Admin\FormItems\Image');
 		FormItem::register('images', 'SleepingOwl\Admin\FormItems\Images');
 		FormItem::register('file', 'SleepingOwl\Admin\FormItems\File');
+		FormItem::register('radio', 'SleepingOwl\Admin\FormItems\Radio');
 	}
 
 }

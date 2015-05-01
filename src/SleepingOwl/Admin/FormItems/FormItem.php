@@ -23,6 +23,7 @@ use SleepingOwl\Admin\Base\AliasBinder;
  * @method static \SleepingOwl\Admin\FormItems\Checkbox checkbox($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\CKEditor ckeditor($name, $label = null)
  * @method static \SleepingOwl\Admin\FormItems\Textarea textarea($name, $label = null)
+ * @method static \SleepingOwl\Admin\FormItems\Radio radio($name, $label = null)
  */
 class FormItem extends AliasBinder
 {
