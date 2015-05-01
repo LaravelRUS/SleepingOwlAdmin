@@ -10,13 +10,23 @@ use SleepingOwl\Admin\Interfaces\WithRoutesInterface;
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
 
+	/**
+	 * Datatables name
+	 * @var string
+	 */
 	protected $name;
 
+	/**
+	 * @param string|null $name
+	 */
 	function __construct($name = null)
 	{
 		$this->name($name);
 	}
 
+	/**
+	 * Register display routes
+	 */
 	public static function registerRoutes()
 	{
 		Route::get('{adminModel}/async/{adminDisplayName?}', [
@@ -37,6 +47,12 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		]);
 	}
 
+	/**
+	 * Find DisplayDatatablesAsync in tabbed display by name
+	 * @param DisplayTabbed $display
+	 * @param string|null $name
+	 * @return DisplayDatatablesAsync|null
+	 */
 	protected static function findDatatablesAsyncByName(DisplayTabbed $display, $name)
 	{
 		$tabs = $display->tabs();
@@ -51,6 +67,9 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		return null;
 	}
 
+	/**
+	 * @return \Illuminate\View\View
+	 */
 	public function render()
 	{
 		$params = $this->getParams();
@@ -61,6 +80,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		return view(AdminTemplate::view('display.datatablesAsync'), $params);
 	}
 
+	/**
+	 * Render async request
+	 * @return array
+	 */
 	public function renderAsync()
 	{
 		$query = $this->repository->query();
@@ -78,6 +101,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		return $this->prepareDatatablesStructure($collection, $totalCount, $filteredCount);
 	}
 
+	/**
+	 * Apply offset and limit to the query
+	 * @param $query
+	 */
 	protected function applyOffset($query)
 	{
 		$offset = Input::get('start', 0);
@@ -89,6 +116,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		$query->offset($offset)->limit($limit);
 	}
 
+	/**
+	 * Apply orders to the query
+	 * @param $query
+	 */
 	protected function applyOrders($query)
 	{
 		$orders = Input::get('order', []);
@@ -105,6 +136,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		}
 	}
 
+	/**
+	 * Apply search to the query
+	 * @param $query
+	 */
 	protected function applySearch($query)
 	{
 		$search = Input::get('search.value');
@@ -130,6 +165,14 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		});
 	}
 
+	/**
+	 * Convert collection to the datatables structure
+	 *
+	 * @param $collection
+	 * @param $totalCount
+	 * @param $filteredCount
+	 * @return array
+	 */
 	protected function prepareDatatablesStructure($collection, $totalCount, $filteredCount)
 	{
 		$columns = $this->allColumns();
@@ -152,6 +195,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		return $result;
 	}
 
+	/**
+	 * Get or set datatables name
+	 * @param null $name
+	 * @return $this
+	 */
 	public function name($name = null)
 	{
 		if (is_null($name))

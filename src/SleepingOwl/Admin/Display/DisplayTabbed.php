@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Display;
 
 use AdminTemplate;
+use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Interfaces\DisplayInterface;
 use SleepingOwl\Admin\Interfaces\FormInterface;
@@ -8,8 +9,17 @@ use SleepingOwl\Admin\Interfaces\FormInterface;
 class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 {
 
+	/**
+	 * Added tabs
+	 * @var DisplayTab[]
+	 */
 	protected $tabs = [];
 
+	/**
+	 * Get or set tabs
+	 * @param Closure|DisplayTab[]|null $tabs
+	 * @return $this|DisplayTab[]
+	 */
 	public function tabs($tabs = null)
 	{
 		if (is_null($tabs))
@@ -24,6 +34,9 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		return $this;
 	}
 
+	/**
+	 * @return \Illuminate\View\View
+	 */
 	public function render()
 	{
 		$params = [
@@ -32,11 +45,17 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		return view(AdminTemplate::view('display.tabbed'), $params);
 	}
 
+	/**
+	 * @return string
+	 */
 	function __toString()
 	{
 		return (string)$this->render();
 	}
 
+	/**
+	 * @param string $class
+	 */
 	public function setClass($class)
 	{
 		foreach ($this->tabs as $tab)
@@ -48,6 +67,9 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function initialize()
 	{
 		foreach ($this->tabs as $tab)
@@ -59,6 +81,9 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
+	/**
+	 * @param string $action
+	 */
 	public function setAction($action)
 	{
 		foreach ($this->tabs as $tab)
@@ -70,6 +95,9 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
+	/**
+	 * @param int $id
+	 */
 	public function setId($id)
 	{
 		foreach ($this->tabs as $tab)
@@ -81,6 +109,10 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		}
 	}
 
+	/**
+	 * @param mixed $model
+	 * @return null
+	 */
 	public function validate($model)
 	{
 		foreach ($this->tabs as $tab)
@@ -97,6 +129,9 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
 		return null;
 	}
 
+	/**
+	 * @param mixed $model
+	 */
 	public function save($model)
 	{
 		foreach ($this->tabs as $tab)
