@@ -172,7 +172,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		foreach ($queryColumns as $index => $queryColumn)
 		{
 			$search = array_get($queryColumn, 'search.value');
-			if (is_null($search)) continue;
+			if (empty($search)) continue;
 
 			$column = array_get($this->columns(), $index);
 			if ($column instanceof String)
@@ -181,6 +181,15 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 				if ($this->repository->hasColumn($name))
 				{
 					$query->where($name, 'like', '%' . $search . '%');
+				} elseif (strpos($name, '.') !== false)
+				{
+					$parts = explode('.', $name);
+					$fieldName = array_pop($parts);
+					$relationName = implode('.', $parts);
+					$query->whereHas($relationName, function ($q) use ($search, $fieldName)
+					{
+						$q->where($fieldName, $search);
+					});
 				}
 			}
 		}
