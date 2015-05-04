@@ -86,6 +86,7 @@ class ModelItem
 	 * @var bool
 	 */
 	protected $columnFilter = false;
+	protected $stateSave = true;
 
 	/**
 	 * @param $modelClass
@@ -121,6 +122,7 @@ class ModelItem
 		{
 			$attributes['data-ordering'] = 'false';
 		}
+		$attributes['data-statesave'] = $this->stateSave();
 		if ($this->isAsync())
 		{
 			$url = Admin::instance()->router->routeToTable($this->getAlias(), \Input::all());
@@ -443,6 +445,16 @@ class ModelItem
 	public function isColumnFilter()
 	{
 		return $this->columnFilter;
+	}
+
+	public function stateSave($stateSave = null)
+	{
+		if (is_null($stateSave))
+		{
+			return $this->stateSave;
+		}
+		$this->stateSave = $stateSave;
+		return $this;
 	}
 
 }
