@@ -9,6 +9,7 @@ class ColumnFilterServiceProvider extends ServiceProvider
 	public function register()
 	{
 		ColumnFilter::register('text', 'SleepingOwl\Admin\ColumnFilters\Text');
+		ColumnFilter::register('select', 'SleepingOwl\Admin\ColumnFilters\Select');
 	}
 
 }
