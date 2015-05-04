@@ -91,6 +91,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
 		$this->modifyQuery($query);
 		$this->applySearch($query);
+		$this->applyColumnSearch($query);
 
 		$filteredCount = $query->count();
 
@@ -163,6 +164,26 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 				}
 			}
 		});
+	}
+
+	protected function applyColumnSearch($query)
+	{
+		$queryColumns = Input::get('columns', []);
+		foreach ($queryColumns as $index => $queryColumn)
+		{
+			$search = array_get($queryColumn, 'search.value');
+			if (is_null($search)) continue;
+
+			$column = array_get($this->columns(), $index);
+			if ($column instanceof String)
+			{
+				$name = $column->name();
+				if ($this->repository->hasColumn($name))
+				{
+					$query->where($name, 'like', '%' . $search . '%');
+				}
+			}
+		}
 	}
 
 	/**

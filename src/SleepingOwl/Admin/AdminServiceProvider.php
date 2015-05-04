@@ -12,6 +12,7 @@ class AdminServiceProvider extends ServiceProvider
 		'SleepingOwl\AdminAuth\AdminAuthServiceProvider',
 		'SleepingOwl\Admin\Providers\DisplayServiceProvider',
 		'SleepingOwl\Admin\Providers\ColumnServiceProvider',
+		'SleepingOwl\Admin\Providers\ColumnFilterServiceProvider',
 		'SleepingOwl\Admin\Providers\FormServiceProvider',
 		'SleepingOwl\Admin\Providers\FormItemServiceProvider',
 		'SleepingOwl\Admin\Providers\FilterServiceProvider',

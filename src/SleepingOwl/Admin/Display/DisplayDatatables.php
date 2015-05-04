@@ -1,6 +1,7 @@
 <?php namespace SleepingOwl\Admin\Display;
 
 use SleepingOwl\Admin\AssetManager\AssetManager;
+use SleepingOwl\Admin\Interfaces\ColumnFilterInterface;
 
 class DisplayDatatables extends DisplayTable
 {
@@ -15,6 +16,7 @@ class DisplayDatatables extends DisplayTable
 	 * @var array
 	 */
 	protected $order = [[0, 'asc']];
+	protected $columnFilters = [];
 
 	/**
 	 * Initialize display
@@ -23,12 +25,30 @@ class DisplayDatatables extends DisplayTable
 	{
 		parent::initialize();
 
+		foreach ($this->columnFilters() as $columnFilter)
+		{
+			if ($columnFilter instanceof ColumnFilterInterface)
+			{
+				$columnFilter->initialize();
+			}
+		}
+
 		AssetManager::addScript('admin::default/js/datatables/jquery.dataTables.min.js');
 		AssetManager::addScript('admin::default/js/datatables/jquery.dataTables_bootstrap.js');
 		AssetManager::addScript('admin::default/js/notify-combined.min.js');
 		AssetManager::addScript('admin::default/js/datatables/init.js');
 
 		AssetManager::addStyle('admin::default/css/dataTables.bootstrap.css');
+	}
+
+	public function columnFilters($columnFilters = null)
+	{
+		if (is_null($columnFilters))
+		{
+			return $this->columnFilters;
+		}
+		$this->columnFilters = $columnFilters;
+		return $this;
 	}
 
 	/**
@@ -54,6 +74,7 @@ class DisplayDatatables extends DisplayTable
 	{
 		$params = parent::getParams();
 		$params['order'] = $this->order();
+		$params['columnFilters'] = $this->columnFilters();
 		return $params;
 	}
 

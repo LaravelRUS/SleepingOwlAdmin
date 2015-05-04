@@ -24,6 +24,12 @@ $(function ()
 				"url": url
 			};
 		}
-		$this.DataTable(params);
+		var table = $this.DataTable(params);
+
+		$this.find('.column-filter').each(function ()
+		{
+			var type = $(this).data('type');
+			window.columnFilters[type](this, table);
+		});
 	});
 });
