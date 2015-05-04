@@ -13,7 +13,7 @@
 		{!! $action->render() !!}
 	@endforeach
 </div>
-<table class="table table-striped datatables" data-order="{{ json_encode($order) }}" data-url="{{ $url }}">
+<table class="table table-striped datatables" data-order="{{ json_encode($order) }}" data-url="{{ $url }}" data-attributes="{{ json_encode($attributes, JSON_FORCE_OBJECT) }}">
 	<thead>
 		<tr>
 			@foreach ($columns as $column)

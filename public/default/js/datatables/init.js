@@ -15,6 +15,8 @@ $(function ()
 				[10, 25, 50, window.admin.lang.table.all]
 			]
 		};
+		params = $.extend(params, $this.data('attributes'));
+
 		var url;
 		if (url = $this.data('url'))
 		{

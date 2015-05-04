@@ -15,8 +15,14 @@ class DisplayDatatables extends DisplayTable
 	 * Datatables order
 	 * @var array
 	 */
-	protected $order = [[0, 'asc']];
+	protected $order = [
+		[
+			0,
+			'asc'
+		]
+	];
 	protected $columnFilters = [];
+	protected $attributes = [];
 
 	/**
 	 * Initialize display
@@ -51,6 +57,16 @@ class DisplayDatatables extends DisplayTable
 		return $this;
 	}
 
+	public function attributes($attributes = null)
+	{
+		if (is_null($attributes))
+		{
+			return $this->attributes;
+		}
+		$this->attributes = $attributes;
+		return $this;
+	}
+
 	/**
 	 * Set or get datatables order
 	 * @param array|null $order
@@ -75,6 +91,7 @@ class DisplayDatatables extends DisplayTable
 		$params = parent::getParams();
 		$params['order'] = $this->order();
 		$params['columnFilters'] = $this->columnFilters();
+		$params['attributes'] = $this->attributes();
 		return $params;
 	}
 

@@ -39,6 +39,7 @@ It includes:
 		'Admin'         => 'SleepingOwl\Admin\Admin',
 		'AdminAuth'     => 'SleepingOwl\AdminAuth\Facades\AdminAuth',
 		'Column'        => 'SleepingOwl\Admin\Columns\Column',
+		'ColumnFilter'  => 'SleepingOwl\Admin\ColumnFilters\ColumnFilter',
 		'Filter'        => 'SleepingOwl\Admin\Filter\Filter',
 		'AdminDisplay'  => 'SleepingOwl\Admin\Display\AdminDisplay',
 		'AdminForm'     => 'SleepingOwl\Admin\Form\AdminForm',
