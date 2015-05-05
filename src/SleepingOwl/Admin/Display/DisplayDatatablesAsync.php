@@ -1,8 +1,10 @@
 <?php namespace SleepingOwl\Admin\Display;
 
 use AdminTemplate;
+use Carbon\Carbon;
 use Input;
 use Route;
+use SleepingOwl\Admin\Columns\Column\DateTime;
 use SleepingOwl\Admin\Columns\Column\NamedColumn;
 use SleepingOwl\Admin\Columns\Column\String;
 use SleepingOwl\Admin\Interfaces\WithRoutesInterface;
@@ -177,21 +179,53 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 			$column = array_get($this->columns(), $index);
 			if ($column instanceof String)
 			{
-				$name = $column->name();
-				if ($this->repository->hasColumn($name))
-				{
-					$query->where($name, 'like', '%' . $search . '%');
-				} elseif (strpos($name, '.') !== false)
-				{
-					$parts = explode('.', $name);
-					$fieldName = array_pop($parts);
-					$relationName = implode('.', $parts);
-					$query->whereHas($relationName, function ($q) use ($search, $fieldName)
-					{
-						$q->where($fieldName, $search);
-					});
-				}
+				$this->applyStringColumnSearch($index, $column, $query, $search);
 			}
+			if ($column instanceof DateTime)
+			{
+				$this->applyDateTimeColumnSearch($index, $column, $query, $search);
+			}
+		}
+	}
+
+	protected function applyStringColumnSearch($index, $column, $query, $search)
+	{
+		$name = $column->name();
+		if ($this->repository->hasColumn($name))
+		{
+			$query->where($name, 'like', '%' . $search . '%');
+		} elseif (strpos($name, '.') !== false)
+		{
+			$parts = explode('.', $name);
+			$fieldName = array_pop($parts);
+			$relationName = implode('.', $parts);
+			$query->whereHas($relationName, function ($q) use ($search, $fieldName)
+			{
+				$q->where($fieldName, $search);
+			});
+		}
+	}
+
+	protected function applyDateTimeColumnSearch($index, $column, $query, $search)
+	{
+		try
+		{
+			$time = Carbon::parse($search);
+		} catch (\Exception $e)
+		{
+			try
+			{
+				$columnFilter = array_get($this->columnFilters(), $index);
+				$time = Carbon::createFromFormat($columnFilter->format(), $search);
+			} catch (\Exception $e)
+			{
+				return;
+			}
+		}
+		$name = $column->name();
+		if ($this->repository->hasColumn($name))
+		{
+			$query->where($name, $time);
 		}
 	}
 
@@ -218,7 +252,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 			foreach ($columns as $column)
 			{
 				$column->setInstance($instance);
-				$_row[] = (string) $column;
+				$_row[] = (string)$column;
 			}
 			$result['data'][] = $_row;
 		}
