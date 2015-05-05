@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\Admin\ColumnFilters;
 
+use Carbon\Carbon;
 use SleepingOwl\Admin\AssetManager\AssetManager;
 
 class Date extends Text
@@ -10,6 +11,7 @@ class Date extends Text
 	protected $seconds = false;
 	protected $pickerFormat;
 	protected $width = 150;
+	protected $searchFormat = 'Y-m-d';
 
 	public function initialize()
 	{
@@ -99,6 +101,54 @@ class Date extends Text
 			'y' => 'YY',
 		];
 		return strtr($format, $replacement);
+	}
+
+	public function searchFormat($searchFormat = null)
+	{
+		if (is_null($searchFormat))
+		{
+			return $this->searchFormat;
+		}
+		$this->searchFormat = $searchFormat;
+		return $this;
+	}
+
+	public function apply($repository, $column, $query, $search)
+	{
+		try
+		{
+			if ($this instanceof Date)
+			{
+				$time = Carbon::createFromFormat($this->format(), $search);
+			} else
+			{
+				return;
+			}
+		} catch (\Exception $e)
+		{
+			try
+			{
+				$time = Carbon::parse($search);
+			} catch (\Exception $e)
+			{
+				return;
+			}
+		}
+		$time = $time->format($this->searchFormat());
+		$name = $column->name();
+		if ($repository->hasColumn($name))
+		{
+			$query->where($name, $time);
+		} elseif (strpos($name, '.') !== false)
+		{
+			$parts = explode('.', $name);
+			$fieldName = array_pop($parts);
+			$relationName = implode('.', $parts);
+			$query->whereHas($relationName, function ($q) use ($time, $fieldName)
+			{
+				$q->where($fieldName, $time);
+			});
+		}
 	}
 
 } 

@@ -35,4 +35,22 @@ class Text extends BaseColumnFilter
 		];
 	}
 
-} 
+	public function apply($repository, $column, $query, $search)
+	{
+		$name = $column->name();
+		if ($repository->hasColumn($name))
+		{
+			$query->where($name, 'like', '%' . $search . '%');
+		} elseif (strpos($name, '.') !== false)
+		{
+			$parts = explode('.', $name);
+			$fieldName = array_pop($parts);
+			$relationName = implode('.', $parts);
+			$query->whereHas($relationName, function ($q) use ($search, $fieldName)
+			{
+				$q->where($fieldName, $search);
+			});
+		}
+	}
+
+}

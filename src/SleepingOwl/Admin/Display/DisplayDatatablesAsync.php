@@ -4,6 +4,7 @@ use AdminTemplate;
 use Carbon\Carbon;
 use Input;
 use Route;
+use SleepingOwl\Admin\ColumnFilters\Date;
 use SleepingOwl\Admin\Columns\Column\DateTime;
 use SleepingOwl\Admin\Columns\Column\NamedColumn;
 use SleepingOwl\Admin\Columns\Column\String;
@@ -177,55 +178,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 			if (empty($search)) continue;
 
 			$column = array_get($this->columns(), $index);
-			if ($column instanceof String)
-			{
-				$this->applyStringColumnSearch($index, $column, $query, $search);
-			}
-			if ($column instanceof DateTime)
-			{
-				$this->applyDateTimeColumnSearch($index, $column, $query, $search);
-			}
-		}
-	}
-
-	protected function applyStringColumnSearch($index, $column, $query, $search)
-	{
-		$name = $column->name();
-		if ($this->repository->hasColumn($name))
-		{
-			$query->where($name, 'like', '%' . $search . '%');
-		} elseif (strpos($name, '.') !== false)
-		{
-			$parts = explode('.', $name);
-			$fieldName = array_pop($parts);
-			$relationName = implode('.', $parts);
-			$query->whereHas($relationName, function ($q) use ($search, $fieldName)
-			{
-				$q->where($fieldName, $search);
-			});
-		}
-	}
-
-	protected function applyDateTimeColumnSearch($index, $column, $query, $search)
-	{
-		try
-		{
-			$time = Carbon::parse($search);
-		} catch (\Exception $e)
-		{
-			try
-			{
-				$columnFilter = array_get($this->columnFilters(), $index);
-				$time = Carbon::createFromFormat($columnFilter->format(), $search);
-			} catch (\Exception $e)
-			{
-				return;
-			}
-		}
-		$name = $column->name();
-		if ($this->repository->hasColumn($name))
-		{
-			$query->where($name, $time);
+			$columnFilter = array_get($this->columnFilters(), $index);
+			$columnFilter->apply($this->repository, $column, $query, $search);
 		}
 	}
 

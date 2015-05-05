@@ -8,4 +8,6 @@ interface ColumnFilterInterface
 	 */
 	public function initialize();
 
+	public function apply($repository, $column, $query, $search);
+
 } 
