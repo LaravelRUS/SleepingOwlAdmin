@@ -85,20 +85,27 @@ class Select extends BaseColumnFilter
 		];
 	}
 
-	public function apply($repository, $column, $query, $search)
+	public function apply($repository, $column, $query, $search, $fullSearch, $operator = 'like')
 	{
+		if (empty($search)) return;
+
+		if ($operator == 'like')
+		{
+			$search = '%' . $search . '%';
+		}
+
 		$name = $column->name();
 		if ($repository->hasColumn($name))
 		{
-			$query->where($name, 'like', '%' . $search . '%');
+			$query->where($name, $operator, $search);
 		} elseif (strpos($name, '.') !== false)
 		{
 			$parts = explode('.', $name);
 			$fieldName = array_pop($parts);
 			$relationName = implode('.', $parts);
-			$query->whereHas($relationName, function ($q) use ($search, $fieldName)
+			$query->whereHas($relationName, function ($q) use ($search, $fieldName, $operator)
 			{
-				$q->where($fieldName, $search);
+				$q->where($fieldName, $operator, $search);
 			});
 		}
 	}

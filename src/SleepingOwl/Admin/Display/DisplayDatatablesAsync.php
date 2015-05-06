@@ -175,11 +175,14 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 		foreach ($queryColumns as $index => $queryColumn)
 		{
 			$search = array_get($queryColumn, 'search.value');
-			if (empty($search)) continue;
+			$fullSearch = array_get($queryColumn, 'search');
 
 			$column = array_get($this->columns(), $index);
 			$columnFilter = array_get($this->columnFilters(), $index);
-			$columnFilter->apply($this->repository, $column, $query, $search);
+			if ( ! is_null($columnFilter))
+			{
+				$columnFilter->apply($this->repository, $column, $query, $search, $fullSearch);
+			}
 		}
 	}
 

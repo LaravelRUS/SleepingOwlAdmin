@@ -113,17 +113,13 @@ class Date extends Text
 		return $this;
 	}
 
-	public function apply($repository, $column, $query, $search)
+	public function apply($repository, $column, $query, $search, $fullSearch, $operator = '=')
 	{
+		if (empty($search)) return;
+
 		try
 		{
-			if ($this instanceof Date)
-			{
-				$time = Carbon::createFromFormat($this->format(), $search);
-			} else
-			{
-				return;
-			}
+			$time = Carbon::createFromFormat($this->format(), $search);
 		} catch (\Exception $e)
 		{
 			try
@@ -138,15 +134,15 @@ class Date extends Text
 		$name = $column->name();
 		if ($repository->hasColumn($name))
 		{
-			$query->where($name, $time);
+			$query->where($name, $operator, $time);
 		} elseif (strpos($name, '.') !== false)
 		{
 			$parts = explode('.', $name);
 			$fieldName = array_pop($parts);
 			$relationName = implode('.', $parts);
-			$query->whereHas($relationName, function ($q) use ($time, $fieldName)
+			$query->whereHas($relationName, function ($q) use ($time, $fieldName, $operator)
 			{
-				$q->where($fieldName, $time);
+				$q->where($fieldName, $operator, $time);
 			});
 		}
 	}

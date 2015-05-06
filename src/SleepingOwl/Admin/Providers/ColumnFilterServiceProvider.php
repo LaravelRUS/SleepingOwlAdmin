@@ -10,6 +10,7 @@ class ColumnFilterServiceProvider extends ServiceProvider
 	{
 		ColumnFilter::register('text', 'SleepingOwl\Admin\ColumnFilters\Text');
 		ColumnFilter::register('date', 'SleepingOwl\Admin\ColumnFilters\Date');
+		ColumnFilter::register('range', 'SleepingOwl\Admin\ColumnFilters\Range');
 		ColumnFilter::register('select', 'SleepingOwl\Admin\ColumnFilters\Select');
 	}
 
