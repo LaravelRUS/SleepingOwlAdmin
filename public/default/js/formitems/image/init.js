@@ -17,7 +17,7 @@ $(function ()
 				_token: $item.data('token')
 			}
 		});
-		flow.assignBrowse($item.find('.imageBrowse'), true);
+		flow.assignBrowse($item.find('.imageBrowse'), false, true);
 		flow.on('filesSubmitted', function(file) {
 			flow.upload();
 		});
