@@ -17,6 +17,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 {
 
 	/**
+	 * View to render
+	 * @var string
+	 */
+	protected $view = 'default';
+	/**
 	 * Form related class
 	 * @var string
 	 */
@@ -62,10 +67,14 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		$this->initialized = true;
 		$this->repository = new BaseRepository($this->class);
 		$this->instance(app($this->class));
-		foreach ($this->items() as $item)
+		$items = $this->items();
+		array_walk_recursive($items, function ($item)
 		{
-			$item->initialize();
-		}
+			if ($item instanceof FormItemInterface)
+			{
+				$item->initialize();
+			}
+		});
 	}
 
 	/**
@@ -119,10 +128,14 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 			return $this->instance;
 		}
 		$this->instance = $instance;
-		foreach ($this->items() as $item)
+		$items = $this->items();
+		array_walk_recursive($items, function ($item) use ($instance)
 		{
-			$item->setInstance($instance);
-		}
+			if ($item instanceof FormItemInterface)
+			{
+				$item->setInstance($instance);
+			}
+		});
 		return $this;
 	}
 
@@ -158,11 +171,14 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		{
 			return null;
 		}
-
-		foreach ($this->items() as $item)
+		$items = $this->items();
+		array_walk_recursive($items, function ($item)
 		{
-			$item->save();
-		}
+			if ($item instanceof FormItemInterface)
+			{
+				$item->save();
+			}
+		});
 		$this->instance()->save();
 	}
 
@@ -179,10 +195,14 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 		}
 
 		$rules = [];
-		foreach ($this->items() as $item)
+		$items = $this->items();
+		array_walk_recursive($items, function ($item) use (&$rules)
 		{
-			$rules += $item->getValidationRules();
-		}
+			if ($item instanceof FormItemInterface)
+			{
+				$rules += $item->getValidationRules();
+			}
+		});
 		$data = Input::all();
 		$verifier = app('validation.presence');
 		$verifier->setConnection($this->instance()->getConnectionName());
@@ -206,7 +226,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 			'action'   => $this->action,
 			'backUrl'  => session('_redirectBack', URL::previous()),
 		];
-		return view(AdminTemplate::view('form.default'), $params);
+		return view(AdminTemplate::view('form.' . $this->view), $params);
 	}
 
 	/**
