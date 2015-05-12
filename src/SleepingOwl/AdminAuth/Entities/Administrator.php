@@ -2,6 +2,7 @@
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Hash;
 
 class Administrator extends \Eloquent implements AuthenticatableContract
 {
@@ -17,5 +18,13 @@ class Administrator extends \Eloquent implements AuthenticatableContract
 		'password',
 		'remember_token',
 	];
+
+	public function setPasswordAttribute($value)
+	{
+		if ( ! empty($value))
+		{
+			$this->attributes['password'] = Hash::make($value);
+		}
+	}
 
 }

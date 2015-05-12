@@ -1,7 +1,6 @@
 <?php namespace SleepingOwl\Admin\Commands;
 
 use Config;
-use Hash;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use SleepingOwl\Admin\Commands\Compilers\ModelCompiler;
@@ -98,7 +97,7 @@ class AdministratorsCommand extends Command
 		{
 			Administrator::create([
 				'username' => $username,
-				'password' => Hash::make($password),
+				'password' => $password,
 				'name'     => $name,
 			]);
 		} catch (\Exception $e)
@@ -156,7 +155,7 @@ class AdministratorsCommand extends Command
 			return;
 		}
 
-		Administrator::find($id)->fill(['password' => Hash::make($password)])->save();
+		Administrator::find($id)->fill(['password' => $password])->save();
 
 		$this->info('Password was changed.');
 	}
