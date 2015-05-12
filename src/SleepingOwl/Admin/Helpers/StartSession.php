@@ -38,7 +38,11 @@ class StartSession
 	{
 		$session = $this->manager->driver();
 
-		$session->setId($this->encrypter->decrypt($request->cookies->get($session->getName())));
+		$cookie = $request->cookies->get($session->getName());
+		if ( ! is_null($cookie))
+		{
+			$session->setId($this->encrypter->decrypt($cookie));
+		}
 
 		return $session;
 	}
