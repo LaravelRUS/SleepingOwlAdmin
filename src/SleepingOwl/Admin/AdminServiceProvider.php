@@ -81,6 +81,8 @@ class AdminServiceProvider extends ServiceProvider
 			__DIR__.'/../../../public/' => public_path('packages/sleeping-owl/admin/'),
 		], 'assets');
 
+		app('SleepingOwl\Admin\Helpers\StartSession')->run();
+
 		Admin::instance()->router->registerRoutes();
 		$this->registerValidator();
 
