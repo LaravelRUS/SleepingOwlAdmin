@@ -16,9 +16,9 @@ class Select extends NamedFormItem
 	{
 		parent::initialize();
 
-		AssetManager::addStyle('admin::default/css/bootstrap-multiselect.css');
-		AssetManager::addScript('admin::default/js/bootstrap-multiselect.js');
-		AssetManager::addScript('admin::default/js/formitems/select.js');
+		AssetManager::addStyle('admin::default/css/formitems/select/chosen.css');
+		AssetManager::addScript('admin::default/js/formitems/select/chosen.jquery.min.js');
+		AssetManager::addScript('admin::default/js/formitems/select/init.js');
 	}
 
 	public function model($model = null)

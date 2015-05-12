@@ -12,7 +12,7 @@ It includes:
  - [sb-admin-2 template](http://startbootstrap.com/template-overviews/sb-admin-2/)
  - [jQuery 1.11.0](http://jquery.org)
  - [Bootstrap v3.2.0](http://getbootstrap.com)
- - [Bootstrap Multiselect v0.9.8](https://github.com/davidstutz/bootstrap-multiselect)
+ - [Chosen v1.4.2](http://harvesthq.github.io/chosen/)
  - [DataTables 1.10.0-dev](http://www.sprymedia.co.uk)
  - [Nestable jQuery Plugin](http://dbushell.github.io/Nestable/)
  - [Lightbox for Bootstrap 3](https://github.com/ashleydw/lightbox)

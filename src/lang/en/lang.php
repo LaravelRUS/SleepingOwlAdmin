@@ -62,8 +62,9 @@ return [
 		]
 	],
 	'select'   => [
-		'nothing'  => 'Nothing selected',
-		'selected' => 'selected'
+		'nothing'     => 'Nothing selected',
+		'selected'    => 'selected',
+		'placeholder' => 'Select from the list',
 	],
 	'image'    => [
 		'browse'         => 'Select Image',
