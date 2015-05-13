@@ -27,7 +27,7 @@ class DateFormatter
 		{
 			throw new \Exception('You must install "intl" php extension.');
 		}
-		$formatter = datefmt_create(App::getLocale(), $dateFormat, $timeFormat);
+		$formatter = datefmt_create(App::getLocale(), $dateFormat, $timeFormat, \Config::get('app.timezone'));
 		$pattern = $formatter->getPattern();
 		$pattern = str_replace('yy', 'y', $pattern);
 		$formatter->setPattern($pattern);
