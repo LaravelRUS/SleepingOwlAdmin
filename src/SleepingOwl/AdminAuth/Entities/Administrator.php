@@ -18,4 +18,12 @@ class Administrator extends \Eloquent implements AuthenticatableContract
 		'remember_token',
 	];
 
+	public function setPasswordAttribute($value)
+	{
+		if ( ! empty($value))
+		{
+			$this->attributes['password'] = Hash::make($value);
+		}
+	}
+
 }
