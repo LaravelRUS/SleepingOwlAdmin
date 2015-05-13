@@ -3,8 +3,9 @@
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Hash;
+use SleepingOwl\Models\SleepingOwlModel;
 
-class Administrator extends \Eloquent implements AuthenticatableContract
+class Administrator extends SleepingOwlModel implements AuthenticatableContract
 {
 	use Authenticatable;
 
