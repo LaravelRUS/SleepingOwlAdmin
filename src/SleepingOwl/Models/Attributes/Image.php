@@ -113,7 +113,9 @@ class Image
 	public function thumbnail($template)
 	{
 		if ( ! $this->exists()) return null;
-		return route('imagecache', [
+
+		$route = ($template == 'admin_preview') ? 'imagecache.admin' : 'imagecache';
+		return route($route, [
 			$template,
 			$this->getPath()
 		]);

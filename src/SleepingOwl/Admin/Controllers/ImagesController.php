@@ -174,7 +174,7 @@ class ImagesController extends Controller
 		return '<script>' . $result . ';</script>';
 	}
 
-	public function getImage($filename)
+	public function getImage($template, $filename)
 	{
 		Config::set('session.driver', 'array');
 

@@ -201,7 +201,10 @@ class Router
 	 */
 	protected function registerImageCacheRoute()
 	{
-		$this->laravelRouter->get($this->config->get('imagecache.route') . '/admin_preview/{filename}', 'SleepingOwl\Admin\Controllers\ImagesController@getImage')->where(['filename' => '[ \w\\.\\/\\-]+']);
+		$this->laravelRouter->get($this->prefix . '/img/cache/{template}/{filename}', [
+			'as' => 'imagecache.admin',
+			'uses' => 'SleepingOwl\Admin\Controllers\ImagesController@getImage',
+		])->where(['filename' => '[ \w\\.\\/\\-]+']);
 	}
 
 	/**
