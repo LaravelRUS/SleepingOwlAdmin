@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\AdminAuth\Entities;
 
+use Hash;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
