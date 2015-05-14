@@ -13,7 +13,7 @@ class AdministratorsTableSeeder extends Seeder
 
 		$default = [
 			'username' => 'admin',
-			'password' => Hash::make('SleepingOwl'),
+			'password' => 'SleepingOwl',
 			'name'     => 'SleepingOwl Administrator'
 		];
 
