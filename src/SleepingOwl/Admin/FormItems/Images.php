@@ -39,6 +39,10 @@ class Images extends Image
 		{
 			$value = [];
 		}
+		if (is_string($value))
+		{
+			$value = preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
+		}
 		return $value;
 	}
 
