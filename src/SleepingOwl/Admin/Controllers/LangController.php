@@ -10,6 +10,10 @@ class LangController extends Controller
 	public function getAll()
 	{
 		$lang = Lang::get('admin::lang');
+		if ($lang == 'admin::lang')
+		{
+			$lang = Lang::get('admin::lang', [], 'en');
+		}
 		$content = 'window.admin={}; window.admin.locale="' . App::getLocale() . '"; window.admin.lang=' . json_encode($lang) . ';';
 
 		$response = new Response($content, 200, [
