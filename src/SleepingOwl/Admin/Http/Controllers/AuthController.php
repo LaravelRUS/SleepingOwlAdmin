@@ -34,7 +34,12 @@ class AuthController extends Controller
 	{
 		$rules = config('admin.auth.rules');
 		$data = Input::only(array_keys($rules));
-		$validator = Validator::make($data, $rules, trans('admin::validation'));
+		$lang = trans('admin::validation');
+		if ($lang == 'admin::validation')
+		{
+			$lang = [];
+		}
+		$validator = Validator::make($data, $rules, $lang);
 		if ($validator->fails())
 		{
 			return Redirect::back()->withInput()->withErrors($validator);
