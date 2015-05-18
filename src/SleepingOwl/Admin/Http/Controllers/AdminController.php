@@ -115,6 +115,10 @@ class AdminController extends Controller
 	public function getLang()
 	{
 		$lang = trans('admin::lang');
+		if ($lang == 'admin::lang')
+		{
+			$lang = trans('admin::lang', [], 'messages', 'en');
+		}
 		$content = 'window.admin={}; window.admin.locale="' . App::getLocale() . '"; window.admin.token="' . csrf_token() . '"; window.admin.prefix="' . config('admin.prefix') . '"; window.admin.lang=' . json_encode($lang) . ';';
 
 		$response = new Response($content, 200, [
