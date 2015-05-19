@@ -18,7 +18,7 @@ class DisplayTable implements Renderable, DisplayInterface
 	protected $with = [];
 	protected $repository;
 	protected $apply;
-	protected $scope;
+	protected $scopes = [];
 	protected $filters = [];
 	protected $activeFilters = [];
 	protected $controlActive = true;
@@ -91,9 +91,9 @@ class DisplayTable implements Renderable, DisplayInterface
 	{
 		if (is_null($scope))
 		{
-			return $this->scope;
+			return $this->scopes;
 		}
-		$this->scope = func_get_args();
+		$this->scopes[] = func_get_args();
 		return $this;
 	}
 
@@ -166,14 +166,16 @@ class DisplayTable implements Renderable, DisplayInterface
 
 	protected function modifyQuery($query)
 	{
-		$scope = $this->scope();
-		if ( ! is_null($scope))
+		foreach ($this->scope() as $scope)
 		{
-			$method = array_shift($scope);
-			call_user_func_array([
-				$query,
-				$method
-			], $scope);
+			if ( ! is_null($scope))
+			{
+				$method = array_shift($scope);
+				call_user_func_array([
+					$query,
+					$method
+				], $scope);
+			}
 		}
 		$apply = $this->apply();
 		if ( ! is_null($apply))
