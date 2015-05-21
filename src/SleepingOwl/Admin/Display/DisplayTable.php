@@ -5,6 +5,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Input;
 use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Columns\Column;
+use SleepingOwl\Admin\Helpers\ExceptionHandler;
 use SleepingOwl\Admin\Interfaces\ColumnInterface;
 use SleepingOwl\Admin\Interfaces\DisplayInterface;
 use SleepingOwl\Admin\Repository\BaseRepository;
@@ -259,12 +260,18 @@ class DisplayTable implements Renderable, DisplayInterface
 		$this->modifyQuery($query);
 		$params = $this->getParams();
 		$params['collection'] = $query->get();
-		return view(AdminTemplate::view('display.' . $this->view), $params);
+		return view(AdminTemplate::view('display.' . $this->view), $params)->render();
 	}
 
 	function __toString()
 	{
-		return (string)$this->render();
+		try
+		{
+			return (string)$this->render();
+		} catch (\Exception $e)
+		{
+			ExceptionHandler::handle($e);
+		}
 	}
 
 }

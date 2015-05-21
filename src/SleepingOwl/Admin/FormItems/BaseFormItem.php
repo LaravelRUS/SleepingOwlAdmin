@@ -2,6 +2,7 @@
 
 use AdminTemplate;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Helpers\ExceptionHandler;
 use SleepingOwl\Admin\Interfaces\FormItemInterface;
 
 abstract class BaseFormItem implements Renderable, FormItemInterface
@@ -65,12 +66,18 @@ abstract class BaseFormItem implements Renderable, FormItemInterface
 	public function render()
 	{
 		$params = $this->getParams();
-		return view(AdminTemplate::view('formitem.' . $this->view), $params);
+		return view(AdminTemplate::view('formitem.' . $this->view), $params)->render();
 	}
 
 	function __toString()
 	{
-		return (string)$this->render();
+		try
+		{
+			return (string)$this->render();
+		} catch (\Exception $e)
+		{
+			ExceptionHandler::handle($e);
+		}
 	}
 
 } 
