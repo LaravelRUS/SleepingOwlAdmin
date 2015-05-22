@@ -12,7 +12,11 @@ class MultiSelect extends Select
 		$value = parent::value();
 		if ($value instanceof Collection)
 		{
-			return $value->lists('id');
+			$value = $value->lists('id');
+		}
+		if ($value instanceof Collection)
+		{
+			$value = $value->toArray();
 		}
 		return $value;
 	}
