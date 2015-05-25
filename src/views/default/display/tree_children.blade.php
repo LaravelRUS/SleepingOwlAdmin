@@ -12,7 +12,7 @@
 						$control->setInstance($entry);
 					}
 				?>
-				{!! $control->render() !!}
+				{!! $control !!}
 			@endforeach
 		</div>
 		@if ($entry->children->count() > 0)

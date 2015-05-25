@@ -2,7 +2,7 @@
 	<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 	<input type="hidden" name="_redirectBack" value="{{ $backUrl }}" />
 	@foreach ($items as $item)
-		{!! $item->render() !!}
+		{!! $item !!}
 	@endforeach
 	<div class="form-group">
 		<input type="submit" value="{{ trans('admin::lang.table.save') }}" class="btn btn-primary"/>

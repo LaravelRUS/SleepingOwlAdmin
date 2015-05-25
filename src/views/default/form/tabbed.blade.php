@@ -18,7 +18,7 @@
 			@foreach ($items as $label => $formItems)
 				<div role="tabpanel" class="tab-pane {!! ($active == $label) ? 'in active' : '' !!}" id="{{ md5($label) }}">
 					@foreach ($formItems as $item)
-						{!! $item->render() !!}
+						{!! $item !!}
 					@endforeach
 				</div>
 			@endforeach

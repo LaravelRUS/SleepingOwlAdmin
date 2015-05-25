@@ -1,12 +1,12 @@
 <div role="tabpanel">
 	<ul class="nav nav-tabs" role="tablist">
 		@foreach ($tabs as $tab)
-			{!! $tab->render() !!}
+			{!! $tab !!}
 		@endforeach
 	</ul>
 	<div class="tab-content">
 		@foreach ($tabs as $tab)
-			{!! $tab->content()->render() !!}
+			{!! $tab->content() !!}
 		@endforeach
 	</div>
 </div>

@@ -10,14 +10,14 @@
 @endif
 <div class="pull-right tableActions">
 	@foreach ($actions as $action)
-		{!! $action->render() !!}
+		{!! $action !!}
 	@endforeach
 </div>
 <table class="table table-striped datatables" data-order="{{ json_encode($order) }}" data-url="{{ $url }}" data-attributes="{{ json_encode($attributes, JSON_FORCE_OBJECT) }}">
 	<thead>
 		<tr>
 			@foreach ($columns as $column)
-				{!! $column->header()->render() !!}
+				{!! $column->header() !!}
 			@endforeach
 		</tr>
 	</thead>
