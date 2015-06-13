@@ -10,6 +10,7 @@ class FormServiceProvider extends ServiceProvider
 	{
 		AdminForm::register('form', 'SleepingOwl\Admin\Form\FormDefault');
 		AdminForm::register('tabbed', 'SleepingOwl\Admin\Form\FormTabbed');
+        AdminForm::register('panel', 'SleepingOwl\Admin\Form\FormPanel');
 	}
 
 }
