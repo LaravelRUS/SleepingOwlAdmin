@@ -23,7 +23,7 @@ class AdminServiceProvider extends ServiceProvider
 	/**
 	 * Commands to register
 	 */
-	protected $commads = [
+	protected $commands = [
 		'AdministratorsCommand',
 		'InstallCommand',
 		'ModelCommand'
@@ -110,7 +110,7 @@ class AdminServiceProvider extends ServiceProvider
 	 */
 	protected function registerCommands()
 	{
-		foreach ($this->commads as $command)
+		foreach ($this->commands as $command)
 		{
 			$this->commands('SleepingOwl\Admin\Commands\\' . $command);
 		}
