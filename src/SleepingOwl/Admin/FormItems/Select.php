@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\Admin\FormItems;
 
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\AssetManager\AssetManager;
 use SleepingOwl\Admin\Repository\BaseRepository;
 
@@ -62,6 +63,10 @@ class Select extends NamedFormItem
 		$repository = new BaseRepository($this->model());
 		$key = $repository->model()->getKeyName();
 		$options = $repository->query()->get()->lists($this->display(), $key);
+		if ($options instanceof Collection)
+		{
+			$options = $options->all();
+		}
 		$this->options($options);
 	}
 

@@ -1,5 +1,6 @@
 <?php namespace SleepingOwl\Admin\ColumnFilters;
 
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\AssetManager\AssetManager;
 use SleepingOwl\Admin\Repository\BaseRepository;
 
@@ -63,6 +64,10 @@ class Select extends BaseColumnFilter
 		$repository = new BaseRepository($this->model());
 		$key = $repository->model()->getKeyName();
 		$options = $repository->query()->get()->lists($this->display(), $key);
+		if ($options instanceof Collection)
+		{
+			$options = $options->all();
+		}
 		$options = array_unique($options);
 		$this->options($options);
 	}
