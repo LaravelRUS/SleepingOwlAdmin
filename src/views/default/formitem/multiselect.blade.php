@@ -3,7 +3,7 @@
 	<div>
 		<select id="{{ $name }}" name="{{ $name }}[]" class="form-control multiselect" multiple="multiple">
 			@foreach ($options as $optionValue => $optionLabel)
-				<option value="{{ $optionValue }}" {!! in_array($optionValue, $value) ? 'selected="selected"' : '' !!}>{{ $optionLabel }}</option>
+				<option value="{{ $optionValue }}" {!! isset($value) && in_array($optionValue, $value) ? 'selected="selected"' : '' !!}>{{ $optionLabel }}</option>
 			@endforeach
 		</select>
 	</div>
