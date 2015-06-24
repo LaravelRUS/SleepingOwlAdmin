@@ -8,6 +8,7 @@ abstract class NamedFormItem extends BaseFormItem
 	protected $name;
 	protected $label;
 	protected $defaultValue;
+	protected $readonly;
 
 	function __construct($name, $label = null)
 	{
@@ -38,9 +39,10 @@ abstract class NamedFormItem extends BaseFormItem
 	public function getParams()
 	{
 		return parent::getParams() + [
-			'name'  => $this->name(),
-			'label' => $this->label(),
-			'value' => $this->value(),
+			'name'      => $this->name(),
+			'label'     => $this->label(),
+			'readonly'  => $this->readonly(),
+			'value'     => $this->value()
 		];
 	}
 
@@ -51,6 +53,18 @@ abstract class NamedFormItem extends BaseFormItem
 			return $this->defaultValue;
 		}
 		$this->defaultValue = $defaultValue;
+		return $this;
+	}
+
+	public function readonly($readonly = null)
+	{
+		if (is_null($readonly))
+		{
+			return $this->readonly;
+		}
+
+		$this->readonly = $readonly;
+
 		return $this;
 	}
 
