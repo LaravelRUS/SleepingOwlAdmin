@@ -92,9 +92,10 @@ class Select extends BaseColumnFilter
 
 	public function apply($repository, $column, $query, $search, $fullSearch, $operator = 'like')
 	{
-		if (empty($search)) return;
+		#if (empty($search)) return;
+        if ($search === '') return;
 
-		if ($operator == 'like')
+        if ($operator == 'like')
 		{
 			$search = '%' . $search . '%';
 		}
