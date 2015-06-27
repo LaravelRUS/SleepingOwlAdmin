@@ -90,7 +90,7 @@ class Select extends BaseColumnFilter
 		];
 	}
 
-	public function apply($repository, $column, $query, $search, $fullSearch, $operator = 'like')
+	public function apply($repository, $column, $query, $search, $fullSearch, $operator = '=')
 	{
 		#if (empty($search)) return;
         if ($search === '') return;
