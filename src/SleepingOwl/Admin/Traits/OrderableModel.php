@@ -73,7 +73,7 @@ trait OrderableModel
 	 */
 	protected function updateOrderFieldOnDelete()
 	{
-		static::orderModel()->where($this->getOrderField(), '>', $this->getOrderValue())->update([$this->getOrderField() => DB::raw($this->getOrderField() . ' - 1')]);
+		static::orderModel()->where($this->getOrderField(), '>', $this->getOrderValue())->decrement($this->getOrderField());
 	}
 
 	/**
