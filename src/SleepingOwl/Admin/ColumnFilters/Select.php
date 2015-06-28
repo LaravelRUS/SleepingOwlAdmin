@@ -12,6 +12,7 @@ class Select extends BaseColumnFilter
 	protected $display = 'title';
 	protected $options = [];
 	protected $placeholder;
+    protected $filter_field = '';
 
 	/**
 	 * Initialize column filter
@@ -22,6 +23,15 @@ class Select extends BaseColumnFilter
 
 		AssetManager::addScript('admin::default/js/columnfilters/select.js');
 	}
+
+    public function filter_field( $field = null )
+    {
+        if(is_null($field))
+            return $this->filter_field;
+
+        $this->filter_field = $field;
+        return $this;
+    }
 
 	public function model($model = null)
 	{
@@ -90,11 +100,18 @@ class Select extends BaseColumnFilter
 		];
 	}
 
-	public function apply($repository, $column, $query, $search, $fullSearch, $operator = 'like')
+	public function apply($repository, $column, $query, $search, $fullSearch, $operator = '=')
 	{
-		if (empty($search)) return;
+		#if (empty($search)) return;
+        if ($search === '') return;
 
-		if ($operator == 'like')
+        if($this->filter_field())
+        {
+            $query->where($this->filter_field(), '=', $search);
+            return;
+        }
+        
+        if ($operator == 'like')
 		{
 			$search = '%' . $search . '%';
 		}
