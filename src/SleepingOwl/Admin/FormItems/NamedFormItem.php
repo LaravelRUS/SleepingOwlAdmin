@@ -71,7 +71,6 @@ abstract class NamedFormItem extends BaseFormItem
 	{
 		return parent::getParams() + [
 			'name'      => $this->name(),
-			'attribute' => $this->attribute(),
 			'label'     => $this->label(),
 			'readonly'  => $this->readonly(),
 			'value'     => $this->value()
@@ -110,7 +109,7 @@ abstract class NamedFormItem extends BaseFormItem
 		$input = Input::all();
 		if (($value = array_get($input, $this->path())) !== null)
 		{
-			return $value; //Input::get($this->name());
+			return $value;
 		}
 		if ( ! is_null($instance) && ! is_null($value = $instance->getAttribute($this->attribute())))
 		{
@@ -121,11 +120,9 @@ abstract class NamedFormItem extends BaseFormItem
 
 	public function save()
 	{
-		//$name = $this->name();
 		$attribute = $this->attribute();
-		if (Input::get($this->path()) == null)
-		{
-			$value = null; //Input::merge(([$name => null]);
+		if (Input::get($this->path()) == null) {
+			$value = null;
 		} else {
 			$value = $this->value();
 		}
@@ -150,7 +147,7 @@ abstract class NamedFormItem extends BaseFormItem
 			if ($item == '_unique')
 			{
 				$table = $this->instance()->getTable();
-				$item = 'unique:' . $table . ',' . $this->name();
+				$item = 'unique:' . $table . ',' . $this->attribute();
 				if ($this->instance()->exists())
 				{
 					$item .= ',' . $this->instance()->getKey();
