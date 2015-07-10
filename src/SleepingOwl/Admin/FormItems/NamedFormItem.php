@@ -5,15 +5,46 @@ use Input;
 abstract class NamedFormItem extends BaseFormItem
 {
 
+	protected $path;
 	protected $name;
+	protected $attribute;
 	protected $label;
 	protected $defaultValue;
 	protected $readonly;
 
-	function __construct($name, $label = null)
+	function __construct($path, $label = null)
 	{
 		$this->label = $label;
-		$this->name = $name;
+		$parts = explode(".", $path);
+		if (count($parts) > 1) {
+			$this->path = $path;
+			$this->name = $parts[0] . "[" . implode("][", array_slice($parts, 1)) . "]";
+			$this->attribute = implode(".", array_slice(explode(".", $path), -1, 1));
+		} else {
+			$this->path = $path;
+			$this->name = $path;
+			$this->attribute = $path;
+		}
+	}
+
+	public function path($path = null)
+	{
+		if (is_null($path))
+		{
+			return $this->path;
+		}
+		$this->path = $path;
+		return $path;
+	}
+
+	public function attribute($attribute = null)
+	{
+		if (is_null($attribute))
+		{
+			return $this->attribute;
+		}
+		$this->attribute = $attribute;
+		return $attribute;
 	}
 
 	public function name($name = null)
@@ -40,6 +71,7 @@ abstract class NamedFormItem extends BaseFormItem
 	{
 		return parent::getParams() + [
 			'name'      => $this->name(),
+			'attribute' => $this->attribute(),
 			'label'     => $this->label(),
 			'readonly'  => $this->readonly(),
 			'value'     => $this->value()
@@ -71,16 +103,16 @@ abstract class NamedFormItem extends BaseFormItem
 	public function value()
 	{
 		$instance = $this->instance();
-		if ( ! is_null($value = old($this->name())))
+		if ( ! is_null($value = old($this->path())))
 		{
 			return $value;
 		}
 		$input = Input::all();
-		if (array_key_exists($this->name, $input))
+		if (($value = array_get($input, $this->path())) !== null)
 		{
-			return Input::get($this->name());
+			return $value; //Input::get($this->name());
 		}
-		if ( ! is_null($instance) && ! is_null($value = $instance->getAttribute($this->name())))
+		if ( ! is_null($instance) && ! is_null($value = $instance->getAttribute($this->attribute())))
 		{
 			return $value;
 		}
@@ -89,12 +121,15 @@ abstract class NamedFormItem extends BaseFormItem
 
 	public function save()
 	{
-		$name = $this->name();
-		if ( ! Input::has($name))
+		//$name = $this->name();
+		$attribute = $this->attribute();
+		if (Input::get($this->path()) == null)
 		{
-			Input::merge([$name => null]);
+			$value = null; //Input::merge(([$name => null]);
+		} else {
+			$value = $this->value();
 		}
-		$this->instance()->$name = $this->value();
+		$this->instance()->$attribute = $value;
 	}
 
 	public function required()
