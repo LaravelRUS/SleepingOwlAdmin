@@ -10,7 +10,7 @@ class MultiSelect extends Select
 	public function value()
 	{
 		$value = parent::value();
-		if ($value instanceof Collection)
+		if ($value instanceof Collection  && $value->count() > 0)
 		{
 			$value = $value->lists($value->first()->getKeyName());
 		}
