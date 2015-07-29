@@ -63,7 +63,7 @@ return [
 	],
 	'select'   => [
 		'nothing'  => 'Nada selecionado',
-		'selected' => 'selecionado'
+		'selected' => 'selecionado',
 		'placeholder' => 'Selecione da lista',
 	],
 	'image'    => [
