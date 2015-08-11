@@ -37,5 +37,6 @@ CKEDITOR.editorConfig = function (config) {
 	CKEDITOR.config.simpleImageBrowserURL = '/' + window.admin.prefix + '/assets/images/all';
 	CKEDITOR.config.language = window.admin.locale;
 	config.filebrowserImageUploadUrl = '/' + window.admin.prefix + '/assets/images/upload';
-};
 
+	$.extend(config, window.admin.ckeditor_cfg);
+};

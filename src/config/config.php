@@ -50,4 +50,11 @@ return [
 	'datetimeFormat'          => 'd.m.Y H:i',
 	'dateFormat'              => 'd.m.Y',
 	'timeFormat'              => 'H:i',
+
+	/*
+	 * If you want, you can extend ckeditor default configuration
+	 * with this PHP Hash variable.
+	 * Checkout for more information: https://github.com/sleeping-owl/admin/blob/development/public/default/js/formitems/ckeditor/config.js
+	 */
+	'ckeditor' => [],
 ];
