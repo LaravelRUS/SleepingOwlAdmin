@@ -121,7 +121,7 @@ abstract class NamedFormItem extends BaseFormItem
 	public function save()
 	{
 		$attribute = $this->attribute();
-		if (Input::get($this->path()) == null) {
+		if (Input::get($this->path()) === null) {
 			$value = null;
 		} else {
 			$value = $this->value();
