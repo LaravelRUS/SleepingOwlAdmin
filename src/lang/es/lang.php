@@ -6,7 +6,7 @@ return [
 		'title'          => 'Autorización',
 		'username'       => 'Usuario',
 		'password'       => 'Contraseña',
-		'login'          => 'Inicar sesión',
+		'login'          => 'Iniciar sesión',
 		'logout'         => 'Cerrar sesión',
 		'wrong-username' => 'Usuario',
 		'wrong-password' => 'o contraseña incorrectos'
