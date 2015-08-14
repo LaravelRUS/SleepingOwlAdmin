@@ -119,8 +119,17 @@ class AdminController extends Controller
 		{
 			$lang = trans('admin::lang', [], 'messages', 'en');
 		}
-		$content = 'window.admin={}; window.admin.locale="' . App::getLocale() . '"; window.admin.token="' . csrf_token() . '"; window.admin.prefix="' . config('admin.prefix') . '"; window.admin.lang=' . json_encode($lang) . ';';
 
+		$data = array(
+			'locale' => App::getLocale(),
+			'token'  => csrf_token(),
+			'prefix' => config('admin.prefix'),
+			'lang'   => $lang,
+			'ckeditor_cfg' => config('admin.ckeditor')
+		);
+		
+		$content = 'window.admin = '.json_encode($data) . ';';
+		
 		$response = new Response($content, 200, [
 			'Content-Type' => 'text/javascript',
 		]);
