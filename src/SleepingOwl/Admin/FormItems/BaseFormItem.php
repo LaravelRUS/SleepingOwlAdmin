@@ -38,9 +38,9 @@ abstract class BaseFormItem implements Renderable, FormItemInterface
 			return $this->validationRules;
 		}
 		if (is_string($validationRules))
-+		{
-+			$validationRules = explode('|', $validationRules);
-+		}
+		{
+			$validationRules = explode('|', $validationRules);
+		}
 		$this->validationRules = $validationRules;
 		return $this;
 	}
