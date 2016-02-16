@@ -23,11 +23,12 @@ class Image extends NamedFormItem implements WithRoutesInterface
 
 	public static function registerRoutes()
 	{
-		Route::post('formitems/image/' . static::$route, [
-			'as' => 'admin.formitems.image.' . static::$route,
-			function ()
+		$class = get_called_class();
+		Route::post('formitems/image/' . $class::$route, [
+			'as' => 'admin.formitems.image.' . $class::$route,
+			function () use ($class)
 			{
-				$validator = Validator::make(Input::all(), static::uploadValidationRules());
+				$validator = Validator::make(Input::all(), $class::uploadValidationRules());
 				if ($validator->fails())
 				{
 					return Response::make($validator->errors()->get('file'), 400);
