@@ -1,0 +1,78 @@
+{
+  "name": "SleepingOwlAdmin",
+  "version": "0.1",
+  "dependencies": {
+    "jquery": "latest",
+    "bootstrap": "latest",
+    "bootbox": "latest",
+    "datetimepicker": "latest",
+    "fontawesome": "latest",
+    "moment": "latest",
+    "nestable": "latest",
+    "noty": "latest",
+    "ckeditor": "latest",
+    "Sortable": "latest",
+    "select2": "latest",
+    "flow.js": "latest",
+    "ekko-lightbox": "latest",
+    "metisMenu": "latest",
+    "datatables": "latest"
+  },
+  "install": {
+    "base": "public/default/libs",
+    "path": {
+      "js": "{name}/js",
+      "map": "{name}/js",
+      "less": "{name}/less",
+      "css": "{name}/css",
+      "eot": "{name}/fonts",
+      "svg": "{name}/fonts",
+      "ttf": "{name}/fonts",
+      "woff": "{name}/fonts",
+      "woff2": "{name}/fonts",
+      "otf": "{name}/fonts",
+      "gif": "{name}/images",
+      "png": "{name}/images",
+      "jpg": "{name}/images"
+    },
+    "sources": {
+      "bootstrap": [
+        "bower_components/bootstrap/dist/css/**",
+        "bower_components/bootstrap/dist/js/**",
+        "bower_components/bootstrap/fonts/**",
+        "bower_components/bootstrap/less/**"
+      ],
+      "datetimepicker": [
+        "bower_components/datetimepicker/jquery.datetimepicker.css",
+        "bower_components/datetimepicker/jquery.datetimepicker.js"
+      ],
+      "fontawesome": [
+        "bower_components/fontawesome/css/**",
+        "bower_components/fontawesome/fonts/**",
+        "bower_components/fontawesome/less/**"
+      ],
+      "jquery": [
+        "bower_components/jquery/dist/jquery.min.js",
+        "bower_components/jquery/dist/jquery.min.map"
+      ],
+      "moment": [
+        "bower_components/moment/min/*.*",
+        "bower_components/moment/locale/**"
+      ],
+      "nestable": [
+        "bower_components/nestable/jquery.nestable.js"
+      ],
+      "noty": [
+        "bower_components/noty/js/noty/packaged/*.*"
+      ],
+      "select2": [
+        "bower_components/select2/dist/css/*.*",
+        "bower_components/select2/dist/js/**"
+      ],
+      "Sortable": [
+        "bower_components/Sortable/jquery.binding.js",
+        "bower_components/Sortable/Sortable.min.js"
+      ]
+    }
+  }
+}
