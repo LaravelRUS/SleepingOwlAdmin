@@ -1,0 +1,9 @@
+<?php
+
+return [
+    [
+        'name'     => 'Dashboard',
+        'icon'     => 'dashboard',
+        'url'      => route('admin.dashboard'),
+    ]
+];

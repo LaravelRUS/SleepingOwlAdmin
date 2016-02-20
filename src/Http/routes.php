@@ -5,7 +5,7 @@ Route::get('assets/lang', [
     'uses' => 'AdminController@getLang',
 ]);
 
-Route::group(['middleware' => config('sleeping_owl.middleware'), 'prefix' => config('sleeping_owl.prefix'), 'as' => 'admin.',], function () {
+Route::group(['as' => 'admin.'], function () {
     Route::get('{adminModel}', [
         'as'   => 'model',
         'uses' => 'AdminController@getDisplay',

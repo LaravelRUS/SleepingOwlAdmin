@@ -1,17 +1,18 @@
 <?php
 
 if (! function_exists('resources_url')) {
-    function resources_url()
+    function resources_url($path)
     {
-        return public_path('packages/sleepingowl/default/');
+        return '/packages/sleepingowl/default/'.$path;
     }
 }
 
 PackageManager::add('libraries')
-    ->js(null, resources_url('js/libraries.js'));
+    ->js(null, resources_url('js/libraries.js'), ['jquery']);
 
 PackageManager::add('admin-default')
-    ->js(null, resources_url('js/admin-default.js'));
+    ->js(null, resources_url('js/admin-default.js'), ['metisMenu'])
+    ->css(null, resources_url('css/common.css'));
 
 PackageManager::add('flow.js')
     ->js(null, resources_url('libs/flow.js/js/flow.js'), ['jquery']);
@@ -44,7 +45,7 @@ PackageManager::add('jquery')
     ->js(null, resources_url('libs/jquery/js/jquery.min.js'));
 
 PackageManager::add('metisMenu')
-    ->js(null, resources_url('libs/metisMenu/js/metisMenu.js'), ['jquery'])
+    ->js(null, resources_url('libs/metisMenu/js/metisMenu.js'), ['jquery', 'libraries'])
     ->css(null, resources_url('libs/metisMenu/css/metisMenu.css'));
 
 PackageManager::add('moment')

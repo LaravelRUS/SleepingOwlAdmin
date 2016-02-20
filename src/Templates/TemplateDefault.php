@@ -3,24 +3,49 @@
 namespace SleepingOwl\Admin\Templates;
 
 use Meta;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 
 class TemplateDefault implements TemplateInterface
 {
+
     public function __construct()
     {
-        Meta::loadPackage('libraries', 'admin-default');
+        Meta::loadPackage([
+            'libraries',
+            'jquery',
+            'metisMenu',
+            'admin-default',
+            'font-awesome'
+        ]);
     }
 
     /**
-     * Get full view name
-     *
+     * @return string
+     */
+    public function getViewNamespace()
+    {
+        return 'sleeping_owl::';
+    }
+
+    /**
      * @param string $view
      *
      * @return string
      */
-    public function view($view)
+    public function getTemplateViewPath($view)
     {
-        return 'sleeping_owl::default.'.$view;
+        return $this->getViewNamespace().'default.'.$view;
     }
 
+    /**
+     * @param string $view
+     * @param array  $data
+     * @param array  $mergeData
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function view($view, $data = [], $mergeData = [])
+    {
+        return view($this->getTemplateViewPath($view), $data, $mergeData);
+    }
 }

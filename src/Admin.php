@@ -131,7 +131,7 @@ class Admin
      */
     public function buildMenu(Navigation $navigation)
     {
-        $section = $navigation->addSection('SleepingOwl', null, 999);
+        $section = $navigation->getRootSection();
 
         foreach ($this->menuItems as $item) {
             $section->addPage($item);
@@ -148,6 +148,6 @@ class Admin
     {
         $controller = app(AdminController::class);
 
-        return $controller->render($title, $content);
+        return $controller->renderContent($content, $title);
     }
 }

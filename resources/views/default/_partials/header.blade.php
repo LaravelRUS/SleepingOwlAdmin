@@ -5,5 +5,5 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand" href="#">{{{ config('admin.title') }}}</a>
+	<a class="navbar-brand" href="#">{{{ config('sleeping_owl.title') }}}</a>
 </div>

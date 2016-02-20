@@ -16,8 +16,11 @@ use KodiCMS\Navigation\Navigation;
 use Route;
 use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Column\Filter\ColumnFilter;
+use SleepingOwl\Admin\Commands\InstallCommand;
 use SleepingOwl\Admin\Display\AdminDisplay;
+use SleepingOwl\Admin\Facades\AdminNavigation;
 use SleepingOwl\Admin\Facades\AdminSection;
+use SleepingOwl\Admin\Facades\AdminTemplate;
 use SleepingOwl\Admin\Filter\Filter;
 use SleepingOwl\Admin\Form\AdminForm;
 use SleepingOwl\Admin\FormItems\FormItem;
@@ -33,7 +36,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
         $this->registerProviders();
         $this->registerAliases();
-        $this->registerRoutePatterns();
+        $this->registerCommands();
     }
 
     public function boot()
@@ -42,43 +45,31 @@ class SleepingOwlServiceProvider extends ServiceProvider
             return $this->app['sleeping_owl']->template();
         });
 
+        $this->app->singleton('sleeping_owl.navigation', function () {
+            $items = [];
+            if (file_exists($navigation = config('sleeping_owl.bootstrapDirectory').DIRECTORY_SEPARATOR.'navigation.php')) {
+                $items = include $navigation;
+            }
+
+            return new Navigation([]);
+        });
+
+
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'sleeping_owl');
+        $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
 
         $this->publishes([
-             __DIR__.'/../../public/' => public_path('packages/sleepingowl/'),
-         ], 'assets');
+            __DIR__.'/../../public/' => public_path('packages/sleepingowl/'),
+        ], 'assets');
 
         $this->publishes([
-             __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
-         ], 'config');
+            __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
+        ], 'config');
 
-        if (file_exists($assetsFile = __DIR__.'/../../resources/asets.php')) {
+        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
             include $assetsFile;
         }
-    }
-
-    protected function registerRoutePatterns()
-    {
-        Route::pattern('adminModelId', '[0-9]+');
-
-        $aliases = $this->app['sleeping_owl']->modelAliases();
-
-        if (count($aliases) > 0) {
-            Route::pattern('adminModel', implode('|', $aliases));
-            Route::bind('adminModel', function ($model) use ($aliases) {
-                $class = array_search($model, $aliases);
-
-                if ($class === false) {
-                    throw new ModelNotFoundException;
-                }
-
-                return $this->app['sleeping_owl']->getModel($class);
-            });
-        }
-
-        Route::pattern('adminWildcard', '.*');
     }
 
     public function registerProviders()
@@ -91,7 +82,9 @@ class SleepingOwlServiceProvider extends ServiceProvider
             FormServiceProvider::class,
             FormItemServiceProvider::class,
             AssetsServiceProvider::class,
-            HtmlServiceProvider::class
+            HtmlServiceProvider::class,
+            BootstrapServiceProvider::class,
+            RouteServiceProvider::class
         ];
 
         foreach ($providers as $providerClass) {
@@ -102,18 +95,31 @@ class SleepingOwlServiceProvider extends ServiceProvider
     public function registerAliases()
     {
         AliasLoader::getInstance([
-            'AdminSection'            => AdminSection::class,
-            'SleepingOwlColumn'       => Column::class,
-            'SleepingOwlColumnFilter' => ColumnFilter::class,
-            'SleepingOwlFilter'       => Filter::class,
-            'AdminDisplay'            => AdminDisplay::class,
-            'SleepingOwlForm'         => AdminForm::class,
-            'SleepingOwlFormItem'     => FormItem::class,
-            'Assets'                  => Assets::class,
-            'PackageManager'          => PackageManager::class,
-            'Meta'                    => Meta::class,
-            'Form'                    => FormFacade::class,
-            'HTML'                    => HtmlFacade::class,
+            'AdminSection'      => AdminSection::class,
+            'AdminTemplate'     => AdminTemplate::class,
+            'AdminNavigation'   => AdminNavigation::class,
+            'AdminColumn'       => Column::class,
+            'AdminColumnFilter' => ColumnFilter::class,
+            'AdminFilter'       => Filter::class,
+            'AdminForm'         => AdminForm::class,
+            'AdminFormItem'     => FormItem::class,
+            'AdminDisplay'      => AdminDisplay::class,
+            'Assets'            => Assets::class,
+            'PackageManager'    => PackageManager::class,
+            'Meta'              => Meta::class,
+            'Form'              => FormFacade::class,
+            'HTML'              => HtmlFacade::class,
         ]);
+    }
+
+    protected function registerCommands()
+    {
+        $commands = [
+            InstallCommand::class
+        ];
+
+        foreach ($commands as $command) {
+            $this->commands($command);
+        }
     }
 }

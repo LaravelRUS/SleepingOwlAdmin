@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use App;
-use Request;
 use AdminTemplate;
+use App;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Contracts\Support\Renderable;
+use Request;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
@@ -171,11 +171,26 @@ class AdminController extends Controller
             $content = $content->render();
         }
 
-        return view(AdminTemplate::view('_layout.inner'), [
-            'title'   => $model->getTitle(),
-            'content' => $content,
-            'model'   => $model
-        ]);
+        return AdminTemplate::view('_layout.inner')
+            ->with('title', $model->getTitle())
+            ->with('content', $content);
+    }
+
+    /**
+     * @param Renderable|string $content
+     * @param string|null       $title
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function renderContent($content, $title = null)
+    {
+        if ($content instanceof Renderable) {
+            $content = $content->render();
+        }
+
+        return AdminTemplate::view('_layout.inner')
+            ->with('title', $title)
+            ->with('content', $content);
     }
 
     /**

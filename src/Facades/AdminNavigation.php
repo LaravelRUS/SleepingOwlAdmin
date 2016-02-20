@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class AdminTemplate extends Facade
+class AdminNavigation extends Facade
 {
 
 	/**
@@ -12,7 +12,7 @@ class AdminTemplate extends Facade
 	 */
 	protected static function getFacadeAccessor()
 	{
-		return 'sleeping_owl.template';
+		return 'sleeping_owl.navigation';
 	}
 
 } 
