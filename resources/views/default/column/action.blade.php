@@ -1,4 +1,4 @@
-<td>
+<td {!! HTML::attributes($attributes) !!}>
 	<div class="text-right">
 		<a class="btn btn-default btn-sm btnAction" href="{{ $url }}" data-href="{{ $url }}" @if ($style == 'short') data-toggle="tooltip" title="{{ $value }}" @endif target="{{ $target }}">
 			@if ($icon)

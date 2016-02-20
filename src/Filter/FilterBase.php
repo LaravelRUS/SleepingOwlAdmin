@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Filter;
 
-use Input;
+use Request;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Exceptions\FilterOperatorException;
@@ -195,7 +195,7 @@ abstract class FilterBase implements FilterInterface
     public function getValue($default = null)
     {
         if (is_null($this->value)) {
-            $this->value = Input::get($this->getAlias(), $default);
+            $this->value = Request::get($this->getAlias(), $default);
         }
 
         $params = $this->getOperatorParams();

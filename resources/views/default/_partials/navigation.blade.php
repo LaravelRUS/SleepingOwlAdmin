@@ -11,7 +11,7 @@
 		@endforeach
 
 		@foreach(AdminNavigation::getRootSection()->getSections() as $section)
-			@include('cms::navigation.sections', ['section' => $section])
+			@include(AdminTemplate::getTemplateViewPath('_partials.navigation.sections', ['section' => $section]))
 		@endforeach
 		</ul>
 	</div>

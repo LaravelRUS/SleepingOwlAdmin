@@ -6,7 +6,7 @@
 	</ul>
 	<div class="tab-content">
 		@foreach ($tabs as $tab)
-			{!! $tab->content() !!}
+			{!! $tab->getContent()->render() !!}
 		@endforeach
 	</div>
 </div>

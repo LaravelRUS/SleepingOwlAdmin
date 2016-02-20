@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\FormItems;
 
-use Input;
+use Request;
 use Route;
 use Response;
 use Validator;
@@ -19,12 +19,12 @@ class Image extends NamedFormItem implements WithRoutesInterface
     {
         Route::post('formitems/image/'.static::$route, ['as' => 'admin.formitems.image.'.static::$route,
             function () {
-                $validator = Validator::make(Input::all(), static::uploadValidationRules());
+                $validator = Validator::make(Request::all(), static::uploadValidationRules());
                 if ($validator->fails()) {
                     return Response::make($validator->errors()->get('file'), 400);
                 }
 
-                $file = Input::file('file');
+                $file = Request::file('file');
                 $filename = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
                 $path = config('sleeping_owl.imagesUploadDirectory');
                 $fullpath = public_path($path);

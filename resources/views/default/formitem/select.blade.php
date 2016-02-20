@@ -10,5 +10,5 @@
 			@endforeach
 		</select>
 	</div>
-	@include(AdminTemplate::view('formitem.errors'))
+	@include(AdminTemplate::getTemplateViewPath('formitem.errors'))
 </div>

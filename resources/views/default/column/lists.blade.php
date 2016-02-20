@@ -1,7 +1,5 @@
-<td>
-	<ul class="list-unstyled">
-		@foreach ($values as $value)
-			<li>{{ $value }}</li>
-		@endforeach
-	</ul>
+<td {!! HTML::attributes($attributes) !!}>
+	@foreach ($values as $value)
+	<span class="label label-info">{{ $value }}</span>
+	@endforeach
 </td>

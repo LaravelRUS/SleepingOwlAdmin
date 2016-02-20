@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Input;
+use Request;
 use Closure;
 use SleepingOwl\Admin\Column;
 use Illuminate\Database\Eloquent\Builder;
@@ -391,7 +391,7 @@ class DisplayTable implements Renderable, DisplayInterface
             'title'     => $this->getTitle(),
             'columns'   => $this->getAllColumns(),
             'creatable' => ! is_null($model->fireCreate()),
-            'createUrl' => $model->getCreateUrl($this->getParameters() + Input::all()),
+            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
             'actions'   => $this->getActions(),
             'attributes' => $this->getAttributes()
         ];
@@ -443,9 +443,9 @@ class DisplayTable implements Renderable, DisplayInterface
 
     protected function initializeAction()
     {
-        $action = Input::get('_action');
-        $id = Input::get('_id');
-        $ids = Input::get('_ids');
+        $action = Request::get('_action');
+        $id = Request::get('_id');
+        $ids = Request::get('_ids');
 
         if (! is_null($action) && (! is_null($id) || ! is_null($ids))) {
             $columns = array_merge($this->getColumns(), $this->getActions());

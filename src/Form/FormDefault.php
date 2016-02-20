@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Support\Collection;
 use URL;
-use Input;
+use Request;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Renderable;
@@ -252,7 +252,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
             }
         });
 
-        $data = Input::all();
+        $data = Request::all();
         $verifier = app('validation.presence');
         $verifier->setConnection($this->getModelObject()->getConnectionName());
         $validator = Validator::make($data, $rules);

@@ -1,1 +1,3 @@
-<td data-order="{{ $originalValue }}">{{ $value }} {!! $append !!}</td>
+<td {!! HTML::attributes($attributes) !!}>
+    {{ $value }} {!! $append !!}
+</td>

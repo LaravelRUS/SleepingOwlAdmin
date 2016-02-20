@@ -250,7 +250,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
             'url'         => $model->getDisplayUrl(),
             'value'       => $this->getValue(),
             'creatable'   => ! is_null($model->create()),
-            'createUrl'   => $model->createUrl($this->getParameters() + Input::all()),
+            'createUrl'   => $model->createUrl($this->getParameters() + Request::all()),
             'controls'    => [Column::treeControl()],
         ];
     }

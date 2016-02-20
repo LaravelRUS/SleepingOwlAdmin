@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Input;
+use Request;
 use Route;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Column\String;
@@ -121,7 +121,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public function getParams()
     {
         $params = parent::getParams();
-        $attributes = Input::all();
+        $attributes = Request::all();
         array_unshift($attributes, $this->getName());
         array_unshift($attributes, $this->getModel()->alias());
         $params['url'] = route('admin.model.async', $attributes);
@@ -165,8 +165,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applyOffset($query)
     {
-        $offset = Input::get('start', 0);
-        $limit = Input::get('length', 10);
+        $offset = Request::get('start', 0);
+        $limit = Request::get('length', 10);
 
         if ($limit == -1) {
             return;
@@ -182,7 +182,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applyOrders($query)
     {
-        $orders = Input::get('order', []);
+        $orders = Request::get('order', []);
 
         foreach ($orders as $order) {
             $columnIndex = $order['column'];
@@ -203,7 +203,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applySearch(Builder $query)
     {
-        $search = Input::get('search.value');
+        $search = Request::get('search.value');
         if (is_null($search)) {
             return;
         }
@@ -226,7 +226,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applyColumnSearch(Builder $query)
     {
-        $queryColumns = Input::get('columns', []);
+        $queryColumns = Request::get('columns', []);
 
         foreach ($queryColumns as $index => $queryColumn) {
 
@@ -255,7 +255,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $columns = $this->allColumns();
 
         $result = [];
-        $result['draw'] = Input::get('draw', 0);
+        $result['draw'] = Request::get('draw', 0);
         $result['recordsTotal'] = $totalCount;
         $result['recordsFiltered'] = $filteredCount;
         $result['data'] = [];

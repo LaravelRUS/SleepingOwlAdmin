@@ -18,14 +18,14 @@
 			@foreach ($items as $label => $formItems)
 				<div role="tabpanel" class="tab-pane {!! ($active == $label) ? 'in active' : '' !!}" id="{{ md5($label) }}">
 					@foreach ($formItems as $item)
-						{!! $item !!}
+						{!! $item->render() !!}
 					@endforeach
 				</div>
 			@endforeach
 		</div>
 	</div>
 	<div class="form-group">
-		<input type="submit" value="{{ trans('admin::lang.table.save') }}" class="btn btn-primary"/>
-		<a href="{{ $backUrl }}" class="btn btn-default">{{ trans('admin::lang.table.cancel') }}</a>
+		<input type="submit" value="{{ trans('sleeping_owl::lang.table.save') }}" class="btn btn-primary"/>
+		<a href="{{ $backUrl }}" class="btn btn-default">{{ trans('sleeping_owl::lang.table.cancel') }}</a>
 	</div>
 </form>

@@ -8,12 +8,12 @@
 			</div>
 		</div>
 		<div>
-			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('admin::lang.image.browse') }}</div>
-			<div class="btn btn-danger imageRemove"><i class="fa fa-times"></i> {{ trans('admin::lang.image.remove') }}</div>
+			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browse') }}</div>
+			<div class="btn btn-danger imageRemove"><i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}</div>
 		</div>
 		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ $value }}">
 		<div class="errors">
-			@include(AdminTemplate::view('formitem.errors'))
+			@include(AdminTemplate::getTemplateViewPath('formitem.errors'))
 		</div>
 	</div>
 </div>

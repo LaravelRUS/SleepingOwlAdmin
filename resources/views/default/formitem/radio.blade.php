@@ -4,7 +4,7 @@
 		<div class="radio">
 			<label>
 				<input type="radio" name="{{ $name }}" value="" {!! ($value == null) ? 'checked' : '' !!}/>
-				{{ trans('admin::lang.select.nothing') }}
+				{{ trans('sleeping_owl::lang.select.nothing') }}
 			</label>
 		</div>
 	@endif
@@ -16,5 +16,5 @@
 			</label>
 		</div>
 	@endforeach
-	@include(AdminTemplate::view('formitem.errors'))
+	@include(AdminTemplate::getTemplateViewPath('formitem.errors'))
 </div>

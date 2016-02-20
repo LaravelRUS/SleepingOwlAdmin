@@ -5,32 +5,38 @@
 		</div>
 	</div>
 @endif
-@if ($creatable)
-	<a class="btn btn-primary" href="{{ $createUrl }}"><i class="fa fa-plus"></i> {{ trans('admin::lang.table.new-entry') }}</a>
-@endif
-<div class="pull-right tableActions">
-	@foreach ($actions as $action)
-		{!! $action !!}
-	@endforeach
-</div>
-<table class="table table-striped datatables" data-order="{{ json_encode($order) }}" data-url="{{ $url }}" data-attributes="{{ json_encode($attributes, JSON_FORCE_OBJECT) }}">
-	<thead>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		@if ($creatable)
+			{!! link_to($createUrl, trans('sleeping_owl::lang.table.new-entry'), [
+                'class' => 'btn btn-primary btn-labeled', 'data-icon' => 'plus'
+            ]) !!}
+		@endif
+
+		<div class="pull-right tableActions">
+			@foreach ($actions as $action)
+				{!! $action !!}
+			@endforeach
+		</div>
+	</div>
+	<table {!! HTML::attributes($attributes) !!}>
+		<colgroup>
+			@foreach ($columns as $column)
+				<col width="{!! $column->getWidth() !!}" />
+			@endforeach
+		</colgroup>
+		<thead>
 		<tr>
 			@foreach ($columns as $column)
-				{!! $column->header() !!}
+				{!! $column->getHeader()->render() !!}
 			@endforeach
 		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			@foreach ($columns as $index => $column)
-				<?php
-					$columnFilter = array_get($columnFilters, $index);
-				?>
-				<td data-index="{{ $index }}">{!! $columnFilter !!}</td>
-			@endforeach
-		</tr>
-	</tfoot>
-	<tbody>
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+		</tbody>
+
+		<tfoot>
+		@include('sleeping_owl::default.columnfilter.filter_list')
+		</tfoot>
+	</table>
+</div>

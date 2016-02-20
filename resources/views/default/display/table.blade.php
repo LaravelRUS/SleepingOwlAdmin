@@ -5,32 +5,43 @@
 		</div>
 	</div>
 @endif
-@if ($creatable)
-	<a class="btn btn-primary" href="{{ $createUrl }}"><i class="fa fa-plus"></i> {{ trans('admin::lang.table.new-entry') }}</a>
-@endif
-<div class="pull-right tableActions">
-	@foreach ($actions as $action)
-		{!! $action !!}
-	@endforeach
-</div>
-<table class="table table-striped">
-	<thead>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		@if ($creatable)
+			{!! link_to($createUrl, trans('sleeping_owl::lang.table.new-entry'), [
+                'class' => 'btn btn-primary btn-labeled', 'data-icon' => 'plus'
+            ]) !!}
+		@endif
+
+		<div class="pull-right tableActions">
+			@foreach ($actions as $action)
+				{!! $action !!}
+			@endforeach
+		</div>
+	</div>
+
+	<table {!! HTML::attributes($attributes) !!}>
+		<colgroup>
+			@foreach ($columns as $column)
+				<col width="{!! $column->getWidth() !!}" />
+			@endforeach
+		</colgroup>
+		<thead>
 		<tr>
 			@foreach ($columns as $column)
-				{!! $column->header() !!}
+				{!! $column->getHeader()->render() !!}
 			@endforeach
 		</tr>
-	</thead>
-	<tbody>
-		@foreach ($collection as $instance)
+		</thead>
+		<tbody>
+		@foreach ($collection as $model)
 			<tr>
 				@foreach ($columns as $column)
-					<?php
-						$column->setInstance($instance);
-					?>
-					{!! $column !!}
+					<?php $column->setModel($model); ?>
+					{!! $column->render() !!}
 				@endforeach
 			</tr>
 		@endforeach
-	</tbody>
-</table>
+		</tbody>
+	</table>
+</div>

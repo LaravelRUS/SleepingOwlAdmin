@@ -12,11 +12,11 @@
 			@endforeach
 		</div>
 		<div>
-			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('admin::lang.image.browseMultiple') }}</div>
+			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}</div>
 		</div>
 		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ implode(',', $value) }}">
 		<div class="errors">
-			@include(AdminTemplate::view('formitem.errors'))
+			@include(AdminTemplate::getTemplateViewPath('formitem.errors'))
 		</div>
 	</div>
 </div>

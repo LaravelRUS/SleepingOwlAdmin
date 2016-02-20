@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\FormItems;
 
 use Meta;
-use Input;
+use Request;
 
 class Images extends Image
 {
@@ -15,7 +15,7 @@ class Images extends Image
     public function save()
     {
         $name = $this->getName();
-        $value = Input::get($name, '');
+        $value = Request::get($name, '');
 
         if (! empty($value)) {
             $value = explode(',', $value);
@@ -23,7 +23,7 @@ class Images extends Image
             $value = [];
         }
 
-        Input::merge([$name => $value]);
+        Request::merge([$name => $value]);
         parent::save();
     }
 

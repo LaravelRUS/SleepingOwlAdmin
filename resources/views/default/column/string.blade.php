@@ -1,1 +1,1 @@
-<td>{{ $value }} {!! $append !!}</td>
+<td {!! HTML::attributes($attributes) !!}>{{ $value }} {!! $append !!}</td>

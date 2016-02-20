@@ -4,36 +4,20 @@ namespace SleepingOwl\Admin\Providers;
 
 use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
-use Collective\Html\HtmlServiceProvider;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use KodiCMS\Assets\Facades\Meta;
+use KodiCMS\Assets\Facades\Assets;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Collective\Html\HtmlServiceProvider;
 use KodiCMS\Assets\AssetsServiceProvider;
-use KodiCMS\Assets\Facades\Assets;
-use KodiCMS\Assets\Facades\Meta;
 use KodiCMS\Assets\Facades\PackageManager;
-use KodiCMS\Navigation\Navigation;
-use Route;
-use SleepingOwl\Admin\Admin;
-use SleepingOwl\Admin\Column\Filter\ColumnFilter;
 use SleepingOwl\Admin\Commands\InstallCommand;
-use SleepingOwl\Admin\Display\AdminDisplay;
-use SleepingOwl\Admin\Facades\AdminNavigation;
-use SleepingOwl\Admin\Facades\AdminSection;
-use SleepingOwl\Admin\Facades\AdminTemplate;
-use SleepingOwl\Admin\Filter\Filter;
-use SleepingOwl\Admin\Form\AdminForm;
-use SleepingOwl\Admin\FormItems\FormItem;
 
 class SleepingOwlServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
-        $this->app->singleton('sleeping_owl', function () {
-            return new Admin();
-        });
-
         $this->registerProviders();
         $this->registerAliases();
         $this->registerCommands();
@@ -41,20 +25,6 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->app->singleton('sleeping_owl.template', function () {
-            return $this->app['sleeping_owl']->template();
-        });
-
-        $this->app->singleton('sleeping_owl.navigation', function () {
-            $items = [];
-            if (file_exists($navigation = config('sleeping_owl.bootstrapDirectory').DIRECTORY_SEPARATOR.'navigation.php')) {
-                $items = include $navigation;
-            }
-
-            return new Navigation($items);
-        });
-
-
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
         $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
@@ -83,7 +53,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
             FormItemServiceProvider::class,
             AssetsServiceProvider::class,
             HtmlServiceProvider::class,
-            BootstrapServiceProvider::class,
+            AdminServiceProvider::class,
             RouteServiceProvider::class
         ];
 
@@ -95,15 +65,6 @@ class SleepingOwlServiceProvider extends ServiceProvider
     public function registerAliases()
     {
         AliasLoader::getInstance([
-            'AdminSection'      => AdminSection::class,
-            'AdminTemplate'     => AdminTemplate::class,
-            'AdminNavigation'   => AdminNavigation::class,
-            'AdminColumn'       => Column::class,
-            'AdminColumnFilter' => ColumnFilter::class,
-            'AdminFilter'       => Filter::class,
-            'AdminForm'         => AdminForm::class,
-            'AdminFormItem'     => FormItem::class,
-            'AdminDisplay'      => AdminDisplay::class,
             'Assets'            => Assets::class,
             'PackageManager'    => PackageManager::class,
             'Meta'              => Meta::class,

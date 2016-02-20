@@ -16,7 +16,7 @@
             @endforeach
 
             @foreach($section->getSections() as $sub_section )
-            @include('cms::navigation.sections', ['section' => $sub_section])
+            @include(AdminTemplate::getTemplateViewPath('_partials.navigation.sections', ['section' => $sub_section])
             @endforeach
         </ul>
     </li>

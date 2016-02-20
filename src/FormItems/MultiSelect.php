@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\FormItems;
 
-use Input;
+use Request;
 use Illuminate\Database\Eloquent\Collection;
 
 class MultiSelect extends Select
@@ -37,7 +37,7 @@ class MultiSelect extends Select
     {
         $attribute = $this->getAttribute();
 
-        if (is_null(Input::get($this->getPath()))) {
+        if (is_null(Request::get($this->getPath()))) {
             $values = [];
         } else {
             $values = $this->getValue();
