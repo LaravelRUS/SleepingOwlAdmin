@@ -3,11 +3,10 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use KodiCMS\Navigation\Navigation;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Facades\AdminNavigation;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
-use KodiCMS\Navigation\Section as NavigationSection;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 
 class Admin
@@ -113,29 +112,24 @@ class Admin
 
     /**
      * @param string $class
+     * @param string|null   $section
      *
      * @return NavigationPage
      */
-    public function addMenuLink($class)
+    public function addMenuLink($class, $section = null)
     {
         $model = $this->getModel($class);
+        $page  = new NavigationPage($model);
 
-        $page = new NavigationPage($model);
-        $this->menuItems[] = $page;
+        if (is_null($section)) {
+            $section = AdminNavigation::getRootSection();
+        } else {
+            $section = AdminNavigation::findSectionOrCreate($section);
+        }
+
+        $section->addPage($page);
 
         return $page;
-    }
-
-    /**
-     * @param Navigation $navigation
-     */
-    public function buildMenu(Navigation $navigation)
-    {
-        $section = $navigation->getRootSection();
-
-        foreach ($this->menuItems as $item) {
-            $section->addPage($item);
-        }
     }
 
     /**
