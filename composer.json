@@ -33,7 +33,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SleepingOwl\\Admin\\": "src/SleepingOwl"
+      "SleepingOwl\\Admin\\": "src/"
     }
   }
 }
