@@ -27,7 +27,7 @@ abstract class BaseFormItem implements Renderable, FormItemInterface, Arrayable
 
     public function initialize()
     {
-        Meta::loadPackage(get_class());
+        Meta::loadPackage(get_called_class());
     }
 
     /**
