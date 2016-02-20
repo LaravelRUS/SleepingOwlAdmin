@@ -51,7 +51,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
                 $items = include $navigation;
             }
 
-            return new Navigation([]);
+            return new Navigation($items);
         });
 
 
