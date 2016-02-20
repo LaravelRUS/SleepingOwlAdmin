@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use AdminTemplate;
 use App;
-use Illuminate\Contracts\Support\Renderable;
+use Request;
+use AdminTemplate;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Request;
+use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
@@ -46,7 +46,6 @@ class AdminController extends Controller
     public function postStore(ModelConfiguration $model)
     {
         $createForm = $model->fireCreate();
-
         if (is_null($createForm)) {
             abort(404);
         }
@@ -198,9 +197,9 @@ class AdminController extends Controller
      */
     public function getLang()
     {
-        $lang = trans('sleeping_owl::core');
-        if ($lang == 'sleeping_owl::core') {
-            $lang = trans('sleeping_owl::core', [], 'messages', 'en');
+        $lang = trans('sleeping_owl::lang');
+        if ($lang == 'sleeping_owl::lang') {
+            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
         }
 
         $data = [

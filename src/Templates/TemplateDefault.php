@@ -12,11 +12,13 @@ class TemplateDefault implements TemplateInterface
     {
         Meta::loadPackage([
             'libraries',
-            'jquery',
+            'select2',
             'metisMenu',
             'admin-default',
             'font-awesome'
         ]);
+
+        Meta::AddJs('adminScripts', route('admin.lang'));
     }
 
     /**

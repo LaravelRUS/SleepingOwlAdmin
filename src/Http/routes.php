@@ -1,6 +1,6 @@
 <?php
 
-Route::get('assets/lang', [
+Route::get('assets/admin.scripts', [
     'as'   => 'admin.lang',
     'uses' => 'AdminController@getLang',
 ]);
