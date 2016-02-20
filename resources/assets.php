@@ -21,6 +21,9 @@ PackageManager::add(\SleepingOwl\Admin\Display\DisplayDatatablesAsync::class)
     ->js(null, resources_url('js/datatables.min.js'), ['datatables'])
     ->with('datatables');
 
+PackageManager::add(\SleepingOwl\Admin\FormItems\Image::class)
+    ->with('flow.js');
+
 PackageManager::add('libraries')
     ->js(null, resources_url('js/libraries.js'), ['jquery']);
 
@@ -73,7 +76,7 @@ PackageManager::add('noty')
     ->js(null, resources_url('libs/noty/js/jquery.noty.packaged.min.js'), ['jquery']);
 
 PackageManager::add('select2')
-    ->js(null, resources_url('libs/select2/js/select2.full.min.js'), ['jquery'])
+    ->js(null, resources_url('libs/select2/js/select2.full.min.js'), ['jquery', 'libraries'])
     ->css(null, resources_url('libs/select2/css/select2.min.css'));
 
 PackageManager::add('Sortable')
