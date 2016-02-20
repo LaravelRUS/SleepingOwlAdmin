@@ -19,6 +19,16 @@ class Link extends NamedColumn
     }
 
     /**
+     * Check if instance editable.
+     *
+     * @return bool
+     */
+    protected function isEditable()
+    {
+        return ! is_null($this->getModelConfiguration()->fireEdit($this->getModel()->getKey()));
+    }
+
+    /**
      * @return array
      */
     public function getLinkAttributes()
@@ -43,7 +53,8 @@ class Link extends NamedColumn
             'value'          => $this->getModelValue(),
             'link'           => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
             'append'         => $this->getAppends(),
-            'linkAttributes' => $this->getLinkAttributes()
+            'linkAttributes' => $this->getLinkAttributes(),
+            'isEditable'     => $this->isEditable()
         ];
     }
 }
