@@ -2,6 +2,7 @@ $(function () {
     $.fn.dataTable.ext.errMode = function () {
         $.notify(window.admin.lang.table.error, 'error');
     };
+
     $('.datatables').each(function () {
         var $this = $(this);
         var params = {
@@ -31,12 +32,16 @@ $(function () {
                 }
             };
         }
+
         var table = $this.DataTable(params);
 
         $this.find('.column-filter').each(function () {
             if ($(this).parent().closest('.column-filter').length > 0) return;
             var type = $(this).data('type');
-            window.columnFilters[type](this, table);
+
+            if (typeof window.columnFilters[type] == 'function') {
+                window.columnFilters[type](this, table);
+            }
         });
     });
 });

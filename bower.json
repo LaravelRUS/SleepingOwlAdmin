@@ -44,7 +44,7 @@
       ],
       "datetimepicker": [
         "bower_components/datetimepicker/jquery.datetimepicker.css",
-        "bower_components/datetimepicker/jquery.datetimepicker.js"
+        "bower_components/datetimepicker/build/jquery.datetimepicker.full.min.js"
       ],
       "fontawesome": [
         "bower_components/fontawesome/css/**",
@@ -56,8 +56,7 @@
         "bower_components/jquery/dist/jquery.min.map"
       ],
       "moment": [
-        "bower_components/moment/min/*.*",
-        "bower_components/moment/locale/**"
+        "bower_components/moment/min/moment-with-locales.min.js"
       ],
       "nestable": [
         "bower_components/nestable/jquery.nestable.js"
@@ -72,6 +71,19 @@
       "Sortable": [
         "bower_components/Sortable/jquery.binding.js",
         "bower_components/Sortable/Sortable.min.js"
+      ],
+      "flow.js": [
+        "bower_components/flow.js/dist/flow.min.js"
+      ],
+      "metisMenu": [
+        "bower_components/metisMenu/dist/metisMenu.min.css",
+        "bower_components/metisMenu/dist/metisMenu.min.js"
+      ],
+      "datatables": [
+        "bower_components/datatables/media/js/jquery.dataTables.min.js",
+        "bower_components/datatables/media/js/dataTables.bootstrap.min.js",
+        "bower_components/datatables/media/css/dataTables.bootstrap.min.css",
+        "bower_components/datatables/media/css/jquery.dataTables.min.css"
       ]
     }
   }

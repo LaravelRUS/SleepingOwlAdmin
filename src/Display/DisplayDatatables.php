@@ -48,6 +48,7 @@ class DisplayDatatables extends DisplayTable
             }
         }
 
+        $this->setAttribute('class', 'datatables');
         $this->setAttribute('data-order', json_encode($this->getOrder()));
         $this->setAttribute('data-attributes', json_encode($this->getDatatableAttributes(), JSON_FORCE_OBJECT));
     }

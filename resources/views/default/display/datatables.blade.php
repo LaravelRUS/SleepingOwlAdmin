@@ -19,32 +19,34 @@
 			@endforeach
 		</div>
 	</div>
-	<table {!! HTML::attributes($attributes) !!}>
-		<colgroup>
-			@foreach ($columns as $column)
-				<col width="{!! $column->getWidth() !!}" />
-			@endforeach
-		</colgroup>
-		<thead>
-		<tr>
-			@foreach ($columns as $column)
-				{!! $column->getHeader()->render() !!}
-			@endforeach
-		</tr>
-		</thead>
-		<tbody>
-		@foreach ($collection as $model)
+	<div class="panel-body">
+		<table {!! HTML::attributes($attributes) !!}>
+			<colgroup>
+				@foreach ($columns as $column)
+					<col width="{!! $column->getWidth() !!}" />
+				@endforeach
+			</colgroup>
+			<thead>
 			<tr>
 				@foreach ($columns as $column)
-					<?php $column->setModel($model); ?>
-					{!! $column->render() !!}
+					{!! $column->getHeader()->render() !!}
 				@endforeach
 			</tr>
-		@endforeach
-		</tbody>
+			</thead>
+			<tbody>
+			@foreach ($collection as $model)
+				<tr>
+					@foreach ($columns as $column)
+						<?php $column->setModel($model); ?>
+						{!! $column->render() !!}
+					@endforeach
+				</tr>
+			@endforeach
+			</tbody>
 
-		<tfoot>
-		@include('sleeping_owl::default.columnfilter.filter_list')
-		</tfoot>
-	</table>
+			<tfoot>
+			@include('sleeping_owl::default.columnfilter.filter_list')
+			</tfoot>
+		</table>
+	</div>
 </div>

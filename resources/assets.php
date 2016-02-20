@@ -7,15 +7,29 @@ if (! function_exists('resources_url')) {
     }
 }
 
+PackageManager::add(\SleepingOwl\Admin\FormItems\Date::class)
+    ->with('datetimepicker');
+
+PackageManager::add(\SleepingOwl\Admin\FormItems\Select::class)
+    ->with('select2');
+
+PackageManager::add(\SleepingOwl\Admin\Display\DisplayDatatables::class)
+    ->js(null, resources_url('js/datatables.min.js'), ['datatables'])
+    ->with('datatables');
+
+PackageManager::add(\SleepingOwl\Admin\Display\DisplayDatatablesAsync::class)
+    ->js(null, resources_url('js/datatables.min.js'), ['datatables'])
+    ->with('datatables');
+
 PackageManager::add('libraries')
     ->js(null, resources_url('js/libraries.js'), ['jquery']);
 
 PackageManager::add('admin-default')
-    ->js(null, resources_url('js/admin-default.js'), ['metisMenu'])
+    ->js(null, resources_url('js/admin-default.js'), ['libraries', 'metisMenu', 'datatables'])
     ->css(null, resources_url('css/common.css'));
 
 PackageManager::add('flow.js')
-    ->js(null, resources_url('libs/flow.js/js/flow.js'), ['jquery']);
+    ->js(null, resources_url('libs/flow.js/js/flow.min.js'), ['jquery']);
 
 PackageManager::add('bootbox.js')
     ->js(null, resources_url('libs/bootbox.js/js/bootbox.js'), ['jquery']);
@@ -28,11 +42,12 @@ PackageManager::add('ckeditor')
     ->js(null, resources_url('libs/ckeditor/js/ckeditor.js'), ['jquery']);
 
 PackageManager::add('datatables')
-    ->js(null, resources_url('libs/datatables/js/jquery.dataTables.js'), ['jquery'])
-    ->css(null, resources_url('libs/datatables/css/jquery.dataTables.css'));
+    ->js(null, resources_url('libs/datatables/js/jquery.dataTables.min.js'), ['jquery', 'libraries'])
+    ->js('dataTables-theme', resources_url('libs/datatables/js/dataTables.bootstrap.min.js'), ['datatables'])
+    ->css('dataTables-theme', resources_url('libs/datatables/css/dataTables.bootstrap.min.css'));
 
 PackageManager::add('datetimepicker')
-    ->js(null, resources_url('libs/datetimepicker/js/jquery.datetimepicker.js'), ['jquery'])
+    ->js(null, resources_url('libs/datetimepicker/js/jquery.datetimepicker.full.min.js'), ['jquery', 'libraries'])
     ->css(null, resources_url('libs/datetimepicker/css/jquery.datetimepicker.css'));
 
 PackageManager::add('ekko-lightbox')

@@ -27,10 +27,8 @@ elixir(function(mix) {
 			'jquery/js/jquery.min.js',
 			'bootstrap/js/bootstrap.js',
 			'noty/js/jquery.noty.packaged.js',
-			'select2/js/select2.full.js',
-			'datetimepicker/js/jquery.datetimepicker.js',
-			'moment/js/moment.min.js',
-			'bootbox.js/js/bootbox.js'
+			'bootbox.js/js/bootbox.js',
+			'moment/js/moment-with-locales.min.js'
 		], 'public/default/js/libraries.js', 'public/default/libs');
 
 	/**************************************************************
@@ -38,19 +36,23 @@ elixir(function(mix) {
 	 **************************************************************/
 	mix
 		.scripts([
-			'columns/filter/base.js',
-			'columns/filter/range.js',
-			'columns/filter/select.js',
-			'columns/filter/text.js',
-			'columns/checkbox.js',
-			'columns/control.js',
-			'columns/image.js',
+			'column/filter/base.js',
+			'column/filter/range.js',
+			'column/filter/select.js',
+			'column/filter/text.js',
+			'column/checkbox.js',
+			'column/control.js',
+			'column/image.js',
 			'form/datetime.js',
 			'form/select.js',
 			'form/image/init.js',
 			'form/image/initMultiple.js',
-			'datatables.js',
 			'admin-default.js',
 			'sb-admin-2.js'
 		], 'public/default/js/admin-default.js');
+
+	mix
+		.scripts([
+			'datatables.js'
+		], 'public/default/js/datatables.min.js');
 });

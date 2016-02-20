@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Meta;
 use Request;
 use Closure;
 use SleepingOwl\Admin\Column;
@@ -101,6 +102,8 @@ class DisplayTable implements Renderable, DisplayInterface
 
     public function initialize()
     {
+        Meta::loadPackage(get_called_class());
+
         $this->repository = new BaseRepository($this->getClass());
         $this->repository->setWith($this->getWith());
         $this->initializeFilters();
