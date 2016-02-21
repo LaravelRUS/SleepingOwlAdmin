@@ -3,25 +3,25 @@
 
 @font-face {
   font-family: 'Open Sans';
-  font-style: italic;
+  font-style:  italic;
   font-weight: 400;
-  src: local('Open Sans Italic'), local('Open-Sans-Italic'),
+  src:         local('Open Sans Italic'), local('Open-Sans-Italic'),
                url('../fonts/OpenSans-Italic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
-  font-style: bold;
+  font-style:  bold;
   font-weight: 700;
-  src: local('Open Sans Bold'), local('Open-Sans-Bold'),
+  src:         local('Open Sans Bold'), local('Open-Sans-Bold'),
                url('../fonts/OpenSans-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
-  font-style: normal;
+  font-style:  normal;
   font-weight: 400;
-  src: local('Open Sans Regular'), local('Open-Sans-Regular'),
+  src:         local('Open Sans Regular'), local('Open-Sans-Regular'),
                url('../fonts/OpenSans-Regular.ttf') format('truetype');
 }
 
@@ -54,64 +54,8 @@ body {
   }
 }
 
-.navbar-top-links {
-  li {
-    display: inline-block;
-
-    &:last-child {
-      margin-right: 15px;
-    }
-
-    a {
-      padding:    15px;
-      min-height: 50px;
-    }
-  }
-
-  li, .dropdown-menu li {
-    display: block;
-  }
-
-  .dropdown-menu {
-    li {
-      &:last-child {
-        margin-right: 0;
-      }
-
-      a {
-        padding:    3px 20px;
-        min-height: 0;
-
-        div {
-          white-space: normal;
-        }
-      }
-    }
-  }
-
-  .dropdown-messages,
-  .dropdown-tasks,
-  .dropdown-alerts {
-    width:     310px;
-    min-width: 0;
-  }
-
-  .dropdown-messages {
-    margin-left: 5px;
-  }
-
-  .dropdown-tasks {
-    margin-left: -59px;
-  }
-
-  .dropdown-alerts {
-    margin-left: -123px;
-  }
-
-  .dropdown-user {
-    right: 0;
-    left:  auto;
-  }
+.navbar-static-top {
+  margin-bottom: 0;
 }
 
 .sidebar {
@@ -165,7 +109,7 @@ body {
     z-index:    1;
     position:   absolute;
     width:      250px;
-    margin-top: 51px;
+    margin-top: 2px;
   }
 
   .navbar-top-links .dropdown-messages,

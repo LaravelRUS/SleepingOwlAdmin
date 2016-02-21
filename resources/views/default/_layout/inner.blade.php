@@ -2,8 +2,10 @@
 
 @section('content')
 	<div id="wrapper">
-		<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+		<nav class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container-fluid">
 			@include(AdminTemplate::getTemplateViewPath('_partials.header'))
+			</div>
 			@include(AdminTemplate::getTemplateViewPath('_partials.navigation'))
 		</nav>
 

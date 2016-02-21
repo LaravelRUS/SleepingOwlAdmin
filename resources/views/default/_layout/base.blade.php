@@ -15,6 +15,8 @@
 	<![endif]-->
 
 	{!! Meta::render() !!}
+
+	@stack('scripts')
 </head>
 <body>
 	@yield('content')

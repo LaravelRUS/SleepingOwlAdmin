@@ -7,3 +7,11 @@
 	</button>
 	<a class="navbar-brand" href="#">{{{ config('sleeping_owl.title') }}}</a>
 </div>
+
+<ul class="nav navbar-nav">
+	@yield('navbar')
+</ul>
+
+<ul class="nav navbar-nav navbar-right">
+	@yield('navbar.right')
+</ul>
