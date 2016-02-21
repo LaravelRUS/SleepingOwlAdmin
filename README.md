@@ -7,6 +7,24 @@
 
 SleepingOwl Admin is administrative interface builder for Laravel.
 
+### Used bower packages:
+ - jquery
+ - bootstrap
+ - bootbox
+ - datetimepicker
+ - fontawesome
+ - moment
+ - nestable
+ - noty
+ - ckeditor
+ - Sortable
+ - select2
+ - flow.js
+ - ekko-lightbox
+ - metisMenu
+ - datatables
+ - startbootstrap-sb-admin-2
+
 ## Installation
 
  1. Require this package in your composer.json and run composer update:
