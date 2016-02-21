@@ -46,7 +46,6 @@ PackageManager::add('ckeditor')
 
 PackageManager::add('datatables')
     ->js(null, resources_url('libs/datatables/js/jquery.dataTables.min.js'), ['jquery', 'libraries'])
-    ->js('dataTables-theme', resources_url('libs/datatables/js/dataTables.bootstrap.min.js'), ['datatables'])
     ->css('dataTables-theme', resources_url('libs/datatables/css/dataTables.bootstrap.min.css'));
 
 PackageManager::add('datetimepicker')

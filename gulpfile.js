@@ -53,6 +53,7 @@ elixir(function(mix) {
 
 	mix
 		.scripts([
+			'dataTables.bootstrap.js',
 			'datatables.js'
 		], 'public/default/js/datatables.min.js');
 });

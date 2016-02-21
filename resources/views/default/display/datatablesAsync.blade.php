@@ -19,26 +19,24 @@
 			@endforeach
 		</div>
 	</div>
-	<div class="panel-body">
-		<table {!! HTML::attributes($attributes) !!}>
-			<colgroup>
-				@foreach ($columns as $column)
-					<col width="{!! $column->getWidth() !!}" />
-				@endforeach
-			</colgroup>
-			<thead>
-			<tr>
-				@foreach ($columns as $column)
-					{!! $column->getHeader()->render() !!}
-				@endforeach
-			</tr>
-			</thead>
-			<tbody>
-			</tbody>
+	<table {!! HTML::attributes($attributes) !!}>
+		<colgroup>
+			@foreach ($columns as $column)
+				<col width="{!! $column->getWidth() !!}" />
+			@endforeach
+		</colgroup>
+		<thead>
+		<tr>
+			@foreach ($columns as $column)
+				{!! $column->getHeader()->render() !!}
+			@endforeach
+		</tr>
+		</thead>
+		<tbody>
+		</tbody>
 
-			<tfoot>
-			@include('sleeping_owl::default.columnfilter.filter_list')
-			</tfoot>
-		</table>
-	</div>
+		<tfoot>
+		@include('sleeping_owl::default.columnfilter.filter_list')
+		</tfoot>
+	</table>
 </div>
