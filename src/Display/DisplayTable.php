@@ -83,6 +83,11 @@ class DisplayTable implements Renderable, DisplayInterface
     protected $actions = [];
 
     /**
+     * @var int|null
+     */
+    protected $paginate;
+
+    /**
      * @param string $class
      */
     public function setClass($class)
@@ -384,6 +389,26 @@ class DisplayTable implements Renderable, DisplayInterface
     }
 
     /**
+     * @param int $perPage
+     *
+     * @return $this
+     */
+    public function paginate($perPage = 20)
+    {
+        $this->paginate = (int) $perPage;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function usePagination()
+    {
+        return $this->paginate > 0;
+    }
+
+    /**
      * @return array
      */
     public function getParams()
@@ -405,17 +430,24 @@ class DisplayTable implements Renderable, DisplayInterface
      */
     public function render()
     {
-        $query = $this->getRepository()->getQuery();
-        $this->modifyQuery($query);
         $params = $this->getParams();
-        $params['collection'] = $query->get();
+        $params['collection'] = $this->getCollection();
 
         return app('sleeping_owl.template')->view('display.'.$this->view, $params);
     }
 
-    public function getColection()
+    /**
+     * @return
+     */
+    protected function getCollection()
     {
+        $query =  $this->getRepository()->getQuery();
 
+        $this->modifyQuery($query);
+
+        return $this->usePagination()
+            ? $query->paginate($this->paginate)
+            : $query->get();
     }
 
     /**

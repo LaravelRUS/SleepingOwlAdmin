@@ -44,4 +44,10 @@
 		@endforeach
 		</tbody>
 	</table>
+
+	@if($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
+	<div class="panel-footer">
+		{!! $collection->render() !!}
+	</div>
+	@endif
 </div>
