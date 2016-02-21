@@ -63,8 +63,8 @@ PackageManager::add('jquery')
     ->js(null, resources_url('libs/jquery/js/jquery.min.js'));
 
 PackageManager::add('metisMenu')
-    ->js(null, resources_url('libs/metisMenu/js/metisMenu.js'), ['jquery', 'libraries'])
-    ->css(null, resources_url('libs/metisMenu/css/metisMenu.css'));
+    ->js(null, resources_url('libs/metisMenu/js/metisMenu.min.js'), ['jquery', 'libraries'])
+    ->css(null, resources_url('libs/metisMenu/css/metisMenu.min.css'));
 
 PackageManager::add('moment')
     ->js(null, resources_url('libs/moment/js/moment-with-locales.min.js'), ['jquery']);
