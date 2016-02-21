@@ -16,7 +16,8 @@
     "flow.js": "latest",
     "ekko-lightbox": "latest",
     "metisMenu": "latest",
-    "datatables": "latest"
+    "datatables": "latest",
+    "startbootstrap-sb-admin-2": "latest"
   },
   "install": {
     "base": "public/default/libs",

@@ -28,30 +28,10 @@
 @import "../../../public/default/libs/bootstrap/less/bootstrap";
 @import "../../../public/default/libs/font-awesome/less/font-awesome";
 
-/*!
- * Start Bootstrap - SB Admin 2 Bootstrap Admin Theme (http://startbootstrap.com)
- */
-body {
-  background-color: #f8f8f8;
-}
+@import (less) "../../../public/default/libs/startbootstrap-sb-admin-2/css/sb-admin-2.css";
 
-#wrapper {
-  width: 100%;
-}
-
-#page-wrapper {
-  padding:          0 15px;
-  min-height:       568px;
-  background-color: #fff;
-}
-
-@media (min-width: 768px) {
-  #page-wrapper {
-    position:    inherit;
-    margin:      0 0 0 250px;
-    padding:     0 30px;
-    border-left: 1px solid #e7e7e7;
-  }
+body  {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .navbar-static-top {
@@ -59,98 +39,7 @@ body {
 }
 
 .sidebar {
-  .sidebar-nav.navbar-collapse {
-    padding-right: 0;
-    padding-left:  0;
-  }
-
-  .sidebar-search {
-    padding: 15px;
-  }
-
-  ul {
-    li {
-      border-bottom: 1px solid #e7e7e7;
-
-      a.active {
-        background-color: #eee;
-      }
-    }
-  }
-
-  .arrow {
-    float: right;
-  }
-
-  .fa.arrow:before {
-    content: "\f104";
-  }
-
-  .active > a > .fa.arrow:before {
-    content: "\f107";
-  }
-
-  .nav-second-level li,
-  .nav-third-level li {
-    border-bottom: 0 !important;
-  }
-
-  .nav-second-level li a {
-    padding-left: 37px;
-  }
-
-  .nav-third-level li a {
-    padding-left: 52px;
-  }
-}
-
-@media (min-width: 768px) {
-  .sidebar {
-    z-index:    1;
-    position:   absolute;
-    width:      250px;
-    margin-top: 2px;
-  }
-
-  .navbar-top-links .dropdown-messages,
-  .navbar-top-links .dropdown-tasks,
-  .navbar-top-links .dropdown-alerts {
-    margin-left: auto;
-  }
-}
-
-.btn-outline {
-  color:            inherit;
-  background-color: transparent;
-  transition:       all .5s;
-}
-
-.btn-primary.btn-outline {
-  color: #428bca;
-}
-
-.btn-success.btn-outline {
-  color: #5cb85c;
-}
-
-.btn-info.btn-outline {
-  color: #5bc0de;
-}
-
-.btn-warning.btn-outline {
-  color: #f0ad4e;
-}
-
-.btn-danger.btn-outline {
-  color: #d9534f;
-}
-
-.btn-primary.btn-outline:hover,
-.btn-success.btn-outline:hover,
-.btn-info.btn-outline:hover,
-.btn-warning.btn-outline:hover,
-.btn-danger.btn-outline:hover {
-  color: #fff;
+  margin-top: 1px;
 }
 
 table.dataTable thead .sorting,
