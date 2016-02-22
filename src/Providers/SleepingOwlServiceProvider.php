@@ -22,6 +22,10 @@ class SleepingOwlServiceProvider extends ServiceProvider
         $this->registerProviders();
         $this->registerAliases();
         $this->registerCommands();
+
+        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
+            include $assetsFile;
+        }
     }
 
     public function boot()
@@ -37,10 +41,6 @@ class SleepingOwlServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
         ], 'config');
-
-        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
-            include $assetsFile;
-        }
     }
 
     public function registerProviders()
