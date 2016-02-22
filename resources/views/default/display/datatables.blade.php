@@ -44,7 +44,7 @@
 		</tbody>
 
 		<tfoot>
-		@include('sleeping_owl::default.columnfilter.filter_list')
+		@include('sleeping_owl::default.column.filter.filter_list')
 		</tfoot>
 	</table>
 </div>
