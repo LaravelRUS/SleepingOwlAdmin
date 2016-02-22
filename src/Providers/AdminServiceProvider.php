@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Route;
+use SleepingOwl\Admin\Form;
 use SleepingOwl\Admin\Admin;
 use KodiCMS\Navigation\Navigation;
 use SleepingOwl\Admin\FormElement;
 use SleepingOwl\Admin\TableColumn;
 use Symfony\Component\Finder\Finder;
 use SleepingOwl\Admin\DisplayFilter;
-use SleepingOwl\Admin\Form\AdminForm;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\TableColumnFilter;
@@ -108,7 +108,7 @@ class AdminServiceProvider extends ServiceProvider
             'AdminColumn'       => TableColumn::class,
             'AdminColumnFilter' => TableColumnFilter::class,
             'AdminFilter'       => DisplayFilter::class,
-            'AdminForm'         => AdminForm::class,
+            'AdminForm'         => Form::class,
             'AdminFormElement'  => FormElement::class,
             'AdminDisplay'      => AdminDisplay::class
         ]);

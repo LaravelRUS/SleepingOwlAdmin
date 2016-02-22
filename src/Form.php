@@ -1,14 +1,13 @@
 <?php
 
-namespace SleepingOwl\Admin\Form;
-
-use SleepingOwl\Admin\AliasBinder;
+namespace SleepingOwl\Admin;
 
 /**
  * @method static \SleepingOwl\Admin\Form\FormDefault form()
  * @method static \SleepingOwl\Admin\Form\FormTabbed tabbed()
+ * @method static \SleepingOwl\Admin\Form\FormPanel panel()
  */
-class AdminForm extends AliasBinder
+class Form extends AliasBinder
 {
     /**
      * Form class aliases.

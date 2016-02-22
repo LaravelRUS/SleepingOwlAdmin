@@ -52,10 +52,6 @@ class AdminController extends Controller
 
         $nextAction = Request::get('next_action');
 
-        if ($nextAction == 'cancel') {
-            return redirect()->to($model->getDisplayUrl());
-        }
-
         if ($createForm instanceof FormInterface) {
             if ($validator = $createForm->validate($model)) {
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -64,7 +60,7 @@ class AdminController extends Controller
             $createForm->save($model);
         }
 
-        if ($nextAction == 'continue') {
+        if ($nextAction == 'save_and_continue') {
             return redirect()->to($model->getEditUrl($createForm->getModelObject()->id));
         }
 
@@ -102,10 +98,6 @@ class AdminController extends Controller
 
         $nextAction = Request::get('next_action');
 
-        if ($nextAction == 'cancel') {
-            return redirect()->to($model->getDisplayUrl());
-        }
-
         if ($editForm instanceof FormInterface) {
             if ($validator = $editForm->validate($model)) {
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -114,7 +106,7 @@ class AdminController extends Controller
             $editForm->save($model);
         }
 
-        if ($nextAction == 'continue') {
+        if ($nextAction == 'save_and_continue') {
             return redirect()->back();
         }
 
