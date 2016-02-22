@@ -18,7 +18,7 @@
 
 	@stack('scripts')
 </head>
-<body>
+<body class="skin-blue">
 	@yield('content')
 </body>
 </html>

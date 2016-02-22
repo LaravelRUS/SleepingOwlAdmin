@@ -5,9 +5,9 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Route;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Column\String;
 use Illuminate\Database\Query\Builder;
-use SleepingOwl\Admin\Column\NamedColumn;
+use SleepingOwl\Admin\Display\Column\Text;
+use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
@@ -211,7 +211,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $query->where(function ($query) use ($search) {
             $columns = $this->columns();
             foreach ($columns as $column) {
-                if ($column instanceof String) {
+                if ($column instanceof Text) {
                     $name = $column->name();
                     if ($this->repository->hasColumn($name)) {
                         $query->orWhere($name, 'like', '%'.$search.'%');

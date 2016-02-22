@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Route;
 use Request;
-use SleepingOwl\Admin\Column;
+use SleepingOwl\Admin\TableColumn;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Repository\TreeRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -71,7 +71,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
         Meta::loadPackage(get_class());
         $this->repository = new TreeRepository($this->class);
         $this->repository->with($this->getWith());
-        Column::treeControl()->initialize();
+        TableColumn::treeControl()->initialize();
     }
 
     /**
@@ -251,7 +251,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
             'value'       => $this->getValue(),
             'creatable'   => ! is_null($model->create()),
             'createUrl'   => $model->createUrl($this->getParameters() + Request::all()),
-            'controls'    => [Column::treeControl()],
+            'controls'    => [TableColumn::treeControl()],
         ];
     }
 

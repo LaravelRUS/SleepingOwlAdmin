@@ -1,11 +1,11 @@
 @if(count($section) > 0 or $section->hasSections())
-    <li>
+    <li class="treeview">
         <a href="#">
             {!! $section->getIcon() !!}
-            {!! $section->getName() !!}
-            <span class="fa arrow"></span>
+            <span>{!! $section->getName() !!}</span>
+            <i class="fa fa-angle-left pull-right"></i>
         </a>
-        <ul class="nav nav-second-level">
+        <ul class="treeview-menu">
             @foreach($section as $item)
                 <?php if($item->isHidden()) continue; ?>
                 <li @if ($item->isActive())class="active"@endif>

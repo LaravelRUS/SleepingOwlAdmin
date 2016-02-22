@@ -12,6 +12,7 @@ use Collective\Html\HtmlServiceProvider;
 use KodiCMS\Assets\AssetsServiceProvider;
 use KodiCMS\Assets\Facades\PackageManager;
 use SleepingOwl\Admin\Commands\InstallCommand;
+use SleepingOwl\Admin\Form\Element\FormElement;
 
 class SleepingOwlServiceProvider extends ServiceProvider
 {
@@ -50,7 +51,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
             DisplayServiceProvider::class,
             FilterServiceProvider::class,
             FormServiceProvider::class,
-            FormItemServiceProvider::class,
+            FormElementsServiceProvider::class,
             AssetsServiceProvider::class,
             HtmlServiceProvider::class,
             AdminServiceProvider::class,

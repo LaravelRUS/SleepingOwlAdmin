@@ -1,24 +1,24 @@
 @extends(AdminTemplate::getTemplateViewPath('_layout.base'))
 
 @section('content')
-	<div id="wrapper">
-		<nav class="navbar navbar-default navbar-static-top" role="navigation">
-			<div class="container-fluid">
+	<div class="wrapper">
+		<header class="main-header">
 			@include(AdminTemplate::getTemplateViewPath('_partials.header'))
-			</div>
-			@include(AdminTemplate::getTemplateViewPath('_partials.navigation'))
-		</nav>
+		</header>
 
-		<div id="page-wrapper">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">{{{ $title }}}</h1>
-				</div>
+		<aside class="main-sidebar">
+			@include(AdminTemplate::getTemplateViewPath('_partials.navigation'))
+		</aside>
+
+		<div class="content-wrapper">
+			<div class="content-header">
+				<h1>
+					{{{ $title }}}
+				</h1>
 			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					{!! $content !!}
-				</div>
+
+			<div class="content body">
+				{!! $content !!}
 			</div>
 		</div>
 	</div>

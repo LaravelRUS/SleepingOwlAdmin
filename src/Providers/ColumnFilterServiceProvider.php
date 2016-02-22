@@ -3,15 +3,15 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Column\Filter\ColumnFilter;
+use SleepingOwl\Admin\TableColumnFilter;
 
 class ColumnFilterServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        ColumnFilter::register('text', \SleepingOwl\Admin\Column\Filter\Text::class);
-        ColumnFilter::register('date', \SleepingOwl\Admin\Column\Filter\Date::class);
-        ColumnFilter::register('range', \SleepingOwl\Admin\Column\Filter\Range::class);
-        ColumnFilter::register('select', \SleepingOwl\Admin\Column\Filter\Select::class);
+        TableColumnFilter::register('text', \SleepingOwl\Admin\Display\Column\Filter\Text::class);
+        TableColumnFilter::register('date', \SleepingOwl\Admin\Display\Column\Filter\Date::class);
+        TableColumnFilter::register('range', \SleepingOwl\Admin\Display\Column\Filter\Range::class);
+        TableColumnFilter::register('select', \SleepingOwl\Admin\Display\Column\Filter\Select::class);
     }
 }

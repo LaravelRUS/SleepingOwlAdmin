@@ -5,17 +5,18 @@ namespace SleepingOwl\Admin\Providers;
 use Route;
 use SleepingOwl\Admin\Admin;
 use KodiCMS\Navigation\Navigation;
+use SleepingOwl\Admin\FormElement;
+use SleepingOwl\Admin\TableColumn;
 use Symfony\Component\Finder\Finder;
-use SleepingOwl\Admin\Filter\Filter;
+use SleepingOwl\Admin\DisplayFilter;
 use SleepingOwl\Admin\Form\AdminForm;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\FormItems\FormItem;
+use SleepingOwl\Admin\TableColumnFilter;
 use SleepingOwl\Admin\Display\AdminDisplay;
 use SleepingOwl\Admin\Facades\AdminSection;
 use SleepingOwl\Admin\Facades\AdminTemplate;
 use SleepingOwl\Admin\Facades\AdminNavigation;
-use SleepingOwl\Admin\Column\Filter\ColumnFilter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AdminServiceProvider extends ServiceProvider
@@ -104,11 +105,11 @@ class AdminServiceProvider extends ServiceProvider
             'AdminSection'      => AdminSection::class,
             'AdminTemplate'     => AdminTemplate::class,
             'AdminNavigation'   => AdminNavigation::class,
-            'AdminColumn'       => Column::class,
-            'AdminColumnFilter' => ColumnFilter::class,
-            'AdminFilter'       => Filter::class,
+            'AdminColumn'       => TableColumn::class,
+            'AdminColumnFilter' => TableColumnFilter::class,
+            'AdminFilter'       => DisplayFilter::class,
             'AdminForm'         => AdminForm::class,
-            'AdminFormItem'     => FormItem::class,
+            'AdminFormElement'  => FormElement::class,
             'AdminDisplay'      => AdminDisplay::class
         ]);
     }

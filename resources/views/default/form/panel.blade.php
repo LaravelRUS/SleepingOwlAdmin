@@ -1,21 +1,29 @@
-<form action="{{ $action }}" method="POST">
+<form action="{{ $action }}" method="POST" class="panel panel-default">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <input type="hidden" name="_redirectBack" value="{{ $backUrl }}" />
 
     @foreach($items as $panelTitle => $formItems)
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                {{ $panelTitle  }}
-            </div>
-            <div class="panel-body">
-                @foreach ($formItems as $item)
-                    {!! $item->render() !!}
-                @endforeach
-            </div>
-        </div>
+
+    @if(!is_integer($panelTitle))
+    <div class="panel-heading">
+        <span class="panel-title">{{ $panelTitle }}</span>
+    </div>
+    @endif
+
+    <div class="panel-body">
+        @foreach ($formItems as $item)
+            {!! $item->render() !!}
+        @endforeach
+    </div>
+
     @endforeach
-    <div class="form-group">
-        <input type="submit" value="{{ trans('sleeping_owl::lang.table.save') }}" class="btn btn-primary flat"/>
-        <a href="{{ $backUrl }}" class="btn btn-default flat">{{ trans('sleeping_owl::lang.table.cancel') }}</a>
+
+    <div class="panel-footer">
+        <button type="submit" class="btn btn-primary btn-flat btn-lg">
+            <i class="fa fa-check"></i> {{ trans('sleeping_owl::lang.table.save') }}
+        </button>
+        <a href="{{ $backUrl }}" class="btn btn-default btn-flat">
+            <i class="fa fa-ban"></i>  {{ trans('sleeping_owl::lang.table.cancel') }}
+        </a>
     </div>
 </form>

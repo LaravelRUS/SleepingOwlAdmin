@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Request;
 use Closure;
-use SleepingOwl\Admin\Column;
+use SleepingOwl\Admin\TableColumn;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
@@ -148,7 +148,7 @@ class DisplayTable implements Renderable, DisplayInterface
     {
         $columns = $this->getColumns();
         if ($this->isControlActive()) {
-            $columns[] = Column::control();
+            $columns[] = TableColumn::control();
         }
 
         return $columns;

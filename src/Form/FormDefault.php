@@ -12,7 +12,7 @@ use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\FormItemInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class FormDefault implements Renderable, DisplayInterface, FormInterface
@@ -37,7 +37,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 
     /**
      * Form items.
-     * @var FormItemInterface[]
+     * @var FormElementInterface[]
      */
     protected $items = [];
 
@@ -150,7 +150,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     }
 
     /**
-     * @param array|FormItemInterface $items
+     * @param array|FormElementInterface $items
      *
      * @return $this
      */
@@ -183,7 +183,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         $this->modelObject = $modelObject;
 
         $this->getItems()->each(function($item) {
-            if ($item instanceof FormItemInterface) {
+            if ($item instanceof FormElementInterface) {
                 $item->setModel($this->modelObject);
             }
         });
@@ -225,7 +225,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         }
 
         $this->getItems()->each(function($item) {
-            if ($item instanceof FormItemInterface) {
+            if ($item instanceof FormElementInterface) {
                 $item->save();
             }
         });
@@ -247,7 +247,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         $rules = [];
 
         $this->getItems()->each(function($item) use (&$rules) {
-            if ($item instanceof FormItemInterface) {
+            if ($item instanceof FormElementInterface) {
                 $rules += $item->getValidationRules();
             }
         });
@@ -309,7 +309,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         $items = $this->getItems();
 
         $this->getItems()->each(function($item) {
-            if ($item instanceof FormItemInterface) {
+            if ($item instanceof FormElementInterface) {
                 $item->initialize();
             }
         });
