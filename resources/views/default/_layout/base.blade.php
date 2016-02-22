@@ -18,7 +18,7 @@
 
 	@stack('scripts')
 </head>
-<body class="skin-blue">
+<body class="skin-blue sidebar-mini">
 	@yield('content')
 </body>
 </html>
