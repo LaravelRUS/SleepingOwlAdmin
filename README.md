@@ -1,13 +1,53 @@
-This is development version of sleeping-owl/admin package.
+## Laravel 5.2 Admin Module
 
-Available display types:
+[![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://badges.gitter.im/LaravelRUS/SleepingOwlAdmin.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-- `AdminDisplay::table()` - basic table
-- `AdminDisplay::datatables()` - table with datatables plugin
-- `AdminDisplay::tree()` - nested-set tree display
-- `AdminDisplay::tabbed()` - tabbed display
+[![Latest Stable Version](https://poser.pugx.org/sleeping-owl/admin/v/unstable.svg)](https://packagist.org/packages/laravelrus/sleepingowl)
+[![License](https://poser.pugx.org/laravelrus/sleepingowl/license.svg)](https://packagist.org/packages/laravelrus/sleepingowl)
 
-Supported nested-set packages:
+*Note: this is development version. If you are looking for stable version check out [master branch](https://github.com/LaravelRUS/SleepingOwlAdmin).*
 
-- https://github.com/etrepat/baum
-- https://github.com/lazychaser/laravel-nestedset
+SleepingOwl Admin is administrative interface builder for Laravel.
+
+### Used bower packages:
+ - jquery
+ - bootstrap
+ - bootbox
+ - datetimepicker
+ - fontawesome
+ - moment
+ - nestable
+ - noty
+ - ckeditor
+ - Sortable
+ - select2
+ - flow.js
+ - ekko-lightbox
+ - metisMenu
+ - datatables
+ - startbootstrap-sb-admin-2
+
+## Installation
+
+ 1. Require this package in your composer.json and run composer update:
+
+		"laravelrus/sleepingowl": "4.*@dev"
+
+ 2. After composer update, add service providers to the `config/app.php`
+
+	    SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
+ 3. Run this command in terminal (if you want to know what exactly this command makes, see [install command documentation](http://sleeping-owl.github.io/en/Commands/Install.html)):
+
+		$ php artisan sleepingowl:install
+
+## Demo project
+
+You can download demo project https://github.com/LaravelRUS/SleepingOwlAdminDemo
+
+## Documentation
+
+Documentation can be found at [sleeping owl documentation](http://sleeping-owl.github.io/v4).
+
+## Copyright and License
+
+Admin was written by Sleeping Owl for the Laravel framework and is released under the MIT License. See the LICENSE file for details.
