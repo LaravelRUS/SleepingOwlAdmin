@@ -1,6 +1,6 @@
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
 	<label for="{{ $name }}">{{ $label }}</label>
-	<div class="imageUpload" data-target="{{ route('admin.formitems.image.uploadImage') }}" data-token="{{ csrf_token() }}">
+	<div class="imageUpload" data-target="{{ route('admin.form.element.image.uploadImage') }}" data-token="{{ csrf_token() }}">
 		<div>
 			<div class="thumbnail">
 				<img class="no-value {{ empty($value) ? '' : 'hidden' }}" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" width="200px" height="150px" />

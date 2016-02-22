@@ -17,7 +17,7 @@ class Image extends NamedFormElement implements WithRoutesInterface
 
     public static function registerRoutes()
     {
-        Route::post('FormElements/image/'.static::$route, ['as' => 'admin.FormElements.image.'.static::$route,
+        Route::post('FormElements/image/'.static::$route, ['as' => 'admin.form.element.image.'.static::$route,
             function () {
                 $validator = Validator::make(Request::all(), static::uploadValidationRules());
                 if ($validator->fails()) {
