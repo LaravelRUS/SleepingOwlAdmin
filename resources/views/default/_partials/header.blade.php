@@ -1,5 +1,6 @@
 <a href="#" class="logo">
-	{{{ config('sleeping_owl.title') }}}
+	<span class="logo-lg">{!! config('sleeping_owl.title') !!}</span>
+	<span class="logo-mini">{!! config('sleeping_owl.title_mini') !!}</span>
 </a>
 
 <nav class="navbar navbar-static-top" role="navigation">

@@ -6,6 +6,13 @@ return [
      * Displays in page title and header
      */
     'title'                 => 'Sleeping Owl administrator',
+
+    /*
+     * Admin title mini
+     * Displays in page title and header
+     */
+    'title_mini'            => '<i class="fa fa-github-alt fa-lg"></i>',
+
     /*
      * Admin url prefix
      */
