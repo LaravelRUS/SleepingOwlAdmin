@@ -7,10 +7,10 @@ if (! function_exists('resources_url')) {
     }
 }
 
-PackageManager::add(\SleepingOwl\Admin\FormItems\Date::class)
+PackageManager::add(\SleepingOwl\Admin\Form\Element\Date::class)
     ->with('datetimepicker');
 
-PackageManager::add(\SleepingOwl\Admin\FormItems\Select::class)
+PackageManager::add(\SleepingOwl\Admin\Form\Element\Select::class)
     ->with('select2');
 
 PackageManager::add(\SleepingOwl\Admin\Display\DisplayDatatables::class)
@@ -21,7 +21,7 @@ PackageManager::add(\SleepingOwl\Admin\Display\DisplayDatatablesAsync::class)
     ->js(null, resources_url('js/datatables.min.js'), ['datatables'])
     ->with('datatables');
 
-PackageManager::add(\SleepingOwl\Admin\FormItems\Image::class)
+PackageManager::add(\SleepingOwl\Admin\Form\Element\Image::class)
     ->with('flow.js');
 
 PackageManager::add('libraries')
