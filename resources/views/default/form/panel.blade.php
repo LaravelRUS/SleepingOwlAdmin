@@ -11,9 +11,13 @@
     @endif
 
     <div class="panel-body">
+        @if($formItems instanceof \SleepingOwl\Admin\Form\Element\Columns)
+            {!! $formItems->render() !!}
+        @else
         @foreach ($formItems as $item)
             {!! $item->render() !!}
         @endforeach
+        @endif
     </div>
 
     @endforeach
