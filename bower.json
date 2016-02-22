@@ -17,7 +17,7 @@
     "ekko-lightbox": "latest",
     "metisMenu": "latest",
     "datatables": "latest",
-    "startbootstrap-sb-admin-2": "latest"
+    "admin-lte": "latest"
   },
   "install": {
     "base": "public/default/libs",
@@ -85,6 +85,10 @@
         "bower_components/datatables/media/js/dataTables.bootstrap.min.js",
         "bower_components/datatables/media/css/dataTables.bootstrap.min.css",
         "bower_components/datatables/media/css/jquery.dataTables.min.css"
+      ],
+      "admin-lte": [
+        "bower_components/admin-lte/build/less/**",
+        "bower_components/admin-lte/dist/js/**"
       ]
     }
   }

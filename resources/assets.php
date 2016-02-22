@@ -28,7 +28,8 @@ PackageManager::add('libraries')
     ->js(null, resources_url('js/libraries.js'), ['jquery']);
 
 PackageManager::add('admin-default')
-    ->js(null, resources_url('js/admin-default.js'), ['libraries', 'metisMenu', 'datatables'])
+    ->js('AdminLTE', resources_url('libs/AdminLTE/js/app.min.js'), ['libraries', 'jquery'])
+    ->js(null, resources_url('js/admin-default.js'), ['libraries', 'metisMenu', 'datatables', 'AdminLTE'])
     ->css(null, resources_url('css/common.css'));
 
 PackageManager::add('flow.js')

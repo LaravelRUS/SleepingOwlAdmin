@@ -47,8 +47,7 @@ elixir(function(mix) {
 			'form/select.js',
 			'form/image/init.js',
 			'form/image/initMultiple.js',
-			'admin-default.js',
-			'sb-admin-2.js'
+			'admin-default.js'
 		], 'public/default/js/admin-default.js');
 
 	mix
