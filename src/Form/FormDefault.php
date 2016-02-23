@@ -378,17 +378,21 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         }
 
         $rules = [];
+        $messages = [];
 
-        $this->getItems()->each(function ($item) use (&$rules) {
+        $this->getItems()->each(function ($item) use (&$rules, &$messages) {
             if ($item instanceof FormElementInterface) {
                 $rules += $item->getValidationRules();
+                $messages += $item->getValidationMessages();
             }
         });
 
         $data     = Request::all();
+
         $verifier = app('validation.presence');
         $verifier->setConnection($this->getModelObject()->getConnectionName());
-        $validator = Validator::make($data, $rules);
+
+        $validator = Validator::make($data, $rules, $messages);
         $validator->setPresenceVerifier($verifier);
 
         if ($validator->fails()) {

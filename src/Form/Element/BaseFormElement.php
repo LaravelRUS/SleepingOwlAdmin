@@ -31,6 +31,53 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
     }
 
     /**
+     * @return array
+     */
+    public function getValidationRules()
+    {
+        return $this->validationRules;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        return [];
+    }
+
+    /**
+     * @param string      $rule
+     * @param string|null $message
+     *
+     * @return $this
+     */
+    public function addValidationRule($rule, $message = null)
+    {
+        $this->validationRules[] = $rule;
+
+        return $this;
+    }
+
+    /**
+     * @param array|string $validationRules
+     *
+     * @return $this
+     */
+    public function setValidationRules($validationRules)
+    {
+        if (! is_array($validationRules)) {
+            $validationRules = func_get_args();
+        }
+        foreach ($validationRules as $rule) {
+            $validationRules[] = explode('|', $rule);
+        }
+        $this->validationRules = $validationRules;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getView()
@@ -63,46 +110,9 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getValidationRules()
-    {
-        return $this->validationRules;
-    }
-
-    /**
-     * @param array|string $validationRules
-     *
-     * @return $this
-     */
-    public function setValidationRules($validationRules)
-    {
-        if (! is_array($validationRules)) {
-            $validationRules = func_get_args();
-        }
-        foreach ($validationRules as $rule) {
-            $validationRules[] = explode('|', $rule);
-        }
-        $this->validationRules = $validationRules;
-
-        return $this;
-    }
-
-    /**
-     * @param string $rule
-     *
-     * @return $this
-     */
-    public function addValidationRule($rule)
-    {
-        $this->validationRules[] = $rule;
-
-        return $this;
-    }
-
     public function save()
     {
+
     }
 
     /**

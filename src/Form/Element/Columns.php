@@ -89,6 +89,7 @@ class Columns extends BaseFormElement
     public function getValidationRules()
     {
         $rules = parent::getValidationRules();
+
         foreach ($this->getColumns() as $columnItems) {
             foreach ($columnItems as $item) {
                 if ($item instanceof FormElementInterface) {
@@ -98,6 +99,24 @@ class Columns extends BaseFormElement
         }
 
         return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        $messages = [];
+
+        foreach ($this->getColumns() as $columnItems) {
+            foreach ($columnItems as $item) {
+                if ($item instanceof NamedFormElement) {
+                    $messages += $item->getValidationMessages();
+                }
+            }
+        }
+
+        return $messages;
     }
 
     public function save()

@@ -40,6 +40,10 @@ abstract class NamedFormElement extends BaseFormElement
      * @var bool
      */
     protected $readonly;
+    /**
+     * @var array
+     */
+    protected $validationMessages = [];
 
     /**
      * @param string      $path
@@ -201,6 +205,86 @@ abstract class NamedFormElement extends BaseFormElement
     }
 
     /**
+     * @param string      $rule
+     * @param string|null $message
+     *
+     * @return $this
+     */
+    public function addValidationRule($rule, $message = null)
+    {
+        parent::addValidationRule($rule);
+
+        if (! is_null($message)) {
+            $this->addValidationMessage($rule, $message);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string|null $message
+     *
+     * @return $this
+     */
+    public function required($message = null)
+    {
+        $this->addValidationRule('required', $message);
+
+        return $this;
+    }
+
+    /**
+     * @param string|null $message
+     *
+     * @return $this
+     */
+    public function unique($message = null)
+    {
+        $this->addValidationRule('_unique', $message);
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        $messages = parent::getValidationMessages();
+
+        foreach ($this->validationMessages as $rule => $message) {
+            $messages[$this->getName().'.'.$rule] = $message;
+        }
+
+        return $messages;
+    }
+
+    /**
+     * @param array $validationMessages
+     *
+     * @return $this
+     */
+    public function setValidationMessages($validationMessages)
+    {
+        $this->validationMessages = $validationMessages;
+
+        return $this;
+    }
+
+    /**
+     * @param string $rule
+     * @param string $message
+     *
+     * @return $this
+     */
+    public function addValidationMessage($rule, $message)
+    {
+        $this->validationMessages[$rule] = $message;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getValue()
@@ -242,26 +326,6 @@ abstract class NamedFormElement extends BaseFormElement
         });
 
         return [$this->getName() => $rules];
-    }
-
-    /**
-     * @return $this
-     */
-    public function required()
-    {
-        $this->addValidationRule('required');
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function unique()
-    {
-        $this->addValidationRule('_unique');
-
-        return $this;
     }
 
     /**
