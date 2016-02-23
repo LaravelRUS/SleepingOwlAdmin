@@ -2,8 +2,10 @@
 
 namespace SleepingOwl\Admin\Model;
 
+use Gate;
 use Closure;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -34,6 +36,36 @@ class ModelConfiguration
      * @var Closure|null
      */
     protected $create;
+
+    /**
+     * @var bool
+     */
+    protected $displayable = true;
+
+    /**
+     * @var bool
+     */
+    protected $creatable = true;
+
+    /**
+     * @var bool
+     */
+    protected $editable = true;
+
+    /**
+     * @var bool
+     */
+    protected $restorable = true;
+
+    /**
+     * @var bool
+     */
+    protected $deletable = true;
+
+    /**
+     * @var bool
+     */
+    protected $checkAccess = false;
 
     /**
      * @var Closure|null
@@ -231,6 +263,145 @@ class ModelConfiguration
     }
 
     /**
+     * @return boolean
+     */
+    public function isDisplayable()
+    {
+        return $this->displayable && $this->can('display', $this->makeModel());
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableDisplay()
+    {
+        $this->displayable = false;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCreatable()
+    {
+        if (! is_callable($this->getCreate())) {
+            return false;
+        }
+
+        return $this->creatable && $this->can('create', $this->makeModel());
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableCreating()
+    {
+        $this->creatable = false;
+
+        return $this;
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return bool
+     */
+    public function isEditable(Model $model)
+    {
+        if (! is_callable($this->getEdit())) {
+            return false;
+        }
+
+        return $this->editable && $this->can('edit', $model);
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableEditing()
+    {
+        $this->editable = false;
+
+        return $this;
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return bool
+     */
+    public function isDeletable(Model $model)
+    {
+        return $this->deletable && $this->can('delete', $model);
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableDeleting()
+    {
+        $this->deletable = false;
+
+        return $this;
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return boolean
+     */
+    public function isRestorable(Model $model)
+    {
+        return $this->restorable && $this->can('restore', $model);
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableRestoring()
+    {
+        $this->restorable = false;
+
+        return $this;
+    }
+
+    /**
+     * @param string $action
+     * @param Model $model
+     *
+     * @return bool
+     */
+    public function can($action, Model $model)
+    {
+        if (! $this->checkAccess) {
+            return true;
+        }
+
+        return Gate::allows($action, $model);
+    }
+
+    /**
+     * @return $this
+     */
+    public function enableAccessCheck()
+    {
+        $this->checkAccess = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableAccessCheck()
+    {
+        $this->checkAccess = false;
+
+        return $this;
+    }
+
+    /**
      * @return DisplayInterface|mixed
      */
     public function fireDisplay()
@@ -313,8 +484,8 @@ class ModelConfiguration
      */
     public function fireDelete($id)
     {
-        if (is_callable($this->delete)) {
-            return app()->call($this->delete, [$id]);
+        if (is_callable($this->getDelete())) {
+            return app()->call($this->getDelete(), [$id]);
         }
     }
 
@@ -325,11 +496,11 @@ class ModelConfiguration
      */
     public function fireRestore($id)
     {
-        if (is_callable($this->restore)) {
-            return app()->call($this->restore, [$id]);
+        if (is_callable($this->getRestore())) {
+            return app()->call($this->getRestore(), [$id]);
         }
 
-        return $this->restore;
+        return $this->getRestore();
     }
 
     /**
@@ -408,5 +579,13 @@ class ModelConfiguration
     {
         $alias = Str::snake(Str::plural(class_basename($this->getClass())));
         $this->setAlias($alias);
+    }
+
+    /**
+     * @return Model
+     */
+    protected function makeModel()
+    {
+        return app()->make($this->getClass());
     }
 }

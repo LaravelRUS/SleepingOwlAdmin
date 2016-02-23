@@ -418,7 +418,7 @@ class DisplayTable implements Renderable, DisplayInterface
         return [
             'title'     => $this->getTitle(),
             'columns'   => $this->getAllColumns(),
-            'creatable' => ! is_null($model->fireCreate()),
+            'creatable' => $model->isCreatable(),
             'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
             'actions'   => $this->getActions(),
             'attributes' => $this->getAttributes()

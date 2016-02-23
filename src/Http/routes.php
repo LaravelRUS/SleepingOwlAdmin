@@ -33,7 +33,7 @@ Route::group(['as' => 'admin.'], function () {
 
     Route::delete('{adminModel}/{adminModelId}/delete', [
         'as'   => 'model.destroy',
-        'uses' => 'AdminController@postDestroy',
+        'uses' => 'AdminController@deleteDestroy',
     ]);
 
     Route::post('{adminModel}/{adminModelId}/restore', [

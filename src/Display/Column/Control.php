@@ -51,7 +51,12 @@ class Control extends BaseColumn
      */
     protected function isEditable()
     {
-        return ! $this->isTrashed() && ! is_null($this->getModelConfiguration()->fireEdit($this->getModelKey()));
+        return
+            ! $this->isTrashed()
+            &&
+            $this->getModelConfiguration()->isEditable(
+                $this->getModel()
+            );
     }
 
     /**
@@ -70,7 +75,12 @@ class Control extends BaseColumn
      */
     protected function isDeletable()
     {
-        return ! $this->isTrashed() && ! is_null($this->getModelConfiguration()->fireDelete($this->getModelKey()));
+        return
+            ! $this->isTrashed()
+            &&
+            $this->getModelConfiguration()->isDeletable(
+                $this->getModel()
+            );
     }
 
     /**
@@ -90,7 +100,12 @@ class Control extends BaseColumn
      */
     protected function isRestorable()
     {
-        return $this->isTrashed() && ! is_null($this->getModelConfiguration()->fireRestore($this->getModelKey()));
+        return
+            $this->isTrashed()
+            &&
+            $this->getModelConfiguration()->isRestorable(
+                $this->getModel()
+            );
     }
 
     /**

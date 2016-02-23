@@ -20,6 +20,10 @@ class AdminController extends Controller
      */
     public function getDisplay(ModelConfiguration $model)
     {
+        if (! $model->isDisplayable()) {
+            abort(404);
+        }
+
         return $this->render($model, $model->fireDisplay());
     }
 
@@ -30,11 +34,11 @@ class AdminController extends Controller
      */
     public function getCreate(ModelConfiguration $model)
     {
-        $create = $model->fireCreate();
-        if (is_null($create)) {
+        if (! $model->isCreatable()) {
             abort(404);
         }
 
+        $create = $model->fireCreate();
         return $this->render($model, $create);
     }
 
@@ -45,11 +49,11 @@ class AdminController extends Controller
      */
     public function postStore(ModelConfiguration $model)
     {
-        $createForm = $model->fireCreate();
-        if (is_null($createForm)) {
+        if (! $model->isCreatable()) {
             abort(404);
         }
 
+        $createForm = $model->fireCreate();
         $nextAction = Request::get('next_action');
 
         if ($createForm instanceof FormInterface) {
@@ -75,12 +79,13 @@ class AdminController extends Controller
      */
     public function getEdit(ModelConfiguration $model, $id)
     {
-        $edit = $model->fireFullEdit($id);
-        if (is_null($edit)) {
+        $item = $model->getRepository()->find($id);
+
+        if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
-        return $this->render($model, $edit);
+        return $this->render($model, $model->fireFullEdit($id));
     }
 
     /**
@@ -91,11 +96,13 @@ class AdminController extends Controller
      */
     public function postUpdate(ModelConfiguration $model, $id)
     {
-        $editForm = $model->fireFullEdit($id);
-        if (is_null($editForm)) {
+        $item = $model->getRepository()->find($id);
+
+        if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
+        $editForm = $model->fireFullEdit($id);
         $nextAction = Request::get('next_action');
 
         if ($editForm instanceof FormInterface) {
@@ -119,14 +126,15 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postDestroy(ModelConfiguration $model, $id)
+    public function deleteDestroy(ModelConfiguration $model, $id)
     {
-        $delete = $model->fireDelete($id);
+        $item = $model->getRepository()->find($id);
 
-        if (is_null($delete)) {
+        if (is_null($item) || ! $model->isDeletable($item)) {
             abort(404);
         }
 
+        $model->fireDelete($id);
         $model->getRepository()->delete($id);
 
         return redirect()->back();
@@ -140,11 +148,13 @@ class AdminController extends Controller
      */
     public function postRestore($model, $id)
     {
-        $restore = $model->fireRestore($id);
-        if (is_null($restore)) {
+        $item = $model->getRepository()->find($id);
+
+        if (is_null($item) || ! $model->isRestorable($item)) {
             abort(404);
         }
 
+        $model->fireRestore($id);
         $model->getRepository()->restore($id);
 
         return redirect()->back();
