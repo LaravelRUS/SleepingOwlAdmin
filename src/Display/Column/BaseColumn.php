@@ -57,7 +57,7 @@ abstract class BaseColumn implements Renderable, ColumnInterface, Arrayable
      */
     public function initialize()
     {
-        Meta::loadPackage(get_class());
+        Meta::loadPackage(get_called_class());
     }
 
     /**

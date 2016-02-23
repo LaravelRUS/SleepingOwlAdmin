@@ -19,14 +19,14 @@ window.columnFilters.range = function (container, table) {
 
         var fromValue = from.val();
         var toValue = to.val();
-        if ((from.closest('.datepicker').length > 0) && (to.closest('.datepicker').length > 0)) {
+        if ((from.closest('.input-date').length > 0) && (to.closest('.input-date').length > 0)) {
             if (fromValue != '') {
-                fromValue = from.closest('.datepicker').data('DateTimePicker').getDate();
+                fromValue = from.closest('.input-date').data('DateTimePicker').date();
             } else {
                 fromValue = Number.NEGATIVE_INFINITY;
             }
             if (toValue != '') {
-                toValue = to.closest('.datepicker').data('DateTimePicker').getDate();
+                toValue = to.closest('.input-date').data('DateTimePicker').date();
             } else {
                 toValue = Number.POSITIVE_INFINITY;
             }

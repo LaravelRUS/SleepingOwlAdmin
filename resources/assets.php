@@ -10,6 +10,10 @@ if (! function_exists('resources_url')) {
 PackageManager::add(\SleepingOwl\Admin\Form\Element\Date::class)
     ->with('datetimepicker');
 
+PackageManager::add(\SleepingOwl\Admin\Display\Column\Filter\Date::class)
+    ->with('datetimepicker');
+
+
 PackageManager::add(\SleepingOwl\Admin\Form\Element\Select::class)
     ->with('select2');
 
@@ -50,8 +54,8 @@ PackageManager::add('datatables')
     ->css('dataTables-theme', resources_url('libs/datatables/css/dataTables.bootstrap.min.css'));
 
 PackageManager::add('datetimepicker')
-    ->js(null, resources_url('libs/datetimepicker/js/jquery.datetimepicker.full.min.js'), ['jquery', 'libraries'])
-    ->css(null, resources_url('libs/datetimepicker/css/jquery.datetimepicker.css'));
+    ->js(null, resources_url('libs/eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'), ['jquery', 'libraries'])
+    ->css(null, resources_url('libs/eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'));
 
 PackageManager::add('ekko-lightbox')
     ->js(null, resources_url('libs/ekko-lightbox/js/ekko-lightbox.min.js'), ['jquery']);
