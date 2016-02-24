@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use App;
-use Request;
 use AdminTemplate;
+use App;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Contracts\Support\Renderable;
+use Request;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
@@ -66,6 +66,8 @@ class AdminController extends Controller
 
         if ($nextAction == 'save_and_continue') {
             return redirect()->to($model->getEditUrl($createForm->getModelObject()->id));
+        } else if ($nextAction == 'save_and_create') {
+            return redirect()->to($model->getCreateUrl());
         }
 
         return redirect()->to($model->getDisplayUrl());
@@ -115,6 +117,8 @@ class AdminController extends Controller
 
         if ($nextAction == 'save_and_continue') {
             return redirect()->back();
+        } else if ($nextAction == 'save_and_create') {
+            return redirect()->to($model->getCreateUrl());
         }
 
         return redirect()->to($model->getDisplayUrl());

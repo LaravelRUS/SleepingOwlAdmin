@@ -81,6 +81,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     protected $saveAndCloseButtonText;
 
     /**
+     * @var string|null
+     */
+    protected $saveAndCreateButtonText;
+
+    /**
      * @var bool
      */
     protected $showCancelButton = true;
@@ -89,6 +94,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      * @var bool
      */
     protected $showSaveAndCloseButton = true;
+
+    /**
+     * @var bool
+     */
+    protected $showSaveAndCreateButton = true;
 
     /**
      * Initialize form.
@@ -311,6 +321,30 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     }
 
     /**
+     * @return null|string
+     */
+    public function getSaveAndCreateButtonText()
+    {
+        if (is_null($this->saveAndCreateButtonText)) {
+            $this->saveAndCreateButtonText = trans('sleeping_owl::lang.table.save_and_create');
+        }
+
+        return $this->saveAndCreateButtonText;
+    }
+
+    /**
+     * @param null|string $saveAndCreateButtonText
+     *
+     * @return $this
+     */
+    public function setSaveAndCreateButtonText($saveAndCreateButtonText)
+    {
+        $this->saveAndCreateButtonText = $saveAndCreateButtonText;
+
+        return $this;
+    }
+
+    /**
      * @return boolean
      */
     public function isShowCancelButton()
@@ -342,6 +376,25 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     public function hideSaveAndCloseButton()
     {
         $this->showSaveAndCloseButton = false;
+
+        return $this;
+    }
+
+
+    /**
+     * @return boolean
+     */
+    public function isShowSaveAndCreateButton()
+    {
+        return $this->showSaveAndCreateButton;
+    }
+
+    /**
+     * @return $this
+     */
+    public function hideSaveAndCreateButton()
+    {
+        $this->showSaveAndCreateButton = false;
 
         return $this;
     }
@@ -425,9 +478,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
                 'backUrl'                => $this->getModel()->getDisplayUrl(),
                 'saveButtonText'         => $this->getSaveButtonText(),
                 'saveAndCloseButtonText' => $this->getSaveAndCloseButtonText(),
+                'saveAndCreateButtonText' => $this->getSaveAndCreateButtonText(),
                 'cancelButtonText'       => $this->getCancelButtonText(),
                 'showCancelButton'       => $this->isShowCancelButton(),
-                'showSaveAndCloseButton' => $this->isShowSaveAndCloseButton()
+                'showSaveAndCloseButton' => $this->isShowSaveAndCloseButton(),
+                'showSaveAndCreateButton' => $this->isShowSaveAndCreateButton()
             ])
         ];
     }
