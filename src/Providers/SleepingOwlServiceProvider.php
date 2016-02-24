@@ -54,8 +54,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
             FormElementsServiceProvider::class,
             AssetsServiceProvider::class,
             HtmlServiceProvider::class,
-            AdminServiceProvider::class,
-            RouteServiceProvider::class
+            AdminServiceProvider::class
         ];
 
         foreach ($providers as $providerClass) {
