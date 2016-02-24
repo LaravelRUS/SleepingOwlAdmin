@@ -4,13 +4,14 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 // TODO: починить указание активности таба
 class DisplayTab implements Renderable, DisplayInterface, FormInterface
 {
+
     /**
      * @var string
      */
@@ -89,7 +90,9 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
      */
     public function getName()
     {
-        return is_null($this->name) ? md5($this->getLabel()) : $this->name;
+        return is_null($this->name)
+            ? md5($this->getLabel())
+            : $this->name;
     }
 
     /**
@@ -235,10 +238,11 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('display.tab_content', [
-            'active'  => $this->isActive(),
-            'name'    => $this->getName(),
-            'content' => $this->getContent(),
+        return app('sleeping_owl.template')->view('display.tab', [
+            'active' => $this->isActive(),
+            'name'   => $this->getName(),
+            'label'  => $this->getLabel(),
+            'icon'   => $this->getIcon()
         ]);
     }
 

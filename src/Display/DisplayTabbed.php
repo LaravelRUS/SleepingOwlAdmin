@@ -71,7 +71,7 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
      *
      * @return $this
      */
-    public function appendDisplay(DisplayInterface $display, $label, $active = false)
+    public function appendTab(DisplayInterface $display, $label, $active = false)
     {
         $tab = \AdminDisplay::tab($display)
             ->setLabel($label)
