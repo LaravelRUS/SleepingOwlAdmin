@@ -5,15 +5,14 @@ namespace SleepingOwl\Admin\Form;
 use URL;
 use Request;
 use Validator;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 
 class FormDefault implements Renderable, DisplayInterface, FormInterface
 {
@@ -195,7 +194,19 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
             $items = func_get_args();
         }
 
-        $this->items = collect($items);
+        $this->items = $items;
+
+        return $this;
+    }
+
+    /**
+     * @param FormElementInterface $item
+     *
+     * @return $this
+     */
+    public function addItem(FormElementInterface $item)
+    {
+        $this->items[] = $item;
 
         return $this;
     }
@@ -206,24 +217,6 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     public function getModelObject()
     {
         return $this->modelObject;
-    }
-
-    /**
-     * @param Model $modelObject
-     *
-     * @return $this
-     */
-    public function setModelObject(Model $modelObject)
-    {
-        $this->modelObject = $modelObject;
-
-        $this->getItems()->each(function ($item) {
-            if ($item instanceof FormElementInterface) {
-                $item->setModel($this->modelObject);
-            }
-        });
-
-        return $this;
     }
 
     /**
@@ -400,6 +393,26 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     }
 
     /**
+     * @param Model      $modelObject
+     *
+     * @return $this
+     */
+    public function setModelObject(Model $modelObject)
+    {
+        $this->modelObject = $modelObject;
+
+        $items = $this->getItems();
+
+        array_walk_recursive($items, function($item) {
+            if ($item instanceof FormElementInterface) {
+                $item->setModel($this->modelObject);
+            }
+        });
+
+        return $this;
+    }
+
+    /**
      * Save instance.
      *
      * @param $model
@@ -410,7 +423,9 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
             return;
         }
 
-        $this->getItems()->each(function ($item) {
+        $items = $this->getItems();
+
+        array_walk_recursive($items, function($item) {
             if ($item instanceof FormElementInterface) {
                 $item->save();
             }
@@ -433,7 +448,8 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         $rules = [];
         $messages = [];
 
-        $this->getItems()->each(function ($item) use (&$rules, &$messages) {
+        $items = $this->getItems();
+        array_walk_recursive($items, function($item) use (&$rules, &$messages) {
             if ($item instanceof FormElementInterface) {
                 $rules += $item->getValidationRules();
                 $messages += $item->getValidationMessages();
@@ -505,7 +521,9 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 
     protected function initializeItems()
     {
-        $this->getItems()->each(function ($item) {
+        $items = $this->getItems();
+
+        array_walk_recursive($items, function($item) {
             if ($item instanceof FormElementInterface) {
                 $item->initialize();
             }
