@@ -88,6 +88,16 @@ class DisplayTable implements Renderable, DisplayInterface
     protected $paginate;
 
     /**
+     * @var Column\Control
+     */
+    protected $controlColumn;
+
+    public function __construct()
+    {
+        $this->controlColumn = TableColumn::control();
+    }
+
+    /**
      * @param string $class
      */
     public function setClass($class)
@@ -103,6 +113,26 @@ class DisplayTable implements Renderable, DisplayInterface
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * @param ColumnInterface $controlColumn
+     *
+     * @return $this
+     */
+    public function setControlColumn(ColumnInterface $controlColumn)
+    {
+        $this->controlColumn = $controlColumn;
+
+        return $this;
+    }
+
+    /**
+     * @return Column\Control
+     */
+    public function getControlColumn()
+    {
+        return $this->controlColumn;
     }
 
     public function initialize()
@@ -147,8 +177,9 @@ class DisplayTable implements Renderable, DisplayInterface
     public function getAllColumns()
     {
         $columns = $this->getColumns();
+
         if ($this->isControlActive()) {
-            $columns[] = TableColumn::control();
+            $columns[] = $this->getControlColumn();
         }
 
         return $columns;
@@ -180,6 +211,8 @@ class DisplayTable implements Renderable, DisplayInterface
 
     /**
      * @param Closure $apply
+     *
+     * @return $this
      */
     public function setApply(Closure $apply)
     {
