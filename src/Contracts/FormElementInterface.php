@@ -25,6 +25,16 @@ interface FormElementInterface
     public function getValidationRules();
 
     /**
+     * @return array
+     */
+    public function getValidationMessages();
+
+    /**
+     * @return array
+     */
+    public function getValidationLabels();
+
+    /**
      * Save form item.
      */
     public function save();

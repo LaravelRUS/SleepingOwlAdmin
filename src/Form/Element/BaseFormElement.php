@@ -47,6 +47,14 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
     }
 
     /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        return [];
+    }
+
+    /**
      * @param string      $rule
      * @param string|null $message
      *

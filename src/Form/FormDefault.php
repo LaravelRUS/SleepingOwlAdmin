@@ -11,8 +11,13 @@ use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FormDefault implements Renderable, DisplayInterface, FormInterface
 {
@@ -50,7 +55,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      * Form related model instance.
      * @var Model
      */
-    protected $modelObject;
+    protected $model;
 
     /**
      * Currently loaded model id.
@@ -111,7 +116,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         $this->initialized = true;
         $this->repository  = new BaseRepository($this->class);
 
-        $this->setModelObject(app($this->class));
+        $this->setModel(app($this->class));
         $this->initializeItems();
     }
 
@@ -214,9 +219,9 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     /**
      * @return Model
      */
-    public function getModelObject()
+    public function getModel()
     {
-        return $this->modelObject;
+        return $this->model;
     }
 
     /**
@@ -228,7 +233,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     {
         if (is_null($this->id)) {
             $this->id = $id;
-            $this->setModelObject($this->getRepository()->find($id));
+            $this->setModel($this->getRepository()->find($id));
         }
     }
 
@@ -236,7 +241,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      * Get related form model configuration.
      * @return ModelConfiguration
      */
-    public function getModel()
+    public function getModelConfiguration()
     {
         return app('sleeping_owl')->getModel($this->class);
     }
@@ -373,7 +378,6 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         return $this;
     }
 
-
     /**
      * @return boolean
      */
@@ -393,19 +397,19 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     }
 
     /**
-     * @param Model      $modelObject
+     * @param Model $model
      *
      * @return $this
      */
-    public function setModelObject(Model $modelObject)
+    public function setModel(Model $model)
     {
-        $this->modelObject = $modelObject;
+        $this->model = $model;
 
         $items = $this->getItems();
 
-        array_walk_recursive($items, function($item) {
+        array_walk_recursive($items, function ($item) {
             if ($item instanceof FormElementInterface) {
-                $item->setModel($this->modelObject);
+                $item->setModel($this->model);
             }
         });
 
@@ -419,19 +423,50 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      */
     public function save(ModelConfiguration $model)
     {
-        if ($this->getModel() != $model) {
+        if ($this->getModelConfiguration() != $model) {
             return;
         }
 
         $items = $this->getItems();
 
-        array_walk_recursive($items, function($item) {
+        array_walk_recursive($items, function ($item) {
             if ($item instanceof FormElementInterface) {
                 $item->save();
             }
         });
 
-        $this->getModelObject()->save();
+        $this->saveBelongsToRelations();
+
+        $this->getModel()->save();
+
+        $this->saveHasOneRelations();
+    }
+
+    protected function saveBelongsToRelations()
+    {
+        $model = $this->getModel();
+
+        foreach ($model->getRelations() as $name => $relation) {
+            if ($model->{$name}() instanceof BelongsTo) {
+                $relation->save();
+                $model->{$name}()->associate($relation);
+            }
+        }
+    }
+
+    protected function saveHasOneRelations()
+    {
+        $model = $this->getModel();
+
+        foreach ($model->getRelations() as $name => $relation) {
+            if ($model->{$name}() instanceof HasOneOrMany) {
+                if (is_array($relation)) {
+                    $model->{$name}()->saveMany($relation);
+                } else {
+                    $model->{$name}()->save($relation);
+                }
+            }
+        }
     }
 
     /**
@@ -441,34 +476,37 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      */
     public function validate(ModelConfiguration $model)
     {
-        if ($this->getModel() != $model) {
+        if ($this->getModelConfiguration() != $model) {
             return;
         }
 
-        $rules = [];
+        $rules    = [];
         $messages = [];
+        $titles   = [];
 
         $items = $this->getItems();
-        array_walk_recursive($items, function($item) use (&$rules, &$messages) {
+
+        array_walk_recursive($items, function ($item) use (&$rules, &$messages, &$titles) {
             if ($item instanceof FormElementInterface) {
                 $rules += $item->getValidationRules();
                 $messages += $item->getValidationMessages();
+                $titles += $item->getValidationLabels();
             }
         });
 
-        $data     = Request::all();
+        $data = Request::all();
 
         $verifier = app('validation.presence');
-        $verifier->setConnection($this->getModelObject()->getConnectionName());
+        $verifier->setConnection($this->getModel()->getConnectionName());
 
-        $validator = Validator::make($data, $rules, $messages);
+        $validator = Validator::make($data, $rules, $messages, $titles);
         $validator->setPresenceVerifier($verifier);
 
         if ($validator->fails()) {
             return $validator;
         }
 
-        return;
+        return true;
     }
 
     /**
@@ -488,16 +526,16 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     {
         return [
             'items'    => $this->getItems(),
-            'instance' => $this->getModelObject(),
+            'instance' => $this->getModel(),
             'action'   => $this->getAction(),
             'buttons'  => app('sleeping_owl.template')->view('form.buttons', [
-                'backUrl'                => $this->getModel()->getDisplayUrl(),
-                'saveButtonText'         => $this->getSaveButtonText(),
-                'saveAndCloseButtonText' => $this->getSaveAndCloseButtonText(),
+                'backUrl'                 => $this->getModelConfiguration()->getDisplayUrl(),
+                'saveButtonText'          => $this->getSaveButtonText(),
+                'saveAndCloseButtonText'  => $this->getSaveAndCloseButtonText(),
                 'saveAndCreateButtonText' => $this->getSaveAndCreateButtonText(),
-                'cancelButtonText'       => $this->getCancelButtonText(),
-                'showCancelButton'       => $this->isShowCancelButton(),
-                'showSaveAndCloseButton' => $this->isShowSaveAndCloseButton(),
+                'cancelButtonText'        => $this->getCancelButtonText(),
+                'showCancelButton'        => $this->isShowCancelButton(),
+                'showSaveAndCloseButton'  => $this->isShowSaveAndCloseButton(),
                 'showSaveAndCreateButton' => $this->isShowSaveAndCreateButton()
             ])
         ];
@@ -523,7 +561,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     {
         $items = $this->getItems();
 
-        array_walk_recursive($items, function($item) {
+        array_walk_recursive($items, function ($item) {
             if ($item instanceof FormElementInterface) {
                 $item->initialize();
             }

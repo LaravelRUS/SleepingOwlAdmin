@@ -1,3 +1,3 @@
-@foreach ($errors->get($name) as $error)
+@foreach ($errors->get($path) as $error)
 	<p class="help-block">{{ $error }}</p>
 @endforeach

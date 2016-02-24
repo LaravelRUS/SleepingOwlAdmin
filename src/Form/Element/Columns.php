@@ -119,6 +119,24 @@ class Columns extends BaseFormElement
         return $messages;
     }
 
+    /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        $labels = [];
+
+        foreach ($this->getColumns() as $columnItems) {
+            foreach ($columnItems as $item) {
+                if ($item instanceof NamedFormElement) {
+                    $labels += $item->getValidationLabels();
+                }
+            }
+        }
+
+        return $labels;
+    }
+
     public function save()
     {
         parent::save();

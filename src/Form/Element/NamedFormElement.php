@@ -3,6 +3,11 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Request;
+use LogicException;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 abstract class NamedFormElement extends BaseFormElement
 {
@@ -285,6 +290,14 @@ abstract class NamedFormElement extends BaseFormElement
     }
 
     /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        return [$this->getPath() => $this->getLabel()];
+    }
+
+    /**
      * @return mixed
      */
     public function getValue()
@@ -295,12 +308,34 @@ abstract class NamedFormElement extends BaseFormElement
         }
 
         $input = Request::all();
+
         if (($value = array_get($input, $this->getPath())) !== null) {
             return $value;
         }
 
-        if (! is_null($model) && ! is_null($value = $model->getAttribute($this->getAttribute()))) {
-            return $value;
+        if (! is_null($model)) {
+            $exploded = explode('.', $this->getPath());
+            $i        = 1;
+            $count    = count($exploded);
+
+            if ($count > 1) {
+                $i++;
+                foreach ($exploded as $relation) {
+                    if ($model->{$relation} instanceof Model) {
+                        $model = $model->{$relation};
+                    } elseif ($count === $i) {
+                        $value = $model->getAttribute($relation);
+                    } else {
+                        throw new LogicException("Can not fetch value for field '{$this->getPath()}'. Probably relation definition is incorrect");
+                    }
+                }
+            } else {
+                $value = $model->getAttribute($this->getAttribute());
+            }
+
+            if (! is_null($value)) {
+                return $value;
+            }
         }
 
         return $this->getDefaultValue();
@@ -325,7 +360,7 @@ abstract class NamedFormElement extends BaseFormElement
             }
         });
 
-        return [$this->getName() => $rules];
+        return [$this->getPath() => $rules];
     }
 
     /**
@@ -336,6 +371,7 @@ abstract class NamedFormElement extends BaseFormElement
         return parent::getParams() + [
             'id'       => $this->getName(),
             'name'     => $this->getName(),
+            'path'     => $this->getPath(),
             'label'    => $this->getLabel(),
             'readonly' => $this->isReadonly(),
             'value'    => $this->getValue(),
@@ -346,14 +382,52 @@ abstract class NamedFormElement extends BaseFormElement
     public function save()
     {
         $attribute = $this->getAttribute();
+        $model = $this->getModel();
 
-        if (Request::get($this->getPath()) === null) {
-            $value = null;
-        } else {
-            $value = $this->getValue();
+        $value = $this->getValue();
+
+        $relations = explode('.', $this->getPath());
+        $count = count($relations);
+        $i = 1;
+
+        if ($count > 1) {
+            $i++;
+            $previousModel = $model;
+
+            /** @var Model $model */
+            foreach ($relations as $relation) {
+                $nestedModel = null;
+                if ($previousModel->{$relation} instanceof Model) {
+                    $relatedModel = & $previousModel->{$relation};
+                } elseif (method_exists($previousModel, $relation)) {
+
+                    /** @var Relation $relation */
+                    $relationObject = $previousModel->{$relation}();
+                    switch (get_class($relationObject)) {
+                        case BelongsTo::class:
+                            $relationObject->associate(
+                                $relatedModel = $relationObject->getRelated()
+                            );
+                            break;
+                        case HasOne::class:
+                            $relatedModel = $relationObject->create();
+                            $model->{$relation} = $relatedModel;
+                            break;
+                    }
+                }
+
+                $previousModel = $relatedModel;
+                if ($i === $count) {
+                    break;
+                } elseif (is_null($relatedModel)) {
+                    throw new LogicException("Field «{$this->getPath()}» can't be mapped to relations of model ".get_class($model).". Probably some dot delimeted segment is not a supported relation type");
+                }
+            }
+
+            $model = $previousModel;
         }
 
-        $this->setValue($attribute, $value);
+        $model->setAttribute($attribute, $value);
     }
 
     /**

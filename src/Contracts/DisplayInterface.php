@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 
 interface DisplayInterface extends Arrayable
 {
