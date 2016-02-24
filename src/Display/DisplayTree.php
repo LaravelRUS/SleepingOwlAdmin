@@ -242,7 +242,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
      */
     public function getParams()
     {
-        $model = $this->getModel();
+        $model = $this->getModelConfiguration();
 
         return [
             'items'       => $this->getRepository()->getTree(),
@@ -288,7 +288,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
     /**
      * @return ModelConfiguration
      */
-    protected function getModel()
+    protected function getModelConfiguration()
     {
         return app('sleeping_owl')->getModel($this->class);
     }

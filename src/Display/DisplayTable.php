@@ -384,7 +384,7 @@ class DisplayTable implements Renderable, DisplayInterface
     public function getActions()
     {
         foreach ($this->actions as $action) {
-            $action->setUrl($this->getModel()->getDeleteUrl([
+            $action->setUrl($this->getModelConfiguration()->getDeleteUrl([
                 '_action' => $action->getName(),
                 '_ids'    => '',
             ]));
@@ -446,7 +446,7 @@ class DisplayTable implements Renderable, DisplayInterface
      */
     public function getParams()
     {
-        $model = $this->getModel();
+        $model = $this->getModelConfiguration();
 
         return [
             'title'     => $this->getTitle(),
@@ -575,7 +575,7 @@ class DisplayTable implements Renderable, DisplayInterface
     /**
      * @return ModelConfiguration
      */
-    protected function getModel()
+    protected function getModelConfiguration()
     {
         return app('sleeping_owl')->getModel($this->getClass());
     }

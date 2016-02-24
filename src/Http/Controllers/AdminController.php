@@ -65,7 +65,7 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
-            return redirect()->to($model->getEditUrl($createForm->getModelObject()->id));
+            return redirect()->to($model->getEditUrl($createForm->getModel()->id));
         } else if ($nextAction == 'save_and_create') {
             return redirect()->to($model->getCreateUrl());
         }
