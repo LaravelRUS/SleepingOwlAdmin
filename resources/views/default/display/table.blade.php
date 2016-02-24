@@ -8,9 +8,9 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		@if ($creatable)
-			{!! link_to($createUrl, trans('sleeping_owl::lang.table.new-entry'), [
-                'class' => 'btn btn-primary btn-labeled', 'data-icon' => 'plus'
-            ]) !!}
+			<a href="{{ url($createUrl) }}" class="btn btn-primary btn-flat">
+				<i class="fa fa-plus"></i> {{ trans('sleeping_owl::lang.table.new-entry') }}
+			</a>
 		@endif
 
 		<div class="pull-right tableActions">
