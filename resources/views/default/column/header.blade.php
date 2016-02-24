@@ -1,3 +1,3 @@
-<th data-orderable="{{ $orderable ? 'true' : 'false' }}" class="row-header">
+<th {!! HTML::attributes($attributes) !!}>
     {!! $title !!}
 </th>
