@@ -1,4 +1,4 @@
-@extends(AdminTemplate::getTemplateViewPath('_layout.base'))
+@extends(AdminTemplate::getViewPath('_layout.base'))
 
 @section('content')
     <div class="container">

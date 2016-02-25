@@ -33,8 +33,19 @@ class TemplateDefault implements TemplateInterface
      * @param string $view
      *
      * @return string
+     * @deprecated
      */
     public function getTemplateViewPath($view)
+    {
+        return $this->getViewPath($view);
+    }
+
+    /**
+     * @param string $view
+     *
+     * @return string
+     */
+    public function getViewPath($view)
     {
         return $this->getViewNamespace().'default.'.$view;
     }
@@ -48,7 +59,8 @@ class TemplateDefault implements TemplateInterface
      */
     public function view($view, $data = [], $mergeData = [])
     {
-        return view($this->getTemplateViewPath($view), $data, $mergeData);
+        return view($this->getViewPath($view), $data, $mergeData);
+    }
 
     /**
      * @param string $title

@@ -16,7 +16,7 @@
 		</div>
 		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ implode(',', $value) }}">
 		<div class="errors">
-			@include(AdminTemplate::getTemplateViewPath('form.element.errors'))
+			@include(AdminTemplate::getViewPath('form.element.errors'))
 		</div>
 	</div>
 </div>

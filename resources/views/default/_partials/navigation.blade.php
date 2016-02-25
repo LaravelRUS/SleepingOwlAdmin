@@ -16,7 +16,7 @@
 		@endforeach
 
 		@foreach(AdminNavigation::getRootSection()->getSections() as $section)
-			@include(AdminTemplate::getTemplateViewPath('_partials.navigation.sections'), ['section' => $section])
+			@include(AdminTemplate::getViewPath('_partials.navigation.sections'), ['section' => $section])
 		@endforeach
 
 		@yield('sidebar.ul.bottom')

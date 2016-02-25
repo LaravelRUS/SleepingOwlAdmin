@@ -4,5 +4,5 @@
 		<input data-date-format="{{ $pickerFormat }}" data-date-pickdate="false" data-date-useseconds="{{ $seconds ? 'true' : 'false' }}" class="form-control" name="{{ $name }}" type="text" id="{{ $name }}" value="{{ $value }}" @if(isset($readonly))readonly="{{ $readonly }}"@endif>
 		<span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
 	</div>
-	@include(AdminTemplate::getTemplateViewPath('form.element.errors'))
+	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>

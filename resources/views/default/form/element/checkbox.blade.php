@@ -4,5 +4,5 @@
 			<input type="checkbox" name="{{ $name }}" value="1" {!! $value ? 'checked="checked"' : '' !!} />{{ $label }}
 		</label>
 	</div>
-	@include(AdminTemplate::getTemplateViewPath('form.element.errors'))
+	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>

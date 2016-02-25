@@ -14,7 +14,7 @@ interface TemplateInterface
      *
      * @return string
      */
-    public function getTemplateViewPath($view);
+    public function getViewPath($view);
 
     /**
      * @param string $view

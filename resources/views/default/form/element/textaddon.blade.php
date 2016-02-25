@@ -9,5 +9,5 @@
 			<span class="input-group-addon">{!! $addon !!}</span>
 		@endif
 	</div>
-	@include(AdminTemplate::getTemplateViewPath('form.element.errors'))
+	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>

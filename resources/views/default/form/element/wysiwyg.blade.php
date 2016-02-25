@@ -18,6 +18,6 @@
             <span class="help-block">{!! $helpText !!}</span>
         @endif
 
-        @include(app('sleeping_owl.template')->getTemplateViewPath('form.element.errors'))
+        @include(app('sleeping_owl.template')->getViewPath('form.element.errors'))
     </div>
 </div>
