@@ -49,5 +49,20 @@ class TemplateDefault implements TemplateInterface
     public function view($view, $data = [], $mergeData = [])
     {
         return view($this->getTemplateViewPath($view), $data, $mergeData);
+
+    /**
+     * @return string
+     */
+    public function getLogo()
+    {
+        return config('sleeping_owl.logo');
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogoMini()
+    {
+        return config('sleeping_owl.logo_mini');
     }
 }
