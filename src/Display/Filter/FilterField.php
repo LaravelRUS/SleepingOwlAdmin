@@ -1,6 +1,6 @@
 <?php
 
-namespace SleepingOwl\Admin\Filter;
+namespace SleepingOwl\Admin\Display\Filter;
 
 class FilterField extends FilterBase
 {

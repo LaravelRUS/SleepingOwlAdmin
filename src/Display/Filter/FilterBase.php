@@ -1,12 +1,12 @@
 <?php
 
-namespace SleepingOwl\Admin\Filter;
+namespace SleepingOwl\Admin\Display\Filter;
 
 use Request;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 use SleepingOwl\Admin\Contracts\FilterInterface;
+use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 
 abstract class FilterBase implements FilterInterface
 {

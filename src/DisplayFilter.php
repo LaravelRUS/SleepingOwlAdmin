@@ -2,14 +2,12 @@
 
 namespace SleepingOwl\Admin;
 
-use SleepingOwl\Admin\AliasBinder;
-
 /**
  * Class Filter.
- * @method static \SleepingOwl\Admin\Filter\FilterCustom custom($name)
- * @method static \SleepingOwl\Admin\Filter\FilterField field($name)
- * @method static \SleepingOwl\Admin\Filter\FilterRelated related($name)
- * @method static \SleepingOwl\Admin\Filter\FilterScope scope($name)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterCustom custom($name)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterField field($name)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterRelated related($name)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterScope scope($name)
  */
 class DisplayFilter extends AliasBinder
 {
