@@ -140,7 +140,7 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
         return [
             'tabs' => $this->getTabs(),
@@ -152,17 +152,7 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('display.tabbed', $this->getParams());
-    }
-
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->getParams();
+        return app('sleeping_owl.template')->view('display.tabbed', $this->toArray());
     }
 
     /**

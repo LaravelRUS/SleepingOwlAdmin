@@ -76,9 +76,9 @@ class Columns extends BaseFormElement
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
-        return parent::getParams() + [
+        return parent::toArray() + [
             'columns' => $this->getColumns(),
         ];
     }

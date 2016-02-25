@@ -366,9 +366,9 @@ abstract class NamedFormElement extends BaseFormElement
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
-        return parent::getParams() + [
+        return parent::toArray() + [
             'id'       => $this->getName(),
             'name'     => $this->getName(),
             'path'     => $this->getPath(),

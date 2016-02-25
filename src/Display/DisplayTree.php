@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Route;
 use Request;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\TableColumn;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Repository\TreeRepository;
@@ -69,6 +70,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
     public function initialize()
     {
         Meta::loadPackage(get_class());
+
         $this->repository = new TreeRepository($this->class);
         $this->repository->with($this->getWith());
         TableColumn::treeControl()->initialize();
@@ -234,13 +236,13 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('display.tree', $this->getParams());
+        return app('sleeping_owl.template')->view('display.tree', $this->toArray());
     }
 
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
         $model = $this->getModelConfiguration();
 
@@ -249,20 +251,10 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
             'reorderable' => $this->isReorderable(),
             'url'         => $model->getDisplayUrl(),
             'value'       => $this->getValue(),
-            'creatable'   => ! is_null($model->create()),
-            'createUrl'   => $model->createUrl($this->getParameters() + Request::all()),
+            'creatable'   => $model->isCreatable(),
+            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
             'controls'    => [TableColumn::treeControl()],
         ];
-    }
-
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->getParams();
     }
 
     /**

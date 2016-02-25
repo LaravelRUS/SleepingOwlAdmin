@@ -111,19 +111,20 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('display.datatablesAsync', $this->getParams());
+        return app('sleeping_owl.template')->view('display.datatablesAsync', $this->toArray());
     }
 
     /**
      * Get view render parameters.
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
-        $params = parent::getParams();
+        $params = parent::toArray();
+
         $attributes = Request::all();
         array_unshift($attributes, $this->getName());
-        array_unshift($attributes, $this->getModelConfiguration()->alias());
+        array_unshift($attributes, $this->getModelConfiguration()->getAlias());
         $params['url'] = route('admin.model.async', $attributes);
 
         return $params;

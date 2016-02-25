@@ -128,9 +128,9 @@ class Select extends NamedFormElement
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
-        return parent::getParams() + [
+        return parent::toArray() + [
             'options'  => $this->getOptions(),
             'nullable' => $this->isNullable(),
         ];

@@ -30,7 +30,7 @@ class Images extends Image
     /**
      * @return string
      */
-    public function value()
+    public function getValue()
     {
         $value = parent::getValue();
         if (is_null($value)) {

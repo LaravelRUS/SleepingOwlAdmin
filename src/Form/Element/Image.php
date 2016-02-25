@@ -17,26 +17,24 @@ class Image extends NamedFormElement implements WithRoutesInterface
 
     public static function registerRoutes()
     {
-        Route::post('FormElements/image/'.static::$route, ['as' => 'admin.form.element.image.'.static::$route,
-            function () {
-                $validator = Validator::make(Request::all(), static::uploadValidationRules());
-                if ($validator->fails()) {
-                    return Response::make($validator->errors()->get('file'), 400);
-                }
+        Route::post('FormElements/image/'.static::$route, ['as' => 'admin.form.element.image.'.static::$route, function () {
+            $validator = Validator::make(Request::all(), static::uploadValidationRules());
+            if ($validator->fails()) {
+                return Response::make($validator->errors()->get('file'), 400);
+            }
 
-                $file = Request::file('file');
-                $filename = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
-                $path = config('sleeping_owl.imagesUploadDirectory');
-                $fullpath = public_path($path);
-                $file->move($fullpath, $filename);
-                $value = $path.'/'.$filename;
+            $file = Request::file('file');
+            $filename = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+            $path = config('sleeping_owl.imagesUploadDirectory');
+            $fullpath = public_path($path);
+            $file->move($fullpath, $filename);
+            $value = $path.'/'.$filename;
 
-                return [
-                    'url'   => asset($value),
-                    'value' => $value,
-                ];
-            },
-        ]);
+            return [
+                'url'   => asset($value),
+                'value' => $value,
+            ];
+        }]);
     }
 
     /**

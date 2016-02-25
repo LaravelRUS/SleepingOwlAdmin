@@ -31,21 +31,13 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @return array
-     */
-    public function getParams()
-    {
-        return [];
-    }
-
-    /**
      * Get the instance as an array.
      *
      * @return array
      */
     public function toArray()
     {
-        return $this->getParams();
+        return [];
     }
 
     /**
@@ -53,7 +45,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('column.filter.'.$this->getView(), $this->getParams())->render();
+        return app('sleeping_owl.template')->view('column.filter.'.$this->getView(), $this->toArray());
     }
 
     /**

@@ -444,7 +444,7 @@ class DisplayTable implements Renderable, DisplayInterface
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
         $model = $this->getModelConfiguration();
 
@@ -463,7 +463,7 @@ class DisplayTable implements Renderable, DisplayInterface
      */
     public function render()
     {
-        $params = $this->getParams();
+        $params = $this->toArray();
         $params['collection'] = $this->getCollection();
 
         return app('sleeping_owl.template')->view('display.'.$this->view, $params);
@@ -481,16 +481,6 @@ class DisplayTable implements Renderable, DisplayInterface
         return $this->usePagination()
             ? $query->paginate($this->paginate)
             : $query->get();
-    }
-
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->getParams();
     }
 
     /**

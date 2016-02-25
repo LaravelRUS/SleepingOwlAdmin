@@ -136,18 +136,6 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
     }
 
     /**
-     * @return array
-     */
-    public function getParams()
-    {
-        return [
-            'label'  => $this->getLabel(),
-            'active' => $this->isActive(),
-            'name'   => $this->getName(),
-        ];
-    }
-
-    /**
      * @param string $class
      *
      * @return $this
@@ -234,27 +222,26 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view('display.tab', [
-            'active' => $this->isActive(),
-            'name'   => $this->getName(),
-            'label'  => $this->getLabel(),
-            'icon'   => $this->getIcon()
-        ]);
-    }
-
-    /**
-     * Get the instance as an array.
-     *
      * @return array
      */
     public function toArray()
     {
-        return $this->getParams();
+        return [
+            'label'  => $this->getLabel(),
+            'active' => $this->isActive(),
+            'name'   => $this->getName(),
+            'icon'   => $this->getIcon()
+        ];
     }
+
+    /**
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function render()
+    {
+        return app('sleeping_owl.template')->view('display.tab', $this->toArray());
+    }
+
 
     /**
      * @return string

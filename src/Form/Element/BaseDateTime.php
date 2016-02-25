@@ -103,9 +103,9 @@ class BaseDateTime extends NamedFormElement
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
-        return parent::getParams() + [
+        return parent::toArray() + [
             'seconds'      => $this->hasSeconds(),
             'format'       => $this->getFormat(),
             'pickerFormat' => $this->getPickerFormat(),

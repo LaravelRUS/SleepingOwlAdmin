@@ -138,9 +138,10 @@ class DisplayDatatables extends DisplayTable
      * Get view render parameters.
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
-        $params = parent::getParams();
+        $params = parent::toArray();
+
         $params['order'] = $this->getOrder();
         $params['columnFilters'] = $this->getColumnFilters();
         $params['filterPosition'] = $this->getFilterPosition();

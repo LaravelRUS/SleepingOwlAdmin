@@ -12,11 +12,6 @@ interface ColumnFilterInterface
     public function initialize();
 
     /**
-     * @return array
-     */
-    public function getParams();
-
-    /**
      * @param RepositoryInterface  $repository
      * @param NamedColumnInterface $column
      * @param Builder              $query

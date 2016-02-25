@@ -126,22 +126,13 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
         return [
             'model' => $this->getModel(),
         ];
     }
 
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->getParams();
-    }
 
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
@@ -149,7 +140,7 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
     public function render()
     {
         return app('sleeping_owl.template')
-            ->view('form.element.'.$this->getView(), $this->getParams())
+            ->view('form.element.'.$this->getView(), $this->toArray())
             ->render();
     }
 

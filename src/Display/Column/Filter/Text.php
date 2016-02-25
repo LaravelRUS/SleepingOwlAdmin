@@ -81,9 +81,9 @@ class Text extends BaseColumnFilter
     /**
      * @return array
      */
-    public function getParams()
+    public function toArray()
     {
-        return parent::getParams() + [
+        return parent::toArray() + [
             'placeholder' => $this->getPlaceholder(),
         ];
     }
