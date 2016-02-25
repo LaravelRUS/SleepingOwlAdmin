@@ -26,4 +26,13 @@ $(function () {
         $('input[type="text"]:first').focus();
     })();
 
+    $('.alert-message').each(function() {
+        var $self = $(this);
+
+        setTimeout(function() {
+            $self.fadeOut(600, function() {
+                $self.remove();
+            });
+        }, 500);
+    })
 });

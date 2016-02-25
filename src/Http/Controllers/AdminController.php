@@ -2,12 +2,13 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use AdminTemplate;
 use App;
-use Illuminate\Contracts\Support\Renderable;
+use Request;
+use AdminTemplate;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Request;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
@@ -65,12 +66,14 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
-            return redirect()->to($model->getEditUrl($createForm->getModel()->id));
+            $response = redirect()->to($model->getEditUrl($createForm->getModel()->id));
         } else if ($nextAction == 'save_and_create') {
-            return redirect()->to($model->getCreateUrl());
+            $response = redirect()->to($model->getCreateUrl());
+        } else {
+            $response = redirect()->to($model->getDisplayUrl());
         }
 
-        return redirect()->to($model->getDisplayUrl());
+        return $response->with('success_message', $model->getMessageOnCreate());
     }
 
     /**
@@ -108,20 +111,24 @@ class AdminController extends Controller
         $nextAction = Request::get('next_action');
 
         if ($editForm instanceof FormInterface) {
-            if ($validator = $editForm->validate($model)) {
-                return redirect()->back()->withErrors($validator)->withInput();
+            if (($validator = $editForm->validate($model)) instanceof Validator) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
             $editForm->save($model);
         }
 
         if ($nextAction == 'save_and_continue') {
-            return redirect()->back();
+            $response = redirect()->back();
         } else if ($nextAction == 'save_and_create') {
-            return redirect()->to($model->getCreateUrl());
+            $response = redirect()->to($model->getCreateUrl());
+        } else {
+            $response = redirect()->to($model->getDisplayUrl());
         }
 
-        return redirect()->to($model->getDisplayUrl());
+        return $response->with('success_message', $model->getMessageOnUpdate());
     }
 
     /**
@@ -141,7 +148,7 @@ class AdminController extends Controller
         $model->fireDelete($id);
         $model->getRepository()->delete($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('success_message', $model->getMessageOnDelete());
     }
 
     /**
@@ -161,7 +168,7 @@ class AdminController extends Controller
         $model->fireRestore($id);
         $model->getRepository()->restore($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('success_message', $model->getMessageOnRestore());
     }
 
     /**
@@ -178,7 +185,8 @@ class AdminController extends Controller
 
         return AdminTemplate::view('_layout.inner')
             ->with('title', $model->getTitle())
-            ->with('content', $content);
+            ->with('content', $content)
+            ->with('successMessage', session('success_message'));
     }
 
     /**
@@ -195,7 +203,8 @@ class AdminController extends Controller
 
         return AdminTemplate::view('_layout.inner')
             ->with('title', $title)
-            ->with('content', $content);
+            ->with('content', $content)
+            ->with('successMessage', session('success_message'));
     }
 
     /**

@@ -83,6 +83,26 @@ class ModelConfiguration
     protected $restore = true;
 
     /**
+     * @var string
+     */
+    protected $messageOnCreate;
+
+    /**
+     * @var string
+     */
+    protected $messageOnUpdate;
+
+    /**
+     * @var string
+     */
+    protected $messageOnDelete;
+
+    /**
+     * @var string
+     */
+    protected $messageOnRestore;
+
+    /**
      * ModelConfiguration constructor.
      *
      * @param string $class
@@ -368,7 +388,7 @@ class ModelConfiguration
 
     /**
      * @param string $action
-     * @param Model $model
+     * @param Model  $model
      *
      * @return bool
      */
@@ -573,6 +593,98 @@ class ModelConfiguration
     public function getRestoreUrl($id)
     {
         return route('admin.model.restore', [$this->getAlias(), $id]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageOnCreate()
+    {
+        if (is_null($this->messageOnUpdate)) {
+            $this->messageOnUpdate = trans('sleeping_owl::lang.message.created');
+        }
+
+        return $this->messageOnCreate;
+    }
+
+    /**
+     * @param string $messageOnCreate
+     */
+    public function setMessageOnCreate($messageOnCreate)
+    {
+        $this->messageOnCreate = $messageOnCreate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageOnUpdate()
+    {
+        if (is_null($this->messageOnUpdate)) {
+            $this->messageOnUpdate = trans('sleeping_owl::lang.message.updated');
+        }
+
+        return $this->messageOnUpdate;
+    }
+
+    /**
+     * @param string $messageOnUpdate
+     *
+     * @return $this
+     */
+    public function setMessageOnUpdate($messageOnUpdate)
+    {
+        $this->messageOnUpdate = $messageOnUpdate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageOnDelete()
+    {
+        if (is_null($this->messageOnDelete)) {
+            $this->messageOnDelete = trans('sleeping_owl::lang.message.deleted');
+        }
+
+        return $this->messageOnDelete;
+    }
+
+    /**
+     * @param string $messageOnDelete
+     *
+     * @return $this
+     */
+    public function setMessageOnDelete($messageOnDelete)
+    {
+        $this->messageOnDelete = $messageOnDelete;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageOnRestore()
+    {
+        if (is_null($this->messageOnRestore)) {
+            $this->messageOnRestore = trans('sleeping_owl::lang.message.restored');
+        }
+
+        return $this->messageOnRestore;
+    }
+
+    /**
+     * @param string $messageOnRestore
+     *
+     * @return $this
+     */
+    public function setMessageOnRestore($messageOnRestore)
+    {
+        $this->messageOnRestore = $messageOnRestore;
+
+        return $this;
     }
 
     protected function setDefaultAlias()
