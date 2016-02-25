@@ -103,16 +103,18 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerAliases()
     {
+        $aliasPrefix = config('sleeping_owl.alias_prefix', 'Admin');
+
         AliasLoader::getInstance([
-            'AdminSection'      => AdminSection::class,
-            'AdminTemplate'     => AdminTemplate::class,
-            'AdminNavigation'   => AdminNavigation::class,
-            'AdminColumn'       => TableColumn::class,
-            'AdminColumnFilter' => TableColumnFilter::class,
-            'AdminFilter'       => DisplayFilter::class,
-            'AdminForm'         => Form::class,
-            'AdminFormElement'  => FormElement::class,
-            'AdminDisplay'      => Display::class
+            $aliasPrefix.'Section'       => AdminSection::class,
+            $aliasPrefix.'Template'      => AdminTemplate::class,
+            $aliasPrefix.'Navigation'    => AdminNavigation::class,
+            $aliasPrefix.'Column'        => TableColumn::class,
+            $aliasPrefix.'ColumnFilter'  => TableColumnFilter::class,
+            $aliasPrefix.'DisplayFilter' => DisplayFilter::class,
+            $aliasPrefix.'Form'          => Form::class,
+            $aliasPrefix.'FormElement'   => FormElement::class,
+            $aliasPrefix.'Display'       => Display::class
         ]);
     }
 

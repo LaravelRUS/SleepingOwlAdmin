@@ -19,6 +19,11 @@ return [
     'prefix'                => 'admin',
 
     /*
+     * Admin url prefix
+     */
+    'alias_prefix'        => 'Admin',
+
+    /*
      * Middleware to use in admin routes
      */
     //'middleware'            => ['admin.auth'],
