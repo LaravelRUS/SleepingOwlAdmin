@@ -51,6 +51,16 @@ class TemplateDefault implements TemplateInterface
         return view($this->getTemplateViewPath($view), $data, $mergeData);
 
     /**
+     * @param string $title
+     *
+     * @return string
+     */
+    public function makeTitle($title)
+    {
+        return $title . ' | ' . config('sleeping_owl.title');
+    }
+
+    /**
      * @return string
      */
     public function getLogo()

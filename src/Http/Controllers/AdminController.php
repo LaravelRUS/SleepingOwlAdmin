@@ -184,7 +184,7 @@ class AdminController extends Controller
         }
 
         return AdminTemplate::view('_layout.inner')
-            ->with('title', $model->getTitle())
+            ->with('title', AdminTemplate::makeTitle($model->getTitle()))
             ->with('content', $content)
             ->with('successMessage', session('success_message'));
     }
@@ -202,7 +202,7 @@ class AdminController extends Controller
         }
 
         return AdminTemplate::view('_layout.inner')
-            ->with('title', $title)
+            ->with('title', AdminTemplate::makeTitle($title))
             ->with('content', $content)
             ->with('successMessage', session('success_message'));
     }
