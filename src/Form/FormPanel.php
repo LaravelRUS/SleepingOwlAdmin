@@ -12,6 +12,16 @@ class FormPanel extends FormDefault
     protected $view = 'panel';
 
     /**
+     * Initialize form.
+     */
+    public function initialize()
+    {
+        $this->getButtons()->setAttribute('class', 'panel-footer');
+
+        parent::initialize();
+    }
+
+    /**
      * @param array|FormElementInterface $items
      *
      * @return $this

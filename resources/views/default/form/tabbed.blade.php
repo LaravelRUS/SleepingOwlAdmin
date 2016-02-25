@@ -26,7 +26,5 @@
 		</div>
 	</div>
 
-	<div class="well well-sm">
-		{!! $buttons !!}
-	</div>
+	{!! $buttons->render() !!}
 </form>

@@ -6,7 +6,5 @@
 		{!! $item->render() !!}
 	@endforeach
 
-	<div class="well well-sm">
-		{!! $buttons !!}
-	</div>
+	{!! $buttons->render() !!}
 </form>

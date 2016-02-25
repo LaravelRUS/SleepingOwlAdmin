@@ -22,7 +22,5 @@
 
     @endforeach
 
-    <div class="panel-footer">
-        {!! $buttons !!}
-    </div>
+    {!! $buttons->render() !!}
 </form>

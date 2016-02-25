@@ -12,9 +12,9 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -32,6 +32,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      * @var string
      */
     protected $class;
+
+    /**
+     * @var FormButtons
+     */
+    protected $buttons;
 
     /**
      * Form related repository.
@@ -69,40 +74,10 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      */
     protected $initialized = false;
 
-    /**
-     * @var string|null
-     */
-    protected $cancelButtonText;
-
-    /**
-     * @var string|null
-     */
-    protected $saveButtonText;
-
-    /**
-     * @var string|null
-     */
-    protected $saveAndCloseButtonText;
-
-    /**
-     * @var string|null
-     */
-    protected $saveAndCreateButtonText;
-
-    /**
-     * @var bool
-     */
-    protected $showCancelButton = true;
-
-    /**
-     * @var bool
-     */
-    protected $showSaveAndCloseButton = true;
-
-    /**
-     * @var bool
-     */
-    protected $showSaveAndCreateButton = true;
+    public function __construct()
+    {
+        $this->setButtons(new FormButtons());
+    }
 
     /**
      * Initialize form.
@@ -118,6 +93,29 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
 
         $this->setModel(app($this->class));
         $this->initializeItems();
+
+        $this->getButtons()->setModelConfiguration(
+            $this->getModelConfiguration()
+        );
+    }
+
+    /**
+     * @return FormButtons
+     */
+    public function getButtons()
+    {
+        return $this->buttons;
+    }
+
+    /**
+     * @param FormButtonsInterface $buttons
+     *
+     * @return $this
+     */
+    public function setButtons(FormButtonsInterface $buttons)
+    {
+        $this->buttons = $buttons;
+        return $this;
     }
 
     /**
@@ -247,156 +245,6 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
     }
 
     /**
-     * @return null|string
-     */
-    public function getCancelButtonText()
-    {
-        if (is_null($this->cancelButtonText)) {
-            $this->cancelButtonText = trans('sleeping_owl::lang.table.cancel');
-        }
-
-        return $this->cancelButtonText;
-    }
-
-    /**
-     * @param string $cancelButtonText
-     *
-     * @return $this
-     */
-    public function setCancelButtonText($cancelButtonText)
-    {
-        $this->cancelButtonText = $cancelButtonText;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSaveButtonText()
-    {
-        if (is_null($this->saveButtonText)) {
-            $this->saveButtonText = trans('sleeping_owl::lang.table.save');
-        }
-
-        return $this->saveButtonText;
-    }
-
-    /**
-     * @param string $saveButtonText
-     *
-     * @return $this
-     */
-    public function setSaveButtonText($saveButtonText)
-    {
-        $this->saveButtonText = $saveButtonText;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSaveAndCloseButtonText()
-    {
-        if (is_null($this->saveAndCloseButtonText)) {
-            $this->saveAndCloseButtonText = trans('sleeping_owl::lang.table.save_and_close');
-        }
-
-        return $this->saveAndCloseButtonText;
-    }
-
-    /**
-     * @param string $saveAndCloseButtonText
-     *
-     * @return $this
-     */
-    public function setSaveAndCloseButtonText($saveAndCloseButtonText)
-    {
-        $this->saveAndCloseButtonText = $saveAndCloseButtonText;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSaveAndCreateButtonText()
-    {
-        if (is_null($this->saveAndCreateButtonText)) {
-            $this->saveAndCreateButtonText = trans('sleeping_owl::lang.table.save_and_create');
-        }
-
-        return $this->saveAndCreateButtonText;
-    }
-
-    /**
-     * @param null|string $saveAndCreateButtonText
-     *
-     * @return $this
-     */
-    public function setSaveAndCreateButtonText($saveAndCreateButtonText)
-    {
-        $this->saveAndCreateButtonText = $saveAndCreateButtonText;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isShowCancelButton()
-    {
-        return $this->showCancelButton;
-    }
-
-    /**
-     * @return $this
-     */
-    public function hideCancelButton()
-    {
-        $this->showCancelButton = false;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isShowSaveAndCloseButton()
-    {
-        return $this->showSaveAndCloseButton;
-    }
-
-    /**
-     * @return $this
-     */
-    public function hideSaveAndCloseButton()
-    {
-        $this->showSaveAndCloseButton = false;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isShowSaveAndCreateButton()
-    {
-        return $this->showSaveAndCreateButton;
-    }
-
-    /**
-     * @return $this
-     */
-    public function hideSaveAndCreateButton()
-    {
-        $this->showSaveAndCreateButton = false;
-
-        return $this;
-    }
-
-    /**
      * @param Model $model
      *
      * @return $this
@@ -516,28 +364,11 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      */
     public function toArray()
     {
-        return $this->getParams();
-    }
-
-    /**
-     * @return array
-     */
-    public function getParams()
-    {
         return [
             'items'    => $this->getItems(),
             'instance' => $this->getModel(),
             'action'   => $this->getAction(),
-            'buttons'  => app('sleeping_owl.template')->view('form.buttons', [
-                'backUrl'                 => $this->getModelConfiguration()->getDisplayUrl(),
-                'saveButtonText'          => $this->getSaveButtonText(),
-                'saveAndCloseButtonText'  => $this->getSaveAndCloseButtonText(),
-                'saveAndCreateButtonText' => $this->getSaveAndCreateButtonText(),
-                'cancelButtonText'        => $this->getCancelButtonText(),
-                'showCancelButton'        => $this->isShowCancelButton(),
-                'showSaveAndCloseButton'  => $this->isShowSaveAndCloseButton(),
-                'showSaveAndCreateButton' => $this->isShowSaveAndCreateButton()
-            ])
+            'buttons'  => $this->getButtons()
         ];
     }
 
@@ -546,7 +377,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('form.'.$this->getView(), $this->getParams());
+        return app('sleeping_owl.template')->view('form.'.$this->getView(), $this->toArray());
     }
 
     /**
@@ -554,7 +385,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
      */
     public function __toString()
     {
-        return (string)$this->render();
+        return (string) $this->render();
     }
 
     protected function initializeItems()
