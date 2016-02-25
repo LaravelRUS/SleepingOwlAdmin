@@ -1,8 +1,6 @@
 <?php
 
-namespace SleepingOwl\Admin\Display;
-
-use SleepingOwl\Admin\AliasBinder;
+namespace SleepingOwl\Admin;
 
 /**
  * @method static \SleepingOwl\Admin\Display\DisplayDatatables datatables()
@@ -12,7 +10,7 @@ use SleepingOwl\Admin\AliasBinder;
  * @method static \SleepingOwl\Admin\Display\DisplayTable table()
  * @method static \SleepingOwl\Admin\Display\DisplayTree tree()
  */
-class AdminDisplay extends AliasBinder
+class Display extends AliasBinder
 {
     /**
      * Display class aliases.

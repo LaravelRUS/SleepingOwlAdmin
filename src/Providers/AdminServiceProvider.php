@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Providers;
 
 use SleepingOwl\Admin\Form;
 use SleepingOwl\Admin\Admin;
+use SleepingOwl\Admin\Display;
 use SleepingOwl\Admin\TableColumn;
 use KodiCMS\Navigation\Navigation;
 use SleepingOwl\Admin\FormElement;
@@ -13,7 +14,6 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\TableColumnFilter;
 use SleepingOwl\Admin\Facades\AdminSection;
-use SleepingOwl\Admin\Display\AdminDisplay;
 use SleepingOwl\Admin\Facades\AdminTemplate;
 use SleepingOwl\Admin\Facades\AdminNavigation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -112,7 +112,7 @@ class AdminServiceProvider extends ServiceProvider
             'AdminFilter'       => DisplayFilter::class,
             'AdminForm'         => Form::class,
             'AdminFormElement'  => FormElement::class,
-            'AdminDisplay'      => AdminDisplay::class
+            'AdminDisplay'      => Display::class
         ]);
     }
 
