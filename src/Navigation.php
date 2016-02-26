@@ -70,7 +70,7 @@ class Navigation implements Renderable, Arrayable
      *
      * @return $this
      */
-    public function setItems(Closure $callback)
+    public function setPages(Closure $callback)
     {
         call_user_func($callback, $this);
 
@@ -182,7 +182,7 @@ class Navigation implements Renderable, Arrayable
         $page = new Page();
 
         foreach ($data as $key => $value) {
-            if (method_exists($page, $method = 'set'.ucfirst($key))) {
+            if ($key != 'pages' and method_exists($page, $method = 'set'.ucfirst($key))) {
                 $page->{$method}($value);
             }
         }
