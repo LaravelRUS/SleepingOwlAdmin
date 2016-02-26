@@ -92,7 +92,7 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
     {
         if (is_null($this->view)) {
             $reflect    = new \ReflectionClass($this);
-            $this->view = strtolower($reflect->getShortName());
+            $this->view = 'form.element.'.strtolower($reflect->getShortName());
         }
 
         return $this->view;
@@ -145,7 +145,7 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
     public function render()
     {
         return app('sleeping_owl.template')
-            ->view('form.element.'.$this->getView(), $this->toArray())
+            ->view($this->getView(), $this->toArray())
             ->render();
     }
 
