@@ -25,7 +25,7 @@ class Link extends NamedColumn
      */
     protected function isEditable()
     {
-        return ! is_null($this->getModelConfiguration()->fireEdit($this->getModel()->getKey()));
+        return $this->getModelConfiguration()->isEditable($this->getModel());
     }
 
     /**
