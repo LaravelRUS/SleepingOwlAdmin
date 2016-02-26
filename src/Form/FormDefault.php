@@ -288,6 +288,12 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         $this->getModel()->save();
 
         $this->saveHasOneRelations();
+
+        array_walk_recursive($items, function ($item) {
+            if ($item instanceof FormElementInterface) {
+                $item->afterSave();
+            }
+        });
     }
 
     protected function saveBelongsToRelations()

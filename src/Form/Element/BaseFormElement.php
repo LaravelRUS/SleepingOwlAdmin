@@ -123,6 +123,11 @@ abstract class BaseFormElement implements Renderable, FormElementInterface, Arra
 
     }
 
+    public function afterSave()
+    {
+
+    }
+
     /**
      * @return array
      */

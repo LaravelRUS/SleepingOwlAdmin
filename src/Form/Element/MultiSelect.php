@@ -35,6 +35,11 @@ class MultiSelect extends Select
 
     public function save()
     {
+
+    }
+
+    public function afterSave()
+    {
         $attribute = $this->getAttribute();
 
         if (is_null(Request::get($this->getPath()))) {

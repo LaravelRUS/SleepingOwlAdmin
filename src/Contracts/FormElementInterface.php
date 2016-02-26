@@ -38,4 +38,9 @@ interface FormElementInterface
      * Save form item.
      */
     public function save();
+
+    /**
+     * Save form item.
+     */
+    public function afterSave();
 }
