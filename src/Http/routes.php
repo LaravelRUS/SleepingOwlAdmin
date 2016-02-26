@@ -1,11 +1,11 @@
 <?php
 
-Route::get('assets/admin.scripts', [
-    'as'   => 'admin.lang',
-    'uses' => 'AdminController@getLang',
-]);
+Route::group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function () {
+    Route::get('assets/admin.scripts', [
+        'as'   => 'lang',
+        'uses' => 'AdminController@getScripts',
+    ]);
 
-Route::group(['as' => 'admin.'], function () {
     Route::get('{adminModel}', [
         'as'   => 'model',
         'uses' => 'AdminController@getDisplay',

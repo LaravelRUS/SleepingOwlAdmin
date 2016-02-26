@@ -212,7 +212,7 @@ class AdminController extends Controller
     /**
      * @return Response
      */
-    public function getLang()
+    public function getScripts()
     {
         $lang = trans('sleeping_owl::lang');
         if ($lang == 'sleeping_owl::lang') {
@@ -229,11 +229,11 @@ class AdminController extends Controller
 
         $content = 'window.admin = '.json_encode($data).';';
 
-        $response = new Response($content, 200, [
-            'Content-Type' => 'text/javascript',
-        ]);
-
-        return $this->cacheResponse($response);
+        return $this->cacheResponse(
+            new Response($content, 200, [
+                'Content-Type' => 'text/javascript',
+            ])
+        );
     }
 
     /**
