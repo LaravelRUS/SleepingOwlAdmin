@@ -2,22 +2,23 @@
 
 namespace SleepingOwl\Admin;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
+use Closure;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Navigation\Page;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Renderable;
 
 class Navigation implements Renderable, Arrayable
 {
     /**
-     * @var Page
-     */
-    protected static $currentPage;
-
-    /**
      * @var Collection
      */
     protected $items;
+
+    /**
+     * @var Closure
+     */
+    protected $accessLogic;
 
     public function __construct()
     {
@@ -25,19 +26,33 @@ class Navigation implements Renderable, Arrayable
     }
 
     /**
-     * @param string|null $class
+     * @param array $navigation
+     */
+    public function setFromArray(array $navigation)
+    {
+        foreach ($navigation as $page) {
+            $this->addPage($page);
+        }
+    }
+
+    /**
+     * @param string|array|Page|null $page
      *
      * @return Page
      */
-    public function addPage($class = null)
+    public function addPage($page = null)
     {
-        $page = new Page($class);
-
-        if (is_null(static::$currentPage)) {
-            static::$currentPage = $this;
+        if (is_array($page)) {
+            $page = $this->createPageFromArray($page);
+        } else if (is_string($page) or is_null($page)) {
+            $page = new Page($page);
         }
 
-        static::$currentPage->getItems()->push($page);
+        if (! ($page instanceof Page)) {
+            return;
+        }
+
+        $this->getPages()->push($page);
 
         return $page;
     }
@@ -45,24 +60,41 @@ class Navigation implements Renderable, Arrayable
     /**
      * @return Collection
      */
-    public function getItems()
+    public function getPages()
     {
         return $this->items;
     }
 
     /**
-     * @param \Closure $callback
+     * @param Closure $callback
      *
      * @return $this
      */
-    public function setItems(\Closure $callback)
+    public function setItems(Closure $callback)
     {
-        $oldPage = static::$currentPage;
-        static::$currentPage = $this;
-        call_user_func($callback);
-        static::$currentPage = $oldPage;
+        call_user_func($callback, $this);
 
         return $this;
+    }
+
+    /**
+     * @param Closure $accessLogic
+     *
+     * @return $this
+     */
+    public function setAccessLogic(Closure $accessLogic)
+    {
+        $this->accessLogic = $accessLogic;
+
+        return $this;
+    }
+
+    /**
+     * @return Closure
+     */
+    public function getAccessLogic()
+    {
+        return is_callable($this->accessLogic) ? $this->accessLogic : true;
     }
 
     /**
@@ -70,7 +102,7 @@ class Navigation implements Renderable, Arrayable
      */
     public function hasChild()
     {
-        return $this->getItems()->count() > 0;
+        return $this->getPages()->count() > 0;
     }
 
     /**
@@ -78,17 +110,7 @@ class Navigation implements Renderable, Arrayable
      */
     public function toArray()
     {
-        return $this->getItems();
-    }
-
-    protected function findActive()
-    {
-        $this->getItems()->each(function(Page $page) {
-            if ($page->getUrl() == url()->current()) {
-                $page->setActive();
-            }
-            $page->findActive();
-        });
+        return $this->getPages();
     }
 
     /**
@@ -96,14 +118,81 @@ class Navigation implements Renderable, Arrayable
      */
     public function render()
     {
-        $this->items = $this->getItems()->sortBy(function ($page, $key) {
-            return $page->getPriority();
-        });
-
         $this->findActive();
+        $this->filterByAccessRights();
+        $this->sort();
 
         return app('sleeping_owl.template')->view('_partials.navigation.navigation', [
             'pages' => $this->toArray()
         ])->render();
+    }
+
+    public function filterByAccessRights()
+    {
+        $this->items = $this->getPages()->filter(function (Page $page) {
+            $page->filterByAccessRights();
+
+            return $page->checkAccess();
+        });
+    }
+
+    public function sort()
+    {
+        $this->items = $this->getPages()->sortBy(function (Page $page) {
+            $page->sort();
+
+            return $page->getPriority();
+        });
+    }
+
+    protected function findActive()
+    {
+        $this->getPages()->each(function (Page $page) {
+            if ($page->getUrl() == url()->current()) {
+                $page->setActive();
+            }
+
+            $page->findActive();
+        });
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return Page|false
+     */
+    public function findPageByTitle($title)
+    {
+        foreach ($this->getPages() as $page) {
+            if ($page->findPageByTitle($title)) {
+                return $page;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Page
+     */
+    protected function createPageFromArray(array $data)
+    {
+        $page = new Page();
+
+        foreach ($data as $key => $value) {
+            if (method_exists($page, $method = 'set'.ucfirst($key))) {
+                $page->{$method}($value);
+            }
+        }
+
+        if (isset($data['pages']) and is_array($data['pages'])) {
+            foreach ($data['pages'] as $child) {
+                $page->addPage($child);
+            }
+        }
+
+        return $page;
     }
 }

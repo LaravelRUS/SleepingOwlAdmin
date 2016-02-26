@@ -68,6 +68,14 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerCustomRoutes();
         $this->registerBootstrap();
         $this->registerDefaultRoutes();
+
+        if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
+            $items = include $navigation;
+
+            if (is_array($items)) {
+                $this->app['sleeping_owl.navigation']->setFromArray($items);
+            }
+        }
     }
 
     /**
@@ -93,10 +101,6 @@ class AdminServiceProvider extends ServiceProvider
 
         foreach ($files as $file) {
             require $file;
-        }
-
-        if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
-            include $navigation;
         }
     }
 

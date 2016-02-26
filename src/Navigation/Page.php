@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
+use Gate;
 use SleepingOwl\Admin\Navigation;
 use Illuminate\Routing\UrlGenerator;
 use SleepingOwl\Admin\Model\ModelConfiguration;
@@ -43,6 +44,11 @@ class Page extends Navigation
     protected $active = false;
 
     /**
+     * @var Page
+     */
+    protected $parent;
+
+    /**
      * @param string|null $modelClass
      */
     public function __construct($modelClass = null)
@@ -50,6 +56,19 @@ class Page extends Navigation
         $this->setModel($modelClass);
 
         parent::__construct();
+    }
+
+    /**
+     * @param string|array|Page|null $page
+     *
+     * @return Page
+     */
+    public function addPage($page = null)
+    {
+        $page = parent::addPage($page);
+        $page->setParent($this);
+
+        return $page;
     }
 
     /**
@@ -199,7 +218,79 @@ class Page extends Navigation
     {
         $this->active = true;
 
+        if (! is_null($this->getParent())) {
+            $this->getParent()->setActive();
+        }
+
         return $this;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return Page|false
+     */
+    public function findPageByTitle($title)
+    {
+        if ($this->getTitle() == $title) {
+            return $this;
+        }
+
+        return parent::findPageByTitle($title);
+    }
+
+    /**
+     * @param Page $page
+     *
+     * @return $this
+     */
+    public function setParent(Page $page)
+    {
+        $this->parent = $page;
+
+        return $this;
+    }
+
+    /**
+     * @return Page
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @return Closure
+     */
+    public function getAccessLogic()
+    {
+        if (! is_callable($this->accessLogic)) {
+            if ($this->hasModel()) {
+                return function () {
+                    return $this->getModelConfiguration()->isDisplayable();
+                };
+            }
+
+            if (! is_null($parent = $this->getParent())) {
+                return $parent->getAccessLogic();
+            }
+        }
+
+        return parent::getAccessLogic();
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkAccess()
+    {
+        $accessLogic = $this->getAccessLogic();
+
+        if (is_callable($accessLogic)) {
+            return call_user_func($accessLogic, $this);
+        }
+
+        return $accessLogic;
     }
 
     /**
