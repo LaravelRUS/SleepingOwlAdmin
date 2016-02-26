@@ -162,10 +162,13 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerRoutes(\Closure $callback)
     {
-        $this->app['router']->group(['prefix' => $this->getConfig('prefix'), 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function () use($callback) {
-            $this->app['router']->group(['middleware' => $this->getConfig('middleware')], function () use($callback) {
-                $callback();
-            });
+        $this->app['router']->group([
+            'prefix' => $this->getConfig('prefix'),
+            'middleware' => $this->getConfig('middleware')
+        ], function () use($callback) {
+
+            call_user_func($callback);
+
         });
     }
 }
