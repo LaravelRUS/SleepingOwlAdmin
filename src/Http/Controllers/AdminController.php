@@ -58,8 +58,10 @@ class AdminController extends Controller
         $nextAction = Request::get('next_action');
 
         if ($createForm instanceof FormInterface) {
-            if ($validator = $createForm->validate($model)) {
-                return redirect()->back()->withErrors($validator)->withInput();
+            if (($validator = $createForm->validate($model)) instanceof Validator) {
+                return redirect()->back()
+                     ->withErrors($validator)
+                     ->withInput();
             }
 
             $createForm->save($model);
