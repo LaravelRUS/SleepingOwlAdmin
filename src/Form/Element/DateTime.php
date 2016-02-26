@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Exception;
 use Carbon\Carbon;
 
-class BaseDateTime extends NamedFormElement
+class DateTime extends NamedFormElement
 {
     /**
      * @var string

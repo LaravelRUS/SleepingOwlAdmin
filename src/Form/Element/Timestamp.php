@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-class Timestamp extends BaseDateTime
+class Timestamp extends DateTime
 {
     /**
      * @var string

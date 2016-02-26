@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-class Date extends BaseDateTime
+class Date extends DateTime
 {
     /**
      * @var string
