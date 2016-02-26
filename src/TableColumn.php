@@ -15,6 +15,7 @@ namespace SleepingOwl\Admin;
  * @method static \SleepingOwl\Admin\Display\Column\Order order()
  * @method static \SleepingOwl\Admin\Display\Column\Text text($name)
  * @method static \SleepingOwl\Admin\Display\Column\Link link($name)
+ * @method static \SleepingOwl\Admin\Display\Column\RelatedLink relatedLink($name, $model)
  * @method static \SleepingOwl\Admin\Display\Column\Email email($name)
  * @method static \SleepingOwl\Admin\Display\Column\TreeControl treeControl()
  * @method static \SleepingOwl\Admin\Display\Column\Url url($name)

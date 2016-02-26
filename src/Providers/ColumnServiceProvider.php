@@ -21,6 +21,7 @@ class ColumnServiceProvider extends ServiceProvider
         TableColumn::register('order', \SleepingOwl\Admin\Display\Column\Order::class);
         TableColumn::register('text', \SleepingOwl\Admin\Display\Column\Text::class);
         TableColumn::register('link', \SleepingOwl\Admin\Display\Column\Link::class);
+        TableColumn::register('relatedLink', \SleepingOwl\Admin\Display\Column\RelatedLink::class);
         TableColumn::register('email', \SleepingOwl\Admin\Display\Column\Email::class);
         TableColumn::register('treeControl', \SleepingOwl\Admin\Display\Column\TreeControl::class);
         TableColumn::register('url', \SleepingOwl\Admin\Display\Column\Url::class);
