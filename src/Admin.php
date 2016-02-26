@@ -111,15 +111,18 @@ class Admin
     }
 
     /**
-     * @param string $class
-     * @param string|null   $section
+     * @param string      $class
+     * @param string|null $section
+     * @param int         $priority
      *
      * @return NavigationPage
      */
-    public function addMenuLink($class, $section = null)
+    public function addMenuLink($class, $section = null, $priority = 100)
     {
         $model = $this->getModel($class);
         $page  = new NavigationPage($model);
+
+        $page->priority = $priority;
 
         if (is_null($section)) {
             $section = AdminNavigation::getRootSection();
