@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Request;
 use LogicException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -174,6 +175,10 @@ abstract class NamedFormElement extends BaseFormElement
      */
     public function getHelpText()
     {
+        if ($this->helpText instanceof Htmlable) {
+            return $this->helpText->toHtml();
+        }
+
         return $this->helpText;
     }
 
