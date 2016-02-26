@@ -7,11 +7,6 @@ use Request;
 
 class Images extends Image
 {
-    public function initialize()
-    {
-        Meta::loadPackage(get_class());
-    }
-
     public function save()
     {
         $name = $this->getName();
