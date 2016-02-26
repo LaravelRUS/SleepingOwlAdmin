@@ -4,6 +4,12 @@ namespace SleepingOwl\Admin\Display\Column;
 
 class Email extends NamedColumn
 {
+
+    /**
+     * Email constructor.
+     *
+     * @param string $name
+     */
     public function __construct($name)
     {
         parent::__construct($name);
