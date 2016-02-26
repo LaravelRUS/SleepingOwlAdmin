@@ -4,10 +4,10 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Facades\AdminNavigation;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Navigation\Page;
 
 class Admin
 {
@@ -111,28 +111,22 @@ class Admin
     }
 
     /**
-     * @param string      $class
-     * @param string|null $section
-     * @param int         $priority
+     * @param string $class
+     * @param int    $priority
      *
-     * @return NavigationPage
+     * @return Page
      */
-    public function addMenuLink($class, $section = null, $priority = 100)
+    public function addMenuPage($class = null, $priority = 100)
     {
-        $model = $this->getModel($class);
-        $page  = new NavigationPage($model);
+        return app('sleeping_owl.navigation')->addPage($class)->setPriority($priority);
+    }
 
-        $page->priority = $priority;
-
-        if (is_null($section)) {
-            $section = AdminNavigation::getRootSection();
-        } else {
-            $section = AdminNavigation::findSectionOrCreate($section);
-        }
-
-        $section->addPage($page);
-
-        return $page;
+    /**
+     * @return Navigation
+     */
+    public function getNavigation()
+    {
+        return app('sleeping_owl.navigation');
     }
 
     /**

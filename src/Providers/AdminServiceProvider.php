@@ -5,9 +5,9 @@ namespace SleepingOwl\Admin\Providers;
 use SleepingOwl\Admin\Form;
 use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Display;
-use SleepingOwl\Admin\TableColumn;
-use KodiCMS\Navigation\Navigation;
+use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\FormElement;
+use SleepingOwl\Admin\TableColumn;
 use SleepingOwl\Admin\DisplayFilter;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
@@ -29,12 +29,7 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('sleeping_owl.navigation', function () {
-            $items = [];
-            if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
-                $items = include $navigation;
-            }
-
-            return new Navigation($items);
+            return new Navigation();
         });
 
         $this->registerAliases();
@@ -98,6 +93,10 @@ class AdminServiceProvider extends ServiceProvider
 
         foreach ($files as $file) {
             require $file;
+        }
+
+        if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
+            include $navigation;
         }
     }
 
