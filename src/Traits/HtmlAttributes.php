@@ -86,6 +86,33 @@ trait HtmlAttributes
     }
 
     /**
+     * @param string $class
+     *
+     * @return bool
+     */
+    public function hasClass($class)
+    {
+        $has = false;
+
+        if (! is_array($class)) {
+            $class = func_get_args();
+        }
+
+        if (isset($this->attributes['class']) && is_array($this->attributes['class'])) {
+            foreach ($this->attributes['class'] as $i => $string) {
+                foreach($class as $className) {
+                    if (strpos($string, $className) !== false) {
+                        $has = true;
+                    }
+                }
+
+            }
+        }
+
+        return $has;
+    }
+
+    /**
      * @param string $key
      *
      * @return $this

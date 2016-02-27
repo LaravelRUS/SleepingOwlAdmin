@@ -1,6 +1,6 @@
 @if($hasChild)
-<li class="treeview @if($isActive) active @endif">
-    <a href="#">
+<li {!! HTML::attributes($attributes) !!}>
+    <a href="#" >
         {!! $icon !!}
         <span>{!! $title !!}</span>
         <i class="fa fa-angle-left pull-right"></i>
@@ -13,10 +13,11 @@
     </ul>
 </li>
 @else
-<li @if($isActive) class="active" @endif>
+<li {!! HTML::attributes($attributes) !!}>
     <a href="{{ $url }}">
         {!! $icon !!}
         <span>{!! $title !!}</span>
+        {!! $badge !!}
     </a>
 </li>
 @endif
