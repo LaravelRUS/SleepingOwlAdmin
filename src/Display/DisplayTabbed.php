@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 
-class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
+class DisplayTabbed implements DisplayInterface, FormInterface
 {
     /**
      * Added tabs.
@@ -20,7 +20,7 @@ class DisplayTabbed implements Renderable, DisplayInterface, FormInterface
     public function initialize()
     {
         foreach ($this->getTabs() as $tab) {
-            if ($tab instanceof DisplayInterface) {
+            if ($tab instanceof Initializable) {
                 $tab->initialize();
             }
         }

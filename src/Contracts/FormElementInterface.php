@@ -3,14 +3,11 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Renderable;
 
-interface FormElementInterface
+interface FormElementInterface extends Renderable, Arrayable, Initializable
 {
-    /**
-     * Initialize form item.
-     */
-    public function initialize();
-
     /**
      * Set currently rendered instance.
      *

@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 // TODO: починить указание активности таба
-class DisplayTab implements Renderable, DisplayInterface, FormInterface
+class DisplayTab implements DisplayInterface, FormInterface
 {
 
     /**
@@ -156,7 +156,7 @@ class DisplayTab implements Renderable, DisplayInterface, FormInterface
      */
     public function initialize()
     {
-        if ($this->getContent() instanceof DisplayInterface) {
+        if ($this->getContent() instanceof Initializable) {
             $this->getContent()->initialize();
         }
 

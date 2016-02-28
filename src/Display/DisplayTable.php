@@ -8,7 +8,7 @@ use Closure;
 use SleepingOwl\Admin\TableColumn;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
-use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\FilterInterface;
@@ -18,7 +18,7 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\ColumnActionInterface;
 
-class DisplayTable implements Renderable, DisplayInterface
+class DisplayTable implements DisplayInterface
 {
     use HtmlAttributes;
 
@@ -143,7 +143,7 @@ class DisplayTable implements Renderable, DisplayInterface
         $this->repository->setWith($this->getWith());
         $this->initializeFilters();
         foreach ($this->getAllColumns() as $column) {
-            if ($column instanceof ColumnInterface) {
+            if ($column instanceof Initializable) {
                 $column->initialize();
             }
         }
@@ -533,9 +533,11 @@ class DisplayTable implements Renderable, DisplayInterface
         $this->initializeAction();
 
         foreach ($this->getFilters() as $filter) {
-            $filter->initialize();
-            if ($filter->isActive()) {
-                $this->activeFilters[] = $filter;
+            if ($filter instanceof FilterInterface) {
+                $filter->initialize();
+                if ($filter->isActive()) {
+                    $this->activeFilters[] = $filter;
+                }
             }
         }
     }

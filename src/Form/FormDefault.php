@@ -6,7 +6,7 @@ use URL;
 use Request;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class FormDefault implements Renderable, DisplayInterface, FormInterface
+class FormDefault implements DisplayInterface, FormInterface
 {
     /**
      * View to render.
@@ -399,7 +399,7 @@ class FormDefault implements Renderable, DisplayInterface, FormInterface
         $items = $this->getItems();
 
         array_walk_recursive($items, function ($item) {
-            if ($item instanceof FormElementInterface) {
+            if ($item instanceof Initializable) {
                 $item->initialize();
             }
         });

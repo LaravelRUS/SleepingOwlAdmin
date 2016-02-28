@@ -5,14 +5,13 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Route;
 use Request;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\TableColumn;
-use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\TreeRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
-class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
+class DisplayTree implements DisplayInterface, WithRoutesInterface
 {
     public static function registerRoutes()
     {
@@ -73,6 +72,7 @@ class DisplayTree implements Renderable, DisplayInterface, WithRoutesInterface
 
         $this->repository = new TreeRepository($this->class);
         $this->repository->with($this->getWith());
+
         TableColumn::treeControl()->initialize();
     }
 

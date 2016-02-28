@@ -2,9 +2,11 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
-interface FormButtonsInterface
+interface FormButtonsInterface extends Renderable, Arrayable
 {
     /**
      * @param ModelConfiguration $modelConfiguration

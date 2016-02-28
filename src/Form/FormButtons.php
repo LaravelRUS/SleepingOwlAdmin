@@ -2,13 +2,11 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 
-class FormButtons implements Renderable, Arrayable, FormButtonsInterface
+class FormButtons implements FormButtonsInterface
 {
     use HtmlAttributes;
 

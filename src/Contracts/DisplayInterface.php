@@ -3,14 +3,10 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Renderable;
 
-interface DisplayInterface extends Arrayable
+interface DisplayInterface extends Arrayable, Renderable, Initializable
 {
-    /**
-     * Initialize display.
-     */
-    public function initialize();
-
     /**
      * Set display class.
      *

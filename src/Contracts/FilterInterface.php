@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 
-interface FilterInterface
+interface FilterInterface extends Initializable
 {
     /**
      * Initialize filter.
