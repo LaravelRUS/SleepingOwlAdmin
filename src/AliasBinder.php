@@ -17,7 +17,7 @@ abstract class AliasBinder
     {
         static::$aliases[$alias] = $class;
         Route::group([
-            'prefix' => config('sleeping_owl.prefix'),
+            'prefix' => config('sleeping_owl.url_prefix'),
             'middleware' => config('sleeping_owl.middleware'),
         ], function () use ($class) {
             if (method_exists($class, 'registerRoutes')) {

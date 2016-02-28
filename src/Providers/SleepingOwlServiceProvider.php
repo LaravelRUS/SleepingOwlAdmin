@@ -2,25 +2,19 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Collective\Html\FormFacade;
-use Collective\Html\HtmlFacade;
-use KodiCMS\Assets\Facades\Meta;
-use KodiCMS\Assets\Facades\Assets;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Collective\Html\HtmlServiceProvider;
-use KodiCMS\Assets\AssetsServiceProvider;
-use KodiCMS\Assets\Facades\PackageManager;
 use SleepingOwl\Admin\Commands\InstallCommand;
-use SleepingOwl\Admin\Form\Element\FormElement;
 
 class SleepingOwlServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
+
         $this->registerProviders();
-        $this->registerAliases();
         $this->registerCommands();
 
         if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
@@ -30,9 +24,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
-        $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
 
         $this->publishes([
             __DIR__.'/../../public/' => public_path('packages/sleepingowl/'),
@@ -45,32 +37,9 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
     public function registerProviders()
     {
-        $providers = [
-            ColumnFilterServiceProvider::class,
-            ColumnServiceProvider::class,
-            DisplayServiceProvider::class,
-            FilterServiceProvider::class,
-            FormServiceProvider::class,
-            FormElementsServiceProvider::class,
-            AssetsServiceProvider::class,
-            HtmlServiceProvider::class,
-            AdminServiceProvider::class
-        ];
-
-        foreach ($providers as $providerClass) {
+        foreach (config('sleeping_owl.providers', []) as $providerClass) {
             $this->app->register($providerClass);
         }
-    }
-
-    public function registerAliases()
-    {
-        AliasLoader::getInstance([
-            'Assets'            => Assets::class,
-            'PackageManager'    => PackageManager::class,
-            'Meta'              => Meta::class,
-            'Form'              => FormFacade::class,
-            'HTML'              => HtmlFacade::class,
-        ]);
     }
 
     protected function registerCommands()
