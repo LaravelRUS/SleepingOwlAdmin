@@ -3,8 +3,9 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use SleepingOwl\Admin\Form\FormElement;
 
-class Custom extends BaseFormElement
+class Custom extends FormElement
 {
     /**
      * @var string|Closure

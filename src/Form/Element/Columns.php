@@ -5,9 +5,10 @@ namespace SleepingOwl\Admin\Form\Element;
 use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\FormElement;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 
-class Columns extends BaseFormElement
+class Columns extends FormElement
 {
     /**
      * @var Collection
