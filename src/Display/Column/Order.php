@@ -3,9 +3,10 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Route;
+use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
-class Order extends BaseColumn implements WithRoutesInterface
+class Order extends TableColumn implements WithRoutesInterface
 {
     /**
      * Register routes.

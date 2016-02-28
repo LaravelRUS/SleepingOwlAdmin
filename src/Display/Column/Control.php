@@ -2,7 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-class Control extends BaseColumn
+use SleepingOwl\Admin\Display\TableColumn;
+
+class Control extends TableColumn
 {
     /**
      * @var string
@@ -13,6 +15,11 @@ class Control extends BaseColumn
      * @var string
      */
     protected $width = '50px';
+
+    /**
+     * @var
+     */
+    protected $buttons;
 
     public function __construct()
     {

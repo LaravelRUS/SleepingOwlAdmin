@@ -1,6 +1,6 @@
 <?php
 
-namespace SleepingOwl\Admin\Display\Column;
+namespace SleepingOwl\Admin\Display;
 
 use Meta;
 use Illuminate\Database\Eloquent\Model;
@@ -9,15 +9,16 @@ use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
-abstract class BaseColumn implements Renderable, ColumnInterface, Arrayable
+abstract class TableColumn implements Renderable, ColumnInterface, Arrayable
 {
     use HtmlAttributes;
 
     /**
      * Column header.
      *
-     * @var ColumnHeader
+     * @var TableHeaderColumnInterface
      */
     protected $header;
 
@@ -49,7 +50,7 @@ abstract class BaseColumn implements Renderable, ColumnInterface, Arrayable
 
     public function __construct()
     {
-        $this->header = new ColumnHeader;
+        $this->header = new TableHeaderColumn();
     }
 
     /**
@@ -61,7 +62,7 @@ abstract class BaseColumn implements Renderable, ColumnInterface, Arrayable
     }
 
     /**
-     * @return ColumnHeader
+     * @return TableHeaderColumnInterface
      */
     public function getHeader()
     {
