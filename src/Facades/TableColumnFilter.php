@@ -1,8 +1,8 @@
 <?php
 
-namespace SleepingOwl\Admin;
+namespace SleepingOwl\Admin\Facades;
 
-use SleepingOwl\Admin\AliasBinder;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Display\Column\Filter\Text text()
@@ -10,11 +10,13 @@ use SleepingOwl\Admin\AliasBinder;
  * @method static \SleepingOwl\Admin\Display\Column\Filter\Select select()
  * @method static \SleepingOwl\Admin\Display\Column\Filter\Range range()
  */
-class TableColumnFilter extends AliasBinder
+class TableColumnFilter  extends Facade
 {
     /**
-     * Column filter class aliases.
-     * @var string[]
+     * @return string
      */
-    protected static $aliases = [];
+    protected static function getFacadeAccessor()
+    {
+        return 'sleeping_owl.column_filter';
+    }
 }

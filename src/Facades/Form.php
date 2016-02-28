@@ -1,17 +1,18 @@
 <?php
 
-namespace SleepingOwl\Admin;
+namespace SleepingOwl\Admin\Facades;
+
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Form\FormDefault form()
  * @method static \SleepingOwl\Admin\Form\FormTabbed tabbed()
  * @method static \SleepingOwl\Admin\Form\FormPanel panel()
  */
-class Form extends AliasBinder
+class Form extends Facade
 {
-    /**
-     * Form class aliases.
-     * @var string[]
-     */
-    protected static $aliases = [];
+    public static function getFacadeAccessor()
+    {
+        return 'sleeping_owl.form';
+    }
 }

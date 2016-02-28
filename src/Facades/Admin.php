@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class AdminSection extends Facade
+class Admin extends Facade
 {
     public static function getFacadeAccessor()
     {

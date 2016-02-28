@@ -1,6 +1,8 @@
 <?php
 
-namespace SleepingOwl\Admin;
+namespace SleepingOwl\Admin\Facades;
+
+use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Filter.
@@ -9,10 +11,13 @@ namespace SleepingOwl\Admin;
  * @method static \SleepingOwl\Admin\Display\Filter\FilterRelated related($name)
  * @method static \SleepingOwl\Admin\Display\Filter\FilterScope scope($name)
  */
-class DisplayFilter extends AliasBinder
+class DisplayFilter extends Facade
 {
     /**
-     * @var array
+     * @return string
      */
-    protected static $aliases = [];
+    protected static function getFacadeAccessor()
+    {
+        return 'sleeping_owl.display.filter';
+    }
 }

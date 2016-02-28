@@ -106,12 +106,7 @@ return [
    */
 
     'providers' => [
-        SleepingOwl\Admin\Providers\ColumnFilterServiceProvider::class,
-        SleepingOwl\Admin\Providers\ColumnServiceProvider::class,
-        SleepingOwl\Admin\Providers\DisplayServiceProvider::class,
-        SleepingOwl\Admin\Providers\FilterServiceProvider::class,
-        SleepingOwl\Admin\Providers\FormServiceProvider::class,
-        SleepingOwl\Admin\Providers\FormElementsServiceProvider::class,
+        SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
         KodiCMS\Assets\AssetsServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         SleepingOwl\Admin\Providers\AdminServiceProvider::class
@@ -134,14 +129,14 @@ return [
         'Form'              => Collective\Html\FormFacade::class,
         'HTML'              => Collective\Html\HtmlFacade::class,
 
-        'AdminSection'       => SleepingOwl\Admin\Facades\AdminSection::class,
-        'AdminTemplate'      => SleepingOwl\Admin\Facades\AdminTemplate::class,
-        'AdminNavigation'    => SleepingOwl\Admin\Facades\AdminNavigation::class,
-        'AdminColumn'        => SleepingOwl\Admin\TableColumn::class,
-        'AdminColumnFilter'  => SleepingOwl\Admin\TableColumnFilter::class,
-        'AdminDisplayFilter' => SleepingOwl\Admin\DisplayFilter::class,
-        'AdminForm'          => SleepingOwl\Admin\Form::class,
-        'AdminFormElement'   => SleepingOwl\Admin\FormElement::class,
-        'AdminDisplay'       => SleepingOwl\Admin\Display::class
+        'AdminSection'       => SleepingOwl\Admin\Facades\Admin::class,
+        'AdminTemplate'      => SleepingOwl\Admin\Facades\Template::class,
+        'AdminNavigation'    => SleepingOwl\Admin\Facades\Navigation::class,
+        'AdminColumn'        => SleepingOwl\Admin\Facades\TableColumn::class,
+        'AdminColumnFilter'  => SleepingOwl\Admin\Facades\TableColumnFilter::class,
+        'AdminDisplayFilter' => SleepingOwl\Admin\Facades\DisplayFilter::class,
+        'AdminForm'          => SleepingOwl\Admin\Facades\Form::class,
+        'AdminFormElement'   => SleepingOwl\Admin\Facades\FormElement::class,
+        'AdminDisplay'       => SleepingOwl\Admin\Facades\Display::class
     ]
 ];
