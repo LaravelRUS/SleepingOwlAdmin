@@ -114,13 +114,13 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param bool $nullable
+     * @param bool|true $nullable
      *
      * @return $this
      */
-    public function setNullable($nullable)
+    public function nullable()
     {
-        $this->nullable = (bool) $nullable;
+        $this->nullable = true;
 
         return $this;
     }
