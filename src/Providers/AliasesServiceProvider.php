@@ -14,6 +14,7 @@ class AliasesServiceProvider extends ServiceProvider
         $this->registerColumns();
         $this->registerForms();
         $this->registerFormElements();
+        $this->registerFilters();
     }
 
     protected function registerColumnFilters()
