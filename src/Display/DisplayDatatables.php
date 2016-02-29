@@ -55,7 +55,7 @@ class DisplayDatatables extends DisplayTable
     }
 
     /**
-     * TODO: сделать чтобы работал
+     * TODO: сделать чтобы работал.
      * @return array
      */
     public function getDatatableAttributes()

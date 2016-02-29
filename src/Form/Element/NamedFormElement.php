@@ -210,7 +210,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function setReadonly($readonly)
     {
-        $this->readonly = (bool)$readonly;
+        $this->readonly = (bool) $readonly;
 
         return $this;
     }
@@ -321,8 +321,8 @@ abstract class NamedFormElement extends FormElement
 
         if (! is_null($model)) {
             $exploded = explode('.', $this->getPath());
-            $i        = 1;
-            $count    = count($exploded);
+            $i = 1;
+            $count = count($exploded);
 
             if ($count > 1) {
                 $i++;
@@ -359,7 +359,7 @@ abstract class NamedFormElement extends FormElement
             if ($item == '_unique') {
                 $table = $model->getTable();
 
-                $item  = 'unique:'.$table.','.$this->getAttribute();
+                $item = 'unique:'.$table.','.$this->getAttribute();
                 if ($model->exists()) {
                     $item .= ','.$model->getKey();
                 }
@@ -400,14 +400,14 @@ abstract class NamedFormElement extends FormElement
             $i++;
             $previousModel = $model;
 
-            /** @var Model $model */
+            /* @var Model $model */
             foreach ($relations as $relation) {
                 $nestedModel = null;
                 if ($previousModel->{$relation} instanceof Model) {
-                    $relatedModel = & $previousModel->{$relation};
+                    $relatedModel = &$previousModel->{$relation};
                 } elseif (method_exists($previousModel, $relation)) {
 
-                    /** @var Relation $relation */
+                    /* @var Relation $relation */
                     $relationObject = $previousModel->{$relation}();
                     switch (get_class($relationObject)) {
                         case BelongsTo::class:
@@ -426,7 +426,7 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field «{$this->getPath()}» can't be mapped to relations of model ".get_class($model).". Probably some dot delimeted segment is not a supported relation type");
+                    throw new LogicException("Field «{$this->getPath()}» can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 

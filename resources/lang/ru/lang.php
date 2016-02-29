@@ -9,7 +9,7 @@ return [
         'login'          => 'Войти',
         'logout'         => 'Выйти',
         'wrong-username' => 'Неверный логин',
-        'wrong-password' => 'или пароль'
+        'wrong-password' => 'или пароль',
     ],
     'ckeditor' => [
         'upload'        => [
@@ -20,7 +20,7 @@ return [
                 'filesize_limit'      => 'Максимальный размер файла :size кб.',
                 'imagesize_max_limit' => 'Ширина x Высота = :width x :height \\n Максимальный размер изображение должен быть: :maxwidth x :maxheight',
                 'imagesize_min_limit' => 'Ширина x Высота = :width x :height \\n Минимальный размер изображение должен быть: :minwidth x :minheight',
-            ]
+            ],
         ],
         'image_browser' => [
             'title'    => 'Вставка изображения с сервера',
@@ -60,8 +60,8 @@ return [
             'first'    => 'Первая',
             'previous' => '&larr;',
             'next'     => '&rarr;',
-            'last'     => 'Последняя'
-        ]
+            'last'     => 'Последняя',
+        ],
     ],
     'select'   => [
         'nothing'     => 'Ничего не выбрано',
@@ -81,6 +81,6 @@ return [
         'created' => 'Запись успешно создана',
         'updated' => 'Запись успешно обновлена',
         'deleted' => 'Запись успешно удалена',
-        'restored' => 'Запись успешно восстановлена'
-    ]
+        'restored' => 'Запись успешно восстановлена',
+    ],
 ];

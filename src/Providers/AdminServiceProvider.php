@@ -89,7 +89,6 @@ class AdminServiceProvider extends ServiceProvider
                 return $a->getFilename() != 'bootstrap.php';
             });
 
-
         foreach ($files as $file) {
             require $file;
         }
@@ -103,7 +102,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerCustomRoutes()
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
-            $this->registerRoutes(function() use($file) {
+            $this->registerRoutes(function () use ($file) {
                 require $file;
             });
         }
@@ -111,7 +110,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerDefaultRoutes()
     {
-        $this->registerRoutes(function() {
+        $this->registerRoutes(function () {
             $this->app['router']->pattern('adminModelId', '[0-9]+');
 
             $aliases = $this->app['sleeping_owl']->modelAliases();
@@ -143,8 +142,8 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->app['router']->group([
             'prefix' => $this->getConfig('url_prefix'),
-            'middleware' => $this->getConfig('middleware')
-        ], function () use($callback) {
+            'middleware' => $this->getConfig('middleware'),
+        ], function () use ($callback) {
 
             call_user_func($callback);
 

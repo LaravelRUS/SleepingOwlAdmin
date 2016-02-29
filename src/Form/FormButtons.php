@@ -147,7 +147,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isShowCancelButton()
     {
@@ -165,7 +165,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isShowSaveAndCloseButton()
     {
@@ -183,7 +183,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isShowSaveAndCreateButton()
     {
@@ -222,7 +222,7 @@ class FormButtons implements FormButtonsInterface
             'cancelButtonText'        => $this->getCancelButtonText(),
             'showCancelButton'        => $this->isShowCancelButton(),
             'showSaveAndCloseButton'  => $this->isShowSaveAndCloseButton(),
-            'showSaveAndCreateButton' => $this->isShowSaveAndCreateButton()
+            'showSaveAndCreateButton' => $this->isShowSaveAndCreateButton(),
         ];
     }
 

@@ -89,7 +89,7 @@ abstract class FormElement implements FormElementInterface
     public function getView()
     {
         if (is_null($this->view)) {
-            $reflect    = new \ReflectionClass($this);
+            $reflect = new \ReflectionClass($this);
             $this->view = 'form.element.'.strtolower($reflect->getShortName());
         }
 
@@ -118,12 +118,10 @@ abstract class FormElement implements FormElementInterface
 
     public function save()
     {
-
     }
 
     public function afterSave()
     {
-
     }
 
     /**
@@ -135,7 +133,6 @@ abstract class FormElement implements FormElementInterface
             'model' => $this->getModel(),
         ];
     }
-
 
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory

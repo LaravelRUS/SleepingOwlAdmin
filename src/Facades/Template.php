@@ -6,13 +6,11 @@ use Illuminate\Support\Facades\Facade;
 
 class Template extends Facade
 {
-
-	/**
-	 * @return string
-	 */
-	protected static function getFacadeAccessor()
-	{
-		return 'sleeping_owl.template';
-	}
-
-} 
+    /**
+     * @return string
+     */
+    protected static function getFacadeAccessor()
+    {
+        return 'sleeping_owl.template';
+    }
+}

@@ -35,7 +35,7 @@ interface PageInterface extends Renderable, Arrayable
     public function getPriority();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive();
 

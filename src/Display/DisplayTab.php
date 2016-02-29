@@ -11,7 +11,6 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 // TODO: починить указание активности таба
 class DisplayTab implements DisplayInterface, FormInterface
 {
-
     /**
      * @var string
      */
@@ -201,8 +200,6 @@ class DisplayTab implements DisplayInterface, FormInterface
         if ($this->getContent() instanceof FormInterface) {
             return $this->getContent()->validate($model);
         }
-
-        return;
     }
 
     /**
@@ -230,7 +227,7 @@ class DisplayTab implements DisplayInterface, FormInterface
             'label'  => $this->getLabel(),
             'active' => $this->isActive(),
             'name'   => $this->getName(),
-            'icon'   => $this->getIcon()
+            'icon'   => $this->getIcon(),
         ];
     }
 
@@ -241,7 +238,6 @@ class DisplayTab implements DisplayInterface, FormInterface
     {
         return app('sleeping_owl.template')->view('display.tab', $this->toArray());
     }
-
 
     /**
      * @return string

@@ -12,7 +12,7 @@ class MultiSelect extends Select
      */
     public function getName()
     {
-        return $this->name . '[]';
+        return $this->name.'[]';
     }
 
     /**
@@ -35,7 +35,6 @@ class MultiSelect extends Select
 
     public function save()
     {
-
     }
 
     public function afterSave()

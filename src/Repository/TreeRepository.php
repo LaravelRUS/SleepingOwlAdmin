@@ -90,8 +90,6 @@ class TreeRepository extends BaseRepository
                 return $this->createSimpleTree();
                 break;
         }
-
-        return;
     }
 
     /**

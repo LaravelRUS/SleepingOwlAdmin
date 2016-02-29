@@ -9,7 +9,7 @@ return [
         'login'          => 'Login',
         'logout'         => 'Logout',
         'wrong-username' => 'Wrong username',
-        'wrong-password' => 'or password'
+        'wrong-password' => 'or password',
     ],
     'ckeditor' => [
         'upload'        => [
@@ -20,7 +20,7 @@ return [
                 'filesize_limit'      => 'Maximum allowed file size is :size kb.',
                 'imagesize_max_limit' => 'Width x Height = :width x :height \\n The maximum Width x Height must be: :maxwidth x :maxheight',
                 'imagesize_min_limit' => 'Width x Height = :width x :height \\n The minimum Width x Height must be: :minwidth x :minheight',
-            ]
+            ],
         ],
         'image_browser' => [
             'title'    => 'Insert image from server',
@@ -60,8 +60,8 @@ return [
             'first'    => 'First',
             'previous' => '&larr;',
             'next'     => '&rarr;',
-            'last'     => 'Last'
-        ]
+            'last'     => 'Last',
+        ],
     ],
     'select'   => [
         'nothing'     => 'Nothing selected',
@@ -81,6 +81,6 @@ return [
         'created'  => '<i class="fa fa-check fa-lg"></i> Record created successfully',
         'updated'  => '<i class="fa fa-check fa-lg"></i> Record updated successfully',
         'deleted'  => '<i class="fa fa-check fa-lg"></i> Record deleted successfully',
-        'restored' => '<i class="fa fa-check fa-lg"></i> Record restored successfully'
-    ]
+        'restored' => '<i class="fa fa-check fa-lg"></i> Record restored successfully',
+    ],
 ];

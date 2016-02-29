@@ -43,7 +43,7 @@ class DateTime extends NamedColumn
      */
     public function toArray()
     {
-        $value         = $this->getModelValue();
+        $value = $this->getModelValue();
         $originalValue = $value;
 
         if (! is_null($value)) {

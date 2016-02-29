@@ -54,7 +54,7 @@ class Link extends NamedColumn
             'link'           => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
             'append'         => $this->getAppends(),
             'linkAttributes' => $this->getLinkAttributes(),
-            'isEditable'     => $this->isEditable()
+            'isEditable'     => $this->isEditable(),
         ];
     }
 }

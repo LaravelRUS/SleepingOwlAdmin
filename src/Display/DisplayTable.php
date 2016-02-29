@@ -453,7 +453,7 @@ class DisplayTable implements DisplayInterface
             'creatable' => $model->isCreatable(),
             'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
             'actions'   => $this->getActions(),
-            'attributes' => $this->getAttributes()
+            'attributes' => $this->getAttributes(),
         ];
     }
 
@@ -473,7 +473,7 @@ class DisplayTable implements DisplayInterface
      */
     protected function getCollection()
     {
-        $query =  $this->getRepository()->getQuery();
+        $query = $this->getRepository()->getQuery();
 
         $this->modifyQuery($query);
 

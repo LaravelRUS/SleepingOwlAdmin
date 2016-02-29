@@ -13,7 +13,6 @@ PackageManager::add(\SleepingOwl\Admin\Form\Element\Date::class)
 PackageManager::add(\SleepingOwl\Admin\Display\Column\Filter\Date::class)
     ->with('datetimepicker');
 
-
 PackageManager::add(\SleepingOwl\Admin\Form\Element\Select::class)
     ->with('select2');
 

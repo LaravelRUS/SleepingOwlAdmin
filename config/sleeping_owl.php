@@ -109,7 +109,7 @@ return [
         SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
         KodiCMS\Assets\AssetsServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        SleepingOwl\Admin\Providers\AdminServiceProvider::class
+        SleepingOwl\Admin\Providers\AdminServiceProvider::class,
     ],
 
     /*
@@ -137,6 +137,6 @@ return [
         'AdminDisplayFilter' => SleepingOwl\Admin\Facades\DisplayFilter::class,
         'AdminForm'          => SleepingOwl\Admin\Facades\Form::class,
         'AdminFormElement'   => SleepingOwl\Admin\Facades\FormElement::class,
-        'AdminDisplay'       => SleepingOwl\Admin\Facades\Display::class
-    ]
+        'AdminDisplay'       => SleepingOwl\Admin\Facades\Display::class,
+    ],
 ];

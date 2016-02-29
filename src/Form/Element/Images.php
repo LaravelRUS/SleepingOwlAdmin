@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Meta;
 use Request;
 
 class Images extends Image

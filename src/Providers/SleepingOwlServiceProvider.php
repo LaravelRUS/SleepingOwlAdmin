@@ -2,13 +2,11 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Commands\InstallCommand;
 
 class SleepingOwlServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
@@ -45,7 +43,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
     protected function registerCommands()
     {
         $commands = [
-            InstallCommand::class
+            InstallCommand::class,
         ];
 
         foreach ($commands as $command) {

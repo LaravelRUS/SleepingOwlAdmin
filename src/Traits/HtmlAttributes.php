@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Traits;
 
 trait HtmlAttributes
 {
-
     /**
      * @var array
      */
@@ -79,7 +78,7 @@ trait HtmlAttributes
      */
     public function replaceAttribute($key, $attribute)
     {
-        $attribute              = $this->attributeElement($attribute);
+        $attribute = $this->attributeElement($attribute);
         $this->attributes[$key] = $attribute;
 
         return $this;
@@ -100,12 +99,11 @@ trait HtmlAttributes
 
         if (isset($this->attributes['class']) && is_array($this->attributes['class'])) {
             foreach ($this->attributes['class'] as $i => $string) {
-                foreach($class as $className) {
+                foreach ($class as $className) {
                     if (strpos($string, $className) !== false) {
                         $has = true;
                     }
                 }
-
             }
         }
 

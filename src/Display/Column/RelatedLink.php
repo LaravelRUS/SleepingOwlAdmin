@@ -40,8 +40,8 @@ class RelatedLink extends Link
             $parts = explode('.', $this->originalName);
             $name = array_pop($parts);
 
-            while($parts) {
-                $part     = array_shift($parts);
+            while ($parts) {
+                $part = array_shift($parts);
                 $relation = $model->getAttribute($part);
 
                 if ($relation instanceof Model) {

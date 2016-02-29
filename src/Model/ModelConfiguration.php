@@ -283,7 +283,7 @@ class ModelConfiguration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDisplayable()
     {
@@ -301,7 +301,7 @@ class ModelConfiguration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isCreatable()
     {
@@ -369,7 +369,7 @@ class ModelConfiguration
     /**
      * @param Model $model
      *
-     * @return boolean
+     * @return bool
      */
     public function isRestorable(Model $model)
     {

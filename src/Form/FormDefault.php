@@ -11,13 +11,11 @@ use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FormDefault implements DisplayInterface, FormInterface
 {
@@ -89,7 +87,7 @@ class FormDefault implements DisplayInterface, FormInterface
         }
 
         $this->initialized = true;
-        $this->repository  = new BaseRepository($this->class);
+        $this->repository = new BaseRepository($this->class);
 
         $this->setModel(app($this->class));
         $this->initializeItems();
@@ -115,6 +113,7 @@ class FormDefault implements DisplayInterface, FormInterface
     public function setButtons(FormButtonsInterface $buttons)
     {
         $this->buttons = $buttons;
+
         return $this;
     }
 
@@ -334,9 +333,9 @@ class FormDefault implements DisplayInterface, FormInterface
             return;
         }
 
-        $rules    = [];
+        $rules = [];
         $messages = [];
-        $titles   = [];
+        $titles = [];
 
         $items = $this->getItems();
 
@@ -374,7 +373,7 @@ class FormDefault implements DisplayInterface, FormInterface
             'items'    => $this->getItems(),
             'instance' => $this->getModel(),
             'action'   => $this->getAction(),
-            'buttons'  => $this->getButtons()
+            'buttons'  => $this->getButtons(),
         ];
     }
 
