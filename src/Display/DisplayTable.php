@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Request;
 use Closure;
-use SleepingOwl\Admin\TableColumn;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -94,7 +93,7 @@ class DisplayTable implements DisplayInterface
 
     public function __construct()
     {
-        $this->controlColumn = TableColumn::control();
+        $this->controlColumn = app('sleeping_owl.table.column')->control();
     }
 
     /**
