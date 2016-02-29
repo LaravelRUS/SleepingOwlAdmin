@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 class DisplayDatatables extends DisplayTable
@@ -43,7 +44,7 @@ class DisplayDatatables extends DisplayTable
     {
         parent::initialize();
         foreach ($this->getColumnFilters() as $columnFilter) {
-            if ($columnFilter instanceof ColumnFilterInterface) {
+            if ($columnFilter instanceof Initializable) {
                 $columnFilter->initialize();
             }
         }

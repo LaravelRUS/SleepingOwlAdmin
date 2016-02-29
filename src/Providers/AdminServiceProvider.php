@@ -2,20 +2,11 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use SleepingOwl\Admin\Form;
 use SleepingOwl\Admin\Admin;
-use SleepingOwl\Admin\Display;
 use SleepingOwl\Admin\Navigation;
-use SleepingOwl\Admin\FormElement;
-use SleepingOwl\Admin\TableColumn;
-use SleepingOwl\Admin\DisplayFilter;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\TableColumnFilter;
-use SleepingOwl\Admin\Facades\AdminSection;
-use SleepingOwl\Admin\Facades\AdminTemplate;
-use SleepingOwl\Admin\Facades\AdminNavigation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AdminServiceProvider extends ServiceProvider
@@ -106,19 +97,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerAliases()
     {
-        $aliasPrefix = config('sleeping_owl.alias_prefix', 'Admin');
-
-        AliasLoader::getInstance([
-            $aliasPrefix.'Section'       => AdminSection::class,
-            $aliasPrefix.'Template'      => AdminTemplate::class,
-            $aliasPrefix.'Navigation'    => AdminNavigation::class,
-            $aliasPrefix.'Column'        => TableColumn::class,
-            $aliasPrefix.'ColumnFilter'  => TableColumnFilter::class,
-            $aliasPrefix.'DisplayFilter' => DisplayFilter::class,
-            $aliasPrefix.'Form'          => Form::class,
-            $aliasPrefix.'FormElement'   => FormElement::class,
-            $aliasPrefix.'Display'       => Display::class
-        ]);
+        AliasLoader::getInstance(config('sleeping_owl.aliases', []));
     }
 
     protected function registerCustomRoutes()
@@ -163,7 +142,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerRoutes(\Closure $callback)
     {
         $this->app['router']->group([
-            'prefix' => $this->getConfig('prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware')
         ], function () use($callback) {
 

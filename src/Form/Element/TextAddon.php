@@ -35,6 +35,26 @@ class TextAddon extends NamedFormElement
     }
 
     /**
+     * @return $this
+     */
+    public function placeBefore()
+    {
+        $this->placement = 'before';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function placeAfter()
+    {
+        $this->placement = 'after';
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getAddon()

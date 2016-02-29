@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class AdminNavigation extends Facade
+class Navigation extends Facade
 {
 
 	/**

@@ -2,28 +2,35 @@
 
 namespace SleepingOwl\Admin;
 
-use Route;
 use BadMethodCallException;
 
-abstract class AliasBinder
+class AliasBinder
 {
+    /**
+     * @var array
+     */
+    protected $aliases = [];
+
     /**
      * Register new alias.
      *
      * @param string $alias
      * @param string $class
      */
-    public static function register($alias, $class)
+    public function register($alias, $class)
     {
-        static::$aliases[$alias] = $class;
-        Route::group([
-            'prefix' => config('sleeping_owl.prefix'),
-            'middleware' => config('sleeping_owl.middleware'),
-        ], function () use ($class) {
-            if (method_exists($class, 'registerRoutes')) {
-                call_user_func([$class, 'registerRoutes']);
+        $this->aliases[$alias] = $class;
+
+        app('router')->group(
+            ['prefix' => config('sleeping_owl.url_prefix'), 'middleware' => config('sleeping_owl.middleware')],
+            function () use ($class) {
+
+                if (method_exists($class, 'registerRoutes')) {
+                    call_user_func([$class, 'registerRoutes']);
+                }
+
             }
-        });
+        );
     }
 
     /**
@@ -33,9 +40,9 @@ abstract class AliasBinder
      *
      * @return string
      */
-    public static function getAlias($alias)
+    public function getAlias($alias)
     {
-        return static::$aliases[$alias];
+        return $this->aliases[$alias];
     }
 
     /**
@@ -45,9 +52,9 @@ abstract class AliasBinder
      *
      * @return bool
      */
-    public static function hasAlias($alias)
+    public function hasAlias($alias)
     {
-        return array_key_exists($alias, static::$aliases);
+        return array_key_exists($alias, $this->aliases);
     }
 
     /**
@@ -58,12 +65,12 @@ abstract class AliasBinder
      *
      * @return mixed
      */
-    public static function __callStatic($name, $arguments)
+    public function __call($name, $arguments)
     {
-        if (! static::hasAlias($name)) {
+        if (! $this->hasAlias($name)) {
             throw new BadMethodCallException($name);
         }
 
-        return app(static::getAlias($name), $arguments);
+        return app($this->getAlias($name), $arguments);
     }
 }

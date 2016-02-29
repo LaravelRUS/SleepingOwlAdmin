@@ -3,10 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
-abstract class NamedColumn extends BaseColumn implements NamedColumnInterface
+abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
     /**
      * Column field name.

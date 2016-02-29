@@ -4,13 +4,8 @@ namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
-interface ColumnInterface
+interface ColumnInterface extends Initializable
 {
-    /**
-     * Initialize column.
-     */
-    public function initialize();
-
     /**
      * @param Model $model
      *

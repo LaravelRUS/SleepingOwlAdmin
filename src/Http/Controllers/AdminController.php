@@ -222,7 +222,7 @@ class AdminController extends Controller
         $data = [
             'locale'       => App::getLocale(),
             'token'        => csrf_token(),
-            'prefix'       => config('sleeping_owl.prefix'),
+            'prefix'       => config('sleeping_owl.url_prefix'),
             'lang'         => $lang,
             'ckeditor_cfg' => config('sleeping_owl.ckeditor'),
         ];

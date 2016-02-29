@@ -5,10 +5,14 @@ namespace SleepingOwl\Admin\Navigation;
 use Gate;
 use SleepingOwl\Admin\Navigation;
 use Illuminate\Routing\UrlGenerator;
+use SleepingOwl\Admin\Traits\HtmlAttributes;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
 
-class Page extends Navigation
+class Page extends Navigation implements PageInterface
 {
+    use HtmlAttributes;
 
     /**
      * Menu item related model class
@@ -32,6 +36,11 @@ class Page extends Navigation
      * @var string
      */
     protected $url;
+
+    /**
+     * @var Badge
+     */
+    protected $badge;
 
     /**
      * @var int
@@ -59,7 +68,7 @@ class Page extends Navigation
     }
 
     /**
-     * @param string|array|Page|null $page
+     * @param string|array|PageInterface|null $page
      *
      * @return Page
      */
@@ -69,18 +78,6 @@ class Page extends Navigation
         $page->setParent($this);
 
         return $page;
-    }
-
-    /**
-     * @param string $model
-     *
-     * @return $this
-     */
-    protected function setModel($model)
-    {
-        $this->model = $model;
-
-        return $this;
     }
 
     /**
@@ -184,6 +181,43 @@ class Page extends Navigation
     }
 
     /**
+     * @return Badge
+     */
+    public function getBadge()
+    {
+        return $this->badge;
+    }
+
+    /**
+     * @param BadgeInterface $badge
+     *
+     * @return $this
+     */
+    public function setBadge(BadgeInterface $badge)
+    {
+        $this->badge = $badge;
+
+        return $this;
+    }
+
+    /**
+     * @param atring   $value
+     * @param \Closure $closure
+     *
+     * @return Badge
+     */
+    public function addBadge($value, \Closure $closure = null)
+    {
+        $this->badge = new Badge($value);
+
+        if (is_callable($closure)) {
+            call_user_func($closure, $this->badge);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getPriority()
@@ -252,7 +286,7 @@ class Page extends Navigation
     }
 
     /**
-     * @return Page
+     * @return PageInterface
      */
     public function getParent()
     {
@@ -298,14 +332,24 @@ class Page extends Navigation
      */
     public function toArray()
     {
+        if ($this->isActive()) {
+            $this->setAttribute('class', 'active');
+        }
+
+        if ($this->hasChild()) {
+            $this->setAttribute('class', 'treeview');
+        }
+
         return [
-            'pages'    => parent::toArray(),
-            'hasChild' => $this->hasChild(),
-            'title'    => $this->getTitle(),
-            'icon'     => $this->getIcon(),
-            'priority' => $this->getPriority(),
-            'url'      => $this->getUrl(),
-            'isActive' => $this->isActive()
+            'pages'      => parent::toArray(),
+            'hasChild'   => $this->hasChild(),
+            'title'      => $this->getTitle(),
+            'icon'       => $this->getIcon(),
+            'priority'   => $this->getPriority(),
+            'url'        => $this->getUrl(),
+            'isActive'   => $this->isActive(),
+            'attributes' => $this->getAttributes(),
+            'badge'      => $this->getBadge()
         ];
     }
 
@@ -315,5 +359,17 @@ class Page extends Navigation
     public function render()
     {
         return app('sleeping_owl.template')->view('_partials.navigation.page', $this->toArray());
+    }
+
+    /**
+     * @param string $model
+     *
+     * @return $this
+     */
+    protected function setModel($model)
+    {
+        $this->model = $model;
+
+        return $this;
     }
 }

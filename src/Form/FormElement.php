@@ -1,14 +1,12 @@
 <?php
 
-namespace SleepingOwl\Admin\Form\Element;
+namespace SleepingOwl\Admin\Form;
 
 use Meta;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 
-abstract class BaseFormElement implements Renderable, FormElementInterface, Arrayable
+abstract class FormElement implements FormElementInterface
 {
     /**
      * @var string

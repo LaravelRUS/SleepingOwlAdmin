@@ -1,7 +1,8 @@
 <?php
 
-namespace SleepingOwl\Admin;
+namespace SleepingOwl\Admin\Facades;
 
+use Illuminate\Support\Facades\Facade;
 /**
  * Class AdminForm.
  * @method static \SleepingOwl\Admin\Form\Element\Text text($name, $label = null)
@@ -25,10 +26,13 @@ namespace SleepingOwl\Admin;
  * @method static \SleepingOwl\Admin\Form\Element\Radio radio($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Wysiwyg wysiwyg($name, $label = null)
  */
-class FormElement extends AliasBinder
+class FormElement extends Facade
 {
     /**
-     * @var array
+     * @return string
      */
-    protected static $aliases = [];
+    protected static function getFacadeAccessor()
+    {
+        return 'sleeping_owl.form.element';
+    }
 }

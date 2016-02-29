@@ -1,6 +1,8 @@
 <?php
 
-namespace SleepingOwl\Admin;
+namespace SleepingOwl\Admin\Facades;
+
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Display\DisplayDatatables datatables()
@@ -10,11 +12,15 @@ namespace SleepingOwl\Admin;
  * @method static \SleepingOwl\Admin\Display\DisplayTable table()
  * @method static \SleepingOwl\Admin\Display\DisplayTree tree()
  */
-class Display extends AliasBinder
+class Display extends Facade
 {
+
     /**
-     * Display class aliases.
-     * @var string[]
+     * @return string
      */
-    protected static $aliases = [];
+    protected static function getFacadeAccessor()
+    {
+        return 'sleeping_owl.display';
+    }
+
 }

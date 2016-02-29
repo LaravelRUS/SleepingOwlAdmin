@@ -1,6 +1,8 @@
 <?php
 
-namespace SleepingOwl\Admin;
+namespace SleepingOwl\Admin\Facades;
+
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Display\Column\Action action($name)
@@ -20,11 +22,11 @@ namespace SleepingOwl\Admin;
  * @method static \SleepingOwl\Admin\Display\Column\TreeControl treeControl()
  * @method static \SleepingOwl\Admin\Display\Column\Url url($name)
  */
-class TableColumn extends AliasBinder
+class TableColumn extends Facade
 {
-    /**
-     * Column class aliases.
-     * @var string[]
-     */
-    protected static $aliases = [];
+
+    public static function getFacadeAccessor()
+    {
+        return 'sleeping_owl.table.column';
+    }
 }

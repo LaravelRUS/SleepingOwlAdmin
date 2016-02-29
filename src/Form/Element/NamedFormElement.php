@@ -5,12 +5,13 @@ namespace SleepingOwl\Admin\Form\Element;
 use Request;
 use LogicException;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-abstract class NamedFormElement extends BaseFormElement
+abstract class NamedFormElement extends FormElement
 {
     /**
      * @var string

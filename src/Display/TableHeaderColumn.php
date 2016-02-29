@@ -1,12 +1,11 @@
 <?php
 
-namespace SleepingOwl\Admin\Display\Column;
+namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
-class ColumnHeader implements Renderable, Arrayable
+class TableHeaderColumn implements TableHeaderColumnInterface
 {
     use HtmlAttributes;
 
@@ -62,10 +61,9 @@ class ColumnHeader implements Renderable, Arrayable
      */
     public function setOrderable($orderable)
     {
-        $this->orderable = (bool) $orderable;
+        $this->orderable = (bool)$orderable;
 
         return $this;
-
     }
 
     /**
@@ -76,8 +74,9 @@ class ColumnHeader implements Renderable, Arrayable
     public function toArray()
     {
         return [
-            'attributes' => $this->getAttributes(),
-            'title'     => $this->getTitle()
+            'attributes'  => $this->getAttributes(),
+            'title'       => $this->getTitle(),
+            'isOrderable' => $this->isOrderable()
         ];
     }
 
@@ -87,6 +86,7 @@ class ColumnHeader implements Renderable, Arrayable
     public function render()
     {
         $this->setAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
+
         return app('sleeping_owl.template')->view('column.header', $this->toArray());
     }
 
@@ -95,6 +95,6 @@ class ColumnHeader implements Renderable, Arrayable
      */
     public function __toString()
     {
-        return (string) $this->render();
+        return (string)$this->render();
     }
 }

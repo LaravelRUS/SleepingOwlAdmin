@@ -4,13 +4,8 @@ namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 
-interface ColumnFilterInterface
+interface ColumnFilterInterface extends Initializable
 {
-    /**
-     * Initialize column filter.
-     */
-    public function initialize();
-
     /**
      * @param RepositoryInterface  $repository
      * @param NamedColumnInterface $column

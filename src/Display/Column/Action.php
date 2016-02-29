@@ -155,6 +155,9 @@ class Action extends NamedColumn implements ColumnActionInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return parent::toArray() + [
@@ -183,7 +186,7 @@ class Action extends NamedColumn implements ColumnActionInterface
             return $this->url;
         }
 
-        return $this->getModelConfiguration()->displayUrl([
+        return $this->getModelConfiguration()->getDisplayUrl([
             '_action' => $this->getName(),
             '_id'     => $this->getModel()->getKey(),
         ]);
