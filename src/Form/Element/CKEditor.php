@@ -109,7 +109,6 @@ class CKEditor extends NamedFormElement implements WithRoutesInterface
             }
 
             if ($file->getSize() > $maxsize * 1000) {
-
                 $errors[] = trans('sleeping_owl::core.ckeditor.upload.error.filesize_limit', ['size' => $maxsize]);
             }
 
@@ -132,7 +131,8 @@ class CKEditor extends NamedFormElement implements WithRoutesInterface
                     'minheight' => $minheight,
                 ]);
             }
-        } catch (Exception $e) {}
+        } catch (Exception $e) {
+        }
 
         if (! empty($errors)) {
             return '<script>alert("'.implode('\\n', $errors).'");</script>';

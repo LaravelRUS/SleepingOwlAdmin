@@ -38,6 +38,7 @@ class DateTime extends NamedFormElement
     public function setFormat($format)
     {
         $this->format = $format;
+
         return $this;
     }
 
@@ -69,7 +70,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasSeconds()
     {
@@ -77,7 +78,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param boolean $seconds
+     * @param bool $seconds
      */
     public function setSeconds($seconds)
     {
@@ -111,7 +112,6 @@ class DateTime extends NamedFormElement
             'pickerFormat' => $this->getPickerFormat(),
         ];
     }
-
 
     /**
      * @return string

@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
+
 /**
  * Class AdminForm.
  * @method static \SleepingOwl\Admin\Form\Element\Text text($name, $label = null)

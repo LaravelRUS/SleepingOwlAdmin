@@ -40,6 +40,7 @@ class AdminController extends Controller
         }
 
         $create = $model->fireCreate();
+
         return $this->render($model, $create);
     }
 
@@ -69,7 +70,7 @@ class AdminController extends Controller
 
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->to($model->getEditUrl($createForm->getModel()->id));
-        } else if ($nextAction == 'save_and_create') {
+        } elseif ($nextAction == 'save_and_create') {
             $response = redirect()->to($model->getCreateUrl());
         } else {
             $response = redirect()->to($model->getDisplayUrl());
@@ -124,7 +125,7 @@ class AdminController extends Controller
 
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back();
-        } else if ($nextAction == 'save_and_create') {
+        } elseif ($nextAction == 'save_and_create') {
             $response = redirect()->to($model->getCreateUrl());
         } else {
             $response = redirect()->to($model->getDisplayUrl());

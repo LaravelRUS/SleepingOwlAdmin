@@ -44,7 +44,7 @@ class Navigation implements Renderable, Arrayable
     {
         if (is_array($page)) {
             $page = $this->createPageFromArray($page);
-        } else if (is_string($page) or is_null($page)) {
+        } elseif (is_string($page) or is_null($page)) {
             $page = new Page($page);
         }
 
@@ -123,7 +123,7 @@ class Navigation implements Renderable, Arrayable
         $this->sort();
 
         return app('sleeping_owl.template')->view('_partials.navigation.navigation', [
-            'pages' => $this->toArray()
+            'pages' => $this->toArray(),
         ])->render();
     }
 

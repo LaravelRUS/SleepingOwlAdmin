@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
-use Gate;
 use SleepingOwl\Admin\Navigation;
 use Illuminate\Routing\UrlGenerator;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
@@ -15,7 +14,7 @@ class Page extends Navigation implements PageInterface
     use HtmlAttributes;
 
     /**
-     * Menu item related model class
+     * Menu item related model class.
      * @var string
      */
     protected $model;
@@ -26,13 +25,13 @@ class Page extends Navigation implements PageInterface
     protected $title;
 
     /**
-     * Menu item icon
+     * Menu item icon.
      * @var string
      */
     protected $icon;
 
     /**
-     * Menu item url
+     * Menu item url.
      * @var string
      */
     protected $url;
@@ -238,7 +237,7 @@ class Page extends Navigation implements PageInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
@@ -349,7 +348,7 @@ class Page extends Navigation implements PageInterface
             'url'        => $this->getUrl(),
             'isActive'   => $this->isActive(),
             'attributes' => $this->getAttributes(),
-            'badge'      => $this->getBadge()
+            'badge'      => $this->getBadge(),
         ];
     }
 

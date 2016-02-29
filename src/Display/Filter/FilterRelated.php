@@ -92,8 +92,7 @@ class FilterRelated extends FilterBase
             $modelObject = app($model)->findOrFail($this->getValue());
 
             return $modelObject->{$this->getDisplay()};
-        } catch (ModelNotFoundException $e) {}
-
-        return;
+        } catch (ModelNotFoundException $e) {
+        }
     }
 }

@@ -24,7 +24,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class TableColumn extends Facade
 {
-
     public static function getFacadeAccessor()
     {
         return 'sleeping_owl.table.column';

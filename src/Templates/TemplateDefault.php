@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\TemplateInterface;
 
 class TemplateDefault implements TemplateInterface
 {
-
     public function __construct()
     {
         Meta::loadPackage([
@@ -15,7 +14,7 @@ class TemplateDefault implements TemplateInterface
             'select2',
             'metisMenu',
             'admin-default',
-            'font-awesome'
+            'font-awesome',
         ]);
 
         Meta::AddJs('adminScripts', route('admin.lang'));
@@ -69,7 +68,7 @@ class TemplateDefault implements TemplateInterface
      */
     public function makeTitle($title)
     {
-        return $title . ' | ' . config('sleeping_owl.title');
+        return $title.' | '.config('sleeping_owl.title');
     }
 
     /**

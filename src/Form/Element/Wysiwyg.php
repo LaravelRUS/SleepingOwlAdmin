@@ -80,7 +80,7 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFilterHtml()
     {
@@ -88,7 +88,7 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @param boolean $filterHtml
+     * @param bool $filterHtml
      */
     public function setFilterHtml($filterHtml)
     {

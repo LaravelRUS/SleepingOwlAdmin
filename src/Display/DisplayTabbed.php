@@ -121,8 +121,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 }
             }
         }
-
-        return;
     }
 
     /**

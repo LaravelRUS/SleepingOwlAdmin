@@ -57,7 +57,7 @@ class Badge implements BadgeInterface
 
         return [
             'value'      => $this->getValue(),
-            'attributes' => $this->getAttributes()
+            'attributes' => $this->getAttributes(),
         ];
     }
 

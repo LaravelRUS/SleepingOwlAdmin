@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class Display extends Facade
 {
-
     /**
      * @return string
      */
@@ -22,5 +21,4 @@ class Display extends Facade
     {
         return 'sleeping_owl.display';
     }
-
 }

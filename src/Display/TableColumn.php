@@ -95,7 +95,7 @@ abstract class TableColumn implements Renderable, ColumnInterface, Arrayable
     public function getView()
     {
         if (is_null($this->view)) {
-            $reflect    = new \ReflectionClass($this);
+            $reflect = new \ReflectionClass($this);
             $this->view = 'column.'.strtolower($reflect->getShortName());
         }
 
@@ -207,7 +207,7 @@ abstract class TableColumn implements Renderable, ColumnInterface, Arrayable
     public function toArray()
     {
         return [
-            'attributes' => $this->getAttributes()
+            'attributes' => $this->getAttributes(),
         ];
     }
 

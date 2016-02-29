@@ -164,7 +164,7 @@ class Select extends BaseColumnFilter
     {
         return parent::toArray() + [
             'options'     => $this->getOptions(),
-            'placeholder' => $this->getPlaceholder()
+            'placeholder' => $this->getPlaceholder(),
         ];
     }
 

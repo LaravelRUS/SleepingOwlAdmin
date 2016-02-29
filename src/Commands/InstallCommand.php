@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Commands;
 
-use App;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
@@ -10,7 +9,6 @@ use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 class InstallCommand extends Command
 {
-
     /**
      * The console command name.
      * @var string
@@ -51,7 +49,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Create bootstrap directory
+     * Create bootstrap directory.
      */
     protected function createBootstrapDirectory()
     {
@@ -64,7 +62,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Create default menu file
+     * Create default menu file.
      */
     protected function createNavigationFile()
     {
@@ -78,7 +76,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Create default bootstrap file
+     * Create default bootstrap file.
      */
     protected function createBootstrapFile()
     {
@@ -91,7 +89,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Create default routes file
+     * Create default routes file.
      */
     protected function createRoutesFile()
     {
@@ -104,7 +102,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Create public default structure
+     * Create public default structure.
      */
     protected function createPublicDefaultStructure()
     {
@@ -115,7 +113,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Publish package config
+     * Publish package config.
      *
      * @param string|null $title
      */
@@ -141,9 +139,8 @@ class InstallCommand extends Command
                 'title',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Title for admin module.'
+                'Title for admin module.',
             ],
         ];
     }
-
 }

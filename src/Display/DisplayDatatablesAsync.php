@@ -48,8 +48,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 return $content;
             }
         }
-
-        return;
     }
 
     /**
@@ -230,7 +228,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $queryColumns = Request::get('columns', []);
 
         foreach ($queryColumns as $index => $queryColumn) {
-
             $search = array_get($queryColumn, 'search.value');
             $fullSearch = array_get($queryColumn, 'search');
             $column = array_get($this->columns(), $index);
