@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Route;
 use Request;
-use SleepingOwl\Admin\TableColumn;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\TreeRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -13,6 +12,7 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayTree implements DisplayInterface, WithRoutesInterface
 {
+
     public static function registerRoutes()
     {
         Route::post('{adminModel}/reorder', function ($model) {
@@ -66,6 +66,16 @@ class DisplayTree implements DisplayInterface, WithRoutesInterface
      */
     protected $rootParentId = null;
 
+    /**
+     * @var Column\TreeControl
+     */
+    protected $controlColumn;
+
+    public function __construct()
+    {
+        $this->controlColumn = app('sleeping_owl.table.column')->treeControl();
+    }
+
     public function initialize()
     {
         Meta::loadPackage(get_class());
@@ -73,7 +83,15 @@ class DisplayTree implements DisplayInterface, WithRoutesInterface
         $this->repository = new TreeRepository($this->class);
         $this->repository->with($this->getWith());
 
-        TableColumn::treeControl()->initialize();
+        $this->getTreeControl()->initialize();
+    }
+
+    /**
+     * @return Column\TreeControl
+     */
+    protected function getTreeControl()
+    {
+        return $this->controlColumn;
     }
 
     /**
@@ -253,7 +271,7 @@ class DisplayTree implements DisplayInterface, WithRoutesInterface
             'value'       => $this->getValue(),
             'creatable'   => $model->isCreatable(),
             'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls'    => [TableColumn::treeControl()],
+            'controls'    => [$this->getTreeControl()->treeControl()],
         ];
     }
 
