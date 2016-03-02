@@ -96,6 +96,33 @@ abstract class FilterBase implements FilterInterface
      */
     public function initialize()
     {
+        $value = $this->value;
+        if (is_null($value)) {
+            $value = Request::get($this->getAlias());
+        }
+
+        $params = $this->getOperatorParams();
+        $method = $params['method'];
+        switch ($method) {
+            case 'where':
+            case 'whereNull':
+            case 'whereNotNull':
+                break;
+            case 'whereBetween':
+            case 'whereNotBetween':
+                if (! is_array($value)) {
+                    $value = explode(',', $value, 2);
+                }
+                break;
+            case 'whereIn':
+            case 'whereNotIn':
+                if (! is_array($value)) {
+                    $value = explode(',', $value);
+                }
+                break;
+        }
+
+        $this->setValue($value);
     }
 
     /**
@@ -188,37 +215,10 @@ abstract class FilterBase implements FilterInterface
     }
 
     /**
-     * @param null $default
-     *
      * @return mixed
      */
-    public function getValue($default = null)
+    public function getValue()
     {
-        if (is_null($this->value)) {
-            $this->value = Request::get($this->getAlias(), $default);
-        }
-
-        $params = $this->getOperatorParams();
-        $method = $params['method'];
-        switch ($method) {
-            case 'where':
-            case 'whereNull':
-            case 'whereNotNull':
-                break;
-            case 'whereBetween':
-            case 'whereNotBetween':
-                if (! is_array($this->value)) {
-                    $this->value = explode(',', $this->value, 2);
-                }
-                break;
-            case 'whereIn':
-            case 'whereNotIn':
-                if (! is_array($this->value)) {
-                    $this->value = explode(',', $this->value);
-                }
-                break;
-        }
-
         return $this->value;
     }
 
