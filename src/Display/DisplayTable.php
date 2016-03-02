@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Request;
 use Closure;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -16,6 +17,7 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\ColumnActionInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class DisplayTable implements DisplayInterface
 {
@@ -85,6 +87,11 @@ class DisplayTable implements DisplayInterface
      * @var int|null
      */
     protected $paginate;
+
+    /**
+     * @var string
+     */
+    protected $pageName;
 
     /**
      * @var Column\Control
@@ -421,13 +428,15 @@ class DisplayTable implements DisplayInterface
     }
 
     /**
-     * @param int $perPage
+     * @param int    $perPage
+     * @param string $pageName
      *
      * @return $this
      */
-    public function paginate($perPage = 20)
+    public function paginate($perPage = 20, $pageName = 'page')
     {
         $this->paginate = (int) $perPage;
+        $this->pageName = $pageName;
 
         return $this;
     }
@@ -469,7 +478,7 @@ class DisplayTable implements DisplayInterface
     }
 
     /**
-     * @return
+     * @return Collection|LengthAwarePaginator
      */
     protected function getCollection()
     {
@@ -478,7 +487,7 @@ class DisplayTable implements DisplayInterface
         $this->modifyQuery($query);
 
         return $this->usePagination()
-            ? $query->paginate($this->paginate)
+            ? $query->paginate($this->paginate, ['*'], $this->pageName)
             : $query->get();
     }
 
