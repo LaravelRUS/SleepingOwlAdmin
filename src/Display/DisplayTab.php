@@ -77,7 +77,7 @@ class DisplayTab implements DisplayInterface, FormInterface
      *
      * @return $this
      */
-    public function setActive($active)
+    public function setActive($active = true)
     {
         $this->active = (bool) $active;
 
