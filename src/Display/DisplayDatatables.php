@@ -12,20 +12,9 @@ class DisplayDatatables extends DisplayTable
     const FILTER_POSITION_BOTH = 2;
 
     /**
-     * View to render.
-     * @var string
-     */
-    protected $view = 'datatables';
-
-    /**
      * @var array
      */
     protected $order = [[0, 'asc']];
-
-    /**
-     * @var ColumnFilterInterface[]
-     */
-    protected $columnFilters = [];
 
     /**
      * @var array
@@ -43,11 +32,6 @@ class DisplayDatatables extends DisplayTable
     public function initialize()
     {
         parent::initialize();
-        foreach ($this->getColumnFilters() as $columnFilter) {
-            if ($columnFilter instanceof Initializable) {
-                $columnFilter->initialize();
-            }
-        }
 
         $this->setAttribute('class', 'datatables');
         $this->setAttribute('data-order', json_encode($this->getOrder()));
@@ -69,22 +53,6 @@ class DisplayDatatables extends DisplayTable
     public function setDatatableAttributes(array $datatableAttributes)
     {
         $this->datatableAttributes = $datatableAttributes;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFilterPosition()
-    {
-        return $this->filterPosition;
-    }
-
-    /**
-     * @param int $filterPosition
-     */
-    public function setFilterPosition($filterPosition)
-    {
-        $this->filterPosition = $filterPosition;
     }
 
     /**
@@ -112,30 +80,6 @@ class DisplayDatatables extends DisplayTable
     }
 
     /**
-     * @return ColumnFilterInterface[]
-     */
-    public function getColumnFilters()
-    {
-        return $this->columnFilters;
-    }
-
-    /**
-     * @param array|ColumnFilterInterface $columnFilters
-     *
-     * @return $this
-     */
-    public function setColumnFilters($columnFilters)
-    {
-        if (! is_array($columnFilters)) {
-            $columnFilters = func_get_args();
-        }
-
-        $this->columnFilters = $columnFilters;
-
-        return $this;
-    }
-
-    /**
      * Get view render parameters.
      * @return array
      */
@@ -144,8 +88,6 @@ class DisplayDatatables extends DisplayTable
         $params = parent::toArray();
 
         $params['order'] = $this->getOrder();
-        $params['columnFilters'] = $this->getColumnFilters();
-        $params['filterPosition'] = $this->getFilterPosition();
 
         return $params;
     }

@@ -5,46 +5,31 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Route;
 use Request;
+use SleepingOwl\Admin\Display\Extension\Tree;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\TreeRepository;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
-class DisplayTree implements DisplayInterface, WithRoutesInterface
+class DisplayTree extends Display implements WithRoutesInterface
 {
 
     public static function registerRoutes()
     {
-        Route::post('{adminModel}/reorder', function ($model) {
+        Route::post('{adminModel}/reorder', function (ModelConfiguration $model) {
             $data = Request::get('data');
-            $model->display()->repository()->reorder($data);
+            $model->getDisplay()->repository()->reorder($data);
         });
     }
-
-    /**
-     * @var string
-     */
-    protected $class;
-
-    /**
-     * @var array
-     */
-    protected $with = [];
-
-    /**
-     * @var TreeRepository
-     */
-    protected $repository;
-
-    /**
-     * @var bool
-     */
-    protected $reorderable = true;
 
     /**
      * @var array
      */
     protected $parameters = [];
+
+    /**
+     * @var bool
+     */
+    protected $reorderable = true;
 
     /**
      * @var string
@@ -67,41 +52,34 @@ class DisplayTree implements DisplayInterface, WithRoutesInterface
     protected $rootParentId = null;
 
     /**
+     * @var string
+     */
+    protected $repositoryClass = TreeRepository::class;
+
+    /**
+     * @var TreeRepository
+     */
+    protected $repository;
+
+    /**
      * @var Column\TreeControl
      */
     protected $controlColumn;
 
     public function __construct()
     {
-        $this->controlColumn = app('sleeping_owl.table.column')->treeControl();
+        parent::__construct();
+
+        $this->extend('tree', new Tree());
     }
 
     public function initialize()
     {
-        Meta::loadPackage(get_class());
+        parent::initialize();
 
-        $this->repository = new TreeRepository($this->class);
-        $this->repository->with($this->getWith());
-
-        $this->getTreeControl()->initialize();
-    }
-
-    /**
-     * @return Column\TreeControl
-     */
-    protected function getTreeControl()
-    {
-        return $this->controlColumn;
-    }
-
-    /**
-     * @param string $class
-     */
-    public function setClass($class)
-    {
-        if (is_null($this->class)) {
-            $this->class = $class;
-        }
+        $this->repository->parentField($this->getParentField());
+        $this->repository->orderField($this->getOrderField());
+        $this->repository->rootParentId($this->getRootParentId());
     }
 
     /**
@@ -210,30 +188,6 @@ class DisplayTree implements DisplayInterface, WithRoutesInterface
     }
 
     /**
-     * @return \string[]
-     */
-    public function getWith()
-    {
-        return $this->with;
-    }
-
-    /**
-     * @param \string[] $with
-     *
-     * @return $this
-     */
-    public function setWith($with)
-    {
-        if (! is_array($with)) {
-            $with = func_get_args();
-        }
-
-        $this->with = $with;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function isReorderable()
@@ -254,7 +208,7 @@ class DisplayTree implements DisplayInterface, WithRoutesInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('display.tree', $this->toArray());
+        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
     }
 
     /**
@@ -264,35 +218,13 @@ class DisplayTree implements DisplayInterface, WithRoutesInterface
     {
         $model = $this->getModelConfiguration();
 
-        return [
-            'items'       => $this->getRepository()->getTree(),
+        return $this->toArray() + [
             'reorderable' => $this->isReorderable(),
             'url'         => $model->getDisplayUrl(),
             'value'       => $this->getValue(),
             'creatable'   => $model->isCreatable(),
-            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls'    => [$this->getTreeControl()->treeControl()],
+            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all())
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
-    }
-
-    /**
-     * @return TreeRepository
-     */
-    protected function getRepository()
-    {
-        $this->repository->parentField($this->getParentField());
-        $this->repository->orderField($this->getOrderField());
-        $this->repository->rootParentId($this->getRootParentId());
-
-        return $this->repository;
     }
 
     /**

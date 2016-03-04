@@ -12,5 +12,10 @@ interface DisplayInterface extends Arrayable, Renderable, Initializable
      *
      * @param string $class
      */
-    public function setClass($class);
+    public function setModelClass($class);
+
+    /**
+     * @return string
+     */
+    public function getView();
 }

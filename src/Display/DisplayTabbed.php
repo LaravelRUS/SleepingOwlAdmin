@@ -11,11 +11,16 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
+
     /**
-     * Added tabs.
      * @var DisplayTab[]
      */
     protected $tabs = [];
+
+    /**
+     * @var string
+     */
+    protected $view = 'display.tabbed';
 
     public function initialize()
     {
@@ -29,11 +34,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @param string $class
      */
-    public function setClass($class)
+    public function setModelClass($class)
     {
         foreach ($this->getTabs() as $tab) {
             if ($tab instanceof DisplayInterface) {
-                $tab->setClass($class);
+                $tab->setModelClass($class);
             }
         }
     }
@@ -73,9 +78,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function appendTab(DisplayInterface $display, $label, $active = false)
     {
-        $tab = \AdminDisplay::tab($display)
-            ->setLabel($label)
-            ->setActive($active);
+        $tab = \AdminDisplay::tab($display)->setLabel($label)->setActive($active);
 
         $this->tabs[] = $tab;
 
@@ -136,6 +139,14 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
+     * @return string
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -150,7 +161,10 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('display.tabbed', $this->toArray());
+        return app('sleeping_owl.template')->view(
+            $this->getView(),
+            $this->toArray()
+        );
     }
 
     /**

@@ -168,7 +168,7 @@ class FormDefault implements DisplayInterface, FormInterface
      *
      * @return $this
      */
-    public function setClass($class)
+    public function setModelClass($class)
     {
         if (is_null($this->class)) {
             $this->class = $class;

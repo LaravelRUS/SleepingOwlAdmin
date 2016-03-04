@@ -432,7 +432,7 @@ class ModelConfiguration
 
         $display = app()->call($this->display);
         if ($display instanceof DisplayInterface) {
-            $display->setClass($this->getClass());
+            $display->setModelClass($this->getClass());
             $display->initialize();
         }
 
@@ -450,7 +450,7 @@ class ModelConfiguration
 
         $create = app()->call($this->create);
         if ($create instanceof DisplayInterface) {
-            $create->setClass($this->getClass());
+            $create->setModelClass($this->getClass());
             $create->initialize();
         }
         if ($create instanceof FormInterface) {
@@ -473,7 +473,7 @@ class ModelConfiguration
 
         $edit = app()->call($this->edit, ['id' => $id]);
         if ($edit instanceof DisplayInterface) {
-            $edit->setClass($this->getClass());
+            $edit->setModelClass($this->getClass());
             $edit->initialize();
         }
 

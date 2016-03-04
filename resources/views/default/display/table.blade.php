@@ -1,10 +1,13 @@
 @if ( ! empty($title))
 	<div class="row">
 		<div class="col-lg-12">
-			<h2 style="margin-top:0;"><small>{{ $title }}</small></h2>
+			<h2 class="page-title"><small>{{ $title }}</small></h2>
 		</div>
 	</div>
 @endif
+
+@yield('before.panel')
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		@if ($creatable)
@@ -13,41 +16,20 @@
 			</a>
 		@endif
 
-		<div class="pull-right tableActions">
-			@foreach ($actions as $action)
-				{!! $action !!}
-			@endforeach
-		</div>
+			@yield('panel.buttons')
+
+			<div class="pull-right">
+				@yield('panel.heading.actions')
+			</div>
 	</div>
 
-	<table {!! HTML::attributes($attributes) !!}>
-		<colgroup>
-			@foreach ($columns as $column)
-				<col width="{!! $column->getWidth() !!}" />
-			@endforeach
-		</colgroup>
-		<thead>
-		<tr>
-			@foreach ($columns as $column)
-				{!! $column->getHeader()->render() !!}
-			@endforeach
-		</tr>
-		</thead>
-		<tbody>
-		@foreach ($collection as $model)
-			<tr>
-				@foreach ($columns as $column)
-					<?php $column->setModel($model); ?>
-					{!! $column->render() !!}
-				@endforeach
-			</tr>
-		@endforeach
-		</tbody>
-	</table>
+	@yield('panel.heading')
 
-	@if($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
-	<div class="panel-footer">
-		{!! $collection->render() !!}
-	</div>
-	@endif
+	@foreach($extensions as $ext)
+		{!! $ext->render() !!}
+	@endforeach
+
+	@yield('panel.footer')
 </div>
+
+@yield('after.panel')

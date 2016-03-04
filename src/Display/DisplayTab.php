@@ -37,6 +37,11 @@ class DisplayTab implements DisplayInterface, FormInterface
     protected $content;
 
     /**
+     * @var string
+     */
+    protected $view = 'display.tab';
+
+    /**
      * @param DisplayInterface $content
      */
     public function __construct(DisplayInterface $content)
@@ -139,10 +144,10 @@ class DisplayTab implements DisplayInterface, FormInterface
      *
      * @return $this
      */
-    public function setClass($class)
+    public function setModelClass($class)
     {
         if ($this->getContent() instanceof DisplayInterface) {
-            $this->getContent()->setClass($class);
+            $this->getContent()->setModelClass($class);
         }
 
         return $this;
@@ -219,6 +224,14 @@ class DisplayTab implements DisplayInterface, FormInterface
     }
 
     /**
+     * @return string
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -236,7 +249,7 @@ class DisplayTab implements DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('display.tab', $this->toArray());
+        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
     }
 
     /**
