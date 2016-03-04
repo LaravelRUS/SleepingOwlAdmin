@@ -6,7 +6,6 @@ use Closure;
 
 class Apply extends Extension
 {
-
     /**
      * @var Closure[]
      */
@@ -58,7 +57,7 @@ class Apply extends Extension
     public function toArray()
     {
         return [
-            'applies' => $this->applies
+            'applies' => $this->applies,
         ];
     }
 

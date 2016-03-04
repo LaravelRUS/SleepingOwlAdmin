@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 class Scopes extends Extension
 {
-
     /**
      * @var string[]
      */
@@ -58,7 +57,7 @@ class Scopes extends Extension
     public function toArray()
     {
         return [
-            'scopes' => $this->scopes
+            'scopes' => $this->scopes,
         ];
     }
 
@@ -69,7 +68,6 @@ class Scopes extends Extension
     {
         foreach ($this->scopes as $scope) {
             if (! is_null($scope)) {
-
                 $method = array_shift($scope);
 
                 call_user_func_array([

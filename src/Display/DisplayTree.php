@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Meta;
 use Route;
 use Request;
 use SleepingOwl\Admin\Display\Extension\Tree;
@@ -12,7 +11,6 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayTree extends Display implements WithRoutesInterface
 {
-
     public static function registerRoutes()
     {
         Route::post('{adminModel}/reorder', function (ModelConfiguration $model) {
@@ -223,7 +221,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             'url'         => $model->getDisplayUrl(),
             'value'       => $this->getValue(),
             'creatable'   => $model->isCreatable(),
-            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all())
+            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
         ];
     }
 

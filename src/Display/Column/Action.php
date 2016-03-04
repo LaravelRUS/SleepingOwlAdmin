@@ -2,12 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Closure;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 
 class Action extends NamedColumn implements ActionInterface
 {
-
     /**
      * Action icon class.
      * @var string
@@ -56,7 +54,7 @@ class Action extends NamedColumn implements ActionInterface
             'class' => 'btn btn-action btn-default',
             'name'  => 'action',
             'value' => $this->getName(),
-            'data-action' => $this->getAction()
+            'data-action' => $this->getAction(),
         ]);
     }
 
@@ -149,7 +147,7 @@ class Action extends NamedColumn implements ActionInterface
             'icon'   => $this->getIcon(),
             'action' => $this->getAction(),
             'method' => $this->getMethod(),
-            'title'  => $this->getTitle()
+            'title'  => $this->getTitle(),
         ];
     }
 }

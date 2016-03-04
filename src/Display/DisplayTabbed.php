@@ -11,7 +11,6 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-
     /**
      * @var DisplayTab[]
      */

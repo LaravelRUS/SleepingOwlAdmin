@@ -18,8 +18,7 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
- * Class Display
- * @package SleepingOwl\Admin\Display
+ * Class Display.
  *
  * @method Actions getActions()
  * @method $this setActions(ActionInterface $action, ...$actions)
@@ -35,7 +34,6 @@ use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
  */
 abstract class Display implements DisplayInterface
 {
-
     use HtmlAttributes;
 
     /**
@@ -92,7 +90,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isInitialized()
     {
@@ -186,7 +184,7 @@ abstract class Display implements DisplayInterface
     public function getTitle()
     {
         $titles = [
-            $this->title
+            $this->title,
         ];
 
         $this->getExtensions()->each(function (DisplayExtensionInterface $extension) use (&$titles) {
@@ -220,7 +218,7 @@ abstract class Display implements DisplayInterface
         return [
             'title'      => $this->getTitle(),
             'extensions' => $this->getExtensions()->toArray(),
-            'attributes' => $this->getAttributes()
+            'attributes' => $this->getAttributes(),
         ];
     }
 
@@ -250,7 +248,7 @@ abstract class Display implements DisplayInterface
     {
         if (starts_with($name, 'get') and $this->extensions->has($method = strtolower(substr($name, 3)))) {
             return $this->extensions->get($method);
-        } else if (starts_with($name, 'set') and $this->extensions->has($method = strtolower(substr($name, 3)))) {
+        } elseif (starts_with($name, 'set') and $this->extensions->has($method = strtolower(substr($name, 3)))) {
             $extension = $this->extensions->get($method);
 
             if (method_exists($extension, 'set')) {
@@ -278,5 +276,4 @@ abstract class Display implements DisplayInterface
 
         return new $class($this->modelClass);
     }
-
 }
