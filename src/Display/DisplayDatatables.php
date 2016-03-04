@@ -2,9 +2,6 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
-
 class DisplayDatatables extends DisplayTable
 {
     const FILTER_POSITION_TOP = 0;

@@ -8,7 +8,6 @@ use SleepingOwl\Admin\Contracts\Initializable;
 
 class Filters extends Extension implements Initializable
 {
-
     /**
      * @var FilterInterface[]|Collection
      */
@@ -29,7 +28,7 @@ class Filters extends Extension implements Initializable
      */
     public function clear()
     {
-        $this->filters =  new Collection();
+        $this->filters = new Collection();
 
         return $this;
     }
@@ -121,7 +120,7 @@ class Filters extends Extension implements Initializable
     {
         return [
             'filters' => $this->filters->toArray(),
-            'title'   => $this->getTitle()
+            'title'   => $this->getTitle(),
         ];
     }
 

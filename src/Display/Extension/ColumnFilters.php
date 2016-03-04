@@ -39,8 +39,7 @@ class ColumnFilters extends Extension implements Initializable
 
         $this->columnFilters = [];
 
-        foreach($columnFilters as $filter)
-        {
+        foreach ($columnFilters as $filter) {
             $this->push($filter);
         }
 
@@ -116,7 +115,7 @@ class ColumnFilters extends Extension implements Initializable
     {
         return [
             'filters'    => $this->columnFilters,
-            'attributes' => $this->getAttributes()
+            'attributes' => $this->getAttributes(),
         ];
     }
 

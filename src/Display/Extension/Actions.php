@@ -9,7 +9,6 @@ use SleepingOwl\Admin\Contracts\ActionInterface;
 
 class Actions extends Extension implements Initializable
 {
-
     use HtmlAttributes;
 
     /**
@@ -132,7 +131,7 @@ class Actions extends Extension implements Initializable
         return [
             'actions'  => $this->actions,
             'position' => $this->getPosition(),
-            'attributes' => $this->getAttributes()
+            'attributes' => $this->getAttributes(),
         ];
     }
 

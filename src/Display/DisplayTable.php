@@ -12,8 +12,7 @@ use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
- * Class DisplayTable
- * @package SleepingOwl\Admin\Display
+ * Class DisplayTable.
 
  * @method Columns getColumns()
  * @method $this setColumns(ColumnInterface $column, ... $columns)
@@ -23,7 +22,6 @@ use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
  */
 class DisplayTable extends Display
 {
-
     /**
      * @var string
      */
@@ -136,8 +134,8 @@ class DisplayTable extends Display
 
         $params = parent::toArray();
 
-        $params['creatable']  = $model->isCreatable();
-        $params['createUrl']  = $model->getCreateUrl($this->getParameters() + Request::all());
+        $params['creatable'] = $model->isCreatable();
+        $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
         $params['extensions'] = $this->getExtensions()->filter(function (DisplayExtensionInterface $ext) {
             return $ext instanceof Renderable;

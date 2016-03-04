@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Traits;
 
 trait HtmlAttributes
 {
-
     /**
      * @var array
      */
@@ -79,7 +78,7 @@ trait HtmlAttributes
      */
     public function replaceAttribute($key, $attribute)
     {
-        $attribute              = $this->attributeElement($attribute);
+        $attribute = $this->attributeElement($attribute);
         $this->attributes[$key] = $attribute;
 
         return $this;

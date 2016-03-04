@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 abstract class Extension implements DisplayExtensionInterface
 {
-
     /**
      * @var DisplayInterface
      */

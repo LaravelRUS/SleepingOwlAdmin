@@ -11,7 +11,6 @@ use SleepingOwl\Admin\Contracts\ColumnInterface;
 
 class Tree extends Extension implements Initializable, Renderable
 {
-
     use HtmlAttributes;
 
     /**
@@ -152,7 +151,7 @@ class Tree extends Extension implements Initializable, Renderable
     {
         return [
             'columns'    => $this->allWithControl(),
-            'attributes' => $this->getAttributes()
+            'attributes' => $this->getAttributes(),
         ];
     }
 
