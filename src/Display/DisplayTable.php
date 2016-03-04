@@ -5,10 +5,22 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
+/**
+ * Class DisplayTable
+ * @package SleepingOwl\Admin\Display
+
+ * @method Columns getColumns()
+ * @method $this setColumns(ColumnInterface $column, ... $columns)
+ *
+ * @method getColumnFilters getColumnFilters()
+ * @method $this setColumnFilters(ColumnFilterInterface $filters = null, ...$filters)
+ */
 class DisplayTable extends Display
 {
 

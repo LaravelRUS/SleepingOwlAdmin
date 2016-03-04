@@ -8,6 +8,8 @@ use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Display\Extension\Scopes;
+use SleepingOwl\Admin\Contracts\ActionInterface;
+use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Repository\BaseRepository;
@@ -15,6 +17,22 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
+/**
+ * Class Display
+ * @package SleepingOwl\Admin\Display
+ *
+ * @method Actions getActions()
+ * @method $this setActions(ActionInterface $action, ...$actions)
+ *
+ * @method Filters getFilters()
+ * @method $this setFilters(FilterInterface $filter, ...$filters)
+ *
+ * @method Apply getApply()
+ * @method $this setApply(\Closure $apply, ...$applies)
+ *
+ * @method Scopes getScopes()
+ * @method $this setScopes(array $scope, ...$scopes)
+ */
 abstract class Display implements DisplayInterface
 {
 
