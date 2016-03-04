@@ -226,6 +226,10 @@ abstract class NamedFormElement extends FormElement
         parent::addValidationRule($rule);
 
         if (! is_null($message)) {
+            if (is_string($rule) and ($pos = strpos($rule, ':')) !== false) {
+                $rule = substr($rule, 0, $pos);
+            }
+
             $this->addValidationMessage($rule, $message);
         }
 
