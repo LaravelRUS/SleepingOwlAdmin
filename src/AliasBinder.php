@@ -16,21 +16,37 @@ class AliasBinder
      *
      * @param string $alias
      * @param string $class
+     *
+     * @return $this
      */
-    public function register($alias, $class)
+    public function add($alias, $class)
     {
         $this->aliases[$alias] = $class;
 
-        app('router')->group(
-            ['prefix' => config('sleeping_owl.url_prefix'), 'middleware' => config('sleeping_owl.middleware')],
-            function () use ($class) {
+        if (method_exists($class, 'registerRoutes')) {
+            app('router')->group([
+                'prefix'     => config('sleeping_owl.url_prefix'),
+                'middleware' => config('sleeping_owl.middleware'),
+            ], function () use ($class) {
+                call_user_func([$class, 'registerRoutes']);
+            });
+        }
 
-                if (method_exists($class, 'registerRoutes')) {
-                    call_user_func([$class, 'registerRoutes']);
-                }
+        return $this;
+    }
 
-            }
-        );
+    /**
+     * @param array $classes
+     *
+     * @return $this
+     */
+    public function register(array $classes)
+    {
+        foreach ($classes as $key => $class) {
+            $this->add($key, $class);
+        }
+
+        return $this;
     }
 
     /**
