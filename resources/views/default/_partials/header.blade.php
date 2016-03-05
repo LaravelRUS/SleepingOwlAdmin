@@ -1,4 +1,4 @@
-<a href="#" class="logo">
+<a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="logo">
 	<span class="logo-lg">{!! AdminTemplate::getLogo() !!}</span>
 	<span class="logo-mini">{!! AdminTemplate::getLogoMini() !!}</span>
 </a>

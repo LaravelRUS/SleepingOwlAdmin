@@ -2,7 +2,7 @@
 
 Route::group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function () {
     Route::get('assets/admin.scripts', [
-        'as'   => 'lang',
+        'as'   => 'scripts',
         'uses' => 'AdminController@getScripts',
     ]);
 

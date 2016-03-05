@@ -17,7 +17,7 @@ class TemplateDefault implements TemplateInterface
             'font-awesome',
         ]);
 
-        Meta::AddJs('adminScripts', route('admin.lang'));
+        Meta::AddJs('adminScripts', route('admin.scripts'), ['libraries']);
     }
 
     /**

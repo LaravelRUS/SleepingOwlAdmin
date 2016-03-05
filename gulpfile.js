@@ -28,7 +28,10 @@ elixir(function(mix) {
 			'bootstrap/js/bootstrap.js',
 			'noty/js/jquery.noty.packaged.js',
 			'bootbox.js/js/bootbox.js',
-			'moment/js/moment-with-locales.min.js'
+			'jquery-colorbox/js/jquery.colorbox-min.js',
+			'moment/js/moment-with-locales.min.js',
+			'underscore/js/underscore.js',
+			'../../../resources/assets/js/core.js'
 		], 'public/default/js/libraries.js', 'public/default/libs');
 
 	/**************************************************************
@@ -47,12 +50,12 @@ elixir(function(mix) {
 			'form/select.js',
 			'form/image/init.js',
 			'form/image/initMultiple.js',
-			'admin-default.js'
+			'init.js'
 		], 'public/default/js/admin-default.js');
 
 	mix
 		.scripts([
-			'dataTables.bootstrap.js',
-			'datatables.js'
+			'libs/datatables/dataTables.bootstrap.js',
+			'libs/datatables/datatables.js'
 		], 'public/default/js/datatables.min.js');
 });

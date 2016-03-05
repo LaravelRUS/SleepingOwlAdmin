@@ -223,12 +223,12 @@ class AdminController extends Controller
         $data = [
             'locale'       => App::getLocale(),
             'token'        => csrf_token(),
-            'prefix'       => config('sleeping_owl.url_prefix'),
+            'url_prefix'   => config('sleeping_owl.url_prefix'),
             'lang'         => $lang,
             'ckeditor_cfg' => config('sleeping_owl.ckeditor'),
         ];
 
-        $content = 'window.admin = '.json_encode($data).';';
+        $content = "window.Admin['Settings'] = ".json_encode($data, JSON_PRETTY_PRINT).";";
 
         return $this->cacheResponse(
             new Response($content, 200, [

@@ -76,6 +76,7 @@ PackageManager::add('moment')
     ->js(null, resources_url('libs/moment/js/moment-with-locales.min.js'), ['jquery']);
 
 PackageManager::add('nestable')
+    ->css(null, resources_url('libs/nestable/css/jquery.nestable.css'))
     ->js(null, resources_url('libs/nestable/js/jquery.nestable.js'), ['jquery']);
 
 PackageManager::add('noty')

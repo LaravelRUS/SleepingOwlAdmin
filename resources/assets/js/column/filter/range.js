@@ -13,7 +13,7 @@ window.columnFilters.range = function (container, table) {
             return true;
         }
         var value = table.data()[dataIndex][index];
-        if (value['@data-order'] !== undefined) {
+        if (value && value['@data-order'] !== undefined) {
             value = value['@data-order'];
         }
 

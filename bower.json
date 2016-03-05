@@ -3,6 +3,7 @@
   "version": "0.1",
   "dependencies": {
     "jquery": "latest",
+    "underscore": "latest",
     "bootstrap": "latest",
     "bootbox": "latest",
     "eonasdan-bootstrap-datetimepicker": "latest",
@@ -17,6 +18,7 @@
     "ekko-lightbox": "latest",
     "metisMenu": "latest",
     "datatables": "latest",
+    "colorbox": "latest",
     "admin-lte": "latest"
   },
   "install": {
@@ -89,6 +91,11 @@
       "admin-lte": [
         "bower_components/admin-lte/build/less/**",
         "bower_components/admin-lte/dist/js/**"
+      ],
+      "colorbox": [
+        "bower_components/colorbox/jquery.colorbox.js",
+        "bower_components/colorbox/jquery.colorbox-min.js",
+        "bower_components/colorbox/example3/images/*.*"
       ]
     }
   }
