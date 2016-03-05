@@ -65,8 +65,6 @@ class DisplayTable extends Display
     {
         parent::initialize();
 
-        \Meta::loadPackage(get_called_class());
-
         $this->setAttribute('class', 'table table-striped');
     }
 

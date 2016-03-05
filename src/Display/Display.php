@@ -81,6 +81,7 @@ abstract class Display implements DisplayInterface
      */
     public function __construct()
     {
+
         $this->extensions = new Collection();
 
         $this->extend('actions', new Actions());
@@ -149,6 +150,8 @@ abstract class Display implements DisplayInterface
         if ($this->isInitialized()) {
             return;
         }
+
+        \Meta::loadPackage(get_called_class());
 
         $this->repository = $this->makeRepository();
         $this->repository->setWith($this->with);

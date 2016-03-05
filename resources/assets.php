@@ -16,6 +16,9 @@ PackageManager::add(\SleepingOwl\Admin\Display\Column\Filter\Date::class)
 PackageManager::add(\SleepingOwl\Admin\Form\Element\Select::class)
     ->with('select2');
 
+PackageManager::add(\SleepingOwl\Admin\Display\DisplayTree::class)
+    ->with('nestable');
+
 PackageManager::add(\SleepingOwl\Admin\Display\DisplayDatatables::class)
     ->js(null, resources_url('js/datatables.min.js'), ['datatables'])
     ->with('datatables');

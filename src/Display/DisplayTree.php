@@ -14,10 +14,16 @@ class DisplayTree extends Display implements WithRoutesInterface
     public static function registerRoutes()
     {
         Route::post('{adminModel}/reorder', function (ModelConfiguration $model) {
-            $data = Request::get('data');
-            $model->getDisplay()->repository()->reorder($data);
+            $model->fireDisplay()->getRepository()->reorder(
+                Request::get('data')
+            );
         });
     }
+
+    /**
+     * @var string
+     */
+    protected $view = 'display.tree';
 
     /**
      * @var array
@@ -75,9 +81,10 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         parent::initialize();
 
-        $this->repository->parentField($this->getParentField());
-        $this->repository->orderField($this->getOrderField());
-        $this->repository->rootParentId($this->getRootParentId());
+        $this->getRepository()
+            ->setParentField($this->getParentField())
+            ->setOrderField($this->getOrderField())
+            ->setRootParentId($this->getRootParentId());
     }
 
     /**
@@ -216,12 +223,14 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         $model = $this->getModelConfiguration();
 
-        return $this->toArray() + [
+        return parent::toArray() + [
+            'items'       => $this->getRepository()->getTree(),
             'reorderable' => $this->isReorderable(),
             'url'         => $model->getDisplayUrl(),
             'value'       => $this->getValue(),
             'creatable'   => $model->isCreatable(),
             'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
+            'controls'    => [app('sleeping_owl.table.column')->treeControl()]
         ];
     }
 
@@ -230,6 +239,6 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->class);
+        return app('sleeping_owl')->getModel($this->modelClass);
     }
 }

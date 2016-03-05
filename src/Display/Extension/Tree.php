@@ -14,11 +14,6 @@ class Tree extends Extension implements Initializable, Renderable
     use HtmlAttributes;
 
     /**
-     * @var ColumnInterface[]|Collection
-     */
-    protected $columns;
-
-    /**
      * @var bool
      */
     protected $controlActive = true;
