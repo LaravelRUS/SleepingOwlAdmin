@@ -147,6 +147,15 @@ class Columns extends FormElement
         });
     }
 
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        $this->applyCallbackToItems(function (FormElementInterface $item) {
+            $item->afterSave();
+        });
+    }
+
     /**
      * @param Closure $callback
      */
