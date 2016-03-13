@@ -96,9 +96,8 @@ abstract class FilterBase implements FilterInterface
      */
     public function initialize()
     {
-        $value = $this->value;
-        if (is_null($value)) {
-            $value = Request::get($this->getAlias());
+        if (is_null($value = $this->getValue())) {
+            $value = Request::offsetGet($this->getAlias());
         }
 
         $params = $this->getOperatorParams();
@@ -247,24 +246,51 @@ abstract class FilterBase implements FilterInterface
      */
     public function apply(Builder $query)
     {
+        $name = $this->getName();
+        $value = $this->getValue();
+        $relationName = null;
+
+        if (strpos($name, '.') !== false) {
+            $parts = explode('.', $name);
+            $name = array_pop($parts);
+            $relationName = implode('.', $parts);
+        }
+
+        if(!is_null($relationName)) {
+            $query->whereHas($relationName, function ($q) use ($name, $value) {
+                $this->buildQuery($q, $name, $value);
+            });
+        } else {
+            $this->buildQuery($query, $name, $value);
+        }
+    }
+
+    /**
+     * @param Builder      $query
+     * @param string       $column
+     * @param string|array $value
+     */
+    protected function buildQuery(Builder $query, $column, $value)
+    {
         $params = $this->getOperatorParams();
         $method = $params['method'];
+
         switch ($method) {
             case 'where':
-                $value = str_replace('?', $this->getValue(), array_get($params, 'mod', '?'));
-                $query->where($this->getName(), $params['op'], $value);
+                $value = str_replace('?', $value, array_get($params, 'mod', '?'));
+                $query->where($column, $params['op'], $value);
                 break;
             case 'whereNull':
             case 'whereNotNull':
-                $query->$method($this->getName());
+                $query->{$method}($column);
                 break;
             case 'whereBetween':
             case 'whereNotBetween':
-                $query->$method($this->getName(), (array) $this->getValue());
+                $query->{$method}($column, (array) $value);
                 break;
             case 'whereIn':
             case 'whereNotIn':
-                $query->$method($this->getName(), (array) $this->getValue());
+                $query->{$method}($column, (array) $value);
                 break;
         }
     }
