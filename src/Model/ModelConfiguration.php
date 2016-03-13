@@ -23,6 +23,11 @@ class ModelConfiguration
     protected $alias;
 
     /**
+     * @var string|null
+     */
+    protected $controllerClass;
+
+    /**
      * @var string
      */
     protected $title;
@@ -683,6 +688,34 @@ class ModelConfiguration
     public function setMessageOnRestore($messageOnRestore)
     {
         $this->messageOnRestore = $messageOnRestore;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function hasCustomControllerClass()
+    {
+        return ! is_null($controller = $this->getControllerClass()) and class_exists($controller);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getControllerClass()
+    {
+        return $this->controllerClass;
+    }
+
+    /**
+     * @param string $controllerClass
+     *
+     * @return $this
+     */
+    public function setControllerClass($controllerClass)
+    {
+        $this->controllerClass = $controllerClass;
 
         return $this;
     }

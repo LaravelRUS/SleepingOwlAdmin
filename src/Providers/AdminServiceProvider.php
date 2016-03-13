@@ -7,6 +7,7 @@ use SleepingOwl\Admin\Navigation;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AdminServiceProvider extends ServiceProvider
@@ -118,14 +119,28 @@ class AdminServiceProvider extends ServiceProvider
             if (count($aliases) > 0) {
                 $this->app['router']->pattern('adminModel', implode('|', $aliases));
 
-                $this->app['router']->bind('adminModel', function ($model) use ($aliases) {
+                $this->app['router']->bind('adminModel', function ($model, \Illuminate\Routing\Route $route) use ($aliases) {
                     $class = array_search($model, $aliases);
 
                     if ($class === false) {
                         throw new ModelNotFoundException;
                     }
 
-                    return $this->app['sleeping_owl']->getModel($class);
+                    /** @var ModelConfiguration $model */
+                    $model = $this->app['sleeping_owl']->getModel($class);
+
+                    if ($model->hasCustomControllerClass()) {
+                        list($controller, $action) = explode('@', $route->getActionName(), 2);
+
+                        $newController = $model->getControllerClass().'@'.$action;
+
+                        $route->uses([
+                            'uses' => $newController,
+                            'controller' => $newController
+                        ]);
+                    }
+
+                    return $model;
                 });
             }
 
