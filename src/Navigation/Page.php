@@ -180,6 +180,24 @@ class Page extends Navigation implements PageInterface
     }
 
     /**
+     * @return array
+     */
+    public function getPath()
+    {
+        $data = [
+            $this->toArray()
+        ];
+
+        $page = $this;
+
+        while (! is_null($page = $page->getParent())) {
+            $data[] = $page->toArray();
+        }
+
+        return $data;
+    }
+
+    /**
      * @return Badge
      */
     public function getBadge()
@@ -200,14 +218,14 @@ class Page extends Navigation implements PageInterface
     }
 
     /**
-     * @param atring   $value
+     * @param string   $value
      * @param \Closure $closure
      *
-     * @return Badge
+     * @return $this
      */
     public function addBadge($value, \Closure $closure = null)
     {
-        $this->badge = new Badge($value);
+        $this->badge = app()->make(BadgeInterface::class, [$value]);
 
         if (is_callable($closure)) {
             call_user_func($closure, $this->badge);
@@ -273,11 +291,11 @@ class Page extends Navigation implements PageInterface
     }
 
     /**
-     * @param Page $page
+     * @param PageInterface $page
      *
      * @return $this
      */
-    public function setParent(Page $page)
+    public function setParent(PageInterface $page)
     {
         $this->parent = $page;
 
@@ -370,5 +388,21 @@ class Page extends Navigation implements PageInterface
         $this->model = $model;
 
         return $this;
+    }
+
+    protected function findActive()
+    {
+        $url = url()->current();
+
+        $this->getPages()->each(function (PageInterface $page) use($url) {
+            if (strpos($url, $page->getUrl()) !== false) {
+                Navigation::$foundPages[] = [
+                    levenshtein($url, $page->getUrl()),
+                    $page
+                ];
+            }
+
+            $page->findActive();
+        });
     }
 }

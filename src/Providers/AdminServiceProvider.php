@@ -9,6 +9,8 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -20,10 +22,7 @@ class AdminServiceProvider extends ServiceProvider
             return new Admin();
         });
 
-        $this->app->singleton('sleeping_owl.navigation', function () {
-            return new Navigation();
-        });
-
+        $this->registerNavigation();
         $this->registerAliases();
     }
 
@@ -68,6 +67,16 @@ class AdminServiceProvider extends ServiceProvider
                 $this->app['sleeping_owl.navigation']->setFromArray($items);
             }
         }
+    }
+
+    protected function registerNavigation()
+    {
+        $this->app->bind(PageInterface::class, Navigation\Page::class);
+        $this->app->bind(BadgeInterface::class, Navigation\Badge::class);
+
+        $this->app->singleton('sleeping_owl.navigation', function () {
+            return new Navigation();
+        });
     }
 
     /**

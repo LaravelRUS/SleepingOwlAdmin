@@ -7,9 +7,21 @@ use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 class Navigation implements Renderable, Arrayable
 {
+
+    /**
+     * @var Page|null
+     */
+    protected static $current;
+
+    /**
+     * @var Page|null
+     */
+    protected static $foundPages = [];
+
     /**
      * @var Collection
      */
@@ -45,10 +57,10 @@ class Navigation implements Renderable, Arrayable
         if (is_array($page)) {
             $page = $this->createPageFromArray($page);
         } elseif (is_string($page) or is_null($page)) {
-            $page = new Page($page);
+            $page = app()->make(PageInterface::class, [$page]);
         }
 
-        if (! ($page instanceof Page)) {
+        if (! ($page instanceof PageInterface)) {
             return;
         }
 
@@ -106,6 +118,16 @@ class Navigation implements Renderable, Arrayable
     }
 
     /**
+     * @return Page|null
+     */
+    public function getCurrent()
+    {
+        $this->findActive();
+
+        return Navigation::$current;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -129,7 +151,7 @@ class Navigation implements Renderable, Arrayable
 
     public function filterByAccessRights()
     {
-        $this->items = $this->getPages()->filter(function (Page $page) {
+        $this->items = $this->getPages()->filter(function (PageInterface $page) {
             $page->filterByAccessRights();
 
             return $page->checkAccess();
@@ -138,22 +160,52 @@ class Navigation implements Renderable, Arrayable
 
     public function sort()
     {
-        $this->items = $this->getPages()->sortBy(function (Page $page) {
+        $this->items = $this->getPages()->sortBy(function (PageInterface $page) {
             $page->sort();
 
             return $page->getPriority();
         });
     }
 
+    /**
+     * @return bool
+     */
     protected function findActive()
     {
-        $this->getPages()->each(function (Page $page) {
-            if ($page->getUrl() == url()->current()) {
-                $page->setActive();
+        if (! is_null(Navigation::$current)) {
+            return true;
+        }
+
+        $url = url()->current();
+
+        $this->getPages()->each(function (PageInterface $page) use ($url) {
+            if (strpos($url, $page->getUrl()) !== false) {
+                Navigation::$foundPages[] = [
+                    levenshtein($url, $page->getUrl()),
+                    $page
+                ];
             }
 
             $page->findActive();
         });
+
+        $calculates = [];
+
+        foreach (Navigation::$foundPages as $data) {
+            $calculates[] = $data[0];
+        }
+
+        if (count($calculates)) {
+            Navigation::$current = array_get(Navigation::$foundPages, array_search(min($calculates), $calculates).'.1');
+        }
+
+
+        if (! is_null(Navigation::$current)) {
+            Navigation::$current->setActive();
+
+        }
+
+        return false;
     }
 
     /**
@@ -175,11 +227,11 @@ class Navigation implements Renderable, Arrayable
     /**
      * @param array $data
      *
-     * @return Page
+     * @return PageInterface
      */
     protected function createPageFromArray(array $data)
     {
-        $page = new Page();
+        $page = app()->make(PageInterface::class);
 
         foreach ($data as $key => $value) {
             if ($key != 'pages' and method_exists($page, $method = 'set'.ucfirst($key))) {
