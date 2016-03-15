@@ -11,6 +11,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class AdminController extends Controller
 {
@@ -132,6 +133,37 @@ class AdminController extends Controller
         }
 
         return $response->with('success_message', $model->getMessageOnUpdate());
+    }
+
+    /**
+     * @param ModelConfiguration $model
+     */
+    public function inlineEdit(ModelConfiguration $model)
+    {
+        $field = Request::get('name');
+        $value = Request::get('value');
+        $id = Request::get('pk');
+
+        $display = $model->fireDisplay();
+
+        /** @var ColumnEditableInterface|null $column */
+        $column = $display->getColumns()->all()->filter(function($column) use($field) {
+            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+        })->first();
+
+        if (is_null($column)) {
+            abort(404);
+        }
+
+        $repository = $model->getRepository();
+        $item = $repository->find($id);
+
+        if (is_null($item) || ! $model->isEditable($item)) {
+            abort(404);
+        }
+
+        $column->setModel($item);
+        $column->save($value);
     }
 
     /**

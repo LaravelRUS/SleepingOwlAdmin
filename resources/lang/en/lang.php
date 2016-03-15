@@ -63,6 +63,12 @@ return [
             'last'     => 'Last',
         ],
     ],
+    'editable' => [
+        'checkbox' => [
+            'checked'   => 'Yes',
+            'unchecked' => 'No',
+        ],
+    ],
     'select'   => [
         'nothing'     => 'Nothing selected',
         'selected'    => 'selected',

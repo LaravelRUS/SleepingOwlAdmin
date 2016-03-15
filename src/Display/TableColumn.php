@@ -4,14 +4,12 @@ namespace SleepingOwl\Admin\Display;
 
 use Meta;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\HtmlAttributes;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
-abstract class TableColumn implements Renderable, ColumnInterface, Arrayable
+abstract class TableColumn implements ColumnInterface
 {
     use HtmlAttributes;
 

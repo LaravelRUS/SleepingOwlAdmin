@@ -53,6 +53,18 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return parent::toArray() + [
+            'name' => $this->getName()
+        ];
+    }
+
+    /**
      * Get column value from instance.
      *
      * @param Collection|Model $instance

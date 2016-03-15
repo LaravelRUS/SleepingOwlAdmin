@@ -31,6 +31,7 @@ elixir(function(mix) {
 			'jquery-colorbox/js/jquery.colorbox-min.js',
 			'moment/js/moment-with-locales.min.js',
 			'underscore/js/underscore.js',
+			'x-editable/js/bootstrap-editable.min.js',
 			'../../../resources/assets/js/core.js'
 		], 'public/default/js/libraries.js', 'public/default/libs');
 

@@ -19,7 +19,8 @@
     "metisMenu": "latest",
     "datatables": "latest",
     "colorbox": "latest",
-    "admin-lte": "latest"
+    "admin-lte": "latest",
+    "x-editable": "latest"
   },
   "install": {
     "base": "public/default/libs",
@@ -96,6 +97,11 @@
         "bower_components/colorbox/jquery.colorbox.js",
         "bower_components/colorbox/jquery.colorbox-min.js",
         "bower_components/colorbox/example3/images/*.*"
+      ],
+      "x-editable": [
+        "bower_components/x-editable/dist/bootstrap3-editable/js/*.*",
+        "bower_components/x-editable/dist/bootstrap3-editable/css/*.*",
+        "bower_components/x-editable/dist/bootstrap3-editable/img/*.*"
       ]
     }
   }

@@ -5,6 +5,9 @@ $(function () {
         }
     });
 
+
+    $('.inline-editable').editable();
+
     Admin.Components.init();
     Admin.Controllers.call();
 });

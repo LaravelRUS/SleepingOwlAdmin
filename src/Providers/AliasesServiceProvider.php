@@ -10,6 +10,7 @@ class AliasesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerColumns();
+        $this->registerColumnEditable();
         $this->registerColumnFilters();
         $this->registerDisplays();
         $this->registerForms();
@@ -68,6 +69,17 @@ class AliasesServiceProvider extends ServiceProvider
         ]);
 
         $this->app->singleton('sleeping_owl.table.column', function() use($alias) {
+            return $alias;
+        });
+    }
+
+    protected function registerColumnEditable()
+    {
+        $alias = (new AliasBinder())->register([
+            'checkbox'    => \SleepingOwl\Admin\Display\Column\Editable\Checkbox::class
+        ]);
+
+        $this->app->singleton('sleeping_owl.table.column.editable', function() use($alias) {
             return $alias;
         });
     }

@@ -11,6 +11,11 @@ Route::group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controlle
         'uses' => 'AdminController@getDisplay',
     ]);
 
+    Route::post('{adminModel}', [
+        'as'   => 'model',
+        'uses' => 'AdminController@inlineEdit',
+    ]);
+
     Route::get('{adminModel}/create', [
         'as'   => 'model.create',
         'uses' => 'AdminController@getCreate',
