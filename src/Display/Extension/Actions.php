@@ -24,7 +24,7 @@ class Actions extends Extension implements Initializable
     /**
      * @var string
      */
-    protected $position = 'panel.footer';
+    protected $placement = 'panel.footer';
 
     public function __construct()
     {
@@ -104,19 +104,19 @@ class Actions extends Extension implements Initializable
     /**
      * @return string
      */
-    public function getPosition()
+    public function getPlacement()
     {
-        return $this->position;
+        return $this->placement;
     }
 
     /**
-     * @param string $position
+     * @param string $placement
      *
      * @return $this
      */
-    public function setPosition($position)
+    public function setPlacement($placement)
     {
-        $this->position = $position;
+        $this->placement = $placement;
 
         return $this;
     }
@@ -130,7 +130,7 @@ class Actions extends Extension implements Initializable
     {
         return [
             'actions'  => $this->actions,
-            'position' => $this->getPosition(),
+            'placement' => $this->getPlacement(),
             'attributes' => $this->getAttributes(),
         ];
     }
@@ -158,7 +158,7 @@ class Actions extends Extension implements Initializable
 
         view()->composer($template, function (\Illuminate\View\View $view) {
             $view->getFactory()->inject(
-                $this->getPosition(),
+                $this->getPlacement(),
                 app('sleeping_owl.template')->view($this->getView(), $this->toArray())
             );
         });
