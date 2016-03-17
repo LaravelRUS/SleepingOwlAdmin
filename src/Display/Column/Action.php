@@ -120,6 +120,46 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
+     * @return $this
+     */
+    public function useGet()
+    {
+        $this->method = 'get';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function usePost()
+    {
+        $this->method = 'post';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function usePut()
+    {
+        $this->method = 'put';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function useDelete()
+    {
+        $this->method = 'delete';
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getIcon()
