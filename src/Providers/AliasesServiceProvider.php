@@ -27,7 +27,7 @@ class AliasesServiceProvider extends ServiceProvider
             'select' => \SleepingOwl\Admin\Display\Column\Filter\Select::class,
         ]);
 
-        $this->app->singleton('sleeping_owl.column_filter', function() use($alias) {
+        $this->app->singleton('sleeping_owl.column_filter', function () use ($alias) {
             return $alias;
         });
     }
@@ -40,10 +40,10 @@ class AliasesServiceProvider extends ServiceProvider
             'tab'             => \SleepingOwl\Admin\Display\DisplayTab::class,
             'tabbed'          => \SleepingOwl\Admin\Display\DisplayTabbed::class,
             'table'           => \SleepingOwl\Admin\Display\DisplayTable::class,
-            'tree'            => \SleepingOwl\Admin\Display\DisplayTree::class
+            'tree'            => \SleepingOwl\Admin\Display\DisplayTree::class,
         ]);
 
-        $this->app->singleton('sleeping_owl.display', function() use($alias) {
+        $this->app->singleton('sleeping_owl.display', function () use ($alias) {
             return $alias;
         });
     }
@@ -68,7 +68,7 @@ class AliasesServiceProvider extends ServiceProvider
             'treeControl' => \SleepingOwl\Admin\Display\Column\TreeControl::class,
         ]);
 
-        $this->app->singleton('sleeping_owl.table.column', function() use($alias) {
+        $this->app->singleton('sleeping_owl.table.column', function () use ($alias) {
             return $alias;
         });
     }
@@ -76,10 +76,10 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerColumnEditable()
     {
         $alias = (new AliasBinder())->register([
-            'checkbox'    => \SleepingOwl\Admin\Display\Column\Editable\Checkbox::class
+            'checkbox'    => \SleepingOwl\Admin\Display\Column\Editable\Checkbox::class,
         ]);
 
-        $this->app->singleton('sleeping_owl.table.column.editable', function() use($alias) {
+        $this->app->singleton('sleeping_owl.table.column.editable', function () use ($alias) {
             return $alias;
         });
     }
@@ -109,7 +109,7 @@ class AliasesServiceProvider extends ServiceProvider
             'wysiwyg'     => \SleepingOwl\Admin\Form\Element\Wysiwyg::class,
         ]);
 
-        $this->app->singleton('sleeping_owl.form.element', function() use($alias) {
+        $this->app->singleton('sleeping_owl.form.element', function () use ($alias) {
             return $alias;
         });
     }
@@ -122,7 +122,7 @@ class AliasesServiceProvider extends ServiceProvider
             'panel'  => \SleepingOwl\Admin\Form\FormPanel::class,
         ]);
 
-        $this->app->singleton('sleeping_owl.form', function() use($alias) {
+        $this->app->singleton('sleeping_owl.form', function () use ($alias) {
             return $alias;
         });
     }
@@ -136,7 +136,7 @@ class AliasesServiceProvider extends ServiceProvider
             'related' => \SleepingOwl\Admin\Display\Filter\FilterRelated::class,
         ]);
 
-        $this->app->singleton('sleeping_owl.display.filter', function() use($alias) {
+        $this->app->singleton('sleeping_owl.display.filter', function () use ($alias) {
             return $alias;
         });
     }

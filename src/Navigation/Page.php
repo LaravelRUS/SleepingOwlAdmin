@@ -185,7 +185,7 @@ class Page extends Navigation implements PageInterface
     public function getPath()
     {
         $data = [
-            $this->toArray()
+            $this->toArray(),
         ];
 
         $page = $this;
@@ -394,11 +394,11 @@ class Page extends Navigation implements PageInterface
     {
         $url = url()->current();
 
-        $this->getPages()->each(function (PageInterface $page) use($url) {
+        $this->getPages()->each(function (PageInterface $page) use ($url) {
             if (strpos($url, $page->getUrl()) !== false) {
                 Navigation::$foundPages[] = [
                     levenshtein($url, $page->getUrl()),
-                    $page
+                    $page,
                 ];
             }
 

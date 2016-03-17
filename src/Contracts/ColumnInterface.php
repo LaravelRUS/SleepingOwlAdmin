@@ -9,7 +9,6 @@ use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 interface ColumnInterface extends Initializable, Renderable, Arrayable
 {
-
     /**
      * @param Model $model
      *

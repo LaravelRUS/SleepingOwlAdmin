@@ -230,7 +230,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             'value'       => $this->getValue(),
             'creatable'   => $model->isCreatable(),
             'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls'    => [app('sleeping_owl.table.column')->treeControl()]
+            'controls'    => [app('sleeping_owl.table.column')->treeControl()],
         ];
     }
 

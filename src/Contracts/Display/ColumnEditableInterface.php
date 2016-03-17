@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Contracts\Display;
 
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 
-interface ColumnEditableInterface extends ColumnInterface {
-
+interface ColumnEditableInterface extends ColumnInterface
+{
     /**
      * Save form item.
      *

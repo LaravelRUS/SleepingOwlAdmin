@@ -41,7 +41,7 @@ class Password extends NamedFormElement
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAllowedEmptyValue()
     {
