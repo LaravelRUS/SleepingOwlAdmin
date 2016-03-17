@@ -81,7 +81,6 @@ abstract class Display implements DisplayInterface
      */
     public function __construct()
     {
-
         $this->extensions = new Collection();
 
         $this->extend('actions', new Actions());

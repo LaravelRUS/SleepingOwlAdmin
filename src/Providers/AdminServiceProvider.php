@@ -145,7 +145,7 @@ class AdminServiceProvider extends ServiceProvider
 
                         $route->uses([
                             'uses' => $newController,
-                            'controller' => $newController
+                            'controller' => $newController,
                         ]);
                     }
 

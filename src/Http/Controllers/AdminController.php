@@ -147,7 +147,7 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
 
         /** @var ColumnEditableInterface|null $column */
-        $column = $display->getColumns()->all()->filter(function($column) use($field) {
+        $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
             return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
         })->first();
 
@@ -260,7 +260,7 @@ class AdminController extends Controller
             'ckeditor_cfg' => config('sleeping_owl.ckeditor'),
         ];
 
-        $content = "window.Admin['Settings'] = ".json_encode($data, JSON_PRETTY_PRINT).";";
+        $content = "window.Admin['Settings'] = ".json_encode($data, JSON_PRETTY_PRINT).';';
 
         return $this->cacheResponse(
             new Response($content, 200, [

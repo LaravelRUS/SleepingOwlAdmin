@@ -42,7 +42,7 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
      */
     public function getCheckedLabel()
     {
-        if(is_null($label = $this->checkedLabel)) {
+        if (is_null($label = $this->checkedLabel)) {
             $label = trans('sleeping_owl::lang.editable.checkbox.checked');
         }
 
@@ -66,7 +66,7 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
      */
     public function getUncheckedLabel()
     {
-        if(is_null($label = $this->uncheckedLabel)) {
+        if (is_null($label = $this->uncheckedLabel)) {
             $label = trans('sleeping_owl::lang.editable.checkbox.unchecked');
         }
 

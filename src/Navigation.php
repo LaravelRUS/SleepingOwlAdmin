@@ -11,7 +11,6 @@ use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 class Navigation implements Renderable, Arrayable
 {
-
     /**
      * @var Page|null
      */
@@ -124,7 +123,7 @@ class Navigation implements Renderable, Arrayable
     {
         $this->findActive();
 
-        return Navigation::$current;
+        return self::$current;
     }
 
     /**
@@ -172,7 +171,7 @@ class Navigation implements Renderable, Arrayable
      */
     protected function findActive()
     {
-        if (! is_null(Navigation::$current)) {
+        if (! is_null(self::$current)) {
             return true;
         }
 
@@ -182,7 +181,7 @@ class Navigation implements Renderable, Arrayable
             if (strpos($url, $page->getUrl()) !== false) {
                 Navigation::$foundPages[] = [
                     levenshtein($url, $page->getUrl()),
-                    $page
+                    $page,
                 ];
             }
 
@@ -191,18 +190,16 @@ class Navigation implements Renderable, Arrayable
 
         $calculates = [];
 
-        foreach (Navigation::$foundPages as $data) {
+        foreach (self::$foundPages as $data) {
             $calculates[] = $data[0];
         }
 
         if (count($calculates)) {
-            Navigation::$current = array_get(Navigation::$foundPages, array_search(min($calculates), $calculates).'.1');
+            self::$current = array_get(self::$foundPages, array_search(min($calculates), $calculates).'.1');
         }
 
-
-        if (! is_null(Navigation::$current)) {
-            Navigation::$current->setActive();
-
+        if (! is_null(self::$current)) {
+            self::$current->setActive();
         }
 
         return false;
