@@ -1,5 +1,6 @@
 <form {!! HTML::attributes($attributes) !!}>
-    <input type="hidden" name="_ids[]" />
+    {{ csrf_field() }}
+
     @foreach ($actions as $action)
         {!! $action->render() !!}
     @endforeach

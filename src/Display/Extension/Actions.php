@@ -148,6 +148,8 @@ class Actions extends Extension implements Initializable
             $action->initialize();
         });
 
+        $this->setAttribute('data-type', 'display-actions');
+
         if (! $this->hasAttribute('class')) {
             $this->setAttribute('class', 'panel-footer');
         }

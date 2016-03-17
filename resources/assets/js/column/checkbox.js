@@ -1,17 +1,29 @@
 $(function () {
-    $('.adminCheckboxAll').change(function () {
-        var checked = $(this).is(':checked');
-        $('.adminCheckboxRow').prop('checked', checked).filter(':first').change();
+    $('.adminCheckboxRow').on('change', function(e) {
+        var $self = $(this),
+            $row = $self.closest('tr');
+
+        if($self.is(':checked')) {
+            $row.addClass('info');
+        } else {
+            $row.removeClass('info');
+        }
     });
-    $(document).delegate('.adminCheckboxRow', 'change', function () {
-        var selected = [];
-        $('.adminCheckboxRow:checked').each(function () {
-            selected.push($(this).val());
-        });
-        $('.tableActions .btnAction').each(function () {
-            var $this = $(this);
-            var url = $this.data('href') + selected.join(',');
-            $this.attr('href', url);
-        });
+
+    $('.adminCheckboxAll').on('change', function() {
+        var $self = $(this),
+            $checkboxes = $('.adminCheckboxRow');
+
+        if($self.is(':checked')) {
+            $checkboxes.not(':checked').each(function(i, a) {
+                this.checked = true;
+                $(this).trigger('change');
+            });
+        } else {
+            $checkboxes.filter(':checked').each(function(i, a) {
+                this.checked = false;
+                $(this).trigger('change');
+            });
+        }
     });
 });

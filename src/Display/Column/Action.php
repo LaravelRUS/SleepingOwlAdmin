@@ -55,6 +55,7 @@ class Action extends NamedColumn implements ActionInterface
             'name'  => 'action',
             'value' => $this->getName(),
             'data-action' => $this->getAction(),
+            'data-method' => $this->getMethod(),
         ]);
     }
 

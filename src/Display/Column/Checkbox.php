@@ -16,7 +16,7 @@ class Checkbox extends TableColumn
     {
         parent::__construct();
         $this->setLabel(
-            Form::checkbox(null, 1, ['class' => 'adminCheckboxAll']
+            Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
         ));
 
         $this->setOrderable(false);
