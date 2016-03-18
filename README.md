@@ -58,7 +58,7 @@ SleepingOwl Admin is administrative interface builder for Laravel.
 
 ## Demo project
 
-You can download demo project https://github.com/SleepingOwlAdmin/SleepingOwlAdminDemo
+You can download demo project https://github.com/SleepingOwlAdmin/demo
 
 ## Documentation
 
