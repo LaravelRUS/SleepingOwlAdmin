@@ -194,7 +194,11 @@ class AdminController extends Controller
      */
     public function postRestore($model, $id)
     {
-        $item = $model->getRepository()->find($id);
+        if (! $model->isRestorableModel()) {
+            abort(404);
+        }
+
+        $item = $model->getRepository()->findOnlyTrashed($id);
 
         if (is_null($item) || ! $model->isRestorable($item)) {
             abort(404);

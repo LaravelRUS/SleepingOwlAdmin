@@ -25,7 +25,7 @@ interface RepositoryInterface
     /**
      * @param \string[] $with
      */
-    public function setWith($with);
+    public function with($with);
 
     /**
      * Get base query.
@@ -41,6 +41,15 @@ interface RepositoryInterface
      * @return Model|null
      */
     public function find($id);
+
+    /**
+     * Find model instance by id.
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function findOnlyTrashed($id);
 
     /**
      * Find model instances by ids.
@@ -73,4 +82,9 @@ interface RepositoryInterface
      * @return bool
      */
     public function hasColumn($column);
+
+    /**
+     * @return bool
+     */
+    public function isRestorable();
 }

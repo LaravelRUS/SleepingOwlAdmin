@@ -152,7 +152,7 @@ abstract class Display implements DisplayInterface
         \Meta::loadPackage(get_called_class());
 
         $this->repository = $this->makeRepository();
-        $this->repository->setWith($this->with);
+        $this->repository->with($this->with);
 
         $this->extensions->each(function (DisplayExtensionInterface $extension) {
 

@@ -65,6 +65,12 @@ class DisplayTable extends Display
     {
         parent::initialize();
 
+        if ($this->getModelConfiguration()->isRestorableModel()) {
+            $this->setApply(function ($q) {
+                return $q->withTrashed();
+            });
+        }
+
         $this->setAttribute('class', 'table table-striped');
     }
 
@@ -135,6 +141,7 @@ class DisplayTable extends Display
         $params['creatable'] = $model->isCreatable();
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
+
         $params['extensions'] = $this->getExtensions()->filter(function (DisplayExtensionInterface $ext) {
             return $ext instanceof Renderable;
         });

@@ -39,6 +39,7 @@ class BaseRepository implements RepositoryInterface
             $this->class = $class;
             $model = app($this->class);
         }
+
         $this->setModel($model);
     }
 
@@ -69,7 +70,7 @@ class BaseRepository implements RepositoryInterface
     /**
      * @param \string[] $with
      */
-    public function setWith($with)
+    public function with($with)
     {
         if (! is_array($with)) {
             $with = func_get_args();
@@ -100,7 +101,24 @@ class BaseRepository implements RepositoryInterface
      */
     public function find($id)
     {
-        return $this->getModel()->find($id);
+        $query = $this->getQuery();
+        if ($this->isRestorable()) {
+            $query->withTrashed();
+        }
+
+        return $query->find($id);
+    }
+
+    /**
+     * Find model instance by id.
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function findOnlyTrashed($id)
+    {
+        return $this->getQuery()->onlyTrashed()->find($id);
     }
 
     /**
@@ -112,8 +130,8 @@ class BaseRepository implements RepositoryInterface
      */
     public function findMany(array $ids)
     {
-        $query = $this->getModel()->query();
-        if (method_exists($this->getModel(), 'withTrashed')) {
+        $query = $this->getQuery();
+        if ($this->isRestorable()) {
             $query->withTrashed();
         }
 
@@ -137,7 +155,7 @@ class BaseRepository implements RepositoryInterface
      */
     public function restore($id)
     {
-        $this->query()->onlyTrashed()->find($id)->restore();
+        $this->findOnlyTrashed($id)->restore();
     }
 
     /**
@@ -155,5 +173,13 @@ class BaseRepository implements RepositoryInterface
         });
 
         return array_search($column, $columns) !== false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRestorable()
+    {
+        return in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($this->class));
     }
 }

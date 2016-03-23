@@ -108,6 +108,11 @@ class ModelConfiguration
     protected $messageOnRestore;
 
     /**
+     * @var RepositoryInterface;
+     */
+    protected $repository;
+
+    /**
      * ModelConfiguration constructor.
      *
      * @param string $class
@@ -123,7 +128,11 @@ class ModelConfiguration
      */
     public function getRepository()
     {
-        return app(RepositoryInterface::class, [$this->getClass()]);
+        if (is_null($this->repository)) {
+            $this->repository = app(RepositoryInterface::class, [$this->getClass()]);
+        }
+
+        return $this->repository;
     }
 
     /**
@@ -378,7 +387,18 @@ class ModelConfiguration
      */
     public function isRestorable(Model $model)
     {
-        return $this->restorable && $this->can('restore', $model);
+        return
+            $this->restorable
+            && $this->can('restore', $model)
+            && $this->isRestorableModel();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRestorableModel()
+    {
+        return $this->restorable && $this->getRepository()->isRestorable();
     }
 
     /**
