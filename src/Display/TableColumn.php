@@ -48,7 +48,7 @@ abstract class TableColumn implements ColumnInterface
 
     public function __construct()
     {
-        $this->header = new TableHeaderColumn();
+        $this->header = app(TableHeaderColumnInterface::class);
     }
 
     /**

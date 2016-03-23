@@ -225,7 +225,7 @@ class Page extends Navigation implements PageInterface
      */
     public function addBadge($value, \Closure $closure = null)
     {
-        $this->badge = app()->make(BadgeInterface::class, [$value]);
+        $this->badge = app(BadgeInterface::class, [$value]);
 
         if (is_callable($closure)) {
             call_user_func($closure, $this->badge);

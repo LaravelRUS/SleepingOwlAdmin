@@ -7,8 +7,8 @@ use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class ModelConfiguration
 {
@@ -119,11 +119,11 @@ class ModelConfiguration
     }
 
     /**
-     * @return BaseRepository
+     * @return RepositoryInterface
      */
     public function getRepository()
     {
-        return new BaseRepository($this->getClass());
+        return app(RepositoryInterface::class, [$this->getClass()]);
     }
 
     /**
@@ -731,6 +731,6 @@ class ModelConfiguration
      */
     protected function makeModel()
     {
-        return app()->make($this->getClass());
+        return app($this->getClass());
     }
 }

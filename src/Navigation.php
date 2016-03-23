@@ -56,7 +56,7 @@ class Navigation implements Renderable, Arrayable
         if (is_array($page)) {
             $page = $this->createPageFromArray($page);
         } elseif (is_string($page) or is_null($page)) {
-            $page = app()->make(PageInterface::class, [$page]);
+            $page = app(PageInterface::class, [$page]);
         }
 
         if (! ($page instanceof PageInterface)) {
@@ -228,7 +228,7 @@ class Navigation implements Renderable, Arrayable
      */
     protected function createPageFromArray(array $data)
     {
-        $page = app()->make(PageInterface::class);
+        $page = app(PageInterface::class);
 
         foreach ($data as $key => $value) {
             if ($key != 'pages' and method_exists($page, $method = 'set'.ucfirst($key))) {

@@ -12,7 +12,6 @@ use SleepingOwl\Admin\Contracts\ActionInterface;
 use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Actions;
-use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
@@ -59,7 +58,7 @@ abstract class Display implements DisplayInterface
     /**
      * @var string
      */
-    protected $repositoryClass = BaseRepository::class;
+    protected $repositoryClass = RepositoryInterface::class;
 
     /**
      * @var RepositoryInterface
@@ -274,8 +273,6 @@ abstract class Display implements DisplayInterface
      */
     protected function makeRepository()
     {
-        $class = $this->repositoryClass;
-
-        return new $class($this->modelClass);
+        return app($this->repositoryClass, [$this->modelClass]);
     }
 }

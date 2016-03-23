@@ -5,9 +5,8 @@ namespace SleepingOwl\Admin\Display\Column\Filter;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Repository\BaseRepository;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
 class Select extends BaseColumnFilter
 {
@@ -215,7 +214,8 @@ class Select extends BaseColumnFilter
 
     protected function loadOptions()
     {
-        $repository = new BaseRepository($this->getModel());
+        $repository = app(RepositoryInterface::class, [$this->getModel()]);
+
         $key = $repository->getModel()->getKeyName();
         $options = $repository->getQuery()->get()->lists($this->getDisplay(), $key);
 

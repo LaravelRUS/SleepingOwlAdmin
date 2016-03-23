@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Repository\BaseRepository;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class Select extends NamedFormElement
 {
@@ -114,8 +114,6 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param bool|true $nullable
-     *
      * @return $this
      */
     public function nullable()
@@ -138,7 +136,7 @@ class Select extends NamedFormElement
 
     protected function loadOptions()
     {
-        $repository = new BaseRepository($this->getModelForOptions());
+        $repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
 
         $key = $repository->getModel()->getKeyName();
         $options = $repository->getQuery()->get()->lists($this->getDisplay(), $key);

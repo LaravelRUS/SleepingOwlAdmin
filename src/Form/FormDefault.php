@@ -2,14 +2,12 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use URL;
 use Request;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Repository\BaseRepository;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
@@ -74,7 +72,9 @@ class FormDefault implements DisplayInterface, FormInterface
 
     public function __construct()
     {
-        $this->setButtons(new FormButtons());
+        $this->setButtons(
+            app(FormButtonsInterface::class)
+        );
     }
 
     /**
@@ -87,7 +87,7 @@ class FormDefault implements DisplayInterface, FormInterface
         }
 
         $this->initialized = true;
-        $this->repository = new BaseRepository($this->class);
+        $this->repository = app(RepositoryInterface::class, [$this->class]);
 
         $this->setModel(app($this->class));
         $this->initializeItems();

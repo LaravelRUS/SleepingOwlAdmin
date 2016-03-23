@@ -8,9 +8,12 @@ use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -73,6 +76,10 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->app->bind(PageInterface::class, Navigation\Page::class);
         $this->app->bind(BadgeInterface::class, Navigation\Badge::class);
+
+        $this->app->bind(TableHeaderColumnInterface::class, \SleepingOwl\Admin\Display\TableHeaderColumn::class);
+        $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repository\BaseRepository::class);
+        $this->app->bind(FormButtonsInterface::class, \SleepingOwl\Admin\Form\FormButtons::class);
 
         $this->app->singleton('sleeping_owl.navigation', function () {
             return new Navigation();
