@@ -77,7 +77,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function appendTab(DisplayInterface $display, $label, $active = false)
     {
-        $tab = \AdminDisplay::tab($display)->setLabel($label)->setActive($active);
+        $tab = app('sleeping_owl.display')->tab($display)->setLabel($label)->setActive($active);
 
         $this->tabs[] = $tab;
 
