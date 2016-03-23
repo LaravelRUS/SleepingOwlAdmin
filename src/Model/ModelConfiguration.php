@@ -168,6 +168,14 @@ class ModelConfiguration
      */
     public function getTitle()
     {
+        if (is_null($this->title)) {
+            $title = str_replace('_', ' ', $this->getDefaultClassTitle());
+
+            $this->setTitle(
+                ucwords($title)
+            );
+        }
+
         return $this->title;
     }
 
@@ -742,8 +750,19 @@ class ModelConfiguration
 
     protected function setDefaultAlias()
     {
-        $alias = Str::snake(Str::plural(class_basename($this->getClass())));
-        $this->setAlias($alias);
+        $this->setAlias(
+            $this->getDefaultClassTitle()
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultClassTitle()
+    {
+        return snake_case(
+            str_plural(class_basename($this->getClass()))
+        );
     }
 
     /**
