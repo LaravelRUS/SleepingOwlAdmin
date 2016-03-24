@@ -1,3 +1,5 @@
+![bg](https://cloud.githubusercontent.com/assets/773481/14028746/24d7efa8-f20f-11e5-8e38-3d264739f0aa.png)
+
 ## Laravel 5.2 Admin Module
 
 [![StyleCI](https://styleci.io/repos/52141393/shield?style=flat)](https://styleci.io/repos/52141393)
@@ -79,6 +81,61 @@ By default admin module use Laravel authentication.
 
 If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/5.2/authentication) and append middleware `auth` to `config/sleeping_owl.php`
 
+### Supporting of old authentication
+
+If you want to migrate from old version< you can use old auth.
+
+Steps:
+
+1. Add new user provider in `config/auth.php`
+
+```php
+	'providers' => [
+		'users' => [
+			'driver' => 'eloquent',
+			'model' => App\User::class,
+		],
+		'administrators' => [
+			'driver' => 'eloquent',
+			'model' => SleepingOwl\Admin\Auth\Administrator::class,
+		],
+	],
+```
+
+2. Add new guards or change existing in `config/auth.php`
+
+```php
+	'guards' => [
+		'web' => [
+			'driver' => 'session',
+			'provider' => 'administrators', // change existing provider
+		],
+		
+		// or add new
+		
+		'admin' => [
+			'driver' => 'session',
+			'provider' => 'administrators',
+		],
+	],
+```
+
+3. Setting up middleware
+
+By default `auth` middleware use default guard, selected in `config/auth.php`
+
+```php
+	'defaults' => [
+		'guard' => 'web', <- default
+		...
+	],
+```
+
+You can change default guard to `admin` or change middleware in `config/sleeping_owl.php` to
+
+```php
+	'middleware' => ['web', 'auth:admin'],
+```
 
 ## Demo project
 
