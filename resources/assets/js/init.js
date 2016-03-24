@@ -1,3 +1,39 @@
+window.Admin.Components.add('ckeditor', function() {
+
+    CKEDITOR.disableAutoInline = true;
+
+    switchOn_handler = function (textarea_id, params) {
+        var textarea = $('#' + textarea_id).hide(),
+            params = $.extend({
+                height: 200
+            }, textarea.data(), params);
+
+        return editor = CKEDITOR.replace(textarea_id, params);
+    };
+
+    switchOff_handler = function (editor, textarea_id) {
+        editor.destroy()
+    }
+
+    exec_handler = function (editor, command, textarea_id, data) {
+        switch (command) {
+            case 'insert':
+                editor.insertText(data);
+                break;
+            case 'changeHeight':
+                editor.resize('100%', data);
+        }
+    }
+
+    window.Admin.WYSIWYG.add(
+        'ckeditor',
+        switchOn_handler,
+        switchOff_handler,
+        exec_handler
+    );
+});
+
+
 $(function () {
     $.ajaxSetup({
         headers: {
@@ -24,6 +60,6 @@ $(function () {
 
     $('.inline-editable').editable();
 
-    Admin.Components.init();
-    Admin.Controllers.call();
+    window.Admin.Components.init();
+    window.Admin.Controllers.call();
 });

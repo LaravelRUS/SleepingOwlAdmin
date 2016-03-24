@@ -292,11 +292,11 @@ class AdminController extends Controller
         }
 
         $data = [
-            'locale'       => App::getLocale(),
-            'token'        => csrf_token(),
-            'url_prefix'   => config('sleeping_owl.url_prefix'),
-            'lang'         => $lang,
-            'ckeditor_cfg' => config('sleeping_owl.ckeditor'),
+            'locale'     => App::getLocale(),
+            'token'      => csrf_token(),
+            'url_prefix' => config('sleeping_owl.url_prefix'),
+            'lang'       => $lang,
+            'wysiwyg'    => config('sleeping_owl.wysiwyg'),
         ];
 
         $content = "window.Admin['Settings'] = ".json_encode($data, JSON_PRETTY_PRINT).';';

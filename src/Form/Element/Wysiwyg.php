@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use WYSIWYG as WYSIWYGHelper;
+use WysiwygManager;
 
 class Wysiwyg extends NamedFormElement
 {
@@ -12,19 +12,11 @@ class Wysiwyg extends NamedFormElement
     protected $editor;
 
     /**
-     * @var int|null
+     * @var array
      */
-    protected $height = 200;
-
-    /**
-     * @var bool
-     */
-    protected $filterHtml = false;
-
-    /**
-     * @var string
-     */
-    protected $allowedHtmlTags = '<b><i><p><ul><li><ol>';
+    protected $parameters = [
+        'height' => 200,
+    ];
 
     /**
      * @param string      $path
@@ -36,7 +28,7 @@ class Wysiwyg extends NamedFormElement
         parent::__construct($path, $label);
 
         if (is_null($editor)) {
-            $editor = WYSIWYGHelper::getDefaultHTMLEditorId();
+            $editor = WysiwygManager::getDefaultEditorId();
         }
 
         $this->setEditor($editor);
@@ -44,7 +36,7 @@ class Wysiwyg extends NamedFormElement
 
     public function initialize()
     {
-        WYSIWYGHelper::loadEditor($this->getEditor());
+        WysiwygManager::loadEditor($this->getEditor());
     }
 
     /**
@@ -57,58 +49,46 @@ class Wysiwyg extends NamedFormElement
 
     /**
      * @param null|string $editor
+     *
+     * @return $this
      */
     public function setEditor($editor)
     {
         $this->editor = $editor;
-    }
 
-    /**
-     * @return int|null
-     */
-    public function getHeight()
-    {
-        return $this->height;
+        return $this;
     }
 
     /**
      * @param int|null $height
+     *
+     * @return $this
      */
     public function setHeight($height)
     {
-        $this->height = (int) $height;
+        $this->parameters['height'] = (int) $height;
+
+        return $this;
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function isFilterHtml()
+    public function getParameters()
     {
-        return $this->filterHtml;
+        return $this->parameters;
     }
 
     /**
-     * @param bool $filterHtml
+     * @param array $parameters
+     *
+     * @return $this
      */
-    public function setFilterHtml($filterHtml)
+    public function setParameters(array $parameters)
     {
-        $this->filterHtml = (bool) $filterHtml;
-    }
+        $this->parameters = $parameters;
 
-    /**
-     * @return string
-     */
-    public function getAllowedHtmlTags()
-    {
-        return $this->allowedHtmlTags;
-    }
-
-    /**
-     * @param string $allowedHtmlTags
-     */
-    public function setAllowedHtmlTags($allowedHtmlTags)
-    {
-        $this->allowedHtmlTags = $allowedHtmlTags;
+        return $this;
     }
 
     /**
@@ -117,24 +97,20 @@ class Wysiwyg extends NamedFormElement
     public function toArray()
     {
         return parent::toArray() + [
-            'name'     => $this->getName(),
-            'label'    => $this->getLabel(),
-            'value'    => $this->getValue(),
-            'height'     => $this->getHeight(),
+            'name'       => $this->getName(),
+            'label'      => $this->getLabel(),
+            'value'      => $this->getValue(),
+            'parameters' => $this->getParameters(),
             'editor'     => $this->getEditor(),
         ];
     }
 
     /**
      * @param string $attribute
-     * @param mixed $value
+     * @param mixed  $value
      */
     protected function setValue($attribute, $value)
     {
-        if ($this->isFilterHtml()) {
-            // TODO: add filter html tags
-        }
-
-        parent::setValue($attribute, WYSIWYGHelper::applyFilter($this->getEditor(), $value));
+        parent::setValue($attribute, WysiwygManager::applyFilter($this->getEditor(), $value));
     }
 }
