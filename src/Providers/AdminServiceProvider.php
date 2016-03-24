@@ -25,6 +25,7 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         $this->registerNavigation();
+        $this->registerWysiwyg();
         $this->registerAliases();
 
         ModelConfiguration::setEventDispatcher($this->app['events']);
@@ -84,6 +85,13 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('sleeping_owl.navigation', function () {
             return new \SleepingOwl\Admin\Navigation();
+        });
+    }
+
+    protected function registerWysiwyg()
+    {
+        $this->app->singleton('sleeping_owl.wysiwyg', function () {
+            return new \SleepingOwl\Admin\Wysiwyg\Manager();
         });
     }
 

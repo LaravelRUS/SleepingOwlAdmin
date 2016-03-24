@@ -88,11 +88,14 @@ return [
     |  PHP Hash variable.
     |--------------------------------------------------------------------------
     |
-    | Checkout http://docs.ckeditor.com/#!/api/CKEDITOR.config for more information.
-    |
     */
 
-    'ckeditor' => [],
+    'wysiwyg' => [
+        'default' => 'ckeditor',
+
+        // Checkout http://docs.ckeditor.com/#!/api/CKEDITOR.config for more information.
+        'ckeditor' => [],
+    ],
 
     /*
    |--------------------------------------------------------------------------
@@ -128,6 +131,7 @@ return [
         'Meta'           => KodiCMS\Assets\Facades\Meta::class,
         'Form'           => Collective\Html\FormFacade::class,
         'HTML'           => Collective\Html\HtmlFacade::class,
+        'WysiwygManager' => SleepingOwl\Admin\Facades\WysiwygManager::class,
 
         'AdminSection'        => SleepingOwl\Admin\Facades\Admin::class,
         'AdminTemplate'       => SleepingOwl\Admin\Facades\Template::class,

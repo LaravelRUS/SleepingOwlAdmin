@@ -49,7 +49,7 @@ PackageManager::add('bootstrap')
     ->css(null, resources_url('libs/bootstrap/css/bootstrap.min.css'));
 
 PackageManager::add('ckeditor')
-    ->js(null, resources_url('libs/ckeditor/js/ckeditor.js'), ['jquery']);
+    ->js(null, 'http://cdn.ckeditor.com/4.5.7/standard/ckeditor.js', ['jquery']);
 
 PackageManager::add('datatables')
     ->js(null, resources_url('libs/datatables/js/jquery.dataTables.min.js'), ['jquery', 'libraries'])
@@ -89,3 +89,5 @@ PackageManager::add('select2')
 PackageManager::add('Sortable')
     ->js(null, resources_url('libs/Sortable/js/Sortable.min.js'), ['jquery'])
     ->js('jquery.binding', resources_url('libs/Sortable/js/jquery.binding.js'), ['Sortable']);
+
+WysiwygManager::register('ckeditor');
