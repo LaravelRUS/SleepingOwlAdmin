@@ -33,25 +33,25 @@ SleepingOwl Admin is administrative interface builder for Laravel.
 
  1. Require this package in your composer.json and run composer update:
 
-		"laravelrus/sleepingowl": "4.*@dev"
+	"laravelrus/sleepingowl": "4.*@dev"
 
  2. After composer update, insert service provider `SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,`
  before `Application Service Providers...` to the `config/app.php`
 
-**Example**
-```php
-		...
-		/*
-		 * SleepingOwl Service Provider
-		 */
-	    SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
-
-	    /*
-		 * Application Service Providers...
-		 */
- 		App\Providers\AppServiceProvider::class,
- 		...
-```
+	**Example**
+	```php
+			...
+			/*
+			 * SleepingOwl Service Provider
+			 */
+		    SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
+	
+		    /*
+			 * Application Service Providers...
+			 */
+	 		App\Providers\AppServiceProvider::class,
+	 		...
+	```
 
  3. Run this command in terminal (if you want to know what exactly this command makes, see [install command documentation](http://sleeping-owl.github.io/en/Commands/Install.html)):
 
@@ -76,6 +76,8 @@ Class has been moved to composer package `kodicomponents\support` for using in o
 ### Navigation
 Navigation classes have been move to composer package `kodicomponents\navigation` for using in other projects
 
+---
+
 ## Authentication
 By default admin module use Laravel authentication.
 
@@ -89,7 +91,7 @@ Steps:
 
 1. Add new user provider in `config/auth.php`
 
-```php
+	```php
 	'providers' => [
 		'users' => [
 			'driver' => 'eloquent',
@@ -100,11 +102,11 @@ Steps:
 			'model' => SleepingOwl\Admin\Auth\Administrator::class,
 		],
 	],
-```
+	```
 
 2. Add new guards or change existing in `config/auth.php`
 
-```php
+	```php
 	'guards' => [
 		'web' => [
 			'driver' => 'session',
@@ -118,24 +120,26 @@ Steps:
 			'provider' => 'administrators',
 		],
 	],
-```
+	```
 
 3. Setting up middleware
 
-By default `auth` middleware use default guard, selected in `config/auth.php`
-
-```php
+	By default `auth` middleware use default guard, selected in `config/auth.php`
+	
+	```php
 	'defaults' => [
 		'guard' => 'web', <- default
 		...
 	],
-```
-
-You can change default guard to `admin` or change middleware in `config/sleeping_owl.php` to
-
-```php
+	```
+	
+	You can change default guard to `admin` or change middleware in `config/sleeping_owl.php` to
+	
+	```php
 	'middleware' => ['web', 'auth:admin'],
-```
+	```
+
+---
 
 ## Demo project
 
