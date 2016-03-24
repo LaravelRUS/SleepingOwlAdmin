@@ -40,10 +40,6 @@ elixir(function(mix) {
 	 **************************************************************/
 	mix
 		.scripts([
-			'column/filter/base.js',
-			'column/filter/range.js',
-			'column/filter/select.js',
-			'column/filter/text.js',
 			'column/checkbox.js',
 			'column/control.js',
 			'column/image.js',

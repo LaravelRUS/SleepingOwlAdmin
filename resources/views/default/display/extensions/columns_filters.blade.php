@@ -1,7 +1,7 @@
-<tfoot>
+<tfoot {!! HTML::attributes($attributes) !!}>
     <tr>
         @foreach ($filters as $index => $filter)
-            <td>
+            <td data-index="{{ $index }}">
                 {!! $filter !!}
             </td>
         @endforeach
