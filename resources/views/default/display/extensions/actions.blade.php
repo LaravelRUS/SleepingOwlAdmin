@@ -1,4 +1,4 @@
-<form {!! HTML::attributes($attributes) !!}>
+<form {!! $attributes !!}>
     {{ csrf_field() }}
 
     @foreach ($actions as $action)

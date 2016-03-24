@@ -12,7 +12,7 @@ class Url extends NamedColumn
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->setAttribute('class', 'row-url');
+        $this->setHtmlAttribute('class', 'row-url');
     }
 
     /**

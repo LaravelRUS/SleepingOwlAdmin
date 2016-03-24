@@ -1,4 +1,4 @@
-<td {!! HTML::attributes($attributes) !!}>
+<td {!! $attributes !!}>
 	<div class="text-right pull-right" style="width: 90px;">
 		@if ($editable)
 			<a href="{{ $editUrl }}" class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.edit') }}">

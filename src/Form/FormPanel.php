@@ -16,7 +16,7 @@ class FormPanel extends FormDefault
      */
     public function initialize()
     {
-        $this->getButtons()->setAttribute('class', 'panel-footer');
+        $this->getButtons()->setHtmlAttribute('class', 'panel-footer');
 
         parent::initialize();
     }

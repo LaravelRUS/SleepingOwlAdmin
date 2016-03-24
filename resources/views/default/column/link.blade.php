@@ -1,4 +1,4 @@
-<td {!! HTML::attributes($attributes) !!}>
+<td {!! $attributes !!}>
     @if($isEditable)
     {!! link_to($link, $value, $linkAttributes) !!} {!! $append !!}
     @else

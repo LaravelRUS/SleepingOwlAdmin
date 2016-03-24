@@ -1,4 +1,4 @@
-<td {!! HTML::attributes($attributes) !!}>
+<td {!! $attributes !!}>
 	@if ($movableUp)
 		<form action="{{ $moveUpUrl }}" method="POST" style="display:inline-block;">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />

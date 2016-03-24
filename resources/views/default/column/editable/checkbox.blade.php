@@ -1,4 +1,4 @@
-<td {!! HTML::attributes($attributes) !!}>
+<td {!! $attributes !!}>
     @if($isEditable)
     <a href="#"
            class="inline-editable"

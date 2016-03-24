@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Traits\HtmlAttributes;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
@@ -115,7 +115,7 @@ class ColumnFilters extends Extension implements Initializable
     {
         return [
             'filters'    => $this->columnFilters,
-            'attributes' => $this->getAttributes(),
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 
@@ -134,8 +134,8 @@ class ColumnFilters extends Extension implements Initializable
             }
         }
 
-        if (! $this->hasAttribute('class')) {
-            $this->setAttribute('class', 'panel-footer');
+        if (! $this->hasHtmlAttribute('class')) {
+            $this->setHtmlAttribute('class', 'panel-footer');
         }
 
         $template = app('sleeping_owl.template')->getViewPath($this->getDisplay()->getView());

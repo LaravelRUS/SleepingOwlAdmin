@@ -22,7 +22,7 @@ class Custom extends TableColumn
     public function __construct()
     {
         parent::__construct();
-        $this->setAttribute('class', 'row-custom');
+        $this->setHtmlAttribute('class', 'row-custom');
     }
 
     /**

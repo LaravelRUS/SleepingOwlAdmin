@@ -1,3 +1,3 @@
-<th {!! HTML::attributes($attributes) !!}>
+<th {!! $attributes !!}>
     {!! $title !!}
 </th>

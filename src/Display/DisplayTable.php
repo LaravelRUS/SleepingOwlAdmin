@@ -71,7 +71,7 @@ class DisplayTable extends Display
             });
         }
 
-        $this->setAttribute('class', 'table table-striped');
+        $this->setHtmlAttribute('class', 'table table-striped');
     }
 
     /**

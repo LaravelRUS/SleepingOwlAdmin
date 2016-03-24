@@ -12,7 +12,7 @@ class Image extends NamedColumn
         parent::__construct($name);
         $this->setOrderable(false);
 
-        $this->setAttribute('class', 'row-image');
+        $this->setHtmlAttribute('class', 'row-image');
     }
 
     /**

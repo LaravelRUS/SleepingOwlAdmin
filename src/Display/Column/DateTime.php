@@ -15,7 +15,7 @@ class DateTime extends NamedColumn
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->setAttribute('class', 'row-control');
+        $this->setHtmlAttribute('class', 'row-control');
     }
 
     /**
@@ -54,7 +54,7 @@ class DateTime extends NamedColumn
             $value = $value->format($this->getFormat());
         }
 
-        $this->setAttribute('data-order', $originalValue);
+        $this->setHtmlAttribute('data-order', $originalValue);
 
         return parent::toArray() + [
             'value'         => $value,

@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Providers;
 
 use SleepingOwl\Admin\Admin;
-use SleepingOwl\Admin\Navigation;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -76,15 +75,15 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerNavigation()
     {
-        $this->app->bind(PageInterface::class, Navigation\Page::class);
-        $this->app->bind(BadgeInterface::class, Navigation\Badge::class);
-
         $this->app->bind(TableHeaderColumnInterface::class, \SleepingOwl\Admin\Display\TableHeaderColumn::class);
         $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repository\BaseRepository::class);
         $this->app->bind(FormButtonsInterface::class, \SleepingOwl\Admin\Form\FormButtons::class);
 
+        $this->app->bind(\KodiComponents\Navigation\Contracts\PageInterface::class, \SleepingOwl\Admin\Navigation\Page::class);
+        $this->app->bind(\KodiComponents\Navigation\Contracts\BadgeInterface::class, \SleepingOwl\Admin\Navigation\Badge::class);
+
         $this->app->singleton('sleeping_owl.navigation', function () {
-            return new Navigation();
+            return new \SleepingOwl\Admin\Navigation();
         });
     }
 

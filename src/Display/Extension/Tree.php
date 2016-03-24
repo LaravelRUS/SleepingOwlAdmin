@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
+use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Traits\HtmlAttributes;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
@@ -146,7 +146,7 @@ class Tree extends Extension implements Initializable, Renderable
     {
         return [
             'columns'    => $this->allWithControl(),
-            'attributes' => $this->getAttributes(),
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 
@@ -156,7 +156,7 @@ class Tree extends Extension implements Initializable, Renderable
             $column->initialize();
         });
 
-        $this->setAttribute('class', 'table table-striped');
+        $this->setHtmlAttribute('class', 'table table-striped');
     }
 
     /**

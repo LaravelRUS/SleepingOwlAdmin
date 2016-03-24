@@ -26,7 +26,7 @@ class RelatedLink extends Link
         parent::__construct($name);
         $this->originalName = $name;
 
-        $this->setAttribute('class', 'row-link');
+        $this->setHtmlAttribute('class', 'row-link');
     }
 
     /**

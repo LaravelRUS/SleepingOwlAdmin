@@ -1,4 +1,4 @@
-<table {!! HTML::attributes($attributes) !!}>
+<table {!! $attributes !!}>
     <colgroup>
         @foreach ($columns as $column)
             <col width="{!! $column->getWidth() !!}" />

@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Traits\HtmlAttributes;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Model\ModelConfiguration;
@@ -219,7 +219,7 @@ abstract class Display implements DisplayInterface
         return [
             'title'      => $this->getTitle(),
             'extensions' => $this->getExtensions()->toArray(),
-            'attributes' => $this->getAttributes(),
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 

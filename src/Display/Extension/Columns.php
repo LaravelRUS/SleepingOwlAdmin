@@ -152,7 +152,7 @@ class Columns extends Extension implements Initializable, Renderable
     {
         return [
             'columns'    => $this->all(),
-            'attributes' => $this->getDisplay()->getAttributes(),
+            'attributes' => $this->getDisplay()->htmlAttributesToString(),
         ];
     }
 

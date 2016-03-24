@@ -20,7 +20,7 @@ class Checkbox extends TableColumn
         ));
 
         $this->setOrderable(false);
-        $this->setAttribute('class', 'row-checkbox');
+        $this->setHtmlAttribute('class', 'row-checkbox');
     }
 
     /**

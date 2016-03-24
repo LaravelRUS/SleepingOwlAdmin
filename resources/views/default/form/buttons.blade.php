@@ -1,4 +1,4 @@
-<div {!! HTML::attributes($attributes) !!}>
+<div {!! $attributes !!}>
     <div class="btn-group">
         <button
                 type="submit"

@@ -12,7 +12,7 @@ class Email extends NamedColumn
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->setAttribute('class', 'row-email');
+        $this->setHtmlAttribute('class', 'row-email');
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Form;
 
 use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Traits\HtmlAttributes;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 
 class FormButtons implements FormButtonsInterface
@@ -214,7 +214,7 @@ class FormButtons implements FormButtonsInterface
     public function toArray()
     {
         return [
-            'attributes'              => $this->getAttributes(),
+            'attributes'              => $this->htmlAttributesToString(),
             'backUrl'                 => $this->getModelConfiguration()->getDisplayUrl(),
             'saveButtonText'          => $this->getSaveButtonText(),
             'saveAndCloseButtonText'  => $this->getSaveAndCloseButtonText(),

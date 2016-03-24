@@ -32,12 +32,12 @@ class DisplayDatatables extends DisplayTable
 
         $id = str_random(10);
 
-        $this->setAttribute('class', 'datatables');
-        $this->setAttribute('data-id', $id);
-        $this->getColumnFilters()->setAttribute('data-datatables-id', $id);
+        $this->setHtmlAttribute('class', 'datatables');
+        $this->setHtmlAttribute('data-id', $id);
+        $this->getColumnFilters()->setHtmlAttribute('data-datatables-id', $id);
 
-        $this->setAttribute('data-order', json_encode($this->getOrder()));
-        $this->setAttribute('data-attributes', json_encode($this->getDatatableAttributes(), JSON_FORCE_OBJECT));
+        $this->setHtmlAttribute('data-order', json_encode($this->getOrder()));
+        $this->setHtmlAttribute('data-attributes', json_encode($this->getDatatableAttributes(), JSON_FORCE_OBJECT));
     }
 
     /**

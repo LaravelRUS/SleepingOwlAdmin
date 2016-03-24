@@ -1,5 +1,5 @@
 @if($hasChild)
-<li {!! HTML::attributes($attributes) !!}>
+<li {!! $attributes !!}>
     <a href="#" >
         {!! $icon !!}
         <span>{!! $title !!}</span>
@@ -13,7 +13,7 @@
     </ul>
 </li>
 @else
-<li {!! HTML::attributes($attributes) !!}>
+<li {!! $attributes !!}>
     <a href="{{ $url }}">
         {!! $icon !!}
         <span>{!! $title !!}</span>

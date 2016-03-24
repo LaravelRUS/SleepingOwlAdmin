@@ -12,7 +12,7 @@ class Text extends NamedColumn
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->setAttribute('class', 'row-string');
+        $this->setHtmlAttribute('class', 'row-string');
     }
 
     /**

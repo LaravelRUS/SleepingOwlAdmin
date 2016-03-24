@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Traits\HtmlAttributes;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class TableHeaderColumn implements TableHeaderColumnInterface
@@ -23,7 +23,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
 
     public function __construct()
     {
-        $this->setAttribute('class', 'row-header');
+        $this->setHtmlAttribute('class', 'row-header');
     }
 
     /**
@@ -74,7 +74,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     public function toArray()
     {
         return [
-            'attributes'  => $this->getAttributes(),
+            'attributes'  => $this->htmlAttributesToString(),
             'title'       => $this->getTitle(),
             'isOrderable' => $this->isOrderable(),
         ];
@@ -85,7 +85,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
      */
     public function render()
     {
-        $this->setAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
+        $this->setHtmlAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
 
         return app('sleeping_owl.template')->view('column.header', $this->toArray());
     }

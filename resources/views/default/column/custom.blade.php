@@ -1,3 +1,3 @@
-<td {!! HTML::attributes($attributes) !!}>
+<td {!! $attributes !!}>
     {!! $value !!} {!! $append !!}
 </td>

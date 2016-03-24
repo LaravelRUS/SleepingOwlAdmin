@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Meta;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Traits\HtmlAttributes;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
@@ -205,7 +205,7 @@ abstract class TableColumn implements ColumnInterface
     public function toArray()
     {
         return [
-            'attributes' => $this->getAttributes(),
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 

@@ -50,7 +50,7 @@ class Action extends NamedColumn implements ActionInterface
 
     public function initialize()
     {
-        $this->setAttributes([
+        $this->setHtmlAttributes([
             'class' => 'btn btn-action btn-default',
             'name'  => 'action',
             'value' => $this->getName(),

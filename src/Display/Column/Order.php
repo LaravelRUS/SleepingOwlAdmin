@@ -37,7 +37,7 @@ class Order extends TableColumn implements WithRoutesInterface
     public function __construct()
     {
         parent::__construct();
-        $this->setAttribute('class', 'row-order');
+        $this->setHtmlAttribute('class', 'row-order');
     }
 
     /**

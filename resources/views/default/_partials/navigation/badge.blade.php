@@ -1,3 +1,3 @@
-<small {!! HTML::attributes($attributes) !!}>
+<small {!! $attributes !!}>
     {{ $value }}
 </small>

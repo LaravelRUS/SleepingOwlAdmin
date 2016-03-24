@@ -10,7 +10,7 @@ class Lists extends NamedColumn
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->setAttribute('class', 'row-lists');
+        $this->setHtmlAttribute('class', 'row-lists');
     }
 
     /**

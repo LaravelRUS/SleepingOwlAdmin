@@ -26,7 +26,7 @@ class Control extends TableColumn
         parent::__construct();
         $this->setOrderable(false);
 
-        $this->setAttribute('class', 'row-control');
+        $this->setHtmlAttribute('class', 'row-control');
     }
 
     /**

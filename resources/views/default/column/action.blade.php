@@ -1,4 +1,4 @@
-<button {!! HTML::attributes($attributes) !!}>
+<button {!! $attributes !!}>
 	@if ($icon)
 	<i class="{{ $icon }}"></i>
 	@endif

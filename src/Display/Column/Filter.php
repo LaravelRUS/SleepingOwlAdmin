@@ -19,7 +19,7 @@ class Filter extends NamedColumn
     public function __construct($name)
     {
         parent::__construct($name);
-        $this->setAttribute('class', 'row-filter');
+        $this->setHtmlAttribute('class', 'row-filter');
     }
 
     /**
