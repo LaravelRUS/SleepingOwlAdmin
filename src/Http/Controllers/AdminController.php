@@ -66,7 +66,13 @@ class AdminController extends Controller
                      ->withInput();
             }
 
+            if ($model->fireEvent('creating') === false) {
+                return redirect()->back();
+            }
+
             $createForm->save($model);
+
+            $model->fireEvent('created', false);
         }
 
         if ($nextAction == 'save_and_continue') {
@@ -121,7 +127,13 @@ class AdminController extends Controller
                     ->withInput();
             }
 
+            if ($model->fireEvent('updating', true, $item) === false) {
+                return redirect()->back();
+            }
+
             $editForm->save($model);
+
+            $model->fireEvent('updated', false, $item);
         }
 
         if ($nextAction == 'save_and_continue') {
@@ -137,6 +149,8 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfiguration $model
+     *
+     * @return bool
      */
     public function inlineEdit(ModelConfiguration $model)
     {
@@ -163,7 +177,14 @@ class AdminController extends Controller
         }
 
         $column->setModel($item);
+
+        if ($model->fireEvent('updating', true, $item) === false) {
+            return redirect()->back();
+        }
+
         $column->save($value);
+
+        $model->fireEvent('updated', false, $item);
     }
 
     /**
@@ -181,7 +202,14 @@ class AdminController extends Controller
         }
 
         $model->fireDelete($id);
+
+        if ($model->fireEvent('deleting', true, $item) === false) {
+            return redirect()->back();
+        }
+
         $model->getRepository()->delete($id);
+
+        $model->fireEvent('deleted', false, $item);
 
         return redirect()->back()->with('success_message', $model->getMessageOnDelete());
     }
@@ -205,7 +233,14 @@ class AdminController extends Controller
         }
 
         $model->fireRestore($id);
+
+        if ($model->fireEvent('restoring', true, $item) === false) {
+            return redirect()->back();
+        }
+
         $model->getRepository()->restore($id);
+
+        $model->fireEvent('restored', false, $item);
 
         return redirect()->back()->with('success_message', $model->getMessageOnRestore());
     }

@@ -5,13 +5,53 @@ namespace SleepingOwl\Admin\Model;
 use Gate;
 use Closure;
 use Illuminate\Support\Str;
+use BadMethodCallException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Events\Dispatcher;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
+/**
+ * @method bool creating(Closure $callback)
+ * @method void created(Closure $callback)
+ * @method bool updating(Closure $callback)
+ * @method void updated(Closure $callback)
+ * @method bool deleting(Closure $callback)
+ * @method void deleted(Closure $callback)
+ * @method bool restoring(Closure $callback)
+ * @method void restored(Closure $callback)
+ */
 class ModelConfiguration
 {
+    /**
+     * The event dispatcher instance.
+     *
+     * @var \Illuminate\Contracts\Events\Dispatcher
+     */
+    protected static $dispatcher;
+
+    /**
+     * Get the event dispatcher instance.
+     *
+     * @return \Illuminate\Contracts\Events\Dispatcher
+     */
+    public static function getEventDispatcher()
+    {
+        return static::$dispatcher;
+    }
+
+    /**
+     * Set the event dispatcher instance.
+     *
+     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
+     * @return void
+     */
+    public static function setEventDispatcher(Dispatcher $dispatcher)
+    {
+        static::$dispatcher = $dispatcher;
+    }
+
     /**
      * @var string
      */
@@ -756,6 +796,47 @@ class ModelConfiguration
     }
 
     /**
+     * Fire the given event for the model.
+     *
+     * @param string     $event
+     * @param bool       $halt
+     * @param Model|null $model
+     *
+     * @return mixed
+     */
+    public function fireEvent($event, $halt = true, Model $model = null)
+    {
+        if (! isset(static::$dispatcher)) {
+            return true;
+        }
+
+        if (is_null($model)) {
+            $model = $this->makeModel();
+        }
+
+        // We will append the names of the class to the event to distinguish it from
+        // other model events that are fired, allowing us to listen on each model
+        // event set individually instead of catching event for all the models.
+        $event = "sleeping_owl.section.{$event}: ".$this->getClass();
+
+        $method = $halt ? 'until' : 'fire';
+
+        return static::$dispatcher->$method($event, [$this, $model]);
+    }
+
+    /**
+     * @param     $event
+     * @param     $callback
+     * @param int $priority
+     */
+    protected function registerEvent($event, $callback, $priority = 0)
+    {
+        if (isset(static::$dispatcher)) {
+            static::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
+        }
+    }
+
+    /**
      * @return string
      */
     protected function getDefaultClassTitle()
@@ -771,5 +852,26 @@ class ModelConfiguration
     protected function makeModel()
     {
         return app($this->getClass());
+    }
+
+    /**
+     * Handle dynamic method calls into the model.
+     *
+     * @param $method
+     * @param $arguments
+     *
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        if (in_array($method, [
+            'creating', 'created', 'updating', 'updated',
+            'deleting', 'deleted', 'restoring', 'restored',
+        ])) {
+            array_unshift($arguments, $method);
+            return call_user_func_array([$this, 'registerEvent'],$arguments);
+        }
+
+        throw new BadMethodCallException($method);
     }
 }

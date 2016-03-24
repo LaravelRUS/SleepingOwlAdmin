@@ -27,6 +27,8 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->registerNavigation();
         $this->registerAliases();
+
+        ModelConfiguration::setEventDispatcher($this->app['events']);
     }
 
     /**
