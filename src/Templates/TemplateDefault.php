@@ -15,6 +15,8 @@ class TemplateDefault implements TemplateInterface
             'metisMenu',
             'admin-default',
             'font-awesome',
+            'flow.js',
+            'Sortable'
         ]);
 
         Meta::AddJs('adminScripts', route('admin.scripts'), ['libraries']);
