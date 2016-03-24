@@ -14,7 +14,7 @@
 		<div>
 			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}</div>
 		</div>
-		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ implode(',', $value) }}">
+		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ !empty($value) && sizeof($value) != 0 ? implode(',', $value) : "" }}">
 		<div class="errors">
 			@include(AdminTemplate::getViewPath('form.element.errors'))
 		</div>
