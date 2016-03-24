@@ -56,6 +56,24 @@ SleepingOwl Admin is administrative interface builder for Laravel.
 		$ php artisan sleepingowl:install
 
 
+## Upgrade from 4.18.x to 4.19.x
+
+### HtmlAttributes
+Class has been moved to composer package `kodicomponents\support` for using in other projects and methods have been changed for more compatibility.
+
+- `setAttribute` -> `setHtmlAttribute`
+- `setAttributes` -> `setHtmlAttributes`
+- `getAttribute` -> `getHtmlAttribute`
+- `getAttributes` -> `getHtmlAttributes`
+- `hasAttribute` -> `hasHtmlAttribute`
+- `replaceAttribute` -> `replaceHtmlAttribute`
+- `removeAttribute` -> `removeHtmlAttribute`
+- `clearAttributes` -> `clearHtmlAttributes`
+- `hasClass` -> `hasClassProperty`
+
+### Navigation
+Navigation classes have been move to composer package `kodicomponents\navigation` for using in other projects
+
 ## Authentication
 By default admin module use Laravel authentication.
 
