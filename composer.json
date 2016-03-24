@@ -23,6 +23,8 @@
   "require": {
     "php": ">=5.4.0",
     "illuminate/support": "5.*",
+    "kodicomponents/support": "0.*",
+    "kodicomponents/navigation": "0.*",
     "doctrine/dbal": "~2.3",
     "laravelcollective/html": "5.*",
     "kodicms/laravel-assets": "0.*"
