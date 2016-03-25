@@ -1,37 +1,93 @@
-window.Admin.Components.add('ckeditor', function() {
+window.Admin.Components
+    .add('ckeditor', function() {
+        switchOn_handler = function (textarea_id, params) {
+            CKEDITOR.disableAutoInline = true;
 
-    CKEDITOR.disableAutoInline = true;
+            var params = $.extend({}, params);
 
-    switchOn_handler = function (textarea_id, params) {
-        var textarea = $('#' + textarea_id).hide(),
-            params = $.extend({
-                height: 200
-            }, textarea.data(), params);
+            return CKEDITOR.replace(textarea_id, params);
+        };
 
-        return editor = CKEDITOR.replace(textarea_id, params);
-    };
-
-    switchOff_handler = function (editor, textarea_id) {
-        editor.destroy()
-    }
-
-    exec_handler = function (editor, command, textarea_id, data) {
-        switch (command) {
-            case 'insert':
-                editor.insertText(data);
-                break;
-            case 'changeHeight':
-                editor.resize('100%', data);
+        switchOff_handler = function (editor, textarea_id) {
+            editor.destroy()
         }
-    }
 
-    window.Admin.WYSIWYG.add(
-        'ckeditor',
-        switchOn_handler,
-        switchOff_handler,
-        exec_handler
-    );
-});
+        exec_handler = function (editor, command, textarea_id, data) {
+            switch (command) {
+                case 'insert':
+                    editor.insertText(data);
+                    break;
+                case 'changeHeight':
+                    editor.resize('100%', data);
+            }
+        }
+
+        window.Admin.WYSIWYG.add(
+            'ckeditor',
+            switchOn_handler,
+            switchOff_handler,
+            exec_handler
+        );
+    })
+    .add('tinymce', function() {
+        switchOn_handler = function (textarea_id, params) {
+            var params = $.extend({
+                selector:'#'+textarea_id
+            }, params);
+
+
+            return tinymce.init(params);
+        };
+
+        switchOff_handler = function (editor, textarea_id) {
+            editor.destroy();
+        }
+
+        exec_handler = function (editor, command, textarea_id, data) {
+            switch (command) {
+                case 'insert':
+                    editor.insertContent(data);
+                    break;
+            }
+        }
+
+        window.Admin.WYSIWYG.add(
+            'tinymce',
+            switchOn_handler,
+            switchOff_handler,
+            exec_handler
+        );
+    }).add('simplemde', function() {
+        switchOn_handler = function (textarea_id, params) {
+            var params = $.extend({
+                element: $("#"+textarea_id)[0]
+            }, params);
+
+
+            return new SimpleMDE(params);
+        };
+
+        switchOff_handler = function (editor, textarea_id) {
+            editor.destroy();
+        }
+
+        exec_handler = function (editor, command, textarea_id, data) {
+            switch (command) {
+                case 'insert':
+                    editor.value(data);
+                    break;
+            }
+        }
+
+        window.Admin.WYSIWYG.add(
+            'simplemde',
+            switchOn_handler,
+            switchOff_handler,
+            exec_handler
+        );
+    });
+
+
 
 
 $(function () {

@@ -48,9 +48,6 @@ PackageManager::add('bootstrap')
     ->js(null, resources_url('libs/bootstrap/js/bootstrap.min.js'), ['jquery'])
     ->css(null, resources_url('libs/bootstrap/css/bootstrap.min.css'));
 
-PackageManager::add('ckeditor')
-    ->js(null, 'http://cdn.ckeditor.com/4.5.7/standard/ckeditor.js', ['jquery']);
-
 PackageManager::add('datatables')
     ->js(null, resources_url('libs/datatables/js/jquery.dataTables.min.js'), ['jquery', 'libraries'])
     ->css('dataTables-theme', resources_url('libs/datatables/css/dataTables.bootstrap.min.css'));
@@ -90,4 +87,18 @@ PackageManager::add('Sortable')
     ->js(null, resources_url('libs/Sortable/js/Sortable.min.js'), ['jquery'])
     ->js('jquery.binding', resources_url('libs/Sortable/js/jquery.binding.js'), ['Sortable']);
 
-WysiwygManager::register('ckeditor');
+/*
+|--------------------------------------------------------------------------
+| Wysiwyg Editors
+|--------------------------------------------------------------------------
+*/
+
+WysiwygManager::register('ckeditor')
+    ->js(null, '//cdn.ckeditor.com/4.5.7/standard/ckeditor.js', ['jquery']);
+
+WysiwygManager::register('tinymce')
+    ->js(null, '//cdn.tinymce.com/4/tinymce.min.js', ['jquery']);
+
+WysiwygManager::register('simplemde', new \SleepingOwl\Admin\Wysiwyg\MarkdownFilter())
+    ->js(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js', ['jquery'])
+    ->css(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');

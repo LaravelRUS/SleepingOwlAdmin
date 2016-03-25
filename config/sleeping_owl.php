@@ -94,7 +94,19 @@ return [
         'default' => 'ckeditor',
 
         // Checkout http://docs.ckeditor.com/#!/api/CKEDITOR.config for more information.
-        'ckeditor' => [],
+        'ckeditor' => [
+            'height' => 200,
+        ],
+
+        // Checkout https://www.tinymce.com/docs/ for more information.
+        'tinymce'  => [
+            'height' => 200,
+        ],
+
+        // Checkout https://github.com/NextStepWebs/simplemde-markdown-editor for more information.
+        'simplemde' => [
+            'hideIcons' => ["side-by-side", "fullscreen"],
+        ]
     ],
 
     /*

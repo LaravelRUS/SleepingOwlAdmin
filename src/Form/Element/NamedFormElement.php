@@ -437,15 +437,26 @@ abstract class NamedFormElement extends FormElement
             $model = $previousModel;
         }
 
+        $this->setValue($model, $attribute, $this->prepareValue($value));
+    }
+
+    /**
+     * @param Model  $model
+     * @param string $attribute
+     * @param mixed  $value
+     */
+    protected function setValue(Model $model, $attribute, $value)
+    {
         $model->setAttribute($attribute, $value);
     }
 
     /**
-     * @param string $attribute
      * @param mixed $value
+     *
+     * @return mixed
      */
-    protected function setValue($attribute, $value)
+    protected function prepareValue($value)
     {
-        $this->getModel()->setAttribute($attribute, $value);
+        return $value;
     }
 }

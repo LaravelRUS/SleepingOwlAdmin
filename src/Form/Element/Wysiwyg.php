@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use WysiwygManager;
+use Illuminate\Database\Eloquent\Model;
 
 class Wysiwyg extends NamedFormElement
 {
@@ -12,11 +12,19 @@ class Wysiwyg extends NamedFormElement
     protected $editor;
 
     /**
+     * @var string|null
+     */
+    protected $filteredFieldKey;
+
+    /**
      * @var array
      */
-    protected $parameters = [
-        'height' => 200,
-    ];
+    protected $parameters = [];
+
+    /**
+     * @var bool
+     */
+    protected $filterValue = true;
 
     /**
      * @param string      $path
@@ -28,7 +36,7 @@ class Wysiwyg extends NamedFormElement
         parent::__construct($path, $label);
 
         if (is_null($editor)) {
-            $editor = WysiwygManager::getDefaultEditorId();
+            $editor = app('sleeping_owl.wysiwyg')->getDefaultEditorId();
         }
 
         $this->setEditor($editor);
@@ -36,7 +44,21 @@ class Wysiwyg extends NamedFormElement
 
     public function initialize()
     {
-        WysiwygManager::loadEditor($this->getEditor());
+        $editor = app('sleeping_owl.wysiwyg')->getEditor($this->getEditor());
+
+        app('sleeping_owl.wysiwyg')->loadEditor($this->getEditor());
+
+        $this->parameters = array_merge($editor->getConfig(), $this->parameters);
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableFilter()
+    {
+        $this->filterValue = false;
+
+        return $this;
     }
 
     /**
@@ -92,6 +114,18 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
+     * @param string $field
+     *
+     * @return $this
+     */
+    public function setFilteredValueToField($field)
+    {
+        $this->filteredFieldKey = $field;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -100,17 +134,29 @@ class Wysiwyg extends NamedFormElement
             'name'       => $this->getName(),
             'label'      => $this->getLabel(),
             'value'      => $this->getValue(),
-            'parameters' => $this->getParameters(),
+            'parameters' => json_encode($this->getParameters()),
             'editor'     => $this->getEditor(),
         ];
     }
 
     /**
+     * @param Model  $model
      * @param string $attribute
      * @param mixed  $value
      */
-    protected function setValue($attribute, $value)
+    protected function setValue(Model $model, $attribute, $value)
     {
-        parent::setValue($attribute, WysiwygManager::applyFilter($this->getEditor(), $value));
+        if ($this->filterValue) {
+            $filteredValue = app('sleeping_owl.wysiwyg')->applyFilter($this->getEditor(), $value);
+        } else {
+            $filteredValue = $value;
+        }
+
+        if (! empty($this->filteredFieldKey)) {
+            parent::setValue($model, $attribute, $value);
+            parent::setValue($model, $this->filteredFieldKey, $filteredValue);
+        } else {
+            parent::setValue($model, $attribute, $filteredValue);
+        }
     }
 }

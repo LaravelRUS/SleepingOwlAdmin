@@ -1,6 +1,6 @@
 <script>
     $(function(){
-        window.Admin.WYSIWYG.switchOn('{{ $name }}', '{{ $editor }}', {!! json_encode($parameters) !!})
+        window.Admin.WYSIWYG.switchOn('{{ $name }}', '{{ $editor }}', {!! $parameters !!})
     });
 </script>
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">

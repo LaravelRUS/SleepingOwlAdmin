@@ -35,6 +35,11 @@ final class Editor implements WysiwygEditorInterface, Arrayable
     private $used = false;
 
     /**
+     * @var \KodiCMS\Assets\Package
+     */
+    private $package;
+
+    /**
      * @param string                      $id
      * @param string|null                 $name
      * @param WysiwygFilterInterface|null $filter
@@ -46,6 +51,8 @@ final class Editor implements WysiwygEditorInterface, Arrayable
         $this->name = is_null($name) ? studly_case($id) : $name;
         $this->filter = is_null($filter) ? $this->loadDefaultFilter() : $filter;
         $this->config = $config;
+
+        $this->package = app('assets.packages')->add($id);
     }
 
     /**
@@ -70,6 +77,22 @@ final class Editor implements WysiwygEditorInterface, Arrayable
     public function getFilter()
     {
         return $this->filter;
+    }
+
+    /**
+     * @return \KodiCMS\Assets\Package
+     */
+    public function getPackage()
+    {
+        return $this->package;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return (array) $this->config;
     }
 
     /**
@@ -113,6 +136,17 @@ final class Editor implements WysiwygEditorInterface, Arrayable
             'id'   => $this->getId(),
             'name' => $this->getName(),
         ];
+    }
+
+    public function __call($method, $arguments)
+    {
+        if (in_array($method, ['js', 'css'])) {
+            call_user_func_array([$this->getPackage(), $method], $arguments);
+
+            return $this;
+        }
+
+        throw new \BadMethodCallException("Call to undefined method [{$method}]");
     }
 
     /**

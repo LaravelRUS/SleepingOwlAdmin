@@ -39,15 +39,17 @@ class Manager
      * @param WysiwygFilterInterface|null $filter
      * @param string|null                 $name
      *
-     * @return $this
+     * @return WysiwygEditorInterface
      */
     public function register($editorId, WysiwygFilterInterface $filter = null, $name = null)
     {
         $config = config('sleeping_owl.wysiwyg.'.$editorId, []);
 
-        $this->getFilters()->push(new Editor($editorId, $name, $filter, $config));
+        $this->getFilters()->push(
+            $editor = new Editor($editorId, $name, $filter, $config)
+        );
 
-        return $this;
+        return $editor;
     }
 
     /**
@@ -56,6 +58,18 @@ class Manager
     public function getFilters()
     {
         return $this->filters;
+    }
+
+    /**
+     * @param string $editorId
+     *
+     * @return WysiwygEditorInterface|null
+     */
+    public function getEditor($editorId)
+    {
+        return $this->getFilters()->filter(function(WysiwygEditorInterface $editor) use($editorId) {
+            return $editor->getId() == $editorId;
+        })->first();
     }
 
     public function loadDefaultEditor()
@@ -103,18 +117,6 @@ class Manager
     public function getFiltersList()
     {
         return $this->getFilters()->pluck('name', 'id')->all();
-    }
-
-    /**
-     * @param string $editorId
-     *
-     * @return WysiwygEditorInterface|null
-     */
-    protected function getEditor($editorId)
-    {
-        return $this->getFilters()->filter(function(WysiwygEditorInterface $editor) use($editorId) {
-            return $editor->getId() == $editorId;
-        })->first();
     }
 
     /**
