@@ -59,15 +59,22 @@ class AdminController extends Controller
         $createForm = $model->fireCreate();
         $nextAction = Request::get('next_action');
 
+        $backUrl = $this->getBackUrl();
+
         if ($createForm instanceof FormInterface) {
             if (($validator = $createForm->validate($model)) instanceof Validator) {
                 return redirect()->back()
-                     ->withErrors($validator)
-                     ->withInput();
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with([
+                        '_redirectBack' => $backUrl,
+                    ]);
             }
 
             if ($model->fireEvent('creating') === false) {
-                return redirect()->back();
+                return redirect()->back()->with([
+                    '_redirectBack' => $backUrl,
+                ]);
             }
 
             $createForm->save($model);
@@ -76,11 +83,17 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
-            $response = redirect()->to($model->getEditUrl($createForm->getModel()->id));
+            $response = redirect()->to(
+                $model->getEditUrl($createForm->getModel()->id)
+            )->with([
+                '_redirectBack' => $backUrl,
+            ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl());
+            $response = redirect()->to($model->getCreateUrl())->with([
+                '_redirectBack' => $backUrl,
+            ]);
         } else {
-            $response = redirect()->to($model->getDisplayUrl());
+            $response = redirect()->to(Request::get('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnCreate());
@@ -120,6 +133,8 @@ class AdminController extends Controller
         $editForm = $model->fireFullEdit($id);
         $nextAction = Request::get('next_action');
 
+        $backUrl = $this->getBackUrl();
+
         if ($editForm instanceof FormInterface) {
             if (($validator = $editForm->validate($model)) instanceof Validator) {
                 return redirect()->back()
@@ -128,7 +143,9 @@ class AdminController extends Controller
             }
 
             if ($model->fireEvent('updating', true, $item) === false) {
-                return redirect()->back();
+                return redirect()->back()->with([
+                    '_redirectBack' => $backUrl,
+                ]);
             }
 
             $editForm->save($model);
@@ -137,11 +154,15 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
-            $response = redirect()->back();
+            $response = redirect()->back()->with([
+                '_redirectBack' => $backUrl,
+            ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl());
+            $response = redirect()->to($model->getCreateUrl())->with([
+                '_redirectBack' => $backUrl,
+            ]);
         } else {
-            $response = redirect()->to($model->getDisplayUrl());
+            $response = redirect()->to(Request::get('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnUpdate());
@@ -179,7 +200,7 @@ class AdminController extends Controller
         $column->setModel($item);
 
         if ($model->fireEvent('updating', true, $item) === false) {
-            return redirect()->back();
+            return;
         }
 
         $column->save($value);
@@ -320,6 +341,19 @@ class AdminController extends Controller
         $response->setExpires(new \DateTime('+1 year'));
 
         return $response;
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getBackUrl()
+    {
+        if (($backUrl = Request::get('_redirectBack')) == url()->previous()) {
+            $backUrl = null;
+            \Request::merge(['_redirectBack' => $backUrl]);
+        }
+
+        return $backUrl;
     }
 
     public function getWildcard()
