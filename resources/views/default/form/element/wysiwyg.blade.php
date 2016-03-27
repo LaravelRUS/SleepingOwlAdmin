@@ -4,7 +4,13 @@
     });
 </script>
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
-    <label for="{{ $name }}" class="control-label">{{ $label }}</label>
+    <label for="{{ $name }}" class="control-label">
+        {{ $label }}
+
+        @if($required)
+            <span class="text-danger">*</span>
+        @endif
+    </label>
 
     {!! Form::textarea($name, $value, [
         'class' => 'form-control',

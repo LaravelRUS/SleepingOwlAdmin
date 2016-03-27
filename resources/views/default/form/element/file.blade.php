@@ -1,5 +1,11 @@
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
-	<label for="{{ $name }}">{{ $label }}</label>
+	<label for="{{ $name }}" class="control-label">
+		{{ $label }}
+
+		@if($required)
+			<span class="text-danger">*</span>
+		@endif
+	</label>
 	<div class="imageUpload" data-target="{{ route('admin.form.element.image.uploadFile') }}" data-token="{{ csrf_token() }}">
 		<div>
 			<div class="thumbnail">

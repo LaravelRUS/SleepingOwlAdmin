@@ -1,5 +1,11 @@
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
-	<label for="{{ $name }}">{{ $label }}</label>
+	<label for="{{ $name }}" class="control-label">
+		{{ $label }}
+
+		@if($required)
+			<span class="text-danger">*</span>
+		@endif
+	</label>
 	<input class="form-control" name="{{ $name }}" type="password" id="{{ $name }}" value="" @if(isset($readonly))readonly="{{ $readonly }}"@endif>
 	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>
