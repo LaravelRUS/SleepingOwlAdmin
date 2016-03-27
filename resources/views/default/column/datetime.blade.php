@@ -1,3 +1,1 @@
-<td {!! $attributes !!}>
-    {{ $value }} {!! $append !!}
-</td>
+{{ $value }} {!! $append !!}

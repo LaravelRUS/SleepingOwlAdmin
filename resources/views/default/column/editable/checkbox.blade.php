@@ -1,17 +1,15 @@
-<td {!! $attributes !!}>
-    @if($isEditable)
-    <a href="#"
-           class="inline-editable"
-           data-name="{{ $name }}"
-           data-value="{{ $value }}"
-           data-url="{{ url()->current() }}"
-           data-type="checklist"
-           data-pk="{{ $id }}"
-           data-source="{ 1 : '{{ $checkedLabel }}' }"
-           data-emptytext="{{ $uncheckedLabel }}"
-    ></a>
+@if($isEditable)
+<a href="#"
+       class="inline-editable"
+       data-name="{{ $name }}"
+       data-value="{{ $value }}"
+       data-url="{{ url()->current() }}"
+       data-type="checklist"
+       data-pk="{{ $id }}"
+       data-source="{ 1 : '{{ $checkedLabel }}' }"
+       data-emptytext="{{ $uncheckedLabel }}"
+></a>
 
-    @else
-        @if($value) {{ $checkedLabel }} @else {{ $uncheckedLabel }} @endif
-    @endif
-</td>
+@else
+    @if($value) {{ $checkedLabel }} @else {{ $uncheckedLabel }} @endif
+@endif

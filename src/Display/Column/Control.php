@@ -14,7 +14,7 @@ class Control extends TableColumn
     /**
      * @var string
      */
-    protected $width = '50px';
+    protected $width = '90px';
 
     /**
      * @var
@@ -26,7 +26,7 @@ class Control extends TableColumn
         parent::__construct();
         $this->setOrderable(false);
 
-        $this->setHtmlAttribute('class', 'row-control');
+        $this->setHtmlAttribute('class', 'row-control text-right');
     }
 
     /**

@@ -7,7 +7,9 @@
     <thead>
     <tr>
         @foreach ($columns as $column)
-            {!! $column->getHeader()->render() !!}
+            <th {!! $column->getHeader()->htmlAttributesToString() !!}>
+                {!! $column->getHeader()->render() !!}
+            </th>
         @endforeach
     </tr>
     </thead>
@@ -16,7 +18,9 @@
         <tr>
             @foreach ($columns as $column)
                 <?php $column->setModel($model); ?>
-                {!! $column->render() !!}
+                <td {!! $column->htmlAttributesToString() !!}>
+                    {!! $column->render() !!}
+                </td>
             @endforeach
         </tr>
     @endforeach

@@ -1,3 +1,1 @@
-<th {!! $attributes !!}>
-    {!! $title !!}
-</th>
+{!! $title !!}
