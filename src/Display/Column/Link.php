@@ -39,10 +39,14 @@ class Link extends NamedColumn
 
     /**
      * @param array $linkAttributes
+     *
+     * @return $this
      */
     public function setLinkAttributes(array $linkAttributes)
     {
         $this->linkAttributes = $linkAttributes;
+
+        return $this;
     }
 
     /**
