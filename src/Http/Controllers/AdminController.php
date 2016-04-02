@@ -83,8 +83,12 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
+
+            $newModel = $createForm->getModel();
+            $primaryKey = $newModel->getKeyName();
+
             $response = redirect()->to(
-                $model->getEditUrl($createForm->getModel()->id)
+                $model->getEditUrl($newModel->{$primaryKey})
             )->with([
                 '_redirectBack' => $backUrl,
             ]);
