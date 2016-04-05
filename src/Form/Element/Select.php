@@ -29,6 +29,11 @@ class Select extends NamedFormElement
     protected $nullable = false;
 
     /**
+     * @var bool
+     */
+    protected $sortable = true;
+
+    /**
      * @return Model
      */
     public function getModelForOptions()
@@ -78,7 +83,9 @@ class Select extends NamedFormElement
         }
 
         $options = $this->options;
-        asort($options);
+        if ($this->isSortable()) {
+            asort($options);
+        }
 
         return $options;
     }
@@ -121,6 +128,23 @@ class Select extends NamedFormElement
         $this->nullable = true;
 
         return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setSortable($sortable)
+    {
+        $this->sortable = $sortable;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSortable()
+    {
+        return $this->sortable;
     }
 
     /**
