@@ -74,7 +74,8 @@ return [
     'url'                     => 'The :attribute format is invalid.',
     'url_stub'                => 'Неверный формат поля.',
     'url_stub_full'           => 'Неверный формат поля.',
-
+    'not_image'               => 'Файл не является изображением',
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
@@ -86,6 +87,6 @@ return [
     |
     */
 
-    'attributes'              => [],
+    'attributes' => [],
 
 ];
