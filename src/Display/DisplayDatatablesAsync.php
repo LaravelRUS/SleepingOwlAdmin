@@ -5,27 +5,31 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Route;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
+
     /**
      * Register display routes.
      */
     public static function registerRoutes()
     {
         Route::get('{adminModel}/async/{adminDisplayName?}', ['as' => 'admin.model.async',
-            function ($model, $name = null) {
-                $display = $model->display();
+            function (ModelConfiguration $model, $name = null) {
+                $display = $model->fireDisplay();
                 if ($display instanceof DisplayTabbed) {
                     $display = static::findDatatablesAsyncByName($display, $name);
                 }
+
                 if ($display instanceof DisplayDatatablesAsync) {
                     return $display->renderAsync();
                 }
+
                 abort(404);
             },
         ]);
@@ -68,8 +72,25 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function __construct($name = null, $distinct = null)
     {
+        parent::__construct();
+
         $this->setName($name);
         $this->setDistinct($distinct);
+
+        $this->getColumns()->setView('display.extensions.columns_async');
+    }
+    /**
+     * Initialize display.
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $attributes = Request::all();
+        array_unshift($attributes, $this->getName());
+        array_unshift($attributes, $this->getModelConfiguration()->getAlias());
+
+        $this->setHtmlAttribute('data-url', route('admin.model.async', $attributes));
     }
 
     /**
@@ -102,30 +123,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public function setDistinct($distinct)
     {
         $this->distinct = $distinct;
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view('display.datatablesAsync', $this->toArray());
-    }
-
-    /**
-     * Get view render parameters.
-     * @return array
-     */
-    public function toArray()
-    {
-        $params = parent::toArray();
-
-        $attributes = Request::all();
-        array_unshift($attributes, $this->getName());
-        array_unshift($attributes, $this->getModelConfiguration()->getAlias());
-        $params['url'] = route('admin.model.async', $attributes);
-
-        return $params;
     }
 
     /**
@@ -186,10 +183,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         foreach ($orders as $order) {
             $columnIndex = $order['column'];
             $orderDirection = $order['dir'];
-            $column = $this->allColumns()[$columnIndex];
+            $column = $this->getColumns()->all()->get($columnIndex);
 
             if ($column instanceof NamedColumn && $column->isOrderable()) {
-                $name = $column->name();
+                $name = $column->getName();
                 $query->orderBy($name, $orderDirection);
             }
         }
@@ -208,10 +205,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         }
 
         $query->where(function ($query) use ($search) {
-            $columns = $this->columns();
+            $columns = $this->getColumns()->all();
             foreach ($columns as $column) {
                 if ($column instanceof Text) {
-                    $name = $column->name();
+                    $name = $column->getName();
                     if ($this->repository->hasColumn($name)) {
                         $query->orWhere($name, 'like', '%'.$search.'%');
                     }
@@ -230,10 +227,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         foreach ($queryColumns as $index => $queryColumn) {
             $search = array_get($queryColumn, 'search.value');
             $fullSearch = array_get($queryColumn, 'search');
-            $column = array_get($this->columns(), $index);
-            $columnFilter = array_get($this->columnFilters(), $index);
+            $column = $this->getColumns()->all()->get($index);
+            $columnFilter = array_get($this->getColumnFilters()->all(), $index);
 
-            if (! is_null($columnFilter)) {
+            if (! is_null($columnFilter) && ! is_null($column)) {
                 $columnFilter->apply($this->repository, $column, $query, $search, $fullSearch);
             }
         }
@@ -250,7 +247,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function prepareDatatablesStructure(Collection $collection, $totalCount, $filteredCount)
     {
-        $columns = $this->allColumns();
+        $columns = $this->getColumns();
 
         $result = [];
         $result['draw'] = Request::get('draw', 0);
@@ -260,8 +257,9 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         foreach ($collection as $instance) {
             $_row = [];
-            foreach ($columns as $column) {
-                $column->setInstance($instance);
+
+            foreach ($columns->all() as $column) {
+                $column->setModel($instance);
                 $_row[] = (string) $column;
             }
 
