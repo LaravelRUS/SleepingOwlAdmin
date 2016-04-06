@@ -16,7 +16,8 @@ class TemplateDefault implements TemplateInterface
             'admin-default',
             'font-awesome',
             'flow.js',
-            'Sortable'
+            'Sortable',
+            'ckeditor'
         ]);
 
         Meta::AddJs('adminScripts', route('admin.scripts'), ['libraries']);
