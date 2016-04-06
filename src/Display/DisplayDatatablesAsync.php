@@ -205,10 +205,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         }
 
         $query->where(function ($query) use ($search) {
-            $columns = $this->columns();
+            $columns = $this->getColumns()->all();
             foreach ($columns as $column) {
                 if ($column instanceof Text) {
-                    $name = $column->name();
+                    $name = $column->getName();
                     if ($this->repository->hasColumn($name)) {
                         $query->orWhere($name, 'like', '%'.$search.'%');
                     }
@@ -227,10 +227,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         foreach ($queryColumns as $index => $queryColumn) {
             $search = array_get($queryColumn, 'search.value');
             $fullSearch = array_get($queryColumn, 'search');
-            $column = array_get($this->getColumns(), $index);
-            $columnFilter = array_get($this->getColumnFilters(), $index);
+            $column = $this->getColumns()->all()->get($index);
+            $columnFilter = $this->getColumnFilters()->all()->get($index);
 
-            if (! is_null($columnFilter)) {
+            if (! is_null($columnFilter) && ! is_null($column)) {
                 $columnFilter->apply($this->repository, $column, $query, $search, $fullSearch);
             }
         }
