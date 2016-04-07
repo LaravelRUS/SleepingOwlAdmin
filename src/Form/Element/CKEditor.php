@@ -2,9 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Route;
-use Request;
-
 class CKEditor extends Wysiwyg
 {
     /**

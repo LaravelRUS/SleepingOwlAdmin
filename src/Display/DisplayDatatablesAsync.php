@@ -13,7 +13,6 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
-
     /**
      * Register display routes.
      */
@@ -79,6 +78,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $this->getColumns()->setView('display.extensions.columns_async');
     }
+
     /**
      * Initialize display.
      */

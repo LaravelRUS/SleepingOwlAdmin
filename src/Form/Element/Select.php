@@ -136,6 +136,7 @@ class Select extends NamedFormElement
     public function setSortable($sortable)
     {
         $this->sortable = $sortable;
+
         return $this;
     }
 

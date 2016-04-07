@@ -105,8 +105,8 @@ return [
 
         // Checkout https://github.com/NextStepWebs/simplemde-markdown-editor for more information.
         'simplemde' => [
-            'hideIcons' => ["side-by-side", "fullscreen"],
-        ]
+            'hideIcons' => ['side-by-side', 'fullscreen'],
+        ],
     ],
 
     /*
