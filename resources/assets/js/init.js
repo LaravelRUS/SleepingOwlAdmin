@@ -74,7 +74,7 @@ window.Admin.Components
         exec_handler = function (editor, command, textarea_id, data) {
             switch (command) {
                 case 'insert':
-                    editor.value(data);
+                    editor.codemirror.replaceSelection(data);
                     break;
             }
         }
