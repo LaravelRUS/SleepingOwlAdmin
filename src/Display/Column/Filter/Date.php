@@ -156,7 +156,6 @@ class Date extends Text
      * @param Builder              $query
      * @param string               $search
      * @param string               $fullSearch
-     * @param string               $operator
      *
      * @return void
      */
@@ -165,8 +164,7 @@ class Date extends Text
         NamedColumnInterface $column,
         Builder $query,
         $search,
-        $fullSearch,
-        $operator = '='
+        $fullSearch
     ) {
         if (empty($search)) {
             return;
@@ -185,13 +183,14 @@ class Date extends Text
         $time = $time->format($this->getSearchFormat());
         $name = $column->getName();
         if ($repository->hasColumn($name)) {
-            $query->where($name, $operator, $time);
+            $this->buildQuery($query, $name, $time);
         } elseif (strpos($name, '.') !== false) {
             $parts = explode('.', $name);
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
-            $query->whereHas($relationName, function ($q) use ($time, $fieldName, $operator) {
-                $q->where($fieldName, $operator, $time);
+
+            $query->whereHas($relationName, function ($q) use ($name, $time) {
+                $this->buildQuery($q, $name, $time);
             });
         }
     }

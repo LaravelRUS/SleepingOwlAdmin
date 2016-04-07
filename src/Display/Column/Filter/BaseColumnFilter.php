@@ -5,10 +5,13 @@ namespace SleepingOwl\Admin\Display\Column\Filter;
 use Meta;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
+    use SqlQueryOperators;
+
     /**
      * @var string
      */

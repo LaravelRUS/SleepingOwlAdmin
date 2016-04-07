@@ -173,7 +173,6 @@ class Select extends BaseColumnFilter
      * @param Builder              $query
      * @param string               $search
      * @param array|string         $fullSearch
-     * @param string               $operator
      *
      * @return void
      */
@@ -182,8 +181,7 @@ class Select extends BaseColumnFilter
         NamedColumnInterface $column,
         Builder $query,
         $search,
-        $fullSearch,
-        $operator = '='
+        $fullSearch
     ) {
         if ($search === '') {
             return;
@@ -195,19 +193,15 @@ class Select extends BaseColumnFilter
             return;
         }
 
-        if ($operator == 'like') {
-            $search = '%'.$search.'%';
-        }
-
         $name = $column->getName();
         if ($repository->hasColumn($name)) {
-            $query->where($name, $operator, $search);
+            $this->buildQuery($query, $name, $search);
         } elseif (strpos($name, '.') !== false) {
             $parts = explode('.', $name);
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
-            $query->whereHas($relationName, function ($q) use ($search, $fieldName, $operator) {
-                $q->where($fieldName, $operator, $search);
+            $query->whereHas($relationName, function ($q) use ($search, $fieldName) {
+                $this->buildQuery($q, $fieldName, $search);
             });
         }
     }

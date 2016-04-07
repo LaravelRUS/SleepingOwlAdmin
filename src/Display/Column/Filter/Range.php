@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
@@ -92,7 +93,6 @@ class Range extends BaseColumnFilter
      * @param Builder              $query
      * @param string               $search
      * @param array|string         $fullSearch
-     * @param string               $operator
      *
      * @return void
      */
@@ -101,18 +101,23 @@ class Range extends BaseColumnFilter
         NamedColumnInterface $column,
         Builder $query,
         $search,
-        $fullSearch,
-        $operator = '='
+        $fullSearch
     ) {
         $from = array_get($fullSearch, 'from');
         $to = array_get($fullSearch, 'to');
 
         if (! empty($from)) {
-            $this->getFrom()->apply($repository, $column, $query, $from, $fullSearch, '>=');
+            $this
+                ->getFrom()
+                ->setOperator(FilterInterface::LESS_OR_EQUAL)
+                ->apply($repository, $column, $query, $from, $fullSearch);
         }
 
         if (! empty($to)) {
-            $this->getTo()->apply($repository, $column, $query, $to, $fullSearch, '<=');
+            $this
+                ->getTo()
+                ->setOperator(FilterInterface::LESS_OR_EQUAL)
+                ->apply($repository, $column, $query, $to, $fullSearch);
         }
     }
 }

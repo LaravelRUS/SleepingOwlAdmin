@@ -12,7 +12,6 @@ interface ColumnFilterInterface extends Initializable
      * @param Builder              $query
      * @param string               $search
      * @param array|string         $fullSearch
-     * @param string               $operator
      *
      * @return void
      */
@@ -21,7 +20,6 @@ interface ColumnFilterInterface extends Initializable
         NamedColumnInterface $column,
         Builder $query,
         $search,
-        $fullSearch,
-        $operator = '='
+        $fullSearch
     );
 }
