@@ -3,25 +3,23 @@
     <input type="hidden" name="_redirectBack" value="{{ $backUrl }}" />
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-    @foreach($items as $panelTitle => $formItems)
-
-    @if(!is_integer($panelTitle))
+    @if(!empty($data = $items[\SleepingOwl\Admin\Form\FormPanel::POSITION_HEADER]))
     <div class="panel-heading">
-        <span class="panel-title">{{ $panelTitle }}</span>
+        @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $data])
     </div>
     @endif
 
+    @if(!empty($data = $items[\SleepingOwl\Admin\Form\FormPanel::POSITION_BODY]))
     <div class="panel-body">
-        @if($formItems instanceof \SleepingOwl\Admin\Form\Element\Columns)
-            {!! $formItems->render() !!}
-        @else
-        @foreach ($formItems as $item)
-            {!! $item->render() !!}
-        @endforeach
-        @endif
+        @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $data])
     </div>
+    @endif
 
-    @endforeach
+    @if(!empty($data = $items[\SleepingOwl\Admin\Form\FormPanel::POSITION_FOOTER]))
+        <div class="panel-footer">
+            @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $data])
+        </div>
+    @endif
 
     {!! $buttons->render() !!}
 </form>

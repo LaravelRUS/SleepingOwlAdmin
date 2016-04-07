@@ -5,6 +5,8 @@ namespace SleepingOwl\Admin\Form\Element;
 use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\FormElement;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 
@@ -24,8 +26,10 @@ class Columns extends FormElement
     {
         parent::initialize();
 
-        $this->applyCallbackToItems(function (FormElementInterface $item) {
-            $item->initialize();
+        $this->applyCallbackToItems(function ($item) {
+            if ($item instanceof Initializable) {
+                $item->initialize();
+            }
         });
     }
 
@@ -38,17 +42,10 @@ class Columns extends FormElement
     }
 
     /**
-     * @param Collection $columns
+     * @param Closure $callback
      *
      * @return $this
      */
-    public function setColumns(Collection $columns)
-    {
-        $this->columns = collect($columns);
-
-        return $this;
-    }
-
     public function addColumn(Closure $callback)
     {
         $this->columns->push(
@@ -67,8 +64,14 @@ class Columns extends FormElement
     {
         parent::setModel($model);
 
-        $this->applyCallbackToItems(function (FormElementInterface $item) use ($model) {
-            $item->setModel($model);
+        $this->applyCallbackToItems(function ($item) use ($model) {
+            if ($item instanceof FormElementInterface) {
+                $item->setModel($model);
+            }
+
+            if ($item instanceof ColumnInterface) {
+                $item->setModel($model);
+            }
         });
 
         return $this;
@@ -142,8 +145,10 @@ class Columns extends FormElement
     {
         parent::save();
 
-        $this->applyCallbackToItems(function (FormElementInterface $item) {
-            $item->save();
+        $this->applyCallbackToItems(function ($item) {
+            if ($item instanceof FormElementInterface) {
+                $item->save();
+            }
         });
     }
 
@@ -151,8 +156,10 @@ class Columns extends FormElement
     {
         parent::afterSave();
 
-        $this->applyCallbackToItems(function (FormElementInterface $item) {
-            $item->afterSave();
+        $this->applyCallbackToItems(function ($item) {
+            if ($item instanceof FormElementInterface) {
+                $item->afterSave();
+            }
         });
     }
 
@@ -163,9 +170,7 @@ class Columns extends FormElement
     {
         foreach ($this->getColumns() as $columnItems) {
             foreach ($columnItems as $item) {
-                if ($item instanceof FormElementInterface) {
-                    call_user_func($callback, $item);
-                }
+                call_user_func($callback, $item);
             }
         }
     }
