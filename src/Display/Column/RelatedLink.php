@@ -17,14 +17,19 @@ class RelatedLink extends Link
     protected $originalName;
 
     /**
-     * @param string $name
      *
-     * @throws \Exception
+     * @param null|string $name
+     * @param null|string $label
+     * @param Model|null  $model
      */
-    public function __construct($name)
+    public function __construct($name, $label = null, Model $model = null)
     {
-        parent::__construct($name);
+        parent::__construct($name, $label);
         $this->originalName = $name;
+
+        if (! is_null($model)) {
+            $this->setModel($model);
+        }
 
         $this->setHtmlAttribute('class', 'row-link');
     }

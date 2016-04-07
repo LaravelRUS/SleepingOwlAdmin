@@ -12,9 +12,15 @@ class DateTime extends NamedColumn
      */
     protected $format;
 
-    public function __construct($name)
+    /**
+     * DateTime constructor.
+     *
+     * @param null|string $name
+     * @param null|string $label
+     */
+    public function __construct($name, $label = null)
     {
-        parent::__construct($name);
+        parent::__construct($name, $label);
         $this->setHtmlAttribute('class', 'row-control');
     }
 
@@ -57,9 +63,9 @@ class DateTime extends NamedColumn
         $this->setHtmlAttribute('data-order', $originalValue);
 
         return parent::toArray() + [
-            'value'         => $value,
+            'value' => $value,
             'originalValue' => $originalValue,
-            'append'        => $this->getAppends(),
+            'append' => $this->getAppends(),
         ];
     }
 }

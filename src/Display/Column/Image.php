@@ -10,11 +10,12 @@ class Image extends NamedColumn
     protected $width = '80px';
 
     /**
-     * @param $name
+     * @param null|string $name
+     * @param null|string $label
      */
-    public function __construct($name)
+    public function __construct($name, $label = null)
     {
-        parent::__construct($name);
+        parent::__construct($name, $label);
         $this->setOrderable(false);
 
         $this->setHtmlAttribute('class', 'row-image');

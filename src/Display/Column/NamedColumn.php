@@ -16,11 +16,12 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $name;
 
     /**
-     * @param $name
+     * @param null|string $name
+     * @param null|string $label
      */
-    public function __construct($name)
+    public function __construct($name, $label = null)
     {
-        parent::__construct();
+        parent::__construct($label);
         $this->setName($name);
     }
 
@@ -79,7 +80,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
         if ($instance instanceof Collection) {
             $instance = $instance->pluck($part);
-        } else {
+        } else if (! is_null($instance)) {
             $instance = $instance->getAttribute($part);
         }
 

@@ -9,9 +9,15 @@ class Count extends NamedColumn
      */
     protected $view = 'column.count';
 
-    public function __construct($name)
+    /**
+     * Count constructor.
+     *
+     * @param null|string $name
+     * @param null|string $label
+     */
+    public function __construct($name, $label = null)
     {
-        parent::__construct($name);
+        parent::__construct($name, $label);
         $this->setHtmlAttribute('class', 'row-count');
     }
 
@@ -21,7 +27,7 @@ class Count extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'value'  => count($this->getModelValue()),
+            'value' => count($this->getModelValue()),
             'append' => $this->getAppends(),
         ];
     }

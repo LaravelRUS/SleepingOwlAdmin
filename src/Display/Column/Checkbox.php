@@ -12,9 +12,14 @@ class Checkbox extends TableColumn
      */
     protected $view = 'column.checkbox';
 
-    public function __construct()
+    /**
+     * Checkbox constructor.
+     *
+     * @param string|null $label
+     */
+    public function __construct($label = null)
     {
-        parent::__construct();
+        parent::__construct($label);
         $this->setLabel(
             Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
         ));

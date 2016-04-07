@@ -19,9 +19,14 @@ class Custom extends TableColumn
      */
     protected $view = 'column.custom';
 
-    public function __construct()
+    /**
+     * Custom constructor.
+     *
+     * @param null|string $label
+     */
+    public function __construct($label = null)
     {
-        parent::__construct();
+        parent::__construct($label);
         $this->setHtmlAttribute('class', 'row-custom');
     }
 

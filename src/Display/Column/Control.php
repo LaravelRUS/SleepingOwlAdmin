@@ -21,9 +21,14 @@ class Control extends TableColumn
      */
     protected $buttons;
 
-    public function __construct()
+    /**
+     * Control constructor.
+     *
+     * @param string|null $label
+     */
+    public function __construct($label = null)
     {
-        parent::__construct();
+        parent::__construct($label);
         $this->setOrderable(false);
 
         $this->setHtmlAttribute('class', 'row-control text-right');
