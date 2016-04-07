@@ -2,7 +2,9 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use KodiComponents\Support\HtmlAttributes;
 use Request;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -17,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 
 class FormDefault implements DisplayInterface, FormInterface
 {
+    use HtmlAttributes;
+
     /**
      * View to render.
      * @var string
@@ -91,6 +95,9 @@ class FormDefault implements DisplayInterface, FormInterface
 
         $this->setModel(app($this->class));
         $this->initializeItems();
+
+        $this->setHtmlAttribute('action', $this->getAction());
+        $this->setHtmlAttribute('method', 'POST');
 
         $this->getButtons()->setModelConfiguration(
             $this->getModelConfiguration()
@@ -258,6 +265,10 @@ class FormDefault implements DisplayInterface, FormInterface
             if ($item instanceof FormElementInterface) {
                 $item->setModel($this->model);
             }
+
+            if ($item instanceof ColumnInterface) {
+                $item->setModel($this->getModel());
+            }
         });
 
         return $this;
@@ -370,11 +381,11 @@ class FormDefault implements DisplayInterface, FormInterface
     public function toArray()
     {
         return [
-            'items'    => $this->getItems(),
+            'items' => $this->getItems(),
             'instance' => $this->getModel(),
-            'action'   => $this->getAction(),
-            'buttons'  => $this->getButtons(),
-            'backUrl'  => session('_redirectBack', url()->previous()),
+            'attributes' => $this->htmlAttributesToString(),
+            'buttons' => $this->getButtons(),
+            'backUrl' => session('_redirectBack', url()->previous()),
         ];
     }
 

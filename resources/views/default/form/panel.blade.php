@@ -1,4 +1,4 @@
-<form action="{{ $action }}" method="POST" class="panel panel-default">
+<form {!! $attributes !!}>
 
     <input type="hidden" name="_redirectBack" value="{{ $backUrl }}" />
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
