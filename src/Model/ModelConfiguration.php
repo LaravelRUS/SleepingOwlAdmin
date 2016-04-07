@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Model;
 
 use Gate;
 use Closure;
-use Illuminate\Support\Str;
 use BadMethodCallException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -869,7 +868,8 @@ class ModelConfiguration
             'deleting', 'deleted', 'restoring', 'restored',
         ])) {
             array_unshift($arguments, $method);
-            return call_user_func_array([$this, 'registerEvent'],$arguments);
+
+            return call_user_func_array([$this, 'registerEvent'], $arguments);
         }
 
         throw new BadMethodCallException($method);

@@ -83,7 +83,6 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
-
             $newModel = $createForm->getModel();
             $primaryKey = $newModel->getKeyName();
 

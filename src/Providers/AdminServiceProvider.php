@@ -10,8 +10,6 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
-use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class AdminServiceProvider extends ServiceProvider
