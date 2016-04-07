@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Facades;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\Timestamp timestamp($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\TextAddon textaddon($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Password password($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\Select select($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\MultiSelect multiselect($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\Select select($name, $label = null, array|Model $options)
+ * @method static \SleepingOwl\Admin\Form\Element\MultiSelect multiselect($name, $label = null, array|Model $options)
  * @method static \SleepingOwl\Admin\Form\Element\Columns columns()
  * @method static \SleepingOwl\Admin\Form\Element\Hidden hidden($name)
  * @method static \SleepingOwl\Admin\Form\Element\Custom custom()

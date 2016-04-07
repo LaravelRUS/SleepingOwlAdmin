@@ -34,6 +34,22 @@ class Select extends NamedFormElement
     protected $sortable = true;
 
     /**
+     * @param string      $path
+     * @param string|null $label
+     * @param array|Model       $options
+     */
+    public function __construct($path, $label = null, $options = [])
+    {
+        parent::__construct($path, $label);
+
+        if (is_array($options)) {
+            $this->setOptions($options);
+        } else if ($options instanceof Model) {
+            $this->setModelForOptions($options);
+        }
+    }
+
+    /**
      * @return Model
      */
     public function getModelForOptions()
@@ -131,11 +147,13 @@ class Select extends NamedFormElement
     }
 
     /**
+     * @param bool $sortable
+     *
      * @return $this
      */
     public function setSortable($sortable)
     {
-        $this->sortable = $sortable;
+        $this->sortable = (bool) $sortable;
 
         return $this;
     }
@@ -153,9 +171,27 @@ class Select extends NamedFormElement
      */
     public function toArray()
     {
+        $attributes = [
+            'id' => $this->getName(),
+            'size' => 2,
+            'data-select-type' => 'single',
+            'class' => 'form-control input-select',
+        ];
+
+        if ($this->isNullable()) {
+            $attributes['data-nullable'] = 'true';
+        }
+
+        $options = $this->getOptions();
+
+        if ($this->isNullable()) {
+            array_unshift($options, '');
+        }
+
         return parent::toArray() + [
             'options'  => $this->getOptions(),
             'nullable' => $this->isNullable(),
+            'attributes' => $attributes
         ];
     }
 
@@ -165,6 +201,7 @@ class Select extends NamedFormElement
 
         $key = $repository->getModel()->getKeyName();
         $options = $repository->getQuery()->get()->lists($this->getDisplay(), $key);
+
         if ($options instanceof Collection) {
             $options = $options->all();
         }
