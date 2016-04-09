@@ -34,6 +34,11 @@ class Select extends NamedFormElement
     protected $sortable = true;
 
     /**
+     * @var bool
+     */
+    protected $isEmptyRelation = false;
+
+    /**
      * @param string      $path
      * @param string|null $label
      * @param array|Model       $options
@@ -147,6 +152,25 @@ class Select extends NamedFormElement
     }
 
     /**
+     * @param bool $state
+     * @return $this
+     */
+    public function setEmptyRelation(bool $state)
+    {
+        $this->isEmptyRelation = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmptyRelation()
+    {
+        return $this->isEmptyRelation;
+    }
+
+    /**
      * @param bool $sortable
      *
      * @return $this
@@ -195,12 +219,21 @@ class Select extends NamedFormElement
         ];
     }
 
+    /**
+     * @var $repository RepositoryInterface
+     */
     protected function loadOptions()
     {
         $repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
 
         $key = $repository->getModel()->getKeyName();
-        $options = $repository->getQuery()->get()->lists($this->getDisplay(), $key);
+
+        $options = $repository->getQuery();
+
+        if($this->isEmptyRelation())
+            $options->where($this->getModel()->getForeignKey(), 0);
+
+        $options = $options->get()->lists($this->getDisplay(), $key);
 
         if ($options instanceof Collection) {
             $options = $options->all();
