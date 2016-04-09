@@ -80,7 +80,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
         if ($instance instanceof Collection) {
             $instance = $instance->pluck($part);
-        } else if (! is_null($instance)) {
+        } elseif (! is_null($instance)) {
             $instance = $instance->getAttribute($part);
         }
 

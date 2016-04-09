@@ -49,7 +49,7 @@ class Select extends NamedFormElement
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } else if ($options instanceof Model) {
+        } elseif ($options instanceof Model) {
             $this->setModelForOptions($options);
         }
     }
@@ -215,12 +215,12 @@ class Select extends NamedFormElement
         return parent::toArray() + [
             'options'  => $this->getOptions(),
             'nullable' => $this->isNullable(),
-            'attributes' => $attributes
+            'attributes' => $attributes,
         ];
     }
 
     /**
-     * @var $repository RepositoryInterface
+     * @var RepositoryInterface
      */
     protected function loadOptions()
     {
@@ -230,8 +230,9 @@ class Select extends NamedFormElement
 
         $options = $repository->getQuery();
 
-        if($this->isEmptyRelation())
+        if ($this->isEmptyRelation()) {
             $options->where($this->getModel()->getForeignKey(), 0);
+        }
 
         $options = $options->get()->lists($this->getDisplay(), $key);
 
