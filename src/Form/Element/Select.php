@@ -155,9 +155,9 @@ class Select extends NamedFormElement
      * @param bool $state
      * @return $this
      */
-    public function setEmptyRelation(bool $state)
+    public function onlyEmptyRelation()
     {
-        $this->isEmptyRelation = $state;
+        $this->isEmptyRelation = true;
 
         return $this;
     }
@@ -234,7 +234,7 @@ class Select extends NamedFormElement
             $options->where($this->getModel()->getForeignKey(), 0);
         }
 
-        $options = $options->get()->lists($this->getDisplay(), $key);
+        $options = $options->get()->pluck($this->getDisplay(), $key);
 
         if ($options instanceof Collection) {
             $options = $options->all();
