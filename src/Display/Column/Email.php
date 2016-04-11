@@ -6,7 +6,7 @@ class Email extends NamedColumn
 {
     /**
      * Email constructor.
-     * 
+     *
      * @param null|string $name
      * @param null|string $label
      */

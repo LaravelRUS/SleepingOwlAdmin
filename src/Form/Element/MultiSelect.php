@@ -44,7 +44,7 @@ class MultiSelect extends Select
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isTaggable()
     {
@@ -62,7 +62,7 @@ class MultiSelect extends Select
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeleteRelatedItem()
     {
@@ -124,10 +124,9 @@ class MultiSelect extends Select
         $relation = $this->getModel()->{$attribute}();
 
         if ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
-
             foreach ($values as $i => $value) {
                 if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
-                    $model = clone($this->getModelForOptions());
+                    $model = clone $this->getModelForOptions();
                     $model->{$this->getDisplay()} = $value;
                     $model->save();
 
@@ -136,8 +135,7 @@ class MultiSelect extends Select
             }
 
             $relation->sync($values);
-        } else if ($relation instanceof \Illuminate\Database\Eloquent\Relations\HasMany) {
-
+        } elseif ($relation instanceof \Illuminate\Database\Eloquent\Relations\HasMany) {
             foreach ($relation->get() as $item) {
                 if (! in_array($item->getKey(), $values)) {
                     if ($this->isDeleteRelatedItem()) {
@@ -151,7 +149,7 @@ class MultiSelect extends Select
 
             foreach ($values as $i => $value) {
                 /** @var Model $model */
-                $model = clone($this->getModelForOptions());
+                $model = clone $this->getModelForOptions();
                 $item = $model->find($value);
 
                 if (is_null($item)) {

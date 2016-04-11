@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 
 trait SqlQueryOperators
 {
-
     /**
      * @var string
      */

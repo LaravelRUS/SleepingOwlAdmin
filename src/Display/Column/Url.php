@@ -13,7 +13,7 @@ class Url extends NamedColumn
     public function __construct($name, $label = null)
     {
         parent::__construct($name, $label);
-        
+
         $this->setHtmlAttribute('class', 'row-url');
     }
 
