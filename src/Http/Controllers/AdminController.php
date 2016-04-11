@@ -57,7 +57,7 @@ class AdminController extends Controller
         }
 
         $createForm = $model->fireCreate();
-        $nextAction = Request::get('next_action');
+        $nextAction = Request::input('next_action');
 
         $backUrl = $this->getBackUrl();
 
@@ -96,7 +96,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::get('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnCreate());
@@ -134,7 +134,7 @@ class AdminController extends Controller
         }
 
         $editForm = $model->fireFullEdit($id);
-        $nextAction = Request::get('next_action');
+        $nextAction = Request::input('next_action');
 
         $backUrl = $this->getBackUrl();
 
@@ -165,7 +165,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::get('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnUpdate());
@@ -178,9 +178,9 @@ class AdminController extends Controller
      */
     public function inlineEdit(ModelConfiguration $model)
     {
-        $field = Request::get('name');
-        $value = Request::get('value');
-        $id = Request::get('pk');
+        $field = Request::input('name');
+        $value = Request::input('value');
+        $id = Request::input('pk');
 
         $display = $model->fireDisplay();
 
@@ -351,9 +351,9 @@ class AdminController extends Controller
      */
     protected function getBackUrl()
     {
-        if (($backUrl = Request::get('_redirectBack')) == url()->previous()) {
+        if (($backUrl = Request::input('_redirectBack')) == url()->previous()) {
             $backUrl = null;
-            \Request::merge(['_redirectBack' => $backUrl]);
+            Request::merge(['_redirectBack' => $backUrl]);
         }
 
         return $backUrl;

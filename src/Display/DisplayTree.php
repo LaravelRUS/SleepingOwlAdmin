@@ -15,7 +15,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         Route::post('{adminModel}/reorder', function (ModelConfiguration $model) {
             $model->fireDisplay()->getRepository()->reorder(
-                Request::get('data')
+                Request::input('data')
             );
         });
     }

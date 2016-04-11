@@ -115,7 +115,7 @@ class MultiSelect extends Select
 
         $attribute = $this->getAttribute();
 
-        if (is_null(Request::get($this->getPath()))) {
+        if (is_null(Request::input($this->getPath()))) {
             $values = [];
         } else {
             $values = $this->getValue();

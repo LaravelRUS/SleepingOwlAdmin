@@ -9,7 +9,7 @@ class Images extends Image
     public function save()
     {
         $name = $this->getName();
-        $value = Request::get($name, '');
+        $value = Request::input($name, '');
 
         if (! empty($value)) {
             $value = explode(',', $value);
