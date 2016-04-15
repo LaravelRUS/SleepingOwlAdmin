@@ -74,7 +74,7 @@ PackageManager::add('moment')
 
 PackageManager::add('nestable')
     ->css(null, resources_url('libs/nestable/css/jquery.nestable.css'))
-    ->js(null, resources_url('libs/nestable/js/jquery.nestable.js'), ['jquery']);
+    ->js(null, resources_url('libs/nestable/js/jquery.nestable.js'), ['jquery', 'libraries']);
 
 PackageManager::add('noty')
     ->js(null, resources_url('libs/noty/js/jquery.noty.packaged.min.js'), ['jquery']);
