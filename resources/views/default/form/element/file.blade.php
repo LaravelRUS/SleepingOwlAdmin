@@ -6,7 +6,7 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<div class="imageUpload" data-target="{{ route('admin.form.element.image.uploadFile') }}" data-token="{{ csrf_token() }}">
+	<div class="imageUpload" data-target="{{ route('admin.form.element.file.uploadFile') }}" data-token="{{ csrf_token() }}">
 		<div>
 			<div class="thumbnail">
 				<div class="no-value {{ empty($value) ? '' : 'hidden' }}">
