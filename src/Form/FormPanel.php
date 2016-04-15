@@ -45,6 +45,34 @@ class FormPanel extends FormDefault
      *
      * @return $this
      */
+    public function setItems($items)
+    {
+        if (! is_array($items)) {
+            $items = func_get_args();
+        }
+
+        $this->placeItemsTo(static::POSITION_BODY, $items);
+
+        return $this;
+    }
+
+    /**
+     * @param FormElementInterface $item
+     *
+     * @return $this
+     */
+    public function addItem(FormElementInterface $item)
+    {
+        $this->items[static::POSITION_BODY][] = $item;
+
+        return $this;
+    }
+
+    /**
+     * @param array|FormElementInterface $items
+     *
+     * @return $this
+     */
     public function addHeader($items)
     {
         if (! is_array($items)) {
