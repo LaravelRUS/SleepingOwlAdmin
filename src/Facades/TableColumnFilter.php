@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Display\Column\Filter\Select select()
  * @method static \SleepingOwl\Admin\Display\Column\Filter\Range range()
  */
-class TableColumnFilter  extends Facade
+class TableColumnFilter extends Facade
 {
     /**
      * @return string
