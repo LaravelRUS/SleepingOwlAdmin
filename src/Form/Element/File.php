@@ -10,7 +10,6 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
-
     /**
      * @var string
      */
@@ -48,7 +47,6 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     protected static function validate(\Illuminate\Validation\Validator $validator)
     {
-
     }
 
     /**
