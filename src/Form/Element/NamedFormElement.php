@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Carbon\Carbon;
 use Request;
 use LogicException;
 use Illuminate\Database\Eloquent\Model;
@@ -167,6 +168,16 @@ abstract class NamedFormElement extends FormElement
     public function setDefaultValue($defaultValue)
     {
         $this->defaultValue = $defaultValue;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setCurrentDate()
+    {
+        $this->defaultValue = Carbon::now();
 
         return $this;
     }
