@@ -303,4 +303,18 @@ class Select extends NamedFormElement
 
         $this->setOptions($options);
     }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function prepareValue($value)
+    {
+        if ($this->isNullable() and $value == '') {
+            return null;
+        }
+
+        return $value;
+    }
 }
