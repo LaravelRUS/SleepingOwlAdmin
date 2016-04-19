@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 
 class Select extends NamedFormElement
 {
@@ -39,9 +40,19 @@ class Select extends NamedFormElement
     protected $isEmptyRelation = false;
 
     /**
+     * @var array
+     */
+    protected $exclude = [];
+
+    /**
+     * @var string|null
+     */
+    protected $foreignKey = null;
+
+    /**
      * @param string      $path
      * @param string|null $label
-     * @param array|Model       $options
+     * @param array|Model $options
      */
     public function __construct($path, $label = null, $options = [])
     {
@@ -49,7 +60,7 @@ class Select extends NamedFormElement
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } elseif ($options instanceof Model) {
+        } elseif (($options instanceof Model) or is_string($options)) {
             $this->setModelForOptions($options);
         }
     }
@@ -63,12 +74,21 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param Model $modelForOptions
+     * @param @param string|Model $modelForOptions
      *
      * @return $this
+     * @throws SelectException
      */
-    public function setModelForOptions(Model $modelForOptions)
+    public function setModelForOptions($modelForOptions)
     {
+        if (is_string($modelForOptions)) {
+            $modelForOptions = app($modelForOptions);
+        }
+
+        if (! ($modelForOptions instanceof Model)) {
+            throw new SelectException('Class must be instanced of Illuminate\Database\Eloquent\Model');
+        }
+
         $this->modelForOptions = $modelForOptions;
 
         return $this;
@@ -152,7 +172,6 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param bool $state
      * @return $this
      */
     public function onlyEmptyRelation()
@@ -191,6 +210,46 @@ class Select extends NamedFormElement
     }
 
     /**
+     * @param array $keys
+     *
+     * @return $this
+     */
+    public function exclude($keys)
+    {
+        if (! is_array($keys)) {
+            $keys = func_get_args();
+        }
+
+        $this->exclude = array_filter($keys);
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getForeignKey()
+    {
+        if (is_null($this->foreignKey)) {
+            return $this->foreignKey = $this->getModel()->getForeignKey();
+        }
+
+        return $this->foreignKey;
+    }
+
+    /**
+     * @param null|string $foreignKey
+     *
+     * @return $this
+     */
+    public function setForeignKey($foreignKey)
+    {
+        $this->foreignKey = $foreignKey;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -209,11 +268,13 @@ class Select extends NamedFormElement
         $options = $this->getOptions();
 
         if ($this->isNullable()) {
-            array_unshift($options, '');
+            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
         }
 
+        $options = array_except($options, $this->exclude);
+
         return parent::toArray() + [
-            'options'  => $this->getOptions(),
+            'options' => $options,
             'nullable' => $this->isNullable(),
             'attributes' => $attributes,
         ];
@@ -231,7 +292,7 @@ class Select extends NamedFormElement
         $options = $repository->getQuery();
 
         if ($this->isEmptyRelation()) {
-            $options->where($this->getModel()->getForeignKey(), 0);
+            $options->where($this->getForeignKey(), 0)->orWhereNull($this->getForeignKey());
         }
 
         $options = $options->get()->pluck($this->getDisplay(), $key);
