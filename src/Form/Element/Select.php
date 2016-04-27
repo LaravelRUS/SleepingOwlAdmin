@@ -312,7 +312,7 @@ class Select extends NamedFormElement
     protected function prepareValue($value)
     {
         if ($this->isNullable() and $value == '') {
-            return null;
+            return;
         }
 
         return $value;

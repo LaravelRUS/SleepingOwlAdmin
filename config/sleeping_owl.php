@@ -6,7 +6,7 @@ return [
     | Admin Title
     |--------------------------------------------------------------------------
     |
-    | Displays in page title and header
+    | Displayed in title and header.
     |
     */
 
@@ -17,7 +17,7 @@ return [
     | Admin Logo
     |--------------------------------------------------------------------------
     |
-    | Displays in navbar
+    | Displayed in navigation panel.
     |
     */
 
@@ -37,9 +37,9 @@ return [
     | Middleware to use in admin routes
     |--------------------------------------------------------------------------
     |
-    | Use command `php artisan make:auth` to make authentication views and routes
-    |
-    | see https://laravel.com/docs/5.2/authentication#authentication-quickstart
+    | In order to create authentication views and routes
+    | don't forget to execute `php artisan make:auth`.
+    | See https://laravel.com/docs/5.2/authentication#authentication-quickstart
     |
     */
 
@@ -58,7 +58,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    |  Directory to upload images to (relative to public directory)
+    |  Directory for uploaded images (relative to `public` directory)
     |--------------------------------------------------------------------------
     */
 
@@ -66,7 +66,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    |  Directory to upload files to (relative to public directory)
+    |  Directory for uploaded files (relative to `public` directory)
     |--------------------------------------------------------------------------
     */
 
@@ -74,7 +74,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    |  Template to use
+    |  Admin panel template
     |--------------------------------------------------------------------------
     */
 
@@ -92,26 +92,33 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    |  If you want, you can extend ckeditor default configuration with this
-    |  PHP Hash variable.
+    | Editors
     |--------------------------------------------------------------------------
+    |
+    | Select default editor and tweak options if needed.
     |
     */
 
     'wysiwyg' => [
-        'default' => 'ckeditor',
+        'default'   => 'ckeditor',
 
-        // Checkout http://docs.ckeditor.com/#!/api/CKEDITOR.config for more information.
-        'ckeditor' => [
+        /*
+         * See http://docs.ckeditor.com/#!/api/CKEDITOR.config
+         */
+        'ckeditor'  => [
             'height' => 200,
         ],
 
-        // Checkout https://www.tinymce.com/docs/ for more information.
-        'tinymce'  => [
+        /*
+         * See https://www.tinymce.com/docs/
+         */
+        'tinymce'   => [
             'height' => 200,
         ],
 
-        // Checkout https://github.com/NextStepWebs/simplemde-markdown-editor for more information.
+        /*
+         * See https://github.com/NextStepWebs/simplemde-markdown-editor
+         */
         'simplemde' => [
             'hideIcons' => ['side-by-side', 'fullscreen'],
         ],
