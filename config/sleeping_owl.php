@@ -102,21 +102,21 @@ return [
     'wysiwyg' => [
         'default'   => 'ckeditor',
 
-        /**
+        /*
          * See http://docs.ckeditor.com/#!/api/CKEDITOR.config
          */
         'ckeditor'  => [
             'height' => 200,
         ],
 
-        /**
+        /*
          * See https://www.tinymce.com/docs/
          */
         'tinymce'   => [
             'height' => 200,
         ],
 
-        /**
+        /*
          * See https://github.com/NextStepWebs/simplemde-markdown-editor
          */
         'simplemde' => [
