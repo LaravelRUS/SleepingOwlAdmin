@@ -37,6 +37,8 @@ return [
     | Middleware to use in admin routes
     |--------------------------------------------------------------------------
     |
+    | In order to create authentication views and routes
+    | don't forget to execute `php artisan make:auth`.
     | See https://laravel.com/docs/5.2/authentication#authentication-quickstart
     |
     */
@@ -56,6 +58,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    |  Directory for uploaded images (relative to `public` directory)
     |--------------------------------------------------------------------------
     */
 
@@ -63,6 +66,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    |  Directory for uploaded files (relative to `public` directory)
     |--------------------------------------------------------------------------
     */
 
