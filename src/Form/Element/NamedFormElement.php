@@ -273,7 +273,7 @@ abstract class NamedFormElement extends FormElement
     {
         parent::addValidationRule($rule);
 
-        if ( ! is_null($message)) {
+        if (is_null($message)) {
             return $this;
         }
 
