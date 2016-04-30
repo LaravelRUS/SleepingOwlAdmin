@@ -48,7 +48,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * @var bool
      */
-    protected $readonly;
+    protected $readonly = false;
 
     /**
      * @var array
@@ -79,7 +79,7 @@ abstract class NamedFormElement extends FormElement
      *
      * @return string
      */
-    protected function composeName(array $parts)
+    private function composeName(array $parts)
     {
         $name = array_shift($parts);
 
@@ -331,7 +331,7 @@ abstract class NamedFormElement extends FormElement
      *
      * @return $this
      */
-    public function setValidationMessages($validationMessages)
+    public function setValidationMessages(array $validationMessages)
     {
         $this->validationMessages = $validationMessages;
 
