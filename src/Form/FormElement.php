@@ -2,12 +2,24 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Meta;
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Facades\Meta;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 
 abstract class FormElement implements FormElementInterface
 {
+
+    /**
+     * @var \SleepingOwl\Admin\Contracts\TemplateInterface
+     */
+    protected $template;
+
+    /**
+     * @var \KodiCMS\Assets\Meta
+     */
+    protected $meta;
+
     /**
      * @var string
      */
@@ -23,10 +35,32 @@ abstract class FormElement implements FormElementInterface
      */
     protected $validationRules = [];
 
+
     public function initialize()
     {
         Meta::loadPackage(get_called_class());
     }
+
+
+    /**
+     * SMELLS
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        return [];
+    }
+
+
+    /**
+     * SMELLS
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        return [];
+    }
+
 
     /**
      * @return array
@@ -36,25 +70,9 @@ abstract class FormElement implements FormElementInterface
         return $this->validationRules;
     }
 
-    /**
-     * @return array
-     */
-    public function getValidationMessages()
-    {
-        return [];
-    }
 
     /**
-     * @return array
-     */
-    public function getValidationLabels()
-    {
-        return [];
-    }
-
-    /**
-     * @param string      $rule
-     * @param string|null $message
+     * @param string $rule
      *
      * @return $this
      */
@@ -65,6 +83,7 @@ abstract class FormElement implements FormElementInterface
         return $this;
     }
 
+
     /**
      * @param array|string $validationRules
      *
@@ -72,12 +91,11 @@ abstract class FormElement implements FormElementInterface
      */
     public function setValidationRules($validationRules)
     {
-        if (! is_array($validationRules)) {
+        if ( ! is_array($validationRules)) {
             $validationRules = func_get_args();
         }
 
         $this->validationRules = [];
-
         foreach ($validationRules as $rule) {
             $this->validationRules[] = explode('|', $rule);
         }
@@ -85,18 +103,20 @@ abstract class FormElement implements FormElementInterface
         return $this;
     }
 
+
     /**
      * @return string
      */
     public function getView()
     {
         if (is_null($this->view)) {
-            $reflect = new \ReflectionClass($this);
-            $this->view = 'form.element.'.strtolower($reflect->getShortName());
+            $name       = (new \ReflectionClass($this))->getShortName();
+            $this->view = 'form.element.' . strtolower($name);
         }
 
         return $this->view;
     }
+
 
     /**
      * @return Model
@@ -105,6 +125,7 @@ abstract class FormElement implements FormElementInterface
     {
         return $this->model;
     }
+
 
     /**
      * @param Model $model
@@ -118,13 +139,22 @@ abstract class FormElement implements FormElementInterface
         return $this;
     }
 
+
+    /**
+     * SMELLS
+     */
     public function save()
     {
     }
 
+
+    /**
+     * SMELLS
+     */
     public function afterSave()
     {
     }
+
 
     /**
      * @return array
@@ -136,6 +166,7 @@ abstract class FormElement implements FormElementInterface
         ];
     }
 
+
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
@@ -145,6 +176,7 @@ abstract class FormElement implements FormElementInterface
             ->view($this->getView(), $this->toArray())
             ->render();
     }
+
 
     /**
      * @return string
