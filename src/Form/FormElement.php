@@ -75,10 +75,12 @@ abstract class FormElement implements FormElementInterface
         if (! is_array($validationRules)) {
             $validationRules = func_get_args();
         }
+
+        $this->validationRules = [];
+
         foreach ($validationRules as $rule) {
-            $validationRules[] = explode('|', $rule);
+            $this->validationRules[] = explode('|', $rule);
         }
-        $this->validationRules = $validationRules;
 
         return $this;
     }
