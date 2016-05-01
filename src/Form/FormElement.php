@@ -40,7 +40,6 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * SMELLS.
      * @return array
      */
     public function getValidationMessages()
@@ -49,7 +48,6 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * SMELLS.
      * @return array
      */
     public function getValidationLabels()
