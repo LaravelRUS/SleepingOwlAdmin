@@ -6,6 +6,12 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<input class="form-control" name="{{ $name }}" type="password" id="{{ $name }}" value="" @if(isset($readonly))readonly="{{ $readonly }}"@endif>
+	<input class="form-control"
+		   name="{{ $name }}"
+		   type="password"
+		   id="{{ $name }}"
+		   value=""
+		   @if($readonly) readonly @endif
+	>
 	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>

@@ -6,6 +6,10 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<textarea class="form-control" rows="{{ $rows }}" name="{{ $name }}" @if(isset($readonly))readonly="{{ $readonly }}"@endif>{!! $value !!}</textarea>
+	<textarea class="form-control"
+			  rows="{{ $rows }}"
+			  name="{{ $name }}"
+			  @if($readonly) readonly @endif
+	>{!! $value !!}</textarea>
 	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>
