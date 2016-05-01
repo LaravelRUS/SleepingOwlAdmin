@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * TODO Has to be a bit more test friendly. Too many facades.
+ */
 abstract class NamedFormElement extends FormElement
 {
 
@@ -337,67 +340,79 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * HACK Needs refactoring and reasoning.
      * @return mixed
      */
     public function getValue()
     {
-        $model = $this->getModel();
-        if (! is_null($value = old($this->getPath()))) {
+        if (! is_null($value = Request::old($this->getPath()))) {
             return $value;
         }
 
+        // HACK This is not the right place for Request facade.
         $input = Request::all();
 
         if (($value = array_get($input, $this->getPath())) !== null) {
             return $value;
         }
 
-        if (! is_null($model)) {
-            $exploded = explode('.', $this->getPath());
-            $i = 1;
-            $count = count($exploded);
+        $model = $this->getModel();
+        $value = $this->getDefaultValue();
 
-            if ($count > 1) {
-                $i++;
-                foreach ($exploded as $relation) {
-                    if ($model->{$relation} instanceof Model) {
-                        $model = $model->{$relation};
-                    } elseif ($count === $i) {
-                        $value = $model->getAttribute($relation);
-                    } else {
-                        throw new LogicException("Can not fetch value for field '{$this->getPath()}'. Probably relation definition is incorrect");
-                    }
-                }
-            } else {
-                $value = $model->getAttribute($this->getAttribute());
-            }
-
-            if (! is_null($value)) {
-                return $value;
-            }
+        if (is_null($model)) {
+            return $value;
         }
 
-        return $this->getDefaultValue();
+        $relations = explode('.', $this->getPath());
+        $count = count($relations);
+
+        if ($count === 1) {
+            return $model->getAttribute($this->getAttribute());
+        }
+
+        foreach ($relations as $relation) {
+
+            if ($model->{$relation} instanceof Model) {
+                $model = $model->{$relation};
+                continue;
+            }
+
+            if ($count === 2) {
+                return $model->getAttribute($relation);
+            }
+
+            throw new LogicException("Can not fetch value for field '{$this->getPath()}'. Probably relation definition is incorrect");
+        }
+
+        return $value;
     }
 
     /**
+     * If FormElement has `_unique` rule, it will get all appropriate
+     * validation rules based on underlying model.
+     *
      * @return array
      */
     public function getValidationRules()
     {
         $rules = parent::getValidationRules();
-        array_walk($rules, function (&$item) {
-            $model = $this->getModel();
 
-            if ($item == '_unique') {
-                $table = $model->getTable();
-
-                $item = 'unique:'.$table.','.$this->getAttribute();
-                if ($model->exists()) {
-                    $item .= ','.$model->getKey();
-                }
+        
+        foreach ($rules as &$rule) {
+            if ($rule !== '_unique'){
+                continue;
             }
-        });
+
+            $model = $this->getModel();
+            $table = $model->getTable();
+
+            $rule = 'unique:'.$table.','.$this->getAttribute();
+            
+            if ($model->exists()) {
+                $rule .= ','.$model->getKey();
+            }
+        }
+        unset($rule);
 
         return [$this->getPath() => $rules];
     }
