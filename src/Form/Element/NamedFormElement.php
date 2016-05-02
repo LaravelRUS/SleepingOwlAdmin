@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * TODO Has to be a bit more test friendly. Too many facades.
+ */
 abstract class NamedFormElement extends FormElement
 {
 
@@ -48,13 +51,12 @@ abstract class NamedFormElement extends FormElement
     /**
      * @var bool
      */
-    protected $readonly;
+    protected $readonly = false;
 
     /**
      * @var array
      */
     protected $validationMessages = [];
-
 
     /**
      * @param string      $path
@@ -70,27 +72,24 @@ abstract class NamedFormElement extends FormElement
         $this->setAttribute(end($parts));
     }
 
-
     /**
-     * Compose html name from array like this:
-     * first[second][third]
+     * Compose html name from array like this: 'first[second][third]'.
      *
      * @param array $parts
      *
      * @return string
      */
-    protected function composeName(array $parts)
+    private function composeName(array $parts)
     {
         $name = array_shift($parts);
 
-        while ( ! empty( $parts )) {
+        while (! empty($parts)) {
             $part = array_shift($parts);
             $name .= "[$part]";
         }
 
         return $name;
     }
-
 
     /**
      * @return string
@@ -99,7 +98,6 @@ abstract class NamedFormElement extends FormElement
     {
         return $this->path;
     }
-
 
     /**
      * @param string $path
@@ -113,7 +111,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -121,7 +118,6 @@ abstract class NamedFormElement extends FormElement
     {
         return $this->name;
     }
-
 
     /**
      * @param string $name
@@ -135,7 +131,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -143,7 +138,6 @@ abstract class NamedFormElement extends FormElement
     {
         return $this->label;
     }
-
 
     /**
      * @param string $label
@@ -157,7 +151,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -165,7 +158,6 @@ abstract class NamedFormElement extends FormElement
     {
         return $this->attribute;
     }
-
 
     /**
      * @param string $attribute
@@ -179,7 +171,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return mixed
      */
@@ -187,7 +178,6 @@ abstract class NamedFormElement extends FormElement
     {
         return $this->defaultValue;
     }
-
 
     /**
      * @param mixed $defaultValue
@@ -201,7 +191,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return $this
      *
@@ -213,7 +202,6 @@ abstract class NamedFormElement extends FormElement
 
         return $this;
     }
-
 
     /**
      * @return string
@@ -227,7 +215,6 @@ abstract class NamedFormElement extends FormElement
         return $this->helpText;
     }
 
-
     /**
      * @param string $helpText
      *
@@ -240,7 +227,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -248,7 +234,6 @@ abstract class NamedFormElement extends FormElement
     {
         return $this->readonly;
     }
-
 
     /**
      * @param bool $readonly
@@ -261,7 +246,6 @@ abstract class NamedFormElement extends FormElement
 
         return $this;
     }
-
 
     /**
      * @param string      $rule
@@ -277,13 +261,12 @@ abstract class NamedFormElement extends FormElement
             return $this;
         }
 
-        if (is_string($rule) and ( $pos = strpos($rule, ':') ) !== false) {
+        if (is_string($rule) and ($pos = strpos($rule, ':')) !== false) {
             $rule = substr($rule, 0, $pos);
         }
 
         return $this->addValidationMessage($rule, $message);
     }
-
 
     /**
      * @param string|null $message
@@ -297,7 +280,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @param string|null $message
      *
@@ -310,7 +292,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return array
      */
@@ -319,25 +300,23 @@ abstract class NamedFormElement extends FormElement
         $messages = parent::getValidationMessages();
 
         foreach ($this->validationMessages as $rule => $message) {
-            $messages[$this->getName() . '.' . $rule] = $message;
+            $messages[$this->getName().'.'.$rule] = $message;
         }
 
         return $messages;
     }
-
 
     /**
      * @param array $validationMessages
      *
      * @return $this
      */
-    public function setValidationMessages($validationMessages)
+    public function setValidationMessages(array $validationMessages)
     {
         $this->validationMessages = $validationMessages;
 
         return $this;
     }
-
 
     /**
      * @param string $rule
@@ -352,7 +331,6 @@ abstract class NamedFormElement extends FormElement
         return $this;
     }
 
-
     /**
      * @return array
      */
@@ -361,74 +339,83 @@ abstract class NamedFormElement extends FormElement
         return [$this->getPath() => $this->getLabel()];
     }
 
-
     /**
+     * HACK Needs refactoring and reasoning.
      * @return mixed
      */
     public function getValue()
     {
-        $model = $this->getModel();
-        if ( ! is_null($value = old($this->getPath()))) {
+        if (! is_null($value = Request::old($this->getPath()))) {
             return $value;
         }
 
+        // HACK This is not the right place for Request facade.
         $input = Request::all();
 
-        if (( $value = array_get($input, $this->getPath()) ) !== null) {
+        if (($value = array_get($input, $this->getPath())) !== null) {
             return $value;
         }
 
-        if ( ! is_null($model)) {
-            $exploded = explode('.', $this->getPath());
-            $i        = 1;
-            $count    = count($exploded);
+        $model = $this->getModel();
+        $value = $this->getDefaultValue();
 
-            if ($count > 1) {
-                $i++;
-                foreach ($exploded as $relation) {
-                    if ($model->{$relation} instanceof Model) {
-                        $model = $model->{$relation};
-                    } elseif ($count === $i) {
-                        $value = $model->getAttribute($relation);
-                    } else {
-                        throw new LogicException("Can not fetch value for field '{$this->getPath()}'. Probably relation definition is incorrect");
-                    }
-                }
-            } else {
-                $value = $model->getAttribute($this->getAttribute());
-            }
-
-            if ( ! is_null($value)) {
-                return $value;
-            }
+        if (is_null($model)) {
+            return $value;
         }
 
-        return $this->getDefaultValue();
+        $relations = explode('.', $this->getPath());
+        $count = count($relations);
+
+        if ($count === 1) {
+            return $model->getAttribute($this->getAttribute());
+        }
+
+        foreach ($relations as $relation) {
+
+            if ($model->{$relation} instanceof Model) {
+                $model = $model->{$relation};
+                continue;
+            }
+
+            if ($count === 2) {
+                return $model->getAttribute($relation);
+            }
+
+            throw new LogicException("Can not fetch value for field '{$this->getPath()}'. Probably relation definition is incorrect");
+        }
+
+        return $value;
     }
 
-
     /**
+     * If FormElement has `_unique` rule, it will get all appropriate
+     * validation rules based on underlying model.
+     *
      * @return array
      */
     public function getValidationRules()
     {
         $rules = parent::getValidationRules();
-        array_walk($rules, function (&$item) {
-            $model = $this->getModel();
 
-            if ($item == '_unique') {
-                $table = $model->getTable();
-
-                $item = 'unique:' . $table . ',' . $this->getAttribute();
-                if ($model->exists()) {
-                    $item .= ',' . $model->getKey();
-                }
+        
+        foreach ($rules as &$rule) {
+            if ($rule !== '_unique'){
+                continue;
             }
-        });
+
+            $model = $this->getModel();
+            $table = $model->getTable();
+
+            $rule = 'unique:'.$table.','.$this->getAttribute();
+            
+            if ($model->exists()) {
+                $rule .= ','.$model->getKey();
+            }
+        }
+        unset($rule);
 
         return [$this->getPath() => $rules];
     }
-
 
     /**
      * @return array
@@ -447,17 +434,16 @@ abstract class NamedFormElement extends FormElement
         ];
     }
 
-
     public function save()
     {
         $attribute = $this->getAttribute();
-        $model     = $this->getModel();
+        $model = $this->getModel();
 
         $value = $this->getValue();
 
         $relations = explode('.', $this->getPath());
-        $count     = count($relations);
-        $i         = 1;
+        $count = count($relations);
+        $i = 1;
 
         if ($count > 1) {
             $i++;
@@ -477,7 +463,7 @@ abstract class NamedFormElement extends FormElement
                             $relationObject->associate($relatedModel = $relationObject->getRelated());
                             break;
                         case HasOne::class:
-                            $relatedModel       = $relationObject->create();
+                            $relatedModel = $relationObject->create();
                             $model->{$relation} = $relatedModel;
                             break;
                     }
@@ -487,7 +473,7 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field «{$this->getPath()}» can't be mapped to relations of model " . get_class($model) . '. Probably some dot delimeted segment is not a supported relation type');
+                    throw new LogicException("Field «{$this->getPath()}» can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
@@ -496,7 +482,6 @@ abstract class NamedFormElement extends FormElement
 
         $this->setValue($model, $attribute, $this->prepareValue($value));
     }
-
 
     /**
      * @param Model  $model
@@ -507,7 +492,6 @@ abstract class NamedFormElement extends FormElement
     {
         $model->setAttribute($attribute, $value);
     }
-
 
     /**
      * @param mixed $value

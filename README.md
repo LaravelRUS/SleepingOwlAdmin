@@ -156,7 +156,8 @@ You can download the demo project at https://github.com/SleepingOwlAdmin/demo
 
 ## Documentation
 
-Documentation can be found at [sleeping owl documentation](http://sleeping-owl.github.io/v4).
+* [russian](http://sleeping-owl.github.io/ru/Introduction.html);
+* [english](http://sleeping-owl.github.io/en/Introduction.html).
 
 ## Copyright and License
 

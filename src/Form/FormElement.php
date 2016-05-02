@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Form;
 use Illuminate\Database\Eloquent\Model;
 use KodiCMS\Assets\Facades\Meta;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
-use SleepingOwl\Admin\Contracts\TemplateInterface;
 
 abstract class FormElement implements FormElementInterface
 {
@@ -35,15 +34,12 @@ abstract class FormElement implements FormElementInterface
      */
     protected $validationRules = [];
 
-
     public function initialize()
     {
         Meta::loadPackage(get_called_class());
     }
 
-
     /**
-     * SMELLS
      * @return array
      */
     public function getValidationMessages()
@@ -51,16 +47,13 @@ abstract class FormElement implements FormElementInterface
         return [];
     }
 
-
     /**
-     * SMELLS
      * @return array
      */
     public function getValidationLabels()
     {
         return [];
     }
-
 
     /**
      * @return array
@@ -69,7 +62,6 @@ abstract class FormElement implements FormElementInterface
     {
         return $this->validationRules;
     }
-
 
     /**
      * @param string $rule
@@ -83,7 +75,6 @@ abstract class FormElement implements FormElementInterface
         return $this;
     }
 
-
     /**
      * @param array|string $validationRules
      *
@@ -91,7 +82,7 @@ abstract class FormElement implements FormElementInterface
      */
     public function setValidationRules($validationRules)
     {
-        if ( ! is_array($validationRules)) {
+        if (! is_array($validationRules)) {
             $validationRules = func_get_args();
         }
 
@@ -103,20 +94,18 @@ abstract class FormElement implements FormElementInterface
         return $this;
     }
 
-
     /**
      * @return string
      */
     public function getView()
     {
         if (is_null($this->view)) {
-            $name       = (new \ReflectionClass($this))->getShortName();
-            $this->view = 'form.element.' . strtolower($name);
+            $name = (new \ReflectionClass($this))->getShortName();
+            $this->view = 'form.element.'.strtolower($name);
         }
 
         return $this->view;
     }
-
 
     /**
      * @return Model
@@ -125,7 +114,6 @@ abstract class FormElement implements FormElementInterface
     {
         return $this->model;
     }
-
 
     /**
      * @param Model $model
@@ -139,22 +127,19 @@ abstract class FormElement implements FormElementInterface
         return $this;
     }
 
-
     /**
-     * SMELLS
+     * SMELLS.
      */
     public function save()
     {
     }
 
-
     /**
-     * SMELLS
+     * SMELLS.
      */
     public function afterSave()
     {
     }
-
 
     /**
      * @return array
@@ -166,7 +151,6 @@ abstract class FormElement implements FormElementInterface
         ];
     }
 
-
     /**
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
@@ -176,7 +160,6 @@ abstract class FormElement implements FormElementInterface
             ->view($this->getView(), $this->toArray())
             ->render();
     }
-
 
     /**
      * @return string
