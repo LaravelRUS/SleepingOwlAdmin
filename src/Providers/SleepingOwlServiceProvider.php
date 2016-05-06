@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Commands\InstallCommand;
+use SleepingOwl\Admin\Commands\UserManagerCommand;
 
 class SleepingOwlServiceProvider extends ServiceProvider
 {
@@ -44,6 +45,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
     {
         $commands = [
             InstallCommand::class,
+            UserManagerCommand::class,
         ];
 
         foreach ($commands as $command) {
