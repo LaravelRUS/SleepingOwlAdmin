@@ -3,9 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class DateTime extends NamedColumn
 {
+
     /**
      * Datetime format.
      * @var string
@@ -21,7 +23,29 @@ class DateTime extends NamedColumn
     public function __construct($name, $label = null)
     {
         parent::__construct($name, $label);
-        $this->setHtmlAttribute('class', 'row-control');
+    }
+
+    /**
+     * Initialize column.
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->setHtmlAttribute('class', 'row-date');
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return $this
+     */
+    public function setModel(Model $model)
+    {
+        parent::setModel($model);
+        $this->setHtmlAttribute('data-value', $this->getModelValue());
+
+        return $this;
     }
 
     /**
@@ -53,7 +77,7 @@ class DateTime extends NamedColumn
      */
     public function toArray()
     {
-        $value = $this->getModelValue();
+        $value         = $this->getModelValue();
         $originalValue = $value;
 
         if (! is_null($value)) {
@@ -63,8 +87,6 @@ class DateTime extends NamedColumn
 
             $value = $value->format($this->getFormat());
         }
-
-        $this->setHtmlAttribute('data-order', $originalValue);
 
         return parent::toArray() + [
             'value' => $value,

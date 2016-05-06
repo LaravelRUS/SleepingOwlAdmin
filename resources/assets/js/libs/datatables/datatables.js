@@ -1,7 +1,13 @@
 $(function () {
     $.fn.dataTable.ext.errMode = function () {
-        $.notify(window.Admin.Settings.lang.table.error, 'error');
+        window.Admin.Messages.error(window.Admin.Settings.lang.table.error);
     };
+
+    $.fn.dataTable.ext.order['DateTime'] = function (settings, col) {
+        return this.api().column(col, {order: 'index'}).nodes().map(function (td, i) {
+            return $(td).data('value');
+        });
+    }
 
     $('.datatables').each(function () {
         var $this = $(this),
@@ -14,6 +20,7 @@ $(function () {
                     [10, 25, 50, window.Admin.Settings.lang.table.all]
                 ]
             };
+
         params = $.extend(params, $this.data('attributes'));
 
         var url;
@@ -33,7 +40,6 @@ $(function () {
                 }
             };
         }
-
         var table = $this.DataTable(params);
 
         $('[data-datatables-id="' + id + '"] .column-filter').each(function () {
@@ -111,7 +117,7 @@ window.columnFilters = {
         var $input = $(input);
 
         $input.on('change', function () {
-            var val  = $input.val() ? $input.find(':selected').text() : '';
+            var val = $input.val() ? $input.find(':selected').text() : '';
             column.search(val).draw();
         });
     },

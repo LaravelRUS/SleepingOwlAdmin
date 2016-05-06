@@ -37,7 +37,14 @@ class DisplayDatatables extends DisplayTable
         $this->getColumnFilters()->setHtmlAttribute('data-datatables-id', $id);
 
         $this->setHtmlAttribute('data-order', json_encode($this->getOrder()));
-        $this->setHtmlAttribute('data-attributes', json_encode($this->getDatatableAttributes(), JSON_FORCE_OBJECT));
+
+        foreach ($this->getColumns()->all() as $column) {
+            $this->datatableAttributes['columns'][] = [
+                'orderDataType' => class_basename($column)
+            ];
+        }
+
+        $this->setHtmlAttribute('data-attributes', json_encode($this->getDatatableAttributes()));
     }
 
     /**
@@ -51,10 +58,14 @@ class DisplayDatatables extends DisplayTable
 
     /**
      * @param array $datatableAttributes
+     *
+     * @return $this
      */
     public function setDatatableAttributes(array $datatableAttributes)
     {
         $this->datatableAttributes = $datatableAttributes;
+
+        return $this;
     }
 
     /**
