@@ -6,8 +6,10 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<div class="datepicker form-group input-group">
+	<div class="input-date form-group input-group">
 		<input data-date-format="{{ $pickerFormat }}"
+			   data-date-pickdate="true"
+			   data-date-picktime="false"
 			   data-date-useseconds="{{ $seconds ? 'true' : 'false' }}"
 			   class="form-control" name="{{ $name }}"
 			   type="text"

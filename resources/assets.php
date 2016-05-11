@@ -10,6 +10,15 @@ if (! function_exists('resources_url')) {
 PackageManager::add(\SleepingOwl\Admin\Form\Element\Date::class)
     ->with('datetimepicker');
 
+PackageManager::add(\SleepingOwl\Admin\Form\Element\Timestamp::class)
+    ->with('datetimepicker');
+
+PackageManager::add(\SleepingOwl\Admin\Form\Element\DateTime::class)
+    ->with('datetimepicker');
+
+PackageManager::add(\SleepingOwl\Admin\Form\Element\Time::class)
+    ->with('datetimepicker');
+
 PackageManager::add(\SleepingOwl\Admin\Display\Column\Filter\Date::class)
     ->with('datetimepicker');
 
