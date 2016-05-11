@@ -359,7 +359,7 @@ abstract class NamedFormElement extends FormElement
         $model = $this->getModel();
         $value = $this->getDefaultValue();
 
-        if (is_null($model)) {
+        if (is_null($model) or ! $model->exists) {
             return $value;
         }
 
