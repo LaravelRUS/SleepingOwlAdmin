@@ -2,13 +2,12 @@
   "name": "laravelrus/sleepingowl",
   "description": "Administrative interface builder for Laravel.",
   "homepage": "http://sleeping-owl.github.io",
-  "keywords": [
-    "laravel",
-    "admin",
-    "administrator",
-    "crud"
-  ],
+  "keywords": ["laravel", "admin", "administrator", "crud"],
   "license": "MIT",
+  "support": {
+    "issues": "https://github.com/LaravelRUS/SleepingOwlAdmin/issues",
+    "source": "https://github.com/LaravelRUS/SleepingOwlAdmin"
+  },
   "authors": [
     {
       "name": "Sleeping Owl",
@@ -31,7 +30,7 @@
     "erusev/parsedown": "1.*"
   },
   "require-dev": {
-    "phpunit/phpunit": "4.*",
+    "phpunit/phpunit": "~4.1",
     "mockery/mockery": "^0.9.4"
   },
   "autoload": {
