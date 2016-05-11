@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class Scopes extends Extension
 {
     /**
@@ -24,13 +26,9 @@ class Scopes extends Extension
      */
     public function set(array $scopes)
     {
-        if (! is_array($scopes)) {
-            $scopes = func_get_args();
-        }
+        $this->scopes = func_get_args();
 
-        $this->scopes = $scopes;
-
-        return $this;
+        return $this->getDisplay();
     }
 
     /**
@@ -62,18 +60,24 @@ class Scopes extends Extension
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    public function modifyQuery(Builder $query)
     {
         foreach ($this->scopes as $scope) {
             if (! is_null($scope)) {
-                $method = array_shift($scope);
+                if (is_array($scope)) {
+                    $method = array_shift($scope);
+                    $params = $scope;
+                } else {
+                    $method = $scope;
+                    $params = [];
+                }
 
                 call_user_func_array([
                     $query,
                     $method,
-                ], $scope);
+                ], $params);
             }
         }
     }
