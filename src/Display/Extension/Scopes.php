@@ -20,11 +20,11 @@ class Scopes extends Extension
     }
 
     /**
-     * @param array $scopes
+     * @param array|string $scopes
      *
      * @return $this
      */
-    public function set(array $scopes)
+    public function set($scopes)
     {
         $this->scopes = func_get_args();
 
