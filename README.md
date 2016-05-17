@@ -156,8 +156,8 @@ You can download the demo project at https://github.com/SleepingOwlAdmin/demo
 
 ## Documentation
 
-* [Russian](https://github.com/LaravelRUS/SleepingOwlAdmin-docs);
-* English.
+* [russian](http://sleeping-owl.github.io/ru/Introduction.html)
+* [english](http://sleeping-owl.github.io/en/Introduction.html)
 
 ## Copyright and License
 
