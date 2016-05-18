@@ -11,7 +11,7 @@
 
     @if(!empty($value))
     <div class="checkbox">
-        <label>{!! Form::checkbox("{$name}_remove") !!} Remove file</label>
+        <label>{!! Form::checkbox("{$name}_remove") !!} @lang('sleeping_owl::lang.file.remove')</label>
     </div>
     @endif
 </div>
