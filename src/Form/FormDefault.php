@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form;
 use KodiComponents\Support\HtmlAttributes;
 use Request;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Form\Element\Upload;
 use Validator;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -412,6 +413,10 @@ class FormDefault implements DisplayInterface, FormInterface
         array_walk_recursive($items, function ($item) {
             if ($item instanceof Initializable) {
                 $item->initialize();
+            }
+
+            if ($item instanceof Upload and ! $this->hasHtmlAttribute('enctype')) {
+                $this->setHtmlAttribute('enctype', 'multipart/form-data');
             }
         });
     }
