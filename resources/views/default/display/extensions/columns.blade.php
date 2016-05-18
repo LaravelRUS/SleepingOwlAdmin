@@ -31,6 +31,6 @@
 
 @if($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
     <div class="panel-footer">
-        {!! $collection->render() !!}
+        {!! (new \Illuminate\Pagination\BootstrapThreePresenter($collection))->render() !!}
     </div>
 @endif
