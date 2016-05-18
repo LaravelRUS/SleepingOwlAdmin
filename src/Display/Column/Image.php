@@ -12,7 +12,7 @@ class Image extends NamedColumn
     /**
      * Image constructor.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($name, $label = null)
     {

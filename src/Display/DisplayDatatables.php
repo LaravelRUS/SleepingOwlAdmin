@@ -40,7 +40,7 @@ class DisplayDatatables extends DisplayTable
 
         foreach ($this->getColumns()->all() as $column) {
             $this->datatableAttributes['columns'][] = [
-                'orderDataType' => class_basename($column)
+                'orderDataType' => class_basename($column),
             ];
         }
 

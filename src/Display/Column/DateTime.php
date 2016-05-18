@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DateTime extends NamedColumn
 {
-
     /**
      * Datetime format.
      * @var string
@@ -17,7 +16,7 @@ class DateTime extends NamedColumn
     /**
      * DateTime constructor.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($name, $label = null)
     {
@@ -76,7 +75,7 @@ class DateTime extends NamedColumn
      */
     public function toArray()
     {
-        $value         = $this->getModelValue();
+        $value = $this->getModelValue();
         $originalValue = $value;
 
         if (! is_null($value)) {

@@ -12,7 +12,7 @@ class Link extends NamedColumn
     /**
      * Link constructor.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($name, $label = null)
     {

@@ -7,7 +7,7 @@ class Email extends NamedColumn
     /**
      * Email constructor.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($name, $label = null)
     {

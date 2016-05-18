@@ -4,11 +4,10 @@ namespace SleepingOwl\Admin\Display\Column;
 
 class Lists extends NamedColumn
 {
-
     /**
      * Lists constructor.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($name, $label = null)
     {

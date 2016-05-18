@@ -4,11 +4,10 @@ namespace SleepingOwl\Admin\Display\Column;
 
 class Url extends NamedColumn
 {
-
     /**
      * String constructor.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($name, $label = null)
     {
