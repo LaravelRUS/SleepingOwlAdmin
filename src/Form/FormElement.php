@@ -8,7 +8,6 @@ use SleepingOwl\Admin\Contracts\FormElementInterface;
 
 abstract class FormElement implements FormElementInterface
 {
-
     /**
      * @var \SleepingOwl\Admin\Contracts\TemplateInterface
      */

@@ -7,7 +7,6 @@ use Request;
 
 class Upload extends NamedFormElement
 {
-
     /**
      * @return array
      */
@@ -32,7 +31,7 @@ class Upload extends NamedFormElement
 
         if (Request::input($this->getPath().'_remove')) {
             $this->setValue($this->getModel(), $this->getAttribute(), null);
-        } else if (! is_null($value)) {
+        } elseif (! is_null($value)) {
             $this->setValue($this->getModel(), $this->getAttribute(), $value);
         }
     }

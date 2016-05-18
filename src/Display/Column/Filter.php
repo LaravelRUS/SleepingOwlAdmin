@@ -19,7 +19,7 @@ class Filter extends NamedColumn
     /**
      * Filter constructor.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($name, $label = null)
     {

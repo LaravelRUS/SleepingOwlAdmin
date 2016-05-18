@@ -81,7 +81,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         }
 
         $parts = explode('.', $name);
-        $part  = array_shift($parts);
+        $part = array_shift($parts);
 
         if ($instance instanceof Collection) {
             $instance = $instance->pluck($part);

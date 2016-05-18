@@ -7,7 +7,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class UserManagerCommand extends Command
 {
-
     /**
      * The console command name.
      * @var string
@@ -55,7 +54,7 @@ class UserManagerCommand extends Command
         $userClass = $this->getUserClass();
 
         $headers = ['id', 'name', 'email'];
-        $users   = $userClass::get($headers);
+        $users = $userClass::get($headers);
 
         $this->table($headers, $users);
     }
@@ -130,7 +129,7 @@ class UserManagerCommand extends Command
     }
 
     /**
-     * Change administrator's password
+     * Change administrator's password.
      */
     protected function changePassword()
     {
