@@ -23,10 +23,15 @@ class Custom extends TableColumn
      * Custom constructor.
      *
      * @param null|string $label
+     * @param Closure $callback
      */
-    public function __construct($label = null)
+    public function __construct($label = null, Closure $callback = null)
     {
         parent::__construct($label);
+        if (! is_null($callback)) {
+            $this->setCallback($callback);
+        }
+
         $this->setHtmlAttribute('class', 'row-custom');
     }
 

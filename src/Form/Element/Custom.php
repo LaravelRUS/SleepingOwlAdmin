@@ -18,6 +18,18 @@ class Custom extends FormElement
     protected $callback;
 
     /**
+     * Custom constructor.
+     *
+     * @param Closure|null $callback
+     */
+    public function __construct(Closure $callback = null)
+    {
+        if (! is_null($callback)) {
+            $this->setCallback($callback);
+        }
+    }
+
+    /**
      * @return Closure|string
      */
     public function getDisplay()

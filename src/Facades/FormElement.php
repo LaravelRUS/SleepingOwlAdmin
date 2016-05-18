@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\MultiSelect multiselect($name, $label = null, array|Model $options)
  * @method static \SleepingOwl\Admin\Form\Element\Columns columns()
  * @method static \SleepingOwl\Admin\Form\Element\Hidden hidden($name)
- * @method static \SleepingOwl\Admin\Form\Element\Custom custom()
+ * @method static \SleepingOwl\Admin\Form\Element\Custom custom(\Closure $callback = null)
  * @method static \SleepingOwl\Admin\Form\Element\View view($view)
  * @method static \SleepingOwl\Admin\Form\Element\Checkbox checkbox($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\CKEditor ckeditor($name, $label = null)

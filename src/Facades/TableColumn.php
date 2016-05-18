@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Display\Column\Checkbox checkbox($label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Control control($label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Count count($name, $label = null)
- * @method static \SleepingOwl\Admin\Display\Column\Custom custom($label = null)
+ * @method static \SleepingOwl\Admin\Display\Column\Custom custom($label = null, \Closure $callback = null)
  * @method static \SleepingOwl\Admin\Display\Column\DateTime datetime($name, $label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Filter filter($name, $label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Image image($name, $label = null)
