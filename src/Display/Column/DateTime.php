@@ -17,8 +17,7 @@ class DateTime extends NamedColumn
     /**
      * DateTime constructor.
      *
-     * @param null|string $name
-     * @param null|string $label
+     * @inheritdoc
      */
     public function __construct($name, $label = null)
     {

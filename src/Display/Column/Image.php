@@ -10,8 +10,9 @@ class Image extends NamedColumn
     protected $width = '80px';
 
     /**
-     * @param null|string $name
-     * @param null|string $label
+     * Image constructor.
+     *
+     * @inheritdoc
      */
     public function __construct($name, $label = null)
     {

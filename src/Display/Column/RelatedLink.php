@@ -17,7 +17,7 @@ class RelatedLink extends Link
     protected $originalName;
 
     /**
-     * @param null|string $name
+     * @param \Closure|null|string $name
      * @param null|string $label
      * @param Model|null  $model
      */

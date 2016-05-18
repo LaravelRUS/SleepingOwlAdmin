@@ -1,5 +1,8 @@
 @if($isEditable)
-{!! link_to($link, $value, $linkAttributes) !!} {!! $append !!}
+<a href="{{ $link }}" {{ app('html')->attributes($linkAttributes) }}>
+    {!! $value !!}
+</a>
 @else
-    {{ $value }} {!! $append !!}
+    {!! $value !!}
 @endif
+{!! $append !!}

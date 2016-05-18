@@ -38,7 +38,9 @@ class Action extends NamedColumn implements ActionInterface
     protected $view = 'column.action';
 
     /**
-     * @param string      $name
+     * Action constructor.
+     *
+     * @param \Closure|null|string $name
      * @param string|null $title
      */
     public function __construct($name, $title = null)

@@ -10,8 +10,9 @@ class Link extends NamedColumn
     protected $linkAttributes = [];
 
     /**
-     * @param null|string $name
-     * @param null|string $label
+     * Link constructor.
+     *
+     * @inheritdoc
      */
     public function __construct($name, $label = null)
     {

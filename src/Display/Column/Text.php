@@ -7,8 +7,7 @@ class Text extends NamedColumn
     /**
      * String constructor.
      *
-     * @param null|string $name
-     * @param null|string $label
+     * @inheritdoc
      */
     public function __construct($name, $label = null)
     {

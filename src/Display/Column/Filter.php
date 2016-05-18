@@ -19,8 +19,7 @@ class Filter extends NamedColumn
     /**
      * Filter constructor.
      *
-     * @param null|string $name
-     * @param null|string $label
+     * @inheritdoc
      */
     public function __construct($name, $label = null)
     {

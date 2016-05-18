@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,7 +17,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $name;
 
     /**
-     * @param null|string $name
+     * @param Closure|null|string $name
      * @param null|string $label
      */
     public function __construct($name, $label = null)
@@ -75,8 +76,12 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     protected function getValueFromObject($instance, $name)
     {
+        if ($name instanceof Closure) {
+            return $name($instance);
+        }
+
         $parts = explode('.', $name);
-        $part = array_shift($parts);
+        $part  = array_shift($parts);
 
         if ($instance instanceof Collection) {
             $instance = $instance->pluck($part);

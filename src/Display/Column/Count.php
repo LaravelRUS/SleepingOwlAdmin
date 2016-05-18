@@ -12,8 +12,7 @@ class Count extends NamedColumn
     /**
      * Count constructor.
      *
-     * @param null|string $name
-     * @param null|string $label
+     * @inheritdoc
      */
     public function __construct($name, $label = null)
     {
