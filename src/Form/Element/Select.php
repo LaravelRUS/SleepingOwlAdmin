@@ -237,7 +237,7 @@ class Select extends NamedFormElement
         }
 
         $this->fetchColumns = $columns;
-        
+
         return $this;
     }
 
