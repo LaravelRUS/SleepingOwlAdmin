@@ -230,7 +230,8 @@ class Select extends NamedFormElement
      * @param string|array $columns
      * @return $this
      */
-    public function setFetchColumns($columns) {
+    public function setFetchColumns($columns)
+    {
         if (! is_array($columns)) {
             $columns = func_get_args();
         }
@@ -240,11 +241,12 @@ class Select extends NamedFormElement
     }
 
     /**
-     * Get the fetch columns
+     * Get the fetch columns.
      *
      * @return array
      */
-    public function getFetchColumns() {
+    public function getFetchColumns()
+    {
         return $this->fetchColumns;
     }
 
@@ -334,7 +336,7 @@ class Select extends NamedFormElement
             $options->where($this->getForeignKey(), 0)->orWhereNull($this->getForeignKey());
         }
 
-        if (!is_null($this->fetchColumns)) {
+        if (! is_null($this->fetchColumns)) {
             $columns = array_merge([$key], $this->fetchColumns);
             $options->select($columns);
         }
@@ -352,19 +354,17 @@ class Select extends NamedFormElement
 
             // iterate for all options and redefine it as
             // list of KEY and TEXT pair
-            $options = array_map(function($opt) use ($key, $makeDisplay) {
+            $options = array_map(function ($opt) use ($key, $makeDisplay) {
                 // get the KEY and make the display text
                 return [data_get($opt, $key), $makeDisplay($opt)];
             }, $options);
 
             // take options as array with KEY => VALUE pair
             $options = Arr::pluck($options, 1, 0);
-        }
-        elseif ($options instanceof Collection) {
+        } elseif ($options instanceof Collection) {
             // take options as array with KEY => VALUE pair
             $options = Arr::pluck($options->all(), $this->getDisplay(), $key);
-        }
-        else {
+        } else {
             // take options as array with KEY => VALUE pair
             $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
