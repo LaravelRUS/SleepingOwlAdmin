@@ -12,9 +12,6 @@ return [
         'wrong-password' => 'или пароль',
         'since' => 'Зарегистрирован :date',
     ],
-    'links' => [
-        'index_page' => 'На сайт',
-    ],
     'ckeditor' => [
         'upload' => [
             'success' => 'Файл был успешно загружен: \\n- Размер: :size кб \\n- ширина/высота: :width x :height',

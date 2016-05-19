@@ -10,6 +10,10 @@ return [
         'logout'           => 'Вийти',
         'wrong-username'   => 'Не вірний логін',
         'wrong-password'   => 'або пароль',
+        'since' => 'Зареєстрований :date',
+    ],
+    'links' => [
+        'index_page' => 'На сайт',
     ],
     'ckeditor' => [
         'upload'        => [
@@ -80,5 +84,11 @@ return [
     'file'     => [
         'browse' => 'Вибір файлу',
         'remove' => 'Видалити',
+    ],
+    'message' => [
+        'created' => 'Запис успішно створена',
+        'updated' => 'Запис успішно обновлена',
+        'deleted' => 'Запис успішно видалена',
+        'restored' => 'Запис успішно відновлена',
     ],
 ];
