@@ -83,11 +83,20 @@ class Page extends \KodiComponents\Navigation\Page
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @param string|null $view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render()
+    public function render($view = null)
     {
-        return app('sleeping_owl.template')->view('_partials.navigation.page', $this->toArray());
+        $data          = $this->toArray();
+        $data['pages'] = $this->getPages();
+
+        if (! is_null($view)) {
+            return view($view, $data)->render();
+        }
+
+        return app('sleeping_owl.template')->view('_partials.navigation.page', $data)->render();
     }
 
     /**

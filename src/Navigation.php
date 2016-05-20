@@ -4,17 +4,26 @@ namespace SleepingOwl\Admin;
 
 class Navigation extends \KodiComponents\Navigation\Navigation
 {
+
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @param string|null $view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render()
+    public function render($view = null)
     {
-        $this->findActive();
+        $this->findActivePage();
         $this->filterByAccessRights();
         $this->sort();
 
+        if (! is_null($view)) {
+            return view($view, [
+                'pages' => $this->getPages(),
+            ])->render();
+        }
+
         return app('sleeping_owl.template')->view('_partials.navigation.navigation', [
-            'pages' => $this->toArray(),
+            'pages' => $this->getPages(),
         ])->render();
     }
 }
