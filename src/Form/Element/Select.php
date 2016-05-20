@@ -384,7 +384,8 @@ class Select extends NamedFormElement
 
         // call the pre load options query preparer if has be set
         if (! is_null($this->getLoadOptionsQueryPreparer())) {
-            $options = $this->getLoadOptionsQueryPreparer($this, $options);
+            $preparer = $this->getLoadOptionsQueryPreparer();
+            $options = $preparer($this, $options);
         }
 
         $options = $options->get();
