@@ -56,6 +56,11 @@ class Select extends NamedFormElement
     protected $fetchColumns = [];
 
     /**
+     * @var function|\Closure|object callable
+     */
+    protected $loadOptionsQueryPreparer;
+
+    /**
      * @param string      $path
      * @param string|null $label
      * @param array|Model $options
@@ -252,6 +257,41 @@ class Select extends NamedFormElement
     }
 
     /**
+     * Set Callback for prepare load options Query.
+     *
+     * Example:
+     * <code>
+     * <?php
+     * AdminFormElement::select('column', 'Label')
+     *     ->modelForOptions(MyModel::class)
+     *     ->setLoadOptionsQueryPreparer(function($item, QueryBuilder $query) {
+     *         return $query
+     *             ->where('column', 'value')
+     *             ->were('owner_id', Auth::user()->id)
+     *     });
+     * ?>
+     * </code>
+     *
+     * @param callable $callback The Callback with $item and $options args.
+     * @return $this
+     */
+    public function setLoadOptionsQueryPreparer($callback)
+    {
+        $this->loadOptionsQueryPreparer = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Get Callback for prepare load options Query.
+     * @return callable
+     */
+    public function getLoadOptionsQueryPreparer()
+    {
+        return $this->loadOptionsQueryPreparer;
+    }
+
+    /**
      * @param array $keys
      *
      * @return $this
@@ -340,6 +380,11 @@ class Select extends NamedFormElement
         if (! is_null($this->fetchColumns)) {
             $columns = array_merge([$key], $this->fetchColumns);
             $options->select($columns);
+        }
+
+        // call the pre load options query preparer if has be set
+        if (! is_null($this->getLoadOptionsQueryPreparer())) {
+            $options = $this->getLoadOptionsQueryPreparer($this, $options);
         }
 
         $options = $options->get();
