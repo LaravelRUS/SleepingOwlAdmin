@@ -337,7 +337,7 @@ class Select extends NamedFormElement
             $options->where($this->getForeignKey(), 0)->orWhereNull($this->getForeignKey());
         }
 
-        if (! is_null($this->fetchColumns)) {
+        if (count($this->fetchColumns) > 0) {
             $columns = array_merge([$key], $this->fetchColumns);
             $options->select($columns);
         }
