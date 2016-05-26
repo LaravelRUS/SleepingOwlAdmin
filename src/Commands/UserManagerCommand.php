@@ -94,7 +94,7 @@ class UserManagerCommand extends Command
         try {
             $user = $userClass::create([
                 'email' => $email,
-                'password' => $password,
+                'password' => bcrypt($password),
                 'name' => $name,
             ]);
 
