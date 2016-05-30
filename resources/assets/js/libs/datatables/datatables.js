@@ -11,17 +11,9 @@ $(function () {
 
     $('.datatables').each(function () {
         var $this = $(this),
-            id = $this.data('id'),
-            params = {
-                language: window.Admin.Settings.lang.table,
-                stateSave: true,
-                lengthMenu: [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, window.Admin.Settings.lang.table.all]
-                ]
-            };
+            id = $this.data('id');
 
-        params = $.extend(params, $this.data('attributes'));
+        var params = $this.data('attributes');
 
         var url;
         if (url = $this.data('url')) {
@@ -40,6 +32,7 @@ $(function () {
                 }
             };
         }
+
         var table = $this.DataTable(params);
 
         $('[data-datatables-id="' + id + '"] .column-filter').each(function () {

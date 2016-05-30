@@ -38,22 +38,26 @@ class DisplayDatatables extends DisplayTable
 
         $this->setHtmlAttribute('data-order', json_encode($this->getOrder()));
 
+        $attributes = $this->getDatatableAttributes();
+        $attributes['pageLength'] = $this->paginate;
+
+        $attributes['language'] = trans('sleeping_owl::lang.table');
+
         foreach ($this->getColumns()->all() as $column) {
-            $this->datatableAttributes['columns'][] = [
+            $attributes['columns'][] = [
                 'orderDataType' => class_basename($column),
             ];
         }
 
-        $this->setHtmlAttribute('data-attributes', json_encode($this->getDatatableAttributes()));
+        $this->setHtmlAttribute('data-attributes', json_encode($attributes));
     }
 
     /**
-     * TODO: сделать чтобы работал.
      * @return array
      */
     public function getDatatableAttributes()
     {
-        return $this->datatableAttributes;
+        return array_merge(config('sleeping_owl.datatables', []), (array) $this->datatableAttributes);
     }
 
     /**
@@ -88,6 +92,24 @@ class DisplayDatatables extends DisplayTable
         }
 
         $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function usePagination()
+    {
+        return false;
+    }
+
+    /**
+     * @return $this
+     */
+    public function disablePagination()
+    {
+        $this->paginate = -1;
 
         return $this;
     }
