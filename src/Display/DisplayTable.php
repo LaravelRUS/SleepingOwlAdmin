@@ -35,7 +35,7 @@ class DisplayTable extends Display
     /**
      * @var int|null
      */
-    protected $paginate;
+    protected $paginate = 25;
 
     /**
      * @var string
@@ -113,10 +113,20 @@ class DisplayTable extends Display
      *
      * @return $this
      */
-    public function paginate($perPage = 20, $pageName = 'page')
+    public function paginate($perPage = 25, $pageName = 'page')
     {
         $this->paginate = (int) $perPage;
         $this->pageName = $pageName;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function disablePagination()
+    {
+        $this->paginate = 0;
 
         return $this;
     }
