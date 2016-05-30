@@ -69,6 +69,8 @@ abstract class NamedFormElement extends FormElement
         $parts = explode('.', $path);
         $this->setName($this->composeName($parts));
         $this->setAttribute(end($parts));
+
+        parent::__construct();
     }
 
     /**

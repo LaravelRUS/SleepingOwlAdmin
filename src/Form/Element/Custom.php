@@ -27,6 +27,8 @@ class Custom extends FormElement
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }
+
+        parent::__construct();
     }
 
     /**

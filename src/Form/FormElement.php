@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use KodiCMS\Assets\Facades\Meta;
+use KodiCMS\Assets\Facades\PackageManager;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 
 abstract class FormElement implements FormElementInterface
@@ -14,9 +15,9 @@ abstract class FormElement implements FormElementInterface
     protected $template;
 
     /**
-     * @var \KodiCMS\Assets\Meta
+     * @var \KodiCMS\Assets\Package
      */
-    protected $meta;
+    protected $package;
 
     /**
      * @var string
@@ -32,10 +33,67 @@ abstract class FormElement implements FormElementInterface
      * @var array
      */
     protected $validationRules = [];
+    
+    public function __construct()
+    {
+        if (is_null($this->package = PackageManager::load(get_called_class()))) {
+            $this->package = PackageManager::add(get_called_class());
+        }
+    }
 
     public function initialize()
     {
         Meta::loadPackage(get_called_class());
+    }
+
+    /**
+     * @param string $handle
+     * @param string $script
+     * @param array $dependency
+     *
+     * @return $this
+     */
+    public function addScript($handle = null, $script, array $dependency = [])
+    {
+        if (is_null($handle)) {
+            $handle = $script;
+        }
+
+        $this->package->js($handle, $script, $dependency);
+
+        return $this;
+    }
+
+    /**
+     * @param string $handle
+     * @param string $style
+     * @param array $attributes
+     *
+     * @return $this
+     */
+    public function addStyle($handle = null, $style, array $attributes = [])
+    {
+        if (is_null($handle)) {
+            $handle = $style;
+        }
+
+        $this->package->css($handle, $style, $attributes);
+
+        return $this;
+    }
+
+    /**
+     * @param string ... $package
+     *
+     * @return $this
+     */
+    public function withPackage($packages)
+    {
+        $packages = is_array($packages) ? $packages : func_get_args();
+
+        $this->package->with($packages);
+
+        return $this;
     }
 
     /**
@@ -64,6 +122,7 @@ abstract class FormElement implements FormElementInterface
 
     /**
      * @param string $rule
+     * @param string|null $message
      *
      * @return $this
      */
