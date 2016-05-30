@@ -2,25 +2,27 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use KodiComponents\Support\HtmlAttributes;
-use Request;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Form\Element\Upload;
-use Validator;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use KodiComponents\Support\HtmlAttributes;
+use Meta;
+use Request;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Form\Element\Upload;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Traits\Assets;
+use Validator;
 
 class FormDefault implements DisplayInterface, FormInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Assets;
 
     /**
      * View to render.
@@ -80,6 +82,8 @@ class FormDefault implements DisplayInterface, FormInterface
         $this->setButtons(
             app(FormButtonsInterface::class)
         );
+
+        $this->initializePackage();
     }
 
     /**
@@ -103,6 +107,8 @@ class FormDefault implements DisplayInterface, FormInterface
         $this->getButtons()->setModelConfiguration(
             $this->getModelConfiguration()
         );
+
+        $this->includePackage();
     }
 
     /**

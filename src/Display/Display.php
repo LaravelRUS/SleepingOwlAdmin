@@ -4,17 +4,18 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Display\Extension\Apply;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
-use SleepingOwl\Admin\Contracts\FilterInterface;
-use SleepingOwl\Admin\Display\Extension\Filters;
-use SleepingOwl\Admin\Display\Extension\Actions;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\FilterInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Display\Extension\Actions;
+use SleepingOwl\Admin\Display\Extension\Apply;
+use SleepingOwl\Admin\Display\Extension\Filters;
+use SleepingOwl\Admin\Display\Extension\Scopes;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Traits\Assets;
 
 /**
  * Class Display.
@@ -33,7 +34,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
  */
 abstract class Display implements DisplayInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Assets;
 
     /**
      * @var string
@@ -86,6 +87,8 @@ abstract class Display implements DisplayInterface
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
+
+        $this->initializePackage();
     }
 
     /**
@@ -149,8 +152,6 @@ abstract class Display implements DisplayInterface
             return;
         }
 
-        \Meta::loadPackage(get_called_class());
-
         $this->repository = $this->makeRepository();
         $this->repository->with($this->with);
 
@@ -161,6 +162,8 @@ abstract class Display implements DisplayInterface
             }
 
         });
+
+        $this->includePackage();
 
         $this->initialized = true;
     }
