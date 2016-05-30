@@ -11,6 +11,8 @@
 		</aside>
 
 		<div class="content-wrapper">
+			{!! Breadcrumbs::renderIfExists($breadcrumbKey) !!}
+
 			<div class="content-header">
 				<h1>
 					{{{ $title }}}

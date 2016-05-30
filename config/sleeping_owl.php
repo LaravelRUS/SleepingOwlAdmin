@@ -161,6 +161,7 @@ return [
         KodiCMS\Assets\AssetsServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         SleepingOwl\Admin\Providers\AdminServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
     ],
 
     /*
@@ -174,22 +175,23 @@ return [
     */
 
     'aliases' => [
-        'Assets'         => KodiCMS\Assets\Facades\Assets::class,
+        'Assets' => KodiCMS\Assets\Facades\Assets::class,
         'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
-        'Meta'           => KodiCMS\Assets\Facades\Meta::class,
-        'Form'           => Collective\Html\FormFacade::class,
-        'HTML'           => Collective\Html\HtmlFacade::class,
+        'Meta' => KodiCMS\Assets\Facades\Meta::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'HTML' => Collective\Html\HtmlFacade::class,
         'WysiwygManager' => SleepingOwl\Admin\Facades\WysiwygManager::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
 
-        'AdminSection'        => SleepingOwl\Admin\Facades\Admin::class,
-        'AdminTemplate'       => SleepingOwl\Admin\Facades\Template::class,
-        'AdminNavigation'     => SleepingOwl\Admin\Facades\Navigation::class,
-        'AdminColumn'         => SleepingOwl\Admin\Facades\TableColumn::class,
+        'AdminSection' => SleepingOwl\Admin\Facades\Admin::class,
+        'AdminTemplate' => SleepingOwl\Admin\Facades\Template::class,
+        'AdminNavigation' => SleepingOwl\Admin\Facades\Navigation::class,
+        'AdminColumn' => SleepingOwl\Admin\Facades\TableColumn::class,
         'AdminColumnEditable' => SleepingOwl\Admin\Facades\TableColumnEditable::class,
-        'AdminColumnFilter'   => SleepingOwl\Admin\Facades\TableColumnFilter::class,
-        'AdminDisplayFilter'  => SleepingOwl\Admin\Facades\DisplayFilter::class,
-        'AdminForm'           => SleepingOwl\Admin\Facades\Form::class,
-        'AdminFormElement'    => SleepingOwl\Admin\Facades\FormElement::class,
-        'AdminDisplay'        => SleepingOwl\Admin\Facades\Display::class,
+        'AdminColumnFilter' => SleepingOwl\Admin\Facades\TableColumnFilter::class,
+        'AdminDisplayFilter' => SleepingOwl\Admin\Facades\DisplayFilter::class,
+        'AdminForm' => SleepingOwl\Admin\Facades\Form::class,
+        'AdminFormElement' => SleepingOwl\Admin\Facades\FormElement::class,
+        'AdminDisplay' => SleepingOwl\Admin\Facades\Display::class,
     ],
 ];

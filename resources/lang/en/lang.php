@@ -12,6 +12,10 @@ return [
         'wrong-password' => 'or password',
         'since' => 'Registered at :date',
     ],
+    'model'=> [
+        'create' => 'Create record in section :title',
+        'edit' => 'Update record in section :title',
+    ],
     'links' => [
         'index_page' => 'To site',
     ],

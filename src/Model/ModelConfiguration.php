@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Model;
 
-use Gate;
-use Closure;
 use BadMethodCallException;
-use Illuminate\Database\Eloquent\Model;
+use Closure;
+use Gate;
 use Illuminate\Contracts\Events\Dispatcher;
-use SleepingOwl\Admin\Contracts\FormInterface;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 /**
@@ -23,12 +23,6 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
  */
 class ModelConfiguration
 {
-    /**
-     * The event dispatcher instance.
-     *
-     * @var \Illuminate\Contracts\Events\Dispatcher
-     */
-    protected static $dispatcher;
 
     /**
      * Get the event dispatcher instance.
@@ -52,6 +46,13 @@ class ModelConfiguration
     }
 
     /**
+     * The event dispatcher instance.
+     *
+     * @var \Illuminate\Contracts\Events\Dispatcher
+     */
+    protected static $dispatcher;
+
+    /**
      * @var string
      */
     protected $class;
@@ -70,6 +71,16 @@ class ModelConfiguration
      * @var string
      */
     protected $title;
+
+    /**
+     * @var string
+     */
+    protected $createTitle;
+
+    /**
+     * @var string
+     */
+    protected $updateTitle;
 
     /**
      * @var Closure|null
@@ -226,6 +237,54 @@ class ModelConfiguration
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     */
+    public function getCreateTitle()
+    {
+        if (is_null($this->createTitle)) {
+            return trans('sleeping_owl::lang.model.create', ['title' => $this->getTitle()]);
+        }
+
+        return $this->createTitle;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setCreateTitle($title)
+    {
+        $this->createTitle = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     */
+    public function getUpdateTitle()
+    {
+        if (is_null($this->updateTitle)) {
+            return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
+        }
+
+        return $this->updateTitle;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setUpdateTitle($title)
+    {
+        $this->updateTitle = $title;
 
         return $this;
     }

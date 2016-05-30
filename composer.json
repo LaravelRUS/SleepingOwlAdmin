@@ -27,7 +27,8 @@
     "doctrine/dbal": "~2.3",
     "laravelcollective/html": "5.*",
     "kodicms/laravel-assets": "0.*",
-    "erusev/parsedown": "1.*"
+    "erusev/parsedown": "1.*",
+    "davejamesmiller/laravel-breadcrumbs": "^3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.1",
