@@ -32,7 +32,7 @@ class AdminController extends Controller
         $this->navigation = app('sleeping_owl.navigation');
 
         Breadcrumbs::register('home', function($breadcrumbs) {
-            $breadcrumbs->push('Home', route('admin.dashboard'));
+            $breadcrumbs->push('Dashboard', route('admin.dashboard'));
         });
 
         $breadcrumbs = [];
@@ -87,7 +87,7 @@ class AdminController extends Controller
 
         $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
 
-        return $this->render($model, $create);
+        return $this->render($model, $create, $model->getCreateTitle());
     }
 
     /**
@@ -161,9 +161,9 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $this->registerBreadcrumb($model->getUpdateTitle(), $this->parentBreadcrumb);
+        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
 
-        return $this->render($model, $model->fireFullEdit($id));
+        return $this->render($model, $model->fireFullEdit($id), $model->getEditTitle());
     }
 
     /**
@@ -318,18 +318,23 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfiguration $model
-     * @param Renderable|string  $content
+     * @param Renderable|string $content
+     * @param string|null $title
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render(ModelConfiguration $model, $content)
+    public function render(ModelConfiguration $model, $content, $title = null)
     {
         if ($content instanceof Renderable) {
             $content = $content->render();
         }
 
+        if (is_null($title)) {
+            $title = $model->getTitle();
+        }
+
         return AdminTemplate::view('_layout.inner')
-            ->with('title', $model->getTitle())
+            ->with('title', $title)
             ->with('content', $content)
             ->with('breadcrumbKey', $this->parentBreadcrumb)
             ->with('successMessage', session('success_message'));

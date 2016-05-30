@@ -80,7 +80,7 @@ class ModelConfiguration
     /**
      * @var string
      */
-    protected $updateTitle;
+    protected $editTitle;
 
     /**
      * @var Closure|null
@@ -268,13 +268,13 @@ class ModelConfiguration
     /**
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
-    public function getUpdateTitle()
+    public function getEditTitle()
     {
-        if (is_null($this->updateTitle)) {
+        if (is_null($this->editTitle)) {
             return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
         }
 
-        return $this->updateTitle;
+        return $this->editTitle;
     }
 
     /**
