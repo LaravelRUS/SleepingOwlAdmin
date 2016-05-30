@@ -14,6 +14,8 @@ class Navigation extends \KodiComponents\Navigation\Navigation
     {
         $this->findActivePage();
         $this->filterByAccessRights();
+        $this->filterEmptyPages();
+
         $this->sort();
 
         if (! is_null($view)) {
