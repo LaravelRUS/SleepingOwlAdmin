@@ -114,7 +114,7 @@ class AdminServiceProvider extends ServiceProvider
             });
 
         foreach ($files as $file) {
-            require_once $file;
+            require $file;
         }
     }
 
@@ -127,7 +127,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
             $this->registerRoutes(function () use ($file) {
-                require_once $file;
+                require $file;
             });
         }
     }
@@ -165,7 +165,7 @@ class AdminServiceProvider extends ServiceProvider
             }
 
             if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
-                require_once $routesFile;
+                require $routesFile;
             }
         });
     }
