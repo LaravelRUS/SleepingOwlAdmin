@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Providers;
 
 use SleepingOwl\Admin\AliasBinder;
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\DataProvider;
 
 class AliasesServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,7 @@ class AliasesServiceProvider extends ServiceProvider
         $this->registerForms();
         $this->registerFormElements();
         $this->registerFilters();
+        $this->registerDataProvider();
     }
 
     protected function registerColumnFilters()
@@ -140,5 +142,17 @@ class AliasesServiceProvider extends ServiceProvider
         $this->app->singleton('sleeping_owl.display.filter', function () use ($alias) {
             return $alias;
         });
+    }
+
+    protected function registerDataProvider()
+    {
+        $cls = $this->app['config']->get('sleeping_owl.dataProviderClass');
+        $dp = new $cls();
+
+        $this->app->singleton('sleeping_owl.data_provider',
+            function () use ($dp) {
+                return $dp;
+            }
+        );
     }
 }

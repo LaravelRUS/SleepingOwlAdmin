@@ -46,6 +46,11 @@ Route::group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controlle
         'uses' => 'AdminController@postRestore',
     ]);
 
+    Route::get('{adminModel}.json', [
+        'as'   => 'model.dataProvider',
+        'uses' => 'AdminController@dataProvider',
+    ]);
+
     Route::get('{adminWildcard}', [
         'as'   => 'wildcard',
         'uses' => 'AdminController@getWildcard',

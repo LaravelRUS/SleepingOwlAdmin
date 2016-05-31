@@ -88,12 +88,22 @@ window.Admin.Components
     });
 
 
-
-
 $(function () {
+    var SITE_URL = $('meta[name="site-url"]').attr('content');
+
+    if (!SITE_URL) {
+        throw "[laravelrus/SleepingOwlAdmin] The header meta 'site-url' " +
+            "does not exists or value is empty.";
+    }
+
     $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        beforeSend: function(jqXHR, settings) {
+            var part = settings.url.substr(0, SITE_URL.length);
+            
+            if (part == SITE_URL) {
+                jqXHR.setRequestHeader('X-CSRF-TOKEN',
+                    window.Admin.Settings.token);
+            }
         }
     });
 

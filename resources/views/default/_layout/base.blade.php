@@ -7,6 +7,7 @@
 			->addMeta(['content' => csrf_token(), 'name' => 'csrf-token'])
 			->addMeta(['content' => 'width=device-width, initial-scale=1', 'name' => 'viewport'])
 			->addMeta(['content' => 'IE=edge', 'http-equiv' => 'X-UA-Compatible'])
+			->addMeta(['content' => url('/'), 'name' => 'site-url'])
 			->render()
 	!!}
 

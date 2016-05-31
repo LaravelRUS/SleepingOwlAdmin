@@ -200,6 +200,18 @@ class FormDefault implements DisplayInterface, FormInterface
     }
 
     /**
+     * @return Collection[]
+     */
+    public function getRealItems()
+    {
+        return array_filter($this->items,
+            function (FormElementInterface $item) {
+                return ! $item->isVirtual();
+            }
+        );
+    }
+
+    /**
      * @param array|FormElementInterface $items
      *
      * @return $this
@@ -292,7 +304,7 @@ class FormDefault implements DisplayInterface, FormInterface
             return;
         }
 
-        $items = $this->getItems();
+        $items = $this->getRealItems();
 
         array_walk_recursive($items, function ($item) {
             if ($item instanceof FormElementInterface) {
