@@ -70,6 +70,7 @@ return [
         'browse'         => 'Seleciona a imagem',
         'browseMultiple' => 'Selecione as imagens',
         'remove'         => 'Remover a imagem',
+        'removeMultiple' => 'Remover',
     ],
     'file'     => [
         'browse' => 'Selecionar o arquivo',
