@@ -20,6 +20,7 @@ class Columns extends FormElement
     public function __construct()
     {
         $this->columns = new Collection();
+        $this->initializePackage();
     }
 
     public function initialize()

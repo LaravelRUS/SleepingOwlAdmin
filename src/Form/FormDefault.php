@@ -343,7 +343,7 @@ class FormDefault implements DisplayInterface, FormInterface
 
         foreach ($model->getRelations() as $name => $relation) {
             if ($model->{$name}() instanceof HasOneOrMany) {
-                if (is_array($relation)) {
+                if (is_array($relation) || $relation instanceof \Traversable) {
                     $model->{$name}()->saveMany($relation);
                 } else {
                     $model->{$name}()->save($relation);
