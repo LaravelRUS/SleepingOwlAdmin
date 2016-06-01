@@ -445,7 +445,7 @@ class Select extends NamedFormElement
      *                                        {id: 2, text: "Two"}}`.
      *
      *      @type bool $cache If store the ajax response data into cache.
-     *                        Default is `false`.
+     *                        Default is `true`.
      *      @type int $pageSize Number of items per page. Default is `30`.
      *      @type int $minInputLength Minimum number of characters in search box
      *                               for load remote data. Default is `2`.
