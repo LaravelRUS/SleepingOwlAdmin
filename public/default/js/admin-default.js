@@ -1,1 +1,306 @@
-$(function(){$(".adminCheckboxRow").on("change",function(e){var n=$(this),t=n.closest("tr");n.is(":checked")?t.addClass("info"):t.removeClass("info")}),$(".adminCheckboxAll").on("change",function(){var e=$(this),n=$(".adminCheckboxRow");e.is(":checked")?n.not(":checked").each(function(e,n){this.checked=!0,$(this).trigger("change")}):n.filter(":checked").each(function(e,n){this.checked=!1,$(this).trigger("change")})})}),$(function(){$(document).delegate(".btn-delete","click",function(e){e.preventDefault();var n=$(this).closest("form");bootbox.confirm(window.Admin.Settings.lang.table["delete-confirm"],function(e){e&&n.submit()})}),bootbox.setDefaults("locale",window.Admin.Settings.locale)}),$(function(){$(document).delegate('*[data-toggle="lightbox"]',"click",function(e){e.preventDefault(),$(this).ekkoLightbox({always_show_close:!1})})}),$(function(){$(".input-date").each(function(){var e=$(this);e.datetimepicker({locale:window.Admin.Settings.locale}).trigger("dp.change").on("dp.change",function(){e.change()})})}),$(function(){$(".input-select").each(function(){var e={},n=$(this);n.hasClass("input-taggable")&&(e.tags=!0),n.select2(e)})}),$(function(){$(".imageUpload").each(function(e,n){var t=$(n),i=t.closest(".form-group"),a=t.find(".errors"),o=t.find(".no-value"),c=t.find(".has-value"),s=t.find(".thumbnail img.has-value"),d=t.find(".imageValue"),l=new Flow({target:t.data("target"),testChunks:!1,chunkSize:1073741824,query:{_token:t.data("token")}});l.assignBrowse(t.find(".imageBrowse"),!1,!0),l.on("filesSubmitted",function(e){l.upload()}),l.on("fileSuccess",function(e,n){l.removeFile(e),a.html(""),i.removeClass("has-error");var t=$.parseJSON(n);s.attr("src",t.url),c.find("span").text(t.value),d.val(t.value),o.addClass("hidden"),c.removeClass("hidden")}),l.on("fileError",function(e,n){l.removeFile(e);var t=$.parseJSON(n),o="";$.each(t,function(e,n){o+='<p class="help-block">'+n+"</p>"}),a.html(o),i.addClass("has-error")}),t.find(".imageRemove").click(function(){d.val(""),o.removeClass("hidden"),c.addClass("hidden")})})}),$(function(){$(".imageUploadMultiple").each(function(e,n){var t=$(n),i=t.closest(".form-group"),a=t.find(".form-group"),o=t.find(".errors"),c=t.find(".imageValue"),s=new Flow({target:t.data("target"),testChunks:!1,chunkSize:1073741824,query:{_token:t.data("token")}}),d=function(){var e=[];t.find("img[data-value]").each(function(){e.push($(this).data("value"))}),c.val(e.join(","))};s.assignBrowse(t.find(".imageBrowse")),s.on("filesSubmitted",function(e){s.upload()}),s.on("fileSuccess",function(e,n){s.removeFile(e),o.html(""),i.removeClass("has-error");var t=$.parseJSON(n);a.append('<div class="col-xs-6 col-md-3 imageThumbnail"><div class="thumbnail"><img data-value="'+t.value+'" src="'+t.url+'" /><a href="#" class="imageRemove">Remove</a></div></div>'),d()}),s.on("fileError",function(e,n){s.removeFile(e);var t=$.parseJSON(n),a="";$.each(t,function(e,n){a+='<p class="help-block">'+n+"</p>"}),o.html(a),i.addClass("has-error")}),t.on("click",".imageRemove",function(e){e.preventDefault(),$(this).closest(".imageThumbnail").remove(),d()}),a.sortable({onUpdate:function(){d()}})})}),window.Admin.Components.add("ckeditor",function(){switchOn_handler=function(e,n){CKEDITOR.disableAutoInline=!0;var n=$.extend({},n);return CKEDITOR.replace(e,n)},switchOff_handler=function(e,n){e.destroy()},exec_handler=function(e,n,t,i){switch(n){case"insert":e.insertText(i);break;case"changeHeight":e.resize("100%",i)}},window.Admin.WYSIWYG.add("ckeditor",switchOn_handler,switchOff_handler,exec_handler)}).add("tinymce",function(){switchOn_handler=function(e,n){var n=$.extend({selector:"#"+e},n);return tinymce.init(n)},switchOff_handler=function(e,n){e.destroy()},exec_handler=function(e,n,t,i){switch(n){case"insert":e.insertContent(i)}},window.Admin.WYSIWYG.add("tinymce",switchOn_handler,switchOff_handler,exec_handler)}).add("simplemde",function(){switchOn_handler=function(e,n){var n=$.extend({element:$("#"+e)[0]},n);return new SimpleMDE(n)},switchOff_handler=function(e,n){e.destroy()},exec_handler=function(e,n,t,i){switch(n){case"insert":e.codemirror.replaceSelection(i)}},window.Admin.WYSIWYG.add("simplemde",switchOn_handler,switchOff_handler,exec_handler)}),$(function(){$.ajaxSetup({headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")}}),$('form[data-type="display-actions"]').on("submit",function(e){var n=$(this),t=$(e.target.action),i=$(".adminCheckboxRow").filter(":checked");i.length||e.preventDefault(),this.action=t.data("action"),this.method=t.data("method"),i.each(function(){n.append('<input type="hidden" name="id[]" value="'+$(this).val()+'" />')})}),$(".inline-editable").editable(),window.Admin.Components.init(),window.Admin.Controllers.call()});
+$(function () {
+    $('.adminCheckboxRow').on('change', function(e) {
+        var $self = $(this),
+            $row = $self.closest('tr');
+
+        if($self.is(':checked')) {
+            $row.addClass('info');
+        } else {
+            $row.removeClass('info');
+        }
+    });
+
+    $('.adminCheckboxAll').on('change', function() {
+        var $self = $(this),
+            $checkboxes = $('.adminCheckboxRow');
+
+        if($self.is(':checked')) {
+            $checkboxes.not(':checked').each(function(i, a) {
+                this.checked = true;
+                $(this).trigger('change');
+            });
+        } else {
+            $checkboxes.filter(':checked').each(function(i, a) {
+                this.checked = false;
+                $(this).trigger('change');
+            });
+        }
+    });
+});
+$(function () {
+    $(document).delegate('.btn-delete', 'click', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        bootbox.confirm(window.Admin.Settings.lang.table['delete-confirm'], function (result) {
+            if (result) {
+                form.submit();
+            }
+        });
+    });
+    bootbox.setDefaults('locale', window.Admin.Settings.locale);
+});
+$(function () {
+    $(document).delegate('*[data-toggle="lightbox"]', 'click', function (e) {
+        e.preventDefault();
+        $(this).ekkoLightbox({
+            always_show_close: false
+        });
+    });
+});
+$(function () {
+    $('.input-date').each(function () {
+        var $self = $(this);
+        $self.datetimepicker({
+            locale: window.Admin.Settings.locale
+        }).trigger('dp.change').on('dp.change', function () {
+            $self.change();
+        });
+    });
+});
+$(function () {
+    $('.input-select').each(function () {
+        var options = {},
+            $self = $(this);
+
+        if ($self.hasClass('input-taggable')) {
+            options['tags'] = true;
+        }
+
+        $self.select2(options)
+    });
+});
+$(function () {
+    $('.imageUpload').each(function (index, item) {
+        var $item = $(item);
+        var $group = $item.closest('.form-group');
+        var $errors = $item.find('.errors');
+        var $noValue = $item.find('.no-value');
+        var $hasValue = $item.find('.has-value');
+        var $thumbnail = $item.find('.thumbnail img.has-value');
+        var $input = $item.find('.imageValue');
+        var flow = new Flow({
+            target: $item.data('target'),
+            testChunks: false,
+            chunkSize: 1024 * 1024 * 1024,
+            query: {
+                _token: $item.data('token')
+            }
+        });
+        flow.assignBrowse($item.find('.imageBrowse'), false, true);
+        flow.on('filesSubmitted', function (file) {
+            flow.upload();
+        });
+        flow.on('fileSuccess', function (file, message) {
+            flow.removeFile(file);
+
+            $errors.html('');
+            $group.removeClass('has-error');
+
+            var result = $.parseJSON(message);
+            $thumbnail.attr('src', result.url);
+            $hasValue.find('span').text(result.value);
+            $input.val(result.value);
+            $noValue.addClass('hidden');
+            $hasValue.removeClass('hidden');
+        });
+        flow.on('fileError', function (file, message) {
+            flow.removeFile(file);
+
+            var response = $.parseJSON(message);
+            var errors = '';
+            $.each(response, function (index, error) {
+                errors += '<p class="help-block">' + error + '</p>'
+            });
+            $errors.html(errors);
+            $group.addClass('has-error');
+        });
+        $item.find('.imageRemove').click(function () {
+            $input.val('');
+            $noValue.removeClass('hidden');
+            $hasValue.addClass('hidden');
+        });
+    });
+});
+$(function () {
+    $('.imageUploadMultiple').each(function (index, item) {
+        var $item = $(item);
+        var $group = $item.closest('.form-group');
+        var $innerGroup = $item.find('.form-group');
+        var $errors = $item.find('.errors');
+        var $input = $item.find('.imageValue');
+        var flow = new Flow({
+            target: $item.data('target'),
+            testChunks: false,
+            chunkSize: 1024 * 1024 * 1024,
+            query: {
+                _token: $item.data('token')
+            }
+        });
+        var updateValue = function () {
+            var values = [];
+            $item.find('img[data-value]').each(function () {
+                values.push($(this).data('value'));
+            });
+            $input.val(values.join(','));
+        };
+        flow.assignBrowse($item.find('.imageBrowse'));
+        flow.on('filesSubmitted', function (file) {
+            flow.upload();
+        });
+        flow.on('fileSuccess', function (file, message) {
+            flow.removeFile(file);
+
+            $errors.html('');
+            $group.removeClass('has-error');
+
+            var result = $.parseJSON(message);
+
+            $innerGroup.append($($('#thumbnail_template').html()).find('img').attr('src', result.url).attr('data-value', result.value));
+            updateValue();
+        });
+        flow.on('fileError', function (file, message) {
+            flow.removeFile(file);
+
+            var response = $.parseJSON(message);
+            var errors = '';
+            $.each(response, function (index, error) {
+                errors += '<p class="help-block">' + error + '</p>'
+            });
+            $errors.html(errors);
+            $group.addClass('has-error');
+        });
+        $item.on('click', '.imageRemove', function (e) {
+            e.preventDefault();
+            $(this).closest('.imageThumbnail').remove();
+            updateValue();
+        });
+
+        $innerGroup.sortable({
+            onUpdate: function () {
+                updateValue();
+            }
+        });
+    });
+});
+window.Admin.Components
+    .add('ckeditor', function() {
+        switchOn_handler = function (textarea_id, params) {
+            CKEDITOR.disableAutoInline = true;
+
+            var params = $.extend({}, params);
+
+            return CKEDITOR.replace(textarea_id, params);
+        };
+
+        switchOff_handler = function (editor, textarea_id) {
+            editor.destroy()
+        }
+
+        exec_handler = function (editor, command, textarea_id, data) {
+            switch (command) {
+                case 'insert':
+                    editor.insertText(data);
+                    break;
+                case 'changeHeight':
+                    editor.resize('100%', data);
+            }
+        }
+
+        window.Admin.WYSIWYG.add(
+            'ckeditor',
+            switchOn_handler,
+            switchOff_handler,
+            exec_handler
+        );
+    })
+    .add('tinymce', function() {
+        switchOn_handler = function (textarea_id, params) {
+            var params = $.extend({
+                selector:'#'+textarea_id
+            }, params);
+
+
+            return tinymce.init(params);
+        };
+
+        switchOff_handler = function (editor, textarea_id) {
+            editor.destroy();
+        }
+
+        exec_handler = function (editor, command, textarea_id, data) {
+            switch (command) {
+                case 'insert':
+                    editor.insertContent(data);
+                    break;
+            }
+        }
+
+        window.Admin.WYSIWYG.add(
+            'tinymce',
+            switchOn_handler,
+            switchOff_handler,
+            exec_handler
+        );
+    }).add('simplemde', function() {
+        switchOn_handler = function (textarea_id, params) {
+            var params = $.extend({
+                element: $("#"+textarea_id)[0]
+            }, params);
+
+
+            return new SimpleMDE(params);
+        };
+
+        switchOff_handler = function (editor, textarea_id) {
+            editor.destroy();
+        }
+
+        exec_handler = function (editor, command, textarea_id, data) {
+            switch (command) {
+                case 'insert':
+                    editor.codemirror.replaceSelection(data);
+                    break;
+            }
+        }
+
+        window.Admin.WYSIWYG.add(
+            'simplemde',
+            switchOn_handler,
+            switchOff_handler,
+            exec_handler
+        );
+    });
+
+
+
+
+$(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('form[data-type="display-actions"]').on('submit', function(e) {
+        var $form = $(this),
+            $btn = $(e.target.action),
+            $checkboxes = $('.adminCheckboxRow').filter(':checked');
+
+        if (!$checkboxes.length) {
+            e.preventDefault();
+        }
+
+        this.action = $btn.data('action');
+        this.method = $btn.data('method');
+
+        $checkboxes.each(function () {
+            $form.append('<input type="hidden" name="id[]" value="' + $(this).val() + '" />');
+        });
+    });
+
+    $('.inline-editable').editable();
+
+    window.Admin.Components.init();
+    window.Admin.Controllers.call();
+});
+//# sourceMappingURL=admin-default.js.map
