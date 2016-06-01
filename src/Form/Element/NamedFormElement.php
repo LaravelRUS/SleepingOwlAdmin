@@ -11,6 +11,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.
@@ -462,8 +463,10 @@ abstract class NamedFormElement extends FormElement
                             $relationObject->associate($relatedModel = $relationObject->getRelated());
                             break;
                         case HasOne::class:
-                            $relatedModel = $relationObject->create();
-                            $model->{$relation} = $relatedModel;
+                        case MorphOne::class:
+                            $relatedModel = $relationObject->getRelated()->newInstance();
+                            $relatedModel->setAttribute($relationObject->getPlainForeignKey(), $relationObject->getParentKey());
+                            $model->setRelation($relation, $relatedModel);
                             break;
                     }
                 }
