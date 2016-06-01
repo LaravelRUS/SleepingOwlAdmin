@@ -32,9 +32,7 @@ $(function () {
 
             var result = $.parseJSON(message);
 
-            $innerGroup.append('<div class="col-xs-6 col-md-3 imageThumbnail"><div class="thumbnail">' +
-                '<img data-value="' + result.value + '" src="' + result.url + '" />' +
-                '<a href="#" class="imageRemove">Remove</a></div></div>');
+            $innerGroup.append($($('#thumbnail_template').html()).find('img').attr('src', result.url).attr('data-value', result.value));
             updateValue();
         });
         flow.on('fileError', function (file, message) {

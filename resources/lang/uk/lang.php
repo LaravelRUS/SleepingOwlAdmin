@@ -80,6 +80,7 @@ return [
         'browse'         => 'Вибір зображення',
         'browseMultiple' => 'Вибір зображення',
         'remove'         => 'Видалити',
+        'removeMultiple' => 'Видалити',
     ],
     'file'     => [
         'browse' => 'Вибір файлу',

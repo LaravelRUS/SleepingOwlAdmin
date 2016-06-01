@@ -12,7 +12,9 @@
 				<div class="col-xs-6 col-md-3 imageThumbnail">
 					<div class="thumbnail">
 						<img data-value="{{ $image }}" src="{{ asset($image) }}" />
-						<a href="#" class="imageRemove">Remove</a>
+						<div class="text-right">
+							<a href="#" class="imageRemove btn btn-danger">{{ trans('sleeping_owl::lang.image.removeMultiple') }}</a>
+						</div>
 					</div>
 				</div>
 			@endforeach
@@ -26,3 +28,13 @@
 		</div>
 	</div>
 </div>
+<script id="thumbnail_template" type="template/html">
+	<div class="col-xs-6 col-md-3 imageThumbnail">
+		<div class="thumbnail">
+			<img />
+			<div class="text-right">
+				<a href="#" class="imageRemove btn btn-danger">{{ trans('sleeping_owl::lang.image.removeMultiple') }}</a>
+			</div>
+		</div>
+	</div>
+</script>

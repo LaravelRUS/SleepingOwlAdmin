@@ -78,6 +78,7 @@ return [
         'browse'         => 'Wybierz obrazek',
         'browseMultiple' => 'Wybierz obrazki',
         'remove'         => 'Usuń obrazek',
+        'removeMultiple' => 'Usuń',
     ],
     'file'     => [
         'browse' => 'Wybierz plik',
