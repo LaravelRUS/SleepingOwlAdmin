@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Providers;
 
 use SleepingOwl\Admin\AliasBinder;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\DataProvider;
 
 class AliasesServiceProvider extends ServiceProvider
 {

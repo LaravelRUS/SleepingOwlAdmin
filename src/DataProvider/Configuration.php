@@ -2,27 +2,25 @@
 
 namespace SleepingOwl\Admin\DataProvider;
 
-
 use Request;
 use SleepingOwl\Admin\Utils\Invoker;
 use Illuminate\Database\Eloquent\Builder;
 
-
 class Configuration
 {
-    /** @var  callable */
+    /** @var callable */
     protected $queryHandler;
     protected $hidden = [];
     protected $fillable = [];
-    /** @var  class */
+    /** @var class */
     protected $modelClass;
-    /** @var  callable[] */
+    /** @var callable[] */
     protected $itemFormatters = [];
     protected $searchable = true;
     protected $searchParam = 'q';
-    /** @var  callable */
+    /** @var callable */
     protected $searchHandler;
-    /** @var  callable[] */
+    /** @var callable[] */
     protected $filters = [];
     protected $all = false;
     protected $perPage = 30;
@@ -40,7 +38,7 @@ class Configuration
     /**
      * Check items pagination is enabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAll()
     {
@@ -50,7 +48,7 @@ class Configuration
     /**
      * Perform items pagination enabled.
      *
-     * @param boolean $all
+     * @param bool $all
      * @return Configuration
      */
     public function setAll($all)
@@ -93,7 +91,7 @@ class Configuration
     }
 
     /**
-     * Return the model class
+     * Return the model class.
      * @return type
      */
     public function getModelClass()
@@ -126,7 +124,7 @@ class Configuration
     }
 
     /**
-     * Get model hidden fields
+     * Get model hidden fields.
      *
      * @return array
      */
@@ -151,7 +149,7 @@ class Configuration
     }
 
     /**
-     * Get the custom fillable fields
+     * Get the custom fillable fields.
      * @return array
      */
     public function getFillable()
@@ -175,7 +173,7 @@ class Configuration
     }
 
     /**
-     * Get the item formatters
+     * Get the item formatters.
      * @return array
      */
     public function getItemFormatters()
@@ -185,7 +183,7 @@ class Configuration
 
     /**
      * Set many item formatters.
-     * 
+     *
      * @param array $formatters Array of formatters with KEY as name and VALUE
      *                          is the handler.
      * @return Configuration
@@ -193,11 +191,12 @@ class Configuration
     public function setItemFormatters(array $formatters)
     {
         $this->itemFormatters = $formatters;
+
         return $this;
     }
 
     /**
-     * Set item formatter
+     * Set item formatter.
      *
      * Examples:
      *
@@ -211,11 +210,11 @@ class Configuration
      * $cfg->setItemFormatter('full_name', function(&$model, Request $request) {
      *     $model->name = $model->firtName . " " . $model->secondName;
      * });
-     * 
+     *
      * $cfg->setItemFormatter('custom', function(&$model) {
      *     $model = [$model->id, $model->name];
      * });
-     * 
+     *
      * $cfg->setItemFormatter('name_attr', function(&$model) {
      *     $model = $model->name;
      * });
@@ -237,14 +236,14 @@ class Configuration
     }
 
     /**
-     * Get the item format by name
+     * Get the item format by name.
      *
      * @param $name Name of the item formatter
      * @param callable $default default formatter if it not exists by name.
      * @return callable|null if item formatter with $name exists or default has
      *                       be not null, return it, otherwise, `null`.
      */
-    public function getItemFormatter($name, $default=null)
+    public function getItemFormatter($name, $default = null)
     {
         if (array_key_exists($name, $this->itemFormatters)) {
             return $this->itemFormatters[$name];
@@ -255,7 +254,7 @@ class Configuration
 
     /**
      * Return if searchable by term.
-     * @return boolean
+     * @return bool
      */
     public function isSearchable()
     {
@@ -264,7 +263,7 @@ class Configuration
 
     /**
      * Enable or disable term searchable.
-     * @param boolean $searchable
+     * @param bool $searchable
      * @return Configuration
      */
     public function setSearchable($searchable)
@@ -275,7 +274,7 @@ class Configuration
     }
 
     /**
-     * Enable term searcheable
+     * Enable term searcheable.
      *
      * @see Configuration::setSearcheable()
      * @return Configuration
@@ -288,7 +287,7 @@ class Configuration
     }
 
     /**
-     * Disable term searcheable
+     * Disable term searcheable.
      *
      * @see Configuration::setSearcheable()
      * @return Configuration
@@ -322,7 +321,7 @@ class Configuration
     }
 
     /**
-     * Get all filters
+     * Get all filters.
      * @return array
      */
     public function getFilters()
@@ -390,15 +389,15 @@ class Configuration
      *
      * @param $fieldName The field name
      * @param array $options {
-     *     @type string $key op. The query operator. Default is `'='`.
-     *     @type string $key param. The name of request param for get the value.
+     *     @var string $key op. The query operator. Default is `'='`.
+     *     @var string $key param. The name of request param for get the value.
      *                       Default is $fieldName.
-     *     @type string $key formatter. Handler for format filter value. It is
+     *     @var string $key formatter. Handler for format filter value. It is
      *                       callable if filter value not is null.
      *                       The **first** argument is a filter value. Returns
      *                       the formatted value. **Arguments injection** is
      *                       available.
-     *     @type string $key required. If is `true` and request param value is
+     *     @var string $key required. If is `true` and request param value is
      *                       `null`, aborts with HTTP 400 status. Default is
      *                       `false`.
      * }
@@ -413,7 +412,7 @@ class Configuration
             'required' => false,
         ], $options);
 
-        return $this->setFilter('field:' . $fieldName,
+        return $this->setFilter('field:'.$fieldName,
             function (Builder $query, Invoker $invoker) use ($fieldName, $options) {
                 $value = Request::input($options['param']);
 
@@ -427,7 +426,7 @@ class Configuration
 
                 if (is_null($value) || (is_string($value)
                         && strlen($value) == 0)) {
-                    if($options['required']) {
+                    if ($options['required']) {
                         abort(400, "Parameter '{$options['param']}' is empty.");
                     }
 
@@ -447,20 +446,21 @@ class Configuration
      * @param array $options The custom options.
      * @return Configuration
      */
-    public function likeFieldFilter($fieldName, array $options=[])
+    public function likeFieldFilter($fieldName, array $options = [])
     {
         $options = array_merge($options, [
             'op' => 'like',
-            'formatter' => function(&$value) {
-                return '%' . $value . '%';
-            }
+            'formatter' => function (&$value) {
+                return '%'.$value.'%';
+            },
         ]);
+
         return $this->addFieldFilter($fieldName, $options);
     }
 
     /**
      * Return the search term handler.
-     * 
+     *
      * @return callable
      */
     public function getSearchHandler()
@@ -470,17 +470,17 @@ class Configuration
 
     /**
      * Set the search term handler.
-     * 
+     *
      * Example:
      * ```php
      * $cfg->setSearchHandler(function(Builder $query, $term){
      *     return $query->where('name', 'like', '%' . $term . '%');
      * });
      * ```
-     * 
+     *
      * @param callable $handler Is a function called when search term value not
-     *                          is `null`. The function receives 
-     *                          {@see Illuminate\Database\Eloquent\Builder} 
+     *                          is `null`. The function receives
+     *                          {@see Illuminate\Database\Eloquent\Builder}
      *                          object as **first parameter** and the term value
      *                          as **second parameter**. The function returns a
      *                          {@see Illuminate\Database\Eloquent\Builder}
@@ -495,7 +495,7 @@ class Configuration
     }
 
     /**
-     * Return the response Formatters
+     * Return the response Formatters.
      * @return array
      */
     public function getResponseFormatters()
@@ -504,7 +504,7 @@ class Configuration
     }
 
     /**
-     * Set the response formatters
+     * Set the response formatters.
      * @param array $formatters Array with KEY is the formatter name and value
      *                          is the formatter handler.
      * @see Configuration::setResponseFormatter
@@ -554,7 +554,7 @@ class Configuration
      * @return callable|null If formatter handler exists by name or $default
      *                       not is null. otherwise, `null`.
      */
-    public function getResponseFormatter($name, $default=null)
+    public function getResponseFormatter($name, $default = null)
     {
         if (array_key_exists($name, $this->responseFormatters)) {
             return $this->responseFormatters[$name];
@@ -564,7 +564,7 @@ class Configuration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isTotalize()
     {
@@ -574,12 +574,13 @@ class Configuration
     /**
      * If count query results.
      *
-     * @param boolean $totalize
+     * @param bool $totalize
      * @return Configuration
      */
     public function setTotalize($totalize)
     {
         $this->totalize = $totalize;
+
         return $this;
     }
 
@@ -625,14 +626,14 @@ class Configuration
      *     return $e->name;
      * });
      * ```
-     * 
+     *
      * This function is alias of:
-     * 
+     *
      * ```php
      * $formatter = function (Model $e) {
      *     return $e->name;
      * };
-     * 
+     *
      * $cfg->setItemFormatter('idtext', function(&$model) use ($formatter) {
      *     $model = [$model->id, $formatter($model)];
      * });
@@ -658,9 +659,10 @@ class Configuration
      *                                   representative text.
      * @return Configuration
      */
-    public function setIdTextItemFormatter($formatter) {
+    public function setIdTextItemFormatter($formatter)
+    {
         if (is_string($formatter)) {
-            $formatter = function(&$e) use ($formatter) {
+            $formatter = function (&$e) use ($formatter) {
                 return data_get($e, $formatter);
             };
         }
@@ -709,6 +711,7 @@ class Configuration
     public function setFetchColumns(array $fetchColumns)
     {
         $this->fetchColumns = $fetchColumns;
+
         return $this;
     }
 }

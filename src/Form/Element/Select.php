@@ -359,7 +359,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDynamic()
     {
@@ -367,7 +367,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param boolean $dynamic
+     * @param bool $dynamic
      * @return Select
      */
     public function setDynamic($dynamic)
@@ -414,21 +414,21 @@ class Select extends NamedFormElement
      * @param array $options {
      *      An array of dynamic options.
      *
-     *      @type string $url URL for remote data source.
-     *      @type string $findByIdUrl URL for find by id. To recover using the
+     *      @var string $url URL for remote data source.
+     *      @var string $findByIdUrl URL for find by id. To recover using the
      *                               options through the unique identification.
      *                               For example on the edit form where only was
      *                               stored the ID (or primary key) as the field
      *                               value. Default is a **$url** option.
-     *      @type string $idParam The request param name for pass ID on using
+     *      @var string $idParam The request param name for pass ID on using
      *                            the $findByIdUrl. Default is `'id'`. Multiple
      *                            values are concatenated and separated by
      *                             **$idParamSep** option.
-     *      @type string $idParamSep Character used to separate multiple values
+     *      @var string $idParamSep Character used to separate multiple values
      *                               passed in parameter **$idParam**.
-     *      @type int $minInputLength Minimum input length on search term input
+     *      @var int $minInputLength Minimum input length on search term input
      *                                field for fetch remote options.
-     *      @type null|array|string $static Set the Static JavaScript data
+     *      @var null|array|string $static Set the Static JavaScript data
      *                                      source.
      *
      *                                      Examples:
@@ -444,18 +444,18 @@ class Select extends NamedFormElement
      *                                        [{id: 1, text: "One"},
      *                                        {id: 2, text: "Two"}}`.
      *
-     *      @type bool $cache If store the ajax response data into cache.
+     *      @var bool $cache If store the ajax response data into cache.
      *                        Default is `true`.
-     *      @type int $pageSize Number of items per page. Default is `30`.
-     *      @type int $minInputLength Minimum number of characters in search box
+     *      @var int $pageSize Number of items per page. Default is `30`.
+     *      @var int $minInputLength Minimum number of characters in search box
      *                               for load remote data. Default is `2`.
-     *      @type string $itemsProperty Name of items property in remote data
+     *      @var string $itemsProperty Name of items property in remote data
      *                                  response. Example: `'items'` or
      *                                  `'items.data'`.
-     *      @type string $totalCountProperty Name of total results count property
+     *      @var string $totalCountProperty Name of total results count property
      *                                       in remote data response. Example:
      *                                       `'items'` or `'items.data'`.
-     *      @type array $dependency An array of the dependency fields or QUEY
+     *      @var array $dependency An array of the dependency fields or QUEY
      *                              STRING of page URL. If item in array is a
      *                              KEY and VALUE pair, the KEY is a remote
      *                              data name, and VALUE is a VALUE GETTER,
@@ -489,12 +489,12 @@ class Select extends NamedFormElement
      *                                name is `dataName` and the value is
      *                                obtained by `jQuery.url.param("qname")`.
      *
-     *      @type int $delay Milliseconds for wait before triggering the
+     *      @var int $delay Milliseconds for wait before triggering the
      *                       request data. Default is `500`.
-     *      @type string $pageParam Name of page parameter. Default is `'page'`.
-     *      @type string $termParam Name of search term parameter.
+     *      @var string $pageParam Name of page parameter. Default is `'page'`.
+     *      @var string $termParam Name of search term parameter.
      *                              Default is `'q'`.
-     *      @type array $params Array of custom parameters.
+     *      @var array $params Array of custom parameters.
      * }
      * @param bool $merge Optional. If merge the $options on current options.
      *                    Default is `false`.
@@ -521,7 +521,6 @@ class Select extends NamedFormElement
 
         return $this;
     }
-
 
     /**
      * @return array
@@ -601,7 +600,7 @@ class Select extends NamedFormElement
                 $dynamicOptions['url'] = route('admin.model.dataProvider', [
                     'adminModel' => app('sleeping_owl')
                         ->getModel($modelForOptions)
-                        ->getAlias()
+                        ->getAlias(),
                 ]);
 
                 if (! array_key_exists('params', $dynamicOptions)) {
@@ -616,7 +615,7 @@ class Select extends NamedFormElement
             if (! empty($dynamicOptions)) {
                 $attributes['data-dynamic-options'] = json_encode($dynamicOptions);
             }
-        } else if ($this->isNullable()) {
+        } elseif ($this->isNullable()) {
             $options = [null => trans('sleeping_owl::lang.select.nothing')];
         }
 

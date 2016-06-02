@@ -54,12 +54,12 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable
      * Return if the virtual flag has be set.
      *
      * @see FormElementInterface::setVirtual()
-     * @return boolean
+     * @return bool
      */
     public function isVirtual();
 
     /**
-     * Set form item as virtual
+     * Set form item as virtual.
      * @see FormElementInterface::setVirtual()
      * @return FormElementInterface
      */

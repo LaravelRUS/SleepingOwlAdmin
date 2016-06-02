@@ -31,10 +31,10 @@ abstract class FormElement implements FormElementInterface
     protected $validationRules = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $virtual = false;
-    
+
     public function __construct()
     {
         $this->initializePackage();
@@ -177,7 +177,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setVirtual($value)
     {
@@ -187,7 +187,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isVirtual()
     {
@@ -195,7 +195,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function virtual()
     {

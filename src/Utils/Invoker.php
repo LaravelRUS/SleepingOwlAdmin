@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Utils;
 
 /**
@@ -142,14 +143,15 @@ class Invoker
      * @param callable $handler The handler
      * @return Invoker new Invoker instance.
      */
-    public function bridge($handler) {
+    public function bridge($handler)
+    {
         return self::create($handler)
             ->setArgsByRef($this->args)
             ->setDependencyProviderByRef($this->dependencyProvider);
     }
 
     /**
-     * Get the handler
+     * Get the handler.
      *
      * @return callable
      */
@@ -159,7 +161,7 @@ class Invoker
     }
 
     /**
-     * Set the Handler
+     * Set the Handler.
      *
      * @param callable $handler
      * @return Invoker
@@ -172,7 +174,7 @@ class Invoker
     }
 
     /**
-     * Get the initial handler args
+     * Get the initial handler args.
      *
      * @return array
      */
@@ -182,7 +184,7 @@ class Invoker
     }
 
     /**
-     * Set initial handler args
+     * Set initial handler args.
      *
      * @param array $args
      * @return Invoker
@@ -193,8 +195,9 @@ class Invoker
 
         return $this;
     }
+
     /**
-     * Set initial handler args by reference
+     * Set initial handler args by reference.
      *
      * @param array $args
      * @return Invoker
@@ -246,9 +249,10 @@ class Invoker
                     $this->dependencyProvider[$pcls] :
                     call_user_func($defaultDP, $pcls);
             }
-        };
+        }
 
         $r = $rfHandler->invokeArgs($args);
+
         return $r;
     }
 

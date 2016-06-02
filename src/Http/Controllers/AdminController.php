@@ -8,7 +8,6 @@ use Breadcrumbs;
 use Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -20,7 +19,6 @@ use SleepingOwl\Admin\Utils\Invoker;
 
 class AdminController extends Controller
 {
-
     /**
      * @var \SleepingOwl\Admin\Navigation
      */
@@ -35,7 +33,7 @@ class AdminController extends Controller
     {
         $this->navigation = app('sleeping_owl.navigation');
 
-        Breadcrumbs::register('home', function($breadcrumbs) {
+        Breadcrumbs::register('home', function ($breadcrumbs) {
             $breadcrumbs->push('Dashboard', route('admin.dashboard'));
         });
 
@@ -47,7 +45,7 @@ class AdminController extends Controller
                     'id' => $page['id'],
                     'title' => $page['title'],
                     'url' => $page['url'],
-                    'parent' => $this->parentBreadcrumb
+                    'parent' => $this->parentBreadcrumb,
                 ];
 
                 $this->parentBreadcrumb = $page['id'];
@@ -428,7 +426,7 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumb($title, $parent)
     {
-        Breadcrumbs::register('render', function($breadcrumbs) use($title, $parent) {
+        Breadcrumbs::register('render', function ($breadcrumbs) use ($title,$parent) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title);
         });
@@ -452,7 +450,7 @@ class AdminController extends Controller
         }
 
         // check if model is displayable
-        if (!$model->isDisplayable()) {
+        if (! $model->isDisplayable()) {
             abort(403);
         }
 
@@ -463,11 +461,11 @@ class AdminController extends Controller
         $pmap = [
             ModelConfiguration::class => $model,
             Configuration::class => $cfg,
-            Request::class => $request
+            Request::class => $request,
         ];
 
         // the invoker
-        $invoke = function &($handler, $args) use (& $pmap) {
+        $invoke = function &($handler, $args) use (&$pmap) {
             return Invoker::create($handler, $args)
                 ->setDependencyProviderByRef($pmap)->invoke();
         };
@@ -488,12 +486,11 @@ class AdminController extends Controller
             }
 
             $id = explode(',', $id);
-            
+
             if (count($id) == 1) {
                 $data = $query->find($id[0]);
                 $data = is_null($data) ? [] : [$data];
-            }
-            else {
+            } else {
                 $data = $query->findMany($id)->all();
             }
 
@@ -526,8 +523,8 @@ class AdminController extends Controller
 
             // if searchable by TERM, apply it
             if ($cfg->isSearchable()
-                && !is_null($handler = $cfg->getSearchHandler())
-                && !empty($q = Request::input($cfg->getSearchParam(), ''))
+                && ! is_null($handler = $cfg->getSearchHandler())
+                && ! empty($q = Request::input($cfg->getSearchParam(), ''))
             ) {
                 $query = $invoke($handler, [$query, &$q]);
             }
@@ -555,7 +552,7 @@ class AdminController extends Controller
             }
         }
 
-        array_walk($data, function(Model $e) use ($cfg) {
+        array_walk($data, function (Model $e) use ($cfg) {
             $e->addHidden($cfg->getHidden());
             $e->fillable(array_merge($cfg->getFillable()));
         });
@@ -578,7 +575,7 @@ class AdminController extends Controller
             $formatter = function &(&$data, &$info) {
                 $r = ['items' => &$data];
 
-                if(! empty($info)) {
+                if (! empty($info)) {
                     $r['info'] = &$info;
                 }
 
@@ -587,7 +584,7 @@ class AdminController extends Controller
         }
 
         $result = $invoke($formatter, [&$data, &$info]);
-        
+
         if (! is_null($handler = $cfg->getPostFormatHandler())) {
             $invoke($handler, [&$result, &$info]);
         }

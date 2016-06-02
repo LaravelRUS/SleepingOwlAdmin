@@ -2,13 +2,10 @@
 
 namespace SleepingOwl\Admin\DataProvider;
 
-
 /**
- * Class DataProvider
+ * Class DataProvider.
  *
  * The DataProvider model Register.
- *
- * @package SleepingOwl\Admin\DataProvider
  */
 class DataProvider
 {
