@@ -40,4 +40,28 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable
      * Save form item.
      */
     public function afterSave();
+
+    /**
+     * Set form item virtual flag.
+     *
+     * The virtual item isn't {@see FormElementInterface::save()} available.
+     *
+     * @return FormElementInterface
+     */
+    public function setVirtual($value);
+
+    /**
+     * Return if the virtual flag has be set.
+     *
+     * @see FormElementInterface::setVirtual()
+     * @return bool
+     */
+    public function isVirtual();
+
+    /**
+     * Set form item as virtual.
+     * @see FormElementInterface::setVirtual()
+     * @return FormElementInterface
+     */
+    public function virtual();
 }

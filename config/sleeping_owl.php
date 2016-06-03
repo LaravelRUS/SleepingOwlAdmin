@@ -193,5 +193,8 @@ return [
         'AdminForm' => SleepingOwl\Admin\Facades\Form::class,
         'AdminFormElement' => SleepingOwl\Admin\Facades\FormElement::class,
         'AdminDisplay' => SleepingOwl\Admin\Facades\Display::class,
+        'AdminDataProvider' => SleepingOwl\Admin\Facades\DataProvider::class,
     ],
+
+    'dataProviderClass' => SleepingOwl\Admin\DataProvider\DataProvider::class,
 ];

@@ -179,9 +179,7 @@ class AdminServiceProvider extends ServiceProvider
             'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
         ], function () use ($callback) {
-
             call_user_func($callback);
-
         });
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use KodiComponents\Support\HtmlAttributes;
-use Meta;
 use Request;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -200,6 +199,18 @@ class FormDefault implements DisplayInterface, FormInterface
     }
 
     /**
+     * @return Collection[]
+     */
+    public function getRealItems()
+    {
+        return array_filter($this->items,
+            function (FormElementInterface $item) {
+                return ! $item->isVirtual();
+            }
+        );
+    }
+
+    /**
      * @param array|FormElementInterface $items
      *
      * @return $this
@@ -292,7 +303,7 @@ class FormDefault implements DisplayInterface, FormInterface
             return;
         }
 
-        $items = $this->getItems();
+        $items = $this->getRealItems();
 
         array_walk_recursive($items, function ($item) {
             if ($item instanceof FormElementInterface) {

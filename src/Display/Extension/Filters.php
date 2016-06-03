@@ -103,9 +103,7 @@ class Filters extends Extension implements Initializable
         $titles = [$this->title];
 
         $this->getActive()->each(function (FilterInterface $filter) use (&$titles) {
-
             $titles[] = $filter->getTitle();
-
         });
 
         return implode(' | ', array_filter($titles));
@@ -130,9 +128,7 @@ class Filters extends Extension implements Initializable
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
         $this->getActive()->each(function (FilterInterface $filter) use ($query) {
-
             $filter->apply($query);
-
         });
     }
 

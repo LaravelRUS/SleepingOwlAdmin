@@ -29,7 +29,12 @@ abstract class FormElement implements FormElementInterface
      * @var array
      */
     protected $validationRules = [];
-    
+
+    /**
+     * @var bool
+     */
+    protected $virtual = false;
+
     public function __construct()
     {
         $this->initializePackage();
@@ -169,5 +174,33 @@ abstract class FormElement implements FormElementInterface
     public function __toString()
     {
         return (string) $this->render();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setVirtual($value)
+    {
+        $this->virtual = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isVirtual()
+    {
+        return $this->virtual;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function virtual()
+    {
+        $this->virtual = true;
+
+        return $this;
     }
 }
