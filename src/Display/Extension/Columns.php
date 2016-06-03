@@ -80,7 +80,7 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function disableControls()
     {
-        $this->controlActive = true;
+        $this->controlActive = false;
 
         return $this;
     }
