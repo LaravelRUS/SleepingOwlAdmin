@@ -88,4 +88,16 @@ class TemplateDefault implements TemplateInterface
     {
         return config('sleeping_owl.logo_mini');
     }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function renderBreadcrumbs($key)
+    {
+        if (config('sleeping_owl.breadcrumbs')) {
+            return \Breadcrumbs::renderIfExists($key);
+        }
+    }
 }
