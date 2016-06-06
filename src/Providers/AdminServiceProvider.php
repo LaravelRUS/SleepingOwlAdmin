@@ -135,7 +135,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerDefaultRoutes()
     {
         $this->registerRoutes(function () {
-            $this->app['router']->pattern('adminModelId', '[0-9]+');
+            $this->app['router']->pattern('adminModelId', '[a-zA-Z0-9_-]+');
 
             $aliases = $this->app['sleeping_owl']->modelAliases();
 
