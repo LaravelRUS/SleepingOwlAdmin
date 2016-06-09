@@ -3,7 +3,7 @@
        class="inline-editable"
        data-name="{{ $name }}"
        data-value="{{ $value }}"
-       data-url="{{ url()->current() }}"
+       data-url="{{ request()->url() }}"
        data-type="checklist"
        data-pk="{{ $id }}"
        data-source="{ 1 : '{{ $checkedLabel }}' }"

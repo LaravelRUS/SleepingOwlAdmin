@@ -27,9 +27,16 @@ class AdminController extends Controller
      */
     private $parentBreadcrumb = 'home';
 
-    public function __construct()
+    /**
+     * AdminController constructor.
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    public function __construct(\Illuminate\Http\Request $request)
     {
         $this->navigation = app('sleeping_owl.navigation');
+
+        $this->navigation->setCurrentUrl($request->url());
 
         Breadcrumbs::register('home', function($breadcrumbs) {
             $breadcrumbs->push('Dashboard', route('admin.dashboard'));
