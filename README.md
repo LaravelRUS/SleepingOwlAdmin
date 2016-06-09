@@ -65,7 +65,15 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
  3. Run this command in the terminal (if you want to know more about what exactly this command does, see [install command documentation](http://sleeping-owl.github.io/en/Commands/Install.html)):
 
     $ php artisan sleepingowl:install
+    
+## Laravel 5.1 usage
 
+SleepingOwl are compatible with Laravel 5.1. But full performance is not guaranteed.
+
+### Installation
+
+- See `Installation` section of Laravel 5.2
+- After all actions: open `config/sleeping_owl.php` and change `'middleware' => ['web']` to `'middleware' => []`
 
 ## Upgrade from 4.18.x to 4.19.x
 
