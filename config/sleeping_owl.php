@@ -41,6 +41,8 @@ return [
     | don't forget to execute `php artisan make:auth`.
     | See https://laravel.com/docs/5.2/authentication#authentication-quickstart
     |
+    | Note: Please remove 'web' middleware for Laravel 5.1 or older
+    |
     */
 
     'middleware' => ['web'],
@@ -110,7 +112,7 @@ return [
     |
     */
 
-    'wysiwyg' => [
+    'wysiwyg'     => [
         'default'   => 'ckeditor',
 
         /*
@@ -143,7 +145,7 @@ return [
     | Select default settings for datatable
     |
     */
-    'datatables' => [],
+    'datatables'  => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -154,15 +156,15 @@ return [
     'breadcrumbs' => true,
 
     /*
-   |--------------------------------------------------------------------------
-   | Autoloaded Service Providers
-   |--------------------------------------------------------------------------
-   |
-   | The service providers listed here will be automatically loaded on the
-   | request to your application. Feel free to add your own services to
-   | this array to grant expanded functionality to your applications.
-   |
-   */
+    |--------------------------------------------------------------------------
+    | Autoloaded Service Providers
+    |--------------------------------------------------------------------------
+    |
+    | The service providers listed here will be automatically loaded on the
+    | request to your application. Feel free to add your own services to
+    | this array to grant expanded functionality to your applications.
+    |
+    */
 
     'providers' => [
         SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
@@ -183,23 +185,25 @@ return [
     */
 
     'aliases' => [
-        'Assets' => KodiCMS\Assets\Facades\Assets::class,
-        'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
-        'Meta' => KodiCMS\Assets\Facades\Meta::class,
-        'Form' => Collective\Html\FormFacade::class,
-        'HTML' => Collective\Html\HtmlFacade::class,
-        'WysiwygManager' => SleepingOwl\Admin\Facades\WysiwygManager::class,
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        // Components
+        'Assets'                => KodiCMS\Assets\Facades\Assets::class,
+        'PackageManager'        => KodiCMS\Assets\Facades\PackageManager::class,
+        'Meta'                  => KodiCMS\Assets\Facades\Meta::class,
+        'Form'                  => Collective\Html\FormFacade::class,
+        'HTML'                  => Collective\Html\HtmlFacade::class,
+        'WysiwygManager'        => SleepingOwl\Admin\Facades\WysiwygManager::class,
+        'Breadcrumbs'           => DaveJamesMiller\Breadcrumbs\Facade::class,
 
-        'AdminSection' => SleepingOwl\Admin\Facades\Admin::class,
-        'AdminTemplate' => SleepingOwl\Admin\Facades\Template::class,
-        'AdminNavigation' => SleepingOwl\Admin\Facades\Navigation::class,
-        'AdminColumn' => SleepingOwl\Admin\Facades\TableColumn::class,
-        'AdminColumnEditable' => SleepingOwl\Admin\Facades\TableColumnEditable::class,
-        'AdminColumnFilter' => SleepingOwl\Admin\Facades\TableColumnFilter::class,
-        'AdminDisplayFilter' => SleepingOwl\Admin\Facades\DisplayFilter::class,
-        'AdminForm' => SleepingOwl\Admin\Facades\Form::class,
-        'AdminFormElement' => SleepingOwl\Admin\Facades\FormElement::class,
-        'AdminDisplay' => SleepingOwl\Admin\Facades\Display::class,
+        // Presenters
+        'AdminSection'          => SleepingOwl\Admin\Facades\Admin::class,
+        'AdminTemplate'         => SleepingOwl\Admin\Facades\Template::class,
+        'AdminNavigation'       => SleepingOwl\Admin\Facades\Navigation::class,
+        'AdminColumn'           => SleepingOwl\Admin\Facades\TableColumn::class,
+        'AdminColumnEditable'   => SleepingOwl\Admin\Facades\TableColumnEditable::class,
+        'AdminColumnFilter'     => SleepingOwl\Admin\Facades\TableColumnFilter::class,
+        'AdminDisplayFilter'    => SleepingOwl\Admin\Facades\DisplayFilter::class,
+        'AdminForm'             => SleepingOwl\Admin\Facades\Form::class,
+        'AdminFormElement'      => SleepingOwl\Admin\Facades\FormElement::class,
+        'AdminDisplay'          => SleepingOwl\Admin\Facades\Display::class,
     ],
 ];
