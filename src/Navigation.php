@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin;
 
 class Navigation extends \KodiComponents\Navigation\Navigation
 {
-
     /**
      * @param string|null $view
      *

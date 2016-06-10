@@ -29,7 +29,7 @@ abstract class FormElement implements FormElementInterface
      * @var array
      */
     protected $validationRules = [];
-    
+
     public function __construct()
     {
         $this->initializePackage();

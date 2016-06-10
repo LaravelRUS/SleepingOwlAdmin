@@ -155,11 +155,9 @@ abstract class Display implements DisplayInterface
         $this->repository->with($this->with);
 
         $this->extensions->each(function (DisplayExtensionInterface $extension) {
-
             if ($extension instanceof Initializable) {
                 $extension->initialize();
             }
-
         });
 
         $this->includePackage();

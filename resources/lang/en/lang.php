@@ -12,7 +12,7 @@ return [
         'wrong-password' => 'or password',
         'since' => 'Registered at :date',
     ],
-    'model'=> [
+    'model' => [
         'create' => 'Create record in section :title',
         'edit' => 'Update record in section :title',
     ],
@@ -86,7 +86,7 @@ return [
         'browse' => 'Select Image',
         'browseMultiple' => 'Select Images',
         'remove' => 'Remove Image',
-        'removeMultiple' => 'Remove'
+        'removeMultiple' => 'Remove',
     ],
     'file' => [
         'browse' => 'Select File',
