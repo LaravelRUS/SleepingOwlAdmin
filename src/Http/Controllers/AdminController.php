@@ -16,7 +16,6 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class AdminController extends Controller
 {
-
     /**
      * @var \SleepingOwl\Admin\Navigation
      */
@@ -38,7 +37,7 @@ class AdminController extends Controller
 
         $this->navigation->setCurrentUrl($request->url());
 
-        Breadcrumbs::register('home', function($breadcrumbs) {
+        Breadcrumbs::register('home', function ($breadcrumbs) {
             $breadcrumbs->push('Dashboard', route('admin.dashboard'));
         });
 
@@ -50,7 +49,7 @@ class AdminController extends Controller
                     'id' => $page['id'],
                     'title' => $page['title'],
                     'url' => $page['url'],
-                    'parent' => $this->parentBreadcrumb
+                    'parent' => $this->parentBreadcrumb,
                 ];
 
                 $this->parentBreadcrumb = $page['id'];
@@ -431,7 +430,7 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumb($title, $parent)
     {
-        Breadcrumbs::register('render', function($breadcrumbs) use($title, $parent) {
+        Breadcrumbs::register('render', function ($breadcrumbs) use ($title,$parent) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title);
         });
