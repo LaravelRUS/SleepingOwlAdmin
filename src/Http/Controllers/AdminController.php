@@ -412,7 +412,7 @@ class AdminController extends Controller
      */
     protected function getBackUrl()
     {
-        if (($backUrl = Request::input('_redirectBack')) == url()->previous()) {
+        if (($backUrl = Request::input('_redirectBack')) == \URL::previous()) {
             $backUrl = null;
             Request::merge(['_redirectBack' => $backUrl]);
         }

@@ -392,7 +392,7 @@ class FormDefault implements DisplayInterface, FormInterface
             'instance' => $this->getModel(),
             'attributes' => $this->htmlAttributesToString(),
             'buttons' => $this->getButtons(),
-            'backUrl' => session('_redirectBack', url()->previous()),
+            'backUrl' => session('_redirectBack', \URL::previous()),
         ];
     }
 
