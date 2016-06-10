@@ -132,15 +132,19 @@ abstract class Display implements DisplayInterface
 
     /**
      * @param array|string[] ...$relations
+     * 
      * @return $this
      */
     public function with(...$relations)
     {
-        $this->with = $relations;
+        $this->with = array_flatten($relations);
 
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
         if ($this->isInitialized()) {
