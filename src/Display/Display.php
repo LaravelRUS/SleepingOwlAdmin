@@ -131,16 +131,11 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param string[] $relations
-     *
+     * @param array|string[] ...$relations
      * @return $this
      */
-    public function with($relations)
+    public function with(...$relations)
     {
-        if (! is_array($relations)) {
-            $relations = func_get_args();
-        }
-
         $this->with = $relations;
 
         return $this;
