@@ -89,7 +89,7 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function render($view = null)
     {
-        $data          = $this->toArray();
+        $data = $this->toArray();
         $data['pages'] = $this->getPages();
 
         if (! is_null($view)) {

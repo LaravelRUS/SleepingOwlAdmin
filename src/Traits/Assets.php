@@ -7,7 +7,6 @@ use Meta;
 
 trait Assets
 {
-
     /**
      * @var \KodiCMS\Assets\Package
      */
@@ -20,7 +19,7 @@ trait Assets
      *
      * @return $this
      */
-    public function addScript($handle = null, $script, array $dependency = [])
+    public function addScript($handle, $script, array $dependency = [])
     {
         if (is_null($handle)) {
             $handle = $script;
@@ -38,7 +37,7 @@ trait Assets
      *
      * @return $this
      */
-    public function addStyle($handle = null, $style, array $attributes = [])
+    public function addStyle($handle, $style, array $attributes = [])
     {
         if (is_null($handle)) {
             $handle = $style;

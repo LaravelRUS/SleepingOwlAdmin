@@ -23,7 +23,6 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
  */
 class ModelConfiguration
 {
-
     /**
      * Get the event dispatcher instance.
      *
