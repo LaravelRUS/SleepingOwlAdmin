@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dashboard' => 'deska rozdzielcza',
     '404'      => 'Strony nie znaleziono.',
     'auth'     => [
         'title'          => 'Autoryzacja',

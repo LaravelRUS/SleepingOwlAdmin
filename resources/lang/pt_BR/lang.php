@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dashboard' => 'Painel de instrumentos',
     '404'      => 'Página não encontrada.',
     'auth'     => [
         'title'          => 'Autorização',

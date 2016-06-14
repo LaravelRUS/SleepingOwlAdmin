@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dashboard' => 'Dashboard',
     '404' => 'Page not found.',
     'auth' => [
         'title' => 'Authorization',
