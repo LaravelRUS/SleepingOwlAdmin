@@ -1,6 +1,6 @@
 {
   "name": "weiliang/sleepingowl",
-  "description": "Administrative interface builder for Laravel.提供更好的中文支持.",
+  "description": "Administrative interface builder for Laravel.提供更好的中文支持..",
   "homepage": "http://sleeping-owl.github.io",
   "keywords": ["laravel", "admin", "administrator", "crud"],
   "license": "MIT",
