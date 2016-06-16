@@ -1,6 +1,6 @@
 {
-  "name": "laravelrus/sleepingowl",
-  "description": "Administrative interface builder for Laravel.",
+  "name": "weiliang/sleepingowl",
+  "description": "Administrative interface builder for Laravel.提供更好的中文支持..",
   "homepage": "http://sleeping-owl.github.io",
   "keywords": ["laravel", "admin", "administrator", "crud"],
   "license": "MIT",
@@ -17,6 +17,11 @@
       "name": "Pavel Buchnev",
       "email": "butschster@gmail.com",
       "homepage": "http://www.kodicms.ru/"
+    },
+    {
+      "name": "weiliang",
+      "email": "496928838@qq.com",
+      "homepage": "http://blog.c2567.com/"
     }
   ],
   "require": {
