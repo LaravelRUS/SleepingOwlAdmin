@@ -38,7 +38,7 @@ class AdminController extends Controller
         $this->navigation->setCurrentUrl($request->url());
 
         Breadcrumbs::register('home', function ($breadcrumbs) {
-            $breadcrumbs->push('Dashboard', route('admin.dashboard'));
+            $breadcrumbs->push(config('sleeping_owl.indexName','Dashboard'), route('admin.dashboard'));
         });
 
         $breadcrumbs = [];

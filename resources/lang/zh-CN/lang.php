@@ -1,0 +1,101 @@
+<?php
+
+return [
+    '404' => '页面没有找到。',
+    'auth' => [
+        'title' => '授权',
+        'username' => '用户名',
+        'password' => '密码',
+        'login' => '登陆',
+        'logout' => '退出登录',
+        'wrong-username' => '警告 用户名',
+        'wrong-password' => '或者 密码',
+        'since' => '注册时间 :date',
+    ],
+    'model' => [
+        'create' => '创建记录 :title',
+        'edit' => '更新记录 :title',
+    ],
+    'links' => [
+        'index_page' => '网站',
+    ],
+    'ckeditor' => [
+        'upload' => [
+            'success' => '文件上传: \\n- 大小: :size kb \\n- 宽度/高度: :width x :height',
+            'error' => [
+                'common' => '无法上传文件。',
+                'wrong_extension' => '文件 ":file" 扩展名错误',
+                'filesize_limit' => '允许的最大文件大小 :size kb.',
+                'imagesize_max_limit' => '宽度 x 高度 = :width x :height \\n 最大的宽度 x 高度 must be: :maxwidth x :maxheight',
+                'imagesize_min_limit' => '宽度 x 高度 = :width x :height \\n 最小的宽度 x 高度 must be: :minwidth x :minheight',
+            ],
+        ],
+        'image_browser' => [
+            'title' => '插入图像从服务器',
+            'subtitle' => '选择图像插入',
+        ],
+    ],
+    'table' => [
+        'new-entry' => '新建',
+        'edit' => '编辑',
+        'restore' => '恢复',
+        'delete' => '删除',
+        'delete-confirm' => '你确定要删除这个条目吗?',
+        'delete-error' => '当删除这个条目时发生错误。',
+        'moveUp' => '向上移动',
+        'moveDown' => '向下移动',
+        'error' => '在您的请求时发生错误',
+        'filter' => '显示类似的条目',
+        'filter-goto' => '显示',
+        'save' => '保存',
+        'save_and_close' => '保存并关闭',
+        'save_and_create' => '保存并继续创建',
+        'cancel' => '取消',
+        'download' => '下载',
+        'all' => '所有',
+        'processing' => '<i class="fa fa-5x fa-circle-o-notch fa-spin"></i>',
+        'loadingRecords' => '加载中...',
+        'lengthMenu' => '显示 _MENU_ 记录',
+        'zeroRecords' => '没有找到匹配的记录。',
+        'info' => '显示 _START_ to _END_ of _TOTAL_ 记录',
+        'infoEmpty' => '显示 0 to 0 of 0 记录',
+        'infoFiltered' => '(过滤后 _MAX_ 条记录)',
+        'infoThousands' => ',',
+        'infoPostFix' => '',
+        'search' => '搜索: ',
+        'emptyTable' => '没有数据表',
+        'paginate' => [
+            'first' => '首页',
+            'previous' => '上一页',
+            'next' => '下一页',
+            'last' => '尾页',
+        ],
+    ],
+    'editable' => [
+        'checkbox' => [
+            'checked' => 'Yes',
+            'unchecked' => 'No',
+        ],
+    ],
+    'select' => [
+        'nothing' => '没有选择',
+        'selected' => '选中',
+        'placeholder' => '从列表中选择',
+    ],
+    'image' => [
+        'browse' => '选择图片',
+        'browseMultiple' => '选择多张图片',
+        'remove' => '移除图片',
+        'removeMultiple' => '移除',
+    ],
+    'file' => [
+        'browse' => '选择文件',
+        'remove' => '移除文件',
+    ],
+    'message' => [
+        'created' => '<i class="fa fa-check fa-lg"></i> 创建记录成功',
+        'updated' => '<i class="fa fa-check fa-lg"></i> 更新记录成功',
+        'deleted' => '<i class="fa fa-check fa-lg"></i> 删除记录成功',
+        'restored' => '<i class="fa fa-check fa-lg"></i> 恢复记录成功',
+    ],
+];
