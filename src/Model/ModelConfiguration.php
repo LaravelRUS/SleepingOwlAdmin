@@ -527,7 +527,9 @@ class ModelConfiguration
      */
     public function isDestroyable(Model $model)
     {
-        return $this->destroyable && $this->can('destroy', $model);
+        return $this->destroyable
+        && $this->can('destroy', $model)
+        && $this->isRestorableModel();
     }
 
     /**
