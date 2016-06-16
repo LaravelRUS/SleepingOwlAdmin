@@ -37,6 +37,11 @@ Route::group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controlle
     ]);
 
     Route::delete('{adminModel}/{adminModelId}/delete', [
+        'as'   => 'model.delete',
+        'uses' => 'AdminController@deleteDelete',
+    ]);
+
+    Route::delete('{adminModel}/{adminModelId}/destroy', [
         'as'   => 'model.destroy',
         'uses' => 'AdminController@deleteDestroy',
     ]);

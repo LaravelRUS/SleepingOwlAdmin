@@ -270,7 +270,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteDestroy(ModelConfiguration $model, $id)
+    public function deleteDelete(ModelConfiguration $model, $id)
     {
         $item = $model->getRepository()->find($id);
 
@@ -289,6 +289,37 @@ class AdminController extends Controller
         $model->fireEvent('deleted', false, $item);
 
         return redirect()->back()->with('success_message', $model->getMessageOnDelete());
+    }
+
+    /**
+     * @param ModelConfiguration $model
+     * @param int                $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteDestroy(ModelConfiguration $model, $id)
+    {
+        if (! $model->isRestorableModel()) {
+            abort(404);
+        }
+
+        $item = $model->getRepository()->findOnlyTrashed($id);
+
+        if (is_null($item) || ! $model->isRestorable($item)) {
+            abort(404);
+        }
+
+        $model->fireDestroy($id);
+
+        if ($model->fireEvent('destroying', true, $item) === false) {
+            return redirect()->back();
+        }
+
+        $model->getRepository()->forceDelete($id);
+
+        $model->fireEvent('destroyed', false, $item);
+
+        return redirect()->back()->with('success_message', $model->getMessageOnDestroy());
     }
 
     /**

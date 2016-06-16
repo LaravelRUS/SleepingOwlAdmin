@@ -149,6 +149,16 @@ class BaseRepository implements RepositoryInterface
     }
 
     /**
+     * Permanently delete model instance by id.
+     *
+     * @param int $id
+     */
+    public function forceDelete($id)
+    {
+        $this->findOnlyTrashed($id)->forceDelete();
+    }
+
+    /**
      * Restore model instance by id.
      *
      * @param int $id

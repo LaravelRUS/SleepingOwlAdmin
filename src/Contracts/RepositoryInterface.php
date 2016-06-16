@@ -68,6 +68,13 @@ interface RepositoryInterface
     public function delete($id);
 
     /**
+     * Permanently delete model instance by id.
+     *
+     * @param int $id
+     */
+    public function forceDelete($id);
+    
+    /**
      * Restore model instance by id.
      *
      * @param int $id

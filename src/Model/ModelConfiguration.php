@@ -119,6 +119,11 @@ class ModelConfiguration
     /**
      * @var bool
      */
+    protected $destroyable = true;
+
+    /**
+     * @var bool
+     */
     protected $checkAccess = false;
 
     /**
@@ -130,6 +135,11 @@ class ModelConfiguration
      * @var Closure|null
      */
     protected $delete = true;
+
+    /**
+     * @var Closure|null
+     */
+    protected $destroy = true;
 
     /**
      * @var Closure|null
@@ -150,6 +160,11 @@ class ModelConfiguration
      * @var string
      */
     protected $messageOnDelete;
+
+    /**
+     * @var string
+     */
+    protected $messageOnDestroy;
 
     /**
      * @var string
@@ -307,6 +322,14 @@ class ModelConfiguration
     /**
      * @return Closure|null
      */
+    public function getDestroy()
+    {
+        return $this->destroy;
+    }
+
+    /**
+     * @return Closure|null
+     */
     public function getEdit()
     {
         return $this->edit;
@@ -373,6 +396,18 @@ class ModelConfiguration
     public function onDelete(Closure $callback = null)
     {
         $this->delete = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function onDestroy(Closure $callback = null)
+    {
+        $this->destroy = $callback;
 
         return $this;
     }
@@ -481,6 +516,26 @@ class ModelConfiguration
     public function disableDeleting()
     {
         $this->deletable = false;
+
+        return $this;
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return bool
+     */
+    public function isDestroyable(Model $model)
+    {
+        return $this->destroyable && $this->can('destroy', $model);
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableDestroying()
+    {
+        $this->destroyable = false;
 
         return $this;
     }
@@ -642,6 +697,18 @@ class ModelConfiguration
     /**
      * @param $id
      *
+     * @return mixed
+     */
+    public function fireDestroy($id)
+    {
+        if (is_callable($this->getDestroy())) {
+            return app()->call($this->getDestroy(), [$id]);
+        }
+    }
+
+    /**
+     * @param $id
+     *
      * @return bool|mixed
      */
     public function fireRestore($id)
@@ -711,6 +778,16 @@ class ModelConfiguration
      * @return string
      */
     public function getDeleteUrl($id)
+    {
+        return route('admin.model.delete', [$this->getAlias(), $id]);
+    }
+
+    /**
+     * @param string|int $id
+     *
+     * @return string
+     */
+    public function getDestroyUrl($id)
     {
         return route('admin.model.destroy', [$this->getAlias(), $id]);
     }
@@ -782,6 +859,18 @@ class ModelConfiguration
     }
 
     /**
+     * @return string
+     */
+    public function getMessageOnDestroy()
+    {
+        if (is_null($this->messageOnDestroy)) {
+            $this->messageOnDestroy = trans('sleeping_owl::lang.message.destroyed');
+        }
+
+        return $this->messageOnDestroy;
+    }
+
+    /**
      * @param string $messageOnDelete
      *
      * @return $this
@@ -789,6 +878,18 @@ class ModelConfiguration
     public function setMessageOnDelete($messageOnDelete)
     {
         $this->messageOnDelete = $messageOnDelete;
+
+        return $this;
+    }
+
+    /**
+     * @param string $messageOnDestroy
+     *
+     * @return $this
+     */
+    public function setMessageOnDestroy($messageOnDestroy)
+    {
+        $this->messageOnDestroy = $messageOnDestroy;
 
         return $this;
     }
@@ -923,7 +1024,8 @@ class ModelConfiguration
     {
         if (in_array($method, [
             'creating', 'created', 'updating', 'updated',
-            'deleting', 'deleted', 'restoring', 'restored',
+            'deleting', 'deleted', 'destroying', 'destroyed',
+            'restoring', 'restored',
         ])) {
             array_unshift($arguments, $method);
 

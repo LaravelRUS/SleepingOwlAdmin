@@ -42,6 +42,9 @@ return [
         'delete' => 'Delete',
         'delete-confirm' => 'Are you sure want to delete this entry?',
         'delete-error' => 'Error while deleting this entry. You must delete all linked entries first.',
+        'destroy' => 'Destroy',
+        'destroy-confirm' => 'Are you sure want to permanently delete this entry?',
+        'destroy-error' => 'Error while permanently deleting this entry. You must delete all linked entries first.',
         'moveUp' => 'Move Up',
         'moveDown' => 'Move Down',
         'error' => 'There was an error during your request',
@@ -96,6 +99,7 @@ return [
         'created' => '<i class="fa fa-check fa-lg"></i> Record created successfully',
         'updated' => '<i class="fa fa-check fa-lg"></i> Record updated successfully',
         'deleted' => '<i class="fa fa-check fa-lg"></i> Record deleted successfully',
+        'destroyed' => '<i class="fa fa-check fa-lg"></i> Record destroyed successfully',
         'restored' => '<i class="fa fa-check fa-lg"></i> Record restored successfully',
     ],
 ];

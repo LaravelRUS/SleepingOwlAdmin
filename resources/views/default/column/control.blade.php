@@ -20,3 +20,12 @@
 		</button>
 	</form>
 @endif
+@if ($destroyable)
+	<form action="{{ $destroyUrl }}" method="POST" style="display:inline-block;">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+		<input type="hidden" name="_method" value="DELETE" />
+		<button class="btn btn-danger btn-xs btn-destroy btn-flat" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.destroy') }}">
+			<i class="fa fa-trash"></i>
+		</button>
+	</form>
+@endif

@@ -106,6 +106,31 @@ class Control extends TableColumn
     }
 
     /**
+     * Check if instance is force deletable.
+     *
+     * @return bool
+     */
+    protected function isDestroyable()
+    {
+        return
+            $this->isTrashed()
+            &&
+            $this->getModelConfiguration()->isDestroyable(
+                $this->getModel()
+            );
+    }
+
+    /**
+     * Get instance delete url.
+     *
+     * @return string
+     */
+    protected function getDestroyUrl()
+    {
+        return $this->getModelConfiguration()->getDestroyUrl($this->getModelKey());
+    }
+
+    /**
      * Check if instance is restorable.
      *
      * @return bool
@@ -136,12 +161,14 @@ class Control extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'editable'   => $this->isEditable(),
-            'editUrl'    => $this->getEditUrl(),
-            'deletable'  => $this->isDeletable(),
-            'deleteUrl'  => $this->getDeleteUrl(),
-            'restorable' => $this->isRestorable(),
-            'restoreUrl' => $this->getRestoreUrl(),
+            'editable'    => $this->isEditable(),
+            'editUrl'     => $this->getEditUrl(),
+            'deletable'   => $this->isDeletable(),
+            'deleteUrl'   => $this->getDeleteUrl(),
+            'destroyable' => $this->isDestroyable(),
+            'destroyUrl'  => $this->getDestroyUrl(),
+            'restorable'  => $this->isRestorable(),
+            'restoreUrl'  => $this->getRestoreUrl(),
         ];
     }
 }
