@@ -1,17 +1,17 @@
 ![bg](https://cloud.githubusercontent.com/assets/773481/14028746/24d7efa8-f20f-11e5-8e38-3d264739f0aa.png)
 
-## Laravel 5.2 Admin Module
+## Laravel 5.2 后台管理模块
 
 [![StyleCI](https://styleci.io/repos/52141393/shield?style=flat)](https://styleci.io/repos/52141393)
 [![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://badges.gitter.im/LaravelRUS/SleepingOwlAdmin.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Latest Stable Version](https://poser.pugx.org/sleeping-owl/admin/v/unstable.svg)](https://packagist.org/packages/laravelrus/sleepingowl)
 [![License](https://poser.pugx.org/laravelrus/sleepingowl/license.svg)](https://packagist.org/packages/laravelrus/sleepingowl)
 
-*Note: This is the development version. If you are looking for the stable version check out [master branch](https://github.com/LaravelRUS/SleepingOwlAdmin).*
+*Note: 这是开发分支，如果你需要稳定版本，请检出 [master branch](https://github.com/LaravelRUS/SleepingOwlAdmin).*
 
-SleepingOwl Admin is an administrative interface builder for Laravel.
+这是一个管理界面生成器，很简单的接入在Laravel.
 
-### Used bower packages:
+### 使用到的bower包:
  - jquery
  - bootstrap
  - bootbox
@@ -29,7 +29,7 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
  - datatables
  - startbootstrap-sb-admin-2
 
-## Installation
+## 安装
 
  1. Require this package in your composer.json and run composer update:
 
