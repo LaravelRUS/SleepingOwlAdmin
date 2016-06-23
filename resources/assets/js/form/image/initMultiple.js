@@ -31,8 +31,11 @@ $(function () {
             $group.removeClass('has-error');
 
             var result = $.parseJSON(message);
+            var template = $($('#thumbnail_template').html());
+            template.find('img').attr('src', result.url).attr('data-value', result.value);
 
-            $innerGroup.append($($('#thumbnail_template').html()).find('img').attr('src', result.url).attr('data-value', result.value));
+            $innerGroup.append(template);
+
             updateValue();
         });
         flow.on('fileError', function (file, message) {
