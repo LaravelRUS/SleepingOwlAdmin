@@ -130,7 +130,7 @@ class AdminController extends Controller
 
             $createForm->save($model);
 
-            $model->fireEvent('created', false);
+            $model->fireEvent('created', false, $createForm->getModel());
         }
 
         if ($nextAction == 'save_and_continue') {
