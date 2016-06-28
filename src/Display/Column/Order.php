@@ -2,9 +2,11 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Illuminate\Database\Eloquent\Model;
 use Route;
-use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Display\TableColumn;
+use SleepingOwl\Admin\Traits\OrderableModel;
 
 class Order extends TableColumn implements WithRoutesInterface
 {
@@ -39,6 +41,20 @@ class Order extends TableColumn implements WithRoutesInterface
         parent::__construct();
         $this->setHtmlAttribute('class', 'row-order');
     }
+
+    /**
+     * @return Model $model
+     * @throws \Exception
+     */
+    public function getModel()
+    {
+        if (! in_array(OrderableModel::class, trait_uses_recursive($class = get_class($this->model)))) {
+            throw new \Exception("Model [$class] should uses trait [SleepingOwl\\Admin\\Traits\\OrderableModel]");
+        }
+
+        return $this->model;
+    }
+
 
     /**
      * Get order value from instance.

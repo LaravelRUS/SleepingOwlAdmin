@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Traits;
 
 trait OrderableModel
 {
+
     /**
      * Boot trait.
      */
@@ -50,12 +51,10 @@ trait OrderableModel
      */
     protected function move($destination)
     {
-        $previousRow = static::orderModel()
-            ->where($this->getOrderField(), $this->getOrderValue() - $destination)
-            ->first();
-
-        $previousRow->{$this->getOrderField()} += $destination;
-        $previousRow->save();
+        if ($previousRow = static::orderModel()->findByPosition($this->getOrderValue() - $destination)->first()) {
+            $previousRow->{$this->getOrderField()} += $destination;
+            $previousRow->save();
+        }
 
         $this->{$this->getOrderField()} -= $destination;
         $this->save();
@@ -74,9 +73,9 @@ trait OrderableModel
      */
     protected function updateOrderFieldOnDelete()
     {
-        static::orderModel()->where(
-            $this->getOrderField(), '>', $this->getOrderValue())->decrement($this->getOrderField()
-        );
+        static::orderModel()
+              ->where($this->getOrderField(), '>', $this->getOrderValue())
+              ->decrement($this->getOrderField());
     }
 
     /**
@@ -89,6 +88,17 @@ trait OrderableModel
     public function scopeOrderModel($query)
     {
         return $query;
+    }
+
+    /**
+     * @param $query
+     * @param int $position
+     *
+     * @return mixed
+     */
+    public function scopeFindByPosition($query, $position)
+    {
+        $query->where($this->getOrderField(), $position);
     }
 
     /**
