@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin;
 
+use SleepingOwl\Admin\Contracts\SectionInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class Section implements SectionInterface
