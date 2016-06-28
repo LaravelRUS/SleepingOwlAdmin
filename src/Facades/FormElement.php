@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\Hidden hidden($name)
  * @method static \SleepingOwl\Admin\Form\Element\Custom custom(\Closure $callback = null)
  * @method static \SleepingOwl\Admin\Form\Element\Html html($html)
- * @method static \SleepingOwl\Admin\Form\Element\View view($view)
+ * @method static \SleepingOwl\Admin\Form\Element\View view($view, array $data, \Closure $callback = null)
  * @method static \SleepingOwl\Admin\Form\Element\Checkbox checkbox($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\CKEditor ckeditor($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Textarea textarea($name, $label = null)
