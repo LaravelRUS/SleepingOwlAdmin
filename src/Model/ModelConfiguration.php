@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Navigation\Page;
 
 /**
  * @method bool creating(Closure $callback)
@@ -879,6 +880,18 @@ class ModelConfiguration
         $method = $halt ? 'until' : 'fire';
 
         return static::$dispatcher->$method($event, [$this, $model]);
+    }
+
+    /**
+     * @param int    $priority
+     *
+     * @return Page
+     */
+    public function addToNavigation($priority = 100)
+    {
+        return app('sleeping_owl.navigation')
+            ->addPage(new Page($this->getClass()))
+            ->setPriority($priority);
     }
 
     /**
