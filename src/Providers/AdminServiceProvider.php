@@ -27,6 +27,11 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerWysiwyg();
         $this->registerAliases();
 
+        $this->app->booted(function() {
+            $this->registerCustomRoutes();
+            $this->registerDefaultRoutes();
+        });
+
         ModelConfiguration::setEventDispatcher($this->app['events']);
     }
 
@@ -60,9 +65,16 @@ class AdminServiceProvider extends ServiceProvider
             return $this->app['sleeping_owl']->template();
         });
 
-        $this->registerCustomRoutes();
         $this->registerBootstrap();
-        $this->registerDefaultRoutes();
+
+        $this->registerRoutes(function() {
+            $this->app['router']->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
+                $route->get('assets/admin.scripts', [
+                    'as'   => 'scripts',
+                    'uses' => 'AdminController@getScripts',
+                ]);
+            });
+        });
 
         if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
             $items = include $navigation;
