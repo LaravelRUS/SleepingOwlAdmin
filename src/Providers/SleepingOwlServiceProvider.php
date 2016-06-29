@@ -4,6 +4,8 @@ namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Commands\InstallCommand;
+use SleepingOwl\Admin\Commands\SectionGenerate;
+use SleepingOwl\Admin\Commands\SectionMake;
 use SleepingOwl\Admin\Commands\UserManagerCommand;
 
 class SleepingOwlServiceProvider extends ServiceProvider
@@ -46,6 +48,8 @@ class SleepingOwlServiceProvider extends ServiceProvider
         $commands = [
             InstallCommand::class,
             UserManagerCommand::class,
+            SectionGenerate::class,
+            SectionMake::class
         ];
 
         foreach ($commands as $command) {

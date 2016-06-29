@@ -20,7 +20,9 @@ class AdminSectionsServiceProvider extends ServiceProvider
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
         foreach ($this->sections as $model => $section) {
-            $admin->register(new $section($model));
+            if (class_exists($section)) {
+                $admin->register(new $section($model));
+            }
         }
     }
 

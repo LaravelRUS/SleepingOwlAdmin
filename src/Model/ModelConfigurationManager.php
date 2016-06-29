@@ -126,8 +126,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         if (is_null($this->title)) {
             $title = str_replace('_', ' ', $this->getDefaultClassTitle());
-
-            $this->setTitle(ucwords($title));
+            $this->title = ucwords($title);
         }
 
         return $this->title;
@@ -419,7 +418,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     protected function setDefaultAlias()
     {
-        $this->setAlias($this->getDefaultClassTitle());
+        $this->alias = $this->getDefaultClassTitle();
     }
 
     /**
