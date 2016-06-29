@@ -2,15 +2,17 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use SleepingOwl\Admin\Admin;
-use SleepingOwl\Admin\Model\ModelConfigurationManager;
-use Symfony\Component\Finder\Finder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SleepingOwl\Admin\Admin;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
+use Symfony\Component\Finder\Finder;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -168,6 +170,10 @@ class AdminServiceProvider extends ServiceProvider
 
             if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
                 require $routesFile;
+            }
+
+            foreach (AliasBinder::routes() as $route) {
+                call_user_func($route);
             }
         });
     }

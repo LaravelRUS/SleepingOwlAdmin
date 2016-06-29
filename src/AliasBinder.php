@@ -6,6 +6,20 @@ use BadMethodCallException;
 
 class AliasBinder
 {
+
+    /**
+     * @var array
+     */
+    protected static $routes = [];
+
+    /**
+     * @return array
+     */
+    public static function routes()
+    {
+        return self::$routes;
+    }
+
     /**
      * @var array
      */
@@ -24,12 +38,7 @@ class AliasBinder
         $this->aliases[$alias] = $class;
 
         if (method_exists($class, 'registerRoutes')) {
-            app('router')->group([
-                'prefix'     => config('sleeping_owl.url_prefix'),
-                'middleware' => config('sleeping_owl.middleware'),
-            ], function () use ($class) {
-                call_user_func([$class, 'registerRoutes']);
-            });
+            AliasBinder::$routes[] = [$class, 'registerRoutes'];
         }
 
         return $this;
