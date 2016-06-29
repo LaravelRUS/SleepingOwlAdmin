@@ -25,9 +25,9 @@ class FormDefault implements DisplayInterface, FormInterface
 
     /**
      * View to render.
-     * @var string
+     * @var string|\Illuminate\View\View
      */
-    protected $view = 'default';
+    protected $view = 'form.default';
 
     /**
      * Form related class.
@@ -139,11 +139,23 @@ class FormDefault implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
         return $this->view;
+    }
+
+    /**
+     * @param \Illuminate\View\View|string $view
+     *
+     * @return $this
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
     }
 
     /**
@@ -400,7 +412,7 @@ class FormDefault implements DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('form.'.$this->getView(), $this->toArray());
+        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
     }
 
     /**

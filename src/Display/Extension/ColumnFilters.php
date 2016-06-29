@@ -17,7 +17,7 @@ class ColumnFilters extends Extension implements Initializable
     protected $columnFilters = [];
 
     /**
-     * @var string
+     * @var string|\Illuminate\View\View
      */
     protected $view = 'display.extensions.columns_filters';
 
@@ -67,7 +67,7 @@ class ColumnFilters extends Extension implements Initializable
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
@@ -75,7 +75,7 @@ class ColumnFilters extends Extension implements Initializable
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      *
      * @return $this
      */

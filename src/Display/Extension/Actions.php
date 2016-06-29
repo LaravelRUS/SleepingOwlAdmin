@@ -17,7 +17,7 @@ class Actions extends Extension implements Initializable
     protected $actions;
 
     /**
-     * @var string
+     * @var string|\Illuminate\View\View
      */
     protected $view = 'display.extensions.actions';
 
@@ -82,7 +82,7 @@ class Actions extends Extension implements Initializable
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
@@ -90,7 +90,7 @@ class Actions extends Extension implements Initializable
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      *
      * @return $this
      */

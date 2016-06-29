@@ -16,7 +16,7 @@ abstract class FormElement implements FormElementInterface
     protected $template;
 
     /**
-     * @var string
+     * @var string|\Illuminate\View\View
      */
     protected $view;
 
@@ -97,7 +97,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
@@ -107,6 +107,18 @@ abstract class FormElement implements FormElementInterface
         }
 
         return $this->view;
+    }
+
+    /**
+     * @param \Illuminate\View\View|string $view
+     *
+     * @return $this
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
     }
 
     /**

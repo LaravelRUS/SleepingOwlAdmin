@@ -124,7 +124,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
@@ -132,7 +132,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      *
      * @return $this
      */

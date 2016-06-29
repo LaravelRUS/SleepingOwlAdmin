@@ -7,5 +7,5 @@ class FormTabbed extends FormDefault
     /**
      * @var string
      */
-    protected $view = 'tabbed';
+    protected $view = 'form.tabbed';
 }

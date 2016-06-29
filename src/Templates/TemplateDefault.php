@@ -52,7 +52,7 @@ class TemplateDefault implements TemplateInterface
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      * @param array  $data
      * @param array  $mergeData
      *
@@ -60,6 +60,10 @@ class TemplateDefault implements TemplateInterface
      */
     public function view($view, $data = [], $mergeData = [])
     {
+        if ($view instanceof \Illuminate\View\View) {
+            return $view->with($data);
+        }
+
         return view($this->getViewPath($view), $data, $mergeData);
     }
 

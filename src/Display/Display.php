@@ -37,7 +37,7 @@ abstract class Display implements DisplayInterface
     use HtmlAttributes, Assets;
 
     /**
-     * @var string
+     * @var string|\Illuminate\View\View
      */
     protected $view;
 
@@ -232,6 +232,17 @@ abstract class Display implements DisplayInterface
     }
 
     /**
+     * @param string|\Illuminate\View\View $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+
+    /**
      * @return string
      */
     public function __toString()
@@ -259,7 +270,6 @@ abstract class Display implements DisplayInterface
 
         throw new \BadMethodCallException("Call to undefined method [{$name}]");
     }
-
     /**
      * @return ModelConfiguration
      */

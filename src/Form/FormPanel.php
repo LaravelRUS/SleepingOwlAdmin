@@ -15,7 +15,7 @@ class FormPanel extends FormDefault
     /**
      * @var string
      */
-    protected $view = 'panel';
+    protected $view = 'form.panel';
 
     public function __construct()
     {
