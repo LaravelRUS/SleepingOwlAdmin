@@ -5,9 +5,9 @@ namespace SleepingOwl\Admin\Display;
 use Meta;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 abstract class TableColumn implements ColumnInterface
 {
@@ -164,7 +164,7 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * Get related model configuration.
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     protected function getModelConfiguration()
     {

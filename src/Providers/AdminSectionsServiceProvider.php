@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
@@ -21,9 +20,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
         foreach ($this->sections as $model => $section) {
-            $admin->registerModel($model, function (ModelConfiguration $model) use ($section) {
-                return $this->app->make($section, ['model' => $model]);
-            });
+            $admin->register(new $section($model));
         }
     }
 

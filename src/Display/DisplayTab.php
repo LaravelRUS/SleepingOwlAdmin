@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 // TODO: починить указание активности таба
@@ -196,11 +196,11 @@ class DisplayTab implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return Validator|null
      */
-    public function validate(ModelConfiguration $model)
+    public function validate(ModelConfigurationInterface $model)
     {
         if ($this->getContent() instanceof FormInterface) {
             return $this->getContent()->validate($model);
@@ -210,11 +210,11 @@ class DisplayTab implements DisplayInterface, FormInterface
     /**
      * Save model.
      *
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return $this
      */
-    public function save(ModelConfiguration $model)
+    public function save(ModelConfigurationInterface $model)
     {
         if ($this->getContent() instanceof FormInterface) {
             $this->getContent()->save($model);

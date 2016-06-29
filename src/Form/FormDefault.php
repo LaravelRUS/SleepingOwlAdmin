@@ -13,9 +13,9 @@ use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Form\Element\Upload;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Traits\Assets;
 use Validator;
 
@@ -249,7 +249,7 @@ class FormDefault implements DisplayInterface, FormInterface
 
     /**
      * Get related form model configuration.
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     public function getModelConfiguration()
     {
@@ -285,7 +285,7 @@ class FormDefault implements DisplayInterface, FormInterface
      *
      * @param $model
      */
-    public function save(ModelConfiguration $model)
+    public function save(ModelConfigurationInterface $model)
     {
         if ($this->getModelConfiguration() != $model) {
             return;
@@ -340,11 +340,11 @@ class FormDefault implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Contracts\Validation\Validator|null
      */
-    public function validate(ModelConfiguration $model)
+    public function validate(ModelConfigurationInterface $model)
     {
         if ($this->getModelConfiguration() != $model) {
             return;

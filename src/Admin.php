@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Model\ModelConfiguration;
@@ -12,7 +13,7 @@ use SleepingOwl\Admin\Navigation\Page;
 class Admin
 {
     /**
-     * @var ModelConfiguration[]
+     * @var ModelConfigurationInterface[]
      */
     protected $models = [];
 
@@ -22,7 +23,7 @@ class Admin
     protected $template;
 
     /**
-     * @var NavigationPage[]
+     * @var Page[]
      */
     protected $menuItems = [];
 
@@ -31,9 +32,21 @@ class Admin
      */
     public function modelAliases()
     {
-        return array_map(function (ModelConfiguration $model) {
+        return array_map(function (ModelConfigurationInterface $model) {
             return $model->getAlias();
         }, $this->getModels());
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function register(ModelConfigurationInterface $model)
+    {
+        $this->setModel($model->getClass(), $model);
+
+        return $this;
     }
 
     /**
@@ -44,8 +57,8 @@ class Admin
      */
     public function registerModel($class, Closure $callback = null)
     {
-        $model = new ModelConfiguration($class);
-        $this->setModel($class, $model);
+        $this->register($model = new ModelConfiguration($class));
+
         if (is_callable($callback)) {
             call_user_func($callback, $model);
         }
@@ -90,9 +103,9 @@ class Admin
 
     /**
      * @param string             $class
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      */
-    public function setModel($class, $model)
+    public function setModel($class, ModelConfigurationInterface $model)
     {
         $this->models[$class] = $model;
     }

@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Providers;
 
 use SleepingOwl\Admin\Admin;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -28,7 +28,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerWysiwyg();
         $this->registerAliases();
 
-        ModelConfiguration::setEventDispatcher($this->app['events']);
+        ModelConfigurationManager::setEventDispatcher($this->app['events']);
     }
 
     /**

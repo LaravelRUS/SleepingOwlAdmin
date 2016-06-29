@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class Page extends \KodiComponents\Navigation\Page
 {
@@ -23,7 +23,7 @@ class Page extends \KodiComponents\Navigation\Page
     }
 
     /**
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     public function getModelConfiguration()
     {
