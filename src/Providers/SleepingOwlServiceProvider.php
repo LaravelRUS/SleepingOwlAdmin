@@ -45,15 +45,11 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
     protected function registerCommands()
     {
-        $commands = [
+        $this->commands([
             InstallCommand::class,
             UserManagerCommand::class,
             SectionGenerate::class,
             SectionMake::class
-        ];
-
-        foreach ($commands as $command) {
-            $this->commands($command);
-        }
+        ]);
     }
 }
