@@ -79,15 +79,15 @@ class Columns extends FormElements implements ColumnInterface
     {
         $this->setHtmlAttribute('class', 'row');
 
-        $count = $this->getColumns()->filter(function(ColumnInterface $column) {
+        $count = $this->getColumns()->filter(function (ColumnInterface $column) {
             return $column->getWidth() === 0;
         })->count();
 
-        $width = $this->maxWidth - $this->getColumns()->sum(function(ColumnInterface $column) {
+        $width = $this->maxWidth - $this->getColumns()->sum(function (ColumnInterface $column) {
             return $column->getWidth();
         });
 
-        $this->getColumns()->each(function(ColumnInterface $column) use($width, $count) {
+        $this->getColumns()->each(function (ColumnInterface $column) use ($width,$count) {
             if (! $column->getWidth()) {
                 $column->setWidth(floor($width / $count));
             }
@@ -105,7 +105,7 @@ class Columns extends FormElements implements ColumnInterface
     {
         parent::setModel($model);
 
-        $this->getColumns()->each(function(ColumnInterface $column) use($model) {
+        $this->getColumns()->each(function (ColumnInterface $column) use ($model) {
             $column->setModel($model);
         });
 
@@ -120,7 +120,7 @@ class Columns extends FormElements implements ColumnInterface
         return parent::toArray() + [
             'columns' => $this->getColumns(),
             'elements' => $this->getElements(),
-            'attributes' => $this->htmlAttributesToString()
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 
@@ -131,7 +131,7 @@ class Columns extends FormElements implements ColumnInterface
     {
         $rules = parent::getValidationRules();
 
-        $this->getColumns()->each(function(ColumnInterface $column) use(&$rules) {
+        $this->getColumns()->each(function (ColumnInterface $column) use (&$rules) {
             $rules += $column->getValidationRules();
         });
 
@@ -145,7 +145,7 @@ class Columns extends FormElements implements ColumnInterface
     {
         $messages = parent::getValidationMessages();
 
-        $this->getColumns()->each(function(ColumnInterface $column) use(&$messages) {
+        $this->getColumns()->each(function (ColumnInterface $column) use (&$messages) {
             $messages += $column->getValidationMessages();
         });
 
@@ -159,7 +159,7 @@ class Columns extends FormElements implements ColumnInterface
     {
         $labels = parent::getValidationLabels();
 
-        $this->getColumns()->each(function(ColumnInterface $column) use(&$labels) {
+        $this->getColumns()->each(function (ColumnInterface $column) use (&$labels) {
             $labels += $column->getValidationLabels();
         });
 
@@ -170,7 +170,7 @@ class Columns extends FormElements implements ColumnInterface
     {
         parent::save();
 
-        $this->getColumns()->each(function(ColumnInterface $column) {
+        $this->getColumns()->each(function (ColumnInterface $column) {
             $column->save();
         });
     }
@@ -179,7 +179,7 @@ class Columns extends FormElements implements ColumnInterface
     {
         parent::afterSave();
 
-        $this->getColumns()->each(function(ColumnInterface $column) {
+        $this->getColumns()->each(function (ColumnInterface $column) {
             $column->afterSave();
         });
     }
@@ -187,12 +187,16 @@ class Columns extends FormElements implements ColumnInterface
     /**
      * @return int
      */
-    public function getWidth(){}
+    public function getWidth()
+    {
+    }
 
     /**
      * @return string
      */
-    public function getSize(){}
+    public function getSize()
+    {
+    }
 
     /**
      * @param string $size
@@ -201,7 +205,7 @@ class Columns extends FormElements implements ColumnInterface
      */
     public function setSize($size)
     {
-        $this->getColumns()->each(function(ColumnInterface $column) use($size) {
+        $this->getColumns()->each(function (ColumnInterface $column) use ($size) {
             $column->setSize($size);
         });
     }

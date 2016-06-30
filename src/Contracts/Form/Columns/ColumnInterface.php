@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Contracts\Form\Columns;
 
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 interface ColumnInterface extends ElementsInterface
@@ -16,7 +15,7 @@ interface ColumnInterface extends ElementsInterface
      * @return string
      */
     public function getSize();
-    
+
     /**
      * @param string $size
      *

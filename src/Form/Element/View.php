@@ -63,6 +63,7 @@ class View extends Custom
     public function setData(array $data)
     {
         $this->data = $data;
+
         return $this;
     }
 
