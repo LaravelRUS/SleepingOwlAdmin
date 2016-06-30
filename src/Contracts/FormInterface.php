@@ -2,9 +2,6 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
-use Illuminate\Contracts\Validation\Validator;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-
 interface FormInterface
 {
     /**
@@ -22,16 +19,16 @@ interface FormInterface
     public function setId($id);
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
-     * @return Validator|null
+     * @return \Illuminate\Contracts\Validation\Validator|null
      */
-    public function validate(ModelConfiguration $model);
+    public function validate(ModelConfigurationInterface $model);
 
     /**
      * Save model.
      *
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      */
-    public function save(ModelConfiguration $model);
+    public function save(ModelConfigurationInterface $model);
 }

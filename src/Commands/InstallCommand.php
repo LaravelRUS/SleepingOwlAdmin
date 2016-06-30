@@ -44,6 +44,7 @@ class InstallCommand extends Command
         $this->createBootstrapDirectory();
         $this->createNavigationFile();
         $this->createBootstrapFile();
+        $this->createServiceProvider();
         $this->createRoutesFile();
         $this->createPublicDefaultStructure();
     }
@@ -85,6 +86,16 @@ class InstallCommand extends Command
             $contents = $this->files->get(__DIR__.'/stubs/bootstrap.stub');
             $this->files->put($file, $contents);
             $this->line('<info>Bootstrap file was created:</info> '.str_replace(base_path(), '', $file));
+        }
+    }
+
+    protected function createServiceProvider()
+    {
+        $file = app_path('Providers/AdminSectionsServiceProvider.php');
+        if (! file_exists($file)) {
+            $contents = $this->files->get(__DIR__.'/stubs/AdminSectionsServiceProvider.stub');
+            $this->files->put($file, $contents);
+            $this->line('<info>AdminSectionsServiceProvider file was created:</info> '.str_replace(base_path(), '', $file));
         }
     }
 

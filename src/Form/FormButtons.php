@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 
@@ -46,7 +46,7 @@ class FormButtons implements FormButtonsInterface
     protected $showSaveAndCreateButton = true;
 
     /**
-     * @var ModelConfiguration
+     * @var ModelConfigurationInterface
      */
     protected $modelConfiguration;
 
@@ -227,11 +227,11 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param ModelConfiguration $modelConfiguration
+     * @param ModelConfigurationInterface $modelConfiguration
      *
      * @return $this
      */
-    public function setModelConfiguration(ModelConfiguration $modelConfiguration)
+    public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration)
     {
         $this->modelConfiguration = $modelConfiguration;
 
@@ -239,7 +239,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     public function getModelConfiguration()
     {

@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use Symfony\Component\Finder\Finder;
 
 class AdminServiceProvider extends ServiceProvider
@@ -33,7 +34,7 @@ class AdminServiceProvider extends ServiceProvider
             $this->registerNavigationFile();
         });
 
-        ModelConfiguration::setEventDispatcher($this->app['events']);
+        ModelConfigurationManager::setEventDispatcher($this->app['events']);
     }
 
     /**

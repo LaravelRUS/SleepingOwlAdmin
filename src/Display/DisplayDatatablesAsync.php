@@ -6,10 +6,10 @@ use Request;
 use Route;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -19,7 +19,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public static function registerRoutes()
     {
         Route::get('{adminModel}/async/{adminDisplayName?}', ['as' => 'admin.model.async',
-            function (ModelConfiguration $model, $name = null) {
+            function (ModelConfigurationInterface $model, $name = null) {
                 $display = $model->fireDisplay();
                 if ($display instanceof DisplayTabbed) {
                     $display = static::findDatatablesAsyncByName($display, $name);

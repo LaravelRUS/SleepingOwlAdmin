@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Display;
 
 use Route;
 use Request;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Display\Extension\Tree;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
@@ -13,7 +13,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 {
     public static function registerRoutes()
     {
-        Route::post('{adminModel}/reorder', function (ModelConfiguration $model) {
+        Route::post('{adminModel}/reorder', function (ModelConfigurationInterface $model) {
             $model->fireDisplay()->getRepository()->reorder(
                 Request::input('data')
             );
@@ -235,7 +235,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     protected function getModelConfiguration()
     {
