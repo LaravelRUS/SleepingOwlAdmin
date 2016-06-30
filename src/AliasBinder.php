@@ -6,7 +6,6 @@ use BadMethodCallException;
 
 class AliasBinder
 {
-
     /**
      * @var array
      */
@@ -38,7 +37,7 @@ class AliasBinder
         $this->aliases[$alias] = $class;
 
         if (method_exists($class, 'registerRoutes')) {
-            AliasBinder::$routes[] = [$class, 'registerRoutes'];
+            self::$routes[] = [$class, 'registerRoutes'];
         }
 
         return $this;

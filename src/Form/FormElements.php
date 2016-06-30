@@ -24,7 +24,7 @@ class FormElements extends FormElement implements ElementsInterface
     public function __construct(array $elements = [])
     {
         parent::__construct();
-        
+
         $this->setElements($elements);
     }
 

@@ -68,7 +68,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->registerBootstrap();
 
-        $this->registerRoutes(function() {
+        $this->registerRoutes(function () {
             $this->app['router']->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
                 $route->get('assets/admin.scripts', [
                     'as'   => 'scripts',

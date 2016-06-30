@@ -132,7 +132,7 @@ abstract class Display implements DisplayInterface
 
     /**
      * @param array|string[] ...$relations
-     * 
+     *
      * @return $this
      */
     public function with($relations)
@@ -241,7 +241,6 @@ abstract class Display implements DisplayInterface
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -270,6 +269,7 @@ abstract class Display implements DisplayInterface
 
         throw new \BadMethodCallException("Call to undefined method [{$name}]");
     }
+
     /**
      * @return ModelConfiguration
      */

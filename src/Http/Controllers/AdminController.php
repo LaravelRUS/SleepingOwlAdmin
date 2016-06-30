@@ -430,7 +430,7 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumb($title, $parent)
     {
-        Breadcrumbs::register('render', function ($breadcrumbs) use ($title,$parent) {
+        Breadcrumbs::register('render', function ($breadcrumbs) use ($title, $parent) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title);
         });

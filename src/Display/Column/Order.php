@@ -55,7 +55,6 @@ class Order extends TableColumn implements WithRoutesInterface
         return $this->model;
     }
 
-
     /**
      * Get order value from instance.
      * @return int

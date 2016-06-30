@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Traits;
 
 trait OrderableModel
 {
-
     /**
      * Boot trait.
      */
