@@ -23,13 +23,14 @@ class AdminServiceProvider extends ServiceProvider
             return new Admin();
         });
 
-        $this->registerNavigation();
+        $this->initializeNavigation();
         $this->registerWysiwyg();
         $this->registerAliases();
 
-        $this->app->booted(function() {
+        $this->app->booted(function () {
             $this->registerCustomRoutes();
             $this->registerDefaultRoutes();
+            $this->registerNavigationFile();
         });
 
         ModelConfiguration::setEventDispatcher($this->app['events']);
@@ -75,17 +76,9 @@ class AdminServiceProvider extends ServiceProvider
                 ]);
             });
         });
-
-        if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
-            $items = include $navigation;
-
-            if (is_array($items)) {
-                $this->app['sleeping_owl.navigation']->setFromArray($items);
-            }
-        }
     }
 
-    protected function registerNavigation()
+    protected function initializeNavigation()
     {
         $this->app->bind(TableHeaderColumnInterface::class, \SleepingOwl\Admin\Display\TableHeaderColumn::class);
         $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repository\BaseRepository::class);
@@ -198,5 +191,16 @@ class AdminServiceProvider extends ServiceProvider
         ], function () use ($callback) {
             call_user_func($callback);
         });
+    }
+
+    protected function registerNavigationFile()
+    {
+        if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
+            $items = include $navigation;
+
+            if (is_array($items)) {
+                $this->app['sleeping_owl.navigation']->setFromArray($items);
+            }
+        }
     }
 }
