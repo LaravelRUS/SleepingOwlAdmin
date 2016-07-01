@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
@@ -45,6 +46,10 @@ class Admin
     public function register(ModelConfigurationInterface $model)
     {
         $this->setModel($model->getClass(), $model);
+
+        if ($model instanceof Initializable) {
+            $model->initialize();
+        }
 
         return $this;
     }
