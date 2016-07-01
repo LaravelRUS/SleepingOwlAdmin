@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputArgument;
 
 class SectionMake extends GeneratorCommand
 {
@@ -57,5 +58,32 @@ class SectionMake extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace;
+    }
+
+    /**
+     * Replace the class name for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     * @return string
+     */
+    protected function replaceClass($stub, $name)
+    {
+        $stub = parent::replaceClass($stub, $name);
+
+        return str_replace('DummyModel', '\\'.trim($this->argument('model')), $stub);
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        $arguments = parent::getArguments();
+        $arguments[] = ['model', InputArgument::REQUIRED, 'The name of the model class'];
+
+        return $arguments;
     }
 }

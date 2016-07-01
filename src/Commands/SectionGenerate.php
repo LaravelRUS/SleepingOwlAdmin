@@ -32,7 +32,7 @@ class SectionGenerate extends Command
         );
 
         foreach ($provider->sections() as $model => $section) {
-            $this->callSilent('sleepingowl:section:make', ['name' => $section]);
+            $this->callSilent('sleepingowl:section:make', ['name' => $section, 'model' => $model]);
         }
 
         $this->info('Sections generated successfully!');
