@@ -46,7 +46,7 @@ class DummyClass extends Section
      */
     public function onCreate()
     {
-        // todo: remove if unused
+        return $this->onEdit(null);
     }
 
     /**
