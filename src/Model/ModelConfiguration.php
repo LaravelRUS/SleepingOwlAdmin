@@ -703,16 +703,4 @@ class ModelConfiguration extends ModelConfigurationManager
 
         return $this;
     }
-
-    /**
-     * @param int    $priority
-     *
-     * @return Page
-     */
-    public function addToNavigation($priority = 100)
-    {
-        return app('sleeping_owl.navigation')
-            ->addPage(new Page($this->getClass()))
-            ->setPriority($priority);
-    }
 }

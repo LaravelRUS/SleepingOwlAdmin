@@ -5,8 +5,11 @@ namespace SleepingOwl\Admin\Model;
 use BadMethodCallException;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Model;
+use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Navigation\Badge;
+use SleepingOwl\Admin\Navigation\Page;
 
 /**
  * @method bool creating(Closure $callback)
@@ -378,6 +381,30 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function getMessageOnDestroy()
     {
         return trans('sleeping_owl::lang.message.destroyed');
+    }
+
+    /**
+     * @param int $priority
+     * @param string|\Closure|BadgeInterface $badge
+     *
+     * @return Page
+     */
+    public function addToNavigation($priority = 100, $badge = null)
+    {
+        $page = new Page($this->getClass());
+        $page->setPriority($priority);
+
+        if ($badge) {
+            if (! ($badge instanceof BadgeInterface)) {
+                $badge = new Badge($badge);
+            }
+
+            $page->setBadge($badge);
+        }
+
+        app('sleeping_owl.navigation')->addPage($page);
+
+        return $page;
     }
 
     /**
