@@ -27,7 +27,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public static function getEventDispatcher()
     {
-        return ModelConfigurationManager::$dispatcher;
+        return self::$dispatcher;
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
     {
-        ModelConfigurationManager::$dispatcher = $dispatcher;
+        self::$dispatcher = $dispatcher;
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @var string
      */
     protected $class;
-    
+
     /**
      * @var Model
      */
@@ -100,7 +100,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         if (! $this->alias) {
             $this->setDefaultAlias();
         }
-        
     }
 
     /**
@@ -131,7 +130,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
         return $this->title;
     }
-    
+
     /**
      * @return string
      */
@@ -179,7 +178,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         return $this->can('create', $this->getModel());
     }
-    
+
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      *
@@ -189,7 +188,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         return $this->can('edit', $model);
     }
-    
+
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      *
@@ -380,7 +379,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         return trans('sleeping_owl::lang.message.destroyed');
     }
-    
+
     /**
      * Fire the given event for the model.
      *
@@ -392,7 +391,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function fireEvent($event, $halt = true, Model $model = null)
     {
-        if (! isset(ModelConfigurationManager::$dispatcher)) {
+        if (! isset(self::$dispatcher)) {
             return true;
         }
 
@@ -407,7 +406,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
         $method = $halt ? 'until' : 'fire';
 
-        return ModelConfigurationManager::$dispatcher->$method($event, [$this, $model]);
+        return self::$dispatcher->$method($event, [$this, $model]);
     }
 
     /**
@@ -439,8 +438,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     protected function registerEvent($event, $callback, $priority = 0)
     {
-        if (isset(ModelConfigurationManager::$dispatcher)) {
-            ModelConfigurationManager::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
+        if (isset(self::$dispatcher)) {
+            self::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
         }
     }
 

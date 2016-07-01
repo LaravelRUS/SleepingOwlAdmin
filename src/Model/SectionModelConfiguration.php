@@ -128,7 +128,6 @@ class SectionModelConfiguration extends ModelConfigurationManager
         }
     }
 
-
     /**
      * @param $id
      *
