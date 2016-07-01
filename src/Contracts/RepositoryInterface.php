@@ -73,7 +73,7 @@ interface RepositoryInterface
      * @param int $id
      */
     public function forceDelete($id);
-    
+
     /**
      * Restore model instance by id.
      *

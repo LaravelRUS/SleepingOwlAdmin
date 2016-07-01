@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
-
     /**
      * @var array
      */

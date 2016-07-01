@@ -49,7 +49,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
             InstallCommand::class,
             UserManagerCommand::class,
             SectionGenerate::class,
-            SectionMake::class
+            SectionMake::class,
         ]);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 
 class SectionGenerate extends Command

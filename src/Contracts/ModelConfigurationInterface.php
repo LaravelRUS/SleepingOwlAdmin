@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ModelConfigurationInterface
 {
-
     /**
      * @return RepositoryInterface
      */
@@ -201,7 +200,7 @@ interface ModelConfigurationInterface
      * @return string
      */
     public function getMessageOnDelete();
-    
+
     /**
      * @return string
      */
@@ -221,5 +220,4 @@ interface ModelConfigurationInterface
      * @return null|string
      */
     public function getControllerClass();
-
 }
