@@ -77,6 +77,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected $title;
 
     /**
+     * @var string
+     */
+    protected $icon;
+
+    /**
      * @var bool
      */
     protected $checkAccess = false;
@@ -132,6 +137,26 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         }
 
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string $icon
+     *
+     * @return $this
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
     }
 
     /**

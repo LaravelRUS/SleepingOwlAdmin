@@ -27,6 +27,11 @@ interface ModelConfigurationInterface
     public function getTitle();
 
     /**
+     * @return string
+     */
+    public function getIcon();
+
+    /**
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getCreateTitle();

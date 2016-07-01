@@ -45,6 +45,14 @@ class Page extends \KodiComponents\Navigation\Page
     /**
      * @return string
      */
+    public function getId()
+    {
+        return $this->model;
+    }
+
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         if (is_null($this->title) and $this->hasModel()) {
@@ -52,6 +60,18 @@ class Page extends \KodiComponents\Navigation\Page
         }
 
         return parent::getTitle();
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        if ($icon = $this->getModelConfiguration()->getIcon()) {
+            return $icon;
+        }
+
+        return parent::getIcon();
     }
 
     /**
