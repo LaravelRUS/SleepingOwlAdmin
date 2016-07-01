@@ -146,12 +146,7 @@ class InstallCommand extends Command
     protected function getOptions()
     {
         return [
-            [
-                'title',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Title for admin module.',
-            ],
+            ['title', null, InputOption::VALUE_REQUIRED, 'Title for admin module.'],
         ];
     }
 }
