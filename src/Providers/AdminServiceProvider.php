@@ -24,6 +24,8 @@ class AdminServiceProvider extends ServiceProvider
             return new Admin();
         });
 
+        $this->app->alias('sleeping_owl', \SleepingOwl\Admin\Admin::class);
+
         $this->initializeNavigation();
         $this->registerWysiwyg();
         $this->registerAliases();
