@@ -201,6 +201,16 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @param Model $model
+     *
+     * @return bool
+     */
+    public function isDestroyable(Model $model)
+    {
+        return $this->isRestorableModel() && $this->can('destroy', $model);
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return bool
@@ -308,6 +318,16 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDeleteUrl($id)
     {
+        return route('admin.model.delete', [$this->getAlias(), $id]);
+    }
+
+    /**
+     * @param string|int $id
+     *
+     * @return string
+     */
+    public function getDestroyUrl($id)
+    {
         return route('admin.model.destroy', [$this->getAlias(), $id]);
     }
 
@@ -351,6 +371,14 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function getMessageOnRestore()
     {
         return trans('sleeping_owl::lang.message.restored');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageOnDestroy()
+    {
+        return trans('sleeping_owl::lang.message.destroyed');
     }
     
     /**

@@ -66,6 +66,13 @@ interface ModelConfigurationInterface
      *
      * @return bool
      */
+    public function isDestroyable(Model $model);
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
     public function isRestorable(Model $model);
 
     /**
@@ -111,6 +118,13 @@ interface ModelConfigurationInterface
      * @return mixed
      */
     public function fireDelete($id);
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function fireDestroy($id);
 
     /**
      * @param $id
@@ -164,6 +178,13 @@ interface ModelConfigurationInterface
      *
      * @return string
      */
+    public function getDestroyUrl($id);
+
+    /**
+     * @param string|int $id
+     *
+     * @return string
+     */
     public function getRestoreUrl($id);
 
     /**
@@ -180,6 +201,11 @@ interface ModelConfigurationInterface
      * @return string
      */
     public function getMessageOnDelete();
+    
+    /**
+     * @return string
+     */
+    public function getMessageOnDestroy();
 
     /**
      * @return string

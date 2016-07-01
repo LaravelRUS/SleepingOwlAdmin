@@ -119,6 +119,19 @@ class SectionModelConfiguration extends ModelConfigurationManager
     /**
      * @param $id
      *
+     * @return mixed
+     */
+    public function fireDestroy($id)
+    {
+        if (method_exists($this, 'onDestroy')) {
+            return app()->call([$this, 'onDestroy'], ['id' => $id]);
+        }
+    }
+
+
+    /**
+     * @param $id
+     *
      * @return bool|mixed
      */
     public function fireRestore($id)
