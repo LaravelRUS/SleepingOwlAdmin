@@ -20,6 +20,10 @@ class Page extends \KodiComponents\Navigation\Page
         parent::__construct();
 
         $this->setModel($modelClass);
+
+        if ($this->hasModel()) {
+            $this->setIcon($this->getModelConfiguration()->getIcon());
+        }
     }
 
     /**
@@ -60,18 +64,6 @@ class Page extends \KodiComponents\Navigation\Page
         }
 
         return parent::getTitle();
-    }
-
-    /**
-     * @return string
-     */
-    public function getIcon()
-    {
-        if ($icon = $this->getModelConfiguration()->getIcon()) {
-            return $icon;
-        }
-
-        return parent::getIcon();
     }
 
     /**
