@@ -13,7 +13,19 @@ class Body extends FormElements implements PanelInterface
     /**
      * @var string
      */
-    protected $view = 'form.panel.body';
+    protected $view = 'form.panel.element';
+
+    /**
+     * @var string
+     */
+    protected $class = 'panel-body';
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->setHtmlAttribute('class', $this->class);
+    }
 
     /**
      * @return array
