@@ -12,14 +12,14 @@ use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Navigation\Page;
 
 /**
- * @method bool creating(Closure $callback)
- * @method void created(Closure $callback)
- * @method bool updating(Closure $callback)
- * @method void updated(Closure $callback)
- * @method bool deleting(Closure $callback)
- * @method void deleted(Closure $callback)
- * @method bool restoring(Closure $callback)
- * @method void restored(Closure $callback)
+ * @method bool creating(\Closure $callback)
+ * @method void created(\Closure $callback)
+ * @method bool updating(\Closure $callback)
+ * @method void updated(\Closure $callback)
+ * @method bool deleting(\Closure $callback)
+ * @method void deleted(\Closure $callback)
+ * @method bool restoring(\Closure $callback)
+ * @method void restored(\Closure $callback)
  */
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
