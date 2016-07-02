@@ -113,7 +113,7 @@ class AdminController extends Controller
         $backUrl = $this->getBackUrl();
 
         if ($createForm instanceof FormInterface) {
-            if (($validator = $createForm->validate($model)) instanceof Validator) {
+            if (($validator = $createForm->validateForm($model)) instanceof Validator) {
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput()
@@ -128,7 +128,7 @@ class AdminController extends Controller
                 ]);
             }
 
-            $createForm->save($model);
+            $createForm->saveForm($model);
 
             $model->fireEvent('created', false, $createForm->getModel());
         }
@@ -192,7 +192,7 @@ class AdminController extends Controller
         $backUrl = $this->getBackUrl();
 
         if ($editForm instanceof FormInterface) {
-            if (($validator = $editForm->validate($model)) instanceof Validator) {
+            if (($validator = $editForm->validateForm($model)) instanceof Validator) {
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput();
@@ -204,7 +204,7 @@ class AdminController extends Controller
                 ]);
             }
 
-            $editForm->save($model);
+            $editForm->saveForm($model);
 
             $model->fireEvent('updated', false, $item);
         }
