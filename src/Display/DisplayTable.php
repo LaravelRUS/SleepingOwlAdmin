@@ -40,7 +40,7 @@ class DisplayTable extends Display
     /**
      * @var string
      */
-    protected $pageName;
+    protected $pageName = 'name';
 
     /**
      * @var Collection
