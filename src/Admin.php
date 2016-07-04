@@ -136,9 +136,7 @@ class Admin
      */
     public function addMenuPage($class = null, $priority = 100)
     {
-        return app('sleeping_owl.navigation')
-            ->addPage(new Page($class))
-            ->setPriority($priority);
+        return $this->getModel($class)->addToNavigation($priority);
     }
 
     /**
