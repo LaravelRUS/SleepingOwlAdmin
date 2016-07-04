@@ -133,6 +133,18 @@ class DateTime extends NamedFormElement
     }
 
     /**
+     * @return $this
+     *
+     * SMELLS This function does more than it says.
+     */
+    public function setCurrentDate()
+    {
+        $this->defaultValue = Carbon::now()->format($this->getFormat());
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     protected function generatePickerFormat()

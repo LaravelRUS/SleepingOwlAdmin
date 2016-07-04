@@ -194,18 +194,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return $this
-     *
-     * SMELLS This function does more than it says.
-     */
-    public function setCurrentDate()
-    {
-        $this->defaultValue = Carbon::now();
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getHelpText()
