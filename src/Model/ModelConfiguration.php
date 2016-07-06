@@ -170,9 +170,9 @@ class ModelConfiguration extends ModelConfigurationManager
      *
      * @return $this
      */
-    public function setUpdateTitle($title)
+    public function setEditTitle($title)
     {
-        $this->updateTitle = $title;
+        $this->editTitle = $title;
 
         return $this;
     }
