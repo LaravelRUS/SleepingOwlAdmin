@@ -60,12 +60,13 @@ class TreeRepository extends BaseRepository
 
     /**
      * Get tree structure.
+     *
+     * @param \Illuminate\Database\Eloquent\Collection $collection
+     *
      * @return mixed
      */
-    public function getTree()
+    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
     {
-        $collection = $this->getQuery()->get();
-
         switch ($this->getType()) {
             case static::TreeTypeBaum:
                 return $collection->toHierarchy();
@@ -380,9 +381,9 @@ class TreeRepository extends BaseRepository
     protected function createSimpleTree()
     {
         $collection = $this->getQuery()
-            ->orderBy($this->getParentField(), 'asc')
-            ->orderBy($this->getOrderField(), 'asc')
-            ->get();
+           ->orderBy($this->getParentField(), 'asc')
+           ->orderBy($this->getOrderField(), 'asc')
+           ->get();
 
         $parent = $this->getRootParentId();
 
