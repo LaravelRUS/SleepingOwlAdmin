@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Navigation\Page;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
