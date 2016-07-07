@@ -4,10 +4,11 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 
-class Actions extends Extension implements Initializable
+class Actions extends Extension implements Initializable, Placable
 {
     use HtmlAttributes;
 
@@ -153,14 +154,5 @@ class Actions extends Extension implements Initializable
         if (! $this->hasHtmlAttribute('class')) {
             $this->setHtmlAttribute('class', 'panel-footer');
         }
-
-        $template = app('sleeping_owl.template')->getViewPath($this->getDisplay()->getView());
-
-        view()->composer($template, function (\Illuminate\View\View $view) {
-            $view->getFactory()->inject(
-                $this->getPlacement(),
-                app('sleeping_owl.template')->view($this->getView(), $this->toArray())
-            );
-        });
     }
 }

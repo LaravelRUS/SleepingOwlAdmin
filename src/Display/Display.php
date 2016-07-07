@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -157,6 +158,17 @@ abstract class Display implements DisplayInterface
         $this->extensions->each(function (DisplayExtensionInterface $extension) {
             if ($extension instanceof Initializable) {
                 $extension->initialize();
+            }
+
+            if ($extension instanceof Placable) {
+                $template = app('sleeping_owl.template')->getViewPath($this->getView());
+
+                view()->composer($template, function (\Illuminate\View\View $view) use($extension) {
+                    $view->getFactory()->inject(
+                        $extension->getPlacement(),
+                        app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render()
+                    );
+                });
             }
         });
 
