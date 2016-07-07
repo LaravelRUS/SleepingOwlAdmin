@@ -23,12 +23,12 @@ interface FormInterface
      *
      * @return \Illuminate\Contracts\Validation\Validator|null
      */
-    public function validate(ModelConfigurationInterface $model);
+    public function validateForm(ModelConfigurationInterface $model);
 
     /**
      * Save model.
      *
      * @param ModelConfigurationInterface $model
      */
-    public function save(ModelConfigurationInterface $model);
+    public function saveForm(ModelConfigurationInterface $model);
 }

@@ -60,6 +60,18 @@ class FormElements extends FormElement implements ElementsInterface
     }
 
     /**
+     * @param FormElementInterface $element
+     *
+     * @return $this
+     */
+    public function addElement(FormElementInterface $element)
+    {
+        $this->elements->push($element);
+
+        return $this;
+    }
+
+    /**
      * @param Model $model
      *
      * @return $this
