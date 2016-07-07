@@ -13,7 +13,6 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayTree extends Display implements WithRoutesInterface
 {
-
     /**
      * @var Collection
      */

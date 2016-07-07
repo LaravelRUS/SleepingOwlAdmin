@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Carbon\Carbon;
 use Request;
 use LogicException;
 use Illuminate\Database\Eloquent\Model;
