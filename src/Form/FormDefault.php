@@ -15,7 +15,6 @@ use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Form\Element\Upload;
-use SleepingOwl\Admin\Traits\Assets;
 use Validator;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
