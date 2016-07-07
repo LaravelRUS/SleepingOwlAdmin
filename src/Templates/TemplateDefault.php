@@ -48,6 +48,10 @@ class TemplateDefault implements TemplateInterface
      */
     public function getViewPath($view)
     {
+        if ($view instanceof \Illuminate\View\View) {
+            return $view->getPath();
+        }
+
         return $this->getViewNamespace().'default.'.$view;
     }
 
