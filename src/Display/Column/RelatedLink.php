@@ -29,8 +29,6 @@ class RelatedLink extends Link
         if (! is_null($model)) {
             $this->setModel($model);
         }
-
-        $this->setHtmlAttribute('class', 'row-link');
     }
 
     /**

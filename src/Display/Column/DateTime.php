@@ -14,26 +14,6 @@ class DateTime extends NamedColumn
     protected $format;
 
     /**
-     * DateTime constructor.
-     *
-     * {@inheritdoc}
-     */
-    public function __construct($name, $label = null)
-    {
-        parent::__construct($name, $label);
-    }
-
-    /**
-     * Initialize column.
-     */
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->setHtmlAttribute('class', 'row-date');
-    }
-
-    /**
      * @param Model $model
      *
      * @return $this

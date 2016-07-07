@@ -31,7 +31,7 @@ class Control extends TableColumn
         parent::__construct($label);
         $this->setOrderable(false);
 
-        $this->setHtmlAttribute('class', 'row-control text-right');
+        $this->setHtmlAttribute('class', 'text-right');
     }
 
     /**

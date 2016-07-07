@@ -10,17 +10,6 @@ class Count extends NamedColumn
     protected $view = 'column.count';
 
     /**
-     * Count constructor.
-     *
-     * {@inheritdoc}
-     */
-    public function __construct($name, $label = null)
-    {
-        parent::__construct($name, $label);
-        $this->setHtmlAttribute('class', 'row-count');
-    }
-
-    /**
      * @return array
      */
     public function toArray()

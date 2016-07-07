@@ -18,8 +18,6 @@ class Image extends NamedColumn
     {
         parent::__construct($name, $label);
         $this->setOrderable(false);
-
-        $this->setHtmlAttribute('class', 'row-image');
     }
 
     /**
