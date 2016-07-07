@@ -20,7 +20,7 @@ use Validator;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
-    use HtmlAttributes, Assets;
+    use HtmlAttributes;
 
     /**
      * View to render.
