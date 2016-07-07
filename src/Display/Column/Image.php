@@ -7,7 +7,7 @@ class Image extends NamedColumn
     /**
      * @var string
      */
-    protected $width = '80px';
+    protected $imageWidth = '80px';
 
     /**
      * Image constructor.
@@ -23,9 +23,9 @@ class Image extends NamedColumn
     /**
      * @return string
      */
-    public function getWidth()
+    public function getImageWidth()
     {
-        return $this->width;
+        return $this->imageWidth;
     }
 
     /**
@@ -33,9 +33,9 @@ class Image extends NamedColumn
      *
      * @return $this
      */
-    public function setWidth($width)
+    public function setImageWidth($width)
     {
-        $this->width = $width;
+        $this->imageWidth = $width;
 
         return $this;
     }
@@ -52,7 +52,7 @@ class Image extends NamedColumn
 
         return parent::toArray() + [
             'value'  => $value,
-            'width'  => $this->getWidth(),
+            'imageWidth'  => $this->getImageWidth(),
             'append' => $this->getAppends(),
         ];
     }
