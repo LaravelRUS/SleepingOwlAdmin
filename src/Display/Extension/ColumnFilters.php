@@ -4,10 +4,11 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
-class ColumnFilters extends Extension implements Initializable
+class ColumnFilters extends Extension implements Initializable, Placable
 {
     use HtmlAttributes;
 
@@ -24,7 +25,7 @@ class ColumnFilters extends Extension implements Initializable
     /**
      * @var string
      */
-    protected $position = 'table.footer';
+    protected $placement = 'table.footer';
 
     /**
      * @param array|ColumnFilterInterface $columnFilters
@@ -89,21 +90,41 @@ class ColumnFilters extends Extension implements Initializable
     /**
      * @return string
      */
-    public function getPosition()
+    public function getPlacement()
     {
-        return $this->position;
+        return $this->placement;
     }
 
     /**
+     * @param string $placement
+     *
+     * @return $this
+     */
+    public function setPlacement($placement)
+    {
+        $this->placement = $placement;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated use getPlacement()
+     * @return string
+     */
+    public function getPosition()
+    {
+        return $this->getPlacement();
+    }
+
+    /**
+     * @deprecated use setPlacement(string $placement)
      * @param string $position
      *
      * @return $this
      */
     public function setPosition($position)
     {
-        $this->position = $position;
-
-        return $this;
+        return $this->setPlacement($position);
     }
 
     /**
@@ -137,14 +158,5 @@ class ColumnFilters extends Extension implements Initializable
         if (! $this->hasHtmlAttribute('class')) {
             $this->setHtmlAttribute('class', 'panel-footer');
         }
-
-        $template = app('sleeping_owl.template')->getViewPath($this->getDisplay()->getView());
-
-        view()->composer($template, function (\Illuminate\View\View $view) {
-            $view->getFactory()->inject(
-                $this->getPosition(),
-                app('sleeping_owl.template')->view($this->getView(), $this->toArray())
-            );
-        });
     }
 }
