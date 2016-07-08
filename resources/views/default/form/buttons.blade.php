@@ -35,6 +35,30 @@
         @endif
     </div>
 
+    @if($showRestoreButton)
+        <button class="btn btn-restore btn-success btn-flat" data-url="{!! $restoreUrl !!}">
+            <i class="fa fa-reply"></i> {{ $restoreButtonText }}
+        </button>
+    @elseif($deleteButtonText)
+        <div class="btn-group">
+            <button class="btn btn-delete btn-danger btn-flat" data-url="{!! $deleteUrl !!}">
+                <i class="fa fa-trash"></i> {{ $deleteButtonText }}
+            </button>
+            @if($showDestroyButton)
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-menu btn-actions">
+                    <div class="btn-group-vertical">
+                        <button class="btn btn-destroy btn-danger btn-flat">
+                            <i class="fa fa-trash"></i> {{ $destroyButtonText }}
+                        </button>
+                    </div>
+                </div>
+            @endif
+        </div>
+    @endif
+
     <a href="{{ $backUrl }}" class="btn btn-link">
         <i class="fa fa-ban"></i> {{ $cancelButtonText }}
     </a>
