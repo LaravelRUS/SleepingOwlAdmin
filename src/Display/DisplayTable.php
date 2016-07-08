@@ -55,7 +55,7 @@ class DisplayTable extends Display
         parent::__construct();
 
         $this->extend('columns', new Columns());
-        $this->extend('columnfilters', new ColumnFilters());
+        $this->extend('column_filters', new ColumnFilters());
     }
 
     /**

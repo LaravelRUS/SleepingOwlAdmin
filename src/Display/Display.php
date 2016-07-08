@@ -269,9 +269,11 @@ abstract class Display implements DisplayInterface
      */
     public function __call($name, $arguments)
     {
-        if (starts_with($name, 'get') and $this->extensions->has($method = strtolower(substr($name, 3)))) {
+        $method = snake_case(substr($name, 3));
+
+        if (starts_with($name, 'get') and $this->extensions->has($method)) {
             return $this->extensions->get($method);
-        } elseif (starts_with($name, 'set') and $this->extensions->has($method = strtolower(substr($name, 3)))) {
+        } elseif (starts_with($name, 'set') and $this->extensions->has($method)) {
             $extension = $this->extensions->get($method);
 
             if (method_exists($extension, 'set')) {
