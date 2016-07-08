@@ -50,5 +50,4 @@ class RelatedLink extends Link
 
         return parent::setModel($model);
     }
-
 }

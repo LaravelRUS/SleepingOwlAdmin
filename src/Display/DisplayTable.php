@@ -156,7 +156,7 @@ class DisplayTable extends Display
             ->filter(function (DisplayExtensionInterface $ext) {
                 return $ext instanceof Renderable;
             })
-            ->sortBy(function(DisplayExtensionInterface $extension) {
+            ->sortBy(function (DisplayExtensionInterface $extension) {
                 return $extension->getOrder();
             });
 
