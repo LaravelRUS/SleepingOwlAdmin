@@ -208,7 +208,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected function applySearch(Builder $query)
     {
         $search = Request::input('search.value');
-        if (is_null($search)) {
+        if (empty($search)) {
             return;
         }
 
