@@ -103,10 +103,14 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @param string $name
+     *
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -119,10 +123,14 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @param mixed $distinct
+     *
+     * @return $this
      */
     public function setDistinct($distinct)
     {
         $this->distinct = $distinct;
+
+        return $this;
     }
 
     /**

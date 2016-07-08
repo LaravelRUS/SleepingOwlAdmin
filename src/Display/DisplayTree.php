@@ -144,10 +144,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param string $orderField
+     *
+     * @return $this
      */
     public function setOrderField($orderField)
     {
         $this->orderField = $orderField;
+
+        return $this;
     }
 
     /**
@@ -160,10 +164,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param null|string $rootParentId
+     *
+     * @return $this
      */
     public function setRootParentId($rootParentId)
     {
         $this->rootParentId = $rootParentId;
+
+        return $this;
     }
 
     /**
@@ -209,10 +217,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param bool $reorderable
+     *
+     * @return $this
      */
     public function setReorderable($reorderable)
     {
         $this->reorderable = (bool) $reorderable;
+
+        return $this;
     }
 
     /**
