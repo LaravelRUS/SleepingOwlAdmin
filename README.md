@@ -1,4 +1,5 @@
 ![bg](https://cloud.githubusercontent.com/assets/773481/14028746/24d7efa8-f20f-11e5-8e38-3d264739f0aa.png)
+[![Build Status](https://travis-ci.org/SleepingOwlAdmin/demo.svg?branch=master)](https://travis-ci.org/SleepingOwlAdmin/demo)
 
 ## Laravel 5.2 Admin Module
 
