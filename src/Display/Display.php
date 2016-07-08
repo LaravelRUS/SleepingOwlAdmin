@@ -163,7 +163,7 @@ abstract class Display implements DisplayInterface
             if ($extension instanceof Placable) {
                 $template = app('sleeping_owl.template')->getViewPath($this->getView());
 
-                view()->composer($template, function (\Illuminate\View\View $view) use($extension) {
+                view()->composer($template, function (\Illuminate\View\View $view) use ($extension) {
                     $view->getFactory()->inject(
                         $extension->getPlacement(),
                         app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render()
