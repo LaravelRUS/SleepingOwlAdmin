@@ -9,6 +9,8 @@
 			->addMeta(['content' => 'IE=edge', 'http-equiv' => 'X-UA-Compatible'])
 			->render()
 	!!}
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.css">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
