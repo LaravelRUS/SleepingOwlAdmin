@@ -132,7 +132,7 @@ abstract class Display implements DisplayInterface
 
     /**
      * @param array|string[] ...$relations
-     * 
+     *
      * @return $this
      */
     public function with($relations)

@@ -18,7 +18,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     public static function registerRoutes()
     {
         $routeName = 'admin.form.element.file.'.static::$route;
-        if (!Route::has($routeName)) {
+        if (! Route::has($routeName)) {
             Route::post('FormElements/image/'.static::$route, ['as' => $routeName, function () {
                 $validator = Validator::make(Request::all(), static::uploadValidationRules());
 
