@@ -17,29 +17,31 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     public static function registerRoutes()
     {
-        Route::post('FormElements/image/'.static::$route, ['as' => 'admin.form.element.file.'.static::$route, function () {
-            $validator = Validator::make(Request::all(), static::uploadValidationRules());
+        $routeName = 'admin.form.element.file.'.static::$route;
+        if (! Route::has($routeName)) {
+            Route::post('FormElements/image/'.static::$route, ['as' => $routeName, function () {
+                $validator = Validator::make(Request::all(), static::uploadValidationRules());
 
-            static::uploadValidationRules($validator);
+                static::uploadValidationRules($validator);
 
-            if ($validator->fails()) {
-                return Response::make($validator->errors()->get('file'), 400);
-            }
+                if ($validator->fails()) {
+                    return Response::make($validator->errors()->get('file'), 400);
+                }
 
-            $file = Request::file('file');
-            $filename = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
-            $path = static::getUploadPath();
-            $fullPath = public_path($path);
-            $file->move($fullPath, $filename);
+                $file = Request::file('file');
+                $filename = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+                $path = static::getUploadPath();
+                $fullPath = public_path($path);
+                $file->move($fullPath, $filename);
 
-            $value = $path.'/'.$filename;
+                $value = $path.'/'.$filename;
 
-            return [
+                return [
                     'url' => asset($value),
                     'value' => $value,
                 ];
-        },
-        ]);
+            }]);
+        }
     }
 
     /**
