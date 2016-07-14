@@ -35,14 +35,14 @@
         @endif
     </div>
 
-    @if($showRestoreButton)
-        <button class="btn btn-restore btn-success btn-flat" data-url="{!! $restoreUrl !!}">
-            <i class="fa fa-reply"></i> {{ $restoreButtonText }}
+    @if($showDeleteButton)
+        <button class="btn btn-delete btn-danger btn-flat" data-url="{!! $deleteUrl !!}" data-redirect="{{ $backUrl }}">
+            <i class="fa fa-trash"></i> {{ $deleteButtonText }}
         </button>
-    @elseif($deleteButtonText)
+    @elseif($showRestoreButton)
         <div class="btn-group">
-            <button class="btn btn-delete btn-danger btn-flat" data-url="{!! $deleteUrl !!}">
-                <i class="fa fa-trash"></i> {{ $deleteButtonText }}
+            <button class="btn btn-restore btn-warning btn-flat" data-url="{!! $restoreUrl !!}" data-redirect="{{ $editUrl }}">
+                <i class="fa fa-reply"></i> {{ $restoreButtonText }}
             </button>
             @if($showDestroyButton)
                 <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,7 +50,7 @@
                 </button>
                 <div class="dropdown-menu btn-actions">
                     <div class="btn-group-vertical">
-                        <button class="btn btn-destroy btn-danger btn-flat">
+                        <button class="btn btn-destroy btn-danger btn-flat" data-url="{!! $destroyUrl !!}" data-redirect="{{ $backUrl }}">
                             <i class="fa fa-trash"></i> {{ $destroyButtonText }}
                         </button>
                     </div>

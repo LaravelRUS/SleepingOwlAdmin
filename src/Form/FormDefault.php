@@ -79,9 +79,7 @@ class FormDefault implements DisplayInterface, FormInterface
     public function __construct()
     {
         $this->setButtons(
-            app(FormButtonsInterface::class, [
-                'currentId' => $this->id,
-            ])
+            app(FormButtonsInterface::class)
         );
 
         $this->initializePackage();
@@ -108,24 +106,6 @@ class FormDefault implements DisplayInterface, FormInterface
         $this->getButtons()->setModelConfiguration(
             $this->getModelConfiguration()
         );
-
-        if (is_null($this->getButtons()->isShowDeleteButton())) {
-            $this->getButtons()->showDeleteButton(
-                $this->getModelConfiguration()->isDeletable($this->getModel())
-            );
-        }
-
-        if (is_null($this->getButtons()->isShowDestroyButton())) {
-            $this->getButtons()->showDestroyButton(
-                $this->getModelConfiguration()->isDeletable($this->getModel())
-            );
-        }
-
-        if (is_null($this->getButtons()->isShowRestoreButton())) {
-            $this->getButtons()->showRestoreButton(
-                $this->getModelConfiguration()->isRestorable($this->getModel())
-            );
-        }
 
         $this->includePackage();
     }
@@ -308,6 +288,8 @@ class FormDefault implements DisplayInterface, FormInterface
                 $item->setModel($this->getModel());
             }
         });
+
+        $this->getButtons()->setModel($this->getModel());
 
         return $this;
     }
