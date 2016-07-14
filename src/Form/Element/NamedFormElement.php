@@ -356,6 +356,9 @@ abstract class NamedFormElement extends FormElement
         $count = count($relations);
 
         if ($count === 1) {
+            if($value){
+                return $value;
+            }
             return $model->getAttribute($this->getAttribute());
         }
 
