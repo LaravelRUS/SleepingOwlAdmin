@@ -59,7 +59,9 @@
         </div>
     @endif
 
-    <a href="{{ $backUrl }}" class="btn btn-link">
-        <i class="fa fa-ban"></i> {{ $cancelButtonText }}
-    </a>
+    @if($showCancelButton)
+        <a href="{{ $backUrl }}" class="btn btn-link">
+            <i class="fa fa-ban"></i> {{ $cancelButtonText }}
+        </a>
+    @endif
 </div>
