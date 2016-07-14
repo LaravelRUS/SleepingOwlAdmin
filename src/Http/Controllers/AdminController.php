@@ -12,7 +12,7 @@ use Illuminate\Routing\Controller;
 use Request;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class AdminController extends Controller
 {
@@ -65,11 +65,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDisplay(ModelConfiguration $model)
+    public function getDisplay(ModelConfigurationInterface $model)
     {
         if (! $model->isDisplayable()) {
             abort(404);
@@ -79,11 +79,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getCreate(ModelConfiguration $model)
+    public function getCreate(ModelConfigurationInterface $model)
     {
         if (! $model->isCreatable()) {
             abort(404);
@@ -97,11 +97,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postStore(ModelConfiguration $model)
+    public function postStore(ModelConfigurationInterface $model)
     {
         if (! $model->isCreatable()) {
             abort(404);
@@ -113,7 +113,7 @@ class AdminController extends Controller
         $backUrl = $this->getBackUrl();
 
         if ($createForm instanceof FormInterface) {
-            if (($validator = $createForm->validate($model)) instanceof Validator) {
+            if (($validator = $createForm->validateForm($model)) instanceof Validator) {
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput()
@@ -128,9 +128,9 @@ class AdminController extends Controller
                 ]);
             }
 
-            $createForm->save($model);
+            $createForm->saveForm($model);
 
-            $model->fireEvent('created', false);
+            $model->fireEvent('created', false, $createForm->getModel());
         }
 
         if ($nextAction == 'save_and_continue') {
@@ -154,12 +154,12 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      * @param int                $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getEdit(ModelConfiguration $model, $id)
+    public function getEdit(ModelConfigurationInterface $model, $id)
     {
         $item = $model->getRepository()->find($id);
 
@@ -173,12 +173,12 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      * @param int                $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postUpdate(ModelConfiguration $model, $id)
+    public function postUpdate(ModelConfigurationInterface $model, $id)
     {
         $item = $model->getRepository()->find($id);
 
@@ -192,7 +192,7 @@ class AdminController extends Controller
         $backUrl = $this->getBackUrl();
 
         if ($editForm instanceof FormInterface) {
-            if (($validator = $editForm->validate($model)) instanceof Validator) {
+            if (($validator = $editForm->validateForm($model)) instanceof Validator) {
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput();
@@ -204,7 +204,7 @@ class AdminController extends Controller
                 ]);
             }
 
-            $editForm->save($model);
+            $editForm->saveForm($model);
 
             $model->fireEvent('updated', false, $item);
         }
@@ -225,11 +225,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return bool
      */
-    public function inlineEdit(ModelConfiguration $model)
+    public function inlineEdit(ModelConfigurationInterface $model)
     {
         $field = Request::input('name');
         $value = Request::input('value');
@@ -265,12 +265,12 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      * @param int                $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteDestroy(ModelConfiguration $model, $id)
+    public function deleteDelete(ModelConfigurationInterface $model, $id)
     {
         $item = $model->getRepository()->find($id);
 
@@ -289,6 +289,37 @@ class AdminController extends Controller
         $model->fireEvent('deleted', false, $item);
 
         return redirect()->back()->with('success_message', $model->getMessageOnDelete());
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     * @param int                $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteDestroy(ModelConfigurationInterface $model, $id)
+    {
+        if (! $model->isRestorableModel()) {
+            abort(404);
+        }
+
+        $item = $model->getRepository()->findOnlyTrashed($id);
+
+        if (is_null($item) || ! $model->isRestorable($item)) {
+            abort(404);
+        }
+
+        $model->fireDestroy($id);
+
+        if ($model->fireEvent('destroying', true, $item) === false) {
+            return redirect()->back();
+        }
+
+        $model->getRepository()->forceDelete($id);
+
+        $model->fireEvent('destroyed', false, $item);
+
+        return redirect()->back()->with('success_message', $model->getMessageOnDestroy());
     }
 
     /**
@@ -323,13 +354,13 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      * @param Renderable|string $content
      * @param string|null $title
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render(ModelConfiguration $model, $content, $title = null)
+    public function render(ModelConfigurationInterface $model, $content, $title = null)
     {
         if ($content instanceof Renderable) {
             $content = $content->render();

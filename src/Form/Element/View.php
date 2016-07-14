@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Closure;
+
 class View extends Custom
 {
     /**
@@ -10,11 +12,21 @@ class View extends Custom
     protected $view;
 
     /**
-     * @param string $view
+     * @var array
      */
-    public function __construct($view)
+    protected $data = [];
+
+    /**
+     * @param string $view
+     * @param array $data
+     * @param Closure $callback
+     */
+    public function __construct($view, array $data = [], Closure $callback = null)
     {
         $this->setView($view);
+        $this->setData($data);
+
+        parent::__construct($callback);
     }
 
     /**
@@ -35,8 +47,22 @@ class View extends Custom
         $this->view = $view;
 
         $this->setDisplay(function ($model) {
-            return view($this->getView(), ['model' => $model]);
+            $this->data['model'] = $model;
+
+            return view($this->getView(), $this->data);
         });
+
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
 
         return $this;
     }

@@ -19,7 +19,7 @@ class Tree extends Extension implements Initializable, Renderable
     protected $controlActive = true;
 
     /**
-     * @var string
+     * @var string|\Illuminate\View\View
      */
     protected $view = 'display.columns';
 
@@ -118,7 +118,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
@@ -126,7 +126,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      *
      * @return $this
      */

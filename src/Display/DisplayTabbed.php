@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 class DisplayTabbed implements DisplayInterface, FormInterface
@@ -109,15 +109,15 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return Validator|null
      */
-    public function validate(ModelConfiguration $model)
+    public function validateForm(ModelConfigurationInterface $model)
     {
         foreach ($this->getTabs() as $tab) {
             if ($tab instanceof FormInterface) {
-                $result = $tab->validate($model);
+                $result = $tab->validateForm($model);
                 if (! is_null($result)) {
                     return $result;
                 }
@@ -126,13 +126,13 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      */
-    public function save(ModelConfiguration $model)
+    public function saveForm(ModelConfigurationInterface $model)
     {
         foreach ($this->getTabs() as $tab) {
             if ($tab instanceof FormInterface) {
-                $tab->save($model);
+                $tab->saveForm($model);
             }
         }
     }

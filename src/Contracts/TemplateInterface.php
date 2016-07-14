@@ -17,7 +17,7 @@ interface TemplateInterface
     public function getViewPath($view);
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      * @param array  $data
      * @param array  $mergeData
      *

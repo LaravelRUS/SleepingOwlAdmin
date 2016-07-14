@@ -118,4 +118,6 @@ $(function () {
 
     window.Admin.Components.init();
     window.Admin.Controllers.call();
+
+    bootbox.setDefaults('locale', window.Admin.Settings.locale);
 });

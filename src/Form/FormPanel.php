@@ -3,6 +3,10 @@
 namespace SleepingOwl\Admin\Form;
 
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Form\Element\Html;
+use SleepingOwl\Admin\Form\Panel\Body;
+use SleepingOwl\Admin\Form\Panel\Footer;
+use SleepingOwl\Admin\Form\Panel\Header;
 
 class FormPanel extends FormDefault
 {
@@ -15,18 +19,7 @@ class FormPanel extends FormDefault
     /**
      * @var string
      */
-    protected $view = 'panel';
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->items = [
-            static::POSITION_HEADER => [],
-            static::POSITION_BODY => [],
-            static::POSITION_FOOTER => [],
-        ];
-    }
+    protected $view = 'form.panel';
 
     /**
      * Initialize form.
@@ -51,7 +44,7 @@ class FormPanel extends FormDefault
             $items = func_get_args();
         }
 
-        $this->placeItemsTo(static::POSITION_BODY, $items);
+        $this->addBody($items);
 
         return $this;
     }
@@ -63,7 +56,7 @@ class FormPanel extends FormDefault
      */
     public function addItem(FormElementInterface $item)
     {
-        $this->items[static::POSITION_BODY][] = $item;
+        $this->getElements()->last()->addElement($item);
 
         return $this;
     }
@@ -79,7 +72,7 @@ class FormPanel extends FormDefault
             $items = func_get_args();
         }
 
-        $this->placeItemsTo(static::POSITION_HEADER, $items);
+        $this->addElement(new Header($items));
 
         return $this;
     }
@@ -95,7 +88,11 @@ class FormPanel extends FormDefault
             $items = func_get_args();
         }
 
-        $this->placeItemsTo(static::POSITION_BODY, $items);
+        if (get_class($this->getElements()->last()) === Body::class) {
+            $this->addElement(new Html('<hr />'));
+        }
+
+        $this->addElement(new Body($items));
 
         return $this;
     }
@@ -111,27 +108,8 @@ class FormPanel extends FormDefault
             $items = func_get_args();
         }
 
-        $this->placeItemsTo(static::POSITION_FOOTER, $items);
+        $this->addElement(new Footer($items));
 
         return $this;
-    }
-
-    /**
-     * @param       $place
-     * @param array $items
-     */
-    protected function placeItemsTo($place, array $items)
-    {
-        if (! isset($this->items[$place])) {
-            return;
-        }
-
-        if (count($this->items[$place]) > 0) {
-            $this->items[$place][] = static::SEPARATOR;
-        }
-
-        foreach ($items as $item) {
-            $this->items[$place][] = $item;
-        }
     }
 }

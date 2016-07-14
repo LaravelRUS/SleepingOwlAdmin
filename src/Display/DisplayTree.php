@@ -2,18 +2,25 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Database\Eloquent\Collection;
 use Route;
 use Request;
+use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Display\Extension\Tree;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Repository\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayTree extends Display implements WithRoutesInterface
 {
+    /**
+     * @var Collection
+     */
+    protected $collection;
+
     public static function registerRoutes()
     {
-        Route::post('{adminModel}/reorder', function (ModelConfiguration $model) {
+        Route::post('{adminModel}/reorder', function (ModelConfigurationInterface $model) {
             $model->fireDisplay()->getRepository()->reorder(
                 Request::input('data')
             );
@@ -82,9 +89,9 @@ class DisplayTree extends Display implements WithRoutesInterface
         parent::initialize();
 
         $this->getRepository()
-            ->setParentField($this->getParentField())
-            ->setOrderField($this->getOrderField())
-            ->setRootParentId($this->getRootParentId());
+             ->setParentField($this->getParentField())
+             ->setOrderField($this->getOrderField())
+             ->setRootParentId($this->getRootParentId());
     }
 
     /**
@@ -137,10 +144,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param string $orderField
+     *
+     * @return $this
      */
     public function setOrderField($orderField)
     {
         $this->orderField = $orderField;
+
+        return $this;
     }
 
     /**
@@ -153,10 +164,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param null|string $rootParentId
+     *
+     * @return $this
      */
     public function setRootParentId($rootParentId)
     {
         $this->rootParentId = $rootParentId;
+
+        return $this;
     }
 
     /**
@@ -202,10 +217,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param bool $reorderable
+     *
+     * @return $this
      */
     public function setReorderable($reorderable)
     {
         $this->reorderable = (bool) $reorderable;
+
+        return $this;
     }
 
     /**
@@ -224,7 +243,7 @@ class DisplayTree extends Display implements WithRoutesInterface
         $model = $this->getModelConfiguration();
 
         return parent::toArray() + [
-            'items'       => $this->getRepository()->getTree(),
+            'items'       => $this->getRepository()->getTree($this->getCollection()),
             'reorderable' => $this->isReorderable(),
             'url'         => $model->getDisplayUrl(),
             'value'       => $this->getValue(),
@@ -235,10 +254,41 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     protected function getModelConfiguration()
     {
         return app('sleeping_owl')->getModel($this->modelClass);
+    }
+
+    /**
+     * @return Collection
+     * @throws \Exception
+     */
+    public function getCollection()
+    {
+        if (! $this->isInitialized()) {
+            throw new \Exception('Display is not initialized');
+        }
+
+        if (! is_null($this->collection)) {
+            return $this->collection;
+        }
+
+        $query = $this->getRepository()->getQuery();
+
+        $this->modifyQuery($query);
+
+        return $query->get();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder|Builder $query
+     */
+    protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
+            $extension->modifyQuery($query);
+        });
     }
 }
