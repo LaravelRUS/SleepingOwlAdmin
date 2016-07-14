@@ -32,15 +32,26 @@ class File extends NamedFormElement implements WithRoutesInterface
                 $filename = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
                 $path = static::getUploadPath();
                 $fullPath = public_path($path);
-                $file->move($fullPath, $filename);
-
+                
                 $value = $path.'/'.$filename;
-
+                $envFile = config('filesystems.default', 'local')=='local';
+                if($envFile){
+                    $move2Path = $file->move($fullPath, $filename);
+                    $value = $path.'/'.$filename;
+                }else{
+                    $move2Path = \Storage::put(
+                        $value,
+                        file_get_contents($file->getRealPath())//
+                    );
+                }
+                if (!$move2Path) {
+                    return Response::make($validator->errors()->get('file'), 400);
+                }
                 return [
-                    'url' => asset($value),
-                    'value' => $value,
-                ];
-            }]);
+                        'url' => $envFile?asset($value):'http://'.config('filesystems.disks.'.config('filesystems.default').'.domain').'/'.$value,
+                        'value' => $value,
+                    ];
+                }]);
         }
     }
 
