@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
@@ -17,7 +18,7 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInterface
 {
     /**
-     * @var DisplayTab[]|Collection
+     * @var TabInterface[]|Collection
      */
     protected $tabs;
 
@@ -26,18 +27,35 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     protected $view = 'display.tabbed';
 
-    public function __construct()
+    /**
+     * DisplayTabbed constructor.
+     *
+     * @param Closure|TabInterface[] $tabs
+     */
+    public function __construct($tabs = null)
     {
         $this->tabs = new Collection();
+
+        if (is_array($tabs) or is_callable($tabs)) {
+            $this->setTabs($tabs);
+        }
     }
 
     public function initialize()
     {
-        $this->getTabs()->each(function ($tab) {
+        $this->getTabs()->each(function (TabInterface $tab) {
             if ($tab instanceof Initializable) {
                 $tab->initialize();
             }
         });
+
+        $activeTabs = $this->getTabs()->filter(function (TabInterface $tab) {
+            return $tab->isActive();
+        })->count();
+
+        if ($activeTabs === 0 and $firstTab = $this->getTabs()->first()) {
+            $firstTab->setActive(true);
+        }
     }
 
     /**
@@ -45,7 +63,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     public function setModelClass($class)
     {
-        $this->getTabs()->each(function ($tab) use($class) {
+        $this->getTabs()->each(function (TabInterface $tab) use($class) {
             if ($tab instanceof DisplayInterface) {
                 $tab->setModelClass($class);
             }
@@ -53,7 +71,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
     }
 
     /**
-     * @return DisplayTab[]|Collection
+     * @return TabInterface[]|Collection
      */
     public function getTabs()
     {
@@ -61,7 +79,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
     }
 
     /**
-     * @param Closure|DisplayTab[] $tabs
+     * @param Closure|TabInterface[] $tabs
      *
      * @return $this
      */
@@ -73,7 +91,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
 
         if (is_array($tabs)) {
             foreach ($tabs as $tab) {
-                $this->tabs->push($tab);
+                if ($tab instanceof TabInterface) {
+                    $this->tabs->push($tab);
+                } else {
+                    $this->appendTab($tab);
+                }
             }
         }
 
@@ -85,7 +107,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      * @param string $label
      * @param bool|false $active
      *
-     * @return $this
+     * @return TabInterface
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
@@ -101,7 +123,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     public function setAction($action)
     {
-        $this->getTabs()->each(function ($tab) use($action) {
+        $this->getTabs()->each(function (TabInterface $tab) use($action) {
             if ($tab instanceof FormInterface) {
                 $tab->setAction($action);
             }
@@ -113,7 +135,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     public function setId($id)
     {
-        $this->getTabs()->each(function ($tab) use($id) {
+        $this->getTabs()->each(function (TabInterface $tab) use($id) {
             if ($tab instanceof FormInterface) {
                 $tab->setId($id);
             }
@@ -142,7 +164,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     public function saveForm(ModelConfigurationInterface $model)
     {
-        $this->getTabs()->each(function ($tab) use($model) {
+        $this->getTabs()->each(function (TabInterface $tab) use($model) {
             if ($tab instanceof FormInterface) {
                 $tab->saveForm($model);
             }
@@ -193,7 +215,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     public function setModel(Model $model)
     {
-        $this->getTabs()->each(function ($tab) use($model) {
+        $this->getTabs()->each(function (TabInterface $tab) use($model) {
             if ($tab->getContent() instanceof ElementsInterface) {
                 $tab->getContent()->setModel($model);
             }
@@ -208,7 +230,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
     {
         $rules = [];
 
-        $this->getTabs()->each(function ($tab) use(&$rules) {
+        $this->getTabs()->each(function (TabInterface $tab) use(&$rules) {
             if ($tab->getContent() instanceof ElementsInterface) {
                 $rules += $tab->getContent()->getValidationRules();
             }
@@ -224,7 +246,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
     {
         $messages = [];
 
-        $this->getTabs()->each(function ($tab) use (&$messages) {
+        $this->getTabs()->each(function (TabInterface $tab) use (&$messages) {
             if ($tab->getContent() instanceof ElementsInterface) {
                 $messages += $tab->getContent()->getValidationMessages();
             }
@@ -240,7 +262,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
     {
         $labels = [];
 
-        $this->getTabs()->each(function ($tab) use (&$labels) {
+        $this->getTabs()->each(function (TabInterface $tab) use (&$labels) {
             if ($tab->getContent() instanceof ElementsInterface) {
                 $labels += $tab->getContent()->getValidationLabels();
             }
@@ -254,7 +276,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     public function save()
     {
-        $this->getTabs()->each(function ($tab) {
+        $this->getTabs()->each(function (TabInterface $tab) {
             if ($tab->getContent() instanceof ElementsInterface) {
                 $tab->getContent()->save();
             }
@@ -266,7 +288,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
      */
     public function afterSave()
     {
-        $this->getTabs()->each(function ($tab) {
+        $this->getTabs()->each(function (TabInterface $tab) {
             if ($tab->getContent() instanceof ElementsInterface) {
                 $tab->getContent()->afterSave();
             }

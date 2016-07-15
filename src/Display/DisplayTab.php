@@ -4,12 +4,13 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 
-class DisplayTab implements DisplayInterface, FormInterface
+class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
     /**
      * @var string
