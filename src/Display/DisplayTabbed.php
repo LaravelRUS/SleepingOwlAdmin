@@ -3,31 +3,41 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 
-class DisplayTabbed implements DisplayInterface, FormInterface
+class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInterface
 {
     /**
-     * @var DisplayTab[]
+     * @var DisplayTab[]|Collection
      */
-    protected $tabs = [];
+    protected $tabs;
 
     /**
      * @var string
      */
     protected $view = 'display.tabbed';
 
+    public function __construct()
+    {
+        $this->tabs = new Collection();
+    }
+
     public function initialize()
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function ($tab) {
             if ($tab instanceof Initializable) {
                 $tab->initialize();
             }
-        }
+        });
     }
 
     /**
@@ -35,15 +45,15 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setModelClass($class)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function ($tab) use($class) {
             if ($tab instanceof DisplayInterface) {
                 $tab->setModelClass($class);
             }
-        }
+        });
     }
 
     /**
-     * @return DisplayTab[]
+     * @return DisplayTab[]|Collection
      */
     public function getTabs()
     {
@@ -62,24 +72,26 @@ class DisplayTabbed implements DisplayInterface, FormInterface
         }
 
         if (is_array($tabs)) {
-            $this->tabs = $tabs;
+            foreach ($tabs as $tab) {
+                $this->tabs->push($tab);
+            }
         }
 
         return $this;
     }
 
     /**
-     * @param DisplayInterface $display
-     * @param string           $label
-     * @param bool|false       $active
+     * @param Renderable $display
+     * @param string $label
+     * @param bool|false $active
      *
      * @return $this
      */
-    public function appendTab(DisplayInterface $display, $label, $active = false)
+    public function appendTab(Renderable $display, $label, $active = false)
     {
         $tab = app('sleeping_owl.display')->tab($display)->setLabel($label)->setActive($active);
 
-        $this->tabs[] = $tab;
+        $this->tabs->push($tab);
 
         return $tab;
     }
@@ -89,11 +101,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setAction($action)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function ($tab) use($action) {
             if ($tab instanceof FormInterface) {
                 $tab->setAction($action);
             }
-        }
+        });
     }
 
     /**
@@ -101,11 +113,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setId($id)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function ($tab) use($id) {
             if ($tab instanceof FormInterface) {
                 $tab->setId($id);
             }
-        }
+        });
     }
 
     /**
@@ -130,11 +142,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function saveForm(ModelConfigurationInterface $model)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function ($tab) use($model) {
             if ($tab instanceof FormInterface) {
                 $tab->saveForm($model);
             }
-        }
+        });
     }
 
     /**
@@ -172,5 +184,92 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     public function __toString()
     {
         return (string) $this->render();
+    }
+
+    /**
+     * Set currently rendered instance.
+     *
+     * @param Model $model
+     */
+    public function setModel(Model $model)
+    {
+        $this->getTabs()->each(function ($tab) use($model) {
+            if ($tab->getContent() instanceof ElementsInterface) {
+                $tab->getContent()->setModel($model);
+            }
+        });
+    }
+
+    /**
+     * Get form item validation rules.
+     * @return mixed
+     */
+    public function getValidationRules()
+    {
+        $rules = [];
+
+        $this->getTabs()->each(function ($tab) use(&$rules) {
+            if ($tab->getContent() instanceof ElementsInterface) {
+                $rules += $tab->getContent()->getValidationRules();
+            }
+        });
+
+        return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        $messages = [];
+
+        $this->getTabs()->each(function ($tab) use (&$messages) {
+            if ($tab->getContent() instanceof ElementsInterface) {
+                $messages += $tab->getContent()->getValidationMessages();
+            }
+        });
+
+        return $messages;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        $labels = [];
+
+        $this->getTabs()->each(function ($tab) use (&$labels) {
+            if ($tab->getContent() instanceof ElementsInterface) {
+                $labels += $tab->getContent()->getValidationLabels();
+            }
+        });
+
+        return $labels;
+    }
+
+    /**
+     * Save form item.
+     */
+    public function save()
+    {
+        $this->getTabs()->each(function ($tab) {
+            if ($tab->getContent() instanceof ElementsInterface) {
+                $tab->getContent()->save();
+            }
+        });
+    }
+
+    /**
+     * Save form item.
+     */
+    public function afterSave()
+    {
+        $this->getTabs()->each(function ($tab) {
+            if ($tab->getContent() instanceof ElementsInterface) {
+                $tab->getContent()->afterSave();
+            }
+        });
     }
 }

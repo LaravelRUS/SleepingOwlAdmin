@@ -170,9 +170,7 @@ abstract class FormElement implements FormElementInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')
-            ->view($this->getView(), $this->toArray())
-            ->render();
+        return app('sleeping_owl.template')->view($this->getView(), $this->toArray())->render();
     }
 
     /**

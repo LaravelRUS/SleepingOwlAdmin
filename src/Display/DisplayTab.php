@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 
-// TODO: починить указание активности таба
 class DisplayTab implements DisplayInterface, FormInterface
 {
     /**
@@ -42,9 +42,9 @@ class DisplayTab implements DisplayInterface, FormInterface
     protected $view = 'display.tab';
 
     /**
-     * @param DisplayInterface $content
+     * @param Renderable $content
      */
-    public function __construct(DisplayInterface $content)
+    public function __construct(Renderable $content)
     {
         $this->content = $content;
     }

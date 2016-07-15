@@ -17,6 +17,12 @@ class FormElements extends FormElement implements ElementsInterface
     protected $elements;
 
     /**
+     * View to render.
+     * @var string|\Illuminate\View\View
+     */
+    protected $view = 'form.partials.elements';
+
+    /**
      * Column constructor.
      *
      * @param array $elements
@@ -64,7 +70,7 @@ class FormElements extends FormElement implements ElementsInterface
      *
      * @return $this
      */
-    public function addElement(FormElementInterface $element)
+    public function addElement($element)
     {
         $this->elements->push($element);
 
@@ -141,7 +147,7 @@ class FormElements extends FormElement implements ElementsInterface
     {
         parent::save();
 
-        $this->getElements()->each(function ($element) use (&$labels) {
+        $this->getElements()->each(function ($element) {
             if ($element instanceof FormElementInterface) {
                 $element->save();
             }
@@ -152,10 +158,20 @@ class FormElements extends FormElement implements ElementsInterface
     {
         parent::afterSave();
 
-        $this->getElements()->each(function ($element) use (&$labels) {
+        $this->getElements()->each(function ($element) {
             if ($element instanceof FormElementInterface) {
                 $element->afterSave();
             }
         });
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return parent::toArray() + [
+            'items' => $this->getElements()
+        ];
     }
 }

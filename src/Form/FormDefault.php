@@ -239,7 +239,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @return $this
      */
-    public function addItem(FormElementInterface $item)
+    public function addItem($item)
     {
         return $this->addElement($item);
     }

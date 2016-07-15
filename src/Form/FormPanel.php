@@ -54,9 +54,13 @@ class FormPanel extends FormDefault
      *
      * @return $this
      */
-    public function addItem(FormElementInterface $item)
+    public function addItem($item)
     {
-        $this->getElements()->last()->addElement($item);
+        if ($part = $this->getElements()->last()) {
+            $part->addElement($item);
+        } else {
+            $this->addBody($item);
+        }
 
         return $this;
     }
