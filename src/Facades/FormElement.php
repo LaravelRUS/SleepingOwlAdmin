@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\Password password($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Select select($name, $label = null, array|Model $options)
  * @method static \SleepingOwl\Admin\Form\Element\MultiSelect multiselect($name, $label = null, array|Model $options)
- * @method static \SleepingOwl\Admin\Form\Columns\Columns columns()
+ * @method static \SleepingOwl\Admin\Form\Columns\Columns columns(array $columns = [])
  * @method static \SleepingOwl\Admin\Form\Element\Hidden hidden($name)
  * @method static \SleepingOwl\Admin\Form\Element\Custom custom(\Closure $callback = null)
  * @method static \SleepingOwl\Admin\Form\Element\Html html($html)

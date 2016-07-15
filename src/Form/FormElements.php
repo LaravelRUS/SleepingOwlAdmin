@@ -17,12 +17,6 @@ class FormElements extends FormElement implements ElementsInterface
     protected $elements;
 
     /**
-     * View to render.
-     * @var string|\Illuminate\View\View
-     */
-    protected $view = 'form.partials.elements';
-
-    /**
      * Column constructor.
      *
      * @param array $elements

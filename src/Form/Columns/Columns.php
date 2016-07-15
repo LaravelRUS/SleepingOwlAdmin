@@ -30,6 +30,8 @@ class Columns extends FormElements implements ColumnInterface
      */
     public function __construct(array $columns = [])
     {
+        $this->columns = new Collection();
+
         $this->setColumns($columns);
         parent::__construct();
     }
@@ -49,7 +51,9 @@ class Columns extends FormElements implements ColumnInterface
      */
     public function setColumns(array $columns)
     {
-        $this->columns = new Collection($columns);
+        foreach ($columns as $column) {
+            $this->addColumn($column);
+        }
 
         return $this;
     }
