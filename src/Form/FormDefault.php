@@ -251,9 +251,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setId($id)
     {
-        if (is_null($this->id)) {
+        if (is_null($this->id) and ! is_null($id) and ($model = $this->getRepository()->find($id))) {
             $this->id = $id;
-            $this->setModel($this->getRepository()->find($id));
+            $this->setModel($model);
         }
     }
 
