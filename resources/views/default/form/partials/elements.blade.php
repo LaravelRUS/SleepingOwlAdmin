@@ -1,5 +1,5 @@
 @if($items instanceof \SleepingOwl\Admin\Form\Element\Columns)
-    {!! $formItems->render() !!}
+    {!! $items->render() !!}
 @else
 @foreach ($items as $item)
     @if($item instanceof \Illuminate\Contracts\Support\Renderable)
