@@ -13,6 +13,20 @@ class FilterCustom extends FilterField
     protected $callback;
 
     /**
+     * @param string $name
+     * @param string|\Closure|null $title
+     * @param Closure $callback
+     */
+    public function __construct($name, $title = null, Closure $callback = null)
+    {
+        parent::__construct($name, $title);
+
+        if (! is_null($callback)) {
+            $this->setCallback($callback);
+        }
+    }
+
+    /**
      * @param Builder $query
      */
     public function apply(Builder $query)
