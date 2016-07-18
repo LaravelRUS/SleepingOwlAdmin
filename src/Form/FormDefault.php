@@ -68,9 +68,14 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     protected $initialized = false;
 
-    public function __construct()
+    /**
+     * FormDefault constructor.
+     *
+     * @param array $elements
+     */
+    public function __construct(array $elements = [])
     {
-        parent::__construct();
+        parent::__construct($elements);
 
         $this->setButtons(
             app(FormButtonsInterface::class)

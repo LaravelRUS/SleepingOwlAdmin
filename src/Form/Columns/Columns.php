@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Columns;
 
-use Closure;
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;

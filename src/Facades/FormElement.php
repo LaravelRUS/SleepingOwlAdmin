@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\CKEditor ckeditor($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Textarea textarea($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Radio radio($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\Wysiwyg wysiwyg($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method static \SleepingOwl\Admin\Form\Element\Upload upload($name, $label = null)
  */
 class FormElement extends Facade
