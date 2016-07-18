@@ -132,6 +132,18 @@ abstract class Display implements DisplayInterface
     }
 
     /**
+     * @param $repositoryClass
+     *
+     * @return $this
+     */
+    public function setRepositoryClass($repositoryClass)
+    {
+        $this->repositoryClass = $repositoryClass;
+
+        return $this;
+    }
+
+    /**
      * @param array|string[] ...$relations
      *
      * @return $this
@@ -293,10 +305,17 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return RepositoryInterface
+     * @return \Illuminate\Foundation\Application|mixed
+     * @throws \Exception
      */
     protected function makeRepository()
     {
-        return app($this->repositoryClass, [$this->modelClass]);
+        $repository = app($this->repositoryClass, [$this->modelClass]);
+
+        if (! ($repository instanceof RepositoryInterface)) {
+            throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
+        }
+
+        return $repository;
     }
 }
