@@ -290,6 +290,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         parent::setModel($model);
 
+        $this->getButtons()->setModel($this->getModel());
+
         return $this;
     }
 

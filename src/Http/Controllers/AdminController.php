@@ -288,7 +288,8 @@ class AdminController extends Controller
 
         $model->fireEvent('deleted', false, $item);
 
-        return redirect()->back()->with('success_message', $model->getMessageOnDelete());
+        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+            ->with('success_message', $model->getMessageOnDelete());
     }
 
     /**
@@ -319,7 +320,8 @@ class AdminController extends Controller
 
         $model->fireEvent('destroyed', false, $item);
 
-        return redirect()->back()->with('success_message', $model->getMessageOnDestroy());
+        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+            ->with('success_message', $model->getMessageOnDestroy());
     }
 
     /**
@@ -350,7 +352,8 @@ class AdminController extends Controller
 
         $model->fireEvent('restored', false, $item);
 
-        return redirect()->back()->with('success_message', $model->getMessageOnRestore());
+        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+            ->with('success_message', $model->getMessageOnRestore());
     }
 
     /**

@@ -35,7 +35,33 @@
         @endif
     </div>
 
-    <a href="{{ $backUrl }}" class="btn btn-link">
-        <i class="fa fa-ban"></i> {{ $cancelButtonText }}
-    </a>
+    @if($showDeleteButton)
+        <button class="btn btn-delete btn-danger btn-flat" data-url="{!! $deleteUrl !!}" data-redirect="{{ $backUrl }}">
+            <i class="fa fa-trash"></i> {{ $deleteButtonText }}
+        </button>
+    @elseif($showRestoreButton)
+        <div class="btn-group">
+            <button class="btn btn-restore btn-warning btn-flat" data-url="{!! $restoreUrl !!}" data-redirect="{{ $editUrl }}">
+                <i class="fa fa-reply"></i> {{ $restoreButtonText }}
+            </button>
+            @if($showDestroyButton)
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-menu btn-actions">
+                    <div class="btn-group-vertical">
+                        <button class="btn btn-destroy btn-danger btn-flat" data-url="{!! $destroyUrl !!}" data-redirect="{{ $backUrl }}">
+                            <i class="fa fa-trash"></i> {{ $destroyButtonText }}
+                        </button>
+                    </div>
+                </div>
+            @endif
+        </div>
+    @endif
+
+    @if($showCancelButton)
+        <a href="{{ $backUrl }}" class="btn btn-link">
+            <i class="fa fa-ban"></i> {{ $cancelButtonText }}
+        </a>
+    @endif
 </div>
