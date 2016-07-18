@@ -71,7 +71,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * Get column value from instance.
      *
-     * @param Collection|Model $instance
+     * @param Collection|Model|Closure $instance
      * @param string           $name
      *
      * @return mixed
