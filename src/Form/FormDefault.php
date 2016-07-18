@@ -322,7 +322,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $model = $this->getModel();
 
         foreach ($model->getRelations() as $name => $relation) {
-            if ($model->{$name}() instanceof BelongsTo) {
+            if ($model->{$name}() instanceof BelongsTo && !is_null($relation)) {
                 $relation->save();
                 $model->{$name}()->associate($relation);
             }
@@ -334,7 +334,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $model = $this->getModel();
 
         foreach ($model->getRelations() as $name => $relation) {
-            if ($model->{$name}() instanceof HasOneOrMany) {
+            if ($model->{$name}() instanceof HasOneOrMany && !is_null($relation)) {
                 if (is_array($relation) || $relation instanceof \Traversable) {
                     $model->{$name}()->saveMany($relation);
                 } else {
