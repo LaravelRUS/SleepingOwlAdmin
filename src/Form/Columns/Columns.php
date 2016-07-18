@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Columns;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
@@ -14,11 +13,6 @@ class Columns extends FormElements implements ColumnInterface
     use HtmlAttributes;
 
     /**
-     * @var Collection|ColumnInterface
-     */
-    protected $columns;
-
-    /**
      * @var int
      */
     protected $maxWidth = 12;
@@ -26,22 +20,12 @@ class Columns extends FormElements implements ColumnInterface
     /**
      * Columns constructor.
      *
-     * @param array $columns
+     * @param array $elements
      */
-    public function __construct(array $columns = [])
+    public function __construct(array $elements = [])
     {
-        $this->columns = new Collection();
-
-        $this->setColumns($columns);
-        parent::__construct();
-    }
-
-    /**
-     * @return Collection|ColumnInterface
-     */
-    public function getColumns()
-    {
-        return $this->columns;
+        $this->elements = new Collection();
+        parent::__construct($elements);
     }
 
     /**
@@ -49,7 +33,7 @@ class Columns extends FormElements implements ColumnInterface
      *
      * @return $this
      */
-    public function setColumns(array $columns)
+    public function setElements(array $columns)
     {
         foreach ($columns as $column) {
             $this->addColumn($column);
@@ -59,22 +43,38 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param Closure|ColumnInterface $column
+     * @param \SleepingOwl\Admin\Contracts\FormElementInterface[]|\Closure|ColumnInterface $column
+     * @param int|null $width
+     *
+     * @return $this
+     */
+    public function addColumn($column, $width = null)
+    {
+        return $this->addElement($column, $width);
+    }
+
+    /**
+     * @param \SleepingOwl\Admin\Contracts\FormElementInterface[]|\Closure|ColumnInterface $element
+     * @param int|null $width
      *
      * @return $this
      * @throws \Exception
      */
-    public function addColumn($column)
+    public function addElement($element, $width = null)
     {
-        if (is_callable($column)) {
-            $column = new Column($column());
+        if (is_callable($element)) {
+            $element = new Column($element());
+        } else if (is_array($element)) {
+            $element = new Column($element);
         }
 
-        if (! ($column instanceof ColumnInterface)) {
+        if (! ($element instanceof ColumnInterface)) {
             throw new \Exception('Column should be instance of ColumnInterface');
         }
 
-        $this->columns->push($column);
+        $element->setWidth($width);
+
+        parent::addElement($element);
 
         return $this;
     }
@@ -83,37 +83,21 @@ class Columns extends FormElements implements ColumnInterface
     {
         $this->setHtmlAttribute('class', 'row');
 
-        $count = $this->getColumns()->filter(function (ColumnInterface $column) {
+        $count = $this->getElements()->filter(function (ColumnInterface $column) {
             return $column->getWidth() === 0;
         })->count();
 
-        $width = $this->maxWidth - $this->getColumns()->sum(function (ColumnInterface $column) {
+        $width = $this->maxWidth - $this->getElements()->sum(function (ColumnInterface $column) {
             return $column->getWidth();
         });
 
-        $this->getColumns()->each(function (ColumnInterface $column) use ($width,$count) {
+        $this->getElements()->each(function (ColumnInterface $column) use ($width, $count) {
             if (! $column->getWidth()) {
                 $column->setWidth(floor($width / $count));
             }
-
-            $column->initialize();
-        });
-    }
-
-    /**
-     * @param Model $model
-     *
-     * @return $this
-     */
-    public function setModel(Model $model)
-    {
-        parent::setModel($model);
-
-        $this->getColumns()->each(function (ColumnInterface $column) use ($model) {
-            $column->setModel($model);
         });
 
-        return $this;
+        parent::initialize();
     }
 
     /**
@@ -122,70 +106,9 @@ class Columns extends FormElements implements ColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-            'columns' => $this->getColumns(),
-            'elements' => $this->getElements(),
+            'columns' => $this->getElements(),
             'attributes' => $this->htmlAttributesToString(),
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationRules()
-    {
-        $rules = parent::getValidationRules();
-
-        $this->getColumns()->each(function (ColumnInterface $column) use (&$rules) {
-            $rules += $column->getValidationRules();
-        });
-
-        return $rules;
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationMessages()
-    {
-        $messages = parent::getValidationMessages();
-
-        $this->getColumns()->each(function (ColumnInterface $column) use (&$messages) {
-            $messages += $column->getValidationMessages();
-        });
-
-        return $messages;
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationLabels()
-    {
-        $labels = parent::getValidationLabels();
-
-        $this->getColumns()->each(function (ColumnInterface $column) use (&$labels) {
-            $labels += $column->getValidationLabels();
-        });
-
-        return $labels;
-    }
-
-    public function save()
-    {
-        parent::save();
-
-        $this->getColumns()->each(function (ColumnInterface $column) {
-            $column->save();
-        });
-    }
-
-    public function afterSave()
-    {
-        parent::afterSave();
-
-        $this->getColumns()->each(function (ColumnInterface $column) {
-            $column->afterSave();
-        });
     }
 
     /**
