@@ -7,9 +7,11 @@
         @endif
     </label>
 
+    @if (! $readonly)
     {!! Form::file($name, ['id' => $name]) !!}
+    @endif
 
-    @if(!empty($value))
+    @if(!empty($value) && !$readonly)
     <div class="checkbox">
         <label>{!! Form::checkbox("{$name}_remove") !!} @lang('sleeping_owl::lang.file.remove')</label>
     </div>

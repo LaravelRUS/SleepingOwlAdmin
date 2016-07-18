@@ -12,16 +12,20 @@
 				<div class="col-xs-6 col-md-3 imageThumbnail">
 					<div class="thumbnail">
 						<img data-value="{{ $image }}" src="{{ asset($image) }}" />
+						@if (! $readonly)
 						<div class="text-right">
 							<a href="#" class="imageRemove btn btn-danger">{{ trans('sleeping_owl::lang.image.removeMultiple') }}</a>
 						</div>
+						@endif
 					</div>
 				</div>
 			@endforeach
 		</div>
+		@if (! $readonly)
 		<div>
 			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}</div>
 		</div>
+		@endif
 		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ !empty($value) && sizeof($value) != 0 ? implode(',', $value) : "" }}">
 		<div class="errors">
 			@include(AdminTemplate::getViewPath('form.element.errors'))

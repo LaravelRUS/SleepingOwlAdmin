@@ -17,10 +17,12 @@
 				</div>
 			</div>
 		</div>
+		@if (! $readonly)
 		<div>
 			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.file.browse') }}</div>
 			<div class="btn btn-danger imageRemove"><i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.file.remove') }}</div>
 		</div>
+		@endif
 		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ $value }}">
 		<div class="errors">
 			@include(AdminTemplate::getViewPath('form.element.errors'))
