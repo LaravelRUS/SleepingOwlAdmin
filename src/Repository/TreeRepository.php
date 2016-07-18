@@ -4,8 +4,9 @@ namespace SleepingOwl\Admin\Repository;
 
 use Exception;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 
-class TreeRepository extends BaseRepository
+class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 {
     /**
      * Extrepat/Baum tree type
@@ -15,7 +16,7 @@ class TreeRepository extends BaseRepository
 
     /**
      * Lasychaser/Laravel-nestedset tree type
-     * https://github.com/lazychaser/laravel-nestedset.
+     * https://github.com/lazychaser/laravel-nestedset
      */
     const TreeTypeKalnoy = 1;
 
@@ -185,7 +186,7 @@ class TreeRepository extends BaseRepository
      *
      * @param $data
      */
-    public function reorder($data)
+    public function reorder(array $data)
     {
         if ($this->isType(static::TreeTypeSimple)) {
             $this->recursiveReorderSimple($data, $this->getRootParentId());
@@ -205,7 +206,7 @@ class TreeRepository extends BaseRepository
      * @param $left
      * @param $right
      */
-    public function move($id, $parentId, $left, $right)
+    protected function move($id, $parentId, $left, $right)
     {
         $instance = $this->find($id);
         $attributes = $instance->getAttributes();
@@ -224,7 +225,7 @@ class TreeRepository extends BaseRepository
      * @return mixed
      * @throws Exception
      */
-    public function getLeftColumn($instance)
+    protected function getLeftColumn($instance)
     {
         $methods = [
             'getLeftColumnName',
@@ -242,7 +243,7 @@ class TreeRepository extends BaseRepository
      * @return mixed
      * @throws Exception
      */
-    public function getRightColumn($instance)
+    protected function getRightColumn($instance)
     {
         $methods = [
             'getRightColumnName',
@@ -260,7 +261,7 @@ class TreeRepository extends BaseRepository
      * @return mixed
      * @throws Exception
      */
-    public function getParentColumn($instance)
+    protected function getParentColumn($instance)
     {
         $methods = [
             'getParentColumnName',
@@ -334,7 +335,7 @@ class TreeRepository extends BaseRepository
      * @param $data
      * @param $parentId
      */
-    protected function recursiveReorderSimple($data, $parentId)
+    protected function recursiveReorderSimple(array $data, $parentId)
     {
         foreach ($data as $order => $item) {
             $id = $item['id'];
@@ -356,7 +357,7 @@ class TreeRepository extends BaseRepository
      * @param $collection
      * @param $id
      *
-     * @return static
+     * @return Collection
      */
     protected function getChildren($collection, $id)
     {
@@ -371,7 +372,7 @@ class TreeRepository extends BaseRepository
             $result[] = $instance;
         }
 
-        return Collection::make($result);
+        return new Collection($result);
     }
 
     /**
@@ -380,13 +381,15 @@ class TreeRepository extends BaseRepository
      */
     protected function createSimpleTree()
     {
-        $collection = $this->getQuery()
-           ->orderBy($this->getParentField(), 'asc')
-           ->orderBy($this->getOrderField(), 'asc')
-           ->get();
+        $collection = $this
+            ->getQuery()
+            ->orderBy($this->getParentField(), 'asc')
+            ->orderBy($this->getOrderField(), 'asc')
+            ->get();
 
-        $parent = $this->getRootParentId();
-
-        return $this->getChildren($collection, $parent);
+        return $this->getChildren(
+            $collection,
+            $this->getRootParentId()
+        );
     }
 }

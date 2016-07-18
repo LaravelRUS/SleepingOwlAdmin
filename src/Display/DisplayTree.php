@@ -7,10 +7,15 @@ use Request;
 use Route;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\Extension\Tree;
 use SleepingOwl\Admin\Repository\TreeRepository;
 
+/**
+ * @method TreeRepositoryInterface getRepository()
+ * @property TreeRepositoryInterface $repository
+ */
 class DisplayTree extends Display implements WithRoutesInterface
 {
     public static function registerRoutes()
@@ -66,11 +71,6 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $repositoryClass = TreeRepository::class;
 
     /**
-     * @var TreeRepository
-     */
-    protected $repository;
-
-    /**
      * @var Column\TreeControl
      */
     protected $controlColumn;
@@ -85,7 +85,8 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         parent::__construct();
 
-        $this->extend('tree', new Tree());
+        // TODO: move tree building to extension
+        // $this->extend('tree', new Tree());
     }
 
     public function initialize()
@@ -294,5 +295,20 @@ class DisplayTree extends Display implements WithRoutesInterface
         $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
             $extension->modifyQuery($query);
         });
+    }
+
+    /**
+     * @return \Illuminate\Foundation\Application|mixed
+     * @throws \Exception
+     */
+    protected function makeRepository()
+    {
+        $repository = parent::makeRepository();
+
+        if (! ($repository instanceof TreeRepositoryInterface)) {
+            throw new \Exception('Repository class must be instanced of [TreeRepositoryInterface]');
+        }
+
+        return $repository;
     }
 }
