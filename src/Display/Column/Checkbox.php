@@ -25,7 +25,6 @@ class Checkbox extends TableColumn
         ));
 
         $this->setOrderable(false);
-        $this->setHtmlAttribute('class', 'row-checkbox');
     }
 
     /**

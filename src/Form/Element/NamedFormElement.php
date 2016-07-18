@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Carbon\Carbon;
 use Request;
 use LogicException;
 use Illuminate\Database\Eloquent\Model;
@@ -194,18 +193,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return $this
-     *
-     * SMELLS This function does more than it says.
-     */
-    public function setCurrentDate()
-    {
-        $this->defaultValue = Carbon::now();
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getHelpText()
@@ -369,6 +356,9 @@ abstract class NamedFormElement extends FormElement
         $count = count($relations);
 
         if ($count === 1) {
+            if($value){
+                return $value;
+            }
             return $model->getAttribute($this->getAttribute());
         }
 

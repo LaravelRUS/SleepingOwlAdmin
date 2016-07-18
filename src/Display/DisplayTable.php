@@ -40,7 +40,7 @@ class DisplayTable extends Display
     /**
      * @var string
      */
-    protected $pageName;
+    protected $pageName = 'page';
 
     /**
      * @var Collection
@@ -55,7 +55,7 @@ class DisplayTable extends Display
         parent::__construct();
 
         $this->extend('columns', new Columns());
-        $this->extend('columnfilters', new ColumnFilters());
+        $this->extend('column_filters', new ColumnFilters());
     }
 
     /**
@@ -152,9 +152,13 @@ class DisplayTable extends Display
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
 
-        $params['extensions'] = $this->getExtensions()->filter(function (DisplayExtensionInterface $ext) {
-            return $ext instanceof Renderable;
-        });
+        $params['extensions'] = $this->getExtensions()
+            ->filter(function (DisplayExtensionInterface $ext) {
+                return $ext instanceof Renderable;
+            })
+            ->sortBy(function (DisplayExtensionInterface $extension) {
+                return $extension->getOrder();
+            });
 
         return $params;
     }

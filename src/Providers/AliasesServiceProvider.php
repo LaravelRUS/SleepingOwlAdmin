@@ -87,7 +87,7 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerFormElements()
     {
         $alias = (new AliasBinder())->register([
-            'columns'     => \SleepingOwl\Admin\Form\Element\Columns::class,
+            'columns'     => \SleepingOwl\Admin\Form\Columns\Columns::class,
             'text'        => \SleepingOwl\Admin\Form\Element\Text::class,
             'time'        => \SleepingOwl\Admin\Form\Element\Time::class,
             'date'        => \SleepingOwl\Admin\Form\Element\Date::class,

@@ -170,6 +170,7 @@ return [
         SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
         KodiCMS\Assets\AssetsServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        // App\Providers\AdminSectionsServiceProvider::class,
         SleepingOwl\Admin\Providers\AdminServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
     ],

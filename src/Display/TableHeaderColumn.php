@@ -21,6 +21,11 @@ class TableHeaderColumn implements TableHeaderColumnInterface
      */
     protected $orderable = true;
 
+    /**
+     * @var string|\Illuminate\View\View
+     */
+    protected $view = 'column.header';
+
     public function __construct()
     {
         $this->setHtmlAttribute('class', 'row-header');
@@ -67,6 +72,26 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     }
 
     /**
+     * @return \Illuminate\View\View|string
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
+     * @param \Illuminate\View\View|string $view
+     *
+     * @return $this
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -87,7 +112,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     {
         $this->setHtmlAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
 
-        return app('sleeping_owl.template')->view('column.header', $this->toArray());
+        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
     }
 
     /**

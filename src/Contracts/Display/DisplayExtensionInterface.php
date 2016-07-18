@@ -8,6 +8,18 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 interface DisplayExtensionInterface extends Arrayable
 {
     /**
+     * @return int
+     */
+    public function getOrder();
+
+    /**
+     * @param int $order
+     *
+     * @return $this
+     */
+    public function setOrder($order);
+
+    /**
      * @return DisplayInterface
      */
     public function getDisplay();

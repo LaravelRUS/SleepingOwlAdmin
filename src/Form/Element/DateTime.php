@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class DateTime extends NamedFormElement
 {
@@ -85,20 +86,18 @@ class DateTime extends NamedFormElement
         $this->seconds = $seconds;
     }
 
-    public function save()
+    /**
+     * @param Model $model
+     * @param string $attribute
+     * @param mixed $value
+     */
+    public function setValue(Model $model, $attribute, $value)
     {
-        $name = $this->getName();
-        $value = parent::getValue();
-
-        if (empty($value)) {
-            $value = null;
-        }
-
         if (! is_null($value)) {
             $value = Carbon::createFromFormat($this->getFormat(), $value);
         }
 
-        $this->getModel()->setAttribute($name, $value);
+        parent::setValue($model, $attribute, $value);
     }
 
     /**
@@ -131,6 +130,18 @@ class DateTime extends NamedFormElement
     public function setPickerFormat($pickerFormat)
     {
         $this->pickerFormat = $pickerFormat;
+    }
+
+    /**
+     * @return $this
+     *
+     * SMELLS This function does more than it says.
+     */
+    public function setCurrentDate()
+    {
+        $this->defaultValue = Carbon::now()->format($this->getFormat());
+
+        return $this;
     }
 
     /**

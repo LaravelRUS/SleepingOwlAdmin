@@ -2,75 +2,13 @@
 
 namespace SleepingOwl\Admin\Model;
 
-use BadMethodCallException;
 use Closure;
-use Gate;
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
-/**
- * @method bool creating(Closure $callback)
- * @method void created(Closure $callback)
- * @method bool updating(Closure $callback)
- * @method void updated(Closure $callback)
- * @method bool deleting(Closure $callback)
- * @method void deleted(Closure $callback)
- * @method bool restoring(Closure $callback)
- * @method void restored(Closure $callback)
- */
-class ModelConfiguration
+class ModelConfiguration extends ModelConfigurationManager
 {
-    /**
-     * Get the event dispatcher instance.
-     *
-     * @return \Illuminate\Contracts\Events\Dispatcher
-     */
-    public static function getEventDispatcher()
-    {
-        return static::$dispatcher;
-    }
-
-    /**
-     * Set the event dispatcher instance.
-     *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
-     * @return void
-     */
-    public static function setEventDispatcher(Dispatcher $dispatcher)
-    {
-        static::$dispatcher = $dispatcher;
-    }
-
-    /**
-     * The event dispatcher instance.
-     *
-     * @var \Illuminate\Contracts\Events\Dispatcher
-     */
-    protected static $dispatcher;
-
-    /**
-     * @var string
-     */
-    protected $class;
-
-    /**
-     * @var string
-     */
-    protected $alias;
-
-    /**
-     * @var string|null
-     */
-    protected $controllerClass;
-
-    /**
-     * @var string
-     */
-    protected $title;
-
     /**
      * @var string
      */
@@ -119,7 +57,7 @@ class ModelConfiguration
     /**
      * @var bool
      */
-    protected $checkAccess = false;
+    protected $destroyable = true;
 
     /**
      * @var Closure|null
@@ -130,6 +68,11 @@ class ModelConfiguration
      * @var Closure|null
      */
     protected $delete = true;
+
+    /**
+     * @var Closure|null
+     */
+    protected $destroy = true;
 
     /**
      * @var Closure|null
@@ -154,51 +97,12 @@ class ModelConfiguration
     /**
      * @var string
      */
+    protected $messageOnDestroy;
+
+    /**
+     * @var string
+     */
     protected $messageOnRestore;
-
-    /**
-     * @var RepositoryInterface;
-     */
-    protected $repository;
-
-    /**
-     * ModelConfiguration constructor.
-     *
-     * @param string $class
-     */
-    public function __construct($class)
-    {
-        $this->class = $class;
-        $this->setDefaultAlias();
-    }
-
-    /**
-     * @return RepositoryInterface
-     */
-    public function getRepository()
-    {
-        if (is_null($this->repository)) {
-            $this->repository = app(RepositoryInterface::class, [$this->getClass()]);
-        }
-
-        return $this->repository;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
 
     /**
      * @param string $alias
@@ -210,22 +114,6 @@ class ModelConfiguration
         $this->alias = $alias;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        if (is_null($this->title)) {
-            $title = str_replace('_', ' ', $this->getDefaultClassTitle());
-
-            $this->setTitle(
-                ucwords($title)
-            );
-        }
-
-        return $this->title;
     }
 
     /**
@@ -246,7 +134,7 @@ class ModelConfiguration
     public function getCreateTitle()
     {
         if (is_null($this->createTitle)) {
-            return trans('sleeping_owl::lang.model.create', ['title' => $this->getTitle()]);
+            return parent::getCreateTitle();
         }
 
         return $this->createTitle;
@@ -270,7 +158,7 @@ class ModelConfiguration
     public function getEditTitle()
     {
         if (is_null($this->editTitle)) {
-            return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
+            return parent::getEditTitle();
         }
 
         return $this->editTitle;
@@ -281,9 +169,9 @@ class ModelConfiguration
      *
      * @return $this
      */
-    public function setUpdateTitle($title)
+    public function setEditTitle($title)
     {
-        $this->updateTitle = $title;
+        $this->editTitle = $title;
 
         return $this;
     }
@@ -302,6 +190,14 @@ class ModelConfiguration
     public function getDelete()
     {
         return $this->delete;
+    }
+
+    /**
+     * @return Closure|null
+     */
+    public function getDestroy()
+    {
+        return $this->destroy;
     }
 
     /**
@@ -382,6 +278,18 @@ class ModelConfiguration
      *
      * @return $this
      */
+    public function onDestroy(Closure $callback = null)
+    {
+        $this->destroy = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
     public function onRestore(Closure $callback = null)
     {
         $this->restore = $callback;
@@ -406,7 +314,7 @@ class ModelConfiguration
      */
     public function isDisplayable()
     {
-        return $this->displayable && $this->can('display', $this->makeModel());
+        return $this->displayable && parent::isDisplayable();
     }
 
     /**
@@ -428,7 +336,7 @@ class ModelConfiguration
             return false;
         }
 
-        return $this->creatable && $this->can('create', $this->makeModel());
+        return $this->creatable && parent::isCreatable($this->getModel());
     }
 
     /**
@@ -452,7 +360,7 @@ class ModelConfiguration
             return false;
         }
 
-        return $this->editable && $this->can('edit', $model);
+        return $this->editable && parent::isEditable($model);
     }
 
     /**
@@ -472,7 +380,7 @@ class ModelConfiguration
      */
     public function isDeletable(Model $model)
     {
-        return $this->deletable && $this->can('delete', $model);
+        return $this->deletable && parent::isDeletable($model);
     }
 
     /**
@@ -490,12 +398,29 @@ class ModelConfiguration
      *
      * @return bool
      */
+    public function isDestroyable(Model $model)
+    {
+        return $this->destroyable && parent::isDestroyable($model);
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableDestroying()
+    {
+        $this->destroyable = false;
+
+        return $this;
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return bool
+     */
     public function isRestorable(Model $model)
     {
-        return
-            $this->restorable
-            && $this->can('restore', $model)
-            && $this->isRestorableModel();
+        return $this->restorable && parent::isRestorable($model);
     }
 
     /**
@@ -503,7 +428,7 @@ class ModelConfiguration
      */
     public function isRestorableModel()
     {
-        return $this->restorable && $this->getRepository()->isRestorable();
+        return $this->restorable && parent::isRestorableModel();
     }
 
     /**
@@ -514,21 +439,6 @@ class ModelConfiguration
         $this->restorable = false;
 
         return $this;
-    }
-
-    /**
-     * @param string $action
-     * @param Model  $model
-     *
-     * @return bool
-     */
-    public function can($action, Model $model)
-    {
-        if (! $this->checkAccess) {
-            return true;
-        }
-
-        return Gate::allows($action, $model);
     }
 
     /**
@@ -642,6 +552,18 @@ class ModelConfiguration
     /**
      * @param $id
      *
+     * @return mixed
+     */
+    public function fireDestroy($id)
+    {
+        if (is_callable($this->getDestroy())) {
+            return app()->call($this->getDestroy(), [$id]);
+        }
+    }
+
+    /**
+     * @param $id
+     *
      * @return bool|mixed
      */
     public function fireRestore($id)
@@ -654,84 +576,12 @@ class ModelConfiguration
     }
 
     /**
-     * @param array $parameters
-     *
-     * @return string
-     */
-    public function getDisplayUrl(array $parameters = [])
-    {
-        array_unshift($parameters, $this->getAlias());
-
-        return route('admin.model', $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
-    public function getCreateUrl(array $parameters = [])
-    {
-        array_unshift($parameters, $this->getAlias());
-
-        return route('admin.model.create', $parameters);
-    }
-
-    /**
-     * @return string
-     */
-    public function getStoreUrl()
-    {
-        return route('admin.model.store', $this->getAlias());
-    }
-
-    /**
-     * @param string|int $id
-     *
-     * @return string
-     */
-    public function getEditUrl($id)
-    {
-        return route('admin.model.edit', [$this->getAlias(), $id]);
-    }
-
-    /**
-     * @param string|int $id
-     *
-     * @return string
-     */
-    public function getUpdateUrl($id)
-    {
-        return route('admin.model.update', [$this->getAlias(), $id]);
-    }
-
-    /**
-     * @param string|int $id
-     *
-     * @return string
-     */
-    public function getDeleteUrl($id)
-    {
-        return route('admin.model.destroy', [$this->getAlias(), $id]);
-    }
-
-    /**
-     * @param string|int $id
-     *
-     * @return string
-     */
-    public function getRestoreUrl($id)
-    {
-        return route('admin.model.restore', [$this->getAlias(), $id]);
-    }
-
-    /**
      * @return string
      */
     public function getMessageOnCreate()
     {
         if (is_null($this->messageOnUpdate)) {
-            $this->messageOnUpdate = trans('sleeping_owl::lang.message.created');
+            $this->messageOnUpdate = parent::getMessageOnCreate();
         }
 
         return $this->messageOnCreate;
@@ -751,7 +601,7 @@ class ModelConfiguration
     public function getMessageOnUpdate()
     {
         if (is_null($this->messageOnUpdate)) {
-            $this->messageOnUpdate = trans('sleeping_owl::lang.message.updated');
+            $this->messageOnUpdate = parent::getMessageOnUpdate();
         }
 
         return $this->messageOnUpdate;
@@ -775,10 +625,22 @@ class ModelConfiguration
     public function getMessageOnDelete()
     {
         if (is_null($this->messageOnDelete)) {
-            $this->messageOnDelete = trans('sleeping_owl::lang.message.deleted');
+            $this->messageOnDelete = parent::getMessageOnDelete();
         }
 
         return $this->messageOnDelete;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageOnDestroy()
+    {
+        if (is_null($this->messageOnDestroy)) {
+            $this->messageOnDestroy = parent::getMessageOnDestroy();
+        }
+
+        return $this->messageOnDestroy;
     }
 
     /**
@@ -794,12 +656,24 @@ class ModelConfiguration
     }
 
     /**
+     * @param string $messageOnDestroy
+     *
+     * @return $this
+     */
+    public function setMessageOnDestroy($messageOnDestroy)
+    {
+        $this->messageOnDestroy = $messageOnDestroy;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getMessageOnRestore()
     {
         if (is_null($this->messageOnRestore)) {
-            $this->messageOnRestore = trans('sleeping_owl::lang.message.restored');
+            $this->messageOnRestore = parent::getMessageOnRestore();
         }
 
         return $this->messageOnRestore;
@@ -818,22 +692,6 @@ class ModelConfiguration
     }
 
     /**
-     * @return null|string
-     */
-    public function hasCustomControllerClass()
-    {
-        return ! is_null($controller = $this->getControllerClass()) and class_exists($controller);
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getControllerClass()
-    {
-        return $this->controllerClass;
-    }
-
-    /**
      * @param string $controllerClass
      *
      * @return $this
@@ -843,93 +701,5 @@ class ModelConfiguration
         $this->controllerClass = $controllerClass;
 
         return $this;
-    }
-
-    protected function setDefaultAlias()
-    {
-        $this->setAlias(
-            $this->getDefaultClassTitle()
-        );
-    }
-
-    /**
-     * Fire the given event for the model.
-     *
-     * @param string     $event
-     * @param bool       $halt
-     * @param Model|null $model
-     *
-     * @return mixed
-     */
-    public function fireEvent($event, $halt = true, Model $model = null)
-    {
-        if (! isset(static::$dispatcher)) {
-            return true;
-        }
-
-        if (is_null($model)) {
-            $model = $this->makeModel();
-        }
-
-        // We will append the names of the class to the event to distinguish it from
-        // other model events that are fired, allowing us to listen on each model
-        // event set individually instead of catching event for all the models.
-        $event = "sleeping_owl.section.{$event}: ".$this->getClass();
-
-        $method = $halt ? 'until' : 'fire';
-
-        return static::$dispatcher->$method($event, [$this, $model]);
-    }
-
-    /**
-     * @param     $event
-     * @param     $callback
-     * @param int $priority
-     */
-    protected function registerEvent($event, $callback, $priority = 0)
-    {
-        if (isset(static::$dispatcher)) {
-            static::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDefaultClassTitle()
-    {
-        return snake_case(
-            str_plural(class_basename($this->getClass()))
-        );
-    }
-
-    /**
-     * @return Model
-     */
-    protected function makeModel()
-    {
-        return app($this->getClass());
-    }
-
-    /**
-     * Handle dynamic method calls into the model.
-     *
-     * @param $method
-     * @param $arguments
-     *
-     * @return mixed
-     */
-    public function __call($method, $arguments)
-    {
-        if (in_array($method, [
-            'creating', 'created', 'updating', 'updated',
-            'deleting', 'deleted', 'restoring', 'restored',
-        ])) {
-            array_unshift($arguments, $method);
-
-            return call_user_func_array([$this, 'registerEvent'], $arguments);
-        }
-
-        throw new BadMethodCallException($method);
     }
 }
