@@ -3,10 +3,13 @@
 		{{ $label }}
 
 		@if($required)
-		<span class="text-danger">*</span>
+			<span class="text-danger">*</span>
 		@endif
 	</label>
 
-	<textarea class="form-control ckeditor" name="{{ $name }}">{!! $value !!}</textarea>
+	<textarea class="form-control ckeditor"
+			  name="{{ $name }}"
+			  @if($readonly) disabled @endif
+	>{!! $value !!}</textarea>
 	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>

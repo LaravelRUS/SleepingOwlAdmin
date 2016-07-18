@@ -343,6 +343,10 @@ class Select extends NamedFormElement
             'class' => 'form-control input-select',
         ];
 
+        if ($this->isReadonly()) {
+            $attributes['disabled'] = 'disabled';
+        }
+
         if ($this->isNullable()) {
             $attributes['data-nullable'] = 'true';
         }

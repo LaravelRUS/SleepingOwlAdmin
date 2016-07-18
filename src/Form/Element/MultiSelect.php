@@ -90,6 +90,10 @@ class MultiSelect extends Select
             'multiple',
         ];
 
+        if ($this->isReadonly()) {
+            $attributes['disabled'] = 'disabled';
+        }
+
         if ($this->isTaggable()) {
             $attributes['class'] .= ' input-taggable';
         }
