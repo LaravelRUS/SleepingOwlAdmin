@@ -90,15 +90,15 @@ class DisplayTabbed implements DisplayInterface, FormInterface, FormElementInter
     public function setElements($elements)
     {
         if (is_callable($elements)) {
-            $tabs = call_user_func($elements, $this);
+            $elements = call_user_func($elements, $this);
         }
 
         if (is_array($elements)) {
-            foreach ($elements as $tab) {
+            foreach ($elements as $label => $tab) {
                 if ($tab instanceof TabInterface) {
                     $this->addElement($tab);
                 } else {
-                    $this->appendTab($tab);
+                    $this->appendTab($tab, $label);
                 }
             }
         }
