@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use SleepingOwl\Admin\AliasBinder;
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\AliasBinder;
 
 class AliasesServiceProvider extends ServiceProvider
 {
@@ -119,9 +119,10 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerForms()
     {
         $alias = (new AliasBinder())->register([
-            'form'   => \SleepingOwl\Admin\Form\FormDefault::class,
+            'form' => \SleepingOwl\Admin\Form\FormDefault::class,
+            'elements' => \SleepingOwl\Admin\Form\FormElements::class,
             'tabbed' => \SleepingOwl\Admin\Form\FormTabbed::class,
-            'panel'  => \SleepingOwl\Admin\Form\FormPanel::class,
+            'panel' => \SleepingOwl\Admin\Form\FormPanel::class,
         ]);
 
         $this->app->singleton('sleeping_owl.form', function () use ($alias) {
