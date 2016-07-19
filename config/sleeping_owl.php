@@ -157,26 +157,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
-    |--------------------------------------------------------------------------
-    |
-    | The service providers listed here will be automatically loaded on the
-    | request to your application. Feel free to add your own services to
-    | this array to grant expanded functionality to your applications.
-    |
-    */
-
-    'providers' => [
-        SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
-        KodiCMS\Assets\AssetsServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-        // App\Providers\AdminSectionsServiceProvider::class,
-        SleepingOwl\Admin\Providers\AdminServiceProvider::class,
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Class Aliases
     |--------------------------------------------------------------------------
     |
