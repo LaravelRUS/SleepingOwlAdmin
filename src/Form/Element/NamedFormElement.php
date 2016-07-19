@@ -2,15 +2,15 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
-use LogicException;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use LogicException;
+use Request;
+use SleepingOwl\Admin\Form\FormElement;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.
@@ -329,19 +329,24 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * HACK Needs refactoring and reasoning.
-     * @return mixed
+     * @return array|string
      */
-    public function getValue()
+    public function getValueFromRequest()
     {
         if (! is_null($value = Request::old($this->getPath()))) {
             return $value;
         }
 
-        // HACK This is not the right place for Request facade.
-        $input = Request::all();
+        return Request::input($this->getPath());
+    }
 
-        if (($value = array_get($input, $this->getPath())) !== null) {
+    /**
+     * HACK Needs refactoring and reasoning.
+     * @return mixed
+     */
+    public function getValue()
+    {
+        if (! is_null($value = $this->getValueFromRequest())) {
             return $value;
         }
 
@@ -425,8 +430,7 @@ abstract class NamedFormElement extends FormElement
     {
         $attribute = $this->getAttribute();
         $model = $this->getModel();
-
-        $value = $this->getValue();
+        $value = $this->getValueFromRequest();
 
         $relations = explode('.', $this->getPath());
         $count = count($relations);
