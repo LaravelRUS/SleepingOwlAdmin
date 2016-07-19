@@ -176,10 +176,11 @@ abstract class Display implements DisplayInterface
                 $template = app('sleeping_owl.template')->getViewPath($this->getView());
 
                 view()->composer($template, function (\Illuminate\View\View $view) use ($extension) {
-                    $view->getFactory()->inject(
-                        $extension->getPlacement(),
-                        app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render()
-                    );
+                    $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
+
+                    if (! empty($html)) {
+                        $view->getFactory()->inject($extension->getPlacement(), $html);
+                    }
                 });
             }
         });
