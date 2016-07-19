@@ -5,7 +5,11 @@
         @endif
         <div class="dd3-content">
 
-            {{{ $entry->$value }}}
+            @if (is_callable($value))
+                {{{ $value($entry) }}}
+            @else
+                {{{ $entry->{$value} }}}
+            @endif
 
             <div class="pull-right">
                 @foreach ($controls as $control)
