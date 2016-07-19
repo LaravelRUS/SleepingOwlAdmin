@@ -4,11 +4,13 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
@@ -33,7 +35,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $icon;
 
     /**
-     * @var DisplayInterface
+     * @var Renderable
      */
     protected $content;
 
@@ -133,7 +135,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @return DisplayInterface|FormInterface
+     * @return Renderable
      */
     public function getContent()
     {
@@ -259,5 +261,84 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function __toString()
     {
         return (string) $this->render();
+    }
+
+    /**
+     * Set currently rendered instance.
+     *
+     * @param Model $model
+     */
+    public function setModel(Model $model)
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            $this->getContent()->setModel($model);
+        }
+    }
+
+    /**
+     * @return Model $model
+     */
+    public function getModel()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getModel();
+        }
+    }
+
+    /**
+     * Get form item validation rules.
+     * @return array
+     */
+    public function getValidationRules()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getValidationRules();
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getValidationMessages();
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getValidationLabels();
+        }
+
+        return [];
+    }
+
+    /**
+     * Save form item.
+     */
+    public function save()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            $this->getContent()->save();
+        }
+    }
+
+    /**
+     * Save form item.
+     */
+    public function afterSave()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            $this->getContent()->afterSave();
+        }
     }
 }

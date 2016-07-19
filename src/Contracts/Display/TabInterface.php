@@ -4,8 +4,6 @@ namespace SleepingOwl\Admin\Contracts\Display;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 
 interface TabInterface extends Arrayable, Renderable, Initializable
@@ -31,7 +29,7 @@ interface TabInterface extends Arrayable, Renderable, Initializable
     public function getIcon();
 
     /**
-     * @return DisplayInterface|FormInterface
+     * @return Renderable
      */
     public function getContent();
 }
