@@ -38,5 +38,10 @@
     "psr-4": {
       "SleepingOwl\\Admin\\": "src/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-development": "4.x-dev"
+    }
   }
 }
