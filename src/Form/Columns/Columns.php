@@ -63,7 +63,7 @@ class Columns extends FormElements implements ColumnInterface
     {
         if (is_callable($element)) {
             $element = new Column($element());
-        } else if (is_array($element)) {
+        } elseif (is_array($element)) {
             $element = new Column($element);
         }
 

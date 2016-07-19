@@ -69,7 +69,7 @@ class FormElements extends FormElement implements ElementsInterface
     public function toArray()
     {
         return parent::toArray() + [
-            'items' => $this->getElements()
+            'items' => $this->getElements(),
         ];
     }
 }
