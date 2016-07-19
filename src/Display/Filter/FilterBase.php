@@ -8,7 +8,6 @@ use SleepingOwl\Admin\Contracts\FilterInterface;
 
 abstract class FilterBase implements FilterInterface
 {
-
     /**
      * @var string
      */

@@ -61,6 +61,4 @@ interface TreeRepositoryInterface extends RepositoryInterface
      * @param $data
      */
     public function reorder(array $data);
-
-
 }

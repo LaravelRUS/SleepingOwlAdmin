@@ -16,7 +16,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 
     /**
      * Lasychaser/Laravel-nestedset tree type
-     * https://github.com/lazychaser/laravel-nestedset
+     * https://github.com/lazychaser/laravel-nestedset.
      */
     const TreeTypeKalnoy = 1;
 

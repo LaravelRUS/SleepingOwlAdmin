@@ -57,7 +57,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setModelClass($class)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use($class) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($class) {
             if ($tab instanceof DisplayInterface) {
                 $tab->setModelClass($class);
             }
@@ -139,7 +139,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setAction($action)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use($action) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($action) {
             if ($tab instanceof FormInterface) {
                 $tab->setAction($action);
             }
@@ -151,7 +151,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setId($id)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use($id) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($id) {
             if ($tab instanceof FormInterface) {
                 $tab->setId($id);
             }
@@ -180,7 +180,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function saveForm(ModelConfigurationInterface $model)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use($model) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($model) {
             if ($tab instanceof FormInterface) {
                 $tab->saveForm($model);
             }
@@ -225,7 +225,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * Using in trait FormElements;
+     * Using in trait FormElements;.
      *
      * @param $object
      *

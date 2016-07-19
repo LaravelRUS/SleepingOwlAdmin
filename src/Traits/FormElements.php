@@ -32,7 +32,6 @@ trait FormElements
         return $this->elements;
     }
 
-
     /**
      * @param array $elements
      *
