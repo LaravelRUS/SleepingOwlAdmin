@@ -46,7 +46,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $reorderable = true;
 
     /**
-     * @var string
+     * @var string|callable
      */
     protected $value = 'title';
 
@@ -107,7 +107,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string $value
+     * @param string|callable $value
      *
      * @return $this
      */
