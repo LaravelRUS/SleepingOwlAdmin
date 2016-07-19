@@ -158,10 +158,6 @@ class Columns extends Extension implements Initializable, Renderable
 
     public function initialize()
     {
-        if ($this->isControlActive()) {
-            $this->push($this->getControlColumn());
-        }
-
         $this->all()->each(function (ColumnInterface $column) {
             $column->initialize();
         });
@@ -174,6 +170,10 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function render()
     {
+        if ($this->isControlActive()) {
+            $this->push($this->getControlColumn());
+        }
+
         $params = $this->toArray();
         $params['collection'] = $this->getDisplay()->getCollection();
 
