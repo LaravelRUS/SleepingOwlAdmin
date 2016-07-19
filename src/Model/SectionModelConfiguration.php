@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Model;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
@@ -54,17 +55,20 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $create = app()->call([$this, 'onCreate']);
-        if ($create instanceof DisplayInterface) {
-            $create->setModelClass($this->getClass());
-            $create->initialize();
+        $form = app()->call([$this, 'onCreate']);
+        if ($form instanceof DisplayInterface) {
+            $form->setModelClass($this->getClass());
         }
 
-        if ($create instanceof FormInterface) {
-            $create->setAction($this->getStoreUrl());
+        if ($form instanceof Initializable) {
+            $form->initialize();
         }
 
-        return $create;
+        if ($form instanceof FormInterface) {
+            $form->setAction($this->getStoreUrl());
+        }
+
+        return $form;
     }
 
     /**
@@ -78,30 +82,21 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $edit = app()->call([$this, 'onEdit'], ['id' => $id]);
-        if ($edit instanceof DisplayInterface) {
-            $edit->setModelClass($this->getClass());
-            $edit->initialize();
+        $form = app()->call([$this, 'onEdit'], ['id' => $id]);
+        if ($form instanceof DisplayInterface) {
+            $form->setModelClass($this->getClass());
         }
 
-        return $edit;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return $this
-     */
-    public function fireFullEdit($id)
-    {
-        $edit = $this->fireEdit($id);
-
-        if ($edit instanceof FormInterface) {
-            $edit->setAction($this->getUpdateUrl($id));
-            $edit->setId($id);
+        if ($form instanceof Initializable) {
+            $form->initialize();
         }
 
-        return $edit;
+        if ($form instanceof FormInterface) {
+            $form->setAction($this->getUpdateUrl($id));
+            $form->setId($id);
+        }
+
+        return $form;
     }
 
     /**

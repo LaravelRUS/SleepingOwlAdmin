@@ -169,7 +169,7 @@ class AdminController extends Controller
 
         $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
 
-        return $this->render($model, $model->fireFullEdit($id), $model->getEditTitle());
+        return $this->render($model, $model->fireEdit($id), $model->getEditTitle());
     }
 
     /**
@@ -186,7 +186,7 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $editForm = $model->fireFullEdit($id);
+        $editForm = $model->fireEdit($id);
         $nextAction = Request::input('next_action');
 
         $backUrl = $this->getBackUrl();

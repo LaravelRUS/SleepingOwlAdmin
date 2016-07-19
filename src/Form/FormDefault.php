@@ -106,7 +106,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             }
         });
 
-        $this->setHtmlAttribute('action', $this->getAction());
         $this->setHtmlAttribute('method', 'POST');
 
         $this->getButtons()->setModelConfiguration(
@@ -182,6 +181,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         if (is_null($this->action)) {
             $this->action = $action;
         }
+
+        $this->setHtmlAttribute('action', $this->action);
 
         return $this;
     }

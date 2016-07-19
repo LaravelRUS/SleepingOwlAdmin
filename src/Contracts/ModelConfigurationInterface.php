@@ -110,6 +110,7 @@ interface ModelConfigurationInterface
     public function fireEdit($id);
 
     /**
+     * @deprecated
      * @param int $id
      *
      * @return $this

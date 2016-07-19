@@ -256,6 +256,17 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @deprecated
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function fireFullEdit($id)
+    {
+        return $this->fireEdit($id);
+    }
+
+    /**
      * @param string $action
      * @param \Illuminate\Database\Eloquent\Model $model
      *

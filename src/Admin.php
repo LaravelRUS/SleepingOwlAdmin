@@ -73,7 +73,7 @@ class Admin
 
     /**
      * @param string $class
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     public function getModel($class)
     {
@@ -89,7 +89,7 @@ class Admin
     }
 
     /**
-     * @return ModelConfiguration[]
+     * @return ModelConfigurationInterface[]
      */
     public function getModels()
     {
