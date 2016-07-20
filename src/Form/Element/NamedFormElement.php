@@ -395,7 +395,7 @@ abstract class NamedFormElement extends FormElement
                 continue;
             }
 
-            $model = $this->getModel();
+            $model = $this->resolvePath()->getModel();
             $table = $model->getTable();
 
             $rule = 'unique:'.$table.','.$this->getAttribute();
@@ -407,6 +407,36 @@ abstract class NamedFormElement extends FormElement
         unset($rule);
 
         return [$this->getPath() => $rules];
+    }
+
+    /**
+     * Get model related to form element.
+     *
+     * @return mixed
+     */
+    public function resolvePath()
+    {
+        $model = $this->getModel();
+        $relations = explode('.', $this->getPath());
+        $count = count($relations);
+
+        if ($count === 1) {
+            return $model;
+        }
+
+        foreach ($relations as $relation) {
+            if ($model->{$relation} instanceof Model) {
+                $model = $model->{$relation};
+                continue;
+            }
+
+            if ($count === 2) {
+                break;
+            }
+
+            throw new LogicException("Can not fetch value for field '{$this->getPath()}'. Probably relation definition is incorrect");
+        }
+        return $model;
     }
 
     /**
