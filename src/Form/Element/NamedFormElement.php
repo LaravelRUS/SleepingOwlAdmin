@@ -395,18 +395,51 @@ abstract class NamedFormElement extends FormElement
                 continue;
             }
 
-            $model = $this->getModel();
+            $model = $this->resolvePath();
             $table = $model->getTable();
 
-            $rule = 'unique:'.$table.','.$this->getAttribute();
-
+            $rule = 'unique:' . $table . ',' . $this->getAttribute();
             if ($model->exists()) {
-                $rule .= ','.$model->getKey();
+                $rule .= ',' . $model->getKey();
             }
         }
         unset($rule);
 
         return [$this->getPath() => $rules];
+    }
+
+    /**
+     * Get model related to form element.
+     *
+     * @return mixed
+     */
+    public function resolvePath()
+    {
+        $model = $this->getModel();
+        $relations = explode('.', $this->getPath());
+        $count = count($relations);
+
+        foreach ($relations as $relation) {
+            if ($count === 1) {
+                return $model->getModel();
+            }
+            if($model->exists() && $model->{$relation} instanceof Model){
+                $model = $model->{$relation};
+                if($model != null){
+                    $count--;
+                    continue;
+                }
+            }
+
+            if ($model->{$relation}() instanceof BelongsTo) {
+                $model = $model->{$relation}()->getModel();
+                $count--;
+                continue;
+            }
+
+            break;
+        }
+        throw new LogicException("Can not resolve path for field '{$this->getPath()}'. Probably relation definition is incorrect");
     }
 
     /**
