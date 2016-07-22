@@ -277,11 +277,19 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      */
     protected function detectType()
     {
-        if ($this->getModel() instanceof \Baum\Node) {
+        $model = $this->getModel();
+
+        // Check for package baum/baum
+        if ($model instanceof \Baum\Node) {
             return $this->setType(static::TreeTypeBaum);
         }
 
-        if ($this->getModel() instanceof \Kalnoy\Nestedset\Node) {
+        // Check for package kalnoy/nestedset
+        if (class_exists('Kalnoy\Nestedset\Node') and $model instanceof \Kalnoy\Nestedset\Node) {
+            return $this->setType(static::TreeTypeKalnoy);
+        } else if (function_exists('trait_uses_recursive') and $traits = trait_uses_recursive($model) and in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+            return $this->setType(static::TreeTypeKalnoy);
+        } else if ($traits = class_uses($model) and in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             return $this->setType(static::TreeTypeKalnoy);
         }
 
