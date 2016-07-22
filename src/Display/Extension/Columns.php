@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Display\Column\Control;
-use SleepingOwl\Admin\Contracts\Initializable;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Column\Control;
 
 class Columns extends Extension implements Initializable, Renderable
 {
@@ -24,6 +24,11 @@ class Columns extends Extension implements Initializable, Renderable
      * @var string
      */
     protected $view = 'display.extensions.columns';
+
+    /**
+     * @var bool
+     */
+    protected $initialize = false;
 
     /**
      * @var Control
@@ -81,6 +86,14 @@ class Columns extends Extension implements Initializable, Renderable
     public function disableControls()
     {
         $this->controlActive = false;
+
+        if ($this->isInitialize()) {
+            $this->columns = $this->columns->filter(function ($column) {
+                $class = get_class($this->getControlColumn());
+
+                return ! ($column instanceOf $class);
+            });
+        }
 
         return $this;
     }
@@ -144,6 +157,14 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
+     * @return boolean
+     */
+    public function isInitialize()
+    {
+        return $this->initialize;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -161,6 +182,12 @@ class Columns extends Extension implements Initializable, Renderable
         $this->all()->each(function (ColumnInterface $column) {
             $column->initialize();
         });
+
+        if ($this->isControlActive()) {
+            $this->push($this->getControlColumn());
+        }
+
+        $this->initialize = true;
     }
 
     /**
@@ -170,10 +197,6 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function render()
     {
-        if ($this->isControlActive()) {
-            $this->push($this->getControlColumn());
-        }
-
         $params = $this->toArray();
         $params['collection'] = $this->getDisplay()->getCollection();
 
