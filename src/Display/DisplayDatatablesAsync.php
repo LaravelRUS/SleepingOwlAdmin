@@ -7,6 +7,8 @@ use Route;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Display\Column\Email;
+use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
@@ -62,6 +64,15 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param string|null $name
      */
     protected $distinct;
+
+    /**
+     * @var array
+     */
+    protected $searchableColumns = [
+        Text::class,
+        Link::class,
+        Email::class,
+    ];
 
     /**
      * DisplayDatatablesAsync constructor.
@@ -215,7 +226,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $query->where(function ($query) use ($search) {
             $columns = $this->getColumns()->all();
             foreach ($columns as $column) {
-                if ($column instanceof Text) {
+                if (in_array(get_class($column), $this->searchableColumns)) {
                     $name = $column->getName();
                     if ($this->repository->hasColumn($name)) {
                         $query->orWhere($name, 'like', '%'.$search.'%');
