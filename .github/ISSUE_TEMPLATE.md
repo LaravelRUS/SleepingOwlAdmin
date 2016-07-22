@@ -1,5 +1,11 @@
-Note: for support questions, please use gitter: 
-https://gitter.im/LaravelRUS/SleepingOwlAdmin
+*Note: for support questions, please use gitter: https://gitter.im/LaravelRUS/SleepingOwlAdmin*
+
+**Read this before asking (Прочитай, прежде чем задавать вопросы):**
+
+ - [How do I ask a good question?](http://programmers.stackexchange.com/help/how-to-ask)
+ - [How to Ask Programming Questions](https://www.propublica.org/nerds/item/how-to-ask-programming-questions)
+ - [Молодым программистам на заметку: Как правильно писать «Помоги»](https://habrahabr.ru/post/127967/)
+ - [Как задавать вопросы разработчику](https://mkdev.me/posts/kak-zadavat-voprosy-mentoru-ili-starshemu-razrabotchiku)
 
 Do you want to request a feature or report a bug?
 
