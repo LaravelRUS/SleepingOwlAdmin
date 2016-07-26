@@ -93,9 +93,7 @@ class DateTime extends NamedFormElement
      */
     public function setValue(Model $model, $attribute, $value)
     {
-        if (! is_null($value)) {
-            $value = Carbon::createFromFormat($this->getFormat(), $value);
-        }
+        $value = ! empty($value) ? Carbon::createFromFormat($this->getFormat(), $value) : null;
 
         parent::setValue($model, $attribute, $value);
     }
