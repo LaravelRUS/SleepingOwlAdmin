@@ -2,7 +2,8 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Html\HtmlServiceProvider;
+use App\Providers\AdminSectionsServiceProvider;
+use Collective\Html\HtmlServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use KodiCMS\Assets\AssetsServiceProvider;
 use SleepingOwl\Admin\Admin;
@@ -61,6 +62,11 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
         foreach ($providers as $providerClass) {
             $this->app->register($providerClass);
+        }
+
+        /* Workaround to allow use ServiceProvider-based configurations in old fashion */
+        if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
+            $this->app->register(AdminSectionsServiceProvider::class);
         }
     }
 
