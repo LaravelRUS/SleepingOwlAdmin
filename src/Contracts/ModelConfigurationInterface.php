@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 interface ModelConfigurationInterface
 {
@@ -226,4 +228,12 @@ interface ModelConfigurationInterface
      * @return null|string
      */
     public function getControllerClass();
+
+    /**
+     * @param int $priority
+     * @param string|\Closure|BadgeInterface $badge
+     *
+     * @return PageInterface
+     */
+    public function addToNavigation($priority = 100, $badge = null);
 }

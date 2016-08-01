@@ -3,10 +3,17 @@
 namespace SleepingOwl\Admin\Model;
 
 use Closure;
+use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\NavigationInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
@@ -104,6 +111,36 @@ class ModelConfiguration extends ModelConfigurationManager
      * @var string
      */
     protected $messageOnRestore;
+
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * ModelConfigurationManager constructor.
+     *
+     * @param Dispatcher $dispatcher
+     * @param TranslatorInterface $translator
+     * @param UrlGenerator $urlGenerator
+     * @param RepositoryInterface $repository
+     * @param NavigationInterface $navigation
+     * @param Gate $gate
+     * @param Container $container
+     */
+    public function __construct(Dispatcher $dispatcher,
+                                TranslatorInterface $translator,
+                                UrlGenerator $urlGenerator,
+                                RepositoryInterface $repository,
+                                NavigationInterface $navigation,
+                                Gate $gate,
+                                Container $container)
+    {
+        parent::__construct($dispatcher, $translator, $urlGenerator, $repository, $navigation, $gate);
+
+        $this->container = $container;
+    }
+
 
     /**
      * @param string $alias
@@ -337,7 +374,7 @@ class ModelConfiguration extends ModelConfigurationManager
             return false;
         }
 
-        return $this->creatable && parent::isCreatable($this->getModel());
+        return $this->creatable && parent::isCreatable();
     }
 
     /**
@@ -468,10 +505,10 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireDisplay()
     {
         if (! is_callable($this->display)) {
-            return;
+            return null;
         }
 
-        $display = app()->call($this->display);
+        $display = $this->container->call($this->display);
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
             $display->initialize();
@@ -486,10 +523,10 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireCreate()
     {
         if (! is_callable($this->create)) {
-            return;
+            return null;
         }
 
-        $form = app()->call($this->create);
+        $form = $this->container->call($this->create);
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -513,10 +550,10 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireEdit($id)
     {
         if (! is_callable($this->edit)) {
-            return;
+            return null;
         }
 
-        $form = app()->call($this->edit, ['id' => $id]);
+        $form = $this->container->call($this->edit, ['id' => $id]);
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -541,7 +578,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireDelete($id)
     {
         if (is_callable($this->getDelete())) {
-            return app()->call($this->getDelete(), [$id]);
+            return $this->container->call($this->getDelete(), [$id]);
         }
     }
 
@@ -553,7 +590,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireDestroy($id)
     {
         if (is_callable($this->getDestroy())) {
-            return app()->call($this->getDestroy(), [$id]);
+            return $this->container->call($this->getDestroy(), [$id]);
         }
     }
 
@@ -565,7 +602,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireRestore($id)
     {
         if (is_callable($this->getRestore())) {
-            return app()->call($this->getRestore(), [$id]);
+            return $this->container->call($this->getRestore(), [$id]);
         }
 
         return $this->getRestore();

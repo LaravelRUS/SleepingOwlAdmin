@@ -4,6 +4,8 @@ namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Display;
+use SleepingOwl\Admin\Form;
 
 class AliasesServiceProvider extends ServiceProvider
 {
@@ -21,10 +23,10 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerColumnFilters()
     {
         $alias = (new AliasBinder())->register([
-            'text'   => \SleepingOwl\Admin\Display\Column\Filter\Text::class,
-            'date'   => \SleepingOwl\Admin\Display\Column\Filter\Date::class,
-            'range'  => \SleepingOwl\Admin\Display\Column\Filter\Range::class,
-            'select' => \SleepingOwl\Admin\Display\Column\Filter\Select::class,
+            'text'   => Display\Column\Filter\Text::class,
+            'date'   => Display\Column\Filter\Date::class,
+            'range'  => Display\Column\Filter\Range::class,
+            'select' => Display\Column\Filter\Select::class,
         ]);
 
         $this->app->singleton('sleeping_owl.column_filter', function () use ($alias) {
@@ -35,12 +37,12 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerDisplays()
     {
         $alias = (new AliasBinder())->register([
-            'datatables'      => \SleepingOwl\Admin\Display\DisplayDatatables::class,
-            'datatablesAsync' => \SleepingOwl\Admin\Display\DisplayDatatablesAsync::class,
-            'tab'             => \SleepingOwl\Admin\Display\DisplayTab::class,
-            'tabbed'          => \SleepingOwl\Admin\Display\DisplayTabbed::class,
-            'table'           => \SleepingOwl\Admin\Display\DisplayTable::class,
-            'tree'            => \SleepingOwl\Admin\Display\DisplayTree::class,
+            'datatables'      => Display\DisplayDatatables::class,
+            'datatablesAsync' => Display\DisplayDatatablesAsync::class,
+            'tab'             => Display\DisplayTab::class,
+            'tabbed'          => Display\DisplayTabbed::class,
+            'table'           => Display\DisplayTable::class,
+            'tree'            => Display\DisplayTree::class,
         ]);
 
         $this->app->singleton('sleeping_owl.display', function () use ($alias) {
@@ -51,21 +53,21 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerColumns()
     {
         $alias = (new AliasBinder())->register([
-            'action'      => \SleepingOwl\Admin\Display\Column\Action::class,
-            'checkbox'    => \SleepingOwl\Admin\Display\Column\Checkbox::class,
-            'control'     => \SleepingOwl\Admin\Display\Column\Control::class,
-            'count'       => \SleepingOwl\Admin\Display\Column\Count::class,
-            'custom'      => \SleepingOwl\Admin\Display\Column\Custom::class,
-            'datetime'    => \SleepingOwl\Admin\Display\Column\DateTime::class,
-            'filter'      => \SleepingOwl\Admin\Display\Column\Filter::class,
-            'image'       => \SleepingOwl\Admin\Display\Column\Image::class,
-            'lists'       => \SleepingOwl\Admin\Display\Column\Lists::class,
-            'order'       => \SleepingOwl\Admin\Display\Column\Order::class,
-            'text'        => \SleepingOwl\Admin\Display\Column\Text::class,
-            'link'        => \SleepingOwl\Admin\Display\Column\Link::class,
-            'relatedLink' => \SleepingOwl\Admin\Display\Column\RelatedLink::class,
-            'email'       => \SleepingOwl\Admin\Display\Column\Email::class,
-            'treeControl' => \SleepingOwl\Admin\Display\Column\TreeControl::class,
+            'action'      => Display\Column\Action::class,
+            'checkbox'    => Display\Column\Checkbox::class,
+            'control'     => Display\Column\Control::class,
+            'count'       => Display\Column\Count::class,
+            'custom'      => Display\Column\Custom::class,
+            'datetime'    => Display\Column\DateTime::class,
+            'filter'      => Display\Column\Filter::class,
+            'image'       => Display\Column\Image::class,
+            'lists'       => Display\Column\Lists::class,
+            'order'       => Display\Column\Order::class,
+            'text'        => Display\Column\Text::class,
+            'link'        => Display\Column\Link::class,
+            'relatedLink' => Display\Column\RelatedLink::class,
+            'email'       => Display\Column\Email::class,
+            'treeControl' => Display\Column\TreeControl::class,
         ]);
 
         $this->app->singleton('sleeping_owl.table.column', function () use ($alias) {
@@ -76,7 +78,7 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerColumnEditable()
     {
         $alias = (new AliasBinder())->register([
-            'checkbox'    => \SleepingOwl\Admin\Display\Column\Editable\Checkbox::class,
+            'checkbox'    => Display\Column\Editable\Checkbox::class,
         ]);
 
         $this->app->singleton('sleeping_owl.table.column.editable', function () use ($alias) {
@@ -87,28 +89,28 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerFormElements()
     {
         $alias = (new AliasBinder())->register([
-            'columns'     => \SleepingOwl\Admin\Form\Columns\Columns::class,
-            'text'        => \SleepingOwl\Admin\Form\Element\Text::class,
-            'time'        => \SleepingOwl\Admin\Form\Element\Time::class,
-            'date'        => \SleepingOwl\Admin\Form\Element\Date::class,
-            'timestamp'   => \SleepingOwl\Admin\Form\Element\Timestamp::class,
-            'textaddon'   => \SleepingOwl\Admin\Form\Element\TextAddon::class,
-            'select'      => \SleepingOwl\Admin\Form\Element\Select::class,
-            'multiselect' => \SleepingOwl\Admin\Form\Element\MultiSelect::class,
-            'hidden'      => \SleepingOwl\Admin\Form\Element\Hidden::class,
-            'checkbox'    => \SleepingOwl\Admin\Form\Element\Checkbox::class,
-            'ckeditor'    => \SleepingOwl\Admin\Form\Element\CKEditor::class,
-            'custom'      => \SleepingOwl\Admin\Form\Element\Custom::class,
-            'password'    => \SleepingOwl\Admin\Form\Element\Password::class,
-            'textarea'    => \SleepingOwl\Admin\Form\Element\Textarea::class,
-            'view'        => \SleepingOwl\Admin\Form\Element\View::class,
-            'image'       => \SleepingOwl\Admin\Form\Element\Image::class,
-            'images'      => \SleepingOwl\Admin\Form\Element\Images::class,
-            'file'        => \SleepingOwl\Admin\Form\Element\File::class,
-            'radio'       => \SleepingOwl\Admin\Form\Element\Radio::class,
-            'wysiwyg'     => \SleepingOwl\Admin\Form\Element\Wysiwyg::class,
-            'upload'      => \SleepingOwl\Admin\Form\Element\Upload::class,
-            'html'        => \SleepingOwl\Admin\Form\Element\Html::class,
+            'columns'     => Form\Columns\Columns::class,
+            'text'        => Form\Element\Text::class,
+            'time'        => Form\Element\Time::class,
+            'date'        => Form\Element\Date::class,
+            'timestamp'   => Form\Element\Timestamp::class,
+            'textaddon'   => Form\Element\TextAddon::class,
+            'select'      => Form\Element\Select::class,
+            'multiselect' => Form\Element\MultiSelect::class,
+            'hidden'      => Form\Element\Hidden::class,
+            'checkbox'    => Form\Element\Checkbox::class,
+            'ckeditor'    => Form\Element\CKEditor::class,
+            'custom'      => Form\Element\Custom::class,
+            'password'    => Form\Element\Password::class,
+            'textarea'    => Form\Element\Textarea::class,
+            'view'        => Form\Element\View::class,
+            'image'       => Form\Element\Image::class,
+            'images'      => Form\Element\Images::class,
+            'file'        => Form\Element\File::class,
+            'radio'       => Form\Element\Radio::class,
+            'wysiwyg'     => Form\Element\Wysiwyg::class,
+            'upload'      => Form\Element\Upload::class,
+            'html'        => Form\Element\Html::class,
         ]);
 
         $this->app->singleton('sleeping_owl.form.element', function () use ($alias) {
@@ -119,10 +121,10 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerForms()
     {
         $alias = (new AliasBinder())->register([
-            'form' => \SleepingOwl\Admin\Form\FormDefault::class,
-            'elements' => \SleepingOwl\Admin\Form\FormElements::class,
-            'tabbed' => \SleepingOwl\Admin\Form\FormTabbed::class,
-            'panel' => \SleepingOwl\Admin\Form\FormPanel::class,
+            'form' => Form\FormDefault::class,
+            'elements' => Form\FormElements::class,
+            'tabbed' => Form\FormTabbed::class,
+            'panel' => Form\FormPanel::class,
         ]);
 
         $this->app->singleton('sleeping_owl.form', function () use ($alias) {
@@ -133,10 +135,10 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerFilters()
     {
         $alias = (new AliasBinder())->register([
-            'field'   => \SleepingOwl\Admin\Display\Filter\FilterField::class,
-            'scope'   => \SleepingOwl\Admin\Display\Filter\FilterScope::class,
-            'custom'  => \SleepingOwl\Admin\Display\Filter\FilterCustom::class,
-            'related' => \SleepingOwl\Admin\Display\Filter\FilterRelated::class,
+            'field'   => Display\Filter\FilterField::class,
+            'scope'   => Display\Filter\FilterScope::class,
+            'custom'  => Display\Filter\FilterCustom::class,
+            'related' => Display\Filter\FilterRelated::class,
         ]);
 
         $this->app->singleton('sleeping_owl.display.filter', function () use ($alias) {

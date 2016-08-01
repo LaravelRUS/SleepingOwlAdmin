@@ -3,16 +3,22 @@
 namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Wysiwyg\ManagerInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 use SleepingOwl\Admin\Exceptions\WysiwygException;
 
-class Manager
+class Manager implements ManagerInterface
 {
     /**
-     * @var
+     * @var array
      */
     protected $config;
+
+    /**
+     * @var string
+     */
+    protected $defaultEditor;
 
     /**
      * Available wysiwyg editors.
@@ -21,17 +27,31 @@ class Manager
      */
     protected $filters;
 
-    public function __construct()
+    /**
+     * @var Factory
+     */
+    protected $factory;
+
+    /**
+     * Manager constructor.
+     * @param Factory $factory
+     * @param $config
+     * @param $defaultEditor
+     */
+    public function __construct(Factory $factory, $config, $defaultEditor)
     {
         $this->filters = new Collection();
+        $this->config = $config;
+        $this->defaultEditor = $defaultEditor;
+        $this->factory = $factory;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getDefaultEditorId()
     {
-        return config('sleeping_owl.wysiwyg.default', 'ckeditor');
+        return $this->defaultEditor;
     }
 
     /**
@@ -43,10 +63,10 @@ class Manager
      */
     public function register($editorId, WysiwygFilterInterface $filter = null, $name = null)
     {
-        $config = config('sleeping_owl.wysiwyg.'.$editorId, []);
+        $config = array_key_exists($editorId, $this->config) ? $this->config[$editorId] : [];
 
         $this->getFilters()->push(
-            $editor = new Editor($editorId, $name, $filter, $config)
+            $editor = $this->factory->make($editorId, $name, $filter, $config)
         );
 
         return $editor;

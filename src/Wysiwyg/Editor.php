@@ -2,11 +2,16 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
-use Meta;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Package;
 use Illuminate\Contracts\Support\Arrayable;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
+/**
+ * @method Editor js($handle = false, $src = null, $dependency = null, $footer = false)
+ * @method Editor css($handle = null, $src = null, $dependency = null, array $attributes = [])
+ */
 final class Editor implements WysiwygEditorInterface, Arrayable
 {
     /**
@@ -35,24 +40,31 @@ final class Editor implements WysiwygEditorInterface, Arrayable
     private $used = false;
 
     /**
-     * @var \KodiCMS\Assets\Package
+     * @var Package
      */
     private $package;
 
     /**
-     * @param string                      $id
-     * @param string|null                 $name
-     * @param WysiwygFilterInterface|null $filter
-     * @param array                       $config
+     * @var MetaInterface
      */
-    public function __construct($id, $name = null, WysiwygFilterInterface $filter = null, array $config = [])
+    private $meta;
+
+    /**
+     * @param string $id
+     * @param string $name
+     * @param WysiwygFilterInterface|null $filter
+     * @param Package $package
+     * @param MetaInterface $meta
+     * @param array $config
+     */
+    public function __construct($id, $name, WysiwygFilterInterface $filter, Package $package, MetaInterface $meta, array $config = [])
     {
         $this->id = $id;
-        $this->name = is_null($name) ? studly_case($id) : $name;
-        $this->filter = is_null($filter) ? $this->loadDefaultFilter() : $filter;
+        $this->package = $package;
+        $this->name = $name;
+        $this->filter = $filter;
         $this->config = $config;
-
-        $this->package = app('assets.packages')->add($id);
+        $this->meta = $meta;
     }
 
     /**
@@ -80,7 +92,7 @@ final class Editor implements WysiwygEditorInterface, Arrayable
     }
 
     /**
-     * @return \KodiCMS\Assets\Package
+     * @return Package
      */
     public function getPackage()
     {
@@ -115,7 +127,7 @@ final class Editor implements WysiwygEditorInterface, Arrayable
 
     public function load()
     {
-        Meta::loadPackage($this->getId());
+        $this->meta->loadPackage($this->getId());
 
         $this->used = true;
     }
@@ -147,13 +159,5 @@ final class Editor implements WysiwygEditorInterface, Arrayable
         }
 
         throw new \BadMethodCallException("Call to undefined method [{$method}]");
-    }
-
-    /**
-     * @return WysiwygFilterInterface
-     */
-    protected function loadDefaultFilter()
-    {
-        return app()->make(DummyFilter::class);
     }
 }

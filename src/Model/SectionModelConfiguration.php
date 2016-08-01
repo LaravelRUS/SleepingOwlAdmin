@@ -2,19 +2,54 @@
 
 namespace SleepingOwl\Admin\Model;
 
+use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\NavigationInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * ModelConfigurationManager constructor.
+     *
+     * @param Dispatcher $dispatcher
+     * @param TranslatorInterface $translator
+     * @param UrlGenerator $urlGenerator
+     * @param RepositoryInterface $repository
+     * @param NavigationInterface $navigation
+     * @param Gate $gate
+     * @param Container $container
+     */
+    public function __construct(Dispatcher $dispatcher,
+                                TranslatorInterface $translator,
+                                UrlGenerator $urlGenerator,
+                                RepositoryInterface $repository,
+                                NavigationInterface $navigation,
+                                Gate $gate, Container $container)
+    {
+        parent::__construct($dispatcher, $translator, $urlGenerator, $repository, $navigation, $gate);
+
+        $this->container = $container;
+    }
+
     /**
      * @return bool
      */
     public function isCreatable()
     {
-        return method_exists($this, 'onCreate') && parent::isCreatable($this->getModel());
+        return method_exists($this, 'onCreate') && parent::isCreatable();
     }
 
     /**
@@ -33,10 +68,10 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireDisplay()
     {
         if (! method_exists($this, 'onDisplay')) {
-            return;
+            return null;
         }
 
-        $display = app()->call([$this, 'onDisplay']);
+        $display = $this->container->call([$this, 'onDisplay']);
 
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
@@ -52,10 +87,10 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireCreate()
     {
         if (! method_exists($this, 'onCreate')) {
-            return;
+            return null;
         }
 
-        $form = app()->call([$this, 'onCreate']);
+        $form = $this->container->call([$this, 'onCreate']);
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -79,10 +114,10 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireEdit($id)
     {
         if (! method_exists($this, 'onEdit')) {
-            return;
+            return null;
         }
 
-        $form = app()->call([$this, 'onEdit'], ['id' => $id]);
+        $form = $this->container->call([$this, 'onEdit'], ['id' => $id]);
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -107,7 +142,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireDelete($id)
     {
         if (method_exists($this, 'onDelete')) {
-            return app()->call([$this, 'onDelete'], ['id' => $id]);
+            return $this->container->call([$this, 'onDelete'], ['id' => $id]);
         }
     }
 
@@ -119,7 +154,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireDestroy($id)
     {
         if (method_exists($this, 'onDestroy')) {
-            return app()->call([$this, 'onDestroy'], ['id' => $id]);
+            return $this->container->call([$this, 'onDestroy'], ['id' => $id]);
         }
     }
 
@@ -131,7 +166,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireRestore($id)
     {
         if (method_exists($this, 'onRestore')) {
-            return app()->call([$this, 'onRestore'], ['id' => $id]);
+            return $this->container->call([$this, 'onRestore'], ['id' => $id]);
         }
     }
 }

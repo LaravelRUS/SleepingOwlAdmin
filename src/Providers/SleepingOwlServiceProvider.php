@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Commands\InstallCommand;
 use SleepingOwl\Admin\Commands\SectionGenerate;
@@ -38,7 +39,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
     public function registerProviders()
     {
-        foreach (config('sleeping_owl.providers', []) as $providerClass) {
+        foreach ($this->app->make(Config::class)->get('sleeping_owl.providers', []) as $providerClass) {
             $this->app->register($providerClass);
         }
     }

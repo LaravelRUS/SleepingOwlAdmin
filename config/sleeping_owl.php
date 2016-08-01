@@ -167,12 +167,12 @@ return [
     */
 
     'providers' => [
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
         KodiCMS\Assets\AssetsServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         // App\Providers\AdminSectionsServiceProvider::class,
         SleepingOwl\Admin\Providers\AdminServiceProvider::class,
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
     ],
 
     /*

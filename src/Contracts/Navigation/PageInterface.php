@@ -10,7 +10,7 @@ interface PageInterface extends Renderable, Arrayable
     /**
      * @param string|array|PageInterface|null $page
      *
-     * @return Page
+     * @return PageInterface
      */
     public function addPage($page = null);
 
