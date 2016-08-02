@@ -2,9 +2,10 @@
 
 namespace SleepingOwl\Admin\Repository;
 
-use Cache;
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
-use Schema;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Schema\Builder;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class BaseRepository implements RepositoryInterface
@@ -22,25 +23,40 @@ class BaseRepository implements RepositoryInterface
     protected $model;
 
     /**
+     * @var Repository
+     */
+    protected $cache;
+
+    /**
+     * @var Builder
+     */
+    protected $schema;
+
+    /**
      * Eager loading relations.
      * @var string[]
      */
     protected $with = [];
 
     /**
-     * @param string $class
+     * @param Repository $cache
+     * @param Builder $schema
+     * @param string|Model $class
      */
-    public function __construct($class)
+    public function __construct(Repository $cache, Builder $schema, $class)
     {
         if ($class instanceof Model) {
             $this->class = get_class($class);
             $model = $class;
         } else {
             $this->class = $class;
-            $model = app($this->class);
+            $model = new $class;
         }
 
         $this->setModel($model);
+
+        $this->cache = $cache;
+        $this->schema = $schema;
     }
 
     /**
@@ -81,7 +97,7 @@ class BaseRepository implements RepositoryInterface
 
     /**
      * Get base query.
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function getQuery()
     {
@@ -178,8 +194,8 @@ class BaseRepository implements RepositoryInterface
     public function hasColumn($column)
     {
         $table = $this->getModel()->getTable();
-        $columns = Cache::remember('admin.columns.'.$table, 60, function () use ($table) {
-            return Schema::getColumnListing($table);
+        $columns = $this->cache->remember('admin.columns.'.$table, 60, function () use ($table) {
+            return $this->schema->getColumnListing($table);
         });
 
         return array_search($column, $columns) !== false;
@@ -190,6 +206,6 @@ class BaseRepository implements RepositoryInterface
      */
     public function isRestorable()
     {
-        return in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($this->class));
+        return in_array(SoftDeletes::class, class_uses_recursive($this->class));
     }
 }

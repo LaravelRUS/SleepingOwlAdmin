@@ -3,7 +3,10 @@
 namespace SleepingOwl\Admin\Repository;
 
 use Exception;
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Builder;
 use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 
 class TreeRepository extends BaseRepository implements TreeRepositoryInterface
@@ -50,11 +53,13 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     protected $rootParentId = null;
 
     /**
-     * @param string $class
+     * @param Repository $cache
+     * @param Builder $schema
+     * @param string|Model $class
      */
-    public function __construct($class)
+    public function __construct(Repository $cache, Builder $schema, $class)
     {
-        parent::__construct($class);
+        parent::__construct($cache, $schema, $class);
 
         $this->detectType();
     }
@@ -66,7 +71,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+    public function getTree(Collection $collection)
     {
         switch ($this->getType()) {
             case static::TreeTypeBaum:
@@ -370,17 +375,19 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     protected function getChildren($collection, $id)
     {
         $parentField = $this->getParentField();
-        $result = [];
+        $result = new Collection();
+
+        /** @var Model $instance */
         foreach ($collection as $instance) {
             if ($instance->$parentField != $id) {
                 continue;
             }
 
             $instance->setRelation('children', $this->getChildren($collection, $instance->getKey()));
-            $result[] = $instance;
+            $result->push($instance);
         }
 
-        return new Collection($result);
+        return $result;
     }
 
     /**

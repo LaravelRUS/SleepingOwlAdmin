@@ -4,7 +4,9 @@ namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as IlluminateRouter;
@@ -106,6 +108,14 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(TableHeaderColumnInterface::class, TableHeaderColumn::class);
         $this->app->bind(RepositoryInterface::class, BaseRepository::class);
         $this->app->bind(FormButtonsInterface::class, FormButtons::class);
+
+        $this->app->when(RepositoryInterface::class)
+            ->needs(Builder::class)
+            ->give(function (Container $app) {
+                /** @var ConnectionResolverInterface $db */
+                $db = $app['db'];
+                return $db->connection($db->getDefaultConnection())->getSchemaBuilder();
+            });
     }
 
     protected function registerTemplate()

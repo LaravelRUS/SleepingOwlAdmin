@@ -311,7 +311,7 @@ abstract class Display implements DisplayInterface
      */
     protected function makeRepository()
     {
-        $repository = app($this->repositoryClass, [$this->modelClass]);
+        $repository = app($this->repositoryClass, ['class' => $this->modelClass]);
 
         if (! ($repository instanceof RepositoryInterface)) {
             throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
