@@ -22,10 +22,19 @@ class TemplateDefault implements TemplateInterface
      */
     protected $breadcrumbs = false;
 
+    /**
+     * @var string
+     */
     protected $title;
 
+    /**
+     * @var string
+     */
     protected $logo;
 
+    /**
+     * @var string
+     */
     protected $logoMini;
 
     /**

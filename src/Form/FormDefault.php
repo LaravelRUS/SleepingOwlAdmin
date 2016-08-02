@@ -94,7 +94,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         }
 
         $this->initialized = true;
-        $this->repository = app(RepositoryInterface::class, [$this->class]);
+        $this->repository = app(RepositoryInterface::class, ['class' => $this->class]);
 
         $this->setModel(app($this->class));
 

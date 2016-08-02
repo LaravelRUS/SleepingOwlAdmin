@@ -5,6 +5,9 @@ namespace SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
+/*
+ * TODO base class refactor
+ */
 class Page extends \KodiComponents\Navigation\Page implements PageInterface
 {
     /**

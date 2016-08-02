@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
+/*
+ * TODO base class refactor
+ */
 class Badge extends \KodiComponents\Navigation\Badge
 {
     /**

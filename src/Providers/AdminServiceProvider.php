@@ -8,6 +8,7 @@ use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Support\ServiceProvider;
@@ -16,6 +17,7 @@ use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\BreadcrumbsInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\NavigationInterface;
@@ -38,18 +40,19 @@ class AdminServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->registerBindings();
         $this->registerTemplate();
         $this->registerNavigation();
         $this->registerAdminSingleton();
         $this->registerRouter();
         $this->registerWysiwyg();
         $this->registerAliases();
-        $this->registerBindings();
 
         $this->app->booted(function () {
             $this->registerCustomRoutes();
             $this->registerDefaultRoutes();
             $this->registerNavigationFile();
+            $this->bootBreadcrumbs();
         });
     }
 
@@ -101,6 +104,16 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('sleeping_owl.navigation', Navigation::class);
         $this->app->alias('sleeping_owl.navigation', NavigationInterface::class);
+
+        $this->app->booted(function (Container $app) {
+            $app->make(NavigationInterface::class)->setCurrentUrl($app->make(Request::class)->url());
+        });
+
+        $this->app->singleton('sleeping_owl.breadcrumbs', Navigation\Breadcrumbs::class);
+        $this->app->alias('sleeping_owl.breadcrumbs', BreadcrumbsInterface::class);
+        $this->app->when(Navigation\Breadcrumbs::class)
+            ->needs(\DaveJamesMiller\Breadcrumbs\Manager::class)
+            ->give('breadcrumbs');
     }
 
     protected function registerBindings()
@@ -258,5 +271,12 @@ class AdminServiceProvider extends ServiceProvider
                 $this->app->make(NavigationInterface::class)->setFromArray($items);
             }
         }
+    }
+
+    protected function bootBreadcrumbs()
+    {
+        /** @var Navigation\Breadcrumbs $breadcrumb */
+        $breadcrumb = $this->app->make(BreadcrumbsInterface::class);
+        $this->app->call([$breadcrumb, 'boot']);
     }
 }
