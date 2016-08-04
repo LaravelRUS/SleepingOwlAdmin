@@ -1,0 +1,1 @@
+require('../../../../node_modules/x-editable/dist/bootstrap3-editable/js/bootstrap-editable');

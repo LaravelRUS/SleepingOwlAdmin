@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use KodiComponents\Support\HtmlAttributes;
 use Meta;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -10,7 +11,7 @@ use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
-    use SqlQueryOperators;
+    use SqlQueryOperators, HtmlAttributes;
 
     /**
      * @var string
@@ -40,7 +41,9 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      */
     public function toArray()
     {
-        return [];
+        return [
+            'attributes' => $this->htmlAttributesToString()
+        ];
     }
 
     /**

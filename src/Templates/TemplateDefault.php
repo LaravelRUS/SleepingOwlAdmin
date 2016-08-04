@@ -9,16 +9,7 @@ class TemplateDefault implements TemplateInterface
 {
     public function __construct()
     {
-        Meta::loadPackage([
-            'libraries',
-            'select2',
-            'metisMenu',
-            'admin-default',
-            'font-awesome',
-            'flow.js',
-            'Sortable',
-        ]);
-
+        Meta::loadPackage('admin-default');
         Meta::AddJs('adminScripts', route('admin.scripts'), ['libraries']);
     }
 
