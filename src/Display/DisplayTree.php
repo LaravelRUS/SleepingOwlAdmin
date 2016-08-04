@@ -2,14 +2,21 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
-use Request;
-use Route;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\RouterInterface;
 use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\Extension\Tree;
+use SleepingOwl\Admin\Factories\RepositoryFactory;
+use SleepingOwl\Admin\Http\Controllers\DisplayTreeController;
 use SleepingOwl\Admin\Repository\TreeRepository;
 
 /**
@@ -18,16 +25,20 @@ use SleepingOwl\Admin\Repository\TreeRepository;
  */
 class DisplayTree extends Display implements WithRoutesInterface
 {
-    public static function registerRoutes()
+    /**
+     * @param Router $router
+     */
+    public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.tree.reorder';
-        if (! Route::has($routeName)) {
-            Route::post('{adminModel}/reorder', ['as' => $routeName, function (ModelConfigurationInterface $model) {
-                $model->fireDisplay()->getRepository()->reorder(
-                    Request::input('data')
-                );
-            }]);
+
+        if ($router->has($routeName)) {
+            return;
         }
+
+        $router->post('{adminModel}/reorder')
+            ->uses(DisplayTreeController::class . '@reorder')
+            ->name($routeName);
     }
 
     /**
@@ -80,9 +91,35 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected $collection;
 
-    public function __construct()
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    protected $displayColumnFactory;
+
+    /**
+     * DisplayTree constructor.
+     * @param PackageManagerInterface $packageManager
+     * @param MetaInterface $meta
+     * @param RepositoryFactory $repositoryFactory
+     * @param AdminInterface $admin
+     * @param Factory $viewFactory
+     * @param Request $request
+     * @param DisplayColumnFactoryInterface $displayColumnFactory
+     */
+    public function __construct(PackageManagerInterface $packageManager,
+                                MetaInterface $meta,
+                                RepositoryFactory $repositoryFactory,
+                                AdminInterface $admin,
+                                Factory $viewFactory,
+                                Request $request,
+                                DisplayColumnFactoryInterface $displayColumnFactory)
     {
-        parent::__construct();
+        parent::__construct($packageManager, $meta, $repositoryFactory, $admin, $viewFactory);
+
+        $this->request = $request;
+        $this->displayColumnFactory = $displayColumnFactory;
 
         // TODO: move tree building to extension
         // $this->extend('tree', new Tree());
@@ -236,7 +273,7 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->admin->template()->view($this->getView(), $this->toArray());
     }
 
     /**
@@ -252,17 +289,9 @@ class DisplayTree extends Display implements WithRoutesInterface
             'url'         => $model->getDisplayUrl(),
             'value'       => $this->getValue(),
             'creatable'   => $model->isCreatable(),
-            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls'    => [app('sleeping_owl.table.column')->treeControl()],
+            'createUrl'   => $model->getCreateUrl($this->getParameters() + $this->request->all()),
+            'controls'    => [$this->displayColumnFactory->treeControl()],
         ];
-    }
-
-    /**
-     * @return ModelConfigurationInterface
-     */
-    protected function getModelConfiguration()
-    {
-        return app('sleeping_owl')->getModel($this->modelClass);
     }
 
     /**

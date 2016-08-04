@@ -20,7 +20,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     public function boot(AdminInterface $admin)
     {
-        $factory = new ModelConfigurationFactory($this->app);
+        /** @var ModelConfigurationFactory $factory */
+        $factory = $this->app->make(ModelConfigurationFactory::class);
 
         foreach ($this->sections as $model => $section) {
             if (class_exists($section)) {

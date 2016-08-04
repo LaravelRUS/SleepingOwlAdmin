@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use KodiCMS\Assets\Contracts\MetaInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 
 class Control extends TableColumn
@@ -25,10 +28,16 @@ class Control extends TableColumn
      * Control constructor.
      *
      * @param string|null $label
+     * @param TableHeaderColumnInterface $tableHeaderColumn
+     * @param AdminInterface $admin
+     * @param MetaInterface $meta
      */
-    public function __construct($label = null)
+    public function __construct($label = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta)
     {
-        parent::__construct($label);
+        parent::__construct($label, $tableHeaderColumn, $admin, $meta);
         $this->setOrderable(false);
 
         $this->setHtmlAttribute('class', 'text-right');

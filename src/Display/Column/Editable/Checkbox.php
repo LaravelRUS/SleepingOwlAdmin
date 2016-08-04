@@ -2,8 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
+use KodiCMS\Assets\Contracts\MetaInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class Checkbox extends NamedColumn implements ColumnEditableInterface
 {
@@ -23,15 +27,31 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     protected $uncheckedLabel;
 
     /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
      * Checkbox constructor.
      *
-     * @param             $name
+     * @param \Closure|null|string $name
      * @param string|null $checkedLabel
      * @param string|null $uncheckedLabel
+     * @param TableHeaderColumnInterface $tableHeaderColumn
+     * @param AdminInterface $admin
+     * @param MetaInterface $meta
+     * @param TranslatorInterface $translator
      */
-    public function __construct($name, $checkedLabel = null, $uncheckedLabel = null)
+    public function __construct($name,
+                                $checkedLabel = null,
+                                $uncheckedLabel = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta,
+                                TranslatorInterface $translator)
     {
-        parent::__construct($name);
+        parent::__construct($name, null, $tableHeaderColumn, $admin, $meta);
+        $this->translator = $translator;
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
@@ -43,7 +63,7 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     public function getCheckedLabel()
     {
         if (is_null($label = $this->checkedLabel)) {
-            $label = trans('sleeping_owl::lang.editable.checkbox.checked');
+            $label = $this->translator->trans('sleeping_owl::lang.editable.checkbox.checked');
         }
 
         return $label;
@@ -67,7 +87,7 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     public function getUncheckedLabel()
     {
         if (is_null($label = $this->uncheckedLabel)) {
-            $label = trans('sleeping_owl::lang.editable.checkbox.unchecked');
+            $label = $this->translator->trans('sleeping_owl::lang.editable.checkbox.unchecked');
         }
 
         return $label;

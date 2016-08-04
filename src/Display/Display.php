@@ -2,9 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -16,6 +21,7 @@ use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Scopes;
+use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Traits\Assets;
 
 /**
@@ -68,6 +74,11 @@ abstract class Display implements DisplayInterface
     protected $repository;
 
     /**
+     * @var RepositoryFactory
+     */
+    protected $repositoryFactory;
+
+    /**
      * @var DisplayExtensionInterface[]|Collection
      */
     protected $extensions;
@@ -78,10 +89,35 @@ abstract class Display implements DisplayInterface
     protected $initialized = false;
 
     /**
-     * Display constructor.
+     * @var AdminInterface
      */
-    public function __construct()
+    protected $admin;
+
+    /**
+     * @var Factory
+     */
+    protected $viewFactory;
+
+    /**
+     * Display constructor.
+     * @param PackageManagerInterface $packageManager
+     * @param MetaInterface $meta
+     * @param RepositoryFactory $repositoryFactory
+     * @param AdminInterface $admin
+     * @param Factory $viewFactory
+     */
+    public function __construct(PackageManagerInterface $packageManager,
+                                MetaInterface $meta,
+                                RepositoryFactory $repositoryFactory,
+                                AdminInterface $admin,
+                                Factory $viewFactory)
     {
+        $this->packageManager = $packageManager;
+        $this->meta = $meta;
+        $this->repositoryFactory = $repositoryFactory;
+        $this->admin = $admin;
+        $this->viewFactory = $viewFactory;
+
         $this->extensions = new Collection();
 
         $this->extend('actions', new Actions());
@@ -175,10 +211,11 @@ abstract class Display implements DisplayInterface
             if ($extension instanceof Placable) {
                 $template = app('sleeping_owl.template')->getViewPath($this->getView());
 
-                view()->composer($template, function (\Illuminate\View\View $view) use ($extension) {
-                    $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
+                $this->viewFactory->composer($template, function (View $view) use ($extension) {
+                    $html = $this->admin->template()->view($extension->getView(), $extension->toArray())->render();
 
                     if (! empty($html)) {
+                        /** @var \Illuminate\View\View $view */
                         $view->getFactory()->inject($extension->getPlacement(), $html);
                     }
                 });
@@ -257,7 +294,8 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param string|\Illuminate\View\View $view
+     * @param string|View $view
+     * @return $this
      */
     public function setView($view)
     {
@@ -302,7 +340,7 @@ abstract class Display implements DisplayInterface
      */
     protected function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->modelClass);
+        return $this->admin->getModel($this->modelClass);
     }
 
     /**
@@ -311,7 +349,7 @@ abstract class Display implements DisplayInterface
      */
     protected function makeRepository()
     {
-        $repository = app($this->repositoryClass, ['class' => $this->modelClass]);
+        $repository = $this->repositoryFactory->make($this->modelClass, $this->repositoryClass);
 
         if (! ($repository instanceof RepositoryInterface)) {
             throw new \Exception('Repository class must be instanced of [RepositoryInterface]');

@@ -7,10 +7,12 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Traits\FormElements;
 
 /**
@@ -26,12 +28,26 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     protected $view = 'display.tabbed';
 
     /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
+     * @var DisplayFactoryInterface
+     */
+    protected $displayFactory;
+
+    /**
      * DisplayTabbed constructor.
      *
      * @param Closure|TabInterface[] $tabs
+     * @param TemplateInterface $template
+     * @param DisplayFactoryInterface $displayFactory
      */
-    public function __construct($tabs = null)
+    public function __construct($tabs = null, TemplateInterface $template, DisplayFactoryInterface $displayFactory)
     {
+        $this->template = $template;
+        $this->displayFactory = $displayFactory;
         $this->elements = new Collection();
 
         if (is_array($tabs) or is_callable($tabs)) {
@@ -115,7 +131,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
-        $tab = app('sleeping_owl.display')->tab($display)->setLabel($label)->setActive($active);
+        $tab = $this->displayFactory->tab($display)->setLabel($label)->setActive($active);
 
         $this->addElement($tab);
 
@@ -173,6 +189,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 }
             }
         }
+
+        return null;
     }
 
     /**
@@ -210,10 +228,10 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view(
+        return $this->template->view(
             $this->getView(),
             $this->toArray()
-        );
+        )->render();
     }
 
     /**

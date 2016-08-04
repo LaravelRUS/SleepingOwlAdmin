@@ -2,15 +2,17 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Closure;
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 
 class Custom extends TableColumn
 {
     /**
      * Callback to render column contents.
-     * @var Closure
+     * @var \Closure
      */
     protected $callback;
 
@@ -23,18 +25,25 @@ class Custom extends TableColumn
      * Custom constructor.
      *
      * @param null|string $label
-     * @param Closure $callback
+     * @param \Closure $callback
+     * @param TableHeaderColumnInterface $tableHeaderColumn
+     * @param AdminInterface $admin
+     * @param MetaInterface $meta
      */
-    public function __construct($label = null, Closure $callback = null)
+    public function __construct($label = null,
+                                \Closure $callback = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta)
     {
-        parent::__construct($label);
+        parent::__construct($label, $tableHeaderColumn, $admin, $meta);
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }
     }
 
     /**
-     * @return Closure
+     * @return \Closure
      */
     public function getCallback()
     {
@@ -42,11 +51,11 @@ class Custom extends TableColumn
     }
 
     /**
-     * @param Closure $callback
+     * @param \Closure $callback
      *
      * @return $this
      */
-    public function setCallback(Closure $callback)
+    public function setCallback(\Closure $callback)
     {
         $this->callback = $callback;
 

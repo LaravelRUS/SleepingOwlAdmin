@@ -3,8 +3,21 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
+use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
 use SleepingOwl\Admin\Display;
+use SleepingOwl\Admin\Factories\DisplayColumnEditableFactory;
+use SleepingOwl\Admin\Factories\DisplayColumnFilterFactory;
+use SleepingOwl\Admin\Factories\DisplayColumnFactory;
+use SleepingOwl\Admin\Factories\DisplayFactory;
+use SleepingOwl\Admin\Factories\DisplayFilterFactory;
+use SleepingOwl\Admin\Factories\FormElementFactory;
+use SleepingOwl\Admin\Factories\FormFactory;
 use SleepingOwl\Admin\Form;
 
 class AliasesServiceProvider extends ServiceProvider
@@ -22,7 +35,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerColumnFilters()
     {
-        $alias = (new AliasBinder())->register([
+        $alias = (new DisplayColumnFilterFactory($this->app))->register([
             'text'   => Display\Column\Filter\Text::class,
             'date'   => Display\Column\Filter\Date::class,
             'range'  => Display\Column\Filter\Range::class,
@@ -32,11 +45,12 @@ class AliasesServiceProvider extends ServiceProvider
         $this->app->singleton('sleeping_owl.column_filter', function () use ($alias) {
             return $alias;
         });
+        $this->app->alias('sleeping_owl.column_filter', DisplayColumnFilterFactoryInterface::class);
     }
 
     protected function registerDisplays()
     {
-        $alias = (new AliasBinder())->register([
+        $alias = (new DisplayFactory($this->app))->register([
             'datatables'      => Display\DisplayDatatables::class,
             'datatablesAsync' => Display\DisplayDatatablesAsync::class,
             'tab'             => Display\DisplayTab::class,
@@ -48,11 +62,12 @@ class AliasesServiceProvider extends ServiceProvider
         $this->app->singleton('sleeping_owl.display', function () use ($alias) {
             return $alias;
         });
+        $this->app->alias('sleeping_owl.display', DisplayFactoryInterface::class);
     }
 
     protected function registerColumns()
     {
-        $alias = (new AliasBinder())->register([
+        $alias = (new DisplayColumnFactory($this->app))->register([
             'action'      => Display\Column\Action::class,
             'checkbox'    => Display\Column\Checkbox::class,
             'control'     => Display\Column\Control::class,
@@ -68,27 +83,30 @@ class AliasesServiceProvider extends ServiceProvider
             'relatedLink' => Display\Column\RelatedLink::class,
             'email'       => Display\Column\Email::class,
             'treeControl' => Display\Column\TreeControl::class,
+            'url'         => Display\Column\Url::class,
         ]);
 
         $this->app->singleton('sleeping_owl.table.column', function () use ($alias) {
             return $alias;
         });
+        $this->app->alias('sleeping_owl.table.column', DisplayColumnFactoryInterface::class);
     }
 
     protected function registerColumnEditable()
     {
-        $alias = (new AliasBinder())->register([
+        $alias = (new DisplayColumnEditableFactory($this->app))->register([
             'checkbox'    => Display\Column\Editable\Checkbox::class,
         ]);
 
         $this->app->singleton('sleeping_owl.table.column.editable', function () use ($alias) {
             return $alias;
         });
+        $this->app->alias('sleeping_owl.table.column.editable', DisplayColumnEditableFactoryInterface::class);
     }
 
     protected function registerFormElements()
     {
-        $alias = (new AliasBinder())->register([
+        $alias = (new FormElementFactory($this->app))->register([
             'columns'     => Form\Columns\Columns::class,
             'text'        => Form\Element\Text::class,
             'time'        => Form\Element\Time::class,
@@ -116,11 +134,12 @@ class AliasesServiceProvider extends ServiceProvider
         $this->app->singleton('sleeping_owl.form.element', function () use ($alias) {
             return $alias;
         });
+        $this->app->alias('sleeping_owl.form.element', FormElementFactoryInterface::class);
     }
 
     protected function registerForms()
     {
-        $alias = (new AliasBinder())->register([
+        $alias = (new FormFactory($this->app))->register([
             'form' => Form\FormDefault::class,
             'elements' => Form\FormElements::class,
             'tabbed' => Form\FormTabbed::class,
@@ -130,11 +149,12 @@ class AliasesServiceProvider extends ServiceProvider
         $this->app->singleton('sleeping_owl.form', function () use ($alias) {
             return $alias;
         });
+        $this->app->alias('sleeping_owl.form', FormFactoryInterface::class);
     }
 
     protected function registerFilters()
     {
-        $alias = (new AliasBinder())->register([
+        $alias = (new DisplayFilterFactory($this->app))->register([
             'field'   => Display\Filter\FilterField::class,
             'scope'   => Display\Filter\FilterScope::class,
             'custom'  => Display\Filter\FilterCustom::class,
@@ -144,5 +164,6 @@ class AliasesServiceProvider extends ServiceProvider
         $this->app->singleton('sleeping_owl.display.filter', function () use ($alias) {
             return $alias;
         });
+        $this->app->alias('sleeping_owl.display.filter', DisplayFilterFactoryInterface::class);
     }
 }

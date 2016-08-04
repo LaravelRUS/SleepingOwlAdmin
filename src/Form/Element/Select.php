@@ -2,11 +2,17 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use SleepingOwl\Admin\Factories\RepositoryFactory;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class Select extends NamedFormElement
 {
@@ -56,18 +62,45 @@ class Select extends NamedFormElement
     protected $fetchColumns = [];
 
     /**
-     * @var function|\Closure|object callable
+     * @var callable|\Closure|object callable
      */
     protected $loadOptionsQueryPreparer;
 
     /**
-     * @param string      $path
+     * @var RepositoryFactory
+     */
+    protected $repositoryFactory;
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @param string $path
      * @param string|null $label
      * @param array|Model $options
+     * @param PackageManagerInterface $packageManager
+     * @param MetaInterface $meta
+     * @param TemplateInterface $template
+     * @param Request $request
+     * @param RepositoryFactory $repositoryFactory
+     * @param TranslatorInterface $translator
      */
-    public function __construct($path, $label = null, $options = [])
+    public function __construct($path,
+                                $label = null,
+                                $options = [],
+                                PackageManagerInterface $packageManager,
+                                MetaInterface $meta,
+                                TemplateInterface $template,
+                                Request $request,
+                                RepositoryFactory $repositoryFactory,
+                                TranslatorInterface $translator)
     {
-        parent::__construct($path, $label);
+        parent::__construct($path, $label, $packageManager, $meta, $template, $request);
+
+        $this->translator = $translator;
+        $this->repositoryFactory = $repositoryFactory;
 
         if (is_array($options)) {
             $this->setOptions($options);
@@ -93,7 +126,7 @@ class Select extends NamedFormElement
     public function setModelForOptions($modelForOptions)
     {
         if (is_string($modelForOptions)) {
-            $modelForOptions = app($modelForOptions);
+            $modelForOptions = new $modelForOptions;
         }
 
         if (! ($modelForOptions instanceof Model)) {
@@ -354,7 +387,7 @@ class Select extends NamedFormElement
         $options = $this->getOptions();
 
         if ($this->isNullable()) {
-            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
+            $options = [null => $this->translator->trans('sleeping_owl::lang.select.nothing')] + $options;
         }
 
         $options = array_except($options, $this->exclude);
@@ -371,7 +404,7 @@ class Select extends NamedFormElement
      */
     protected function loadOptions()
     {
-        $repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
+        $repository = $this->repositoryFactory->make($this->getModelForOptions());
 
         $key = $repository->getModel()->getKeyName();
 
@@ -430,7 +463,7 @@ class Select extends NamedFormElement
     protected function prepareValue($value)
     {
         if ($this->isNullable() and $value == '') {
-            return;
+            return null;
         }
 
         return $value;

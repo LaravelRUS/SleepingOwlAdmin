@@ -3,6 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class RelatedLink extends Link
 {
@@ -19,17 +22,24 @@ class RelatedLink extends Link
     /**
      * @param \Closure|null|string $name
      * @param null|string $label
+     * @param TableHeaderColumnInterface $tableHeaderColumn
+     * @param AdminInterface $admin
+     * @param MetaInterface $meta
      */
-    public function __construct($name, $label = null)
+    public function __construct($name,
+                                $label = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta)
     {
-        parent::__construct($name, $label);
+        parent::__construct($name, $label, $tableHeaderColumn, $admin, $meta);
         $this->originalName = $name;
     }
 
     /**
      * @param Model $model
      *
-     * @return $this
+     * @return Link
      */
     public function setModel(Model $model)
     {

@@ -2,6 +2,15 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
+use SleepingOwl\Admin\Factories\RepositoryFactory;
+use Symfony\Component\Translation\TranslatorInterface;
+
 class DisplayDatatables extends DisplayTable
 {
     const FILTER_POSITION_TOP = 0;
@@ -24,6 +33,36 @@ class DisplayDatatables extends DisplayTable
     protected $filterPosition = self::FILTER_POSITION_BOTH;
 
     /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * DisplayDatatables constructor.
+     * @param PackageManagerInterface $packageManager
+     * @param MetaInterface $meta
+     * @param RepositoryFactory $repositoryFactory
+     * @param AdminInterface $admin
+     * @param Factory $viewFactory
+     * @param Request $request
+     * @param DisplayColumnFactoryInterface $displayColumnFactory
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(PackageManagerInterface $packageManager,
+                                MetaInterface $meta,
+                                RepositoryFactory $repositoryFactory,
+                                AdminInterface $admin,
+                                Factory $viewFactory,
+                                Request $request,
+                                DisplayColumnFactoryInterface $displayColumnFactory,
+                                TranslatorInterface $translator)
+    {
+        parent::__construct($packageManager, $meta, $repositoryFactory, $admin, $viewFactory, $request, $displayColumnFactory);
+
+        $this->translator = $translator;
+    }
+
+    /**
      * Initialize display.
      */
     public function initialize()
@@ -41,7 +80,7 @@ class DisplayDatatables extends DisplayTable
         $attributes = $this->getDatatableAttributes();
         $attributes['pageLength'] = $this->paginate;
 
-        $attributes['language'] = trans('sleeping_owl::lang.table');
+        $attributes['language'] = $this->translator->trans('sleeping_owl::lang.table');
 
         foreach ($this->getColumns()->all() as $column) {
             $attributes['columns'][] = [

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 
 class AdminSectionsServiceProvider extends ServiceProvider
@@ -19,7 +20,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(\SleepingOwl\Admin\Admin $admin)
+    public function boot(AdminInterface $admin)
     {
         parent::boot($admin);
     }

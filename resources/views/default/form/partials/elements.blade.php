@@ -1,4 +1,4 @@
-@if($items instanceof \SleepingOwl\Admin\Form\Element\Columns)
+@if($items instanceof \SleepingOwl\Admin\Form\Columns\Columns)
     {!! $items->render() !!}
 @else
 @foreach ($items as $item)

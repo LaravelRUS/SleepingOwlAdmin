@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin;
 
 use BadMethodCallException;
+use Illuminate\Contracts\Container\Container;
 
 class AliasBinder
 {
@@ -23,6 +24,20 @@ class AliasBinder
      * @var array
      */
     protected $aliases = [];
+
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * AliasBinder constructor.
+     * @param Container $container
+     */
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Register new alias.
@@ -95,6 +110,6 @@ class AliasBinder
             throw new BadMethodCallException($name);
         }
 
-        return app($this->getAlias($name), $arguments);
+        return $this->container->make($this->getAlias($name), $arguments);
     }
 }

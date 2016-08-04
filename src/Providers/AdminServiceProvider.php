@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\PresenceVerifierInterface;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Admin;
@@ -26,7 +27,11 @@ use SleepingOwl\Admin\Contracts\RouterInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\ManagerInterface;
 use SleepingOwl\Admin\Display\TableHeaderColumn;
+use SleepingOwl\Admin\Form\Element\Custom;
 use SleepingOwl\Admin\Form\FormButtons;
+use SleepingOwl\Admin\Form\FormDefault;
+use SleepingOwl\Admin\Form\FormPanel;
+use SleepingOwl\Admin\Form\FormTabbed;
 use SleepingOwl\Admin\Http\Router;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Badge;
@@ -47,6 +52,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerRouter();
         $this->registerWysiwyg();
         $this->registerAliases();
+        $this->registerNullableClosure();
 
         $this->app->booted(function () {
             $this->registerCustomRoutes();
@@ -129,6 +135,25 @@ class AdminServiceProvider extends ServiceProvider
                 $db = $app['db'];
                 return $db->connection($db->getDefaultConnection())->getSchemaBuilder();
             });
+
+        foreach ([FormDefault::class, FormPanel::class, FormTabbed::class] as $class) {
+            $this->app->when($class)
+                ->needs(PresenceVerifierInterface::class)
+                ->give('validation.presence');
+        }
+    }
+
+    protected function registerNullableClosure()
+    {
+        $objects = [
+            Custom::class, \SleepingOwl\Admin\Display\Column\Custom::class,
+        ];
+
+        foreach ($objects as $class) {
+            $this->app->when($class)
+                ->needs(\Closure::class)
+                ->give(function () {});
+        }
     }
 
     protected function registerTemplate()
@@ -221,6 +246,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerDefaultRoutes()
     {
+
         $this->app->make(RouterInterface::class)->register(function (IlluminateRouter $router) {
             /** @var AdminInterface $admin */
             $admin = $this->app->make(AdminInterface::class);
@@ -257,7 +283,7 @@ class AdminServiceProvider extends ServiceProvider
             }
 
             foreach (AliasBinder::routes() as $route) {
-                $this->app->call($route);
+                call_user_func($route, $router);
             }
         });
     }

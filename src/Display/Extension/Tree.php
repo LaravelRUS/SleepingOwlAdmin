@@ -5,6 +5,8 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
@@ -24,15 +26,31 @@ class Tree extends Extension implements Initializable, Renderable
     protected $view = 'display.columns';
 
     /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
      * @var Control
      */
     protected $controlColumn;
 
-    public function __construct()
+    /**
+     * @var Collection|ColumnInterface[]
+     */
+    protected $columns;
+
+    /**
+     * Tree constructor.
+     * @param DisplayColumnFactoryInterface $displayColumnFactory
+     * @param TemplateInterface $template
+     */
+    public function __construct(DisplayColumnFactoryInterface $displayColumnFactory, TemplateInterface $template)
     {
+        $this->template = $template;
         $this->columns = new Collection();
 
-        $this->setControlColumn(app('sleeping_owl.table.column')->treeControl());
+        $this->setControlColumn($displayColumnFactory->treeControl());
     }
 
     /**
@@ -166,6 +184,6 @@ class Tree extends Extension implements Initializable, Renderable
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->template->view($this->getView(), $this->toArray());
     }
 }

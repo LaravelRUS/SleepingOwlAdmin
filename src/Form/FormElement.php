@@ -3,7 +3,10 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
 
 abstract class FormElement implements FormElementInterface
@@ -11,7 +14,7 @@ abstract class FormElement implements FormElementInterface
     use Assets;
 
     /**
-     * @var \SleepingOwl\Admin\Contracts\TemplateInterface
+     * @var TemplateInterface
      */
     protected $template;
 
@@ -30,8 +33,20 @@ abstract class FormElement implements FormElementInterface
      */
     protected $validationRules = [];
 
-    public function __construct()
+    /**
+     * FormElement constructor.
+     *
+     * @param PackageManagerInterface $packageManager
+     * @param MetaInterface $meta
+     * @param TemplateInterface $template
+     */
+    public function __construct(PackageManagerInterface $packageManager,
+                                MetaInterface $meta,
+                                TemplateInterface $template)
     {
+        $this->packageManager = $packageManager;
+        $this->meta = $meta;
+        $this->template = $template;
         $this->initializePackage();
     }
 
@@ -166,11 +181,11 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return string
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray())->render();
+        return $this->template->view($this->getView(), $this->toArray())->render();
     }
 
     /**

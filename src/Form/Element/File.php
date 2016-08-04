@@ -2,70 +2,25 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
-use Route;
-use Response;
-use Validator;
+use Illuminate\Routing\Router;
+use SleepingOwl\Admin\Http\Controllers\FileElementController;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
     /**
-     * @var string
+     * @param Router $router
      */
-    protected static $route = 'uploadFile';
-
-    public static function registerRoutes()
+    public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.file.'.static::$route;
-        if (! Route::has($routeName)) {
-            Route::post('FormElements/image/'.static::$route, ['as' => $routeName, function () {
-                $validator = Validator::make(Request::all(), static::uploadValidationRules());
+        $routeName = 'admin.form.element.file';
 
-                static::uploadValidationRules($validator);
-
-                if ($validator->fails()) {
-                    return Response::make($validator->errors()->get('file'), 400);
-                }
-
-                $file = Request::file('file');
-                $filename = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
-                $path = static::getUploadPath();
-                $fullPath = public_path($path);
-                $file->move($fullPath, $filename);
-
-                $value = $path.'/'.$filename;
-
-                return [
-                    'url' => asset($value),
-                    'value' => $value,
-                ];
-            }]);
+        if ($router->has($routeName)) {
+            return;
         }
-    }
 
-    /**
-     * @param \Illuminate\Validation\Validator $validator
-     */
-    protected static function validate(\Illuminate\Validation\Validator $validator)
-    {
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getUploadPath()
-    {
-        return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
-    }
-
-    /**
-     * @return array
-     */
-    protected static function uploadValidationRules()
-    {
-        return [
-            'file' => 'required',
-        ];
+        $router->post('upload/element/{type}')
+            ->name($routeName)
+            ->uses(FileElementController::class . '@file');
     }
 }

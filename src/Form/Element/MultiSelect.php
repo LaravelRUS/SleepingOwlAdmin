@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
-use Request;
 use Illuminate\Database\Eloquent\Collection;
 
 class MultiSelect extends Select
@@ -119,7 +118,7 @@ class MultiSelect extends Select
 
         $attribute = $this->getAttribute();
 
-        if (is_null(Request::input($this->getPath()))) {
+        if (is_null($this->request->input($this->getPath()))) {
             $values = [];
         } else {
             $values = $this->getValue();

@@ -5,7 +5,9 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Display\Column\Control;
 
 class Columns extends Extension implements Initializable, Renderable
@@ -35,11 +37,22 @@ class Columns extends Extension implements Initializable, Renderable
      */
     protected $controlColumn;
 
-    public function __construct()
+    /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
+     * Columns constructor.
+     * @param DisplayColumnFactoryInterface $displayColumnFactory
+     * @param TemplateInterface $template
+     */
+    public function __construct(DisplayColumnFactoryInterface $displayColumnFactory, TemplateInterface $template)
     {
+        $this->template = $template;
         $this->columns = new Collection();
 
-        $this->setControlColumn(app('sleeping_owl.table.column')->control());
+        $this->setControlColumn($displayColumnFactory->control());
     }
 
     /**
@@ -200,6 +213,6 @@ class Columns extends Extension implements Initializable, Renderable
         $params = $this->toArray();
         $params['collection'] = $this->getDisplay()->getCollection();
 
-        return app('sleeping_owl.template')->view($this->getView(), $params)->render();
+        return $this->template->view($this->getView(), $params)->render();
     }
 }

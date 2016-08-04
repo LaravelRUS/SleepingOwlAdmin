@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class FormButtons implements FormButtonsInterface
 {
@@ -87,10 +89,25 @@ class FormButtons implements FormButtonsInterface
     protected $model;
 
     /**
-     * FormButtons constructor.
+     * @var TranslatorInterface
      */
-    public function __construct()
+    protected $translator;
+
+    /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
+     * FormButtons constructor.
+     *
+     * @param TranslatorInterface $translator
+     * @param TemplateInterface $template
+     */
+    public function __construct(TranslatorInterface $translator, TemplateInterface $template)
     {
+        $this->template = $template;
+        $this->translator = $translator;
         $this->setHtmlAttribute('class', 'form-buttons');
     }
 
@@ -100,7 +117,7 @@ class FormButtons implements FormButtonsInterface
     public function getCancelButtonText()
     {
         if (is_null($this->cancelButtonText)) {
-            $this->cancelButtonText = trans('sleeping_owl::lang.table.cancel');
+            $this->cancelButtonText = $this->translator->trans('sleeping_owl::lang.table.cancel');
         }
 
         return $this->cancelButtonText;
@@ -124,7 +141,7 @@ class FormButtons implements FormButtonsInterface
     public function getSaveButtonText()
     {
         if (is_null($this->saveButtonText)) {
-            $this->saveButtonText = trans('sleeping_owl::lang.table.save');
+            $this->saveButtonText = $this->translator->trans('sleeping_owl::lang.table.save');
         }
 
         return $this->saveButtonText;
@@ -148,7 +165,7 @@ class FormButtons implements FormButtonsInterface
     public function getSaveAndCloseButtonText()
     {
         if (is_null($this->saveAndCloseButtonText)) {
-            $this->saveAndCloseButtonText = trans('sleeping_owl::lang.table.save_and_close');
+            $this->saveAndCloseButtonText = $this->translator->trans('sleeping_owl::lang.table.save_and_close');
         }
 
         return $this->saveAndCloseButtonText;
@@ -172,7 +189,7 @@ class FormButtons implements FormButtonsInterface
     public function getSaveAndCreateButtonText()
     {
         if (is_null($this->saveAndCreateButtonText)) {
-            $this->saveAndCreateButtonText = trans('sleeping_owl::lang.table.save_and_create');
+            $this->saveAndCreateButtonText = $this->translator->trans('sleeping_owl::lang.table.save_and_create');
         }
 
         return $this->saveAndCreateButtonText;
@@ -196,7 +213,7 @@ class FormButtons implements FormButtonsInterface
     public function getDeleteButtonText()
     {
         if (is_null($this->deleteButtonText)) {
-            $this->deleteButtonText = trans('sleeping_owl::lang.table.delete');
+            $this->deleteButtonText = $this->translator->trans('sleeping_owl::lang.table.delete');
         }
 
         return $this->deleteButtonText;
@@ -220,7 +237,7 @@ class FormButtons implements FormButtonsInterface
     public function getDestroyButtonText()
     {
         if (is_null($this->destroyButtonText)) {
-            $this->destroyButtonText = trans('sleeping_owl::lang.table.destroy');
+            $this->destroyButtonText = $this->translator->trans('sleeping_owl::lang.table.destroy');
         }
 
         return $this->destroyButtonText;
@@ -240,7 +257,7 @@ class FormButtons implements FormButtonsInterface
     public function getRestoreButtonText()
     {
         if (is_null($this->restoreButtonText)) {
-            $this->restoreButtonText = trans('sleeping_owl::lang.table.restore');
+            $this->restoreButtonText = $this->translator->trans('sleeping_owl::lang.table.restore');
         }
 
         return $this->restoreButtonText;
@@ -387,7 +404,7 @@ class FormButtons implements FormButtonsInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('form.buttons', $this->toArray());
+        return $this->template->view('form.buttons', $this->toArray());
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use KodiCMS\Assets\Facades\PackageManager;
-use Meta;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
 
 trait Assets
 {
@@ -11,6 +11,16 @@ trait Assets
      * @var \KodiCMS\Assets\Package
      */
     protected $package;
+
+    /**
+     * @var PackageManagerInterface
+     */
+    protected $packageManager;
+
+    /**
+     * @var MetaInterface
+     */
+    protected $meta;
 
     /**
      * @param string $handle
@@ -66,13 +76,13 @@ trait Assets
 
     protected function initializePackage()
     {
-        if (is_null($this->package = PackageManager::load(get_called_class()))) {
-            $this->package = PackageManager::add(get_called_class());
+        if (is_null($this->package = $this->packageManager->load(get_called_class()))) {
+            $this->package = $this->packageManager->add(get_called_class());
         }
     }
 
     protected function includePackage()
     {
-        Meta::loadPackage($this->package->getName());
+        $this->meta->loadPackage($this->package->getName());
     }
 }

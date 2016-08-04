@@ -60,7 +60,7 @@ class DateTime extends NamedFormElement
                 try {
                     $time = Carbon::createFromFormat($this->getFormat(), $value);
                 } catch (Exception $e) {
-                    return;
+                    return null;
                 }
             }
 

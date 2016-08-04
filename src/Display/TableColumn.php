@@ -2,9 +2,10 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Meta;
+use KodiCMS\Assets\Contracts\MetaInterface;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -47,13 +48,31 @@ abstract class TableColumn implements ColumnInterface
     protected $view;
 
     /**
+     * @var AdminInterface
+     */
+    protected $admin;
+
+    /**
+     * @var MetaInterface
+     */
+    protected $meta;
+
+    /**
      * TableColumn constructor.
      *
      * @param string|null $label
+     * @param TableHeaderColumnInterface $tableHeaderColumn
+     * @param AdminInterface $admin
+     * @param MetaInterface $meta
      */
-    public function __construct($label = null)
+    public function __construct($label = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta)
     {
-        $this->header = app(TableHeaderColumnInterface::class);
+        $this->header = $tableHeaderColumn;
+        $this->admin = $admin;
+        $this->meta = $meta;
 
         if (! is_null($label)) {
             $this->setLabel($label);
@@ -65,7 +84,7 @@ abstract class TableColumn implements ColumnInterface
      */
     public function initialize()
     {
-        Meta::loadPackage(get_called_class());
+        $this->meta->loadPackage(get_called_class());
     }
 
     /**
@@ -172,7 +191,7 @@ abstract class TableColumn implements ColumnInterface
      */
     protected function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel(get_class($this->getModel()));
+        return $this->admin->getModel(get_class($this->getModel()));
     }
 
     /**
@@ -235,7 +254,7 @@ abstract class TableColumn implements ColumnInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view(
+        return $this->admin->template()->view(
             $this->getView(),
             $this->toArray()
         );

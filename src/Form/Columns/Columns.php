@@ -3,8 +3,11 @@
 namespace SleepingOwl\Admin\Form\Columns;
 
 use Illuminate\Support\Collection;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElements;
 
 class Columns extends FormElements implements ColumnInterface
@@ -20,12 +23,20 @@ class Columns extends FormElements implements ColumnInterface
      * Columns constructor.
      *
      * @param array $elements
+     * @param PackageManagerInterface $packageManager
+     * @param MetaInterface $meta
+     * @param TemplateInterface $template
      */
-    public function __construct(array $elements = [])
+    public function __construct(array $elements = [],
+                                PackageManagerInterface $packageManager,
+                                MetaInterface $meta,
+                                TemplateInterface $template)
     {
         $this->elements = new Collection();
-        parent::__construct($elements);
+        parent::__construct($elements, $packageManager, $meta, $template);
     }
+
+
 
     /**
      * @param array|ColumnInterface[] $columns
@@ -62,9 +73,9 @@ class Columns extends FormElements implements ColumnInterface
     public function addElement($element, $width = null)
     {
         if (is_callable($element)) {
-            $element = new Column($element());
+            $element = new Column($element(), $this->packageManager, $this->meta, $this->template);
         } elseif (is_array($element)) {
-            $element = new Column($element);
+            $element = new Column($element, $this->packageManager, $this->meta, $this->template);
         }
 
         if (! ($element instanceof ColumnInterface)) {
