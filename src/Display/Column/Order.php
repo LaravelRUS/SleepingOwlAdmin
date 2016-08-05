@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Routing\Router;
 use Route;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\TableColumn;
@@ -10,12 +11,15 @@ use SleepingOwl\Admin\Traits\OrderableModel;
 
 class Order extends TableColumn implements WithRoutesInterface
 {
+
     /**
      * Register routes.
+     *
+     * @param Router $router
      */
-    public static function registerRoutes()
+    public static function registerRoutes(Router $router)
     {
-        Route::post('{adminModel}/{adminModelId}/up', [
+        $router->post('{adminModel}/{adminModelId}/up', [
             'as' => 'admin.model.move-up',
             function ($model, $id) {
                 $instance = $model->getRepository()->find($id);
@@ -25,7 +29,7 @@ class Order extends TableColumn implements WithRoutesInterface
             },
         ]);
 
-        Route::post('{adminModel}/{adminModelId}/down', [
+        $router->post('{adminModel}/{adminModelId}/down', [
             'as' => 'admin.model.move-down',
             function ($model, $id) {
                 $instance = $model->getRepository()->find($id);

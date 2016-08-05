@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\AliasBinder;
@@ -71,8 +72,8 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->registerBootstrap();
 
-        $this->registerRoutes(function () {
-            $this->app['router']->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
+        $this->registerRoutes(function (Router $route) {
+            $route->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
                 $route->get('assets/admin.scripts', [
                     'as'   => 'scripts',
                     'uses' => 'AdminController@getScripts',
@@ -135,7 +136,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerCustomRoutes()
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
-            $this->registerRoutes(function () use ($file) {
+            $this->registerRoutes(function (Router $route) use ($file) {
                 require $file;
             });
         }
@@ -143,13 +144,13 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerDefaultRoutes()
     {
-        $this->registerRoutes(function () {
-            $this->app['router']->pattern('adminModelId', '[a-zA-Z0-9_-]+');
+        $this->registerRoutes(function (Router $router) {
+            $router->pattern('adminModelId', '[a-zA-Z0-9_-]+');
 
             $aliases = $this->app['sleeping_owl']->modelAliases();
 
             if (count($aliases) > 0) {
-                $this->app['router']->pattern('adminModel', implode('|', $aliases));
+                $router->pattern('adminModel', implode('|', $aliases));
 
                 $this->app['router']->bind('adminModel', function ($model, \Illuminate\Routing\Route $route) use ($aliases) {
                     $class = array_search($model, $aliases);
@@ -178,7 +179,7 @@ class AdminServiceProvider extends ServiceProvider
             }
 
             foreach (AliasBinder::routes() as $route) {
-                call_user_func($route);
+                call_user_func($route, $router);
             }
         });
     }
@@ -191,8 +192,8 @@ class AdminServiceProvider extends ServiceProvider
         $this->app['router']->group([
             'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
-        ], function () use ($callback) {
-            call_user_func($callback);
+        ], function ($route) use ($callback) {
+            call_user_func($callback, $route);
         });
     }
 

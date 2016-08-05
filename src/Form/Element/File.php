@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Routing\Router;
 use KodiComponents\Support\Upload;
 use Route;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -20,12 +21,15 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     protected static $route = 'uploadFile';
 
-    public static function registerRoutes()
+    /**
+     * @param Router $router
+     */
+    public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.form.element.file.'.static::$route;
 
-        if (! Route::has($routeName)) {
-            Route::post('{adminModel}/'.static::$route.'/{field}/{id?}', ['as' => $routeName, function (
+        if (! $router->has($routeName)) {
+            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', ['as' => $routeName, function (
                 Request $request,
                 ModelConfigurationInterface $model,
                 $field,
@@ -213,11 +217,13 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @param Closure $uploadPath
      *
-     * @internal param $ \Closure
+     * @return $this
      */
     public function setUploadPath(Closure $uploadPath)
     {
         $this->uploadPath = $uploadPath;
+
+        return $this;
     }
 
     /**
@@ -236,10 +242,14 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     /**
      * @param Closure $uploadFileName
+     *
+     * @return $this
      */
     public function setUploadFileName(Closure $uploadFileName)
     {
         $this->uploadFileName = $uploadFileName;
+
+        return $this;
     }
 
     /**
@@ -256,9 +266,13 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     /**
      * @param array $imageSettings
+     *
+     * @return $this
      */
     public function setUploadSettings(array $imageSettings)
     {
         $this->uploadSettings = $imageSettings;
+
+        return $this;
     }
 }
