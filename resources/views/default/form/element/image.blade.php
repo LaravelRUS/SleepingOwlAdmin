@@ -21,8 +21,9 @@
 			<ul v-if="errors.length" class="alert alert-warning">
 				<li v-for="error in errors">@{{ error }}</li>
 			</ul>
-			<div class="thumbnail">
-				<img v-if="has_value" :src="value" width="200px" height="150px" />
+
+			<div class="thumbnail" v-if="has_value">
+				<img :src="value" width="200px" height="150px" />
 			</div>
 
 			<div v-if="!readonly">
