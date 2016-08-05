@@ -19,14 +19,14 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @var string
      */
-    protected static $route = 'uploadFile';
+    protected static $route = 'file';
 
     /**
      * @param Router $router
      */
     public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.file.'.static::$route;
+        $routeName = 'admin.form.element.'.static::$route;
 
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', ['as' => $routeName, function (
@@ -39,7 +39,7 @@ class File extends NamedFormElement implements WithRoutesInterface
                     $item = $model->getRepository()->find($id);
                     if (is_null($item) || ! $model->isEditable($item)) {
                         return new JsonResponse([
-                            'message' => 'Access denied'
+                            'message' => trans('lang.message.access_denied')
                         ], 403);
                     }
 
@@ -47,7 +47,7 @@ class File extends NamedFormElement implements WithRoutesInterface
                 } else {
                     if (! $model->isCreatable()) {
                         return new JsonResponse([
-                            'message' => 'Access denied'
+                            'message' => trans('lang.message.access_denied')
                         ], 403);
                     }
 
@@ -70,7 +70,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
                 if ($validator->fails()) {
                     return new JsonResponse([
-                        'message' => 'Validation error',
+                        'message' => trans('lang.message.validation_error'),
                         'errors' => $validator->errors()->get('file')
                     ], 400);
                 }

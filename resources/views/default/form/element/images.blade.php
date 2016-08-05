@@ -8,7 +8,7 @@
 	</label>
 
 	<element-images
-			url="{{ route('admin.form.element.file.uploadImage', [
+			url="{{ route('admin.form.element.image', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
@@ -19,18 +19,23 @@
 			inline-template
 	>
 
-		<ul v-if="errors.length" class="alert alert-warning">
-			<li v-for="error in errors">@{{ error }}</li>
-		</ul>
+		<div v-if="errors.length" class="alert alert-warning">
+			<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
+		</div>
 
-		<div class="row form-group images-group" v-if="has_values">
-			<div class="col-xs-6 col-md-3" v-for="image in values">
-				<div class="thumbnail">
-					<a class="close" @click="remove(image)" v-if="!readonly" aria-label="{{ trans('sleeping_owl::lang.image.removeMultiple') }}">
-						<span aria-hidden="true">&times;</span>
+		<div class="form-element-files clearfix" v-if="has_values">
+			<div class="form-element-files__item" v-for="image in values">
+				<a :href="image" class="form-element-files__image" data-toggle="lightbox">
+					<img :src="image" />
+				</a>
+				<div class="form-element-files__info">
+					<a :href="image" class="btn btn-default btn-xs pull-right">
+						<i class="fa fa-cloud-download"></i>
 					</a>
 
-					<img :src="image" />
+					<butto @click.prevent="remove(image)" v-if="!readonly" class="btn btn-danger btn-xs" aria-label="{{ trans('sleeping_owl::lang.image.remove') }}">
+						<i class="fa fa-times"></i>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -41,7 +46,7 @@
 			</div>
 		</div>
 
-		<input name="@{{ name }}" class="imageValue" type="hidden" value="@{{ serializedValues }}">
+		<input name="@{{ name }}" type="hidden" value="@{{ serializedValues }}">
 	</element-images>
 
 	<div class="errors">

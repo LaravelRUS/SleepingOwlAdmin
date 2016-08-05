@@ -1,1 +1,2 @@
-require('ekko-lightbox');
+require('magnific-popup');
+

@@ -10,7 +10,7 @@ class Image extends File
     /**
      * @var string
      */
-    protected static $route = 'uploadImage';
+    protected static $route = 'image';
 
     /**
      * @param Validator $validator

@@ -64,7 +64,18 @@ Vue.component('element-image', Vue.extend({
             self.flow = flow;
         },
         remove () {
-            this.value = '';
+            var self = this;
+
+            swal({
+                title: i18next.t('lang.message.are_you_sure'),
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: i18next.t('lang.button.yes')
+            }).then(() => {
+                self.value = '';
+            });
         }
     },
     computed: {
