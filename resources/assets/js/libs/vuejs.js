@@ -8,4 +8,25 @@ require('vue-resource');
  */
 Vue.http.interceptors.push((request, next) => {
     request.headers['X-CSRF-TOKEN'] = Admin.Settings.token;
+
+    next((response) => {
+        switch (response.status) {
+            case 200:
+            case 202:
+            case 400:
+                break;
+            default:
+                sweetAlert(
+                    i18next.t('lang.message.something_went_wrong'),
+                    response.data.message || '',
+                    'error'
+                )
+        }
+    });
+});
+
+Vue.use({
+    install (Vue, options) {
+        Vue.prototype.$trans = (key) => i18next.t(key)
+    }
 });

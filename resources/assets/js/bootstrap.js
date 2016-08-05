@@ -18,6 +18,7 @@ require('./libs/flow')
 require('./libs/datatables')
 require('./libs/metismenu')
 require('./libs/nestable')
+require('./libs/sweetalert')
 
 /**
  * Admin-LTE
@@ -29,7 +30,7 @@ require('admin-lte')
  * reacting data binding and reusable components. Vue's API is clean and
  * simple, leaving you to focus only on building your next great idea.
  */
-// require('./libs/vuejs')
+require('./libs/vuejs')
 
 /**
  * Components

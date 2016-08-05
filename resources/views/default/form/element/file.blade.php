@@ -13,7 +13,6 @@
 				'field' => $path,
 				'id' => $model->getKey()
 			]) }}"
-			data-token="{{ csrf_token() }}"
 	>
 		<div>
 			<div class="thumbnail">

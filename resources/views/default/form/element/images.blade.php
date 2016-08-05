@@ -6,47 +6,45 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<div
-			class="imageUploadMultiple"
-			data-target="{{ route('admin.form.element.file.uploadImage', [
+
+	<element-images
+			url="{{ route('admin.form.element.file.uploadImage', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
 			]) }}"
-			data-token="{{ csrf_token() }}"
+			:values="{{ json_encode($value) }}"
+			:readonly="{{ $readonly ? 'true' : 'false' }}"
+			name="{{ $name }}"
+			inline-template
 	>
-		<div class="row form-group images-group">
-			@foreach ($value as $image)
-				<div class="col-xs-6 col-md-3 imageThumbnail">
-					<div class="thumbnail">
-						<img data-value="{{ $image }}" src="{{ asset($image) }}" />
-						@if (! $readonly)
-						<div class="text-right">
-							<a href="#" class="imageRemove btn btn-danger">{{ trans('sleeping_owl::lang.image.removeMultiple') }}</a>
-						</div>
-						@endif
-					</div>
+
+		<ul v-if="errors.length" class="alert alert-warning">
+			<li v-for="error in errors">@{{ error }}</li>
+		</ul>
+
+		<div class="row form-group images-group" v-if="has_values">
+			<div class="col-xs-6 col-md-3" v-for="image in values">
+				<div class="thumbnail">
+					<a class="close" @click="remove(image)" v-if="!readonly" aria-label="{{ trans('sleeping_owl::lang.image.removeMultiple') }}">
+						<span aria-hidden="true">&times;</span>
+					</a>
+
+					<img :src="image" />
 				</div>
-			@endforeach
-		</div>
-		@if (! $readonly)
-		<div>
-			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}</div>
-		</div>
-		@endif
-		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ !empty($value) && sizeof($value) != 0 ? implode(',', $value) : "" }}">
-		<div class="errors">
-			@include(AdminTemplate::getViewPath('form.element.errors'))
-		</div>
-	</div>
-</div>
-<script id="thumbnail_template" type="template/html">
-	<div class="col-xs-6 col-md-3 imageThumbnail">
-		<div class="thumbnail">
-			<img />
-			<div class="text-right">
-				<a href="#" class="imageRemove btn btn-danger">{{ trans('sleeping_owl::lang.image.removeMultiple') }}</a>
 			</div>
 		</div>
+
+		<div v-if="!readonly">
+			<div class="btn btn-primary upload-button">
+				<i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browse') }}
+			</div>
+		</div>
+
+		<input name="@{{ name }}" class="imageValue" type="hidden" value="@{{ serializedValues }}">
+	</element-images>
+
+	<div class="errors">
+		@include(AdminTemplate::getViewPath('form.element.errors'))
 	</div>
-</script>
+</div>

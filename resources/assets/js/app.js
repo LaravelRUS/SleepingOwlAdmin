@@ -29,5 +29,11 @@ require('./admin/display/columns/inline_edit')
 require('./admin/form/buttons')
 require('./admin/form/datetime')
 require('./admin/form/select')
-require('./admin/form/image/init')
-require('./admin/form/image/initMultiple')
+require('./admin/form/image')
+require('./admin/form/images')
+
+$(() => {
+    var app = new Vue({
+        el: 'body'
+    });
+})
