@@ -8,6 +8,13 @@ use SleepingOwl\Admin\Contracts\FormElementInterface;
 interface ElementsInterface extends FormElementInterface
 {
     /**
+     * @param string $path
+     *
+     * @return FormElementInterface|null
+     */
+    public function getElement($path);
+
+    /**
      * @return Collection
      */
     public function getElements();
