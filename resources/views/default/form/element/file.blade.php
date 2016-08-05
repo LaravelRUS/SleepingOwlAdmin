@@ -6,7 +6,15 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<div class="imageUpload" data-target="{{ route('admin.form.element.file.uploadFile') }}" data-token="{{ csrf_token() }}">
+	<div
+			class="imageUpload"
+			data-target="{{ route('admin.form.element.file.uploadFile', [
+				'adminModel' => AdminSection::getModel($model)->getAlias(),
+				'field' => $path,
+				'id' => $model->getKey()
+			]) }}"
+			data-token="{{ csrf_token() }}"
+	>
 		<div>
 			<div class="thumbnail">
 				<div class="no-value {{ empty($value) ? '' : 'hidden' }}">
