@@ -10,7 +10,7 @@ $(() => {
             testChunks: false,
             chunkSize: 1024 * 1024 * 1024,
             query: {
-                _token: $item.data('token')
+                _token: Admin.Settings.token
             }
         });
 
