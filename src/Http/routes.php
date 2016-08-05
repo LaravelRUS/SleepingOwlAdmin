@@ -1,52 +1,52 @@
 <?php
 
-Route::group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function () {
-    Route::get('{adminModel}', [
+$router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($router) {
+    $router->get('{adminModel}', [
         'as'   => 'model',
         'uses' => 'AdminController@getDisplay',
     ]);
 
-    Route::post('{adminModel}', [
+    $router->post('{adminModel}', [
         'as'   => 'model',
         'uses' => 'AdminController@inlineEdit',
     ]);
 
-    Route::get('{adminModel}/create', [
+    $router->get('{adminModel}/create', [
         'as'   => 'model.create',
         'uses' => 'AdminController@getCreate',
     ]);
 
-    Route::post('{adminModel}/create', [
+    $router->post('{adminModel}/create', [
         'as'   => 'model.store',
         'uses' => 'AdminController@postStore',
     ]);
 
-    Route::get('{adminModel}/{adminModelId}/edit', [
+    $router->get('{adminModel}/{adminModelId}/edit', [
         'as'   => 'model.edit',
         'uses' => 'AdminController@getEdit',
     ]);
 
-    Route::post('{adminModel}/{adminModelId}/edit', [
+    $router->post('{adminModel}/{adminModelId}/edit', [
         'as'   => 'model.update',
         'uses' => 'AdminController@postUpdate',
     ]);
 
-    Route::delete('{adminModel}/{adminModelId}/delete', [
+    $router->delete('{adminModel}/{adminModelId}/delete', [
         'as'   => 'model.delete',
         'uses' => 'AdminController@deleteDelete',
     ]);
 
-    Route::delete('{adminModel}/{adminModelId}/destroy', [
+    $router->delete('{adminModel}/{adminModelId}/destroy', [
         'as'   => 'model.destroy',
         'uses' => 'AdminController@deleteDestroy',
     ]);
 
-    Route::post('{adminModel}/{adminModelId}/restore', [
+    $router->post('{adminModel}/{adminModelId}/restore', [
         'as'   => 'model.restore',
         'uses' => 'AdminController@postRestore',
     ]);
 
-    Route::get('{adminWildcard}', [
+    $router->get('{adminWildcard}', [
         'as'   => 'wildcard',
         'uses' => 'AdminController@getWildcard',
     ]);

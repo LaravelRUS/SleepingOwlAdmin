@@ -30,6 +30,9 @@ abstract class FormElement implements FormElementInterface
      */
     protected $validationRules = [];
 
+    /**
+     * FormElement constructor.
+     */
     public function __construct()
     {
         $this->initializePackage();

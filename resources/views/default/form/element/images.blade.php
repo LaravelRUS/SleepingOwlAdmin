@@ -6,7 +6,15 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<div class="imageUploadMultiple" data-target="{{ route('admin.form.element.file.uploadImage') }}" data-token="{{ csrf_token() }}">
+	<div
+			class="imageUploadMultiple"
+			data-target="{{ route('admin.form.element.file.uploadImage', [
+				'adminModel' => AdminSection::getModel($model)->getAlias(),
+				'field' => $path,
+				'id' => $model->getKey()
+			]) }}"
+			data-token="{{ csrf_token() }}"
+	>
 		<div class="row form-group images-group">
 			@foreach ($value as $image)
 				<div class="col-xs-6 col-md-3 imageThumbnail">

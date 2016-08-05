@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Routing\Router;
 use Request;
 use Route;
 use Illuminate\Support\Collection;
@@ -15,12 +16,15 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
+
     /**
      * Register display routes.
+     *
+     * @param Router $router
      */
-    public static function registerRoutes()
+    public static function registerRoutes(Router $router)
     {
-        Route::get('{adminModel}/async/{adminDisplayName?}', ['as' => 'admin.model.async',
+        $router->get('{adminModel}/async/{adminDisplayName?}', ['as' => 'admin.model.async',
             function (ModelConfigurationInterface $model, $name = null) {
                 $display = $model->fireDisplay();
                 if ($display instanceof DisplayTabbed) {
