@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\Validator;
+
 class Image extends File
 {
     /**
@@ -10,9 +13,9 @@ class Image extends File
     protected static $route = 'uploadImage';
 
     /**
-     * @param \Illuminate\Validation\Validator $validator
+     * @param Validator $validator
      */
-    protected static function validate(\Illuminate\Validation\Validator $validator)
+    protected static function validate(Validator $validator)
     {
         $validator->after(function ($validator) {
             /** @var \Illuminate\Http\UploadedFile $file */
@@ -27,9 +30,36 @@ class Image extends File
     }
 
     /**
+     * @param UploadedFile $file
+     * @param string $path
+     * @param string $filename
+     * @param array $settings
+     */
+    protected static function saveFile(UploadedFile $file, $path, $filename, array $settings)
+    {
+        if (
+            class_exists('Intervention\Image\Facades\Image')
+            and
+            (bool) getimagesize($file->getRealPath())
+        ) {
+            $image = \Intervention\Image\Facades\Image::make($file);
+
+            foreach ($settings as $method => $args) {
+                call_user_func_array([$image, $method], $args);
+            }
+
+            return $image->save($path.'/'.$filename);
+        }
+
+        $file->move($path, $filename);
+    }
+
+    /**
+     * @param UploadedFile $file
+     *
      * @return string
      */
-    protected static function getUploadPath()
+    protected static function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.imagesUploadDirectory', 'images/uploads');
     }
@@ -40,7 +70,14 @@ class Image extends File
     protected static function uploadValidationRules()
     {
         return [
-            'file' => 'image',
+            'file' => 'required|image',
         ];
     }
+
+    /**
+     * @var array
+     */
+    protected $validationRules = [
+        'required', 'image'
+    ];
 }
