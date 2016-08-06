@@ -8,47 +8,47 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'uses' => 'AdminController@getDisplay',
     ]);
 
-    $router->post('{adminModel}', [
+    Route::post('{adminModel}', [
         'as'   => 'model',
         'uses' => 'AdminController@inlineEdit',
     ]);
 
-    $router->get('{adminModel}/create', [
+    Route::get('{adminModel}/create', [
         'as'   => 'model.create',
         'uses' => 'AdminController@getCreate',
     ]);
 
-    $router->post('{adminModel}/create', [
+    Route::post('{adminModel}/create', [
         'as'   => 'model.store',
         'uses' => 'AdminController@postStore',
     ]);
 
-    $router->get('{adminModel}/{adminModelId}/edit', [
+    Route::get('{adminModel}/{adminModelId}/edit', [
         'as'   => 'model.edit',
         'uses' => 'AdminController@getEdit',
     ]);
 
-    $router->post('{adminModel}/{adminModelId}/edit', [
+    Route::post('{adminModel}/{adminModelId}/edit', [
         'as'   => 'model.update',
         'uses' => 'AdminController@postUpdate',
     ]);
 
-    $router->delete('{adminModel}/{adminModelId}/delete', [
+    Route::delete('{adminModel}/{adminModelId}/delete', [
         'as'   => 'model.delete',
         'uses' => 'AdminController@deleteDelete',
     ]);
 
-    $router->delete('{adminModel}/{adminModelId}/destroy', [
+    Route::delete('{adminModel}/{adminModelId}/destroy', [
         'as'   => 'model.destroy',
         'uses' => 'AdminController@deleteDestroy',
     ]);
 
-    $router->post('{adminModel}/{adminModelId}/restore', [
+    Route::post('{adminModel}/{adminModelId}/restore', [
         'as'   => 'model.restore',
         'uses' => 'AdminController@postRestore',
     ]);
 
-    $router->get('{adminWildcard}', [
+    Route::get('{adminWildcard}', [
         'as'   => 'wildcard',
         'uses' => 'AdminController@getWildcard',
     ]);

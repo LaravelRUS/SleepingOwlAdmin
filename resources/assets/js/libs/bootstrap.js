@@ -1,0 +1,1 @@
+var bootstrap = require('bootstrap')

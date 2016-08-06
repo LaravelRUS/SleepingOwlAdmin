@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
@@ -22,6 +23,28 @@ trait FormElements
                 $element->initialize();
             }
         });
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return FormElementInterface|null
+     */
+    public function getElement($path)
+    {
+        $found = null;
+
+        foreach ($this->getElements() as $element) {
+            if ($element instanceof ElementsInterface) {
+                if (! is_null($found = $element->getElement($path))) {
+                    return $found;
+                }
+            }
+
+            if ($element instanceof NamedFormElement && $element->getPath() == $path) {
+                return $element;
+            }
+        }
     }
 
     /**

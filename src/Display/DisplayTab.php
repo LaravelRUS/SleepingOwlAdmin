@@ -5,8 +5,10 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -251,7 +253,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             'label'  => $this->getLabel(),
             'active' => $this->isActive(),
             'name'   => $this->getName(),
-            'icon'   => $this->getIcon(),
+            'icon'   => $this->getIcon()
         ];
     }
 
@@ -347,6 +349,40 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         if ($this->getContent() instanceof FormElementInterface) {
             $this->getContent()->afterSave();
+        }
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return FormElementInterface|null
+     */
+    public function getElement($path)
+    {
+        if (($content = $this->getContent()) instanceof ElementsInterface) {
+            return $content->getElement($path);
+        }
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getElements()
+    {
+        if ($content = $this->getContent() instanceof ElementsInterface) {
+            return $content->getElements();
+        }
+    }
+
+    /**
+     * @param array $elements
+     *
+     * @return $this
+     */
+    public function setElements(array $elements)
+    {
+        if ($content = $this->getContent() instanceof ElementsInterface) {
+            return $content->setElements($elements);
         }
     }
 }

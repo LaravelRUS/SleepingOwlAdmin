@@ -1,5 +1,9 @@
-@import (less) "../../../public/default/libs/select2/css/select2.min.css";
-@import (less) "../../../public/default/libs/x-editable/css/bootstrap-editable.css";
+@import (less) "../../../node_modules/select2/dist/css/select2.css";
+@import (less) "../../../node_modules/magnific-popup/dist/magnific-popup.css";
+@import (less) "../../../node_modules/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css";
+@import (less) "../../../node_modules/sweetalert2/dist/sweetalert2.min.css";
+@import "libs/dataTables";
+@import "libs/nestable";
 
 @font-face {
   font-family: 'Open Sans';
@@ -25,20 +29,24 @@
                url('../fonts/OpenSans-Regular.ttf') format('truetype');
 }
 
-@import "../../../public/default/libs/bootstrap/less/bootstrap";
-@import "../../../public/default/libs/font-awesome/less/font-awesome";
-@import "AdminLTE";
+// Bootstrap 3
+@import "../../../node_modules/bootstrap/less/bootstrap";
+@icon-font-path: "../fonts/";
 
-@fa-font-path: "../libs/font-awesome/fonts";
-@icon-font-path: "../libs/bootstrap/fonts/";
+// Font awesome
+@import "../../../node_modules/font-awesome/less/font-awesome";
+@fa-font-path: "../fonts";
+
+// Admin LTE
+@import "libs/AdminLTE";
 @input-color: #666;
 
-body  {
+body {
   font-family: 'Open Sans', sans-serif;
 }
 
 .sidebar-menu .treeview-menu > li > a {
-  padding-top: 12px;
+  padding-top:    12px;
   padding-bottom: 12px;
 }
 
@@ -88,22 +96,21 @@ table.dataTable thead .sorting:after {
 }
 
 .btn-actions {
-  padding: 10px !important;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  padding:       10px !important;
+  box-shadow:    0 6px 12px rgba(0, 0, 0, .175);
   border-radius: 0;
-  background: whitesmoke;
+  background:    whitesmoke;
 
   .btn {
     text-align: left !important;
-    border: 1px solid #fff;
+    border:     1px solid #fff;
   }
 
   .divider {
-    margin-left: -10px;
+    margin-left:  -10px;
     margin-right: -10px;
   }
 }
-
 
 /*******************
     Table
@@ -118,7 +125,7 @@ table.dataTable thead .sorting:after {
   thead th,
   .table-header {
     border-color: darken(desaturate(@color, 15%), 12%) !important;
-    color: @text;
+    color:        @text;
   }
 
   thead tr,
@@ -164,12 +171,67 @@ table.dataTable thead .sorting:after {
 
   .dt-bootstrap-footer {
     background-color: #f5f5f5;
-    padding: 10px 20px 5px;
-    border-top: 1px solid @gray-lighter;
+    padding:          10px 20px 5px;
+    border-top:       1px solid @gray-lighter;
   }
 }
 
 .panel-wide {
   margin-left:  -@panel-body-padding;
   margin-right: -@panel-body-padding;
+}
+
+/**
+ * Thumbs
+ */
+.form-element-files {
+
+}
+
+.form-element-files__item {
+  float:         left;
+  width:         206px;
+  border:        1px solid #d8d8d8;
+  margin-bottom: 10px;
+  margin-right:  10px;
+  padding:       3px;
+}
+
+.form-element-files__image,
+.form-element-files__info,
+.form-element-files__size {
+  display: block;
+}
+
+.form-element-files__info {
+  padding:    10px;
+  background: #f4f4f4;
+  height:     50px;
+}
+
+.form-element-files__file,
+.form-element-files__image {
+  text-align: center;
+  padding:    0;
+}
+
+.form-element-files__file {
+  font-size: 65px;
+  color: #666;
+  background: #fff;
+  padding: 20px 10px;
+}
+
+.form-element-files__image {
+  background: #000;
+  height:     200px;
+  overflow:   hidden;
+  > img {
+    width:      auto;
+    max-height: 100%;
+  }
+}
+
+.form-element-files__close {
+  &:extend(.close);
 }

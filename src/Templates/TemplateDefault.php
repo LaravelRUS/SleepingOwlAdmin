@@ -58,15 +58,7 @@ class TemplateDefault implements TemplateInterface
 
     public function boot(MetaInterface $meta, UrlGenerator $generator)
     {
-        $meta->loadPackage([
-            'libraries',
-            'select2',
-            'metisMenu',
-            'admin-default',
-            'font-awesome',
-            'flow.js',
-            'Sortable',
-        ]);
+        $meta->loadPackage('admin-default');
 
         $meta->AddJs('adminScripts', $generator->route('admin.scripts'), ['libraries']);
     }

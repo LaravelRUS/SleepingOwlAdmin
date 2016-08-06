@@ -14,7 +14,7 @@ abstract class FormElement implements FormElementInterface
     use Assets;
 
     /**
-     * @var TemplateInterface
+     * @var \SleepingOwl\Admin\Contracts\TemplateInterface
      */
     protected $template;
 
@@ -181,11 +181,11 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return string
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function render()
     {
-        return $this->template->view($this->getView(), $this->toArray())->render();
+        return app('sleeping_owl.template')->view($this->getView(), $this->toArray())->render();
     }
 
     /**

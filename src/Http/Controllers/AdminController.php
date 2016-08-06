@@ -415,7 +415,7 @@ class AdminController extends Controller
             'wysiwyg'    => $config->get('sleeping_owl.wysiwyg'),
         ];
 
-        $content = "window.Admin['Settings'] = ".json_encode($data, JSON_PRETTY_PRINT).';';
+        $content = "window.Admin = {Settings: ".json_encode($data, JSON_PRETTY_PRINT).'}';
 
         return $this->cacheResponse(
             new Response($content, 200, [

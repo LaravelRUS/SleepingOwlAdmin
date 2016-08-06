@@ -96,11 +96,19 @@ return [
         'browse' => 'Select File',
         'remove' => 'Remove File',
     ],
+    'button' => [
+        'yes' => 'Yes',
+        'no' => 'No'
+    ],
     'message' => [
         'created' => '<i class="fa fa-check fa-lg"></i> Record created successfully',
         'updated' => '<i class="fa fa-check fa-lg"></i> Record updated successfully',
         'deleted' => '<i class="fa fa-check fa-lg"></i> Record deleted successfully',
         'destroyed' => '<i class="fa fa-check fa-lg"></i> Record destroyed successfully',
         'restored' => '<i class="fa fa-check fa-lg"></i> Record restored successfully',
+        'something_went_wrong' => 'Something went wrong!',
+        'are_you_sure' => 'Are you sure?',
+        'access_denied' => 'Access denied',
+        'validation_error' => 'Validation error',
     ],
 ];

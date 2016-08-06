@@ -2,7 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
-interface FormInterface extends FormElementInterface
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+
+interface FormInterface extends FormElementInterface, ElementsInterface
 {
     /**
      * Set form action url.

@@ -40,6 +40,14 @@ class Select extends BaseColumnFilter
      */
     protected $filterField = '';
 
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->setHtmlAttribute('class', 'form-control column-filter');
+        $this->setHtmlAttribute('data-type', 'select');
+    }
+
     /**
      * @return Model
      */

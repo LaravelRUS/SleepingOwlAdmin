@@ -96,10 +96,18 @@ return [
         'browse' => 'Выбор файла',
         'remove' => 'Удалить',
     ],
+    'button' => [
+        'yes' => 'Да',
+        'no' => 'Нет'
+    ],
     'message' => [
-        'created' => 'Запись успешно создана',
-        'updated' => 'Запись успешно обновлена',
-        'deleted' => 'Запись успешно удалена',
-        'restored' => 'Запись успешно восстановлена',
+        'created' => '<i class="fa fa-check fa-lg"></i> Запись успешно создана',
+        'updated' => '<i class="fa fa-check fa-lg"></i> Запись успешно обновлена',
+        'deleted' => '<i class="fa fa-check fa-lg"></i> Запись успешно удалена',
+        'restored' => '<i class="fa fa-check fa-lg"></i> Запись успешно восстановлена',
+        'something_went_wrong' => 'Что-то пошло не так!',
+        'are_you_sure' => 'Вы уверены?',
+        'access_denied' => 'Доступ запрещен',
+        'validation_error' => 'Ошибка валидации',
     ],
 ];

@@ -6,10 +6,11 @@ use Illuminate\Routing\Router;
 
 interface WithRoutesInterface
 {
+
     /**
-     * Register router.
-     *
      * @param Router $router
+     *
+     * @return void
      */
     public static function registerRoutes(Router $router);
 }

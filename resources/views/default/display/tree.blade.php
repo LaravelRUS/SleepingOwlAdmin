@@ -1,16 +1,3 @@
-<script type="text/javascript">
-    $(function () {
-        $('.nestable').nestable({
-            maxDepth: 20
-        }).on('change', function (e) {
-            var url = $(this).data('url');
-            var list = e.length ? e : $(e.target);
-            var data = list.nestable('serialize');
-            $.post(url, {data: data});
-        });
-    })
-</script>
-
 <div class="panel panel-default">
     <div class="panel-heading">
         @if ($creatable)

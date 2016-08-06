@@ -32,8 +32,14 @@ class Range extends BaseColumnFilter
     {
         parent::initialize();
 
+        $this->setHtmlAttribute('data-type', 'range');
+        $this->setHtmlAttribute('class', 'column-filter');
+
         $this->getFrom()->initialize();
         $this->getTo()->initialize();
+
+        $this->getFrom()->removeHtmlAttribute('data-type');
+        $this->getTo()->removeHtmlAttribute('data-type');
     }
 
     /**
