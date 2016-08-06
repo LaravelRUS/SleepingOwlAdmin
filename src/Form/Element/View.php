@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
+use SleepingOwl\Admin\Structures\AssetPackage;
 
 class View extends Custom
 {
@@ -22,16 +23,18 @@ class View extends Custom
      * @param array $data
      * @param Closure $callback
      * @param TemplateInterface $template
+     * @param AssetPackage $assetPackage
      */
     public function __construct($view,
                                 array $data = [],
                                 Closure $callback = null,
-                                TemplateInterface $template)
+                                TemplateInterface $template,
+                                AssetPackage $assetPackage)
     {
         $this->setView($view);
         $this->setData($data);
 
-        parent::__construct($callback, $template);
+        parent::__construct($callback, $template, $assetPackage);
     }
 
     /**

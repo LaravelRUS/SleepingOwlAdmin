@@ -14,6 +14,7 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Http\Controllers\DisplayTreeController;
 use SleepingOwl\Admin\Repository\TreeRepository;
+use SleepingOwl\Admin\Structures\AssetPackage;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -92,6 +93,9 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected $request;
 
+    /**
+     * @var DisplayColumnFactoryInterface
+     */
     protected $displayColumnFactory;
 
     /**
@@ -100,16 +104,18 @@ class DisplayTree extends Display implements WithRoutesInterface
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
+     * @param AssetPackage $assetPackage
      * @param Request $request
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      */
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
+                                AssetPackage $assetPackage,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory)
     {
-        parent::__construct($repositoryFactory, $admin, $viewFactory);
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $assetPackage);
 
         $this->request = $request;
         $this->displayColumnFactory = $displayColumnFactory;

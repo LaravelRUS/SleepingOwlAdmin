@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\NavigationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\PackageManager;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager
@@ -20,6 +21,11 @@ class SectionModelConfiguration extends ModelConfigurationManager
      * @var Container
      */
     protected $container;
+
+    /**
+     * @var PackageManager
+     */
+    protected $packageManager;
 
     /**
      * ModelConfigurationManager constructor.
@@ -31,17 +37,21 @@ class SectionModelConfiguration extends ModelConfigurationManager
      * @param NavigationInterface $navigation
      * @param Gate $gate
      * @param Container $container
+     * @param PackageManager $packageManager
      */
     public function __construct(Dispatcher $dispatcher,
                                 TranslatorInterface $translator,
                                 UrlGenerator $urlGenerator,
                                 RepositoryInterface $repository,
                                 NavigationInterface $navigation,
-                                Gate $gate, Container $container)
+                                Gate $gate,
+                                Container $container,
+                                PackageManager $packageManager)
     {
         parent::__construct($dispatcher, $translator, $urlGenerator, $repository, $navigation, $gate);
 
         $this->container = $container;
+        $this->packageManager = $packageManager;
     }
 
     /**
@@ -78,6 +88,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
             $display->initialize();
         }
 
+        $this->packageManager->initialize();
+
         return $display;
     }
 
@@ -102,6 +114,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
         if ($form instanceof FormInterface) {
             $form->setAction($this->getStoreUrl());
         }
+
+        $this->packageManager->initialize();
 
         return $form;
     }
@@ -130,6 +144,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
             $form->setAction($this->getUpdateUrl($id));
             $form->setId($id);
         }
+
+        $this->packageManager->initialize();
 
         return $form;
     }

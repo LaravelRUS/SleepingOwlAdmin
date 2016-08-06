@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use LogicException;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
+use SleepingOwl\Admin\Structures\AssetPackage;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.
@@ -67,11 +68,13 @@ abstract class NamedFormElement extends FormElement
      * @param string $path
      * @param string|null $label
      * @param TemplateInterface $template
+     * @param AssetPackage $assetPackage
      * @param Request $request
      */
     public function __construct($path,
                                 $label = null,
                                 TemplateInterface $template,
+                                AssetPackage $assetPackage,
                                 Request $request)
     {
         $this->setPath($path);
@@ -83,7 +86,7 @@ abstract class NamedFormElement extends FormElement
 
         $this->request = $request;
 
-        parent::__construct($template);
+        parent::__construct($template, $assetPackage);
     }
 
     /**

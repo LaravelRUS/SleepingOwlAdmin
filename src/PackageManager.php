@@ -54,7 +54,7 @@ class PackageManager implements Initializable
             return;
         }
 
-        $this->packages[] = $object;
+        $this->packages[get_class($object)] = $object;
     }
 
     /**
@@ -64,9 +64,9 @@ class PackageManager implements Initializable
     {
         foreach ($this->packages as $packageObject) {
             /** @var AssetPackage $data */
-            $data = call_user_func($packageObject, 'loadPackage');
+            $data = call_user_func([$packageObject, 'loadPackage']);
             /** @var Package $package */
-            $package = $this->packageManager->load($data->name);
+            $package = $this->packageManager->add($data->name);
 
             /** @var array $params */
             foreach ($data->js as $params) {
@@ -77,7 +77,10 @@ class PackageManager implements Initializable
                 call_user_func_array([$package, 'css'], $params);
             }
 
-            $package->with($data->with->toArray());
+            $with = $data->with->toArray();
+            if (! empty($with)) {
+                $package->with($with);
+            }
 
             $this->meta->loadPackage($data->name);
         }

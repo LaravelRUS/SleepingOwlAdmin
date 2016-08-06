@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Closure;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
+use SleepingOwl\Admin\Structures\AssetPackage;
 
 class Custom extends FormElement
 {
@@ -23,14 +24,15 @@ class Custom extends FormElement
      *
      * @param Closure|null $callback
      * @param TemplateInterface $template
+     * @param AssetPackage $assetPackage
      */
-    public function __construct(Closure $callback = null, TemplateInterface $template)
+    public function __construct(Closure $callback = null, TemplateInterface $template, AssetPackage $assetPackage)
     {
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }
 
-        parent::__construct($template);
+        parent::__construct($template, $assetPackage);
     }
 
     /**

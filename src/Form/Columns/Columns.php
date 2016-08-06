@@ -7,6 +7,7 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Structures\AssetPackage;
 
 class Columns extends FormElements implements ColumnInterface
 {
@@ -22,11 +23,12 @@ class Columns extends FormElements implements ColumnInterface
      *
      * @param array $elements
      * @param TemplateInterface $template
+     * @param AssetPackage $assetPackage
      */
-    public function __construct(array $elements = [], TemplateInterface $template)
+    public function __construct(array $elements = [], TemplateInterface $template, AssetPackage $assetPackage)
     {
         $this->elements = new Collection();
-        parent::__construct($elements, $template);
+        parent::__construct($elements, $template, $assetPackage);
     }
 
 

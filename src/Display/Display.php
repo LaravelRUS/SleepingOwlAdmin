@@ -104,14 +104,17 @@ abstract class Display implements DisplayInterface, AssetsInterface
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
+     * @param AssetPackage $assetPackage
      */
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
-                                Factory $viewFactory)
+                                Factory $viewFactory,
+                                AssetPackage $assetPackage)
     {
         $this->repositoryFactory = $repositoryFactory;
         $this->admin = $admin;
         $this->viewFactory = $viewFactory;
+        $this->package = $assetPackage;
 
         $this->extensions = new Collection();
 
@@ -119,8 +122,6 @@ abstract class Display implements DisplayInterface, AssetsInterface
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
-
-        $this->package = new AssetPackage(get_called_class());
     }
 
     /**

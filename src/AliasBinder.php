@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin;
 use BadMethodCallException;
 use Illuminate\Contracts\Container\Container;
 use SleepingOwl\Admin\Contracts\AssetsInterface;
+use SleepingOwl\Admin\Structures\AssetPackage;
 
 class AliasBinder
 {
@@ -118,9 +119,22 @@ class AliasBinder
             throw new BadMethodCallException($name);
         }
 
+        $this->container->when($this->getAlias($name))
+            ->needs(AssetPackage::class)
+            ->give(function (Container $app) use ($name) {
+                if ($app->resolved($this->getAlias($name))) {
+                    return $app->make('sleeping_owl.package.' . $this->getAlias($name));
+                }
+
+                return new AssetPackage($this->getAlias($name));
+            });
+
         $object = $this->container->make($this->getAlias($name), $arguments);
 
         if ($object instanceof AssetsInterface) {
+            $this->container->singleton('sleeping_owl.package.' . $this->getAlias($name), function () use ($object) {
+                return $object->loadPackage();
+            });
             $this->packageManager->add($object);
         }
 

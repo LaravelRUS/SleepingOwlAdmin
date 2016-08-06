@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
+use SleepingOwl\Admin\Structures\AssetPackage;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class DisplayDatatables extends DisplayTable
@@ -40,6 +41,7 @@ class DisplayDatatables extends DisplayTable
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
+     * @param AssetPackage $assetPackage
      * @param Request $request
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      * @param TranslatorInterface $translator
@@ -47,11 +49,12 @@ class DisplayDatatables extends DisplayTable
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
+                                AssetPackage $assetPackage,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory,
                                 TranslatorInterface $translator)
     {
-        parent::__construct($repositoryFactory, $admin, $viewFactory, $request, $displayColumnFactory);
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $assetPackage, $request, $displayColumnFactory);
 
         $this->translator = $translator;
     }

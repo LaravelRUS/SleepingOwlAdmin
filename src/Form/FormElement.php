@@ -37,11 +37,12 @@ abstract class FormElement implements FormElementInterface, AssetsInterface
      * FormElement constructor.
      *
      * @param TemplateInterface $template
+     * @param AssetPackage $assetPackage
      */
-    public function __construct(TemplateInterface $template)
+    public function __construct(TemplateInterface $template, AssetPackage $assetPackage)
     {
         $this->template = $template;
-        $this->package = new AssetPackage(get_called_class());
+        $this->package = $assetPackage;
     }
 
     public function initialize()

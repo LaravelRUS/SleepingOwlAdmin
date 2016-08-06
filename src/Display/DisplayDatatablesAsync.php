@@ -16,6 +16,7 @@ use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Http\Controllers\DatatablesAsyncController;
+use SleepingOwl\Admin\Structures\AssetPackage;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
@@ -57,6 +58,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
+     * @param AssetPackage $assetPackage
      * @param Request $request
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      * @param TranslatorInterface $translator
@@ -66,13 +68,14 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
+                                AssetPackage $assetPackage,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory,
                                 TranslatorInterface $translator,
                                 $name = null, $distinct = null)
     {
-        parent::__construct($repositoryFactory, $admin, $viewFactory, $request,
-            $displayColumnFactory, $translator);
+        parent::__construct($repositoryFactory, $admin, $viewFactory,
+            $assetPackage, $request, $displayColumnFactory, $translator);
 
         $this->setName($name);
         $this->setDistinct($distinct);

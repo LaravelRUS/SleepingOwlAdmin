@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\ManagerInterface;
+use SleepingOwl\Admin\Structures\AssetPackage;
 use SleepingOwl\Admin\Wysiwyg\Manager;
 
 class Wysiwyg extends NamedFormElement
@@ -40,6 +41,7 @@ class Wysiwyg extends NamedFormElement
      * @param string|null $label
      * @param string|null $editor
      * @param TemplateInterface $template
+     * @param AssetPackage $assetPackage
      * @param Request $request
      * @param ManagerInterface $manager
      */
@@ -47,10 +49,11 @@ class Wysiwyg extends NamedFormElement
                                 $label = null,
                                 $editor = null,
                                 TemplateInterface $template,
+                                AssetPackage $assetPackage,
                                 Request $request,
                                 ManagerInterface $manager)
     {
-        parent::__construct($path, $label, $template, $request);
+        parent::__construct($path, $label, $template, $assetPackage, $request);
         $this->wysiwyg = $manager;
 
         if (is_null($editor)) {
