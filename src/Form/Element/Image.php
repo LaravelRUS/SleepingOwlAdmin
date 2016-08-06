@@ -67,17 +67,14 @@ class Image extends File
     /**
      * @return array
      */
-    protected static function uploadValidationRules()
+    protected static function defaultUploadValidationRules()
     {
         return [
-            'file' => 'required|image',
+            'file' => 'image',
         ];
     }
-
     /**
      * @var array
      */
-    protected $validationRules = [
-        'required', 'image'
-    ];
+    protected $uploadValidationRules = ['required', 'image'];
 }

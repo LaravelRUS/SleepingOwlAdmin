@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Router;
 use KodiComponents\Support\Upload;
-use Route;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use Validator;
@@ -56,12 +55,12 @@ class File extends NamedFormElement implements WithRoutesInterface
 
                 $messages = [];
                 $labels   = [];
-                $rules = static::uploadValidationRules();
+                $rules = static::defaultUploadValidationRules();
 
                 if (! is_null($element = $form->getElement($field))) {
-                    $rules    = $element->getValidationRules();
-                    $messages = $element->getValidationMessages();
-                    $labels   = $element->getValidationLabels();
+                    $rules    = $element->getUploadValidationRules();
+                    $messages = $element->getUploadValidationMessages();
+                    $labels   = $element->getUploadValidationLabels();
                 }
 
                 $validator = Validator::make($request->all(), $rules, $messages, $labels);
@@ -142,10 +141,10 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @return array
      */
-    protected static function uploadValidationRules()
+    protected static function defaultUploadValidationRules()
     {
         return [
-            'file' => 'required',
+            'file' => ['required', 'file'],
         ];
     }
 
@@ -167,14 +166,12 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @var array
      */
-    protected $validationRules = [
-        'required'
-    ];
+    protected $uploadValidationRules = ['required', 'file'];
 
-    /**
+        /**
      * @return array
      */
-    public function getValidationMessages()
+    public function getUploadValidationMessages()
     {
         $messages = [];
         foreach ($this->validationMessages as $rule => $message) {
@@ -187,7 +184,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @return array
      */
-    public function getValidationLabels()
+    public function getUploadValidationLabels()
     {
         return ['file' => $this->getLabel()];
     }
@@ -195,9 +192,9 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @return array
      */
-    public function getValidationRules()
+    public function getUploadValidationRules()
     {
-        return ['file' => $this->validationRules];
+        return ['file' => array_unique($this->uploadValidationRules)];
     }
 
     /**
@@ -274,5 +271,30 @@ class File extends NamedFormElement implements WithRoutesInterface
         $this->uploadSettings = $imageSettings;
 
         return $this;
+    }
+
+    /**
+     * @param string      $rule
+     * @param string|null $message
+     *
+     * @return $this
+     */
+    public function addValidationRule($rule, $message = null)
+    {
+        $uploadRules = ['file', 'image', 'mime', 'size', 'dimensions'];
+
+        foreach ($uploadRules as $uploadRule) {
+            if (strpos($rule, $uploadRule) !== false) {
+                $this->uploadValidationRules[] = $rule;
+
+                if (is_null($message)) {
+                    return $this;
+                }
+
+                return $this->addValidationMessage($rule, $message);
+            }
+        }
+
+        return parent::addValidationRule($rule, $message);
     }
 }
