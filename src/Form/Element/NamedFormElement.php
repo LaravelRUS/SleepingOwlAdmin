@@ -250,10 +250,6 @@ abstract class NamedFormElement extends FormElement
             return $this;
         }
 
-        if (is_string($rule) and ($pos = strpos($rule, ':')) !== false) {
-            $rule = substr($rule, 0, $pos);
-        }
-
         return $this->addValidationMessage($rule, $message);
     }
 
@@ -315,6 +311,10 @@ abstract class NamedFormElement extends FormElement
      */
     public function addValidationMessage($rule, $message)
     {
+        if (($pos = strpos($rule, ':')) !== false) {
+            $rule = substr($rule, 0, $pos);
+        }
+
         $this->validationMessages[$rule] = $message;
 
         return $this;
