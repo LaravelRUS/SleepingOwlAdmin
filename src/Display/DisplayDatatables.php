@@ -4,10 +4,10 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use KodiCMS\Assets\Package;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
-use SleepingOwl\Admin\Structures\AssetPackage;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class DisplayDatatables extends DisplayTable
@@ -38,10 +38,11 @@ class DisplayDatatables extends DisplayTable
 
     /**
      * DisplayDatatables constructor.
+     *
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      * @param Request $request
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      * @param TranslatorInterface $translator
@@ -49,12 +50,12 @@ class DisplayDatatables extends DisplayTable
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
-                                AssetPackage $assetPackage,
+                                Package $package,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory,
                                 TranslatorInterface $translator)
     {
-        parent::__construct($repositoryFactory, $admin, $viewFactory, $assetPackage, $request, $displayColumnFactory);
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $package, $request, $displayColumnFactory);
 
         $this->translator = $translator;
     }

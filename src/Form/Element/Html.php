@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use KodiCMS\Assets\Package;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 class Html extends Custom
 {
@@ -13,12 +13,12 @@ class Html extends Custom
      *
      * @param string|Closure $html
      * @param TemplateInterface $template
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      */
-    public function __construct($html, TemplateInterface $template, AssetPackage $assetPackage)
+    public function __construct($html, TemplateInterface $template, Package $package)
     {
         $this->setDisplay($html);
 
-        parent::__construct(null, $template, $assetPackage);
+        parent::__construct(null, $template, $package);
     }
 }

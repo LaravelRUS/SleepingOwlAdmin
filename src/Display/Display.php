@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use KodiCMS\Assets\Package;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 use SleepingOwl\Admin\Contracts\AdminInterface;
@@ -21,7 +22,6 @@ use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
-use SleepingOwl\Admin\Structures\AssetPackage;
 use SleepingOwl\Admin\Traits\Assets;
 
 /**
@@ -104,17 +104,18 @@ abstract class Display implements DisplayInterface, AssetsInterface
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
-     * @param AssetPackage $assetPackage
+     * @param Package $package
+     * @internal param AssetPackage $assetPackage
      */
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
-                                AssetPackage $assetPackage)
+                                Package $package)
     {
         $this->repositoryFactory = $repositoryFactory;
         $this->admin = $admin;
         $this->viewFactory = $viewFactory;
-        $this->package = $assetPackage;
+        $this->package = $package;
 
         $this->extensions = new Collection();
 

@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Providers;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
@@ -29,7 +28,7 @@ class AliasesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(PackageManager::class, function (Container $app) {
-            return new PackageManager($app->make(PackageManagerInterface::class), $app->make(MetaInterface::class));
+            return new PackageManager($app->make(MetaInterface::class));
         });
 
         $this->registerColumns();

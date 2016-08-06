@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Validation\DatabasePresenceVerifier;
 use Illuminate\Validation\PresenceVerifierInterface;
 use Illuminate\Validation\Validator;
+use KodiCMS\Assets\Package;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -23,7 +24,6 @@ use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Form\Element\Upload;
 use Illuminate\Contracts\Validation\Factory;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -111,7 +111,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @param array $elements
      * @param TemplateInterface $template
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      * @param FormButtonsInterface $formButtons
      * @param RepositoryFactory $repositoryFactory
      * @param Request $request
@@ -122,7 +122,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function __construct(array $elements = [],
                                 TemplateInterface $template,
-                                AssetPackage $assetPackage,
+                                Package $package,
                                 FormButtonsInterface $formButtons,
                                 RepositoryFactory $repositoryFactory,
                                 Request $request,
@@ -131,7 +131,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
                                 PresenceVerifierInterface $presenceVerifier,
                                 UrlGenerator $urlGenerator)
     {
-        parent::__construct($elements, $template, $assetPackage);
+        parent::__construct($elements, $template, $package);
 
         $this->request = $request;
         $this->validationFactory = $validationFactory;

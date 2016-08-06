@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Package;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 class FormElements extends FormElement implements ElementsInterface
 {
@@ -16,11 +16,11 @@ class FormElements extends FormElement implements ElementsInterface
      *
      * @param array $elements
      * @param TemplateInterface $template
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      */
-    public function __construct(array $elements = [], TemplateInterface $template, AssetPackage $assetPackage)
+    public function __construct(array $elements = [], TemplateInterface $template, Package $package)
     {
-        parent::__construct($template, $assetPackage);
+        parent::__construct($template, $package);
 
         $this->setElements($elements);
     }

@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
+use KodiCMS\Assets\Package;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
@@ -14,7 +15,6 @@ use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 /**
  * Class DisplayTable.
@@ -63,18 +63,18 @@ class DisplayTable extends Display
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      * @param Request $request
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      */
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
-                                AssetPackage $assetPackage,
+                                Package $package,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory)
     {
-        parent::__construct($repositoryFactory, $admin, $viewFactory, $assetPackage);
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $package);
 
         $this->request = $request;
 

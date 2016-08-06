@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use KodiCMS\Assets\Package;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
@@ -14,7 +15,6 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Http\Controllers\DisplayTreeController;
 use SleepingOwl\Admin\Repository\TreeRepository;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -104,18 +104,18 @@ class DisplayTree extends Display implements WithRoutesInterface
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      * @param Request $request
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      */
     public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
-                                AssetPackage $assetPackage,
+                                Package $package,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory)
     {
-        parent::__construct($repositoryFactory, $admin, $viewFactory, $assetPackage);
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $package);
 
         $this->request = $request;
         $this->displayColumnFactory = $displayColumnFactory;

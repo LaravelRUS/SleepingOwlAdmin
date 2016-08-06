@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use SleepingOwl\Admin\Structures\AssetPackage;
+use KodiCMS\Assets\Package;
 
 trait Assets
 {
     /**
-     * @var AssetPackage
+     * @var Package
      */
     protected $package;
 
@@ -24,7 +24,7 @@ trait Assets
             $handle = $script;
         }
 
-        $this->package->js->push([$handle, $script, $dependency]);
+        $this->package->js($handle, $script, $dependency);
 
         return $this;
     }
@@ -42,7 +42,7 @@ trait Assets
             $handle = $style;
         }
 
-        $this->package->css->push([$handle, $style, $attributes]);
+        $this->package->css($handle, $style, $attributes);
 
         return $this;
     }
@@ -58,13 +58,13 @@ trait Assets
             ? $packages
             : func_get_args();
 
-        $this->package->with->push($packages);
+        $this->package->with($packages);
 
         return $this;
     }
 
     /**
-     * @return AssetPackage
+     * @return Package
      */
     public function loadPackage()
     {

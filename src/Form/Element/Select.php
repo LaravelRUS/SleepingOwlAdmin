@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Package;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
-use SleepingOwl\Admin\Structures\AssetPackage;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class Select extends NamedFormElement
@@ -80,7 +80,7 @@ class Select extends NamedFormElement
      * @param string|null $label
      * @param array|Model $options
      * @param TemplateInterface $template
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      * @param Request $request
      * @param RepositoryFactory $repositoryFactory
      * @param TranslatorInterface $translator
@@ -89,12 +89,12 @@ class Select extends NamedFormElement
                                 $label = null,
                                 $options = [],
                                 TemplateInterface $template,
-                                AssetPackage $assetPackage,
+                                Package $package,
                                 Request $request,
                                 RepositoryFactory $repositoryFactory,
                                 TranslatorInterface $translator)
     {
-        parent::__construct($path, $label, $template, $assetPackage, $request);
+        parent::__construct($path, $label, $template, $package, $request);
 
         $this->translator = $translator;
         $this->repositoryFactory = $repositoryFactory;

@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
+use KodiCMS\Assets\Package;
 use LogicException;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.
@@ -68,13 +68,13 @@ abstract class NamedFormElement extends FormElement
      * @param string $path
      * @param string|null $label
      * @param TemplateInterface $template
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      * @param Request $request
      */
     public function __construct($path,
                                 $label = null,
                                 TemplateInterface $template,
-                                AssetPackage $assetPackage,
+                                Package $package,
                                 Request $request)
     {
         $this->setPath($path);
@@ -86,7 +86,7 @@ abstract class NamedFormElement extends FormElement
 
         $this->request = $request;
 
-        parent::__construct($template, $assetPackage);
+        parent::__construct($template, $package);
     }
 
     /**

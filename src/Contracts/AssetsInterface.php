@@ -1,12 +1,12 @@
 <?php
 namespace SleepingOwl\Admin\Contracts;
 
-use SleepingOwl\Admin\Structures\AssetPackage;
+use KodiCMS\Assets\Package;
 
 interface AssetsInterface
 {
     /**
-     * @return AssetPackage
+     * @return Package
      */
     public function loadPackage();
 }

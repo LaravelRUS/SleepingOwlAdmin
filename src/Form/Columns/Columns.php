@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Form\Columns;
 
 use Illuminate\Support\Collection;
+use KodiCMS\Assets\Package;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElements;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 class Columns extends FormElements implements ColumnInterface
 {
@@ -23,12 +23,12 @@ class Columns extends FormElements implements ColumnInterface
      *
      * @param array $elements
      * @param TemplateInterface $template
-     * @param AssetPackage $assetPackage
+     * @param Package $package
      */
-    public function __construct(array $elements = [], TemplateInterface $template, AssetPackage $assetPackage)
+    public function __construct(array $elements = [], TemplateInterface $template, Package $package)
     {
         $this->elements = new Collection();
-        parent::__construct($elements, $template, $assetPackage);
+        parent::__construct($elements, $template, $package);
     }
 
 

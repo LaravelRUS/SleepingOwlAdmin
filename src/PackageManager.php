@@ -2,16 +2,13 @@
 namespace SleepingOwl\Admin;
 
 use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use KodiCMS\Assets\Package;
-use SleepingOwl\Admin\Contracts\AssetsInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Structures\AssetPackage;
 
 class PackageManager implements Initializable
 {
     /**
-     * @var AssetsInterface[]
+     * @var Package[]
      */
     protected $packages = [];
 
@@ -21,40 +18,34 @@ class PackageManager implements Initializable
     protected $meta;
 
     /**
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
-
-    /**
      * PackageManager constructor.
-     * @param PackageManagerInterface $packageManager
+     *
      * @param MetaInterface $meta
      */
-    public function __construct(PackageManagerInterface $packageManager, MetaInterface $meta)
+    public function __construct(MetaInterface $meta)
     {
-        $this->packageManager = $packageManager;
         $this->meta = $meta;
     }
 
     /**
-     * @param AssetsInterface $object
+     * @param Package $package
      * @return bool
      */
-    protected function has(AssetsInterface $object)
+    public function has(Package $package)
     {
-        return array_key_exists(get_class($object), $this->packages);
+        return array_key_exists($package->getName(), $this->packages);
     }
 
     /**
-     * @param AssetsInterface $object
+     * @param Package $package
      */
-    public function add(AssetsInterface $object)
+    public function add(Package $package)
     {
-        if ($this->has($object)) {
+        if ($this->has($package)) {
             return;
         }
 
-        $this->packages[get_class($object)] = $object;
+        $this->packages[$package->getName()] = $package;
     }
 
     /**
@@ -62,27 +53,8 @@ class PackageManager implements Initializable
      */
     public function initialize()
     {
-        foreach ($this->packages as $packageObject) {
-            /** @var AssetPackage $data */
-            $data = call_user_func([$packageObject, 'loadPackage']);
-            /** @var Package $package */
-            $package = $this->packageManager->add($data->name);
-
-            /** @var array $params */
-            foreach ($data->js as $params) {
-                call_user_func_array([$package, 'js'], $params);
-            }
-
-            foreach ($data->css as $params) {
-                call_user_func_array([$package, 'css'], $params);
-            }
-
-            $with = $data->with->toArray();
-            if (! empty($with)) {
-                $package->with($with);
-            }
-
-            $this->meta->loadPackage($data->name);
+        foreach ($this->packages as $package) {
+            $this->meta->loadPackage($package->getName());
         }
     }
 
