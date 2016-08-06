@@ -32,7 +32,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      * @param string $filename
      * @param array $settings
      */
-    protected static function saveFile(UploadedFile $file, $path, $filename, array $settings)
+    public static function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
         $file->move($path, $filename);
     }
@@ -40,9 +40,8 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @param $validator
      */
-    protected static function validate(Validator $validator)
+    public static function validate(Validator $validator)
     {
-
     }
 
     /**
@@ -50,7 +49,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      *
      * @return string
      */
-    protected static function defaultUploadFilename(UploadedFile $file)
+    public static function defaultUploadFilename(UploadedFile $file)
     {
         return md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
     }
@@ -60,7 +59,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      *
      * @return string
      */
-    protected static function defaultUploadPath(UploadedFile $file)
+    public static function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
     }
@@ -68,7 +67,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @return array
      */
-    protected static function defaultUploadValidationRules()
+    public static function defaultUploadValidationRules()
     {
         return [
             'file' => ['required', 'file'],

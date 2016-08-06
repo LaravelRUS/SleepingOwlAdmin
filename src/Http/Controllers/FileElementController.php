@@ -95,8 +95,8 @@ class FileElementController extends Controller
             $path     = $element->getUploadPath($file);
             $settings = $element->getUploadSettings();
         } else {
-            $filename = static::defaultUploadFilename($file);
-            $path     = static::defaultUploadPath($file);
+            $filename = $static::defaultUploadFilename($file);
+            $path     = $static::defaultUploadPath($file);
             $settings = [];
         }
 
