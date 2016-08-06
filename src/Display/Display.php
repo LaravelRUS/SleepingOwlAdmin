@@ -5,11 +5,10 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\AssetsInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -22,6 +21,7 @@ use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
+use SleepingOwl\Admin\Structures\AssetPackage;
 use SleepingOwl\Admin\Traits\Assets;
 
 /**
@@ -39,7 +39,7 @@ use SleepingOwl\Admin\Traits\Assets;
  * @method Scopes getScopes()
  * @method $this setScopes(array $scope, ...$scopes)
  */
-abstract class Display implements DisplayInterface
+abstract class Display implements DisplayInterface, AssetsInterface
 {
     use HtmlAttributes, Assets;
 
@@ -100,20 +100,15 @@ abstract class Display implements DisplayInterface
 
     /**
      * Display constructor.
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
+     *
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
      */
-    public function __construct(PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
-                                RepositoryFactory $repositoryFactory,
+    public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory)
     {
-        $this->packageManager = $packageManager;
-        $this->meta = $meta;
         $this->repositoryFactory = $repositoryFactory;
         $this->admin = $admin;
         $this->viewFactory = $viewFactory;
@@ -125,7 +120,7 @@ abstract class Display implements DisplayInterface
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
 
-        $this->initializePackage();
+        $this->package = new AssetPackage(get_called_class());
     }
 
     /**
@@ -209,7 +204,7 @@ abstract class Display implements DisplayInterface
             }
 
             if ($extension instanceof Placable) {
-                $template = app('sleeping_owl.template')->getViewPath($this->getView());
+                $template = $this->admin->template()->getViewPath($this->getView());
 
                 $this->viewFactory->composer($template, function (View $view) use ($extension) {
                     $html = $this->admin->template()->view($extension->getView(), $extension->toArray())->render();
@@ -221,8 +216,6 @@ abstract class Display implements DisplayInterface
                 });
             }
         });
-
-        $this->includePackage();
 
         $this->initialized = true;
     }

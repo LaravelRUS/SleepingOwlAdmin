@@ -5,8 +5,6 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\AdminInterface;
@@ -55,8 +53,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * DisplayDatatablesAsync constructor.
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
+     *
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
@@ -66,9 +63,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param null $name
      * @param null $distinct
      */
-    public function __construct(PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
-                                RepositoryFactory $repositoryFactory,
+    public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
                                 Request $request,
@@ -76,7 +71,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                                 TranslatorInterface $translator,
                                 $name = null, $distinct = null)
     {
-        parent::__construct($packageManager, $meta, $repositoryFactory, $admin, $viewFactory, $request,
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $request,
             $displayColumnFactory, $translator);
 
         $this->setName($name);

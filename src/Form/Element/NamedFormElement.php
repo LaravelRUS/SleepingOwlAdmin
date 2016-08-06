@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use LogicException;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
@@ -68,15 +66,11 @@ abstract class NamedFormElement extends FormElement
     /**
      * @param string $path
      * @param string|null $label
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
      * @param TemplateInterface $template
      * @param Request $request
      */
     public function __construct($path,
                                 $label = null,
-                                PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
                                 TemplateInterface $template,
                                 Request $request)
     {
@@ -89,7 +83,7 @@ abstract class NamedFormElement extends FormElement
 
         $this->request = $request;
 
-        parent::__construct($packageManager, $meta, $template);
+        parent::__construct($template);
     }
 
     /**

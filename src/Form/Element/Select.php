@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
@@ -80,8 +78,6 @@ class Select extends NamedFormElement
      * @param string $path
      * @param string|null $label
      * @param array|Model $options
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
      * @param TemplateInterface $template
      * @param Request $request
      * @param RepositoryFactory $repositoryFactory
@@ -90,14 +86,12 @@ class Select extends NamedFormElement
     public function __construct($path,
                                 $label = null,
                                 $options = [],
-                                PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
                                 TemplateInterface $template,
                                 Request $request,
                                 RepositoryFactory $repositoryFactory,
                                 TranslatorInterface $translator)
     {
-        parent::__construct($path, $label, $packageManager, $meta, $template, $request);
+        parent::__construct($path, $label, $template, $request);
 
         $this->translator = $translator;
         $this->repositoryFactory = $repositoryFactory;

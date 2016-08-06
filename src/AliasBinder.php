@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin;
 
 use BadMethodCallException;
 use Illuminate\Contracts\Container\Container;
+use SleepingOwl\Admin\Contracts\AssetsInterface;
 
 class AliasBinder
 {
@@ -31,12 +32,19 @@ class AliasBinder
     protected $container;
 
     /**
+     * @var PackageManager
+     */
+    protected $packageManager;
+
+    /**
      * AliasBinder constructor.
      * @param Container $container
+     * @param PackageManager $packageManager
      */
-    public function __construct(Container $container)
+    public function __construct(Container $container, PackageManager $packageManager)
     {
         $this->container = $container;
+        $this->packageManager = $packageManager;
     }
 
     /**
@@ -110,6 +118,12 @@ class AliasBinder
             throw new BadMethodCallException($name);
         }
 
-        return $this->container->make($this->getAlias($name), $arguments);
+        $object = $this->container->make($this->getAlias($name), $arguments);
+
+        if ($object instanceof AssetsInterface) {
+            $this->packageManager->add($object);
+        }
+
+        return $object;
     }
 }

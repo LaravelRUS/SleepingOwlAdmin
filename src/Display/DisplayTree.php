@@ -6,15 +6,11 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
-use SleepingOwl\Admin\Contracts\RouterInterface;
 use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Display\Extension\Tree;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Http\Controllers\DisplayTreeController;
 use SleepingOwl\Admin\Repository\TreeRepository;
@@ -100,23 +96,20 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * DisplayTree constructor.
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
+     *
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
      * @param Request $request
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      */
-    public function __construct(PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
-                                RepositoryFactory $repositoryFactory,
+    public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory)
     {
-        parent::__construct($packageManager, $meta, $repositoryFactory, $admin, $viewFactory);
+        parent::__construct($repositoryFactory, $admin, $viewFactory);
 
         $this->request = $request;
         $this->displayColumnFactory = $displayColumnFactory;

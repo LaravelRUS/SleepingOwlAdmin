@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
+use SleepingOwl\Admin\Contracts\AssetsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
+use SleepingOwl\Admin\Structures\AssetPackage;
 use SleepingOwl\Admin\Traits\Assets;
 
-abstract class FormElement implements FormElementInterface
+abstract class FormElement implements FormElementInterface, AssetsInterface
 {
     use Assets;
 
@@ -36,23 +36,16 @@ abstract class FormElement implements FormElementInterface
     /**
      * FormElement constructor.
      *
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
      * @param TemplateInterface $template
      */
-    public function __construct(PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
-                                TemplateInterface $template)
+    public function __construct(TemplateInterface $template)
     {
-        $this->packageManager = $packageManager;
-        $this->meta = $meta;
         $this->template = $template;
-        $this->initializePackage();
+        $this->package = new AssetPackage(get_called_class());
     }
 
     public function initialize()
     {
-        $this->includePackage();
     }
 
     /**

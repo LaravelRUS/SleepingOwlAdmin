@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
@@ -19,11 +22,16 @@ use SleepingOwl\Admin\Factories\DisplayFilterFactory;
 use SleepingOwl\Admin\Factories\FormElementFactory;
 use SleepingOwl\Admin\Factories\FormFactory;
 use SleepingOwl\Admin\Form;
+use SleepingOwl\Admin\PackageManager;
 
 class AliasesServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->app->singleton(PackageManager::class, function (Container $app) {
+            return new PackageManager($app->make(PackageManagerInterface::class), $app->make(MetaInterface::class));
+        });
+
         $this->registerColumns();
         $this->registerColumnEditable();
         $this->registerColumnFilters();
@@ -35,7 +43,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerColumnFilters()
     {
-        $alias = (new DisplayColumnFilterFactory($this->app))->register([
+        $alias = $this->app->make(DisplayColumnFilterFactory::class)->register([
             'text'   => Display\Column\Filter\Text::class,
             'date'   => Display\Column\Filter\Date::class,
             'range'  => Display\Column\Filter\Range::class,
@@ -50,7 +58,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerDisplays()
     {
-        $alias = (new DisplayFactory($this->app))->register([
+        $alias = $this->app->make(DisplayFactory::class)->register([
             'datatables'      => Display\DisplayDatatables::class,
             'datatablesAsync' => Display\DisplayDatatablesAsync::class,
             'tab'             => Display\DisplayTab::class,
@@ -67,7 +75,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerColumns()
     {
-        $alias = (new DisplayColumnFactory($this->app))->register([
+        $alias = $this->app->make(DisplayColumnFactory::class)->register([
             'action'      => Display\Column\Action::class,
             'checkbox'    => Display\Column\Checkbox::class,
             'control'     => Display\Column\Control::class,
@@ -94,7 +102,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerColumnEditable()
     {
-        $alias = (new DisplayColumnEditableFactory($this->app))->register([
+        $alias = $this->app->make(DisplayColumnEditableFactory::class)->register([
             'checkbox'    => Display\Column\Editable\Checkbox::class,
         ]);
 
@@ -106,7 +114,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerFormElements()
     {
-        $alias = (new FormElementFactory($this->app))->register([
+        $alias = $this->app->make(FormElementFactory::class)->register([
             'columns'     => Form\Columns\Columns::class,
             'text'        => Form\Element\Text::class,
             'time'        => Form\Element\Time::class,
@@ -139,7 +147,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerForms()
     {
-        $alias = (new FormFactory($this->app))->register([
+        $alias = $this->app->make(FormFactory::class)->register([
             'form' => Form\FormDefault::class,
             'elements' => Form\FormElements::class,
             'tabbed' => Form\FormTabbed::class,
@@ -154,7 +162,7 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerFilters()
     {
-        $alias = (new DisplayFilterFactory($this->app))->register([
+        $alias = $this->app->make(DisplayFilterFactory::class)->register([
             'field'   => Display\Filter\FilterField::class,
             'scope'   => Display\Filter\FilterScope::class,
             'custom'  => Display\Filter\FilterCustom::class,

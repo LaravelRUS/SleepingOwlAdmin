@@ -4,8 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\ManagerInterface;
 use SleepingOwl\Admin\Wysiwyg\Manager;
@@ -41,8 +39,6 @@ class Wysiwyg extends NamedFormElement
      * @param string $path
      * @param string|null $label
      * @param string|null $editor
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
      * @param TemplateInterface $template
      * @param Request $request
      * @param ManagerInterface $manager
@@ -50,13 +46,11 @@ class Wysiwyg extends NamedFormElement
     public function __construct($path,
                                 $label = null,
                                 $editor = null,
-                                PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
                                 TemplateInterface $template,
                                 Request $request,
                                 ManagerInterface $manager)
     {
-        parent::__construct($path, $label, $packageManager, $meta, $template, $request);
+        parent::__construct($path, $label, $template, $request);
         $this->wysiwyg = $manager;
 
         if (is_null($editor)) {

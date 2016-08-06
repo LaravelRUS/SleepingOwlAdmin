@@ -11,8 +11,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Validation\DatabasePresenceVerifier;
 use Illuminate\Validation\PresenceVerifierInterface;
 use Illuminate\Validation\Validator;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -111,8 +109,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * FormDefault constructor.
      *
      * @param array $elements
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
      * @param TemplateInterface $template
      * @param FormButtonsInterface $formButtons
      * @param RepositoryFactory $repositoryFactory
@@ -123,8 +119,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param UrlGenerator $urlGenerator
      */
     public function __construct(array $elements = [],
-                                PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
                                 TemplateInterface $template,
                                 FormButtonsInterface $formButtons,
                                 RepositoryFactory $repositoryFactory,
@@ -134,7 +128,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
                                 PresenceVerifierInterface $presenceVerifier,
                                 UrlGenerator $urlGenerator)
     {
-        parent::__construct($elements, $packageManager, $meta, $template);
+        parent::__construct($elements, $template);
 
         $this->request = $request;
         $this->validationFactory = $validationFactory;
@@ -144,8 +138,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $this->urlGenerator = $urlGenerator;
 
         $this->setButtons($formButtons);
-
-        $this->initializePackage();
     }
 
     /**
@@ -175,8 +167,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $this->getButtons()->setModelConfiguration(
             $this->getModelConfiguration()
         );
-
-        $this->includePackage();
     }
 
     /**

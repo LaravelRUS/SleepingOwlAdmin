@@ -2,25 +2,14 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
+use SleepingOwl\Admin\Structures\AssetPackage;
 
 trait Assets
 {
     /**
-     * @var \KodiCMS\Assets\Package
+     * @var AssetPackage
      */
     protected $package;
-
-    /**
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
-
-    /**
-     * @var MetaInterface
-     */
-    protected $meta;
 
     /**
      * @param string $handle
@@ -35,7 +24,7 @@ trait Assets
             $handle = $script;
         }
 
-        $this->package->js($handle, $script, $dependency);
+        $this->package->js->push([$handle, $script, $dependency]);
 
         return $this;
     }
@@ -53,7 +42,7 @@ trait Assets
             $handle = $style;
         }
 
-        $this->package->css($handle, $style, $attributes);
+        $this->package->css->push([$handle, $style, $attributes]);
 
         return $this;
     }
@@ -69,20 +58,16 @@ trait Assets
             ? $packages
             : func_get_args();
 
-        $this->package->with($packages);
+        $this->package->with->push($packages);
 
         return $this;
     }
 
-    protected function initializePackage()
+    /**
+     * @return AssetPackage
+     */
+    public function loadPackage()
     {
-        if (is_null($this->package = $this->packageManager->load(get_called_class()))) {
-            $this->package = $this->packageManager->add(get_called_class());
-        }
-    }
-
-    protected function includePackage()
-    {
-        $this->meta->loadPackage($this->package->getName());
+        return $this->package;
     }
 }

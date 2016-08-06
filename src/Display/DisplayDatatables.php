@@ -4,8 +4,6 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
-use KodiCMS\Assets\Contracts\MetaInterface;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Factories\RepositoryFactory;
@@ -39,8 +37,6 @@ class DisplayDatatables extends DisplayTable
 
     /**
      * DisplayDatatables constructor.
-     * @param PackageManagerInterface $packageManager
-     * @param MetaInterface $meta
      * @param RepositoryFactory $repositoryFactory
      * @param AdminInterface $admin
      * @param Factory $viewFactory
@@ -48,16 +44,14 @@ class DisplayDatatables extends DisplayTable
      * @param DisplayColumnFactoryInterface $displayColumnFactory
      * @param TranslatorInterface $translator
      */
-    public function __construct(PackageManagerInterface $packageManager,
-                                MetaInterface $meta,
-                                RepositoryFactory $repositoryFactory,
+    public function __construct(RepositoryFactory $repositoryFactory,
                                 AdminInterface $admin,
                                 Factory $viewFactory,
                                 Request $request,
                                 DisplayColumnFactoryInterface $displayColumnFactory,
                                 TranslatorInterface $translator)
     {
-        parent::__construct($packageManager, $meta, $repositoryFactory, $admin, $viewFactory, $request, $displayColumnFactory);
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $request, $displayColumnFactory);
 
         $this->translator = $translator;
     }

@@ -28,7 +28,8 @@
     "laravelcollective/html": "5.*",
     "kodicms/laravel-assets": "dev-master",
     "erusev/parsedown": "1.*",
-    "davejamesmiller/laravel-breadcrumbs": "^3.0"
+    "davejamesmiller/laravel-breadcrumbs": "^3.0",
+    "serafim/properties": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.1",
