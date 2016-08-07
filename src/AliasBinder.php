@@ -4,9 +4,8 @@ namespace SleepingOwl\Admin;
 
 use BadMethodCallException;
 use Illuminate\Contracts\Container\Container;
-use KodiCMS\Assets\Contracts\PackageManagerInterface;
 use KodiCMS\Assets\Package;
-use SleepingOwl\Admin\Contracts\AssetsInterface;
+use SleepingOwl\Admin\Factories\PackageFactory;
 
 class AliasBinder
 {
@@ -34,19 +33,19 @@ class AliasBinder
     protected $container;
 
     /**
-     * @var PackageManager
+     * @var PackageFactory
      */
-    protected $packageManager;
+    protected $packageFactory;
 
     /**
      * AliasBinder constructor.
      * @param Container $container
-     * @param PackageManager $packageManager
+     * @param PackageFactory $packageFactory
      */
-    public function __construct(Container $container, PackageManager $packageManager)
+    public function __construct(Container $container, PackageFactory $packageFactory)
     {
         $this->container = $container;
-        $this->packageManager = $packageManager;
+        $this->packageFactory = $packageFactory;
     }
 
     /**
@@ -125,24 +124,10 @@ class AliasBinder
         $this->container->when($alias)
             ->needs(Package::class)
             ->give(function (Container $app) use ($alias) {
-                if ($app->resolved($alias)) {
-                    return $app->make('sleeping_owl.package.' . $alias);
-                }
-
-                /** @var PackageManagerInterface $pm */
-                $pm = $this->container->make(PackageManagerInterface::class);
-                return $pm->add($alias);
+                return $this->packageFactory->make($alias);
             });
 
         $object = $this->container->make($alias, $arguments);
-
-        if ($object instanceof AssetsInterface) {
-            $package = $object->loadPackage();
-            $this->container->singleton('sleeping_owl.package.' . $alias, function () use ($package) {
-                return $package;
-            });
-            $this->packageManager->add($package);
-        }
 
         return $object;
     }
