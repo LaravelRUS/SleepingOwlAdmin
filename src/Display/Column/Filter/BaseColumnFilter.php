@@ -42,7 +42,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function toArray()
     {
         return [
-            'attributes' => $this->htmlAttributesToString()
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 

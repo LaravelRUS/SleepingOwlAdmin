@@ -2,14 +2,7 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Contracts\Config\Repository as Config;
-use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Commands\InstallCommand;
-use SleepingOwl\Admin\Commands\SectionGenerate;
-use SleepingOwl\Admin\Commands\SectionMake;
-use SleepingOwl\Admin\Commands\UserManagerCommand;
-
-class SleepingOwlServiceProvider extends ServiceProvider
+class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
     public function register()
     {
@@ -24,7 +17,10 @@ class SleepingOwlServiceProvider extends ServiceProvider
         }
     }
 
-    public function boot()
+    /**
+     * @param \SleepingOwl\Admin\Admin $admin
+     */
+    public function boot(\SleepingOwl\Admin\Admin $admin)
     {
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
@@ -35,22 +31,37 @@ class SleepingOwlServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
         ], 'config');
+
+        parent::boot($admin);
     }
 
     public function registerProviders()
     {
-        foreach ($this->app->make(Config::class)->get('sleeping_owl.providers', []) as $providerClass) {
+        $providers = [
+            AliasesServiceProvider::class,
+            \KodiCMS\Assets\AssetsServiceProvider::class,
+            \Collective\Html\HtmlServiceProvider::class,
+            \DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+            AdminServiceProvider::class,
+        ];
+
+        foreach ($providers as $providerClass) {
             $this->app->register($providerClass);
+        }
+
+        /* Workaround to allow use ServiceProvider-based configurations in old fashion */
+        if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
+            $this->app->register(\App\Providers\AdminSectionsServiceProvider::class);
         }
     }
 
     protected function registerCommands()
     {
         $this->commands([
-            InstallCommand::class,
-            UserManagerCommand::class,
-            SectionGenerate::class,
-            SectionMake::class,
+            \SleepingOwl\Admin\Commands\InstallCommand::class,
+            \SleepingOwl\Admin\Commands\UserManagerCommand::class,
+            \SleepingOwl\Admin\Commands\SectionGenerate::class,
+            \SleepingOwl\Admin\Commands\SectionMake::class,
         ]);
     }
 }

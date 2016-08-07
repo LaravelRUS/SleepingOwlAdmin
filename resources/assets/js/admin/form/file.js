@@ -1,4 +1,4 @@
-Vue.component('element-image', Vue.extend({
+Vue.component('element-file', Vue.extend({
     props: {
         url: {
             required: true
@@ -34,7 +34,6 @@ Vue.component('element-image', Vue.extend({
                 method: 'POST',
                 uploadMultiple: false,
                 previewsContainer: false,
-                acceptedFiles: 'image/*',
                 dictDefaultMessage: '',
                 headers: {
                     'X-CSRF-TOKEN': Admin.Settings.token
@@ -74,7 +73,7 @@ Vue.component('element-image', Vue.extend({
         has_value () {
             return this.value.length > 0
         },
-        image () {
+        file () {
             return Admin.Settings.base_url + this.value
         }
     }

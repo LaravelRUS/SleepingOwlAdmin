@@ -1,0 +1,27 @@
+<?php
+
+namespace __NAMESPACE__\Providers;
+
+use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
+use SleepingOwl\Admin\Admin;
+
+class AdminServiceProvider extends SleepingOwlServiceProvider
+{
+
+    /**
+     * @var array
+     */
+    protected $sections = [
+        //__NAMESPACE__\User::class => '__NAMESPACE__\Http\Sections\Users',
+    ];
+
+    /**
+     * Register sections.
+     *
+     * @return void
+     */
+    public function boot(Admin $admin)
+    {
+        parent::boot($admin);
+    }
+}

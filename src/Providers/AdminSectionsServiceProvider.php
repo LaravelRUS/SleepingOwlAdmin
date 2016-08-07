@@ -9,7 +9,7 @@ use SleepingOwl\Admin\Model\ModelConfigurationFactory;
 class AdminSectionsServiceProvider extends ServiceProvider
 {
     /**
-     * @var array
+     * @var array  Associative array in form of: Model::class => Section::class
      */
     protected $sections = [];
 
@@ -28,14 +28,6 @@ class AdminSectionsServiceProvider extends ServiceProvider
                 $admin->register($factory->make($section, $model));
             }
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function sections()
-    {
-        return $this->sections;
     }
 
     /**

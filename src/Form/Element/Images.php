@@ -4,10 +4,9 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Images extends Image
 {
-
     public function save()
     {
-        $name  = $this->getName();
+        $name = $this->getName();
         $value = $this->request->input($name, '');
 
         if (! empty($value)) {

@@ -19,53 +19,51 @@ Vue.component('element-images', Vue.extend({
     data () {
         return {
             errors: [],
-            values: []
+            values: [],
         }
     },
     ready () {
         this.initUpload()
-        console.log(this.values);
     },
     methods: {
         initUpload () {
-            var self = this,
-                flow = new Flow({
-                    target: this.url,
-                    testChunks: false,
-                    singleFile: false,
-                    chunkSize: 1024 * 1024 * 1024,
-                    query: {
-                        _token: Admin.Settings.token
-                    }
-                });
+            let self = this,
+                container = $(self.$el.parentNode),
+                button = container.find('.upload-button');
 
-            let button = $(self.$el.parentNode).find('.upload-button');
-
-            flow.assignBrowse(button, false, true)
-
-            flow.on('filesSubmitted', (file) => {
-                self.$set('errors', []);
-                flow.upload();
-            });
-
-            flow.on('fileSuccess', (file, message) => {
-                flow.removeFile(file);
-
-                var result = $.parseJSON(message);
-                self.values.push(result.url);
-            });
-
-            flow.on('fileError', (file, message) => {
-                flow.removeFile(file);
-
-                var response = $.parseJSON(message);
-
-                if(_.isArray(response.errors)) {
-                    self.$set('errors', response.errors);
+            container.magnificPopup({
+                delegate: '[data-toggle="images"]',
+                type: 'image',
+                gallery:{
+                    enabled:true
                 }
             });
 
-            self.flow = flow;
+            container.find('.dropzone').dropzone({
+                url: this.url,
+                method: 'POST',
+                previewsContainer: false,
+                acceptedFiles: 'image/*',
+                clickable: button[0],
+                dictDefaultMessage: '',
+                headers: {
+                    'X-CSRF-TOKEN': Admin.Settings.token
+                },
+                sending () {
+                    self.closeAlert();
+                },
+                success (file, response) {
+                    self.values.push(response.value);
+                },
+                error (file, response) {
+                    if(_.isArray(response.errors)) {
+                        self.$set('errors', response.errors);
+                    }
+                }
+            });
+        },
+        image (uri) {
+            return Admin.Settings.base_url + uri;
         },
         remove (image) {
             var self = this;
@@ -82,6 +80,9 @@ Vue.component('element-images', Vue.extend({
                     return image != img
                 }));
             });
+        },
+        closeAlert () {
+            this.$set('errors', []);
         }
     },
     computed: {

@@ -411,11 +411,12 @@ class AdminController extends Controller
             'locale'     => $config->get('app.locale'),
             'token'      => $request->session()->get('_token'),
             'url_prefix' => $config->get('sleeping_owl.url_prefix'),
+            'base_url' => asset('/'),
             'lang'       => $lang,
             'wysiwyg'    => $config->get('sleeping_owl.wysiwyg'),
         ];
 
-        $content = "window.Admin = {Settings: ".json_encode($data, JSON_PRETTY_PRINT).'}';
+        $content = 'window.Admin = {Settings: '.json_encode($data, JSON_PRETTY_PRINT).'}';
 
         return $this->cacheResponse(
             new Response($content, 200, [

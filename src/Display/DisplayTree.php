@@ -283,13 +283,13 @@ class DisplayTree extends Display implements WithRoutesInterface
         $model = $this->getModelConfiguration();
 
         return parent::toArray() + [
-            'items'       => $this->getRepository()->getTree($this->getCollection()),
+            'items' => $this->getRepository()->getTree($this->getCollection()),
             'reorderable' => $this->isReorderable(),
-            'url'         => $model->getDisplayUrl(),
-            'value'       => $this->getValue(),
-            'creatable'   => $model->isCreatable(),
-            'createUrl'   => $model->getCreateUrl($this->getParameters() + $this->request->all()),
-            'controls'    => [$this->displayColumnFactory->treeControl()],
+            'url' => $model->getDisplayUrl(),
+            'value' => $this->getValue(),
+            'creatable' => $model->isCreatable(),
+            'createUrl' => $model->getCreateUrl($this->getParameters() + $this->request->all()),
+            'controls' => [$this->displayColumnFactory->treeControl()],
         ];
     }
 
