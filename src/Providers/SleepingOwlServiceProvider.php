@@ -2,22 +2,8 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use App\Providers\AdminSectionsServiceProvider;
-use Collective\Html\HtmlServiceProvider;
-use Illuminate\Support\ServiceProvider;
-use KodiCMS\Assets\AssetsServiceProvider;
-use SleepingOwl\Admin\Admin;
-use SleepingOwl\Admin\Commands\InstallCommand;
-use SleepingOwl\Admin\Commands\SectionGenerate;
-use SleepingOwl\Admin\Commands\SectionMake;
-use SleepingOwl\Admin\Commands\UserManagerCommand;
-use DaveJamesMiller\Breadcrumbs\ServiceProvider as BreadcrumbsServiceProvider;
-
-class SleepingOwlServiceProvider extends ServiceProvider
+class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
-    /** @var array Associative array in form of: Model => Section */
-    protected $sections = [];
-
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
@@ -31,7 +17,10 @@ class SleepingOwlServiceProvider extends ServiceProvider
         }
     }
 
-    public function boot(Admin $admin)
+    /**
+     * @param \SleepingOwl\Admin\Admin $admin
+     */
+    public function boot(\SleepingOwl\Admin\Admin $admin)
     {
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
@@ -43,20 +32,16 @@ class SleepingOwlServiceProvider extends ServiceProvider
             __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
         ], 'config');
 
-        foreach ($this->sections as $model => $section) {
-            if (class_exists($section)) {
-                $admin->register(new $section($model));
-            }
-        }
+        parent::boot($admin);
     }
 
     public function registerProviders()
     {
         $providers = [
             AliasesServiceProvider::class,
-            AssetsServiceProvider::class,
-            HtmlServiceProvider::class,
-            BreadcrumbsServiceProvider::class,
+            \KodiCMS\Assets\AssetsServiceProvider::class,
+            \Collective\Html\HtmlServiceProvider::class,
+            \DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
             AdminServiceProvider::class,
         ];
 
@@ -66,17 +51,17 @@ class SleepingOwlServiceProvider extends ServiceProvider
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
         if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
-            $this->app->register(AdminSectionsServiceProvider::class);
+            $this->app->register(\App\Providers\AdminSectionsServiceProvider::class);
         }
     }
 
     protected function registerCommands()
     {
         $this->commands([
-            InstallCommand::class,
-            UserManagerCommand::class,
-            SectionGenerate::class,
-            SectionMake::class,
+            \SleepingOwl\Admin\Commands\InstallCommand::class,
+            \SleepingOwl\Admin\Commands\UserManagerCommand::class,
+            \SleepingOwl\Admin\Commands\SectionGenerate::class,
+            \SleepingOwl\Admin\Commands\SectionMake::class,
         ]);
     }
 }
