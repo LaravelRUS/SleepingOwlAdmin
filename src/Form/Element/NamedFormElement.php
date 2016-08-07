@@ -398,9 +398,9 @@ abstract class NamedFormElement extends FormElement
             $model = $this->resolvePath();
             $table = $model->getTable();
 
-            $rule = 'unique:' . $table . ',' . $this->getAttribute();
+            $rule = 'unique:'.$table.','.$this->getAttribute();
             if ($model->exists()) {
-                $rule .= ',' . $model->getKey();
+                $rule .= ','.$model->getKey();
             }
         }
         unset($rule);
@@ -423,9 +423,9 @@ abstract class NamedFormElement extends FormElement
             if ($count === 1) {
                 return $model->getModel();
             }
-            if($model->exists() && $model->{$relation} instanceof Model){
+            if ($model->exists() && $model->{$relation} instanceof Model) {
                 $model = $model->{$relation};
-                if($model != null){
+                if ($model != null) {
                     $count--;
                     continue;
                 }
@@ -448,12 +448,12 @@ abstract class NamedFormElement extends FormElement
     public function toArray()
     {
         return parent::toArray() + [
-            'id'       => $this->getName(),
-            'name'     => $this->getName(),
-            'path'     => $this->getPath(),
-            'label'    => $this->getLabel(),
+            'id' => $this->getName(),
+            'name' => $this->getName(),
+            'path' => $this->getPath(),
+            'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
-            'value'    => $this->getValue(),
+            'value' => $this->getValue(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ];

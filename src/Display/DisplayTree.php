@@ -17,7 +17,6 @@ use SleepingOwl\Admin\Repository\TreeRepository;
  */
 class DisplayTree extends Display implements WithRoutesInterface
 {
-
     /**
      * @param Router $router
      */
@@ -250,13 +249,13 @@ class DisplayTree extends Display implements WithRoutesInterface
         $model = $this->getModelConfiguration();
 
         return parent::toArray() + [
-            'items'       => $this->getRepository()->getTree($this->getCollection()),
+            'items' => $this->getRepository()->getTree($this->getCollection()),
             'reorderable' => $this->isReorderable(),
-            'url'         => $model->getDisplayUrl(),
-            'value'       => $this->getValue(),
-            'creatable'   => $model->isCreatable(),
-            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls'    => [app('sleeping_owl.table.column')->treeControl()],
+            'url' => $model->getDisplayUrl(),
+            'value' => $this->getValue(),
+            'creatable' => $model->isCreatable(),
+            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
+            'controls' => [app('sleeping_owl.table.column')->treeControl()],
         ];
     }
 

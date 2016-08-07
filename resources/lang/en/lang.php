@@ -98,7 +98,7 @@ return [
     ],
     'button' => [
         'yes' => 'Yes',
-        'no' => 'No'
+        'no' => 'No',
     ],
     'message' => [
         'created' => '<i class="fa fa-check fa-lg"></i> Record created successfully',

@@ -98,7 +98,7 @@ return [
     ],
     'button' => [
         'yes' => 'Да',
-        'no' => 'Нет'
+        'no' => 'Нет',
     ],
     'message' => [
         'created' => '<i class="fa fa-check fa-lg"></i> Запись успешно создана',

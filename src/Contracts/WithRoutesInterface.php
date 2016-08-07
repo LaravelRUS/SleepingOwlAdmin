@@ -6,7 +6,6 @@ use Illuminate\Routing\Router;
 
 interface WithRoutesInterface
 {
-
     /**
      * @param Router $router
      *
