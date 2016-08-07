@@ -26,14 +26,6 @@ class AdminSectionsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return array
-     */
-    public function sections()
-    {
-        return $this->sections;
-    }
-
-    /**
      * Register the service provider.
      *
      * @return void

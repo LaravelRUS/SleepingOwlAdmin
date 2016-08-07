@@ -2,14 +2,22 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use App\Providers\AdminSectionsServiceProvider;
+use Collective\Html\HtmlServiceProvider;
 use Illuminate\Support\ServiceProvider;
+use KodiCMS\Assets\AssetsServiceProvider;
+use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\Commands\InstallCommand;
 use SleepingOwl\Admin\Commands\SectionGenerate;
 use SleepingOwl\Admin\Commands\SectionMake;
 use SleepingOwl\Admin\Commands\UserManagerCommand;
+use DaveJamesMiller\Breadcrumbs\ServiceProvider as BreadcrumbsServiceProvider;
 
 class SleepingOwlServiceProvider extends ServiceProvider
 {
+    /** @var array Associative array in form of: Model => Section */
+    protected $sections = [];
+
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
@@ -23,7 +31,7 @@ class SleepingOwlServiceProvider extends ServiceProvider
         }
     }
 
-    public function boot()
+    public function boot(Admin $admin)
     {
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
@@ -34,12 +42,31 @@ class SleepingOwlServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
         ], 'config');
+
+        foreach ($this->sections as $model => $section) {
+            if (class_exists($section)) {
+                $admin->register(new $section($model));
+            }
+        }
     }
 
     public function registerProviders()
     {
-        foreach (config('sleeping_owl.providers', []) as $providerClass) {
+        $providers = [
+            AliasesServiceProvider::class,
+            AssetsServiceProvider::class,
+            HtmlServiceProvider::class,
+            BreadcrumbsServiceProvider::class,
+            AdminServiceProvider::class,
+        ];
+
+        foreach ($providers as $providerClass) {
             $this->app->register($providerClass);
+        }
+
+        /* Workaround to allow use ServiceProvider-based configurations in old fashion */
+        if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
+            $this->app->register(AdminSectionsServiceProvider::class);
         }
     }
 
