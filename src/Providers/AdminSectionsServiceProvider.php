@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class AdminSectionsServiceProvider extends ServiceProvider
 {
     /**
-     * @var array
+     * @var array  Associative array in form of: Model::class => Section::class
      */
     protected $sections = [];
 
