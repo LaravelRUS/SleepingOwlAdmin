@@ -279,7 +279,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function addValidationRule($rule, $message = null)
     {
-        $uploadRules = ['file', 'image', 'mime', 'size', 'dimensions'];
+        $uploadRules = ['file', 'image', 'mime', 'size', 'dimensions', 'max', 'min', 'between'];
 
         foreach ($uploadRules as $uploadRule) {
             if (strpos($rule, $uploadRule) !== false) {
@@ -294,5 +294,29 @@ class File extends NamedFormElement implements WithRoutesInterface
         }
 
         return parent::addValidationRule($rule, $message);
+    }
+
+    /**
+     * @param int $size Max size in kilobytes
+     *
+     * @return $this
+     */
+    public function maxSize($size)
+    {
+        $this->addValidationRule('max:'.(int) $size);
+
+        return $this;
+    }
+
+    /**
+     * @param int $size Max size in kilobytes
+     *
+     * @return $this
+     */
+    public function minSize($size)
+    {
+        $this->addValidationRule('min:'.(int) $size);
+
+        return $this;
     }
 }
