@@ -16,7 +16,6 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
-
     /**
      * Register display routes.
      *

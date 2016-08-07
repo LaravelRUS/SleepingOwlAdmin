@@ -73,6 +73,7 @@ class Image extends File
             'file' => 'image',
         ];
     }
+
     /**
      * @var array
      */
