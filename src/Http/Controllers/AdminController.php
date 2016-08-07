@@ -413,6 +413,7 @@ class AdminController extends Controller
             'locale' => App::getLocale(),
             'token' => csrf_token(),
             'url_prefix' => config('sleeping_owl.url_prefix'),
+            'base_url' => asset('/'),
             'lang' => $lang,
             'wysiwyg' => config('sleeping_owl.wysiwyg'),
         ];

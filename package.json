@@ -39,7 +39,6 @@
     "noty": "^2.3.8",
     "sortablejs": "1.4.2",
     "select2": "^4.0.3",
-    "@flowjs/flow.js": "^2.11.2",
     "ekko-lightbox": "^4.0.1",
     "metismenu": "^2.5.2",
     "datatables.net": "^1.10.12",

@@ -20,20 +20,24 @@
 	>
 
 		<div v-if="errors.length" class="alert alert-warning">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+
 			<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
 		</div>
 
-		<div class="form-element-files clearfix" v-if="has_values">
-			<div class="form-element-files__item" v-for="image in values">
-				<a :href="image" class="form-element-files__image" data-toggle="lightbox">
-					<img :src="image" />
+		<div class="form-element-files dropzone clearfix">
+			<div class="form-element-files__item" v-for="uri in values">
+				<a :href="image(uri)" class="form-element-files__image" data-toggle="images">
+					<img :src="image(uri)" />
 				</a>
 				<div class="form-element-files__info">
-					<a :href="image" class="btn btn-default btn-xs pull-right">
+					<a :href="image(uri)" class="btn btn-default btn-xs pull-right">
 						<i class="fa fa-cloud-download"></i>
 					</a>
 
-					<butto @click.prevent="remove(image)" v-if="!readonly" class="btn btn-danger btn-xs" aria-label="{{ trans('sleeping_owl::lang.image.remove') }}">
+					<button @click.prevent="remove(uri)" v-if="!readonly" class="btn btn-danger btn-xs" aria-label="{{ trans('sleeping_owl::lang.image.remove') }}">
 						<i class="fa fa-times"></i>
 					</button>
 				</div>
@@ -41,6 +45,7 @@
 		</div>
 
 		<div v-if="!readonly">
+			<br />
 			<div class="btn btn-primary upload-button">
 				<i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browse') }}
 			</div>

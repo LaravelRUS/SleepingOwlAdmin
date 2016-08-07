@@ -25,43 +25,31 @@ Vue.component('element-file', Vue.extend({
     },
     methods: {
         initUpload () {
-            var self = this,
-                flow = new Flow({
-                    target: this.url,
-                    testChunks: false,
-                    chunkSize: 1024 * 1024 * 1024,
-                    query: {
-                        _token: Admin.Settings.token
+            let self = this,
+                container = $(self.$el.parentNode),
+                button = container.find('.upload-button');
+
+            button.dropzone({
+                url: this.url,
+                method: 'POST',
+                uploadMultiple: false,
+                previewsContainer: false,
+                dictDefaultMessage: '',
+                headers: {
+                    'X-CSRF-TOKEN': Admin.Settings.token
+                },
+                sending () {
+                    self.closeAlert()
+                },
+                success (file, response) {
+                    self.value = response.value;
+                },
+                error (file, response) {
+                    if(_.isArray(response.errors)) {
+                        self.$set('errors', response.errors);
                     }
-                });
-
-            let button = $(self.$el.parentNode).find('.upload-button');
-
-            flow.assignBrowse(button, false, true)
-
-            flow.on('filesSubmitted', (file) => {
-                self.$set('errors', []);
-                flow.upload();
-            });
-
-            flow.on('fileSuccess', (file, message) => {
-                flow.removeFile(file);
-
-                var result = $.parseJSON(message);
-                self.value = result.url;
-            });
-
-            flow.on('fileError', (file, message) => {
-                flow.removeFile(file);
-
-                var response = $.parseJSON(message);
-
-                if(_.isArray(response.errors)) {
-                    self.$set('errors', response.errors);
                 }
             });
-
-            self.flow = flow;
         },
         remove () {
             var self = this;
@@ -76,11 +64,17 @@ Vue.component('element-file', Vue.extend({
             }).then(() => {
                 self.value = '';
             });
+        },
+        closeAlert () {
+            this.$set('errors', []);
         }
     },
     computed: {
         has_value () {
             return this.value.length > 0
+        },
+        file () {
+            return Admin.Settings.base_url + this.value
         }
     }
 }));

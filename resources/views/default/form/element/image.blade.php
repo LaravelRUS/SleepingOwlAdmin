@@ -13,21 +13,25 @@
 				'field' => $path,
 				'id' => $model->getKey()
 			]) }}"
-			value="{{ !empty($value) ? asset($value) : '' }}"
+			value="{{ $value }}"
 			:readonly="{{ $readonly ? 'true' : 'false' }}"
 			name="{{ $name }}"
 			inline-template
 	>
 			<div v-if="errors.length" class="alert alert-warning">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
 				<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
 			</div>
 			<div class="form-element-files clearfix" v-if="has_value">
 				<div class="form-element-files__item">
-					<a :href="value" class="form-element-files__image" data-toggle="lightbox">
-						<img :src="value" />
+					<a :href="image" class="form-element-files__image" data-toggle="lightbox">
+						<img :src="image" />
 					</a>
 					<div class="form-element-files__info">
-						<a :href="value" class="btn btn-default btn-xs pull-right">
+						<a :href="image" class="btn btn-default btn-xs pull-right">
 							<i class="fa fa-cloud-download"></i>
 						</a>
 
