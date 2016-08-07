@@ -6,10 +6,9 @@ use Request;
 
 class Images extends Image
 {
-
     public function save()
     {
-        $name  = $this->getName();
+        $name = $this->getName();
         $value = Request::input($name, '');
 
         if (! empty($value)) {

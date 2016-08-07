@@ -242,10 +242,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function toArray()
     {
         return [
-            'label'  => $this->getLabel(),
+            'label' => $this->getLabel(),
             'active' => $this->isActive(),
-            'name'   => $this->getName(),
-            'icon'   => $this->getIcon()
+            'name' => $this->getName(),
+            'icon' => $this->getIcon(),
         ];
     }
 

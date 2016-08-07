@@ -410,14 +410,14 @@ class AdminController extends Controller
         }
 
         $data = [
-            'locale'     => App::getLocale(),
-            'token'      => csrf_token(),
+            'locale' => App::getLocale(),
+            'token' => csrf_token(),
             'url_prefix' => config('sleeping_owl.url_prefix'),
-            'lang'       => $lang,
-            'wysiwyg'    => config('sleeping_owl.wysiwyg'),
+            'lang' => $lang,
+            'wysiwyg' => config('sleeping_owl.wysiwyg'),
         ];
 
-        $content = "window.Admin = {Settings: ".json_encode($data, JSON_PRETTY_PRINT).'}';
+        $content = 'window.Admin = {Settings: '.json_encode($data, JSON_PRETTY_PRINT).'}';
 
         return $this->cacheResponse(
             new Response($content, 200, [

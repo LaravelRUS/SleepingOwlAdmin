@@ -91,7 +91,7 @@ class Columns extends Extension implements Initializable, Renderable
             $this->columns = $this->columns->filter(function ($column) {
                 $class = get_class($this->getControlColumn());
 
-                return ! ($column instanceOf $class);
+                return ! ($column instanceof $class);
             });
         }
 
@@ -157,7 +157,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isInitialize()
     {
@@ -172,7 +172,7 @@ class Columns extends Extension implements Initializable, Renderable
     public function toArray()
     {
         return [
-            'columns'    => $this->all(),
+            'columns' => $this->all(),
             'attributes' => $this->getDisplay()->htmlAttributesToString(),
         ];
     }
