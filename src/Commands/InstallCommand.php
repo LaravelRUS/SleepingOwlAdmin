@@ -91,21 +91,7 @@ class InstallCommand extends Command
 
     protected function createServiceProvider()
     {
-        $file = app_path('Providers/AdminServiceProvider.php');
-        $ns = rtrim(app()->getNamespace(), '\\');
-
-        if (! file_exists($file)) {
-            $contents = str_replace(
-                '__NAMESPACE__',
-                $ns,
-                $this->files->get(__DIR__.'/stubs/AdminServiceProvider.stub')
-            );
-            $this->files->put($file, $contents);
-            $this->line('<info>AdminServiceProvider file was created:</info> '.str_replace(base_path(), '', $file));
-            $this->line(
-                sprintf('Now you can replace <info>SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class</info> with <info>%s\Providers\AdminServiceProvider::class</info> in your <info>config/app.php</info> file', $ns)
-            );
-        }
+        $this->call('sleepingowl:section:provider');
     }
 
     /**

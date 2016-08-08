@@ -31,6 +31,12 @@ class SectionGenerate extends Command
             'App\Providers\AdminSectionsServiceProvider'
         );
 
+        if (! $provider) {
+            $this->error('[App\Providers\AdminSectionsServiceProvider] not found');
+
+            return;
+        }
+
         foreach ($provider->sections() as $model => $section) {
             $this->callSilent('sleepingowl:section:make', ['name' => $section, 'model' => $model]);
         }
