@@ -62,6 +62,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
             \SleepingOwl\Admin\Commands\UserManagerCommand::class,
             \SleepingOwl\Admin\Commands\SectionGenerate::class,
             \SleepingOwl\Admin\Commands\SectionMake::class,
+            \SleepingOwl\Admin\Commands\SectionProvider::class,
         ]);
     }
 }
