@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use SleepingOwl\Admin\Contracts\AdminInterface;
+
 class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
     public function register()
@@ -18,9 +20,9 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     }
 
     /**
-     * @param \SleepingOwl\Admin\Admin $admin
+     * @param AdminInterface $admin
      */
-    public function boot(\SleepingOwl\Admin\Admin $admin)
+    public function boot(AdminInterface $admin)
     {
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
@@ -38,11 +40,11 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     public function registerProviders()
     {
         $providers = [
-            AliasesServiceProvider::class,
+            \DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
             \KodiCMS\Assets\AssetsServiceProvider::class,
             \Collective\Html\HtmlServiceProvider::class,
-            \DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
             AdminServiceProvider::class,
+            AliasesServiceProvider::class,
         ];
 
         foreach ($providers as $providerClass) {
@@ -50,8 +52,9 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         }
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
-        if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
-            $this->app->register(\App\Providers\AdminSectionsServiceProvider::class);
+        $defaultAdminSectionsServiceProviderClass = $this->app->getNamespace() . 'Providers\AdminSectionsServiceProvider';
+        if (class_exists($defaultAdminSectionsServiceProviderClass)) {
+            $this->app->register($defaultAdminSectionsServiceProviderClass);
         }
     }
 

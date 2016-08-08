@@ -2,6 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use KodiCMS\Assets\Contracts\MetaInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+
 class Image extends NamedColumn
 {
     /**
@@ -14,9 +18,13 @@ class Image extends NamedColumn
      *
      * {@inheritdoc}
      */
-    public function __construct($name, $label = null)
+    public function __construct($name,
+                                $label = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta)
     {
-        parent::__construct($name, $label);
+        parent::__construct($name, $label, $tableHeaderColumn, $admin, $meta);
         $this->setOrderable(false);
     }
 

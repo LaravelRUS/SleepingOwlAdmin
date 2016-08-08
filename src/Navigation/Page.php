@@ -3,8 +3,12 @@
 namespace SleepingOwl\Admin\Navigation;
 
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
-class Page extends \KodiComponents\Navigation\Page
+/*
+ * TODO base class refactor
+ */
+class Page extends \KodiComponents\Navigation\Page implements PageInterface
 {
     /**
      * Menu item related model class.
@@ -32,7 +36,7 @@ class Page extends \KodiComponents\Navigation\Page
     public function getModelConfiguration()
     {
         if (! $this->hasModel()) {
-            return;
+            return null;
         }
 
         return app('sleeping_owl')->getModel($this->model);
@@ -79,7 +83,7 @@ class Page extends \KodiComponents\Navigation\Page
     }
 
     /**
-     * @return Closure
+     * @return \Closure
      */
     public function getAccessLogic()
     {

@@ -3,13 +3,18 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+use SleepingOwl\Admin\Contracts\NavigationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Navigation\Page;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @method bool creating(\Closure $callback)
@@ -24,32 +29,31 @@ use SleepingOwl\Admin\Navigation\Page;
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
     /**
-     * Get the event dispatcher instance.
-     *
-     * @return \Illuminate\Contracts\Events\Dispatcher
-     */
-    public static function getEventDispatcher()
-    {
-        return self::$dispatcher;
-    }
-
-    /**
-     * Set the event dispatcher instance.
-     *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
-     * @return void
-     */
-    public static function setEventDispatcher(Dispatcher $dispatcher)
-    {
-        self::$dispatcher = $dispatcher;
-    }
-
-    /**
      * The event dispatcher instance.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var Dispatcher
      */
-    protected static $dispatcher;
+    protected $dispatcher;
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @var UrlGenerator
+     */
+    protected $urlGenerator;
+
+    /**
+     * @var NavigationInterface
+     */
+    protected $navigation;
+
+    /**
+     * @var Gate
+     */
+    protected $gate;
 
     /**
      * @var string
@@ -92,18 +96,31 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     private $repository;
 
     /**
-     * SectionModelConfiguration constructor.
+     * ModelConfigurationManager constructor.
      *
-     * @param string $class
-     *
-     * @throws \Exception
+     * @param Dispatcher $dispatcher
+     * @param TranslatorInterface $translator
+     * @param UrlGenerator $urlGenerator
+     * @param RepositoryInterface $repository
+     * @param NavigationInterface $navigation
+     * @param Gate $gate
      */
-    public function __construct($class)
+    public function __construct(Dispatcher $dispatcher,
+                                TranslatorInterface $translator,
+                                UrlGenerator $urlGenerator,
+                                RepositoryInterface $repository,
+                                NavigationInterface $navigation,
+                                Gate $gate)
     {
-        $this->class = $class;
-        $this->model = app($class);
+        $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
+        $this->translator = $translator;
+        $this->urlGenerator = $urlGenerator;
+        $this->navigation = $navigation;
+        $this->gate = $gate;
 
-        $this->repository = app(RepositoryInterface::class, [$class]);
+        $this->model = $repository->getModel();
+        $this->class = get_class($this->model);
 
         if (! $this->alias) {
             $this->setDefaultAlias();
@@ -176,19 +193,19 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|TranslatorInterface
      */
     public function getCreateTitle()
     {
-        return trans('sleeping_owl::lang.model.create', ['title' => $this->getTitle()]);
+        return $this->translator->trans('sleeping_owl::lang.model.create', ['title' => $this->getTitle()]);
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|TranslatorInterface
      */
     public function getEditTitle()
     {
-        return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
+        return $this->translator->trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
     }
 
     /**
@@ -278,7 +295,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             return true;
         }
 
-        return \Gate::allows($action, $model);
+        return $this->gate->allows($action, $model);
     }
 
     /**
@@ -306,7 +323,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         array_unshift($parameters, $this->getAlias());
 
-        return route('admin.model', $parameters);
+        return $this->urlGenerator->route('admin.model', $parameters);
     }
 
     /**
@@ -318,7 +335,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         array_unshift($parameters, $this->getAlias());
 
-        return route('admin.model.create', $parameters);
+        return $this->urlGenerator->route('admin.model.create', $parameters);
     }
 
     /**
@@ -326,7 +343,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getStoreUrl()
     {
-        return route('admin.model.store', $this->getAlias());
+        return $this->urlGenerator->route('admin.model.store', $this->getAlias());
     }
 
     /**
@@ -336,7 +353,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getEditUrl($id)
     {
-        return route('admin.model.edit', [$this->getAlias(), $id]);
+        return $this->urlGenerator->route('admin.model.edit', [$this->getAlias(), $id]);
     }
 
     /**
@@ -346,7 +363,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getUpdateUrl($id)
     {
-        return route('admin.model.update', [$this->getAlias(), $id]);
+        return $this->urlGenerator->route('admin.model.update', [$this->getAlias(), $id]);
     }
 
     /**
@@ -356,7 +373,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDeleteUrl($id)
     {
-        return route('admin.model.delete', [$this->getAlias(), $id]);
+        return $this->urlGenerator->route('admin.model.delete', [$this->getAlias(), $id]);
     }
 
     /**
@@ -366,7 +383,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDestroyUrl($id)
     {
-        return route('admin.model.destroy', [$this->getAlias(), $id]);
+        return $this->urlGenerator->route('admin.model.destroy', [$this->getAlias(), $id]);
     }
 
     /**
@@ -376,7 +393,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getRestoreUrl($id)
     {
-        return route('admin.model.restore', [$this->getAlias(), $id]);
+        return $this->urlGenerator->route('admin.model.restore', [$this->getAlias(), $id]);
     }
 
     /**
@@ -384,7 +401,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnCreate()
     {
-        return trans('sleeping_owl::lang.message.created');
+        return $this->translator->trans('sleeping_owl::lang.message.created');
     }
 
     /**
@@ -392,7 +409,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnUpdate()
     {
-        return trans('sleeping_owl::lang.message.updated');
+        return $this->translator->trans('sleeping_owl::lang.message.updated');
     }
 
     /**
@@ -400,7 +417,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnDelete()
     {
-        return trans('sleeping_owl::lang.message.deleted');
+        return $this->translator->trans('sleeping_owl::lang.message.deleted');
     }
 
     /**
@@ -408,7 +425,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnRestore()
     {
-        return trans('sleeping_owl::lang.message.restored');
+        return $this->translator->trans('sleeping_owl::lang.message.restored');
     }
 
     /**
@@ -416,14 +433,14 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnDestroy()
     {
-        return trans('sleeping_owl::lang.message.destroyed');
+        return $this->translator->trans('sleeping_owl::lang.message.destroyed');
     }
 
     /**
      * @param int $priority
      * @param string|\Closure|BadgeInterface $badge
      *
-     * @return Page
+     * @return PageInterface
      */
     public function addToNavigation($priority = 100, $badge = null)
     {
@@ -438,7 +455,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             $page->setBadge($badge);
         }
 
-        app('sleeping_owl.navigation')->addPage($page);
+        $this->navigation->addPage($page);
 
         return $page;
     }
@@ -454,10 +471,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function fireEvent($event, $halt = true, Model $model = null)
     {
-        if (! isset(self::$dispatcher)) {
-            return true;
-        }
-
         if (is_null($model)) {
             $model = $this->getModel();
         }
@@ -469,7 +482,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
         $method = $halt ? 'until' : 'fire';
 
-        return self::$dispatcher->$method($event, [$this, $model]);
+        return $this->dispatcher->$method($event, [$this, $model]);
     }
 
     /**
@@ -501,9 +514,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     protected function registerEvent($event, $callback, $priority = 0)
     {
-        if (isset(self::$dispatcher)) {
-            self::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
-        }
+        $this->dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
     }
 
     protected function setDefaultAlias()

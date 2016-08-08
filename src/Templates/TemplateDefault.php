@@ -2,15 +2,65 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Meta;
+use DaveJamesMiller\Breadcrumbs\Manager;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use KodiCMS\Assets\Contracts\MetaInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 
 class TemplateDefault implements TemplateInterface
 {
-    public function __construct()
+    /**
+     * @var Factory
+     */
+    protected $view;
+
+    /**
+     * @var Manager|bool
+     */
+    protected $breadcrumbs = false;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @var string
+     */
+    protected $logo;
+
+    /**
+     * @var string
+     */
+    protected $logoMini;
+
+    /**
+     * TemplateDefault constructor.
+     * @param Factory $view
+     * @param Manager|false $breadcrumbs
+     * @param Repository $config
+     */
+    public function __construct(Factory $view, $breadcrumbs, Repository $config)
     {
-        Meta::loadPackage('admin-default');
-        Meta::AddJs('adminScripts', route('admin.scripts'), ['libraries']);
+        $this->view = $view;
+
+        if ($breadcrumbs instanceof Manager) {
+            $this->breadcrumbs = $breadcrumbs;
+        }
+
+        $this->title = $config->get('sleeping_owl.title');
+        $this->logo = $config->get('sleeping_owl.logo');
+        $this->logoMini = $config->get('sleeping_owl.logo_mini');
+    }
+
+    public function boot(MetaInterface $meta, UrlGenerator $generator)
+    {
+        $meta->loadPackage('admin-default');
+
+        $meta->AddJs('adminScripts', $generator->route('admin.scripts'), ['libraries']);
     }
 
     /**
@@ -39,7 +89,8 @@ class TemplateDefault implements TemplateInterface
      */
     public function getViewPath($view)
     {
-        if ($view instanceof \Illuminate\View\View) {
+        if ($view instanceof View) {
+            /** @var \Illuminate\View\View $view */
             return $view->getPath();
         }
 
@@ -51,15 +102,16 @@ class TemplateDefault implements TemplateInterface
      * @param array  $data
      * @param array  $mergeData
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|View
      */
     public function view($view, $data = [], $mergeData = [])
     {
-        if ($view instanceof \Illuminate\View\View) {
+        if ($view instanceof View) {
+
             return $view->with($data);
         }
 
-        return view($this->getViewPath($view), $data, $mergeData);
+        return $this->view->make($this->getViewPath($view), $data, $mergeData);
     }
 
     /**
@@ -69,7 +121,7 @@ class TemplateDefault implements TemplateInterface
      */
     public function makeTitle($title)
     {
-        return $title.' | '.config('sleeping_owl.title');
+        return $title.' | '.$this->title;
     }
 
     /**
@@ -77,7 +129,7 @@ class TemplateDefault implements TemplateInterface
      */
     public function getLogo()
     {
-        return config('sleeping_owl.logo');
+        return $this->logo;
     }
 
     /**
@@ -85,7 +137,7 @@ class TemplateDefault implements TemplateInterface
      */
     public function getLogoMini()
     {
-        return config('sleeping_owl.logo_mini');
+        return $this->logoMini;
     }
 
     /**
@@ -95,8 +147,10 @@ class TemplateDefault implements TemplateInterface
      */
     public function renderBreadcrumbs($key)
     {
-        if (config('sleeping_owl.breadcrumbs')) {
-            return \Breadcrumbs::renderIfExists($key);
+        if ($this->breadcrumbs instanceof Manager) {
+            return $this->breadcrumbs->renderIfExists($key);
         }
+
+        return null;
     }
 }

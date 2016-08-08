@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use KodiCMS\Assets\Contracts\MetaInterface;
 use SleepingOwl\Admin\Contracts\ActionInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class Action extends NamedColumn implements ActionInterface
 {
@@ -42,10 +45,17 @@ class Action extends NamedColumn implements ActionInterface
      *
      * @param \Closure|null|string $name
      * @param string|null $title
+     * @param TableHeaderColumnInterface $tableHeaderColumn
+     * @param AdminInterface $admin
+     * @param MetaInterface $meta
      */
-    public function __construct($name, $title = null)
+    public function __construct($name,
+                                $title = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta)
     {
-        parent::__construct($name);
+        parent::__construct($name, null, $tableHeaderColumn, $admin, $meta);
 
         $this->setTitle($title);
     }

@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Model\ModelConfigurationFactory;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
@@ -14,13 +16,16 @@ class AdminSectionsServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      *
-     * @param \SleepingOwl\Admin\Admin $admin
+     * @param AdminInterface $admin
      */
-    public function boot(\SleepingOwl\Admin\Admin $admin)
+    public function boot(AdminInterface $admin)
     {
+        /** @var ModelConfigurationFactory $factory */
+        $factory = $this->app->make(ModelConfigurationFactory::class);
+
         foreach ($this->sections as $model => $section) {
             if (class_exists($section)) {
-                $admin->register(new $section($model));
+                $admin->register($factory->make($section, $model));
             }
         }
     }

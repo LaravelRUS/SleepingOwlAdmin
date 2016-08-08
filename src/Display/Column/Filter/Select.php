@@ -216,7 +216,7 @@ class Select extends BaseColumnFilter
 
     protected function loadOptions()
     {
-        $repository = app(RepositoryInterface::class, [$this->getModel()]);
+        $repository = app(RepositoryInterface::class, ['class' => $this->getModel()]);
 
         $key = $repository->getModel()->getKeyName();
         $options = $repository->getQuery()->get()->lists($this->getDisplay(), $key);

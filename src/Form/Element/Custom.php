@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use KodiCMS\Assets\Package;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
 
 class Custom extends FormElement
@@ -21,14 +23,16 @@ class Custom extends FormElement
      * Custom constructor.
      *
      * @param Closure|null $callback
+     * @param TemplateInterface $template
+     * @param Package $package
      */
-    public function __construct(Closure $callback = null)
+    public function __construct(Closure $callback = null, TemplateInterface $template, Package $package)
     {
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }
 
-        parent::__construct();
+        parent::__construct($template, $package);
     }
 
     /**

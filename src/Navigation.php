@@ -2,7 +2,12 @@
 
 namespace SleepingOwl\Admin;
 
-class Navigation extends \KodiComponents\Navigation\Navigation
+use SleepingOwl\Admin\Contracts\NavigationInterface;
+
+/*
+ * TODO refactor base class
+ */
+class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
 {
     /**
      * @param string|null $view

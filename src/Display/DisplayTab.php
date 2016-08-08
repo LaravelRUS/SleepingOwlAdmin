@@ -13,6 +13,7 @@ use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
@@ -42,16 +43,23 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $content;
 
     /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
      * @var string
      */
     protected $view = 'display.tab';
 
     /**
      * @param Renderable $content
+     * @param TemplateInterface $template
      */
-    public function __construct(Renderable $content)
+    public function __construct(Renderable $content, TemplateInterface $template)
     {
         $this->content = $content;
+        $this->template = $template;
     }
 
     /**
@@ -254,7 +262,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->template->view($this->getView(), $this->toArray());
     }
 
     /**

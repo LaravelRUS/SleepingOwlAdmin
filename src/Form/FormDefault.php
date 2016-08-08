@@ -2,20 +2,28 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\DatabasePresenceVerifier;
+use Illuminate\Validation\PresenceVerifierInterface;
+use Illuminate\Validation\Validator;
+use KodiCMS\Assets\Package;
 use KodiComponents\Support\HtmlAttributes;
-use Request;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
+use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Form\Element\Upload;
-use Validator;
+use Illuminate\Contracts\Validation\Factory;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -69,19 +77,70 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     protected $initialized = false;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var RepositoryFactory
+     */
+    protected $repositoryFactory;
+
+    /**
+     * @var Factory
+     */
+    protected $validationFactory;
+
+    /**
+     * @var AdminInterface
+     */
+    protected $admin;
+
+    /**
+     * @var PresenceVerifierInterface|DatabasePresenceVerifier
+     */
+    protected $presenceVerifier;
+
+    /**
+     * @var UrlGenerator|\Illuminate\Routing\UrlGenerator
+     */
+    protected $urlGenerator;
+
+    /**
      * FormDefault constructor.
      *
      * @param array $elements
+     * @param TemplateInterface $template
+     * @param Package $package
+     * @param FormButtonsInterface $formButtons
+     * @param RepositoryFactory $repositoryFactory
+     * @param Request $request
+     * @param Factory $validationFactory
+     * @param AdminInterface $admin
+     * @param PresenceVerifierInterface $presenceVerifier
+     * @param UrlGenerator $urlGenerator
      */
-    public function __construct(array $elements = [])
+    public function __construct(array $elements = [],
+                                TemplateInterface $template,
+                                Package $package,
+                                FormButtonsInterface $formButtons,
+                                RepositoryFactory $repositoryFactory,
+                                Request $request,
+                                Factory $validationFactory,
+                                AdminInterface $admin,
+                                PresenceVerifierInterface $presenceVerifier,
+                                UrlGenerator $urlGenerator)
     {
-        parent::__construct($elements);
+        parent::__construct($elements, $template, $package);
 
-        $this->setButtons(
-            app(FormButtonsInterface::class)
-        );
+        $this->request = $request;
+        $this->validationFactory = $validationFactory;
+        $this->repositoryFactory = $repositoryFactory;
+        $this->admin = $admin;
+        $this->presenceVerifier = $presenceVerifier;
+        $this->urlGenerator = $urlGenerator;
 
-        $this->initializePackage();
+        $this->setButtons($formButtons);
     }
 
     /**
@@ -94,9 +153,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         }
 
         $this->initialized = true;
-        $this->repository = app(RepositoryInterface::class, [$this->class]);
+        $this->repository = $this->repositoryFactory->make($this->class);
 
-        $this->setModel(app($this->class));
+        $this->setModel($this->repository->getModel());
 
         parent::initialize();
 
@@ -111,8 +170,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $this->getButtons()->setModelConfiguration(
             $this->getModelConfiguration()
         );
-
-        $this->includePackage();
     }
 
     /**
@@ -269,7 +326,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->class);
+        return $this->admin->getModel($this->class);
     }
 
     /**
@@ -353,28 +410,26 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function validateForm(ModelConfigurationInterface $modelConfiguration)
     {
         if ($modelConfiguration !== $this->getModelConfiguration()) {
-            return;
+            return null;
         }
 
-        $data = Request::all();
+        $data = $this->request->all();
 
-        $verifier = app('validation.presence');
-        $verifier->setConnection($this->getModel()->getConnectionName());
+        $this->presenceVerifier->setConnection($this->getModel()->getConnectionName());
 
-        $validator = Validator::make(
-            $data,
+        /** @var Validator $validator */
+        $validator = $this->validationFactory->make($data,
             $this->getValidationRules(),
             $this->getValidationMessages(),
-            $this->getValidationLabels()
-        );
+            $this->getValidationLabels());
 
-        $validator->setPresenceVerifier($verifier);
+        $validator->setPresenceVerifier($this->presenceVerifier);
 
         if ($validator->fails()) {
             return $validator;
         }
 
-        return true;
+        return null;
     }
 
     /**
@@ -389,7 +444,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             'instance' => $this->getModel(),
             'attributes' => $this->htmlAttributesToString(),
             'buttons' => $this->getButtons(),
-            'backUrl' => session('_redirectBack', \URL::previous()),
+            'backUrl' => $this->request->session()->set('_redirectBack', $this->urlGenerator->previous()),
         ];
     }
 
@@ -398,7 +453,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->template->view($this->getView(), $this->toArray());
     }
 
     /**

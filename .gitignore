@@ -4,3 +4,5 @@ composer.phar
 composer.lock
 .DS_Store
 /.idea
+/npm-debug.log
+/build

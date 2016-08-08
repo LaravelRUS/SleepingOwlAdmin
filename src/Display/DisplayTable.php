@@ -2,14 +2,19 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
+use KodiCMS\Assets\Package;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Factories\RepositoryFactory;
 
 /**
  * Class DisplayTable.
@@ -48,15 +53,35 @@ class DisplayTable extends Display
     protected $collection;
 
     /**
-     * Display constructor.
+     * @var Request
      */
-    public function __construct()
-    {
-        parent::__construct();
+    protected $request;
 
-        $this->extend('columns', new Columns());
+    /**
+     * DisplayTable constructor.
+     *
+     * @param RepositoryFactory $repositoryFactory
+     * @param AdminInterface $admin
+     * @param Factory $viewFactory
+     * @param Package $package
+     * @param Request $request
+     * @param DisplayColumnFactoryInterface $displayColumnFactory
+     */
+    public function __construct(RepositoryFactory $repositoryFactory,
+                                AdminInterface $admin,
+                                Factory $viewFactory,
+                                Package $package,
+                                Request $request,
+                                DisplayColumnFactoryInterface $displayColumnFactory)
+    {
+        parent::__construct($repositoryFactory, $admin, $viewFactory, $package);
+
+        $this->request = $request;
+
+        $this->extend('columns', new Columns($displayColumnFactory, $admin->template()));
         $this->extend('column_filters', new ColumnFilters());
     }
+
 
     /**
      * Initialize display.
@@ -149,7 +174,7 @@ class DisplayTable extends Display
         $params = parent::toArray();
 
         $params['creatable'] = $model->isCreatable();
-        $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
+        $params['createUrl'] = $model->getCreateUrl($this->getParameters() + $this->request->all());
         $params['collection'] = $this->getCollection();
 
         $params['extensions'] = $this->getExtensions()
@@ -170,7 +195,7 @@ class DisplayTable extends Display
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->admin->template()->view($this->getView(), $this->toArray());
     }
 
     /**

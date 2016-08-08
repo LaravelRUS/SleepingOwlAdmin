@@ -2,9 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use KodiCMS\Assets\Package;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\AssetsInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
@@ -16,6 +21,7 @@ use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Scopes;
+use SleepingOwl\Admin\Factories\RepositoryFactory;
 use SleepingOwl\Admin\Traits\Assets;
 
 /**
@@ -33,7 +39,7 @@ use SleepingOwl\Admin\Traits\Assets;
  * @method Scopes getScopes()
  * @method $this setScopes(array $scope, ...$scopes)
  */
-abstract class Display implements DisplayInterface
+abstract class Display implements DisplayInterface, AssetsInterface
 {
     use HtmlAttributes, Assets;
 
@@ -68,6 +74,11 @@ abstract class Display implements DisplayInterface
     protected $repository;
 
     /**
+     * @var RepositoryFactory
+     */
+    protected $repositoryFactory;
+
+    /**
      * @var DisplayExtensionInterface[]|Collection
      */
     protected $extensions;
@@ -78,18 +89,40 @@ abstract class Display implements DisplayInterface
     protected $initialized = false;
 
     /**
-     * Display constructor.
+     * @var AdminInterface
      */
-    public function __construct()
+    protected $admin;
+
+    /**
+     * @var Factory
+     */
+    protected $viewFactory;
+
+    /**
+     * Display constructor.
+     *
+     * @param RepositoryFactory $repositoryFactory
+     * @param AdminInterface $admin
+     * @param Factory $viewFactory
+     * @param Package $package
+     * @internal param AssetPackage $assetPackage
+     */
+    public function __construct(RepositoryFactory $repositoryFactory,
+                                AdminInterface $admin,
+                                Factory $viewFactory,
+                                Package $package)
     {
+        $this->repositoryFactory = $repositoryFactory;
+        $this->admin = $admin;
+        $this->viewFactory = $viewFactory;
+        $this->package = $package;
+
         $this->extensions = new Collection();
 
         $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
-
-        $this->initializePackage();
     }
 
     /**
@@ -173,19 +206,18 @@ abstract class Display implements DisplayInterface
             }
 
             if ($extension instanceof Placable) {
-                $template = app('sleeping_owl.template')->getViewPath($this->getView());
+                $template = $this->admin->template()->getViewPath($this->getView());
 
-                view()->composer($template, function (\Illuminate\View\View $view) use ($extension) {
-                    $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
+                $this->viewFactory->composer($template, function (View $view) use ($extension) {
+                    $html = $this->admin->template()->view($extension->getView(), $extension->toArray())->render();
 
                     if (! empty($html)) {
+                        /** @var \Illuminate\View\View $view */
                         $view->getFactory()->inject($extension->getPlacement(), $html);
                     }
                 });
             }
         });
-
-        $this->includePackage();
 
         $this->initialized = true;
     }
@@ -257,7 +289,8 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param string|\Illuminate\View\View $view
+     * @param string|View $view
+     * @return $this
      */
     public function setView($view)
     {
@@ -302,7 +335,7 @@ abstract class Display implements DisplayInterface
      */
     protected function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->modelClass);
+        return $this->admin->getModel($this->modelClass);
     }
 
     /**
@@ -311,7 +344,7 @@ abstract class Display implements DisplayInterface
      */
     protected function makeRepository()
     {
-        $repository = app($this->repositoryClass, [$this->modelClass]);
+        $repository = $this->repositoryFactory->make($this->modelClass, $this->repositoryClass);
 
         if (! ($repository instanceof RepositoryInterface)) {
             throw new \Exception('Repository class must be instanced of [RepositoryInterface]');

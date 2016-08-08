@@ -2,11 +2,25 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
-use Blade;
+use Illuminate\View\Compilers\BladeCompiler;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
 class DummyFilter implements WysiwygFilterInterface
 {
+    /**
+     * @var BladeCompiler
+     */
+    protected $compiler;
+
+    /**
+     * DummyFilter constructor.
+     * @param BladeCompiler $compiler
+     */
+    public function __construct(BladeCompiler $compiler)
+    {
+        $this->compiler = $compiler;
+    }
+
     /**
      * @param string $text
      *
@@ -14,7 +28,7 @@ class DummyFilter implements WysiwygFilterInterface
      */
     public function apply($text)
     {
-        return Blade::compileString(
+        return $this->compiler->compileString(
             preg_replace(['/<(\?|\%)\=?(php)?/', '/(\%|\?)>/'], ['', ''], $text)
         );
     }

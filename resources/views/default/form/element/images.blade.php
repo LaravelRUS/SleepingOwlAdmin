@@ -8,7 +8,8 @@
 	</label>
 
 	<element-images
-			url="{{ route('admin.form.element.image', [
+			url="{{ route('admin.form.element.file', [
+				'type' => 'image',
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()

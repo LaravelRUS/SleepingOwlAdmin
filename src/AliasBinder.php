@@ -3,6 +3,9 @@
 namespace SleepingOwl\Admin;
 
 use BadMethodCallException;
+use Illuminate\Contracts\Container\Container;
+use KodiCMS\Assets\Package;
+use SleepingOwl\Admin\Factories\PackageFactory;
 
 class AliasBinder
 {
@@ -23,6 +26,27 @@ class AliasBinder
      * @var array
      */
     protected $aliases = [];
+
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * @var PackageFactory
+     */
+    protected $packageFactory;
+
+    /**
+     * AliasBinder constructor.
+     * @param Container $container
+     * @param PackageFactory $packageFactory
+     */
+    public function __construct(Container $container, PackageFactory $packageFactory)
+    {
+        $this->container = $container;
+        $this->packageFactory = $packageFactory;
+    }
 
     /**
      * Register new alias.
@@ -95,6 +119,16 @@ class AliasBinder
             throw new BadMethodCallException($name);
         }
 
-        return app($this->getAlias($name), $arguments);
+        $alias = $this->getAlias($name);
+
+        $this->container->when($alias)
+            ->needs(Package::class)
+            ->give(function (Container $app) use ($alias) {
+                return $this->packageFactory->make($alias);
+            });
+
+        $object = $this->container->make($alias, $arguments);
+
+        return $object;
     }
 }

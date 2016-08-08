@@ -9,6 +9,7 @@
 
 	<element-file
 			url="{{ route('admin.form.element.file', [
+				'type' => 'file',
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
@@ -48,11 +49,10 @@
 				<i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.file.browse') }}
 			</div>
 		</div>
-
-		<input name="@{{ name }}" type="hidden" value="@{{ value }}">
-	</element-file>
-
-	<div class="errors">
-		@include(AdminTemplate::getViewPath('form.element.errors'))
+		@endif
+		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ $value }}">
+		<div class="errors">
+			@include(AdminTemplate::getViewPath('form.element.errors'))
+		</div>
 	</div>
 </div>

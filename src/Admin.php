@@ -4,14 +4,17 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\NavigationInterface;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Model\ModelConfigurationFactory;
 use SleepingOwl\Admin\Navigation\Page;
 
-class Admin
+class Admin implements AdminInterface
 {
     /**
      * @var ModelConfigurationInterface[]
@@ -27,6 +30,40 @@ class Admin
      * @var Page[]
      */
     protected $menuItems = [];
+
+    /**
+     * @var NavigationInterface
+     */
+    protected $navigation;
+
+    /**
+     * @var AdminController
+     */
+    protected $controller;
+
+    /**
+     * @var ModelConfigurationFactory
+     */
+    protected $factory;
+
+    /**
+     * Admin constructor.
+     *
+     * @param NavigationInterface $navigation
+     * @param AdminController $controller
+     * @param ModelConfigurationFactory $factory
+     * @param TemplateInterface $template
+     */
+    public function __construct(NavigationInterface $navigation,
+                                AdminController $controller,
+                                ModelConfigurationFactory $factory,
+                                TemplateInterface $template)
+    {
+        $this->navigation = $navigation;
+        $this->controller = $controller;
+        $this->factory = $factory;
+        $this->template = $template;
+    }
 
     /**
      * @return string[]
@@ -62,7 +99,9 @@ class Admin
      */
     public function registerModel($class, Closure $callback = null)
     {
-        $this->register($model = new ModelConfiguration($class));
+        $model = $this->factory->make(ModelConfiguration::class, $class);
+
+        $this->register($model);
 
         if (is_callable($callback)) {
             call_user_func($callback, $model);
@@ -120,11 +159,6 @@ class Admin
      */
     public function template()
     {
-        if (is_null($this->template)) {
-            $templateClass = config('sleeping_owl.template');
-            $this->template = app($templateClass);
-        }
-
         return $this->template;
     }
 
@@ -140,11 +174,11 @@ class Admin
     }
 
     /**
-     * @return Navigation
+     * @return NavigationInterface
      */
     public function getNavigation()
     {
-        return app('sleeping_owl.navigation');
+        return $this->navigation;
     }
 
     /**
@@ -155,8 +189,6 @@ class Admin
      */
     public function view($content, $title = null)
     {
-        $controller = app(AdminController::class);
-
-        return $controller->renderContent($content, $title);
+        return $this->controller->renderContent($content, $title);
     }
 }

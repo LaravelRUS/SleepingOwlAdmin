@@ -2,66 +2,62 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use AdminTemplate;
-use App;
-use Breadcrumbs;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Request;
+use Illuminate\Routing\Redirector;
+use SleepingOwl\Admin\Contracts\BreadcrumbsInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class AdminController extends Controller
 {
     /**
-     * @var \SleepingOwl\Admin\Navigation
+     * @var BreadcrumbsInterface
      */
-    public $navigation;
+    protected $breadcrumbs;
 
     /**
-     * @var
+     * @var TemplateInterface
      */
-    private $parentBreadcrumb = 'home';
+    protected $template;
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @var UrlGenerator
+     */
+    protected $urlGenerator;
 
     /**
      * AdminController constructor.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param TemplateInterface $template
+     * @param TranslatorInterface $translator
+     * @param UrlGenerator $urlGenerator
+     * @param BreadcrumbsInterface $breadcrumbs
      */
-    public function __construct(\Illuminate\Http\Request $request)
+    public function __construct(TemplateInterface $template,
+                                TranslatorInterface $translator,
+                                UrlGenerator $urlGenerator,
+                                BreadcrumbsInterface $breadcrumbs)
     {
-        $this->navigation = app('sleeping_owl.navigation');
-
-        $this->navigation->setCurrentUrl($request->url());
-
-        Breadcrumbs::register('home', function ($breadcrumbs) {
-            $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
-        });
-
-        $breadcrumbs = [];
-
-        if ($currentPage = $this->navigation->getCurrentPage()) {
-            foreach ($currentPage->getPathArray() as $page) {
-                $breadcrumbs[] = [
-                    'id' => $page['id'],
-                    'title' => $page['title'],
-                    'url' => $page['url'],
-                    'parent' => $this->parentBreadcrumb,
-                ];
-
-                $this->parentBreadcrumb = $page['id'];
-            }
-        }
-
-        foreach ($breadcrumbs as  $breadcrumb) {
-            Breadcrumbs::register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
-                $breadcrumbs->parent($breadcrumb['parent']);
-                $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
-            });
-        }
+        $this->template = $template;
+        $this->translator = $translator;
+        $this->urlGenerator = $urlGenerator;
+        $this->breadcrumbs = $breadcrumbs;
     }
 
     /**
@@ -72,7 +68,7 @@ class AdminController extends Controller
     public function getDisplay(ModelConfigurationInterface $model)
     {
         if (! $model->isDisplayable()) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         return $this->render($model, $model->fireDisplay());
@@ -86,35 +82,36 @@ class AdminController extends Controller
     public function getCreate(ModelConfigurationInterface $model)
     {
         if (! $model->isCreatable()) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $create = $model->fireCreate();
 
-        $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
+        $this->breadcrumbs->register($model->getCreateTitle(), $this->breadcrumbs->getParentBreadcrumb());
 
         return $this->render($model, $create, $model->getCreateTitle());
     }
 
     /**
+     * @param Request $request
+     * @param Redirector $redirect
      * @param ModelConfigurationInterface $model
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function postStore(ModelConfigurationInterface $model)
+    public function postStore(Request $request, Redirector $redirect, ModelConfigurationInterface $model)
     {
         if (! $model->isCreatable()) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $createForm = $model->fireCreate();
-        $nextAction = Request::input('next_action');
+        $nextAction = $request->input('next_action');
 
-        $backUrl = $this->getBackUrl();
+        $backUrl = $this->getBackUrl($request);
 
         if ($createForm instanceof FormInterface) {
             if (($validator = $createForm->validateForm($model)) instanceof Validator) {
-                return redirect()->back()
+                return $redirect->back()
                     ->withErrors($validator)
                     ->withInput()
                     ->with([
@@ -123,7 +120,7 @@ class AdminController extends Controller
             }
 
             if ($model->fireEvent('creating') === false) {
-                return redirect()->back()->with([
+                return $redirect->back()->with([
                     '_redirectBack' => $backUrl,
                 ]);
             }
@@ -137,17 +134,17 @@ class AdminController extends Controller
             $newModel = $createForm->getModel();
             $primaryKey = $newModel->getKeyName();
 
-            $response = redirect()->to(
+            $response = $redirect->to(
                 $model->getEditUrl($newModel->{$primaryKey})
             )->with([
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl())->with([
+            $response = $redirect->to($model->getCreateUrl())->with([
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
+            $response = $redirect->to($request->input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnCreate());
@@ -164,32 +161,33 @@ class AdminController extends Controller
         $item = $model->getRepository()->find($id);
 
         if (is_null($item) || ! $model->isEditable($item)) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
-        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
+        $this->breadcrumbs->register($model->getEditTitle(), $this->breadcrumbs->getParentBreadcrumb());
 
         return $this->render($model, $model->fireEdit($id), $model->getEditTitle());
     }
 
     /**
+     * @param Request $request
+     * @param Redirector $redirect
      * @param ModelConfigurationInterface $model
-     * @param int                $id
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function postUpdate(ModelConfigurationInterface $model, $id)
+    public function postUpdate(Request $request, Redirector $redirect, ModelConfigurationInterface $model, $id)
     {
         $item = $model->getRepository()->find($id);
 
         if (is_null($item) || ! $model->isEditable($item)) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $editForm = $model->fireEdit($id);
-        $nextAction = Request::input('next_action');
+        $nextAction = $request->input('next_action');
 
-        $backUrl = $this->getBackUrl();
+        $backUrl = $this->getBackUrl($request);
 
         if ($editForm instanceof FormInterface) {
             if (($validator = $editForm->validateForm($model)) instanceof Validator) {
@@ -199,7 +197,7 @@ class AdminController extends Controller
             }
 
             if ($model->fireEvent('updating', true, $item) === false) {
-                return redirect()->back()->with([
+                return $redirect->back()->with([
                     '_redirectBack' => $backUrl,
                 ]);
             }
@@ -210,30 +208,30 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
-            $response = redirect()->back()->with([
+            $response = $redirect->back()->with([
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl())->with([
+            $response = $redirect->to($model->getCreateUrl())->with([
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
+            $response = $redirect->to($request->input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnUpdate());
     }
 
     /**
+     * @param Request $request
      * @param ModelConfigurationInterface $model
-     *
      * @return bool
      */
-    public function inlineEdit(ModelConfigurationInterface $model)
+    public function inlineEdit(Request $request, ModelConfigurationInterface $model)
     {
-        $field = Request::input('name');
-        $value = Request::input('value');
-        $id = Request::input('pk');
+        $field = $request->input('name');
+        $value = $request->input('value');
+        $id = $request->input('pk');
 
         $display = $model->fireDisplay();
 
@@ -243,20 +241,20 @@ class AdminController extends Controller
         })->first();
 
         if (is_null($column)) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $repository = $model->getRepository();
         $item = $repository->find($id);
 
         if (is_null($item) || ! $model->isEditable($item)) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $column->setModel($item);
 
         if ($model->fireEvent('updating', true, $item) === false) {
-            return;
+            return null;
         }
 
         $column->save($value);
@@ -265,94 +263,97 @@ class AdminController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param Redirector $redirect
      * @param ModelConfigurationInterface $model
-     * @param int                $id
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function deleteDelete(ModelConfigurationInterface $model, $id)
+    public function deleteDelete(Request $request, Redirector $redirect, ModelConfigurationInterface $model, $id)
     {
         $item = $model->getRepository()->find($id);
 
         if (is_null($item) || ! $model->isDeletable($item)) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $model->fireDelete($id);
 
         if ($model->fireEvent('deleting', true, $item) === false) {
-            return redirect()->back();
+            return $redirect->back();
         }
 
         $model->getRepository()->delete($id);
 
         $model->fireEvent('deleted', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return $redirect->to($request->input('_redirectBack', $redirect->back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDelete());
     }
 
     /**
+     * @param Request $request
+     * @param Redirector $redirect
      * @param ModelConfigurationInterface $model
-     * @param int                $id
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function deleteDestroy(ModelConfigurationInterface $model, $id)
+    public function deleteDestroy(Request $request, Redirector $redirect, ModelConfigurationInterface $model, $id)
     {
         if (! $model->isRestorableModel()) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $item = $model->getRepository()->findOnlyTrashed($id);
 
         if (is_null($item) || ! $model->isRestorable($item)) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $model->fireDestroy($id);
 
         if ($model->fireEvent('destroying', true, $item) === false) {
-            return redirect()->back();
+            return $redirect->back();
         }
 
         $model->getRepository()->forceDelete($id);
 
         $model->fireEvent('destroyed', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return $redirect->to($request->input('_redirectBack', $redirect->back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDestroy());
     }
 
     /**
-     * @param ModelConfiguration $model
-     * @param int                $id
-     *
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param Redirector $redirect
+     * @param ModelConfigurationInterface $model
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function postRestore($model, $id)
+    public function postRestore(Request $request, Redirector $redirect, ModelConfigurationInterface $model, $id)
     {
         if (! $model->isRestorableModel()) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $item = $model->getRepository()->findOnlyTrashed($id);
 
         if (is_null($item) || ! $model->isRestorable($item)) {
-            abort(404);
+            throw new NotFoundHttpException();
         }
 
         $model->fireRestore($id);
 
         if ($model->fireEvent('restoring', true, $item) === false) {
-            return redirect()->back();
+            return $redirect->back();
         }
 
         $model->getRepository()->restore($id);
 
         $model->fireEvent('restored', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return $redirect->to($request->input('_redirectBack', $redirect->back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnRestore());
     }
 
@@ -373,10 +374,10 @@ class AdminController extends Controller
             $title = $model->getTitle();
         }
 
-        return AdminTemplate::view('_layout.inner')
+        return $this->template->view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
-            ->with('breadcrumbKey', $this->parentBreadcrumb)
+            ->with('breadcrumbKey', $this->breadcrumbs->getParentBreadcrumb())
             ->with('successMessage', session('success_message'));
     }
 
@@ -392,30 +393,27 @@ class AdminController extends Controller
             $content = $content->render();
         }
 
-        return AdminTemplate::view('_layout.inner')
+        return $this->template->view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
-            ->with('breadcrumbKey', $this->parentBreadcrumb)
+            ->with('breadcrumbKey', $this->breadcrumbs->getParentBreadcrumb())
             ->with('successMessage', session('success_message'));
     }
 
-    /**
-     * @return Response
-     */
-    public function getScripts()
+    public function getScripts(Request $request, Repository $config)
     {
-        $lang = trans('sleeping_owl::lang');
+        $lang = $this->translator->trans('sleeping_owl::lang');
         if ($lang == 'sleeping_owl::lang') {
-            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
+            $lang = $this->translator->trans('sleeping_owl::lang', [], 'messages', 'en');
         }
 
         $data = [
-            'locale' => App::getLocale(),
-            'token' => csrf_token(),
-            'url_prefix' => config('sleeping_owl.url_prefix'),
+            'locale'     => $config->get('app.locale'),
+            'token'      => $request->session()->get('_token'),
+            'url_prefix' => $config->get('sleeping_owl.url_prefix'),
             'base_url' => asset('/'),
-            'lang' => $lang,
-            'wysiwyg' => config('sleeping_owl.wysiwyg'),
+            'lang'       => $lang,
+            'wysiwyg'    => $config->get('sleeping_owl.wysiwyg'),
         ];
 
         $content = 'window.Admin = {Settings: '.json_encode($data, JSON_PRETTY_PRINT).'}';
@@ -442,13 +440,14 @@ class AdminController extends Controller
     }
 
     /**
-     * @return string|null
+     * @param Request $request
+     * @return null|string
      */
-    protected function getBackUrl()
+    protected function getBackUrl(Request $request)
     {
-        if (($backUrl = Request::input('_redirectBack')) == \URL::previous()) {
+        if (($backUrl = $request->input('_redirectBack')) == $this->urlGenerator->previous()) {
             $backUrl = null;
-            Request::merge(['_redirectBack' => $backUrl]);
+            $request->merge(['_redirectBack' => $backUrl]);
         }
 
         return $backUrl;
@@ -456,20 +455,6 @@ class AdminController extends Controller
 
     public function getWildcard()
     {
-        abort(404);
-    }
-
-    /**
-     * @param string $title
-     * @param string $parent
-     */
-    protected function registerBreadcrumb($title, $parent)
-    {
-        Breadcrumbs::register('render', function ($breadcrumbs) use ($title, $parent) {
-            $breadcrumbs->parent($parent);
-            $breadcrumbs->push($title);
-        });
-
-        $this->parentBreadcrumb = 'render';
+        throw new NotFoundHttpException();
     }
 }

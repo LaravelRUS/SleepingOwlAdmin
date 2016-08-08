@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
+use KodiCMS\Assets\Package;
 use LogicException;
-use Request;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
 
 /**
@@ -58,10 +60,22 @@ abstract class NamedFormElement extends FormElement
     protected $validationMessages = [];
 
     /**
-     * @param string      $path
-     * @param string|null $label
+     * @var Request
      */
-    public function __construct($path, $label = null)
+    protected $request;
+
+    /**
+     * @param string $path
+     * @param string|null $label
+     * @param TemplateInterface $template
+     * @param Package $package
+     * @param Request $request
+     */
+    public function __construct($path,
+                                $label = null,
+                                TemplateInterface $template,
+                                Package $package,
+                                Request $request)
     {
         $this->setPath($path);
         $this->setLabel($label);
@@ -70,7 +84,9 @@ abstract class NamedFormElement extends FormElement
         $this->setName($this->composeName($parts));
         $this->setAttribute(end($parts));
 
-        parent::__construct();
+        $this->request = $request;
+
+        parent::__construct($template, $package);
     }
 
     /**
@@ -333,11 +349,11 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromRequest()
     {
-        if (! is_null($value = Request::old($this->getPath()))) {
+        if (! is_null($value = $this->request->old($this->getPath()))) {
             return $value;
         }
 
-        return Request::input($this->getPath());
+        return $this->request->input($this->getPath());
     }
 
     /**

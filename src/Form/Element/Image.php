@@ -2,20 +2,15 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Validation\Validator;
 
 class Image extends File
 {
     /**
-     * @var string
-     */
-    protected static $route = 'image';
-
-    /**
      * @param Validator $validator
      */
-    protected static function validate(Validator $validator)
+    public static function validate(Validator $validator)
     {
         $validator->after(function ($validator) {
             /** @var \Illuminate\Http\UploadedFile $file */
@@ -35,7 +30,7 @@ class Image extends File
      * @param string $filename
      * @param array $settings
      */
-    protected static function saveFile(UploadedFile $file, $path, $filename, array $settings)
+    public static function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
         if (
             class_exists('Intervention\Image\Facades\Image')
@@ -48,7 +43,9 @@ class Image extends File
                 call_user_func_array([$image, $method], $args);
             }
 
-            return $image->save($path.'/'.$filename);
+            $image->save($path.'/'.$filename);
+
+            return;
         }
 
         $file->move($path, $filename);
@@ -59,7 +56,7 @@ class Image extends File
      *
      * @return string
      */
-    protected static function defaultUploadPath(UploadedFile $file)
+    public static function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.imagesUploadDirectory', 'images/uploads');
     }
@@ -67,7 +64,7 @@ class Image extends File
     /**
      * @return array
      */
-    protected static function defaultUploadValidationRules()
+    public static function defaultUploadValidationRules()
     {
         return [
             'file' => 'image',

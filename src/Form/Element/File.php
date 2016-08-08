@@ -3,98 +3,26 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Router;
 use KodiComponents\Support\Upload;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use Validator;
+use SleepingOwl\Admin\Http\Controllers\FileElementController;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
-    /**
-     * @var string
-     */
-    protected static $route = 'file';
-
     /**
      * @param Router $router
      */
     public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.'.static::$route;
+        $routeName = 'admin.form.element.file';
 
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', ['as' => $routeName, function (
-                Request $request,
-                ModelConfigurationInterface $model,
-                $field,
-                $id = null
-            ) {
-                if (! is_null($id)) {
-                    $item = $model->getRepository()->find($id);
-                    if (is_null($item) || ! $model->isEditable($item)) {
-                        return new JsonResponse([
-                            'message' => trans('lang.message.access_denied'),
-                        ], 403);
-                    }
-
-                    $form = $model->fireEdit($id);
-                } else {
-                    if (! $model->isCreatable()) {
-                        return new JsonResponse([
-                            'message' => trans('lang.message.access_denied'),
-                        ], 403);
-                    }
-
-                    $form = $model->fireCreate();
-                }
-
-                $messages = [];
-                $labels = [];
-                $rules = static::defaultUploadValidationRules();
-
-                if (! is_null($element = $form->getElement($field))) {
-                    $rules = $element->getUploadValidationRules();
-                    $messages = $element->getUploadValidationMessages();
-                    $labels = $element->getUploadValidationLabels();
-                }
-
-                $validator = Validator::make($request->all(), $rules, $messages, $labels);
-
-                static::validate($validator);
-
-                if ($validator->fails()) {
-                    return new JsonResponse([
-                        'message' => trans('lang.message.validation_error'),
-                        'errors' => $validator->errors()->get('file'),
-                    ], 400);
-                }
-
-                $file = $request->file('file');
-
-                /** @var File $element */
-                if (! is_null($element = $form->getElement($field))) {
-                    $filename = $element->getUploadFileName($file);
-                    $path = $element->getUploadPath($file);
-                    $settings = $element->getUploadSettings();
-                } else {
-                    $filename = static::defaultUploadFilename($file);
-                    $path = static::defaultUploadPath($file);
-                    $settings = [];
-                }
-
-                static::saveFile($file, public_path($path), $filename, $settings);
-
-                $value = $path.'/'.$filename;
-
-                return new JsonResponse([
-                    'url' => asset($value),
-                    'value' => $value,
-                ]);
-            }]);
+            $router->post('upload/{adminModel}/{type}/{field}/{id?}')
+                ->uses(FileElementController::class . '@file')
+                ->name($routeName);
         }
     }
 
@@ -104,15 +32,15 @@ class File extends NamedFormElement implements WithRoutesInterface
      * @param string $filename
      * @param array $settings
      */
-    protected static function saveFile(UploadedFile $file, $path, $filename, array $settings)
+    public static function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
         $file->move($path, $filename);
     }
 
     /**
-     * @param \Illuminate\Validation\Validator $validator
+     * @param $validator
      */
-    protected static function validate(\Illuminate\Validation\Validator $validator)
+    public static function validate(Validator $validator)
     {
     }
 
@@ -121,7 +49,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      *
      * @return string
      */
-    protected static function defaultUploadFilename(UploadedFile $file)
+    public static function defaultUploadFilename(UploadedFile $file)
     {
         return md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
     }
@@ -131,7 +59,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      *
      * @return string
      */
-    protected static function defaultUploadPath(UploadedFile $file)
+    public static function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
     }
@@ -139,7 +67,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @return array
      */
-    protected static function defaultUploadValidationRules()
+    public static function defaultUploadValidationRules()
     {
         return [
             'file' => ['required', 'file'],

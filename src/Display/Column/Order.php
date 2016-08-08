@@ -4,9 +4,12 @@ namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
-use Route;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\TableColumn;
+use SleepingOwl\Admin\Http\Controllers\OrderElementController;
 use SleepingOwl\Admin\Traits\OrderableModel;
 
 class Order extends TableColumn implements WithRoutesInterface
@@ -18,30 +21,20 @@ class Order extends TableColumn implements WithRoutesInterface
      */
     public static function registerRoutes(Router $router)
     {
-        $router->post('{adminModel}/{adminModelId}/up', [
-            'as' => 'admin.model.move-up',
-            function ($model, $id) {
-                $instance = $model->getRepository()->find($id);
-                $instance->moveUp();
+        $router->post('{adminModel}/{adminModelId}/up')
+            ->uses(OrderElementController::class . '@up')
+            ->name('admin.model.move-up');
 
-                return back();
-            },
-        ]);
-
-        $router->post('{adminModel}/{adminModelId}/down', [
-            'as' => 'admin.model.move-down',
-            function ($model, $id) {
-                $instance = $model->getRepository()->find($id);
-                $instance->moveDown();
-
-                return back();
-            },
-        ]);
+        $router->post('{adminModel}/{adminModelId}/down')
+            ->uses(OrderElementController::class . '@down')
+            ->name('admin.model.move-down');
     }
 
-    public function __construct()
+    public function __construct(TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta)
     {
-        parent::__construct();
+        parent::__construct(null, $tableHeaderColumn, $admin, $meta);
         $this->setHtmlAttribute('class', 'row-order');
     }
 

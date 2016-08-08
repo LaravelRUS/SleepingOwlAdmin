@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use KodiCMS\Assets\Package;
+use SleepingOwl\Admin\Contracts\TemplateInterface;
 
 class View extends Custom
 {
@@ -20,13 +22,19 @@ class View extends Custom
      * @param string $view
      * @param array $data
      * @param Closure $callback
+     * @param TemplateInterface $template
+     * @param Package $package
      */
-    public function __construct($view, array $data = [], Closure $callback = null)
+    public function __construct($view,
+                                array $data = [],
+                                Closure $callback = null,
+                                TemplateInterface $template,
+                                Package $package)
     {
         $this->setView($view);
         $this->setData($data);
 
-        parent::__construct($callback);
+        parent::__construct($callback, $template, $package);
     }
 
     /**

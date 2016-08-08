@@ -23,6 +23,6 @@ WysiwygManager::register('ckeditor')
 WysiwygManager::register('tinymce')
     ->js(null, '//cdn.tinymce.com/4/tinymce.min.js', ['jquery']);
 
-WysiwygManager::register('simplemde', new \SleepingOwl\Admin\Wysiwyg\MarkdownFilter())
+WysiwygManager::register('simplemde', new \SleepingOwl\Admin\Wysiwyg\MarkdownFilter(new \Parsedown()))
     ->js(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js', ['jquery'])
     ->css(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');

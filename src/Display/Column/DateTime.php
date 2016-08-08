@@ -3,7 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Carbon\Carbon;
+use Illuminate\Config\Repository;
 use Illuminate\Database\Eloquent\Model;
+use KodiCMS\Assets\Contracts\MetaInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class DateTime extends NamedColumn
 {
@@ -12,6 +16,32 @@ class DateTime extends NamedColumn
      * @var string
      */
     protected $format;
+
+    /**
+     * @var Repository
+     */
+    protected $config;
+
+    /**
+     * DateTime constructor.
+     *
+     * @param Closure|null|string $name
+     * @param null|string $label
+     * @param TableHeaderColumnInterface $tableHeaderColumn
+     * @param AdminInterface $admin
+     * @param MetaInterface $meta
+     * @param Repository $config
+     */
+    public function __construct($name,
+                                $label = null,
+                                TableHeaderColumnInterface $tableHeaderColumn,
+                                AdminInterface $admin,
+                                MetaInterface $meta,
+                                Repository $config)
+    {
+        $this->config = $config;
+        parent::__construct($name, $label, $tableHeaderColumn, $admin, $meta);
+    }
 
     /**
      * @param Model $model
@@ -32,7 +62,7 @@ class DateTime extends NamedColumn
     public function getFormat()
     {
         if (is_null($this->format)) {
-            $this->format = config('sleeping_owl.datetimeFormat');
+            $this->format = $this->config->get('sleeping_owl.datetimeFormat', 'd.m.Y H:i');
         }
 
         return $this->format;
@@ -51,7 +81,7 @@ class DateTime extends NamedColumn
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return array
      */
     public function toArray()
     {
