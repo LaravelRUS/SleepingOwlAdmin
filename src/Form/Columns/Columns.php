@@ -25,13 +25,11 @@ class Columns extends FormElements implements ColumnInterface
      * @param TemplateInterface $template
      * @param Package $package
      */
-    public function __construct(array $elements = [], TemplateInterface $template, Package $package)
+    public function __construct(array $elements, TemplateInterface $template, Package $package)
     {
         $this->elements = new Collection();
         parent::__construct($elements, $template, $package);
     }
-
-
 
     /**
      * @param array|ColumnInterface[] $columns

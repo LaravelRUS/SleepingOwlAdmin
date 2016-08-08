@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin;
 
 use KodiCMS\Assets\Contracts\MetaInterface;
@@ -57,5 +58,4 @@ class PackageManager implements Initializable
             $this->meta->loadPackage($package->getName());
         }
     }
-
 }

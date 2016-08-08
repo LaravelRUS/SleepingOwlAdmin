@@ -90,7 +90,7 @@ class TemplateDefault implements TemplateInterface
     public function getViewPath($view)
     {
         if ($view instanceof View) {
-            /** @var \Illuminate\View\View $view */
+            /* @var \Illuminate\View\View $view */
             return $view->getPath();
         }
 
@@ -107,7 +107,6 @@ class TemplateDefault implements TemplateInterface
     public function view($view, $data = [], $mergeData = [])
     {
         if ($view instanceof View) {
-
             return $view->with($data);
         }
 
@@ -150,7 +149,5 @@ class TemplateDefault implements TemplateInterface
         if ($this->breadcrumbs instanceof Manager) {
             return $this->breadcrumbs->renderIfExists($key);
         }
-
-        return null;
     }
 }

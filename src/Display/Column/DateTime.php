@@ -33,7 +33,7 @@ class DateTime extends NamedColumn
      * @param Repository $config
      */
     public function __construct($name,
-                                $label = null,
+                                $label,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta,

@@ -50,7 +50,7 @@ class Action extends NamedColumn implements ActionInterface
      * @param MetaInterface $meta
      */
     public function __construct($name,
-                                $title = null,
+                                $title,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta)

@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Http;
 
 use Illuminate\Routing\Router as IlluminateRouter;
@@ -36,7 +37,7 @@ class Router implements RouterInterface
     }
 
     /**
-     * Register admin routes
+     * Register admin routes.
      *
      * @param \Closure $closure
      */

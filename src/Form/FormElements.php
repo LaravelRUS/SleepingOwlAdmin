@@ -18,7 +18,7 @@ class FormElements extends FormElement implements ElementsInterface
      * @param TemplateInterface $template
      * @param Package $package
      */
-    public function __construct(array $elements = [], TemplateInterface $template, Package $package)
+    public function __construct(array $elements, TemplateInterface $template, Package $package)
     {
         parent::__construct($template, $package);
 

@@ -22,11 +22,11 @@ class Order extends TableColumn implements WithRoutesInterface
     public static function registerRoutes(Router $router)
     {
         $router->post('{adminModel}/{adminModelId}/up')
-            ->uses(OrderElementController::class . '@up')
+            ->uses(OrderElementController::class.'@up')
             ->name('admin.model.move-up');
 
         $router->post('{adminModel}/{adminModelId}/down')
-            ->uses(OrderElementController::class . '@down')
+            ->uses(OrderElementController::class.'@down')
             ->name('admin.model.move-down');
     }
 

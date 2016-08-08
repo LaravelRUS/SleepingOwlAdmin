@@ -36,7 +36,7 @@ class Filter extends NamedColumn
      * @param TranslatorInterface $translator
      */
     public function __construct($name,
-                                $label = null,
+                                $label,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta,
@@ -46,7 +46,6 @@ class Filter extends NamedColumn
 
         parent::__construct($name, $label, $tableHeaderColumn, $admin, $meta);
     }
-
 
     /**
      * @return string

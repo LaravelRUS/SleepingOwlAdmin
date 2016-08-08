@@ -86,8 +86,8 @@ class Select extends NamedFormElement
      * @param TranslatorInterface $translator
      */
     public function __construct($path,
-                                $label = null,
-                                $options = [],
+                                $label,
+                                $options,
                                 TemplateInterface $template,
                                 Package $package,
                                 Request $request,
@@ -460,7 +460,7 @@ class Select extends NamedFormElement
     protected function prepareValue($value)
     {
         if ($this->isNullable() and $value == '') {
-            return null;
+            return;
         }
 
         return $value;

@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Model;
 
 use Illuminate\Contracts\Container\Container;

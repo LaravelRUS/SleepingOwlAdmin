@@ -19,7 +19,7 @@ class Image extends NamedColumn
      * {@inheritdoc}
      */
     public function __construct($name,
-                                $label = null,
+                                $label,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta)

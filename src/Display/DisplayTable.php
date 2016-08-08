@@ -82,7 +82,6 @@ class DisplayTable extends Display
         $this->extend('column_filters', new ColumnFilters());
     }
 
-
     /**
      * Initialize display.
      */

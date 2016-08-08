@@ -18,7 +18,7 @@ class CKEditor extends Wysiwyg
      * @param ManagerInterface $manager
      */
     public function __construct($path,
-                                $label = null,
+                                $label,
                                 TemplateInterface $template,
                                 Package $package,
                                 Request $request,

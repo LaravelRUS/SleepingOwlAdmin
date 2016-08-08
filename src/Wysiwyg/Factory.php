@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Wysiwyg;
 
 use KodiCMS\Assets\Contracts\MetaInterface;

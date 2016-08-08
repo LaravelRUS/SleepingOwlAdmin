@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Contracts\Wysiwyg;
 
 use Illuminate\Support\Collection;

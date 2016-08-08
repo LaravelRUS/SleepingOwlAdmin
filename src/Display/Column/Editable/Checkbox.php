@@ -43,8 +43,8 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
      * @param TranslatorInterface $translator
      */
     public function __construct($name,
-                                $checkedLabel = null,
-                                $uncheckedLabel = null,
+                                $checkedLabel,
+                                $uncheckedLabel,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta,

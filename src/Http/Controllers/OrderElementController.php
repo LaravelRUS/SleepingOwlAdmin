@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Routing\Controller;

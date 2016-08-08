@@ -1,7 +1,8 @@
 <?php
+
 use Illuminate\Routing\Router;
 
-/** @var Router $router */
+/* @var Router $router */
 $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function (Router $router) {
     $router->get('{adminModel}', [
         'as'   => 'model',

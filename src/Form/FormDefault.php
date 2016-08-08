@@ -120,7 +120,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param PresenceVerifierInterface $presenceVerifier
      * @param UrlGenerator $urlGenerator
      */
-    public function __construct(array $elements = [],
+    public function __construct(array $elements,
                                 TemplateInterface $template,
                                 Package $package,
                                 FormButtonsInterface $formButtons,
@@ -410,7 +410,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function validateForm(ModelConfigurationInterface $modelConfiguration)
     {
         if ($modelConfiguration !== $this->getModelConfiguration()) {
-            return null;
+            return;
         }
 
         $data = $this->request->all();
@@ -428,8 +428,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         if ($validator->fails()) {
             return $validator;
         }
-
-        return null;
     }
 
     /**

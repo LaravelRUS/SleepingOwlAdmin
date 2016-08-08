@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;

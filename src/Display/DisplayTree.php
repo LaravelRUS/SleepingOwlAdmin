@@ -34,7 +34,7 @@ class DisplayTree extends Display implements WithRoutesInterface
         }
 
         $router->post('{adminModel}/reorder')
-            ->uses(DisplayTreeController::class . '@reorder')
+            ->uses(DisplayTreeController::class.'@reorder')
             ->name($routeName);
     }
 

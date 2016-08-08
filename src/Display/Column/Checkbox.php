@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Collective\Html\FormBuilder;
-use Form;
 use KodiCMS\Assets\Contracts\MetaInterface;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
@@ -25,7 +24,7 @@ class Checkbox extends TableColumn
      * @param MetaInterface $meta
      * @param FormBuilder $formBuilder
      */
-    public function __construct($label = null,
+    public function __construct($label,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta,

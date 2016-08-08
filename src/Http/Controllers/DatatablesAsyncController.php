@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
@@ -48,7 +49,5 @@ class DatatablesAsyncController extends Controller
                 return $content;
             }
         }
-
-        return null;
     }
 }

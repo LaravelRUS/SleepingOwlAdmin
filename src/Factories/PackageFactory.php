@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Factories;
 
 use Illuminate\Contracts\Container\Container;
@@ -28,7 +29,7 @@ class PackageFactory
      */
     public function make($forClass)
     {
-        $alias = 'sleeping_owl.package.' . $forClass;
+        $alias = 'sleeping_owl.package.'.$forClass;
         if ($this->container->resolved($alias)) {
             return $this->container->make($alias);
         }

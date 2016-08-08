@@ -70,7 +70,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function getConfig($key, $default = null)
     {
-        return $this->app->make(Config::class)->get('sleeping_owl.' . $key, $default);
+        return $this->app->make(Config::class)->get('sleeping_owl.'.$key, $default);
     }
 
     /**
@@ -80,11 +80,11 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function getBootstrapPath($path = null)
     {
-        if (!is_null($path)) {
-            $path = DIRECTORY_SEPARATOR . $path;
+        if (! is_null($path)) {
+            $path = DIRECTORY_SEPARATOR.$path;
         }
 
-        return $this->getConfig('bootstrapDirectory') . $path;
+        return $this->getConfig('bootstrapDirectory').$path;
     }
 
     public function boot()
@@ -100,7 +100,6 @@ class AdminServiceProvider extends ServiceProvider
                     ]);
                 });
         });
-
     }
 
     protected function registerNavigation()
@@ -133,6 +132,7 @@ class AdminServiceProvider extends ServiceProvider
             ->give(function (Container $app) {
                 /** @var ConnectionResolverInterface $db */
                 $db = $app['db'];
+
                 return $db->connection($db->getDefaultConnection())->getSchemaBuilder();
             });
 
@@ -152,7 +152,8 @@ class AdminServiceProvider extends ServiceProvider
         foreach ($objects as $class) {
             $this->app->when($class)
                 ->needs(\Closure::class)
-                ->give(function () {});
+                ->give(function () {
+                });
         }
     }
 
@@ -180,7 +181,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->app->singleton('sleeping_owl', function (Container $app) {
             return $app->make(Admin::class, [
-                'templateClass' => $this->getConfig('template')
+                'templateClass' => $this->getConfig('template'),
             ]);
         });
         $this->app->alias('sleeping_owl', AdminInterface::class);
@@ -212,7 +213,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $directory = $this->getBootstrapPath();
 
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             return;
         }
 
@@ -246,7 +247,6 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerDefaultRoutes()
     {
-
         $this->app->make(RouterInterface::class)->register(function (IlluminateRouter $router) {
             /** @var AdminInterface $admin */
             $admin = $this->app->make(AdminInterface::class);
@@ -269,7 +269,7 @@ class AdminServiceProvider extends ServiceProvider
                     if ($model->hasCustomControllerClass()) {
                         list($controller, $action) = explode('@', $route->getActionName(), 2);
 
-                        $newController = $model->getControllerClass() . '@' . $action;
+                        $newController = $model->getControllerClass().'@'.$action;
 
                         $route->uses($newController);
                     }
@@ -278,7 +278,7 @@ class AdminServiceProvider extends ServiceProvider
                 });
             }
 
-            if (file_exists($routesFile = __DIR__ . '/../Http/routes.php')) {
+            if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
                 require $routesFile;
             }
 

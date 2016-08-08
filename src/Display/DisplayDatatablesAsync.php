@@ -29,7 +29,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public static function registerRoutes(Router $router)
     {
         $router->get('{adminModel}/async/{adminDisplayName?}')
-            ->uses(DatatablesAsyncController::class . '@data')
+            ->uses(DatatablesAsyncController::class.'@data')
             ->name('admin.model.async');
     }
 
@@ -82,7 +82,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $this->getColumns()->setView('display.extensions.columns_async');
     }
-
 
     /**
      * Initialize display.
@@ -148,7 +147,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $totalCount = $query->count();
         $filteredCount = 0;
 
-        if (!is_null($this->distinct)) {
+        if (! is_null($this->distinct)) {
             $filteredCount = $query->distinct()->count($this->getDistinct());
         }
 
@@ -223,7 +222,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 if (in_array(get_class($column), $this->searchableColumns)) {
                     $name = $column->getName();
                     if ($this->repository->hasColumn($name)) {
-                        $query->orWhere($name, 'like', '%' . $search . '%');
+                        $query->orWhere($name, 'like', '%'.$search.'%');
                     }
                 }
             }
@@ -243,7 +242,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             $column = $this->getColumns()->all()->get($index);
             $columnFilter = array_get($this->getColumnFilters()->all(), $index);
 
-            if (!is_null($columnFilter) && !is_null($column)) {
+            if (! is_null($columnFilter) && ! is_null($column)) {
                 $columnFilter->apply($this->repository, $column, $query, $search, $fullSearch);
             }
         }
@@ -273,7 +272,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
             foreach ($columns->all() as $column) {
                 $column->setModel($instance);
-                $_row[] = (string)$column;
+                $_row[] = (string) $column;
             }
 
             $result['data'][] = $_row;

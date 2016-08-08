@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Factories;
 
 use Illuminate\Contracts\Support\Renderable;

@@ -150,7 +150,6 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->packageManager = $packageManager;
     }
 
-
     /**
      * @param string $alias
      *
@@ -514,7 +513,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireDisplay()
     {
         if (! is_callable($this->display)) {
-            return null;
+            return;
         }
 
         $display = $this->container->call($this->display);
@@ -534,7 +533,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireCreate()
     {
         if (! is_callable($this->create)) {
-            return null;
+            return;
         }
 
         $form = $this->container->call($this->create);
@@ -563,7 +562,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireEdit($id)
     {
         if (! is_callable($this->edit)) {
-            return null;
+            return;
         }
 
         $form = $this->container->call($this->edit, ['id' => $id]);

@@ -254,7 +254,7 @@ class AdminController extends Controller
         $column->setModel($item);
 
         if ($model->fireEvent('updating', true, $item) === false) {
-            return null;
+            return;
         }
 
         $column->save($value);

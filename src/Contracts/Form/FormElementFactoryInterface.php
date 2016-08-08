@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Contracts\Form;
 
 use SleepingOwl\Admin\Factories\Model;

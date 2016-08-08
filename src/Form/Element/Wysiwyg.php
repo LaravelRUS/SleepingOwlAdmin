@@ -46,8 +46,8 @@ class Wysiwyg extends NamedFormElement
      * @param ManagerInterface $manager
      */
     public function __construct($path,
-                                $label = null,
-                                $editor = null,
+                                $label,
+                                $editor,
                                 TemplateInterface $template,
                                 Package $package,
                                 Request $request,

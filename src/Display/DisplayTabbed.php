@@ -44,7 +44,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * @param TemplateInterface $template
      * @param DisplayFactoryInterface $displayFactory
      */
-    public function __construct($tabs = null, TemplateInterface $template, DisplayFactoryInterface $displayFactory)
+    public function __construct($tabs, TemplateInterface $template, DisplayFactoryInterface $displayFactory)
     {
         $this->template = $template;
         $this->displayFactory = $displayFactory;
@@ -187,8 +187,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 }
             }
         }
-
-        return null;
     }
 
     /**

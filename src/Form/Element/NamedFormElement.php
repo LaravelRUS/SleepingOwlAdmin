@@ -72,7 +72,7 @@ abstract class NamedFormElement extends FormElement
      * @param Request $request
      */
     public function __construct($path,
-                                $label = null,
+                                $label,
                                 TemplateInterface $template,
                                 Package $package,
                                 Request $request)

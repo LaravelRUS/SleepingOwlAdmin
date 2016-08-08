@@ -78,7 +78,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireDisplay()
     {
         if (! method_exists($this, 'onDisplay')) {
-            return null;
+            return;
         }
 
         $display = $this->container->call([$this, 'onDisplay']);
@@ -99,7 +99,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireCreate()
     {
         if (! method_exists($this, 'onCreate')) {
-            return null;
+            return;
         }
 
         $form = $this->container->call([$this, 'onCreate']);
@@ -128,7 +128,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireEdit($id)
     {
         if (! method_exists($this, 'onEdit')) {
-            return null;
+            return;
         }
 
         $form = $this->container->call([$this, 'onEdit'], ['id' => $id]);

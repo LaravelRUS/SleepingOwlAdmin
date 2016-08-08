@@ -50,7 +50,7 @@ class FormPanel extends FormDefault
      * @param UrlGenerator $urlGenerator
      * @param PackageFactory $packageFactory
      */
-    public function __construct(array $elements = [],
+    public function __construct(array $elements,
                                 TemplateInterface $template,
                                 Package $package,
                                 FormButtonsInterface $formButtons,

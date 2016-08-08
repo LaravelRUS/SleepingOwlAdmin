@@ -212,7 +212,7 @@ abstract class Display implements DisplayInterface, AssetsInterface
                     $html = $this->admin->template()->view($extension->getView(), $extension->toArray())->render();
 
                     if (! empty($html)) {
-                        /** @var \Illuminate\View\View $view */
+                        /* @var \Illuminate\View\View $view */
                         $view->getFactory()->inject($extension->getPlacement(), $html);
                     }
                 });

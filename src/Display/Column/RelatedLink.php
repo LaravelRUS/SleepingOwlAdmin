@@ -27,7 +27,7 @@ class RelatedLink extends Link
      * @param MetaInterface $meta
      */
     public function __construct($name,
-                                $label = null,
+                                $label,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta)

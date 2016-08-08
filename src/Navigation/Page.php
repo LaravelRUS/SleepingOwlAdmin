@@ -36,7 +36,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     public function getModelConfiguration()
     {
         if (! $this->hasModel()) {
-            return null;
+            return;
         }
 
         return app('sleeping_owl')->getModel($this->model);

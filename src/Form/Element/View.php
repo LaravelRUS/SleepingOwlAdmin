@@ -26,7 +26,7 @@ class View extends Custom
      * @param Package $package
      */
     public function __construct($view,
-                                array $data = [],
+                                array $data,
                                 Closure $callback = null,
                                 TemplateInterface $template,
                                 Package $package)

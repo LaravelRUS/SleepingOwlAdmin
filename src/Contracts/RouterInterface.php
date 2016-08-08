@@ -1,10 +1,11 @@
 <?php
+
 namespace SleepingOwl\Admin\Contracts;
 
 interface RouterInterface
 {
     /**
-     * Register admin routes
+     * Register admin routes.
      *
      * @param \Closure $closure
      */

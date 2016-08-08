@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Navigation;
 
 use DaveJamesMiller\Breadcrumbs\Manager;

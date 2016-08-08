@@ -32,7 +32,7 @@ class Control extends TableColumn
      * @param AdminInterface $admin
      * @param MetaInterface $meta
      */
-    public function __construct($label = null,
+    public function __construct($label,
                                 TableHeaderColumnInterface $tableHeaderColumn,
                                 AdminInterface $admin,
                                 MetaInterface $meta)

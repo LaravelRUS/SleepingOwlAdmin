@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Contracts\Validation\Factory;
@@ -50,7 +51,7 @@ class FileElementController extends Controller
             $item = $model->getRepository()->find($id);
             if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
-                    'message' => $translator->trans('lang.message.access_denied')
+                    'message' => $translator->trans('lang.message.access_denied'),
                 ], 403);
             }
 
@@ -58,7 +59,7 @@ class FileElementController extends Controller
         } else {
             if (! $model->isCreatable()) {
                 return new JsonResponse([
-                    'message' => $translator->trans('lang.message.access_denied')
+                    'message' => $translator->trans('lang.message.access_denied'),
                 ], 403);
             }
 
@@ -66,14 +67,14 @@ class FileElementController extends Controller
         }
 
         $messages = [];
-        $labels   = [];
+        $labels = [];
         $rules = $static::defaultUploadValidationRules();
 
         /** @var Element\File $element */
         if (! is_null($element = $form->getElement($field))) {
-            $rules    = $element->getUploadValidationRules();
+            $rules = $element->getUploadValidationRules();
             $messages = $element->getUploadValidationMessages();
-            $labels   = $element->getUploadValidationLabels();
+            $labels = $element->getUploadValidationLabels();
         }
 
         /** @var Validator|\Illuminate\Validation\Validator $validator */
@@ -83,7 +84,7 @@ class FileElementController extends Controller
         if ($validator->fails()) {
             return new JsonResponse([
                 'message' => $translator->trans('lang.message.validation_error'),
-                'errors' => $validator->errors()->get('file')
+                'errors' => $validator->errors()->get('file'),
             ], 400);
         }
 
@@ -92,11 +93,11 @@ class FileElementController extends Controller
         /** @var Element\File $element */
         if (! is_null($element = $form->getElement($field))) {
             $filename = $element->getUploadFileName($file);
-            $path     = $element->getUploadPath($file);
+            $path = $element->getUploadPath($file);
             $settings = $element->getUploadSettings();
         } else {
             $filename = $static::defaultUploadFilename($file);
-            $path     = $static::defaultUploadPath($file);
+            $path = $static::defaultUploadPath($file);
             $settings = [];
         }
 

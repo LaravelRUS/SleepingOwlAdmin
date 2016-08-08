@@ -21,7 +21,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         if (! $router->has($routeName)) {
             $router->post('upload/{adminModel}/{type}/{field}/{id?}')
-                ->uses(FileElementController::class . '@file')
+                ->uses(FileElementController::class.'@file')
                 ->name($routeName);
         }
     }
