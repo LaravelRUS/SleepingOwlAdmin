@@ -20,5 +20,7 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	@yield('content')
+
+	{!! Meta::getJsList(true) !!}
 </body>
 </html>
