@@ -17,7 +17,9 @@
     <a href="{{ $url }}">
         {!! $icon !!}
         <span>{!! $title !!}</span>
-        {!! $badge !!}
+        <span class="pull-right-container">
+              {!! $badge !!}
+        </span>
     </a>
 </li>
 @endif
