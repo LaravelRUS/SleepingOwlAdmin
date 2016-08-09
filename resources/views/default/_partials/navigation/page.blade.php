@@ -3,7 +3,9 @@
     <a href="#" >
         {!! $icon !!}
         <span>{!! $title !!}</span>
-        <i class="fa fa-angle-left pull-right-container"></i>
+        <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
     </a>
 
     <ul class="treeview-menu">
