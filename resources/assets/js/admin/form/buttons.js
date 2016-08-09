@@ -38,8 +38,17 @@ $(() => {
                 return prepareData(self);
             }
 
-            bootbox.confirm(question, (result) => {
-                result && prepareData(self);
+            swal({
+                title: question,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: i18next.t('lang.button.yes')
+            }).then(() => {
+                prepareData(self);
+            }, dismiss => {
+
             });
         });
     };

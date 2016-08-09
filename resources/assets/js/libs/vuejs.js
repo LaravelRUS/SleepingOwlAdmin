@@ -1,4 +1,18 @@
+/**
+ * Vue is a modern JavaScript for building interactive web interfaces using
+ * reacting data binding and reusable components. Vue's API is clean and
+ * simple, leaving you to focus only on building your next great idea.
+ *
+ * @see https://vuejs.org/guide/
+ */
 window.Vue = require('vue');
+
+/**
+ * The plugin for Vue.js provides services for making web requests and handle
+ * responses using a XMLHttpRequest or JSONP.
+ *
+ * @see https://github.com/vuejs/vue-resource/tree/master/docs
+ */
 require('vue-resource');
 
 /**

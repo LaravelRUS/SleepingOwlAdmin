@@ -20,6 +20,7 @@ require('./admin/display/actions')
 require('./admin/display/treeview')
 require('./admin/display/columns/checkbox')
 require('./admin/display/columns/control')
+require('./admin/display/columns/tree_control')
 require('./admin/display/columns/inline_edit')
 
 /**

@@ -7,7 +7,7 @@
 	<form action="{{ $deleteUrl }}" method="POST" style="display:inline-block;">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<input type="hidden" name="_method" value="DELETE" />
-		<button class="btn btn-danger btn-xs btn-delete btn-flat" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.delete') }}">
+		<button class="btn btn-danger btn-xs btn-delete" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.delete') }}">
 			<i class="fa fa-trash"></i>
 		</button>
 	</form>
@@ -15,7 +15,7 @@
 @if ($restorable)
 	<form action="{{ $restoreUrl }}" method="POST" style="display:inline-block;">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-		<button class="btn btn-warning btn-xs btn-flat" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.restore') }}">
+		<button class="btn btn-warning btn-xs" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.restore') }}">
 			<i class="fa fa-reply"></i>
 		</button>
 	</form>
@@ -24,7 +24,7 @@
 	<form action="{{ $destroyUrl }}" method="POST" style="display:inline-block;">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		<input type="hidden" name="_method" value="DELETE" />
-		<button class="btn btn-danger btn-xs btn-destroy btn-flat" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.destroy') }}">
+		<button class="btn btn-danger btn-xs btn-destroy" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.destroy') }}">
 			<i class="fa fa-trash"></i>
 		</button>
 	</form>

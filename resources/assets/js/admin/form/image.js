@@ -64,6 +64,8 @@ Vue.component('element-image', Vue.extend({
                 confirmButtonText: i18next.t('lang.button.yes')
             }).then(() => {
                 self.value = '';
+            }, dismiss => {
+
             });
         },
         closeAlert () {

@@ -79,6 +79,8 @@ Vue.component('element-images', Vue.extend({
                 self.$set('values', _.filter(self.values, function (img) {
                     return image != img
                 }));
+            }, dismiss => {
+
             });
         },
         closeAlert () {

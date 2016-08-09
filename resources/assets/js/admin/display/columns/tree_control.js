@@ -1,9 +1,10 @@
 $(() => {
     let clickEvent = (selector, question) => {
-        $('table').on('click', selector, function (e) {
+        $('.dd3-content').on('click', selector, function (e) {
             e.preventDefault();
 
             let $form = $(this).closest('form');
+
             swal({
                 title: question,
                 type: 'warning',
