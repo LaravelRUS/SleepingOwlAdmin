@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 
 class Wysiwyg extends NamedFormElement
 {
@@ -44,11 +45,12 @@ class Wysiwyg extends NamedFormElement
 
     public function initialize()
     {
+        /** @var WysiwygEditorInterface $editor */
         $editor = app('sleeping_owl.wysiwyg')->getEditor($this->getEditor());
 
         app('sleeping_owl.wysiwyg')->loadEditor($this->getEditor());
 
-        $this->parameters = array_merge($editor->getConfig(), $this->parameters);
+        $this->parameters = (array) $editor->getConfig()->set($this->parameters);
     }
 
     /**
