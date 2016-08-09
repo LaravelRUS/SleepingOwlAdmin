@@ -55,6 +55,6 @@
 	</element-images>
 
 	<div class="errors">
-		@include(AdminTemplate::getViewPath('form.element.errors'))
+		@include($template->getViewPath('form.element.errors'))
 	</div>
 </div>

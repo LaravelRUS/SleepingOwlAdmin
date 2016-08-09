@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 
 class Custom extends TableColumn
@@ -22,12 +23,13 @@ class Custom extends TableColumn
     /**
      * Custom constructor.
      *
+     * @param TemplateInterface $template
      * @param null|string $label
      * @param Closure $callback
      */
-    public function __construct($label = null, Closure $callback = null)
+    public function __construct(TemplateInterface $template, $label = null, Closure $callback = null)
     {
-        parent::__construct($label);
+        parent::__construct($template, $label);
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }

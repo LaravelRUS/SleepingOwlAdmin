@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 
 class Select extends NamedFormElement
@@ -61,13 +62,14 @@ class Select extends NamedFormElement
     protected $loadOptionsQueryPreparer;
 
     /**
-     * @param string      $path
+     * @param TemplateInterface $template
+     * @param string $path
      * @param string|null $label
      * @param array|Model $options
      */
-    public function __construct($path, $label = null, $options = [])
+    public function __construct(TemplateInterface $template, $path, $label = null, $options = [])
     {
-        parent::__construct($path, $label);
+        parent::__construct($template, $path, $label);
 
         if (is_array($options)) {
             $this->setOptions($options);

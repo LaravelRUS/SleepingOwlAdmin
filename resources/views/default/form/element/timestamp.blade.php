@@ -21,5 +21,5 @@
             <span class="fa fa-clock-o"></span>
         </span>
 	</div>
-	@include(AdminTemplate::getViewPath('form.element.errors'))
+	@include($template->getViewPath('form.element.errors'))
 </div>

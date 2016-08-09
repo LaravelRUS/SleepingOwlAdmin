@@ -11,5 +11,5 @@
 			  name="{{ $name }}"
 			  @if($readonly) disabled @endif
 	>{!! $value !!}</textarea>
-	@include(AdminTemplate::getViewPath('form.element.errors'))
+	@include($template->getViewPath('form.element.errors'))
 </div>

@@ -166,6 +166,6 @@ class Tree extends Extension implements Initializable, Renderable
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->getDisplay()->template()->view($this->getView(), $this->toArray());
     }
 }

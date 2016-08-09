@@ -8,6 +8,7 @@ use Route;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
@@ -80,12 +81,13 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * DisplayDatatablesAsync constructor.
      *
+     * @param TemplateInterface $template
      * @param string|null $name
      * @param string|null $distinct
      */
-    public function __construct($name = null, $distinct = null)
+    public function __construct(TemplateInterface $template, $name = null, $distinct = null)
     {
-        parent::__construct();
+        parent::__construct($template);
 
         $this->setName($name);
         $this->setDistinct($distinct);

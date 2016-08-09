@@ -2,15 +2,64 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Meta;
-use SleepingOwl\Admin\Contracts\TemplateInterface;
+use DaveJamesMiller\Breadcrumbs\Manager;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class TemplateDefault implements TemplateInterface
 {
-    public function __construct()
+    /**
+     * @var MetaInterface
+     */
+    private $meta;
+
+    /**
+     * @var NavigationInterface
+     */
+    private $navigation;
+
+    /**
+     * @var Manager
+     */
+    private $breadcrumbs;
+
+    /**
+     * TemplateDefault constructor.
+     *
+     * @param Manager $breadcrumbs
+     * @param MetaInterface $meta
+     * @param NavigationInterface $navigation
+     */
+    public function __construct(Manager $breadcrumbs, MetaInterface $meta, NavigationInterface $navigation)
     {
-        Meta::loadPackage('admin-default');
-        Meta::AddJs('adminScripts', route('admin.scripts'), ['libraries']);
+        $this->meta = $meta;
+        $this->navigation = $navigation;
+        $this->breadcrumbs = $breadcrumbs;
+    }
+
+    /**
+     * @return Manager
+     */
+    public function breadcrumbs()
+    {
+        return $this->breadcrumbs;
+    }
+
+    /**
+     * @return MetaInterface
+     */
+    public function meta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return NavigationInterface
+     */
+    public function navigation()
+    {
+        return $this->navigation;
     }
 
     /**
@@ -53,8 +102,10 @@ class TemplateDefault implements TemplateInterface
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function view($view, $data = [], $mergeData = [])
+    public function view($view, array $data = [], $mergeData = [])
     {
+        $data['template'] = $this;
+
         if ($view instanceof \Illuminate\View\View) {
             return $view->with($data);
         }
@@ -96,7 +147,46 @@ class TemplateDefault implements TemplateInterface
     public function renderBreadcrumbs($key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
-            return \Breadcrumbs::renderIfExists($key);
+            $this->breadcrumbs()->setView($this->getViewPath('_partials.breadcrumbs'));
+
+            return $this->breadcrumbs()->renderIfExists($key);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function renderNavigation()
+    {
+        return $this->navigation()->render(
+            $this->getViewPath('_partials.navigation.navigation')
+        );
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return string
+     */
+    public function renderMeta($title)
+    {
+        return $this->meta()
+            ->setTitle($this->makeTitle($title))
+            ->addMeta(['charset' => 'utf-8'], 'meta::charset')
+            ->addMeta(['content' => csrf_token(), 'name' => 'csrf-token'])
+            ->addMeta(['content' => 'width=device-width, initial-scale=1', 'name' => 'viewport'])
+            ->addMeta(['content' => 'IE=edge', 'http-equiv' => 'X-UA-Compatible'])
+            ->render();
+    }
+
+    /**
+     * Initialize class.
+     */
+    public function initialize()
+    {
+        $this->meta
+            ->addJs('admin-default', resources_url('js/admin-app.js'), ['adminScripts'])
+            ->addJs('adminScripts', route('admin.scripts'))
+            ->addCss('admin-default', resources_url('css/admin-app.css'));
     }
 }

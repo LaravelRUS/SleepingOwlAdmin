@@ -6,13 +6,17 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
+use SleepingOwl\Admin\Exceptions\TemplateException;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
+use SleepingOwl\Admin\Templates\Breadcrumbs;
 use Symfony\Component\Finder\Finder;
 
 class AdminServiceProvider extends ServiceProvider
@@ -21,20 +25,34 @@ class AdminServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton('sleeping_owl', function () {
-            return new Admin();
+        $this->registerAliases();
+        $this->initializeNavigation();
+        $this->initializeAssets();
+
+        $this->app->singleton('sleeping_owl.template', function ($app) {
+            if (! class_exists($class = $this->getConfig('template'))) {
+                throw new TemplateException("Template class [{$class}] not found");
+            }
+
+            return $app->make($class);
         });
 
-        $this->app->alias('sleeping_owl', \SleepingOwl\Admin\Admin::class);
+        $this->app->alias('sleeping_owl.template', \SleepingOwl\Admin\Contracts\Template\TemplateInterface::class);
 
-        $this->initializeNavigation();
+        $this->app->singleton('sleeping_owl', function ($app) {
+            return new \SleepingOwl\Admin\Admin($app['sleeping_owl.template']);
+        });
+
+        $this->app->alias('sleeping_owl', \SleepingOwl\Admin\Contracts\AdminInterface::class);
+
         $this->registerWysiwyg();
-        $this->registerAliases();
 
         $this->app->booted(function () {
             $this->registerCustomRoutes();
             $this->registerDefaultRoutes();
             $this->registerNavigationFile();
+
+            $this->app['sleeping_owl']->initialize();
         });
 
         ModelConfigurationManager::setEventDispatcher($this->app['events']);
@@ -66,10 +84,6 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->app->singleton('sleeping_owl.template', function () {
-            return $this->app['sleeping_owl']->template();
-        });
-
         $this->registerBootstrap();
 
         $this->registerRoutes(function (Router $route) {
@@ -94,13 +108,36 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('sleeping_owl.navigation', function () {
             return new \SleepingOwl\Admin\Navigation();
         });
+
+        $this->app->alias('sleeping_owl.navigation', NavigationInterface::class);
+    }
+
+    protected function initializeAssets()
+    {
+        $this->app->singleton('assets.packages', function ($app) {
+            return new \KodiCMS\Assets\PackageManager();
+        });
+
+        $this->app->singleton('sleeping_owl.assets', function ($app) {
+            return new \SleepingOwl\Admin\Templates\Meta(
+                new \KodiCMS\Assets\Assets(
+                    $app['assets.packages']
+                )
+            );
+        });
+
+        $this->app->alias('sleeping_owl.assets', MetaInterface::class);
     }
 
     protected function registerWysiwyg()
     {
-        $this->app->singleton('sleeping_owl.wysiwyg', function () {
-            return new \SleepingOwl\Admin\Wysiwyg\Manager();
+        $this->app->singleton('sleeping_owl.wysiwyg', function ($app) {
+            return new \SleepingOwl\Admin\Wysiwyg\Manager(
+                $app['sleeping_owl.assets']
+            );
         });
+
+        $this->app->alias('sleeping_owl.wysiwyg', WysiwygMangerInterface::class);
     }
 
     /**

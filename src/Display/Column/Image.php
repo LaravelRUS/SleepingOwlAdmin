@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+
 class Image extends NamedColumn
 {
     /**
@@ -14,9 +16,9 @@ class Image extends NamedColumn
      *
      * {@inheritdoc}
      */
-    public function __construct($name, $label = null)
+    public function __construct(TemplateInterface $template, $name, $label = null)
     {
-        parent::__construct($name, $label);
+        parent::__construct($template, $name, $label);
         $this->setOrderable(false);
     }
 

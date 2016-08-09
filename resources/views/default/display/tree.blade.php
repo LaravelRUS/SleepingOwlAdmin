@@ -10,7 +10,7 @@
     <div class="panel-body">
         <div class="dd nestable" data-url="{{ $url }}/reorder">
             <ol class="dd-list">
-                @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
+                @include($template->getViewPath('display.tree_children'), ['children' => $items])
             </ol>
         </div>
     </div>

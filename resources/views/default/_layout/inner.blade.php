@@ -1,17 +1,17 @@
-@extends(AdminTemplate::getViewPath('_layout.base'))
+@extends($template->getViewPath('_layout.base'))
 
 @section('content')
 	<div class="wrapper">
 		<header class="main-header">
-			@include(AdminTemplate::getViewPath('_partials.header'))
+			@include($template->getViewPath('_partials.header'))
 		</header>
 
 		<aside class="main-sidebar">
-			@include(AdminTemplate::getViewPath('_partials.navigation'))
+			@include($template->getViewPath('_partials.navigation'))
 		</aside>
 
 		<div class="content-wrapper">
-			{!! AdminTemplate::renderBreadcrumbs($breadcrumbKey) !!}
+			{!! $template->renderBreadcrumbs($breadcrumbKey) !!}
 
 			<div class="content-header">
 				<h1>

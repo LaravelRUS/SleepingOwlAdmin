@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use LogicException;
 use Request;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
 
 /**
@@ -58,10 +59,11 @@ abstract class NamedFormElement extends FormElement
     protected $validationMessages = [];
 
     /**
-     * @param string      $path
+     * @param TemplateInterface $template
+     * @param string $path
      * @param string|null $label
      */
-    public function __construct($path, $label = null)
+    public function __construct(TemplateInterface $template, $path, $label = null)
     {
         $this->setPath($path);
         $this->setLabel($label);
@@ -70,7 +72,7 @@ abstract class NamedFormElement extends FormElement
         $this->setName($this->composeName($parts));
         $this->setAttribute(end($parts));
 
-        parent::__construct();
+        parent::__construct($template);
     }
 
     /**

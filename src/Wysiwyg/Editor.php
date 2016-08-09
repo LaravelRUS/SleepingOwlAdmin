@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Config\Repository;
-use Meta;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
@@ -40,19 +40,25 @@ final class Editor implements WysiwygEditorInterface
     private $package;
 
     /**
-     * @param string                      $id
-     * @param string|null                 $name
-     * @param WysiwygFilterInterface|null $filter
-     * @param array                       $config
+     * @var MetaInterface
      */
-    public function __construct($id, $name = null, WysiwygFilterInterface $filter = null, array $config = [])
+    private $meta;
+
+    /**
+     * @param MetaInterface $meta
+     * @param string $id
+     * @param string|null $name
+     * @param WysiwygFilterInterface|null $filter
+     * @param array $config
+     */
+    public function __construct(MetaInterface $meta, $id, $name = null, WysiwygFilterInterface $filter = null, array $config = [])
     {
+        $this->meta = $meta;
         $this->id = $id;
         $this->name = is_null($name) ? studly_case($id) : $name;
         $this->filter = is_null($filter) ? $this->loadDefaultFilter() : $filter;
         $this->config = new Repository($config);
-
-        $this->package = app('assets.packages')->add($id);
+        $this->package = $meta->assets()->packageManager()->add($id);
     }
 
     /**
@@ -115,7 +121,7 @@ final class Editor implements WysiwygEditorInterface
 
     public function load()
     {
-        Meta::loadPackage($this->getId());
+        $this->meta->loadPackage($this->getId());
 
         $this->used = true;
     }

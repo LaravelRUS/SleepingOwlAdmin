@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class View extends Custom
 {
@@ -17,16 +18,17 @@ class View extends Custom
     protected $data = [];
 
     /**
+     * @param TemplateInterface $template
      * @param string $view
      * @param array $data
      * @param Closure $callback
      */
-    public function __construct($view, array $data = [], Closure $callback = null)
+    public function __construct(TemplateInterface $template, $view, array $data = [], Closure $callback = null)
     {
         $this->setView($view);
         $this->setData($data);
 
-        parent::__construct($callback);
+        parent::__construct($template, $callback);
     }
 
     /**

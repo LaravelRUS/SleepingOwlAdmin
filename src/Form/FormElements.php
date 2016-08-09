@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class FormElements extends FormElement implements ElementsInterface
 {
@@ -12,11 +13,12 @@ class FormElements extends FormElement implements ElementsInterface
     /**
      * Column constructor.
      *
+     * @param TemplateInterface $template
      * @param array $elements
      */
-    public function __construct(array $elements = [])
+    public function __construct(TemplateInterface $template, array $elements = [])
     {
-        parent::__construct();
+        parent::__construct($template);
 
         $this->setElements($elements);
     }

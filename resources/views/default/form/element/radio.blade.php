@@ -22,5 +22,5 @@
 			</label>
 		</div>
 	@endforeach
-	@include(AdminTemplate::getViewPath('form.element.errors'))
+	@include($template->getViewPath('form.element.errors'))
 </div>

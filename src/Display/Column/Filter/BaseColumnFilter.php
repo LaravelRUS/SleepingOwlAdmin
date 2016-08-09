@@ -6,12 +6,14 @@ use KodiComponents\Support\HtmlAttributes;
 use Meta;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
-    use SqlQueryOperators, HtmlAttributes;
+    use SqlQueryOperators, HtmlAttributes, Assets;
 
     /**
      * @var string
@@ -19,11 +21,31 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     protected $view;
 
     /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
+     * BaseColumnFilter constructor.
+     *
+     * @param TemplateInterface $template
+     */
+    public function __construct(TemplateInterface $template)
+    {
+        $this->template = $template;
+        $this->initializePackage(
+            $this->template->meta()
+        );
+    }
+
+    /**
      * Initialize column filter.
      */
     public function initialize()
     {
-        Meta::loadPackage(get_called_class());
+        $this->includePackage(
+            $this->template->meta()
+        );
     }
 
     /**
@@ -51,7 +73,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('column.filter.'.$this->getView(), $this->toArray());
+        return $this->template->view('column.filter.'.$this->getView(), $this->toArray());
     }
 
     /**

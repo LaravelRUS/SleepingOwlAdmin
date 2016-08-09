@@ -14,6 +14,7 @@ use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Form\Element\Upload;
 use Validator;
 
@@ -71,17 +72,21 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * FormDefault constructor.
      *
+     * @param TemplateInterface $template
+     * @param FormButtonsInterface $buttons
      * @param array $elements
      */
-    public function __construct(array $elements = [])
+    public function __construct(TemplateInterface $template, FormButtonsInterface $buttons, array $elements = [])
     {
-        parent::__construct($elements);
+        parent::__construct($template, $elements);
 
         $this->setButtons(
-            app(FormButtonsInterface::class)
+            $buttons
         );
 
-        $this->initializePackage();
+        $this->initializePackage(
+            $this->template->meta()
+        );
     }
 
     /**
@@ -112,7 +117,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             $this->getModelConfiguration()
         );
 
-        $this->includePackage();
+        $this->includePackage(
+            $this->template->meta()
+        );
     }
 
     /**
@@ -398,7 +405,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->template->view($this->getView(), $this->toArray());
     }
 
     /**

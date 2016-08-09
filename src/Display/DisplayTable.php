@@ -6,6 +6,7 @@ use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
@@ -49,10 +50,12 @@ class DisplayTable extends Display
 
     /**
      * Display constructor.
+     *
+     * @param TemplateInterface $template
      */
-    public function __construct()
+    public function __construct(TemplateInterface $template)
     {
-        parent::__construct();
+        parent::__construct($template);
 
         $this->extend('columns', new Columns());
         $this->extend('column_filters', new ColumnFilters());
@@ -170,7 +173,7 @@ class DisplayTable extends Display
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->template->view($this->getView(), $this->toArray());
     }
 
     /**

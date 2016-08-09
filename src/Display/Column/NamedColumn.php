@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
@@ -17,12 +18,13 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $name;
 
     /**
+     * @param TemplateInterface $template
      * @param Closure|null|string $name
      * @param null|string $label
      */
-    public function __construct($name, $label = null)
+    public function __construct(TemplateInterface $template, $name, $label = null)
     {
-        parent::__construct($label);
+        parent::__construct($template, $label);
         $this->setName($name);
 
         $this->setHtmlAttribute('class', 'row-'.strtolower(class_basename(get_called_class())));

@@ -3,7 +3,10 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
+use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
+use SleepingOwl\Admin\Exceptions\WysiwygException;
 
 class Wysiwyg extends NamedFormElement
 {
@@ -28,16 +31,25 @@ class Wysiwyg extends NamedFormElement
     protected $filterValue = true;
 
     /**
-     * @param string      $path
+     * @var WysiwygMangerInterface
+     */
+    protected $manger;
+
+    /**
+     * @param TemplateInterface $template
+     * @param WysiwygMangerInterface $manger
+     * @param string $path
      * @param string|null $label
      * @param string|null $editor
      */
-    public function __construct($path, $label = null, $editor = null)
+    public function __construct(TemplateInterface $template, WysiwygMangerInterface $manger, $path, $label = null, $editor = null)
     {
-        parent::__construct($path, $label);
+        $this->manger = $manger;
+
+        parent::__construct($template, $path, $label);
 
         if (is_null($editor)) {
-            $editor = app('sleeping_owl.wysiwyg')->getDefaultEditorId();
+            $editor = $this->manger->getDefaultEditorId();
         }
 
         $this->setEditor($editor);
@@ -46,9 +58,13 @@ class Wysiwyg extends NamedFormElement
     public function initialize()
     {
         /** @var WysiwygEditorInterface $editor */
-        $editor = app('sleeping_owl.wysiwyg')->getEditor($this->getEditor());
+        $editor = $this->manger->getEditor($this->getEditor());
 
-        app('sleeping_owl.wysiwyg')->loadEditor($this->getEditor());
+        if (is_null($editor)) {
+            throw new WysiwygException("Editor [{$this->getEditor()}] not found.");
+        }
+
+        $this->manger->loadEditor($this->getEditor());
 
         $this->parameters = (array) $editor->getConfig()->set($this->parameters);
     }
@@ -149,7 +165,7 @@ class Wysiwyg extends NamedFormElement
     protected function setValue(Model $model, $attribute, $value)
     {
         if ($this->filterValue) {
-            $filteredValue = app('sleeping_owl.wysiwyg')->applyFilter($this->getEditor(), $value);
+            $filteredValue = $this->manger->applyFilter($this->getEditor(), $value);
         } else {
             $filteredValue = $value;
         }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class FormButtons implements FormButtonsInterface
 {
@@ -87,10 +88,18 @@ class FormButtons implements FormButtonsInterface
     protected $model;
 
     /**
-     * FormButtons constructor.
+     * @var TemplateInterface
      */
-    public function __construct()
+    protected $template;
+
+    /**
+     * FormButtons constructor.
+     *
+     * @param TemplateInterface $template
+     */
+    public function __construct(TemplateInterface $template)
     {
+        $this->template = $template;
         $this->setHtmlAttribute('class', 'form-buttons');
     }
 
@@ -387,7 +396,7 @@ class FormButtons implements FormButtonsInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('form.buttons', $this->toArray());
+        return $this->template->view('form.buttons', $this->toArray());
     }
 
     /**

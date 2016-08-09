@@ -2,16 +2,17 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Meta;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Traits\Assets;
 
 abstract class TableColumn implements ColumnInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Assets;
 
     /**
      * Column header.
@@ -47,17 +48,28 @@ abstract class TableColumn implements ColumnInterface
     protected $view;
 
     /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
      * TableColumn constructor.
      *
+     * @param TemplateInterface $template
      * @param string|null $label
      */
-    public function __construct($label = null)
+    public function __construct(TemplateInterface $template, $label = null)
     {
+        $this->template = $template;
         $this->header = app(TableHeaderColumnInterface::class);
 
         if (! is_null($label)) {
             $this->setLabel($label);
         }
+
+        $this->initializePackage(
+            $this->template->meta()
+        );
     }
 
     /**
@@ -65,7 +77,9 @@ abstract class TableColumn implements ColumnInterface
      */
     public function initialize()
     {
-        Meta::loadPackage(get_called_class());
+        $this->includePackage(
+            $this->template->meta()
+        );
     }
 
     /**
@@ -235,7 +249,7 @@ abstract class TableColumn implements ColumnInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view(
+        return $this->template->view(
             $this->getView(),
             $this->toArray()
         );

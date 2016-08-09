@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
@@ -22,9 +23,9 @@ class AdminSectionsServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      *
-     * @param \SleepingOwl\Admin\Admin $admin
+     * @param AdminInterface $admin
      */
-    public function boot(\SleepingOwl\Admin\Admin $admin)
+    public function boot(AdminInterface $admin)
     {
         foreach ($this->sections as $model => $section) {
             if (class_exists($section)) {

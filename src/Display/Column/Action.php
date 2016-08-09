@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use SleepingOwl\Admin\Contracts\ActionInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class Action extends NamedColumn implements ActionInterface
 {
@@ -40,12 +41,13 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * Action constructor.
      *
+     * @param TemplateInterface $template
      * @param \Closure|null|string $name
      * @param string|null $title
      */
-    public function __construct($name, $title = null)
+    public function __construct(TemplateInterface $template, $name, $title = null)
     {
-        parent::__construct($name);
+        parent::__construct($template, $name);
 
         $this->setTitle($title);
     }

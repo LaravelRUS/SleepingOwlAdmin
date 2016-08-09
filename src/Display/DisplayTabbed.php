@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\FormElements;
 
 /**
@@ -26,13 +27,20 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     protected $view = 'display.tabbed';
 
     /**
+     * @var TemplateInterface
+     */
+    private $template;
+
+    /**
      * DisplayTabbed constructor.
      *
+     * @param TemplateInterface $template
      * @param Closure|TabInterface[] $tabs
      */
-    public function __construct($tabs = null)
+    public function __construct(TemplateInterface $template, $tabs = null)
     {
         $this->elements = new Collection();
+        $this->template = $template;
 
         if (is_array($tabs) or is_callable($tabs)) {
             $this->setTabs($tabs);
@@ -208,7 +216,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view(
+        return $this->template->view(
             $this->getView(),
             $this->toArray()
         );

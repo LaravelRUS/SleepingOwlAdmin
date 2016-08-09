@@ -200,6 +200,6 @@ class Columns extends Extension implements Initializable, Renderable
         $params = $this->toArray();
         $params['collection'] = $this->getDisplay()->getCollection();
 
-        return app('sleeping_owl.template')->view($this->getView(), $params)->render();
+        return $this->getDisplay()->template()->view($this->getView(), $params)->render();
     }
 }

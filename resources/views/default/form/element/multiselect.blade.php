@@ -9,5 +9,5 @@
 
 	{!! Form::select($name, $options, $value, $attributes) !!}
 
-	@include(AdminTemplate::getViewPath('form.element.errors'))
+	@include($template->getViewPath('form.element.errors'))
 </div>

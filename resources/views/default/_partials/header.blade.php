@@ -1,6 +1,6 @@
 <a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="logo">
-	<span class="logo-lg">{!! AdminTemplate::getLogo() !!}</span>
-	<span class="logo-mini">{!! AdminTemplate::getLogoMini() !!}</span>
+	<span class="logo-lg">{!! $template->getLogo() !!}</span>
+	<span class="logo-mini">{!! $template->getLogoMini() !!}</span>
 </a>
 
 <nav class="navbar navbar-static-top" role="navigation">

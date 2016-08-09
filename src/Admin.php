@@ -4,14 +4,17 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Navigation\Page;
 
-class Admin
+class Admin implements AdminInterface
 {
     /**
      * @var ModelConfigurationInterface[]
@@ -27,6 +30,24 @@ class Admin
      * @var Page[]
      */
     protected $menuItems = [];
+
+    /**
+     * Admin constructor.
+     *
+     * @param TemplateInterface $template
+     */
+    public function __construct(TemplateInterface $template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * Initialize class.
+     */
+    public function initialize()
+    {
+        $this->template()->initialize();
+    }
 
     /**
      * @return string[]
@@ -62,7 +83,7 @@ class Admin
      */
     public function registerModel($class, Closure $callback = null)
     {
-        $this->register($model = new ModelConfiguration($class));
+        $this->register($model = new ModelConfiguration($this->template, $class));
 
         if (is_callable($callback)) {
             call_user_func($callback, $model);
@@ -116,16 +137,27 @@ class Admin
     }
 
     /**
-     * @return TemplateInterface
+     * @return \SleepingOwl\Admin\Contracts\Template\TemplateInterface
      */
     public function template()
     {
-        if (is_null($this->template)) {
-            $templateClass = config('sleeping_owl.template');
-            $this->template = app($templateClass);
-        }
-
         return $this->template;
+    }
+
+    /**
+     * @return NavigationInterface
+     */
+    public function navigation()
+    {
+        return $this->template->navigation();
+    }
+
+    /**
+     * @return MetaInterface
+     */
+    public function meta()
+    {
+        return $this->template->meta();
     }
 
     /**
@@ -140,14 +172,6 @@ class Admin
     }
 
     /**
-     * @return Navigation
-     */
-    public function getNavigation()
-    {
-        return app('sleeping_owl.navigation');
-    }
-
-    /**
      * @param string|Renderable $content
      * @param string|null       $title
      *
@@ -155,8 +179,6 @@ class Admin
      */
     public function view($content, $title = null)
     {
-        $controller = app(AdminController::class);
-
-        return $controller->renderContent($content, $title);
+        return app(AdminController::class)->renderContent($content, $title);
     }
 }

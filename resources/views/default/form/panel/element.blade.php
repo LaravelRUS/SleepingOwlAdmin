@@ -1,3 +1,3 @@
 <div {!! $attributes !!}>
-    @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $elements])
+    @include($template->getViewPath('form.partials.elements'), ['items' => $elements])
 </div>

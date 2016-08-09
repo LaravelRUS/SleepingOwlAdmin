@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class Html extends Custom
 {
@@ -11,10 +12,10 @@ class Html extends Custom
      *
      * @param string|Closure $html
      */
-    public function __construct($html)
+    public function __construct(TemplateInterface $template, $html)
     {
         $this->setDisplay($html);
 
-        parent::__construct();
+        parent::__construct($template);
     }
 }

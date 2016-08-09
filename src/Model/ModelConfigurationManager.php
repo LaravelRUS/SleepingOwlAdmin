@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Navigation\Page;
 
@@ -23,6 +24,11 @@ use SleepingOwl\Admin\Navigation\Page;
  */
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
+    /**
+     * @var TemplateInterface
+     */
+    private $template;
+
     /**
      * Get the event dispatcher instance.
      *
@@ -89,19 +95,20 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @var RepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * SectionModelConfiguration constructor.
      *
+     * @param TemplateInterface $template
      * @param string $class
      *
-     * @throws \Exception
      */
-    public function __construct($class)
+    public function __construct(TemplateInterface $template, $class)
     {
         $this->class = $class;
         $this->model = app($class);
+        $this->template = $template;
 
         $this->repository = app(RepositoryInterface::class, [$class]);
 
@@ -438,7 +445,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             $page->setBadge($badge);
         }
 
-        app('sleeping_owl.navigation')->addPage($page);
+        $this->template->navigation()->addPage($page);
 
         return $page;
     }
@@ -516,6 +523,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     protected function getDefaultClassTitle()
     {
-        return snake_case(str_plural(class_basename($this->getClass())));
+        return snake_case(
+            str_plural(
+                class_basename($this->getClass())
+            )
+        );
     }
 }

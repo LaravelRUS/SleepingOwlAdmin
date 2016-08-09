@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
 
 abstract class FormElement implements FormElementInterface
@@ -32,15 +33,22 @@ abstract class FormElement implements FormElementInterface
 
     /**
      * FormElement constructor.
+     *
+     * @param TemplateInterface $template
      */
-    public function __construct()
+    public function __construct(TemplateInterface $template)
     {
-        $this->initializePackage();
+        $this->template = $template;
+        $this->initializePackage(
+            $this->template->meta()
+        );
     }
 
     public function initialize()
     {
-        $this->includePackage();
+        $this->includePackage(
+            $this->template->meta()
+        );
     }
 
     /**
@@ -173,7 +181,7 @@ abstract class FormElement implements FormElementInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray())->render();
+        return $this->template->view($this->getView(), $this->toArray())->render();
     }
 
     /**

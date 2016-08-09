@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use AdminTemplate;
 use App;
 use Breadcrumbs;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Request;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -17,9 +17,9 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 class AdminController extends Controller
 {
     /**
-     * @var \SleepingOwl\Admin\Navigation
+     * @var DaveJamesMiller\Breadcrumbs\Manager
      */
-    public $navigation;
+    private $breadcrumbs;
 
     /**
      * @var
@@ -27,23 +27,36 @@ class AdminController extends Controller
     private $parentBreadcrumb = 'home';
 
     /**
+     * @var \SleepingOwl\Admin\Admin
+     */
+    private $admin;
+
+    /**
+     * @var Request
+     */
+    private $request;
+
+    /**
      * AdminController constructor.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
+     * @param AdminInterface $admin
      */
-    public function __construct(\Illuminate\Http\Request $request)
+    public function __construct(Request $request, AdminInterface $admin)
     {
-        $this->navigation = app('sleeping_owl.navigation');
+        $this->request = $request;
+        $this->admin = $admin;
+        $this->breadcrumbs = $admin->template()->breadcrumbs();
 
-        $this->navigation->setCurrentUrl($request->url());
+        $admin->navigation()->setCurrentUrl($request->url());
 
-        Breadcrumbs::register('home', function ($breadcrumbs) {
+        $this->breadcrumbs->register('home', function ($breadcrumbs) {
             $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
         });
 
         $breadcrumbs = [];
 
-        if ($currentPage = $this->navigation->getCurrentPage()) {
+        if ($currentPage = $admin->navigation()->getCurrentPage()) {
             foreach ($currentPage->getPathArray() as $page) {
                 $breadcrumbs[] = [
                     'id' => $page['id'],
@@ -57,7 +70,7 @@ class AdminController extends Controller
         }
 
         foreach ($breadcrumbs as  $breadcrumb) {
-            Breadcrumbs::register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
+            $this->breadcrumbs->register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
                 $breadcrumbs->parent($breadcrumb['parent']);
                 $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
             });
@@ -108,7 +121,7 @@ class AdminController extends Controller
         }
 
         $createForm = $model->fireCreate();
-        $nextAction = Request::input('next_action');
+        $nextAction = $this->request->input('next_action');
 
         $backUrl = $this->getBackUrl();
 
@@ -147,7 +160,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to($this->request->input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnCreate());
@@ -187,7 +200,7 @@ class AdminController extends Controller
         }
 
         $editForm = $model->fireEdit($id);
-        $nextAction = Request::input('next_action');
+        $nextAction = $this->request->input('next_action');
 
         $backUrl = $this->getBackUrl();
 
@@ -218,7 +231,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to($this->request->input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnUpdate());
@@ -231,9 +244,9 @@ class AdminController extends Controller
      */
     public function inlineEdit(ModelConfigurationInterface $model)
     {
-        $field = Request::input('name');
-        $value = Request::input('value');
-        $id = Request::input('pk');
+        $field = $this->request->input('name');
+        $value = $this->request->input('value');
+        $id = $this->request->input('pk');
 
         $display = $model->fireDisplay();
 
@@ -288,7 +301,7 @@ class AdminController extends Controller
 
         $model->fireEvent('deleted', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return redirect($this->request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDelete());
     }
 
@@ -320,12 +333,12 @@ class AdminController extends Controller
 
         $model->fireEvent('destroyed', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return redirect($this->request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDestroy());
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      * @param int                $id
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -352,7 +365,7 @@ class AdminController extends Controller
 
         $model->fireEvent('restored', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return redirect($this->request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnRestore());
     }
 
@@ -373,7 +386,7 @@ class AdminController extends Controller
             $title = $model->getTitle();
         }
 
-        return AdminTemplate::view('_layout.inner')
+        return $this->admin->template()->view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
             ->with('breadcrumbKey', $this->parentBreadcrumb)
@@ -392,7 +405,7 @@ class AdminController extends Controller
             $content = $content->render();
         }
 
-        return AdminTemplate::view('_layout.inner')
+        return $this->admin->template()->view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
             ->with('breadcrumbKey', $this->parentBreadcrumb)
@@ -446,9 +459,9 @@ class AdminController extends Controller
      */
     protected function getBackUrl()
     {
-        if (($backUrl = Request::input('_redirectBack')) == \URL::previous()) {
+        if (($backUrl = $this->request->input('_redirectBack')) == \URL::previous()) {
             $backUrl = null;
-            Request::merge(['_redirectBack' => $backUrl]);
+            $this->request->merge(['_redirectBack' => $backUrl]);
         }
 
         return $backUrl;
@@ -465,7 +478,7 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumb($title, $parent)
     {
-        Breadcrumbs::register('render', function ($breadcrumbs) use ($title, $parent) {
+        $this->breadcrumbs->register('render', function ($breadcrumbs) use ($title, $parent) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title);
         });

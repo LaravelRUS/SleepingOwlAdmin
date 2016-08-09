@@ -7,6 +7,7 @@ use Illuminate\Routing\Router;
 use Request;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Repository\TreeRepository;
@@ -82,9 +83,14 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected $collection;
 
-    public function __construct()
+    /**
+     * DisplayTree constructor.
+     *
+     * @param TemplateInterface $template
+     */
+    public function __construct(TemplateInterface $template)
     {
-        parent::__construct();
+        parent::__construct($template);
 
         // TODO: move tree building to extension
         // $this->extend('tree', new Tree());
@@ -238,7 +244,7 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        return $this->template->view($this->getView(), $this->toArray());
     }
 
     /**

@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Filters;
@@ -78,18 +79,28 @@ abstract class Display implements DisplayInterface
     protected $initialized = false;
 
     /**
-     * Display constructor.
+     * @var TemplateInterface
      */
-    public function __construct()
+    protected $template;
+
+    /**
+     * Display constructor.
+     *
+     * @param TemplateInterface $template
+     */
+    public function __construct(TemplateInterface $template)
     {
         $this->extensions = new Collection();
+        $this->template = $template;
 
         $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
 
-        $this->initializePackage();
+        $this->initializePackage(
+            $this->template->meta()
+        );
     }
 
     /**
@@ -173,10 +184,10 @@ abstract class Display implements DisplayInterface
             }
 
             if ($extension instanceof Placable) {
-                $template = app('sleeping_owl.template')->getViewPath($this->getView());
+                $template = $this->template->getViewPath($this->getView());
 
                 view()->composer($template, function (\Illuminate\View\View $view) use ($extension) {
-                    $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
+                    $html = $this->template->view($extension->getView(), $extension->toArray())->render();
 
                     if (! empty($html)) {
                         $view->getFactory()->inject($extension->getPlacement(), $html);
@@ -185,7 +196,9 @@ abstract class Display implements DisplayInterface
             }
         });
 
-        $this->includePackage();
+        $this->includePackage(
+            $this->template->meta()
+        );
 
         $this->initialized = true;
     }
@@ -297,6 +310,14 @@ abstract class Display implements DisplayInterface
         }
 
         throw new \BadMethodCallException("Call to undefined method [{$name}]");
+    }
+
+    /**
+     * @return TemplateInterface
+     */
+    public function template()
+    {
+        return $this->template;
     }
 
     /**

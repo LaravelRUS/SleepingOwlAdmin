@@ -5,7 +5,7 @@
 	<ul class="sidebar-menu">
 		@yield('sidebar.ul.top')
 
-		{!! app('sleeping_owl.navigation')->render() !!}
+		{!! $template->renderNavigation() !!}
 
 		@yield('sidebar.ul.bottom')
 	</ul>

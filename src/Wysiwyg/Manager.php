@@ -3,11 +3,13 @@
 namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
+use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 use SleepingOwl\Admin\Exceptions\WysiwygException;
 
-class Manager
+class Manager implements WysiwygMangerInterface
 {
     /**
      * @var
@@ -21,9 +23,20 @@ class Manager
      */
     protected $filters;
 
-    public function __construct()
+    /**
+     * @var MetaInterface
+     */
+    protected $meta;
+
+    /**
+     * Manager constructor.
+     *
+     * @param MetaInterface $meta
+     */
+    public function __construct(MetaInterface $meta)
     {
         $this->filters = new Collection();
+        $this->meta = $meta;
     }
 
     /**
@@ -46,14 +59,14 @@ class Manager
         $config = config('sleeping_owl.wysiwyg.'.$editorId, []);
 
         $this->getFilters()->push(
-            $editor = new Editor($editorId, $name, $filter, $config)
+            $editor = new Editor($this->meta, $editorId, $name, $filter, $config)
         );
 
         return $editor;
     }
 
     /**
-     * @return Collection|Editor[]
+     * @return Collection|WysiwygEditorInterface[]
      */
     public function getFilters()
     {
@@ -109,14 +122,6 @@ class Manager
         }
 
         throw new WysiwygException("Editor [{$editorId}] not found");
-    }
-
-    /**
-     * @return array
-     */
-    public function getFiltersList()
-    {
-        return $this->getFilters()->pluck('name', 'id')->all();
     }
 
     /**
