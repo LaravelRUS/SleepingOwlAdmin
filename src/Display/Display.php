@@ -258,6 +258,8 @@ abstract class Display implements DisplayInterface
 
     /**
      * @param string|\Illuminate\View\View $view
+     *
+     * @return $this
      */
     public function setView($view)
     {
