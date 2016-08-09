@@ -28,23 +28,23 @@ class SectionProvider extends Command
      */
     public function fire(Filesystem $files)
     {
-        $file = app_path('Providers/AdminServiceProvider.php');
+        $file = app_path('Providers/AdminSectionsServiceProvider.php');
         $ns = rtrim($this->getLaravel()->getNamespace(), '\\');
 
         if (! file_exists($file)) {
             $contents = str_replace(
                 '__NAMESPACE__',
                 $ns,
-                $files->get(__DIR__.'/stubs/AdminServiceProvider.stub')
+                $files->get(__DIR__.'/stubs/provider.stub')
             );
 
             $files->put($file, $contents);
 
-            $this->line('<info>AdminServiceProvider file was created:</info> '.str_replace(base_path(), '', $file));
+            $this->line('<info>AdminSectionsServiceProvider file was created:</info> '.str_replace(base_path(), '', $file));
 
             return;
         }
 
-        $this->line('File <info>AdminServiceProvider</info> exists');
+        $this->line('File <info>AdminSectionsServiceProvider</info> exists');
     }
 }

@@ -2,10 +2,9 @@
 
 namespace __NAMESPACE__\Providers;
 
-use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
-use SleepingOwl\Admin\Admin;
+use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider;
 
-class AdminServiceProvider extends SleepingOwlServiceProvider
+class AdminSectionsServiceProvider extends AdminSectionsServiceProvider
 {
 
     /**
@@ -20,8 +19,10 @@ class AdminServiceProvider extends SleepingOwlServiceProvider
      *
      * @return void
      */
-    public function boot(Admin $admin)
+    public function boot(\SleepingOwl\Admin\Admin $admin)
     {
+    	//
+
         parent::boot($admin);
     }
 }
