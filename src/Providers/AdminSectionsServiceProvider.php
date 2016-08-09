@@ -12,6 +12,14 @@ class AdminSectionsServiceProvider extends ServiceProvider
     protected $sections = [];
 
     /**
+     * @return array
+     */
+    public function sections()
+    {
+        return $this->sections;
+    }
+
+    /**
      * Register the service provider.
      *
      * @param \SleepingOwl\Admin\Admin $admin
