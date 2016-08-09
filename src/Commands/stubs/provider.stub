@@ -2,9 +2,9 @@
 
 namespace __NAMESPACE__\Providers;
 
-use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider;
+use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 
-class AdminSectionsServiceProvider extends AdminSectionsServiceProvider
+class AdminSectionsServiceProvider extends ServiceProvider
 {
 
     /**
