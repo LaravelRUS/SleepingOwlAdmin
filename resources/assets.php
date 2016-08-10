@@ -7,10 +7,6 @@ if (! function_exists('resources_url')) {
     }
 }
 
-PackageManager::add('admin-default')
-    ->js(null, resources_url('js/admin-app.js'))
-    ->css(null, resources_url('css/admin-app.css'));
-
 /*
 |--------------------------------------------------------------------------
 | Wysiwyg Editors

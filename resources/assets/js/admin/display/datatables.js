@@ -1,4 +1,4 @@
-$(() => {
+Admin.Modules.add('display.datatables', () => {
     $.fn.dataTable.ext.errMode = () => {
         Admin.Messages.error(
             i18next.t('lang.table.error')

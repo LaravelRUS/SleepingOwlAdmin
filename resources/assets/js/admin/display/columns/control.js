@@ -1,4 +1,4 @@
-$(() => {
+Admin.Modules.add('display.columns.control', () => {
     let clickEvent = (selector, question) => {
         $('table').on('click', selector, function (e) {
             e.preventDefault();

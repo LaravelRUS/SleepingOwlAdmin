@@ -21,6 +21,7 @@
 <body class="skin-blue sidebar-mini">
 	@yield('content')
 
-	{!! Meta::getJsList(true) !!}
+	{!! Meta::renderScripts(true) !!}
+	@stack('footer-scripts')
 </body>
 </html>

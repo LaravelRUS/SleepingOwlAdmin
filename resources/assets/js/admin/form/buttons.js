@@ -1,4 +1,4 @@
-$(() => {
+Admin.Modules.add('form.buttons', () => {
     var formRequest = (url, params) => {
         let form = '<form method="POST" action="' + url + '">';
         for (let name in params) {
