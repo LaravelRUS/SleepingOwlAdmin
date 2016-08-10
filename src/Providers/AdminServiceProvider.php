@@ -162,7 +162,7 @@ class AdminServiceProvider extends ServiceProvider
                     /** @var ModelConfiguration $model */
                     $model = $this->app['sleeping_owl']->getModel($class);
 
-                    if ($model->hasCustomControllerClass()) {
+                    if ($model->hasCustomControllerClass() && $route->getActionName() !== 'Closure') {
                         list($controller, $action) = explode('@', $route->getActionName(), 2);
 
                         $newController = $model->getControllerClass().'@'.$action;
