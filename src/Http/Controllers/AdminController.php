@@ -78,6 +78,22 @@ class AdminController extends Controller
     }
 
     /**
+     * @return string
+     */
+    public function getParentBreadcrumb()
+    {
+        return $this->parentBreadcrumb;
+    }
+
+    /**
+     * @param string $parentBreadcrumb
+     */
+    public function setParentBreadcrumb($parentBreadcrumb)
+    {
+        $this->parentBreadcrumb = $parentBreadcrumb;
+    }
+
+    /**
      * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

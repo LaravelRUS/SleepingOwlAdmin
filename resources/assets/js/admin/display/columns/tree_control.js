@@ -1,4 +1,4 @@
-$(() => {
+Admin.Modules.add('display.columns.tree_control', () => {
     let clickEvent = (selector, question) => {
         $('.dd3-content').on('click', selector, function (e) {
             e.preventDefault();

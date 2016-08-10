@@ -7,6 +7,12 @@ use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 
 class CKEditor extends Wysiwyg
 {
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.wysiwyg';
+
     /**
      * @var string|\Illuminate\View\View
      */

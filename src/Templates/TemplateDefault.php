@@ -189,8 +189,8 @@ class TemplateDefault implements TemplateInterface
     public function initialize()
     {
         $this->meta
-            ->addJs('admin-default', resources_url('js/admin-app.js'), ['adminScripts'])
-            ->addJs('adminScripts', route('admin.scripts'))
+            ->addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'])
+            ->addJs('admin-scripts', route('admin.scripts'))
             ->addCss('admin-default', resources_url('css/admin-app.css'));
     }
 }

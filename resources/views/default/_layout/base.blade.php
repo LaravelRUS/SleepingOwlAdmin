@@ -15,5 +15,6 @@
 	@yield('content')
 
 	{!! $template->meta()->renderScripts(true) !!}
+	@stack('footer-scripts')
 </body>
 </html>
