@@ -101,16 +101,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * SectionModelConfiguration constructor.
      *
      * @param TemplateInterface $template
+     * @param RepositoryInterface $repository
      * @param string $class
-     *
      */
-    public function __construct(TemplateInterface $template, $class)
+    public function __construct($class, TemplateInterface $template, RepositoryInterface $repository)
     {
         $this->class = $class;
         $this->model = app($class);
         $this->template = $template;
-
-        $this->repository = app(RepositoryInterface::class, [$class]);
+        $this->repository = $repository->setClass($class);
 
         if (! $this->alias) {
             $this->setDefaultAlias();

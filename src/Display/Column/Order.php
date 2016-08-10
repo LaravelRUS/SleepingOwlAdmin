@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
-use Route;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Traits\OrderableModel;
@@ -43,11 +43,13 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * Order constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
      */
-    public function __construct(TemplateInterface $template)
+    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn)
     {
-        parent::__construct($template);
+        parent::__construct($admin, $headerColumn);
+
         $this->setHtmlAttribute('class', 'row-order');
     }
 

@@ -6,6 +6,7 @@ use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 use SleepingOwl\Admin\Form\Element;
 use SleepingOwl\Admin\Form\Columns;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method Element\Text text($name, $label = null)
@@ -33,4 +34,33 @@ use SleepingOwl\Admin\Form\Columns;
  */
 class FormElementFactory extends AliasBinder implements FormElementFactoryInterface
 {
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    {
+        parent::__construct($application);
+        
+        $this->register([
+            'columns' => Columns\Columns::class,
+            'text' => Element\Text::class,
+            'time' => Element\Time::class,
+            'date' => Element\Date::class,
+            'timestamp' => Element\Timestamp::class,
+            'textaddon' => Element\TextAddon::class,
+            'select' => Element\Select::class,
+            'multiselect' => Element\MultiSelect::class,
+            'hidden' => Element\Hidden::class,
+            'checkbox' => Element\Checkbox::class,
+            'ckeditor' => Element\CKEditor::class,
+            'custom' => Element\Custom::class,
+            'password' => Element\Password::class,
+            'textarea' => Element\Textarea::class,
+            'view' => Element\View::class,
+            'image' => Element\Image::class,
+            'images' => Element\Images::class,
+            'file' => Element\File::class,
+            'radio' => Element\Radio::class,
+            'wysiwyg' => Element\Wysiwyg::class,
+            'upload' => Element\Upload::class,
+            'html' => Element\Html::class,
+        ]);
+    }
 }

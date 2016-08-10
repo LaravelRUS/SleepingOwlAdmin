@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Display\Column\TreeControl;
 
 class Tree extends Extension implements Initializable, Renderable
 {
@@ -28,11 +29,16 @@ class Tree extends Extension implements Initializable, Renderable
      */
     protected $controlColumn;
 
-    public function __construct()
+    /**
+     * Tree constructor.
+     *
+     * @param TreeControl $control
+     */
+    public function __construct(TreeControl $control)
     {
         $this->columns = new Collection();
 
-        $this->setControlColumn(app('sleeping_owl.table.column')->treeControl());
+        $this->setControlColumn($control);
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class Select extends BaseColumnFilter
 {
@@ -39,6 +40,24 @@ class Select extends BaseColumnFilter
      * @var string
      */
     protected $filterField = '';
+
+    /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    /**
+     * Select constructor.
+     *
+     * @param TemplateInterface $template
+     * @param RepositoryInterface $repository
+     */
+    public function __construct(TemplateInterface $template, RepositoryInterface $repository)
+    {
+        parent::__construct($template);
+
+        $this->repository = $repository;
+    }
 
     public function initialize()
     {
@@ -73,6 +92,7 @@ class Select extends BaseColumnFilter
         }
 
         $this->model = $model;
+        $this->repository->setModel($model);
 
         return $this;
     }
@@ -216,10 +236,8 @@ class Select extends BaseColumnFilter
 
     protected function loadOptions()
     {
-        $repository = app(RepositoryInterface::class, [$this->getModel()]);
-
-        $key = $repository->getModel()->getKeyName();
-        $options = $repository->getQuery()->get()->lists($this->getDisplay(), $key);
+        $key = $this->repository->getModel()->getKeyName();
+        $options = $this->repository->getQuery()->get()->lists($this->getDisplay(), $key);
 
         if ($options instanceof Collection) {
             $options = $options->all();

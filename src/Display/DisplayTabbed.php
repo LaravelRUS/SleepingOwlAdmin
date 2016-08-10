@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
@@ -29,16 +30,23 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @var TemplateInterface
      */
-    private $template;
+    protected $template;
+
+    /**
+     * @var DisplayFactoryInterface
+     */
+    protected $displayFactory;
 
     /**
      * DisplayTabbed constructor.
      *
      * @param TemplateInterface $template
+     * @param DisplayFactoryInterface $displayFactory
      * @param Closure|TabInterface[] $tabs
      */
-    public function __construct(TemplateInterface $template, $tabs = null)
+    public function __construct(TemplateInterface $template, DisplayFactoryInterface $displayFactory, $tabs = null)
     {
+        $this->displayFactory = $displayFactory;
         $this->elements = new Collection();
         $this->template = $template;
 
@@ -121,7 +129,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
-        $tab = app('sleeping_owl.display')->tab($display)->setLabel($label)->setActive($active);
+        $tab = $this->displayFactory->tab($display)->setLabel($label)->setActive($active);
 
         $this->addElement($tab);
 

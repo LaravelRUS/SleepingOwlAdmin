@@ -521,6 +521,7 @@ class ModelConfiguration extends ModelConfigurationManager
             $form->setModelClass($this->getClass());
         }
 
+
         if ($form instanceof Initializable) {
             $form->initialize();
         }

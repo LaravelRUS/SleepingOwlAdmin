@@ -50,13 +50,17 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     protected $rootParentId = null;
 
     /**
-     * @param string $class
+     * @param string|Model $class
+     *
+     * @return BaseRepository
      */
-    public function __construct($class)
+    public function setClass($class)
     {
-        parent::__construct($class);
+        parent::setClass($class);
 
         $this->detectType();
+
+        return $this;
     }
 
     /**

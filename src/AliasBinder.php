@@ -3,8 +3,6 @@
 namespace SleepingOwl\Admin;
 
 use BadMethodCallException;
-use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Display\DisplayTab;
 
 class AliasBinder
 {
@@ -14,16 +12,16 @@ class AliasBinder
     protected static $routes = [];
 
     /**
-     * @var Application
+     * @var \Illuminate\Contracts\Foundation\Application
      */
     private $app;
 
     /**
      * AliasBinder constructor.
      *
-     * @param Application $application
+     * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(Application $application)
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
     {
         $this->app = $application;
     }
@@ -111,10 +109,15 @@ class AliasBinder
         $constructor = $reflector->getConstructor();
 
         $totalArguments = count($arguments);
-        $deps = array_slice(array_reverse($constructor->getParameters()), -$totalArguments, $totalArguments, true);
+        $deps = $constructor->getParameters();
+        $deps = array_reverse(
+            array_slice(
+                $deps, 0, count($deps) - $totalArguments
+            )
+        );
 
         foreach ($deps as $parameter) {
-            if (! is_null($parameter->getClass())) {
+            if (! is_null($parameter->getClass()) && $parameter->getClass()->name != 'Closure') {
                 array_unshift($arguments, $this->app->make($parameter->getClass()->name));
             }
         }

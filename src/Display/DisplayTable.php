@@ -5,8 +5,10 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
@@ -51,13 +53,18 @@ class DisplayTable extends Display
     /**
      * Display constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param RepositoryInterface $repository
+     *
+     * @param Control $control
+     *
+     * @internal param TemplateInterface $template
      */
-    public function __construct(TemplateInterface $template)
+    public function __construct(AdminInterface $admin, RepositoryInterface $repository, Control $control)
     {
-        parent::__construct($template);
+        parent::__construct($admin, $repository);
 
-        $this->extend('columns', new Columns());
+        $this->extend('columns', new Columns($control));
         $this->extend('column_filters', new ColumnFilters());
     }
 

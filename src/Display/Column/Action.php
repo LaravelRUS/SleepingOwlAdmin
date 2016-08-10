@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use SleepingOwl\Admin\Contracts\ActionInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class Action extends NamedColumn implements ActionInterface
@@ -41,13 +43,14 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * Action constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
      * @param \Closure|null|string $name
      * @param string|null $title
      */
-    public function __construct(TemplateInterface $template, $name, $title = null)
+    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $name, $title = null)
     {
-        parent::__construct($template, $name);
+        parent::__construct($admin, $headerColumn, $name);
 
         $this->setTitle($title);
     }

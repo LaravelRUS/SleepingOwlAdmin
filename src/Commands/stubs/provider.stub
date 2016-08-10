@@ -19,7 +19,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(\SleepingOwl\Admin\Admin $admin)
+    public function boot(\SleepingOwl\Admin\Contracts\AdminInterface $admin)
     {
     	//
 

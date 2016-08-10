@@ -3,7 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class RelatedLink extends Link
 {
@@ -18,13 +19,14 @@ class RelatedLink extends Link
     protected $originalName;
 
     /**
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
      * @param \Closure|null|string $name
      * @param null|string $label
      */
-    public function __construct(TemplateInterface $template, $name, $label = null)
+    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $name, $label = null)
     {
-        parent::__construct($template, $name, $label);
+        parent::__construct($admin, $headerColumn, $name, $label);
         $this->originalName = $name;
     }
 

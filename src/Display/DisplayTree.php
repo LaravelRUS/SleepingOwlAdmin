@@ -5,11 +5,12 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Routing\Router;
 use Request;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Display\Column\TreeControl;
 use SleepingOwl\Admin\Repository\TreeRepository;
 
 /**
@@ -18,6 +19,7 @@ use SleepingOwl\Admin\Repository\TreeRepository;
  */
 class DisplayTree extends Display implements WithRoutesInterface
 {
+
     /**
      * @param Router $router
      */
@@ -69,11 +71,6 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $rootParentId = null;
 
     /**
-     * @var string
-     */
-    protected $repositoryClass = TreeRepository::class;
-
-    /**
      * @var Column\TreeControl
      */
     protected $controlColumn;
@@ -84,13 +81,22 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $collection;
 
     /**
+     * @var TreeControl
+     */
+    protected $control;
+
+    /**
      * DisplayTree constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TreeRepository $repository
+     * @param TreeControl $control
      */
-    public function __construct(TemplateInterface $template)
+    public function __construct(AdminInterface $admin, TreeRepository $repository, TreeControl $control)
     {
-        parent::__construct($template);
+        $this->control = $control;
+
+        parent::__construct($admin, $repository);
 
         // TODO: move tree building to extension
         // $this->extend('tree', new Tree());
@@ -253,24 +259,17 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function toArray()
     {
         $model = $this->getModelConfiguration();
+        $items = $this->getRepository()->getTree($this->getCollection());
 
         return parent::toArray() + [
-            'items' => $this->getRepository()->getTree($this->getCollection()),
+            'items' => $items,
             'reorderable' => $this->isReorderable(),
             'url' => $model->getDisplayUrl(),
             'value' => $this->getValue(),
             'creatable' => $model->isCreatable(),
             'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls' => [app('sleeping_owl.table.column')->treeControl()],
+            'controls' => [$this->control]
         ];
-    }
-
-    /**
-     * @return ModelConfigurationInterface
-     */
-    protected function getModelConfiguration()
-    {
-        return app('sleeping_owl')->getModel($this->modelClass);
     }
 
     /**
@@ -302,20 +301,5 @@ class DisplayTree extends Display implements WithRoutesInterface
         $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
             $extension->modifyQuery($query);
         });
-    }
-
-    /**
-     * @return \Illuminate\Foundation\Application|mixed
-     * @throws \Exception
-     */
-    protected function makeRepository()
-    {
-        $repository = parent::makeRepository();
-
-        if (! ($repository instanceof TreeRepositoryInterface)) {
-            throw new \Exception('Repository class must be instanced of [TreeRepositoryInterface]');
-        }
-
-        return $repository;
     }
 }

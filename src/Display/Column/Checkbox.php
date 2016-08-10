@@ -3,7 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Form;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 
 class Checkbox extends TableColumn
@@ -16,12 +17,13 @@ class Checkbox extends TableColumn
     /**
      * Checkbox constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
      * @param string|null $label
      */
-    public function __construct(TemplateInterface $template, $label = null)
+    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $label = null)
     {
-        parent::__construct($template, $label);
+        parent::__construct($admin, $headerColumn, $label);
         $this->setLabel(
             Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
         ));

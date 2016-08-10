@@ -11,4 +11,18 @@ use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
  */
 class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnEditableFactoryInterface
 {
+
+    /**
+     * DisplayColumnEditableFactory constructor.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $application
+     */
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    {
+        parent::__construct($application);
+
+        $this->register([
+            'checkbox' => Checkbox::class,
+        ]);
+    }
 }

@@ -68,7 +68,7 @@ class Filter extends NamedColumn
     {
         $value = $this->getModelValue($this->getModel(), $this->getField());
 
-        return app('sleeping_owl')->getModel($this->getRelatedModel())->getDisplayUrl([$this->getName() => $value]);
+        return $this->admin->getModel($this->getRelatedModel())->getDisplayUrl([$this->getName() => $value]);
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use Request;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
@@ -70,15 +71,29 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     protected $initialized = false;
 
     /**
+     * @var AdminInterface
+     */
+    protected $admin;
+
+    /**
      * FormDefault constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
      * @param FormButtonsInterface $buttons
+     * @param RepositoryInterface $repository
      * @param array $elements
      */
-    public function __construct(TemplateInterface $template, FormButtonsInterface $buttons, array $elements = [])
+    public function __construct(
+        AdminInterface $admin,
+        FormButtonsInterface $buttons,
+        RepositoryInterface $repository,
+        array $elements = []
+    )
     {
-        parent::__construct($template, $elements);
+        $this->admin = $admin;
+        $this->repository = $repository;
+
+        parent::__construct($admin->template(), $elements);
 
         $this->setButtons(
             $buttons
@@ -99,7 +114,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         }
 
         $this->initialized = true;
-        $this->repository = app(RepositoryInterface::class, [$this->class]);
 
         $this->setModel(app($this->class));
 
@@ -210,6 +224,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function setModelClass($class)
     {
         if (is_null($this->class)) {
+            $this->repository->setClass($class);
             $this->class = $class;
         }
 
@@ -276,7 +291,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->class);
+        return $this->admin->getModel($this->class);
     }
 
     /**

@@ -17,4 +17,21 @@ use SleepingOwl\Admin\Display\Column\Filter\Text;
  */
 class DisplayColumnFilterFactory extends AliasBinder implements DisplayColumnFilterFactoryInterface
 {
+
+    /**
+     * DisplayColumnFilterFactory constructor.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $application
+     */
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    {
+        parent::__construct($application);
+
+        $this->register([
+            'text' => Text::class,
+            'date' => Date::class,
+            'range' => Range::class,
+            'select' => Select::class,
+        ]);
+    }
 }

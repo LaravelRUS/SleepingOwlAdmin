@@ -35,11 +35,16 @@ class Columns extends Extension implements Initializable, Renderable
      */
     protected $controlColumn;
 
-    public function __construct()
+    /**
+     * Columns constructor.
+     *
+     * @param Control $control
+     */
+    public function __construct(Control $control)
     {
         $this->columns = new Collection();
 
-        $this->setControlColumn(app('sleeping_owl.table.column')->control());
+        $this->setControlColumn($control);
     }
 
     /**

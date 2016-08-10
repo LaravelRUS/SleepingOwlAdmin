@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
-use SleepingOwl\Admin\Facades\Template;
 
 class Control extends TableColumn
 {
@@ -26,12 +26,14 @@ class Control extends TableColumn
     /**
      * Control constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
      * @param string|null $label
      */
-    public function __construct(TemplateInterface $template, $label = null)
+    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $label = null)
     {
-        parent::__construct($template, $label);
+        parent::__construct($admin,$headerColumn, $label);
+
         $this->setOrderable(false);
 
         $this->setHtmlAttribute('class', 'text-right');

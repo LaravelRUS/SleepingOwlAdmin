@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -53,15 +54,22 @@ abstract class TableColumn implements ColumnInterface
     protected $template;
 
     /**
+     * @var AdminInterface
+     */
+    protected $admin;
+
+    /**
      * TableColumn constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
      * @param string|null $label
      */
-    public function __construct(TemplateInterface $template, $label = null)
+    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $label = null)
     {
-        $this->template = $template;
-        $this->header = app(TableHeaderColumnInterface::class);
+        $this->admin = $admin;
+        $this->template = $admin->template();
+        $this->header = $headerColumn;
 
         if (! is_null($label)) {
             $this->setLabel($label);
@@ -186,7 +194,7 @@ abstract class TableColumn implements ColumnInterface
      */
     protected function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel(get_class($this->getModel()));
+        return $this->admin->getModel(get_class($this->getModel()));
     }
 
     /**

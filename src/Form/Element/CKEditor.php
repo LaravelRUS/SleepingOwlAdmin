@@ -8,6 +8,11 @@ use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 class CKEditor extends Wysiwyg
 {
     /**
+     * @var string|\Illuminate\View\View
+     */
+    protected $view = 'form.element.ckeditor';
+
+    /**
      * @param TemplateInterface $template
      * @param WysiwygMangerInterface $manger
      * @param string $path

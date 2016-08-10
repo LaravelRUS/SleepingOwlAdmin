@@ -22,4 +22,23 @@ use SleepingOwl\Admin\Display\DisplayTree;
  */
 class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
 {
+
+    /**
+     * DisplayFactory constructor.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $application
+     */
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    {
+        parent::__construct($application);
+
+        $this->register([
+            'datatables' => DisplayDatatables::class,
+            'datatablesAsync' => DisplayDatatablesAsync::class,
+            'tab' => DisplayTab::class,
+            'tabbed' => DisplayTabbed::class,
+            'table' => DisplayTable::class,
+            'tree' => DisplayTree::class,
+        ]);
+    }
 }

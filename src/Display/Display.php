@@ -12,7 +12,7 @@ use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Filters;
@@ -59,11 +59,6 @@ abstract class Display implements DisplayInterface
     protected $title;
 
     /**
-     * @var string
-     */
-    protected $repositoryClass = RepositoryInterface::class;
-
-    /**
      * @var RepositoryInterface
      */
     protected $repository;
@@ -84,14 +79,21 @@ abstract class Display implements DisplayInterface
     protected $template;
 
     /**
+     * @var AdminInterface
+     */
+    protected $admin;
+
+    /**
      * Display constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param RepositoryInterface $repository
      */
-    public function __construct(TemplateInterface $template)
+    public function __construct(AdminInterface $admin, RepositoryInterface $repository)
     {
         $this->extensions = new Collection();
-        $this->template = $template;
+        $this->template = $admin->template();
+        $this->repository = $repository;
 
         $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
@@ -101,6 +103,8 @@ abstract class Display implements DisplayInterface
         $this->initializePackage(
             $this->template->meta()
         );
+
+        $this->admin = $admin;
     }
 
     /**
@@ -143,18 +147,6 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param $repositoryClass
-     *
-     * @return $this
-     */
-    public function setRepositoryClass($repositoryClass)
-    {
-        $this->repositoryClass = $repositoryClass;
-
-        return $this;
-    }
-
-    /**
      * @param array|string[] ...$relations
      *
      * @return $this
@@ -175,7 +167,10 @@ abstract class Display implements DisplayInterface
             return;
         }
 
-        $this->repository = $this->makeRepository();
+        $this->repository->setClass(
+            $this->modelClass
+        );
+
         $this->repository->with($this->with);
 
         $this->extensions->each(function (DisplayExtensionInterface $extension) {
@@ -325,21 +320,6 @@ abstract class Display implements DisplayInterface
      */
     protected function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->modelClass);
-    }
-
-    /**
-     * @return \Illuminate\Foundation\Application|mixed
-     * @throws \Exception
-     */
-    protected function makeRepository()
-    {
-        $repository = app($this->repositoryClass, [$this->modelClass]);
-
-        if (! ($repository instanceof RepositoryInterface)) {
-            throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
-        }
-
-        return $repository;
+        return $this->admin->getModel($this->modelClass);
     }
 }

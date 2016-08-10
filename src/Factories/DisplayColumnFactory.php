@@ -26,4 +26,33 @@ use SleepingOwl\Admin\Display\Column;
  */
 class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryInterface
 {
+
+    /**
+     * DisplayColumnFactory constructor.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $application
+     */
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    {
+        parent::__construct($application);
+
+        $this->register([
+            'action' => Column\Action::class,
+            'checkbox' => Column\Checkbox::class,
+            'control' => Column\Control::class,
+            'count' => Column\Count::class,
+            'custom' => Column\Custom::class,
+            'datetime' => Column\DateTime::class,
+            'filter' => Column\Filter::class,
+            'image' => Column\Image::class,
+            'lists' => Column\Lists::class,
+            'order' => Column\Order::class,
+            'text' => Column\Text::class,
+            'link' => Column\Link::class,
+            'relatedLink' => Column\RelatedLink::class,
+            'email' => Column\Email::class,
+            'treeControl' => Column\TreeControl::class,
+            'url' => Column\Url::class,
+        ]);
+    }
 }

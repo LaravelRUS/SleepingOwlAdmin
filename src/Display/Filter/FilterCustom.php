@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display\Filter;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class FilterCustom extends FilterField
 {
@@ -14,14 +13,13 @@ class FilterCustom extends FilterField
     protected $callback;
 
     /**
-     * @param TemplateInterface $template
      * @param string $name
      * @param string|\Closure|null $title
      * @param Closure $callback
      */
-    public function __construct(TemplateInterface $template, $name, $title = null, Closure $callback = null)
+    public function __construct($name, $title = null, Closure $callback = null)
     {
-        parent::__construct($template, $name, $title);
+        parent::__construct($name, $title);
 
         if (! is_null($callback)) {
             $this->setCallback($callback);

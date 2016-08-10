@@ -8,12 +8,21 @@ use Illuminate\Database\Eloquent\Builder;
 interface RepositoryInterface
 {
     /**
+     * @param string|Model $class
+     *
+     * @return $this
+     */
+    public function setClass($class);
+
+    /**
      * @return Model
      */
     public function getModel();
 
     /**
      * @param Model $model
+     *
+     * @return $this
      */
     public function setModel(Model $model);
 

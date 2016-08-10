@@ -28,19 +28,21 @@ class BaseRepository implements RepositoryInterface
     protected $with = [];
 
     /**
-     * @param string $class
+     * @param string|Model $class
+     *
+     * @return BaseRepository
      */
-    public function __construct($class)
+    public function setClass($class)
     {
         if ($class instanceof Model) {
             $this->class = get_class($class);
-            $model = $class;
+            $model       = $class;
         } else {
             $this->class = $class;
-            $model = app($this->class);
+            $model       = app($this->class);
         }
 
-        $this->setModel($model);
+        return $this->setModel($model);
     }
 
     /**
@@ -53,10 +55,14 @@ class BaseRepository implements RepositoryInterface
 
     /**
      * @param Model $model
+     *
+     * @return $this
      */
     public function setModel(Model $model)
     {
         $this->model = $model;
+
+        return $this;
     }
 
     /**

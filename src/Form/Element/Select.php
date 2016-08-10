@@ -62,13 +62,21 @@ class Select extends NamedFormElement
     protected $loadOptionsQueryPreparer;
 
     /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @param TemplateInterface $template
+     * @param RepositoryInterface $repository
      * @param string $path
      * @param string|null $label
      * @param array|Model $options
      */
-    public function __construct(TemplateInterface $template, $path, $label = null, $options = [])
+    public function __construct(TemplateInterface $template, RepositoryInterface $repository, $path, $label = null, $options = [])
     {
+        $this->repository = $repository;
+
         parent::__construct($template, $path, $label);
 
         if (is_array($options)) {
@@ -103,6 +111,7 @@ class Select extends NamedFormElement
         }
 
         $this->modelForOptions = $modelForOptions;
+        $this->repository->setModel($modelForOptions);
 
         return $this;
     }
@@ -373,11 +382,9 @@ class Select extends NamedFormElement
      */
     protected function loadOptions()
     {
-        $repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
+        $key = $this->repository->getModel()->getKeyName();
 
-        $key = $repository->getModel()->getKeyName();
-
-        $options = $repository->getQuery();
+        $options = $this->repository->getQuery();
 
         if ($this->isEmptyRelation()) {
             $options->where($this->getForeignKey(), 0)->orWhereNull($this->getForeignKey());

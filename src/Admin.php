@@ -83,7 +83,7 @@ class Admin implements AdminInterface
      */
     public function registerModel($class, Closure $callback = null)
     {
-        $this->register($model = new ModelConfiguration($this->template, $class));
+        $this->register($model = app(ModelConfiguration::class, [$class]));
 
         if (is_callable($callback)) {
             call_user_func($callback, $model);

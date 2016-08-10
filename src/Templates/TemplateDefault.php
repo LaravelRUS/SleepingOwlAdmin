@@ -31,7 +31,11 @@ class TemplateDefault implements TemplateInterface
      * @param MetaInterface $meta
      * @param NavigationInterface $navigation
      */
-    public function __construct(Manager $breadcrumbs, MetaInterface $meta, NavigationInterface $navigation)
+    public function __construct(
+        Manager $breadcrumbs,
+        MetaInterface $meta,
+        NavigationInterface $navigation
+    )
     {
         $this->meta = $meta;
         $this->navigation = $navigation;

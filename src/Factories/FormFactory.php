@@ -4,8 +4,6 @@ namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Form;
 
 /**
@@ -18,18 +16,19 @@ class FormFactory extends AliasBinder implements FormFactoryInterface
 {
 
     /**
-     * @param string $alias
-     * @param array $arguments
+     * FormFactory constructor.
      *
-     * @return object
+     * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function makeClass($alias, array $arguments)
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
     {
-        array_unshift($arguments, app(FormButtonsInterface::class));
-        array_unshift($arguments, app(TemplateInterface::class));
+        parent::__construct($application);
 
-        $reflection = new \ReflectionClass($this->getAlias($alias));
-
-        return $reflection->newInstanceArgs($arguments);
+        $this->register([
+            'form' => Form\FormDefault::class,
+            'elements' => Form\FormElements::class,
+            'tabbed' => Form\FormTabbed::class,
+            'panel' => Form\FormPanel::class,
+        ]);
     }
 }

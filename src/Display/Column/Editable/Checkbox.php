@@ -2,7 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
@@ -26,14 +27,15 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     /**
      * Checkbox constructor.
      *
-     * @param TemplateInterface $template
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
      * @param null|string $name
      * @param string|null $checkedLabel
      * @param string|null $uncheckedLabel
      */
-    public function __construct(TemplateInterface $template, $name, $checkedLabel = null, $uncheckedLabel = null)
+    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $name, $checkedLabel = null, $uncheckedLabel = null)
     {
-        parent::__construct($template, $name);
+        parent::__construct($admin, $headerColumn, $name);
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
