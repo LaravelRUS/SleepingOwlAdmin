@@ -50,7 +50,10 @@ class Wysiwyg extends NamedFormElement
 
         app('sleeping_owl.wysiwyg')->loadEditor($this->getEditor());
 
-        $this->parameters = (array) $editor->getConfig()->set($this->parameters);
+        $config = $editor->getConfig();
+        $config->set($this->parameters);
+
+        $this->parameters = (array) $config->all();
     }
 
     /**
