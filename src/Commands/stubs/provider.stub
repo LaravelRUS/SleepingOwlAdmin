@@ -11,7 +11,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $sections = [
-        //__NAMESPACE__\User::class => '__NAMESPACE__\Http\Sections\Users',
+        //\__NAMESPACE__\User::class => '__NAMESPACE__\Http\Sections\Users',
     ];
 
     /**
