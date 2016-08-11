@@ -51,7 +51,11 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function getId()
     {
-        return $this->model;
+        if (is_null($this->id) and $this->hasModel()) {
+            return $this->model;
+        }
+
+        return parent::getId();
     }
 
     /**
