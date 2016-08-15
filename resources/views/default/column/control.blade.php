@@ -1,5 +1,5 @@
 @if ($editable)
-	<a href="{{ $editUrl }}" class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.edit') }}">
+	<a href="{{ $editUrl }}" class="btn btn-primary btn-xs" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.edit') }}">
 		<i class="fa fa-pencil"></i>
 	</a>
 @endif
