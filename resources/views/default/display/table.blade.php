@@ -11,16 +11,16 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		@if ($creatable)
-			<a href="{{ url($createUrl) }}" class="btn btn-primary btn-flat">
-				<i class="fa fa-plus"></i> {{ trans('sleeping_owl::lang.table.new-entry') }}
+			<a href="{{ url($createUrl) }}" class="btn btn-primary">
+				<i class="fa fa-plus"></i> {{ $newEntryButtonText }}
 			</a>
 		@endif
 
-			@yield('panel.buttons')
+		@yield('panel.buttons')
 
-			<div class="pull-right">
-				@yield('panel.heading.actions')
-			</div>
+		<div class="pull-right">
+			@yield('panel.heading.actions')
+		</div>
 	</div>
 
 	@yield('panel.heading')
