@@ -51,6 +51,11 @@ class DisplayTable extends Display
     protected $collection;
 
     /**
+     * @var string|null
+     */
+    protected $newEntryButtonText;
+
+    /**
      * Display constructor.
      *
      * @param AdminInterface $admin
@@ -82,6 +87,31 @@ class DisplayTable extends Display
         }
 
         $this->setHtmlAttribute('class', 'table table-striped');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNewEntryButtonText()
+    {
+        if (is_null($this->newEntryButtonText)) {
+            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+        }
+
+
+        return $this->newEntryButtonText;
+    }
+
+    /**
+     * @param string $newEntryButtonText
+     *
+     * @return $this
+     */
+    public function setNewEntryButtonText($newEntryButtonText)
+    {
+        $this->newEntryButtonText = $newEntryButtonText;
+
+        return $this;
     }
 
     /**
@@ -169,6 +199,8 @@ class DisplayTable extends Display
             ->sortBy(function (DisplayExtensionInterface $extension) {
                 return $extension->getOrder();
             });
+
+        $params['newEntryButtonText'] = $this->getNewEntryButtonText();
 
         return $params;
     }

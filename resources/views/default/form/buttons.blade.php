@@ -8,7 +8,7 @@
                 @else
                 value="save_and_close"
                 @endif
-                class="btn btn-primary btn-flat">
+                class="btn btn-primary">
             <i class="fa fa-check"></i> {{ $saveButtonText }}
         </button>
         @if($showSaveAndCloseButton or $showSaveAndCreateButton)
@@ -18,14 +18,14 @@
             <div class="dropdown-menu btn-actions">
                 <div class="btn-group-vertical">
                     @if($showSaveAndCloseButton)
-                        <button type="submit" name="next_action" value="save_and_close" class="btn btn-success btn-block btn-flat">
+                        <button type="submit" name="next_action" value="save_and_close" class="btn btn-success btn-block">
                             <i class="fa fa-check"></i>
                             {{ $saveAndCloseButtonText }}
                         </button>
                     @endif
                     @if($showSaveAndCreateButton)
                         <div role="separator" class="divider"></div>
-                        <button type="submit" name="next_action" value="save_and_create" class="btn btn-info btn-block btn-flat">
+                        <button type="submit" name="next_action" value="save_and_create" class="btn btn-info btn-block">
                             <i class="fa fa-check"></i>
                             {{ $saveAndCreateButtonText }}
                         </button>
@@ -36,12 +36,12 @@
     </div>
 
     @if($showDeleteButton)
-        <button class="btn btn-delete btn-danger btn-flat" data-url="{!! $deleteUrl !!}" data-redirect="{{ $backUrl }}">
+        <button class="btn btn-delete btn-danger" data-url="{!! $deleteUrl !!}" data-redirect="{{ $backUrl }}">
             <i class="fa fa-trash"></i> {{ $deleteButtonText }}
         </button>
     @elseif($showRestoreButton)
         <div class="btn-group">
-            <button class="btn btn-restore btn-warning btn-flat" data-url="{!! $restoreUrl !!}" data-redirect="{{ $editUrl }}">
+            <button class="btn btn-restore btn-warning" data-url="{!! $restoreUrl !!}" data-redirect="{{ $editUrl }}">
                 <i class="fa fa-reply"></i> {{ $restoreButtonText }}
             </button>
             @if($showDestroyButton)
@@ -50,7 +50,7 @@
                 </button>
                 <div class="dropdown-menu btn-actions">
                     <div class="btn-group-vertical">
-                        <button class="btn btn-destroy btn-danger btn-flat" data-url="{!! $destroyUrl !!}" data-redirect="{{ $backUrl }}">
+                        <button class="btn btn-destroy btn-danger" data-url="{!! $destroyUrl !!}" data-redirect="{{ $backUrl }}">
                             <i class="fa fa-trash"></i> {{ $destroyButtonText }}
                         </button>
                     </div>
