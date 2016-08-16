@@ -3,27 +3,32 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use KodiComponents\Support\HtmlAttributes;
-use Meta;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
-    use SqlQueryOperators, HtmlAttributes;
+    use SqlQueryOperators, HtmlAttributes, Assets;
 
     /**
      * @var string
      */
     protected $view;
 
+    public function __construct()
+    {
+        $this->initializePackage();
+    }
+
     /**
      * Initialize column filter.
      */
     public function initialize()
     {
-        Meta::loadPackage(get_called_class());
+        $this->includePackage();
     }
 
     /**
