@@ -9,7 +9,7 @@ class TemplateDefault implements TemplateInterface
 {
     public function __construct()
     {
-        Meta::addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'], true)
+        Meta::addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'])
             ->addJs('admin-scripts', route('admin.scripts'))
             ->addCss('admin-default', resources_url('css/admin-app.css'));
     }
