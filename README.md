@@ -12,23 +12,32 @@
 
 SleepingOwl Admin is an administrative interface builder for Laravel.
 
-### Used bower packages:
- - jquery
- - bootstrap
- - bootbox
- - datetimepicker
- - fontawesome
- - moment
- - nestable
- - noty
- - ckeditor
- - Sortable
- - select2
- - flow.js
- - ekko-lightbox
- - metisMenu
- - datatables
- - startbootstrap-sb-admin-2
+### Used npm packages:
+
+```js
+"devDependencies": {
+	"jquery": "^2.1.4",
+	"underscore": "1.8.3",
+	"bootstrap": "^3.3.7",
+	"eonasdan-bootstrap-datetimepicker": "^4.15.35",
+	"font-awesome": "^4.6.3",
+	"moment": "^2.14.1",
+	"nestable": "^0.2.0",
+	"noty": "^2.3.8",
+	"sortablejs": "1.4.2",
+	"select2": "^4.0.3",
+	"metismenu": "^2.5.2",
+	"datatables.net": "^1.10.12",
+	"admin-lte": "^2.3.5",
+	"x-editable": "^1.5.1",
+	"dropzone": "4.3.0",
+	"i18next": "^3.4.1",
+	"vue": "^1.0.26",
+	"vue-resource": "^0.9.3",
+	"sweetalert2": "^4.1.0",
+	"magnific-popup": "^1.1.0"
+}
+```
 
 ## Installation
 
@@ -56,7 +65,7 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
        */
         SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
   
-        /*
+      /*
        * Application Service Providers...
        */
       App\Providers\AppServiceProvider::class,
@@ -65,7 +74,9 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 
  3. Run this command in the terminal (if you want to know more about what exactly this command does, see [install command documentation](http://sleeping-owl.github.io/en/Commands/Install.html)):
 
-    $ php artisan sleepingowl:install
+```
+$ php artisan sleepingowl:install
+```
     
 ## Laravel 5.1 usage
 
@@ -76,30 +87,19 @@ SleepingOwl are compatible with Laravel 5.1. But full performance is not guarant
 - See `Installation` section of Laravel 5.2
 - After all actions: open `config/sleeping_owl.php` and change `'middleware' => ['web']` to `'middleware' => []`
 
-## Upgrade from 4.18.x to 4.19.x
-
-### HtmlAttributes
-Class has been moved to composer package `kodicomponents\support` for using in other projects and methods have been changed for more compatibility.
-
-- `setAttribute` -> `setHtmlAttribute`
-- `setAttributes` -> `setHtmlAttributes`
-- `getAttribute` -> `getHtmlAttribute`
-- `getAttributes` -> `getHtmlAttributes`
-- `hasAttribute` -> `hasHtmlAttribute`
-- `replaceAttribute` -> `replaceHtmlAttribute`
-- `removeAttribute` -> `removeHtmlAttribute`
-- `clearAttributes` -> `clearHtmlAttributes`
-- `hasClass` -> `hasClassProperty`
-
-### Navigation
-Navigation classes have been move to composer package `kodicomponents\navigation` for using in other projects.
-
 ---
 
 ## Authentication
 By default, admin module uses Laravel authentication.
 
-If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/5.2/authentication) and append middleware `auth` to `config/sleeping_owl.php`
+If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/5.2/authentication) 
+and append middleware `auth` to `config/sleeping_owl.php` 
+
+```php
+	...
+	'middleware' => ['web', 'auth']
+	...
+```
 
 ### Supporting of old authentication
 
@@ -170,4 +170,5 @@ You can download the demo project at https://github.com/SleepingOwlAdmin/demo
 
 ## Copyright and License
 
-Admin was written by Sleeping Owl for the Laravel framework and is released under the MIT License. See the LICENSE file for details.
+Admin was written by Sleeping Owl for the Laravel framework and is released under the MIT License. 
+See the LICENSE file for details.
