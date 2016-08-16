@@ -17,11 +17,11 @@
 	<![endif]-->
 
 	@stack('scripts')
-</head>
-<body class="skin-blue sidebar-mini">
-	@yield('content')
 
 	{!! Meta::renderScripts(true) !!}
 	@stack('footer-scripts')
+</head>
+<body class="skin-blue sidebar-mini">
+	@yield('content')
 </body>
 </html>
