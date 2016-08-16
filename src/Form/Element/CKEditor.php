@@ -14,11 +14,6 @@ class CKEditor extends Wysiwyg
     protected $view = 'form.element.wysiwyg';
 
     /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view = 'form.element.ckeditor';
-
-    /**
      * @param TemplateInterface $template
      * @param WysiwygMangerInterface $manger
      * @param string $path
