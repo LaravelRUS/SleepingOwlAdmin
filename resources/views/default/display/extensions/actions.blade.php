@@ -1,3 +1,4 @@
+@if(count($actions) > 0)
 <form {!! $attributes !!}>
     {{ csrf_field() }}
 
@@ -5,3 +6,4 @@
         {!! $action->render() !!}
     @endforeach
 </form>
+@endif

@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Display\Column\Control;
-use SleepingOwl\Admin\Contracts\Initializable;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Column\Control;
 
 class Columns extends Extension implements Initializable, Renderable
 {
@@ -24,6 +24,11 @@ class Columns extends Extension implements Initializable, Renderable
      * @var string
      */
     protected $view = 'display.extensions.columns';
+
+    /**
+     * @var bool
+     */
+    protected $initialize = false;
 
     /**
      * @var Control
@@ -82,6 +87,14 @@ class Columns extends Extension implements Initializable, Renderable
     {
         $this->controlActive = false;
 
+        if ($this->isInitialize()) {
+            $this->columns = $this->columns->filter(function ($column) {
+                $class = get_class($this->getControlColumn());
+
+                return ! ($column instanceof $class);
+            });
+        }
+
         return $this;
     }
 
@@ -124,7 +137,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
@@ -132,7 +145,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      *
      * @return $this
      */
@@ -144,6 +157,14 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
+     * @return bool
+     */
+    public function isInitialize()
+    {
+        return $this->initialize;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -151,20 +172,22 @@ class Columns extends Extension implements Initializable, Renderable
     public function toArray()
     {
         return [
-            'columns'    => $this->all(),
+            'columns' => $this->all(),
             'attributes' => $this->getDisplay()->htmlAttributesToString(),
         ];
     }
 
     public function initialize()
     {
+        $this->all()->each(function (ColumnInterface $column) {
+            $column->initialize();
+        });
+
         if ($this->isControlActive()) {
             $this->push($this->getControlColumn());
         }
 
-        $this->all()->each(function (ColumnInterface $column) {
-            $column->initialize();
-        });
+        $this->initialize = true;
     }
 
     /**

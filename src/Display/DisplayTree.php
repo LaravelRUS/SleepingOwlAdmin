@@ -2,22 +2,34 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Route;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Routing\Router;
 use Request;
-use SleepingOwl\Admin\Display\Extension\Tree;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Repository\TreeRepository;
+use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Repository\TreeRepository;
 
+/**
+ * @method TreeRepositoryInterface getRepository()
+ * @property TreeRepositoryInterface $repository
+ */
 class DisplayTree extends Display implements WithRoutesInterface
 {
-    public static function registerRoutes()
+    /**
+     * @param Router $router
+     */
+    public static function registerRoutes(Router $router)
     {
-        Route::post('{adminModel}/reorder', function (ModelConfiguration $model) {
-            $model->fireDisplay()->getRepository()->reorder(
-                Request::input('data')
-            );
-        });
+        $routeName = 'admin.display.tree.reorder';
+        if (! $router->has($routeName)) {
+            $router->post('{adminModel}/reorder', ['as' => $routeName, function (ModelConfigurationInterface $model) {
+                $model->fireDisplay()->getRepository()->reorder(
+                    Request::input('data')
+                );
+            }]);
+        }
     }
 
     /**
@@ -36,7 +48,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $reorderable = true;
 
     /**
-     * @var string
+     * @var string|callable
      */
     protected $value = 'title';
 
@@ -61,20 +73,21 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $repositoryClass = TreeRepository::class;
 
     /**
-     * @var TreeRepository
-     */
-    protected $repository;
-
-    /**
      * @var Column\TreeControl
      */
     protected $controlColumn;
+
+    /**
+     * @var Collection
+     */
+    protected $collection;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->extend('tree', new Tree());
+        // TODO: move tree building to extension
+        // $this->extend('tree', new Tree());
     }
 
     public function initialize()
@@ -82,9 +95,9 @@ class DisplayTree extends Display implements WithRoutesInterface
         parent::initialize();
 
         $this->getRepository()
-            ->setParentField($this->getParentField())
-            ->setOrderField($this->getOrderField())
-            ->setRootParentId($this->getRootParentId());
+             ->setParentField($this->getParentField())
+             ->setOrderField($this->getOrderField())
+             ->setRootParentId($this->getRootParentId());
     }
 
     /**
@@ -96,7 +109,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string $value
+     * @param string|callable $value
      *
      * @return $this
      */
@@ -137,10 +150,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param string $orderField
+     *
+     * @return $this
      */
     public function setOrderField($orderField)
     {
         $this->orderField = $orderField;
+
+        return $this;
     }
 
     /**
@@ -153,10 +170,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param null|string $rootParentId
+     *
+     * @return $this
      */
     public function setRootParentId($rootParentId)
     {
         $this->rootParentId = $rootParentId;
+
+        return $this;
     }
 
     /**
@@ -202,10 +223,14 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param bool $reorderable
+     *
+     * @return $this
      */
     public function setReorderable($reorderable)
     {
         $this->reorderable = (bool) $reorderable;
+
+        return $this;
     }
 
     /**
@@ -224,21 +249,67 @@ class DisplayTree extends Display implements WithRoutesInterface
         $model = $this->getModelConfiguration();
 
         return parent::toArray() + [
-            'items'       => $this->getRepository()->getTree(),
+            'items' => $this->getRepository()->getTree($this->getCollection()),
             'reorderable' => $this->isReorderable(),
-            'url'         => $model->getDisplayUrl(),
-            'value'       => $this->getValue(),
-            'creatable'   => $model->isCreatable(),
-            'createUrl'   => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls'    => [app('sleeping_owl.table.column')->treeControl()],
+            'url' => $model->getDisplayUrl(),
+            'value' => $this->getValue(),
+            'creatable' => $model->isCreatable(),
+            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
+            'controls' => [app('sleeping_owl.table.column')->treeControl()],
         ];
     }
 
     /**
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     protected function getModelConfiguration()
     {
         return app('sleeping_owl')->getModel($this->modelClass);
+    }
+
+    /**
+     * @return Collection
+     * @throws \Exception
+     */
+    public function getCollection()
+    {
+        if (! $this->isInitialized()) {
+            throw new \Exception('Display is not initialized');
+        }
+
+        if (! is_null($this->collection)) {
+            return $this->collection;
+        }
+
+        $query = $this->getRepository()->getQuery();
+
+        $this->modifyQuery($query);
+
+        return $query->get();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder|Builder $query
+     */
+    protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
+            $extension->modifyQuery($query);
+        });
+    }
+
+    /**
+     * @return \Illuminate\Foundation\Application|mixed
+     * @throws \Exception
+     */
+    protected function makeRepository()
+    {
+        $repository = parent::makeRepository();
+
+        if (! ($repository instanceof TreeRepositoryInterface)) {
+            throw new \Exception('Repository class must be instanced of [TreeRepositoryInterface]');
+        }
+
+        return $repository;
     }
 }

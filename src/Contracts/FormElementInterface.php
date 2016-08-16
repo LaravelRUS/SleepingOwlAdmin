@@ -16,6 +16,11 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable
     public function setModel(Model $model);
 
     /**
+     * @return Model $model
+     */
+    public function getModel();
+
+    /**
      * Get form item validation rules.
      * @return mixed
      */

@@ -6,15 +6,16 @@ use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Scopes;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Traits\Assets;
 
 /**
@@ -37,7 +38,7 @@ abstract class Display implements DisplayInterface
     use HtmlAttributes, Assets;
 
     /**
-     * @var string
+     * @var string|\Illuminate\View\View
      */
     protected $view;
 
@@ -131,6 +132,18 @@ abstract class Display implements DisplayInterface
     }
 
     /**
+     * @param $repositoryClass
+     *
+     * @return $this
+     */
+    public function setRepositoryClass($repositoryClass)
+    {
+        $this->repositoryClass = $repositoryClass;
+
+        return $this;
+    }
+
+    /**
      * @param array|string[] ...$relations
      *
      * @return $this
@@ -157,6 +170,18 @@ abstract class Display implements DisplayInterface
         $this->extensions->each(function (DisplayExtensionInterface $extension) {
             if ($extension instanceof Initializable) {
                 $extension->initialize();
+            }
+
+            if ($extension instanceof Placable) {
+                $template = app('sleeping_owl.template')->getViewPath($this->getView());
+
+                view()->composer($template, function (\Illuminate\View\View $view) use ($extension) {
+                    $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
+
+                    if (! empty($html)) {
+                        $view->getFactory()->inject($extension->getPlacement(), $html);
+                    }
+                });
             }
         });
 
@@ -232,6 +257,18 @@ abstract class Display implements DisplayInterface
     }
 
     /**
+     * @param string|\Illuminate\View\View $view
+     *
+     * @return $this
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -247,9 +284,11 @@ abstract class Display implements DisplayInterface
      */
     public function __call($name, $arguments)
     {
-        if (starts_with($name, 'get') and $this->extensions->has($method = strtolower(substr($name, 3)))) {
+        $method = snake_case(substr($name, 3));
+
+        if (starts_with($name, 'get') and $this->extensions->has($method)) {
             return $this->extensions->get($method);
-        } elseif (starts_with($name, 'set') and $this->extensions->has($method = strtolower(substr($name, 3)))) {
+        } elseif (starts_with($name, 'set') and $this->extensions->has($method)) {
             $extension = $this->extensions->get($method);
 
             if (method_exists($extension, 'set')) {
@@ -261,7 +300,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     protected function getModelConfiguration()
     {
@@ -269,10 +308,17 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return RepositoryInterface
+     * @return \Illuminate\Foundation\Application|mixed
+     * @throws \Exception
      */
     protected function makeRepository()
     {
-        return app($this->repositoryClass, [$this->modelClass]);
+        $repository = app($this->repositoryClass, [$this->modelClass]);
+
+        if (! ($repository instanceof RepositoryInterface)) {
+            throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
+        }
+
+        return $repository;
     }
 }

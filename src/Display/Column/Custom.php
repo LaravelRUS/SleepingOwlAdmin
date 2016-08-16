@@ -31,8 +31,6 @@ class Custom extends TableColumn
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }
-
-        $this->setHtmlAttribute('class', 'row-custom');
     }
 
     /**

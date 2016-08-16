@@ -40,12 +40,17 @@ class DisplayTable extends Display
     /**
      * @var string
      */
-    protected $pageName;
+    protected $pageName = 'page';
 
     /**
      * @var Collection
      */
     protected $collection;
+
+    /**
+     * @var string|null
+     */
+    protected $newEntryButtonText;
 
     /**
      * Display constructor.
@@ -55,7 +60,7 @@ class DisplayTable extends Display
         parent::__construct();
 
         $this->extend('columns', new Columns());
-        $this->extend('columnfilters', new ColumnFilters());
+        $this->extend('column_filters', new ColumnFilters());
     }
 
     /**
@@ -72,6 +77,31 @@ class DisplayTable extends Display
         }
 
         $this->setHtmlAttribute('class', 'table table-striped');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNewEntryButtonText()
+    {
+        if (is_null($this->newEntryButtonText)) {
+            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+        }
+
+
+        return $this->newEntryButtonText;
+    }
+
+    /**
+     * @param string $newEntryButtonText
+     *
+     * @return $this
+     */
+    public function setNewEntryButtonText($newEntryButtonText)
+    {
+        $this->newEntryButtonText = $newEntryButtonText;
+
+        return $this;
     }
 
     /**
@@ -152,9 +182,15 @@ class DisplayTable extends Display
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
 
-        $params['extensions'] = $this->getExtensions()->filter(function (DisplayExtensionInterface $ext) {
-            return $ext instanceof Renderable;
-        });
+        $params['extensions'] = $this->getExtensions()
+            ->filter(function (DisplayExtensionInterface $ext) {
+                return $ext instanceof Renderable;
+            })
+            ->sortBy(function (DisplayExtensionInterface $extension) {
+                return $extension->getOrder();
+            });
+
+        $params['newEntryButtonText'] = $this->getNewEntryButtonText();
 
         return $params;
     }

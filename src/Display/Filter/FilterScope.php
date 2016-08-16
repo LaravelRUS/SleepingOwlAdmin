@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display\Filter;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterScope extends FilterField
+class FilterScope extends FilterBase
 {
     /**
      * @param Builder $query

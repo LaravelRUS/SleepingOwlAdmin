@@ -6,35 +6,55 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<div class="imageUploadMultiple" data-target="{{ route('admin.form.element.file.uploadImage') }}" data-token="{{ csrf_token() }}">
-		<div class="row form-group images-group">
-			@foreach ($value as $image)
-				<div class="col-xs-6 col-md-3 imageThumbnail">
-					<div class="thumbnail">
-						<img data-value="{{ $image }}" src="{{ asset($image) }}" />
-						<div class="text-right">
-							<a href="#" class="imageRemove btn btn-danger">{{ trans('sleeping_owl::lang.image.removeMultiple') }}</a>
-						</div>
-					</div>
+
+	<element-images
+			url="{{ route('admin.form.element.image', [
+				'adminModel' => AdminSection::getModel($model)->getAlias(),
+				'field' => $path,
+				'id' => $model->getKey()
+			]) }}"
+			:values="{{ json_encode($value) }}"
+			:readonly="{{ $readonly ? 'true' : 'false' }}"
+			name="{{ $name }}"
+			inline-template
+	>
+
+		<div v-if="errors.length" class="alert alert-warning">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+
+			<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
+		</div>
+
+		<div class="form-element-files dropzone clearfix">
+			<div class="form-element-files__item" v-for="uri in values">
+				<a :href="image(uri)" class="form-element-files__image" data-toggle="images">
+					<img :src="image(uri)" />
+				</a>
+				<div class="form-element-files__info">
+					<a :href="image(uri)" class="btn btn-default btn-xs pull-right">
+						<i class="fa fa-cloud-download"></i>
+					</a>
+
+					<button @click.prevent="remove(uri)" v-if="!readonly" class="btn btn-danger btn-xs" aria-label="{{ trans('sleeping_owl::lang.image.remove') }}">
+						<i class="fa fa-times"></i>
+					</button>
 				</div>
-			@endforeach
-		</div>
-		<div>
-			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}</div>
-		</div>
-		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ !empty($value) && sizeof($value) != 0 ? implode(',', $value) : "" }}">
-		<div class="errors">
-			@include(AdminTemplate::getViewPath('form.element.errors'))
-		</div>
-	</div>
-</div>
-<script id="thumbnail_template" type="template/html">
-	<div class="col-xs-6 col-md-3 imageThumbnail">
-		<div class="thumbnail">
-			<img />
-			<div class="text-right">
-				<a href="#" class="imageRemove btn btn-danger">{{ trans('sleeping_owl::lang.image.removeMultiple') }}</a>
 			</div>
 		</div>
+
+		<div v-if="!readonly">
+			<br />
+			<div class="btn btn-primary upload-button">
+				<i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browse') }}
+			</div>
+		</div>
+
+		<input name="@{{ name }}" type="hidden" value="@{{ serializedValues }}">
+	</element-images>
+
+	<div class="errors">
+		@include(AdminTemplate::getViewPath('form.element.errors'))
 	</div>
-</script>
+</div>

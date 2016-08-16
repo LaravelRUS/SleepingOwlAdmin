@@ -9,17 +9,9 @@ class TemplateDefault implements TemplateInterface
 {
     public function __construct()
     {
-        Meta::loadPackage([
-            'libraries',
-            'select2',
-            'metisMenu',
-            'admin-default',
-            'font-awesome',
-            'flow.js',
-            'Sortable',
-        ]);
-
-        Meta::AddJs('adminScripts', route('admin.scripts'), ['libraries']);
+        Meta::addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'], true)
+            ->addJs('admin-scripts', route('admin.scripts'))
+            ->addCss('admin-default', resources_url('css/admin-app.css'));
     }
 
     /**
@@ -48,11 +40,15 @@ class TemplateDefault implements TemplateInterface
      */
     public function getViewPath($view)
     {
+        if ($view instanceof \Illuminate\View\View) {
+            return $view->getPath();
+        }
+
         return $this->getViewNamespace().'default.'.$view;
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      * @param array  $data
      * @param array  $mergeData
      *
@@ -60,6 +56,10 @@ class TemplateDefault implements TemplateInterface
      */
     public function view($view, $data = [], $mergeData = [])
     {
+        if ($view instanceof \Illuminate\View\View) {
+            return $view->with($data);
+        }
+
         return view($this->getViewPath($view), $data, $mergeData);
     }
 

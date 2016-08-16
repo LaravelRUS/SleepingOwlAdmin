@@ -44,6 +44,7 @@ class InstallCommand extends Command
         $this->createBootstrapDirectory();
         $this->createNavigationFile();
         $this->createBootstrapFile();
+        $this->createServiceProvider();
         $this->createRoutesFile();
         $this->createPublicDefaultStructure();
     }
@@ -86,6 +87,11 @@ class InstallCommand extends Command
             $this->files->put($file, $contents);
             $this->line('<info>Bootstrap file was created:</info> '.str_replace(base_path(), '', $file));
         }
+    }
+
+    protected function createServiceProvider()
+    {
+        $this->call('sleepingowl:section:provider');
     }
 
     /**
@@ -135,12 +141,7 @@ class InstallCommand extends Command
     protected function getOptions()
     {
         return [
-            [
-                'title',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Title for admin module.',
-            ],
+            ['title', null, InputOption::VALUE_REQUIRED, 'Title for admin module.'],
         ];
     }
 }

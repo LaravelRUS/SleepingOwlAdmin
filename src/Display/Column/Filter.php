@@ -17,17 +17,6 @@ class Filter extends NamedColumn
     protected $field;
 
     /**
-     * Filter constructor.
-     *
-     * {@inheritdoc}
-     */
-    public function __construct($name, $label = null)
-    {
-        parent::__construct($name, $label);
-        $this->setHtmlAttribute('class', 'row-filter');
-    }
-
-    /**
      * @return string
      */
     public function getRelatedModel()
@@ -98,7 +87,7 @@ class Filter extends NamedColumn
     {
         return parent::toArray() + [
             'icon' => $this->isSelf() ? 'fa fa-filter' : 'fa fa-arrow-circle-o-right',
-            'title' => $this->isSelf() ? trans('sleeping_owl::core.table.filter') : trans('sleeping_owl::core.table.filter-goto'),
+            'title' => $this->isSelf() ? trans('sleeping_owl::lang.table.filter') : trans('sleeping_owl::lang.table.filter-goto'),
             'url' => $this->getUrl(),
             'value' => $this->getModelValue($this->getModel(), $this->getField()),
         ];

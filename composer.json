@@ -38,5 +38,15 @@
     "psr-4": {
       "SleepingOwl\\Admin\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/TestCase.php"
+    ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-development": "4.x-dev"
+    }
   }
 }

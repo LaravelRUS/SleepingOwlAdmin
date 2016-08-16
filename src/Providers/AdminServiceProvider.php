@@ -2,15 +2,18 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use SleepingOwl\Admin\Admin;
-use Symfony\Component\Finder\Finder;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
+use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Admin;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
+use Symfony\Component\Finder\Finder;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -22,11 +25,19 @@ class AdminServiceProvider extends ServiceProvider
             return new Admin();
         });
 
-        $this->registerNavigation();
+        $this->app->alias('sleeping_owl', \SleepingOwl\Admin\Admin::class);
+
+        $this->initializeNavigation();
         $this->registerWysiwyg();
         $this->registerAliases();
 
-        ModelConfiguration::setEventDispatcher($this->app['events']);
+        $this->app->booted(function () {
+            $this->registerCustomRoutes();
+            $this->registerDefaultRoutes();
+            $this->registerNavigationFile();
+        });
+
+        ModelConfigurationManager::setEventDispatcher($this->app['events']);
     }
 
     /**
@@ -59,20 +70,19 @@ class AdminServiceProvider extends ServiceProvider
             return $this->app['sleeping_owl']->template();
         });
 
-        $this->registerCustomRoutes();
         $this->registerBootstrap();
-        $this->registerDefaultRoutes();
 
-        if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
-            $items = include $navigation;
-
-            if (is_array($items)) {
-                $this->app['sleeping_owl.navigation']->setFromArray($items);
-            }
-        }
+        $this->registerRoutes(function (Router $route) {
+            $route->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
+                $route->get('assets/admin.scripts', [
+                    'as'   => 'scripts',
+                    'uses' => 'AdminController@getScripts',
+                ]);
+            });
+        });
     }
 
-    protected function registerNavigation()
+    protected function initializeNavigation()
     {
         $this->app->bind(TableHeaderColumnInterface::class, \SleepingOwl\Admin\Display\TableHeaderColumn::class);
         $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repository\BaseRepository::class);
@@ -126,7 +136,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerCustomRoutes()
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
-            $this->registerRoutes(function () use ($file) {
+            $this->registerRoutes(function (Router $route) use ($file) {
                 require $file;
             });
         }
@@ -134,13 +144,13 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerDefaultRoutes()
     {
-        $this->registerRoutes(function () {
-            $this->app['router']->pattern('adminModelId', '[a-zA-Z0-9_-]+');
+        $this->registerRoutes(function (Router $router) {
+            $router->pattern('adminModelId', '[a-zA-Z0-9_-]+');
 
             $aliases = $this->app['sleeping_owl']->modelAliases();
 
             if (count($aliases) > 0) {
-                $this->app['router']->pattern('adminModel', implode('|', $aliases));
+                $router->pattern('adminModel', implode('|', $aliases));
 
                 $this->app['router']->bind('adminModel', function ($model, \Illuminate\Routing\Route $route) use ($aliases) {
                     $class = array_search($model, $aliases);
@@ -152,7 +162,7 @@ class AdminServiceProvider extends ServiceProvider
                     /** @var ModelConfiguration $model */
                     $model = $this->app['sleeping_owl']->getModel($class);
 
-                    if ($model->hasCustomControllerClass()) {
+                    if ($model->hasCustomControllerClass() && $route->getActionName() !== 'Closure') {
                         list($controller, $action) = explode('@', $route->getActionName(), 2);
 
                         $newController = $model->getControllerClass().'@'.$action;
@@ -167,6 +177,10 @@ class AdminServiceProvider extends ServiceProvider
             if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
                 require $routesFile;
             }
+
+            foreach (AliasBinder::routes() as $route) {
+                call_user_func($route, $router);
+            }
         });
     }
 
@@ -178,8 +192,19 @@ class AdminServiceProvider extends ServiceProvider
         $this->app['router']->group([
             'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
-        ], function () use ($callback) {
-            call_user_func($callback);
+        ], function ($route) use ($callback) {
+            call_user_func($callback, $route);
         });
+    }
+
+    protected function registerNavigationFile()
+    {
+        if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
+            $items = include $navigation;
+
+            if (is_array($items)) {
+                $this->app['sleeping_owl.navigation']->setFromArray($items);
+            }
+        }
     }
 }

@@ -6,20 +6,54 @@
 			<span class="text-danger">*</span>
 		@endif
 	</label>
-	<div class="imageUpload" data-target="{{ route('admin.form.element.file.uploadImage') }}" data-token="{{ csrf_token() }}">
-		<div>
-			<div class="thumbnail">
-				<img class="no-value {{ empty($value) ? '' : 'hidden' }}" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" width="200px" height="150px" />
-				<img class="has-value {{ empty($value) ? 'hidden' : '' }}" src="{{ asset($value) }}" width="200px" height="150px" />
+
+	<element-image
+			url="{{ route('admin.form.element.image', [
+				'adminModel' => AdminSection::getModel($model)->getAlias(),
+				'field' => $path,
+				'id' => $model->getKey()
+			]) }}"
+			value="{{ $value }}"
+			:readonly="{{ $readonly ? 'true' : 'false' }}"
+			name="{{ $name }}"
+			inline-template
+	>
+			<div v-if="errors.length" class="alert alert-warning">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
+				<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
 			</div>
-		</div>
-		<div>
-			<div class="btn btn-primary imageBrowse"><i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browse') }}</div>
-			<div class="btn btn-danger imageRemove"><i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}</div>
-		</div>
-		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ $value }}">
-		<div class="errors">
-			@include(AdminTemplate::getViewPath('form.element.errors'))
-		</div>
+			<div class="form-element-files clearfix" v-if="has_value">
+				<div class="form-element-files__item">
+					<a :href="image" class="form-element-files__image" data-toggle="lightbox">
+						<img :src="image" />
+					</a>
+					<div class="form-element-files__info">
+						<a :href="image" class="btn btn-default btn-xs pull-right">
+							<i class="fa fa-cloud-download"></i>
+						</a>
+
+						<button v-if="has_value" class="btn btn-danger btn-xs" @click.prevent="remove()">
+							<i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div v-if="!readonly">
+				<div class="btn btn-primary upload-button">
+					<i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browse') }}
+				</div>
+
+			</div>
+
+			<input name="@{{ name }}" type="hidden" value="@{{ value }}">
+	</element-image>
+
+
+	<div class="errors">
+		@include(AdminTemplate::getViewPath('form.element.errors'))
 	</div>
 </div>

@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class Page extends \KodiComponents\Navigation\Page
 {
@@ -20,10 +20,14 @@ class Page extends \KodiComponents\Navigation\Page
         parent::__construct();
 
         $this->setModel($modelClass);
+
+        if ($this->hasModel()) {
+            $this->setIcon($this->getModelConfiguration()->getIcon());
+        }
     }
 
     /**
-     * @return ModelConfiguration
+     * @return ModelConfigurationInterface
      */
     public function getModelConfiguration()
     {
@@ -40,6 +44,18 @@ class Page extends \KodiComponents\Navigation\Page
     public function hasModel()
     {
         return ! is_null($this->model) and class_exists($this->model);
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        if (is_null($this->id) and $this->hasModel()) {
+            return $this->model;
+        }
+
+        return parent::getId();
     }
 
     /**

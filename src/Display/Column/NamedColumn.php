@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Display\TableColumn;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
@@ -24,6 +24,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     {
         parent::__construct($label);
         $this->setName($name);
+
+        $this->setHtmlAttribute('class', 'row-'.strtolower(class_basename(get_called_class())));
     }
 
     /**
@@ -69,7 +71,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * Get column value from instance.
      *
-     * @param Collection|Model $instance
+     * @param Collection|Model|Closure $instance
      * @param string           $name
      *
      * @return mixed

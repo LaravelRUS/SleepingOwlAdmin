@@ -2,14 +2,19 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
-// TODO: починить указание активности таба
-class DisplayTab implements DisplayInterface, FormInterface
+class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
     /**
      * @var string
@@ -32,7 +37,7 @@ class DisplayTab implements DisplayInterface, FormInterface
     protected $icon;
 
     /**
-     * @var DisplayInterface
+     * @var Renderable
      */
     protected $content;
 
@@ -42,9 +47,9 @@ class DisplayTab implements DisplayInterface, FormInterface
     protected $view = 'display.tab';
 
     /**
-     * @param DisplayInterface $content
+     * @param Renderable $content
      */
-    public function __construct(DisplayInterface $content)
+    public function __construct(Renderable $content)
     {
         $this->content = $content;
     }
@@ -132,7 +137,7 @@ class DisplayTab implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return DisplayInterface|FormInterface
+     * @return Renderable
      */
     public function getContent()
     {
@@ -196,28 +201,28 @@ class DisplayTab implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return Validator|null
      */
-    public function validate(ModelConfiguration $model)
+    public function validateForm(ModelConfigurationInterface $model)
     {
         if ($this->getContent() instanceof FormInterface) {
-            return $this->getContent()->validate($model);
+            return $this->getContent()->validateForm($model);
         }
     }
 
     /**
      * Save model.
      *
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return $this
      */
-    public function save(ModelConfiguration $model)
+    public function saveForm(ModelConfigurationInterface $model)
     {
         if ($this->getContent() instanceof FormInterface) {
-            $this->getContent()->save($model);
+            $this->getContent()->saveForm($model);
         }
 
         return $this;
@@ -237,10 +242,10 @@ class DisplayTab implements DisplayInterface, FormInterface
     public function toArray()
     {
         return [
-            'label'  => $this->getLabel(),
+            'label' => $this->getLabel(),
             'active' => $this->isActive(),
-            'name'   => $this->getName(),
-            'icon'   => $this->getIcon(),
+            'name' => $this->getName(),
+            'icon' => $this->getIcon(),
         ];
     }
 
@@ -258,5 +263,118 @@ class DisplayTab implements DisplayInterface, FormInterface
     public function __toString()
     {
         return (string) $this->render();
+    }
+
+    /**
+     * Set currently rendered instance.
+     *
+     * @param Model $model
+     */
+    public function setModel(Model $model)
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            $this->getContent()->setModel($model);
+        }
+    }
+
+    /**
+     * @return Model $model
+     */
+    public function getModel()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getModel();
+        }
+    }
+
+    /**
+     * Get form item validation rules.
+     * @return array
+     */
+    public function getValidationRules()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getValidationRules();
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getValidationMessages();
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            return $this->getContent()->getValidationLabels();
+        }
+
+        return [];
+    }
+
+    /**
+     * Save form item.
+     */
+    public function save()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            $this->getContent()->save();
+        }
+    }
+
+    /**
+     * Save form item.
+     */
+    public function afterSave()
+    {
+        if ($this->getContent() instanceof FormElementInterface) {
+            $this->getContent()->afterSave();
+        }
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return FormElementInterface|null
+     */
+    public function getElement($path)
+    {
+        if (($content = $this->getContent()) instanceof ElementsInterface) {
+            return $content->getElement($path);
+        }
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getElements()
+    {
+        if ($content = $this->getContent() instanceof ElementsInterface) {
+            return $content->getElements();
+        }
+    }
+
+    /**
+     * @param array $elements
+     *
+     * @return $this
+     */
+    public function setElements(array $elements)
+    {
+        if ($content = $this->getContent() instanceof ElementsInterface) {
+            return $content->setElements($elements);
+        }
     }
 }

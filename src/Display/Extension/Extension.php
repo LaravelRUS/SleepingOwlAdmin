@@ -13,6 +13,11 @@ abstract class Extension implements DisplayExtensionInterface
     protected $display;
 
     /**
+     * @var int
+     */
+    protected $order = 0;
+
+    /**
      * @return DisplayInterface
      */
     public function getDisplay()
@@ -38,5 +43,25 @@ abstract class Extension implements DisplayExtensionInterface
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
         // TODO: Implement modifyQuery() method.
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param int $order
+     *
+     * @return $this
+     */
+    public function setOrder($order)
+    {
+        $this->order = (int) $order;
+
+        return $this;
     }
 }

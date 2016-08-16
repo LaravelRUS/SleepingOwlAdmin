@@ -2,16 +2,15 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Carbon\Carbon;
-use Request;
-use LogicException;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use LogicException;
+use Request;
+use SleepingOwl\Admin\Form\FormElement;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.
@@ -194,18 +193,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return $this
-     *
-     * SMELLS This function does more than it says.
-     */
-    public function setCurrentDate()
-    {
-        $this->defaultValue = Carbon::now();
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getHelpText()
@@ -261,10 +248,6 @@ abstract class NamedFormElement extends FormElement
 
         if (is_null($message)) {
             return $this;
-        }
-
-        if (is_string($rule) and ($pos = strpos($rule, ':')) !== false) {
-            $rule = substr($rule, 0, $pos);
         }
 
         return $this->addValidationMessage($rule, $message);
@@ -328,6 +311,10 @@ abstract class NamedFormElement extends FormElement
      */
     public function addValidationMessage($rule, $message)
     {
+        if (($pos = strpos($rule, ':')) !== false) {
+            $rule = substr($rule, 0, $pos);
+        }
+
         $this->validationMessages[$rule] = $message;
 
         return $this;
@@ -342,19 +329,24 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * HACK Needs refactoring and reasoning.
-     * @return mixed
+     * @return array|string
      */
-    public function getValue()
+    public function getValueFromRequest()
     {
         if (! is_null($value = Request::old($this->getPath()))) {
             return $value;
         }
 
-        // HACK This is not the right place for Request facade.
-        $input = Request::all();
+        return Request::input($this->getPath());
+    }
 
-        if (($value = array_get($input, $this->getPath())) !== null) {
+    /**
+     * HACK Needs refactoring and reasoning.
+     * @return mixed
+     */
+    public function getValue()
+    {
+        if (! is_null($value = $this->getValueFromRequest())) {
             return $value;
         }
 
@@ -403,11 +395,10 @@ abstract class NamedFormElement extends FormElement
                 continue;
             }
 
-            $model = $this->getModel();
+            $model = $this->resolvePath();
             $table = $model->getTable();
 
             $rule = 'unique:'.$table.','.$this->getAttribute();
-
             if ($model->exists()) {
                 $rule .= ','.$model->getKey();
             }
@@ -418,17 +409,51 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * Get model related to form element.
+     *
+     * @return mixed
+     */
+    public function resolvePath()
+    {
+        $model = $this->getModel();
+        $relations = explode('.', $this->getPath());
+        $count = count($relations);
+
+        foreach ($relations as $relation) {
+            if ($count === 1) {
+                return $model->getModel();
+            }
+            if ($model->exists() && $model->{$relation} instanceof Model) {
+                $model = $model->{$relation};
+                if ($model != null) {
+                    $count--;
+                    continue;
+                }
+            }
+
+            if ($model->{$relation}() instanceof BelongsTo) {
+                $model = $model->{$relation}()->getModel();
+                $count--;
+                continue;
+            }
+
+            break;
+        }
+        throw new LogicException("Can not resolve path for field '{$this->getPath()}'. Probably relation definition is incorrect");
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
         return parent::toArray() + [
-            'id'       => $this->getName(),
-            'name'     => $this->getName(),
-            'path'     => $this->getPath(),
-            'label'    => $this->getLabel(),
+            'id' => $this->getName(),
+            'name' => $this->getName(),
+            'path' => $this->getPath(),
+            'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
-            'value'    => $this->getValue(),
+            'value' => $this->getValue(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ];
@@ -438,8 +463,7 @@ abstract class NamedFormElement extends FormElement
     {
         $attribute = $this->getAttribute();
         $model = $this->getModel();
-
-        $value = $this->getValue();
+        $value = $this->getValueFromRequest();
 
         $relations = explode('.', $this->getPath());
         $count = count($relations);

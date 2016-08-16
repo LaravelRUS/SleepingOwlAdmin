@@ -40,6 +40,12 @@ class Date extends Text
      */
     protected $width = 150;
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->setHtmlAttribute('data-type', 'date');
+    }
+
     /**
      * @return string
      */

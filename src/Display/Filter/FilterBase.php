@@ -2,16 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Filter;
 
-use Request;
 use Closure;
-use Illuminate\Database\Eloquent\Builder;
+use Request;
 use SleepingOwl\Admin\Contracts\FilterInterface;
-use SleepingOwl\Admin\Traits\SqlQueryOperators;
 
 abstract class FilterBase implements FilterInterface
 {
-    use SqlQueryOperators;
-
     /**
      * @var string
      */
@@ -23,7 +19,7 @@ abstract class FilterBase implements FilterInterface
     protected $alias;
 
     /**
-     * @var string
+     * @var string|\Closure|null
      */
     protected $title;
 
@@ -34,11 +30,16 @@ abstract class FilterBase implements FilterInterface
 
     /**
      * @param string $name
+     * @param string|\Closure|null $title
      */
-    public function __construct($name)
+    public function __construct($name, $title = null)
     {
         $this->setName($name);
         $this->setAlias($name);
+
+        if (! is_null($title)) {
+            $this->setTitle($title);
+        }
     }
 
     /**
@@ -49,8 +50,6 @@ abstract class FilterBase implements FilterInterface
         if (is_null($value = $this->getValue())) {
             $value = Request::offsetGet($this->getAlias());
         }
-
-        $value = $this->prepareValue($value);
 
         $this->setValue($value);
     }
@@ -104,7 +103,7 @@ abstract class FilterBase implements FilterInterface
             return call_user_func($this->title, $this->getValue());
         }
 
-        return $this->title;
+        return strtr($this->title, [':value' => $this->getValue()]);
     }
 
     /**
@@ -145,29 +144,5 @@ abstract class FilterBase implements FilterInterface
     public function isActive()
     {
         return ! is_null($this->getValue());
-    }
-
-    /**
-     * @param Builder $query
-     */
-    public function apply(Builder $query)
-    {
-        $name = $this->getName();
-        $value = $this->getValue();
-        $relationName = null;
-
-        if (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $name = array_pop($parts);
-            $relationName = implode('.', $parts);
-        }
-
-        if (! is_null($relationName)) {
-            $query->whereHas($relationName, function ($q) use ($name, $value) {
-                $this->buildQuery($q, $name, $value);
-            });
-        } else {
-            $this->buildQuery($query, $name, $value);
-        }
     }
 }

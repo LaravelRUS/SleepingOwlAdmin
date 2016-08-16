@@ -3,30 +3,52 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
-use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\FormElements;
 
+/**
+ * @property TabInterface[]|Collection $elements
+ */
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-    /**
-     * @var DisplayTab[]
-     */
-    protected $tabs = [];
+    use FormElements;
 
     /**
      * @var string
      */
     protected $view = 'display.tabbed';
 
+    /**
+     * DisplayTabbed constructor.
+     *
+     * @param Closure|TabInterface[] $tabs
+     */
+    public function __construct($tabs = null)
+    {
+        $this->elements = new Collection();
+
+        if (is_array($tabs) or is_callable($tabs)) {
+            $this->setTabs($tabs);
+        }
+    }
+
     public function initialize()
     {
-        foreach ($this->getTabs() as $tab) {
-            if ($tab instanceof Initializable) {
-                $tab->initialize();
-            }
+        $this->initializeElements();
+
+        $activeTabs = $this->getTabs()->filter(function (TabInterface $tab) {
+            return $tab->isActive();
+        })->count();
+
+        if ($activeTabs === 0 and $firstTab = $this->getTabs()->first()) {
+            $firstTab->setActive(true);
         }
     }
 
@@ -35,23 +57,23 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setModelClass($class)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($class) {
             if ($tab instanceof DisplayInterface) {
                 $tab->setModelClass($class);
             }
-        }
+        });
     }
 
     /**
-     * @return DisplayTab[]
+     * @return TabInterface[]|Collection
      */
     public function getTabs()
     {
-        return $this->tabs;
+        return $this->getElements();
     }
 
     /**
-     * @param Closure|DisplayTab[] $tabs
+     * @param Closure|TabInterface[] $tabs
      *
      * @return $this
      */
@@ -61,27 +83,53 @@ class DisplayTabbed implements DisplayInterface, FormInterface
             $tabs = call_user_func($tabs, $this);
         }
 
-        if (is_array($tabs)) {
-            $this->tabs = $tabs;
+        return $this->setElements($tabs);
+    }
+
+    /**
+     * @param array $elements
+     *
+     * @return $this
+     */
+    public function setElements(array $elements)
+    {
+        foreach ($elements as $label => $tab) {
+            if ($tab instanceof TabInterface) {
+                $this->addElement($tab);
+            } else {
+                $this->appendTab($tab, $label);
+            }
         }
 
         return $this;
     }
 
     /**
-     * @param DisplayInterface $display
-     * @param string           $label
-     * @param bool|false       $active
+     * @param Renderable $display
+     * @param string $label
+     * @param bool|false $active
      *
-     * @return $this
+     * @return TabInterface
      */
-    public function appendTab(DisplayInterface $display, $label, $active = false)
+    public function appendTab(Renderable $display, $label, $active = false)
     {
         $tab = app('sleeping_owl.display')->tab($display)->setLabel($label)->setActive($active);
 
-        $this->tabs[] = $tab;
+        $this->addElement($tab);
 
         return $tab;
+    }
+
+    /**
+     * @param TabInterface $element
+     *
+     * @return $this
+     */
+    public function addElement(TabInterface $element)
+    {
+        $this->elements->push($element);
+
+        return $this;
     }
 
     /**
@@ -89,11 +137,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setAction($action)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($action) {
             if ($tab instanceof FormInterface) {
                 $tab->setAction($action);
             }
-        }
+        });
     }
 
     /**
@@ -101,23 +149,23 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setId($id)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($id) {
             if ($tab instanceof FormInterface) {
                 $tab->setId($id);
             }
-        }
+        });
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      *
      * @return Validator|null
      */
-    public function validate(ModelConfiguration $model)
+    public function validateForm(ModelConfigurationInterface $model)
     {
         foreach ($this->getTabs() as $tab) {
             if ($tab instanceof FormInterface) {
-                $result = $tab->validate($model);
+                $result = $tab->validateForm($model);
                 if (! is_null($result)) {
                     return $result;
                 }
@@ -126,15 +174,15 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param ModelConfiguration $model
+     * @param ModelConfigurationInterface $model
      */
-    public function save(ModelConfiguration $model)
+    public function saveForm(ModelConfigurationInterface $model)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($model) {
             if ($tab instanceof FormInterface) {
-                $tab->save($model);
+                $tab->saveForm($model);
             }
-        }
+        });
     }
 
     /**
@@ -172,5 +220,29 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     public function __toString()
     {
         return (string) $this->render();
+    }
+
+    /**
+     * Using in trait FormElements;.
+     *
+     * @param $object
+     *
+     * @return mixed
+     */
+    protected function getElementContainer($object)
+    {
+        return $object->getContent();
+    }
+
+    /**
+     * @return Model $model
+     */
+    public function getModel()
+    {
+        foreach ($this->getTabs() as $tab) {
+            if ($tab->getContent() instanceof FormInterface) {
+                return $tab->getContent()->getModel();
+            }
+        }
     }
 }

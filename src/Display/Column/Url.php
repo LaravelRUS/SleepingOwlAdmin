@@ -5,15 +5,28 @@ namespace SleepingOwl\Admin\Display\Column;
 class Url extends NamedColumn
 {
     /**
-     * String constructor.
-     *
-     * {@inheritdoc}
+     * @var array
      */
-    public function __construct($name, $label = null)
-    {
-        parent::__construct($name, $label);
+    protected $linkAttributes = [];
 
-        $this->setHtmlAttribute('class', 'row-url');
+    /**
+     * @return array
+     */
+    public function getLinkAttributes()
+    {
+        return $this->linkAttributes;
+    }
+
+    /**
+     * @param array $linkAttributes
+     *
+     * @return $this
+     */
+    public function setLinkAttributes(array $linkAttributes)
+    {
+        $this->linkAttributes = $linkAttributes;
+
+        return $this;
     }
 
     /**
@@ -22,7 +35,8 @@ class Url extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'url' => $this->getModelValue(),
+            'linkAttributes' => $this->getLinkAttributes(),
+            'value' => $this->getModelValue(),
         ];
     }
 }

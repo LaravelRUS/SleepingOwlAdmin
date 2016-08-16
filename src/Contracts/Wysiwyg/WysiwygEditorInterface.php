@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Contracts\Wysiwyg;
 
-interface WysiwygEditorInterface
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Support\Arrayable;
+
+interface WysiwygEditorInterface extends Arrayable
 {
     /**
      * @return string
@@ -18,6 +21,11 @@ interface WysiwygEditorInterface
      * @return WysiwygFilterInterface
      */
     public function getFilter();
+
+    /**
+     * @return Repository
+     */
+    public function getConfig();
 
     /**
      * @return bool

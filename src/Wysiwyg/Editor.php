@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
+use Illuminate\Config\Repository;
 use Meta;
-use Illuminate\Contracts\Support\Arrayable;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
-final class Editor implements WysiwygEditorInterface, Arrayable
+final class Editor implements WysiwygEditorInterface
 {
     /**
      * @var string
@@ -25,9 +25,9 @@ final class Editor implements WysiwygEditorInterface, Arrayable
     private $filter;
 
     /**
-     * @var array
+     * @var Repository
      */
-    private $config = [];
+    private $config;
 
     /**
      * @var bool
@@ -50,7 +50,7 @@ final class Editor implements WysiwygEditorInterface, Arrayable
         $this->id = $id;
         $this->name = is_null($name) ? studly_case($id) : $name;
         $this->filter = is_null($filter) ? $this->loadDefaultFilter() : $filter;
-        $this->config = $config;
+        $this->config = new Repository($config);
 
         $this->package = app('assets.packages')->add($id);
     }
@@ -88,11 +88,11 @@ final class Editor implements WysiwygEditorInterface, Arrayable
     }
 
     /**
-     * @return array
+     * @return Repository
      */
     public function getConfig()
     {
-        return (array) $this->config;
+        return $this->config;
     }
 
     /**

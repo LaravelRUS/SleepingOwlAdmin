@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display\Filter;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class FilterRelated extends FilterBase
+class FilterRelated extends FilterField
 {
     /**
      * TODO: возможно стоит изменить название параметра на $field.

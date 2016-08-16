@@ -4,10 +4,11 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 
-class Actions extends Extension implements Initializable
+class Actions extends Extension implements Initializable, Placable
 {
     use HtmlAttributes;
 
@@ -17,7 +18,7 @@ class Actions extends Extension implements Initializable
     protected $actions;
 
     /**
-     * @var string
+     * @var string|\Illuminate\View\View
      */
     protected $view = 'display.extensions.actions';
 
@@ -82,7 +83,7 @@ class Actions extends Extension implements Initializable
     }
 
     /**
-     * @return string
+     * @return string|\Illuminate\View\View
      */
     public function getView()
     {
@@ -90,7 +91,7 @@ class Actions extends Extension implements Initializable
     }
 
     /**
-     * @param string $view
+     * @param string|\Illuminate\View\View $view
      *
      * @return $this
      */
@@ -153,14 +154,5 @@ class Actions extends Extension implements Initializable
         if (! $this->hasHtmlAttribute('class')) {
             $this->setHtmlAttribute('class', 'panel-footer');
         }
-
-        $template = app('sleeping_owl.template')->getViewPath($this->getDisplay()->getView());
-
-        view()->composer($template, function (\Illuminate\View\View $view) {
-            $view->getFactory()->inject(
-                $this->getPlacement(),
-                app('sleeping_owl.template')->view($this->getView(), $this->toArray())
-            );
-        });
     }
 }

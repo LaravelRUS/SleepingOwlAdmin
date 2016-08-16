@@ -5,9 +5,10 @@ namespace SleepingOwl\Admin\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \SleepingOwl\Admin\Form\FormDefault form()
- * @method static \SleepingOwl\Admin\Form\FormTabbed tabbed()
- * @method static \SleepingOwl\Admin\Form\FormPanel panel()
+ * @method static \SleepingOwl\Admin\Form\FormDefault form(array $elements = [])
+ * @method static \SleepingOwl\Admin\Form\FormElements elements(array $elements = [])
+ * @method static \SleepingOwl\Admin\Form\FormTabbed tabbed(array $elements = [])
+ * @method static \SleepingOwl\Admin\Form\FormPanel panel(array $elements = [])
  */
 class Form extends Facade
 {

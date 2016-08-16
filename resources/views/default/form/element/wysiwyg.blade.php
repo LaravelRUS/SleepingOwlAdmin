@@ -1,8 +1,11 @@
+@push('footer-scripts')
 <script>
-    $(function(){
+    Admin.Modules.add('wysiwyg', function() {
         window.Admin.WYSIWYG.switchOn('{{ $name }}', '{{ $editor }}', {!! $parameters !!})
-    });
+    })
 </script>
+@endpush
+
 <div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
     <label for="{{ $name }}" class="control-label">
         {{ $label }}

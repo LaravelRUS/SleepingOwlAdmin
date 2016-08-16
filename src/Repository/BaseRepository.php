@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Repository;
 
 use Cache;
-use Schema;
 use Illuminate\Database\Eloquent\Model;
+use Schema;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class BaseRepository implements RepositoryInterface
@@ -81,7 +81,7 @@ class BaseRepository implements RepositoryInterface
 
     /**
      * Get base query.
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getQuery()
     {
@@ -146,6 +146,16 @@ class BaseRepository implements RepositoryInterface
     public function delete($id)
     {
         $this->find($id)->delete();
+    }
+
+    /**
+     * Permanently delete model instance by id.
+     *
+     * @param int $id
+     */
+    public function forceDelete($id)
+    {
+        $this->findOnlyTrashed($id)->forceDelete();
     }
 
     /**
