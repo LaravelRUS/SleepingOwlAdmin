@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use KodiComponents\Support\HtmlAttributes;
-use Meta;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
