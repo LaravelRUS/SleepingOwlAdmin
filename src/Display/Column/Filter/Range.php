@@ -115,7 +115,7 @@ class Range extends BaseColumnFilter
         if (! empty($from)) {
             $this
                 ->getFrom()
-                ->setOperator(FilterInterface::LESS_OR_EQUAL)
+                ->setOperator(FilterInterface::GREATER_OR_EQUAL)
                 ->apply($repository, $column, $query, $from, $fullSearch);
         }
 

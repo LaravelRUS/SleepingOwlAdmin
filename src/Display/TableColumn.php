@@ -8,10 +8,11 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\Assets;
 
 abstract class TableColumn implements ColumnInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Assets;
 
     /**
      * Column header.
@@ -58,6 +59,8 @@ abstract class TableColumn implements ColumnInterface
         if (! is_null($label)) {
             $this->setLabel($label);
         }
+
+        $this->initializePackage();
     }
 
     /**
@@ -65,7 +68,7 @@ abstract class TableColumn implements ColumnInterface
      */
     public function initialize()
     {
-        Meta::loadPackage(get_called_class());
+        $this->includePackage();
     }
 
     /**
