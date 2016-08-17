@@ -77,7 +77,7 @@ Vue.component('element-image', Vue.extend({
             return this.value.length > 0
         },
         image () {
-            return Admin.Settings.base_url + this.value
+            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Settings.base_url + this.value)
         }
     }
 }));

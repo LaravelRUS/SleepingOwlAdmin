@@ -76,7 +76,7 @@ Vue.component('element-file', Vue.extend({
             return this.value.length > 0
         },
         file () {
-            return Admin.Settings.base_url + this.value
+            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Settings.base_url + this.value)
         }
     }
 }));
