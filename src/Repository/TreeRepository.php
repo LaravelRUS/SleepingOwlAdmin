@@ -372,7 +372,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
         $parentField = $this->getParentField();
         $result = [];
         foreach ($collection as $instance) {
-            if ($instance->$parentField != $id) {
+            if ((int)$instance->$parentField != $id) {
                 continue;
             }
 
