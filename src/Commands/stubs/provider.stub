@@ -21,8 +21,12 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     public function boot(\SleepingOwl\Admin\Contracts\AdminInterface $admin)
     {
+        parent::boot($admin);
+
     	//
 
-        parent::boot($admin);
+        // Uncomment this line if you want to use section policies
+        // use `php artisan sleepingowl:section:policies` for policies generating
+        // $this->registerPolicies();
     }
 }

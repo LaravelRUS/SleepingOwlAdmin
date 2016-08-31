@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 
@@ -31,6 +32,13 @@ class AdminSectionsServiceProvider extends ServiceProvider
             if (class_exists($section)) {
                 $admin->register($this->app->make($section, ['class' => $model]));
             }
+        }
+    }
+
+    public function registerPolicies()
+    {
+        foreach ($this->sections as $section => $model) {
+            Gate::policy($section, class_basename($section).'SectionModelPolicy');
         }
     }
 
