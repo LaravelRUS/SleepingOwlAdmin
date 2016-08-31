@@ -329,6 +329,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @param ModelConfigurationInterface $modelConfiguration
      * @param \Illuminate\Http\Request $request
+     *
+     * @return bool
      */
     public function saveForm(ModelConfigurationInterface $modelConfiguration, \Illuminate\Http\Request $request)
     {
@@ -340,11 +342,29 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $this->saveBelongsToRelations();
 
+        $loaded = $this->getModel()->exists;
+
+        if ($loaded && $modelConfiguration->fireEvent('updating', true, $this->getModel()) === false) {
+            return false;
+        } else if ($modelConfiguration->fireEvent('creating', true, $this->getModel()) === false) {
+            return false;
+        }
+
+        if ($modelConfiguration->fireEvent('saving', true, $this->getModel()) === false) {
+            return false;
+        }
+
+
         $this->getModel()->save();
 
         $this->saveHasOneRelations();
 
         parent::afterSave($request);
+
+        $modelConfiguration->fireEvent($loaded ? 'updated' : 'created', false, $this->getModel());
+        $modelConfiguration->fireEvent('saved', false, $this->getModel());
+
+        return true;
     }
 
     protected function saveBelongsToRelations()

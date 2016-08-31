@@ -156,15 +156,11 @@ class AdminController extends Controller
                     ]);
             }
 
-            if ($model->fireEvent('creating') === false) {
+            if ($createForm->saveForm($model, $this->request) === false) {
                 return redirect()->back()->with([
                     '_redirectBack' => $backUrl,
                 ]);
             }
-
-            $createForm->saveForm($model, $this->request);
-
-            $model->fireEvent('created', false, $createForm->getModel());
         }
 
         if ($nextAction == 'save_and_continue') {
@@ -236,15 +232,11 @@ class AdminController extends Controller
                     ->withInput();
             }
 
-            if ($model->fireEvent('updating', true, $item) === false) {
+            if ($editForm->saveForm($model, $this->request) === false) {
                 return redirect()->back()->with([
                     '_redirectBack' => $backUrl,
                 ]);
             }
-
-            $editForm->saveForm($model, $this->request);
-
-            $model->fireEvent('updated', false, $item);
         }
 
         if ($nextAction == 'save_and_continue') {
