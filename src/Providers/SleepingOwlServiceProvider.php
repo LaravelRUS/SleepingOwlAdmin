@@ -52,7 +52,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
         if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
-            $this->app->register(\App\Providers\AdminSectionsServiceProvider::class);
+            $this->app->register($this->app->getNamespace() . 'Providers\\AdminSectionsServiceProvider');
         }
     }
 

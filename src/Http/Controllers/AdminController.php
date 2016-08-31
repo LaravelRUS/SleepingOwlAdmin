@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Http\Controllers;
 
 use App;
 use Breadcrumbs;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
@@ -137,6 +138,7 @@ class AdminController extends Controller
         }
 
         $createForm = $model->fireCreate();
+
         $nextAction = $this->request->input('next_action');
 
         $backUrl = $this->getBackUrl();
@@ -203,19 +205,20 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param int                $id
+     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postUpdate(ModelConfigurationInterface $model, $id)
     {
-        $item = $model->getRepository()->find($id);
+        /** @var FormInterface $editForm */
+        $editForm = $model->fireEdit($id);
+        $item     = $editForm->getModel();
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
-        $editForm = $model->fireEdit($id);
         $nextAction = $this->request->input('next_action');
 
         $backUrl = $this->getBackUrl();
@@ -323,7 +326,7 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param int                $id
+     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -359,7 +362,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postRestore($model, $id)
+    public function postRestore(ModelConfigurationInterface $model, $id)
     {
         if (! $model->isRestorableModel()) {
             abort(404);
@@ -429,9 +432,11 @@ class AdminController extends Controller
     }
 
     /**
+     * @param Application $application
+     *
      * @return Response
      */
-    public function getScripts()
+    public function getScripts(Application $application)
     {
         $lang = trans('sleeping_owl::lang');
         if ($lang == 'sleeping_owl::lang') {
@@ -439,7 +444,7 @@ class AdminController extends Controller
         }
 
         $data = [
-            'locale' => App::getLocale(),
+            'locale' => $application->getLocale(),
             'token' => csrf_token(),
             'url_prefix' => config('sleeping_owl.url_prefix'),
             'base_url' => asset('/'),
@@ -471,7 +476,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     protected function getBackUrl()
     {
