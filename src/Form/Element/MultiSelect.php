@@ -19,11 +19,16 @@ class MultiSelect extends Select
     protected $deleteRelatedItem = false;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.select';
+
+    /**
      * @return string
      */
     public function getName()
     {
-        return $this->name.'[]';
+        return parent::getName().'[]';
     }
 
     /**
@@ -90,18 +95,14 @@ class MultiSelect extends Select
             'multiple',
         ];
 
-        if ($this->isReadonly()) {
-            $attributes['disabled'] = 'disabled';
-        }
-
         if ($this->isTaggable()) {
             $attributes['class'] .= ' input-taggable';
         }
 
-        return [
+        return parent::toArray() + [
             'tagable' => $this->isTaggable(),
             'attributes' => $attributes,
-        ] + parent::toArray();
+        ];
     }
 
     public function save()
