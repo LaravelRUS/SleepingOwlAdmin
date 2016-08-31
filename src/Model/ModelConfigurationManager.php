@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
@@ -24,11 +25,6 @@ use SleepingOwl\Admin\Navigation\Page;
  */
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
-    /**
-     * @var TemplateInterface
-     */
-    private $template;
-
     /**
      * Get the event dispatcher instance.
      *
@@ -98,18 +94,34 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected $repository;
 
     /**
+     * @var TemplateInterface
+     */
+    protected $template;
+
+    /**
+     * @var Gate
+     */
+    protected $gate;
+
+    /**
      * SectionModelConfiguration constructor.
      *
+     * @param string $class
      * @param TemplateInterface $template
      * @param RepositoryInterface $repository
-     * @param string $class
+     * @param Gate $gate
      */
-    public function __construct($class, TemplateInterface $template, RepositoryInterface $repository)
+    public function __construct($class,
+                                TemplateInterface $template,
+                                RepositoryInterface $repository,
+                                Gate $gate
+    )
     {
         $this->class = $class;
         $this->model = app($class);
         $this->template = $template;
         $this->repository = $repository->setClass($class);
+        $this->gate = $gate;
 
         if (! $this->alias) {
             $this->setDefaultAlias();
@@ -179,6 +191,14 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    /**
+     * @return TemplateInterface
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
     /**
@@ -284,7 +304,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             return true;
         }
 
-        return \Gate::allows($action, $model);
+        return $this->gate->allows($action, $model);
     }
 
     /**
@@ -433,7 +453,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function addToNavigation($priority = 100, $badge = null)
     {
-        $page = new Page($this->getClass());
+        $page = app()->make(Page::class, [$this]);
+
         $page->setPriority($priority);
 
         if ($badge) {

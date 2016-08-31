@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class View extends Custom
@@ -69,7 +70,10 @@ class View extends Custom
         return $this;
     }
 
-    public function save()
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
         $callback = $this->getCallback();
         if (is_callable($callback)) {

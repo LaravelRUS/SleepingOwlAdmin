@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
 
@@ -85,7 +86,10 @@ class Custom extends FormElement
         return $this->getDisplay();
     }
 
-    public function save()
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
         $callback = $this->getCallback();
 

@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\AdminInterface;
@@ -56,18 +56,25 @@ class DisplayTable extends Display
     protected $newEntryButtonText;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * Display constructor.
      *
      * @param AdminInterface $admin
      * @param RepositoryInterface $repository
-     *
      * @param Control $control
+     * @param Request $request
      *
      * @internal param TemplateInterface $template
      */
-    public function __construct(AdminInterface $admin, RepositoryInterface $repository, Control $control)
+    public function __construct(AdminInterface $admin, RepositoryInterface $repository, Control $control, Request $request)
     {
         parent::__construct($admin, $repository);
+
+        $this->request = $request;
 
         $this->extend('columns', new Columns($control));
         $this->extend('column_filters', new ColumnFilters());
@@ -189,7 +196,7 @@ class DisplayTable extends Display
         $params = parent::toArray();
 
         $params['creatable'] = $model->isCreatable();
-        $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
+        $params['createUrl'] = $model->getCreateUrl($this->getParameters() + $this->request->all());
         $params['collection'] = $this->getCollection();
 
         $params['extensions'] = $this->getExtensions()

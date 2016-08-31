@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
@@ -114,14 +115,20 @@ trait FormElements
         return $this->getValidationLabelsForElements();
     }
 
-    public function save()
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
-        $this->saveElements();
+        $this->saveElements($request);
     }
 
-    public function afterSave()
+    /**
+     * @param Request $request
+     */
+    public function afterSave(Request $request)
     {
-        $this->afterSaveElements();
+        $this->afterSaveElements($request);
     }
 
     /**
@@ -196,22 +203,28 @@ trait FormElements
         return $labels;
     }
 
-    protected function saveElements()
+    /**
+     * @param Request $request
+     */
+    protected function saveElements(Request $request)
     {
-        $this->getElements()->each(function ($element) {
+        $this->getElements()->each(function ($element) use($request) {
             $element = $this->getElementContainer($element);
             if ($element instanceof FormElementInterface) {
-                $element->save();
+                $element->save($request);
             }
         });
     }
 
-    protected function afterSaveElements()
+    /**
+     * @param Request $request
+     */
+    protected function afterSaveElements(Request $request)
     {
-        $this->getElements()->each(function ($element) {
+        $this->getElements()->each(function ($element) use($request) {
             $element = $this->getElementContainer($element);
             if ($element instanceof FormElementInterface) {
-                $element->afterSave();
+                $element->afterSave($request);
             }
         });
     }

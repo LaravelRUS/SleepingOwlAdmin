@@ -210,27 +210,28 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @param ModelConfigurationInterface $model
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Contracts\Validation\Factory $validator
      *
      * @return Validator|null
      */
-    public function validateForm(ModelConfigurationInterface $model)
+    public function validateForm(ModelConfigurationInterface $model, \Illuminate\Http\Request $request, \Illuminate\Contracts\Validation\Factory $validator)
     {
         if ($this->getContent() instanceof FormInterface) {
-            return $this->getContent()->validateForm($model);
+            return $this->getContent()->validateForm($model, $request, $validator);
         }
     }
 
     /**
-     * Save model.
-     *
      * @param ModelConfigurationInterface $model
+     * @param \Illuminate\Http\Request $request
      *
      * @return $this
      */
-    public function saveForm(ModelConfigurationInterface $model)
+    public function saveForm(ModelConfigurationInterface $model, \Illuminate\Http\Request $request)
     {
         if ($this->getContent() instanceof FormInterface) {
-            $this->getContent()->saveForm($model);
+            $this->getContent()->saveForm($model, $request);
         }
 
         return $this;
@@ -334,21 +335,25 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * Save form item.
+     *
+     * @param \Illuminate\Http\Request $request
      */
-    public function save()
+    public function save(\Illuminate\Http\Request $request)
     {
         if ($this->getContent() instanceof FormElementInterface) {
-            $this->getContent()->save();
+            $this->getContent()->save($request);
         }
     }
 
     /**
      * Save form item.
+     *
+     * @param \Illuminate\Http\Request $request
      */
-    public function afterSave()
+    public function afterSave(\Illuminate\Http\Request $request)
     {
         if ($this->getContent() instanceof FormElementInterface) {
-            $this->getContent()->afterSave();
+            $this->getContent()->afterSave($request);
         }
     }
 

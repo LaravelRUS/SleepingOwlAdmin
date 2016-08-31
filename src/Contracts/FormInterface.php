@@ -23,14 +23,20 @@ interface FormInterface extends FormElementInterface, ElementsInterface
     /**
      * @param ModelConfigurationInterface $model
      *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Contracts\Validation\Factory $validator
+     *
      * @return \Illuminate\Contracts\Validation\Validator|null
      */
-    public function validateForm(ModelConfigurationInterface $model);
+    public function validateForm(ModelConfigurationInterface $model, \Illuminate\Http\Request $request, \Illuminate\Contracts\Validation\Factory $validator);
 
     /**
      * Save model.
      *
      * @param ModelConfigurationInterface $model
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return
      */
-    public function saveForm(ModelConfigurationInterface $model);
+    public function saveForm(ModelConfigurationInterface $model, \Illuminate\Http\Request $request);
 }

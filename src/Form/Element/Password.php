@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
+
 class Password extends NamedFormElement
 {
     /**
@@ -9,7 +11,10 @@ class Password extends NamedFormElement
      */
     protected $allowEmpty = false;
 
-    public function save()
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
         $value = $this->getValue();
 
@@ -17,7 +22,7 @@ class Password extends NamedFormElement
             return;
         }
 
-        parent::save();
+        parent::save($request);
     }
 
     /**

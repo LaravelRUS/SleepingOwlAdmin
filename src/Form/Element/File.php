@@ -10,7 +10,6 @@ use Illuminate\Routing\Router;
 use KodiComponents\Support\Upload;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use Validator;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
@@ -30,6 +29,7 @@ class File extends NamedFormElement implements WithRoutesInterface
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', ['as' => $routeName, function (
                 Request $request,
                 ModelConfigurationInterface $model,
+                \Illuminate\Validation\Factory $validator,
                 $field,
                 $id = null
             ) {
@@ -62,7 +62,7 @@ class File extends NamedFormElement implements WithRoutesInterface
                     $labels = $element->getUploadValidationLabels();
                 }
 
-                $validator = Validator::make($request->all(), $rules, $messages, $labels);
+                $validator = $validator->make($request->all(), $rules, $messages, $labels);
 
                 static::validate($validator);
 

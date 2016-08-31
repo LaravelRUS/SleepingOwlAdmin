@@ -40,7 +40,9 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->alias('sleeping_owl.template', \SleepingOwl\Admin\Contracts\Template\TemplateInterface::class);
 
         $this->app->singleton('sleeping_owl', function ($app) {
-            return new \SleepingOwl\Admin\Admin($app['sleeping_owl.template']);
+            return new \SleepingOwl\Admin\Admin(
+                $app['sleeping_owl.template'], $app
+            );
         });
 
         $this->app->alias('sleeping_owl', \SleepingOwl\Admin\Contracts\AdminInterface::class);
@@ -216,7 +218,7 @@ class AdminServiceProvider extends ServiceProvider
             }
 
             foreach (AliasBinder::routes() as $route) {
-                call_user_func($route, $router);
+                $this->app->call($route);
             }
         });
     }

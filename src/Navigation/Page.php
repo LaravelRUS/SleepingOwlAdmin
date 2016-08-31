@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class Page extends \KodiComponents\Navigation\Page
@@ -13,16 +14,25 @@ class Page extends \KodiComponents\Navigation\Page
     protected $model;
 
     /**
-     * @param string|null $modelClass
+     * @var ModelConfigurationInterface
      */
-    public function __construct($modelClass = null)
+    protected $modelConfiguration;
+
+    /**
+     * @param ModelConfigurationInterface $modelConfiguration
+     *
+     * @internal param null|string $modelClass
+     */
+    public function __construct(ModelConfigurationInterface $modelConfiguration)
     {
+        $this->modelConfiguration = $modelConfiguration;
+
         parent::__construct();
 
-        $this->setModel($modelClass);
+        $this->setModel($this->modelConfiguration->getClass());
 
         if ($this->hasModel()) {
-            $this->setIcon($this->getModelConfiguration()->getIcon());
+            $this->setIcon($this->modelConfiguration->getIcon());
         }
     }
 
@@ -31,11 +41,7 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function getModelConfiguration()
     {
-        if (! $this->hasModel()) {
-            return;
-        }
-
-        return app('sleeping_owl')->getModel($this->model);
+        return $this->modelConfiguration;
     }
 
     /**
@@ -64,7 +70,7 @@ class Page extends \KodiComponents\Navigation\Page
     public function getTitle()
     {
         if (is_null($this->title) and $this->hasModel()) {
-            return $this->getModelConfiguration()->getTitle();
+            return $this->modelConfiguration->getTitle();
         }
 
         return parent::getTitle();
@@ -76,7 +82,7 @@ class Page extends \KodiComponents\Navigation\Page
     public function getUrl()
     {
         if (is_null($this->url) and $this->hasModel()) {
-            return $this->getModelConfiguration()->getDisplayUrl();
+            return $this->modelConfiguration->getDisplayUrl();
         }
 
         return parent::getUrl();
@@ -90,7 +96,7 @@ class Page extends \KodiComponents\Navigation\Page
         if (! is_callable($this->accessLogic)) {
             if ($this->hasModel()) {
                 return function () {
-                    return $this->getModelConfiguration()->isDisplayable();
+                    return $this->modelConfiguration->isDisplayable();
                 };
             }
         }
@@ -112,7 +118,7 @@ class Page extends \KodiComponents\Navigation\Page
             return view($view, $data)->render();
         }
 
-        return app('sleeping_owl.template')->view('_partials.navigation.page', $data)->render();
+        return $this->modelConfiguration->getTemplate()->view('_partials.navigation.page', $data)->render();
     }
 
     /**

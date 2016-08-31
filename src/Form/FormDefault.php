@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
-use Request;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
@@ -15,9 +15,7 @@ use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Form\Element\Upload;
-use Validator;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -76,22 +74,30 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     protected $admin;
 
     /**
+     * @var UrlGenerator
+     */
+    protected $urlGenerator;
+
+    /**
      * FormDefault constructor.
      *
      * @param AdminInterface $admin
      * @param FormButtonsInterface $buttons
      * @param RepositoryInterface $repository
+     * @param UrlGenerator $urlGenerator
      * @param array $elements
      */
     public function __construct(
         AdminInterface $admin,
         FormButtonsInterface $buttons,
         RepositoryInterface $repository,
+        UrlGenerator $urlGenerator,
         array $elements = []
     )
     {
         $this->admin = $admin;
         $this->repository = $repository;
+        $this->urlGenerator = $urlGenerator;
 
         parent::__construct($admin->template(), $elements);
 
@@ -322,14 +328,15 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * Save instance.
      *
      * @param ModelConfigurationInterface $modelConfiguration
+     * @param \Illuminate\Http\Request $request
      */
-    public function saveForm(ModelConfigurationInterface $modelConfiguration)
+    public function saveForm(ModelConfigurationInterface $modelConfiguration, \Illuminate\Http\Request $request)
     {
         if ($modelConfiguration !== $this->getModelConfiguration()) {
             return;
         }
 
-        parent::save();
+        parent::save($request);
 
         $this->saveBelongsToRelations();
 
@@ -337,7 +344,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $this->saveHasOneRelations();
 
-        parent::afterSave();
+        parent::afterSave($request);
     }
 
     protected function saveBelongsToRelations()
@@ -369,27 +376,26 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
     /**
      * @param ModelConfigurationInterface $modelConfiguration
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Contracts\Validation\Factory $validator
      *
      * @return \Illuminate\Contracts\Validation\Validator|null
      */
-    public function validateForm(ModelConfigurationInterface $modelConfiguration)
+    public function validateForm(ModelConfigurationInterface $modelConfiguration, \Illuminate\Http\Request $request, \Illuminate\Contracts\Validation\Factory $validator)
     {
         if ($modelConfiguration !== $this->getModelConfiguration()) {
             return;
         }
 
-        $data = Request::all();
-
-        $verifier = app('validation.presence');
-        $verifier->setConnection($this->getModel()->getConnectionName());
-
-        $validator = Validator::make(
-            $data,
+        $validator = $validator->make(
+            $request->all(),
             $this->getValidationRules(),
             $this->getValidationMessages(),
             $this->getValidationLabels()
         );
 
+        $verifier = app('validation.presence');
+        $verifier->setConnection($this->getModel()->getConnectionName());
         $validator->setPresenceVerifier($verifier);
 
         if ($validator->fails()) {
@@ -411,7 +417,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             'instance' => $this->getModel(),
             'attributes' => $this->htmlAttributesToString(),
             'buttons' => $this->getButtons(),
-            'backUrl' => session('_redirectBack', \URL::previous()),
+            'backUrl' => session('_redirectBack', $this->urlGenerator->previous()),
         ];
     }
 

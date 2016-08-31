@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 interface ModelConfigurationInterface
 {
@@ -10,6 +11,11 @@ interface ModelConfigurationInterface
      * @return RepositoryInterface
      */
     public function getRepository();
+
+    /**
+     * @return TemplateInterface
+     */
+    public function getTemplate();
 
     /**
      * @return string

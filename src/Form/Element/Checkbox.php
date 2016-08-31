@@ -2,17 +2,21 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
+use Illuminate\Http\Request;
 
 class Checkbox extends NamedFormElement
 {
-    public function save()
+
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
         $name = $this->getName();
-        if (! Request::has($name)) {
-            Request::merge([$name => 0]);
+        if (! $request->has($name)) {
+            $request->merge([$name => 0]);
         }
 
-        parent::save();
+        parent::save($request);
     }
 }

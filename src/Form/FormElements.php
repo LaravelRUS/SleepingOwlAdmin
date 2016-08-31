@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
@@ -51,18 +52,24 @@ class FormElements extends FormElement implements ElementsInterface
         );
     }
 
-    public function save()
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
-        parent::save();
+        parent::save($request);
 
-        $this->saveElements();
+        $this->saveElements($request);
     }
 
-    public function afterSave()
+    /**
+     * @param Request $request
+     */
+    public function afterSave(Request $request)
     {
-        parent::afterSave();
+        parent::afterSave($request);
 
-        $this->afterSaveElements();
+        $this->afterSaveElements($request);
     }
 
     /**

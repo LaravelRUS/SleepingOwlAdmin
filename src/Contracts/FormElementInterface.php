@@ -38,11 +38,19 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable
 
     /**
      * Save form item.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
-    public function save();
+    public function save(\Illuminate\Http\Request $request);
 
     /**
      * Save form item.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
-    public function afterSave();
+    public function afterSave(\Illuminate\Http\Request $request);
 }

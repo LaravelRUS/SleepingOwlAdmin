@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method Element\Select select($name, $label = null, array|Model $options)
  * @method Element\MultiSelect multiselect($name, $label = null, array|Model $options)
  * @method Columns\Columns columns(array $columns = [])
+ * @method Columns\Columns column()
  * @method Element\Hidden hidden($name)
  * @method Element\Custom custom(\Closure $callback = null)
  * @method Element\Html html($html)
@@ -40,6 +41,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
         
         $this->register([
             'columns' => Columns\Columns::class,
+            'column' => Columns\Column::class,
             'text' => Element\Text::class,
             'time' => Element\Time::class,
             'date' => Element\Date::class,

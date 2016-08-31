@@ -2,15 +2,19 @@
 
 namespace SleepingOwl\Admin\Factories;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Display\DisplayDatatables;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Display\DisplayTab;
 use SleepingOwl\Admin\Display\DisplayTabbed;
 use SleepingOwl\Admin\Display\DisplayTable;
 use SleepingOwl\Admin\Display\DisplayTree;
+use SleepingOwl\Admin\Navigation\Page;
 
 /**
  * @method DisplayDatatables datatables()
@@ -19,16 +23,23 @@ use SleepingOwl\Admin\Display\DisplayTree;
  * @method DisplayTabbed tabbed(\Closure|array $tabs = null)
  * @method DisplayTable table()
  * @method DisplayTree tree()
+ * @method Page page()
  */
 class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
 {
 
     /**
+     * @var AdminInterface
+     */
+    protected $admin;
+
+    /**
      * DisplayFactory constructor.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $application
+     * @param Application $application
+     * @param AdminInterface $admin
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application, AdminInterface $admin)
     {
         parent::__construct($application);
 
@@ -39,6 +50,33 @@ class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
             'tabbed' => DisplayTabbed::class,
             'table' => DisplayTable::class,
             'tree' => DisplayTree::class,
+
+            'page' => Page::class
         ]);
+
+        $this->admin = $admin;
+    }
+
+    /**
+     * @param string $alias
+     * @param array $arguments
+     *
+     * @return object
+     */
+    public function makeClass($alias, array $arguments)
+    {
+        if ($alias == 'page') {
+            $this->app->when(Page::class)
+                  ->needs(ModelConfigurationInterface::class)
+                  ->give(function ($app) use ($arguments) {
+                      return $this->admin->getModel(
+                          array_shift($arguments)
+                      );
+                  });
+
+            return $this->app->make($this->getAlias($alias));
+        }
+
+        return parent::makeClass($alias, $arguments);
     }
 }

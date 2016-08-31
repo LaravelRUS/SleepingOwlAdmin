@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -32,13 +33,20 @@ class Admin implements AdminInterface
     protected $menuItems = [];
 
     /**
+     * @var Application
+     */
+    protected $app;
+
+    /**
      * Admin constructor.
      *
+     * @param Application $application
      * @param TemplateInterface $template
      */
-    public function __construct(TemplateInterface $template)
+    public function __construct(TemplateInterface $template, Application $application)
     {
         $this->template = $template;
+        $this->app = $application;
     }
 
     /**
@@ -83,7 +91,7 @@ class Admin implements AdminInterface
      */
     public function registerModel($class, Closure $callback = null)
     {
-        $this->register($model = app(ModelConfiguration::class, [$class]));
+        $this->register($model = $this->app->make(ModelConfiguration::class, [$class]));
 
         if (is_callable($callback)) {
             call_user_func($callback, $model);
@@ -179,6 +187,6 @@ class Admin implements AdminInterface
      */
     public function view($content, $title = null)
     {
-        return app(AdminController::class)->renderContent($content, $title);
+        return $this->app->make(AdminController::class)->renderContent($content, $title);
     }
 }

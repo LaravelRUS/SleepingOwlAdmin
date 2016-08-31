@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class DateTime extends NamedFormElement
 {
@@ -44,11 +45,13 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @return $this|NamedFormElement|mixed|null|string
+     * @param Request $request
+     *
+     * @return $this|mixed|null|NamedFormElement|string
      */
-    public function getValue()
+    public function getValue(Request $request)
     {
-        $value = parent::getValue();
+        $value = parent::getValue($request);
         if (empty($value)) {
             $value = null;
         }

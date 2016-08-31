@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
@@ -153,16 +154,16 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * SMELLS.
+     * @param Request $request
      */
-    public function save()
+    public function save(Request $request)
     {
     }
 
     /**
-     * SMELLS.
+     * @param Request $request
      */
-    public function afterSave()
+    public function afterSave(Request $request)
     {
     }
 

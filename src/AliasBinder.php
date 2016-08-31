@@ -14,7 +14,7 @@ class AliasBinder
     /**
      * @var \Illuminate\Contracts\Foundation\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * AliasBinder constructor.
@@ -110,6 +110,7 @@ class AliasBinder
 
         $totalArguments = count($arguments);
         $deps = $constructor->getParameters();
+
         $deps = array_reverse(
             array_slice(
                 $deps, 0, count($deps) - $totalArguments

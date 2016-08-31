@@ -174,14 +174,16 @@ class DisplayTabbed implements DisplayInterface, FormInterface
 
     /**
      * @param ModelConfigurationInterface $model
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Contracts\Validation\Factory $validator
      *
      * @return Validator|null
      */
-    public function validateForm(ModelConfigurationInterface $model)
+    public function validateForm(ModelConfigurationInterface $model, \Illuminate\Http\Request $request, \Illuminate\Contracts\Validation\Factory $validator)
     {
         foreach ($this->getTabs() as $tab) {
             if ($tab instanceof FormInterface) {
-                $result = $tab->validateForm($model);
+                $result = $tab->validateForm($model, $request, $validator);
                 if (! is_null($result)) {
                     return $result;
                 }
@@ -191,12 +193,13 @@ class DisplayTabbed implements DisplayInterface, FormInterface
 
     /**
      * @param ModelConfigurationInterface $model
+     * @param \Illuminate\Http\Request $request
      */
-    public function saveForm(ModelConfigurationInterface $model)
+    public function saveForm(ModelConfigurationInterface $model, \Illuminate\Http\Request $request)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($model) {
+        $this->getTabs()->each(function (TabInterface $tab) use ($model, $request) {
             if ($tab instanceof FormInterface) {
-                $tab->saveForm($model);
+                $tab->saveForm($model, $request);
             }
         });
     }

@@ -2,8 +2,6 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use App;
-use Breadcrumbs;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
@@ -129,9 +127,14 @@ class AdminController extends Controller
     /**
      * @param ModelConfigurationInterface $model
      *
+     * @param \Illuminate\Validation\Factory $factory
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postStore(ModelConfigurationInterface $model)
+    public function postStore(ModelConfigurationInterface $model,
+                              \Illuminate\Validation\Factory $factory,
+                              \Illuminate\Contracts\Routing\UrlGenerator $urlGenerator
+    )
     {
         if (! $model->isCreatable()) {
             abort(404);
@@ -141,10 +144,10 @@ class AdminController extends Controller
 
         $nextAction = $this->request->input('next_action');
 
-        $backUrl = $this->getBackUrl();
+        $backUrl = $this->getBackUrl($urlGenerator);
 
         if ($createForm instanceof FormInterface) {
-            if (($validator = $createForm->validateForm($model)) instanceof Validator) {
+            if (($validator = $createForm->validateForm($model, $this->request, $factory)) instanceof Validator) {
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput()
@@ -159,7 +162,7 @@ class AdminController extends Controller
                 ]);
             }
 
-            $createForm->saveForm($model);
+            $createForm->saveForm($model, $this->request);
 
             $model->fireEvent('created', false, $createForm->getModel());
         }
@@ -209,7 +212,10 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postUpdate(ModelConfigurationInterface $model, $id)
+    public function postUpdate(ModelConfigurationInterface $model,
+                              \Illuminate\Validation\Factory $factory, $id,
+                              \Illuminate\Contracts\Routing\UrlGenerator $urlGenerator
+    )
     {
         /** @var FormInterface $editForm */
         $editForm = $model->fireEdit($id);
@@ -221,10 +227,10 @@ class AdminController extends Controller
 
         $nextAction = $this->request->input('next_action');
 
-        $backUrl = $this->getBackUrl();
+        $backUrl = $this->getBackUrl($urlGenerator);
 
         if ($editForm instanceof FormInterface) {
-            if (($validator = $editForm->validateForm($model)) instanceof Validator) {
+            if (($validator = $editForm->validateForm($model, $this->request, $factory)) instanceof Validator) {
                 return redirect()->back()
                     ->withErrors($validator)
                     ->withInput();
@@ -236,7 +242,7 @@ class AdminController extends Controller
                 ]);
             }
 
-            $editForm->saveForm($model);
+            $editForm->saveForm($model, $this->request);
 
             $model->fireEvent('updated', false, $item);
         }
@@ -476,11 +482,13 @@ class AdminController extends Controller
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\UrlGenerator $urlGenerator
+     *
      * @return null|string
      */
-    protected function getBackUrl()
+    protected function getBackUrl(\Illuminate\Contracts\Routing\UrlGenerator $urlGenerator)
     {
-        if (($backUrl = $this->request->input('_redirectBack')) == \URL::previous()) {
+        if (($backUrl = $this->request->input('_redirectBack')) == $urlGenerator->previous()) {
             $backUrl = null;
             $this->request->merge(['_redirectBack' => $backUrl]);
         }

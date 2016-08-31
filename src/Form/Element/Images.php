@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
+use Illuminate\Http\Request;
 
 class Images extends Image
 {
-    public function save()
+    public function save(Request $request)
     {
         $name = $this->getName();
-        $value = Request::input($name, '');
+        $value = $request->input($name, '');
 
         if (! empty($value)) {
             $value = explode(',', $value);
@@ -17,16 +17,19 @@ class Images extends Image
             $value = [];
         }
 
-        Request::merge([$name => $value]);
-        parent::save();
+        $request->merge([$name => $value]);
+
+        parent::save($request);
     }
 
     /**
+     * @param Request $request
+     *
      * @return string
      */
-    public function getValue()
+    public function getValue(Request $request)
     {
-        $value = parent::getValue();
+        $value = parent::getValue($request);
         if (is_null($value)) {
             $value = [];
         }

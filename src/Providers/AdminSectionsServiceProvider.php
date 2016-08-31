@@ -29,7 +29,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     {
         foreach ($this->sections as $model => $section) {
             if (class_exists($section)) {
-                $admin->register(new $section($model));
+                $admin->register($this->app->make($section, ['class' => $model]));
             }
         }
     }

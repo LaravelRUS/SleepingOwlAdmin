@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
-use Blade;
+use Illuminate\Support\Facades\Blade;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
 class DummyFilter implements WysiwygFilterInterface

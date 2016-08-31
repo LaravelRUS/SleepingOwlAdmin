@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Display\Filter;
 
 use Closure;
-use Request;
+use Illuminate\Support\Facades\Request;
 use SleepingOwl\Admin\Contracts\FilterInterface;
 
 abstract class FilterBase implements FilterInterface
@@ -29,11 +29,19 @@ abstract class FilterBase implements FilterInterface
     protected $value;
 
     /**
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
+    /**
+     * @param \Illuminate\Http\Request $request
      * @param string $name
      * @param string|\Closure|null $title
      */
-    public function __construct($name, $title = null)
+    public function __construct(\Illuminate\Http\Request $request, $name, $title = null)
     {
+        $this->request = $request;
+
         $this->setName($name);
         $this->setAlias($name);
 
@@ -48,7 +56,7 @@ abstract class FilterBase implements FilterInterface
     public function initialize()
     {
         if (is_null($value = $this->getValue())) {
-            $value = Request::offsetGet($this->getAlias());
+            $value = $this->request->input($this->getAlias());
         }
 
         $this->setValue($value);

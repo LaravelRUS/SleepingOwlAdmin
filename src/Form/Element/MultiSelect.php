@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
-use Request;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class MultiSelect extends Select
 {
@@ -27,11 +27,13 @@ class MultiSelect extends Select
     }
 
     /**
+     * @param Request $request
+     *
      * @return array
      */
-    public function getValue()
+    public function getValue(Request $request)
     {
-        $value = parent::getValue();
+        $value = parent::getValue($request);
         if ($value instanceof Collection && $value->count() > 0) {
             $value = $value->pluck($value->first()->getKeyName())->all();
         }
@@ -104,14 +106,20 @@ class MultiSelect extends Select
         ] + parent::toArray();
     }
 
-    public function save()
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
         if (is_null($this->getModelForOptions())) {
-            parent::save();
+            parent::save($request);
         }
     }
 
-    public function afterSave()
+    /**
+     * @param Request $request
+     */
+    public function afterSave(Request $request)
     {
         if (is_null($this->getModelForOptions())) {
             return;
@@ -119,7 +127,7 @@ class MultiSelect extends Select
 
         $attribute = $this->getAttribute();
 
-        if (is_null(Request::input($this->getPath()))) {
+        if (is_null($request->input($this->getPath()))) {
             $values = [];
         } else {
             $values = $this->getValue();

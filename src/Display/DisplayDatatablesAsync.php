@@ -2,15 +2,13 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Request;
-use Route;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Link;
@@ -20,6 +18,7 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
+
     /**
      * Register display routes.
      *
@@ -39,7 +38,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 }
 
                 abort(404);
-            },
+            }
         ]);
     }
 
@@ -73,6 +72,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected $distinct;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @var array
      */
     protected $searchableColumns = [
@@ -86,13 +90,22 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      *
      * @param AdminInterface $admin
      * @param RepositoryInterface $repository
+     * @param Request $request
      * @param Control $control
      * @param string|null $name
      * @param string|null $distinct
      */
-    public function __construct(AdminInterface $admin, RepositoryInterface $repository, Control $control, $name = null, $distinct = null)
+    public function __construct(AdminInterface $admin,
+                                RepositoryInterface $repository,
+                                Control $control,
+                                Request $request,
+                                $name = null,
+                                $distinct = null
+    )
     {
-        parent::__construct($admin, $repository, $control);
+        parent::__construct($admin, $repository, $control, $request);
+
+        $this->request = $request;
 
         $this->setName($name);
         $this->setDistinct($distinct);
@@ -107,7 +120,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     {
         parent::initialize();
 
-        $attributes = Request::all();
+        $attributes = $this->request->all();
+
         array_unshift($attributes, $this->getName());
         array_unshift($attributes, $this->getModelConfiguration()->getAlias());
 
@@ -190,8 +204,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applyOffset($query)
     {
-        $offset = Request::input('start', 0);
-        $limit = Request::input('length', 10);
+        $offset = $this->request->input('start', 0);
+        $limit = $this->request->input('length', 10);
 
         if ($limit == -1) {
             return;
@@ -207,7 +221,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applyOrders($query)
     {
-        $orders = Request::input('order', []);
+        $orders = $this->request->input('order', []);
 
         foreach ($orders as $order) {
             $columnIndex = $order['column'];
@@ -228,7 +242,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applySearch(Builder $query)
     {
-        $search = Request::input('search.value');
+        $search = $this->request->input('search.value');
         if (empty($search)) {
             return;
         }
@@ -251,7 +265,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     protected function applyColumnSearch(Builder $query)
     {
-        $queryColumns = Request::input('columns', []);
+        $queryColumns = $this->request->input('columns', []);
 
         foreach ($queryColumns as $index => $queryColumn) {
             $search = array_get($queryColumn, 'search.value');
@@ -279,7 +293,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $columns = $this->getColumns();
 
         $result = [];
-        $result['draw'] = Request::input('draw', 0);
+        $result['draw'] = $this->request->input('draw', 0);
         $result['recordsTotal'] = $totalCount;
         $result['recordsFiltered'] = $filteredCount;
         $result['data'] = [];

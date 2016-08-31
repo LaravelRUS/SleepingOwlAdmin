@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use LogicException;
-use Request;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
 
@@ -331,24 +331,26 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @param Request $request
+     *
      * @return array|string
      */
-    public function getValueFromRequest()
+    public function getValueFromRequest(Request $request)
     {
-        if (! is_null($value = Request::old($this->getPath()))) {
+        if (! is_null($value = $request->old($this->getPath()))) {
             return $value;
         }
 
-        return Request::input($this->getPath());
+        return $request->input($this->getPath());
     }
 
     /**
      * HACK Needs refactoring and reasoning.
      * @return mixed
      */
-    public function getValue()
+    public function getValue(Request $request)
     {
-        if (! is_null($value = $this->getValueFromRequest())) {
+        if (! is_null($value = $this->getValueFromRequest($request))) {
             return $value;
         }
 
@@ -449,23 +451,30 @@ abstract class NamedFormElement extends FormElement
      */
     public function toArray()
     {
+        // TODO нужно избавиться
+        $request = request();
+
         return parent::toArray() + [
             'id' => $this->getName(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
-            'value' => $this->getValue(),
+            'value' => $this->getValue($request),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ];
     }
 
-    public function save()
+    /**
+     * @param Request $request
+     */
+    public function save(Request $request)
     {
         $attribute = $this->getAttribute();
         $model = $this->getModel();
-        $value = $this->getValueFromRequest();
+
+        $value = $this->getValueFromRequest($request);
 
         $relations = explode('.', $this->getPath());
         $count = count($relations);

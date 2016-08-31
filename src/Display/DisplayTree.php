@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Request;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -27,9 +27,9 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         $routeName = 'admin.display.tree.reorder';
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/reorder', ['as' => $routeName, function (ModelConfigurationInterface $model) {
+            $router->post('{adminModel}/reorder', ['as' => $routeName, function (ModelConfigurationInterface $model, \Illuminate\Http\Request $request) {
                 $model->fireDisplay()->getRepository()->reorder(
-                    Request::input('data')
+                    $request->input('data')
                 );
             }]);
         }
@@ -86,13 +86,19 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $control;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * DisplayTree constructor.
      *
      * @param AdminInterface $admin
      * @param TreeRepository $repository
      * @param TreeControl $control
+     * @param Request $request
      */
-    public function __construct(AdminInterface $admin, TreeRepository $repository, TreeControl $control)
+    public function __construct(AdminInterface $admin, TreeRepository $repository, TreeControl $control, Request $request)
     {
         $this->control = $control;
 
@@ -100,6 +106,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
         // TODO: move tree building to extension
         // $this->extend('tree', new Tree());
+        $this->request = $request;
     }
 
     public function initialize()
@@ -267,7 +274,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             'url' => $model->getDisplayUrl(),
             'value' => $this->getValue(),
             'creatable' => $model->isCreatable(),
-            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
+            'createUrl' => $model->getCreateUrl($this->getParameters() + $this->request->all()),
             'controls' => [$this->control]
         ];
     }
