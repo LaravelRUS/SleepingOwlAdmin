@@ -28,12 +28,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     protected $view = 'form.default';
 
     /**
-     * Form related class.
-     * @var string
-     */
-    protected $class;
-
-    /**
      * @var FormButtons
      */
     protected $buttons;
@@ -55,6 +49,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @var Model
      */
     protected $model;
+
+    /**
+     * @var ModelConfigurationInterface
+     */
+    protected $modelConfiguration;
 
     /**
      * Currently loaded model id.
@@ -121,7 +120,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $this->initialized = true;
 
-        $this->setModel(app($this->class));
+        $this->setModel(
+            $this->repository->getModel()
+        );
 
         parent::initialize();
 
@@ -215,24 +216,15 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @return string
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * @param string $class
+     * @param ModelConfigurationInterface $model
      *
      * @return $this
      */
-    public function setModelClass($class)
+    public function setModelConfiguration(ModelConfigurationInterface $model)
     {
-        if (is_null($this->class)) {
-            $this->repository->setClass($class);
-            $this->class = $class;
-        }
+        parent::setModelConfiguration($model);
+
+        $this->repository->setClass($model->getClass());
 
         return $this;
     }
@@ -292,15 +284,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * Get related form model configuration.
-     * @return ModelConfigurationInterface
-     */
-    public function getModelConfiguration()
-    {
-        return $this->admin->getModel($this->class);
-    }
-
-    /**
      * @return Model
      */
     public function getModel()
@@ -315,8 +298,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setModel(Model $model)
     {
-        $this->model = $model;
-
         parent::setModel($model);
 
         $this->getButtons()->setModel($this->getModel());
@@ -344,9 +325,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $loaded = $this->getModel()->exists;
 
-        if ($loaded && $modelConfiguration->fireEvent('updating', true, $this->getModel()) === false) {
-            return false;
-        } else if ($modelConfiguration->fireEvent('creating', true, $this->getModel()) === false) {
+        if ($modelConfiguration->fireEvent($loaded ? 'updating' : 'creating', true, $this->getModel()) === false) {
             return false;
         }
 
@@ -401,7 +380,10 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @return \Illuminate\Contracts\Validation\Validator|null
      */
-    public function validateForm(ModelConfigurationInterface $modelConfiguration, \Illuminate\Http\Request $request, \Illuminate\Contracts\Validation\Factory $validator)
+    public function validateForm(ModelConfigurationInterface $modelConfiguration,
+                                 \Illuminate\Http\Request $request,
+                                 \Illuminate\Contracts\Validation\Factory $validator
+    )
     {
         if ($modelConfiguration !== $this->getModelConfiguration()) {
             return;

@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Providers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
@@ -17,7 +18,6 @@ use SleepingOwl\Admin\Exceptions\TemplateException;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use SleepingOwl\Admin\Templates\Breadcrumbs;
-use Symfony\Component\Finder\Finder;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -86,8 +86,6 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->registerBootstrap();
-
         $this->registerRoutes(function (Router $route) {
             $route->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
                 $route->get('assets/admin.scripts', [
@@ -120,7 +118,7 @@ class AdminServiceProvider extends ServiceProvider
             return new \KodiCMS\Assets\PackageManager();
         });
 
-        $this->app->singleton('sleeping_owl.assets', function ($app) {
+        $this->app->singleton('sleeping_owl.meta', function ($app) {
             return new \SleepingOwl\Admin\Templates\Meta(
                 new \KodiCMS\Assets\Assets(
                     $app['assets.packages']
@@ -128,43 +126,18 @@ class AdminServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->alias('sleeping_owl.assets', MetaInterface::class);
+        $this->app->alias('sleeping_owl.meta', MetaInterface::class);
     }
 
     protected function registerWysiwyg()
     {
         $this->app->singleton('sleeping_owl.wysiwyg', function ($app) {
             return new \SleepingOwl\Admin\Wysiwyg\Manager(
-                $app['sleeping_owl.assets']
+                $app['sleeping_owl.meta']
             );
         });
 
         $this->app->alias('sleeping_owl.wysiwyg', WysiwygMangerInterface::class);
-    }
-
-    /**
-     * @return array
-     */
-    protected function registerBootstrap()
-    {
-        $directory = $this->getBootstrapPath();
-
-        if (! is_dir($directory)) {
-            return;
-        }
-
-        $files = $files = Finder::create()
-            ->files()
-            ->name('/^.+\.php$/')
-            ->notName('routes.php')
-            ->notName('navigation.php')
-            ->in($directory)->sort(function ($a) {
-                return $a->getFilename() != 'bootstrap.php';
-            });
-
-        foreach ($files as $file) {
-            require $file;
-        }
     }
 
     protected function registerAliases()
@@ -186,20 +159,19 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerRoutes(function (Router $router) {
             $router->pattern('adminModelId', '[a-zA-Z0-9_-]+');
 
-            $aliases = $this->app['sleeping_owl']->modelAliases();
+            /** @var Collection $models */
+            $models = $this->app['sleeping_owl']->getModels();
 
-            if (count($aliases) > 0) {
-                $router->pattern('adminModel', implode('|', $aliases));
+            if ($models->count() > 0) {
+                $router->pattern('adminModel', $models->keys()->implode('|'));
 
-                $this->app['router']->bind('adminModel', function ($model, \Illuminate\Routing\Route $route) use ($aliases) {
-                    $class = array_search($model, $aliases);
+                $this->app['router']->bind('adminModel', function ($alias, \Illuminate\Routing\Route $route) use ($models) {
+                    /** @var ModelConfiguration $model */
+                    $model = $models->get($alias);
 
-                    if ($class === false) {
+                    if (is_null($model)) {
                         throw new ModelNotFoundException;
                     }
-
-                    /** @var ModelConfiguration $model */
-                    $model = $this->app['sleeping_owl']->getModel($class);
 
                     if ($model->hasCustomControllerClass() && $route->getActionName() !== 'Closure') {
                         list($controller, $action) = explode('@', $route->getActionName(), 2);

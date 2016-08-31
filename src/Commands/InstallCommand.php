@@ -41,70 +41,13 @@ class InstallCommand extends Command
 
         $this->publishConfig($title);
 
-        $this->createBootstrapDirectory();
-        $this->createNavigationFile();
-        $this->createBootstrapFile();
         $this->createServiceProvider();
-        $this->createRoutesFile();
         $this->createPublicDefaultStructure();
-    }
-
-    /**
-     * Create bootstrap directory.
-     */
-    protected function createBootstrapDirectory()
-    {
-        $directory = config('sleeping_owl.bootstrapDirectory');
-
-        if (! is_dir($directory)) {
-            $this->files->makeDirectory($directory, 0755, true, true);
-            $this->line('<info>Admin bootstrap directory was created:</info> '.str_replace(base_path(), '', $directory));
-        }
-    }
-
-    /**
-     * Create default menu file.
-     */
-    protected function createNavigationFile()
-    {
-        $file = config('sleeping_owl.bootstrapDirectory').'/navigation.php';
-
-        if (! file_exists($file)) {
-            $contents = $this->files->get(__DIR__.'/stubs/navigation.stub');
-            $this->files->put($file, $contents);
-            $this->line('<info>Menu file was created:</info> '.str_replace(base_path(), '', $file));
-        }
-    }
-
-    /**
-     * Create default bootstrap file.
-     */
-    protected function createBootstrapFile()
-    {
-        $file = config('sleeping_owl.bootstrapDirectory').'/bootstrap.php';
-        if (! file_exists($file)) {
-            $contents = $this->files->get(__DIR__.'/stubs/bootstrap.stub');
-            $this->files->put($file, $contents);
-            $this->line('<info>Bootstrap file was created:</info> '.str_replace(base_path(), '', $file));
-        }
     }
 
     protected function createServiceProvider()
     {
         $this->call('sleepingowl:section:provider');
-    }
-
-    /**
-     * Create default routes file.
-     */
-    protected function createRoutesFile()
-    {
-        $file = config('sleeping_owl.bootstrapDirectory').'/routes.php';
-        if (! file_exists($file)) {
-            $contents = $this->files->get(__DIR__.'/stubs/routes.stub');
-            $this->files->put($file, $contents);
-            $this->line('<info>Bootstrap file was created:</info> '.str_replace(base_path(), '', $file));
-        }
     }
 
     /**

@@ -44,11 +44,6 @@ abstract class Display implements DisplayInterface
     protected $view;
 
     /**
-     * @var string
-     */
-    protected $modelClass;
-
-    /**
      * @var array
      */
     protected $with = [];
@@ -82,6 +77,11 @@ abstract class Display implements DisplayInterface
      * @var AdminInterface
      */
     protected $admin;
+
+    /**
+     * @var ModelConfigurationInterface
+     */
+    protected $modelConfiguration;
 
     /**
      * Display constructor.
@@ -167,10 +167,6 @@ abstract class Display implements DisplayInterface
             return;
         }
 
-        $this->repository->setClass(
-            $this->modelClass
-        );
-
         $this->repository->with($this->with);
 
         $this->extensions->each(function (DisplayExtensionInterface $extension) {
@@ -196,20 +192,6 @@ abstract class Display implements DisplayInterface
         );
 
         $this->initialized = true;
-    }
-
-    /**
-     * @param string $modelClass
-     *
-     * @return $this
-     */
-    public function setModelClass($modelClass)
-    {
-        if (is_null($this->modelClass)) {
-            $this->modelClass = $modelClass;
-        }
-
-        return $this;
     }
 
     /**
@@ -318,8 +300,21 @@ abstract class Display implements DisplayInterface
     /**
      * @return ModelConfigurationInterface
      */
-    protected function getModelConfiguration()
+    public function getModelConfiguration()
     {
-        return $this->admin->getModel($this->modelClass);
+        return $this->modelConfiguration;
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model)
+    {
+        $this->modelConfiguration = $model;
+        $this->repository->setClass($model->getClass());
+
+        return $this;
     }
 }

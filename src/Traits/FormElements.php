@@ -9,6 +9,7 @@ use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 
 trait FormElements
@@ -92,6 +93,58 @@ trait FormElements
     }
 
     /**
+     * @param Model $model
+     *
+     * @return $this
+     */
+    protected function setModelForElements(Model $model)
+    {
+        $this->getElements()->each(function ($element) use ($model) {
+            $element = $this->getElementContainer($element);
+            if ($element instanceof FormElementInterface) {
+                $element->setModel($model);
+            }
+
+            if ($element instanceof ColumnInterface) {
+                $element->setModel($model);
+            }
+        });
+
+        return $this;
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model)
+    {
+        return $this->setModelConfigurationForElements($model);
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    protected function setModelConfigurationForElements(ModelConfigurationInterface $model)
+    {
+        $this->getElements()->each(function ($element) use ($model) {
+            $element = $this->getElementContainer($element);
+            if ($element instanceof FormElementInterface) {
+                $element->setModelConfiguration($model);
+            }
+
+            if ($element instanceof ColumnInterface) {
+                $element->setModelConfiguration($model);
+            }
+        });
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getValidationRules()
@@ -129,27 +182,6 @@ trait FormElements
     public function afterSave(Request $request)
     {
         $this->afterSaveElements($request);
-    }
-
-    /**
-     * @param Model $model
-     *
-     * @return $this
-     */
-    protected function setModelForElements(Model $model)
-    {
-        $this->getElements()->each(function ($element) use ($model) {
-            $element = $this->getElementContainer($element);
-            if ($element instanceof FormElementInterface) {
-                $element->setModel($model);
-            }
-
-            if ($element instanceof ColumnInterface) {
-                $element->setModel($model);
-            }
-        });
-
-        return $this;
     }
 
     /**

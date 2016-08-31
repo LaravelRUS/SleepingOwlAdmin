@@ -60,17 +60,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    |  Path to admin bootstrap files directory
-    |--------------------------------------------------------------------------
-    |
-    | Default: app_path('Admin')
-    |
-    */
-
-    'bootstrapDirectory' => app_path('Admin'),
-
-    /*
-    |--------------------------------------------------------------------------
     |  Directory for uploaded images (relative to `public` directory)
     |--------------------------------------------------------------------------
     */
@@ -167,9 +156,8 @@ return [
 
     'aliases' => [
         // Components
-        'Assets' => KodiCMS\Assets\Facades\Assets::class,
         'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
-        'Meta' => KodiCMS\Assets\Facades\Meta::class,
+        'Meta' => SleepingOwl\Admin\Facades\Meta::class,
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'WysiwygManager' => SleepingOwl\Admin\Facades\WysiwygManager::class,

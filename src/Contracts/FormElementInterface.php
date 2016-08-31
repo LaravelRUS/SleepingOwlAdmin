@@ -37,6 +37,18 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable
     public function getValidationLabels();
 
     /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model);
+
+    /**
+     * @return ModelConfigurationInterface
+     */
+    public function getModelConfiguration();
+
+    /**
      * Save form item.
      *
      * @param \Illuminate\Http\Request $request

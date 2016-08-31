@@ -4,21 +4,21 @@ namespace SleepingOwl\Admin\Commands;
 
 use Illuminate\Console\Command;
 
-class SectionGenerate extends Command
+class SectionPolicies extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'sleepingowl:section:generate';
+    protected $name = 'sleepingowl:section:policies';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate the missing sections';
+    protected $description = 'Generate section policies';
 
     /**
      * Execute the console command.
@@ -38,9 +38,9 @@ class SectionGenerate extends Command
         }
 
         foreach ($provider->sections() as $section => $model) {
-            $this->callSilent('sleepingowl:section:make', ['name' => $section, 'model' => $model]);
+            $this->callSilent('make:policy', ['name' => class_basename($section).'SectionModelPolicy']);
         }
 
-        $this->info('Sections generated successfully!');
+        $this->info('Section policies generated successfully!');
     }
 }

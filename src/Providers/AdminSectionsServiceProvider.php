@@ -27,7 +27,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     public function boot(AdminInterface $admin)
     {
-        foreach ($this->sections as $model => $section) {
+        foreach ($this->sections as $section => $model) {
             if (class_exists($section)) {
                 $admin->register($this->app->make($section, ['class' => $model]));
             }

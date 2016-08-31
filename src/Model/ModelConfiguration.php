@@ -473,7 +473,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
         $display = app()->call($this->display);
         if ($display instanceof DisplayInterface) {
-            $display->setModelClass($this->getClass());
+            $display->setModelConfiguration($this);
             $display->initialize();
         }
 
@@ -491,7 +491,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
         $form = app()->call($this->create);
         if ($form instanceof DisplayInterface) {
-            $form->setModelClass($this->getClass());
+            $form->setModelConfiguration($this);
         }
 
         if ($form instanceof Initializable) {
@@ -518,7 +518,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
         $form = app()->call($this->edit, ['id' => $id]);
         if ($form instanceof DisplayInterface) {
-            $form->setModelClass($this->getClass());
+            $form->setModelConfiguration($this);
         }
 
 

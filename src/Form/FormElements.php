@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class FormElements extends FormElement implements ElementsInterface
@@ -40,6 +41,18 @@ class FormElements extends FormElement implements ElementsInterface
         parent::setModel($model);
 
         return $this->setModelForElements($model);
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model)
+    {
+        parent::setModelConfiguration($model);
+
+        return $this->setModelConfigurationForElements($model);
     }
 
     /**

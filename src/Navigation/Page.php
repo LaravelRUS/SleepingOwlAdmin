@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
-use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class Page extends \KodiComponents\Navigation\Page
@@ -19,17 +18,18 @@ class Page extends \KodiComponents\Navigation\Page
     protected $modelConfiguration;
 
     /**
-     * @param ModelConfigurationInterface $modelConfiguration
+     * @param ModelConfigurationInterface|null $modelConfiguration
      *
      * @internal param null|string $modelClass
      */
-    public function __construct(ModelConfigurationInterface $modelConfiguration)
+    public function __construct(ModelConfigurationInterface $modelConfiguration = null)
     {
-        $this->modelConfiguration = $modelConfiguration;
-
         parent::__construct();
 
-        $this->setModel($this->modelConfiguration->getClass());
+        if (! is_null($modelConfiguration)) {
+            $this->modelConfiguration = $modelConfiguration;
+            $this->setModel($this->modelConfiguration->getClass());
+        }
 
         if ($this->hasModel()) {
             $this->setIcon($this->modelConfiguration->getIcon());
@@ -49,7 +49,7 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function hasModel()
     {
-        return ! is_null($this->model) and class_exists($this->model);
+        return ! is_null($this->modelConfiguration) and ! is_null($this->model) and class_exists($this->model);
     }
 
     /**

@@ -16,7 +16,7 @@ class Password extends NamedFormElement
      */
     public function save(Request $request)
     {
-        $value = $this->getValue();
+        $value = $this->getValue($request);
 
         if (! $this->isAllowedEmptyValue() and $this->getModel()->exists() and empty($value)) {
             return;

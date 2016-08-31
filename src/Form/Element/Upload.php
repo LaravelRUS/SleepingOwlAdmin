@@ -27,9 +27,12 @@ class Upload extends NamedFormElement
         return $request->file($this->getPath());
     }
 
+    /**
+     * @param Request $request
+     */
     public function save(Request $request)
     {
-        $value = $this->getValueFromRequest();
+        $value = $this->getValueFromRequest($request);
 
         if ($request->input($this->getPath().'_remove')) {
             $this->setValue($this->getModel(), $this->getAttribute(), null);

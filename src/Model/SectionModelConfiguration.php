@@ -27,6 +27,22 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return method_exists($this, 'onEdit') && parent::isEditable($model);
     }
 
+
+    /**
+     * @param string $action
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
+    public function can($action, Model $model)
+    {
+        if (! $this->checkAccess) {
+            return true;
+        }
+
+        return $this->gate->allows($action, [$this, $model]);
+    }
+
     /**
      * @return DisplayInterface|mixed
      */
@@ -39,7 +55,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
         $display = app()->call([$this, 'onDisplay']);
 
         if ($display instanceof DisplayInterface) {
-            $display->setModelClass($this->getClass());
+            $display->setModelConfiguration($this);
             $display->initialize();
         }
 
@@ -57,7 +73,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
 
         $form = app()->call([$this, 'onCreate']);
         if ($form instanceof DisplayInterface) {
-            $form->setModelClass($this->getClass());
+            $form->setModelConfiguration($this);
         }
 
         if ($form instanceof Initializable) {
@@ -84,7 +100,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
 
         $form = app()->call([$this, 'onEdit'], ['id' => $id]);
         if ($form instanceof DisplayInterface) {
-            $form->setModelClass($this->getClass());
+            $form->setModelConfiguration($this);
         }
 
         if ($form instanceof Initializable) {

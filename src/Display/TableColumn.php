@@ -59,6 +59,11 @@ abstract class TableColumn implements ColumnInterface
     protected $admin;
 
     /**
+     * @var ModelConfigurationInterface
+     */
+    protected $modelConfiguration;
+
+    /**
      * TableColumn constructor.
      *
      * @param AdminInterface $admin
@@ -180,7 +185,6 @@ abstract class TableColumn implements ColumnInterface
     {
         $this->model = $model;
         $append = $this->getAppends();
-
         if (! is_null($append)) {
             $append->setModel($model);
         }
@@ -188,13 +192,30 @@ abstract class TableColumn implements ColumnInterface
         return $this;
     }
 
+
     /**
-     * Get related model configuration.
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model)
+    {
+        $this->modelConfiguration = $model;
+
+        $append = $this->getAppends();
+        if (! is_null($append)) {
+            $append->setModelConfiguration($model);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return ModelConfigurationInterface
      */
-    protected function getModelConfiguration()
+    public function getModelConfiguration()
     {
-        return $this->admin->getModel(get_class($this->getModel()));
+        return $this->modelConfiguration;
     }
 
     /**

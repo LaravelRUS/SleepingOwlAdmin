@@ -2,15 +2,17 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
+use Baum\Extensions\Eloquent\Model;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 
 interface AdminInterface extends Initializable
 {
     /**
-     * @return string[]
+     * @return string[]|Collection
      */
-    public function modelAliases();
+    public function aliases();
 
     /**
      * @param ModelConfigurationInterface $model
@@ -28,14 +30,21 @@ interface AdminInterface extends Initializable
     public function registerModel($class, \Closure $callback = null);
 
     /**
-     * @param string $class
+     * @param string $alias
      *
-     * @return ModelConfigurationInterface
+     * @return ModelConfigurationInterface|null
      */
-    public function getModel($class);
+    public function getModel($alias);
 
     /**
-     * @return ModelConfigurationInterface[]
+     * @param string|Model $class
+     *
+     * @return ModelConfigurationInterface|null
+     */
+    public function getModelByClass($class);
+
+    /**
+     * @return ModelConfigurationInterface[]|Collection
      */
     public function getModels();
 
@@ -47,10 +56,10 @@ interface AdminInterface extends Initializable
     public function hasModel($class);
 
     /**
-     * @param string             $class
+     * @param string $key
      * @param ModelConfigurationInterface $model
      */
-    public function setModel($class, ModelConfigurationInterface $model);
+    public function setModel($key, ModelConfigurationInterface $model);
 
     /**
      * @return \SleepingOwl\Admin\Contracts\Template\TemplateInterface

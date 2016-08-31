@@ -5,6 +5,8 @@ namespace SleepingOwl\Admin;
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -18,19 +20,15 @@ use SleepingOwl\Admin\Navigation\Page;
 class Admin implements AdminInterface
 {
     /**
-     * @var ModelConfigurationInterface[]
+     * @var ModelConfigurationInterface[]|Collection
      */
-    protected $models = [];
+    protected $models;
 
     /**
      * @var TemplateInterface
      */
     protected $template;
 
-    /**
-     * @var Page[]
-     */
-    protected $menuItems = [];
 
     /**
      * @var Application
@@ -47,6 +45,7 @@ class Admin implements AdminInterface
     {
         $this->template = $template;
         $this->app = $application;
+        $this->models = new Collection();
     }
 
     /**
@@ -58,13 +57,11 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @return string[]
+     * @return Collection
      */
-    public function modelAliases()
+    public function aliases()
     {
-        return array_map(function (ModelConfigurationInterface $model) {
-            return $model->getAlias();
-        }, $this->getModels());
+        return $this->models->keys();
     }
 
     /**
@@ -74,7 +71,7 @@ class Admin implements AdminInterface
      */
     public function register(ModelConfigurationInterface $model)
     {
-        $this->setModel($model->getClass(), $model);
+        $this->setModel($model->getAlias(), $model);
 
         if ($model instanceof Initializable) {
             $model->initialize();
@@ -84,14 +81,14 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
+     * @param string $alias
      * @param Closure|null $callback
      *
      * @return $this
      */
-    public function registerModel($class, Closure $callback = null)
+    public function registerModel($alias, Closure $callback = null)
     {
-        $this->register($model = $this->app->make(ModelConfiguration::class, [$class]));
+        $this->register($model = $this->app->make(ModelConfiguration::class, [$alias]));
 
         if (is_callable($callback)) {
             call_user_func($callback, $model);
@@ -101,24 +98,36 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
-     * @return ModelConfigurationInterface
+     * @param string|Model $class
+     *
+     * @return ModelConfigurationInterface|null
      */
-    public function getModel($class)
+    public function getModelByClass($class)
     {
         if (is_object($class)) {
             $class = get_class($class);
         }
 
-        if (! $this->hasModel($class)) {
-            $this->registerModel($class);
-        }
-
-        return array_get($this->models, $class);
+        return $this->models->filter(function (ModelConfigurationInterface $modelConfiguration) use ($class) {
+            return $modelConfiguration->getClass() == $class;
+        })->first();
     }
 
     /**
-     * @return ModelConfigurationInterface[]
+     * @param string $alias
+     * @return ModelConfigurationInterface|null
+     */
+    public function getModel($alias)
+    {
+        if (! $this->hasModel($alias)) {
+            $this->registerModel($alias);
+        }
+
+        return $this->models->get($alias);
+    }
+
+    /**
+     * @return ModelConfigurationInterface[]|Collection
      */
     public function getModels()
     {
@@ -132,7 +141,7 @@ class Admin implements AdminInterface
      */
     public function hasModel($class)
     {
-        return array_key_exists($class, $this->models);
+        return $this->models->has($class);
     }
 
     /**
@@ -141,7 +150,7 @@ class Admin implements AdminInterface
      */
     public function setModel($class, ModelConfigurationInterface $model)
     {
-        $this->models[$class] = $model;
+        $this->models->put($class, $model);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
 
@@ -31,6 +32,11 @@ abstract class FormElement implements FormElementInterface
      * @var array
      */
     protected $validationRules = [];
+
+    /**
+     * @var ModelConfigurationInterface
+     */
+    protected $modelConfiguration;
 
     /**
      * FormElement constructor.
@@ -151,6 +157,26 @@ abstract class FormElement implements FormElementInterface
         $this->model = $model;
 
         return $this;
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model)
+    {
+        $this->modelConfiguration = $model;
+
+        return $this;
+    }
+
+    /**
+     * @return ModelConfigurationInterface
+     */
+    public function getModelConfiguration()
+    {
+        return $this->modelConfiguration;
     }
 
     /**

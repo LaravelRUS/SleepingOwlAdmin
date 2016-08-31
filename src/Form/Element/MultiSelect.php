@@ -130,7 +130,7 @@ class MultiSelect extends Select
         if (is_null($request->input($this->getPath()))) {
             $values = [];
         } else {
-            $values = $this->getValue();
+            $values = $this->getValue($request);
         }
 
         $relation = $this->getModel()->{$attribute}();

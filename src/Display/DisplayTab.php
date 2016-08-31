@@ -53,6 +53,11 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $template;
 
     /**
+     * @var ModelConfigurationInterface
+     */
+    protected $modelConfiguration;
+
+    /**
      * @param TemplateInterface $template
      * @param Renderable $content
      */
@@ -153,17 +158,27 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $class
+     * @param ModelConfigurationInterface $model
      *
      * @return $this
      */
-    public function setModelClass($class)
+    public function setModelConfiguration(ModelConfigurationInterface $model)
     {
-        if ($this->getContent() instanceof DisplayInterface) {
-            $this->getContent()->setModelClass($class);
+        $this->modelConfiguration = $model;
+
+        if (($content = $this->getContent()) instanceof DisplayInterface) {
+            $content->setModelConfiguration($model);
         }
 
         return $this;
+    }
+
+    /**
+     * @return ModelConfigurationInterface
+     */
+    public function getModelConfiguration()
+    {
+        return $this->modelConfiguration;
     }
 
     /**

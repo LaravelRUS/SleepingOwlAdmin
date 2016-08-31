@@ -38,6 +38,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     protected $displayFactory;
 
     /**
+     * @var ModelConfigurationInterface
+     */
+    protected $modelConfiguration;
+
+    /**
      * DisplayTabbed constructor.
      *
      * @param TemplateInterface $template
@@ -69,15 +74,29 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $class
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
      */
-    public function setModelClass($class)
+    public function setModelConfiguration(ModelConfigurationInterface $model)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($class) {
+        $this->modelConfiguration = $model;
+
+        $this->getTabs()->each(function (TabInterface $tab) use ($model) {
             if ($tab instanceof DisplayInterface) {
-                $tab->setModelClass($class);
+                $tab->setModelConfiguration($model);
             }
         });
+
+        return $this;
+    }
+
+    /**
+     * @return ModelConfigurationInterface
+     */
+    public function getModelConfiguration()
+    {
+        return $this->modelConfiguration;
     }
 
     /**

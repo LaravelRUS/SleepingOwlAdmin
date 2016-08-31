@@ -25,4 +25,16 @@ interface ColumnInterface extends Initializable, Renderable, Arrayable
      * @return TableHeaderColumnInterface
      */
     public function getHeader();
+
+    /**
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model);
+
+    /**
+     * @return ModelConfigurationInterface
+     */
+    public function getModelConfiguration();
 }

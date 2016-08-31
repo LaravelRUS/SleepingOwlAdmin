@@ -93,6 +93,10 @@ class DisplayTable extends Display
             });
         }
 
+        $this->getColumns()->all()->each(function(ColumnInterface $column) {
+            $column->setModelConfiguration($this->getModelConfiguration());
+        });
+
         $this->setHtmlAttribute('class', 'table table-striped');
     }
 
