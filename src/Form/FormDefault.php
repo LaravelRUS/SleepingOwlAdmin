@@ -315,9 +315,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $loaded = $this->getModel()->exists;
 
-        if ($loaded && $modelConfiguration->fireEvent('updating', true, $this->getModel()) === false) {
-            return false;
-        } else if ($modelConfiguration->fireEvent('creating', true, $this->getModel()) === false) {
+        if ($modelConfiguration->fireEvent($loaded ? 'updating' : 'creating', true, $this->getModel()) === false) {
             return false;
         }
 
