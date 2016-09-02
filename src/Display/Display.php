@@ -268,9 +268,15 @@ abstract class Display implements DisplayInterface
         $this->getExtensions()->filter(function($extension) {
             return $extension instanceof Placable;
         })->each(function($extension) use($view) {
-            $view->getFactory()->startSection($extension->getPlacement());
-            echo app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
-            $view->getFactory()->stopSection(true);
+            $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
+
+            if (! empty($html)) {
+                $factory = $view->getFactory();
+
+                $factory->startSection($extension->getPlacement());
+                echo $html;
+                $factory->stopSection(true);
+            }
         });
 
         return $view;
