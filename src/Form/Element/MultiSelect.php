@@ -99,10 +99,10 @@ class MultiSelect extends Select
             $attributes['class'] .= ' input-taggable';
         }
 
-        return parent::toArray() + [
+        return [
             'tagable' => $this->isTaggable(),
             'attributes' => $attributes,
-        ];
+        ] + parent::toArray();
     }
 
     public function save()
