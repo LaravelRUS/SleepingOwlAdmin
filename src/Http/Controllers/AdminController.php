@@ -42,9 +42,11 @@ class AdminController extends Controller
         $this->navigation = $application['sleeping_owl.navigation'];
         $this->navigation->setCurrentUrl($request->url());
 
-        Breadcrumbs::register('home', function ($breadcrumbs) {
-            $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
-        });
+        if (! Breadcrumbs::exists('home')) {
+            Breadcrumbs::register('home', function ($breadcrumbs) {
+                $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
+            });
+        }
 
         $breadcrumbs = [];
 
@@ -430,7 +432,6 @@ class AdminController extends Controller
 
         $data = [
             'locale' => $this->application->getLocale(),
-            'token' => csrf_token(),
             'url_prefix' => config('sleeping_owl.url_prefix'),
             'base_url' => asset('/'),
             'lang' => $lang,
