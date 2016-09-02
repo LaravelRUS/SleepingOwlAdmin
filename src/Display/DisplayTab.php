@@ -48,10 +48,20 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @param Renderable $content
+     * @param string|null $label
+     * @param string|null $icon
      */
-    public function __construct(Renderable $content)
+    public function __construct(Renderable $content, $label = null, $icon = null)
     {
         $this->content = $content;
+
+        if (! is_null($label)) {
+            $this->setLabel($label);
+        }
+
+        if (! is_null($icon)) {
+            $this->setIcon($icon);
+        }
     }
 
     /**
