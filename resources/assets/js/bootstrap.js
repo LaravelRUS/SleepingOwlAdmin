@@ -41,6 +41,8 @@ window.Admin.log = (error) => {
     console.log(error)
 }
 
+window.Admin.Settings.token = $('meta[name="csrf-token"]').attr('content')
+
 // window.Admin.Messages = require('./components/messages');
 window.Admin.Modules = require('./components/modules');
 window.Admin.WYSIWYG = require('./components/wysiwyg');

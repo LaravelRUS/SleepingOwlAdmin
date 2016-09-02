@@ -3,13 +3,12 @@
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use AdminTemplate;
-use App;
 use Breadcrumbs;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Request;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -27,19 +26,27 @@ class AdminController extends Controller
     private $parentBreadcrumb = 'home';
 
     /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    public $application;
+
+    /**
      * AdminController constructor.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
+     * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Http\Request $request)
+    public function __construct(Request $request, \Illuminate\Contracts\Foundation\Application $application)
     {
-        $this->navigation = app('sleeping_owl.navigation');
-
+        $this->application = $application;
+        $this->navigation = $application['sleeping_owl.navigation'];
         $this->navigation->setCurrentUrl($request->url());
 
-        Breadcrumbs::register('home', function ($breadcrumbs) {
-            $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
-        });
+        if (! Breadcrumbs::exists('home')) {
+            Breadcrumbs::register('home', function ($breadcrumbs) {
+                $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
+            });
+        }
 
         $breadcrumbs = [];
 
@@ -117,16 +124,16 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postStore(ModelConfigurationInterface $model)
+    public function postStore(ModelConfigurationInterface $model, Request $request)
     {
         if (! $model->isCreatable()) {
             abort(404);
         }
 
         $createForm = $model->fireCreate();
-        $nextAction = Request::input('next_action');
+        $nextAction = $request->input('next_action');
 
-        $backUrl = $this->getBackUrl();
+        $backUrl = $this->getBackUrl($request);
 
         if ($createForm instanceof FormInterface) {
             if (($validator = $createForm->validateForm($model)) instanceof Validator) {
@@ -138,15 +145,11 @@ class AdminController extends Controller
                     ]);
             }
 
-            if ($model->fireEvent('creating') === false) {
+            if ($createForm->saveForm($model) === false) {
                 return redirect()->back()->with([
                     '_redirectBack' => $backUrl,
                 ]);
             }
-
-            $createForm->saveForm($model);
-
-            $model->fireEvent('created', false, $createForm->getModel());
         }
 
         if ($nextAction == 'save_and_continue') {
@@ -163,7 +166,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnCreate());
@@ -190,22 +193,24 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param int                $id
+     * @param Request $request
+     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postUpdate(ModelConfigurationInterface $model, $id)
+    public function postUpdate(ModelConfigurationInterface $model, Request $request, $id)
     {
-        $item = $model->getRepository()->find($id);
+        /** @var FormInterface $editForm */
+        $editForm = $model->fireEdit($id);
+        $item     = $editForm->getModel();
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
-        $editForm = $model->fireEdit($id);
-        $nextAction = Request::input('next_action');
+        $nextAction = $request->input('next_action');
 
-        $backUrl = $this->getBackUrl();
+        $backUrl = $this->getBackUrl($request);
 
         if ($editForm instanceof FormInterface) {
             if (($validator = $editForm->validateForm($model)) instanceof Validator) {
@@ -214,15 +219,11 @@ class AdminController extends Controller
                     ->withInput();
             }
 
-            if ($model->fireEvent('updating', true, $item) === false) {
+            if ($editForm->saveForm($model) === false) {
                 return redirect()->back()->with([
                     '_redirectBack' => $backUrl,
                 ]);
             }
-
-            $editForm->saveForm($model);
-
-            $model->fireEvent('updated', false, $item);
         }
 
         if ($nextAction == 'save_and_continue') {
@@ -234,7 +235,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } else {
-            $response = redirect()->to(Request::input('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));
         }
 
         return $response->with('success_message', $model->getMessageOnUpdate());
@@ -243,13 +244,15 @@ class AdminController extends Controller
     /**
      * @param ModelConfigurationInterface $model
      *
+     * @param Request $request
+     *
      * @return bool
      */
-    public function inlineEdit(ModelConfigurationInterface $model)
+    public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
-        $field = Request::input('name');
-        $value = Request::input('value');
-        $id = Request::input('pk');
+        $field = $request->input('name');
+        $value = $request->input('value');
+        $id = $request->input('pk');
 
         $display = $model->fireDisplay();
 
@@ -286,7 +289,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteDelete(ModelConfigurationInterface $model, $id)
+    public function deleteDelete(ModelConfigurationInterface $model, Request $request, $id)
     {
         $item = $model->getRepository()->find($id);
 
@@ -304,17 +307,18 @@ class AdminController extends Controller
 
         $model->fireEvent('deleted', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDelete());
     }
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param int                $id
+     * @param Request $request
+     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function deleteDestroy(ModelConfigurationInterface $model, $id)
+    public function deleteDestroy(ModelConfigurationInterface $model, Request $request, $id)
     {
         if (! $model->isRestorableModel()) {
             abort(404);
@@ -336,17 +340,18 @@ class AdminController extends Controller
 
         $model->fireEvent('destroyed', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDestroy());
     }
 
     /**
-     * @param ModelConfiguration $model
-     * @param int                $id
+     * @param ModelConfigurationInterface|ModelConfiguration $model
+     * @param Request $request
+     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postRestore($model, $id)
+    public function postRestore(ModelConfigurationInterface $model, Request $request, $id)
     {
         if (! $model->isRestorableModel()) {
             abort(404);
@@ -368,7 +373,7 @@ class AdminController extends Controller
 
         $model->fireEvent('restored', false, $item);
 
-        return redirect(Request::input('_redirectBack', back()->getTargetUrl()))
+        return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnRestore());
     }
 
@@ -426,8 +431,7 @@ class AdminController extends Controller
         }
 
         $data = [
-            'locale' => App::getLocale(),
-            'token' => csrf_token(),
+            'locale' => $this->application->getLocale(),
             'url_prefix' => config('sleeping_owl.url_prefix'),
             'base_url' => asset('/'),
             'lang' => $lang,
@@ -458,13 +462,15 @@ class AdminController extends Controller
     }
 
     /**
-     * @return string|null
+     * @param Request $request
+     *
+     * @return null|string
      */
-    protected function getBackUrl()
+    protected function getBackUrl(Request $request)
     {
-        if (($backUrl = Request::input('_redirectBack')) == \URL::previous()) {
+        if (($backUrl = $request->input('_redirectBack')) == \URL::previous()) {
             $backUrl = null;
-            Request::merge(['_redirectBack' => $backUrl]);
+            $request->merge(['_redirectBack' => $backUrl]);
         }
 
         return $backUrl;

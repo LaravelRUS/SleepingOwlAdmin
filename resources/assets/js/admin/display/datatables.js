@@ -5,7 +5,7 @@ Admin.Modules.add('display.datatables', () => {
         )
     };
 
-    $.fn.dataTable.ext.order['DateTime'] = (settings, col) => {
+    $.fn.dataTable.ext.order['DateTime'] = function (settings, col) {
         return this.api().column(col, {order: 'index'}).nodes().map((td, i) => {
             return $(td).data('value');
         });

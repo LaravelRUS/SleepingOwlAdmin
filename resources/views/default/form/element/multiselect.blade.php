@@ -7,7 +7,9 @@
 		@endif
 	</label>
 
-	{!! Form::select($name, $options, $value, $attributes) !!}
+	<div>
+		{!! Form::select($name, $options, $value, $attributes) !!}
+	</div>
 
 	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>

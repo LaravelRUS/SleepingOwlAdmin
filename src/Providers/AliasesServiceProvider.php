@@ -41,6 +41,7 @@ class AliasesServiceProvider extends ServiceProvider
             'tabbed'          => \SleepingOwl\Admin\Display\DisplayTabbed::class,
             'table'           => \SleepingOwl\Admin\Display\DisplayTable::class,
             'tree'            => \SleepingOwl\Admin\Display\DisplayTree::class,
+            'page'            => \SleepingOwl\Admin\Navigation\Page::class,
         ]);
 
         $this->app->singleton('sleeping_owl.display', function () use ($alias) {

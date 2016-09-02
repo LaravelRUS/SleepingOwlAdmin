@@ -300,6 +300,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * Save instance.
      *
      * @param ModelConfigurationInterface $modelConfiguration
+     *
+     * @return bool
      */
     public function saveForm(ModelConfigurationInterface $modelConfiguration)
     {
@@ -311,11 +313,27 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $this->saveBelongsToRelations();
 
+        $loaded = $this->getModel()->exists;
+
+        if ($modelConfiguration->fireEvent($loaded ? 'updating' : 'creating', true, $this->getModel()) === false) {
+            return false;
+        }
+
+        if ($modelConfiguration->fireEvent('saving', true, $this->getModel()) === false) {
+            return false;
+        }
+
+
         $this->getModel()->save();
 
         $this->saveHasOneRelations();
 
         parent::afterSave();
+
+        $modelConfiguration->fireEvent($loaded ? 'updated' : 'created', false, $this->getModel());
+        $modelConfiguration->fireEvent('saved', false, $this->getModel());
+
+        return true;
     }
 
     protected function saveBelongsToRelations()

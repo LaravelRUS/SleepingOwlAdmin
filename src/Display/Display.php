@@ -171,18 +171,6 @@ abstract class Display implements DisplayInterface
             if ($extension instanceof Initializable) {
                 $extension->initialize();
             }
-
-            if ($extension instanceof Placable) {
-                $template = app('sleeping_owl.template')->getViewPath($this->getView());
-
-                view()->composer($template, function (\Illuminate\View\View $view) use ($extension) {
-                    $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
-
-                    if (! empty($html)) {
-                        $view->getFactory()->inject($extension->getPlacement(), $html);
-                    }
-                });
-            }
         });
 
         $this->includePackage();
@@ -242,7 +230,7 @@ abstract class Display implements DisplayInterface
     public function toArray()
     {
         return [
-            'title'      => $this->getTitle(),
+            'title' => $this->getTitle(),
             'extensions' => $this->getExtensions()->toArray(),
             'attributes' => $this->htmlAttributesToString(),
         ];
@@ -266,6 +254,32 @@ abstract class Display implements DisplayInterface
         $this->view = $view;
 
         return $this;
+    }
+
+    /**
+     * Get the evaluated contents of the object.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        $view = app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+
+        $this->getExtensions()->filter(function($extension) {
+            return $extension instanceof Placable;
+        })->each(function($extension) use($view) {
+            $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
+
+            if (! empty($html)) {
+                $factory = $view->getFactory();
+
+                $factory->startSection($extension->getPlacement());
+                echo $html;
+                $factory->stopSection(true);
+            }
+        });
+
+        return $view;
     }
 
     /**
