@@ -1,3 +1,5 @@
+window.Admin.Settings.token = document.querySelector("meta[name='csrf-token']").getAttribute('content')
+
 /**
  * Underscore is a JavaScript library that provides a whole mess of useful
  * functional programming helpers without extending any built-in objects.
@@ -40,8 +42,6 @@ require('./libs/vuejs')
 window.Admin.log = (error) => {
     console.log(error)
 }
-
-window.Admin.Settings.token = $('meta[name="csrf-token"]').attr('content')
 
 // window.Admin.Messages = require('./components/messages');
 window.Admin.Modules = require('./components/modules');
