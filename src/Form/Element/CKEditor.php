@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 
 class CKEditor extends Wysiwyg
 {
-
     /**
      * @var string
      */

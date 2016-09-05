@@ -29,8 +29,8 @@
     @yield('table.footer')
 </table>
 
-@if($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
+@if(!is_null($pagination))
     <div class="panel-footer">
-        {!! (new \Illuminate\Pagination\BootstrapThreePresenter($collection))->render() !!}
+        {!! $pagination !!}
     </div>
 @endif

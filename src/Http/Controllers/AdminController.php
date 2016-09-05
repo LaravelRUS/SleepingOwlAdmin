@@ -49,9 +49,11 @@ class AdminController extends Controller
 
         $admin->navigation()->setCurrentUrl($request->url());
 
-        $this->breadcrumbs->register('home', function ($breadcrumbs) {
-            $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
-        });
+		if (! $this->breadcrumbs->exists('home')) {
+			$this->breadcrumbs->register('home', function ($breadcrumbs) {
+				$breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
+			});
+        }
 
         $breadcrumbs = [];
 
@@ -215,7 +217,7 @@ class AdminController extends Controller
     {
         /** @var FormInterface $editForm */
         $editForm = $model->fireEdit($id);
-        $item     = $editForm->getModel();
+        $item = $editForm->getModel();
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
@@ -443,7 +445,6 @@ class AdminController extends Controller
 
         $data = [
             'locale' => $application->getLocale(),
-            'token' => csrf_token(),
             'url_prefix' => config('sleeping_owl.url_prefix'),
             'base_url' => asset('/'),
             'lang' => $lang,

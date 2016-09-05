@@ -217,16 +217,6 @@ class DisplayTable extends Display
     }
 
     /**
-     * Get the evaluated contents of the object.
-     *
-     * @return string
-     */
-    public function render()
-    {
-        return $this->template->view($this->getView(), $this->toArray());
-    }
-
-    /**
      * @return Collection
      * @throws \Exception
      */
