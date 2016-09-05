@@ -7,6 +7,8 @@ Admin.Modules.add('form.elements.select', () => {
             options['tags'] = true;
         }
 
+        options['width'] = '100%';
+
         $self.select2(options)
     })
 })
