@@ -235,7 +235,7 @@ class DisplayTable extends Display
         $this->modifyQuery($query);
 
         return $this->collection = $this->usePagination()
-            ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends(request()->except($this->pageName))
+            ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends($this->request->except($this->pageName))
             : $query->get();
     }
 
