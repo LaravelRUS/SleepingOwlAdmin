@@ -10,6 +10,8 @@ window.Admin.Settings.token = document.querySelector("meta[name='csrf-token']").
  */
 window._ = require('underscore');
 
+window.Admin.Events = require('./components/events');
+
 require('./libs/jquery')
 require('./libs/moment')
 require('./libs/i18next')

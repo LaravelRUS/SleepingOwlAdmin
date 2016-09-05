@@ -34,6 +34,8 @@ require('./admin/form/image')
 require('./admin/form/images')
 
 $(() => {
+    require('./admin/events');
+
     Admin.Modules.init();
 
     var app = new Vue({

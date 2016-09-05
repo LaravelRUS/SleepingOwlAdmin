@@ -1,6 +1,6 @@
 module.exports = {
     _modules: {},
-    add (module, callback, priority) {
+    add (module, callback, priority, events) {
         if (!_.isFunction(callback)) {
             Admin.log('[Modules] Module ' + module + ' not added. You need to specify callback');
             return this;
@@ -11,6 +11,14 @@ module.exports = {
             callback: callback,
             priority: priority || 0
         };
+
+        if(_.isString(events)) {
+            Admin.Events.on(events, callback)
+        } else if (_.isArray(events)) {
+            _.each(events, function(event) {
+                Admin.Events.on(event, callback)
+            })
+        }
 
         return this;
     },
