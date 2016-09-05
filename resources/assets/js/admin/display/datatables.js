@@ -35,6 +35,10 @@ Admin.Modules.add('display.datatables', () => {
             };
         }
 
+        params.fnDrawCallback = function (oSettings) {
+            Admin.Events.fire('datatables::draw', this)
+        }
+
         var table = $this.DataTable(params);
 
         $('[data-datatables-id="' + id + '"] .column-filter[data-type]').each((i, item) => {
