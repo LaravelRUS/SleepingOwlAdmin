@@ -265,9 +265,9 @@ abstract class Display implements DisplayInterface
     {
         $view = app('sleeping_owl.template')->view($this->getView(), $this->toArray());
 
-        $this->getExtensions()->filter(function($extension) {
+        $this->getExtensions()->filter(function ($extension) {
             return $extension instanceof Placable;
-        })->each(function($extension) use($view) {
+        })->each(function ($extension) use ($view) {
             $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
 
             if (! empty($html)) {

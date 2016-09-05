@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class CKEditor extends Wysiwyg
 {
-
     /**
      * @var string
      */

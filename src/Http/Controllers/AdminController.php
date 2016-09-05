@@ -202,7 +202,7 @@ class AdminController extends Controller
     {
         /** @var FormInterface $editForm */
         $editForm = $model->fireEdit($id);
-        $item     = $editForm->getModel();
+        $item = $editForm->getModel();
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);

@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Meta;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
