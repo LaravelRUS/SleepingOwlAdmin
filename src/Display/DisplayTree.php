@@ -275,7 +275,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             'value' => $this->getValue(),
             'creatable' => $model->isCreatable(),
             'createUrl' => $model->getCreateUrl($this->getParameters() + $this->request->all()),
-            'controls' => [$this->control]
+            'controls' => [$this->control],
         ];
     }
 
@@ -299,6 +299,18 @@ class DisplayTree extends Display implements WithRoutesInterface
 
         return $query->get();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setModelConfiguration(ModelConfigurationInterface $model)
+    {
+        parent::setModelConfiguration($model);
+        $this->control->setModelConfiguration($model);
+
+        return $this;
+    }
+
 
     /**
      * @param \Illuminate\Database\Eloquent\Builder|Builder $query
