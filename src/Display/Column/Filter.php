@@ -30,10 +30,14 @@ class Filter extends NamedColumn
 
     /**
      * @param string $relatedModel
+     *
+     * @return $this
      */
     public function setRelatedModel($relatedModel)
     {
         $this->relatedModel = $relatedModel;
+
+        return $this;
     }
 
     /**
