@@ -13,7 +13,7 @@ use SleepingOwl\Admin\Display\DisplayTree;
 /**
  * @method DisplayDatatables datatables()
  * @method DisplayDatatablesAsync datatablesAsync()
- * @method DisplayTab tab(Renderable $display)
+ * @method DisplayTab tab(Renderable $content, $label = null, $icon = null)
  * @method DisplayTabbed tabbed(\Closure|array $tabs = null)
  * @method DisplayTable table()
  * @method DisplayTree tree()

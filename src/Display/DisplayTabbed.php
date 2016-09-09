@@ -148,7 +148,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
-        $tab = $this->displayFactory->tab($display)->setLabel($label)->setActive($active);
+        $tab = $this->displayFactory->tab($display, $label, null)->setActive($active);
 
         $this->addElement($tab);
 
