@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
+use SleepingOwl\Admin\Exceptions\WysiwygException;
 
 class Wysiwyg extends NamedFormElement
 {
@@ -47,6 +48,10 @@ class Wysiwyg extends NamedFormElement
     {
         /** @var WysiwygEditorInterface $editor */
         $editor = app('sleeping_owl.wysiwyg')->getEditor($this->getEditor());
+
+        if (is_null($editor)) {
+            throw new WysiwygException("Wysiwyg editor [{$this->getEditor()}] is not defined.");
+        }
 
         app('sleeping_owl.wysiwyg')->loadEditor($this->getEditor());
 
