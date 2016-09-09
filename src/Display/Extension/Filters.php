@@ -100,13 +100,10 @@ class Filters extends Extension implements Initializable
      */
     public function getTitle()
     {
-        $titles = [$this->title];
-
-        $this->getActive()->each(function (FilterInterface $filter) use (&$titles) {
-            $titles[] = $filter->getTitle();
-        });
-
-        return implode(' | ', array_filter($titles));
+        return app('sleeping_owl.template')->view('display.extensions.filter_title', [
+            'filter_title' => $this->title,
+            'filters' => $this->getActive()
+        ])->render();
     }
 
     /**
