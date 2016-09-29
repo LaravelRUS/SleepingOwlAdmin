@@ -164,7 +164,12 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl())->with([
+            $response = redirect()->to($model->getCreateUrl($request->except([
+                '_redirectBack',
+                '_token',
+                'url',
+                'next_action',
+            ])))->with([
                 '_redirectBack' => $backUrl,
             ]);
         } else {
