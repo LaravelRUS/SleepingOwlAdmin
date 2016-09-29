@@ -64,10 +64,12 @@ class AdminController extends Controller
         }
 
         foreach ($breadcrumbs as  $breadcrumb) {
-            Breadcrumbs::register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
-                $breadcrumbs->parent($breadcrumb['parent']);
-                $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
-            });
+            if (! Breadcrumbs::exists($breadcrumb['id'])) {
+                Breadcrumbs::register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
+                    $breadcrumbs->parent($breadcrumb['parent']);
+                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
+                });
+            }
         }
     }
 
