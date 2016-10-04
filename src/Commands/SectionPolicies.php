@@ -37,8 +37,8 @@ class SectionPolicies extends Command
             return;
         }
 
-        foreach ($provider->sections() as $section => $model) {
-            $this->callSilent('make:policy', ['name' => class_basename($section).'SectionModelPolicy']);
+        foreach ($provider->policies() as $policy) {
+            $this->callSilent('make:policy', ['name' => $policy]);
         }
 
         $this->info('Section policies generated successfully!');
