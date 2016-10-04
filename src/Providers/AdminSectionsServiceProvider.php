@@ -22,6 +22,26 @@ class AdminSectionsServiceProvider extends ServiceProvider
     }
 
     /**
+     * @param string|null $namespace
+     *
+     * @return array
+     */
+    public function policies($namespace = null)
+    {
+        if (is_null($namespace)) {
+            $namespace = config('sleepingowl.policies_namespace', '\\App\\Policies\\');
+        }
+
+        $policies = [];
+
+        foreach ($this->sections as $section => $model) {
+            $policies[$section] = $namespace.class_basename($section).'SectionModelPolicy';
+        }
+
+        return $policies;
+    }
+
+    /**
      * Register the service provider.
      *
      * @param AdminInterface $admin
@@ -35,10 +55,13 @@ class AdminSectionsServiceProvider extends ServiceProvider
         }
     }
 
-    public function registerPolicies()
+    /**
+     * @param string|null $namespace
+     */
+    public function registerPolicies($namespace = null)
     {
-        foreach ($this->sections as $section => $model) {
-            Gate::policy($section, class_basename($section).'SectionModelPolicy');
+        foreach ($this->policies($namespace) as $section => $policy) {
+            Gate::policy($section, $policy);
         }
     }
 

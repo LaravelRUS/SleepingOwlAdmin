@@ -60,6 +60,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Policies default namespace
+    |--------------------------------------------------------------------------
+    |
+    | @see https://laravel.com/docs/5.3/authorization#registering-policies
+    |
+    */
+
+    'policies_namespace' => '\\App\\Policies\\',
+
+
+    /*
+    |--------------------------------------------------------------------------
     |  Directory for uploaded images (relative to `public` directory)
     |--------------------------------------------------------------------------
     */
