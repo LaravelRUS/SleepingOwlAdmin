@@ -17,6 +17,9 @@ use Symfony\Component\Finder\Finder;
 
 class AdminServiceProvider extends ServiceProvider
 {
+    /**
+     * @var string
+     */
     protected $directory;
 
     public function register()
@@ -114,12 +117,13 @@ class AdminServiceProvider extends ServiceProvider
             return;
         }
 
-        $files = $files = Finder::create()
+        $files = Finder::create()
             ->files()
             ->name('/^.+\.php$/')
             ->notName('routes.php')
             ->notName('navigation.php')
-            ->in($directory)->sort(function ($a) {
+            ->in($directory)
+            ->sort(function ($a) {
                 return $a->getFilename() != 'bootstrap.php';
             });
 
