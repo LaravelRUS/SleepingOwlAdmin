@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Display\Filter;
 
 use Closure;
-use Illuminate\Support\Facades\Request;
 use SleepingOwl\Admin\Contracts\FilterInterface;
 
 abstract class FilterBase implements FilterInterface
@@ -43,7 +42,6 @@ abstract class FilterBase implements FilterInterface
         $this->request = $request;
 
         $this->setName($name);
-        $this->setAlias($name);
 
         if (! is_null($title)) {
             $this->setTitle($title);
@@ -87,6 +85,10 @@ abstract class FilterBase implements FilterInterface
      */
     public function getAlias()
     {
+        if (! $this->alias) {
+            return $this->getName();
+        }
+
         return $this->alias;
     }
 
@@ -107,6 +109,10 @@ abstract class FilterBase implements FilterInterface
      */
     public function getTitle()
     {
+        if (is_null($this->title)) {
+            return studly_case($this->getAlias());
+        }
+
         if (is_callable($this->title)) {
             return call_user_func($this->title, $this->getValue());
         }

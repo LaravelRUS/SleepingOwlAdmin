@@ -210,7 +210,7 @@ trait FormElements
     {
         $this->getElements()->each(function ($element) use (&$messages) {
             $element = $this->getElementContainer($element);
-            if ($element instanceof NamedFormElement) {
+            if ($element instanceof FormElementInterface) {
                 $messages += $element->getValidationMessages();
             }
         });

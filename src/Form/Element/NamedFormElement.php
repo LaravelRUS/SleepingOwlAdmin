@@ -486,7 +486,7 @@ abstract class NamedFormElement extends FormElement
 
             /* @var Model $model */
             foreach ($relations as $relation) {
-                $nestedModel = null;
+                $relatedModel = null;
                 if ($previousModel->{$relation} instanceof Model) {
                     $relatedModel = &$previousModel->{$relation};
                 } elseif (method_exists($previousModel, $relation)) {

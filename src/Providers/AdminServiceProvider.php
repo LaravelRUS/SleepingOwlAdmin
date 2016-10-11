@@ -21,6 +21,9 @@ use SleepingOwl\Admin\Templates\Breadcrumbs;
 
 class AdminServiceProvider extends ServiceProvider
 {
+    /**
+     * @var string
+     */
     protected $directory;
 
     public function register()

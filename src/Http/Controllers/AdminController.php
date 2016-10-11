@@ -71,10 +71,12 @@ class AdminController extends Controller
         }
 
         foreach ($breadcrumbs as  $breadcrumb) {
-            $this->breadcrumbs->register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
-                $breadcrumbs->parent($breadcrumb['parent']);
-                $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
-            });
+            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
+                $this->breadcrumbs->register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
+                    $breadcrumbs->parent($breadcrumb['parent']);
+                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
+                });
+            }
         }
     }
 
@@ -175,7 +177,12 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl())->with([
+            $response = redirect()->to($model->getCreateUrl($request->except([
+                '_redirectBack',
+                '_token',
+                'url',
+                'next_action',
+            ])))->with([
                 '_redirectBack' => $backUrl,
             ]);
         } else {
@@ -246,7 +253,12 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl())->with([
+            $response = redirect()->to($model->getCreateUrl($request->except([
+                '_redirectBack',
+                '_token',
+                'url',
+                'next_action',
+            ])))->with([
                 '_redirectBack' => $backUrl,
             ]);
         } else {

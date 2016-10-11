@@ -30,10 +30,14 @@ class Filter extends NamedColumn
 
     /**
      * @param string $relatedModel
+     *
+     * @return $this
      */
     public function setRelatedModel($relatedModel)
     {
         $this->relatedModel = $relatedModel;
+
+        return $this;
     }
 
     /**
@@ -66,9 +70,11 @@ class Filter extends NamedColumn
      */
     public function getUrl()
     {
-        $value = $this->getModelValue($this->getModel(), $this->getField());
+        request()->merge([
+            $this->getName() => $this->getValue()
+        ]);
 
-        return $this->admin->getModel($this->getRelatedModel())->getDisplayUrl([$this->getName() => $value]);
+        return $this->admin->getModel($this->getRelatedModel())->getDisplayUrl(request()->all());
     }
 
     /**
@@ -81,6 +87,14 @@ class Filter extends NamedColumn
     }
 
     /**
+     * @return string
+     */
+    protected function getValue()
+    {
+        return $this->getModelValue($this->getModel(), $this->getField());
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -89,7 +103,7 @@ class Filter extends NamedColumn
             'icon' => $this->isSelf() ? 'fa fa-filter' : 'fa fa-arrow-circle-o-right',
             'title' => $this->isSelf() ? trans('sleeping_owl::lang.table.filter') : trans('sleeping_owl::lang.table.filter-goto'),
             'url' => $this->getUrl(),
-            'value' => $this->getModelValue($this->getModel(), $this->getField()),
+            'value' => $this->getValue(),
         ];
     }
 }

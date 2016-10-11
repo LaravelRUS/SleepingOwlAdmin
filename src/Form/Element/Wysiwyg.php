@@ -61,7 +61,7 @@ class Wysiwyg extends NamedFormElement
         $editor = $this->manger->getEditor($this->getEditor());
 
         if (is_null($editor)) {
-            throw new WysiwygException("Editor [{$this->getEditor()}] not found.");
+            throw new WysiwygException("Wysiwyg Editor [{$this->getEditor()}] not found.");
         }
 
         $this->manger->loadEditor($this->getEditor());
