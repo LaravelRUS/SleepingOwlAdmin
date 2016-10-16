@@ -28,7 +28,7 @@ class DisplayTree extends Display implements WithRoutesInterface
                 $display = $model->fireDisplay();
 
                 if ($display instanceof DisplayTabbed) {
-                    $display->getTabs()->each(function($tab){
+                    $display->getTabs()->each(function ($tab) {
                         $content = $tab->getContent();
                         if ($content instanceof self) {
                             $content->getRepository()->reorder(
