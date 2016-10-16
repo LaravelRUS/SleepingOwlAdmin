@@ -29,8 +29,13 @@
     @yield('table.footer')
 </table>
 
-@if($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
+@if($collection instanceof \Illuminate\Contracts\Pagination\Paginator &&
+    class_exists('\Illuminate\Pagination\BootstrapThreePresenter'))
     <div class="panel-footer">
         {!! (new \Illuminate\Pagination\BootstrapThreePresenter($collection))->render() !!}
+    </div>
+@elseif($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
+    <div class="panel-footer">
+        {!! $collection->render() !!}
     </div>
 @endif
