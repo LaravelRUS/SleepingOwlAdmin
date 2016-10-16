@@ -298,6 +298,10 @@ class DisplayTree extends Display implements WithRoutesInterface
 
         $this->modifyQuery($query);
 
+        if (method_exists($query, 'defaultOrder')) {
+            return $query->defaultOrder()->get();
+        }
+
         return $query->get();
     }
 
