@@ -399,7 +399,7 @@ abstract class NamedFormElement extends FormElement
             $table = $model->getTable();
 
             $rule = 'unique:'.$table.','.$this->getAttribute();
-            if ($model->exists()) {
+            if ($model->exists) {
                 $rule .= ','.$model->getKey();
             }
         }
@@ -423,7 +423,8 @@ abstract class NamedFormElement extends FormElement
             if ($count === 1) {
                 return $model->getModel();
             }
-            if ($model->exists() && $model->{$relation} instanceof Model) {
+
+            if ($model->exists && $model->{$relation} instanceof Model) {
                 $model = $model->{$relation};
                 if ($model != null) {
                     $count--;
