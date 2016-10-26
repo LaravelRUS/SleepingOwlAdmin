@@ -90,5 +90,4 @@ class Number extends NamedFormElement
             'step' => $this->getStep(),
         ];
     }
-
 }
