@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\Radio radio($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method static \SleepingOwl\Admin\Form\Element\Upload upload($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\Number number($name, $label = null)
  */
 class FormElement extends Facade
 {
