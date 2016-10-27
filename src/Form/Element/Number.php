@@ -101,7 +101,7 @@ class Number extends NamedFormElement
         if ($value == '') {
             return;
         }
-    	
+
         return $value;
     }
 }
