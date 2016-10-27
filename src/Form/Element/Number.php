@@ -98,9 +98,9 @@ class Number extends NamedFormElement
      */
     protected function prepareValue($value)
     {
-    	if ($value == '') {
-    		return;
-    	}
+        if ($value == '') {
+            return;
+        }
     	
         return $value;
     }
