@@ -90,4 +90,18 @@ class Number extends NamedFormElement
             'step' => $this->getStep(),
         ];
     }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function prepareValue($value)
+    {
+        if ($value == '') {
+            return;
+        }
+
+        return $value;
+    }
 }
