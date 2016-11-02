@@ -27,7 +27,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
         $this->publishes([
-            __DIR__.'/../../public/' => public_path('packages/sleepingowl/'),
+            __DIR__.'/../../public' => public_path('packages/sleepingowl/'),
         ], 'assets');
 
         $this->publishes([

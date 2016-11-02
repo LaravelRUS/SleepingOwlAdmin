@@ -13,6 +13,7 @@ use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
+use SleepingOwl\Admin\Display\Column\Custom;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
@@ -230,6 +231,9 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
             if ($column instanceof NamedColumn && $column->isOrderable()) {
                 $name = $column->getName();
+                $query->orderBy($name, $orderDirection);
+            } elseif ($column instanceof Custom && $column->getOrderField()) {
+                $name = $column->getOrderField();
                 $query->orderBy($name, $orderDirection);
             }
         }

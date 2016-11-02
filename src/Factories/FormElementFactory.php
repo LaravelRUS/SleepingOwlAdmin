@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method Element\Radio radio($name, $label = null)
  * @method Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method Element\Upload upload($name, $label = null)
+ * @method Element\Number number($name, $label = null)
  */
 class FormElementFactory extends AliasBinder implements FormElementFactoryInterface
 {
@@ -63,6 +64,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'wysiwyg' => Element\Wysiwyg::class,
             'upload' => Element\Upload::class,
             'html' => Element\Html::class,
+            'number' => Element\Number::class
         ]);
     }
 }

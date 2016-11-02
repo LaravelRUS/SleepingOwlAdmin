@@ -130,6 +130,18 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param bool $deletable
+     *
+     * @return $this
+     */
+    public function setDeletable($deletable)
+    {
+        $this->deletable = $deletable;
+
+        return $this;
+    }
+
+    /**
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getCreateTitle()

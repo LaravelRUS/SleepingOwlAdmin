@@ -28,9 +28,22 @@ class DisplayTree extends Display implements WithRoutesInterface
         $routeName = 'admin.display.tree.reorder';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/reorder', ['as' => $routeName, function (ModelConfigurationInterface $model, \Illuminate\Http\Request $request) {
-                $model->fireDisplay()->getRepository()->reorder(
-                    $request->input('data')
-                );
+                $display = $model->fireDisplay();
+
+                if ($display instanceof DisplayTabbed) {
+                    $display->getTabs()->each(function ($tab) {
+                        $content = $tab->getContent();
+                        if ($content instanceof self) {
+                            $content->getRepository()->reorder(
+                                $request->input('data')
+                            );
+                        }
+                    });
+                } else {
+                    $display->getRepository()->reorder(
+                        $request->input('data')
+                    );
+                }
             }]);
         }
     }
@@ -296,6 +309,10 @@ class DisplayTree extends Display implements WithRoutesInterface
         $query = $this->getRepository()->getQuery();
 
         $this->modifyQuery($query);
+
+        if (method_exists($query, 'defaultOrder')) {
+            return $query->defaultOrder()->get();
+        }
 
         return $query->get();
     }

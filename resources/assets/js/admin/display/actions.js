@@ -1,18 +1,31 @@
 Admin.Modules.add('display.actions', () => {
-    $('form[data-type="display-actions"]').on('submit', (e) => {
-        var $form = $(this),
-            $btn = $(e.target.action),
+    $('form[data-type="display-actions"]').on('submit', function (e) {
+        var $btn = $(e.target.action),
             $checkboxes = $('.adminCheckboxRow').filter(':checked')
 
         if (!$checkboxes.length) {
-            e.preventDefault()
+            swal(
+                '',
+                'You need select one or more rows',
+                'error'
+            )
+            e.preventDefault();
+            return;
         }
 
-        this.action = $btn.data('action')
-        this.method = $btn.data('method')
+        $.ajax({
+            type: $btn.data('method'),
+            url: $btn.data('action'),
+            data: $checkboxes.serialize()
+        })
+            .done(function (msg) {
+                swal(
+                    'Success',
+                    '',
+                    'success'
+                )
+            });
 
-        $checkboxes.each((i, item) => {
-            $form.append('<input type="hidden" name="id[]" value="' + $(item).val() + '" />')
-        });
+        return false;
     });
 })
