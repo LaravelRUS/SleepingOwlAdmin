@@ -288,7 +288,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             foreach ($columns->all() as $column) {
                 $column->setModel($instance);
 
-                if($column instanceof Control){
+                if($column instanceof Control) {
                     $column->initialize();
                 }
 
