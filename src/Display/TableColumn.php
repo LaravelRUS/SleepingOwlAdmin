@@ -2,11 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Display\Column\OrderByClause;
 use SleepingOwl\Admin\Traits\Assets;
 
 abstract class TableColumn implements ColumnInterface
@@ -45,6 +48,11 @@ abstract class TableColumn implements ColumnInterface
      * @var string|\Illuminate\View\View
      */
     protected $view;
+
+    /**
+     * @var OrderByClauseInterface
+     */
+    protected $orderByClause;
 
     /**
      * TableColumn constructor.
@@ -192,13 +200,22 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param bool $orderable
+     * @param OrderByClauseInterface|bool|string|\Closure $orderable
      *
      * @return $this
      */
     public function setOrderable($orderable)
     {
-        $this->getHeader()->setOrderable($orderable);
+        if ($orderable instanceof \Closure || is_string($orderable)) {
+            $orderable = new OrderByClause($orderable);
+        }
+
+        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
+            throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
+        }
+
+        $this->orderByClause = $orderable;
+        $this->getHeader()->setOrderable($this->isOrderable());
 
         return $this;
     }
@@ -209,7 +226,20 @@ abstract class TableColumn implements ColumnInterface
      */
     public function isOrderable()
     {
-        return $this->getHeader()->isOrderable();
+        return $this->orderByClause instanceof OrderByClauseInterface;
+    }
+
+    /**
+     * @param Builder $query
+     * @param $condition
+     */
+    public function orderBy(Builder $query, $condition)
+    {
+        if (! $this->isOrderable()) {
+            throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
+        }
+
+        $this->orderByClause->modifyQuery($query, $condition);
     }
 
     /**

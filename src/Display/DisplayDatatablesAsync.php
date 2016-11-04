@@ -2,19 +2,17 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Routing\Router;
-use Request;
-use Route;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Collection;
+use Request;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
-use SleepingOwl\Admin\Display\Column\Custom;
-use SleepingOwl\Admin\Display\Column\NamedColumn;
-use SleepingOwl\Admin\Display\Column\Control;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -193,30 +191,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         }
 
         $query->offset($offset)->limit($limit);
-    }
-
-    /**
-     * Apply orders to the query.
-     *
-     * @param $query
-     */
-    protected function applyOrders($query)
-    {
-        $orders = Request::input('order', []);
-
-        foreach ($orders as $order) {
-            $columnIndex = $order['column'];
-            $orderDirection = $order['dir'];
-            $column = $this->getColumns()->all()->get($columnIndex);
-
-            if ($column instanceof NamedColumn && $column->isOrderable()) {
-                $name = $column->getName();
-                $query->orderBy($name, $orderDirection);
-            } elseif ($column instanceof Custom && $column->getOrderField()) {
-                $name = $column->getOrderField();
-                $query->orderBy($name, $orderDirection);
-            }
-        }
     }
 
     /**
