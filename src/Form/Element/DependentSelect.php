@@ -102,7 +102,7 @@ class DependentSelect extends NamedFormElement
      */
     public function setModelForOptions($modelForOptions)
     {
-	   if (is_string($modelForOptions)) {
+	if (is_string($modelForOptions)) {
             $modelForOptions = app($modelForOptions);
         }
 
@@ -111,9 +111,7 @@ class DependentSelect extends NamedFormElement
         }
 
         $this->modelForOptions = $modelForOptions;
-
-
-		
+	
         return $this;
     }
 
@@ -161,7 +159,8 @@ class DependentSelect extends NamedFormElement
    public function setDataDepends($depends)
    {
         $this->data_depends = $depends;
-        return $this;
+        
+	return $this;
    }
      
      /**
@@ -172,7 +171,8 @@ class DependentSelect extends NamedFormElement
    public function setDataUrl($data_url)
     {
         $this->data_url = $data_url;
-        return $this;
+        
+	return $this;
     }
 	
     /**
@@ -395,7 +395,7 @@ class DependentSelect extends NamedFormElement
 	    'data-depends' =>  $this->getDataDepends(),
         ];
 
-		if ($this->isReadonly()) {
+	if ($this->isReadonly()) {
             $attributes['disabled'] = 'disabled';
         }
 
@@ -420,7 +420,6 @@ class DependentSelect extends NamedFormElement
      */
     protected function loadOptions()
     {
-
 	$repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
 
         $key = $repository->getModel()->getKeyName();
@@ -438,9 +437,7 @@ class DependentSelect extends NamedFormElement
 
         // call the pre load options query preparer if has be set
         if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
-           //dd($options);
-			$options = $preparer($this, $options); 
-			
+	     $options = $preparer($this, $options); 	
         }
 
         $options = $options->get();
@@ -470,7 +467,6 @@ class DependentSelect extends NamedFormElement
             // take options as array with KEY => VALUE pair
             $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
-
 
 	$this->setOptions($options);	
     }
