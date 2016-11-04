@@ -123,7 +123,7 @@ class DependentSelect extends NamedFormElement
         return $this->display;
     }
 
-     /**
+    /**
      * @return string
      */
     public function getDataUrl()
@@ -131,7 +131,7 @@ class DependentSelect extends NamedFormElement
         return $this->data_url;
     }
 
-     /**
+    /**
      * @return Json
      */
     public function getDataDepends()
@@ -151,7 +151,7 @@ class DependentSelect extends NamedFormElement
         return $this;
     }
 
-     /**
+    /**
      * @param array $depends
      *
      * @return $this
@@ -160,10 +160,10 @@ class DependentSelect extends NamedFormElement
    {
         $this->data_depends = $depends;
 
-	return $this;
+        return $this;
    }
 
-     /**
+    /**
      * @param string $data_url
      *
      * @return $this
@@ -172,7 +172,7 @@ class DependentSelect extends NamedFormElement
     {
         $this->data_url = $data_url;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -180,7 +180,7 @@ class DependentSelect extends NamedFormElement
      */
     public function getOptions()
     {
-	if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
+        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
             $this->loadOptions();
         }
 
@@ -395,7 +395,7 @@ class DependentSelect extends NamedFormElement
             'data-depends' =>  $this->getDataDepends(),
         ];
 
-	if ($this->isReadonly()) {
+        if ($this->isReadonly()) {
             $attributes['disabled'] = 'disabled';
         }
 
@@ -437,7 +437,7 @@ class DependentSelect extends NamedFormElement
 
         // call the pre load options query preparer if has be set
         if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
-            $options = $preparer($this, $options); 	
+            $options = $preparer($this, $options); 
         }
 
         $options = $options->get();
@@ -468,7 +468,7 @@ class DependentSelect extends NamedFormElement
             $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
 
-        $this->setOptions($options);	
+        $this->setOptions($options);
     }
 
     /**
@@ -485,4 +485,3 @@ class DependentSelect extends NamedFormElement
         return $value;
     }
 }
-
