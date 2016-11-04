@@ -156,19 +156,19 @@ class DependentSelect extends NamedFormElement
      *
      * @return $this
      */
-   public function setDataDepends($depends)
-   {
-        $this->data_depends = $depends;
+    public function setDataDepends($depends)
+    {
+         $this->data_depends = $depends;
 
-        return $this;
-   }
+         return $this;
+    }
 
     /**
      * @param string $data_url
      *
      * @return $this
      */
-   public function setDataUrl($data_url)
+    public function setDataUrl($data_url)
     {
         $this->data_url = $data_url;
 
@@ -437,7 +437,7 @@ class DependentSelect extends NamedFormElement
 
         // call the pre load options query preparer if has be set
         if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
-            $options = $preparer($this, $options); 
+            $options = $preparer($this, $options);
         }
 
         $options = $options->get();
