@@ -18,6 +18,11 @@ class ControlLink implements ControlButtonInterface
     protected $url;
 
     /**
+     * @var Closure $attributeCondition
+     */
+    protected $attributeCondition;
+
+    /**
      * @var int
      */
     protected $position;
@@ -81,6 +86,18 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
+     * @param Model $model
+     * @return $this
+     */
+    public function getConditionAttributes(Model $model)
+    {
+        $temp = $this->attributeCondition ? call_user_func($this->attributeCondition, $model) : [];
+
+        $this->setHtmlAttributes($temp);
+        return $this;
+    }
+
+    /**
      * @param Closure $condition
      *
      * @return $this
@@ -88,6 +105,19 @@ class ControlLink implements ControlButtonInterface
     public function setCondition(Closure $condition)
     {
         $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Set condition attribute
+     * @param Closure $condition
+     *
+     * @return $this
+     */
+    public function setAttributeCondition(Closure $condition)
+    {
+        $this->attributeCondition = $condition;
 
         return $this;
     }
@@ -192,7 +222,7 @@ class ControlLink implements ControlButtonInterface
     public function toArray()
     {
         return [
-            'attributes' => $this->htmlAttributesToString(),
+            'attributes' => $this->getConditionAttributes($this->model)->htmlAttributesToString(),
             'url' => $this->getUrl($this->model),
             'position' => $this->getPosition(),
             'text' => $this->text,
