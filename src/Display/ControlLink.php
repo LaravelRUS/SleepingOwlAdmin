@@ -13,12 +13,12 @@ class ControlLink implements ControlButtonInterface
     use HtmlAttributes;
 
     /**
-     * @var Closure $url
+     * @var Closure
      */
     protected $url;
 
     /**
-     * @var Closure $attributeCondition
+     * @var Closure
      */
     protected $attributeCondition;
 
@@ -53,7 +53,7 @@ class ControlLink implements ControlButtonInterface
     protected $model;
 
     /**
-     * @var Closure $condition
+     * @var Closure
      */
     protected $condition;
 
@@ -94,6 +94,7 @@ class ControlLink implements ControlButtonInterface
         $temp = $this->attributeCondition ? call_user_func($this->attributeCondition, $model) : [];
 
         $this->setHtmlAttributes($temp);
+
         return $this;
     }
 
@@ -110,7 +111,7 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
-     * Set condition attribute
+     * Set condition attribute.
      * @param Closure $condition
      *
      * @return $this
@@ -227,7 +228,7 @@ class ControlLink implements ControlButtonInterface
             'position' => $this->getPosition(),
             'text' => $this->text,
             'icon' => $this->getIcon(),
-            'hideText' => $this->hideText
+            'hideText' => $this->hideText,
         ];
     }
 

@@ -77,7 +77,7 @@ return [
     ],
     'tree' => [
         'expand' => 'Expand all',
-        'collapse' => 'Collapse all'
+        'collapse' => 'Collapse all',
     ],
     'editable' => [
         'checkbox' => [

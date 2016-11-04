@@ -13,7 +13,7 @@ abstract class Widget implements WidgetInterface
     protected $view;
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function active()
     {
@@ -21,7 +21,7 @@ abstract class Widget implements WidgetInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function position()
     {

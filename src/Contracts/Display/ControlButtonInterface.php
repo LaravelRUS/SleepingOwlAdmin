@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ControlButtonInterface extends Renderable, Arrayable
 {
-
     /**
      * @return int
      */

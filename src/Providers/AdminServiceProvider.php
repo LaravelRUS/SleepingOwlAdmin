@@ -37,7 +37,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerWysiwyg();
         $this->registerAliases();
 
-        $this->app->singleton(WidgetsRegistryInterface::class, function() {
+        $this->app->singleton(WidgetsRegistryInterface::class, function () {
             return new WidgetsRegistry($this->app);
         });
 
