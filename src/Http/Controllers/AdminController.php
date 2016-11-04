@@ -90,6 +90,17 @@ class AdminController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getDashboard()
+    {
+        return $this->renderContent(
+            AdminTemplate::view('dashboard'),
+            trans('sleeping_owl::lang.dashboard')
+        );
+    }
+
+    /**
      * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
