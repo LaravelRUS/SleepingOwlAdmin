@@ -110,6 +110,7 @@ class AliasesServiceProvider extends ServiceProvider
             'wysiwyg'     => \SleepingOwl\Admin\Form\Element\Wysiwyg::class,
             'upload'      => \SleepingOwl\Admin\Form\Element\Upload::class,
             'html'        => \SleepingOwl\Admin\Form\Element\Html::class,
+            'number'      => \SleepingOwl\Admin\Form\Element\Number::class,
         ]);
 
         $this->app->singleton('sleeping_owl.form.element', function () use ($alias) {

@@ -1,6 +1,10 @@
 <?php
 
 $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($router) {
+    if (! $router->has('admin.dashboard')) {
+        $router->get('', ['as' => 'dashboard', 'uses' => 'AdminController@getDashboard']);
+    }
+
     $router->get('{adminModel}', [
         'as'   => 'model',
         'uses' => 'AdminController@getDisplay',
