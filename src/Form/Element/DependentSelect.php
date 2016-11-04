@@ -24,7 +24,7 @@ class DependentSelect extends NamedFormElement
      * @var string
      */
     protected $data_url = '';
-	
+
     /**
      * @var array
      */
@@ -102,7 +102,7 @@ class DependentSelect extends NamedFormElement
      */
     public function setModelForOptions($modelForOptions)
     {
-	if (is_string($modelForOptions)) {
+        if (is_string($modelForOptions)) {
             $modelForOptions = app($modelForOptions);
         }
 
@@ -111,7 +111,7 @@ class DependentSelect extends NamedFormElement
         }
 
         $this->modelForOptions = $modelForOptions;
-	
+
         return $this;
     }
 
@@ -122,15 +122,15 @@ class DependentSelect extends NamedFormElement
     {
         return $this->display;
     }
-	
-    /**
+
+     /**
      * @return string
      */
     public function getDataUrl()
     {
         return $this->data_url;
     }
-	
+
      /**
      * @return Json
      */
@@ -150,8 +150,8 @@ class DependentSelect extends NamedFormElement
 
         return $this;
     }
-	
-    /**
+
+     /**
      * @param array $depends
      *
      * @return $this
@@ -159,10 +159,10 @@ class DependentSelect extends NamedFormElement
    public function setDataDepends($depends)
    {
         $this->data_depends = $depends;
-        
+
 	return $this;
    }
-     
+
      /**
      * @param string $data_url
      *
@@ -171,10 +171,10 @@ class DependentSelect extends NamedFormElement
    public function setDataUrl($data_url)
     {
         $this->data_url = $data_url;
-        
+
 	return $this;
     }
-	
+
     /**
      * @return array
      */
@@ -386,13 +386,13 @@ class DependentSelect extends NamedFormElement
      */
     public function toArray()
     {
-	   $attributes = [
+        $attributes = [
             'id' => $this->getName(),
             'size' => 2,
             'data-select-type' => 'single',
             'class' => 'form-control input-select depdrop',
-	    'data-url' =>  $this->getDataUrl(),
-	    'data-depends' =>  $this->getDataDepends(),
+            'data-url' =>  $this->getDataUrl(),
+            'data-depends' =>  $this->getDataDepends(),
         ];
 
 	if ($this->isReadonly()) {
@@ -420,7 +420,7 @@ class DependentSelect extends NamedFormElement
      */
     protected function loadOptions()
     {
-	$repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
+        $repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
 
         $key = $repository->getModel()->getKeyName();
 
@@ -437,7 +437,7 @@ class DependentSelect extends NamedFormElement
 
         // call the pre load options query preparer if has be set
         if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
-	     $options = $preparer($this, $options); 	
+            $options = $preparer($this, $options); 	
         }
 
         $options = $options->get();
@@ -468,7 +468,7 @@ class DependentSelect extends NamedFormElement
             $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
 
-	$this->setOptions($options);	
+        $this->setOptions($options);	
     }
 
     /**
