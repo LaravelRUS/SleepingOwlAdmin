@@ -93,7 +93,12 @@ class ControlLink implements ControlButtonInterface
     {
         $temp = $this->attributeCondition ? call_user_func($this->attributeCondition, $model) : [];
 
-        $this->setHtmlAttributes($temp);
+        if ($temp) {
+            foreach ($temp as $key => $value) {
+                $this->removeHtmlAttribute($key);
+                $this->setHtmlAttribute($key, $value);
+            }
+        }
 
         return $this;
     }
