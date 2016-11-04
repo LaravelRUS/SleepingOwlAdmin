@@ -102,7 +102,7 @@ class Filters extends Extension implements Initializable
     {
         return app('sleeping_owl.template')->view('display.extensions.filter_title', [
             'filter_title' => $this->title,
-            'filters' => $this->getActive()
+            'filters' => $this->getActive(),
         ])->render();
     }
 

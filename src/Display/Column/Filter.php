@@ -71,7 +71,7 @@ class Filter extends NamedColumn
     public function getUrl()
     {
         request()->merge([
-            $this->getName() => $this->getValue()
+            $this->getName() => $this->getValue(),
         ]);
 
         return app('sleeping_owl')

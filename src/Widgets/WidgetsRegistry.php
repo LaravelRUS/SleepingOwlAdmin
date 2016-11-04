@@ -9,9 +9,8 @@ use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 
-class WidgetsRegistry implements WidgetsRegistryInterface 
+class WidgetsRegistry implements WidgetsRegistryInterface
 {
-
     /**
      * @var Collection|WidgetInterface[]
      */
@@ -58,19 +57,19 @@ class WidgetsRegistry implements WidgetsRegistryInterface
             ->map(function ($class) {
                 return $this->makeWidget($class);
             })
-            ->filter(function(WidgetInterface $block) {
+            ->filter(function (WidgetInterface $block) {
                 return $block->active();
             })
-            ->groupBy(function(WidgetInterface $block) {
+            ->groupBy(function (WidgetInterface $block) {
                 return $block->template();
             });
 
         foreach ($groupedBlocks as $template => $widgets) {
-            $factory->composer($template, function (View $view) use($widgets) {
+            $factory->composer($template, function (View $view) use ($widgets) {
                 $factory = $view->getFactory();
 
                 /** @var Collection|WidgetInterface[] $widgets */
-                $widgets = $widgets->sortBy(function(WidgetInterface $block) {
+                $widgets = $widgets->sortBy(function (WidgetInterface $block) {
                     return $block->position();
                 });
 
@@ -85,7 +84,6 @@ class WidgetsRegistry implements WidgetsRegistryInterface
             });
         }
     }
-
 
     /**
      * @param  mixed  $widget

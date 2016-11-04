@@ -9,12 +9,12 @@ use Illuminate\Contracts\View\View;
 interface WidgetInterface extends Arrayable, Htmlable
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function active();
 
     /**
-     * @return integer
+     * @return int
      */
     public function position();
 

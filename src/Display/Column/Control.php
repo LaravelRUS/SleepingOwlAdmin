@@ -49,7 +49,7 @@ class Control extends TableColumn
             return $this->getModelConfiguration()->getEditUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.edit'), 100));
         $button->hideText();
-        $button->setCondition(function() {
+        $button->setCondition(function () {
             return $this->isEditable();
         });
         $button->setIcon('fa fa-pencil');
@@ -58,7 +58,7 @@ class Control extends TableColumn
         $this->buttons->put('delete', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getDeleteUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.delete'), 200));
-        $button->setCondition(function() {
+        $button->setCondition(function () {
             return $this->isDeletable();
         });
 
@@ -70,7 +70,7 @@ class Control extends TableColumn
         $this->buttons->put('destroy', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getDestroyUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.destroy'), 300));
-        $button->setCondition(function() {
+        $button->setCondition(function () {
             return $this->isDestroyable();
         });
 
@@ -82,7 +82,7 @@ class Control extends TableColumn
         $this->buttons->put('restore', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->get($model->getKey());
         }, trans('sleeping_owl::lang.table.restore'), 400));
-        $button->setCondition(function() {
+        $button->setCondition(function () {
             return $this->isRestorable();
         });
         $button->hideText();
@@ -195,15 +195,15 @@ class Control extends TableColumn
     {
         return parent::toArray() + [
             'buttons' => $this->buttons
-                ->each(function(ControlButtonInterface $button) {
+                ->each(function (ControlButtonInterface $button) {
                     $button->setModel($this->getModel());
                 })
-                ->filter(function(ControlButtonInterface $button) {
+                ->filter(function (ControlButtonInterface $button) {
                     return $button->isActive();
                 })
                 ->sortBy(function (ControlButtonInterface $button) {
                     return $button->getPosition();
-                })
+                }),
         ];
     }
 }

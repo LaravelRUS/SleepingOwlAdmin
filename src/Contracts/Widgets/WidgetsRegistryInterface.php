@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Contracts\Widgets;
 
 interface WidgetsRegistryInterface
 {
-
     /**
      * @param $widget
      *
