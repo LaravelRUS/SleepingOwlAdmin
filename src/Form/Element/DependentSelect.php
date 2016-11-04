@@ -158,9 +158,9 @@ class DependentSelect extends NamedFormElement
      */
     public function setDataDepends($depends)
     {
-         $this->data_depends = $depends;
+        $this->data_depends = $depends;
 
-         return $this;
+        return $this;
     }
 
     /**
