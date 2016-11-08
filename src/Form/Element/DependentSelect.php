@@ -2,12 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
-
 class DependentSelect extends Select
 {
     /**

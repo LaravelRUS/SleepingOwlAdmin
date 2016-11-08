@@ -40,7 +40,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
     public function __construct(\Illuminate\Contracts\Foundation\Application $application)
     {
         parent::__construct($application);
-        
+
         $this->register([
             'columns' => Columns\Columns::class,
             'column' => Columns\Column::class,

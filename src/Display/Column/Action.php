@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Display\Column;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class Action extends NamedColumn implements ActionInterface
 {

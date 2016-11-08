@@ -95,7 +95,7 @@ class DisplayTable extends Display
             });
         }
 
-        $this->getColumns()->all()->each(function(ColumnInterface $column) {
+        $this->getColumns()->all()->each(function (ColumnInterface $column) {
             $column->setModelConfiguration($this->getModelConfiguration());
         });
 
@@ -253,7 +253,7 @@ class DisplayTable extends Display
 
         $columns = $this->getColumns()->all();
 
-        if (! is_integer(key($orders))) {
+        if (! is_int(key($orders))) {
             $orders = [$orders];
         }
 

@@ -12,7 +12,6 @@ use SleepingOwl\Admin\Traits\OrderableModel;
 
 class Order extends TableColumn implements WithRoutesInterface
 {
-
     /**
      * @var bool
      */

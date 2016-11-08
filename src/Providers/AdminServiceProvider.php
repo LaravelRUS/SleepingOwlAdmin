@@ -19,7 +19,6 @@ use SleepingOwl\Admin\Exceptions\TemplateException;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
-use SleepingOwl\Admin\Templates\Breadcrumbs;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 
 class AdminServiceProvider extends ServiceProvider

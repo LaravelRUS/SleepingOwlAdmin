@@ -52,10 +52,10 @@ class AdminController extends Controller
 
         $admin->navigation()->setCurrentUrl($request->url());
 
-		if (! $this->breadcrumbs->exists('home')) {
-			$this->breadcrumbs->register('home', function ($breadcrumbs) {
-				$breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
-			});
+        if (! $this->breadcrumbs->exists('home')) {
+            $this->breadcrumbs->register('home', function ($breadcrumbs) {
+                $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
+            });
         }
 
         $breadcrumbs = [];
@@ -152,8 +152,7 @@ class AdminController extends Controller
     public function postStore(ModelConfigurationInterface $model,
                               Factory $factory,
                               UrlGenerator $urlGenerator
-    )
-    {
+    ) {
         if (! $model->isCreatable()) {
             abort(404);
         }
@@ -236,8 +235,7 @@ class AdminController extends Controller
                                Factory $factory,
                                UrlGenerator $urlGenerator,
                                $id
-    )
-    {
+    ) {
         /** @var FormInterface $editForm */
         $editForm = $model->fireEdit($id);
         $item = $editForm->getModel();

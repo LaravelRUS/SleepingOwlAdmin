@@ -37,10 +37,10 @@ class Control extends TableColumn
      */
     public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $label = null)
     {
-        parent::__construct($admin,$headerColumn, $label);
+        parent::__construct($admin, $headerColumn, $label);
 
         $this->buttons = new Collection();
-        
+
         $this->setHtmlAttribute('class', 'text-right');
     }
 

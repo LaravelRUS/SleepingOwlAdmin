@@ -15,8 +15,6 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
-use SleepingOwl\Admin\Display\Column\Custom;
-use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
@@ -40,7 +38,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 }
 
                 return abort(404);
-            }
+            },
         ]);
     }
 
@@ -62,8 +60,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 return $content;
             }
         }
-
-        return null;
     }
 
     /**
@@ -106,8 +102,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                                 Request $request,
                                 $name = null,
                                 $distinct = null
-    )
-    {
+    ) {
         parent::__construct($admin, $repository, $control, $request);
 
         $this->request = $request;
