@@ -13,6 +13,11 @@ class Image extends NamedColumn
     protected $imageWidth = '80px';
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * Image constructor.
      *
      * {@inheritdoc}
@@ -20,8 +25,6 @@ class Image extends NamedColumn
     public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $name, $label = null)
     {
         parent::__construct($admin, $headerColumn, $name, $label);
-
-        $this->setOrderable(false);
     }
 
     /**

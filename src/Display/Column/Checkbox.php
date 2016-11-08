@@ -27,8 +27,6 @@ class Checkbox extends TableColumn
         $this->setLabel(
             Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
         ));
-
-        $this->setOrderable(false);
     }
 
     /**

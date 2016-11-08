@@ -11,7 +11,9 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
@@ -233,10 +235,42 @@ class DisplayTable extends Display
         $query = $this->getRepository()->getQuery();
 
         $this->modifyQuery($query);
+        $this->applyOrders($query);
 
         return $this->collection = $this->usePagination()
             ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends($this->request->except($this->pageName))
             : $query->get();
+    }
+
+    /**
+     * Apply orders to the query.
+     *
+     * @param $query
+     */
+    protected function applyOrders(Builder $query)
+    {
+        $orders = Request::input('order', []);
+
+        $columns = $this->getColumns()->all();
+
+        if (! is_integer(key($orders))) {
+            $orders = [$orders];
+        }
+
+        foreach ($orders as $order) {
+            $columnIndex = array_get($order, 'column');
+            $direction = array_get($order, 'dir', 'asc');
+
+            if (! $columnIndex) {
+                continue;
+            }
+
+            $column = $columns->get($columnIndex);
+
+            if ($column instanceof ColumnInterface && $column->isOrderable()) {
+                $column->orderBy($query, $direction);
+            }
+        }
     }
 
     /**

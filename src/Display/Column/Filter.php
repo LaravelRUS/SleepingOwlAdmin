@@ -26,6 +26,11 @@ class Filter extends NamedColumn
     protected $request;
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * Filter constructor.
      *
      * @param AdminInterface $admin

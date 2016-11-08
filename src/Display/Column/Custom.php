@@ -22,10 +22,9 @@ class Custom extends TableColumn
     protected $view = 'column.custom';
 
     /**
-     * A field that can be ordered.
-     * @var string
+     * @var bool
      */
-    protected $orderField;
+    protected $orderable = false;
 
     /**
      * Custom constructor.
@@ -65,26 +64,6 @@ class Custom extends TableColumn
         $this->callback = $callback;
 
         return $this;
-    }
-
-    /**
-     * @param string $field
-     *
-     * @return $this
-     */
-    public function setOrderField($field)
-    {
-        $this->orderField = $field;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrderField()
-    {
-        return $this->orderField;
     }
 
     /**

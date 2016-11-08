@@ -41,7 +41,6 @@ class Control extends TableColumn
 
         $this->buttons = new Collection();
         
-        $this->setOrderable(false);
         $this->setHtmlAttribute('class', 'text-right');
     }
 
