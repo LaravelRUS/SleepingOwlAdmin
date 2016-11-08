@@ -13,7 +13,6 @@ use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
@@ -238,7 +237,8 @@ class DisplayTable extends Display
         $this->applyOrders($query);
 
         return $this->collection = $this->usePagination()
-            ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends($this->request->except($this->pageName))
+            ? $query->paginate($this->paginate, ['*'], $this->pageName)
+                ->appends($this->request->except($this->pageName))
             : $query->get();
     }
 
@@ -249,7 +249,7 @@ class DisplayTable extends Display
      */
     protected function applyOrders(Builder $query)
     {
-        $orders = Request::input('order', []);
+        $orders = $this->request->input('order', []);
 
         $columns = $this->getColumns()->all();
 
@@ -276,7 +276,7 @@ class DisplayTable extends Display
     /**
      * @param \Illuminate\Database\Eloquent\Builder|Builder $query
      */
-    protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    protected function modifyQuery(Builder $query)
     {
         $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
             $extension->modifyQuery($query);
