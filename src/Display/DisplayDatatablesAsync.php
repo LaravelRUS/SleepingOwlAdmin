@@ -15,7 +15,6 @@ use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\Custom;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
-use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
@@ -39,7 +38,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                     return $display->renderAsync();
                 }
 
-                abort(404);
+                return abort(404);
             }
         ]);
     }
@@ -55,12 +54,15 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected static function findDatatablesAsyncByName(DisplayTabbed $display, $name)
     {
         $tabs = $display->getTabs();
+
         foreach ($tabs as $tab) {
             $content = $tab->getContent();
             if ($content instanceof self && $content->getName() === $name) {
                 return $content;
             }
         }
+
+        return null;
     }
 
     /**

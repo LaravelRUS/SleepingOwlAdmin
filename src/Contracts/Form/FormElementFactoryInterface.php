@@ -29,6 +29,8 @@ use SleepingOwl\Admin\Form\Element;
  * @method Element\Radio radio($name, $label = null)
  * @method Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method Element\Upload upload($name, $label = null)
+ * @method Element\Number number($name, $label = null)
+ * @method Element\DependentSelect dependentselect($name, $label = null, array|Model $options)
  */
 interface FormElementFactoryInterface
 {

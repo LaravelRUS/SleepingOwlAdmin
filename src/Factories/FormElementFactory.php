@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method Element\Upload upload($name, $label = null)
  * @method Element\Number number($name, $label = null)
+ * @method Element\DependentSelect dependentselect($name, $label = null, array|Model $options)
  */
 class FormElementFactory extends AliasBinder implements FormElementFactoryInterface
 {
@@ -64,7 +65,8 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'wysiwyg' => Element\Wysiwyg::class,
             'upload' => Element\Upload::class,
             'html' => Element\Html::class,
-            'number' => Element\Number::class
+            'number' => Element\Number::class,
+            'dependentselect' => Element\DependentSelect::class,
         ]);
     }
 }

@@ -3,7 +3,9 @@
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,11 +14,12 @@ use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class AdminController extends Controller
 {
     /**
-     * @var DaveJamesMiller\Breadcrumbs\Manager
+     * @var \DaveJamesMiller\Breadcrumbs\Manager
      */
     private $breadcrumbs;
 
@@ -97,12 +100,13 @@ class AdminController extends Controller
     }
 
     /**
+     * @param TemplateInterface $template
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDashboard()
+    public function getDashboard(TemplateInterface $template)
     {
         return $this->renderContent(
-            AdminTemplate::view('dashboard'),
+            $template->view('dashboard'),
             trans('sleeping_owl::lang.dashboard')
         );
     }
@@ -141,14 +145,13 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     *
-     * @param \Illuminate\Validation\Factory $factory
-     *
+     * @param Factory $factory
+     * @param UrlGenerator $urlGenerator
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postStore(ModelConfigurationInterface $model,
-                              \Illuminate\Validation\Factory $factory,
-                              \Illuminate\Contracts\Routing\UrlGenerator $urlGenerator
+                              Factory $factory,
+                              UrlGenerator $urlGenerator
     )
     {
         if (! $model->isCreatable()) {
@@ -188,7 +191,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl($request->except([
+            $response = redirect()->to($model->getCreateUrl($this->request->except([
                 '_redirectBack',
                 '_token',
                 'url',
@@ -224,13 +227,15 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
+     * @param Factory $factory
+     * @param UrlGenerator $urlGenerator
      * @param int $id
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postUpdate(ModelConfigurationInterface $model,
-                              \Illuminate\Validation\Factory $factory, $id,
-                              \Illuminate\Contracts\Routing\UrlGenerator $urlGenerator
+                               Factory $factory,
+                               UrlGenerator $urlGenerator,
+                               $id
     )
     {
         /** @var FormInterface $editForm */
@@ -264,7 +269,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl($request->except([
+            $response = redirect()->to($model->getCreateUrl($this->request->except([
                 '_redirectBack',
                 '_token',
                 'url',
@@ -498,11 +503,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param \Illuminate\Contracts\Routing\UrlGenerator $urlGenerator
+     * @param \Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Routing\UrlGenerator $urlGenerator
      *
      * @return null|string
      */
-    protected function getBackUrl(\Illuminate\Contracts\Routing\UrlGenerator $urlGenerator)
+    protected function getBackUrl(UrlGenerator $urlGenerator)
     {
         if (($backUrl = $this->request->input('_redirectBack')) == $urlGenerator->previous()) {
             $backUrl = null;

@@ -2,6 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Illuminate\Http\Request;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+
 class Filter extends NamedColumn
 {
     /**
@@ -15,6 +19,31 @@ class Filter extends NamedColumn
      * @var string
      */
     protected $field;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * Filter constructor.
+     *
+     * @param AdminInterface $admin
+     * @param TableHeaderColumnInterface $headerColumn
+     * @param Request $request
+     * @param null|string $name
+     * @param $label
+     */
+    public function __construct(AdminInterface $admin,
+                                TableHeaderColumnInterface $headerColumn,
+                                Request $request,
+                                $name,
+                                $label)
+    {
+        parent::__construct($admin, $headerColumn, $name, $label);
+
+        $this->request = $request;
+    }
 
     /**
      * @return string
@@ -70,7 +99,7 @@ class Filter extends NamedColumn
      */
     public function getUrl()
     {
-        request()->merge([
+        $this->request->merge([
             $this->getName() => $this->getValue(),
         ]);
 

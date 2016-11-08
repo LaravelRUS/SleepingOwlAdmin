@@ -8,7 +8,6 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Admin;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
@@ -22,7 +21,6 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use SleepingOwl\Admin\Templates\Breadcrumbs;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
-use Symfony\Component\Finder\Finder;
 
 class AdminServiceProvider extends ServiceProvider
 {

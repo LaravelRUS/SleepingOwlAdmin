@@ -35,7 +35,11 @@ class Custom extends TableColumn
      * @param null|string $label
      * @param Closure $callback
      */
-    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $label = null, Closure $callback = null)
+    public function __construct(AdminInterface $admin,
+                                TableHeaderColumnInterface
+                                $headerColumn,
+                                $label = null,
+                                Closure $callback = null)
     {
         parent::__construct($admin, $headerColumn, $label);
         if (! is_null($callback)) {
