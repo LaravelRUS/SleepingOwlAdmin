@@ -15,6 +15,7 @@ use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\Custom;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
+use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
@@ -307,6 +308,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
             foreach ($columns->all() as $column) {
                 $column->setModel($instance);
+
+                if ($column instanceof Control) {
+                    $column->initialize();
+                }
+
                 $_row[] = (string) $column;
             }
 

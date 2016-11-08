@@ -22,7 +22,7 @@ class Custom extends TableColumn
     protected $view = 'column.custom';
 
     /**
-     * A field that can be ordered
+     * A field that can be ordered.
      * @var string
      */
     protected $orderField;

@@ -20,7 +20,6 @@ use SleepingOwl\Admin\Factories\FormFactory;
 
 class AliasesServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
         $this->registerColumns();
