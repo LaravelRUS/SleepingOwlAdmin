@@ -80,7 +80,7 @@ class Control extends TableColumn
         $button->setHtmlAttribute('class', 'btn-danger btn-destroy');
 
         $this->buttons->put('restore', $button = new ControlButton(function (Model $model) {
-            return $this->getModelConfiguration()->get($model->getKey());
+            return $this->getModelConfiguration()->getRestoreUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.restore'), 400));
         $button->setCondition(function () {
             return $this->isRestorable();
