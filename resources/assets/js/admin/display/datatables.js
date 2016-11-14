@@ -24,6 +24,8 @@ Admin.Modules.add('display.datatables', () => {
             params.ajax = {
                 url: url,
                 data (d) {
+                    Admin.Events.fire('datatables::ajax::data', d)
+
                     $('[data-datatables-id="' + id + '"] .column-filter[data-type]').each((i, subitem) => {
                         var $this = $(subitem);
                         var index = $this.closest('td').data('index');
