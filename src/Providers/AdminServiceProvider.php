@@ -82,6 +82,8 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\SuccessMessages::class);
+
         $this->app->singleton('sleeping_owl.template', function () {
             return $this->app['sleeping_owl']->template();
         });
