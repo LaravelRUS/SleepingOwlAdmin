@@ -108,7 +108,6 @@ class Range extends BaseColumnFilter
         $search,
         $fullSearch
     ) {
-
         if (strpos($search, '::') === false) {
             return;
         }
@@ -123,10 +122,10 @@ class Range extends BaseColumnFilter
         if (! empty($from) && ! empty($to)) {
             $this->setOperator('between');
             $search = [$from, $to];
-        } else if (! empty($from)) {
+        } elseif (! empty($from)) {
             $this->setOperator('greater_or_equal');
             $search = $from;
-        } else if (! empty($to)) {
+        } elseif (! empty($to)) {
             $this->setOperator('less_or_equal');
             $search = $to;
         } else {

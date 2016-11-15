@@ -22,7 +22,6 @@ class DateRange extends Date
      */
     protected $defaultTo;
 
-
     /**
      * @return string
      */
