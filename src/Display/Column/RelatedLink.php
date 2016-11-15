@@ -19,6 +19,11 @@ class RelatedLink extends Link
     protected $originalName;
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * @param AdminInterface $admin
      * @param TableHeaderColumnInterface $headerColumn
      * @param \Closure|null|string $name

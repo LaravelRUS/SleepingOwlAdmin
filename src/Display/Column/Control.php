@@ -4,6 +4,11 @@ namespace SleepingOwl\Admin\Display\Column;
 
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
+use SleepingOwl\Admin\Display\ControlButton;
+use SleepingOwl\Admin\Display\ControlLink;
 use SleepingOwl\Admin\Display\TableColumn;
 
 class Control extends TableColumn
@@ -19,7 +24,7 @@ class Control extends TableColumn
     protected $width = '90px';
 
     /**
-     * @var
+     * @var Collection
      */
     protected $buttons;
 
@@ -32,19 +37,72 @@ class Control extends TableColumn
      */
     public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $label = null)
     {
-        parent::__construct($admin,$headerColumn, $label);
+        parent::__construct($admin, $headerColumn, $label);
 
-        $this->setOrderable(false);
+        $this->buttons = new Collection();
 
         $this->setHtmlAttribute('class', 'text-right');
     }
 
-    /**
-     * @return mixed
-     */
-    protected function getModelKey()
+    public function initialize()
     {
-        return $this->getModel()->getKey();
+        parent::initialize();
+
+        $this->buttons->put('edit', $button = new ControlLink(function (Model $model) {
+            return $this->getModelConfiguration()->getEditUrl($model->getKey());
+        }, trans('sleeping_owl::lang.table.edit'), 100));
+        $button->hideText();
+        $button->setCondition(function () {
+            return $this->isEditable();
+        });
+        $button->setIcon('fa fa-pencil');
+        $button->setHtmlAttribute('class', 'btn-primary');
+
+        $this->buttons->put('delete', $button = new ControlButton(function (Model $model) {
+            return $this->getModelConfiguration()->getDeleteUrl($model->getKey());
+        }, trans('sleeping_owl::lang.table.delete'), 200));
+        $button->setCondition(function () {
+            return $this->isDeletable();
+        });
+
+        $button->setMethod('delete');
+        $button->hideText();
+        $button->setIcon('fa fa-trash');
+        $button->setHtmlAttribute('class', 'btn-danger btn-delete');
+
+        $this->buttons->put('destroy', $button = new ControlButton(function (Model $model) {
+            return $this->getModelConfiguration()->getDestroyUrl($model->getKey());
+        }, trans('sleeping_owl::lang.table.destroy'), 300));
+        $button->setCondition(function () {
+            return $this->isDestroyable();
+        });
+
+        $button->setMethod('delete');
+        $button->hideText();
+        $button->setIcon('fa fa-trash');
+        $button->setHtmlAttribute('class', 'btn-danger btn-destroy');
+
+        $this->buttons->put('restore', $button = new ControlButton(function (Model $model) {
+            return $this->getModelConfiguration()->get($model->getKey());
+        }, trans('sleeping_owl::lang.table.restore'), 400));
+        $button->setCondition(function () {
+            return $this->isRestorable();
+        });
+        $button->hideText();
+        $button->setIcon('fa fa-reply');
+        $button->setHtmlAttribute('class', 'btn-warning');
+    }
+
+    /**
+     * @param ControlButtonInterface $button
+     *
+     * @return $this
+     */
+    public function addButton(ControlButtonInterface $button)
+    {
+        $this->buttons->push($button);
+
+        return $this;
     }
 
     /**
@@ -77,15 +135,6 @@ class Control extends TableColumn
     }
 
     /**
-     * Get instance edit url.
-     * @return string
-     */
-    protected function getEditUrl()
-    {
-        return $this->getModelConfiguration()->getEditUrl($this->getModelKey());
-    }
-
-    /**
      * Check if instance is deletable.
      *
      * @return bool
@@ -98,16 +147,6 @@ class Control extends TableColumn
             $this->getModelConfiguration()->isDeletable(
                 $this->getModel()
             );
-    }
-
-    /**
-     * Get instance delete url.
-     *
-     * @return string
-     */
-    protected function getDeleteUrl()
-    {
-        return $this->getModelConfiguration()->getDeleteUrl($this->getModelKey());
     }
 
     /**
@@ -126,16 +165,6 @@ class Control extends TableColumn
     }
 
     /**
-     * Get instance delete url.
-     *
-     * @return string
-     */
-    protected function getDestroyUrl()
-    {
-        return $this->getModelConfiguration()->getDestroyUrl($this->getModelKey());
-    }
-
-    /**
      * Check if instance is restorable.
      *
      * @return bool
@@ -151,13 +180,15 @@ class Control extends TableColumn
     }
 
     /**
-     * Get instance restore url.
+     * @param Model $model
      *
-     * @return string
+     * @return $this
      */
-    protected function getRestoreUrl()
+    public function setModel(Model $model)
     {
-        return $this->getModelConfiguration()->getRestoreUrl($this->getModelKey());
+        parent::setModel($model);
+
+        return $this;
     }
 
     /**
@@ -166,14 +197,16 @@ class Control extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'editable'    => $this->isEditable(),
-            'editUrl'     => $this->getEditUrl(),
-            'deletable'   => $this->isDeletable(),
-            'deleteUrl'   => $this->getDeleteUrl(),
-            'destroyable' => $this->isDestroyable(),
-            'destroyUrl'  => $this->getDestroyUrl(),
-            'restorable'  => $this->isRestorable(),
-            'restoreUrl'  => $this->getRestoreUrl(),
+            'buttons' => $this->buttons
+                ->each(function (ControlButtonInterface $button) {
+                    $button->setModel($this->getModel());
+                })
+                ->filter(function (ControlButtonInterface $button) {
+                    return $button->isActive();
+                })
+                ->sortBy(function (ControlButtonInterface $button) {
+                    return $button->getPosition();
+                }),
         ];
     }
 }

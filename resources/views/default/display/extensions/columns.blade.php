@@ -17,7 +17,13 @@
     @foreach ($collection as $model)
         <tr>
             @foreach ($columns as $column)
-                <?php $column->setModel($model); ?>
+                <?php
+                $column->setModel($model);
+                if($column instanceof \SleepingOwl\Admin\Display\Column\Control) {
+                    $column->initialize();
+                }
+                ?>
+
                 <td {!! $column->htmlAttributesToString() !!}>
                     {!! $column->render() !!}
                 </td>

@@ -20,7 +20,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
      * Is column orderable?
      * @var bool
      */
-    protected $orderable = true;
+    protected $orderable = false;
 
     /**
      * @var string|\Illuminate\View\View

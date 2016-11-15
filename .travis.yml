@@ -10,11 +10,14 @@ php:
 allow_failures:
   - php: nightly
 
+install:
+  - travis_retry composer install --no-interaction --prefer-dist
+
 before_script:
   - travis_retry composer self-update
 
-install:
-  - travis_retry composer install --no-interaction --prefer-dist
+script:
+  - travis_retry phpunit
 
 # cache vendors
 cache:

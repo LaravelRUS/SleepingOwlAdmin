@@ -2,6 +2,7 @@
 
 namespace __NAMESPACE__\Providers;
 
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 
 class AdminSectionsServiceProvider extends ServiceProvider
@@ -11,7 +12,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $sections = [
-        //\__NAMESPACE__\User::class => '__NAMESPACE__\Http\Sections\Users',
+        '__NAMESPACE__\Http\Sections\Users' => //\__NAMESPACE__\User::class,
     ];
 
     /**
@@ -19,11 +20,9 @@ class AdminSectionsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(\SleepingOwl\Admin\Contracts\AdminInterface $admin)
+    public function boot(AdminInterface $admin)
     {
         parent::boot($admin);
-
-    	//
 
         // Uncomment this line if you want to use section policies
         // use `php artisan sleepingowl:section:policies` for policies generating

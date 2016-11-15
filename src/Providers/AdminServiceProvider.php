@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
@@ -15,9 +16,10 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 use SleepingOwl\Admin\Exceptions\TemplateException;
+use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
-use SleepingOwl\Admin\Templates\Breadcrumbs;
+use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -51,6 +53,16 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->alias('sleeping_owl', \SleepingOwl\Admin\Contracts\AdminInterface::class);
 
         $this->registerWysiwyg();
+
+        $this->app->singleton(WidgetsRegistryInterface::class, function () {
+            return new WidgetsRegistry($this->app);
+        });
+
+        $this->app->booted(function () {
+            $this->app[WidgetsRegistryInterface::class]->placeWidgets(
+                $this->app[ViewFactory::class]
+            );
+        });
 
         $this->app->booted(function () {
             $this->registerCustomRoutes();

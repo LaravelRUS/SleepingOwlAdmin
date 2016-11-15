@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
@@ -93,7 +94,7 @@ class DisplayTable extends Display
             });
         }
 
-        $this->getColumns()->all()->each(function(ColumnInterface $column) {
+        $this->getColumns()->all()->each(function (ColumnInterface $column) {
             $column->setModelConfiguration($this->getModelConfiguration());
         });
 
@@ -233,16 +234,49 @@ class DisplayTable extends Display
         $query = $this->getRepository()->getQuery();
 
         $this->modifyQuery($query);
+        $this->applyOrders($query);
 
         return $this->collection = $this->usePagination()
-            ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends($this->request->except($this->pageName))
+            ? $query->paginate($this->paginate, ['*'], $this->pageName)
+                ->appends($this->request->except($this->pageName))
             : $query->get();
+    }
+
+    /**
+     * Apply orders to the query.
+     *
+     * @param $query
+     */
+    protected function applyOrders(Builder $query)
+    {
+        $orders = $this->request->input('order', []);
+
+        $columns = $this->getColumns()->all();
+
+        if (! is_int(key($orders))) {
+            $orders = [$orders];
+        }
+
+        foreach ($orders as $order) {
+            $columnIndex = array_get($order, 'column');
+            $direction = array_get($order, 'dir', 'asc');
+
+            if (! $columnIndex) {
+                continue;
+            }
+
+            $column = $columns->get($columnIndex);
+
+            if ($column instanceof ColumnInterface && $column->isOrderable()) {
+                $column->orderBy($query, $direction);
+            }
+        }
     }
 
     /**
      * @param \Illuminate\Database\Eloquent\Builder|Builder $query
      */
-    protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    protected function modifyQuery(Builder $query)
     {
         $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
             $extension->modifyQuery($query);

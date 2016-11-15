@@ -22,10 +22,9 @@ class Custom extends TableColumn
     protected $view = 'column.custom';
 
     /**
-     * A field that can be ordered
-     * @var string
+     * @var bool
      */
-    protected $orderField;
+    protected $orderable = false;
 
     /**
      * Custom constructor.
@@ -35,7 +34,11 @@ class Custom extends TableColumn
      * @param null|string $label
      * @param Closure $callback
      */
-    public function __construct(AdminInterface $admin, TableHeaderColumnInterface $headerColumn, $label = null, Closure $callback = null)
+    public function __construct(AdminInterface $admin,
+                                TableHeaderColumnInterface
+                                $headerColumn,
+                                $label = null,
+                                Closure $callback = null)
     {
         parent::__construct($admin, $headerColumn, $label);
         if (! is_null($callback)) {
@@ -61,26 +64,6 @@ class Custom extends TableColumn
         $this->callback = $callback;
 
         return $this;
-    }
-
-    /**
-     * @param string $field
-     *
-     * @return $this
-     */
-    public function setOrderField($field)
-    {
-        $this->orderField = $field;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrderField()
-    {
-        return $this->orderField;
     }
 
     /**

@@ -16,6 +16,10 @@
 
                     @if($control instanceof \SleepingOwl\Admin\Contracts\ColumnInterface)
                         <?php $control->setModel($entry); ?>
+
+                        <?php
+                        $control->initialize();
+                        ?>
                     @endif
 
                     {!! $control->render() !!}

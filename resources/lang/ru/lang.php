@@ -77,7 +77,7 @@ return [
     ],
     'tree' => [
         'expand' => 'Развернуть все',
-        'collapse' => 'Свернуть все'
+        'collapse' => 'Свернуть все',
     ],
     'editable' => [
         'checkbox' => [
