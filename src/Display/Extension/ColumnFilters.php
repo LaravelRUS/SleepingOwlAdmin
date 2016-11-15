@@ -4,9 +4,9 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -20,7 +20,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     /**
      * @var string|\Illuminate\View\View
      */
-    protected $view = 'display.extensions.columns_filters';
+    protected $view = 'display.extensions.columns_filters_table';
 
     /**
      * @var string
@@ -135,8 +135,9 @@ class ColumnFilters extends Extension implements Initializable, Placable
     public function toArray()
     {
         return [
-            'filters'    => $this->columnFilters,
+            'filters' => $this->columnFilters,
             'attributes' => $this->htmlAttributesToString(),
+            'tag' => $this->getPlacement() == 'table.header' ? 'thead' : 'tfoot',
         ];
     }
 
@@ -154,6 +155,12 @@ class ColumnFilters extends Extension implements Initializable, Placable
                 $filter->initialize();
             }
         }
+
+        if (!in_array($this->getPlacement(), ['table.footer', 'table.header']) && $this->view == 'display.extensions.columns_filters_table') {
+            $this->view = 'display.extensions.columns_filters';
+            $this->setHtmlAttribute('class', 'table table-default');
+        }
+
 
         if (! $this->hasHtmlAttribute('class')) {
             $this->setHtmlAttribute('class', 'panel-footer');

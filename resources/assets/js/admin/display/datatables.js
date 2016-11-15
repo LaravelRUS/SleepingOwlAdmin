@@ -11,10 +11,22 @@ Admin.Modules.add('display.datatables', () => {
         });
     }
 
+    function iterateColumnFilters(datatableId, callback) {
+        $('[data-datatables-id="' + datatableId + '"] .column-filter[data-type]').each((i, subitem) => {
+            let $element = $(subitem)
+
+            callback(
+                $element,
+                $element.closest('[data-index]').data('index'),
+                $element.data('type')
+            )
+        });
+    }
+
     $('.datatables').each((i, item) => {
         let $this = $(item),
             id = $this.data('id'),
-            params = $this.data('attributes'),
+            params = $this.data('attributes') || {},
             url = $this.data('url')
 
         if (url && url.length > 0) {
@@ -25,14 +37,11 @@ Admin.Modules.add('display.datatables', () => {
                 data (d) {
                     Admin.Events.fire('datatables::ajax::data', d)
 
-                    $('[data-datatables-id="' + id + '"] .column-filter[data-type]').each((i, subitem) => {
-                        let $this = $(subitem),
-                            index = $this.closest('td').data('index')
-
-                        if (name = $this.data('ajax-data-name')) {
-                            d.columns[index]['search'][name] = $this.val()
+                    iterateColumnFilters(id, function($element, index, type) {
+                        if (name = $element.data('ajax-data-name')) {
+                            d.columns[index]['search'][name] = $element.val()
                         }
-                    });
+                    })
                 }
             };
         }
@@ -41,15 +50,11 @@ Admin.Modules.add('display.datatables', () => {
             Admin.Events.fire('datatables::draw', this)
         }
 
-        var table = $this.DataTable(params);
+        let table = $this.DataTable(params);
 
-        $('[data-datatables-id="' + id + '"] .column-filter[data-type]').each((i, item) => {
-            let $this = $(item),
-                type = $this.data('type'),
-                index = $this.closest('td').data('index');
-
+        iterateColumnFilters(id, function($element, index, type) {
             if (_.isFunction(window.columnFilters[type])) {
-                window.columnFilters[type](item, table.api(), table.api().column(index), index, params.serverSide);
+                window.columnFilters[type]($element, table.api(), table.api().column(index), index, params.serverSide);
             }
         })
     })
@@ -106,9 +111,8 @@ window.columnFilters = {
     range (container, table, column, index, serverSide) {
         let $container = $(container),
             from = $('input:first', $container),
-            to = $('input:last', $container);
-
-        var isDateRange = false;
+            to = $('input:last', $container),
+            isDateRange = false;
 
         from.data('ajax-data-name', 'from');
         to.data('ajax-data-name', 'to');
@@ -168,7 +172,7 @@ window.columnFilters = {
         });
     },
     select (input, table, column, index, serverSide) {
-        var $input = $(input);
+        let $input = $(input);
 
         $input.on('change', () => {
             let val = $input.val() ? $input.find(':selected').text() : '';
@@ -176,7 +180,7 @@ window.columnFilters = {
         });
     },
     text (input, table, column, index, serverSide) {
-        var $input = $(input)
+        let $input = $(input)
 
         $input.on('keyup change', () => {
             column.search($input.val()).draw();
