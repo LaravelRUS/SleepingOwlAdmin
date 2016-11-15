@@ -5,15 +5,16 @@
     "dev": "gulp watch"
   },
   "devDependencies": {
-    "imports-loader": "^0.6.5",
     "admin-lte": "^2.3.5",
     "bootstrap": "^3.3.7",
     "datatables.net": "^1.10.12",
     "dropzone": "4.3.0",
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
+    "bootstrap-daterangepicker": "^2.1.24",
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "i18next": "^3.4.1",
+    "imports-loader": "^0.6.5",
     "jquery": "^2.1.4",
     "laravel-elixir": "^6.0.0-11",
     "laravel-elixir-vue": "^0.1.4",

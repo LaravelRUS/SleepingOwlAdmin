@@ -8,6 +8,6 @@
 			{!! $attributes !!} >
 
 	<span class="input-group-addon">
-		<span class="fa fa-clock-o"></span>
+		<span class="fa fa-calendar"></span>
 	</span>
 </div>

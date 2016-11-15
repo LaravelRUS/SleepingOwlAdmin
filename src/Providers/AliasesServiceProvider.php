@@ -21,9 +21,10 @@ class AliasesServiceProvider extends ServiceProvider
     protected function registerColumnFilters()
     {
         $alias = (new AliasBinder())->register([
-            'text'   => \SleepingOwl\Admin\Display\Column\Filter\Text::class,
-            'date'   => \SleepingOwl\Admin\Display\Column\Filter\Date::class,
-            'range'  => \SleepingOwl\Admin\Display\Column\Filter\Range::class,
+            'text' => \SleepingOwl\Admin\Display\Column\Filter\Text::class,
+            'date' => \SleepingOwl\Admin\Display\Column\Filter\Date::class,
+            'daterange' => \SleepingOwl\Admin\Display\Column\Filter\DateRange::class,
+            'range' => \SleepingOwl\Admin\Display\Column\Filter\Range::class,
             'select' => \SleepingOwl\Admin\Display\Column\Filter\Select::class,
         ]);
 
@@ -92,6 +93,7 @@ class AliasesServiceProvider extends ServiceProvider
             'text'              => \SleepingOwl\Admin\Form\Element\Text::class,
             'time'              => \SleepingOwl\Admin\Form\Element\Time::class,
             'date'              => \SleepingOwl\Admin\Form\Element\Date::class,
+            'daterange'         => \SleepingOwl\Admin\Form\Element\DateRange::class,
             'timestamp'         => \SleepingOwl\Admin\Form\Element\Timestamp::class,
             'textaddon'         => \SleepingOwl\Admin\Form\Element\TextAddon::class,
             'select'            => \SleepingOwl\Admin\Form\Element\Select::class,

@@ -40,6 +40,16 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function parseValue($value)
+    {
+        return $value;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array

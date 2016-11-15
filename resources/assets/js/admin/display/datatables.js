@@ -17,7 +17,7 @@ Admin.Modules.add('display.datatables', () => {
             params = $this.data('attributes'),
             url = $this.data('url')
 
-        if (url.length > 0) {
+        if (url && url.length > 0) {
             params.serverSide = true
             params.processing = true
             params.ajax = {
@@ -49,14 +49,61 @@ Admin.Modules.add('display.datatables', () => {
                 index = $this.closest('td').data('index');
 
             if (_.isFunction(window.columnFilters[type])) {
-                window.columnFilters[type](item, table.api(), table.api().column(index), index);
+                window.columnFilters[type](item, table.api(), table.api().column(index), index, params.serverSide);
             }
         })
     })
 })
 
+window.checkNumberRange = (fromValue, toValue, value) => {
+    if(_.isNaN(fromValue) && _.isNaN(toValue)) {
+        return true;
+    }
+
+    if(_.isNaN(value)) {
+        return false;
+    }
+
+    if(_.isNaN(fromValue) && value <= toValue) {
+        return true;
+    }
+
+    if( _.isNaN(toValue) && value >= fromValue) {
+        return true;
+    }
+
+    return value >= fromValue && value <= toValue;
+}
+
+window.checkDateRange = (fromValue, toValue, value) => {
+    if(!_.isObject(fromValue) && !_.isObject(toValue)) {
+        return true;
+    }
+
+    if (!value.isValid()) {
+        return false;
+    }
+
+    if (!_.isObject(fromValue) && value.isSameOrBefore(toValue)) {
+        return true;
+    }
+
+    if(!_.isObject(toValue) && value.isSameOrAfter(fromValue)) {
+        return true;
+    }
+
+    return value.isBetween(fromValue, toValue)
+}
+
 window.columnFilters = {
-    range (container, table, column, index) {
+    daterange (dateField, table, column, index, serverSide) {
+        let $dateField = $(dateField);
+
+        $dateField.on('apply.daterangepicker', function(e, date) {
+            column.search($dateField.val()).draw();
+        })
+    },
+    range (container, table, column, index, serverSide) {
         let $container = $(container),
             from = $('input:first', $container),
             to = $('input:last', $container);
@@ -69,79 +116,29 @@ window.columnFilters = {
         from
             .add(to)
             .on('keyup change', function () {
-                table.draw();
+                if (serverSide) {
+                    column.search(from.val() + '::' + to.val()).draw()
+                } else {
+                    table.draw();
+                }
             });
 
         if (from.closest('.input-date').length > 0 && to.closest('.input-date').length > 0) {
             from.closest('.input-date')
                 .add(to.closest('.input-date'))
                 .on('dp.change', function () {
-                    table.draw();
+                    if (serverSide) {
+                        column.search(from.val() + '::' + to.val()).draw()
+                    } else {
+                        table.draw();
+                    }
                 });
 
             isDateRange = true;
         }
 
-        let checkDateRange = (from, to, value) => {
-            let fromValue = from.val(),
-                toValue = to.val();
-
-            if (fromValue != '') {
-                fromValue = from.closest('.input-date').data('DateTimePicker').date();
-            } else {
-                fromValue = undefined;
-            }
-
-            if (toValue != '') {
-                toValue = to.closest('.input-date').data('DateTimePicker').date();
-            } else {
-                toValue = undefined;
-            }
-
-            value = moment(value, from.data('date-format'));
-
-            if(!_.isObject(fromValue) && !_.isObject(toValue)) {
-                return true;
-            }
-
-            if (!value.isValid()) {
-                return false;
-            }
-
-            if (!_.isObject(fromValue) && value.isSameOrBefore(toValue)) {
-                return true;
-            }
-
-            if(!_.isObject(toValue) && value.isSameOrAfter(fromValue)) {
-                return true;
-            }
-
-            return value.isBetween(fromValue, toValue)
-        }
-
-        let checkNumberRange = (from, to, value) => {
-            let fromValue = parseInt(from.val()),
-                toValue = parseInt(to.val());
-
-            value = parseInt(value);
-
-            if(_.isNaN(fromValue) && _.isNaN(toValue)) {
-                return true;
-            }
-
-            if(_.isNaN(value)) {
-                return false;
-            }
-
-            if(_.isNaN(fromValue) && value <= toValue) {
-                return true;
-            }
-
-            if( _.isNaN(toValue) && value >= fromValue) {
-                return true;
-            }
-
-            return value >= fromValue && value <= toValue;
+        if (serverSide) {
+            return;
         }
 
         $.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
@@ -156,13 +153,21 @@ window.columnFilters = {
             }
 
             if (isDateRange) {
-                return checkDateRange(from, to, value)
+                return checkDateRange(
+                    from.val().length > 0 && from.closest('.input-date').data('DateTimePicker').date(),
+                    to.val().length > 0 && to.closest('.input-date').data('DateTimePicker').date(),
+                    moment(value, from.data('date-format'))
+                )
             }
 
-            return checkNumberRange(from, to, value)
+            return checkNumberRange(
+                parseInt(from.val()),
+                parseInt(to.val()),
+                parseInt(value)
+            )
         });
     },
-    select (input, table, column, index) {
+    select (input, table, column, index, serverSide) {
         var $input = $(input);
 
         $input.on('change', () => {
@@ -170,7 +175,7 @@ window.columnFilters = {
             column.search(val).draw()
         });
     },
-    text (input, table, column, index) {
+    text (input, table, column, index, serverSide) {
         var $input = $(input)
 
         $input.on('keyup change', () => {

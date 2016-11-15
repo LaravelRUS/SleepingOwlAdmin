@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Builder;
 interface ColumnFilterInterface extends Initializable
 {
     /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function parseValue($value);
+
+    /**
      * @param RepositoryInterface  $repository
      * @param NamedColumnInterface $column
      * @param Builder              $query

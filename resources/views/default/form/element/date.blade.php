@@ -18,7 +18,7 @@
 			   value="{{ $value }}"
 			   @if($readonly) readonly @endif
 		>
-		<span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+		<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
 	</div>
 	@include(AdminTemplate::getViewPath('form.element.errors'))
 </div>
