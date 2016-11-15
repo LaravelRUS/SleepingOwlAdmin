@@ -12,6 +12,8 @@
 
 SleepingOwl Admin is an administrative interface builder for Laravel.
 
+Official site: [http://sleepingowladmin.ru](http://sleepingowladmin.ru)
+
 ### Used npm packages:
 
 ```js
@@ -165,7 +167,7 @@ You can download the demo project at https://github.com/SleepingOwlAdmin/demo
 
 ## Documentation
 
-* [Russian](http://sleepingowl.laravel.su/docs/4.0/)
+* [Russian](http://sleepingowladmin.ru/docs)
 * English
 
 ## Copyright and License
