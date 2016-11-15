@@ -38,6 +38,11 @@ class Action extends NamedColumn implements ActionInterface
     protected $view = 'column.action';
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * Action constructor.
      *
      * @param \Closure|null|string $name

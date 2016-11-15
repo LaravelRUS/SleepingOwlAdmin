@@ -17,6 +17,11 @@ class Filter extends NamedColumn
     protected $field;
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * @return string
      */
     public function getRelatedModel()
