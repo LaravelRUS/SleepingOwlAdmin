@@ -4,6 +4,9 @@
             <col width="{!! $column->getWidth() !!}" />
         @endforeach
     </colgroup>
+
+    @yield('table.header')
+
     <thead>
     <tr>
         @foreach ($columns as $column)

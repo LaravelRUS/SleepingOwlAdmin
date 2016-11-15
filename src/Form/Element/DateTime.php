@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Exception;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -51,26 +51,10 @@ class DateTime extends NamedFormElement
      */
     public function getValue(Request $request)
     {
-        $value = parent::getValue($request);
-        if (empty($value)) {
-            $value = null;
+        $value = parent::getValue();
+        if (! empty($value)) {
+            return $this->parseValue($value);
         }
-
-        if (! is_null($value)) {
-            try {
-                $time = Carbon::parse($value);
-            } catch (Exception $e) {
-                try {
-                    $time = Carbon::createFromFormat($this->getFormat(), $value);
-                } catch (Exception $e) {
-                    return;
-                }
-            }
-
-            $value = $time->format($this->getFormat());
-        }
-
-        return $value;
     }
 
     /**
@@ -83,10 +67,14 @@ class DateTime extends NamedFormElement
 
     /**
      * @param bool $seconds
+     *
+     * @return $this
      */
     public function setSeconds($seconds)
     {
         $this->seconds = $seconds;
+
+        return $this;
     }
 
     /**
@@ -96,7 +84,7 @@ class DateTime extends NamedFormElement
      */
     public function setValue(Model $model, $attribute, $value)
     {
-        $value = ! empty($value) ? Carbon::createFromFormat($this->getFormat(), $value) : null;
+        $value = ! empty($value) ? Carbon::createFromFormat($this->getPickerFormat(), $value)->format($this->getFormat()) : null;
 
         parent::setValue($model, $attribute, $value);
     }
@@ -106,10 +94,17 @@ class DateTime extends NamedFormElement
      */
     public function toArray()
     {
+        $pickerFormat = $this->getPickerFormat();
+        if (empty($pickerFormat)) {
+            $pickerFormat = $this->getFormat();
+        }
+
         return parent::toArray() + [
             'seconds'      => $this->hasSeconds(),
             'format'       => $this->getFormat(),
-            'pickerFormat' => $this->getPickerFormat(),
+            'pickerFormat' => $this->generatePickerFormat(
+                $pickerFormat
+            ),
         ];
     }
 
@@ -118,19 +113,19 @@ class DateTime extends NamedFormElement
      */
     public function getPickerFormat()
     {
-        if (is_null($this->pickerFormat)) {
-            return $this->generatePickerFormat();
-        }
-
-        return $this->pickerFormat;
+        return $this->pickerFormat ?: config('sleeping_owl.datetimeFormat');
     }
 
     /**
      * @param string $pickerFormat
+     *
+     * @return $this
      */
     public function setPickerFormat($pickerFormat)
     {
         $this->pickerFormat = $pickerFormat;
+
+        return $this;
     }
 
     /**
@@ -146,12 +141,13 @@ class DateTime extends NamedFormElement
     }
 
     /**
+     * @param string $format
+     *
      * @return string
      */
-    protected function generatePickerFormat()
+    protected function generatePickerFormat($format)
     {
-        $format = $this->getFormat();
-        $replacement = [
+        return strtr($format, [
             'i' => 'mm',
             's' => 'ss',
             'h' => 'hh',
@@ -164,8 +160,26 @@ class DateTime extends NamedFormElement
             'n' => 'M',
             'Y' => 'YYYY',
             'y' => 'YY',
-        ];
+        ]);
+    }
 
-        return strtr($format, $replacement);
+    /**
+     * @param string $value
+     *
+     * @return string|void
+     */
+    protected function parseValue($value)
+    {
+        try {
+            $time = Carbon::parse($value);
+        } catch (Exception $e) {
+            try {
+                $time = Carbon::createFromFormat($this->getPickerFormat(), $value);
+            } catch (Exception $e) {
+                return;
+            }
+        }
+
+        return $time->format($this->getPickerFormat());
     }
 }

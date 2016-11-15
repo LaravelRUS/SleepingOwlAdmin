@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 class Timestamp extends DateTime
 {
     /**
-     * @var string
-     */
-    protected $defaultConfigFormat = 'datetimeFormat';
-
-    /**
      * @var bool
      */
     protected $seconds = true;

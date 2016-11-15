@@ -101,6 +101,8 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\SuccessMessages::class);
+
         $this->registerRoutes(function (Router $route) {
             $route->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
                 $route->get('assets/admin.scripts', [

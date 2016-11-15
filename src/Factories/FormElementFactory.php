@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method Element\File file($name, $label = null)
  * @method Element\Time time($name, $label = null)
  * @method Element\Date date($name, $label = null)
+ * @method Element\DateRange daterange($name, $label = null)
  * @method Element\Timestamp timestamp($name, $label = null)
  * @method Element\TextAddon textaddon($name, $label = null)
  * @method Element\Password password($name, $label = null)
@@ -37,6 +38,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FormElementFactory extends AliasBinder implements FormElementFactoryInterface
 {
+    /**
+     * FormElementFactory constructor.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $application
+     */
     public function __construct(\Illuminate\Contracts\Foundation\Application $application)
     {
         parent::__construct($application);
@@ -47,6 +53,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'text' => Element\Text::class,
             'time' => Element\Time::class,
             'date' => Element\Date::class,
+            'daterange' => Element\DateRange::class,
             'timestamp' => Element\Timestamp::class,
             'textaddon' => Element\TextAddon::class,
             'select' => Element\Select::class,

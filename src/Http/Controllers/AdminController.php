@@ -434,8 +434,7 @@ class AdminController extends Controller
         return $this->admin->template()->view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
-            ->with('breadcrumbKey', $this->parentBreadcrumb)
-            ->with('successMessage', session('success_message'));
+            ->with('breadcrumbKey', $this->parentBreadcrumb);
     }
 
     /**
@@ -453,8 +452,7 @@ class AdminController extends Controller
         return $this->admin->template()->view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
-            ->with('breadcrumbKey', $this->parentBreadcrumb)
-            ->with('successMessage', session('success_message'));
+            ->with('breadcrumbKey', $this->parentBreadcrumb);
     }
 
     /**
