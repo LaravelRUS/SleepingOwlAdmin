@@ -12,25 +12,25 @@ Admin.Modules.add('display.datatables', () => {
     }
 
     $('.datatables').each((i, item) => {
-        var $this = $(item),
-            id = $this.data('id');
+        let $this = $(item),
+            id = $this.data('id'),
+            params = $this.data('attributes'),
+            url = $this.data('url')
 
-        var params = $this.data('attributes');
-
-        var url;
-        if (url = $this.data('url')) {
-            params.serverSide = true;
-            params.processing = true;
+        if (url.length > 0) {
+            params.serverSide = true
+            params.processing = true
             params.ajax = {
                 url: url,
                 data (d) {
                     Admin.Events.fire('datatables::ajax::data', d)
 
                     $('[data-datatables-id="' + id + '"] .column-filter[data-type]').each((i, subitem) => {
-                        var $this = $(subitem);
-                        var index = $this.closest('td').data('index');
+                        let $this = $(subitem),
+                            index = $this.closest('td').data('index')
+
                         if (name = $this.data('ajax-data-name')) {
-                            d.columns[index]['search'][name] = $this.val();
+                            d.columns[index]['search'][name] = $this.val()
                         }
                     });
                 }
@@ -44,16 +44,16 @@ Admin.Modules.add('display.datatables', () => {
         var table = $this.DataTable(params);
 
         $('[data-datatables-id="' + id + '"] .column-filter[data-type]').each((i, item) => {
-            var $this = $(item),
+            let $this = $(item),
                 type = $this.data('type'),
                 index = $this.closest('td').data('index');
 
             if (_.isFunction(window.columnFilters[type])) {
                 window.columnFilters[type](item, table.api(), table.api().column(index), index);
             }
-        });
-    });
-});
+        })
+    })
+})
 
 window.columnFilters = {
     range (container, table, column, index) {
