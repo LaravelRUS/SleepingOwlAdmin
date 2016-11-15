@@ -2,10 +2,6 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-
 class DateRange extends Date
 {
     /**

@@ -6,7 +6,6 @@ use AdminTemplate;
 
 class SuccessMessages extends Widget
 {
-
     /**
      * Get content as a string of HTML.
      *
@@ -15,7 +14,7 @@ class SuccessMessages extends Widget
     public function toHtml()
     {
         return AdminTemplate::view('_partials.messages', [
-            'messages' => session('success_message')
+            'messages' => session('success_message'),
         ])->render();
     }
 

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Request;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\Column\Control;
