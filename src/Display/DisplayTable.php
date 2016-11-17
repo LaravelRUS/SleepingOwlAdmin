@@ -239,7 +239,7 @@ class DisplayTable extends Display
             $columnIndex = array_get($order, 'column');
             $direction = array_get($order, 'dir', 'asc');
 
-            if (! $columnIndex) {
+            if (! $columnIndex && $columnIndex !== '0') {
                 continue;
             }
 
