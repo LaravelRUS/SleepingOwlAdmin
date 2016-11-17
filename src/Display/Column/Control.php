@@ -122,7 +122,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param $editable
+     * @param bool $editable
      * @return $this
      */
     public function setEditable($editable)
@@ -133,7 +133,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param $deletable
+     * @param bool $deletable
      * @return $this
      */
     public function setDeletable($deletable)
@@ -144,7 +144,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param $destroyable
+     * @param bool $destroyable
      * @return $this
      */
     public function setDestroyable($destroyable)
@@ -155,7 +155,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param $restorable
+     * @param bool $restorable
      * @return $this
      */
     public function setRestorable($restorable)
