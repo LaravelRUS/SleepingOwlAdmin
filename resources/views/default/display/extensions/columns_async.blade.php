@@ -5,6 +5,7 @@
         @endforeach
     </colgroup>
     <thead>
+    @yield('table.header')
     <tr>
         @foreach ($columns as $column)
             <th {!! $column->getHeader()->htmlAttributesToString() !!}>
