@@ -125,7 +125,7 @@ class Control extends TableColumn
      * @param $editable
      * @return $this
      */
-    protected function setEditable($editable)
+    public function setEditable($editable)
     {
         $this->editable = (bool) $editable;
 
