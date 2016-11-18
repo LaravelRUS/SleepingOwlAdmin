@@ -29,6 +29,26 @@ class Control extends TableColumn
     protected $buttons;
 
     /**
+     * @var bool
+     */
+    protected $editable = true;
+
+    /**
+     * @var bool
+     */
+    protected $deletable = true;
+
+    /**
+     * @var bool
+     */
+    protected $destroyable = true;
+
+    /**
+     * @var bool
+     */
+    protected $restorable = true;
+
+    /**
      * Control constructor.
      *
      * @param AdminInterface $admin
@@ -106,6 +126,50 @@ class Control extends TableColumn
     }
 
     /**
+     * @param bool $editable
+     * @return $this
+     */
+    public function setEditable($editable)
+    {
+        $this->editable = (bool) $editable;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $deletable
+     * @return $this
+     */
+    public function setDeletable($deletable)
+    {
+        $this->deletable = (bool) $deletable;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $destroyable
+     * @return $this
+     */
+    public function setDestroyable($destroyable)
+    {
+        $this->destroyable = (bool) $destroyable;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $restorable
+     * @return $this
+     */
+    public function setRestorable($restorable)
+    {
+        $this->restorable = (bool) $restorable;
+
+        return $this;
+    }
+
+    /**
      * Check if instance supports soft-deletes and trashed.
      *
      * @return bool
@@ -127,6 +191,8 @@ class Control extends TableColumn
     protected function isEditable()
     {
         return
+            $this->editable
+            &&
             ! $this->isTrashed()
             &&
             $this->getModelConfiguration()->isEditable(
@@ -142,6 +208,8 @@ class Control extends TableColumn
     protected function isDeletable()
     {
         return
+            $this->deletable
+            &&
             ! $this->isTrashed()
             &&
             $this->getModelConfiguration()->isDeletable(
@@ -157,6 +225,8 @@ class Control extends TableColumn
     protected function isDestroyable()
     {
         return
+            $this->destroyable
+            &&
             $this->isTrashed()
             &&
             $this->getModelConfiguration()->isDestroyable(
@@ -172,6 +242,8 @@ class Control extends TableColumn
     protected function isRestorable()
     {
         return
+            $this->restorable
+            &&
             $this->isTrashed()
             &&
             $this->getModelConfiguration()->isRestorable(
