@@ -60,5 +60,4 @@ abstract class Messages extends Widget
      * @return mixed
      */
     abstract protected function getMessage();
-
 }
