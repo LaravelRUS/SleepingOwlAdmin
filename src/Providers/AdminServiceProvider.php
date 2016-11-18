@@ -82,7 +82,7 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\SuccessMessages::class);
+        $this->registerMessages();
 
         $this->app->singleton('sleeping_owl.template', function () {
             return $this->app['sleeping_owl']->template();
@@ -98,6 +98,14 @@ class AdminServiceProvider extends ServiceProvider
                 ]);
             });
         });
+    }
+
+    protected function registerMessages()
+    {
+        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\ErrorMessages::class);
+        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\InfoMessages::class);
+        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\SuccessMessages::class);
+        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\WarningMessages::class);
     }
 
     protected function initializeNavigation()
