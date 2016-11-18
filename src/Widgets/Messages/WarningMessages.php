@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Widgets\Messages;
 
-
 class WarningMessages extends Messages
 {
     /**
