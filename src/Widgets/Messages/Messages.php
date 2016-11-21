@@ -10,6 +10,11 @@ abstract class Messages extends Widget
     /**
      * @var string
      */
+    protected static $sessionName;
+
+    /**
+     * @var string
+     */
     protected $messageView;
 
     /**
@@ -59,5 +64,17 @@ abstract class Messages extends Widget
     /**
      * @return mixed
      */
-    abstract protected function getMessage();
+    protected function getMessage()
+    {
+        return session(static::$sessionName);
+    }
+
+    /**
+     * @param string $text
+     * @return mixed
+     */
+    public static function addMessage($text)
+    {
+        session()->flash(static::$sessionName,$text);
+    }
 }

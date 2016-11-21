@@ -7,13 +7,10 @@ class WarningMessages extends Messages
     /**
      * @var string
      */
-    protected $messageView = '_partials.messages.warning';
+    protected static $sessionName = 'warning_message';
 
     /**
-     * @return mixed
+     * @var string
      */
-    protected function getMessage()
-    {
-        return session('warning_message');
-    }
+    protected $messageView = '_partials.messages.warning';
 }

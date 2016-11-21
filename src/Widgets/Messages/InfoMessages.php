@@ -7,13 +7,10 @@ class InfoMessages extends Messages
     /**
      * @var string
      */
-    protected $messageView = '_partials.messages.info';
+    protected static $sessionName = 'info_message';
 
     /**
-     * @return mixed
+     * @var string
      */
-    protected function getMessage()
-    {
-        return session('info_message');
-    }
+    protected $messageView = '_partials.messages.info';
 }

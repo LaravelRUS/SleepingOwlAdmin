@@ -4,13 +4,13 @@ namespace SleepingOwl\Admin\Widgets\Messages;
 
 class SuccessMessages extends Messages
 {
-    protected $messageView = '_partials.messages.success';
+    /**
+     * @var string
+     */
+    protected static $sessionName = 'success_message';
 
     /**
-     * @return mixed
+     * @var string
      */
-    protected function getMessage()
-    {
-        return session('success_message');
-    }
+    protected $messageView = '_partials.messages.success';
 }

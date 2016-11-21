@@ -7,13 +7,10 @@ class ErrorMessages extends Messages
     /**
      * @var string
      */
-    protected $messageView = '_partials.messages.error';
+    protected static $sessionName = 'error_message';
 
     /**
-     * @return mixed
+     * @var string
      */
-    protected function getMessage()
-    {
-        return session('error_message');
-    }
+    protected $messageView = '_partials.messages.error';
 }

@@ -102,10 +102,19 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerMessages()
     {
-        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\ErrorMessages::class);
-        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\InfoMessages::class);
-        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\SuccessMessages::class);
-        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\Messages\WarningMessages::class);
+        $messageTypes = [
+            'error' => \SleepingOwl\Admin\Widgets\Messages\ErrorMessages::class,
+            'info' => \SleepingOwl\Admin\Widgets\Messages\InfoMessages::class,
+            'success' => \SleepingOwl\Admin\Widgets\Messages\SuccessMessages::class,
+            'warning' => \SleepingOwl\Admin\Widgets\Messages\WarningMessages::class,
+        ];
+        foreach ($messageTypes as $messageType) {
+            $this->app[WidgetsRegistryInterface::class]->registerWidget($messageType);
+        }
+
+        $this->app->singleton('sleeping_owl.message', function () use ($messageTypes) {
+            return new \SleepingOwl\Admin\Widgets\Messages\MessageStack($messageTypes);
+        });
     }
 
     protected function initializeNavigation()
