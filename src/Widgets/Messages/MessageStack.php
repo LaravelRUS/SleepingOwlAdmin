@@ -3,9 +3,7 @@
 namespace SleepingOwl\Admin\Widgets\Messages;
 
 /**
- * Class MessageStack
- *
- * @package SleepingOwl\Admin\Widgets\Messages
+ * Class MessageStack.
  */
 class MessageStack
 {
@@ -32,10 +30,10 @@ class MessageStack
     {
         $type = strtolower(substr($name, 3));
 
-        if (starts_with($name, 'add') && key_exists($type, $this->messageTypes)) {
-            if(isset($arguments[0])){
+        if (starts_with($name, 'add') && array_key_exists($type, $this->messageTypes)) {
+            if (isset($arguments[0])) {
                 return $this->messageTypes[$type]::addMessage($arguments[0]);
-            }else{
+            } else {
                 throw new \InvalidArgumentException("Method $name expected parameter");
             }
         }
