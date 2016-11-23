@@ -75,6 +75,6 @@ abstract class Messages extends Widget
      */
     public static function addMessage($text)
     {
-        session()->flash(static::$sessionName, $text);
+        return session()->flash(static::$sessionName, $text);
     }
 }
