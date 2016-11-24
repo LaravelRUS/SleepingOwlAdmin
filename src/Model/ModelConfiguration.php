@@ -10,6 +10,7 @@ use SleepingOwl\Admin\Contracts\Initializable;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
+
     /**
      * @var string
      */
@@ -64,6 +65,11 @@ class ModelConfiguration extends ModelConfigurationManager
      * @var Closure|null
      */
     protected $edit;
+
+    /**
+     * @var array
+     */
+    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
 
     /**
      * @var Closure|null
@@ -127,6 +133,23 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * @param string $redirect
+     * @return void
+     */
+    public function setRedirect($redirect)
+    {
+        $this->redirect = $redirect;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirect()
+    {
+        return collect($this->redirect);
     }
 
     /**
@@ -345,7 +368,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function isCreatable()
     {
-        if (! is_callable($this->getCreate())) {
+        if ( ! is_callable($this->getCreate())) {
             return false;
         }
 
@@ -369,7 +392,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function isEditable(Model $model)
     {
-        if (! is_callable($this->getEdit())) {
+        if ( ! is_callable($this->getEdit())) {
             return false;
         }
 
@@ -479,7 +502,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireDisplay()
     {
-        if (! is_callable($this->display)) {
+        if ( ! is_callable($this->display)) {
             return;
         }
 
@@ -497,7 +520,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireCreate()
     {
-        if (! is_callable($this->create)) {
+        if ( ! is_callable($this->create)) {
             return;
         }
 
@@ -524,7 +547,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireEdit($id)
     {
-        if (! is_callable($this->edit)) {
+        if ( ! is_callable($this->edit)) {
             return;
         }
 
