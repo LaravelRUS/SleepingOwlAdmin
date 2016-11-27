@@ -169,8 +169,16 @@ class AdminController extends Controller
             $newModel = $createForm->getModel();
             $primaryKey = $newModel->getKeyName();
 
+            $redirectUrl = $model->getEditUrl($newModel->{$primaryKey});
+            $redirectPolicy = $model->getRedirect();
+
+            /* Make redirect when use in model config && Fix editable redirect */
+            if ($redirectPolicy->get('create') == 'display' || ! $model->isEditable($newModel)) {
+                $redirectUrl = $model->getDisplayUrl();
+            }
+
             $response = redirect()->to(
-                $model->getEditUrl($newModel->{$primaryKey})
+                $redirectUrl
             )->with([
                 '_redirectBack' => $backUrl,
             ]);
@@ -244,10 +252,22 @@ class AdminController extends Controller
             }
         }
 
+        $redirectPolicy = $model->getRedirect();
+        /* Make redirect when use in model config */
+
+
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
                 '_redirectBack' => $backUrl,
             ]);
+
+            if ($redirectPolicy->get('edit') == 'display') {
+                $response = redirect()->to(
+                    $model->getDisplayUrl()
+                )->with([
+                    '_redirectBack' => $backUrl,
+                ]);
+            }
         } elseif ($nextAction == 'save_and_create') {
             $response = redirect()->to($model->getCreateUrl($request->except([
                 '_redirectBack',

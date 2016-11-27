@@ -66,6 +66,11 @@ class ModelConfiguration extends ModelConfigurationManager
     protected $edit;
 
     /**
+     * @var array
+     */
+    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
+
+    /**
      * @var Closure|null
      */
     protected $delete = true;
@@ -127,6 +132,23 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * @param string $redirect
+     * @return void
+     */
+    public function setRedirect($redirect)
+    {
+        $this->redirect = $redirect;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirect()
+    {
+        return collect($this->redirect);
     }
 
     /**
