@@ -10,6 +10,28 @@ use SleepingOwl\Admin\Contracts\Initializable;
 class SectionModelConfiguration extends ModelConfigurationManager
 {
     /**
+     * @var array
+     */
+    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
+
+    /**
+     * @param string $redirect
+     * @return void
+     */
+    public function setRedirect($redirect)
+    {
+        $this->redirect = $redirect;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirect()
+    {
+        return collect($this->redirect);
+    }
+
+    /**
      * @return bool
      */
     public function isCreatable()
