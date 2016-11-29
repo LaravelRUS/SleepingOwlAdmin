@@ -51,7 +51,7 @@ class DateTime extends NamedFormElement
      */
     public function getValue(Request $request)
     {
-        $value = parent::getValue();
+        $value = parent::getValue($request);
         if (! empty($value)) {
             return $this->parseValue($value);
         }
