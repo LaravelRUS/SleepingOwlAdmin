@@ -13,10 +13,10 @@ use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Display\Extension\Columns;
 
 /**
- * Class DisplayTable.
+ * Class DisplayTable
 
  * @method Columns getColumns()
- * @method $this setColumns(ColumnInterface $column, ... $columns)
+ * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
  *
  * @method ColumnFilters getColumnFilters()
  * @method $this setColumnFilters(ColumnFilterInterface $filters = null, ...$filters)
