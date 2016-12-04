@@ -40,8 +40,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 abort(404);
             },
         ]);
-        
-        //Add Column Editable async handler
         $router->post('{adminModel}/async/{adminDisplayName?}', [
             'as' => 'admin.model.async.inline',
             function (ModelConfigurationInterface $model, InlineRequest $request) {
