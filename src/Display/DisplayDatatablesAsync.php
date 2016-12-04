@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Request;
+use Illuminate\Http\Request as InlineRequest;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Link;
@@ -15,6 +17,7 @@ use SleepingOwl\Admin\Display\Column\Text;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
+
     /**
      * Register display routes.
      *
@@ -22,7 +25,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public static function registerRoutes(Router $router)
     {
-        $router->get('{adminModel}/async/{adminDisplayName?}', ['as' => 'admin.model.async',
+        $router->get('{adminModel}/async/{adminDisplayName?}', [
+            'as' => 'admin.model.async',
             function (ModelConfigurationInterface $model, $name = null) {
                 $display = $model->fireDisplay();
                 if ($display instanceof DisplayTabbed) {
@@ -36,13 +40,55 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 abort(404);
             },
         ]);
+        
+        //Add Column Editable async handler
+        $router->post('{adminModel}/async/{adminDisplayName?}', [
+            'as' => 'admin.model.async.inline',
+            function (ModelConfigurationInterface $model, InlineRequest $request) {
+                $field = $request->input('name');
+                $value = $request->input('value');
+                $id = $request->input('pk');
+
+                $display = $model->fireDisplay();
+
+                /** @var ColumnEditableInterface|null $column */
+                $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
+                    return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                })->first();
+
+                if (is_null($column)) {
+                    abort(404);
+                }
+
+                $repository = $model->getRepository();
+                $item = $repository->find($id);
+
+                if (is_null($item) || ! $model->isEditable($item)) {
+                    abort(404);
+                }
+
+                $column->setModel($item);
+
+                if ($model->fireEvent('updating', true, $item) === false) {
+                    return;
+                }
+
+                $column->save($value);
+
+                $model->fireEvent('updated', false, $item);
+
+                if ($display instanceof DisplayDatatablesAsync) {
+                    return $display->renderAsync();
+                }
+            },
+        ]);
     }
 
     /**
      * Find DisplayDatatablesAsync in tabbed display by name.
      *
      * @param DisplayTabbed $display
-     * @param string|null   $name
+     * @param string|null $name
      *
      * @return DisplayDatatablesAsync|null
      */
@@ -152,11 +198,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function renderAsync()
     {
-        $query = $this->getRepository()->getQuery();
-        $totalCount = $query->count();
+        $query         = $this->getRepository()->getQuery();
+        $totalCount    = $query->count();
         $filteredCount = 0;
 
-        if (! is_null($this->distinct)) {
+        if ( ! is_null($this->distinct)) {
             $filteredCount = $query->distinct()->count($this->getDistinct());
         }
 
@@ -183,7 +229,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected function applyOffset($query)
     {
         $offset = Request::input('start', 0);
-        $limit = Request::input('length', 10);
+        $limit  = Request::input('length', 10);
 
         if ($limit == -1) {
             return;
@@ -210,7 +256,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 if (in_array(get_class($column), $this->searchableColumns)) {
                     $name = $column->getName();
                     if ($this->repository->hasColumn($name)) {
-                        $query->orWhere($name, 'like', '%'.$search.'%');
+                        $query->orWhere($name, 'like', '%' . $search . '%');
                     }
                 }
             }
@@ -225,12 +271,12 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $queryColumns = Request::input('columns', []);
 
         foreach ($queryColumns as $index => $queryColumn) {
-            $search = array_get($queryColumn, 'search.value');
-            $fullSearch = array_get($queryColumn, 'search');
-            $column = $this->getColumns()->all()->get($index);
+            $search       = array_get($queryColumn, 'search.value');
+            $fullSearch   = array_get($queryColumn, 'search');
+            $column       = $this->getColumns()->all()->get($index);
             $columnFilter = array_get($this->getColumnFilters()->all(), $index);
 
-            if (! is_null($columnFilter) && ! is_null($column)) {
+            if ( ! is_null($columnFilter) && ! is_null($column)) {
                 $columnFilter->apply($this->repository, $column, $query, $search, $fullSearch);
             }
         }
@@ -249,11 +295,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     {
         $columns = $this->getColumns();
 
-        $result = [];
-        $result['draw'] = Request::input('draw', 0);
-        $result['recordsTotal'] = $totalCount;
+        $result                    = [];
+        $result['draw']            = Request::input('draw', 0);
+        $result['recordsTotal']    = $totalCount;
         $result['recordsFiltered'] = $filteredCount;
-        $result['data'] = [];
+        $result['data']            = [];
 
         foreach ($collection as $instance) {
             $_row = [];
@@ -265,7 +311,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                     $column->initialize();
                 }
 
-                $_row[] = (string) $column;
+                $_row[] = (string)$column;
             }
 
             $result['data'][] = $_row;
