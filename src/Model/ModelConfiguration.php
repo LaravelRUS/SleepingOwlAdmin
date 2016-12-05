@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Model;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 
@@ -734,7 +734,7 @@ class ModelConfiguration extends ModelConfigurationManager
         return $this;
     }
 
-    public function saveColumn(ColumnInterface $column, $value, $id)
+    public function saveColumn(ColumnEditableInterface $column, $value, $id)
     {
         $repository = $this->getRepository();
         $item = $repository->find($id);
