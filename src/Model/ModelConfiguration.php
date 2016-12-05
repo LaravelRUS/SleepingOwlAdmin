@@ -734,6 +734,11 @@ class ModelConfiguration extends ModelConfigurationManager
         return $this;
     }
 
+    /**
+     * @param ColumnEditableInterface $column
+     * @param $value
+     * @param $id
+     */
     public function saveColumn(ColumnEditableInterface $column, $value, $id)
     {
         $repository = $this->getRepository();
