@@ -2,16 +2,18 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Database\Eloquent\Builder;
+use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
-use Request;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Display\Column\Control;
-use SleepingOwl\Admin\Display\Column\Email;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
+use SleepingOwl\Admin\Display\Column\Email;
+use Illuminate\Http\Request as InlineRequest;
+use SleepingOwl\Admin\Display\Column\Control;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -22,7 +24,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public static function registerRoutes(Router $router)
     {
-        $router->get('{adminModel}/async/{adminDisplayName?}', ['as' => 'admin.model.async',
+        $router->get('{adminModel}/async/{adminDisplayName?}', [
+            'as' => 'admin.model.async',
             function (ModelConfigurationInterface $model, $name = null) {
                 $display = $model->fireDisplay();
                 if ($display instanceof DisplayTabbed) {
@@ -36,13 +39,38 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 abort(404);
             },
         ]);
+        $router->post('{adminModel}/async/{adminDisplayName?}', [
+            'as' => 'admin.model.async.inline',
+            function (ModelConfigurationInterface $model, InlineRequest $request) {
+                $field = $request->input('name');
+                $value = $request->input('value');
+                $id = $request->input('pk');
+
+                $display = $model->fireDisplay();
+
+                /** @var ColumnEditableInterface|null $column */
+                $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
+                    return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                })->first();
+
+                if (is_null($column)) {
+                    abort(404);
+                }
+
+                $model->saveColumn($column, $value, $id);
+
+                if ($display instanceof DisplayDatatablesAsync) {
+                    return $display->renderAsync();
+                }
+            },
+        ]);
     }
 
     /**
      * Find DisplayDatatablesAsync in tabbed display by name.
      *
      * @param DisplayTabbed $display
-     * @param string|null   $name
+     * @param string|null $name
      *
      * @return DisplayDatatablesAsync|null
      */

@@ -4,9 +4,10 @@ namespace SleepingOwl\Admin\Model;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
@@ -731,5 +732,30 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->controllerClass = $controllerClass;
 
         return $this;
+    }
+
+    /**
+     * @param ColumnEditableInterface $column
+     * @param $value
+     * @param $id
+     */
+    public function saveColumn(ColumnEditableInterface $column, $value, $id)
+    {
+        $repository = $this->getRepository();
+        $item = $repository->find($id);
+
+        if (is_null($item) || ! $this->isEditable($item)) {
+            abort(404);
+        }
+
+        $column->setModel($item);
+
+        if ($this->fireEvent('updating', true, $item) === false) {
+            return;
+        }
+
+        $column->save($value);
+
+        $this->fireEvent('updated', false, $item);
     }
 }
