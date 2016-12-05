@@ -57,22 +57,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                     abort(404);
                 }
 
-                $repository = $model->getRepository();
-                $item = $repository->find($id);
-
-                if (is_null($item) || ! $model->isEditable($item)) {
-                    abort(404);
-                }
-
-                $column->setModel($item);
-
-                if ($model->fireEvent('updating', true, $item) === false) {
-                    return;
-                }
-
-                $column->save($value);
-
-                $model->fireEvent('updated', false, $item);
+                $model->saveColumn($column, $value, $id);
 
                 if ($display instanceof DisplayDatatablesAsync) {
                     return $display->renderAsync();
