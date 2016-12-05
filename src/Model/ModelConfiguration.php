@@ -4,10 +4,10 @@ namespace SleepingOwl\Admin\Model;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
@@ -752,6 +752,5 @@ class ModelConfiguration extends ModelConfigurationManager
         $column->save($value);
 
         $this->fireEvent('updated', false, $item);
-
     }
 }
