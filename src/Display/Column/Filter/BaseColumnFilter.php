@@ -82,7 +82,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      */
     public function render()
     {
-        return $this->template->view('column.filter.'.$this->getView(), $this->toArray());
+        return $this->template->view('column.filter.'.$this->getView(), $this->toArray())->render();
     }
 
     /**

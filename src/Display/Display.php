@@ -253,7 +253,7 @@ abstract class Display implements DisplayInterface
      */
     public function render()
     {
-        $view = app('sleeping_owl.template')->view($this->getView(), $this->toArray());
+        $view = $this->template->view($this->getView(), $this->toArray());
 
         $blocks = [];
 
@@ -262,10 +262,10 @@ abstract class Display implements DisplayInterface
         });
 
         foreach ($placableExtensions as $extension) {
-            $blocks[$extension->getPlacement()][] = (string) app('sleeping_owl.template')->view(
+            $blocks[$extension->getPlacement()][] = $this->template->view(
                 $extension->getView(),
                 $extension->toArray()
-            );
+            )->render();
         }
 
         foreach ($blocks as $block => $data) {
@@ -278,7 +278,7 @@ abstract class Display implements DisplayInterface
             }
         }
 
-        return $view;
+        return $view->render();
     }
 
     /**

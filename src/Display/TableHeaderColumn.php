@@ -124,7 +124,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     {
         $this->setHtmlAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
 
-        return $this->template->view($this->getView(), $this->toArray());
+        return $this->template->view($this->getView(), $this->toArray())->render();
     }
 
     /**

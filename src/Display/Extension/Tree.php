@@ -172,6 +172,6 @@ class Tree extends Extension implements Initializable, Renderable
      */
     public function render()
     {
-        return $this->getDisplay()->template()->view($this->getView(), $this->toArray());
+        return $this->getDisplay()->template()->view($this->getView(), $this->toArray())->render();
     }
 }

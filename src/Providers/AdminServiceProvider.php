@@ -99,9 +99,12 @@ class AdminServiceProvider extends ServiceProvider
         return $this->getConfig('bootstrapDirectory').$path;
     }
 
-    public function boot()
+    /**
+     * @param WidgetsRegistryInterface $widgetsRegistry
+     */
+    public function boot(WidgetsRegistryInterface $widgetsRegistry)
     {
-        $this->app[WidgetsRegistryInterface::class]->registerWidget(\SleepingOwl\Admin\Widgets\SuccessMessages::class);
+        $this->registerMessages($widgetsRegistry);
 
         $this->registerRoutes(function (Router $route) {
             $route->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
@@ -110,6 +113,27 @@ class AdminServiceProvider extends ServiceProvider
                     'uses' => 'AdminController@getScripts',
                 ]);
             });
+        });
+    }
+
+    /**
+     * @param WidgetsRegistryInterface $widgetsRegistry
+     */
+    protected function registerMessages(WidgetsRegistryInterface $widgetsRegistry)
+    {
+        $messageTypes = [
+            'error' => \SleepingOwl\Admin\Widgets\Messages\ErrorMessages::class,
+            'info' => \SleepingOwl\Admin\Widgets\Messages\InfoMessages::class,
+            'success' => \SleepingOwl\Admin\Widgets\Messages\SuccessMessages::class,
+            'warning' => \SleepingOwl\Admin\Widgets\Messages\WarningMessages::class,
+        ];
+
+        foreach ($messageTypes as $messageType) {
+            $widgetsRegistry->registerWidget($messageType);
+        }
+
+        $this->app->singleton('sleeping_owl.message', function () use ($messageTypes) {
+            return new \SleepingOwl\Admin\Widgets\Messages\MessageStack($messageTypes);
         });
     }
 

@@ -109,6 +109,17 @@ interface ModelConfigurationInterface
     public function fireCreate();
 
     /**
+     * @param array $redirect
+     * @return bool
+     */
+    public function setRedirect($redirect);
+
+    /**
+     * @return string
+     */
+    public function getRedirect();
+
+    /**
      * @param $id
      *
      * @return mixed|void

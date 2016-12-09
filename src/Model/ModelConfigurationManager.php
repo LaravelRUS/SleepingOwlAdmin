@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Model;
 use BadMethodCallException;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -25,6 +26,7 @@ use SleepingOwl\Admin\Navigation\Page;
  */
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
+
     /**
      * Get the event dispatcher instance.
      *
@@ -104,21 +106,29 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected $gate;
 
     /**
+     * @var Application
+     */
+    protected $app;
+
+    /**
      * SectionModelConfiguration constructor.
      *
      * @param string $class
+     * @param Application $application
      * @param TemplateInterface $template
      * @param RepositoryInterface $repository
      * @param Gate $gate
      */
     public function __construct($class,
+                                Application $application,
                                 TemplateInterface $template,
                                 RepositoryInterface $repository,
                                 Gate $gate
     )
     {
         $this->class = $class;
-        $this->model = app($class);
+        $this->app = $application;
+        $this->model = $this->app->make($class);
         $this->template = $template;
         $this->repository = $repository->setClass($class);
         $this->gate = $gate;
@@ -453,7 +463,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function addToNavigation($priority = 100, $badge = null)
     {
-        $page = app()->make(Page::class, [$this]);
+        $page = $this->app->make(Page::class, [$this]);
 
         $page->setPriority($priority);
 

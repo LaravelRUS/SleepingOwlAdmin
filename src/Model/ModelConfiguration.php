@@ -4,9 +4,10 @@ namespace SleepingOwl\Admin\Model;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
@@ -64,6 +65,11 @@ class ModelConfiguration extends ModelConfigurationManager
      * @var Closure|null
      */
     protected $edit;
+
+    /**
+     * @var array
+     */
+    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
 
     /**
      * @var Closure|null
@@ -127,6 +133,23 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * @param string $redirect
+     * @return void
+     */
+    public function setRedirect($redirect)
+    {
+        $this->redirect = $redirect;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirect()
+    {
+        return collect($this->redirect);
     }
 
     /**
@@ -483,7 +506,7 @@ class ModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $display = app()->call($this->display);
+        $display = $this->app->call($this->display);
         if ($display instanceof DisplayInterface) {
             $display->setModelConfiguration($this);
             $display->initialize();
@@ -528,7 +551,7 @@ class ModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $form = app()->call($this->edit, ['id' => $id]);
+        $form = $this->app->call($this->edit, ['id' => $id]);
         if ($form instanceof DisplayInterface) {
             $form->setModelConfiguration($this);
         }
@@ -554,7 +577,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireDelete($id)
     {
         if (is_callable($this->getDelete())) {
-            return app()->call($this->getDelete(), [$id]);
+            return $this->app->call($this->getDelete(), [$id]);
         }
     }
 
@@ -566,7 +589,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireDestroy($id)
     {
         if (is_callable($this->getDestroy())) {
-            return app()->call($this->getDestroy(), [$id]);
+            return $this->app->call($this->getDestroy(), [$id]);
         }
     }
 
@@ -578,7 +601,7 @@ class ModelConfiguration extends ModelConfigurationManager
     public function fireRestore($id)
     {
         if (is_callable($this->getRestore())) {
-            return app()->call($this->getRestore(), [$id]);
+            return $this->app->call($this->getRestore(), [$id]);
         }
 
         return $this->getRestore();
@@ -710,5 +733,30 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->controllerClass = $controllerClass;
 
         return $this;
+    }
+
+    /**
+     * @param ColumnEditableInterface $column
+     * @param $value
+     * @param $id
+     */
+    public function saveColumn(ColumnEditableInterface $column, $value, $id)
+    {
+        $repository = $this->getRepository();
+        $item = $repository->find($id);
+
+        if (is_null($item) || ! $this->isEditable($item)) {
+            abort(404);
+        }
+
+        $column->setModel($item);
+
+        if ($this->fireEvent('updating', true, $item) === false) {
+            return;
+        }
+
+        $column->save($value);
+
+        $this->fireEvent('updated', false, $item);
     }
 }

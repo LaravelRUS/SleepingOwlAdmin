@@ -19,7 +19,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
  * Class DisplayTable.
 
  * @method Columns getColumns()
- * @method $this setColumns(ColumnInterface $column, ... $columns)
+ * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
  *
  * @method ColumnFilters getColumnFilters()
  * @method $this setColumnFilters(ColumnFilterInterface $filters = null, ...$filters)
