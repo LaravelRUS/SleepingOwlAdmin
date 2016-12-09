@@ -6,6 +6,34 @@ use Request;
 
 class Images extends Image
 {
+
+    /**
+     * Store array of images as json string
+     * @return $this
+     */
+    public function storeAsJson()
+    {
+        $this->mutateValue(function($value) {
+            return json_encode($value);
+        });
+
+        return $this;
+    }
+
+    /**
+     * Store array of images as coma separator
+     *
+     * @return $this
+     */
+    public function storeAsComaSeparatedValue()
+    {
+        $this->mutateValue(function($value) {
+            return implode(',', $value);
+        });
+
+        return $this;
+    }
+
     public function save()
     {
         $name = $this->getName();
