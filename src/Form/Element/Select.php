@@ -439,6 +439,6 @@ class Select extends NamedFormElement
             return;
         }
 
-        return $value;
+        return parent::prepareValue($value);
     }
 }

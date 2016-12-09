@@ -59,6 +59,11 @@ abstract class NamedFormElement extends FormElement
     protected $validationMessages = [];
 
     /**
+     * @var \Closure
+     */
+    protected $mutator;
+
+    /**
      * @param TemplateInterface $template
      * @param string $path
      * @param string|null $label
@@ -522,6 +527,30 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * Field->mutate(function($value) {
+     *     return bcrypt($value);
+     * })
+     *
+     * @param \Closure $mutator
+     *
+     * @return $this
+     */
+    public function mutateValue(\Closure $mutator)
+    {
+        $this->mutator = $mutator;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMutator()
+    {
+        return is_callable($this->mutator);
+    }
+
+    /**
      * @param Model  $model
      * @param string $attribute
      * @param mixed  $value
@@ -538,6 +567,10 @@ abstract class NamedFormElement extends FormElement
      */
     protected function prepareValue($value)
     {
+        if ($this->hasMutator()) {
+            $value = call_user_func($this->mutator, $value);
+        }
+
         return $value;
     }
 }

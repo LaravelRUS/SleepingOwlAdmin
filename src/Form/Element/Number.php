@@ -103,6 +103,8 @@ class Number extends NamedFormElement
             return;
         }
 
-        return (int) $value;
+        return parent::prepareValue(
+            (int) $value
+        );
     }
 }
