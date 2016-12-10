@@ -210,7 +210,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $helpText
+     * @param string|Htmlable $helpText
      *
      * @return $this
      */
