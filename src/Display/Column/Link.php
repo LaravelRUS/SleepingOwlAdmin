@@ -21,7 +21,6 @@ class Link extends Url
     {
         return parent::toArray() + [
             'link'           => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
-            'append'         => $this->getAppends(),
             'isEditable'     => $this->isEditable(),
         ];
     }

@@ -57,7 +57,6 @@ class Image extends NamedColumn
         return parent::toArray() + [
             'value'  => $value,
             'imageWidth'  => $this->getImageWidth(),
-            'append' => $this->getAppends(),
         ];
     }
 }

@@ -13,3 +13,4 @@
 @else
     @if($value) {{ $checkedLabel }} @else {{ $uncheckedLabel }} @endif
 @endif
+{!! $append !!}

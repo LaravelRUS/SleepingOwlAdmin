@@ -1,1 +1,1 @@
-{{{ $value }}} {!! $append !!}
+{{ $value }} {!! $append !!}
