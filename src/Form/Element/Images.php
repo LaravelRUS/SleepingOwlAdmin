@@ -6,14 +6,13 @@ use Request;
 
 class Images extends Image
 {
-
     /**
-     * Store array of images as json string
+     * Store array of images as json string.
      * @return $this
      */
     public function storeAsJson()
     {
-        $this->mutateValue(function($value) {
+        $this->mutateValue(function ($value) {
             return json_encode($value);
         });
 
@@ -21,13 +20,13 @@ class Images extends Image
     }
 
     /**
-     * Store array of images as coma separator
+     * Store array of images as coma separator.
      *
      * @return $this
      */
     public function storeAsComaSeparatedValue()
     {
-        $this->mutateValue(function($value) {
+        $this->mutateValue(function ($value) {
             return implode(',', $value);
         });
 

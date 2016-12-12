@@ -1,11 +1,11 @@
 <?php
+
 namespace SleepingOwl\Admin\Console\Installation;
 
 class CreateSectionServiceProvider extends Installator
 {
-
     /**
-     * Вывод информации о текущей конфигурации
+     * Вывод информации о текущей конфигурации.
      *
      * @return void
      */
@@ -15,7 +15,7 @@ class CreateSectionServiceProvider extends Installator
     }
 
     /**
-     * Установка компонентов текущей конфигурации
+     * Установка компонентов текущей конфигурации.
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class CreateSectionServiceProvider extends Installator
     }
 
     /**
-     * При возврате методом true данный компонент будет пропущен
+     * При возврате методом true данный компонент будет пропущен.
      *
      * @return bool
      */

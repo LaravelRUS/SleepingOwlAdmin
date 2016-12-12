@@ -2,15 +2,15 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 use Request;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
-use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Display\Extension\Columns;
+use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
  * Class DisplayTable.
@@ -88,7 +88,6 @@ class DisplayTable extends Display
         if (is_null($this->newEntryButtonText)) {
             $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
         }
-
 
         return $this->newEntryButtonText;
     }

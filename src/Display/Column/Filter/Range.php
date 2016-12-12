@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 class Range extends BaseColumnFilter
 {
@@ -115,7 +115,6 @@ class Range extends BaseColumnFilter
         list($from, $to) = explode('::', $search, 2);
         $from = $this->from->parseValue($from);
         $to = $this->to->parseValue($to);
-
 
         $name = $column->getName();
 

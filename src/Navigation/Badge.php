@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Navigation;
 
 class Badge extends \KodiComponents\Navigation\Badge
 {
-
     /**
      * @return array
      */

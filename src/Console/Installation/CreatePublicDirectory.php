@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Console\Installation;
 
 class CreatePublicDirectory extends Installator
@@ -23,7 +24,7 @@ class CreatePublicDirectory extends Installator
     }
 
     /**
-     * При возврате методом true данный компонент будет пропущен
+     * При возврате методом true данный компонент будет пропущен.
      *
      * @return bool
      */

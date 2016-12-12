@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
+use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
 
 class Columns extends Extension implements Initializable, Renderable
 {

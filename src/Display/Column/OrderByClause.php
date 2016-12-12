@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Database\Eloquent\Builder;
 use Mockery\Matcher\Closure;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 class OrderByClause implements OrderByClauseInterface

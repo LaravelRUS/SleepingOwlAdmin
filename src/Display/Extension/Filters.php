@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\FilterInterface;
 
 class Filters extends Extension implements Initializable
 {
