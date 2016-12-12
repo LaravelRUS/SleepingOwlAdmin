@@ -68,6 +68,7 @@ class AliasesServiceProvider extends ServiceProvider
             'relatedLink' => \SleepingOwl\Admin\Display\Column\RelatedLink::class,
             'email'       => \SleepingOwl\Admin\Display\Column\Email::class,
             'treeControl' => \SleepingOwl\Admin\Display\Column\TreeControl::class,
+            'url'         => \SleepingOwl\Admin\Display\Column\Url::class,
         ]);
 
         $this->app->singleton('sleeping_owl.table.column', function () use ($alias) {
