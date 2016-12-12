@@ -44,8 +44,8 @@ class InstallCommand extends Command
         $this->createBootstrapDirectory();
         $this->createNavigationFile();
         $this->createBootstrapFile();
-        $this->createServiceProvider();
         $this->createRoutesFile();
+        //$this->createServiceProvider();
         $this->createPublicDefaultStructure();
     }
 
