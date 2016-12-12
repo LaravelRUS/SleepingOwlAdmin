@@ -83,7 +83,6 @@ class Custom extends TableColumn
     {
         return parent::toArray() + [
             'value'  => $this->getValue($this->getModel()),
-            'append' => $this->getAppends(),
         ];
     }
 }
