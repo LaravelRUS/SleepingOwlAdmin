@@ -29,11 +29,13 @@
         <span>{!! $title !!}</span>
 
         @if($badges->count() > 0)
+        <span class="pull-right-container">
             <span class="sidebar-page-badges">
             @foreach($badges as $badge)
                 {!! $badge->render() !!}
             @endforeach
             </span>
+        </span>    
         @endif
     </a>
 </li>
