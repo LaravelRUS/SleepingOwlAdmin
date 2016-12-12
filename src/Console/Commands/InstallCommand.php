@@ -6,7 +6,6 @@ use SleepingOwl\Admin\Console\Installation;
 
 class InstallCommand extends Installation\Command
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -32,10 +31,10 @@ class InstallCommand extends Installation\Command
             Installation\CreateSectionServiceProvider::class,
             Installation\CreatePublicDirectory::class,
         ])
-            ->map(function($installer) {
+            ->map(function ($installer) {
                 return new $installer($this, $this->config);
             })
-            ->filter(function($installer) {
+            ->filter(function ($installer) {
                 return $this->option('force') ? true : ! $installer->installed();
             })->each(function ($installer) {
                 $installer->install();

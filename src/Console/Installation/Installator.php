@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Console\Installation;
 
 use Illuminate\Config\Repository;
@@ -6,11 +7,10 @@ use SleepingOwl\Admin\Contracts\Console\Installator as InstallatorContract;
 
 abstract class Installator implements InstallatorContract
 {
-
     /**
      * The console command instance.
      *
-     * @var \Illuminate\Console\Command $command
+     * @var \Illuminate\Console\Command
      */
     protected $command;
 
@@ -28,11 +28,11 @@ abstract class Installator implements InstallatorContract
     public function __construct($command, Repository $config)
     {
         $this->command = $command;
-        $this->config  = $config;
+        $this->config = $config;
     }
 
     /**
-     * При возврате методом true данный компонент будет пропущен
+     * При возврате методом true данный компонент будет пропущен.
      *
      * @return bool
      */

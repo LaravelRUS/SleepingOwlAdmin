@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Model;
 use Request;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
 class MultiSelect extends Select

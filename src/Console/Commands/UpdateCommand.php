@@ -24,10 +24,10 @@ class UpdateCommand extends Installation\Command
         collect([
             Installation\PublishAssets::class,
         ])
-            ->map(function($installer) {
+            ->map(function ($installer) {
                 return new $installer($this, $this->config);
             })
-            ->filter(function($installer) {
+            ->filter(function ($installer) {
                 return $this->option('force') ? true : ! $installer->installed();
             })->each(function ($installer) {
                 $installer->install();

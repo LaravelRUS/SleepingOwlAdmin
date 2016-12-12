@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Console\Installation;
 
 class CreateNavigationFile extends Installator
@@ -24,7 +25,7 @@ class CreateNavigationFile extends Installator
     }
 
     /**
-     * При возврате методом true данный компонент будет пропущен
+     * При возврате методом true данный компонент будет пропущен.
      *
      * @return bool
      */

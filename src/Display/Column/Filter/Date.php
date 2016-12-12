@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
 class Date extends Text
 {

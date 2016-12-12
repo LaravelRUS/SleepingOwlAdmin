@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Routing\Router;
 use Request;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use Illuminate\Routing\Router;
+use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Repository\TreeRepository;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
  * @method TreeRepositoryInterface getRepository()

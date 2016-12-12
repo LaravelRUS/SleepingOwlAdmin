@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
+use Illuminate\Support\ServiceProvider;
 
 class AliasesServiceProvider extends ServiceProvider
 {

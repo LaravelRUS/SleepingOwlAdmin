@@ -1,14 +1,14 @@
 <?php
+
 namespace SleepingOwl\Admin\Console\Installation;
 
 use Illuminate\Config\Repository;
-use Illuminate\Console\Command as ConsoleCommand;
-use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Console\Command as ConsoleCommand;
 
 abstract class Command extends ConsoleCommand
 {
-
     use ConfirmableTrait;
 
     /**

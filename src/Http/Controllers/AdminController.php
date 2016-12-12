@@ -2,16 +2,16 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use AdminTemplate;
 use Breadcrumbs;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\Validation\Validator;
+use AdminTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class AdminController extends Controller
 {
@@ -254,7 +254,6 @@ class AdminController extends Controller
 
         $redirectPolicy = $model->getRedirect();
         /* Make redirect when use in model config */
-
 
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([

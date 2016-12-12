@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
-use SleepingOwl\Admin\Exceptions\WysiwygException;
 
 class Manager
 {

@@ -2,21 +2,21 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Contracts\View\Factory as ViewFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Admin;
+use Illuminate\Routing\Router;
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Model\ModelConfigurationManager;
-use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 use Symfony\Component\Finder\Finder;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Widgets\WidgetsRegistry;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class AdminServiceProvider extends ServiceProvider
 {

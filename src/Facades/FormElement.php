@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Facades;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class AdminForm.

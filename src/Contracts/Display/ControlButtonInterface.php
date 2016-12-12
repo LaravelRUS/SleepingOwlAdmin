@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Contracts\Display;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Renderable;
 
 interface ControlButtonInterface extends Renderable, Arrayable
 {

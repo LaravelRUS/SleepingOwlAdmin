@@ -1,4 +1,5 @@
 <?php
+
 namespace SleepingOwl\Admin\Console\Installation;
 
 class CreateRoutesFile extends Installator
@@ -24,7 +25,7 @@ class CreateRoutesFile extends Installator
     }
 
     /**
-     * При возврате методом true данный компонент будет пропущен
+     * При возврате методом true данный компонент будет пропущен.
      *
      * @return bool
      */

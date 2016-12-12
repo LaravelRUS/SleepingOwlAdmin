@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
-use SleepingOwl\Admin\Traits\Assets;
 
 abstract class FormElement implements FormElementInterface
 {

@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts\Widgets;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Arrayable;
 
 interface WidgetInterface extends Arrayable, Htmlable
 {
