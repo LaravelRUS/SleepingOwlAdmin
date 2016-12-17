@@ -18,8 +18,9 @@ Official site: [http://sleepingowladmin.ru](http://sleepingowladmin.ru)
 ## Documentation
 
 * [Russian](http://sleepingowladmin.ru/docs)
-* English
+* [English](http://en.sleepingowladmin.ru/docs)
 
+[Docs repo](https://github.com/SleepingOwlAdmin/docs)
 
 ## Demo project
 
