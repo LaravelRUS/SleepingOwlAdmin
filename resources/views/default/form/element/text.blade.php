@@ -1,4 +1,11 @@
-<div class="form-group form-element-text {{ $errors->has($name) ? 'has-error' : '' }}">
+<div 
+	class="form-group form-element-text {{ $errors->has($name) ? 'has-error' : '' }}"
+	{{--Добавляем в каждый template--}}
+	@if($width)
+		{!! $width !!}
+	@endif
+	{{-------------------------------}}
+>
 	<label for="{{ $name }}" class="control-label">
 		{{ $label }}
 
