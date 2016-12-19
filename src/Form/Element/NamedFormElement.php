@@ -489,6 +489,7 @@ abstract class NamedFormElement extends FormElement
             'readonly' => $this->isReadonly(),
             'value' => $this->getValue(),
             'helpText' => $this->getHelpText(),
+            'width' => $this->getWidth(),
             'required' => in_array('required', $this->validationRules),
         ];
     }
