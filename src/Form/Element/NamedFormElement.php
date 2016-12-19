@@ -61,6 +61,11 @@ abstract class NamedFormElement extends FormElement
      * @var \Closure
      */
     protected $mutator;
+    
+    /**
+     * @var string
+     */
+    protected $width;
 
     /**
      * @param string      $path
@@ -97,6 +102,29 @@ abstract class NamedFormElement extends FormElement
         return $name;
     }
 
+   /**
+     * @param string px
+     *
+     * @return style="width:@param"
+     */
+    public function getWidth()
+    {
+      return $this->width;
+    }
+
+    /**
+     * @param string px
+     *
+     * @return style="width:@param"
+     */
+    public function setWidth($width)
+    {
+       
+        $this->width = 'style="width: '. $width.'px;"';
+
+        return $this;
+    }
+    
     /**
      * @return string
      */
