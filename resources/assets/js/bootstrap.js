@@ -27,6 +27,7 @@ require('./libs/datatables')
 require('./libs/metismenu')
 require('./libs/nestable')
 require('./libs/sweetalert')
+require('./libs/dependent-dropdown')
 
 /**
  * Best open source admin dashboard & control panel theme.
