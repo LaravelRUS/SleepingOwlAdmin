@@ -11,7 +11,6 @@ class Email extends NamedColumn
     {
         return parent::toArray() + [
             'value'  => $this->getModelValue(),
-            'append' => $this->getAppends(),
         ];
     }
 }

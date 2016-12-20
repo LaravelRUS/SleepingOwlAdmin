@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Repository;
 
 use Cache;
-use Illuminate\Database\Eloquent\Model;
 use Schema;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class BaseRepository implements RepositoryInterface

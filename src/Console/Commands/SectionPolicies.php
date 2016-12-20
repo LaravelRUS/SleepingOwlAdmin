@@ -1,24 +1,24 @@
 <?php
 
-namespace SleepingOwl\Admin\Commands;
+namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class SectionGenerate extends Command
+class SectionPolicies extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'sleepingowl:section:generate';
+    protected $name = 'sleepingowl:section:policies';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate the missing sections';
+    protected $description = 'Generate section policies';
 
     /**
      * Execute the console command.
@@ -28,7 +28,7 @@ class SectionGenerate extends Command
     public function fire()
     {
         $provider = $this->laravel->getProvider(
-            $this->laravel->getNamespace().'Providers\\AdminSectionsServiceProvider'
+            $this->laravel->getNamespace() . 'Providers\\AdminSectionsServiceProvider'
         );
 
         if (! $provider) {
@@ -37,10 +37,10 @@ class SectionGenerate extends Command
             return;
         }
 
-        foreach ($provider->sections() as $section => $model) {
-            $this->callSilent('sleepingowl:section:make', ['name' => $section, 'model' => $model]);
+        foreach ($provider->policies() as $policy) {
+            $this->callSilent('make:policy', ['name' => $policy]);
         }
 
-        $this->info('Sections generated successfully!');
+        $this->info('Section policies generated successfully!');
     }
 }

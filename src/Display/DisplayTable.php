@@ -110,7 +110,6 @@ class DisplayTable extends Display
             $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
         }
 
-
         return $this->newEntryButtonText;
     }
 

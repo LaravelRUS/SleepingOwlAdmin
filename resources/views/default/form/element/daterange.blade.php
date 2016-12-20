@@ -1,13 +1,13 @@
-<div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
+<div class="form-group form-element-daterange {{ $errors->has($name) ? 'has-error' : '' }}">
     <label for="{{ $name }}" class="control-label">
         {{ $label }}
 
         @if($required)
-            <span class="text-danger">*</span>
+            <span class="form-element-required">*</span>
         @endif
     </label>
 
-    <div class="form-group input-group" style="width: 250px">
+    <div class="input-group">
         <input data-format="{{ $pickerFormat }}"
                data-startDate="{{ $startDate }}"
                data-endDate="{{ $endDate }}"
@@ -22,5 +22,7 @@
             <span class="fa fa-calendar"></span>
         </span>
     </div>
-    @include(AdminTemplate::getViewPath('form.element.errors'))
+
+    @include($template->getViewPath('form.element.partials.helptext'))
+    @include($template->getViewPath('form.element.partials.errors'))
 </div>

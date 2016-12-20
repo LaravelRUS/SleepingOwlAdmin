@@ -273,7 +273,6 @@ class AdminController extends Controller
         $redirectPolicy = $model->getRedirect();
         /* Make redirect when use in model config */
 
-
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
                 '_redirectBack' => $backUrl,

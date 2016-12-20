@@ -58,14 +58,17 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 
     protected function registerCommands()
     {
-        $this->commands([
-            \SleepingOwl\Admin\Commands\InstallCommand::class,
-            \SleepingOwl\Admin\Commands\UserManagerCommand::class,
-            \SleepingOwl\Admin\Commands\SectionGenerate::class,
-            \SleepingOwl\Admin\Commands\SectionPolicies::class,
-            \SleepingOwl\Admin\Commands\SectionMake::class,
-            \SleepingOwl\Admin\Commands\SectionProvider::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \SleepingOwl\Admin\Console\Commands\InstallCommand::class,
+                \SleepingOwl\Admin\Console\Commands\UpdateCommand::class,
+                \SleepingOwl\Admin\Console\Commands\UserManagerCommand::class,
+                \SleepingOwl\Admin\Console\Commands\SectionGenerate::class,
+                \SleepingOwl\Admin\Console\Commands\SectionMake::class,
+                \SleepingOwl\Admin\Console\Commands\SectionPolicies::class,
+                \SleepingOwl\Admin\Console\Commands\SectionProvider::class,
+            ]);
+        }
     }
 
     /**

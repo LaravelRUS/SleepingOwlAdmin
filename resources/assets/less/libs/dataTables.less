@@ -178,3 +178,42 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:fir
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:last-child {
   padding-right: 0
 }
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+  background: 0 0;
+}
+
+table.dataTable thead .sorting_asc:after {
+  content:     "\f0de";
+  float:       right;
+  font-family: fontawesome;
+}
+
+table.dataTable thead .sorting_desc:after {
+  content:     "\f0dd";
+  float:       right;
+  font-family: fontawesome;
+}
+
+table.dataTable thead .sorting:after {
+  content:     "\f0dc";
+  float:       right;
+  font-family: fontawesome;
+  color:       rgba(50, 50, 50, .5);
+}
+
+.dt-bootstrap {
+  .dt-bootstrap-header {
+    padding: 10px 20px 0;
+  }
+
+  .dt-bootstrap-footer {
+    background-color: #f5f5f5;
+    padding:          10px 20px 5px;
+    border-top:       1px solid @gray-lighter;
+  }
+}

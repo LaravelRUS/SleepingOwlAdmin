@@ -1,15 +1,19 @@
-<div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
+<div class="form-group form-element-textarea {{ $errors->has($name) ? 'has-error' : '' }}">
 	<label for="{{ $name }}" class="control-label">
 		{{ $label }}
 
 		@if($required)
-			<span class="text-danger">*</span>
+			<span class="form-element-required">*</span>
 		@endif
 	</label>
+
+	@include($template->getViewPath('form.element.partials.helptext'))
+
 	<textarea class="form-control"
 			  rows="{{ $rows }}"
 			  name="{{ $name }}"
 			  @if($readonly) readonly @endif
 	>{!! $value !!}</textarea>
-	@include($template->getViewPath('form.element.errors'))
+
+	@include($template->getViewPath('form.element.partials.errors'))
 </div>

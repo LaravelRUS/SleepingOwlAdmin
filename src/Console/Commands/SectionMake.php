@@ -1,6 +1,6 @@
 <?php
 
-namespace SleepingOwl\Admin\Commands;
+namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;

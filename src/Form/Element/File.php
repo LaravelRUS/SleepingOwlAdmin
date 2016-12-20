@@ -3,13 +3,14 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use Illuminate\Http\JsonResponse;
+use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Router;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use KodiComponents\Support\Upload;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {

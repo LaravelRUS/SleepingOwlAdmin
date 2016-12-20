@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -14,8 +15,6 @@ use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Navigation\Page;
 
 class Admin implements AdminInterface
 {

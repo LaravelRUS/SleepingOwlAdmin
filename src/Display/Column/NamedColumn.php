@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
+use Illuminate\Database\Eloquent\Collection;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {

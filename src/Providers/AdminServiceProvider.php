@@ -17,9 +17,12 @@ use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 use SleepingOwl\Admin\Exceptions\TemplateException;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
 class AdminServiceProvider extends ServiceProvider
 {

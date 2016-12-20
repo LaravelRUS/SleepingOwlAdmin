@@ -69,7 +69,6 @@ class DateTime extends NamedColumn
         return parent::toArray() + [
             'value' => $value,
             'originalValue' => $originalValue,
-            'append' => $this->getAppends(),
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Widgets;
 
-use SleepingOwl\Admin\Contracts\Widgets\WidgetInterface;
 use Illuminate\Contracts\View\View;
+use SleepingOwl\Admin\Contracts\Widgets\WidgetInterface;
 
 abstract class Widget implements WidgetInterface
 {

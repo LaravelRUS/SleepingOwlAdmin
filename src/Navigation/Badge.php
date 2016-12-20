@@ -5,15 +5,20 @@ namespace SleepingOwl\Admin\Navigation;
 class Badge extends \KodiComponents\Navigation\Badge
 {
     /**
-     * @return string
+     * @return array
      */
-    public function getValue()
+    public function toArray()
     {
-        if (is_callable($this->value)) {
-            return call_user_func($this->value);
+        $value = $this->getValue();
+
+        if (! $this->hasClassProperty('label-', 'bg-')) {
+            $this->setHtmlAttribute('class', 'label-primary');
         }
 
-        return parent::getValue();
+        return [
+            'value' => $value,
+            'attributes' => $this->htmlAttributesToString(),
+        ];
     }
 
     /**

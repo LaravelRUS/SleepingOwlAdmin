@@ -2,16 +2,16 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Contracts\Support\Htmlable;
+use LogicException;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use SleepingOwl\Admin\Form\FormElement;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
-use LogicException;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Form\FormElement;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.
@@ -212,7 +212,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $helpText
+     * @param string|Htmlable $helpText
      *
      * @return $this
      */
@@ -529,7 +529,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * Field->mutate(function($value) {
      *     return bcrypt($value);
-     * })
+     * }).
      *
      * @param \Closure $mutator
      *

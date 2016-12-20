@@ -2,15 +2,15 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 trait FormElements
 {

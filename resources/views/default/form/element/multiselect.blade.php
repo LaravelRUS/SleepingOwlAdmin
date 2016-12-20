@@ -1,15 +1,16 @@
-<div class="form-group {{ $errors->has($name) ? 'has-error' : '' }}">
-	<label for="{{ $name }}" class="control-label">
-		{{ $label }}
+<div class="form-group form-element-multiselect {{ $errors->has($name) ? 'has-error' : '' }}">
+    <label for="{{ $name }}" class="control-label">
+        {{ $label }}
 
-		@if($required)
-			<span class="text-danger">*</span>
-		@endif
-	</label>
+        @if($required)
+            <span class="form-element-required">*</span>
+        @endif
+    </label>
 
-	<div>
-		{!! Form::select($name, $options, $value, $attributes) !!}
-	</div>
+    <div>
+        {!! Form::select($name, $options, $value, $attributes) !!}
+    </div>
 
-	@include($template->getViewPath('form.element.errors'))
+    @include($template->getViewPath('form.element.partials.helptext'))
+    @include($template->getViewPath('form.element.partials.errors'))
 </div>

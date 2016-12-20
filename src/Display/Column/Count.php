@@ -16,7 +16,6 @@ class Count extends NamedColumn
     {
         return parent::toArray() + [
             'value' => count($this->getModelValue()),
-            'append' => $this->getAppends(),
         ];
     }
 }
