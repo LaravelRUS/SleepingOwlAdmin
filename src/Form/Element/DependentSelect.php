@@ -5,10 +5,8 @@ namespace SleepingOwl\Admin\Form\Element;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class DependentSelect extends Select implements WithRoutesInterface
 {
@@ -90,9 +88,18 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     protected $params;
 
-    public function initialize()
+    /**
+     * DependentSelect constructor.
+     *
+     * @param string $path
+     * @param null $label
+     * @param array $depends
+     */
+    public function __construct($path, $label = null, array $depends = [])
     {
-        parent::initialize();
+        parent::__construct($path, $label, []);
+
+        $this->setDataDepends($depends);
     }
 
     /**
