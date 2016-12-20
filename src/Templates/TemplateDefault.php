@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Templates;
 
 use DaveJamesMiller\Breadcrumbs\Manager;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 class TemplateDefault implements TemplateInterface
 {
@@ -35,8 +35,7 @@ class TemplateDefault implements TemplateInterface
         Manager $breadcrumbs,
         MetaInterface $meta,
         NavigationInterface $navigation
-    )
-    {
+    ) {
         $this->meta = $meta;
         $this->navigation = $navigation;
         $this->breadcrumbs = $breadcrumbs;

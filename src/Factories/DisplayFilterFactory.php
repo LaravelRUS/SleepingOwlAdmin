@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
 use SleepingOwl\Admin\Display\Filter;
+use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
 
 /**
  * @method Filter\FilterCustom custom($name, string|\Closure|null $title, \Closure $callback)
@@ -14,7 +14,6 @@ use SleepingOwl\Admin\Display\Filter;
  */
 class DisplayFilterFactory extends AliasBinder implements DisplayFilterFactoryInterface
 {
-
     /**
      * DisplayFilterFactory constructor.
      *

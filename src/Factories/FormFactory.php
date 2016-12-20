@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Factories;
 
+use SleepingOwl\Admin\Form;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
-use SleepingOwl\Admin\Form;
 
 /**
  * @method Form\FormDefault form(array $elements = [])
@@ -14,7 +14,6 @@ use SleepingOwl\Admin\Form;
  */
 class FormFactory extends AliasBinder implements FormFactoryInterface
 {
-
     /**
      * FormFactory constructor.
      *

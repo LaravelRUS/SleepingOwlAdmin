@@ -3,16 +3,16 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
-use Illuminate\Contracts\Auth\Access\Gate;
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
+use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 /**
  * @method bool creating(\Closure $callback)
@@ -26,7 +26,6 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
  */
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
-
     /**
      * Get the event dispatcher instance.
      *
@@ -124,8 +123,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
                                 TemplateInterface $template,
                                 RepositoryInterface $repository,
                                 Gate $gate
-    )
-    {
+    ) {
         $this->class = $class;
         $this->app = $application;
         $this->model = $this->app->make($class);

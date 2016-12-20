@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
-use SleepingOwl\Admin\Form\Element;
 use SleepingOwl\Admin\Form\Columns;
+use SleepingOwl\Admin\Form\Element;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 
 /**
  * @method Element\Text text($name, $label = null)

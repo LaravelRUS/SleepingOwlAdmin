@@ -7,16 +7,16 @@ use SleepingOwl\Admin\Traits\Assets;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Extension\Apply;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
 use SleepingOwl\Admin\Contracts\FilterInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**

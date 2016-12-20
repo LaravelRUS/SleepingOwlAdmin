@@ -74,6 +74,7 @@ trait Assets
             $this->package = $packageManager->add(get_called_class());
         }
     }
+
     /**
      * @param MetaInterface $meta
      */

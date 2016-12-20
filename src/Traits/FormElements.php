@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 trait FormElements
 {
@@ -240,7 +240,7 @@ trait FormElements
      */
     protected function saveElements(Request $request)
     {
-        $this->getElements()->each(function ($element) use($request) {
+        $this->getElements()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
             if ($element instanceof FormElementInterface) {
                 $element->save($request);
@@ -253,7 +253,7 @@ trait FormElements
      */
     protected function afterSaveElements(Request $request)
     {
-        $this->getElements()->each(function ($element) use($request) {
+        $this->getElements()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
             if ($element instanceof FormElementInterface) {
                 $element->afterSave($request);

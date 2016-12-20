@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
-use SleepingOwl\Admin\Exceptions\WysiwygException;
 
 class Wysiwyg extends NamedFormElement
 {

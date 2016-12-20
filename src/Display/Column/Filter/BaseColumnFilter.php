@@ -6,9 +6,9 @@ use SleepingOwl\Admin\Traits\Assets;
 use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {

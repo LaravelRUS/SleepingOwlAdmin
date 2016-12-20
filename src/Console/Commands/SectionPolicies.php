@@ -28,7 +28,7 @@ class SectionPolicies extends Command
     public function fire()
     {
         $provider = $this->laravel->getProvider(
-            $this->laravel->getNamespace() . 'Providers\\AdminSectionsServiceProvider'
+            $this->laravel->getNamespace().'Providers\\AdminSectionsServiceProvider'
         );
 
         if (! $provider) {

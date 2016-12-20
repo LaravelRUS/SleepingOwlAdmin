@@ -36,10 +36,10 @@ class BaseRepository implements RepositoryInterface
     {
         if ($class instanceof Model) {
             $this->class = get_class($class);
-            $model       = $class;
+            $model = $class;
         } else {
             $this->class = $class;
-            $model       = app($this->class);
+            $model = app($this->class);
         }
 
         return $this->setModel($model);

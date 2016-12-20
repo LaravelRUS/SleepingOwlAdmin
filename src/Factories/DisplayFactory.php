@@ -2,19 +2,19 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Navigation\Page;
+use SleepingOwl\Admin\Display\DisplayTab;
+use SleepingOwl\Admin\Display\DisplayTree;
+use SleepingOwl\Admin\Display\DisplayTable;
+use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Display\DisplayTabbed;
 use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\DisplayDatatables;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
-use SleepingOwl\Admin\Display\DisplayTab;
-use SleepingOwl\Admin\Display\DisplayTabbed;
-use SleepingOwl\Admin\Display\DisplayTable;
-use SleepingOwl\Admin\Display\DisplayTree;
-use SleepingOwl\Admin\Navigation\Page;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
 
 /**
  * @method DisplayDatatables datatables()
@@ -27,7 +27,6 @@ use SleepingOwl\Admin\Navigation\Page;
  */
 class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
 {
-
     /**
      * @var AdminInterface
      */
@@ -51,7 +50,7 @@ class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
             'table' => DisplayTable::class,
             'tree' => DisplayTree::class,
 
-            'page' => Page::class
+            'page' => Page::class,
         ]);
 
         $this->admin = $admin;

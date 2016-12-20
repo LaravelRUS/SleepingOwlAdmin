@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Contracts\Display;
 
+use SleepingOwl\Admin\Display\DisplayTab;
+use SleepingOwl\Admin\Display\DisplayTree;
+use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Display\DisplayTabbed;
 use SleepingOwl\Admin\Display\DisplayDatatables;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
-use SleepingOwl\Admin\Display\DisplayTab;
-use SleepingOwl\Admin\Display\DisplayTabbed;
-use SleepingOwl\Admin\Display\DisplayTable;
-use SleepingOwl\Admin\Display\DisplayTree;
 
 /**
  * @method DisplayDatatables datatables()

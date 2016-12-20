@@ -5,8 +5,8 @@ namespace SleepingOwl\Admin\Form\Columns;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 
 class Columns extends FormElements implements ColumnInterface
 {

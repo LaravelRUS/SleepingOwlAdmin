@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class Html extends Custom
 {
-
     /**
      * Custom constructor.
      *

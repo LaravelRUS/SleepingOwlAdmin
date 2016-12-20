@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class Checkbox extends NamedColumn implements ColumnEditableInterface
 {

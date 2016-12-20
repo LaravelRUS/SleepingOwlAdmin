@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Display\Column;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 
 /**
  * @method Column\Action action($name, $title = null)
@@ -26,7 +26,6 @@ use SleepingOwl\Admin\Display\Column;
  */
 class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryInterface
 {
-
     /**
      * DisplayColumnFactory constructor.
      *

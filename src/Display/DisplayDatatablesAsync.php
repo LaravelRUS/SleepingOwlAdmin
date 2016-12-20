@@ -2,17 +2,17 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Display\Column\Email;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
+use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Control;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface

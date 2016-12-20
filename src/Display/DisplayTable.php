@@ -4,15 +4,15 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\Extension\Columns;
-use SleepingOwl\Admin\Display\Extension\ColumnFilters;
-use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**

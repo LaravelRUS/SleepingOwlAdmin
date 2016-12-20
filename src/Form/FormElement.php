@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 abstract class FormElement implements FormElementInterface
 {

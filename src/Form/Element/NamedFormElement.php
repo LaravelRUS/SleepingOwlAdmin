@@ -3,15 +3,15 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use LogicException;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\Request;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.

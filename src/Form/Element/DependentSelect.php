@@ -65,7 +65,6 @@ class DependentSelect extends Select
             'data-depends' =>  $this->getDataDepends(),
         ];
 
-
         if ($this->isReadonly()) {
             $attributes['disabled'] = 'disabled';
         }

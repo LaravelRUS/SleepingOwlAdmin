@@ -7,7 +7,6 @@ use Illuminate\Contracts\Support\Renderable;
 
 interface DisplayInterface extends Arrayable, Renderable, Initializable
 {
-
     /**
      * @return string
      */

@@ -1,18 +1,16 @@
 <?php
+
 namespace SleepingOwl\Tests;
 
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 /**
- * Class TestCase
- *
- * @package SleepingOwl
- * @subpackage Tests
+ * Class TestCase.
  */
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getPackageProviders($app)
     {

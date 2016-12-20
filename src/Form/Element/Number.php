@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Number extends NamedFormElement
 {
-
     /**
      * @var int
      */

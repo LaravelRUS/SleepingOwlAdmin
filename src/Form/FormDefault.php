@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Form\Element\Upload;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -92,8 +92,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         RepositoryInterface $repository,
         UrlGenerator $urlGenerator,
         array $elements = []
-    )
-    {
+    ) {
         $this->admin = $admin;
         $this->repository = $repository;
         $this->urlGenerator = $urlGenerator;
@@ -382,8 +381,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function validateForm(ModelConfigurationInterface $modelConfiguration,
                                  \Illuminate\Http\Request $request,
                                  \Illuminate\Contracts\Validation\Factory $validator
-    )
-    {
+    ) {
         if ($modelConfiguration !== $this->getModelConfiguration()) {
             return;
         }

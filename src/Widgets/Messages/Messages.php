@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Widgets\Messages;
 
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Contracts\Widgets\MessagesInterface;
 use SleepingOwl\Admin\Widgets\Widget;
+use SleepingOwl\Admin\Contracts\Widgets\MessagesInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 abstract class Messages extends Widget implements MessagesInterface
 {

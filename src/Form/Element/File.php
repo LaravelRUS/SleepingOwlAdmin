@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Http\JsonResponse;

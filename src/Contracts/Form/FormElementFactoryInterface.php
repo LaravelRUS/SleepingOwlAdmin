@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts\Form;
 
-use SleepingOwl\Admin\Factories\Model;
 use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
+use SleepingOwl\Admin\Factories\Model;
 
 /**
  * @method Element\Text text($name, $label = null)

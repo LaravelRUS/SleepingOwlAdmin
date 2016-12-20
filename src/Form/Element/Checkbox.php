@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class Checkbox extends NamedFormElement
 {
-
     /**
      * @param Request $request
      */

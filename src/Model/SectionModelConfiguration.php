@@ -49,7 +49,6 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return method_exists($this, 'onEdit') && parent::isEditable($model);
     }
 
-
     /**
      * @param string $action
      * @param \Illuminate\Database\Eloquent\Model $model

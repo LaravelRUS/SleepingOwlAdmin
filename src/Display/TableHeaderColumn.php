@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display;
 
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class TableHeaderColumn implements TableHeaderColumnInterface
 {

@@ -5,16 +5,15 @@ namespace SleepingOwl\Admin\Display;
 use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
-use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
-use SleepingOwl\Admin\Contracts\Display\TabInterface;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Traits\FormElements;
-
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
 
 /**
  * @property TabInterface[]|Collection $elements

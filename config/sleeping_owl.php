@@ -69,7 +69,6 @@ return [
 
     'policies_namespace' => '\\App\\Policies\\',
 
-
     /*
     |--------------------------------------------------------------------------
     |  Directory for uploaded images (relative to `public` directory)

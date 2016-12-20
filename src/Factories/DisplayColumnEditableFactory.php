@@ -3,15 +3,14 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 
 /**
  * @method Checkbox checkbox($name)
  */
 class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnEditableFactoryInterface
 {
-
     /**
      * DisplayColumnEditableFactory constructor.
      *

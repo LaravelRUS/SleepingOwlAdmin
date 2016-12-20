@@ -2,19 +2,19 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\Validation\Factory;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Validation\Factory;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class AdminController extends Controller
 {

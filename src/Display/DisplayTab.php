@@ -12,8 +12,8 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {

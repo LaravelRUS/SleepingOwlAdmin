@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
-use Baum\Extensions\Eloquent\Model;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use Baum\Extensions\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 interface AdminInterface extends Initializable
 {

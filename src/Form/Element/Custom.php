@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Form\FormElement;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class Custom extends FormElement
 {

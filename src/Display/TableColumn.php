@@ -9,10 +9,10 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Display\Column\OrderByClause;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 abstract class TableColumn implements ColumnInterface
 {

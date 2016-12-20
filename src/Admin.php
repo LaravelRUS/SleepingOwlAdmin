@@ -3,18 +3,18 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Navigation\Page;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Navigation\Page;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
-use SleepingOwl\Admin\Contracts\Template\MetaInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Http\Controllers\AdminController;
 
 class Admin implements AdminInterface
 {
@@ -27,7 +27,6 @@ class Admin implements AdminInterface
      * @var TemplateInterface
      */
     protected $template;
-
 
     /**
      * @var Application
