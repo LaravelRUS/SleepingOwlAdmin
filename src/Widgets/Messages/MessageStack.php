@@ -2,42 +2,42 @@
 
 namespace SleepingOwl\Admin\Widgets\Messages;
 
-/**
- * Class MessageStack.
- */
+use BadMethodCallException;
+use InvalidArgumentException;
+
 class MessageStack
 {
     /**
      * @var array
      */
-    protected $messageTypes;
+    protected $types;
 
     /**
-     * MessageStack constructor.
-     * @param null|array $messageTypes
+     * @param null|array $types
      */
-    public function __construct($messageTypes = null)
+    public function __construct(array $types = null)
     {
-        $this->messageTypes = $messageTypes;
+        $this->types = $types;
     }
 
     /**
      * @param string $name
      * @param array $arguments
+     *
      * @return mixed
      */
     public function __call($name, $arguments)
     {
         $type = strtolower(substr($name, 3));
 
-        if (starts_with($name, 'add') && array_key_exists($type, $this->messageTypes)) {
+        if (starts_with($name, 'add') && array_key_exists($type, $this->types)) {
             if (isset($arguments[0])) {
-                return $this->messageTypes[$type]::addMessage($arguments[0]);
-            } else {
-                throw new \InvalidArgumentException("Method $name expected parameter");
+                return call_user_func("{$this->types[$type]}::addMessage", $arguments[0]);
             }
+
+            throw new InvalidArgumentException("Method [{$name}] expected parameter");
         }
 
-        throw new \BadMethodCallException("Call to undefined method [{$name}]");
+        throw new BadMethodCallException("Call to undefined method [{$name}]");
     }
 }
