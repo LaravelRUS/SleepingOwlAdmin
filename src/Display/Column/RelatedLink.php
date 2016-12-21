@@ -17,6 +17,11 @@ class RelatedLink extends Link
     protected $originalName;
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * @param \Closure|null|string $name
      * @param null|string $label
      */

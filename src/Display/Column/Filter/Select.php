@@ -219,7 +219,7 @@ class Select extends BaseColumnFilter
         $repository = app(RepositoryInterface::class, [$this->getModel()]);
 
         $key = $repository->getModel()->getKeyName();
-        $options = $repository->getQuery()->get()->lists($this->getDisplay(), $key);
+        $options = $repository->getQuery()->get()->pluck($this->getDisplay(), $key);
 
         if ($options instanceof Collection) {
             $options = $options->all();

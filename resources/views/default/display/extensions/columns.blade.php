@@ -4,6 +4,9 @@
             <col width="{!! $column->getWidth() !!}" />
         @endforeach
     </colgroup>
+
+    @yield('table.header')
+
     <thead>
     <tr>
         @foreach ($columns as $column)
@@ -17,7 +20,13 @@
     @foreach ($collection as $model)
         <tr>
             @foreach ($columns as $column)
-                <?php $column->setModel($model); ?>
+                <?php
+                $column->setModel($model);
+                if($column instanceof \SleepingOwl\Admin\Display\Column\Control) {
+                    $column->initialize();
+                }
+                ?>
+
                 <td {!! $column->htmlAttributesToString() !!}>
                     {!! $column->render() !!}
                 </td>
@@ -29,13 +38,8 @@
     @yield('table.footer')
 </table>
 
-@if($collection instanceof \Illuminate\Contracts\Pagination\Paginator &&
-    class_exists('\Illuminate\Pagination\BootstrapThreePresenter'))
+@if(!is_null($pagination))
     <div class="panel-footer">
-        {!! (new \Illuminate\Pagination\BootstrapThreePresenter($collection))->render() !!}
-    </div>
-@elseif($collection instanceof \Illuminate\Contracts\Pagination\Paginator)
-    <div class="panel-footer">
-        {!! $collection->render() !!}
+        {!! $pagination !!}
     </div>
 @endif

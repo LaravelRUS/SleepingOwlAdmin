@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Form\Panel;
 
+use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\PanelInterface;
-use SleepingOwl\Admin\Form\FormElements;
 
 class Body extends FormElements implements PanelInterface
 {

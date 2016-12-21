@@ -1,11 +1,13 @@
-<div class="form-group {{ $errors->has($name) ? 'has-error' : '' }} well">
+<div class="form-group form-element-upload {{ $errors->has($name) ? 'has-error' : '' }} well">
     <label for="{{ $name }}" class="control-label">
         {{ $label }}
 
         @if($required)
-            <span class="text-danger">*</span>
+            <span class="form-element-required">*</span>
         @endif
     </label>
+
+    @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
     @if (! $readonly)
     {!! Form::file($name, ['id' => $name]) !!}

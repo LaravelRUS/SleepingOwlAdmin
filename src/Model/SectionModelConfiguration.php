@@ -3,12 +3,34 @@
 namespace SleepingOwl\Admin\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
+    /**
+     * @var array
+     */
+    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
+
+    /**
+     * @param string $redirect
+     * @return void
+     */
+    public function setRedirect($redirect)
+    {
+        $this->redirect = $redirect;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirect()
+    {
+        return collect($this->redirect);
+    }
+
     /**
      * @return bool
      */

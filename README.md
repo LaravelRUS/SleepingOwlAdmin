@@ -1,6 +1,6 @@
 ![bg](https://cloud.githubusercontent.com/assets/773481/14028746/24d7efa8-f20f-11e5-8e38-3d264739f0aa.png)
 
-## Laravel 5.2 Admin Module
+## Laravel 5.* Admin Module
 
 [![Build Status](https://travis-ci.org/SleepingOwlAdmin/demo.svg?branch=master)](https://travis-ci.org/SleepingOwlAdmin/demo)
 [![StyleCI](https://styleci.io/repos/52141393/shield?style=flat)](https://styleci.io/repos/52141393)
@@ -12,32 +12,23 @@
 
 SleepingOwl Admin is an administrative interface builder for Laravel.
 
-### Used npm packages:
+Official site: [http://sleepingowladmin.ru](http://sleepingowladmin.ru)
 
-```js
-"devDependencies": {
-	"jquery": "^2.1.4",
-	"underscore": "1.8.3",
-	"bootstrap": "^3.3.7",
-	"eonasdan-bootstrap-datetimepicker": "^4.15.35",
-	"font-awesome": "^4.6.3",
-	"moment": "^2.14.1",
-	"nestable": "^0.2.0",
-	"noty": "^2.3.8",
-	"sortablejs": "1.4.2",
-	"select2": "^4.0.3",
-	"metismenu": "^2.5.2",
-	"datatables.net": "^1.10.12",
-	"admin-lte": "^2.3.5",
-	"x-editable": "^1.5.1",
-	"dropzone": "4.3.0",
-	"i18next": "^3.4.1",
-	"vue": "^1.0.26",
-	"vue-resource": "^0.9.3",
-	"sweetalert2": "^4.1.0",
-	"magnific-popup": "^1.1.0"
-}
-```
+
+## Documentation
+
+* [Russian](http://sleepingowladmin.ru/docs)
+* [English](http://en.sleepingowladmin.ru/docs)
+
+[Docs repo](https://github.com/SleepingOwlAdmin/docs)
+
+## Demo project
+
+You can download the demo project at https://github.com/SleepingOwlAdmin/demo
+
+
+---
+
 
 ## Installation
 
@@ -46,7 +37,6 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
   ```
   "require": {
     "php": ">=5.5.9",
-    "laravel/framework": "5.2.*",
     ...
     "laravelrus/sleepingowl": "4.*@dev"
   },
@@ -77,14 +67,9 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 ```
 $ php artisan sleepingowl:install
 ```
-    
-## Laravel 5.1 usage
-
-SleepingOwl are compatible with Laravel 5.1. But full performance is not guaranteed.
 
 ### Installation
 
-- See `Installation` section of Laravel 5.2
 - After all actions: open `config/sleeping_owl.php` and change `'middleware' => ['web']` to `'middleware' => []`
 
 ---
@@ -92,13 +77,13 @@ SleepingOwl are compatible with Laravel 5.1. But full performance is not guarant
 ## Authentication
 By default, admin module uses Laravel authentication.
 
-If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/5.2/authentication) 
+If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/5.3/authentication) 
 and append middleware `auth` to `config/sleeping_owl.php` 
 
 ```php
-	...
-	'middleware' => ['web', 'auth']
-	...
+...
+'middleware' => ['web', 'auth']
+...
 ```
 
 ### Supporting of old authentication
@@ -156,17 +141,34 @@ Steps:
   ```php
   'middleware' => ['web', 'auth:admin'],
   ```
-
 ---
 
-## Demo project
+### Used npm packages:
 
-You can download the demo project at https://github.com/SleepingOwlAdmin/demo
-
-## Documentation
-
-* [Russian](http://sleepingowl.laravel.su/docs/4.0/)
-* English
+```js
+"devDependencies": {
+   "jquery": "^2.1.4",
+   "underscore": "1.8.3",
+   "bootstrap": "^3.3.7",
+   "eonasdan-bootstrap-datetimepicker": "^4.15.35",
+   "font-awesome": "^4.6.3",
+   "moment": "^2.14.1",
+   "nestable": "^0.2.0",
+   "noty": "^2.3.8",
+   "sortablejs": "1.4.2",
+   "select2": "^4.0.3",
+   "metismenu": "^2.5.2",
+   "datatables.net": "^1.10.12",
+   "admin-lte": "^2.3.5",
+   "x-editable": "^1.5.1",
+   "dropzone": "4.3.0",
+   "i18next": "^3.4.1",
+   "vue": "^1.0.26",
+   "vue-resource": "^0.9.3",
+   "sweetalert2": "^4.1.0",
+   "magnific-popup": "^1.1.0"
+}
+```
 
 ## Copyright and License
 

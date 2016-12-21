@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Facades;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class AdminForm.
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\File file($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Time time($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Date date($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\DateRange daterange($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Timestamp timestamp($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\TextAddon textaddon($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Password password($name, $label = null)
@@ -29,6 +30,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\Element\Radio radio($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method static \SleepingOwl\Admin\Form\Element\Upload upload($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\Number number($name, $label = null)
  */
 class FormElement extends Facade
 {

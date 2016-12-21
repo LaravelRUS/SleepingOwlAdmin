@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use SleepingOwl\Admin\Traits\Assets;
 use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
@@ -37,6 +37,16 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function getView()
     {
         return $this->view;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function parseValue($value)
+    {
+        return $value;
     }
 
     /**

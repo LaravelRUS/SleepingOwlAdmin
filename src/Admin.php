@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
+use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Navigation\Page;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class Admin
 {

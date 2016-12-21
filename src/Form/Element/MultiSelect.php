@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Model;
 use Request;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
 class MultiSelect extends Select
@@ -97,6 +97,10 @@ class MultiSelect extends Select
 
         if ($this->isTaggable()) {
             $attributes['class'] .= ' input-taggable';
+        }
+
+        if ($this->isReadonly()) {
+            $attributes['disabled'] = 'disabled';
         }
 
         return [

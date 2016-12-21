@@ -25,7 +25,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
         $this->publishes([
-            __DIR__.'/../../public/' => public_path('packages/sleepingowl/'),
+            __DIR__.'/../../public' => public_path('packages/sleepingowl/'),
         ], 'assets');
 
         $this->publishes([
@@ -51,18 +51,21 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
         if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
-            $this->app->register($this->app->getNamespace() . 'Providers\\AdminSectionsServiceProvider');
+            $this->app->register($this->app->getNamespace().'Providers\\AdminSectionsServiceProvider');
         }
     }
 
     protected function registerCommands()
     {
-        $this->commands([
-            \SleepingOwl\Admin\Commands\InstallCommand::class,
-            \SleepingOwl\Admin\Commands\UserManagerCommand::class,
-            \SleepingOwl\Admin\Commands\SectionGenerate::class,
-            \SleepingOwl\Admin\Commands\SectionMake::class,
-            \SleepingOwl\Admin\Commands\SectionProvider::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \SleepingOwl\Admin\Console\Commands\InstallCommand::class,
+                \SleepingOwl\Admin\Console\Commands\UpdateCommand::class,
+                \SleepingOwl\Admin\Console\Commands\UserManagerCommand::class,
+                \SleepingOwl\Admin\Console\Commands\SectionGenerate::class,
+                \SleepingOwl\Admin\Console\Commands\SectionMake::class,
+                \SleepingOwl\Admin\Console\Commands\SectionProvider::class,
+            ]);
+        }
     }
 }

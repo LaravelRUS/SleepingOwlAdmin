@@ -2,21 +2,27 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Admin;
+use Illuminate\Routing\Router;
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use Symfony\Component\Finder\Finder;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Widgets\WidgetsRegistry;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class AdminServiceProvider extends ServiceProvider
 {
+    /**
+     * @var string
+     */
     protected $directory;
 
     public function register()
@@ -30,6 +36,16 @@ class AdminServiceProvider extends ServiceProvider
         $this->initializeNavigation();
         $this->registerWysiwyg();
         $this->registerAliases();
+
+        $this->app->singleton(WidgetsRegistryInterface::class, function () {
+            return new WidgetsRegistry($this->app);
+        });
+
+        $this->app->booted(function () {
+            $this->app[WidgetsRegistryInterface::class]->placeWidgets(
+                $this->app[ViewFactory::class]
+            );
+        });
 
         $this->app->booted(function () {
             $this->registerCustomRoutes();
@@ -66,6 +82,8 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->registerMessages();
+
         $this->app->singleton('sleeping_owl.template', function () {
             return $this->app['sleeping_owl']->template();
         });
@@ -79,6 +97,23 @@ class AdminServiceProvider extends ServiceProvider
                     'uses' => 'AdminController@getScripts',
                 ]);
             });
+        });
+    }
+
+    protected function registerMessages()
+    {
+        $messageTypes = [
+            'error' => \SleepingOwl\Admin\Widgets\Messages\ErrorMessages::class,
+            'info' => \SleepingOwl\Admin\Widgets\Messages\InfoMessages::class,
+            'success' => \SleepingOwl\Admin\Widgets\Messages\SuccessMessages::class,
+            'warning' => \SleepingOwl\Admin\Widgets\Messages\WarningMessages::class,
+        ];
+        foreach ($messageTypes as $messageType) {
+            $this->app[WidgetsRegistryInterface::class]->registerWidget($messageType);
+        }
+
+        $this->app->singleton('sleeping_owl.message', function () use ($messageTypes) {
+            return new \SleepingOwl\Admin\Widgets\Messages\MessageStack($messageTypes);
         });
     }
 
@@ -114,12 +149,13 @@ class AdminServiceProvider extends ServiceProvider
             return;
         }
 
-        $files = $files = Finder::create()
+        $files = Finder::create()
             ->files()
             ->name('/^.+\.php$/')
             ->notName('routes.php')
             ->notName('navigation.php')
-            ->in($directory)->sort(function ($a) {
+            ->in($directory)
+            ->sort(function ($a) {
                 return $a->getFilename() != 'bootstrap.php';
             });
 

@@ -9,4 +9,4 @@ Admin.Modules.add('form.elements.select', () => {
 
         $self.select2(options)
     })
-})
+}, 0, ['bootstrap::tab::shown'])

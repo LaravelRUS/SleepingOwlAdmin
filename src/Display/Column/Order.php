@@ -2,15 +2,20 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Routing\Router;
 use Route;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use Illuminate\Routing\Router;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Traits\OrderableModel;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class Order extends TableColumn implements WithRoutesInterface
 {
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
     /**
      * Register routes.
      *

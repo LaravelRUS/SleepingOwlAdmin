@@ -91,11 +91,7 @@ class Date extends Text
      */
     public function getPickerFormat()
     {
-        if (is_null($this->pickerFormat)) {
-            return $this->generatePickerFormat();
-        }
-
-        return $this->pickerFormat;
+        return $this->pickerFormat ?: config('sleeping_owl.dateFormat');
     }
 
     /**
@@ -176,27 +172,18 @@ class Date extends Text
             return;
         }
 
-        try {
-            $time = Carbon::createFromFormat($this->getFormat(), $search);
-        } catch (Exception $e) {
-            try {
-                $time = Carbon::parse($search);
-            } catch (Exception $e) {
-                return;
-            }
-        }
-
-        $time = $time->format($this->getSearchFormat());
+        $date = $this->parserDate($search);
         $name = $column->getName();
+
         if ($repository->hasColumn($name)) {
-            $this->buildQuery($query, $name, $time);
+            $this->buildQuery($query, $name, $date);
         } elseif (strpos($name, '.') !== false) {
             $parts = explode('.', $name);
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
 
-            $query->whereHas($relationName, function ($q) use ($name, $time) {
-                $this->buildQuery($q, $name, $time);
+            $query->whereHas($relationName, function ($q) use ($name, $date) {
+                $this->buildQuery($q, $name, $date);
             });
         }
     }
@@ -206,10 +193,17 @@ class Date extends Text
      */
     public function toArray()
     {
+        $format = $this->getPickerFormat();
+        if (empty($format)) {
+            $format = $this->getFormat();
+        }
+
         return parent::toArray() + [
             'seconds'      => $this->hasSeconds(),
             'format'       => $this->getFormat(),
-            'pickerFormat' => $this->getPickerFormat(),
+            'pickerFormat' => $this->generatePickerFormat(
+                $this->getPickerFormat()
+            ),
             'width'        => $this->getWidth(),
         ];
     }
@@ -217,9 +211,9 @@ class Date extends Text
     /**
      * @return string
      */
-    protected function generatePickerFormat()
+    protected function generatePickerFormat($format)
     {
-        return strtr($this->getFormat(), [
+        return strtr($format, [
             'i' => 'mm',
             's' => 'ss',
             'h' => 'hh',
@@ -233,5 +227,29 @@ class Date extends Text
             'Y' => 'YYYY',
             'y' => 'YY',
         ]);
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return string
+     */
+    public function parseValue($date)
+    {
+        if (empty($date)) {
+            return;
+        }
+
+        try {
+            $date = Carbon::parse($date);
+        } catch (Exception $e) {
+            try {
+                $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
+            } catch (Exception $e) {
+                return;
+            }
+        }
+
+        return $date->format($this->getSearchFormat());
     }
 }

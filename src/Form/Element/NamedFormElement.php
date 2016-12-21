@@ -2,15 +2,15 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Contracts\Support\Htmlable;
+use Request;
+use LogicException;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use SleepingOwl\Admin\Form\FormElement;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use LogicException;
-use Request;
-use SleepingOwl\Admin\Form\FormElement;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * TODO Has to be a bit more test friendly. Too many facades.
@@ -56,6 +56,11 @@ abstract class NamedFormElement extends FormElement
      * @var array
      */
     protected $validationMessages = [];
+
+    /**
+     * @var \Closure
+     */
+    protected $mutator;
 
     /**
      * @param string      $path
@@ -205,7 +210,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $helpText
+     * @param string|Htmlable $helpText
      *
      * @return $this
      */
@@ -399,7 +404,7 @@ abstract class NamedFormElement extends FormElement
             $table = $model->getTable();
 
             $rule = 'unique:'.$table.','.$this->getAttribute();
-            if ($model->exists()) {
+            if ($model->exists) {
                 $rule .= ','.$model->getKey();
             }
         }
@@ -423,7 +428,8 @@ abstract class NamedFormElement extends FormElement
             if ($count === 1) {
                 return $model->getModel();
             }
-            if ($model->exists() && $model->{$relation} instanceof Model) {
+
+            if ($model->exists && $model->{$relation} instanceof Model) {
                 $model = $model->{$relation};
                 if ($model != null) {
                     $count--;
@@ -475,7 +481,7 @@ abstract class NamedFormElement extends FormElement
 
             /* @var Model $model */
             foreach ($relations as $relation) {
-                $nestedModel = null;
+                $relatedModel = null;
                 if ($previousModel->{$relation} instanceof Model) {
                     $relatedModel = &$previousModel->{$relation};
                 } elseif (method_exists($previousModel, $relation)) {
@@ -510,6 +516,30 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * Field->mutate(function($value) {
+     *     return bcrypt($value);
+     * }).
+     *
+     * @param \Closure $mutator
+     *
+     * @return $this
+     */
+    public function mutateValue(\Closure $mutator)
+    {
+        $this->mutator = $mutator;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMutator()
+    {
+        return is_callable($this->mutator);
+    }
+
+    /**
      * @param Model  $model
      * @param string $attribute
      * @param mixed  $value
@@ -526,6 +556,10 @@ abstract class NamedFormElement extends FormElement
      */
     protected function prepareValue($value)
     {
+        if ($this->hasMutator()) {
+            $value = call_user_func($this->mutator, $value);
+        }
+
         return $value;
     }
 }

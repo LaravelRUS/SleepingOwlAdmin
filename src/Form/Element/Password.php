@@ -57,4 +57,34 @@ class Password extends NamedFormElement
 
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function hashWithBcrypt()
+    {
+        return $this->mutateValue(function ($value) {
+            return bcrypt($value);
+        });
+    }
+
+    /**
+     * @return $this
+     */
+    public function hashWithMD5()
+    {
+        return $this->mutateValue(function ($value) {
+            return md5($value);
+        });
+    }
+
+    /**
+     * @return $this
+     */
+    public function hashWithSHA1()
+    {
+        return $this->mutateValue(function ($value) {
+            return sha1($value);
+        });
+    }
 }

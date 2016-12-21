@@ -3,20 +3,20 @@
 namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Traits\Assets;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Extension\Apply;
+use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Contracts\ActionInterface;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\FilterInterface;
+use SleepingOwl\Admin\Display\Extension\Actions;
+use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\FilterInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Display\Extension\Actions;
-use SleepingOwl\Admin\Display\Extension\Apply;
-use SleepingOwl\Admin\Display\Extension\Filters;
-use SleepingOwl\Admin\Display\Extension\Scopes;
-use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
  * Class Display.
@@ -265,19 +265,28 @@ abstract class Display implements DisplayInterface
     {
         $view = app('sleeping_owl.template')->view($this->getView(), $this->toArray());
 
-        $this->getExtensions()->filter(function($extension) {
+        $blocks = [];
+
+        $placableExtensions = $this->getExtensions()->filter(function ($extension) {
             return $extension instanceof Placable;
-        })->each(function($extension) use($view) {
-            $html = app('sleeping_owl.template')->view($extension->getView(), $extension->toArray())->render();
-
-            if (! empty($html)) {
-                $factory = $view->getFactory();
-
-                $factory->startSection($extension->getPlacement());
-                echo $html;
-                $factory->stopSection(true);
-            }
         });
+
+        foreach ($placableExtensions as $extension) {
+            $blocks[$extension->getPlacement()][] = (string) app('sleeping_owl.template')->view(
+                $extension->getView(),
+                $extension->toArray()
+            );
+        }
+
+        foreach ($blocks as $block => $data) {
+            foreach ($data as $html) {
+                if (! empty($html)) {
+                    $view->getFactory()->startSection($block);
+                    echo $html;
+                    $view->getFactory()->yieldSection();
+                }
+            }
+        }
 
         return $view;
     }

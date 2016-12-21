@@ -75,6 +75,10 @@ return [
             'last' => 'Last',
         ],
     ],
+    'tree' => [
+        'expand' => 'Expand all',
+        'collapse' => 'Collapse all',
+    ],
     'editable' => [
         'checkbox' => [
             'checked' => 'Yes',

@@ -1,6 +1,6 @@
 <?php
 
-namespace SleepingOwl\Admin\Commands;
+namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -136,7 +136,7 @@ class UserManagerCommand extends Command
         $userClass = $this->getUserClass();
 
         $this->getUsers();
-        $id = $this->ask('Select user id to delete');
+        $id = $this->ask('Select user id to change their password');
 
         if (is_null($user = $userClass::find($id))) {
             $this->error("User with id [{$id}] not found.");

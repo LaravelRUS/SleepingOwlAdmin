@@ -3,10 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
+use Illuminate\Database\Eloquent\Collection;
+use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
@@ -15,6 +16,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      * @var string
      */
     protected $name;
+
+    /**
+     * @var bool
+     */
+    protected $orderable = true;
 
     /**
      * @param Closure|null|string $name
@@ -26,6 +32,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         $this->setName($name);
 
         $this->setHtmlAttribute('class', 'row-'.strtolower(class_basename(get_called_class())));
+
+        if ($this->orderable) {
+            $this->setOrderable();
+        }
     }
 
     /**
@@ -54,6 +64,27 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function getModelValue()
     {
         return $this->getValueFromObject($this->getModel(), $this->getName());
+    }
+
+    /**
+     * @param OrderByClauseInterface|bool $orderable
+     *
+     * @return $this
+     */
+    public function setOrderable($orderable = true)
+    {
+        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
+            if (! is_string($orderable) && ! $orderable instanceof Closure) {
+                $orderable = $this->getName();
+            }
+
+            $orderable = new OrderByClause($orderable);
+        }
+
+        $this->orderByClause = $orderable;
+        $this->getHeader()->setOrderable($this->isOrderable());
+
+        return $this;
     }
 
     /**

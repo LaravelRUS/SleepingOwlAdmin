@@ -5,6 +5,14 @@
         <span>{!! $title !!}</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
+
+            @if($badges->count() > 0)
+            <span class="sidebar-page-badges">
+            @foreach($badges as $badge)
+                    {!! $badge->render() !!}
+                @endforeach
+            </span>
+            @endif
         </span>
     </a>
 
@@ -19,9 +27,16 @@
     <a href="{{ $url }}">
         {!! $icon !!}
         <span>{!! $title !!}</span>
+
+        @if($badges->count() > 0)
         <span class="pull-right-container">
-              {!! $badge !!}
-        </span>
+            <span class="sidebar-page-badges">
+            @foreach($badges as $badge)
+                {!! $badge->render() !!}
+            @endforeach
+            </span>
+        </span>    
+        @endif
     </a>
 </li>
 @endif

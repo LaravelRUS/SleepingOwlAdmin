@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Routing\Router;
 use Request;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use Illuminate\Routing\Router;
+use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Repository\TreeRepository;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -25,9 +25,22 @@ class DisplayTree extends Display implements WithRoutesInterface
         $routeName = 'admin.display.tree.reorder';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/reorder', ['as' => $routeName, function (ModelConfigurationInterface $model) {
-                $model->fireDisplay()->getRepository()->reorder(
-                    Request::input('data')
-                );
+                $display = $model->fireDisplay();
+
+                if ($display instanceof DisplayTabbed) {
+                    $display->getTabs()->each(function ($tab) {
+                        $content = $tab->getContent();
+                        if ($content instanceof self) {
+                            $content->getRepository()->reorder(
+                                Request::input('data')
+                            );
+                        }
+                    });
+                } else {
+                    $display->getRepository()->reorder(
+                        Request::input('data')
+                    );
+                }
             }]);
         }
     }
@@ -284,6 +297,10 @@ class DisplayTree extends Display implements WithRoutesInterface
         $query = $this->getRepository()->getQuery();
 
         $this->modifyQuery($query);
+
+        if (method_exists($query, 'defaultOrder')) {
+            return $query->defaultOrder()->get();
+        }
 
         return $query->get();
     }

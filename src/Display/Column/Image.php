@@ -10,6 +10,11 @@ class Image extends NamedColumn
     protected $imageWidth = '80px';
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * Image constructor.
      *
      * {@inheritdoc}
@@ -17,7 +22,6 @@ class Image extends NamedColumn
     public function __construct($name, $label = null)
     {
         parent::__construct($name, $label);
-        $this->setOrderable(false);
     }
 
     /**
@@ -53,7 +57,6 @@ class Image extends NamedColumn
         return parent::toArray() + [
             'value'  => $value,
             'imageWidth'  => $this->getImageWidth(),
-            'append' => $this->getAppends(),
         ];
     }
 }

@@ -75,6 +75,10 @@ return [
             'last' => 'Последняя',
         ],
     ],
+    'tree' => [
+        'expand' => 'Развернуть все',
+        'collapse' => 'Свернуть все',
+    ],
     'editable' => [
         'checkbox' => [
             'checked' => 'Да',

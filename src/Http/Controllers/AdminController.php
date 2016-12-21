@@ -2,16 +2,16 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use AdminTemplate;
 use Breadcrumbs;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\Validation\Validator;
+use AdminTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class AdminController extends Controller
 {
@@ -64,10 +64,12 @@ class AdminController extends Controller
         }
 
         foreach ($breadcrumbs as  $breadcrumb) {
-            Breadcrumbs::register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
-                $breadcrumbs->parent($breadcrumb['parent']);
-                $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
-            });
+            if (! Breadcrumbs::exists($breadcrumb['id'])) {
+                Breadcrumbs::register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
+                    $breadcrumbs->parent($breadcrumb['parent']);
+                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
+                });
+            }
         }
     }
 
@@ -85,6 +87,17 @@ class AdminController extends Controller
     public function setParentBreadcrumb($parentBreadcrumb)
     {
         $this->parentBreadcrumb = $parentBreadcrumb;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getDashboard()
+    {
+        return $this->renderContent(
+            AdminTemplate::view('dashboard'),
+            trans('sleeping_owl::lang.dashboard')
+        );
     }
 
     /**
@@ -156,13 +169,26 @@ class AdminController extends Controller
             $newModel = $createForm->getModel();
             $primaryKey = $newModel->getKeyName();
 
+            $redirectUrl = $model->getEditUrl($newModel->{$primaryKey});
+            $redirectPolicy = $model->getRedirect();
+
+            /* Make redirect when use in model config && Fix editable redirect */
+            if ($redirectPolicy->get('create') == 'display' || ! $model->isEditable($newModel)) {
+                $redirectUrl = $model->getDisplayUrl();
+            }
+
             $response = redirect()->to(
-                $model->getEditUrl($newModel->{$primaryKey})
+                $redirectUrl
             )->with([
                 '_redirectBack' => $backUrl,
             ]);
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl())->with([
+            $response = redirect()->to($model->getCreateUrl($request->except([
+                '_redirectBack',
+                '_token',
+                'url',
+                'next_action',
+            ])))->with([
                 '_redirectBack' => $backUrl,
             ]);
         } else {
@@ -202,7 +228,7 @@ class AdminController extends Controller
     {
         /** @var FormInterface $editForm */
         $editForm = $model->fireEdit($id);
-        $item     = $editForm->getModel();
+        $item = $editForm->getModel();
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
@@ -226,12 +252,28 @@ class AdminController extends Controller
             }
         }
 
+        $redirectPolicy = $model->getRedirect();
+        /* Make redirect when use in model config */
+
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
                 '_redirectBack' => $backUrl,
             ]);
+
+            if ($redirectPolicy->get('edit') == 'display') {
+                $response = redirect()->to(
+                    $model->getDisplayUrl()
+                )->with([
+                    '_redirectBack' => $backUrl,
+                ]);
+            }
         } elseif ($nextAction == 'save_and_create') {
-            $response = redirect()->to($model->getCreateUrl())->with([
+            $response = redirect()->to($model->getCreateUrl($request->except([
+                '_redirectBack',
+                '_token',
+                'url',
+                'next_action',
+            ])))->with([
                 '_redirectBack' => $backUrl,
             ]);
         } else {
@@ -397,8 +439,7 @@ class AdminController extends Controller
         return AdminTemplate::view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
-            ->with('breadcrumbKey', $this->parentBreadcrumb)
-            ->with('successMessage', session('success_message'));
+            ->with('breadcrumbKey', $this->parentBreadcrumb);
     }
 
     /**
@@ -416,8 +457,7 @@ class AdminController extends Controller
         return AdminTemplate::view('_layout.inner')
             ->with('title', $title)
             ->with('content', $content)
-            ->with('breadcrumbKey', $this->parentBreadcrumb)
-            ->with('successMessage', session('success_message'));
+            ->with('breadcrumbKey', $this->parentBreadcrumb);
     }
 
     /**

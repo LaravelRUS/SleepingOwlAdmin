@@ -7,5 +7,13 @@ class Time extends DateTime
     /**
      * @var string
      */
-    protected $defaultConfigFormat = 'timeFormat';
+    protected $format = 'H:i:s';
+
+    /**
+     * @return string
+     */
+    public function getPickerFormat()
+    {
+        return $this->pickerFormat ?: config('sleeping_owl.timeFormat');
+    }
 }

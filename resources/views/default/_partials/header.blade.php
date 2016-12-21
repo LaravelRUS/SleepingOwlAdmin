@@ -8,12 +8,13 @@
 	<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
 		<span class="sr-only">Toggle navigation</span>
 	</a>
+	<div class="navbar-custom-menu">	
+		<ul class="nav navbar-nav">
+			@yield('navbar')
+		</ul>
 
-	<ul class="nav navbar-nav">
-		@yield('navbar')
-	</ul>
-
-	<ul class="nav navbar-nav navbar-right">
-		@yield('navbar.right')
-	</ul>
+		<ul class="nav navbar-nav navbar-right">
+			@yield('navbar.right')
+		</ul>
+	</div>
 </nav>

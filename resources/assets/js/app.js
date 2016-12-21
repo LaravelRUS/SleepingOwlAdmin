@@ -28,12 +28,16 @@ require('./admin/display/columns/inline_edit')
  */
 require('./admin/form/buttons')
 require('./admin/form/datetime')
+require('./admin/form/daterange')
 require('./admin/form/select')
+require('./admin/form/dependent-select')
 require('./admin/form/file')
 require('./admin/form/image')
 require('./admin/form/images')
 
 $(() => {
+    require('./admin/events');
+
     Admin.Modules.init();
 
     var app = new Vue({

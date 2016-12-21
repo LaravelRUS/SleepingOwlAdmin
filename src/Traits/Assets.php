@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use KodiCMS\Assets\Facades\PackageManager;
 use Meta;
+use KodiCMS\Assets\Facades\PackageManager;
 
 trait Assets
 {

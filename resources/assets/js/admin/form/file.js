@@ -36,7 +36,7 @@ Vue.component('element-file', Vue.extend({
                 previewsContainer: false,
                 dictDefaultMessage: '',
                 headers: {
-                    'X-CSRF-TOKEN': Admin.Settings.token
+                    'X-CSRF-TOKEN': window.Admin.Settings.token
                 },
                 sending () {
                     self.closeAlert()
