@@ -94,6 +94,7 @@ class AliasesServiceProvider extends ServiceProvider
             'text'              => \SleepingOwl\Admin\Form\Element\Text::class,
             'time'              => \SleepingOwl\Admin\Form\Element\Time::class,
             'date'              => \SleepingOwl\Admin\Form\Element\Date::class,
+            'datetime'          => \SleepingOwl\Admin\Form\Element\DateTime::class,
             'daterange'         => \SleepingOwl\Admin\Form\Element\DateRange::class,
             'timestamp'         => \SleepingOwl\Admin\Form\Element\Timestamp::class,
             'textaddon'         => \SleepingOwl\Admin\Form\Element\TextAddon::class,

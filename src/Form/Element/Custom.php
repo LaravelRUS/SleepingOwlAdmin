@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View as ViewContract;
 use SleepingOwl\Admin\Form\FormElement;
 
 class Custom extends FormElement
@@ -32,7 +34,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @return Closure|string
+     * @return string
      */
     public function getDisplay()
     {
@@ -40,11 +42,19 @@ class Custom extends FormElement
             return call_user_func($this->display, $this->getModel());
         }
 
+        if ($this->display instanceof Htmlable) {
+            return $this->display->toHtml();
+        }
+
+        if ($this->display instanceof View) {
+            return $this->display->with('model', $this->getModel())->render();
+        }
+
         return $this->display;
     }
 
     /**
-     * @param Closure|string $display
+     * @param Closure|string|Htmlable|ViewContract $display
      *
      * @return $this
      */
