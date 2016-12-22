@@ -8,12 +8,12 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Traits\VisibleCondition;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
@@ -248,7 +248,6 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         return $this->view;
     }
-
 
     /**
      * Set currently rendered instance.

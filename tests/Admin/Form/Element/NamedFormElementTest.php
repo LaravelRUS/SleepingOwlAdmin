@@ -15,7 +15,7 @@ class NamedFormElementTest extends TestCase
     {
         return $this->getMockForAbstractClass(NamedFormElement::class, [
             $path,
-            $label
+            $label,
         ]);
     }
 
@@ -187,7 +187,7 @@ class NamedFormElementTest extends TestCase
         /** @var \Illuminate\Http\Request $request */
         $request = $this->app['request'];
         $request->offsetSet('key', [
-            'subkey1' => 'hello world'
+            'subkey1' => 'hello world',
         ]);
 
         $session = $request->getSession();
@@ -209,7 +209,7 @@ class NamedFormElementTest extends TestCase
 
         $element = $this->getElement('key.subkey', 'Label');
         $request->offsetSet('key', [
-            'subkey' => 'hello world'
+            'subkey' => 'hello world',
         ]);
 
         $this->assertEquals('hello world', $element->getValue());
@@ -297,9 +297,9 @@ class NamedFormElementTest extends TestCase
             'id' => 'key2[subkey]',
             'name' => 'key2[subkey]',
             'path' => 'key2.subkey',
-            "label" => "Label",
-            "helpText" => null,
-            "required" => false,
+            'label' => 'Label',
+            'helpText' => null,
+            'required' => false,
         ], $element->toArray());
     }
 
@@ -327,6 +327,12 @@ class NamedFormElementTestModuleForTestingResolvePath extends \Illuminate\Databa
     }
 }
 
-class NamedFormElementTestModuleForTestingResolvePathBelongsTo extends \Illuminate\Database\Eloquent\Model{}
-class NamedFormElementTestModuleForTestingResolvePathHasOne extends \Illuminate\Database\Eloquent\Model{}
-class NamedFormElementTestModuleForTestingResolvePathHasMany extends \Illuminate\Database\Eloquent\Model{}
+class NamedFormElementTestModuleForTestingResolvePathBelongsTo extends \Illuminate\Database\Eloquent\Model
+{
+}
+class NamedFormElementTestModuleForTestingResolvePathHasOne extends \Illuminate\Database\Eloquent\Model
+{
+}
+class NamedFormElementTestModuleForTestingResolvePathHasMany extends \Illuminate\Database\Eloquent\Model
+{
+}
