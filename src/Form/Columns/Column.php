@@ -78,7 +78,7 @@ class Column extends FormElements implements ColumnInterface
     {
         return parent::toArray() + [
             'width' => $this->getWidth(),
-            'elements' => $this->getElements(),
+            'elements' => $this->getElements()->onlyVisible(),
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

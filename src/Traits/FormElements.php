@@ -2,18 +2,18 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 
 trait FormElements
 {
     /**
-     * @var Collection
+     * @var FormElementsCollection
      */
     protected $elements;
 
@@ -49,7 +49,7 @@ trait FormElements
     }
 
     /**
-     * @return Collection
+     * @return FormElementsCollection
      */
     public function getElements()
     {
@@ -63,7 +63,7 @@ trait FormElements
      */
     public function setElements(array $elements)
     {
-        $this->elements = new Collection($elements);
+        $this->elements = new FormElementsCollection($elements);
 
         return $this;
     }
@@ -132,7 +132,9 @@ trait FormElements
     protected function setModelForElements(Model $model)
     {
         $this->getElements()->each(function ($element) use ($model) {
+
             $element = $this->getElementContainer($element);
+
             if ($element instanceof FormElementInterface) {
                 $element->setModel($model);
             }
@@ -152,8 +154,10 @@ trait FormElements
      */
     protected function getValidationRulesFromElements(array $rules = [])
     {
-        $this->getElements()->each(function ($element) use (&$rules) {
+        $this->getElements()->onlyActive()->each(function ($element) use (&$rules) {
+
             $element = $this->getElementContainer($element);
+
             if ($element instanceof FormElementInterface) {
                 $rules += $element->getValidationRules();
             }
@@ -169,8 +173,10 @@ trait FormElements
      */
     protected function getValidationMessagesForElements(array $messages = [])
     {
-        $this->getElements()->each(function ($element) use (&$messages) {
+        $this->getElements()->onlyActive()->each(function ($element) use (&$messages) {
+
             $element = $this->getElementContainer($element);
+
             if ($element instanceof FormElementInterface) {
                 $messages += $element->getValidationMessages();
             }
@@ -186,8 +192,10 @@ trait FormElements
      */
     protected function getValidationLabelsForElements(array $labels = [])
     {
-        $this->getElements()->each(function ($element) use (&$labels) {
+        $this->getElements()->onlyActive()->each(function ($element) use (&$labels) {
+
             $element = $this->getElementContainer($element);
+
             if ($element instanceof NamedFormElement) {
                 $labels += $element->getValidationLabels();
             }
@@ -198,8 +206,10 @@ trait FormElements
 
     protected function saveElements()
     {
-        $this->getElements()->each(function ($element) {
+        $this->getElements()->onlyActive()->each(function ($element) {
+
             $element = $this->getElementContainer($element);
+
             if ($element instanceof FormElementInterface) {
                 $element->save();
             }
@@ -208,8 +218,10 @@ trait FormElements
 
     protected function afterSaveElements()
     {
-        $this->getElements()->each(function ($element) {
+        $this->getElements()->onlyActive()->each(function ($element) {
+
             $element = $this->getElementContainer($element);
+
             if ($element instanceof FormElementInterface) {
                 $element->afterSave();
             }

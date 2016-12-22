@@ -365,7 +365,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * @param ModelConfigurationInterface $modelConfiguration
      *
-     * @return \Illuminate\Contracts\Validation\Validator|null
+     * @return \Illuminate\Contracts\Validation\Validator|null|bool
      */
     public function validateForm(ModelConfigurationInterface $modelConfiguration)
     {
@@ -387,11 +387,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $validator->setPresenceVerifier($verifier);
 
-        if ($validator->fails()) {
-            return $validator;
-        }
-
-        return true;
+        return $validator->fails() ? $validator : true;
     }
 
     /**
@@ -402,7 +398,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function toArray()
     {
         return [
-            'items' => $this->getElements(),
+            'items' => $this->getElements()->onlyVisible(),
             'instance' => $this->getModel(),
             'attributes' => $this->htmlAttributesToString(),
             'buttons' => $this->getButtons(),

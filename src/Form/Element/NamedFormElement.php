@@ -12,9 +12,6 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * TODO Has to be a bit more test friendly. Too many facades.
- */
 abstract class NamedFormElement extends FormElement
 {
     /**
@@ -46,11 +43,6 @@ abstract class NamedFormElement extends FormElement
      * @var mixed
      */
     protected $defaultValue;
-
-    /**
-     * @var bool
-     */
-    protected $readonly = false;
 
     /**
      * @var array
@@ -222,26 +214,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return bool
-     */
-    public function isReadonly()
-    {
-        return $this->readonly;
-    }
-
-    /**
-     * @param bool $readonly
-     *
-     * @return $this
-     */
-    public function setReadonly($readonly)
-    {
-        $this->readonly = (bool) $readonly;
-
-        return $this;
-    }
-
-    /**
      * @param string      $rule
      * @param string|null $message
      *
@@ -346,7 +318,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * HACK Needs refactoring and reasoning.
+     * TODO: HACK Needs refactoring and reasoning.
      * @return mixed
      */
     public function getValue()
@@ -458,8 +430,6 @@ abstract class NamedFormElement extends FormElement
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
-            'readonly' => $this->isReadonly(),
-            'value' => $this->getValue(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ];
