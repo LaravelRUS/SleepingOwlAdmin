@@ -2,13 +2,15 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use SleepingOwl\Admin\Traits\Assets;
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets;
+    use Assets, VisibleCondition;
 
     /**
      * @var \SleepingOwl\Admin\Contracts\TemplateInterface
@@ -30,9 +32,12 @@ abstract class FormElement implements FormElementInterface
      */
     protected $validationRules = [];
 
+
     /**
-     * FormElement constructor.
+     * @var bool
      */
+    protected $readonly = false;
+
     public function __construct()
     {
         $this->initializePackage();
@@ -145,15 +150,41 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * SMELLS.
+     * @return bool
      */
+    public function isReadonly()
+    {
+        if (is_callable($this->readonly)) {
+            return (bool) call_user_func($this->readonly, $this->getModel());
+        }
+
+        return (bool) $this->readonly;
+    }
+
+    /**
+     * @param Closure|bool $readonly
+     *
+     * @return $this
+     */
+    public function setReadonly($readonly)
+    {
+        $this->readonly = $readonly;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+
+    }
+
     public function save()
     {
     }
 
-    /**
-     * SMELLS.
-     */
     public function afterSave()
     {
     }
@@ -164,6 +195,8 @@ abstract class FormElement implements FormElementInterface
     public function toArray()
     {
         return [
+            'value' => $this->getValue(),
+            'readonly' => $this->isReadonly(),
             'model' => $this->getModel(),
         ];
     }
