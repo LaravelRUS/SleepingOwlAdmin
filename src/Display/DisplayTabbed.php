@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
@@ -12,13 +13,14 @@ use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 /**
- * @property TabInterface[]|Collection $elements
+ * @property TabInterface[]|DisplayTabsCollection $elements
  */
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-    use FormElements;
+    use FormElements, VisibleCondition;
 
     /**
      * @var string
@@ -32,7 +34,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function __construct($tabs = null)
     {
-        $this->elements = new Collection();
+        $this->elements = new DisplayTabsCollection();
 
         if (is_array($tabs) or is_callable($tabs)) {
             $this->setTabs($tabs);
@@ -65,7 +67,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return TabInterface[]|Collection
+     * @return TabInterface[]|DisplayTabsCollection
      */
     public function getTabs()
     {
@@ -186,6 +188,22 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReadonly()
+    {
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function getView()
@@ -199,7 +217,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     public function toArray()
     {
         return [
-            'tabs' => $this->getTabs(),
+            'tabs' => $this->getTabs()->onlyVisible(),
         ];
     }
 

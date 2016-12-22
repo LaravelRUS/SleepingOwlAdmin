@@ -13,9 +13,12 @@ use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
+    use VisibleCondition;
+
     /**
      * @var string
      */
@@ -246,6 +249,142 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         return $this->view;
     }
 
+
+    /**
+     * Set currently rendered instance.
+     *
+     * @param Model $model
+     */
+    public function setModel(Model $model)
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            $content->setModel($model);
+        }
+    }
+
+    /**
+     * @return Model $model
+     */
+    public function getModel()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->getModel();
+        }
+    }
+
+    /**
+     * Get form item validation rules.
+     * @return array
+     */
+    public function getValidationRules()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->getValidationRules();
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->getValidationMessages();
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->getValidationLabels();
+        }
+
+        return [];
+    }
+
+    /**
+     * Save form item.
+     */
+    public function save()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            $content->save();
+        }
+    }
+
+    /**
+     * Save form item.
+     */
+    public function afterSave()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            $content->afterSave();
+        }
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return FormElementInterface|null
+     */
+    public function getElement($path)
+    {
+        if ($content = $this->getContent() instanceof ElementsInterface) {
+            return $content->getElement($path);
+        }
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getElements()
+    {
+        if ($content = $this->getContent() instanceof ElementsInterface) {
+            return $content->getElements();
+        }
+    }
+
+    /**
+     * @param array $elements
+     *
+     * @return $this
+     */
+    public function setElements(array $elements)
+    {
+        if ($content = $this->getContent() instanceof ElementsInterface) {
+            return $content->setElements($elements);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->getValue();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReadonly()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->isReadonly();
+        }
+
+        return false;
+    }
+
     /**
      * @return array
      */
@@ -273,118 +412,5 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function __toString()
     {
         return (string) $this->render();
-    }
-
-    /**
-     * Set currently rendered instance.
-     *
-     * @param Model $model
-     */
-    public function setModel(Model $model)
-    {
-        if ($this->getContent() instanceof FormElementInterface) {
-            $this->getContent()->setModel($model);
-        }
-    }
-
-    /**
-     * @return Model $model
-     */
-    public function getModel()
-    {
-        if ($this->getContent() instanceof FormElementInterface) {
-            return $this->getContent()->getModel();
-        }
-    }
-
-    /**
-     * Get form item validation rules.
-     * @return array
-     */
-    public function getValidationRules()
-    {
-        if ($this->getContent() instanceof FormElementInterface) {
-            return $this->getContent()->getValidationRules();
-        }
-
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationMessages()
-    {
-        if ($this->getContent() instanceof FormElementInterface) {
-            return $this->getContent()->getValidationMessages();
-        }
-
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getValidationLabels()
-    {
-        if ($this->getContent() instanceof FormElementInterface) {
-            return $this->getContent()->getValidationLabels();
-        }
-
-        return [];
-    }
-
-    /**
-     * Save form item.
-     */
-    public function save()
-    {
-        if ($this->getContent() instanceof FormElementInterface) {
-            $this->getContent()->save();
-        }
-    }
-
-    /**
-     * Save form item.
-     */
-    public function afterSave()
-    {
-        if ($this->getContent() instanceof FormElementInterface) {
-            $this->getContent()->afterSave();
-        }
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return FormElementInterface|null
-     */
-    public function getElement($path)
-    {
-        if (($content = $this->getContent()) instanceof ElementsInterface) {
-            return $content->getElement($path);
-        }
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getElements()
-    {
-        if ($content = $this->getContent() instanceof ElementsInterface) {
-            return $content->getElements();
-        }
-    }
-
-    /**
-     * @param array $elements
-     *
-     * @return $this
-     */
-    public function setElements(array $elements)
-    {
-        if ($content = $this->getContent() instanceof ElementsInterface) {
-            return $content->setElements($elements);
-        }
     }
 }

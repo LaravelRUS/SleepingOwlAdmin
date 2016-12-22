@@ -10,8 +10,6 @@ class FormElements extends FormElement implements ElementsInterface
     use \SleepingOwl\Admin\Traits\FormElements;
 
     /**
-     * Column constructor.
-     *
      * @param array $elements
      */
     public function __construct(array $elements = [])
@@ -69,7 +67,7 @@ class FormElements extends FormElement implements ElementsInterface
     public function toArray()
     {
         return parent::toArray() + [
-            'items' => $this->getElements(),
+            'items' => $this->getElements()->onlyVisible(),
         ];
     }
 }

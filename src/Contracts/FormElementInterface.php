@@ -37,6 +37,21 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable
     public function getValidationLabels();
 
     /**
+     * @return mixed
+     */
+    public function getValue();
+
+    /**
+     * @return bool
+     */
+    public function isReadonly();
+
+    /**
+     * @return bool
+     */
+    public function isVisible();
+
+    /**
      * Save form item.
      */
     public function save();
