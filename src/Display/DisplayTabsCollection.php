@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
-use SleepingOwl\Admin\Form\FormElementsCollection;
 
 class DisplayTabsCollection extends FormElementsCollection
 {

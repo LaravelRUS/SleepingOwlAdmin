@@ -2,16 +2,16 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Contracts\Support\Htmlable;
+use Request;
+use LogicException;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use SleepingOwl\Admin\Form\FormElement;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use LogicException;
-use Request;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use SleepingOwl\Admin\Exceptions\Form\FormElementException;
-use SleepingOwl\Admin\Form\FormElement;
 
 abstract class NamedFormElement extends FormElement
 {

@@ -93,13 +93,13 @@ class FormElementTest extends TestCase
 
         $element->setValidationMessages([
             'min' => 'test',
-            'max' => 'test'
+            'max' => 'test',
         ]);
 
         $this->assertEquals(['min' => 'test', 'max' => 'test'], $element->getValidationMessages());
 
         $element->setValidationMessages([
-            'max' => 'test'
+            'max' => 'test',
         ]);
 
         $this->assertEquals(['max' => 'test'], $element->getValidationMessages());
@@ -120,7 +120,7 @@ class FormElementTest extends TestCase
         ]);
 
         $this->assertEquals([
-            'rule', 'one', 'rule', 'two'
+            'rule', 'one', 'rule', 'two',
         ], $element->getValidationRules());
     }
 
@@ -233,7 +233,7 @@ class FormElementTest extends TestCase
 
         $element->setModel($model);
 
-        $element->setReadonly(function($model) {
+        $element->setReadonly(function ($model) {
             return $model->isAuthor();
         });
 
@@ -251,7 +251,7 @@ class FormElementTest extends TestCase
         $model->shouldReceive('isAuthor')->andReturn(true)->once();
         $element->setModel($model);
 
-        $element->setVisibilityCondition(function($model) {
+        $element->setVisibilityCondition(function ($model) {
             return $model->isAuthor();
         });
 

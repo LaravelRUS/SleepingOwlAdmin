@@ -5,10 +5,10 @@ namespace SleepingOwl\Admin\Traits;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
-use SleepingOwl\Admin\Form\FormElementsCollection;
 
 trait FormElements
 {
@@ -132,7 +132,6 @@ trait FormElements
     protected function setModelForElements(Model $model)
     {
         $this->getElements()->each(function ($element) use ($model) {
-
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
@@ -155,7 +154,6 @@ trait FormElements
     protected function getValidationRulesFromElements(array $rules = [])
     {
         $this->getElements()->onlyActive()->each(function ($element) use (&$rules) {
-
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
@@ -174,7 +172,6 @@ trait FormElements
     protected function getValidationMessagesForElements(array $messages = [])
     {
         $this->getElements()->onlyActive()->each(function ($element) use (&$messages) {
-
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
@@ -193,7 +190,6 @@ trait FormElements
     protected function getValidationLabelsForElements(array $labels = [])
     {
         $this->getElements()->onlyActive()->each(function ($element) use (&$labels) {
-
             $element = $this->getElementContainer($element);
 
             if ($element instanceof NamedFormElement) {
@@ -207,7 +203,6 @@ trait FormElements
     protected function saveElements()
     {
         $this->getElements()->onlyActive()->each(function ($element) {
-
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
@@ -219,7 +214,6 @@ trait FormElements
     protected function afterSaveElements()
     {
         $this->getElements()->onlyActive()->each(function ($element) {
-
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {

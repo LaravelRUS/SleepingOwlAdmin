@@ -22,13 +22,16 @@ class AdminTest extends TestCase
      */
     public function test_registers_models()
     {
-        $this->admin->registerModel(TestModel::class, function () { });
+        $this->admin->registerModel(TestModel::class, function () {
+        });
         $this->assertCount(1, $this->admin->getModels());
 
-        $this->admin->registerModel(TestModel::class, function () { });
+        $this->admin->registerModel(TestModel::class, function () {
+        });
         $this->assertCount(1, $this->admin->getModels());
 
-        $this->admin->registerModel(OtherTestModel::class, function () { });
+        $this->admin->registerModel(OtherTestModel::class, function () {
+        });
         $this->assertCount(2, $this->admin->getModels());
     }
 
@@ -62,7 +65,8 @@ class AdminTest extends TestCase
      */
     public function test_returns_form_aliases()
     {
-        $this->admin->registerModel(TestModel::class, function () { });
+        $this->admin->registerModel(TestModel::class, function () {
+        });
         $aliases = $this->admin->modelAliases();
 
         $this->assertEquals('test_models', $aliases['TestModel']);
@@ -108,7 +112,8 @@ class AdminTest extends TestCase
      */
     public function test_checks_if_has_model()
     {
-        $this->admin->registerModel(TestModel::class, function () { });
+        $this->admin->registerModel(TestModel::class, function () {
+        });
         $this->assertTrue($this->admin->hasModel(TestModel::class));
         $this->assertFalse($this->admin->hasModel(OtherTestModel::class));
     }
@@ -168,8 +173,13 @@ class AdminTest extends TestCase
     }
 }
 
+class TestModel extends \Illuminate\Database\Eloquent\Model
+{
+}
+class OtherTestModel extends \Illuminate\Database\Eloquent\Model
+{
+}
 
-class TestModel extends \Illuminate\Database\Eloquent\Model {}
-class OtherTestModel extends \Illuminate\Database\Eloquent\Model {}
-
-abstract class TestModelConfiguration implements \SleepingOwl\Admin\Contracts\ModelConfigurationInterface, \SleepingOwl\Admin\Contracts\Initializable {}
+abstract class TestModelConfiguration implements \SleepingOwl\Admin\Contracts\ModelConfigurationInterface, \SleepingOwl\Admin\Contracts\Initializable
+{
+}

@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Form;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Traits\Assets;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\VisibleCondition;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 
 abstract class FormElement implements FormElementInterface
 {
@@ -118,6 +118,7 @@ abstract class FormElement implements FormElementInterface
         if (is_null($message)) {
             return $this;
         }
+
         return $this->addValidationMessage($rule, $message);
     }
 
@@ -218,7 +219,6 @@ abstract class FormElement implements FormElementInterface
      */
     public function getValue()
     {
-
     }
 
     public function save()

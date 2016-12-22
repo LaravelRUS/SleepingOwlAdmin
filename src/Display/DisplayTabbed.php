@@ -3,17 +3,15 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Traits\VisibleCondition;
 
 /**
  * @property TabInterface[]|DisplayTabsCollection $elements
@@ -192,7 +190,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function getValue()
     {
-
     }
 
     /**
