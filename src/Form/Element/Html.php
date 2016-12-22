@@ -3,18 +3,19 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View as ViewContract;
 
 class Html extends Custom
 {
     /**
-     * Custom constructor.
-     *
-     * @param string|Closure $html
+     * @param string|Closure|Htmlable|ViewContract $html
+     * @param Closure $callback
      */
-    public function __construct($html)
+    public function __construct($html, Closure $callback = null)
     {
         $this->setDisplay($html);
 
-        parent::__construct();
+        parent::__construct($callback);
     }
 }

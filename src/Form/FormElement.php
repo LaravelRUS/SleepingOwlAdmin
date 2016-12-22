@@ -32,6 +32,10 @@ abstract class FormElement implements FormElementInterface
      */
     protected $validationRules = [];
 
+    /**
+     * @var array
+     */
+    protected $validationMessages = [];
 
     /**
      * @var bool
@@ -53,7 +57,36 @@ abstract class FormElement implements FormElementInterface
      */
     public function getValidationMessages()
     {
-        return [];
+        return $this->validationMessages;
+    }
+
+    /**
+     * @param string $rule
+     * @param string $message
+     *
+     * @return $this
+     */
+    public function addValidationMessage($rule, $message)
+    {
+        if (($pos = strpos($rule, ':')) !== false) {
+            $rule = substr($rule, 0, $pos);
+        }
+
+        $this->validationMessages[$rule] = $message;
+
+        return $this;
+    }
+
+    /**
+     * @param array $validationMessages
+     *
+     * @return $this
+     */
+    public function setValidationMessages(array $validationMessages)
+    {
+        $this->validationMessages = $validationMessages;
+
+        return $this;
     }
 
     /**
@@ -82,7 +115,10 @@ abstract class FormElement implements FormElementInterface
     {
         $this->validationRules[] = $rule;
 
-        return $this;
+        if (is_null($message)) {
+            return $this;
+        }
+        return $this->addValidationMessage($rule, $message);
     }
 
     /**
@@ -98,7 +134,11 @@ abstract class FormElement implements FormElementInterface
 
         $this->validationRules = [];
         foreach ($validationRules as $rule) {
-            $this->validationRules[] = explode('|', $rule);
+            $rules = explode('|', $rule);
+
+            foreach ($rules as $rule) {
+                $this->addValidationRule($rule);
+            }
         }
 
         return $this;
