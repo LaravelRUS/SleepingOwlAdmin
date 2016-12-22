@@ -15,6 +15,11 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 
 Official site: [http://sleepingowladmin.ru](http://sleepingowladmin.ru)
 
+## Requirements
+
+ - php >= 5.6
+ - Laravel 5.*
+ - Capable hands
 
 ## Documentation
 
@@ -37,7 +42,6 @@ You can download the demo project at https://github.com/SleepingOwlAdmin/demo
 
   ```
   "require": {
-    "php": ">=5.5.9",
     ...
     "laravelrus/sleepingowl": "4.*@dev"
   },
