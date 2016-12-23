@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
-use SleepingOwl\Admin\Contracts\WithModel;
 
 class Select extends BaseColumnFilter
 {

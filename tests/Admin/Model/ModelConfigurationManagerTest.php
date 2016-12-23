@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
 class ModelConfigurationManagerTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -192,7 +191,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->app['sleeping_owl.navigation'] = $navigation = m::mock(\SleepingOwl\Admin\Navigation::class);
-        $navigation->shouldReceive('addPage')->once()->andReturnUsing(function($page) {
+        $navigation->shouldReceive('addPage')->once()->andReturnUsing(function ($page) {
             $this->assertInstanceOf(\KodiComponents\Navigation\Contracts\PageInterface::class, $page);
         });
 
@@ -261,7 +260,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model',
             [$model->getAlias(), 'test'],
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getDisplayUrl(['test']));
@@ -277,7 +276,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.create',
             [$model->getAlias(), 'test'],
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getCreateUrl(['test']));
@@ -293,7 +292,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.store',
             $model->getAlias(),
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getStoreUrl());
@@ -309,7 +308,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.edit',
             [$model->getAlias(), 1],
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getEditUrl(1));
@@ -325,7 +324,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.update',
             [$model->getAlias(), 1],
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getUpdateUrl(1));
@@ -341,7 +340,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.delete',
             [$model->getAlias(), 1],
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getDeleteUrl(1));
@@ -357,7 +356,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.destroy',
             [$model->getAlias(), 1],
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getDestroyUrl(1));
@@ -373,7 +372,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.restore',
             [$model->getAlias(), 1],
-            true
+            true,
         ])->andReturn('http://site.com');
 
         $this->assertEquals('http://site.com', $model->getRestoreUrl(1));
@@ -464,4 +463,6 @@ class ModelConfigurationManagerTestModel extends \Illuminate\Database\Eloquent\M
 {
 }
 
-class ModelConfigurationManagerTestController {}
+class ModelConfigurationManagerTestController
+{
+}

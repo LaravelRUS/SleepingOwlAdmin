@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Templates\TemplateDefault;
 
 class TemplateDefaultTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -46,7 +45,7 @@ class TemplateDefaultTest extends TestCase
     public function test_view()
     {
         $this->getViewMock()->shouldReceive('make')->once()->withArgs([
-            'sleeping_owl::default.test', ['test'], []
+            'sleeping_owl::default.test', ['test'], [],
         ])->andReturn('html');
 
         $this->assertEquals('html', $this->getTemplate()->view(
