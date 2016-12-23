@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class ModelConfigurationTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -90,7 +89,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
-        $model->onDisplay(function () use($display) {
+        $model->onDisplay(function () use ($display) {
             return $display;
         });
 
@@ -102,7 +101,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldNotReceive('setModelClass');
         $display->shouldNotReceive('initialize');
 
-        $model->onDisplay(function () use($display) {
+        $model->onDisplay(function () use ($display) {
             return $display;
         });
 
@@ -114,7 +113,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldNotReceive('setModelClass');
         $display->shouldReceive('initialize');
 
-        $model->onDisplay(function () use($display) {
+        $model->onDisplay(function () use ($display) {
             return $display;
         });
 
@@ -134,7 +133,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
-        $model->onCreate(function () use($display) {
+        $model->onCreate(function () use ($display) {
             return $display;
         });
 
@@ -146,7 +145,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldNotReceive('setModelClass');
         $display->shouldNotReceive('initialize');
 
-        $model->onCreate(function () use($display) {
+        $model->onCreate(function () use ($display) {
             return $display;
         });
 
@@ -158,7 +157,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldNotReceive('setModelClass');
         $display->shouldReceive('initialize')->once();
 
-        $model->onCreate(function () use($display) {
+        $model->onCreate(function () use ($display) {
             return $display;
         });
 
@@ -171,7 +170,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('initialize')->once();
         $display->shouldReceive('setAction')->once()->with($model->getStoreUrl());
 
-        $model->onCreate(function () use($display) {
+        $model->onCreate(function () use ($display) {
             return $display;
         });
 
@@ -191,7 +190,7 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
-        $model->onEdit(function ($id) use($display) {
+        $model->onEdit(function ($id) use ($display) {
             $this->assertEquals(1, $id);
 
             return $display;
@@ -207,8 +206,9 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('setAction')->once()->with($model->getUpdateUrl(1));
         $display->shouldReceive('setId')->once()->with(1);
 
-        $model->onEdit(function ($id) use($display) {
+        $model->onEdit(function ($id) use ($display) {
             $this->assertEquals(1, $id);
+
             return $display;
         });
 
@@ -222,7 +222,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $callback = function() {};
+        $callback = function () {
+        };
 
         $model->onCreateAndEdit($callback);
 
@@ -239,7 +240,7 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $callback = function($id) {
+        $callback = function ($id) {
             $this->assertEquals(1, $id);
 
             return 'deleted';
@@ -259,7 +260,7 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $callback = function($id) {
+        $callback = function ($id) {
             $this->assertEquals(1, $id);
 
             return 'destroyed';
@@ -279,7 +280,7 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $callback = function($id) {
+        $callback = function ($id) {
             $this->assertEquals(1, $id);
 
             return 'restored';
@@ -312,7 +313,8 @@ class ModelConfigurationTest extends TestCase
         $model = $this->getConfiguration();
         $this->assertFalse($model->isCreatable());
 
-        $model->onCreate(function () {});
+        $model->onCreate(function () {
+        });
         $this->assertTrue($model->isCreatable());
 
         $model->disableCreating();
@@ -329,7 +331,8 @@ class ModelConfigurationTest extends TestCase
 
         $this->assertFalse($model->isEditable($model->getModel()));
 
-        $model->onEdit(function ($id) {});
+        $model->onEdit(function ($id) {
+        });
         $this->assertTrue($model->isEditable($model->getModel()));
 
         $model->disableEditing();
@@ -404,7 +407,7 @@ class ModelConfigurationTest extends TestCase
     public function test_restorable_soft_delete()
     {
         $model = $this->getConfiguration(ModelConfigurationTestModelRestorable::class);
-;
+
         $this->assertTrue($model->isDestroyable($model->getModel()));
 
         $model->disableRestoring();

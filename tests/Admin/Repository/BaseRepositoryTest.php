@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Repository\BaseRepository;
 
 class BaseRepositoryTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -280,7 +279,6 @@ class BaseRepositoryTest extends TestCase
 
 class BaseRepositoryTestModel extends Model
 {
-
 }
 
 class BaseRepositoryTestSecondModel extends Model

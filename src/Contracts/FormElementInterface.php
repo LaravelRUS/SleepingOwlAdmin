@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 

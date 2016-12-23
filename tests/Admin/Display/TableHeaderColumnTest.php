@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Display\TableHeaderColumn;
 
 class TableHeaderColumnTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -54,19 +53,19 @@ class TableHeaderColumnTest extends TestCase
         $this->assertFalse($header->isOrderable());
 
         $header->setOrderable('Title');
-        $this->assertTrue( $header->isOrderable());
+        $this->assertTrue($header->isOrderable());
 
         $header->setOrderable(0);
-        $this->assertFalse( $header->isOrderable());
+        $this->assertFalse($header->isOrderable());
 
         $header->setOrderable(1);
-        $this->assertTrue( $header->isOrderable());
+        $this->assertTrue($header->isOrderable());
 
         $header->setOrderable(true);
-        $this->assertTrue( $header->isOrderable());
+        $this->assertTrue($header->isOrderable());
 
         $header->setOrderable(false);
-        $this->assertFalse( $header->isOrderable());
+        $this->assertFalse($header->isOrderable());
     }
 
     /**

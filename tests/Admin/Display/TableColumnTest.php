@@ -1,12 +1,11 @@
 <?php
 
 use Mockery as m;
-use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class TableColumnTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -252,12 +251,10 @@ class TableColumnTest extends TestCase
 
 class TableColumnTestModel extends \Illuminate\Database\Eloquent\Model
 {
-
 }
 
 class TableColumnTestOrderByClause implements \SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface
 {
-
     public function setName($name)
     {
     }
