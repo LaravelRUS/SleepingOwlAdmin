@@ -5,6 +5,12 @@ use SleepingOwl\Admin\Form\Element\NamedFormElement;
 
 class NamedFormElementTest extends TestCase
 {
+
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @param string $path
      * @param string|null $label

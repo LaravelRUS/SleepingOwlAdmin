@@ -45,4 +45,20 @@ class TestCase extends Orchestra\Testbench\TestCase
 
         return $request;
     }
+
+    /**
+     * @return m\MockInterface|\Illuminate\Translation\Translator
+     */
+    public function getTranslatorMock()
+    {
+        return $this->app['translator'] = m::mock(\Illuminate\Translation\Translator::class);
+    }
+
+    /**
+     * @return m\MockInterface|\Illuminate\Contracts\Routing\UrlGenerator
+     */
+    public function geRouterMock()
+    {
+        return $this->app['url'] = m::mock(\Illuminate\Contracts\Routing\UrlGenerator::class);
+    }
 }

@@ -21,6 +21,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * Register display routes.
      *
      * @param Router $router
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public static function registerRoutes(Router $router)
     {

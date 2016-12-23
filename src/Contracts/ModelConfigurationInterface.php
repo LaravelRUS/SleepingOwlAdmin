@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 interface ModelConfigurationInterface
 {
@@ -104,12 +105,12 @@ interface ModelConfigurationInterface
 
     /**
      * @param array $redirect
-     * @return bool
+     * @return $this
      */
-    public function setRedirect($redirect);
+    public function setRedirect(array $redirect);
 
     /**
-     * @return string
+     * @return Collection
      */
     public function getRedirect();
 

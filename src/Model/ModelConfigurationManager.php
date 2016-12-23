@@ -87,6 +87,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected $checkAccess = false;
 
     /**
+     * @var array
+     */
+    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
+
+    /**
      * @var RepositoryInterface
      */
     private $repository;
@@ -267,6 +272,26 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @return $this
+     */
+    public function enableAccessCheck()
+    {
+        $this->checkAccess = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableAccessCheck()
+    {
+        $this->checkAccess = false;
+
+        return $this;
+    }
+
+    /**
      * @param string $action
      * @param \Illuminate\Database\Eloquent\Model $model
      *
@@ -279,6 +304,18 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         }
 
         return \Gate::allows($action, $model);
+    }
+
+    /**
+     * @param string $controllerClass
+     *
+     * @return $this
+     */
+    public function setControllerClass($controllerClass)
+    {
+        $this->controllerClass = $controllerClass;
+
+        return $this;
     }
 
     /**
@@ -441,6 +478,25 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         app('sleeping_owl.navigation')->addPage($page);
 
         return $page;
+    }
+
+    /**
+     * @param array $redirect
+     * @return $this
+     */
+    public function setRedirect(array $redirect)
+    {
+        $this->redirect = $redirect;
+
+        return $this;
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function getRedirect()
+    {
+        return collect($this->redirect);
     }
 
     /**

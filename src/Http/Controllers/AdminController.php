@@ -104,6 +104,8 @@ class AdminController extends Controller
      * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
@@ -118,6 +120,8 @@ class AdminController extends Controller
      * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function getCreate(ModelConfigurationInterface $model)
     {
@@ -136,6 +140,8 @@ class AdminController extends Controller
      * @param ModelConfigurationInterface $model
      *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function postStore(ModelConfigurationInterface $model, Request $request)
     {
@@ -203,6 +209,8 @@ class AdminController extends Controller
      * @param int                $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function getEdit(ModelConfigurationInterface $model, $id)
     {
@@ -223,6 +231,8 @@ class AdminController extends Controller
      * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function postUpdate(ModelConfigurationInterface $model, Request $request, $id)
     {
@@ -289,6 +299,8 @@ class AdminController extends Controller
      * @param Request $request
      *
      * @return bool
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
@@ -330,6 +342,8 @@ class AdminController extends Controller
      * @param int                $id
      *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function deleteDelete(ModelConfigurationInterface $model, Request $request, $id)
     {
@@ -359,6 +373,8 @@ class AdminController extends Controller
      * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function deleteDestroy(ModelConfigurationInterface $model, Request $request, $id)
     {
@@ -392,6 +408,8 @@ class AdminController extends Controller
      * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function postRestore(ModelConfigurationInterface $model, Request $request, $id)
     {

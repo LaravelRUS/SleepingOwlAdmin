@@ -5,6 +5,12 @@ use SleepingOwl\Admin\Form\FormElement;
 
 class FormElementTest extends TestCase
 {
+
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @return FormElement
      */
