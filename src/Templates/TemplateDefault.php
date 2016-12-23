@@ -64,13 +64,26 @@ class TemplateDefault implements TemplateInterface
     }
 
     /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return config('sleeping_owl.title');
+    }
+
+    /**
      * @param string $title
+     * @param string $separator
      *
      * @return string
      */
-    public function makeTitle($title)
+    public function makeTitle($title, $separator = ' | ')
     {
-        return $title.' | '.config('sleeping_owl.title');
+        if (empty($title)) {
+            return $this->getTitle();
+        }
+
+        return $title."{$separator}".$this->getTitle();
     }
 
     /**

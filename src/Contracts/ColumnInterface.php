@@ -2,20 +2,13 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
-interface ColumnInterface extends Initializable, Renderable, Arrayable
+interface ColumnInterface extends Initializable, Renderable, Arrayable, WithModel
 {
-    /**
-     * @param Model $model
-     *
-     * @return $this
-     */
-    public function setModel(Model $model);
 
     /**
      * @return int

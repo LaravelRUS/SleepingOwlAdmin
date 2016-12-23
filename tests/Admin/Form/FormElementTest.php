@@ -12,7 +12,7 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @return FormElement
+     * @return FormElement|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getElement()
     {

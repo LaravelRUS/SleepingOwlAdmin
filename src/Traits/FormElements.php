@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Traits;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
@@ -134,11 +135,7 @@ trait FormElements
         $this->getElements()->each(function ($element) use ($model) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof FormElementInterface) {
-                $element->setModel($model);
-            }
-
-            if ($element instanceof ColumnInterface) {
+            if ($element instanceof WithModel) {
                 $element->setModel($model);
             }
         });

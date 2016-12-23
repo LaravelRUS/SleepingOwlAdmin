@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
@@ -253,12 +254,16 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      * Set currently rendered instance.
      *
      * @param Model $model
+     *
+     * @return $this
      */
     public function setModel(Model $model)
     {
-        if (($content = $this->getContent()) instanceof FormElementInterface) {
+        if (($content = $this->getContent()) instanceof WithModel) {
             $content->setModel($model);
         }
+
+        return $this;
     }
 
     /**
@@ -266,7 +271,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getModel()
     {
-        if (($content = $this->getContent()) instanceof FormElementInterface) {
+        if (($content = $this->getContent()) instanceof WithModel) {
             return $content->getModel();
         }
     }

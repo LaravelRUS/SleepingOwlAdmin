@@ -448,10 +448,14 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @param Model $model
+     *
+     * @return $this
      */
     public function setModel(Model $model)
     {
         $this->model = $model;
+
+        return $this;
     }
 
     /**

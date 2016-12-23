@@ -6,20 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 
-interface FormElementInterface extends Renderable, Arrayable, Initializable
+interface FormElementInterface extends Renderable, Arrayable, Initializable, WithModel
 {
-    /**
-     * Set currently rendered instance.
-     *
-     * @param Model $model
-     */
-    public function setModel(Model $model);
-
-    /**
-     * @return Model $model
-     */
-    public function getModel();
-
     /**
      * Get form item validation rules.
      * @return mixed

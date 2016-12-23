@@ -3,9 +3,10 @@
 namespace SleepingOwl\Admin\Repository;
 
 use Cache;
-use Schema;
 use Illuminate\Database\Eloquent\Model;
+use Schema;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 
 class BaseRepository implements RepositoryInterface
 {
@@ -28,19 +29,44 @@ class BaseRepository implements RepositoryInterface
     protected $with = [];
 
     /**
-     * @param string $class
+     * @param string|Model $class
+     *
+     * @throws RepositoryException
      */
     public function __construct($class)
     {
         if ($class instanceof Model) {
-            $this->class = get_class($class);
-            $model = $class;
+            $this->setModel($class);
         } else {
-            $this->class = $class;
-            $model = app($this->class);
+            $this->setClass($class);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return $this
+     * @throws RepositoryException
+     */
+    public function setClass($class)
+    {
+        if (! class_exists($class)) {
+            throw new RepositoryException("Class {$class} not found.");
         }
 
-        $this->setModel($model);
+        $this->setModel(
+            new $class()
+        );
+
+        return $this;
     }
 
     /**
@@ -53,14 +79,19 @@ class BaseRepository implements RepositoryInterface
 
     /**
      * @param Model $model
+     *
+     * @return $this
      */
     public function setModel(Model $model)
     {
         $this->model = $model;
+        $this->class = get_class($model);
+
+        return $this;
     }
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getWith()
     {
@@ -68,7 +99,9 @@ class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * @param \string[] $with
+     * @param string[] $with
+     *
+     * @return $this
      */
     public function with($with)
     {
@@ -77,6 +110,8 @@ class BaseRepository implements RepositoryInterface
         }
 
         $this->with = $with;
+
+        return $this;
     }
 
     /**
@@ -126,7 +161,7 @@ class BaseRepository implements RepositoryInterface
      *
      * @param int[] $ids
      *
-     * @return mixed
+     * @return \Illuminate\Support\Collection
      */
     public function findMany(array $ids)
     {
@@ -178,6 +213,7 @@ class BaseRepository implements RepositoryInterface
     public function hasColumn($column)
     {
         $table = $this->getModel()->getTable();
+
         $columns = Cache::remember('admin.columns.'.$table, 60, function () use ($table) {
             return Schema::getColumnListing($table);
         });
@@ -190,6 +226,6 @@ class BaseRepository implements RepositoryInterface
      */
     public function isRestorable()
     {
-        return in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($this->class));
+        return in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($this->getClass()));
     }
 }

@@ -3,19 +3,22 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 
-interface RepositoryInterface
+interface RepositoryInterface extends WithModel
 {
     /**
-     * @return Model
+     * @return string
      */
-    public function getModel();
+    public function getClass();
 
     /**
-     * @param Model $model
+     * @param string $class
+     *
+     * @return $this
+     * @throws RepositoryException
      */
-    public function setModel(Model $model);
+    public function setClass($class);
 
     /**
      * @return \string[]
@@ -23,13 +26,15 @@ interface RepositoryInterface
     public function getWith();
 
     /**
-     * @param \string[] $with
+     * @param string[] $with
+     *
+     * @return $this
      */
     public function with($with);
 
     /**
      * Get base query.
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getQuery();
 
@@ -47,7 +52,7 @@ interface RepositoryInterface
      *
      * @param int $id
      *
-     * @return mixed
+     * @return Model|null
      */
     public function findOnlyTrashed($id);
 
@@ -56,7 +61,7 @@ interface RepositoryInterface
      *
      * @param int[] $ids
      *
-     * @return Model[]
+     * @return \Illuminate\Support\Collection
      */
     public function findMany(array $ids);
 
@@ -64,6 +69,8 @@ interface RepositoryInterface
      * Delete model instance by id.
      *
      * @param int $id
+     *
+     * @return void
      */
     public function delete($id);
 
@@ -71,6 +78,8 @@ interface RepositoryInterface
      * Permanently delete model instance by id.
      *
      * @param int $id
+     *
+     * @return void
      */
     public function forceDelete($id);
 
@@ -78,6 +87,8 @@ interface RepositoryInterface
      * Restore model instance by id.
      *
      * @param int $id
+     *
+     * @return void
      */
     public function restore($id);
 

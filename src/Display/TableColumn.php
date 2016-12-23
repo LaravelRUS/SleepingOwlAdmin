@@ -2,15 +2,16 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Traits\Assets;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Display\Column\OrderByClause;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Display\Column\OrderByClause;
+use SleepingOwl\Admin\Traits\Assets;
 
 abstract class TableColumn implements ColumnInterface
 {
@@ -95,12 +96,16 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param string $width
+     * @param int|string $width
      *
      * @return $this
      */
     public function setWidth($width)
     {
+        if (is_integer($width)) {
+            $width = $width.'px';
+        }
+
         $this->width = $width;
 
         return $this;
@@ -169,20 +174,11 @@ abstract class TableColumn implements ColumnInterface
         $this->model = $model;
         $append = $this->getAppends();
 
-        if (! is_null($append)) {
+        if ($append instanceof WithModel) {
             $append->setModel($model);
         }
 
         return $this;
-    }
-
-    /**
-     * Get related model configuration.
-     * @return ModelConfigurationInterface
-     */
-    protected function getModelConfiguration()
-    {
-        return app('sleeping_owl')->getModel(get_class($this->getModel()));
     }
 
     /**
@@ -231,15 +227,19 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * @param Builder $query
-     * @param $condition
+     * @param string $direction
+     *
+     * @return $this
      */
-    public function orderBy(Builder $query, $condition)
+    public function orderBy(Builder $query, $direction)
     {
         if (! $this->isOrderable()) {
             throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
         }
 
-        $this->orderByClause->modifyQuery($query, $condition);
+        $this->orderByClause->modifyQuery($query, $direction);
+
+        return $this;
     }
 
     /**
@@ -273,5 +273,14 @@ abstract class TableColumn implements ColumnInterface
             $this->getView(),
             $this->toArray()
         );
+    }
+
+    /**
+     * Get related model configuration.
+     * @return ModelConfigurationInterface
+     */
+    protected function getModelConfiguration()
+    {
+        return app('sleeping_owl')->getModel(get_class($this->getModel()));
     }
 }

@@ -6,20 +6,14 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\WithModel;
 
-interface ControlButtonInterface extends Renderable, Arrayable
+interface ControlButtonInterface extends Renderable, Arrayable, WithModel
 {
     /**
      * @return int
      */
     public function getPosition();
-
-    /**
-     * @param Model $model
-     *
-     * @return $this
-     */
-    public function setModel(Model $model);
 
     /**
      * @param Model $model

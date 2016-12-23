@@ -221,6 +221,14 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -229,7 +237,7 @@ class ControlLink implements ControlButtonInterface
     {
         return [
             'attributes' => $this->getConditionAttributes($this->model)->htmlAttributesToString(),
-            'url' => $this->getUrl($this->model),
+            'url' => $this->getUrl($this->getModel()),
             'position' => $this->getPosition(),
             'text' => $this->text,
             'icon' => $this->getIcon(),

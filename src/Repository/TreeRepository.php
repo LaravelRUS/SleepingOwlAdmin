@@ -312,6 +312,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
                 return $instance->$method();
             }
         }
+
         throw new Exception('Tree type not supported');
     }
 

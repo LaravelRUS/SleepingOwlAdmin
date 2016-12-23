@@ -258,7 +258,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model',
             [$model->getAlias(), 'test'],
             true
@@ -274,7 +274,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.create',
             [$model->getAlias(), 'test'],
             true
@@ -290,7 +290,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.store',
             $model->getAlias(),
             true
@@ -306,7 +306,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.edit',
             [$model->getAlias(), 1],
             true
@@ -322,7 +322,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.update',
             [$model->getAlias(), 1],
             true
@@ -338,7 +338,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.delete',
             [$model->getAlias(), 1],
             true
@@ -354,7 +354,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.destroy',
             [$model->getAlias(), 1],
             true
@@ -370,7 +370,7 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->geRouterMock()->shouldReceive('route')->once()->withArgs([
+        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.restore',
             [$model->getAlias(), 1],
             true
