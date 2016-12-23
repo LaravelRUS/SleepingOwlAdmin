@@ -2,22 +2,22 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use Illuminate\Support\Collection;
-use Illuminate\Validation\ValidationException;
-use KodiComponents\Support\HtmlAttributes;
 use Request;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
+use Validator;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Form\Element\Upload;
+use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
-use SleepingOwl\Admin\Form\Element\Upload;
-use Validator;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {

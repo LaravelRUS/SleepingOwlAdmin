@@ -19,5 +19,4 @@ interface Validable
      * @return array
      */
     public function getValidationLabels();
-
 }

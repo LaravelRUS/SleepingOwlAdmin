@@ -1,11 +1,11 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Form\FormDefault;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Form\FormDefault;
 
 class FormDefaultTest extends TestCase
 {
@@ -22,7 +22,7 @@ class FormDefaultTest extends TestCase
     /**
      * FormDefault::__construct
      * FormDefault::getElements
-     * FormDefault::getButtons
+     * FormDefault::getButtons.
      */
     public function test_constructor()
     {
@@ -30,7 +30,7 @@ class FormDefaultTest extends TestCase
         \KodiCMS\Assets\Facades\PackageManager::shouldReceive('add')->once();
 
         $form = $this->getForm([
-            m::mock(FormElementInterface::class)
+            m::mock(FormElementInterface::class),
         ]);
 
         $this->assertCount(1, $form->getElements());
@@ -66,7 +66,7 @@ class FormDefaultTest extends TestCase
 
         $form = $this->getForm([
             $element = m::mock(FormElementInterface::class),
-            $uploadElement = m::mock(\SleepingOwl\Admin\Form\Element\Upload::class)
+            $uploadElement = m::mock(\SleepingOwl\Admin\Form\Element\Upload::class),
         ]);
 
         $element->shouldReceive('setModel')->once();
@@ -200,7 +200,7 @@ class FormDefaultTest extends TestCase
         $buttons->shouldReceive('setModel')->once()->with($model);
 
         $form = $this->getForm([
-            $element = m::mock(FormElementInterface::class)
+            $element = m::mock(FormElementInterface::class),
         ]);
 
         $element->shouldReceive('setModel')->once()->with($model);
@@ -232,7 +232,7 @@ class FormDefaultTest extends TestCase
         );
 
         $form = $this->getForm([
-            $element = m::mock(FormElementInterface::class)
+            $element = m::mock(FormElementInterface::class),
         ]);
 
         $element->shouldReceive('setModel')->once()->with($model);
@@ -292,7 +292,7 @@ class FormDefaultTest extends TestCase
             ->andReturn($modelConfiguration);
 
         $form = $this->getForm([
-            $element = m::mock(FormElementInterface::class)
+            $element = m::mock(FormElementInterface::class),
         ]);
 
         $element->shouldReceive('setModel')->once()->with($model);
@@ -300,7 +300,7 @@ class FormDefaultTest extends TestCase
             ->andReturn(['element' => 'required']);
         $element->shouldReceive('getValidationMessages')->once()->andReturn([]);
         $element->shouldReceive('getValidationLabels')->once()->andReturn([
-            'element' => 'Element label'
+            'element' => 'Element label',
         ]);
 
         $element->shouldReceive('isReadonly')->andReturn(false);
@@ -314,10 +314,8 @@ class FormDefaultTest extends TestCase
 
 class FormDefaultTestMockModel extends \Illuminate\Database\Eloquent\Model
 {
-
 }
 
 abstract class FormDefaultTestMockFormButtons implements FormButtonsInterface
 {
-
 }

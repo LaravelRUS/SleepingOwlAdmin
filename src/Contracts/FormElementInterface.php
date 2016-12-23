@@ -7,7 +7,6 @@ use Illuminate\Contracts\Support\Renderable;
 
 interface FormElementInterface extends Renderable, Arrayable, Initializable, WithModel, Validable
 {
-
     /**
      * @return mixed
      */
