@@ -397,12 +397,12 @@ class ModelConfiguration extends ModelConfigurationManager
             $form->setModelClass($this->getClass());
         }
 
-        if ($form instanceof Initializable) {
-            $form->initialize();
-        }
-
         if ($form instanceof FormInterface) {
             $form->setAction($this->getStoreUrl());
+        }
+
+        if ($form instanceof Initializable) {
+            $form->initialize();
         }
 
         return $form;
@@ -444,12 +444,15 @@ class ModelConfiguration extends ModelConfigurationManager
             $form->setModelClass($this->getClass());
         }
 
+        if ($form instanceof FormInterface) {
+            $form->setAction($this->getUpdateUrl($id));
+        }
+
         if ($form instanceof Initializable) {
             $form->initialize();
         }
 
         if ($form instanceof FormInterface) {
-            $form->setAction($this->getUpdateUrl($id));
             $form->setId($id);
         }
 

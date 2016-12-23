@@ -2,10 +2,20 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
+use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
 
 interface FormInterface extends FormElementInterface, ElementsInterface
 {
+    /**
+     * @param string $class
+     *
+     * @return $this
+     * @throws FormException
+     */
+    public function setModelClass($class);
+
     /**
      * Set form action url.
      *
@@ -23,7 +33,9 @@ interface FormInterface extends FormElementInterface, ElementsInterface
     /**
      * @param ModelConfigurationInterface $model
      *
-     * @return \Illuminate\Contracts\Validation\Validator|null
+     * @throws ValidationException
+     *
+     * @return void
      */
     public function validateForm(ModelConfigurationInterface $model);
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
@@ -155,19 +156,21 @@ class AdminController extends Controller
         $backUrl = $this->getBackUrl($request);
 
         if ($createForm instanceof FormInterface) {
-            if (($validator = $createForm->validateForm($model)) instanceof Validator) {
+            try {
+                $createForm->validateForm($model);
+
+                if ($createForm->saveForm($model) === false) {
+                    return redirect()->back()->with([
+                        '_redirectBack' => $backUrl,
+                    ]);
+                }
+            } catch (ValidationException $exception) {
                 return redirect()->back()
-                    ->withErrors($validator)
+                    ->withErrors($exception->validator)
                     ->withInput()
                     ->with([
                         '_redirectBack' => $backUrl,
                     ]);
-            }
-
-            if ($createForm->saveForm($model) === false) {
-                return redirect()->back()->with([
-                    '_redirectBack' => $backUrl,
-                ]);
             }
         }
 
@@ -249,21 +252,25 @@ class AdminController extends Controller
         $backUrl = $this->getBackUrl($request);
 
         if ($editForm instanceof FormInterface) {
-            if (($validator = $editForm->validateForm($model)) instanceof Validator) {
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+            try {
+                $editForm->validateForm($model);
 
-            if ($editForm->saveForm($model) === false) {
-                return redirect()->back()->with([
-                    '_redirectBack' => $backUrl,
-                ]);
+                if ($editForm->saveForm($model) === false) {
+                    return redirect()->back()->with([
+                        '_redirectBack' => $backUrl,
+                    ]);
+                }
+            } catch (ValidationException $exception) {
+                return redirect()->back()
+                    ->withErrors($exception->validator)
+                    ->withInput()
+                    ->with([
+                        '_redirectBack' => $backUrl,
+                    ]);
             }
         }
 
         $redirectPolicy = $model->getRedirect();
-        /* Make redirect when use in model config */
 
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([

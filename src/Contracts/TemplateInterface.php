@@ -21,7 +21,7 @@ interface TemplateInterface
      * @param array  $data
      * @param array  $mergeData
      *
-     * @return \BladeView|bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function view($view, $data = [], $mergeData = []);
 }

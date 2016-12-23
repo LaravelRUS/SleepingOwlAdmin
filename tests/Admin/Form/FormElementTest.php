@@ -18,6 +18,20 @@ class FormElementTest extends TestCase
         return $this->getMockForAbstractClass(FormElement::class);
     }
 
+
+    /**
+     * FormDefault::__construct
+     * FormDefault::getElements
+     * FormDefault::getButtons
+     */
+    public function test_constructor()
+    {
+        PackageManager::shouldReceive('load')->once();
+        PackageManager::shouldReceive('add')->once();
+
+        $this->getElement();
+}
+
     /**
      * @covers FormElement::initialize
      */

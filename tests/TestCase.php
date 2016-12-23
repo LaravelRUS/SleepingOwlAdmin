@@ -102,4 +102,12 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         return $this->app['sleeping_owl.template'] = m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class);
     }
+
+    /**
+     * @return m\MockInterface|\SleepingOwl\Admin\Contracts\TemplateInterface
+     */
+    public function getSleepingOwlMock()
+    {
+        return $this->app['sleeping_owl'] = m::mock(\SleepingOwl\Admin\Admin::class);
+    }
 }

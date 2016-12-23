@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
@@ -222,7 +223,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function validateForm(ModelConfigurationInterface $model)
     {
         if ($this->getContent() instanceof FormInterface) {
-            return $this->getContent()->validateForm($model);
+            $this->getContent()->validateForm($model);
         }
     }
 
@@ -282,7 +283,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getValidationRules()
     {
-        if (($content = $this->getContent()) instanceof FormElementInterface) {
+        if (($content = $this->getContent()) instanceof Validable) {
             return $content->getValidationRules();
         }
 
@@ -294,7 +295,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getValidationMessages()
     {
-        if (($content = $this->getContent()) instanceof FormElementInterface) {
+        if (($content = $this->getContent()) instanceof Validable) {
             return $content->getValidationMessages();
         }
 
@@ -306,7 +307,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getValidationLabels()
     {
-        if (($content = $this->getContent()) instanceof FormElementInterface) {
+        if (($content = $this->getContent()) instanceof Validable) {
             return $content->getValidationLabels();
         }
 

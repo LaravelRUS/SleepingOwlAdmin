@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\FormElementsCollection;
@@ -17,6 +18,9 @@ trait FormElements
      */
     protected $elements;
 
+    /**
+     * @return void
+     */
     public function initializeElements()
     {
         $this->getElements()->each(function ($element) {
@@ -152,7 +156,7 @@ trait FormElements
         $this->getElements()->onlyActive()->each(function ($element) use (&$rules) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof FormElementInterface) {
+            if ($element instanceof Validable) {
                 $rules += $element->getValidationRules();
             }
         });
@@ -170,7 +174,7 @@ trait FormElements
         $this->getElements()->onlyActive()->each(function ($element) use (&$messages) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof FormElementInterface) {
+            if ($element instanceof Validable) {
                 $messages += $element->getValidationMessages();
             }
         });
@@ -188,7 +192,7 @@ trait FormElements
         $this->getElements()->onlyActive()->each(function ($element) use (&$labels) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof NamedFormElement) {
+            if ($element instanceof Validable) {
                 $labels += $element->getValidationLabels();
             }
         });

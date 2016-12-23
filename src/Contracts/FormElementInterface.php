@@ -5,23 +5,8 @@ namespace SleepingOwl\Admin\Contracts;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 
-interface FormElementInterface extends Renderable, Arrayable, Initializable, WithModel
+interface FormElementInterface extends Renderable, Arrayable, Initializable, WithModel, Validable
 {
-    /**
-     * Get form item validation rules.
-     * @return mixed
-     */
-    public function getValidationRules();
-
-    /**
-     * @return array
-     */
-    public function getValidationMessages();
-
-    /**
-     * @return array
-     */
-    public function getValidationLabels();
 
     /**
      * @return mixed

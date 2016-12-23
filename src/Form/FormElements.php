@@ -47,6 +47,9 @@ class FormElements extends FormElement implements ElementsInterface
         );
     }
 
+    /**
+     * @return void
+     */
     public function save()
     {
         parent::save();
@@ -54,6 +57,9 @@ class FormElements extends FormElement implements ElementsInterface
         $this->saveElements();
     }
 
+    /**
+     * @return void
+     */
     public function afterSave()
     {
         parent::afterSave();

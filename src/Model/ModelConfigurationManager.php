@@ -502,13 +502,14 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Fire the given event for the model.
      *
-     * @param string     $event
-     * @param bool       $halt
+     * @param string $event
+     * @param bool $halt
      * @param Model|null $model
+     * @param array $args
      *
      * @return mixed
      */
-    public function fireEvent($event, $halt = true, Model $model = null)
+    public function fireEvent($event, $halt = true, Model $model = null, ...$payload)
     {
         if (! isset(self::$dispatcher)) {
             return true;
@@ -525,7 +526,9 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
         $method = $halt ? 'until' : 'fire';
 
-        return self::$dispatcher->$method($event, [$this, $model]);
+        array_unshift($payload, $this, $model);
+
+        return self::$dispatcher->$method($event, $payload);
     }
 
     /**
