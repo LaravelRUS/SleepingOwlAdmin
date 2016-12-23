@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Contracts\Support\Arrayable;
 use Mockery as m;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
-use SleepingOwl\Admin\Form\FormElements;
+use Illuminate\Contracts\Support\Arrayable;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 
 class FormElementsTest extends TestCase
 {
@@ -39,7 +39,7 @@ class FormElementsTest extends TestCase
 
     /**
      * FormElements::initialize
-     * FormElementsTrait::initializeElements
+     * FormElementsTrait::initializeElements.
      */
     public function test_initialize()
     {
@@ -63,7 +63,7 @@ class FormElementsTest extends TestCase
     /**
      * FormElements::setModel
      * FormElements::getModel
-     * FormElementsTrait::setModelForElements
+     * FormElementsTrait::setModelForElements.
      */
     public function test_sets_model()
     {
@@ -87,7 +87,7 @@ class FormElementsTest extends TestCase
 
     /**
      * FormElements::getValidationRules
-     * FormElementsTrait::getValidationRulesFromElements
+     * FormElementsTrait::getValidationRulesFromElements.
      */
     public function test_gets_validation_rules()
     {
@@ -126,13 +126,13 @@ class FormElementsTest extends TestCase
 
         $this->assertEquals([
             'element1' => 'required',
-            'element6' => 'unique'
+            'element6' => 'unique',
         ], $element->getValidationRules());
     }
 
     /**
      * FormElements::save
-     * FormElementsTrait::saveElements
+     * FormElementsTrait::saveElements.
      */
     public function test_save()
     {
@@ -171,7 +171,7 @@ class FormElementsTest extends TestCase
 
     /**
      * FormElements::afterSave
-     * FormElementsTrait::afterSaveElements
+     * FormElementsTrait::afterSaveElements.
      */
     public function test_after_save()
     {
@@ -209,7 +209,7 @@ class FormElementsTest extends TestCase
     }
 
     /**
-     * FormElements::toArray
+     * FormElements::toArray.
      */
     public function test_to_array()
     {
@@ -236,22 +236,19 @@ class FormElementsTest extends TestCase
 
         $this->assertEquals(4, $array['items']->count());
         $this->assertCount(4, array_intersect([
-            'value', 'readonly', 'model', 'items'
+            'value', 'readonly', 'model', 'items',
         ], array_keys($array)));
     }
 }
 
 abstract class FormElementsTestInitializableMock implements Initializable
 {
-
 }
 
 abstract class FormElementsTestInitializableMockWithoutInitializable implements WithModel, Arrayable
 {
-
 }
 
 abstract class FormElementsTestInitializableMockWithoutValidable implements Validable
 {
-
 }

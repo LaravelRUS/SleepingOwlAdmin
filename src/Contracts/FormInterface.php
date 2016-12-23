@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 interface FormInterface extends FormElementInterface, ElementsInterface
 {
