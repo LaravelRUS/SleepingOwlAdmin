@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Form\Columns;
 
-use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 
 class Columns extends FormElements implements ColumnInterface
@@ -17,13 +17,11 @@ class Columns extends FormElements implements ColumnInterface
     protected $maxWidth = 12;
 
     /**
-     * Columns constructor.
-     *
      * @param array $elements
      */
     public function __construct(array $elements = [])
     {
-        $this->elements = new Collection();
+        $this->elements = new FormElementsCollection();
         parent::__construct($elements);
     }
 
@@ -105,7 +103,7 @@ class Columns extends FormElements implements ColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-            'columns' => $this->getElements(),
+            'columns' => $this->getElements()->onlyVisible(),
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

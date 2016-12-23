@@ -2,15 +2,14 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use Illuminate\Http\JsonResponse;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class DependentSelect extends Select implements WithRoutesInterface
 {
-
     /**
      * @param Router $router
      */
@@ -25,7 +24,6 @@ class DependentSelect extends Select implements WithRoutesInterface
                 $field,
                 $id = null
             ) {
-
                 if (! is_null($id)) {
                     $item = $model->getRepository()->find($id);
                     if (is_null($item) || ! $model->isEditable($item)) {
@@ -64,10 +62,10 @@ class DependentSelect extends Select implements WithRoutesInterface
                 $options = array_except($options, $element->exclude);
 
                 return new JsonResponse([
-                    'output' => collect($options)->map(function($value, $key) {
+                    'output' => collect($options)->map(function ($value, $key) {
                         return ['id' => $key, 'name' => $value];
                     }),
-                    'selected' => $element->getValue()
+                    'selected' => $element->getValue(),
                 ]);
             }]);
         }
@@ -122,7 +120,6 @@ class DependentSelect extends Select implements WithRoutesInterface
         return array_get($this->params, $key, $this->getModel()->getAttribute($key));
     }
 
-
     /**
      * @return string
      */
@@ -131,7 +128,7 @@ class DependentSelect extends Select implements WithRoutesInterface
         return $this->dataUrl ?: route('admin.form.element.dependent-select', [
             'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
             'field' => $this->getName(),
-            'id' => $this->model->getKey()
+            'id' => $this->model->getKey(),
         ]);
     }
 
@@ -154,7 +151,6 @@ class DependentSelect extends Select implements WithRoutesInterface
     {
         return json_encode($this->dataDepends);
     }
-
 
     /**
      * @param array|string $depends
@@ -211,5 +207,4 @@ class DependentSelect extends Select implements WithRoutesInterface
 
         return $this;
     }
-
 }

@@ -11,10 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 
-/**
- * TODO Has to be a bit more test friendly. Too many facades.
- */
 abstract class NamedFormElement extends FormElement
 {
     /**
@@ -48,26 +46,22 @@ abstract class NamedFormElement extends FormElement
     protected $defaultValue;
 
     /**
-     * @var bool
-     */
-    protected $readonly = false;
-
-    /**
-     * @var array
-     */
-    protected $validationMessages = [];
-
-    /**
      * @var \Closure
      */
     protected $mutator;
 
     /**
-     * @param string      $path
+     * @param string $path
      * @param string|null $label
+     *
+     * @throws FormElementException
      */
     public function __construct($path, $label = null)
     {
+        if (empty($path)) {
+            throw new FormElementException('You must specify field path');
+        }
+
         $this->setPath($path);
         $this->setLabel($label);
 
@@ -222,43 +216,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return bool
-     */
-    public function isReadonly()
-    {
-        return $this->readonly;
-    }
-
-    /**
-     * @param bool $readonly
-     *
-     * @return $this
-     */
-    public function setReadonly($readonly)
-    {
-        $this->readonly = (bool) $readonly;
-
-        return $this;
-    }
-
-    /**
-     * @param string      $rule
-     * @param string|null $message
-     *
-     * @return $this
-     */
-    public function addValidationRule($rule, $message = null)
-    {
-        parent::addValidationRule($rule);
-
-        if (is_null($message)) {
-            return $this;
-        }
-
-        return $this->addValidationMessage($rule, $message);
-    }
-
-    /**
      * @param string|null $message
      *
      * @return $this
@@ -277,7 +234,11 @@ abstract class NamedFormElement extends FormElement
      */
     public function unique($message = null)
     {
-        $this->addValidationRule('_unique', $message);
+        $this->addValidationRule('_unique');
+
+        if (! is_null($message)) {
+            $this->addValidationMessage('unique', $message);
+        }
 
         return $this;
     }
@@ -289,40 +250,12 @@ abstract class NamedFormElement extends FormElement
     {
         $messages = parent::getValidationMessages();
 
-        foreach ($this->validationMessages as $rule => $message) {
+        foreach ($messages as $rule => $message) {
             $messages[$this->getName().'.'.$rule] = $message;
+            unset($messages[$rule]);
         }
 
         return $messages;
-    }
-
-    /**
-     * @param array $validationMessages
-     *
-     * @return $this
-     */
-    public function setValidationMessages(array $validationMessages)
-    {
-        $this->validationMessages = $validationMessages;
-
-        return $this;
-    }
-
-    /**
-     * @param string $rule
-     * @param string $message
-     *
-     * @return $this
-     */
-    public function addValidationMessage($rule, $message)
-    {
-        if (($pos = strpos($rule, ':')) !== false) {
-            $rule = substr($rule, 0, $pos);
-        }
-
-        $this->validationMessages[$rule] = $message;
-
-        return $this;
     }
 
     /**
@@ -338,7 +271,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromRequest()
     {
-        if (! is_null($value = Request::old($this->getPath()))) {
+        if (Request::hasSession() && ! is_null($value = Request::old($this->getPath()))) {
             return $value;
         }
 
@@ -346,7 +279,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * HACK Needs refactoring and reasoning.
+     * TODO: HACK Needs refactoring and reasoning.
      * @return mixed
      */
     public function getValue()
@@ -424,27 +357,35 @@ abstract class NamedFormElement extends FormElement
         $relations = explode('.', $this->getPath());
         $count = count($relations);
 
+        if ($count === 1) {
+            return $model;
+        }
+
         foreach ($relations as $relation) {
             if ($count === 1) {
-                return $model->getModel();
+                return $model;
             }
 
-            if ($model->exists && $model->{$relation} instanceof Model) {
-                $model = $model->{$relation};
-                if ($model != null) {
+            if ($model->exists && ($value = $model->getAttribute($relation)) instanceof Model) {
+                $model = $value;
+
+                $count--;
+                continue;
+            }
+
+            if (method_exists($model, $relation)) {
+                $relation = $model->{$relation}();
+
+                if ($relation instanceof Relation) {
+                    $model = $relation->getModel();
                     $count--;
                     continue;
                 }
             }
 
-            if ($model->{$relation}() instanceof BelongsTo) {
-                $model = $model->{$relation}()->getModel();
-                $count--;
-                continue;
-            }
-
             break;
         }
+
         throw new LogicException("Can not resolve path for field '{$this->getPath()}'. Probably relation definition is incorrect");
     }
 
@@ -458,8 +399,6 @@ abstract class NamedFormElement extends FormElement
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
-            'readonly' => $this->isReadonly(),
-            'value' => $this->getValue(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ];
@@ -482,8 +421,8 @@ abstract class NamedFormElement extends FormElement
             /* @var Model $model */
             foreach ($relations as $relation) {
                 $relatedModel = null;
-                if ($previousModel->{$relation} instanceof Model) {
-                    $relatedModel = &$previousModel->{$relation};
+                if ($previousModel->getAttribute($relation) instanceof Model) {
+                    $relatedModel = &$previousModel->getAttribute($relation);
                 } elseif (method_exists($previousModel, $relation)) {
 
                     /* @var Relation $relation */

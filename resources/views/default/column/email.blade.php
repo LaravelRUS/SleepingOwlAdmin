@@ -1,1 +1,4 @@
-{!! HTML::mailto($value, $value) !!} {!! $append !!}
+@if (!empty($value))
+{!! HTML::mailto($value, $value) !!}
+@endif
+{!! $append !!}

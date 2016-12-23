@@ -33,7 +33,7 @@ class Body extends FormElements implements PanelInterface
     public function toArray()
     {
         return parent::toArray() + [
-            'elements' => $this->getElements(),
+            'elements' => $this->getElements()->onlyVisible(),
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

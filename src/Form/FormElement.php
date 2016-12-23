@@ -2,13 +2,15 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use Closure;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets;
+    use Assets, VisibleCondition;
 
     /**
      * @var \SleepingOwl\Admin\Contracts\TemplateInterface
@@ -31,8 +33,15 @@ abstract class FormElement implements FormElementInterface
     protected $validationRules = [];
 
     /**
-     * FormElement constructor.
+     * @var array
      */
+    protected $validationMessages = [];
+
+    /**
+     * @var bool
+     */
+    protected $readonly = false;
+
     public function __construct()
     {
         $this->initializePackage();
@@ -48,7 +57,36 @@ abstract class FormElement implements FormElementInterface
      */
     public function getValidationMessages()
     {
-        return [];
+        return $this->validationMessages;
+    }
+
+    /**
+     * @param string $rule
+     * @param string $message
+     *
+     * @return $this
+     */
+    public function addValidationMessage($rule, $message)
+    {
+        if (($pos = strpos($rule, ':')) !== false) {
+            $rule = substr($rule, 0, $pos);
+        }
+
+        $this->validationMessages[$rule] = $message;
+
+        return $this;
+    }
+
+    /**
+     * @param array $validationMessages
+     *
+     * @return $this
+     */
+    public function setValidationMessages(array $validationMessages)
+    {
+        $this->validationMessages = $validationMessages;
+
+        return $this;
     }
 
     /**
@@ -77,7 +115,11 @@ abstract class FormElement implements FormElementInterface
     {
         $this->validationRules[] = $rule;
 
-        return $this;
+        if (is_null($message)) {
+            return $this;
+        }
+
+        return $this->addValidationMessage($rule, $message);
     }
 
     /**
@@ -93,7 +135,11 @@ abstract class FormElement implements FormElementInterface
 
         $this->validationRules = [];
         foreach ($validationRules as $rule) {
-            $this->validationRules[] = explode('|', $rule);
+            $rules = explode('|', $rule);
+
+            foreach ($rules as $rule) {
+                $this->addValidationRule($rule);
+            }
         }
 
         return $this;
@@ -145,15 +191,40 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * SMELLS.
+     * @return bool
      */
+    public function isReadonly()
+    {
+        if (is_callable($this->readonly)) {
+            return (bool) call_user_func($this->readonly, $this->getModel());
+        }
+
+        return (bool) $this->readonly;
+    }
+
+    /**
+     * @param Closure|bool $readonly
+     *
+     * @return $this
+     */
+    public function setReadonly($readonly)
+    {
+        $this->readonly = $readonly;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+    }
+
     public function save()
     {
     }
 
-    /**
-     * SMELLS.
-     */
     public function afterSave()
     {
     }
@@ -164,6 +235,8 @@ abstract class FormElement implements FormElementInterface
     public function toArray()
     {
         return [
+            'value' => $this->getValue(),
+            'readonly' => $this->isReadonly(),
             'model' => $this->getModel(),
         ];
     }
