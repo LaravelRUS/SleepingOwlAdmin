@@ -166,8 +166,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function setModelClass($class)
     {
-        if ($this->getContent() instanceof DisplayInterface) {
-            $this->getContent()->setModelClass($class);
+        if (($content = $this->getContent()) instanceof DisplayInterface) {
+            $content->setModelClass($class);
         }
 
         return $this;
@@ -180,8 +180,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function initialize()
     {
-        if ($this->getContent() instanceof Initializable) {
-            $this->getContent()->initialize();
+        if (($content = $this->getContent()) instanceof Initializable) {
+            $content->initialize();
         }
 
         return $this;
@@ -194,8 +194,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function setAction($action)
     {
-        if ($this->getContent() instanceof FormInterface) {
-            $this->getContent()->setAction($action);
+        if (($content = $this->getContent()) instanceof FormInterface) {
+            $content->setAction($action);
         }
 
         return $this;
@@ -208,8 +208,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function setId($id)
     {
-        if ($this->getContent() instanceof FormInterface) {
-            $this->getContent()->setId($id);
+        if (($content = $this->getContent()) instanceof FormInterface) {
+            $content->setId($id);
         }
 
         return $this;
@@ -222,8 +222,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function validateForm(ModelConfigurationInterface $model)
     {
-        if ($this->getContent() instanceof FormInterface) {
-            $this->getContent()->validateForm($model);
+        if (($content = $this->getContent()) instanceof FormInterface) {
+            $content->validateForm($model);
         }
     }
 
@@ -236,8 +236,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function saveForm(ModelConfigurationInterface $model)
     {
-        if ($this->getContent() instanceof FormInterface) {
-            $this->getContent()->saveForm($model);
+        if (($content = $this->getContent()) instanceof FormInterface) {
+            $content->saveForm($model);
         }
 
         return $this;
@@ -341,7 +341,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getElement($path)
     {
-        if ($content = $this->getContent() instanceof ElementsInterface) {
+        if (($content = $this->getContent()) instanceof ElementsInterface) {
             return $content->getElement($path);
         }
     }
@@ -351,7 +351,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getElements()
     {
-        if ($content = $this->getContent() instanceof ElementsInterface) {
+        if (($content = $this->getContent()) instanceof ElementsInterface) {
             return $content->getElements();
         }
     }
@@ -363,7 +363,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function setElements(array $elements)
     {
-        if ($content = $this->getContent() instanceof ElementsInterface) {
+        if (($content = $this->getContent()) instanceof ElementsInterface) {
             return $content->setElements($elements);
         }
     }
