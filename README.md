@@ -3,6 +3,7 @@
 ## Laravel 5.* Admin Module
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/?branch=development)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
 [![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://badges.gitter.im/LaravelRUS/SleepingOwlAdmin.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Latest Stable Version](https://poser.pugx.org/laravelrus/sleepingowl/v/stable)](https://packagist.org/packages/laravelrus/sleepingowl)

@@ -18,11 +18,10 @@ class FormElementTest extends TestCase
         return $this->getMockForAbstractClass(FormElement::class);
     }
 
-
     /**
      * FormDefault::__construct
      * FormDefault::getElements
-     * FormDefault::getButtons
+     * FormDefault::getButtons.
      */
     public function test_constructor()
     {
@@ -30,7 +29,7 @@ class FormElementTest extends TestCase
         PackageManager::shouldReceive('add')->once();
 
         $this->getElement();
-}
+    }
 
     /**
      * @covers FormElement::initialize
