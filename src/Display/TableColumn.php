@@ -271,7 +271,8 @@ abstract class TableColumn implements ColumnInterface
     {
         return app('sleeping_owl.template')->view(
             $this->getView(),
-            $this->toArray()
+            $this->toArray() +
+            ['model' => $this->getModel()]
         );
     }
 
