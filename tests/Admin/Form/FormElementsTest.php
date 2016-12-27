@@ -79,7 +79,7 @@ class FormElementsTest extends TestCase
         $element3->shouldNotReceive('setModel');
         $element4->shouldReceive('setModel')->once()->with($model);
 
-        $element->setModel($model);
+        $this->assertEquals($element, $element->setModel($model));
 
         $this->assertEquals(3, $element->getElements()->count());
         $this->assertEquals($model, $element->getModel());
@@ -166,7 +166,9 @@ class FormElementsTest extends TestCase
         $element6->shouldNotReceive('isReadonly');
         $element1->shouldNotReceive('save');
 
-        $element->save();
+        $this->assertNull(
+            $element->save()
+        );
     }
 
     /**
@@ -205,7 +207,9 @@ class FormElementsTest extends TestCase
         $element6->shouldNotReceive('isReadonly');
         $element1->shouldNotReceive('afterSave');
 
-        $element->afterSave();
+        $this->assertNull(
+            $element->afterSave()
+        );
     }
 
     /**

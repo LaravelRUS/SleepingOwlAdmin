@@ -99,7 +99,10 @@ class FormDefaultTest extends TestCase
 
         $this->assertInstanceOf(FormButtonsInterface::class, $form->getButtons());
 
-        $form->setButtons($buttons = m::mock(FormDefaultTestMockFormButtons::class));
+        $this->assertEquals(
+            $form,
+            $form->setButtons($buttons = m::mock(FormDefaultTestMockFormButtons::class))
+        );
 
         $this->assertEquals($buttons, $form->getButtons());
     }
@@ -127,7 +130,7 @@ class FormDefaultTest extends TestCase
         $form = $this->getForm();
         $this->assertEquals('form.default', $form->getView());
 
-        $form->setView($view = 'custom.template');
+        $this->assertEquals($form, $form->setView($view = 'custom.template'));
         $this->assertEquals($view, $form->getView());
     }
 
@@ -139,7 +142,7 @@ class FormDefaultTest extends TestCase
     {
         $form = $this->getForm();
 
-        $form->setAction('action');
+        $this->assertEquals($form, $form->setAction('action'));
         $this->assertEquals('action', $form->getAction());
     }
 
@@ -152,7 +155,10 @@ class FormDefaultTest extends TestCase
     {
         $form = $this->getForm();
 
-        $form->setModelClass($class = FormDefaultTestMockModel::class);
+        $this->assertEquals(
+            $form,
+            $form->setModelClass($class = FormDefaultTestMockModel::class)
+        );
 
         $this->assertEquals($class, $form->getClass());
     }
@@ -205,7 +211,10 @@ class FormDefaultTest extends TestCase
 
         $element->shouldReceive('setModel')->once()->with($model);
 
-        $form->setModel($model);
+        $this->assertEquals(
+            $form,
+            $form->setModel($model)
+        );
     }
 
     /**
@@ -242,7 +251,8 @@ class FormDefaultTest extends TestCase
         $element->shouldReceive('afterSave')->once();
 
         $form->setModel($model);
-        $form->saveForm($modelConfiguration);
+
+        $this->assertTrue($form->saveForm($modelConfiguration));
     }
 
     public function test_save_relations()
@@ -308,7 +318,9 @@ class FormDefaultTest extends TestCase
 
         $form->setModel($model);
 
-        $form->validateForm($modelConfiguration);
+        $this->assertNull(
+            $form->validateForm($modelConfiguration)
+        );
     }
 }
 

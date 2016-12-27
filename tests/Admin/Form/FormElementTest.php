@@ -38,7 +38,9 @@ class FormElementTest extends TestCase
     {
         \KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
 
-        $this->getElement()->initialize();
+        $this->assertNull(
+            $this->getElement()->initialize()
+        );
     }
 
     /**
@@ -52,7 +54,8 @@ class FormElementTest extends TestCase
         $this->assertEmpty($element->getValidationRules());
 
         $rule = 'some_rule';
-        $element->addValidationRule($rule);
+
+        $this->assertEquals($element, $element->addValidationRule($rule));
         $this->assertEquals([$rule], $element->getValidationRules());
     }
 
@@ -87,9 +90,12 @@ class FormElementTest extends TestCase
         $element = $this->getElement();
         $this->assertEmpty($element->getValidationMessages());
 
-        $element->addValidationMessage(
-            $rule = 'min:10',
-            $message = 'my custom message'
+        $this->assertEquals(
+            $element,
+            $element->addValidationMessage(
+                $rule = 'min:10',
+                $message = 'my custom message'
+            )
         );
 
         $element->addValidationMessage(
@@ -109,10 +115,13 @@ class FormElementTest extends TestCase
         $element = $this->getElement();
         $this->assertEmpty($element->getValidationMessages());
 
-        $element->setValidationMessages([
-            'min' => 'test',
-            'max' => 'test',
-        ]);
+        $this->assertEquals(
+            $element,
+            $element->setValidationMessages([
+                'min' => 'test',
+                'max' => 'test',
+            ])
+        );
 
         $this->assertEquals(['min' => 'test', 'max' => 'test'], $element->getValidationMessages());
 
@@ -132,10 +141,14 @@ class FormElementTest extends TestCase
         $element = $this->getElement();
 
         $this->assertEmpty($element->getValidationRules());
-        $element->setValidationRules([
-            'rule|one',
-            'rule|two',
-        ]);
+
+        $this->assertEquals(
+            $element,
+            $element->setValidationRules([
+                'rule|one',
+                'rule|two',
+            ])
+        );
 
         $this->assertEquals([
             'rule', 'one', 'rule', 'two',
@@ -175,7 +188,8 @@ class FormElementTest extends TestCase
     public function test_set_view()
     {
         $element = $this->getElement();
-        $element->setView('my.custom.view');
+
+        $this->assertEquals($element, $element->setView('my.custom.view'));
 
         $this->assertEquals('my.custom.view', $element->getView());
     }
@@ -191,7 +205,7 @@ class FormElementTest extends TestCase
 
         $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
 
-        $element->setModel($model);
+        $this->assertEquals($element, $element->setModel($model));
         $this->assertEquals($model, $element->getModel());
     }
 
@@ -240,7 +254,7 @@ class FormElementTest extends TestCase
     {
         $element = $this->getElement();
 
-        $element->setReadonly(true);
+        $this->assertEquals($element, $element->setReadonly(true));
         $this->assertTrue($element->isReadonly());
 
         $element->setReadonly(false);
@@ -269,9 +283,12 @@ class FormElementTest extends TestCase
         $model->shouldReceive('isAuthor')->andReturn(true)->once();
         $element->setModel($model);
 
-        $element->setVisibilityCondition(function ($model) {
-            return $model->isAuthor();
-        });
+        $this->assertEquals(
+            $element,
+            $element->setVisibilityCondition(function ($model) {
+                return $model->isAuthor();
+            })
+        );
 
         $this->assertTrue($element->isVisible());
     }

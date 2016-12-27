@@ -1,5 +1,6 @@
 <?php
 
+use KodiComponents\Navigation\Contracts\PageInterface;
 use Mockery as m;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
@@ -54,7 +55,10 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $model->setIcon('fa fa-test');
+        $this->assertEquals(
+            $model,
+            $model->setIcon('fa fa-test')
+        );
 
         $this->assertEquals('fa fa-test', $model->getIcon());
     }
@@ -192,10 +196,10 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->app['sleeping_owl.navigation'] = $navigation = m::mock(\SleepingOwl\Admin\Navigation::class);
         $navigation->shouldReceive('addPage')->once()->andReturnUsing(function ($page) {
-            $this->assertInstanceOf(\KodiComponents\Navigation\Contracts\PageInterface::class, $page);
+            $this->assertInstanceOf(PageInterface::class, $page);
         });
 
-        $model->addToNavigation(400);
+        $this->assertInstanceOf(PageInterface::class, $model->addToNavigation(400));
     }
 
     /**
@@ -219,14 +223,15 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $modelObject = $model->getModel();
-        $model->enableAccessCheck();
+
+        $this->assertEquals($model, $model->enableAccessCheck());
 
         $this->app[Illuminate\Contracts\Auth\Access\Gate::class] = $gate = m::mock(\Illuminate\Contracts\Auth\Access\Gate::class);
         $gate->shouldReceive('allows')->once()->withArgs(['test', $modelObject])->andReturn(false);
 
         $this->assertFalse($model->can('test', $model->getModel()));
 
-        $model->disableAccessCheck();
+        $this->assertEquals($model, $model->disableAccessCheck());
         $this->assertTrue($model->can('test', $model->getModel()));
     }
 
@@ -241,7 +246,8 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->assertNull($model->getControllerClass());
 
-        $model->setControllerClass('test');
+        $this->assertEquals($model, $model->setControllerClass('test'));
+
         $this->assertEquals('test', $model->getControllerClass());
         $this->assertFalse($model->hasCustomControllerClass());
 

@@ -71,7 +71,7 @@ class TableColumnTest extends TestCase
 
         $this->assertNull($column->getWidth());
 
-        $column->setWidth(1000);
+        $this->assertEquals($column, $column->setWidth(1000));
         $this->assertEquals('1000px', $column->getWidth());
 
         $column->setWidth('100px');
@@ -88,7 +88,7 @@ class TableColumnTest extends TestCase
 
         $this->assertEquals('column.'.strtolower(get_class($column)), $column->getView());
 
-        $column->setView('custom.template');
+        $this->assertEquals($column, $column->setView('custom.template'));
         $this->assertEquals('custom.template', $column->getView());
     }
 
@@ -101,7 +101,8 @@ class TableColumnTest extends TestCase
         $column = $this->getColumn();
 
         $this->assertNull($column->getAppends());
-        $column->append($append = m::mock(\SleepingOwl\Admin\Contracts\ColumnInterface::class));
+
+        $this->assertEquals($column, $column->append($append = m::mock(\SleepingOwl\Admin\Contracts\ColumnInterface::class)));
 
         $this->assertEquals($append, $column->getAppends());
     }
@@ -116,7 +117,7 @@ class TableColumnTest extends TestCase
 
         $this->assertNull($column->getModel());
 
-        $column->setModel($model = new TableColumnTestModel);
+        $this->assertEquals($column, $column->setModel($model = new TableColumnTestModel));
 
         $this->assertEquals($model, $column->getModel());
     }
@@ -148,8 +149,7 @@ class TableColumnTest extends TestCase
         $this->assertFalse($column->isOrderable());
         $header->shouldReceive('setOrderable')->with(true);
 
-        $column->setOrderable(function () {
-        });
+        $this->assertEquals($column, $column->setOrderable(function () {}));
         $this->assertTrue($column->isOrderable());
     }
 
@@ -218,7 +218,7 @@ class TableColumnTest extends TestCase
         $column->setOrderable($clause = m::mock(TableColumnTestOrderByClause::class));
         $clause->shouldReceive('modifyQuery')->with($builder, $direction);
 
-        $column->orderBy($builder, $direction);
+        $this->assertEquals($column, $column->orderBy($builder, $direction));
     }
 
     /**

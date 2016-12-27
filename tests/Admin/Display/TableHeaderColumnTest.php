@@ -38,7 +38,7 @@ class TableHeaderColumnTest extends TestCase
 
         $this->assertNull($header->getTitle());
 
-        $header->setTitle('Title');
+        $this->assertEquals($header, $header->setTitle('Title'));
         $this->assertEquals('Title', $header->getTitle());
     }
 
@@ -52,7 +52,7 @@ class TableHeaderColumnTest extends TestCase
 
         $this->assertFalse($header->isOrderable());
 
-        $header->setOrderable('Title');
+        $this->assertEquals($header, $header->setOrderable('Title'));
         $this->assertTrue($header->isOrderable());
 
         $header->setOrderable(0);
@@ -78,7 +78,7 @@ class TableHeaderColumnTest extends TestCase
 
         $this->assertEquals('column.header', $header->getView());
 
-        $header->setView('custom.template');
+        $this->assertEquals($header, $header->setView('custom.template'));
         $this->assertEquals('custom.template', $header->getView());
     }
 

@@ -29,7 +29,7 @@ class ModelConfigurationTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->assertEquals('model_configuration_test_models', $model->getAlias());
-        $model->setAlias('test');
+        $this->assertEquals($model, $model->setAlias('test'));
         $this->assertEquals('test', $model->getAlias());
     }
 
@@ -42,7 +42,7 @@ class ModelConfigurationTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->assertEquals('Model Configuration Test Models', $model->getTitle());
-        $model->setTitle('test');
+        $this->assertEquals($model, $model->setTitle('test'));
         $this->assertEquals('test', $model->getTitle());
     }
 
@@ -57,7 +57,7 @@ class ModelConfigurationTest extends TestCase
         $this->getTranslatorMock()->shouldReceive('trans')->once()->with('sleeping_owl::lang.model.create', ['title' => $model->getTitle()], 'messages', null)->andReturn('string');
         $this->assertEquals('string', $model->getCreateTitle());
 
-        $model->setCreateTitle('test');
+        $this->assertEquals($model, $model->setCreateTitle('test'));
         $this->assertEquals('test', $model->getCreateTitle());
     }
 
@@ -72,7 +72,7 @@ class ModelConfigurationTest extends TestCase
         $this->getTranslatorMock()->shouldReceive('trans')->once()->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], 'messages', null)->andReturn('string');
         $this->assertEquals('string', $model->getEditTitle());
 
-        $model->setEditTitle('test');
+        $this->assertEquals($model, $model->setEditTitle('test'));
         $this->assertEquals('test', $model->getEditTitle());
     }
 
@@ -89,9 +89,9 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
-        $model->onDisplay(function () use ($display) {
+        $this->assertEquals($model, $model->onDisplay(function () use ($display) {
             return $display;
-        });
+        }));
 
         $this->assertEquals($display, $model->fireDisplay());
 
@@ -133,9 +133,9 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
-        $model->onCreate(function () use ($display) {
+        $this->assertEquals($model, $model->onCreate(function () use ($display) {
             return $display;
-        });
+        }));
 
         $this->assertEquals($display, $model->fireCreate());
 
@@ -190,11 +190,11 @@ class ModelConfigurationTest extends TestCase
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
-        $model->onEdit(function ($id) use ($display) {
+        $this->assertEquals($model, $model->onEdit(function ($id) use ($display) {
             $this->assertEquals(1, $id);
 
             return $display;
-        });
+        }));
 
         $this->assertEquals($display, $model->fireEdit(1));
 
@@ -222,10 +222,9 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $callback = function () {
-        };
+        $callback = function () {};
 
-        $model->onCreateAndEdit($callback);
+        $this->assertEquals($model, $model->onCreateAndEdit($callback));
 
         $this->assertEquals($callback, $model->getEdit());
         $this->assertEquals($callback, $model->getCreate());
@@ -246,7 +245,7 @@ class ModelConfigurationTest extends TestCase
             return 'deleted';
         };
 
-        $model->onDelete($callback);
+        $this->assertEquals($model, $model->onDelete($callback));
 
         $this->assertEquals('deleted', $model->fireDelete(1));
     }
@@ -266,7 +265,7 @@ class ModelConfigurationTest extends TestCase
             return 'destroyed';
         };
 
-        $model->onDestroy($callback);
+        $this->assertEquals($model, $model->onDestroy($callback));
 
         $this->assertEquals('destroyed', $model->fireDestroy(1));
     }
@@ -286,7 +285,7 @@ class ModelConfigurationTest extends TestCase
             return 'restored';
         };
 
-        $model->onRestore($callback);
+        $this->assertEquals($model, $model->onRestore($callback));
 
         $this->assertEquals('restored', $model->fireRestore(1));
     }
@@ -300,7 +299,7 @@ class ModelConfigurationTest extends TestCase
         $model = $this->getConfiguration();
         $this->assertTrue($model->isDisplayable());
 
-        $model->disableDisplay();
+        $this->assertEquals($model, $model->disableDisplay());
         $this->assertFalse($model->isDisplayable());
     }
 
@@ -317,7 +316,7 @@ class ModelConfigurationTest extends TestCase
         });
         $this->assertTrue($model->isCreatable());
 
-        $model->disableCreating();
+        $this->assertEquals($model, $model->disableCreating());
         $this->assertFalse($model->isCreatable());
     }
 
@@ -335,7 +334,7 @@ class ModelConfigurationTest extends TestCase
         });
         $this->assertTrue($model->isEditable($model->getModel()));
 
-        $model->disableEditing();
+        $this->assertEquals($model, $model->disableEditing());
         $this->assertFalse($model->isEditable($model->getModel()));
     }
 
@@ -350,10 +349,10 @@ class ModelConfigurationTest extends TestCase
 
         $this->assertTrue($model->isDeletable($model->getModel()));
 
-        $model->disableDeleting();
+        $this->assertEquals($model, $model->disableDeleting());
         $this->assertFalse($model->isDeletable($model->getModel()));
 
-        $model->setDeletable(true);
+        $this->assertEquals($model, $model->setDeletable(true));
         $this->assertTrue($model->isDeletable($model->getModel()));
 
         $model->setDeletable(0);
@@ -386,7 +385,7 @@ class ModelConfigurationTest extends TestCase
 
         $this->assertTrue($model->isDestroyable($model->getModel()));
 
-        $model->disableDestroying();
+        $this->assertEquals($model, $model->disableDestroying());
         $this->assertFalse($model->isDestroyable($model->getModel()));
     }
 
@@ -410,7 +409,7 @@ class ModelConfigurationTest extends TestCase
 
         $this->assertTrue($model->isDestroyable($model->getModel()));
 
-        $model->disableRestoring();
+        $this->assertEquals($model, $model->disableRestoring());
         $this->assertFalse($model->isDestroyable($model->getModel()));
     }
 
@@ -445,7 +444,7 @@ class ModelConfigurationTest extends TestCase
         $this->getTranslatorMock()->shouldReceive('trans')->once()->with('sleeping_owl::lang.message.created', null, 'messages', null)->andReturn('string');
         $this->assertEquals('string', $model->getMessageOnCreate());
 
-        $model->setMessageOnCreate('test');
+        $this->assertEquals($model, $model->setMessageOnCreate('test'));
         $this->assertEquals('test', $model->getMessageOnCreate());
     }
 
@@ -460,7 +459,7 @@ class ModelConfigurationTest extends TestCase
         $this->getTranslatorMock()->shouldReceive('trans')->once()->with('sleeping_owl::lang.message.updated', null, 'messages', null)->andReturn('string');
         $this->assertEquals('string', $model->getMessageOnUpdate());
 
-        $model->setMessageOnUpdate('test');
+        $this->assertEquals($model, $model->setMessageOnUpdate('test'));
         $this->assertEquals('test', $model->getMessageOnUpdate());
     }
 
@@ -475,7 +474,7 @@ class ModelConfigurationTest extends TestCase
         $this->getTranslatorMock()->shouldReceive('trans')->once()->with('sleeping_owl::lang.message.deleted', null, 'messages', null)->andReturn('string');
         $this->assertEquals('string', $model->getMessageOnDelete());
 
-        $model->setMessageOnDelete('test');
+        $this->assertEquals($model, $model->setMessageOnDelete('test'));
         $this->assertEquals('test', $model->getMessageOnDelete());
     }
 
@@ -490,7 +489,7 @@ class ModelConfigurationTest extends TestCase
         $this->getTranslatorMock()->shouldReceive('trans')->once()->with('sleeping_owl::lang.message.destroyed', null, 'messages', null)->andReturn('string');
         $this->assertEquals('string', $model->getMessageOnDestroy());
 
-        $model->setMessageOnDestroy('test');
+        $this->assertEquals($model, $model->setMessageOnDestroy('test'));
         $this->assertEquals('test', $model->getMessageOnDestroy());
     }
 
@@ -505,7 +504,7 @@ class ModelConfigurationTest extends TestCase
         $this->getTranslatorMock()->shouldReceive('trans')->once()->with('sleeping_owl::lang.message.restored', null, 'messages', null)->andReturn('string');
         $this->assertEquals('string', $model->getMessageOnRestore());
 
-        $model->setMessageOnRestore('test');
+        $this->assertEquals($model, $model->setMessageOnRestore('test'));
         $this->assertEquals('test', $model->getMessageOnRestore());
     }
 }

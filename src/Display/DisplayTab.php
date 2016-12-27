@@ -2,20 +2,21 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModel;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\Display\TabInterface;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
-use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
@@ -24,7 +25,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @var string
      */
-    protected $label = '';
+    protected $label;
 
     /**
      * @var bool
@@ -111,9 +112,14 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @return string
+     * @throws DisplayTabException
      */
     public function getName()
     {
+        if (is_null($this->name) and is_null($this->getLabel())) {
+            throw new DisplayTabException('You should set name or label');
+        }
+
         return is_null($this->name)
             ? md5($this->getLabel())
             : $this->name;
