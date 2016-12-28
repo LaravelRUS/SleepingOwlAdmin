@@ -302,9 +302,7 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
-            $extension->modifyQuery($query);
-        });
+        $this->extensions->modifyQuery($query);
     }
 
     /**

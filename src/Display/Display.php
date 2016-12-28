@@ -64,7 +64,7 @@ abstract class Display implements DisplayInterface
     protected $repository;
 
     /**
-     * @var DisplayExtensionInterface[]|Collection
+     * @var DisplayExtensionInterface[]|ExtensionCollection
      */
     protected $extensions;
 
@@ -78,7 +78,7 @@ abstract class Display implements DisplayInterface
      */
     public function __construct()
     {
-        $this->extensions = new Collection();
+        $this->extensions = new ExtensionCollection();
 
         $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
@@ -112,7 +112,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface[]
+     * @return ExtensionCollection|DisplayExtensionInterface[]
      */
     public function getExtensions()
     {
@@ -163,11 +163,7 @@ abstract class Display implements DisplayInterface
         $this->repository = $this->makeRepository();
         $this->repository->with($this->with);
 
-        $this->extensions->each(function (DisplayExtensionInterface $extension) {
-            if ($extension instanceof Initializable) {
-                $extension->initialize();
-            }
-        });
+        $this->extensions->initialize();
 
         $this->includePackage();
 
@@ -241,18 +237,7 @@ abstract class Display implements DisplayInterface
     {
         $view = app('sleeping_owl.template')->view($this->getView(), $this->toArray());
 
-        $blocks = [];
-
-        $placableExtensions = $this->getExtensions()->filter(function ($extension) {
-            return $extension instanceof Placable;
-        });
-
-        foreach ($placableExtensions as $extension) {
-            $blocks[$extension->getPlacement()][] = (string) app('sleeping_owl.template')->view(
-                $extension->getView(),
-                $extension->toArray()
-            );
-        }
+        $blocks = $this->getExtensions()->placableBlocks();
 
         foreach ($blocks as $block => $data) {
             foreach ($data as $html) {

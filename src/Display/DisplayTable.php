@@ -182,14 +182,7 @@ class DisplayTable extends Display
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
 
-        $params['extensions'] = $this->getExtensions()
-            ->filter(function (DisplayExtensionInterface $ext) {
-                return $ext instanceof Renderable;
-            })
-            ->sortBy(function (DisplayExtensionInterface $extension) {
-                return $extension->getOrder();
-            });
-
+        $params['extensions'] = $this->getExtensions()->renderable()->sortByOrder();
         $params['newEntryButtonText'] = $this->getNewEntryButtonText();
 
         return $params;
@@ -255,8 +248,6 @@ class DisplayTable extends Display
      */
     protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
-            $extension->modifyQuery($query);
-        });
+        $this->extensions->modifyQuery($query);
     }
 }

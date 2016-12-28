@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
@@ -53,7 +54,21 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
+     * @return Model $model|null
+     */
+    public function getModel()
+    {
+        foreach ($this->getTabs() as $tab) {
+            if ($tab->getContent() instanceof FormInterface) {
+                return $tab->getContent()->getModel();
+            }
+        }
+    }
+
+    /**
      * @param string $class
+     *
+     * @return $this
      */
     public function setModelClass($class)
     {
@@ -62,6 +77,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 $tab->setModelClass($class);
             }
         });
+
+        return $this;
     }
 
     /**
@@ -113,9 +130,9 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
-        $tab = app('sleeping_owl.display')->tab($display)->setLabel($label)->setActive($active);
-
-        $this->addElement($tab);
+        $this->addElement(
+            $tab = app('sleeping_owl.display')->tab($display, $label)->setActive($active)
+        );
 
         return $tab;
     }
@@ -134,6 +151,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
 
     /**
      * @param string $action
+     *
+     * @return $this
      */
     public function setAction($action)
     {
@@ -142,10 +161,14 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 $tab->setAction($action);
             }
         });
+
+        return $this;
     }
 
     /**
      * @param int $id
+     *
+     * @return $this
      */
     public function setId($id)
     {
@@ -154,12 +177,15 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 $tab->setId($id);
             }
         });
+
+        return $this;
     }
 
     /**
      * @param ModelConfigurationInterface $model
      *
-     * @return Validator|null
+     * @return void
+     * @throws ValidationException
      */
     public function validateForm(ModelConfigurationInterface $model)
     {
@@ -172,6 +198,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
 
     /**
      * @param ModelConfigurationInterface $model
+     *
+     * @return void
      */
     public function saveForm(ModelConfigurationInterface $model)
     {
@@ -183,7 +211,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return mixed
+     * @return null
      */
     public function getValue()
     {
@@ -217,17 +245,5 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     protected function getElementContainer($object)
     {
         return $object->getContent();
-    }
-
-    /**
-     * @return Model $model
-     */
-    public function getModel()
-    {
-        foreach ($this->getTabs() as $tab) {
-            if ($tab->getContent() instanceof FormInterface) {
-                return $tab->getContent()->getModel();
-            }
-        }
     }
 }
