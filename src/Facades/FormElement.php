@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class AdminForm.
  * @method static \SleepingOwl\Admin\Form\Element\Text text($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Image image($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Images images($name, $label = null)

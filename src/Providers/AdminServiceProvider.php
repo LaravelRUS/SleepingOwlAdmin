@@ -214,9 +214,7 @@ class AdminServiceProvider extends ServiceProvider
                 require $routesFile;
             }
 
-            foreach (AliasBinder::routes() as $route) {
-                call_user_func($route, $router);
-            }
+            AliasBinder::registerRoutes($router);
         });
     }
 
