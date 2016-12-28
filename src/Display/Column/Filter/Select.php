@@ -13,7 +13,7 @@ class Select extends BaseColumnFilter
     /**
      * @var string
      */
-    protected $view = 'select';
+    protected $view = 'column.filter.select';
 
     /**
      * @var Model

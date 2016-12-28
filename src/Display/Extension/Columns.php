@@ -10,6 +10,8 @@ use SleepingOwl\Admin\Contracts\ColumnInterface;
 
 class Columns extends Extension implements Initializable, Renderable
 {
+    use \SleepingOwl\Admin\Traits\Renderable;
+
     /**
      * @var ColumnInterface[]|Collection
      */
@@ -132,26 +134,6 @@ class Columns extends Extension implements Initializable, Renderable
     public function push(ColumnInterface $column)
     {
         $this->columns->push($column);
-
-        return $this;
-    }
-
-    /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param string|\Illuminate\View\View $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
 
         return $this;
     }

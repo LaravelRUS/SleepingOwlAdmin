@@ -15,14 +15,9 @@ class Image extends NamedColumn
     protected $orderable = false;
 
     /**
-     * Image constructor.
-     *
-     * {@inheritdoc}
+     * @var string
      */
-    public function __construct($name, $label = null)
-    {
-        parent::__construct($name, $label);
-    }
+    protected $view = 'column.image';
 
     /**
      * @return string

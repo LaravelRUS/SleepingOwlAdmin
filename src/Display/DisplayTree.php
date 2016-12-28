@@ -247,14 +247,6 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
-    }
-
-    /**
      * @return array
      */
     public function toArray()

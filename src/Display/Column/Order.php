@@ -17,6 +17,11 @@ class Order extends TableColumn implements WithRoutesInterface
     protected $orderable = false;
 
     /**
+     * @var string
+     */
+    protected $view = 'column.order';
+
+    /**
      * Register routes.
      *
      * @param Router $router

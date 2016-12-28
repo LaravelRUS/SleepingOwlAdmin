@@ -5,22 +5,18 @@ namespace SleepingOwl\Admin\Form;
 use Closure;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets, VisibleCondition;
+    use Assets, VisibleCondition, Renderable;
 
     /**
      * @var \SleepingOwl\Admin\Contracts\TemplateInterface
      */
     protected $template;
-
-    /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view;
 
     /**
      * @var Model
@@ -146,31 +142,6 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        if (is_null($this->view)) {
-            $name = (new \ReflectionClass($this))->getShortName();
-            $this->view = 'form.element.'.strtolower($name);
-        }
-
-        return $this->view;
-    }
-
-    /**
-     * @param \Illuminate\View\View|string $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
      * @return Model
      */
     public function getModel()
@@ -245,21 +216,5 @@ abstract class FormElement implements FormElementInterface
             'readonly' => $this->isReadonly(),
             'model' => $this->getModel(),
         ];
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray())->render();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 }

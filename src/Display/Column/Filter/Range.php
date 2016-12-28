@@ -12,7 +12,7 @@ class Range extends BaseColumnFilter
     /**
      * @var string
      */
-    protected $view = 'range';
+    protected $view = 'column.filter.range';
 
     /**
      * @var ColumnFilterInterface

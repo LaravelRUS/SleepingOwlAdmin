@@ -24,6 +24,11 @@ class DateTime extends NamedFormElement
     protected $pickerFormat;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.datetime';
+
+    /**
      * @return string
      */
     public function getFormat()

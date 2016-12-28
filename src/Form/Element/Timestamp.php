@@ -12,6 +12,11 @@ class Timestamp extends DateTime
     protected $seconds = true;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.timestamp';
+
+    /**
      * @return $this|NamedFormElement|mixed|null|string
      */
     public function getValue()

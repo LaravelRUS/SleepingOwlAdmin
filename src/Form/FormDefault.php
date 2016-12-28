@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form;
 
 use Request;
-use Validator;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
@@ -143,26 +142,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function getRepository()
     {
         return $this->repository;
-    }
-
-    /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param \Illuminate\View\View|string $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
     }
 
     /**
@@ -382,7 +361,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $verifier = app('validation.presence');
         $verifier->setConnection($this->getModel()->getConnectionName());
 
-        $validator = Validator::make(
+        $validator = \Validator::make(
             Request::all(),
             $this->getValidationRules(),
             $this->getValidationMessages(),
@@ -416,22 +395,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             'buttons' => $this->getButtons(),
             'backUrl' => session('_redirectBack', \URL::previous()),
         ];
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 
     /**

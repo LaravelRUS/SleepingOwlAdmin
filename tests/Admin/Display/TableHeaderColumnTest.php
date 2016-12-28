@@ -91,7 +91,7 @@ class TableHeaderColumnTest extends TestCase
         $header->setTitle('Title');
 
         $this->assertEquals([
-            'attributes'  => $header->htmlAttributesToString(),
+            'attributes'  => ' class="row-header" data-orderable="false"',
             'title'       => $header->getTitle(),
             'isOrderable' => $header->isOrderable(),
         ], $header->toArray());

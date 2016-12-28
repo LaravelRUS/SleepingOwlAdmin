@@ -10,6 +10,11 @@ class Textarea extends NamedFormElement
     protected $rows = 10;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.textarea';
+
+    /**
      * @return int
      */
     public function getRows()

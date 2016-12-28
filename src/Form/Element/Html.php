@@ -8,6 +8,12 @@ use Illuminate\Contracts\View\View as ViewContract;
 
 class Html extends Custom
 {
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.html';
+
     /**
      * @param string|Closure|Htmlable|ViewContract $html
      * @param Closure $callback

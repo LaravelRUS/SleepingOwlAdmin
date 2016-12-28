@@ -6,6 +6,12 @@ use Request;
 
 class Images extends Image
 {
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.images';
+
     /**
      * Store array of images as json string.
      * @return $this

@@ -10,6 +10,11 @@ class FormElements extends FormElement implements ElementsInterface
     use \SleepingOwl\Admin\Traits\FormElements;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.formelements';
+
+    /**
      * @param array $elements
      */
     public function __construct(array $elements = [])

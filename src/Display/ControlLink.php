@@ -7,10 +7,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
+use SleepingOwl\Admin\Traits\Renderable;
 
 class ControlLink implements ControlButtonInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Renderable;
 
     /**
      * @var Closure
@@ -58,8 +59,6 @@ class ControlLink implements ControlButtonInterface
     protected $condition;
 
     /**
-     * ControlButton constructor.
-     *
      * @param Closure $url
      * @param string $text
      * @param int $position
@@ -169,14 +168,6 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
-     * @return View|string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
      * @param string $text
      *
      * @return $this
@@ -243,24 +234,5 @@ class ControlLink implements ControlButtonInterface
             'icon' => $this->getIcon(),
             'hideText' => $this->hideText,
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view(
-            $this->getView(),
-            $this->toArray()
-        )->render();
     }
 }

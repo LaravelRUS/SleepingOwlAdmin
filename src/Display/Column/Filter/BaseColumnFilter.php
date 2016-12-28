@@ -11,12 +11,7 @@ use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
-    use SqlQueryOperators, HtmlAttributes, Assets;
-
-    /**
-     * @var string
-     */
-    protected $view;
+    use SqlQueryOperators, HtmlAttributes, Assets, \SleepingOwl\Admin\Traits\Renderable;
 
     public function __construct()
     {
@@ -29,14 +24,6 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function initialize()
     {
         $this->includePackage();
-    }
-
-    /**
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
     }
 
     /**
@@ -59,21 +46,5 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
         return [
             'attributes' => $this->htmlAttributesToString(),
         ];
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view('column.filter.'.$this->getView(), $this->toArray());
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 }

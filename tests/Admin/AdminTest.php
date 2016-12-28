@@ -9,6 +9,12 @@ class AdminTest extends TestCase
      */
     private $admin;
 
+    public function tearDown()
+    {
+        m::close();
+    }
+
+
     public function setUp()
     {
         parent::setUp();

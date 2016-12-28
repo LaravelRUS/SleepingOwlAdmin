@@ -61,6 +61,11 @@ class Select extends NamedFormElement
     protected $loadOptionsQueryPreparer;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.select';
+
+    /**
      * @param string      $path
      * @param string|null $label
      * @param array|Model $options

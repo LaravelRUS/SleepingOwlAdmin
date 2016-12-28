@@ -17,6 +17,7 @@ use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Traits\Renderable;
 
 /**
  * Class Display.
@@ -35,12 +36,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
  */
 abstract class Display implements DisplayInterface
 {
-    use HtmlAttributes, Assets;
-
-    /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view;
+    use HtmlAttributes, Assets, Renderable;
 
     /**
      * @var string
@@ -237,26 +233,6 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param string|\Illuminate\View\View $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
      * Get the evaluated contents of the object.
      *
      * @return string
@@ -289,14 +265,6 @@ abstract class Display implements DisplayInterface
         }
 
         return $view;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 
     /**

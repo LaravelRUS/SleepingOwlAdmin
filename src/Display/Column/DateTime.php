@@ -14,6 +14,11 @@ class DateTime extends NamedColumn
     protected $format;
 
     /**
+     * @var string
+     */
+    protected $view = 'column.datetime';
+
+    /**
      * @param Model $model
      *
      * @return $this

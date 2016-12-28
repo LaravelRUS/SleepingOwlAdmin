@@ -14,7 +14,7 @@ class FormDefaultTest extends TestCase
         m::close();
     }
 
-    public function getForm(array $elements = [])
+    public function getFormElement(array $elements = [])
     {
         return new FormDefault($elements);
     }
@@ -29,7 +29,7 @@ class FormDefaultTest extends TestCase
         \KodiCMS\Assets\Facades\PackageManager::shouldReceive('load')->once();
         \KodiCMS\Assets\Facades\PackageManager::shouldReceive('add')->once();
 
-        $form = $this->getForm([
+        $form = $this->getFormElement([
             m::mock(FormElementInterface::class),
         ]);
 
@@ -64,7 +64,7 @@ class FormDefaultTest extends TestCase
         $buttons->shouldReceive('setModel')->once();
         $buttons->shouldReceive('setModelConfiguration')->once();
 
-        $form = $this->getForm([
+        $form = $this->getFormElement([
             $element = m::mock(FormElementInterface::class),
             $uploadElement = m::mock(\SleepingOwl\Admin\Form\Element\Upload::class),
         ]);
@@ -95,7 +95,7 @@ class FormDefaultTest extends TestCase
      */
     public function test_gets_and_sets_buttons()
     {
-        $form = $this->getForm();
+        $form = $this->getFormElement();
 
         $this->assertInstanceOf(FormButtonsInterface::class, $form->getButtons());
 
@@ -117,7 +117,7 @@ class FormDefaultTest extends TestCase
             $buttons = m::mock(FormButtonsInterface::class)
         );
 
-        $form = $this->getForm();
+        $form = $this->getFormElement();
         $this->assertEquals($buttons, $form->getButtons());
     }
 
@@ -127,7 +127,7 @@ class FormDefaultTest extends TestCase
      */
     public function test_gets_and_sets_view()
     {
-        $form = $this->getForm();
+        $form = $this->getFormElement();
         $this->assertEquals('form.default', $form->getView());
 
         $this->assertEquals($form, $form->setView($view = 'custom.template'));
@@ -140,7 +140,7 @@ class FormDefaultTest extends TestCase
      */
     public function test_gets_and_sets_action()
     {
-        $form = $this->getForm();
+        $form = $this->getFormElement();
 
         $this->assertEquals($form, $form->setAction('action'));
         $this->assertEquals('action', $form->getAction());
@@ -153,7 +153,7 @@ class FormDefaultTest extends TestCase
      */
     public function test_gets_and_sets_model_class()
     {
-        $form = $this->getForm();
+        $form = $this->getFormElement();
 
         $this->assertEquals(
             $form,
@@ -165,7 +165,7 @@ class FormDefaultTest extends TestCase
 
     public function test_sets_model_class_exception()
     {
-        $form = $this->getForm();
+        $form = $this->getFormElement();
 
         $form->setModelClass($class = FormDefaultTestMockModel::class);
         $form->setModelClass(\Illuminate\Database\Eloquent\Model::class);
@@ -184,7 +184,7 @@ class FormDefaultTest extends TestCase
             ->with($model = FormDefaultTestMockModel::class)
             ->andReturn($return = 'model_configuration');
 
-        $form = $this->getForm();
+        $form = $this->getFormElement();
         $form->setModelClass($model);
 
         $this->assertEquals($return, $form->getModelConfiguration());
@@ -205,7 +205,7 @@ class FormDefaultTest extends TestCase
 
         $buttons->shouldReceive('setModel')->once()->with($model);
 
-        $form = $this->getForm([
+        $form = $this->getFormElement([
             $element = m::mock(FormElementInterface::class),
         ]);
 
@@ -240,7 +240,7 @@ class FormDefaultTest extends TestCase
             $repository = m::mock(RepositoryInterface::class)
         );
 
-        $form = $this->getForm([
+        $form = $this->getFormElement([
             $element = m::mock(FormElementInterface::class),
         ]);
 
@@ -301,7 +301,7 @@ class FormDefaultTest extends TestCase
             ->once()
             ->andReturn($modelConfiguration);
 
-        $form = $this->getForm([
+        $form = $this->getFormElement([
             $element = m::mock(FormElementInterface::class),
         ]);
 

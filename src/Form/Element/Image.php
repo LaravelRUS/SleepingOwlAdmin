@@ -78,4 +78,9 @@ class Image extends File
      * @var array
      */
     protected $uploadValidationRules = ['required', 'image'];
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.image';
 }

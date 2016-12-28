@@ -29,6 +29,11 @@ class Wysiwyg extends NamedFormElement
     protected $filterValue = true;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.wysiwyg';
+
+    /**
      * @param string      $path
      * @param string|null $label
      * @param string|null $editor

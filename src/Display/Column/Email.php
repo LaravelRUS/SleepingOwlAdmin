@@ -4,6 +4,12 @@ namespace SleepingOwl\Admin\Display\Column;
 
 class Email extends NamedColumn
 {
+
+    /**
+     * @var string
+     */
+    protected $view = 'column.email';
+
     /**
      * @return array
      */

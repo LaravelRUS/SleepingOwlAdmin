@@ -4,6 +4,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Mockery as m;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Display\DisplayTab;
 
@@ -27,7 +28,10 @@ class DisplayTabTest extends TestCase
 
         return new DisplayTab($renderable, $label, $icon);
     }
-    
+
+    /**
+     * @covers DisplayTab::__construct
+     */
     public function test_constructor_without_optional_args()
     {
         $renderable = m::mock(Renderable::class);
@@ -40,8 +44,14 @@ class DisplayTabTest extends TestCase
         $reflectedClass = new ReflectionClass($classname);
         $constructor = $reflectedClass->getConstructor();
         $constructor->invoke($tab, $renderable);
+
+        $this->assertContains(\SleepingOwl\Admin\Traits\VisibleCondition::class, class_uses_recursive($tab));
+        $this->assertContains(\SleepingOwl\Admin\Traits\Renderable::class, class_uses_recursive($tab));
     }
 
+    /**
+     * @covers DisplayTab::__construct
+     */
     public function test_constructor_with_optional_args()
     {
         $renderable = m::mock(Renderable::class);
@@ -56,6 +66,10 @@ class DisplayTabTest extends TestCase
         $constructor->invokeArgs($tab, [$renderable, $label, $icon]);
     }
 
+    /**
+     * @covers DisplayTab::setLabel
+     * @covers DisplayTab::getLabel
+     */
     public function test_gets_and_sets_label()
     {
         $tab = $this->getTab(null, null);
@@ -65,6 +79,10 @@ class DisplayTabTest extends TestCase
         $this->assertEquals($label, $tab->getLabel());
     }
 
+    /**
+     * @covers DisplayTab::isActive
+     * @covers DisplayTab::setActive
+     */
     public function test_gets_and_sets_active()
     {
         $tab = $this->getTab(null, null);
@@ -84,6 +102,10 @@ class DisplayTabTest extends TestCase
         $this->assertFalse($tab->isActive());
     }
 
+    /**
+     * @covers DisplayTab::getName
+     * @covers DisplayTab::setName
+     */
     public function test_gets_and_sets_name()
     {
         $tab = $this->getTab(null, null);
@@ -105,6 +127,10 @@ class DisplayTabTest extends TestCase
         $tab->getName();
     }
 
+    /**
+     * @covers DisplayTab::setIcon
+     * @covers DisplayTab::getIcon
+     */
     public function test_gets_and_sets_icon()
     {
         $tab = $this->getTab(null, null);
@@ -114,12 +140,18 @@ class DisplayTabTest extends TestCase
         $this->assertEquals($icon, $tab->getIcon());
     }
 
+    /**
+     * @covers DisplayTab::getContent
+     */
     public function test_gets_content()
     {
         $tab = $this->getTab(null, null);
         $this->assertInstanceOf(Renderable::class, $tab->getContent());
     }
 
+    /**
+     * @covers DisplayTab::setModelClass
+     */
     public function test_sets_model_class()
     {
         $tab = $this->getTab(null, null);
@@ -143,6 +175,9 @@ class DisplayTabTest extends TestCase
         $tab->setModelClass($class);
     }
 
+    /**
+     * @covers DisplayTab::initialize
+     */
     public function test_initialize()
     {
         $tab = $this->getTab(null, null);
@@ -164,6 +199,10 @@ class DisplayTabTest extends TestCase
         $tab->initialize();
     }
 
+    /**
+     * @covers DisplayTab::setAction
+     * @covers DisplayTab::setId
+     */
     public function test_sets_action_and_id()
     {
         $tab = $this->getTab(null, null);
@@ -173,6 +212,7 @@ class DisplayTabTest extends TestCase
         $content->shouldNotReceive('setId');
 
         $this->assertEquals($tab, $tab->setAction('test'));
+        $this->assertEquals($tab, $tab->setId('test'));
     }
 
     public function test_sets_action_and_id_with_form_content()
@@ -188,6 +228,9 @@ class DisplayTabTest extends TestCase
         $tab->setId($id);
     }
 
+    /**
+     * @covers DisplayTab::validateForm
+     */
     public function test_validate_form()
     {
         $tab = $this->getTab(null, null);
@@ -210,6 +253,9 @@ class DisplayTabTest extends TestCase
         $this->assertNull($tab->validateForm($model));
     }
 
+    /**
+     * @covers DisplayTab::saveForm
+     */
     public function test_save_form()
     {
         $tab = $this->getTab(null, null);
@@ -231,14 +277,20 @@ class DisplayTabTest extends TestCase
         $this->assertEquals($tab, $tab->saveForm($model));
     }
 
-    public function test_sets_model()
+    /**
+     * @covers DisplayTab::setModel
+     * @covers DisplayTab::getModel
+     */
+    public function test_sets_and_gets_model()
     {
         $tab = $this->getTab(null, null);
 
         $content = $tab->getContent();
         $content->shouldNotReceive('setModel');
+        $content->shouldNotReceive('getModel');
 
         $this->assertEquals($tab, $tab->setModel(m::mock(\Illuminate\Database\Eloquent\Model::class)));
+        $this->assertNull($tab->getModel());
     }
 
     public function test_sets_model_with_modelable_content()
@@ -248,8 +300,128 @@ class DisplayTabTest extends TestCase
         $tab = new DisplayTab($renderable);
         $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
         $renderable->shouldReceive('setModel')->once()->with($model);
+        $renderable->shouldReceive('getModel')->once()->andReturn($model);
 
         $this->assertEquals($tab, $tab->setModel($model));
+        $this->assertEquals($model, $tab->getModel());
+    }
+
+    /**
+     * @covers DisplayTab::getValidationRules
+     * @covers DisplayTab::getValidationMessages
+     * @covers DisplayTab::getValidationLabels
+     */
+    public function test_gets_validation()
+    {
+        $tab = $this->getTab(null, null);
+
+        $content = $tab->getContent();
+        $content->shouldNotReceive('getValidationRules');
+        $content->shouldNotReceive('getValidationMessages');
+        $content->shouldNotReceive('getValidationLabels');
+
+        $this->assertEquals([], $tab->getValidationRules());
+        $this->assertEquals([], $tab->getValidationMessages());
+        $this->assertEquals([], $tab->getValidationLabels());
+    }
+
+    public function test_gets_validation_rules_with_validable_content()
+    {
+        $renderable = m::mock(DisplayTabTestValidable::class);
+        $renderable->shouldReceive('getValidationRules')->once()->andReturn($rules = ['rules']);
+        $renderable->shouldReceive('getValidationMessages')->once()->andReturn($messages = ['messages']);
+        $renderable->shouldReceive('getValidationLabels')->once()->andReturn($labels = ['labels']);
+
+        $tab = new DisplayTab($renderable);
+
+        $this->assertEquals($rules, $tab->getValidationRules());
+        $this->assertEquals($messages, $tab->getValidationMessages());
+        $this->assertEquals($labels, $tab->getValidationLabels());
+    }
+
+    /**
+     * @covers DisplayTab::save
+     * @covers DisplayTab::afterSave
+     * @covers DisplayTab::getValue
+     * @covers DisplayTab::isReadonly
+     */
+    public function test_save()
+    {
+        $tab = $this->getTab(null, null);
+
+        $content = $tab->getContent();
+        $content->shouldNotReceive('save');
+        $content->shouldNotReceive('afterSave');
+        $content->shouldNotReceive('getValue');
+        $content->shouldNotReceive('isReadonly');
+
+        $this->assertNull($tab->save());
+        $this->assertNull($tab->afterSave());
+        $this->assertNull($tab->getValue());
+        $this->assertFalse($tab->isReadonly());
+    }
+
+    /**
+     * @covers DisplayTab::save
+     * @covers DisplayTab::afterSave
+     */
+    public function test_save_with_savable_content()
+    {
+        $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormElementInterface::class);
+        $renderable->shouldReceive('save')->once();
+        $renderable->shouldReceive('afterSave')->once();
+        $renderable->shouldReceive('getValue')->once()->andReturn($value = 'test');
+        $renderable->shouldReceive('isReadonly')->once()->andReturn(true);
+        $tab = new DisplayTab($renderable);
+
+        $tab->save();
+        $tab->afterSave();
+        $this->assertEquals($value, $tab->getValue());
+        $this->assertTrue($tab->isReadonly());
+    }
+
+    /**
+     * @covers DisplayTab::getElement
+     * @covers DisplayTab::getElements
+     * @covers DisplayTab::setElements
+     */
+    public function test_gets_element()
+    {
+        $tab = $this->getTab(null, null);
+
+        $content = $tab->getContent();
+        $content->shouldNotReceive('getElement');
+        $content->shouldNotReceive('getElements');
+        $content->shouldNotReceive('setElements');
+
+        $this->assertNull($tab->getElement('path'));
+        $this->assertInstanceOf(\SleepingOwl\Admin\Form\FormElementsCollection::class, $tab->getElements());
+        $this->assertEquals($tab, $tab->setElements(['elements']));
+    }
+
+    public function test_gets_element_with_elements_content()
+    {
+        $renderable = m::mock(\SleepingOwl\Admin\Contracts\Form\ElementsInterface::class);
+        $renderable->shouldReceive('getElement')->once()->with('path')->andReturn($element = 'element');
+        $renderable->shouldReceive('getElements')->once()->andReturn($elements = ['element']);
+        $renderable->shouldReceive('setElements')->once()->with($elements);
+        $tab = new DisplayTab($renderable);
+
+        $this->assertEquals($element, $tab->getElement('path'));
+        $this->assertEquals($elements, $tab->getElements());
+        $this->assertEquals($tab, $tab->setElements($elements));
+    }
+
+    /**
+     * @covers DisplayTab::toArray
+     */
+    public function test_to_array()
+    {
+        $tab = $this->getTab(null, null);
+
+        $tab->setLabel('test');
+
+        $this->assertCount(4, array_intersect(array_keys($tab->toArray()), ['label', 'active', 'name', 'icon']));
     }
 }
 
@@ -258,5 +430,9 @@ abstract class DisplayTabTestInitializable implements Renderable, Initializable 
 }
 
 abstract class DisplayTabTestWithModel implements Renderable, WithModel {
+
+}
+
+abstract class DisplayTabTestValidable implements Renderable, Validable {
 
 }

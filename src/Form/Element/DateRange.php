@@ -23,6 +23,12 @@ class DateRange extends Date
     protected $defaultTo;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.daterange';
+
+
+    /**
      * @return string
      */
     public function getDefaultFrom()

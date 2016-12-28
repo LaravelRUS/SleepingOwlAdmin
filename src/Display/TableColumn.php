@@ -2,20 +2,21 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Traits\Assets;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
-use SleepingOwl\Admin\Display\Column\OrderByClause;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Display\Column\OrderByClause;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\Renderable;
 
 abstract class TableColumn implements ColumnInterface
 {
-    use HtmlAttributes, Assets;
+    use HtmlAttributes, Assets, Renderable;
 
     /**
      * Column header.
@@ -44,11 +45,6 @@ abstract class TableColumn implements ColumnInterface
      * @var string
      */
     protected $width = null;
-
-    /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view;
 
     /**
      * @var OrderByClauseInterface
@@ -107,31 +103,6 @@ abstract class TableColumn implements ColumnInterface
         }
 
         $this->width = $width;
-
-        return $this;
-    }
-
-    /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        if (is_null($this->view)) {
-            $reflect = new \ReflectionClass($this);
-            $this->view = 'column.'.strtolower($reflect->getShortName());
-        }
-
-        return $this->view;
-    }
-
-    /**
-     * @param string|\Illuminate\View\View $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
 
         return $this;
     }
@@ -254,25 +225,6 @@ abstract class TableColumn implements ColumnInterface
             'model'      => $this->getModel(),
             'append' => $this->getAppends(),
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view(
-            $this->getView(),
-            $this->toArray()
-        );
     }
 
     /**

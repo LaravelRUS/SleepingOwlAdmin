@@ -13,7 +13,7 @@ class Date extends Text
     /**
      * @var string
      */
-    protected $view = 'date';
+    protected $view = 'column.filter.date';
 
     /**
      * @var string

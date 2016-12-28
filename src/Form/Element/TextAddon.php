@@ -15,6 +15,11 @@ class TextAddon extends NamedFormElement
     protected $addon;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.textaddon';
+
+    /**
      * @return string
      */
     public function getPlacement()

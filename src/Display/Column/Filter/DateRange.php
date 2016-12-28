@@ -7,7 +7,7 @@ class DateRange extends Date
     /**
      * @var string
      */
-    protected $view = 'daterange';
+    protected $view = 'column.filter.daterange';
 
     /**
      * Initialize column filter.

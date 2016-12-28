@@ -3,13 +3,15 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\Renderable;
 
 class FormButtons implements FormButtonsInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Renderable;
 
     /**
      * @var string|null
@@ -85,6 +87,11 @@ class FormButtons implements FormButtonsInterface
      * @var Model
      */
     protected $model;
+
+    /**
+     * @var string|View
+     */
+    protected $view = 'form.buttons';
 
     /**
      * FormButtons constructor.
@@ -380,14 +387,6 @@ class FormButtons implements FormButtonsInterface
         $this->showRestoreButton = false;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view('form.buttons', $this->toArray());
     }
 
     /**

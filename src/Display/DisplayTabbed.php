@@ -18,7 +18,7 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
  */
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-    use FormElements, VisibleCondition;
+    use FormElements, VisibleCondition, \SleepingOwl\Admin\Traits\Renderable;
 
     /**
      * @var string
@@ -198,14 +198,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
      * @return array
      */
     public function toArray()
@@ -213,25 +205,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
         return [
             'tabs' => $this->getTabs()->onlyVisible(),
         ];
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view(
-            $this->getView(),
-            $this->toArray()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 
     /**

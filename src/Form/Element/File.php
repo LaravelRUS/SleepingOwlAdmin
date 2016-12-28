@@ -167,6 +167,11 @@ class File extends NamedFormElement implements WithRoutesInterface
     protected $uploadValidationRules = ['required', 'file'];
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.file';
+
+    /**
      * @return array
      */
     public function getUploadValidationMessages()

@@ -86,8 +86,6 @@ class TableColumnTest extends TestCase
     {
         $column = $this->getColumn();
 
-        $this->assertEquals('column.'.strtolower(get_class($column)), $column->getView());
-
         $this->assertEquals($column, $column->setView('custom.template'));
         $this->assertEquals('custom.template', $column->getView());
     }
@@ -246,6 +244,26 @@ class TableColumnTest extends TestCase
 
         $this->getTemplateMock()->shouldReceive('view')->once()->with($column->getView(), $column->toArray())->andReturn('html');
         $this->assertEquals('html', $column->render());
+    }
+
+    public function test_columns_has_view()
+    {
+        $columns = $this->app['sleeping_owl.table.column'];
+
+        foreach ($columns->getAliases() as $class) {
+            $column = $this->createMock($class);
+
+            $reflection = new ReflectionClass($class);
+
+            if ($reflection->isAbstract()) {
+                continue;
+            }
+
+            $property = $reflection->getProperty('view');
+            $property->setAccessible(true);
+
+            $this->assertNotNull($property->getValue($column), $class);
+        }
     }
 }
 

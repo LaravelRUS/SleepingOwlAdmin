@@ -9,6 +9,11 @@ class Password extends NamedFormElement
      */
     protected $allowEmpty = false;
 
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.password';
+
     public function save()
     {
         $value = $this->getValue();

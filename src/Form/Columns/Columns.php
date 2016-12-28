@@ -17,6 +17,11 @@ class Columns extends FormElements implements ColumnInterface
     protected $maxWidth = 12;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.columns';
+
+    /**
      * @param array $elements
      */
     public function __construct(array $elements = [])

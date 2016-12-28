@@ -11,7 +11,7 @@ class Text extends BaseColumnFilter
     /**
      * @var string
      */
-    protected $view = 'text';
+    protected $view = 'column.filter.text';
 
     /**
      * @var string
@@ -21,6 +21,7 @@ class Text extends BaseColumnFilter
     public function initialize()
     {
         parent::initialize();
+
         $this->setHtmlAttribute('class', 'form-control column-filter');
         $this->setHtmlAttribute('data-type', 'text');
         $this->setHtmlAttribute('type', 'text');

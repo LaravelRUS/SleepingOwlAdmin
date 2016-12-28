@@ -171,18 +171,6 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getView
-     */
-    public function test_get_default_view()
-    {
-        $element = $this->getElement();
-
-        $className = strtolower((new \ReflectionClass($element))->getShortName());
-
-        $this->assertEquals('form.element.'.$className, $element->getView());
-    }
-
-    /**
      * @covers FormElement::setView
      */
     public function test_set_view()
@@ -226,11 +214,10 @@ class FormElementTest extends TestCase
     {
         $template = m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class);
         $template->shouldReceive('view')->andReturn($view = m::mock(\Illuminate\Contracts\View\View::class));
-        $view->shouldReceive('render')->once()->andReturn('hello world');
 
         $this->app->instance('sleeping_owl.template', $template);
 
-        $this->assertEquals('hello world', $this->getElement()->render());
+        $this->assertEquals($view, $this->getElement()->render());
     }
 
     /**
@@ -239,11 +226,11 @@ class FormElementTest extends TestCase
     public function test_converts_into_string()
     {
         $template = m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class);
-        $template->shouldReceive('view->render')->andReturn('hello world');
+        $template->shouldReceive('view->__toString')->andReturn('hello world');
 
         $this->app->instance('sleeping_owl.template', $template);
 
-        $this->assertEquals('hello world', $this->getElement()->__toString());
+        $this->assertEquals('hello world', (string) $this->getElement());
     }
 
     /**

@@ -7,6 +7,12 @@ use Illuminate\Http\UploadedFile;
 
 class Upload extends NamedFormElement
 {
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.upload';
+
     /**
      * @return array
      */
