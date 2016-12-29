@@ -69,18 +69,6 @@ class AdminTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Admin::modelAliases
-     * @covers SleepingOwl\Admin\Admin::getModels
-     */
-    public function test_returns_form_aliases()
-    {
-        $this->admin->registerModel(TestModel::class, function () {});
-        $aliases = $this->admin->aliases();
-
-        $this->assertTrue($aliases->has('test_models'));
-    }
-
-    /**
      * @covers SleepingOwl\Admin\Admin::getModel
      */
     public function test_gets_model()
