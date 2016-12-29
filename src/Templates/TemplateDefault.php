@@ -2,16 +2,79 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Meta;
-use SleepingOwl\Admin\Contracts\TemplateInterface;
+use DaveJamesMiller\Breadcrumbs\Manager;
+use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class TemplateDefault implements TemplateInterface
 {
-    public function __construct()
+    /**
+     * @var Application
+     */
+    protected $app;
+
+    /**
+     * @var MetaInterface
+     */
+    private $meta;
+
+    /**
+     * @var NavigationInterface
+     */
+    private $navigation;
+
+    /**
+     * @var Manager
+     */
+    private $breadcrumbs;
+
+    /**
+     * TemplateDefault constructor.
+     *
+     * @param Application $application
+     * @param MetaInterface $meta
+     * @param NavigationInterface $navigation
+     * @param Manager $breadcrumbs
+     */
+    public function __construct(Application $application, MetaInterface $meta, NavigationInterface $navigation, Manager $breadcrumbs)
     {
-        Meta::addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'])
+        $this->app = $application;
+        $this->meta = $meta;
+        $this->navigation = $navigation;
+        $this->breadcrumbs = $breadcrumbs;
+    }
+
+    public function initialize()
+    {
+        $this->meta->addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'])
             ->addJs('admin-scripts', route('admin.scripts'))
             ->addCss('admin-default', resources_url('css/admin-app.css'));
+    }
+
+    /**
+     * @return Manager
+     */
+    public function breadcrumbs()
+    {
+        return $this->breadcrumbs;
+    }
+
+    /**
+     * @return MetaInterface
+     */
+    public function meta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return NavigationInterface
+     */
+    public function navigation()
+    {
+        return $this->navigation;
     }
 
     /**
@@ -20,17 +83,6 @@ class TemplateDefault implements TemplateInterface
     public function getViewNamespace()
     {
         return 'sleeping_owl::';
-    }
-
-    /**
-     * @param string $view
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getTemplateViewPath($view)
-    {
-        return $this->getViewPath($view);
     }
 
     /**
@@ -54,8 +106,10 @@ class TemplateDefault implements TemplateInterface
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function view($view, $data = [], $mergeData = [])
+    public function view($view, array $data = [], $mergeData = [])
     {
+        $data['template'] = $this;
+
         if ($view instanceof \Illuminate\View\View) {
             return $view->with($data);
         }
@@ -110,7 +164,37 @@ class TemplateDefault implements TemplateInterface
     public function renderBreadcrumbs($key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
-            return \Breadcrumbs::renderIfExists($key);
+            $this->breadcrumbs()->setView(
+                $this->getViewPath('_partials.breadcrumbs')
+            );
+
+            return $this->breadcrumbs()->renderIfExists($key);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function renderNavigation()
+    {
+        return $this->navigation()->render(
+            $this->getViewPath('_partials.navigation.navigation')
+        );
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return string
+     */
+    public function renderMeta($title)
+    {
+        return $this->meta()
+            ->setTitle($this->makeTitle($title))
+            ->addMeta(['charset' => 'utf-8'], 'meta::charset')
+            ->addMeta(['content' => csrf_token(), 'name' => 'csrf-token'])
+            ->addMeta(['content' => 'width=device-width, initial-scale=1', 'name' => 'viewport'])
+            ->addMeta(['content' => 'IE=edge', 'http-equiv' => 'X-UA-Compatible'])
+            ->render();
     }
 }

@@ -149,6 +149,6 @@ class AliasBinder implements AliasBinderInterface
             throw new BadMethodCallException($name);
         }
 
-        return $this->makeClass($name, $arguments);;
+        return $this->makeClass($name, $arguments);
     }
 }

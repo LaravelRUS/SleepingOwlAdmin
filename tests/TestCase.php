@@ -68,7 +68,9 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getViewMock()
     {
-        return $this->app[ViewFactory::class] = m::mock(ViewFactory::class);
+        $this->app->instance(ViewFactory::class, $mock = m::mock(ViewFactory::class));
+
+        return $mock;
     }
 
     /**

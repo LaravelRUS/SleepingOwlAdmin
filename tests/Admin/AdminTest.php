@@ -1,6 +1,7 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class AdminTest extends TestCase
 {
@@ -19,7 +20,9 @@ class AdminTest extends TestCase
     {
         parent::setUp();
 
-        $this->admin = new SleepingOwl\Admin\Admin();
+        $this->admin = new SleepingOwl\Admin\Admin($this->app);
+
+        $this->admin->setTemplate(m::mock(TemplateInterface::class));
     }
 
     /**
@@ -71,11 +74,10 @@ class AdminTest extends TestCase
      */
     public function test_returns_form_aliases()
     {
-        $this->admin->registerModel(TestModel::class, function () {
-        });
-        $aliases = $this->admin->modelAliases();
+        $this->admin->registerModel(TestModel::class, function () {});
+        $aliases = $this->admin->aliases();
 
-        $this->assertEquals('test_models', $aliases['TestModel']);
+        $this->assertTrue($aliases->has('test_models'));
     }
 
     /**
@@ -130,7 +132,7 @@ class AdminTest extends TestCase
     public function test_returns_template()
     {
         $this->assertInstanceOf(
-            \SleepingOwl\Admin\Contracts\TemplateInterface::class,
+            TemplateInterface::class,
             $this->admin->template()
         );
     }

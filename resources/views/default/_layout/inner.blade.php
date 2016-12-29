@@ -11,7 +11,7 @@
 		</aside>
 
 		<div class="content-wrapper">
-			{!! AdminTemplate::renderBreadcrumbs($breadcrumbKey) !!}
+			{!! $template->renderBreadcrumbs($breadcrumbKey) !!}
 
 			<div class="content-header">
 				<h1>

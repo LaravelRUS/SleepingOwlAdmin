@@ -3,20 +3,25 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\ProviderRepository;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Model\ModelCollection;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\TemplateInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
-class Admin
+class Admin implements AdminInterface
 {
     /**
-     * @var ModelConfigurationInterface[]
+     * @var ModelConfigurationInterface[]|ModelCollection
      */
-    protected $models = [];
+    protected $models;
 
     /**
      * @var TemplateInterface
@@ -24,18 +29,56 @@ class Admin
     protected $template;
 
     /**
-     * @var Page[]
+     * @var Application
      */
-    protected $menuItems = [];
+    protected $app;
 
     /**
-     * @return string[]
+     * Admin constructor.
+     *
+     * @param Application $application
      */
-    public function modelAliases()
+    public function __construct(Application $application)
     {
-        return array_map(function (ModelConfigurationInterface $model) {
-            return $model->getAlias();
-        }, $this->getModels());
+        $this->app = $application;
+        $this->models = new ModelCollection();
+
+        $this->registerBaseServiceProviders();
+        $this->registerCoreContainerAliases();
+    }
+
+    /**
+     * @param TemplateInterface $template
+     */
+    public function setTemplate(TemplateInterface $template)
+    {
+        $this->template = $template;
+    }
+
+
+    /**
+     * Initialize class.
+     */
+    public function initialize()
+    {
+        $this->template->initialize();
+    }
+
+    /**
+     * @param string $class
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function registerModel($class, Closure $callback = null)
+    {;
+        $this->register($model = $this->app->make(ModelConfiguration::class, ['class' => $class]));
+
+        if (is_callable($callback)) {
+            call_user_func($callback, $model);
+        }
+
+        return $this;
     }
 
     /**
@@ -56,17 +99,13 @@ class Admin
 
     /**
      * @param string $class
-     * @param Closure|null $callback
+     * @param ModelConfigurationInterface $model
      *
      * @return $this
      */
-    public function registerModel($class, Closure $callback = null)
+    public function setModel($class, ModelConfigurationInterface $model)
     {
-        $this->register($model = new ModelConfiguration($class));
-
-        if (is_callable($callback)) {
-            call_user_func($callback, $model);
-        }
+        $this->models->put($class, $model);
 
         return $this;
     }
@@ -85,11 +124,11 @@ class Admin
             $this->registerModel($class);
         }
 
-        return array_get($this->models, $class);
+        return $this->models->get($class);
     }
 
     /**
-     * @return ModelConfigurationInterface[]
+     * @return ModelConfigurationInterface[]|ModelCollection
      */
     public function getModels()
     {
@@ -103,16 +142,7 @@ class Admin
      */
     public function hasModel($class)
     {
-        return array_key_exists($class, $this->models);
-    }
-
-    /**
-     * @param string             $class
-     * @param ModelConfigurationInterface $model
-     */
-    public function setModel($class, ModelConfigurationInterface $model)
-    {
-        $this->models[$class] = $model;
+        return $this->models->has($class);
     }
 
     /**
@@ -120,11 +150,6 @@ class Admin
      */
     public function template()
     {
-        if (is_null($this->template)) {
-            $templateClass = config('sleeping_owl.template');
-            $this->template = app($templateClass);
-        }
-
         return $this->template;
     }
 
@@ -142,9 +167,20 @@ class Admin
     /**
      * @return Navigation
      */
+    public function navigation()
+    {
+        return $this->app['sleeping_owl.navigation'];
+    }
+
+
+    /**
+     * @return Navigation
+     *
+     * @deprecated
+     */
     public function getNavigation()
     {
-        return app('sleeping_owl.navigation');
+        return $this->navigation();
     }
 
     /**
@@ -155,8 +191,56 @@ class Admin
      */
     public function view($content, $title = null)
     {
-        $controller = app(AdminController::class);
+        return $this->app[AdminController::class]->renderContent($content, $title);
+    }
 
-        return $controller->renderContent($content, $title);
+    /**
+     * Register all of the base service providers.
+     *
+     * @return void
+     */
+    protected function registerBaseServiceProviders()
+    {
+        $providers = [
+            \SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
+            \Collective\Html\HtmlServiceProvider::class,
+            \DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+            \SleepingOwl\Admin\Providers\AdminServiceProvider::class,
+        ];
+
+        /* Workaround to allow use ServiceProvider-based configurations in old fashion */
+        if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
+            $providers[] = $this->app->getNamespace().'Providers\\AdminSectionsServiceProvider';
+        }
+
+        $manifestPath = $this->app->bootstrapPath().'/cache/sleepingowladmin-services.php';
+
+        (new ProviderRepository($this->app, new Filesystem(), $manifestPath))->load($providers);
+    }
+
+
+
+    /**
+     * Register the core class aliases in the container.
+     *
+     * @return void
+     */
+    protected function registerCoreContainerAliases()
+    {
+        $aliases = [
+            'sleeping_owl' => ['SleepingOwl\Admin\Admin', 'SleepingOwl\Admin\Contracts\AdminInterface'],
+            'sleeping_owl.template' => ['SleepingOwl\Admin\Contracts\Template\TemplateInterface'],
+            'sleeping_owl.widgets' => ['SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface', 'SleepingOwl\Admin\Widgets\WidgetsRegistry'],
+            'sleeping_owl.message' => ['SleepingOwl\Admin\Widgets\Messages\MessageStack'],
+            'sleeping_owl.navigation' => ['SleepingOwl\Admin\Navigation', 'SleepingOwl\Admin\Contracts\Navigation\NavigationInterface'],
+            'sleeping_owl.wysiwyg' => ['SleepingOwl\Admin\Wysiwyg\Manager', 'SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface'],
+            'sleeping_owl.meta' => ['assets.meta','SleepingOwl\Admin\Contracts\Template\MetaInterface', 'SleepingOwl\Admin\Templates\Meta']
+        ];
+
+        foreach ($aliases as $key => $aliases) {
+            foreach ($aliases as $alias) {
+                $this->app->alias($key, $alias);
+            }
+        }
     }
 }
