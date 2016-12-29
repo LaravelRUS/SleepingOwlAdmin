@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display\Column;
 
 class Url extends NamedColumn
 {
-
     /**
      * @var string
      */

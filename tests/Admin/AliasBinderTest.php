@@ -42,7 +42,7 @@ class AliasBinderTest extends TestCase
     public function test_register_aliases()
     {
         $this->assertEquals($this->binder, $this->binder->register([
-            'test' => $class = AliasBinderTestWithoutRoutes::class
+            'test' => $class = AliasBinderTestWithoutRoutes::class,
         ]));
 
         $this->assertTrue($this->binder->hasAlias('test'));
@@ -79,12 +79,12 @@ class AliasBinderTest extends TestCase
     }
 }
 
-class AliasBinderTestWithoutRoutes {
-
+class AliasBinderTestWithoutRoutes
+{
 }
 
-class AliasBinderTestWithRoutes implements \SleepingOwl\Admin\Contracts\WithRoutesInterface {
-
+class AliasBinderTestWithRoutes implements \SleepingOwl\Admin\Contracts\WithRoutesInterface
+{
     /**
      * @param \Illuminate\Routing\Router $router
      *

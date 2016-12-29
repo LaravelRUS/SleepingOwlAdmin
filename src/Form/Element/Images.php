@@ -6,7 +6,6 @@ use Request;
 
 class Images extends Image
 {
-
     /**
      * @var string
      */

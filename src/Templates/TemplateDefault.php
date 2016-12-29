@@ -4,9 +4,9 @@ namespace SleepingOwl\Admin\Templates;
 
 use DaveJamesMiller\Breadcrumbs\Manager;
 use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 class TemplateDefault implements TemplateInterface
 {

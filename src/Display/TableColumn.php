@@ -2,17 +2,17 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Display\Column\OrderByClause;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\WithModel;
-use SleepingOwl\Admin\Display\Column\OrderByClause;
-use SleepingOwl\Admin\Traits\Assets;
-use SleepingOwl\Admin\Traits\Renderable;
 
 abstract class TableColumn implements ColumnInterface
 {

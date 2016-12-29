@@ -9,7 +9,6 @@ use SleepingOwl\Admin\Repository\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
  * @method TreeRepositoryInterface getRepository()

@@ -147,7 +147,8 @@ class TableColumnTest extends TestCase
         $this->assertFalse($column->isOrderable());
         $header->shouldReceive('setOrderable')->with(true);
 
-        $this->assertEquals($column, $column->setOrderable(function () {}));
+        $this->assertEquals($column, $column->setOrderable(function () {
+        }));
         $this->assertTrue($column->isOrderable());
     }
 

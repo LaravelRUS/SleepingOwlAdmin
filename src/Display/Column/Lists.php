@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display\Column;
 
 class Lists extends NamedColumn
 {
-
     /**
      * @var string
      */

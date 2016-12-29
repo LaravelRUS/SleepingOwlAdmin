@@ -3,17 +3,17 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\ProviderRepository;
-use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Model\ModelCollection;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Model\ModelCollection;
+use Illuminate\Foundation\ProviderRepository;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class Admin implements AdminInterface
@@ -55,7 +55,6 @@ class Admin implements AdminInterface
         $this->template = $template;
     }
 
-
     /**
      * Initialize class.
      */
@@ -71,7 +70,7 @@ class Admin implements AdminInterface
      * @return $this
      */
     public function registerModel($class, Closure $callback = null)
-    {;
+    {
         $this->register($model = $this->app->make(ModelConfiguration::class, ['class' => $class]));
 
         if (is_callable($callback)) {
@@ -172,7 +171,6 @@ class Admin implements AdminInterface
         return $this->app['sleeping_owl.navigation'];
     }
 
-
     /**
      * @return Navigation
      *
@@ -218,8 +216,6 @@ class Admin implements AdminInterface
         (new ProviderRepository($this->app, new Filesystem(), $manifestPath))->load($providers);
     }
 
-
-
     /**
      * Register the core class aliases in the container.
      *
@@ -234,7 +230,7 @@ class Admin implements AdminInterface
             'sleeping_owl.message' => ['SleepingOwl\Admin\Widgets\Messages\MessageStack'],
             'sleeping_owl.navigation' => ['SleepingOwl\Admin\Navigation', 'SleepingOwl\Admin\Contracts\Navigation\NavigationInterface'],
             'sleeping_owl.wysiwyg' => ['SleepingOwl\Admin\Wysiwyg\Manager', 'SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface'],
-            'sleeping_owl.meta' => ['assets.meta','SleepingOwl\Admin\Contracts\Template\MetaInterface', 'SleepingOwl\Admin\Templates\Meta']
+            'sleeping_owl.meta' => ['assets.meta', 'SleepingOwl\Admin\Contracts\Template\MetaInterface', 'SleepingOwl\Admin\Templates\Meta'],
         ];
 
         foreach ($aliases as $key => $aliases) {

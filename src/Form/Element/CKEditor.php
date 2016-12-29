@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class CKEditor extends Wysiwyg
 {
-
     /**
      * @param string      $path
      * @param string|null $label

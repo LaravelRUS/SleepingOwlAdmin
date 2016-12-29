@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Contracts\Support\Renderable;
 use Mockery as m;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\DisplayTab;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
-use SleepingOwl\Admin\Display\DisplayTab;
+use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
 
 class DisplayTabTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -58,8 +57,8 @@ class DisplayTabTest extends TestCase
 
         $tab = $this->createMock($classname = DisplayTab::class);
 
-        $tab->expects($this->once())->method('setLabel')>with($this->equalTo($label = 'TestLabel'));
-        $tab->expects($this->once())->method('setIcon')>with($this->equalTo($icon = 'TestIcon'));
+        $tab->expects($this->once())->method('setLabel') > with($this->equalTo($label = 'TestLabel'));
+        $tab->expects($this->once())->method('setIcon') > with($this->equalTo($icon = 'TestIcon'));
 
         $reflectedClass = new ReflectionClass($classname);
         $constructor = $reflectedClass->getConstructor();
@@ -425,14 +424,14 @@ class DisplayTabTest extends TestCase
     }
 }
 
-abstract class DisplayTabTestInitializable implements Renderable, Initializable {
-
+abstract class DisplayTabTestInitializable implements Renderable, Initializable
+{
 }
 
-abstract class DisplayTabTestWithModel implements Renderable, WithModel {
-
+abstract class DisplayTabTestWithModel implements Renderable, WithModel
+{
 }
 
-abstract class DisplayTabTestValidable implements Renderable, Validable {
-
+abstract class DisplayTabTestValidable implements Renderable, Validable
+{
 }

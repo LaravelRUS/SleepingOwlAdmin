@@ -7,7 +7,6 @@ use Illuminate\Http\UploadedFile;
 
 class Upload extends NamedFormElement
 {
-
     /**
      * @var string
      */

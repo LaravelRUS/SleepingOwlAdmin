@@ -3,12 +3,12 @@
 namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Config\Repository;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
+use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 
 class Manager implements WysiwygMangerInterface
 {

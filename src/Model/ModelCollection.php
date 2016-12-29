@@ -12,7 +12,7 @@ class ModelCollection extends Collection
      */
     public function aliases()
     {
-        return $this->map(function(ModelConfigurationInterface $model) {
+        return $this->map(function (ModelConfigurationInterface $model) {
             return $model->getAlias();
         });
     }
@@ -22,7 +22,7 @@ class ModelCollection extends Collection
      */
     public function keyByAlias()
     {
-        return $this->keyBy(function(ModelConfigurationInterface $model) {
+        return $this->keyBy(function (ModelConfigurationInterface $model) {
             return $model->getAlias();
         });
     }

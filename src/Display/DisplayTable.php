@@ -10,7 +10,6 @@ use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 /**
  * Class DisplayTable.
