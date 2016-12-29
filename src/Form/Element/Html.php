@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\View as ViewContract;
 
 class Html extends Custom
 {
-
     /**
      * @var string
      */

@@ -27,7 +27,6 @@ class DateRange extends Date
      */
     protected $view = 'form.element.daterange';
 
-
     /**
      * @return string
      */

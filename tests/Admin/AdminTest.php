@@ -15,7 +15,6 @@ class AdminTest extends TestCase
         m::close();
     }
 
-
     public function setUp()
     {
         parent::setUp();

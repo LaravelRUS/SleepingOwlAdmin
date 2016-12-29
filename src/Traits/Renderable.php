@@ -35,7 +35,6 @@ trait Renderable
         return $this->viewPath;
     }
 
-
     /**
      * @return string
      */

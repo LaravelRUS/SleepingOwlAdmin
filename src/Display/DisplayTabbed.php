@@ -4,10 +4,9 @@ namespace SleepingOwl\Admin\Display;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\DisplayInterface;

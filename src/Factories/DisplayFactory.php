@@ -9,11 +9,9 @@ use SleepingOwl\Admin\Display\DisplayTree;
 use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\DisplayTabbed;
-use SleepingOwl\Admin\Contracts\AdminInterface;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\DisplayDatatables;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
 
 /**

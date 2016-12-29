@@ -222,7 +222,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $callback = function () {};
+        $callback = function () {
+        };
 
         $this->assertEquals($model, $model->onCreateAndEdit($callback));
 

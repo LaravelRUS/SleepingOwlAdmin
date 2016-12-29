@@ -140,7 +140,7 @@ class TemplateDefaultTest extends TestCase
         $this->assertEquals($logo, $this->getTemplate()->getLogoMini());
     }
 
-    /**
+    /*
      * @covers TemplateDefault::renderBreadcrumbs
      */
     //public function test_renderBreadcrumbs()

@@ -1,7 +1,7 @@
 <?php
 
-use KodiComponents\Navigation\Contracts\PageInterface;
 use Mockery as m;
+use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
 class ModelConfigurationManagerTest extends TestCase

@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display\Column;
 
 class Link extends Url
 {
-
     /**
      * @var string
      */
