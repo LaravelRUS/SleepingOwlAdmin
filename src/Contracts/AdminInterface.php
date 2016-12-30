@@ -3,13 +3,12 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 interface AdminInterface extends Initializable
 {
-
     /**
      * @param ModelConfigurationInterface $model
      *

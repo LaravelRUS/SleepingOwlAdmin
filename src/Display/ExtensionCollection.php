@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
-use SleepingOwl\Admin\Contracts\Display\Placable;
+use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 class ExtensionCollection extends Collection
 {
@@ -36,7 +36,6 @@ class ExtensionCollection extends Collection
 
         return $blocks;
     }
-
 
     /**
      * @return static

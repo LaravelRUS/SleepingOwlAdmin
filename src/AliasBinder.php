@@ -19,9 +19,9 @@ class AliasBinder implements AliasBinderInterface
      */
     public static function registerRoutes(\Illuminate\Contracts\Routing\Registrar $router)
     {
-        foreach (AliasBinder::$routes as $i => $route) {
+        foreach (self::$routes as $i => $route) {
             call_user_func($route, $router);
-            unset(AliasBinder::$routes[$i]);
+            unset(self::$routes[$i]);
         }
     }
 
@@ -58,14 +58,13 @@ class AliasBinder implements AliasBinderInterface
         $this->aliases[$alias] = $class;
 
         if (method_exists($class, 'registerRoutes')) {
-            AliasBinder::$routes[] = [$class, 'registerRoutes'];
+            self::$routes[] = [$class, 'registerRoutes'];
         }
 
         return $this;
     }
 
     /**
-     *
      * @param string $alias
      * @param string $class
      *

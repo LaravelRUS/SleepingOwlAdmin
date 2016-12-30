@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 

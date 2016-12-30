@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\View;
+use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Traits\Renderable;
 
 class FormButtons implements FormButtonsInterface
 {
