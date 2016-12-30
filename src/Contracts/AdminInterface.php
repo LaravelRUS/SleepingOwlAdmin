@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Support\Collection;
-use Baum\Extensions\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
@@ -57,7 +56,7 @@ interface AdminInterface extends Initializable
     public function setTemplate(TemplateInterface $template);
 
     /**
-     * @return \SleepingOwl\Admin\Contracts\Template\TemplateInterface
+     * @return TemplateInterface
      */
     public function template();
 
@@ -65,4 +64,9 @@ interface AdminInterface extends Initializable
      * @return NavigationInterface
      */
     public function navigation();
+
+    /**
+     * @return MetaInterface
+     */
+    public function meta();
 }

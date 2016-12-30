@@ -20,9 +20,9 @@ class AdminSectionsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param \SleepingOwl\Admin\Contracts\AdminInterface $admin
+     * @param \SleepingOwl\Admin\Admin $admin
      */
-    public function boot(\SleepingOwl\Admin\Contracts\AdminInterface $admin)
+    public function boot(\SleepingOwl\Admin\Admin $admin)
     {
         foreach ($this->sections as $model => $section) {
             if (class_exists($section)) {

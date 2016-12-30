@@ -7,6 +7,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\ProviderRepository;
 use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Model\ModelCollection;
 use SleepingOwl\Admin\Navigation\Page;
@@ -146,6 +148,22 @@ class Admin implements AdminInterface
     }
 
     /**
+     * @return NavigationInterface
+     */
+    public function navigation()
+    {
+        return $this->template()->navigation();
+    }
+
+    /**
+     * @return MetaInterface
+     */
+    public function meta()
+    {
+        return $this->template()->meta();
+    }
+
+    /**
      * @return TemplateInterface
      */
     public function template()
@@ -162,14 +180,6 @@ class Admin implements AdminInterface
     public function addMenuPage($class = null, $priority = 100)
     {
         return $this->getModel($class)->addToNavigation($priority);
-    }
-
-    /**
-     * @return Navigation
-     */
-    public function navigation()
-    {
-        return $this->app['sleeping_owl.navigation'];
     }
 
 
