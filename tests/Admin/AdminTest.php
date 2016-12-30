@@ -142,11 +142,13 @@ class AdminTest extends TestCase
     public function test_get_navigation()
     {
         $navigation = m::mock(\SleepingOwl\Admin\Navigation::class);
-        $this->app->instance('sleeping_owl.navigation', $navigation);
 
-        $this->assertInstanceOf(
-            \SleepingOwl\Admin\Navigation::class,
-            $this->admin->getNavigation()
+        $this->admin->setTemplate($template = m::mock(TemplateInterface::class));
+        $template->shouldReceive('navigation')->once()->andReturn($navigation);
+
+        $this->assertEquals(
+            $navigation,
+            $this->admin->navigation()
         );
     }
 
