@@ -43,6 +43,30 @@ class BaseColumnFilterTest extends TestCase
         $filter->apply($column, $builder, 'keyword', []);
     }
 
+    /**
+     * @dataProvider sqlOperatorsProvider
+     */
+    public function testApplyRelated($operator, $condition, $args)
+    {
+        $filter = $this->getFilter();
+
+        $filter->setOperator($operator);
+
+        $column = m::mock(\SleepingOwl\Admin\Contracts\NamedColumnInterface::class);
+        $column->shouldReceive('getName')->andReturn('column.test.columnName');
+
+        $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
+        $subBuilder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
+        $subBuilder->shouldReceive($condition)->withArgs($args);
+
+        $builder->shouldReceive('whereHas')->andReturnUsing(function ($relation, $callback) use($subBuilder) {
+            $this->assertEquals('column.test', $relation);
+            $callback($subBuilder);
+        });
+
+        $filter->apply($column, $builder, 'keyword', []);
+    }
+
     public function sqlOperatorsProvider()
     {
         return [

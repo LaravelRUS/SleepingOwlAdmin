@@ -200,16 +200,6 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $this->applyOrders($query);
-    }
-
-    /**
-     * Apply orders to the query.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    protected function applyOrders(\Illuminate\Database\Eloquent\Builder $query)
-    {
         $orders = Request::input('order', []);
 
         $columns = $this->all();

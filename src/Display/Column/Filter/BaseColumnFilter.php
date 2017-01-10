@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use SleepingOwl\Admin\Traits\Assets;
-use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Traits\SqlQueryOperators;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use Illuminate\Database\Eloquent\Builder;
+use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\SqlQueryOperators;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
@@ -19,6 +19,11 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      * @var \Closure|null
      */
     protected $callback;
+
+    /**
+     * @var string|null
+     */
+    protected $columnName;
 
     public function __construct()
     {
@@ -34,6 +39,26 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @return null|string
+     */
+    public function getColumnName()
+    {
+        return $this->columnName;
+    }
+
+    /**
+     * @param null|string $name
+     *
+     * @return $this
+     */
+    public function setColumnName($name)
+    {
+        $this->columnName = $name;
+
+        return $this;
+    }
+
+    /**
      * @param mixed $value
      *
      * @return mixed
@@ -44,6 +69,26 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @return \Closure|null
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function setCallback(\Closure $callback)
+    {
+        $this->callback = $callback;
+
+        return $this;
+    }
+
+    /**
      * @param NamedColumnInterface $column
      * @param Builder              $query
      * @param string               $queryString
@@ -51,19 +96,23 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      *
      * @return void
      */
-    public function apply(
-        NamedColumnInterface $column,
-        Builder $query,
-        $queryString,
-        $queryParams
-    ) {
+    public function apply(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
+    {
         $queryString = $this->parseValue($queryString);
+
+        if (is_callable($callback = $this->getCallback())) {
+            $callback($column, $query, $queryString, $queryParams);
+
+            return;
+        }
 
         if (empty($queryString)) {
             return;
         }
 
-        $name = $column->getName();
+        if (is_null($name = $this->getColumnName())) {
+            $name = $column->getName();
+        }
 
         if (strpos($name, '.') !== false) {
             $parts = explode('.', $name);

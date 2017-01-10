@@ -21,10 +21,5 @@ interface ColumnFilterInterface extends Initializable
      *
      * @return void
      */
-    public function apply(
-        NamedColumnInterface $column,
-        Builder $query,
-        $queryString,
-        $queryParams
-    );
+    public function apply(NamedColumnInterface $column, Builder $query, $queryString, $queryParams);
 }

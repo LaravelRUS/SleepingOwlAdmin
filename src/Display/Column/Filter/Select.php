@@ -8,6 +8,8 @@ use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class Select extends BaseColumnFilter
 {
+    use \SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+
     /**
      * @var string
      */
@@ -17,11 +19,6 @@ class Select extends BaseColumnFilter
      * @var Model
      */
     protected $model;
-
-    /**
-     * @var string
-     */
-    protected $display = 'title';
 
     /**
      * @var array
@@ -39,6 +36,11 @@ class Select extends BaseColumnFilter
     protected $multiple = false;
 
     /**
+     * @var bool
+     */
+    protected $sortable = true;
+
+    /**
      * @param array|Model|string|null $options
      * @param string|null $title
      */
@@ -48,8 +50,8 @@ class Select extends BaseColumnFilter
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } else if (! is_null($options)) {
-            $this->setModel($options);
+        } elseif (($options instanceof Model) or is_string($options)) {
+            $this->setModelForOptions($options);
         }
 
         if (! is_null($title)) {
@@ -86,52 +88,34 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @return Model
+     * @param bool $sortable
+     *
+     * @return $this
      */
-    public function getModel()
+    public function setSortable($sortable)
     {
-        return $this->model;
+        $this->sortable = (bool) $sortable;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSortable()
+    {
+        return $this->sortable;
     }
 
     /**
      * @param Model|string $model
      *
+     * @deprecated use setModelForOptions
      * @return $this
-     * @throws \Exception
      */
     public function setModel($model)
     {
-        if (is_string($model) and class_exists($model)) {
-            $model = new $model;
-        }
-
-        if (! ($model instanceof Model)) {
-            throw new \Exception('Model must be an instance of Illuminate\Database\Eloquent\Model');
-        }
-
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDisplay()
-    {
-        return $this->display;
-    }
-
-    /**
-     * @param string $display
-     *
-     * @return $this
-     */
-    public function setDisplay($display)
-    {
-        $this->display = $display;
-
-        return $this;
+        return $this->setModelForOptions($model);
     }
 
     /**
@@ -139,12 +123,16 @@ class Select extends BaseColumnFilter
      */
     public function getOptions()
     {
-        if (! is_null($this->getModel()) and ! is_null($this->getDisplay())) {
-            $this->loadOptions();
+        if (! is_null($this->getModelForOptions()) and ! is_null($this->getDisplay())) {
+            $this->setOptions(
+                $this->loadOptions()
+            );
         }
 
         $options = $this->options;
-        asort($options);
+        if ($this->isSortable()) {
+            asort($options);
+        }
 
         return $options;
     }
@@ -189,21 +177,6 @@ class Select extends BaseColumnFilter
         return parent::toArray() + [
             'options'     => $this->getOptions()
         ];
-    }
-
-    protected function loadOptions()
-    {
-        $repository = app(RepositoryInterface::class, [$this->getModel()]);
-
-        $key = $repository->getModel()->getKeyName();
-        $options = $repository->getQuery()->get()->pluck($this->getDisplay(), $key);
-
-        if ($options instanceof Collection) {
-            $options = $options->all();
-        }
-
-        $options = array_unique($options);
-        $this->setOptions($options);
     }
 
     /**

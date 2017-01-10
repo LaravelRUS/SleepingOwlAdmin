@@ -4,12 +4,11 @@ namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Exception;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
 class Date extends Text
 {
+    use \SleepingOwl\Admin\Traits\DatePicker;
+
     /**
      * @var string
      */
@@ -19,11 +18,6 @@ class Date extends Text
      * @var string
      */
     protected $format;
-
-    /**
-     * @var string
-     */
-    protected $pickerFormat;
 
     /**
      * @var string
@@ -75,13 +69,24 @@ class Date extends Text
     }
 
     /**
-     * @param bool $seconds
+     * @param bool $status
+     *
+     * @return $this
+     * @deprecated use showSeconds
+     */
+    public function setSeconds($status)
+    {
+        return $this->showSeconds($status);
+    }
+
+    /**
+     * @param bool $status
      *
      * @return $this
      */
-    public function setSeconds($seconds)
+    public function showSeconds($status = true)
     {
-        $this->seconds = (bool) $seconds;
+        $this->seconds = (bool) $status;
 
         return $this;
     }
@@ -92,18 +97,6 @@ class Date extends Text
     public function getPickerFormat()
     {
         return $this->pickerFormat ?: config('sleeping_owl.dateFormat');
-    }
-
-    /**
-     * @param string $pickerFormat
-     *
-     * @return $this
-     */
-    public function setPickerFormat($pickerFormat)
-    {
-        $this->pickerFormat = $pickerFormat;
-
-        return $this;
     }
 
     /**
@@ -133,66 +126,15 @@ class Date extends Text
     }
 
     /**
-     * @return string
-     */
-    public function getSearchFormat()
-    {
-        return $this->searchFormat;
-    }
-
-    /**
-     * @param string $searchFormat
-     *
-     * @return $this
-     */
-    public function setSearchFormat($searchFormat)
-    {
-        $this->searchFormat = $searchFormat;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function toArray()
     {
-        $format = $this->getPickerFormat();
-        if (empty($format)) {
-            $format = $this->getFormat();
-        }
-
         return parent::toArray() + [
             'seconds'      => $this->hasSeconds(),
-            'format'       => $this->getFormat(),
-            'pickerFormat' => $this->generatePickerFormat(
-                $this->getPickerFormat()
-            ),
+            'pickerFormat' => $this->getJsPickerFormat(),
             'width'        => $this->getWidth(),
         ];
-    }
-
-    /**
-     * @param string $format
-     *
-     * @return string
-     */
-    protected function generatePickerFormat($format)
-    {
-        return strtr($format, [
-            'i' => 'mm',
-            's' => 'ss',
-            'h' => 'hh',
-            'H' => 'HH',
-            'g' => 'h',
-            'G' => 'H',
-            'd' => 'DD',
-            'j' => 'D',
-            'm' => 'MM',
-            'n' => 'M',
-            'Y' => 'YYYY',
-            'y' => 'YY',
-        ]);
     }
 
     /**
@@ -216,6 +158,6 @@ class Date extends Text
             }
         }
 
-        return $date->format($this->getSearchFormat());
+        return $date->format($this->getFormat());
     }
 }
