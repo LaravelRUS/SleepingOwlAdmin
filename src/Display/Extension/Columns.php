@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
@@ -192,5 +193,44 @@ class Columns extends Extension implements Initializable, Renderable
         }
 
         return app('sleeping_owl.template')->view($this->getView(), $params)->render();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $this->applyOrders($query);
+    }
+
+    /**
+     * Apply orders to the query.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    protected function applyOrders(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $orders = Request::input('order', []);
+
+        $columns = $this->all();
+
+        if (! is_int(key($orders))) {
+            $orders = [$orders];
+        }
+
+        foreach ($orders as $order) {
+            $columnIndex = array_get($order, 'column');
+            $direction = array_get($order, 'dir', 'asc');
+
+            if (! $columnIndex && $columnIndex !== '0') {
+                continue;
+            }
+
+            $column = $columns->get($columnIndex);
+
+            if ($column instanceof ColumnInterface && $column->isOrderable()) {
+                $column->orderBy($query, $direction);
+            }
+        }
     }
 }

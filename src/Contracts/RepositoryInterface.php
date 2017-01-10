@@ -93,15 +93,6 @@ interface RepositoryInterface extends WithModel
     public function restore($id);
 
     /**
-     * Check if model's table has column.
-     *
-     * @param string $column
-     *
-     * @return bool
-     */
-    public function hasColumn($column);
-
-    /**
      * @return bool
      */
     public function isRestorable();

@@ -14,19 +14,17 @@ interface ColumnFilterInterface extends Initializable
     public function parseValue($value);
 
     /**
-     * @param RepositoryInterface  $repository
      * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $search
-     * @param array|string         $fullSearch
+     * @param Builder $query
+     * @param string $queryString
+     * @param array|string $queryParams
      *
      * @return void
      */
     public function apply(
-        RepositoryInterface $repository,
         NamedColumnInterface $column,
         Builder $query,
-        $search,
-        $fullSearch
+        $queryString,
+        $queryParams
     );
 }

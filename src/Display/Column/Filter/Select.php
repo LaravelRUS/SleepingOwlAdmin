@@ -2,11 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
 class Select extends BaseColumnFilter
 {
@@ -36,16 +34,55 @@ class Select extends BaseColumnFilter
     protected $placeholder;
 
     /**
-     * @var string
+     * @var bool
      */
-    protected $filterField = '';
+    protected $multiple = false;
+
+    /**
+     * @param array|Model|string|null $options
+     * @param string|null $title
+     */
+    public function __construct($options = null, $title = null)
+    {
+        parent::__construct();
+
+        if (is_array($options)) {
+            $this->setOptions($options);
+        } else if (! is_null($options)) {
+            $this->setModel($options);
+        }
+
+        if (! is_null($title)) {
+            $this->setDisplay($title);
+        }
+    }
+
+    /**
+     * @return $this
+     */
+    public function multiple()
+    {
+        $this->multiple = true;
+
+        return $this;
+    }
 
     public function initialize()
     {
         parent::initialize();
 
-        $this->setHtmlAttribute('class', 'form-control column-filter');
+        $this->setHtmlAttribute('class', 'form-control input-select column-filter');
         $this->setHtmlAttribute('data-type', 'select');
+
+        if ($this->multiple) {
+            $this->setHtmlAttribute('multiple', 'multiple');
+
+            if (! in_array($this->operator, ['in', 'not_in'])) {
+                $this->setOperator('in');
+            }
+        } else {
+            $this->setHtmlAttribute('placeholder', $this->getPlaceholder());
+        }
     }
 
     /**
@@ -73,26 +110,6 @@ class Select extends BaseColumnFilter
         }
 
         $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilterField()
-    {
-        return $this->filterField;
-    }
-
-    /**
-     * @param string $filterField
-     *
-     * @return $this
-     */
-    public function setFilterField($filterField)
-    {
-        $this->filterField = $filterField;
 
         return $this;
     }
@@ -170,48 +187,8 @@ class Select extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-            'options'     => $this->getOptions(),
-            'placeholder' => $this->getPlaceholder(),
+            'options'     => $this->getOptions()
         ];
-    }
-
-    /**
-     * @param RepositoryInterface  $repository
-     * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $search
-     * @param array|string         $fullSearch
-     *
-     * @return void
-     */
-    public function apply(
-        RepositoryInterface $repository,
-        NamedColumnInterface $column,
-        Builder $query,
-        $search,
-        $fullSearch
-    ) {
-        if ($search === '') {
-            return;
-        }
-
-        if ($this->getFilterField()) {
-            $query->where($this->getFilterField(), '=', $search);
-
-            return;
-        }
-
-        $name = $column->getName();
-        if ($repository->hasColumn($name)) {
-            $this->buildQuery($query, $name, $search);
-        } elseif (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $fieldName = array_pop($parts);
-            $relationName = implode('.', $parts);
-            $query->whereHas($relationName, function ($q) use ($search, $fieldName) {
-                $this->buildQuery($q, $fieldName, $search);
-            });
-        }
     }
 
     protected function loadOptions()
@@ -227,5 +204,19 @@ class Select extends BaseColumnFilter
 
         $options = array_unique($options);
         $this->setOptions($options);
+    }
+
+    /**
+     * @param mixed $selected
+     *
+     * @return array
+     */
+    public function parseValue($selected)
+    {
+        if (is_string($selected) && strpos($selected, ',') !== false) {
+            return explode(',', $selected);
+        }
+
+        return $selected;
     }
 }

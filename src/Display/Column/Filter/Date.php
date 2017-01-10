@@ -153,42 +153,6 @@ class Date extends Text
     }
 
     /**
-     * @param RepositoryInterface  $repository
-     * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $search
-     * @param string               $fullSearch
-     *
-     * @return void
-     */
-    public function apply(
-        RepositoryInterface $repository,
-        NamedColumnInterface $column,
-        Builder $query,
-        $search,
-        $fullSearch
-    ) {
-        if (empty($search)) {
-            return;
-        }
-
-        $date = $this->parserDate($search);
-        $name = $column->getName();
-
-        if ($repository->hasColumn($name)) {
-            $this->buildQuery($query, $name, $date);
-        } elseif (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $fieldName = array_pop($parts);
-            $relationName = implode('.', $parts);
-
-            $query->whereHas($relationName, function ($q) use ($name, $date) {
-                $this->buildQuery($q, $name, $date);
-            });
-        }
-    }
-
-    /**
      * @return array
      */
     public function toArray()
@@ -209,6 +173,8 @@ class Date extends Text
     }
 
     /**
+     * @param string $format
+     *
      * @return string
      */
     protected function generatePickerFormat($format)

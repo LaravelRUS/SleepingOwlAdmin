@@ -192,13 +192,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $this->modifyQuery($query);
         $this->applySearch($query);
-        $this->applyColumnSearch($query);
 
         if (is_null($this->distinct)) {
             $filteredCount = $query->count();
         }
 
-        $this->applyOrders($query);
         $this->applyOffset($query);
         $collection = $query->get();
 
@@ -238,32 +236,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             $columns = $this->getColumns()->all();
             foreach ($columns as $column) {
                 if (in_array(get_class($column), $this->searchableColumns)) {
-                    $name = $column->getName();
-                    if ($this->repository->hasColumn($name)) {
-                        $query->orWhere($name, 'like', '%'.$search.'%');
-                    }
+                    $query->orWhere($column->getName(), 'like', '%'.$search.'%');
                 }
             }
         });
-    }
-
-    /**
-     * @param Builder $query
-     */
-    protected function applyColumnSearch(Builder $query)
-    {
-        $queryColumns = Request::input('columns', []);
-
-        foreach ($queryColumns as $index => $queryColumn) {
-            $search = array_get($queryColumn, 'search.value');
-            $fullSearch = array_get($queryColumn, 'search');
-            $column = $this->getColumns()->all()->get($index);
-            $columnFilter = array_get($this->getColumnFilters()->all(), $index);
-
-            if (! is_null($columnFilter) && ! is_null($column)) {
-                $columnFilter->apply($this->repository, $column, $query, $search, $fullSearch);
-            }
-        }
     }
 
     /**

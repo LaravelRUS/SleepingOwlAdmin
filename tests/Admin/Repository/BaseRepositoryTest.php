@@ -258,23 +258,6 @@ class BaseRepositoryTest extends TestCase
         $repository = $this->getRepositoryWithBuilder(BaseRepositoryTestSecondModel::class);
         $this->assertTrue($repository->isRestorable());
     }
-
-    /**
-     * @covers BaseRepository::hasColumn
-     */
-    public function test_hasColumn()
-    {
-        $repository = $this->getRepositoryWithBuilder();
-        $repository->getModel()->shouldReceive('getTable')->twice()->andReturn('table_name');
-
-        Cache::shouldReceive('remember')
-            ->twice()
-            ->withAnyArgs()
-            ->andReturn(['column1', 'column2', 'column3']);
-
-        $this->assertFalse($repository->hasColumn('column5'));
-        $this->assertTrue($repository->hasColumn('column2'));
-    }
 }
 
 class BaseRepositoryTestModel extends Model

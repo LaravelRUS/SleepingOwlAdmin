@@ -4,9 +4,10 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Display\Placable;
+use Request;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\Initializable;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -163,6 +164,49 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
         if (! $this->hasHtmlAttribute('class')) {
             $this->setHtmlAttribute('class', 'panel-footer');
+        }
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $this->applyColumnSearch($query);
+    }
+
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    protected function applyColumnSearch(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $search = Request::input('columns', []);
+
+        $display = $this->getDisplay();
+
+        if (! $display->getExtensions()->has('columns')) {
+            return;
+        }
+
+        $columns = $display->getColumns()->all();
+
+        if (! is_int(key($search))) {
+            $search = [$search];
+        }
+
+        foreach ($search as $index => $columnData) {
+            $column = $columns->get($index);
+            $columnFilter = array_get($this->all(), $index);
+
+            if ($column && $columnFilter) {
+                $columnFilter->apply(
+                    $column,
+                    $query,
+                    array_get($columnData, 'search.value'),
+                    array_get($columnData, 'search')
+                );
+            }
         }
     }
 }
