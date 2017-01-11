@@ -6,10 +6,11 @@ use SleepingOwl\Admin\Contracts\ColumnInterface;
 
 interface ColumnEditableInterface extends ColumnInterface
 {
+
     /**
-     * Save form item.
+     * @param \Illuminate\Http\Request $request
      *
-     * @param mixed $value
+     * @return void
      */
-    public function save($value);
+    public function save(\Illuminate\Http\Request $request);
 }

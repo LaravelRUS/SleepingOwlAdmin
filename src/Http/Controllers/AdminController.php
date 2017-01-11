@@ -308,7 +308,6 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     *
      * @param Request $request
      *
      * @return bool
@@ -318,7 +317,6 @@ class AdminController extends Controller
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
         $field = $request->input('name');
-        $value = $request->input('value');
         $id = $request->input('pk');
 
         $display = $model->fireDisplay();
@@ -345,7 +343,7 @@ class AdminController extends Controller
             return;
         }
 
-        $column->save($value);
+        $column->save($request, $model);
 
         $model->fireEvent('updated', false, $item);
     }

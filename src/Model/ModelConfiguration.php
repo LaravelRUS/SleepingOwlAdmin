@@ -687,35 +687,4 @@ class ModelConfiguration extends ModelConfigurationManager
 
         return $this;
     }
-
-    /**
-     * @param ColumnEditableInterface $column
-     * @param mixed $value
-     * @param string|int $id
-     *
-     * @return bool
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    public function saveColumn(ColumnEditableInterface $column, $value, $id)
-    {
-        $repository = $this->getRepository();
-        $item = $repository->find($id);
-
-        if (is_null($item) || ! $this->isEditable($item)) {
-            abort(404);
-        }
-
-        $column->setModel($item);
-
-        if ($this->fireEvent('updating', true, $item) === false) {
-            return false;
-        }
-
-        $column->save($value);
-
-        $this->fireEvent('updated', false, $item);
-
-        return true;
-    }
 }
