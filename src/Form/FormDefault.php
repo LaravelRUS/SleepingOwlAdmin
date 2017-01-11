@@ -286,7 +286,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @return bool
      */
-    public function validModelConfiguration(ModelConfigurationInterface $modelConfiguration)
+    public function validModelConfiguration(ModelConfigurationInterface $modelConfiguration = null)
     {
        return is_null($modelConfiguration) || $modelConfiguration === $this->getModelConfiguration();
     }
@@ -313,11 +313,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $loaded = $model->exists;
 
-        if ($modelConfiguration->fireEvent($loaded ? 'updating' : 'creating', true, $model) === false) {
+        if ($this->getModelConfiguration()->fireEvent($loaded ? 'updating' : 'creating', true, $model) === false) {
             return false;
         }
 
-        if ($modelConfiguration->fireEvent('saving', true, $model) === false) {
+        if ($this->getModelConfiguration()->fireEvent('saving', true, $model) === false) {
             return false;
         }
 
@@ -327,8 +327,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         parent::afterSave($request);
 
-        $modelConfiguration->fireEvent($loaded ? 'updated' : 'created', false, $model);
-        $modelConfiguration->fireEvent('saved', false, $model);
+        $this->getModelConfiguration()->fireEvent($loaded ? 'updated' : 'created', false, $model);
+        $this->getModelConfiguration()->fireEvent('saved', false, $model);
 
         return true;
     }
@@ -390,7 +390,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $validator->setPresenceVerifier($verifier);
 
-        $modelConfiguration->fireEvent('validate', false, $this->getModel(), $validator);
+        $this->getModelConfiguration()->fireEvent('validate', false, $this->getModel(), $validator);
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
