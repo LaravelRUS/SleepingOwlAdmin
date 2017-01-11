@@ -217,7 +217,7 @@ trait FormElements
      */
     protected function saveElements(\Illuminate\Http\Request $request)
     {
-        $this->getElements()->onlyActive()->each(function ($element) use($request) {
+        $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
@@ -233,7 +233,7 @@ trait FormElements
      */
     protected function afterSaveElements(\Illuminate\Http\Request $request)
     {
-        $this->getElements()->onlyActive()->each(function ($element) use($request) {
+        $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {

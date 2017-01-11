@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Display\Column\Filter\DateRange;
 
 class DateRangeTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -51,7 +50,7 @@ class DateRangeTest extends TestCase
         return [
             ['2016-01-01', ['01-01-2016']],
             ['2016-01-01::2016-01-02', ['01-01-2016', '02-01-2016']],
-            ['01.01.2016::11.01.2016', ['01-01-2016', '11-01-2016']]
+            ['01.01.2016::11.01.2016', ['01-01-2016', '11-01-2016']],
         ];
     }
 }

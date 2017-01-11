@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Display\Column\Filter\Text;
 
 class TextTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();

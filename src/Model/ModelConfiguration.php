@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class ModelConfiguration extends ModelConfigurationManager
 {

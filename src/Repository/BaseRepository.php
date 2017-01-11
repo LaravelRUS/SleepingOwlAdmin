@@ -2,8 +2,6 @@
 
 namespace SleepingOwl\Admin\Repository;
 
-use Cache;
-use Schema;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\RepositoryException;
