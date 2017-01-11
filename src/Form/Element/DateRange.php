@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 
 class DateRange extends Date
 {

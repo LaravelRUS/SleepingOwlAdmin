@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Request;
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
-use Request;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
-use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -139,7 +139,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
             'filters' => $this->columnFilters,
             'attributes' => $this->htmlAttributesToString(),
             'tag' => $this->getPlacement() == 'table.header' ? 'thead' : 'tfoot',
-            'displayClass' => get_class($this->getDisplay())
+            'displayClass' => get_class($this->getDisplay()),
         ];
     }
 

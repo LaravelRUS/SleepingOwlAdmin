@@ -2,20 +2,18 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\JsonResponse;
 use Request;
 use Illuminate\Routing\Router;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\Email;
-use Illuminate\Http\Request as InlineRequest;
 use SleepingOwl\Admin\Display\Column\Control;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -41,7 +39,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                         return $display->renderAsync();
                     } catch (\Exception $exception) {
                         return new JsonResponse([
-                            'message'  => $application->isLocal() ? $exception->getMessage() : trans('sleeping_owl::lang.table.error')
+                            'message'  => $application->isLocal() ? $exception->getMessage() : trans('sleeping_owl::lang.table.error'),
                         ], 403);
                     }
                 }

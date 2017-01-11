@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Checkbox extends NamedFormElement
 {
-
     /**
      * @var string
      */

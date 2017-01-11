@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
+use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Form\FormDefault;
 
 class Checkbox extends NamedColumn implements ColumnEditableInterface
 {
@@ -110,7 +110,7 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
         $form = new FormDefault([
             new \SleepingOwl\Admin\Form\Element\Checkbox(
                 $this->getName()
-            )
+            ),
         ]);
 
         $model = $this->getModel();

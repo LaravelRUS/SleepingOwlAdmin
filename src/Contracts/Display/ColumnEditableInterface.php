@@ -6,7 +6,6 @@ use SleepingOwl\Admin\Contracts\ColumnInterface;
 
 interface ColumnEditableInterface extends ColumnInterface
 {
-
     /**
      * @param \Illuminate\Http\Request $request
      *
