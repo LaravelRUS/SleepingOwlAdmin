@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Display\Column\Filter\Date;
 
 class DateTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -71,7 +70,6 @@ class DateTest extends TestCase
 
         $filter->setWidth($width);
         $this->assertEquals($expected, $filter->getWidth());
-
     }
 
     public function widthProvider()
@@ -105,8 +103,7 @@ class DateTest extends TestCase
             'invalid_date' => ['2016:01:01', 'd.F.Y', 'd.m.Y', null],
             'picker_format' => ['2016:01:01', 'Y:m:d', 'Y-m-d', '2016-01-01'],
             'empty_date' => ['', 'Y:m:d', 'Y-m-d', null],
-            'null_date' => [null, 'Y:m:d', 'Y-m-d', null]
+            'null_date' => [null, 'Y:m:d', 'Y-m-d', null],
         ];
     }
-
 }

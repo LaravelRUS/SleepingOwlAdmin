@@ -3,8 +3,6 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
 
 class Select extends BaseColumnFilter
 {
@@ -175,7 +173,7 @@ class Select extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-            'options'     => $this->getOptions()
+            'options'     => $this->getOptions(),
         ];
     }
 

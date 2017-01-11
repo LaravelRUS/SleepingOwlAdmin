@@ -2,9 +2,6 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 
 class Range extends BaseColumnFilter
@@ -109,12 +106,15 @@ class Range extends BaseColumnFilter
 
         if (! empty($from) && ! empty($to)) {
             $this->setOperator('between');
+
             return [$from, $to];
         } elseif (! empty($from)) {
             $this->setOperator('greater_or_equal');
+
             return $from;
         } elseif (! empty($to)) {
             $this->setOperator('less_or_equal');
+
             return $to;
         }
     }

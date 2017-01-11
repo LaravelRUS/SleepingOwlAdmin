@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 

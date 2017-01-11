@@ -5,7 +5,6 @@ use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
 class BaseColumnFilterTest extends TestCase
 {
-
     public function tearDown()
     {
         m::close();
@@ -59,7 +58,7 @@ class BaseColumnFilterTest extends TestCase
         $subBuilder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
         $subBuilder->shouldReceive($condition)->withArgs($args);
 
-        $builder->shouldReceive('whereHas')->andReturnUsing(function ($relation, $callback) use($subBuilder) {
+        $builder->shouldReceive('whereHas')->andReturnUsing(function ($relation, $callback) use ($subBuilder) {
             $this->assertEquals('column.test', $relation);
             $callback($subBuilder);
         });

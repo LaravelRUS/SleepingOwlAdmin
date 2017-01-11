@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
 use Illuminate\Http\UploadedFile;
 
 class Upload extends NamedFormElement
