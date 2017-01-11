@@ -12,3 +12,5 @@
  * @see http://ned.im/noty/
  */
 window.noty = require('noty')
+
+$.noty.defaults.theme = 'relax';

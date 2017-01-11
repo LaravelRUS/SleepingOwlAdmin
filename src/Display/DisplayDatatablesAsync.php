@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
@@ -28,19 +30,26 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     {
         $router->get('{adminModel}/async/{adminDisplayName?}', [
             'as' => 'admin.model.async',
-            function (ModelConfigurationInterface $model, $name = null) {
+            function (ModelConfigurationInterface $model, Application $application, $name = null) {
                 $display = $model->fireDisplay();
                 if ($display instanceof DisplayTabbed) {
                     $display = static::findDatatablesAsyncByName($display, $name);
                 }
 
                 if ($display instanceof DisplayDatatablesAsync) {
-                    return $display->renderAsync();
+                    try {
+                        return $display->renderAsync();
+                    } catch (\Exception $exception) {
+                        return new JsonResponse([
+                            'message'  => $application->isLocal() ? $exception->getMessage() : trans('sleeping_owl::lang.table.error')
+                        ], 403);
+                    }
                 }
 
                 abort(404);
             },
         ]);
+
         $router->post('{adminModel}/async/{adminDisplayName?}', [
             'as' => 'admin.model.async.inline',
             function (ModelConfigurationInterface $model, InlineRequest $request) {
