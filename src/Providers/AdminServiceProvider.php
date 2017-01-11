@@ -26,9 +26,9 @@ class AdminServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->registerWysiwyg();
         $this->registerTemplate();
         $this->initializeNavigation();
-        $this->registerWysiwyg();
         $this->registerAliases();
 
         $this->app->singleton('sleeping_owl.widgets', function () {
@@ -73,6 +73,10 @@ class AdminServiceProvider extends ServiceProvider
 
             return $app->make($class);
         });
+
+        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
+            include $assetsFile;
+        }
     }
 
     /**

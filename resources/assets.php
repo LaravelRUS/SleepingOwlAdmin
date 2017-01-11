@@ -13,12 +13,12 @@ if (! function_exists('resources_url')) {
 |--------------------------------------------------------------------------
 */
 
-WysiwygManager::register('ckeditor')
+$this->app['sleeping_owl.wysiwyg']->register('ckeditor')
     ->js(null, '//cdn.ckeditor.com/4.5.7/standard/ckeditor.js', ['jquery']);
 
-WysiwygManager::register('tinymce')
+$this->app['sleeping_owl.wysiwyg']->register('tinymce')
     ->js(null, '//cdn.tinymce.com/4/tinymce.min.js', ['jquery']);
 
-WysiwygManager::register('simplemde', new \SleepingOwl\Admin\Wysiwyg\MarkdownFilter())
+$this->app['sleeping_owl.wysiwyg']->register('simplemde', new \SleepingOwl\Admin\Wysiwyg\MarkdownFilter())
     ->js(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js', ['jquery'])
     ->css(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');

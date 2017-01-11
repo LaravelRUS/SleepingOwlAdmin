@@ -32,10 +32,6 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
             ], 'config');
         }
 
-        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
-            include $assetsFile;
-        }
-
         parent::boot($admin);
     }
 
