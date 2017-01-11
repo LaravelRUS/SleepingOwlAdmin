@@ -139,6 +139,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
             'filters' => $this->columnFilters,
             'attributes' => $this->htmlAttributesToString(),
             'tag' => $this->getPlacement() == 'table.header' ? 'thead' : 'tfoot',
+            'displayClass' => get_class($this->getDisplay())
         ];
     }
 
@@ -151,20 +152,16 @@ class ColumnFilters extends Extension implements Initializable, Placable
             return;
         }
 
+        $this->validNumberOfFilters();
+
         foreach ($this->all() as $filter) {
             if ($filter instanceof Initializable) {
                 $filter->initialize();
             }
         }
 
-        if (! in_array($this->getPlacement(), ['table.footer', 'table.header']) && $this->view == 'display.extensions.columns_filters_table') {
-            $this->view = 'display.extensions.columns_filters';
-            $this->setHtmlAttribute('class', 'table table-default');
-        }
-
-        if (! $this->hasHtmlAttribute('class')) {
-            $this->setHtmlAttribute('class', 'panel-footer');
-        }
+        $this->validNumberOfFilters();
+        $this->prepareView();
     }
 
     /**
@@ -199,5 +196,31 @@ class ColumnFilters extends Extension implements Initializable, Placable
                 );
             }
         }
+    }
+
+    protected function validNumberOfFilters()
+    {
+        $display = $this->getDisplay();
+
+        if ($display->getExtensions()->has('columns')) {
+            $totalColumns = count($display->getColumns()->all());
+            $totalFilters = count($this->all());
+            $missedFilters = $totalColumns - $totalFilters;
+
+            while ($missedFilters > 0) {
+                $this->push(null);
+                $missedFilters--;
+            }
+        }
+    }
+
+    protected function prepareView()
+    {
+        if (! in_array($this->getPlacement(), ['table.footer', 'table.header']) && $this->view == 'display.extensions.columns_filters_table') {
+            $this->view = 'display.extensions.columns_filters';
+            $this->setHtmlAttribute('class', 'table table-default');
+        }
+
+        $this->setHtmlAttribute('class', 'display-filters');
     }
 }

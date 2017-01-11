@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
 use LogicException;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
@@ -28,7 +27,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * @var string
      */
-    protected $attribute;
+    protected $modelAttributeKey;
 
     /**
      * @var string
@@ -67,7 +66,7 @@ abstract class NamedFormElement extends FormElement
 
         $parts = explode('.', $path);
         $this->setName($this->composeName($parts));
-        $this->setAttribute(end($parts));
+        $this->setModelAttributeKey(end($parts));
 
         parent::__construct();
     }
@@ -154,19 +153,19 @@ abstract class NamedFormElement extends FormElement
     /**
      * @return string
      */
-    public function getAttribute()
+    public function getModelAttributeKey()
     {
-        return $this->attribute;
+        return $this->modelAttributeKey;
     }
 
     /**
-     * @param string $attribute
+     * @param string $key
      *
      * @return $this
      */
-    public function setAttribute($attribute)
+    public function setModelAttributeKey($key)
     {
-        $this->attribute = $attribute;
+        $this->modelAttributeKey = $key;
 
         return $this;
     }
@@ -267,39 +266,41 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array|string
      */
-    public function getValueFromRequest()
+    public function getValueFromRequest(\Illuminate\Http\Request $request)
     {
-        if (Request::hasSession() && ! is_null($value = Request::old($this->getPath()))) {
+        if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
             return $value;
         }
 
-        return Request::input($this->getPath());
+        return $request->input($this->getPath());
     }
 
     /**
-     * TODO: HACK Needs refactoring and reasoning.
      * @return mixed
      */
-    public function getValue()
+    public function getValueFromModel()
     {
-        if (! is_null($value = $this->getValueFromRequest())) {
+        if (! is_null($value = $this->getValueFromRequest(request()))) {
             return $value;
         }
 
         $model = $this->getModel();
+        $path = $this->getPath();
         $value = $this->getDefaultValue();
 
         if (is_null($model) or ! $model->exists) {
             return $value;
         }
 
-        $relations = explode('.', $this->getPath());
+        $relations = explode('.', $path);
         $count = count($relations);
 
         if ($count === 1) {
-            return $model->getAttribute($this->getAttribute());
+            return $model->getAttribute($this->getModelAttributeKey());
         }
 
         foreach ($relations as $relation) {
@@ -312,7 +313,7 @@ abstract class NamedFormElement extends FormElement
                 return $model->getAttribute($relation);
             }
 
-            throw new LogicException("Can not fetch value for field '{$this->getPath()}'. Probably relation definition is incorrect");
+            throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
         }
 
         return $value;
@@ -336,7 +337,7 @@ abstract class NamedFormElement extends FormElement
             $model = $this->resolvePath();
             $table = $model->getTable();
 
-            $rule = 'unique:'.$table.','.$this->getAttribute();
+            $rule = 'unique:'.$table.','.$this->getModelAttributeKey();
             if ($model->exists) {
                 $rule .= ','.$model->getKey();
             }
@@ -390,27 +391,29 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return array
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
-    public function toArray()
+    public function save(\Illuminate\Http\Request $request)
     {
-        return parent::toArray() + [
-            'id' => $this->getName(),
-            'name' => $this->getName(),
-            'path' => $this->getPath(),
-            'label' => $this->getLabel(),
-            'helpText' => $this->getHelpText(),
-            'required' => in_array('required', $this->validationRules),
-        ];
+        $value = $this->getValueFromRequest(
+            $request
+        );
+
+        $this->setModelAttribute($this->prepareValue($value));
     }
 
-    public function save()
+    /**
+     * @param string $path
+     *
+     * @return Model|null
+     */
+    protected function getModelByPath($path)
     {
-        $attribute = $this->getAttribute();
         $model = $this->getModel();
-        $value = $this->getValueFromRequest();
 
-        $relations = explode('.', $this->getPath());
+        $relations = explode('.', $path);
         $count = count($relations);
         $i = 1;
 
@@ -444,18 +447,19 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field «{$this->getPath()}» can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model)
+                        .'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
             $model = $previousModel;
         }
 
-        $this->setValue($model, $attribute, $this->prepareValue($value));
+        return $model;
     }
 
     /**
-     * Field->mutate(function($value) {
+     * Field->mutateValue(function($value) {
      *     return bcrypt($value);
      * }).
      *
@@ -479,13 +483,34 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param Model  $model
-     * @param string $attribute
+     * @return array
+     */
+    public function toArray()
+    {
+        return array_merge(parent::toArray(), [
+            'id' => $this->getName(),
+            'value' => $this->getValueFromModel(),
+            'name' => $this->getName(),
+            'path' => $this->getPath(),
+            'label' => $this->getLabel(),
+            'helpText' => $this->getHelpText(),
+            'required' => in_array('required', $this->validationRules),
+        ]);
+    }
+
+    /**
      * @param mixed  $value
      */
-    protected function setValue(Model $model, $attribute, $value)
+    public function setModelAttribute($value)
     {
-        $model->setAttribute($attribute, $value);
+        $model = $this->getModelByPath(
+            $this->getPath()
+        );
+
+        $model->setAttribute(
+            $this->getModelAttributeKey(),
+            $value
+        );
     }
 
     /**

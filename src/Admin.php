@@ -112,7 +112,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
+     * @param string|Model $class
      * @return ModelConfigurationInterface
      */
     public function getModel($class)

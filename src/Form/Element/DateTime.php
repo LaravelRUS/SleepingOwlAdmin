@@ -48,9 +48,9 @@ class DateTime extends NamedFormElement
     /**
      * @return $this|NamedFormElement|mixed|null|string
      */
-    public function getValue()
+    public function getValueFromModel()
     {
-        $value = parent::getValue();
+        $value = parent::getValueFromModel();
         if (! empty($value)) {
             return $this->parseValue($value);
         }
@@ -77,15 +77,17 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param Model $model
-     * @param string $attribute
      * @param mixed $value
+     *
+     * @return void
      */
-    public function setValue(Model $model, $attribute, $value)
+    public function setModelAttribute($value)
     {
-        $value = ! empty($value) ? Carbon::createFromFormat($this->getPickerFormat(), $value)->format($this->getFormat()) : null;
+        $value = ! empty($value)
+            ? Carbon::createFromFormat($this->getPickerFormat(), $value)->format($this->getFormat())
+            : null;
 
-        parent::setValue($model, $attribute, $value);
+        parent::setModelAttribute($value);
     }
 
     /**

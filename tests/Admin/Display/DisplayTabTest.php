@@ -237,7 +237,10 @@ class DisplayTabTest extends TestCase
         $content = $tab->getContent();
         $content->shouldNotReceive('validateForm');
 
-        $this->assertNull($tab->validateForm(m::mock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class)));
+        $this->assertNull($tab->validateForm(
+            $this->getRequest(),
+            m::mock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class)
+        ));
     }
 
     public function test_validate_form_with_form_content()
@@ -246,10 +249,10 @@ class DisplayTabTest extends TestCase
 
         $tab = new DisplayTab($renderable);
         $model = m::mock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class);
+        $request = $this->getRequest();
+        $renderable->shouldReceive('validateForm')->once()->with($request, $model);
 
-        $renderable->shouldReceive('validateForm')->once()->with($model);
-
-        $this->assertNull($tab->validateForm($model));
+        $this->assertNull($tab->validateForm($request, $model));
     }
 
     /**
@@ -262,18 +265,22 @@ class DisplayTabTest extends TestCase
         $content = $tab->getContent();
         $content->shouldNotReceive('saveForm');
 
-        $this->assertEquals($tab, $tab->saveForm(m::mock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class)));
+        $this->assertNull($tab->saveForm(
+            $this->getRequest(), m::mock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class)
+        ));
     }
 
     public function test_save_form_with_form_content()
     {
         $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormInterface::class);
 
+        $request = $this->getRequest();
+
         $tab = new DisplayTab($renderable);
         $model = m::mock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class);
-        $renderable->shouldReceive('saveForm')->once()->with($model);
+        $renderable->shouldReceive('saveForm')->once()->with($request, $model);
 
-        $this->assertEquals($tab, $tab->saveForm($model));
+        $this->assertNull($tab->saveForm($request, $model));
     }
 
     /**
@@ -354,8 +361,10 @@ class DisplayTabTest extends TestCase
         $content->shouldNotReceive('getValue');
         $content->shouldNotReceive('isReadonly');
 
-        $this->assertNull($tab->save());
-        $this->assertNull($tab->afterSave());
+        $request = $this->getRequest();
+
+        $this->assertNull($tab->save($request));
+        $this->assertNull($tab->afterSave($request));
         $this->assertNull($tab->getValue());
         $this->assertFalse($tab->isReadonly());
     }
@@ -366,15 +375,18 @@ class DisplayTabTest extends TestCase
      */
     public function test_save_with_savable_content()
     {
+        $request = $this->getRequest();
+
         $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormElementInterface::class);
-        $renderable->shouldReceive('save')->once();
-        $renderable->shouldReceive('afterSave')->once();
+        $renderable->shouldReceive('save')->once()->with($request);
+        $renderable->shouldReceive('afterSave')->once()->with($request);
+
         $renderable->shouldReceive('getValue')->once()->andReturn($value = 'test');
         $renderable->shouldReceive('isReadonly')->once()->andReturn(true);
         $tab = new DisplayTab($renderable);
 
-        $tab->save();
-        $tab->afterSave();
+        $tab->save($request);
+        $tab->afterSave($request);
         $this->assertEquals($value, $tab->getValue());
         $this->assertTrue($tab->isReadonly());
     }

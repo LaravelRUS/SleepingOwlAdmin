@@ -66,12 +66,4 @@ class View extends Custom
 
         return $this;
     }
-
-    public function save()
-    {
-        $callback = $this->getCallback();
-        if (is_callable($callback)) {
-            call_user_func($callback, $this->getModel());
-        }
-    }
 }

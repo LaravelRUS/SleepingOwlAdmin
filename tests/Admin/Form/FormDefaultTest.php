@@ -222,6 +222,8 @@ class FormDefaultTest extends TestCase
      */
     public function test_save_form()
     {
+        $request = $this->getRequest();
+
         $model = m::mock(FormDefaultTestMockModel::class);
 
         $model->shouldReceive('getRelations')->twice()->andReturn([]);
@@ -247,12 +249,12 @@ class FormDefaultTest extends TestCase
         $element->shouldReceive('setModel')->once()->with($model);
         $element->shouldReceive('isReadonly')->twice()->andReturn(false);
         $element->shouldReceive('isVisible')->twice()->andReturn(true);
-        $element->shouldReceive('save')->once();
-        $element->shouldReceive('afterSave')->once();
+        $element->shouldReceive('save')->once()->with($request);
+        $element->shouldReceive('afterSave')->once()->with($request);
 
         $form->setModel($model);
 
-        $this->assertTrue($form->saveForm($modelConfiguration));
+        $this->assertTrue($form->saveForm($request, $modelConfiguration));
     }
 
     public function test_save_relations()
@@ -265,10 +267,9 @@ class FormDefaultTest extends TestCase
     public function test_validate()
     {
         $request = $this->getRequest();
-        $this->app['request'] = $request;
         $request->offsetSet('element', 'test');
 
-        $this->validate();
+        $this->validate($request);
     }
 
     /**
@@ -276,13 +277,10 @@ class FormDefaultTest extends TestCase
      */
     public function test_validate_with_exception()
     {
-        $request = $this->getRequest();
-        $this->app['request'] = $request;
-
-        $this->validate();
+        $this->validate($this->getRequest());
     }
 
-    protected function validate()
+    protected function validate(\Illuminate\Http\Request $request)
     {
         $modelConfiguration = m::mock(ModelConfigurationInterface::class);
         $modelConfiguration->shouldReceive('fireEvent')->once()->andReturn(true);
@@ -319,7 +317,7 @@ class FormDefaultTest extends TestCase
         $form->setModel($model);
 
         $this->assertNull(
-            $form->validateForm($modelConfiguration)
+            $form->validateForm($request, $modelConfiguration)
         );
     }
 }

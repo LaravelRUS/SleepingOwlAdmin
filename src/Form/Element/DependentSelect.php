@@ -65,7 +65,7 @@ class DependentSelect extends Select implements WithRoutesInterface
                     'output' => collect($options)->map(function ($value, $key) {
                         return ['id' => $key, 'name' => $value];
                     }),
-                    'selected' => $element->getValue(),
+                    'selected' => $element->getValueFromModel(),
                 ]);
             }]);
         }
@@ -194,7 +194,7 @@ class DependentSelect extends Select implements WithRoutesInterface
             'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
             'options' => $this->getOptions(),
-            'value' => $this->getValue(),
+            'value' => $this->getValueFromModel(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
             'attributes' => $attributes,

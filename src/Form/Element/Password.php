@@ -14,15 +14,20 @@ class Password extends NamedFormElement
      */
     protected $view = 'form.element.password';
 
-    public function save()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
     {
-        $value = $this->getValue();
+        $value = $this->getValueFromModel();
 
         if (! $this->isAllowedEmptyValue() and $this->getModel()->exists() and empty($value)) {
             return;
         }
 
-        parent::save();
+        parent::save($request);
     }
 
     /**

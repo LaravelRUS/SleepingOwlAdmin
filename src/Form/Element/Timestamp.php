@@ -19,9 +19,9 @@ class Timestamp extends DateTime
     /**
      * @return $this|NamedFormElement|mixed|null|string
      */
-    public function getValue()
+    public function getValueFromModel()
     {
-        $value = parent::getValue();
+        $value = parent::getValueFromModel();
 
         if (empty($value)) {
             $value = Carbon::now()->format($this->getFormat());

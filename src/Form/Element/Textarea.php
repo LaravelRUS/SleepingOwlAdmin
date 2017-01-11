@@ -45,10 +45,6 @@ class Textarea extends NamedFormElement
     public function toArray()
     {
         return parent::toArray() + [
-            'name'     => $this->getName(),
-            'label'    => $this->getLabel(),
-            'readonly' => $this->isReadonly(),
-            'value'    => $this->getValue(),
             'rows'     => $this->getRows(),
         ];
     }

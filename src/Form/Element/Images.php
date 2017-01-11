@@ -2,8 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
-
 class Images extends Image
 {
     /**
@@ -38,10 +36,15 @@ class Images extends Image
         return $this;
     }
 
-    public function save()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
     {
         $name = $this->getName();
-        $value = Request::input($name, '');
+        $value = $request->input($name, '');
 
         if (! empty($value)) {
             $value = explode(',', $value);
@@ -49,16 +52,17 @@ class Images extends Image
             $value = [];
         }
 
-        Request::merge([$name => $value]);
-        parent::save();
+        $request->merge([$name => $value]);
+
+        parent::save($request);
     }
 
     /**
      * @return string
      */
-    public function getValue()
+    public function getValueFromModel()
     {
-        $value = parent::getValue();
+        $value = parent::getValueFromModel();
         if (is_null($value)) {
             $value = [];
         }

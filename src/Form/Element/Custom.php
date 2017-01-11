@@ -93,12 +93,17 @@ class Custom extends FormElement
         return $this->getDisplay();
     }
 
-    public function save()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
     {
         $callback = $this->getCallback();
 
         if (is_callable($callback)) {
-            call_user_func($callback, $this->getModel());
+            call_user_func_array($callback, [$this->getModel(), $request]);
         }
     }
 }

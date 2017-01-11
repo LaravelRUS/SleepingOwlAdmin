@@ -59,8 +59,8 @@ class NamedFormElementTest extends TestCase
     {
         $element = $this->getElement();
 
-        $element->setAttribute('test');
-        $this->assertEquals('test', $element->getAttribute());
+        $element->setModelAttributeKey('test');
+        $this->assertEquals('test', $element->getModelAttributeKey());
     }
 
     /**
@@ -181,7 +181,7 @@ class NamedFormElementTest extends TestCase
         $element = $this->getElement('key.subkey', 'Label');
         $session->shouldReceive('getOldInput')->andReturn('test');
 
-        $this->assertEquals('test', $element->getValueFromRequest());
+        $this->assertEquals('test', $element->getValueFromRequest($request));
     }
 
     /**
@@ -199,7 +199,7 @@ class NamedFormElementTest extends TestCase
 
         $element = $this->getElement('key.subkey1', 'Label');
         $session->shouldReceive('getOldInput')->andReturn(null);
-        $this->assertEquals('hello world', $element->getValueFromRequest());
+        $this->assertEquals('hello world', $element->getValueFromRequest($request));
     }
 
     /**
@@ -217,7 +217,7 @@ class NamedFormElementTest extends TestCase
             'subkey' => 'hello world',
         ]);
 
-        $this->assertEquals('hello world', $element->getValue());
+        $this->assertEquals('hello world', $element->getValueFromModel());
     }
 
     /**
@@ -239,7 +239,7 @@ class NamedFormElementTest extends TestCase
         $this->assertNull($element->getValue());
 
         $model->exists = true;
-        $this->assertEquals('value', $element->getValue());
+        $this->assertEquals('value', $element->getValueFromModel());
     }
 
     /**

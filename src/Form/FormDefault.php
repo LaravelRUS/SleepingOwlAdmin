@@ -2,21 +2,20 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Request;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Form\Element\Upload;
-use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Exceptions\Form\FormException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
+use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Form\Element\Upload;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -248,7 +247,13 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->class);
+        $class = $this->class;
+
+        if (is_null($class) and $this->getModel() instanceof Model) {
+            $class = $this->getModel();
+        }
+
+        return app('sleeping_owl')->getModel($class);
     }
 
     /**
@@ -269,23 +274,38 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         parent::setModel($model);
         $this->getButtons()->setModel($model);
 
+        if (is_null($this->class)) {
+            $this->setModelClass(get_class($model));
+        }
+
         return $this;
+    }
+
+    /**
+     * @param ModelConfigurationInterface $modelConfiguration
+     *
+     * @return bool
+     */
+    public function validModelConfiguration(ModelConfigurationInterface $modelConfiguration)
+    {
+       return is_null($modelConfiguration) || $modelConfiguration === $this->getModelConfiguration();
     }
 
     /**
      * Save instance.
      *
+     * @param \Illuminate\Http\Request $request
      * @param ModelConfigurationInterface $modelConfiguration
      *
      * @return bool
      */
-    public function saveForm(ModelConfigurationInterface $modelConfiguration)
+    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
-        if ($modelConfiguration !== $this->getModelConfiguration()) {
-            return;
+        if (! $this->validModelConfiguration($modelConfiguration)) {
+            return false;
         }
 
-        parent::save();
+        parent::save($request);
 
         $model = $this->getModel();
 
@@ -305,7 +325,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $this->saveHasOneRelations($model);
 
-        parent::afterSave();
+        parent::afterSave($request);
 
         $modelConfiguration->fireEvent($loaded ? 'updated' : 'created', false, $model);
         $modelConfiguration->fireEvent('saved', false, $model);
@@ -347,14 +367,14 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
      * @param ModelConfigurationInterface $modelConfiguration
      *
      * @throws ValidationException
-     * @return void
      */
-    public function validateForm(ModelConfigurationInterface $modelConfiguration)
+    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
-        if ($modelConfiguration !== $this->getModelConfiguration()) {
+        if (! $this->validModelConfiguration($modelConfiguration)) {
             return;
         }
 
@@ -362,7 +382,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $verifier->setConnection($this->getModel()->getConnectionName());
 
         $validator = \Validator::make(
-            Request::all(),
+            $request->all(),
             $this->getValidationRules(),
             $this->getValidationMessages(),
             $this->getValidationLabels()

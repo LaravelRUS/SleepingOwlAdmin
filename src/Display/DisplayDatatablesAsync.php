@@ -52,28 +52,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $router->post('{adminModel}/async/{adminDisplayName?}', [
             'as' => 'admin.model.async.inline',
-            function (ModelConfigurationInterface $model, InlineRequest $request) {
-                $field = $request->input('name');
-                $value = $request->input('value');
-                $id = $request->input('pk');
-
-                $display = $model->fireDisplay();
-
-                /** @var ColumnEditableInterface|null $column */
-                $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
-                    return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
-                })->first();
-
-                if (is_null($column)) {
-                    abort(404);
-                }
-
-                $model->saveColumn($column, $value, $id);
-
-                if ($display instanceof DisplayDatatablesAsync) {
-                    return $display->renderAsync();
-                }
-            },
+            'uses' => 'AdminController@inlineEdit',
         ]);
     }
 
