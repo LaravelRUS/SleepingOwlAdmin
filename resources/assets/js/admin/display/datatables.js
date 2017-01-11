@@ -175,12 +175,15 @@ window.columnFilters = {
         let $input = $(input);
 
         $input.on('change', () => {
-            let val = [];
-
+            let selected = [];
             $input.find(':selected').each((i, e) => {
-                val.push($(e).text());
+                let $option = $(e);
+
+                if ($option.val().length) {
+                    selected.push($option.text());
+                }
             })
-            column.search(val.join(',')).draw()
+            column.search(selected.join(',')).draw()
         });
     },
     text (input, table, column, index, serverSide) {
