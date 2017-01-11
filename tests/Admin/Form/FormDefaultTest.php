@@ -234,7 +234,6 @@ class FormDefaultTest extends TestCase
 
         $this->getSleepingOwlMock()
             ->shouldReceive('getModel')
-            ->once()
             ->andReturn($modelConfiguration);
 
         $this->app->instance(
@@ -296,7 +295,6 @@ class FormDefaultTest extends TestCase
 
         $this->getSleepingOwlMock()
             ->shouldReceive('getModel')
-            ->once()
             ->andReturn($modelConfiguration);
 
         $form = $this->getFormElement([
