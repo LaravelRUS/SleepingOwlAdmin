@@ -8,32 +8,32 @@
 
 .form-element-errors {
   border-radius: 4px;
-  color: @errors-text-color;
-  font-size: 13px;
-  padding: 10px 10px 10px 30px;
-  background: @errors-bg-color;
-  position: relative;
-  margin-top: @arrow-size + 5px;
+  color:         @errors-text-color;
+  font-size:     13px;
+  padding:       10px 10px 10px 30px;
+  background:    @errors-bg-color;
+  position:      relative;
+  margin-top:    @arrow-size + 5px;
 
   &:after {
-    content: '';
-    position: absolute;
-    top: -@arrow-size;
-    width: 0;
-    height: 0;
-    border-left: @arrow-size solid transparent;
-    border-right: @arrow-size solid transparent;
+    content:       '';
+    position:      absolute;
+    top:           -@arrow-size;
+    width:         0;
+    height:        0;
+    border-left:   @arrow-size solid transparent;
+    border-right:  @arrow-size solid transparent;
     border-bottom: @arrow-size solid @errors-bg-color;
   }
 }
 
 .form-element-helptext {
-  color: lighten(@gray-base, 40%);
+  color:      lighten(@gray-base, 40%);
   font-style: italic;
 }
 
 .form-element-required {
-  color: @brand-warning;
+  color:          @brand-warning;
   vertical-align: super;
 }
 
@@ -89,6 +89,15 @@
 
 }
 
+.form-element-multiselect,
+.form-element-select {
+  &.has-error {
+    .select2-selection {
+      border-color: @state-danger-text !important;
+    }
+  }
+}
+
 .form-element-number {
 
 }
@@ -141,7 +150,7 @@
 .form-element-images {
   .form-element-helptext {
     background: whitesmoke;
-    padding: 3px 6px;
+    padding:    3px 6px;
   }
 }
 
@@ -154,7 +163,6 @@
     margin-bottom: 10px;
   }
 }
-
 
 /**
  * Thumbnails
@@ -207,7 +215,6 @@
   &:extend(.close);
 }
 
-
 /**
  * Dates
  */
@@ -219,7 +226,6 @@
     width: 250px;
   }
 }
-
 
 /* Datetime */
 .input-group-addon .fa-calendar, .input-group-addon .fa-clock-o {

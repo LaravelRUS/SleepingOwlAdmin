@@ -10,11 +10,6 @@ class Image extends NamedColumn
     protected $imageWidth = '80px';
 
     /**
-     * @var bool
-     */
-    protected $orderable = false;
-
-    /**
      * @var string
      */
     protected $view = 'column.image';
