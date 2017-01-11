@@ -1,7 +1,7 @@
 Admin.Modules.add('display.datatables', () => {
-    $.fn.dataTable.ext.errMode = () => {
+    $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
-            i18next.t('lang.table.error')
+            dt.jqXHR.responseJSON.message || i18next.t('lang.table.error')
         )
     };
 
