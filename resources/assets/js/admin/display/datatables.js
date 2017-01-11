@@ -183,7 +183,12 @@ window.columnFilters = {
                     selected.push($option.text());
                 }
             })
-            column.search(selected.join(',')).draw()
+
+            if (serverSide) {
+                column.search(selected.join(',')).draw()
+            } else {
+                column.search(selected.join('|'), true, false, true).draw()
+            }
         });
     },
     text (input, table, column, index, serverSide) {

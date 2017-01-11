@@ -1,3 +1,5 @@
+@import (less) "../../../../node_modules/select2/dist/css/select2.css";
+
 .select2-container--default {
   .select2-selection__arrow,
   .select2-selection--single {
@@ -6,7 +8,7 @@
 
   .select2-selection--multiple,
   .select2-selection--single {
-    border-radius: 0 !important;
+    border-radius: @input-radius !important;
     border-color:  @input-border;
   }
 
@@ -21,7 +23,7 @@
     min-height: @input-height-base;
 
     .select2-selection__choice {
-      border-radius:    0 !important;
+      border-radius:    @input-radius !important;
       background-color: whitesmoke;
       border-color:     @input-border;
       color:            @input-color;
@@ -41,7 +43,7 @@
     border-color:  @input-border-focus;
 
     .select2-search__field {
-      border-radius: 0 !important;
+      border-radius: @input-radius !important;
       border-color:  @input-border;
       color:         @input-color;
     }
