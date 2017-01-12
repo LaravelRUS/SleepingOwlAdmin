@@ -188,6 +188,14 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
+     * @return OrderByClauseInterface
+     */
+    public function getOrderByClause()
+    {
+        return $this->orderByClause;
+    }
+
+    /**
      * Check if column is orderable.
      * @return bool
      */
@@ -233,6 +241,8 @@ abstract class TableColumn implements ColumnInterface
      */
     protected function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel(get_class($this->getModel()));
+        return app('sleeping_owl')->getModel(
+            $this->getModel()
+        );
     }
 }

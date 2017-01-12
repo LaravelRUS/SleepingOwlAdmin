@@ -77,14 +77,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
             if (! is_string($orderable) && ! $orderable instanceof Closure) {
                 $orderable = $this->getName();
             }
-
-            $orderable = new OrderByClause($orderable);
         }
 
-        $this->orderByClause = $orderable;
-        $this->getHeader()->setOrderable($this->isOrderable());
-
-        return $this;
+        return parent::setOrderable($orderable);
     }
 
     /**

@@ -61,19 +61,27 @@ class DateTime extends NamedColumn
     public function toArray()
     {
         $value = $this->getModelValue();
-        $originalValue = $value;
+        return parent::toArray() + [
+            'value' => $this->getFormatedDate($value),
+            'originalValue' => $value,
+        ];
+    }
 
-        if (! is_null($value)) {
-            if (! $value instanceof Carbon) {
-                $value = Carbon::parse($value);
+    /**
+     * @param string $date
+     *
+     * @return null|string
+     */
+    protected function getFormatedDate($date)
+    {
+        if (! is_null($date)) {
+            if (! $date instanceof Carbon) {
+                $date = Carbon::parse($date);
             }
 
-            $value = $value->format($this->getFormat());
+            $date = $date->format($this->getFormat());
         }
 
-        return parent::toArray() + [
-            'value' => $value,
-            'originalValue' => $originalValue,
-        ];
+        return $date;
     }
 }
