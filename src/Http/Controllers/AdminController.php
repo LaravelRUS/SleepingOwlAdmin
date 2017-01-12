@@ -18,12 +18,12 @@ class AdminController extends Controller
     /**
      * @var \DaveJamesMiller\Breadcrumbs\Manager
      */
-    private $breadcrumbs;
+    protected $breadcrumbs;
 
     /**
      * @var AdminInterface
      */
-    private $admin;
+    protected $admin;
 
     /**
      * @var
