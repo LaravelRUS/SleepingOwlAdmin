@@ -26,8 +26,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public static function registerRoutes(Router $router)
     {
-        $router->get('{adminModel}/async/{adminDisplayName?}', [
-            'as' => 'admin.model.async',
+        $router->get('{adminModel}/async/{adminDisplayName?}', ['as' => 'admin.model.async',
             function (ModelConfigurationInterface $model, Application $application, $name = null) {
                 $display = $model->fireDisplay();
                 if ($display instanceof DisplayTabbed) {
@@ -48,10 +47,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             },
         ]);
 
-        $router->post('{adminModel}/async/{adminDisplayName?}', [
-            'as' => 'admin.model.async.inline',
-            'uses' => 'AdminController@inlineEdit',
-        ]);
+        $router->post('{adminModel}/async/{adminDisplayName?}', 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit');
     }
 
     /**
