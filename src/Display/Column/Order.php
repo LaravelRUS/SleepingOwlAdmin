@@ -2,12 +2,11 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Route;
-use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Routing\Router;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Traits\OrderableModel;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class Order extends TableColumn implements WithRoutesInterface
 {
@@ -28,25 +27,21 @@ class Order extends TableColumn implements WithRoutesInterface
      */
     public static function registerRoutes(Router $router)
     {
-        $router->post('{adminModel}/{adminModelId}/up', [
-            'as' => 'admin.model.move-up',
-            function ($model, $id) {
-                $instance = $model->getRepository()->find($id);
-                $instance->moveUp();
+        $routeName = 'admin.display.column.move-up';
+        if (! $router->has($routeName)) {
+            $router->post('{adminModel}/{adminModelId}/up', [
+                'as' => $routeName,
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderUp',
+            ]);
+        }
 
-                return back();
-            },
-        ]);
-
-        $router->post('{adminModel}/{adminModelId}/down', [
-            'as' => 'admin.model.move-down',
-            function ($model, $id) {
-                $instance = $model->getRepository()->find($id);
-                $instance->moveDown();
-
-                return back();
-            },
-        ]);
+        $routeName = 'admin.display.column.move-down';
+        if (! $router->has($routeName)) {
+            $router->post('{adminModel}/{adminModelId}/down', [
+                'as' => $routeName,
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderDown',
+            ]);
+        }
     }
 
     public function __construct()
@@ -97,11 +92,11 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * Get instance move up url.
-     * @return Route
+     * @return string
      */
     protected function moveUpUrl()
     {
-        return route('admin.model.move-up', [
+        return route('admin.display.column.move-up', [
             $this->getModelConfiguration()->getAlias(),
             $this->getModel()->getKey(),
         ]);
@@ -118,11 +113,11 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * Get instance move down url.
-     * @return Route
+     * @return string
      */
     protected function moveDownUrl()
     {
-        return route('admin.model.move-down', [
+        return route('admin.display.column.move-down', [
             $this->getModelConfiguration()->getAlias(),
             $this->getModel()->getKey(),
         ]);

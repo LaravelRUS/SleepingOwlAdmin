@@ -23,24 +23,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         $routeName = 'admin.display.tree.reorder';
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/reorder', ['as' => $routeName, function (ModelConfigurationInterface $model) {
-                $display = $model->fireDisplay();
-
-                if ($display instanceof DisplayTabbed) {
-                    $display->getTabs()->each(function ($tab) {
-                        $content = $tab->getContent();
-                        if ($content instanceof self) {
-                            $content->getRepository()->reorder(
-                                Request::input('data')
-                            );
-                        }
-                    });
-                } else {
-                    $display->getRepository()->reorder(
-                        Request::input('data')
-                    );
-                }
-            }]);
+            $router->post('{adminModel}/reorder', ['as' => $routeName, 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@treeReorder']);
         }
     }
 

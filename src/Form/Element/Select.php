@@ -60,7 +60,7 @@ class Select extends NamedFormElement
             );
         }
 
-        $options = $this->options;
+        $options = array_except($this->options, $this->exclude);
         if ($this->isSortable()) {
             asort($options);
         }
@@ -178,8 +178,6 @@ class Select extends NamedFormElement
             $attributes['data-nullable'] = 'true';
             $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
         }
-
-        $options = array_except($options, $this->exclude);
 
         return parent::toArray() + [
             'options' => $options,
