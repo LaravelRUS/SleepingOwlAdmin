@@ -231,7 +231,7 @@ class NamedFormElementTest extends TestCase
 
         $element = $this->getElement('key', 'Label');
 
-        $this->assertNull($element->getValue());
+        $this->assertNull($element->getValueFromModel());
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
         $model->shouldReceive('getAttribute')->with('key')->andReturn('value');
@@ -308,9 +308,110 @@ class NamedFormElementTest extends TestCase
         ], $element->toArray());
     }
 
-    public function test_saving()
+    public function test_save()
     {
-        $this->markTestSkipped('NamedFormElement::save() not tested');
+        $request = $this->app['request'];
+
+        $session = $request->getSession();
+        $session->shouldReceive('getOldInput')->andReturn(null);
+
+        $request->offsetSet($key = 'key', $value = 'hello world');
+        $element = $this->getElement($key, 'Label');
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('setAttribute')->with('key', $value);
+
+        $element->save($request);
+    }
+
+    public function test_sets_model_attribute()
+    {
+        $element = $this->getElement('key', 'Label');
+        $value = 'value';
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('setAttribute')->with('key', $value);
+
+        $element->setModelAttribute($value);
+    }
+
+    public function test_prepare_value()
+    {
+        $element = $this->getElement('key', 'Label');
+        $value = 'value';
+
+        $this->assertEquals($value, $element->prepareValue($value));
+
+        $element->mutateValue(function ($value) {
+            return strtoupper($value);
+        });
+
+        $this->assertEquals('VALUE', $element->prepareValue($value));
+    }
+
+    public function test_mutator()
+    {
+        $element = $this->getElement('key', 'Label');
+        $this->assertFalse($element->hasMutator());
+
+        $element->mutateValue(function ($value) {
+            return strtoupper($value);
+        });
+        $this->assertTrue($element->hasMutator());
+    }
+
+    public function test_get_model_by_path()
+    {
+        $element = $this->getElement('key', 'Label');
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+
+        $this->assertEquals($model, $this->callMethodByPath($element, 'key'));
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')->with('key')->andReturn('test');
+
+        $this->assertNull($this->callMethodByPath($element, 'key.key1'));
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')->with('key')->andReturn(
+            $model1 = m::mock(\Illuminate\Database\Eloquent\Model::class)
+        );
+
+        $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
+    }
+
+    /**
+     * @expectedException LogicException
+     */
+    public function test_get_model_by_path_exception()
+    {
+        $element = $this->getElement('key', 'Label');
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')->with('key')->andReturn(
+            $model1 = m::mock(\Illuminate\Database\Eloquent\Model::class)
+        );
+
+        $model1->shouldReceive('getAttribute')->with('key1');
+
+        $this->callMethodByPath($element, 'key.key1.title');
+    }
+
+    /**
+     * @param NamedFormElement $element
+     * @param $path
+     *
+     * @return mixed
+     */
+    protected function callMethodByPath(NamedFormElement $element, $path)
+    {
+        $reflection = new ReflectionClass($element);
+
+        $method = $reflection->getMethod('getModelByPath');
+        $method->setAccessible(true);
+
+        return $method->invoke($element, $path);
     }
 }
 

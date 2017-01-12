@@ -266,60 +266,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return array|string
-     */
-    public function getValueFromRequest(\Illuminate\Http\Request $request)
-    {
-        if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
-            return $value;
-        }
-
-        return $request->input($this->getPath());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValueFromModel()
-    {
-        if (! is_null($value = $this->getValueFromRequest(request()))) {
-            return $value;
-        }
-
-        $model = $this->getModel();
-        $path = $this->getPath();
-        $value = $this->getDefaultValue();
-
-        if (is_null($model) or ! $model->exists) {
-            return $value;
-        }
-
-        $relations = explode('.', $path);
-        $count = count($relations);
-
-        if ($count === 1) {
-            return $model->getAttribute($this->getModelAttributeKey());
-        }
-
-        foreach ($relations as $relation) {
-            if ($model->{$relation} instanceof Model) {
-                $model = $model->{$relation};
-                continue;
-            }
-
-            if ($count === 2) {
-                return $model->getAttribute($relation);
-            }
-
-            throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
-        }
-
-        return $value;
-    }
-
-    /**
      * If FormElement has `_unique` rule, it will get all appropriate
      * validation rules based on underlying model.
      *
@@ -393,15 +339,86 @@ abstract class NamedFormElement extends FormElement
     /**
      * @param \Illuminate\Http\Request $request
      *
+     * @return array|string
+     */
+    public function getValueFromRequest(\Illuminate\Http\Request $request)
+    {
+        if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
+            return $value;
+        }
+
+        return $request->input($this->getPath());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValueFromModel()
+    {
+        if (! is_null($value = $this->getValueFromRequest(request()))) {
+            return $value;
+        }
+
+        $model = $this->getModel();
+        $path = $this->getPath();
+        $value = $this->getDefaultValue();
+
+        if (is_null($model) or ! $model->exists) {
+            return $value;
+        }
+
+        $relations = explode('.', $path);
+        $count = count($relations);
+
+        if ($count === 1) {
+            return $model->getAttribute($this->getModelAttributeKey());
+        }
+
+        foreach ($relations as $relation) {
+            if ($model->{$relation} instanceof Model) {
+                $model = $model->{$relation};
+                continue;
+            }
+
+            if ($count === 2) {
+                return $model->getAttribute($relation);
+            }
+
+            throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
      * @return void
      */
     public function save(\Illuminate\Http\Request $request)
     {
-        $value = $this->getValueFromRequest(
-            $request
+        $this->setModelAttribute(
+            $this->getValueFromRequest(
+                $request
+            )
+        );
+    }
+
+    /**
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    public function setModelAttribute($value)
+    {
+        $model = $this->getModelByPath(
+            $this->getPath()
         );
 
-        $this->setModelAttribute($this->prepareValue($value));
+        $model->setAttribute(
+            $this->getModelAttributeKey(),
+            $this->prepareValue($value)
+        );
     }
 
     /**
@@ -425,11 +442,12 @@ abstract class NamedFormElement extends FormElement
             foreach ($relations as $relation) {
                 $relatedModel = null;
                 if ($previousModel->getAttribute($relation) instanceof Model) {
-                    $relatedModel = &$previousModel->getAttribute($relation);
+                    $relatedModel = $previousModel->getAttribute($relation);
                 } elseif (method_exists($previousModel, $relation)) {
 
                     /* @var Relation $relation */
                     $relationObject = $previousModel->{$relation}();
+
                     switch (get_class($relationObject)) {
                         case BelongsTo::class:
                             $relationObject->associate($relatedModel = $relationObject->getRelated());
@@ -483,6 +501,20 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function prepareValue($value)
+    {
+        if ($this->hasMutator()) {
+            $value = call_user_func($this->mutator, $value);
+        }
+
+        return $value;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -496,34 +528,5 @@ abstract class NamedFormElement extends FormElement
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);
-    }
-
-    /**
-     * @param mixed  $value
-     */
-    public function setModelAttribute($value)
-    {
-        $model = $this->getModelByPath(
-            $this->getPath()
-        );
-
-        $model->setAttribute(
-            $this->getModelAttributeKey(),
-            $value
-        );
-    }
-
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    protected function prepareValue($value)
-    {
-        if ($this->hasMutator()) {
-            $value = call_user_func($this->mutator, $value);
-        }
-
-        return $value;
     }
 }

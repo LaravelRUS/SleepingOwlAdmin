@@ -191,7 +191,7 @@ class Select extends NamedFormElement
      *
      * @return mixed
      */
-    protected function prepareValue($value)
+    public function prepareValue($value)
     {
         if ($this->isNullable() and $value == '') {
             return;

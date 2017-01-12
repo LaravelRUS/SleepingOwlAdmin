@@ -101,7 +101,7 @@ class Number extends NamedFormElement
      *
      * @return null|int
      */
-    protected function prepareValue($value)
+    public function prepareValue($value)
     {
         if ($value == '') {
             return;
