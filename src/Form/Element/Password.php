@@ -23,7 +23,7 @@ class Password extends NamedFormElement
     {
         $value = $this->getValueFromModel();
 
-        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists() and empty($value)) {
+        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists and empty($value)) {
             return;
         }
 
@@ -37,7 +37,7 @@ class Password extends NamedFormElement
     {
         $data = parent::getValidationRules();
 
-        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists()) {
+        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists) {
             foreach ($data as $field => $rules) {
                 foreach ($rules as $i => $rule) {
                     if ($rule == 'required') {
