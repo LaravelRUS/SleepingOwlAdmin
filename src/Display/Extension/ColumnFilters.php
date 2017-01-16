@@ -8,6 +8,7 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -187,7 +188,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
             $column = $columns->get($index);
             $columnFilter = array_get($this->all(), $index);
 
-            if ($column && $columnFilter) {
+            if ($column && $column instanceOf NamedColumnInterface && $columnFilter) {
                 $columnFilter->apply(
                     $column,
                     $query,
