@@ -41,7 +41,8 @@
   },
   "autoload": {
     "psr-4": {
-      "SleepingOwl\\Admin\\": "src/"
+      "SleepingOwl\\Admin\\": "src/",
+      "SleepingOwl\\Tests\\": "tests/"
     }
   },
   "autoload-dev": {
