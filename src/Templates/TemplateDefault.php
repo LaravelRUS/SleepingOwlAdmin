@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use DaveJamesMiller\Breadcrumbs\Manager;
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Contracts\Template\Breadcrumbs;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
@@ -26,7 +26,7 @@ class TemplateDefault implements TemplateInterface
     private $navigation;
 
     /**
-     * @var Manager
+     * @var Breadcrumbs
      */
     private $breadcrumbs;
 
@@ -36,9 +36,9 @@ class TemplateDefault implements TemplateInterface
      * @param Application $application
      * @param MetaInterface $meta
      * @param NavigationInterface $navigation
-     * @param Manager $breadcrumbs
+     * @param Breadcrumbs $breadcrumbs
      */
-    public function __construct(Application $application, MetaInterface $meta, NavigationInterface $navigation, Manager $breadcrumbs)
+    public function __construct(Application $application, MetaInterface $meta, NavigationInterface $navigation, Breadcrumbs $breadcrumbs)
     {
         $this->app = $application;
         $this->meta = $meta;
