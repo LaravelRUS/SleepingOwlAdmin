@@ -2,20 +2,20 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Form\Element\Upload;
-use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Exceptions\Form\FormException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
+use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\DisplayInterface;
 use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\FormElementInterface;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Form\Element\Upload;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -93,9 +93,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $this->initialized = true;
         $this->repository = app(RepositoryInterface::class, [$this->class]);
-        $this->setModel(
-            $this->makeModel()
-        );
+        $model = $this->makeModel();
+        parent::setModel($model);
+        $this->getButtons()->setModel($model);
 
         parent::initialize();
 
@@ -158,7 +158,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setAction($action)
     {
-        $this->action = $action;
+        if (is_null($this->action)) {
+            $this->action = $action;
+        }
 
         return $this;
     }
@@ -237,7 +239,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         if (is_null($this->id) and ! is_null($id) and ($model = $this->getRepository()->find($id))) {
             $this->id = $id;
 
-            $this->setModel($model);
+            parent::setModel($model);
+            $this->getButtons()->setModel($model);
+            $this->setModelClass(get_class($model));
         }
     }
 
@@ -271,14 +275,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setModel(Model $model)
     {
-        parent::setModel($model);
-        $this->getButtons()->setModel($model);
 
-        if (is_null($this->class)) {
-            $this->setModelClass(get_class($model));
-        }
-
-        return $this;
     }
 
     /**
@@ -379,6 +376,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         }
 
         $verifier = app('validation.presence');
+
         $verifier->setConnection($this->getModel()->getConnectionName());
 
         $validator = \Validator::make(

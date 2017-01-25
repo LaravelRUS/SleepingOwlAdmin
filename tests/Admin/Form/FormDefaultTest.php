@@ -9,6 +9,8 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormDefaultTest extends TestCase
 {
+    use \SleepingOwl\Tests\AssetsTesterTrait;
+
     public function tearDown()
     {
         m::close();
@@ -26,8 +28,7 @@ class FormDefaultTest extends TestCase
      */
     public function test_constructor()
     {
-        \KodiCMS\Assets\Facades\PackageManager::shouldReceive('load')->once();
-        \KodiCMS\Assets\Facades\PackageManager::shouldReceive('add')->once();
+        $this->packageIncluded();
 
         $form = $this->getFormElement([
             m::mock(FormElementInterface::class),
@@ -42,7 +43,7 @@ class FormDefaultTest extends TestCase
      */
     public function test_initialize()
     {
-        \KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
+        $this->packageInitialized();
 
         $this->app->instance(
             RepositoryInterface::class,
@@ -194,28 +195,34 @@ class FormDefaultTest extends TestCase
      * @covers FormDefault::getModel
      * @covers FormDefault::setModel
      */
-    public function test_gets_and_sets_model()
-    {
-        $this->app->instance(
-            FormButtonsInterface::class,
-            $buttons = m::mock(FormButtonsInterface::class)
-        );
-
-        $model = new FormDefaultTestMockModel();
-
-        $buttons->shouldReceive('setModel')->once()->with($model);
-
-        $form = $this->getFormElement([
-            $element = m::mock(FormElementInterface::class),
-        ]);
-
-        $element->shouldReceive('setModel')->once()->with($model);
-
-        $this->assertEquals(
-            $form,
-            $form->setModel($model)
-        );
-    }
+    //public function test_gets_model()
+    //{
+    //    $this->app->instance(
+    //        FormButtonsInterface::class,
+    //        $buttons = m::mock(FormButtonsInterface::class)
+    //    );
+    //
+    //    $this->app->instance(
+    //        RepositoryInterface::class,
+    //        $repository = m::mock(RepositoryInterface::class)
+    //    );
+    //
+    //    $model = new FormDefaultTestMockModel();
+    //
+    //    $buttons->shouldReceive('setModel')->once()->with($model);
+    //
+    //    $form = $this->getFormElement([
+    //        $element = m::mock(FormElementInterface::class),
+    //    ]);
+    //
+    //    $element->shouldReceive('setModel')->once()->with($model);
+    //    $repository->shouldReceive('find')->with(1)->andReturn($model);
+    //
+    //    $this->assertEquals(
+    //        $form,
+    //        $form->setId(1)
+    //    );
+    //}
 
     /**
      * @covers FormDefault::saveForm
@@ -228,6 +235,7 @@ class FormDefaultTest extends TestCase
 
         $model->shouldReceive('getRelations')->twice()->andReturn([]);
         $model->shouldReceive('save')->once();
+        $model->shouldReceive('getConnectionName');
 
         $modelConfiguration = m::mock(ModelConfigurationInterface::class);
         $modelConfiguration->shouldReceive('fireEvent')->times(4)->andReturn(true);
@@ -245,13 +253,18 @@ class FormDefaultTest extends TestCase
             $element = m::mock(FormElementInterface::class),
         ]);
 
-        $element->shouldReceive('setModel')->once()->with($model);
+        $element->shouldReceive('initialize')->once();
+        $element->shouldReceive('setModel');
         $element->shouldReceive('isReadonly')->twice()->andReturn(false);
         $element->shouldReceive('isVisible')->twice()->andReturn(true);
         $element->shouldReceive('save')->once()->with($request);
         $element->shouldReceive('afterSave')->once()->with($request);
 
-        $form->setModel($model);
+        $form->setModelClass(FormDefaultTestMockModel::class);
+        $form->initialize();
+        $repository->shouldReceive('find')->with(1)->andReturn($model);
+
+        $form->setId(1);
 
         $this->assertTrue($form->saveForm($request, $modelConfiguration));
     }
@@ -291,7 +304,7 @@ class FormDefaultTest extends TestCase
 
         $model = m::mock(FormDefaultTestMockModel::class);
 
-        $model->shouldReceive('getConnectionName')->once()->andReturn('default');
+        $model->shouldReceive('getConnectionName')->andReturn('default');
 
         $this->getSleepingOwlMock()
             ->shouldReceive('getModel')
@@ -300,8 +313,8 @@ class FormDefaultTest extends TestCase
         $form = $this->getFormElement([
             $element = m::mock(FormElementInterface::class),
         ]);
-
-        $element->shouldReceive('setModel')->once()->with($model);
+        $element->shouldReceive('initialize')->once();
+        $element->shouldReceive('setModel');
         $element->shouldReceive('getValidationRules')->once()
             ->andReturn(['element' => 'required']);
         $element->shouldReceive('getValidationMessages')->once()->andReturn([]);
@@ -312,7 +325,9 @@ class FormDefaultTest extends TestCase
         $element->shouldReceive('isReadonly')->andReturn(false);
         $element->shouldReceive('isVisible')->andReturn(true);
 
-        $form->setModel($model);
+        $form->setModelClass(FormDefaultTestMockModel::class);
+        $form->initialize();
+        $repository->shouldReceive('find')->with(1)->andReturn($model);
 
         $this->assertNull(
             $form->validateForm($request, $modelConfiguration)
