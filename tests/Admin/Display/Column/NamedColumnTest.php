@@ -6,6 +6,8 @@ use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class NamedColumnTest extends TestCase
 {
+    use \SleepingOwl\Tests\AssetsTesterTrait;
+
     public function tearDown()
     {
         m::close();
@@ -24,11 +26,20 @@ class NamedColumnTest extends TestCase
 
     public function test_constructor()
     {
+        $this->packageIncluded();
         $column = $this->getColumn();
 
         $this->assertEquals('test_name', $column->getName());
         $this->assertEquals('row-'.strtolower(class_basename($column)), $column->getHtmlAttribute('class'));
         $this->assertTrue($column->isOrderable());
+    }
+
+    public function test_initialize()
+    {
+        $column = $this->getColumn();
+        $this->packageInitialized();
+
+        $column->initialize();
     }
 
     public function test_gets_or_sets_name()

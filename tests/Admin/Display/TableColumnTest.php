@@ -6,6 +6,8 @@ use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class TableColumnTest extends TestCase
 {
+    use \SleepingOwl\Tests\AssetsTesterTrait;
+
     public function tearDown()
     {
         m::close();
@@ -28,8 +30,8 @@ class TableColumnTest extends TestCase
     public function test_constructor_without_label()
     {
         $this->app->instance(TableHeaderColumnInterface::class, $header = m::mock(TableHeaderColumnInterface::class));
-        PackageManager::shouldReceive('load')->once();
-        PackageManager::shouldReceive('add')->once();
+
+        $this->packageIncluded();
 
         $header->shouldNotReceive('setTitle');
 
@@ -56,7 +58,7 @@ class TableColumnTest extends TestCase
     {
         $column = $this->getColumn();
 
-        Meta::shouldReceive('loadPackage')->once();
+        $this->packageInitialized();
 
         $column->initialize();
     }
