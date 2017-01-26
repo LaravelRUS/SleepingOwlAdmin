@@ -120,6 +120,22 @@ class Control extends TableColumn
 
         return $this;
     }
+    
+        /**
+     * @param ControlButtonInterface $button
+     *
+     * @return $this
+     */
+    public function addButtons(array $buttons)
+    {
+        foreach($buttons as $button) {
+            
+            if($button instanceof ControlButtonInterface) {
+                $this->buttons->push($button);
+            }
+        }
+        return $this;
+    }
 
     /**
      * @param bool $editable
