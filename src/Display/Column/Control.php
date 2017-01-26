@@ -120,7 +120,7 @@ class Control extends TableColumn
 
         return $this;
     }
-    
+
     /**
      * @param ControlButtonInterface $button
      *
@@ -133,7 +133,7 @@ class Control extends TableColumn
                 $this->buttons->push($button);
             }
         }
-        
+
         return $this;
     }
 
