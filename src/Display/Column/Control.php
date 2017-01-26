@@ -129,11 +129,11 @@ class Control extends TableColumn
     public function addButtons(array $buttons)
     {
         foreach ($buttons as $button) {
-            
             if ($button instanceof ControlButtonInterface) {
                 $this->buttons->push($button);
             }
         }
+        
         return $this;
     }
 
