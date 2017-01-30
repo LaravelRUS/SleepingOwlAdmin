@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\Template\Breadcrumbs as BreadcrumbsContract;
 
 class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
-
     /**
      * @param string|null $name
      *

@@ -12,7 +12,7 @@ class Count extends NamedColumn
     protected $view = 'column.count';
 
     /**
-     * @return integer
+     * @return int
      */
     public function getModelValue()
     {

@@ -3,14 +3,10 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use Validator;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use KodiComponents\Support\Upload;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
@@ -29,7 +25,7 @@ class File extends NamedFormElement implements WithRoutesInterface
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField'
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField',
             ]);
         }
     }
@@ -212,8 +208,6 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         return $this;
     }
-
-
 
     /**
      * @param UploadedFile $file

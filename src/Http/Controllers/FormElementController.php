@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Form\Element\DependentSelect;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormElementController extends Controller
 {

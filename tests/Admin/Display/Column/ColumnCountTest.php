@@ -42,7 +42,7 @@ class ColumnCountTest extends TestCase
         $column = $this->getColumn();
 
         $column->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('getAttribute')->andReturn(new \Illuminate\Support\Collection([1, 2 , 3]));
+        $model->shouldReceive('getAttribute')->andReturn(new \Illuminate\Support\Collection([1, 2, 3]));
 
         $this->assertEquals(3, $column->getModelValue());
     }
@@ -52,7 +52,7 @@ class ColumnCountTest extends TestCase
         $column = $this->getColumn();
 
         $column->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('getAttribute')->andReturn([1, 2 , 3, 4]);
+        $model->shouldReceive('getAttribute')->andReturn([1, 2, 3, 4]);
 
         $this->assertEquals(4, $column->getModelValue());
     }
