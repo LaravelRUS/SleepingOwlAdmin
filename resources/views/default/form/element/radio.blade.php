@@ -6,14 +6,6 @@
 			<span class="form-element-required">*</span>
 		@endif
 	</label>
-	@if ($nullable)
-		<div class="radio">
-			<label>
-				<input type="radio" name="{{ $name }}" value="" {!! ($value == null) ? 'checked' : '' !!}/>
-				{{ trans('sleeping_owl::lang.select.nothing') }}
-			</label>
-		</div>
-	@endif
 	@foreach ($options as $optionValue => $optionLabel)
 		<div class="radio">
 			<label>
