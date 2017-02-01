@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
-use SleepingOwl\Admin\Display\DisplayTabbed;
 use SleepingOwl\Admin\Display\DisplayTree;
+use SleepingOwl\Admin\Display\DisplayTabbed;
+use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class DisplayController extends Controller
 {
@@ -59,7 +59,7 @@ class DisplayController extends Controller
         $display = $model->fireDisplay();
 
         if ($display instanceof DisplayTabbed) {
-            $display->getTabs()->each(function ($tab) use($request) {
+            $display->getTabs()->each(function ($tab) use ($request) {
                 $content = $tab->getContent();
                 if ($content instanceof DisplayTree) {
                     $content->getRepository()->reorder(

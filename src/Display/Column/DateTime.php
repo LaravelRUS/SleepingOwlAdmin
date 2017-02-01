@@ -61,6 +61,7 @@ class DateTime extends NamedColumn
     public function toArray()
     {
         $value = $this->getModelValue();
+
         return parent::toArray() + [
             'value' => $this->getFormatedDate($value),
             'originalValue' => $value,

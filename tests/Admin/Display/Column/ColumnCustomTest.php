@@ -31,7 +31,6 @@ class ColumnCustomTest extends TestCase
         $column = $this->getColumn();
 
         $this->assertEquals($column, $column->setCallback($callback = function () {
-
         }));
 
         $this->assertEquals($callback, $column->getCallback());
@@ -67,7 +66,8 @@ class ColumnCustomTest extends TestCase
     {
         $column = $this->getColumn();
 
-        $column->setCallback(function () {});
+        $column->setCallback(function () {
+        });
 
         $this->assertTrue(array_key_exists('value', $column->toArray()));
     }
