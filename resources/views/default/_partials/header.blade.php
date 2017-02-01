@@ -10,11 +10,11 @@
 	</a>
 	<div class="navbar-custom-menu">	
 		<ul class="nav navbar-nav">
-			@yield('navbar')
+			@stack('navbar')
 		</ul>
 
 		<ul class="nav navbar-nav navbar-right">
-			@yield('navbar.right')
+			@stack('navbar.right')
 		</ul>
 	</div>
 </nav>

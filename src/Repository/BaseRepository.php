@@ -27,20 +27,6 @@ class BaseRepository implements RepositoryInterface
     protected $with = [];
 
     /**
-     * @param string|Model $class
-     *
-     * @throws RepositoryException
-     */
-    public function __construct($class)
-    {
-        if ($class instanceof Model) {
-            $this->setModel($class);
-        } else {
-            $this->setClass($class);
-        }
-    }
-
-    /**
      * @return string
      */
     public function getClass()

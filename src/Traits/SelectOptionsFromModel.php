@@ -194,8 +194,8 @@ trait SelectOptionsFromModel
      */
     protected function loadOptions()
     {
-        $repository = app(RepositoryInterface::class, [$this->getModelForOptions()]);
-
+        $repository = app(RepositoryInterface::class);
+        $repository->setModel($this->getModelForOptions());
         $key = $repository->getModel()->getKeyName();
 
         $options = $repository->getQuery();

@@ -108,8 +108,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         $this->class = $class;
         $this->model = app($class);
 
-        $this->repository = app(RepositoryInterface::class, [$class]);
-
+        $this->repository = app(RepositoryInterface::class);
+        $this->repository->setClass($class);
         if (! $this->alias) {
             $this->setDefaultAlias();
         }
