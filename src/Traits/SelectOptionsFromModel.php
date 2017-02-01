@@ -201,7 +201,13 @@ trait SelectOptionsFromModel
         $options = $repository->getQuery();
 
         if ($this->isEmptyRelation() and ! is_null($foreignKey = $this->getForeignKey())) {
-            $options->where($foreignKey, 0)->orWhereNull($foreignKey);
+            
+            $relation = $this->getModelAttributeKey();
+            $model    = $this->getModel();
+
+            if ($model->{$relation}() instanceof HasOneOrMany) {
+                $options->where($foreignKey, 0)->orWhereNull($foreignKey);
+            }
         }
 
         if (count($this->getFetchColumns()) > 0) {
