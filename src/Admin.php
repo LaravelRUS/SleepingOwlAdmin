@@ -3,20 +3,20 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Illuminate\Filesystem\Filesystem;
-use SleepingOwl\Admin\Navigation\Page;
-use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Model\ModelCollection;
-use Illuminate\Foundation\ProviderRepository;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Contracts\Template\MetaInterface;
-use SleepingOwl\Admin\Http\Controllers\AdminController;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\ProviderRepository;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Model\ModelCollection;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Navigation\Page;
 
 class Admin implements AdminInterface
 {
@@ -34,6 +34,11 @@ class Admin implements AdminInterface
      * @var Application
      */
     protected $app;
+
+    /**
+     * @var array
+     */
+    protected $missedSections = [];
 
     /**
      * Admin constructor.
@@ -96,6 +101,32 @@ class Admin implements AdminInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param array $sections
+     *
+     * @return $this
+     */
+    public function registerSections(array $sections)
+    {
+        foreach ($sections as $model => $section) {
+            if (class_exists($section)) {
+                $this->register(new $section($model));
+            } else {
+                $this->missedSections[$model] = $section;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMissedSections()
+    {
+        return $this->missedSections;
     }
 
     /**
