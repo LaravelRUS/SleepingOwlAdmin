@@ -11,6 +11,9 @@ allow_failures:
 before_script:
   - travis_retry composer self-update
 
+script:
+  - vendor/bin/phpunit
+
 install:
   - travis_retry composer install --no-interaction --prefer-dist
 
