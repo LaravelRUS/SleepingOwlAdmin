@@ -1,6 +1,6 @@
 <?php
 
-namespace SleepingOwl\Admin\Contracts;
+namespace SleepingOwl\Admin\Contracts\Display;
 
 interface NamedColumnInterface
 {

@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 class Range extends BaseColumnFilter
 {

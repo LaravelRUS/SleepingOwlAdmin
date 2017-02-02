@@ -8,7 +8,7 @@ use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 trait FormElements

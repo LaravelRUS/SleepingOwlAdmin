@@ -1,8 +1,10 @@
 <?php
 
-namespace SleepingOwl\Admin\Contracts;
+namespace SleepingOwl\Admin\Contracts\Display\Extension;
 
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 
 interface ColumnFilterInterface extends Initializable
 {

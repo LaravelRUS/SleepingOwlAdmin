@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormElementsCollection extends Collection
 {

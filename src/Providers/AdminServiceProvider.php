@@ -11,7 +11,7 @@ use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 use SleepingOwl\Admin\Exceptions\TemplateException;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use Illuminate\Contracts\View\Factory as ViewFactory;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;

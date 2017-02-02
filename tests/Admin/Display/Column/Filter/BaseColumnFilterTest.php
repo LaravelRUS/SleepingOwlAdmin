@@ -1,6 +1,7 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
 class BaseColumnFilterTest extends TestCase
@@ -33,7 +34,7 @@ class BaseColumnFilterTest extends TestCase
 
         $filter->setOperator($operator);
 
-        $column = m::mock(\SleepingOwl\Admin\Contracts\NamedColumnInterface::class);
+        $column = m::mock(NamedColumnInterface::class);
         $column->shouldReceive('getName')->andReturn('columnName');
 
         $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
@@ -51,7 +52,7 @@ class BaseColumnFilterTest extends TestCase
 
         $filter->setOperator($operator);
 
-        $column = m::mock(\SleepingOwl\Admin\Contracts\NamedColumnInterface::class);
+        $column = m::mock(NamedColumnInterface::class);
         $column->shouldReceive('getName')->andReturn('column.test.columnName');
 
         $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);

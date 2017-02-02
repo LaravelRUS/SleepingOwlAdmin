@@ -1,11 +1,11 @@
 <?php
 
-namespace SleepingOwl\Admin\Contracts;
+namespace SleepingOwl\Admin\Contracts\Display;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
-use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\WithModel;
 
 interface ColumnInterface extends Initializable, Renderable, Arrayable, WithModel
 {

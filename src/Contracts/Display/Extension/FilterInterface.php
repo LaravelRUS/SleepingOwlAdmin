@@ -1,8 +1,9 @@
 <?php
 
-namespace SleepingOwl\Admin\Contracts;
+namespace SleepingOwl\Admin\Contracts\Display\Extension;
 
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\Initializable;
 
 interface FilterInterface extends Initializable
 {
