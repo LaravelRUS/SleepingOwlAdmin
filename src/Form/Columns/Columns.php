@@ -45,7 +45,7 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param \SleepingOwl\Admin\Contracts\FormElementInterface[]|\Closure|ColumnInterface $column
+     * @param \SleepingOwl\Admin\Contracts\Form\FormElementInterface[]|\Closure|ColumnInterface $column
      * @param int|null $width
      *
      * @return $this
@@ -56,7 +56,7 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param \SleepingOwl\Admin\Contracts\FormElementInterface[]|\Closure|ColumnInterface $element
+     * @param \SleepingOwl\Admin\Contracts\Form\FormElementInterface[]|\Closure|ColumnInterface $element
      * @param int|null $width
      *
      * @return $this

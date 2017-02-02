@@ -6,7 +6,7 @@ use SleepingOwl\Admin\Form\Panel\Body;
 use SleepingOwl\Admin\Form\Element\Html;
 use SleepingOwl\Admin\Form\Panel\Footer;
 use SleepingOwl\Admin\Form\Panel\Header;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormPanel extends FormDefault
 {

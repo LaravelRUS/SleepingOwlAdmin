@@ -7,7 +7,7 @@ use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 
 class Tree extends Extension implements Initializable, Renderable
 {
@@ -84,7 +84,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\ColumnInterface[]
+     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
      */
     public function all()
     {
@@ -92,7 +92,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\ColumnInterface[]
+     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
      */
     public function allWithControl()
     {

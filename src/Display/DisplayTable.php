@@ -5,9 +5,9 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Display\Extension\Columns;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 
 /**

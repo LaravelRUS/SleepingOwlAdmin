@@ -1,6 +1,8 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class ModelConfigurationTest extends TestCase
@@ -85,7 +87,7 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $display = m::mock(\SleepingOwl\Admin\Contracts\DisplayInterface::class);
+        $display = m::mock(DisplayInterface::class);
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
@@ -129,7 +131,7 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $display = m::mock(\SleepingOwl\Admin\Contracts\DisplayInterface::class);
+        $display = m::mock(DisplayInterface::class);
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
@@ -165,7 +167,7 @@ class ModelConfigurationTest extends TestCase
 
         // -------------------
 
-        $display = m::mock(\SleepingOwl\Admin\Contracts\FormInterface::class);
+        $display = m::mock(FormInterface::class);
         $display->shouldNotReceive('setModelClass');
         $display->shouldReceive('initialize')->once();
         $display->shouldReceive('setAction')->once()->with($model->getStoreUrl());
@@ -186,7 +188,7 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $display = m::mock(\SleepingOwl\Admin\Contracts\DisplayInterface::class);
+        $display = m::mock(DisplayInterface::class);
         $display->shouldReceive('setModelClass')->once()->with($model->getClass());
         $display->shouldReceive('initialize')->once();
 
@@ -200,7 +202,7 @@ class ModelConfigurationTest extends TestCase
 
         // -------------------
 
-        $display = m::mock(\SleepingOwl\Admin\Contracts\FormInterface::class);
+        $display = m::mock(FormInterface::class);
         $display->shouldNotReceive('setModelClass');
         $display->shouldReceive('initialize')->once();
         $display->shouldReceive('setAction')->once()->with($model->getUpdateUrl(1));

@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 
 class Columns extends Extension implements Initializable, Renderable
 {
@@ -102,7 +102,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\ColumnInterface[]
+     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
      */
     public function all()
     {
@@ -112,7 +112,7 @@ class Columns extends Extension implements Initializable, Renderable
     /**
      * @param $columns
      *
-     * @return \SleepingOwl\Admin\Contracts\DisplayInterface
+     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
     public function set($columns)
     {

@@ -1,7 +1,7 @@
 <?php
 
-use Mockery as m;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Mockery as m;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 class TestCase extends Orchestra\Testbench\TestCase
@@ -24,7 +24,12 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         /** @var \Illuminate\Http\Request $request */
         $request = $app['request'];
-        $request->setSession($session = m::mock(Illuminate\Session\Store::class));
+
+        if (! version_compare($app->version(), '5.4', '>=')) {
+            $request->setSession($session = m::mock(Illuminate\Session\Store::class));
+        } else {
+            $request->setLaravelSession($session = m::mock(Illuminate\Session\Store::class));
+        }
     }
 
     protected function getPackageAliases($app)

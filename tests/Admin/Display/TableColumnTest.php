@@ -1,6 +1,7 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
@@ -102,7 +103,7 @@ class TableColumnTest extends TestCase
 
         $this->assertNull($column->getAppends());
 
-        $this->assertEquals($column, $column->append($append = m::mock(\SleepingOwl\Admin\Contracts\ColumnInterface::class)));
+        $this->assertEquals($column, $column->append($append = m::mock(ColumnInterface::class)));
 
         $this->assertEquals($append, $column->getAppends());
     }
@@ -130,7 +131,7 @@ class TableColumnTest extends TestCase
     {
         $column = $this->getColumn();
 
-        $column->append($append = m::mock(\SleepingOwl\Admin\Contracts\ColumnInterface::class));
+        $column->append($append = m::mock(ColumnInterface::class));
         $model = new TableColumnTestModel();
         $append->shouldReceive('setModel')->with($model);
         $column->setModel($model);
@@ -230,7 +231,7 @@ class TableColumnTest extends TestCase
         $column = $this->getColumn();
 
         $column->setModel($model = new TableColumnTestModel());
-        $column->append($append = m::mock(\SleepingOwl\Admin\Contracts\ColumnInterface::class));
+        $column->append($append = m::mock(ColumnInterface::class));
 
         $column->setHtmlAttribute('class', 'test');
 

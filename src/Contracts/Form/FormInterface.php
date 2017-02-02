@@ -1,10 +1,10 @@
 <?php
 
-namespace SleepingOwl\Admin\Contracts;
+namespace SleepingOwl\Admin\Contracts\Form;
 
 use Illuminate\Validation\ValidationException;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
-use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 interface FormInterface extends FormElementInterface, ElementsInterface
 {

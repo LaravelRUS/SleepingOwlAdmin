@@ -3,12 +3,11 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Request;
-use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Placable;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -50,7 +49,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\ActionInterface[]
+     * @return ColumnFilterInterface[]
      */
     public function all()
     {

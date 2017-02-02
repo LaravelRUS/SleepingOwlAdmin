@@ -1,12 +1,14 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Display\DisplayTab;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class DisplayTabTest extends TestCase
 {
@@ -216,7 +218,7 @@ class DisplayTabTest extends TestCase
 
     public function test_sets_action_and_id_with_form_content()
     {
-        $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormInterface::class);
+        $renderable = m::mock(FormInterface::class);
 
         $tab = new DisplayTab($renderable);
 
@@ -245,7 +247,7 @@ class DisplayTabTest extends TestCase
 
     public function test_validate_form_with_form_content()
     {
-        $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormInterface::class);
+        $renderable = m::mock(FormInterface::class);
 
         $tab = new DisplayTab($renderable);
         $model = m::mock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class);
@@ -272,7 +274,7 @@ class DisplayTabTest extends TestCase
 
     public function test_save_form_with_form_content()
     {
-        $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormInterface::class);
+        $renderable = m::mock(FormInterface::class);
 
         $request = $this->getRequest();
 
@@ -301,7 +303,7 @@ class DisplayTabTest extends TestCase
 
     public function test_sets_model_with_modelable_content()
     {
-        $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormInterface::class);
+        $renderable = m::mock(FormInterface::class);
 
         $tab = new DisplayTab($renderable);
         $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
@@ -377,7 +379,7 @@ class DisplayTabTest extends TestCase
     {
         $request = $this->getRequest();
 
-        $renderable = m::mock(\SleepingOwl\Admin\Contracts\FormElementInterface::class);
+        $renderable = m::mock(FormElementInterface::class);
         $renderable->shouldReceive('save')->once()->with($request);
         $renderable->shouldReceive('afterSave')->once()->with($request);
 
