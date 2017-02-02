@@ -186,5 +186,6 @@ return [
         'AdminForm' => SleepingOwl\Admin\Facades\Form::class,
         'AdminFormElement' => SleepingOwl\Admin\Facades\FormElement::class,
         'AdminDisplay' => SleepingOwl\Admin\Facades\Display::class,
+        'AdminWidgets' => SleepingOwl\Admin\Facades\Widgets::class,
     ],
 ];
