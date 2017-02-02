@@ -18,7 +18,14 @@ class BaseRepositoryTest extends TestCase
      */
     public function getRepository($model = BaseRepositoryTestModel::class)
     {
-        return new BaseRepository($model);
+        $repository = new BaseRepository();
+        if(is_object($model)) {
+            $repository->setModel($model);
+        } else {
+            $repository->setClass($model);
+        }
+
+        return $repository;
     }
 
     /**

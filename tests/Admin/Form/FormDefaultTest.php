@@ -50,6 +50,8 @@ class FormDefaultTest extends TestCase
             $repository = m::mock(RepositoryInterface::class)
         );
 
+        $repository->shouldReceive('setClass')->once();
+
         $class = FormDefaultTestMockModel::class;
 
         $this->app->instance(
@@ -249,6 +251,8 @@ class FormDefaultTest extends TestCase
             $repository = m::mock(RepositoryInterface::class)
         );
 
+        $repository->shouldReceive('setClass')->once();
+
         $form = $this->getFormElement([
             $element = m::mock(FormElementInterface::class),
         ]);
@@ -301,6 +305,7 @@ class FormDefaultTest extends TestCase
             RepositoryInterface::class,
             $repository = m::mock(RepositoryInterface::class)
         );
+        $repository->shouldReceive('setClass')->once();
 
         $model = m::mock(FormDefaultTestMockModel::class);
 

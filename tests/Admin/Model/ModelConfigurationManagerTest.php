@@ -73,7 +73,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getTranslatorMock()
             ->shouldReceive('trans')
             ->once()
-            ->with('sleeping_owl::lang.model.create', ['title' => $model->getTitle()], 'messages', null)
+            ->with('sleeping_owl::lang.model.create', ['title' => $model->getTitle()], null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getCreateTitle());
@@ -89,7 +89,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getTranslatorMock()
             ->shouldReceive('trans')
             ->once()
-            ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], 'messages', null)
+            ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getEditTitle());
@@ -394,7 +394,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getTranslatorMock()
             ->shouldReceive('trans')
             ->once()
-            ->with('sleeping_owl::lang.message.created', null, 'messages', null)
+            ->with('sleeping_owl::lang.message.created', null, null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getMessageOnCreate());
@@ -410,7 +410,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getTranslatorMock()
             ->shouldReceive('trans')
             ->once()
-            ->with('sleeping_owl::lang.message.updated', null, 'messages', null)
+            ->with('sleeping_owl::lang.message.updated', null, null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getMessageOnUpdate());
@@ -426,7 +426,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getTranslatorMock()
             ->shouldReceive('trans')
             ->once()
-            ->with('sleeping_owl::lang.message.deleted', null, 'messages', null)
+            ->with('sleeping_owl::lang.message.deleted', null, null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getMessageOnDelete());
@@ -442,7 +442,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getTranslatorMock()
             ->shouldReceive('trans')
             ->once()
-            ->with('sleeping_owl::lang.message.restored', null, 'messages', null)
+            ->with('sleeping_owl::lang.message.restored', null, null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getMessageOnRestore());
@@ -458,7 +458,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->getTranslatorMock()
             ->shouldReceive('trans')
             ->once()
-            ->with('sleeping_owl::lang.message.destroyed', null, 'messages', null)
+            ->with('sleeping_owl::lang.message.destroyed', null, null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getMessageOnDestroy());
