@@ -4,9 +4,8 @@ namespace SleepingOwl\Admin\Model;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\Types\Array_;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class ModelConfiguration extends ModelConfigurationManager
@@ -201,7 +200,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function isCreatable()
     {
-        if (! is_callable($this->getCreate())) {
+        if (!is_callable($this->getCreate())) {
             return false;
         }
 
@@ -225,7 +224,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function isEditable(Model $model)
     {
-        if (! is_callable($this->getEdit())) {
+        if (!is_callable($this->getEdit())) {
             return false;
         }
 
@@ -249,7 +248,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function setDeletable($deletable)
     {
-        $this->deletable = (bool) $deletable;
+        $this->deletable = (bool)$deletable;
 
         return $this;
     }
@@ -346,13 +345,13 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param array|null $payload
      * @return DisplayInterface|mixed
      */
-    public function fireDisplay( Array $payload = null )
+    public function fireDisplay(array $payload = null)
     {
-        if (! is_callable($this->getDisplay())) {
+        if (!is_callable($this->getDisplay())) {
             return;
         }
 
-        $display = app()->call($this->getDisplay(),$payload);
+        $display = app()->call($this->getDisplay(), $payload);
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
         }
@@ -389,7 +388,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireCreate()
     {
-        if (! is_callable($this->getCreate())) {
+        if (!is_callable($this->getCreate())) {
             return;
         }
 
@@ -436,7 +435,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireEdit($id)
     {
-        if (! is_callable($this->getEdit())) {
+        if (!is_callable($this->getEdit())) {
             return;
         }
 
