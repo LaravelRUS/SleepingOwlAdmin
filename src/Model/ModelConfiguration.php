@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Model;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Array_;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
@@ -342,15 +343,16 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param array|null $payload
      * @return DisplayInterface|mixed
      */
-    public function fireDisplay()
+    public function fireDisplay( Array $payload = null )
     {
         if (! is_callable($this->getDisplay())) {
             return;
         }
 
-        $display = app()->call($this->getDisplay());
+        $display = app()->call($this->getDisplay(),$payload);
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
         }
