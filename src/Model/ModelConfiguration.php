@@ -345,7 +345,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param array|null $payload
      * @return DisplayInterface|mixed
      */
-    public function fireDisplay(array $payload = null)
+    public function fireDisplay(array $payload = [])
     {
         if (!is_callable($this->getDisplay())) {
             return;
