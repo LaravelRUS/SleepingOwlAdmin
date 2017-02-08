@@ -28,7 +28,7 @@ class UpdateCommand extends Installation\Command
                 return new $installer($this, $this->config);
             })
             ->filter(function ($installer) {
-                return $this->option('force') ? true : ! $installer->installed();
+                return $this->hasOption('force') ? true : ! $installer->installed();
             })->each(function ($installer) {
                 $installer->install();
                 $installer->showInfo();

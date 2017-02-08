@@ -1,6 +1,6 @@
 ![bg](https://cloud.githubusercontent.com/assets/773481/14028746/24d7efa8-f20f-11e5-8e38-3d264739f0aa.png)
 
-## Laravel 5.* Admin Module
+## Laravel >=5.2 Admin Module
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/?branch=development)
@@ -19,7 +19,7 @@ Official site: [http://sleepingowladmin.ru](http://sleepingowladmin.ru)
 ## Requirements
 
  - php >= 5.6
- - Laravel 5.*
+ - Laravel >= 5.2
  - Capable hands
 
 ## Documentation
@@ -75,10 +75,6 @@ $ php artisan sleepingowl:install
 ```
 
 ### Installation
-
-- After all actions: open `config/sleeping_owl.php` and change `'middleware' => ['web']` to `'middleware' => []`
-
----
 
 ## Authentication
 By default, admin module uses Laravel authentication.
