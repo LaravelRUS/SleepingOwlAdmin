@@ -42,9 +42,15 @@ You can download the demo project at https://github.com/SleepingOwlAdmin/demo
  1. Require this package in your composer.json and run composer update:
 
   ```
+  "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/LaravelRUS/SleepingOwlAdmin"
+        }
+    ],
   "require": {
     ...
-    "laravelrus/sleepingowl": "4.*@dev"
+    "laravelrus/sleepingowl": "dev-feature/5.4"
   },
   ```
 
