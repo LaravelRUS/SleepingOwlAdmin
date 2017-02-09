@@ -200,16 +200,14 @@ class DisplayTable extends Display
             return $this->collection;
         }
 
-        if ( ! ($this instanceof DisplayDatatablesAsync)) {
 
-            $query = $this->getRepository()->getQuery();
+        $query = $this->getRepository()->getQuery();
 
-            $this->modifyQuery($query);
+        $this->modifyQuery($query);
 
-            return $this->collection = $this->usePagination()
-                ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends(request()->except($this->pageName))
-                : $query->get();
-         }
+        return $this->collection = $this->usePagination()
+            ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends(request()->except($this->pageName))
+            : $query->get();
     }
 
     /**
