@@ -231,7 +231,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
                 if ($column instanceof Control) {
                     $column->initialize();
-                } 
+                }
 
                 $_row[] = (string) $column;
             }
