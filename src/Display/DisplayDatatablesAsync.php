@@ -241,4 +241,12 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         return $result;
     }
+    
+    /**
+     * @return Collection
+     * @throws \Exception
+     */
+    public function getCollection()
+    {
+    }
 }
