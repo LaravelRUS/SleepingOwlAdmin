@@ -231,7 +231,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
                 if ($column instanceof Control) {
                     $column->initialize();
-                }
+                }   
 
                 $_row[] = (string) $column;
             }
@@ -240,5 +240,20 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         }
 
         return $result;
+    }
+    
+    /**
+     * @return Collection
+     * @throws \Exception
+     */
+    public function getCollection()
+    {
+        if (! $this->isInitialized()) {
+            throw new \Exception('Display is not initialized');
+        }
+
+        if (! is_null($this->collection)) {
+            return $this->collection;
+        }
     }
 }
