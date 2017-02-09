@@ -248,12 +248,5 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function getCollection()
     {
-        if (! $this->isInitialized()) {
-            throw new \Exception('Display is not initialized');
-        }
-
-        if (! is_null($this->collection)) {
-            return $this->collection;
-        }
     }
 }
