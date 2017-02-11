@@ -4,9 +4,9 @@ namespace SleepingOwl\Admin\Form;
 
 use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormButtons implements FormButtonsInterface

@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Contracts\View\Factory as ViewFactory;
 use Mockery as m;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 class TestCase extends Orchestra\Testbench\TestCase

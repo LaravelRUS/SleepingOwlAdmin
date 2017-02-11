@@ -104,7 +104,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @param \Illuminate\Contracts\Foundation\Application $app
      * @param string $class
-     *
      */
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
