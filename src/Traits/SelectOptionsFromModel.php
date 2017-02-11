@@ -201,9 +201,8 @@ trait SelectOptionsFromModel
         $options = $repository->getQuery();
 
         if ($this->isEmptyRelation() and ! is_null($foreignKey = $this->getForeignKey())) {
-            
             $relation = $this->getModelAttributeKey();
-            $model    = $this->getModel();
+            $model = $this->getModel();
 
             if ($model->{$relation}() instanceof HasOneOrMany) {
                 $options->where($foreignKey, 0)->orWhereNull($foreignKey);

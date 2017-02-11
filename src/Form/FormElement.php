@@ -4,12 +4,12 @@ namespace SleepingOwl\Admin\Form;
 
 use Closure;
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 abstract class FormElement implements FormElementInterface
 {

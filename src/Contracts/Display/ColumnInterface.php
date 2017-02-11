@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Contracts\Display;
 
+use SleepingOwl\Admin\Contracts\WithModel;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\WithModel;
 
 interface ColumnInterface extends Initializable, Renderable, Arrayable, WithModel
 {

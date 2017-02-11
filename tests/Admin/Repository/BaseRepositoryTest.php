@@ -19,7 +19,7 @@ class BaseRepositoryTest extends TestCase
     public function getRepository($model = BaseRepositoryTestModel::class)
     {
         $repository = new BaseRepository();
-        if(is_object($model)) {
+        if (is_object($model)) {
             $repository->setModel($model);
         } else {
             $repository->setClass($model);

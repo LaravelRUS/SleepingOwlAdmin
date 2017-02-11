@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Form\Element\File;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use SleepingOwl\Admin\Form\Element\File;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UploadController extends Controller
 {
