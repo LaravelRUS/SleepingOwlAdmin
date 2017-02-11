@@ -35,9 +35,6 @@ Vue.component('element-file', Vue.extend({
                 uploadMultiple: false,
                 previewsContainer: false,
                 dictDefaultMessage: '',
-                headers: {
-                    'X-CSRF-TOKEN': window.Admin.Settings.token
-                },
                 sending () {
                     self.closeAlert()
                 },

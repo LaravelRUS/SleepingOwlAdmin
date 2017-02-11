@@ -46,9 +46,6 @@ Vue.component('element-images', Vue.extend({
                 acceptedFiles: 'image/*',
                 clickable: button[0],
                 dictDefaultMessage: '',
-                headers: {
-                    'X-CSRF-TOKEN': window.Admin.Settings.token
-                },
                 sending () {
                     self.closeAlert();
                 },

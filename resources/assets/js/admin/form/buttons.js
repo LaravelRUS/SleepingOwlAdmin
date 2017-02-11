@@ -1,8 +1,8 @@
 Admin.Modules.add('form.buttons', () => {
     var formRequest = (url, params) => {
-        let form = $('<form method="POST" action="' + url + '"></form>');
+        let form = $(`<form method="POST" action="${url}"></form>`);
         for (let name in params) {
-            form.append('<input type="hidden" name="' + name + '" value="' + params[name] + '">');
+            form.append(`<input type="hidden" name="${name}" value="${params[name]}">`);
         }
 
         form.appendTo('body');
