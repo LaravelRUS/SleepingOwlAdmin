@@ -112,7 +112,7 @@ class Admin implements AdminInterface
     {
         foreach ($sections as $model => $section) {
             if (class_exists($section)) {
-                $this->register(new $section($model));
+                $this->register(new $section($this->app, $model));
             } else {
                 $this->missedSections[$model] = $section;
             }
