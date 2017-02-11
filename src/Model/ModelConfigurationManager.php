@@ -52,6 +52,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected static $dispatcher;
 
     /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
+
+    /**
      * @var string
      */
     protected $class;
@@ -97,18 +102,18 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     private $repository;
 
     /**
-     * SectionModelConfiguration constructor.
-     *
+     * @param \Illuminate\Contracts\Foundation\Application $app
      * @param string $class
      *
-     * @throws \Exception
      */
-    public function __construct($class)
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
+        $this->app = $app;
         $this->class = $class;
-        $this->model = app($class);
 
-        $this->repository = app(RepositoryInterface::class);
+        $this->model = $app->make($class);
+
+        $this->repository = $app->make(RepositoryInterface::class);
         $this->repository->setClass($class);
         if (! $this->alias) {
             $this->setDefaultAlias();
@@ -475,7 +480,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             $page->setBadge($badge);
         }
 
-        app('sleeping_owl.navigation')->addPage($page);
+        $this->app['sleeping_owl.navigation']->addPage($page);
 
         return $page;
     }
@@ -505,7 +510,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param string $event
      * @param bool $halt
      * @param Model|null $model
-     * @param array $args
+     * @param array $payload
      *
      * @return mixed
      */

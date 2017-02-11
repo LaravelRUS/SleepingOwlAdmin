@@ -19,7 +19,7 @@ class ModelConfigurationTest extends TestCase
      */
     protected function getConfiguration($class = ModelConfigurationTestModel::class)
     {
-        return $this->getMockForAbstractClass(ModelConfiguration::class, [$class]);
+        return $this->getMockForAbstractClass(ModelConfiguration::class, [$this->app, $class]);
     }
 
     /**
