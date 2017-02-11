@@ -131,7 +131,8 @@ class AliasBinder implements AliasBinderInterface
      */
     public function makeClass($alias, array $arguments)
     {
-        return $this->app->make($this->getAlias($alias), $arguments);
+        $reflection = new \ReflectionClass($this->getAlias($alias));
+        return $reflection->newInstanceArgs($arguments);
     }
 
     /**

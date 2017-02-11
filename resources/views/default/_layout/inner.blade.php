@@ -20,11 +20,11 @@
 			</div>
 
 			<div class="content body">
-				@yield('content.top')
+				@stack('content.top')
 
 				{!! $content !!}
 
-				@yield('content.bottom')
+				@stack('content.bottom')
 			</div>
 		</div>
 	</div>

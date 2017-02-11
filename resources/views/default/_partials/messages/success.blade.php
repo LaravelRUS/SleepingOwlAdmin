@@ -7,4 +7,3 @@
         {!! $messages !!}
     </div>
 @endif
-@parent
