@@ -74,7 +74,7 @@ class FormElementController extends Controller
      */
     public function multiselectSearch(Request $request, ModelConfigurationInterface $model, $field, $id = null)
     {
-        if ( ! is_null($id)) {
+        if (! is_null($id)) {
             $item = $model->getRepository()->find($id);
             if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
@@ -84,7 +84,7 @@ class FormElementController extends Controller
 
             $form = $model->fireEdit($id);
         } else {
-            if ( ! $model->isCreatable()) {
+            if (! $model->isCreatable()) {
                 return new JsonResponse([
                     'message' => trans('lang.message.access_denied'),
                 ], 403);
@@ -111,13 +111,12 @@ class FormElementController extends Controller
                         return [
                             'tag_name'    => $item->{$field},
                             'id'          => $item->id,
-                            'custom_name' => $item->custom_name
+                            'custom_name' => $item->custom_name,
                         ];
                     })
             );
         }
     }
-
 
     /**
      * @param Request $request
@@ -129,7 +128,7 @@ class FormElementController extends Controller
      */
     public function selectSearch(Request $request, ModelConfigurationInterface $model, $field, $id = null)
     {
-        if ( ! is_null($id)) {
+        if (! is_null($id)) {
             $item = $model->getRepository()->find($id);
             if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
@@ -139,7 +138,7 @@ class FormElementController extends Controller
 
             $form = $model->fireEdit($id);
         } else {
-            if ( ! $model->isCreatable()) {
+            if (! $model->isCreatable()) {
                 return new JsonResponse([
                     'message' => trans('lang.message.access_denied'),
                 ], 403);
@@ -166,7 +165,7 @@ class FormElementController extends Controller
                         return [
                             'tag_name'    => $item->{$field},
                             'id'          => $item->id,
-                            'custom_name' => $item->custom_name
+                            'custom_name' => $item->custom_name,
                         ];
                     })
             );

@@ -2,18 +2,17 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class SelectAjax extends Select implements Initializable, WithRoutesInterface
 {
-
-    protected static $route      = 'selectajax';
-    protected        $view       = 'form.element.selectajax';
-    protected        $search_url = null;
+    protected static $route = 'selectajax';
+    protected $view = 'form.element.selectajax';
+    protected $search_url = null;
 
     /**
      * @param string $path
@@ -31,7 +30,6 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
 
             return $query->where([$key => $this->getValueFromModel()]);
         });
-
     }
 
     /**
@@ -39,10 +37,10 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      */
     public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.' . static::$route;
+        $routeName = 'admin.form.element.'.static::$route;
 
-        if ( ! $router->has($routeName)) {
-            $router->post('{adminModel}/' . static::$route . '/{field}/{id?}', [
+        if (! $router->has($routeName)) {
+            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@selectSearch',
             ]);
@@ -62,12 +60,11 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      */
     public function getSearchUrl()
     {
-        return $this->search_url ? $this->search_url : route('admin.form.element.' . static::$route, [
+        return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
                 'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
                 'field' => $this->getName(),
                 'id' => $this->model->getKey(),
             ]);
-
     }
 
     /**
@@ -82,7 +79,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             'class'            => 'form-control js-data-ajax',
             'model'            => get_class($this->getModelForOptions()),
             'field'            => $this->getDisplay(),
-            'search_url'       => $this->getSearchUrl()
+            'search_url'       => $this->getSearchUrl(),
         ];
 
         return ['attributes' => $attributes] + parent::toArray();

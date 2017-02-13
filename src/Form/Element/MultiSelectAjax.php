@@ -10,12 +10,11 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesInterface
 {
-
     protected $view = 'form.element.selectajax';
 
-    protected static $route      = 'multiselectajax';
+    protected static $route = 'multiselectajax';
 
-    protected        $search_url = null;
+    protected $search_url = null;
 
     /**
      * MultiSelectAjax constructor.
@@ -37,7 +36,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * Search url for ajax
+     * Search url for ajax.
      * @param $url
      */
     public function setSearchUrl($url)
@@ -46,12 +45,12 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * Getter of search url
+     * Getter of search url.
      * @return string
      */
     public function getSearchUrl()
     {
-        return $this->search_url ? $this->search_url : route('admin.form.element.' . static::$route, [
+        return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
                 'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
                 'field'      => $this->getName(),
                 'id'         => $this->model->getKey(),
@@ -63,10 +62,10 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
      */
     public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.' . static::$route;
+        $routeName = 'admin.form.element.'.static::$route;
 
-        if ( ! $router->has($routeName)) {
-            $router->post('{adminModel}/' . static::$route . '/{field}/{id?}', [
+        if (! $router->has($routeName)) {
+            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@multiselectSearch',
             ]);
@@ -84,7 +83,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             'multiple',
             'field'      => $this->display,
             'model'      => get_class($this->getModelForOptions()),
-            'search_url' => $this->getSearchUrl()
+            'search_url' => $this->getSearchUrl(),
         ];
 
         return ['attributes' => $attributes] + parent::toArray();
@@ -99,7 +98,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         $attribute = $this->getModelAttributeKey();
 
-        if ( ! method_exists($this->getModel(), $attribute)) {
+        if (! method_exists($this->getModel(), $attribute)) {
             return;
         }
 
