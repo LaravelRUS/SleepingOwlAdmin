@@ -62,7 +62,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      */
     public function getSearchUrl()
     {
-        return $this->search_url ?? route('admin.form.element.' . static::$route, [
+        return $this->search_url ? $this->search_url : route('admin.form.element.' . static::$route, [
                 'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
                 'field' => $this->getName(),
                 'id' => $this->model->getKey(),
