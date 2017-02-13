@@ -31,7 +31,7 @@ Vue.http.interceptors.push((request, next) => {
                 break;
             default:
                 Admin.Messages.error(
-                    i18next.t('lang.message.something_went_wrong'),
+                    trans('lang.message.something_went_wrong'),
                     response.data.message || ''
                 )
         }

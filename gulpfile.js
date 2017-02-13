@@ -27,6 +27,7 @@ elixir(function(mix) {
                 }
             }
         })
+        .copy('resources/assets/fonts', 'public/default/fonts')
 		.copy('node_modules/bootstrap/fonts', 'public/default/fonts')
 		.copy('node_modules/font-awesome/fonts', 'public/default/fonts');
 });

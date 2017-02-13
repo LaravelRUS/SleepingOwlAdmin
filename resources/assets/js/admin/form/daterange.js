@@ -1,4 +1,4 @@
-Admin.Modules.add('form.elements.daterange', () => {
+Admin.Modules.register('form.elements.daterange', () => {
     $('.input-daterange').each((i, item) => {
         let $self = $(item);
 

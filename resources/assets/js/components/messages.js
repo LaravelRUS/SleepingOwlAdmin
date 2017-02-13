@@ -42,16 +42,16 @@ module.exports = (function () {
          * @param {String} message текст
          * @param {Function} callback Код выполняемый при подтверждении
          */
-        confirm(title, message, callback) {
-            swal({
+        confirm(title, message) {
+            return swal({
                 title: title,
                 text: message || '',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3c8dbc',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-            }).then(callback)
+                confirmButtonText: trans('lang.button.yes')
+            })
         },
 
         /**
@@ -62,15 +62,15 @@ module.exports = (function () {
          * @param {Function} callback Код выполняемый при подтверждении
          * @param {String} inputPlaceholder Вспомогательный текст для поля ввода
          */
-        prompt(title, message, callback, inputPlaceholder) {
-            swal({
+        prompt(title, message, inputPlaceholder) {
+            return swal({
                 title: title,
                 text: message || '',
                 input: 'text',
                 showCancelButton: true,
                 closeOnConfirm: false,
                 inputPlaceholder: inputPlaceholder || ''
-            }).then(callback)
+            })
         },
     }
 

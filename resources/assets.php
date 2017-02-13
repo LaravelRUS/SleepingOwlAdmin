@@ -1,9 +1,14 @@
 <?php
 
 if (! function_exists('resources_url')) {
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
     function resources_url($path)
     {
-        return '/packages/sleepingowl/default/'.$path;
+        return app(\SleepingOwl\Admin\Contracts\Template\TemplateInterface::class)->assetPath($path);
     }
 }
 

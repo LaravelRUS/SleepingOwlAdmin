@@ -1,4 +1,4 @@
-Admin.Modules.add('display.tree', () => {
+Admin.Modules.register('display.tree', () => {
     $('.nestable').nestable({
         maxDepth: 20
     }).on('change', (e) => {

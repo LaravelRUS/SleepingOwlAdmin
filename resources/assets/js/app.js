@@ -34,13 +34,10 @@ require('./admin/form/dependent-select')
 require('./admin/form/file')
 require('./admin/form/image')
 require('./admin/form/images')
+require('./admin/events')
 
-$(() => {
-    require('./admin/events');
+Admin.Modules.boot()
 
-    Admin.Modules.init();
-
-    var app = new Vue({
-        el: 'body'
-    });
-})
+const app = new Vue({
+    el: 'body'
+});

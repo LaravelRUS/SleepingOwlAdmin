@@ -1,16 +1,24 @@
 import Config from "./config";
 import Url from "./url";
+import User from "./user";
 
 module.exports = class Admin {
     constructor(token, config) {
         this.__token = token
         this.__config = new Config(config)
-
+        this.__user = new User(this.Config.get('user_id'))
         this.__url = new Url(
             this.Config.get('url'),
             this.Config.get('url_prefix', 'admin'),
-            this.Config.get('asset_url', 'admin')
+            this.Config.get('template.asset_dir')
         )
+    }
+
+    /**
+     * @returns {User}
+     */
+    get User() {
+        return this.__user
     }
 
     /**
@@ -82,5 +90,9 @@ module.exports = class Admin {
 
     set Url(value) {
         throw new Error(`The Url property cannot be written.`)
+    }
+
+    set User(value) {
+        throw new Error(`The User property cannot be written.`)
     }
 }

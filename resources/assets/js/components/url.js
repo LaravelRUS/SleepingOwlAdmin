@@ -91,7 +91,7 @@ module.exports = class Url {
      * @returns {String}
      */
     admin(path, query) {
-        return this._buildUrl(
+        return this.app(
             this.url_prefix + '/' + _.trimStart(path, '/'),
             query
         )

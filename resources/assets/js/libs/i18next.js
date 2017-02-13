@@ -16,3 +16,7 @@ i18next.init({
         }
     }
 });
+
+function trans(key) {
+    return i18next.t(key);
+}

@@ -91,7 +91,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'template' => SleepingOwl\Admin\Templates\TemplateDefault::class,
+    'template' => SleepingOwl\Admin\Template\TemplateDefault::class,
 
     /*
     |--------------------------------------------------------------------------

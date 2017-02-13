@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Configuration;
 
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+
 trait ProvidesScriptVariables
 {
 
@@ -21,11 +23,11 @@ trait ProvidesScriptVariables
             'debug' => config('app.debug'),
             'env' => $this->app->environment(),
             'locale' => $this->app['translator']->getLocale(),
-            'url_prefix' => $this->config['url_prefix'],
-            'asset_url' => asset('/'),
-            'url' => $this->app['url']->to(''),
+            'url' => $this->app['url']->to('/'),
             'lang' => $lang,
             'wysiwyg' => $this->config['wysiwyg'],
+            'template' => $this->app[TemplateInterface::class]->toArray(),
+            'user_id' => auth()->id()
         ];
     }
 }

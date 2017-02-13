@@ -1,4 +1,4 @@
-Admin.Modules.add('form.elements.datetime', () => {
+Admin.Modules.register('form.elements.datetime', () => {
     $('.input-date').each((i, item) => {
         let $self = $(item);
 

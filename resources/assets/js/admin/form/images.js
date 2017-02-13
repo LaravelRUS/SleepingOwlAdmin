@@ -65,19 +65,10 @@ Vue.component('element-images', Vue.extend({
         remove (image) {
             var self = this;
 
-            swal({
-                title: i18next.t('lang.message.are_you_sure'),
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: i18next.t('lang.button.yes')
-            }).then(() => {
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
                 self.$set('values', _.filter(self.values, function (img) {
                     return image != img
                 }));
-            }, dismiss => {
-
             });
         },
         closeAlert () {
