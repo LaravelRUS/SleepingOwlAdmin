@@ -32,7 +32,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             $repository->setModel($this->getModelForOptions());
             $key = $repository->getModel()->getKeyName();
 
-            return $query->whereIn($key, $this->getValueFromModel() ?? []);
+            return $query->whereIn($key, $this->getValueFromModel() ? $this->getValueFromModel() : []);
         });
     }
 
