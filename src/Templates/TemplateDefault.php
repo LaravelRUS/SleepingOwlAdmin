@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Templates;
 
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Template\Breadcrumbs;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
@@ -18,38 +19,50 @@ class TemplateDefault implements TemplateInterface
     /**
      * @var MetaInterface
      */
-    private $meta;
+    protected $meta;
 
     /**
      * @var NavigationInterface
      */
-    private $navigation;
+    protected $navigation;
 
     /**
      * @var Breadcrumbs
      */
-    private $breadcrumbs;
+    protected $breadcrumbs;
+
+    /**
+     * @var AdminInterface
+     */
+    protected $admin;
 
     /**
      * TemplateDefault constructor.
      *
      * @param Application $application
+     * @param AdminInterface $admin
      * @param MetaInterface $meta
      * @param NavigationInterface $navigation
      * @param Breadcrumbs $breadcrumbs
      */
-    public function __construct(Application $application, MetaInterface $meta, NavigationInterface $navigation, Breadcrumbs $breadcrumbs)
+    public function __construct(
+        Application $application,
+        AdminInterface $admin,
+        MetaInterface $meta,
+        NavigationInterface $navigation,
+        Breadcrumbs $breadcrumbs
+    )
     {
         $this->app = $application;
         $this->meta = $meta;
         $this->navigation = $navigation;
         $this->breadcrumbs = $breadcrumbs;
+        $this->admin = $admin;
     }
 
     public function initialize()
     {
         $this->meta->addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'])
-            ->addJs('admin-scripts', route('admin.scripts'))
             ->addCss('admin-default', resources_url('css/admin-app.css'));
     }
 
@@ -189,6 +202,8 @@ class TemplateDefault implements TemplateInterface
      */
     public function renderMeta($title)
     {
+        $this->setGlobalVariables();
+
         return $this->meta()
             ->setTitle($this->makeTitle($title))
             ->addMeta(['charset' => 'utf-8'], 'meta::charset')
@@ -196,5 +211,17 @@ class TemplateDefault implements TemplateInterface
             ->addMeta(['content' => 'width=device-width, initial-scale=1', 'name' => 'viewport'])
             ->addMeta(['content' => 'IE=edge', 'http-equiv' => 'X-UA-Compatible'])
             ->render();
+    }
+
+    /**
+     * Регистрация стандартных глобальных Javascript перменных
+     */
+    protected function setGlobalVariables()
+    {
+        $globalVars = $this->admin->scriptVariables();
+
+        foreach ($globalVars as $var => $value) {
+            $this->meta->putGlobalVar($var, $value);
+        }
     }
 }

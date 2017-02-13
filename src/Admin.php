@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;
+use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelCollection;
@@ -17,9 +18,12 @@ use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use Illuminate\Config\Repository as ConfigRepository;
 
 class Admin implements AdminInterface
 {
+    use ProvidesScriptVariables;
+
     /**
      * @var ModelConfigurationInterface[]|ModelCollection
      */
@@ -36,6 +40,11 @@ class Admin implements AdminInterface
     protected $app;
 
     /**
+     * @var ConfigRepository
+     */
+    protected $config;
+
+    /**
      * @var array
      */
     protected $missedSections = [];
@@ -49,6 +58,9 @@ class Admin implements AdminInterface
     {
         $this->app = $application;
         $this->models = new ModelCollection();
+        $this->config = new ConfigRepository(
+            $this->app['config']->get('sleeping_owl', [])
+        );
 
         $this->registerBaseServiceProviders();
         $this->registerCoreContainerAliases();

@@ -491,47 +491,6 @@ class AdminController extends Controller
     }
 
     /**
-     * @return Response
-     */
-    public function getScripts()
-    {
-        $lang = trans('sleeping_owl::lang');
-        if ($lang == 'sleeping_owl::lang') {
-            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
-        }
-
-        $data = [
-            'locale' => $this->app->getLocale(),
-            'url_prefix' => config('sleeping_owl.url_prefix'),
-            'base_url' => asset('/'),
-            'lang' => $lang,
-            'wysiwyg' => config('sleeping_owl.wysiwyg'),
-        ];
-
-        $content = 'window.Admin = {Settings: '.json_encode($data, JSON_PRETTY_PRINT).'}';
-
-        return $this->cacheResponse(
-            new Response($content, 200, [
-                'Content-Type' => 'text/javascript',
-            ])
-        );
-    }
-
-    /**
-     * @param Response $response
-     *
-     * @return Response
-     */
-    protected function cacheResponse(Response $response)
-    {
-        $response->setSharedMaxAge(31536000);
-        $response->setMaxAge(31536000);
-        $response->setExpires(new \DateTime('+1 year'));
-
-        return $response;
-    }
-
-    /**
      * @param Request $request
      *
      * @return null|string

@@ -60,7 +60,7 @@ Vue.component('element-images', Vue.extend({
             });
         },
         image (uri) {
-            return ((uri.indexOf('http') === 0) ? uri : Admin.Settings.base_url + uri);
+            return ((uri.indexOf('http') === 0) ? uri : Admin.Url.asset(uri));
         },
         remove (image) {
             var self = this;

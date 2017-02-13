@@ -15,7 +15,7 @@ Admin.Modules.add('form.buttons', () => {
             var url = jSelector.data('url'),
                 redirect = jSelector.data('redirect'),
                 params = {
-                    _token: Admin.Settings.token,
+                    _token: Admin.token,
                 };
 
             if (!_.isUndefined(method)) {
