@@ -260,6 +260,32 @@ class FormElementTest extends TestCase
     }
 
     /**
+     * @covers FormElement::isValueSkipped()
+     * @covers FormElement::setValueSkipped()
+     */
+    public function test_valueSkipped()
+    {
+        $element = $this->getElement();
+
+        $this->assertEquals($element, $element->setValueSkipped(true));
+        $this->assertTrue($element->isValueSkipped());
+
+        $element->setValueSkipped(false);
+        $this->assertFalse($element->isValueSkipped());
+
+        $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
+        $model->shouldReceive('isAuthor')->andReturn(true)->once();
+
+        $element->setModel($model);
+
+        $element->setValueSkipped(function ($model) {
+            return $model->isAuthor();
+        });
+
+        $this->assertTrue($element->isValueSkipped());
+    }
+
+    /**
      * @covers FormElement::setVisibilityCondition
      * @covers FormElement::isVisible
      */
