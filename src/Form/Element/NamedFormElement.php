@@ -415,7 +415,7 @@ abstract class NamedFormElement extends FormElement
             $this->getPath()
         );
 
-        if($this->isValueSkipped()) {
+        if ($this->isValueSkipped()) {
             return;
         }
 

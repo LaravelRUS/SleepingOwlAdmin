@@ -346,9 +346,7 @@ class NamedFormElementTest extends TestCase
 
         $model = new NamedFormElementTestModuleForTestingSkippedValues();
         foreach ([$nameElement, $passwordElement] as $element) {
-            /**
-             * @var $element NamedFormElement
-             */
+            /** @var $element NamedFormElement  */
             $element->setModel($model);
             $element->setModelAttribute($element->getLabel());
         }
@@ -468,7 +466,7 @@ class NamedFormElementTestModuleForTestingResolvePathHasMany extends \Illuminate
 {
 }
 
-
 class NamedFormElementTestModuleForTestingSkippedValues extends \Illuminate\Database\Eloquent\Model
 {
+
 }
