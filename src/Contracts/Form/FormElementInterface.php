@@ -23,6 +23,11 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable, Wit
     /**
      * @return bool
      */
+    public function isValueSkipped();
+
+    /**
+     * @return bool
+     */
     public function isVisible();
 
     /**

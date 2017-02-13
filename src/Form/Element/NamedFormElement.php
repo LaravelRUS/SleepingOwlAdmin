@@ -415,6 +415,10 @@ abstract class NamedFormElement extends FormElement
             $this->getPath()
         );
 
+        if ($this->isValueSkipped()) {
+            return;
+        }
+
         $model->setAttribute(
             $this->getModelAttributeKey(),
             $this->prepareValue($value)

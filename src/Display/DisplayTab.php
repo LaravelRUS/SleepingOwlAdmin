@@ -359,6 +359,18 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isValueSkipped()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->isValueSkipped();
+        }
+
+        return false;
+    }
+
+    /**
      * @param string $path
      *
      * @return FormElementInterface|null
