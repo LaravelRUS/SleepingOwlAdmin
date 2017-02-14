@@ -188,7 +188,6 @@ class ColumnFilters extends Extension implements Initializable, Placable
             $column = $columns->get($index);
             $columnFilter = array_get($this->all(), $index);
 
-            dd($column, $index, $columnFilter, $columnData);
             if ($column && $column instanceof NamedColumnInterface && $columnFilter) {
                 $columnFilter->apply(
                     $column,
