@@ -1,4 +1,4 @@
-Admin.Modules.add('form.elements.selectajax', () => {
+Admin.Modules.register('form.elements.selectajax', () => {
     $('.js-data-ajax').each((e, item) => {
         let options = {},
             $self = $(item);

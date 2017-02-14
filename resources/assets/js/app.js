@@ -16,6 +16,7 @@ require('./wysiwyg/tinymce')
  * Initialize display
  */
 require('./admin/display/datatables')
+//require('./admin/display/table') // TODO доделать
 require('./admin/display/actions')
 require('./admin/display/treeview')
 require('./admin/display/columns/checkbox')

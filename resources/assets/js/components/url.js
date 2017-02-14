@@ -125,6 +125,15 @@ module.exports = class Url {
         );
     }
 
+    /**
+     *
+     * @param query
+     * @return {Object} query (Опционально) параметры для генерации query string {foo: bar, baz: bar} = ?foo=bar&baz=bar
+     */
+    query(query) {
+        window.location.href = window.location.href.split("?")[0] + '?' + this._serialize(query)
+    }
+
     _buildUrl(url, query) {
         if(_.isObject(query)) {
             query = this._serialize(query)
@@ -137,13 +146,16 @@ module.exports = class Url {
         return url;
     }
 
-    _serialize (query) {
-        let str = [];
-        for (let p in query)
+    _serialize(query, prefix) {
+        let str = [], p;
+        for (p in query) {
             if (query.hasOwnProperty(p)) {
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(query[p]));
+                let k = prefix ? prefix + "[" + p + "]" : p, v = query[p];
+                str.push((!_.isNull(v) && _.isObject(v)) ?
+                    this._serialize(v, k) :
+                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
             }
-
+        }
         return str.join("&");
     }
 }

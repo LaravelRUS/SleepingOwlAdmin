@@ -135,11 +135,12 @@ class ColumnFilters extends Extension implements Initializable, Placable
      */
     public function toArray()
     {
+        $this->setHtmlAttribute('data-display', class_basename($this->getDisplay()));
+
         return [
             'filters' => $this->columnFilters,
             'attributes' => $this->htmlAttributesToString(),
             'tag' => $this->getPlacement() == 'table.header' ? 'thead' : 'tfoot',
-            'displayClass' => get_class($this->getDisplay()),
         ];
     }
 
@@ -187,6 +188,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
             $column = $columns->get($index);
             $columnFilter = array_get($this->all(), $index);
 
+            dd($column, $index, $columnFilter, $columnData);
             if ($column && $column instanceof NamedColumnInterface && $columnFilter) {
                 $columnFilter->apply(
                     $column,
