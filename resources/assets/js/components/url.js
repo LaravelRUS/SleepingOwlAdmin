@@ -98,6 +98,20 @@ module.exports = class Url {
     }
 
     /**
+     * Генерация upload ссылки
+     *
+     * @param {String} path относительный путь
+     * @param {Object} query (Опционально) параметры для генерации query string {foo: bar, baz: bar} = ?foo=bar&baz=bar
+     * @returns {String}
+     */
+    upload(path, query) {
+        return this._buildUrl(
+            this.url + '/' + _.trimStart(path, '/'),
+            query
+        );
+    }
+
+    /**
      * Генерация front ссылки
      *
      * @param {String} path относительный путь

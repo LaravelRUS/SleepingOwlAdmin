@@ -64,7 +64,7 @@ Vue.component('element-file', Vue.extend({
             return this.value.length > 0
         },
         file () {
-            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Url.asset(this.value))
+            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Url.upload(this.value))
         }
     }
 }));

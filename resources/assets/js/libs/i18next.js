@@ -17,6 +17,6 @@ i18next.init({
     }
 });
 
-function trans(key) {
+window.trans = function (key) {
     return i18next.t(key);
 }
