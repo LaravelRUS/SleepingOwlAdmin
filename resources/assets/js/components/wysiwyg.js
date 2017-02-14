@@ -61,7 +61,7 @@ module.exports = (function() {
                     newFilter = null
 
                 for (let i = 0; i < wysiwyg.length; i++) {
-                    if (wysiwyg[i][0] == filter) {
+                    if (wysiwyg[i][0] == name) {
                         newFilter = wysiwyg[i]
                         break
                     }
@@ -91,7 +91,7 @@ module.exports = (function() {
             let filter = this.get(textareaId)
 
             try {
-                if (filter && typeof(filter[2]) == 'function') {
+                if (filter && _.isFunction(filter[2])) {
                     filter[2](editors[textareaId], textareaId)
                 }
 

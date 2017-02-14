@@ -1,8 +1,6 @@
 @push('footer-scripts')
 <script>
-    Admin.Modules.add('wysiwyg.{{ $name }}', function() {
-        window.Admin.WYSIWYG.switchOn('{{ $name }}', '{{ $editor }}', {!! $parameters !!})
-    })
+    Admin.WYSIWYG.switchOn('{{ $name }}', '{{ $editor }}', {!! $parameters !!})
 </script>
 @endpush
 
