@@ -34,7 +34,7 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->assertEquals(ModelConfigurationManagerTestModel::class, $model->getClass());
         $this->assertInstanceOf(ModelConfigurationManagerTestModel::class, $model->getModel());
-        $this->assertInstanceOf(\SleepingOwl\Admin\Contracts\RepositoryInterface::class, $model->getRepository());
+        $this->assertInstanceOf(\SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface::class, $model->getRepository());
         $this->assertEquals('model_configuration_manager_test_models', $model->getAlias());
     }
 

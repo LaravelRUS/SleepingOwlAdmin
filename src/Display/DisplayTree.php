@@ -5,9 +5,9 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Repository\TreeRepository;
+use SleepingOwl\Admin\Repositories\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 /**

@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesInterface

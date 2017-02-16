@@ -1,10 +1,10 @@
 <?php
 
-namespace SleepingOwl\Admin\Repository;
+namespace SleepingOwl\Admin\Repositories;
 
 use Exception;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
 class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 {

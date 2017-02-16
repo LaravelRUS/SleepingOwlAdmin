@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 
 trait SelectOptionsFromModel

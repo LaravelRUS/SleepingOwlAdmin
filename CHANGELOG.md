@@ -8,6 +8,8 @@
     Отказ от хранения настроек по url `admin/scripts`, теперь глобальный конфиг хранится в body шаблона.
     Перенос `app.js` в футер
 
+ * Перенос интерфейсов `SleepingOwl\Admin\Contracts\RepositoryInterface` и `SleepingOwl\Admin\Contracts\TreeRepositoryInterface` в директорию `SleepingOwl\Admin\Contracts\Repositories`
+ * Замена название директории `src\Repository` в `src\Repositories`
  * Добавлена поддержка Laravel 5.4
  * В конструктор класса раздела добавлен еще один обязательный параметр `Application $app`
 

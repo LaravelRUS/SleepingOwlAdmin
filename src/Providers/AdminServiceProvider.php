@@ -9,7 +9,7 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 use SleepingOwl\Admin\Exceptions\TemplateException;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -129,7 +129,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function initializeNavigation()
     {
         $this->app->bind(TableHeaderColumnInterface::class, \SleepingOwl\Admin\Display\TableHeaderColumn::class);
-        $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repository\BaseRepository::class);
+        $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repositories\BaseRepository::class);
         $this->app->bind(FormButtonsInterface::class, \SleepingOwl\Admin\Form\FormButtons::class);
 
         $this->app->bind(\KodiComponents\Navigation\Contracts\PageInterface::class, \SleepingOwl\Admin\Navigation\Page::class);

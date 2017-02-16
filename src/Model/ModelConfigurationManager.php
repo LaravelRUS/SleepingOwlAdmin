@@ -7,7 +7,7 @@ use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
 use Illuminate\Contracts\Events\Dispatcher;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
