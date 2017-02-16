@@ -2,7 +2,7 @@
 
 use Mockery as m;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Repository\BaseRepository;
+use SleepingOwl\Admin\Repositories\BaseRepository;
 
 class BaseRepositoryTest extends TestCase
 {

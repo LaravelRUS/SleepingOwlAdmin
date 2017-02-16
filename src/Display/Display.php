@@ -9,7 +9,7 @@ use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Filters;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;

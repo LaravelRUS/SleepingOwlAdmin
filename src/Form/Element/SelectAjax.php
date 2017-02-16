@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class SelectAjax extends Select implements Initializable, WithRoutesInterface

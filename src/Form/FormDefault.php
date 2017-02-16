@@ -8,7 +8,7 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Element\Upload;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;

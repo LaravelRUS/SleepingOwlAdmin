@@ -3,6 +3,8 @@
 ## [Unreleased]
 
 ### Changed
+ * Перенос интерфейсов `SleepingOwl\Admin\Contracts\RepositoryInterface` и `SleepingOwl\Admin\Contracts\TreeRepositoryInterface` в директорию `SleepingOwl\Admin\Contracts\Repositories`
+ * Замена название директории `src\Repository` в `src\Repositories`
  * Добавлена поддержка Laravel 5.4
  * В конструктор класса раздела добавлен еще один обязательный параметр `Application $app`
 
