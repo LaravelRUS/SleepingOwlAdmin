@@ -212,11 +212,18 @@ class AdminServiceProvider extends ServiceProvider
                     }
 
                     if ($model->hasCustomControllerClass() && $route->getActionName() !== 'Closure') {
+
                         list($controller, $action) = explode('@', $route->getActionName(), 2);
 
                         $newController = $model->getControllerClass().'@'.$action;
 
-                        $route->uses($newController);
+                        $route->uses(function() use($route, $newController) {
+                            list($class, $action) = explode('@', $newController);
+
+                            return (new \Illuminate\Routing\ControllerDispatcher($this->app))->dispatch(
+                                $route, $this->app->make($class), $action
+                            );
+                        });
                     }
 
                     return $model;
