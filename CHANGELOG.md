@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Changed
+ * Исправлена проблема с заменой контроллера для раздела для Laravel версии > 5.2
  * Перенос интерфейсов `SleepingOwl\Admin\Contracts\RepositoryInterface` и `SleepingOwl\Admin\Contracts\TreeRepositoryInterface` в директорию `SleepingOwl\Admin\Contracts\Repositories`
  * Замена название директории `src\Repository` в `src\Repositories`
  * Добавлена поддержка Laravel 5.4
@@ -104,6 +105,7 @@
  * #399
  * #418
  * #438
+ * #4461
  
  
 ## 4.74.30

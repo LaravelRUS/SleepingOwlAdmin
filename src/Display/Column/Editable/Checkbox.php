@@ -115,9 +115,12 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
 
         $model = $this->getModel();
 
-        $request->offsetSet($this->getName(), $request->input('value'));
+        $request->offsetSet($this->getName(), (bool) $request->input('value.0', false));
 
-        $form->setModel($model);
+        $form->setModelClass(get_class($model));
+        $form->initialize();
+        $form->setId($model->getKey());
+
         $form->saveForm($request);
     }
 }
