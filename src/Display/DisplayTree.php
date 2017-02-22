@@ -136,6 +136,27 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
+     * @return null|string
+     */
+    public function getNewEntryButtonText()
+    {
+        if (is_null($this->newEntryButtonText)) {
+            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+        }
+        return $this->newEntryButtonText;
+    }
+    /**
+     * @param string $newEntryButtonText
+     *
+     * @return $this
+     */
+    public function setNewEntryButtonText($newEntryButtonText)
+    {
+        $this->newEntryButtonText = $newEntryButtonText;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getOrderField()
@@ -243,6 +264,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             'creatable' => $model->isCreatable(),
             'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
             'controls' => [app('sleeping_owl.table.column')->treeControl()],
+            'newEntryButtonText' => $this->getNewEntryButtonText(),
         ];
     }
 
