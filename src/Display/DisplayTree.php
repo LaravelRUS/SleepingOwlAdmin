@@ -77,6 +77,11 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected $collection;
 
+    /**
+     * @var string|null
+     */
+    protected $newEntryButtonText;
+
     public function __construct()
     {
         parent::__construct();
