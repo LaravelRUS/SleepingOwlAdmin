@@ -224,7 +224,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function isEditable(Model $model)
     {
-        if (! is_callable($this->getEdit())) {
+        if (! is_callable($this->getEdit()) and !method_exists($this,'onEdit') )
             return false;
         }
 
