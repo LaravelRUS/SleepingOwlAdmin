@@ -5,8 +5,8 @@ namespace SleepingOwl\Admin\Form\Element;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesInterface
 {
@@ -36,6 +36,15 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
+     * Get Field name for search url.
+     * @return mixed
+     */
+    public function getFieldName()
+    {
+        return str_replace('[]', '', $this->getName());
+    }
+
+    /**
      * Search url for ajax.
      * @param $url
      */
@@ -52,7 +61,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
                 'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
-                'field'      => $this->getName(),
+                'field'      => $this->getFieldName(),
                 'id'         => $this->model->getKey(),
             ]);
     }
