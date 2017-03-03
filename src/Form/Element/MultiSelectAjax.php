@@ -67,18 +67,6 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * Set Callback for prepare load options Query.
-     * @param callable $callback The Callback with $item and $options args.
-     * @return $this
-     */
-    private function setLoadOptionsQueryPreparer($callback)
-    {
-        $this->loadOptionsQueryPreparer = $callback;
-
-        return $this;
-    }
-
-    /**
      * @param Router $router
      */
     public static function registerRoutes(Router $router)
