@@ -41,9 +41,9 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
      */
     public function getFieldName()
     {
-        return str_replace('[]','',  $this->getName());
+        return str_replace('[]', '',  $this->getName());
     }
-    
+
     /**
      * Search url for ajax.
      * @param $url
@@ -66,7 +66,6 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             ]);
     }
 
-    
     /**
      * Set Callback for prepare load options Query
      * @param callable $callback The Callback with $item and $options args.
@@ -78,7 +77,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
         return $this;
     }
-    
+
     /**
      * @param Router $router
      */
