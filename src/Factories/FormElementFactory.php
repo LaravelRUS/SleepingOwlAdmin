@@ -21,6 +21,8 @@ use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
  * @method Element\Password password($name, $label = null)
  * @method Element\Select select($name, $label = null, array|Model $options)
  * @method Element\MultiSelect multiselect($name, $label = null, array|Model $options)
+ * @method Element\SelectAjax selectajax($name, $label = null, array|Model $options)
+ * @method Element\MultiSelectAjax multiselectajax($name, $label = null, array|Model $options)
  * @method Columns\Columns columns(array $columns = [])
  * @method Columns\Columns column()
  * @method Element\Hidden hidden($name)

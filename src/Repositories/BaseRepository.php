@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\RepositoryException;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 class BaseRepository implements RepositoryInterface
 {

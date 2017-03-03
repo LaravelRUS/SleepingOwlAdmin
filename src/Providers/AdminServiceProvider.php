@@ -4,16 +4,16 @@ namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Routing\ModelRouter;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 use SleepingOwl\Admin\Exceptions\TemplateException;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 

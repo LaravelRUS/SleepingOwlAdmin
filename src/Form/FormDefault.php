@@ -8,13 +8,13 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Element\Upload;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {

@@ -7,8 +7,8 @@ use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Repositories\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -148,8 +148,10 @@ class DisplayTree extends Display implements WithRoutesInterface
         if (is_null($this->newEntryButtonText)) {
             $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
         }
+
         return $this->newEntryButtonText;
     }
+
     /**
      * @param string $newEntryButtonText
      *
@@ -158,6 +160,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function setNewEntryButtonText($newEntryButtonText)
     {
         $this->newEntryButtonText = $newEntryButtonText;
+
         return $this;
     }
 
