@@ -5,8 +5,8 @@ namespace SleepingOwl\Admin\Form\Element;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesInterface
 {
@@ -36,12 +36,12 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * Get Field name for search url
+     * Get Field name for search url.
      * @return mixed
      */
     public function getFieldName()
     {
-        return str_replace('[]', '',  $this->getName());
+        return str_replace('[]', '', $this->getName());
     }
 
     /**
@@ -67,7 +67,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * Set Callback for prepare load options Query
+     * Set Callback for prepare load options Query.
      * @param callable $callback The Callback with $item and $options args.
      * @return $this
      */
