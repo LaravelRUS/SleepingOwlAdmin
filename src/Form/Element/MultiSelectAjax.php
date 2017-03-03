@@ -36,6 +36,15 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
+     * Get Field name for search url
+     * @return mixed
+     */
+    public function getFieldName()
+    {
+        return str_replace('[]','',  $this->getName());
+    }
+    
+    /**
      * Search url for ajax.
      * @param $url
      */
@@ -52,11 +61,24 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
                 'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
-                'field'      => $this->getName(),
+                'field'      => $this->getFieldName(),
                 'id'         => $this->model->getKey(),
             ]);
     }
 
+    
+    /**
+     * Set Callback for prepare load options Query
+     * @param callable $callback The Callback with $item and $options args.
+     * @return $this
+     */
+    private function setLoadOptionsQueryPreparer($callback)
+    {
+        $this->loadOptionsQueryPreparer = $callback;
+
+        return $this;
+    }
+    
     /**
      * @param Router $router
      */
