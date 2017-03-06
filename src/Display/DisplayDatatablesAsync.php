@@ -4,16 +4,13 @@ namespace SleepingOwl\Admin\Display;
 
 use Request;
 use Illuminate\Routing\Router;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Display\Column\Link;
 use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Control;
-use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -30,7 +27,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async'
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
         }
 
@@ -38,7 +35,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit'
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
     }
@@ -240,5 +237,13 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         }
 
         return $result;
+    }
+
+    /**
+     * @return Collection
+     * @throws \Exception
+     */
+    public function getCollection()
+    {
     }
 }

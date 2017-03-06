@@ -12,7 +12,7 @@ Admin.Modules.add('display.datatables', () => {
     }
 
     function iterateColumnFilters(datatableId, callback) {
-        $('[data-datatables-id="' + datatableId + '"] .column-filter[data-type]').each((i, subitem) => {
+        $(`[data-datatables-id="${datatableId}"] .column-filter[data-type]`).each((i, subitem) => {
             let $element = $(subitem)
 
             callback(

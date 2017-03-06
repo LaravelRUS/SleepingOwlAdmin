@@ -2,12 +2,11 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Auth\Access\Gate;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
-
     /**
      * @var array  Associative array in form of: Model::class => Section::class
      */

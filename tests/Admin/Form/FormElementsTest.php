@@ -53,7 +53,7 @@ class FormElementsTest extends TestCase
         $element3->shouldReceive('initialize')->once();
         $element4->shouldNotReceive('initialize');
 
-        Meta::shouldReceive('loadPackage')->once();
+        //Meta::shouldReceive('loadPackage')->once();
 
         $element->initialize();
 

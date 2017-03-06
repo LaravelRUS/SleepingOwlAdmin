@@ -2,13 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
-use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Repository\TreeRepository;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
+use Illuminate\Routing\Router;
+use Request;
+use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Repositories\TreeRepository;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -77,22 +78,42 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected $collection;
 
-    public function __construct()
+    /**
+     * @var string|null
+     */
+    protected $newEntryButtonText;
+
+    /**
+     * @var string
+     */
+    protected $treeType;
+
+    /**
+     * DisplayTree constructor.
+     *
+     * @param string|null $treeType
+     */
+    public function __construct($treeType = null)
     {
         parent::__construct();
 
         // TODO: move tree building to extension
         // $this->extend('tree', new Tree());
+        $this->treeType = $treeType;
     }
 
     public function initialize()
     {
         parent::initialize();
 
-        $this->getRepository()
+        $repository = $this->getRepository()
              ->setParentField($this->getParentField())
              ->setOrderField($this->getOrderField())
              ->setRootParentId($this->getRootParentId());
+
+        if (! is_null($this->treeType)) {
+            $repository->setTreeType($this->treeType);
+        }
     }
 
     /**
@@ -131,6 +152,30 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function setParentField($parentField)
     {
         $this->parentField = $parentField;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNewEntryButtonText()
+    {
+        if (is_null($this->newEntryButtonText)) {
+            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+        }
+
+        return $this->newEntryButtonText;
+    }
+
+    /**
+     * @param string $newEntryButtonText
+     *
+     * @return $this
+     */
+    public function setNewEntryButtonText($newEntryButtonText)
+    {
+        $this->newEntryButtonText = $newEntryButtonText;
 
         return $this;
     }
@@ -243,6 +288,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             'creatable' => $model->isCreatable(),
             'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
             'controls' => [app('sleeping_owl.table.column')->treeControl()],
+            'newEntryButtonText' => $this->getNewEntryButtonText(),
         ];
     }
 

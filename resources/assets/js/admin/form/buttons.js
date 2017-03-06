@@ -1,12 +1,12 @@
 Admin.Modules.add('form.buttons', () => {
     var formRequest = (url, params) => {
-        let form = '<form method="POST" action="' + url + '">';
+        let form = $(`<form method="POST" action="${url}"></form>`);
         for (let name in params) {
-            form += '<input type="hidden" name="' + name + '" value="' + params[name] + '">';
+            form.append(`<input type="hidden" name="${name}" value="${params[name]}">`);
         }
 
-        form += '</form>';
-        $(form).submit();
+        form.appendTo('body');
+        form.submit();
     }
 
     var clickEvent = (selector, question, method) => {

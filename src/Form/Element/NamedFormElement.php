@@ -307,7 +307,6 @@ abstract class NamedFormElement extends FormElement
         if ($count === 1) {
             return $model;
         }
-
         foreach ($relations as $relation) {
             if ($count === 1) {
                 return $model;
@@ -371,7 +370,11 @@ abstract class NamedFormElement extends FormElement
         $count = count($relations);
 
         if ($count === 1) {
-            return $model->getAttribute($this->getModelAttributeKey());
+            $attribute = $model->getAttribute($this->getModelAttributeKey());
+
+            if (! empty($attribute) or is_null($value)) {
+                return $attribute;
+            }
         }
 
         foreach ($relations as $relation) {
@@ -381,10 +384,16 @@ abstract class NamedFormElement extends FormElement
             }
 
             if ($count === 2) {
-                return $model->getAttribute($relation);
+                $attribute = $model->getAttribute($relation);
+
+                if (! empty($attribute) or is_null($value)) {
+                    return $attribute;
+                }
             }
 
-            throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
+            if (is_null($this->getDefaultValue())) {
+                throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
+            }
         }
 
         return $value;
@@ -414,6 +423,10 @@ abstract class NamedFormElement extends FormElement
         $model = $this->getModelByPath(
             $this->getPath()
         );
+
+        if ($this->isValueSkipped()) {
+            return;
+        }
 
         $model->setAttribute(
             $this->getModelAttributeKey(),
@@ -455,7 +468,7 @@ abstract class NamedFormElement extends FormElement
                         case HasOne::class:
                         case MorphOne::class:
                             $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($relationObject->getPlainForeignKey(), $relationObject->getParentKey());
+                            $relatedModel->setAttribute($relationObject->getForeignKeyName(), $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }

@@ -36,9 +36,6 @@ Vue.component('element-image', Vue.extend({
                 previewsContainer: false,
                 acceptedFiles: 'image/*',
                 dictDefaultMessage: '',
-                headers: {
-                    'X-CSRF-TOKEN': window.Admin.Settings.token
-                },
                 sending () {
                     self.closeAlert()
                 },

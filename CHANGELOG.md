@@ -3,6 +3,19 @@
 ## [Unreleased]
 
 ### Changed
+ * Исправлена проблема с заменой контроллера для раздела для Laravel версии > 5.2
+ * Перенос интерфейсов `SleepingOwl\Admin\Contracts\RepositoryInterface` и `SleepingOwl\Admin\Contracts\TreeRepositoryInterface` в директорию `SleepingOwl\Admin\Contracts\Repositories`
+ * Замена название директории `src\Repository` в `src\Repositories`
+ * Добавлена поддержка Laravel 5.4
+ * В конструктор класса раздела добавлен еще один обязательный параметр `Application $app`
+
+    ```php
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
+    {
+        ...
+    }
+    ```
+
  * Глобальный рефакторинг и структурирование кода.
 
 	* Класс шаблона теперь ответчает за отображение хлебных крошек, meta и навгации
@@ -91,6 +104,8 @@
  * #404
  * #399
  * #418
+ * #438
+ * #4461
  
  
 ## 4.74.30

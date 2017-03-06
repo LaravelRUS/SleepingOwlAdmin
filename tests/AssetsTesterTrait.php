@@ -12,6 +12,6 @@ trait AssetsTesterTrait
 
     public function packageInitialized()
     {
-        \KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
+        //\KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
     }
 }

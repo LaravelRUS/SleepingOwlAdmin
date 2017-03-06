@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class AdminController extends Controller
 {

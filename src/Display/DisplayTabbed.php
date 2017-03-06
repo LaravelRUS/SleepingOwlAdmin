@@ -4,12 +4,12 @@ namespace SleepingOwl\Admin\Display;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 /**
@@ -220,6 +220,14 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * @return bool
      */
     public function isReadonly()
+    {
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValueSkipped()
     {
         return false;
     }

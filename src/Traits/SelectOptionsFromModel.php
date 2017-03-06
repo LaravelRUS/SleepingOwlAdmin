@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 trait SelectOptionsFromModel
 {
@@ -201,9 +201,8 @@ trait SelectOptionsFromModel
         $options = $repository->getQuery();
 
         if ($this->isEmptyRelation() and ! is_null($foreignKey = $this->getForeignKey())) {
-            
             $relation = $this->getModelAttributeKey();
-            $model    = $this->getModel();
+            $model = $this->getModel();
 
             if ($model->{$relation}() instanceof HasOneOrMany) {
                 $options->where($foreignKey, 0)->orWhereNull($foreignKey);

@@ -1,9 +1,9 @@
 <?php
 
 use Mockery as m;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class ModelConfigurationTest extends TestCase
 {
@@ -19,7 +19,7 @@ class ModelConfigurationTest extends TestCase
      */
     protected function getConfiguration($class = ModelConfigurationTestModel::class)
     {
-        return $this->getMockForAbstractClass(ModelConfiguration::class, [$class]);
+        return $this->getMockForAbstractClass(ModelConfiguration::class, [$this->app, $class]);
     }
 
     /**
