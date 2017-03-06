@@ -5,10 +5,10 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Repository\TreeRepository;
+use SleepingOwl\Admin\Repositories\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\TreeRepositoryInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -77,6 +77,11 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected $collection;
 
+    /**
+     * @var string|null
+     */
+    protected $newEntryButtonText;
+
     public function __construct()
     {
         parent::__construct();
@@ -131,6 +136,30 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function setParentField($parentField)
     {
         $this->parentField = $parentField;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNewEntryButtonText()
+    {
+        if (is_null($this->newEntryButtonText)) {
+            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+        }
+
+        return $this->newEntryButtonText;
+    }
+
+    /**
+     * @param string $newEntryButtonText
+     *
+     * @return $this
+     */
+    public function setNewEntryButtonText($newEntryButtonText)
+    {
+        $this->newEntryButtonText = $newEntryButtonText;
 
         return $this;
     }
@@ -243,6 +272,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             'creatable' => $model->isCreatable(),
             'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
             'controls' => [app('sleeping_owl.table.column')->treeControl()],
+            'newEntryButtonText' => $this->getNewEntryButtonText(),
         ];
     }
 

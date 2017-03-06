@@ -1,6 +1,6 @@
 <?php
 
-namespace SleepingOwl\Admin\Contracts;
+namespace SleepingOwl\Admin\Contracts\Repositories;
 
 interface TreeRepositoryInterface extends RepositoryInterface
 {
