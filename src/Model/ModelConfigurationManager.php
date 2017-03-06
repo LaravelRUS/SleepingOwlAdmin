@@ -468,6 +468,21 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function addToNavigation($priority = 100, $badge = null)
     {
+        $page = $this->makePage($priority, $badge);
+
+        $this->app['sleeping_owl.navigation']->addPage($page);
+
+        return $page;
+    }
+
+    /**
+     * @param int $priority
+     * @param string|\Closure|BadgeInterface $badge
+     *
+     * @return Page
+     */
+    protected function makePage($priority = 100, $badge = null)
+    {
         $page = new Page($this->getClass());
         $page->setPriority($priority);
 
@@ -478,8 +493,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
             $page->setBadge($badge);
         }
-
-        $this->app['sleeping_owl.navigation']->addPage($page);
 
         return $page;
     }
