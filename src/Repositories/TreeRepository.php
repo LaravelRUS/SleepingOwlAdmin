@@ -4,32 +4,15 @@ namespace SleepingOwl\Admin\Repositories;
 
 use Exception;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
+use SleepingOwl\Admin\Display\Tree\BaumNodeType;
+use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
+use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
+use SleepingOwl\Admin\Exceptions\Display\DisplayTreeException;
 
 class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 {
-    /**
-     * Extrepat/Baum tree type
-     * https://github.com/etrepat/baum.
-     */
-    const TreeTypeBaum = 0;
-
-    /**
-     * Lasychaser/Laravel-nestedset tree type
-     * https://github.com/lazychaser/laravel-nestedset.
-     */
-    const TreeTypeKalnoy = 1;
-
-    /**
-     * Simple tree type (with `parent_id` and `order` fields).
-     */
-    const TreeTypeSimple = 2;
-
-    /**
-     * Tree type.
-     * @var int
-     */
-    protected $type;
 
     /**
      * Parent field name.
@@ -50,6 +33,35 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     protected $rootParentId = null;
 
     /**
+     * @var TreeTypeInterface
+     */
+    protected $treeType;
+
+    /**
+     * @param string $treeType
+     */
+    public function __construct($treeType = null)
+    {
+        if (! is_null($treeType)) {
+            $this->setTreeType($treeType);
+        }
+    }
+
+    /**
+     * @param string $treeType
+     *
+     * @throws DisplayTreeException
+     */
+    public function setTreeType($treeType)
+    {
+        $this->treeType = new $treeType($this);
+
+        if (! ($this->treeType instanceof TreeTypeInterface)) {
+            throw new DisplayTreeException('Tree type class must be instanced of [SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface]');
+        }
+    }
+
+    /**
      * @param string $class
      *
      * @return $this
@@ -58,7 +70,9 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     {
         parent::setClass($class);
 
-        $this->detectType();
+        if (is_null($this->treeType)) {
+            $this->detectType();
+        }
 
         return $this;
     }
@@ -72,51 +86,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      */
     public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
     {
-        switch ($this->getType()) {
-            case static::TreeTypeBaum:
-                return $collection->toHierarchy();
-                break;
-
-            case static::TreeTypeKalnoy:
-                return $collection->toTree();
-                break;
-
-            case static::TreeTypeSimple:
-                return $this->createSimpleTree();
-                break;
-        }
-    }
-
-    /**
-     * Get or set tree type.
-     *
-     * @return int
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param int $type
-     *
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @param int $type
-     *
-     * @return bool
-     */
-    public function isType($type)
-    {
-        return $this->type == $type;
+        return $this->treeType->getTree($collection);
     }
 
     /**
@@ -192,87 +162,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      */
     public function reorder(array $data)
     {
-        if ($this->isType(static::TreeTypeSimple)) {
-            $this->recursiveReorderSimple($data, $this->getRootParentId());
-        } else {
-            $left = 1;
-            foreach ($data as $root) {
-                $left = $this->recursiveReorder($root, null, $left);
-            }
-        }
-    }
-
-    /**
-     * Move tree node in nested-set tree type.
-     *
-     * @param $id
-     * @param $parentId
-     * @param $left
-     * @param $right
-     */
-    protected function move($id, $parentId, $left, $right)
-    {
-        $instance = $this->find($id);
-        $attributes = $instance->getAttributes();
-        $attributes[$this->getLeftColumn($instance)] = $left;
-        $attributes[$this->getRightColumn($instance)] = $right;
-        $attributes[$this->getParentColumn($instance)] = $parentId;
-        $instance->setRawAttributes($attributes);
-        $instance->save();
-    }
-
-    /**
-     * Get left column name.
-     *
-     * @param $instance
-     *
-     * @return mixed
-     * @throws Exception
-     */
-    protected function getLeftColumn($instance)
-    {
-        $methods = [
-            'getLeftColumnName',
-            'getLftName',
-        ];
-
-        return $this->callMethods($instance, $methods);
-    }
-
-    /**
-     * Get right column name.
-     *
-     * @param $instance
-     *
-     * @return mixed
-     * @throws Exception
-     */
-    protected function getRightColumn($instance)
-    {
-        $methods = [
-            'getRightColumnName',
-            'getRgtName',
-        ];
-
-        return $this->callMethods($instance, $methods);
-    }
-
-    /**
-     * Get parent column name.
-     *
-     * @param $instance
-     *
-     * @return mixed
-     * @throws Exception
-     */
-    protected function getParentColumn($instance)
-    {
-        $methods = [
-            'getParentColumnName',
-            'getParentIdName',
-        ];
-
-        return $this->callMethods($instance, $methods);
+        $this->treeType->reorder($data);
     }
 
     /**
@@ -283,85 +173,19 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     {
         $model = $this->getModel();
 
-        // Check for package baum/baum
+        $type = SimpleTreeType::class;
+
         if ($model instanceof \Baum\Node) {
-            return $this->setType(static::TreeTypeBaum);
-        }
-
-        // Check for package kalnoy/nestedset
-        if (class_exists('Kalnoy\Nestedset\Node') and $model instanceof \Kalnoy\Nestedset\Node) {
-            return $this->setType(static::TreeTypeKalnoy);
+            $type = BaumNodeType::class;
+        } else  if (class_exists('Kalnoy\Nestedset\Node') and $model instanceof \Kalnoy\Nestedset\Node) {
+            $type = KalnoyNestedsetType::class;
         } elseif (function_exists('trait_uses_recursive') and $traits = trait_uses_recursive($model) and in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
-            return $this->setType(static::TreeTypeKalnoy);
+            $type = KalnoyNestedsetType::class;
         } elseif ($traits = class_uses($model) and in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
-            return $this->setType(static::TreeTypeKalnoy);
+            $type = KalnoyNestedsetType::class;
         }
 
-        return $this->setType(static::TreeTypeSimple);
-    }
-
-    /**
-     * Call several methods and get first result.
-     *
-     * @param $instance
-     * @param $methods
-     *
-     * @return mixed
-     * @throws Exception
-     */
-    protected function callMethods($instance, $methods)
-    {
-        foreach ($methods as $method) {
-            if (method_exists($instance, $method)) {
-                return $instance->$method();
-            }
-        }
-
-        throw new Exception('Tree type not supported');
-    }
-
-    /**
-     * Recursive reorder nested-set tree type.
-     *
-     * @param $root
-     * @param $parentId
-     * @param $left
-     *
-     * @return mixed
-     */
-    protected function recursiveReorder($root, $parentId, $left)
-    {
-        $right = $left + 1;
-        $children = array_get($root, 'children', []);
-        foreach ($children as $child) {
-            $right = $this->recursiveReorder($child, $root['id'], $right);
-        }
-        $this->move($root['id'], $parentId, $left, $right);
-        $left = $right + 1;
-
-        return $left;
-    }
-
-    /**
-     * Recursive reoder simple tree type.
-     *
-     * @param $data
-     * @param $parentId
-     */
-    protected function recursiveReorderSimple(array $data, $parentId)
-    {
-        foreach ($data as $order => $item) {
-            $id = $item['id'];
-
-            $instance = $this->find($id);
-            $instance->{$this->getParentField()} = $parentId;
-            $instance->{$this->getOrderField()} = $order;
-            $instance->save();
-
-            if (isset($item['children'])) {
-                $this->recursiveReorderSimple($item['children'], $id);
-            }
-        }
+        $this->setTreeType($type);
     }
 
     /**
@@ -381,28 +205,14 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
                 continue;
             }
 
-            $instance->setRelation('children', $this->getChildren($collection, $instance->getKey()));
+            $instance->setRelation(
+                'children',
+                $this->getChildren($collection, $instance->getKey())
+            );
+
             $result[] = $instance;
         }
 
         return new Collection($result);
-    }
-
-    /**
-     * Create simple tree type structure.
-     * @return static
-     */
-    protected function createSimpleTree()
-    {
-        $collection = $this
-            ->getQuery()
-            ->orderBy($this->getParentField(), 'asc')
-            ->orderBy($this->getOrderField(), 'asc')
-            ->get();
-
-        return $this->getChildren(
-            $collection,
-            $this->getRootParentId()
-        );
     }
 }

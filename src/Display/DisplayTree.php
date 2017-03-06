@@ -2,13 +2,14 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
-use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Repositories\TreeRepository;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use Illuminate\Routing\Router;
+use Request;
+use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Repositories\TreeRepository;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -82,22 +83,37 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     protected $newEntryButtonText;
 
-    public function __construct()
+    /**
+     * @var string
+     */
+    protected $treeType;
+
+    /**
+     * DisplayTree constructor.
+     *
+     * @param string|null $treeType
+     */
+    public function __construct($treeType = null)
     {
         parent::__construct();
 
         // TODO: move tree building to extension
         // $this->extend('tree', new Tree());
+        $this->treeType = $treeType;
     }
 
     public function initialize()
     {
         parent::initialize();
 
-        $this->getRepository()
+        $repository = $this->getRepository()
              ->setParentField($this->getParentField())
              ->setOrderField($this->getOrderField())
              ->setRootParentId($this->getRootParentId());
+
+        if (! is_null($this->treeType)) {
+            $repository->setTreeType($this->treeType);
+        }
     }
 
     /**
