@@ -53,6 +53,8 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     public function setSearchUrl($url)
     {
         $this->search_url = $url;
+
+        return $this;
     }
 
     /**
