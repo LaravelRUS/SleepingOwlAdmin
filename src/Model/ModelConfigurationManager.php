@@ -307,7 +307,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             return true;
         }
 
-        return \Gate::allows($action, $model);
+        return \Gate::allows($action, [$this, $model])
     }
 
     /**
