@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
 class SimpleTreeType implements TreeTypeInterface
 {
-
     /**
      * @var TreeRepositoryInterface
      */

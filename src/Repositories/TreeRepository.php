@@ -2,18 +2,16 @@
 
 namespace SleepingOwl\Admin\Repositories;
 
-use Exception;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Display\Tree\BaumNodeType;
+use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
+use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
+use SleepingOwl\Admin\Exceptions\Display\DisplayTreeException;
 use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
-use SleepingOwl\Admin\Display\Tree\BaumNodeType;
-use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
-use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
-use SleepingOwl\Admin\Exceptions\Display\DisplayTreeException;
 
 class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 {
-
     /**
      * Parent field name.
      * @var string
@@ -177,7 +175,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 
         if ($model instanceof \Baum\Node) {
             $type = BaumNodeType::class;
-        } else  if (class_exists('Kalnoy\Nestedset\Node') and $model instanceof \Kalnoy\Nestedset\Node) {
+        } elseif (class_exists('Kalnoy\Nestedset\Node') and $model instanceof \Kalnoy\Nestedset\Node) {
             $type = KalnoyNestedsetType::class;
         } elseif (function_exists('trait_uses_recursive') and $traits = trait_uses_recursive($model) and in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;

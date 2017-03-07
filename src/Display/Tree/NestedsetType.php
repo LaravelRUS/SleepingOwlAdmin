@@ -8,7 +8,6 @@ use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
 abstract class NestedsetType implements TreeTypeInterface
 {
-
     /**
      * @var TreeRepositoryInterface
      */
@@ -36,7 +35,7 @@ abstract class NestedsetType implements TreeTypeInterface
     }
 
     /**
-     * Получение ключа поля LeftColumn
+     * Получение ключа поля LeftColumn.
      *
      * @param Model $model
      *
@@ -45,7 +44,7 @@ abstract class NestedsetType implements TreeTypeInterface
     abstract public function getLeftColumn(Model $model);
 
     /**
-     * Получение ключа поля RightColumn
+     * Получение ключа поля RightColumn.
      *
      * @param Model $model
      *
@@ -54,7 +53,7 @@ abstract class NestedsetType implements TreeTypeInterface
     abstract public function getRightColumn(Model $model);
 
     /**
-     * Получение ключа поля Parent Column
+     * Получение ключа поля Parent Column.
      *
      * @param Model $model
      *
