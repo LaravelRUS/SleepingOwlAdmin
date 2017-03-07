@@ -227,7 +227,7 @@ class ModelConfigurationManagerTest extends TestCase
         $this->assertEquals($model, $model->enableAccessCheck());
 
         $this->app[Illuminate\Contracts\Auth\Access\Gate::class] = $gate = m::mock(\Illuminate\Contracts\Auth\Access\Gate::class);
-        $gate->shouldReceive('allows')->once()->withArgs(['test', $modelObject])->andReturn(false);
+        $gate->shouldReceive('allows')->once()->withArgs(['test', [$model, $modelObject]])->andReturn(false);
 
         $this->assertFalse($model->can('test', $model->getModel()));
 
