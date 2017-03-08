@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UploadController extends Controller
 {
+
     /**
      * @param Request $request
      * @param ModelConfigurationInterface $model
@@ -22,7 +23,7 @@ class UploadController extends Controller
      */
     public function fromField(Request $request, ModelConfigurationInterface $model, $field, $id = null)
     {
-        if (! is_null($id)) {
+        if ( ! is_null($id)) {
             $item = $model->getRepository()->find($id);
             if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
@@ -32,7 +33,7 @@ class UploadController extends Controller
 
             $form = $model->fireEdit($id);
         } else {
-            if (! $model->isCreatable()) {
+            if ( ! $model->isCreatable()) {
                 return new JsonResponse([
                     'message' => trans('lang.message.access_denied'),
                 ], 403);
@@ -46,9 +47,9 @@ class UploadController extends Controller
             throw new NotFoundHttpException("Field [{$field}] not found");
         }
 
-        $rules = $element->getUploadValidationRules();
+        $rules    = $element->getUploadValidationRules();
         $messages = $element->getUploadValidationMessages();
-        $labels = $element->getUploadValidationLabels();
+        $labels   = $element->getUploadValidationLabels();
 
         /** @var \Illuminate\Contracts\Validation\Validator $validator */
         $validator = Validator::make($request->all(), $rules, $messages, $labels);
@@ -58,23 +59,29 @@ class UploadController extends Controller
         if ($validator->fails()) {
             return new JsonResponse([
                 'message' => trans('lang.message.validation_error'),
-                'errors' => $validator->errors()->get('file'),
+                'errors'  => $validator->errors()->get('file'),
             ], 400);
         }
 
         $file = $request->file('file');
 
         $filename = $element->getUploadFileName($file);
-        $path = $element->getUploadPath($file);
+        $path     = $element->getUploadPath($file);
         $settings = $element->getUploadSettings();
 
-        $element->saveFile($file, public_path($path), $filename, $settings);
+        $result = $element->saveFile($file, public_path($path), $filename, $settings);
 
-        $value = $path.'/'.$filename;
+        if (collect($element->getDriver())->get('driver') == 'file') {
+            $value = $path . '/' . $filename;
 
-        return new JsonResponse([
-            'url' => asset($value),
-            'value' => $value,
-        ]);
+            return new JsonResponse([
+                'url'   => asset($value),
+                'value' => $value,
+            ]);
+        }
+
+        /** When driver not file */
+        return new JsonResponse($result);
+
     }
 }

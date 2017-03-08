@@ -47,7 +47,7 @@ class Image extends File
 
 
     /**
-     * Set save file callback
+     * Set
      * @param \Closure $callable
      */
     public function setSaveCallback(\Closure $callable)
@@ -69,13 +69,14 @@ class Image extends File
      * @param string $path
      * @param string $filename
      * @param array $settings
-     * @return \Closure
+     * @return \Closure|File|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
 
         if ($this->getSaveCallback()) {
             $callable = $this->getSaveCallback();
+
             return call_user_func($callable, [$file, $path, $filename, $settings]);
         }
 
@@ -86,10 +87,14 @@ class Image extends File
                 call_user_func_array([$image, $method], $args);
             }
 
-            return $image->save($path . '/' . $filename);
+            $value = $path . '/' . $filename;
+
+            $image->save($value);
+
+            return ["path" => asset($value), "value" => $value];
         }
 
-        parent::saveFile($file, $path, $filename, $settings);
+        return parent::saveFile($file, $path, $filename, $settings);
     }
 
     /**
