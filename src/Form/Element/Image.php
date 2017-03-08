@@ -7,14 +7,13 @@ use Illuminate\Validation\Validator;
 
 class Image extends File
 {
-
     /**
      * @var string
      */
     protected static $route = 'image';
 
     /**
-     * @var \Closure $saveCallback
+     * @var \Closure
      */
     protected $saveCallback;
 
@@ -39,15 +38,14 @@ class Image extends File
 
             $size = getimagesize($file->getRealPath());
 
-            if ( ! $size) {
+            if (! $size) {
                 $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
             }
         });
     }
 
-
     /**
-     * Set
+     * Set.
      * @param \Closure $callable
      */
     public function setSaveCallback(\Closure $callable)
@@ -56,7 +54,7 @@ class Image extends File
     }
 
     /**
-     * Return save callback
+     * Return save callback.
      * @return \Closure
      */
     public function getSaveCallback()
@@ -73,25 +71,24 @@ class Image extends File
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
-
         if ($this->getSaveCallback()) {
             $callable = $this->getSaveCallback();
 
             return call_user_func($callable, [$file, $path, $filename, $settings]);
         }
 
-        if (class_exists('Intervention\Image\Facades\Image') and (bool)getimagesize($file->getRealPath())) {
+        if (class_exists('Intervention\Image\Facades\Image') and (bool) getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {
                 call_user_func_array([$image, $method], $args);
             }
 
-            $value = $path . '/' . $filename;
+            $value = $path.'/'.$filename;
 
             $image->save($value);
 
-            return ["path" => asset($value), "value" => $value];
+            return ['path' => asset($value), 'value' => $value];
         }
 
         return parent::saveFile($file, $path, $filename, $settings);
