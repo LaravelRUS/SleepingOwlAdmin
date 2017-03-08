@@ -7,10 +7,16 @@ use Illuminate\Validation\Validator;
 
 class Image extends File
 {
+
     /**
      * @var string
      */
     protected static $route = 'image';
+
+    /**
+     * @var \Closure $saveCallback
+     */
+    protected $saveCallback;
 
     /**
      * @var array
@@ -33,10 +39,29 @@ class Image extends File
 
             $size = getimagesize($file->getRealPath());
 
-            if (! $size) {
+            if ( ! $size) {
                 $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
             }
         });
+    }
+
+
+    /**
+     * Set save file callback
+     * @param \Closure $callable
+     */
+    public function setSaveCallback(\Closure $callable)
+    {
+        $this->saveCallback = $callable;
+    }
+
+    /**
+     * Return save callback
+     * @return \Closure
+     */
+    public function getSaveCallback()
+    {
+        return $this->saveCallback;
     }
 
     /**
@@ -44,17 +69,24 @@ class Image extends File
      * @param string $path
      * @param string $filename
      * @param array $settings
+     * @return \Closure
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
-        if (class_exists('Intervention\Image\Facades\Image') and (bool) getimagesize($file->getRealPath())) {
+
+        if ($this->getSaveCallback()) {
+            $callable = $this->getSaveCallback();
+            return call_user_func($callable, [$file, $path, $filename, $settings]);
+        }
+
+        if (class_exists('Intervention\Image\Facades\Image') and (bool)getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {
                 call_user_func_array([$image, $method], $args);
             }
 
-            return $image->save($path.'/'.$filename);
+            return $image->save($path . '/' . $filename);
         }
 
         parent::saveFile($file, $path, $filename, $settings);
