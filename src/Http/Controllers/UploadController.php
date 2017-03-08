@@ -70,16 +70,7 @@ class UploadController extends Controller
         $settings = $element->getUploadSettings();
 
         $result = $element->saveFile($file, public_path($path), $filename, $settings);
-
-        if (collect($element->getDriver())->get('driver') == 'file') {
-            $value = $path . '/' . $filename;
-
-            return new JsonResponse([
-                'url'   => asset($value),
-                'value' => $value,
-            ]);
-        }
-
+        
         /** When driver not file */
         return new JsonResponse($result);
 

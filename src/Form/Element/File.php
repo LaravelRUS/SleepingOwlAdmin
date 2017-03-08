@@ -95,11 +95,13 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @param $driver
      * @param array $driverOptions
+     * @return $this
      */
     public function setDriver($driver, $driverOptions = [])
     {
         $this->driver        = $driver;
         $this->driverOptions = $driverOptions;
+        return $this;
     }
 
     /**
