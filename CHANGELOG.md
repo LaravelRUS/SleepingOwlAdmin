@@ -6,9 +6,8 @@
  * Добавлен колбек на сохранение файлов (читать в документации)
      ```php
        AdminFormElement::images('some_images', "Some Label")
-           ...
-           ->setSaveCallback(function ($file, $path, $filename, $settings) use ($id) {
                ...
+           ->setSaveCallback(function ($file, $path, $filename, $settings) use ($id) {
                $result = $youimage;
                    
                return ['path' => $result['url'], 'value' => $result['path|url']];
