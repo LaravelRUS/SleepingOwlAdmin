@@ -3,6 +3,17 @@
 ## [Unreleased]
 
 ### Changed
+ * Добавлен колбек на сохранение файлов (читать в документации)
+     ```php
+       AdminFormElement::images('featured_images', trans('back/blog.column.images'))
+           ->setName('featured_images')
+           ->setSaveCallback(function ($file, $path, $filename, $settings) use ($id) {
+               ...
+               $result = $youimage;
+                   
+               return ['path' => $result['url'], 'value' => $result['path|url']];
+           }),
+     ```
  * Исправлена проблема с заменой контроллера для раздела для Laravel версии > 5.2
  * Перенос интерфейсов `SleepingOwl\Admin\Contracts\RepositoryInterface` и `SleepingOwl\Admin\Contracts\TreeRepositoryInterface` в директорию `SleepingOwl\Admin\Contracts\Repositories`
  * Замена название директории `src\Repository` в `src\Repositories`
