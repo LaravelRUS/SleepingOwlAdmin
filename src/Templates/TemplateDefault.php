@@ -37,7 +37,7 @@ class TemplateDefault extends Template
     public function initialize()
     {
         $this->meta()
-            ->addJs('admin-default', $this->assetPath('js/admin-app.js'), null, true)
+            ->addJs('admin-default', $this->assetPath('js/admin-app.js'))
             ->addCss('admin-default', $this->assetPath('css/admin-app.css'));
     }
 
