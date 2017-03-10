@@ -5,8 +5,8 @@ namespace SleepingOwl\Admin\Form\Element;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesInterface
 {
@@ -36,12 +36,23 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
+     * Get Field name for search url.
+     * @return mixed
+     */
+    public function getFieldName()
+    {
+        return str_replace('[]', '', $this->getName());
+    }
+
+    /**
      * Search url for ajax.
      * @param $url
      */
     public function setSearchUrl($url)
     {
         $this->search_url = $url;
+
+        return $this;
     }
 
     /**
@@ -51,10 +62,10 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     public function getSearchUrl()
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
-                'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
-                'field'      => $this->getName(),
-                'id'         => $this->model->getKey(),
-            ]);
+            'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
+            'field' => $this->getFieldName(),
+            'id' => $this->model->getKey(),
+        ]);
     }
 
     /**
@@ -66,7 +77,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@multiselectSearch',
             ]);
         }
@@ -78,11 +89,11 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     public function toArray()
     {
         $attributes = [
-            'id'         => $this->getName(),
-            'class'      => 'form-control js-data-ajax',
+            'id' => $this->getName(),
+            'class' => 'form-control js-data-ajax',
             'multiple',
-            'field'      => $this->display,
-            'model'      => get_class($this->getModelForOptions()),
+            'field' => $this->display,
+            'model' => get_class($this->getModelForOptions()),
             'search_url' => $this->getSearchUrl(),
         ];
 

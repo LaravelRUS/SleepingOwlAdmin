@@ -8,6 +8,18 @@
     Отказ от хранения настроек по url `admin/scripts`, теперь глобальный конфиг хранится в body шаблона.
     Перенос `app.js` в футер
 
+ * Добавлен колбек на сохранение файлов (читать в документации)
+     ```php
+       AdminFormElement::images('some_images', "Some Label")
+               ...
+           ->setSaveCallback(function ($file, $path, $filename, $settings) use ($id) {
+               $result = $youimage;
+                   
+               return ['path' => $result['url'], 'value' => $result['path|url']];
+           }),
+     ```
+ * Исправлена проблема с заменой контроллера для раздела для Laravel версии > 5.2
+
  * Перенос интерфейсов `SleepingOwl\Admin\Contracts\RepositoryInterface` и `SleepingOwl\Admin\Contracts\TreeRepositoryInterface` в директорию `SleepingOwl\Admin\Contracts\Repositories`
  * Замена название директории `src\Repository` в `src\Repositories`
  * Добавлена поддержка Laravel 5.4
@@ -19,6 +31,8 @@
         ...
     }
     ```
+    
+ * Исправлена проблема с использованием Policy в классах разделов.
 
  * Глобальный рефакторинг и структурирование кода.
 
@@ -61,7 +75,7 @@
 	Для использования пакета в своем приложении вы должны подключать самостоятельно сервис провайдер `DaveJamesMiller\Breadcrumbs\ServiceProvider`
 	и регистрировать при необходимости фасад.
 	
- * Вынос логики роутов отдельных компонентов из анонимных функций в контроллеры для возможности кеширования роутов.	 
+ * Вынос логики роутов отдельных компонентов из анонимных функций в контроллеры для возможности кеширования роутов.
  * Phpunit version `~4.1 -> ~5.0`
 
 
@@ -109,6 +123,9 @@
  * #399
  * #418
  * #438
+ * #461
+ * #463
+ * #473
  
  
 ## 4.74.30

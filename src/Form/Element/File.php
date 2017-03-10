@@ -16,6 +16,11 @@ class File extends NamedFormElement implements WithRoutesInterface
     protected static $route = 'file';
 
     /**
+     * @var \Closure
+     */
+    protected $saveCallback;
+
+    /**
      * @param Router $router
      */
     public static function registerRoutes(Router $router)
@@ -24,11 +29,21 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as' => $routeName,
+                'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField',
             ]);
         }
     }
+
+    /**
+     * @var string
+     */
+    protected $driver = 'file';
+
+    /**
+     * @var array
+     */
+    protected $driverOptions = [];
 
     /**
      * @var Closure
@@ -74,6 +89,27 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function getUploadValidationLabels()
     {
         return ['file' => $this->getLabel()];
+    }
+
+    /**
+     * @param $driver
+     * @param array $driverOptions
+     * @return $this
+     */
+    public function setDriver($driver, $driverOptions = [])
+    {
+        $this->driver = $driver;
+        $this->driverOptions = $driverOptions;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDriver()
+    {
+        return ['driver' => $this->driver, 'driverOptions' => $this->driverOptions];
     }
 
     /**
@@ -161,7 +197,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param string      $rule
+     * @param string $rule
      * @param string|null $message
      *
      * @return $this
@@ -210,14 +246,44 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
+     * Set save file callback.
+     * @param \Closure $callable
+     */
+    public function setSaveCallback(\Closure $callable)
+    {
+        $this->saveCallback = $callable;
+    }
+
+    /**
+     * Return save callback.
+     * @return \Closure
+     */
+    public function getSaveCallback()
+    {
+        return $this->saveCallback;
+    }
+
+    /**
      * @param UploadedFile $file
      * @param string $path
      * @param string $filename
      * @param array $settings
+     * @return \Closure|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
+        if ($this->getSaveCallback()) {
+            $callable = $this->getSaveCallback();
+
+            return call_user_func($callable, [$file, $path, $filename, $settings]);
+        }
+
         $file->move($path, $filename);
+
+        //TODO: Make sense take s3, rackspace or some cloud storage url
+        $value = $path.'/'.$filename;
+
+        return ['path' => asset($value), 'value' => $value];
     }
 
     /**

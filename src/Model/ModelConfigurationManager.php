@@ -7,9 +7,9 @@ use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
 use Illuminate\Contracts\Events\Dispatcher;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 /**
  * @method bool creating(\Closure $callback)
@@ -307,7 +307,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             return true;
         }
 
-        return \Gate::allows($action, $model);
+        return \Gate::allows($action, [$this, $model]);
     }
 
     /**
@@ -468,6 +468,21 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function addToNavigation($priority = 100, $badge = null)
     {
+        $page = $this->makePage($priority, $badge);
+
+        $this->app['sleeping_owl.navigation']->addPage($page);
+
+        return $page;
+    }
+
+    /**
+     * @param int $priority
+     * @param string|\Closure|BadgeInterface $badge
+     *
+     * @return Page
+     */
+    protected function makePage($priority = 100, $badge = null)
+    {
         $page = new Page($this->getClass());
         $page->setPriority($priority);
 
@@ -478,8 +493,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
             $page->setBadge($badge);
         }
-
-        $this->app['sleeping_owl.navigation']->addPage($page);
 
         return $page;
     }

@@ -58,7 +58,7 @@ class UploadController extends Controller
         if ($validator->fails()) {
             return new JsonResponse([
                 'message' => trans('lang.message.validation_error'),
-                'errors' => $validator->errors()->get('file'),
+                'errors'  => $validator->errors()->get('file'),
             ], 400);
         }
 
@@ -68,13 +68,9 @@ class UploadController extends Controller
         $path = $element->getUploadPath($file);
         $settings = $element->getUploadSettings();
 
-        $element->saveFile($file, public_path($path), $filename, $settings);
+        $result = $element->saveFile($file, public_path($path), $filename, $settings);
 
-        $value = $path.'/'.$filename;
-
-        return new JsonResponse([
-            'url' => asset($value),
-            'value' => $value,
-        ]);
+        /* When driver not file */
+        return new JsonResponse($result);
     }
 }

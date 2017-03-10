@@ -196,6 +196,21 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param string $action
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
+    public function can($action, Model $model)
+    {
+        if (! $this->checkAccess) {
+            return true;
+        }
+
+        return \Gate::allows($action, $model);
+    }
+
+    /**
      * @return bool
      */
     public function isCreatable()

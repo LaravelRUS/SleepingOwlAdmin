@@ -7,13 +7,13 @@ use SleepingOwl\Admin\AliasBinder;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 use SleepingOwl\Admin\Exceptions\TemplateException;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
@@ -190,29 +190,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerDefaultRoutes()
     {
         $this->registerRoutes(function (Router $router) {
-            $router->pattern('adminModelId', '[a-zA-Z0-9_-]+');
-
-            $aliases = $this->app['sleeping_owl']->getModels()->keyByAlias();
-
-            if ($aliases->count() > 0) {
-                $router->pattern('adminModel', $aliases->keys()->implode('|'));
-
-                $this->app['router']->bind('adminModel', function ($model, \Illuminate\Routing\Route $route) use ($aliases) {
-                    if (is_null($model = $aliases->get($model))) {
-                        throw new ModelNotFoundException;
-                    }
-
-                    if ($model->hasCustomControllerClass() && $route->getActionName() !== 'Closure') {
-                        list($controller, $action) = explode('@', $route->getActionName(), 2);
-
-                        $newController = $model->getControllerClass().'@'.$action;
-
-                        $route->uses($newController);
-                    }
-
-                    return $model;
-                });
-            }
+            (new ModelRouter($this->app, $router))->register($this->app['sleeping_owl']->getModels());
 
             if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
                 require $routesFile;
