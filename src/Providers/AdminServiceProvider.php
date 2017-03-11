@@ -2,19 +2,18 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use SleepingOwl\Admin\Admin;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\AliasBinder;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\TemplateException;
 use Illuminate\Contracts\View\Factory as ViewFactory;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
@@ -27,22 +26,17 @@ class AdminServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton('sleeping_owl', function () {
-            return new Admin();
-        });
-
-        $this->app->alias('sleeping_owl', \SleepingOwl\Admin\Admin::class);
-
-        $this->initializeNavigation();
         $this->registerWysiwyg();
+        $this->registerTemplate();
+        $this->initializeNavigation();
         $this->registerAliases();
 
-        $this->app->singleton(WidgetsRegistryInterface::class, function () {
+        $this->app->singleton('sleeping_owl.widgets', function () {
             return new WidgetsRegistry($this->app);
         });
 
         $this->app->booted(function () {
-            $this->app[WidgetsRegistryInterface::class]->placeWidgets(
+            $this->app['sleeping_owl.widgets']->placeWidgets(
                 $this->app[ViewFactory::class]
             );
         });
@@ -51,9 +45,38 @@ class AdminServiceProvider extends ServiceProvider
             $this->registerCustomRoutes();
             $this->registerDefaultRoutes();
             $this->registerNavigationFile();
+
+            $this->app['sleeping_owl']->initialize();
         });
 
         ModelConfigurationManager::setEventDispatcher($this->app['events']);
+    }
+
+    protected function registerTemplate()
+    {
+        $this->app->singleton('assets.packages', function ($app) {
+            return new \KodiCMS\Assets\PackageManager();
+        });
+
+        $this->app->singleton('sleeping_owl.meta', function ($app) {
+            return new \SleepingOwl\Admin\Templates\Meta(
+                new \KodiCMS\Assets\Assets(
+                    $app['assets.packages']
+                )
+            );
+        });
+
+        $this->app->singleton('sleeping_owl.template', function ($app) {
+            if (! class_exists($class = $this->getConfig('template'))) {
+                throw new TemplateException("Template class [{$class}] not found");
+            }
+
+            return $app->make($class);
+        });
+
+        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
+            include $assetsFile;
+        }
     }
 
     /**
@@ -83,11 +106,6 @@ class AdminServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerMessages();
-
-        $this->app->singleton('sleeping_owl.template', function () {
-            return $this->app['sleeping_owl']->template();
-        });
-
         $this->registerBootstrap();
 
         $this->registerRoutes(function (Router $route) {
@@ -120,7 +138,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function initializeNavigation()
     {
         $this->app->bind(TableHeaderColumnInterface::class, \SleepingOwl\Admin\Display\TableHeaderColumn::class);
-        $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repository\BaseRepository::class);
+        $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repositories\BaseRepository::class);
         $this->app->bind(FormButtonsInterface::class, \SleepingOwl\Admin\Form\FormButtons::class);
 
         $this->app->bind(\KodiComponents\Navigation\Contracts\PageInterface::class, \SleepingOwl\Admin\Navigation\Page::class);
@@ -134,7 +152,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerWysiwyg()
     {
         $this->app->singleton('sleeping_owl.wysiwyg', function () {
-            return new \SleepingOwl\Admin\Wysiwyg\Manager();
+            return new \SleepingOwl\Admin\Wysiwyg\Manager($this->app);
         });
     }
 
@@ -181,42 +199,13 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerDefaultRoutes()
     {
         $this->registerRoutes(function (Router $router) {
-            $router->pattern('adminModelId', '[a-zA-Z0-9_-]+');
-
-            $aliases = $this->app['sleeping_owl']->modelAliases();
-
-            if (count($aliases) > 0) {
-                $router->pattern('adminModel', implode('|', $aliases));
-
-                $this->app['router']->bind('adminModel', function ($model, \Illuminate\Routing\Route $route) use ($aliases) {
-                    $class = array_search($model, $aliases);
-
-                    if ($class === false) {
-                        throw new ModelNotFoundException;
-                    }
-
-                    /** @var ModelConfiguration $model */
-                    $model = $this->app['sleeping_owl']->getModel($class);
-
-                    if ($model->hasCustomControllerClass() && $route->getActionName() !== 'Closure') {
-                        list($controller, $action) = explode('@', $route->getActionName(), 2);
-
-                        $newController = $model->getControllerClass().'@'.$action;
-
-                        $route->uses($newController);
-                    }
-
-                    return $model;
-                });
-            }
+            (new ModelRouter($this->app, $router))->register($this->app['sleeping_owl']->getModels());
 
             if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
                 require $routesFile;
             }
 
-            foreach (AliasBinder::routes() as $route) {
-                call_user_func($route, $router);
-            }
+            AliasBinder::registerRoutes($router);
         });
     }
 

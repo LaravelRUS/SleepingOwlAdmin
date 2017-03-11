@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
@@ -77,14 +77,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
             if (! is_string($orderable) && ! $orderable instanceof Closure) {
                 $orderable = $this->getName();
             }
-
-            $orderable = new OrderByClause($orderable);
         }
 
-        $this->orderByClause = $orderable;
-        $this->getHeader()->setOrderable($this->isOrderable());
-
-        return $this;
+        return parent::setOrderable($orderable);
     }
 
     /**

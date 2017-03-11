@@ -1,6 +1,7 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class AdminTest extends TestCase
 {
@@ -9,11 +10,18 @@ class AdminTest extends TestCase
      */
     private $admin;
 
+    public function tearDown()
+    {
+        m::close();
+    }
+
     public function setUp()
     {
         parent::setUp();
 
-        $this->admin = new SleepingOwl\Admin\Admin();
+        $this->admin = new SleepingOwl\Admin\Admin($this->app);
+
+        $this->admin->setTemplate(m::mock(TemplateInterface::class));
     }
 
     /**
@@ -57,19 +65,6 @@ class AdminTest extends TestCase
         $this->admin->register($configuration2);
 
         $this->assertCount(2, $this->admin->getModels());
-    }
-
-    /**
-     * @covers SleepingOwl\Admin\Admin::modelAliases
-     * @covers SleepingOwl\Admin\Admin::getModels
-     */
-    public function test_returns_form_aliases()
-    {
-        $this->admin->registerModel(TestModel::class, function () {
-        });
-        $aliases = $this->admin->modelAliases();
-
-        $this->assertEquals('test_models', $aliases['TestModel']);
     }
 
     /**
@@ -124,7 +119,7 @@ class AdminTest extends TestCase
     public function test_returns_template()
     {
         $this->assertInstanceOf(
-            \SleepingOwl\Admin\Contracts\TemplateInterface::class,
+            TemplateInterface::class,
             $this->admin->template()
         );
     }
@@ -147,11 +142,13 @@ class AdminTest extends TestCase
     public function test_get_navigation()
     {
         $navigation = m::mock(\SleepingOwl\Admin\Navigation::class);
-        $this->app->instance('sleeping_owl.navigation', $navigation);
 
-        $this->assertInstanceOf(
-            \SleepingOwl\Admin\Navigation::class,
-            $this->admin->getNavigation()
+        $this->admin->setTemplate($template = m::mock(TemplateInterface::class));
+        $template->shouldReceive('navigation')->once()->andReturn($navigation);
+
+        $this->assertEquals(
+            $navigation,
+            $this->admin->navigation()
         );
     }
 

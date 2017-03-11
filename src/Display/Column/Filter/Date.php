@@ -4,26 +4,20 @@ namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Exception;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
 class Date extends Text
 {
+    use \SleepingOwl\Admin\Traits\DatePicker;
+
     /**
      * @var string
      */
-    protected $view = 'date';
+    protected $view = 'column.filter.date';
 
     /**
      * @var string
      */
     protected $format;
-
-    /**
-     * @var string
-     */
-    protected $pickerFormat;
 
     /**
      * @var string
@@ -75,13 +69,24 @@ class Date extends Text
     }
 
     /**
-     * @param bool $seconds
+     * @param bool $status
+     *
+     * @return $this
+     * @deprecated use showSeconds
+     */
+    public function setSeconds($status)
+    {
+        return $this->showSeconds($status);
+    }
+
+    /**
+     * @param bool $status
      *
      * @return $this
      */
-    public function setSeconds($seconds)
+    public function showSeconds($status = true)
     {
-        $this->seconds = (bool) $seconds;
+        $this->seconds = (bool) $status;
 
         return $this;
     }
@@ -92,18 +97,6 @@ class Date extends Text
     public function getPickerFormat()
     {
         return $this->pickerFormat ?: config('sleeping_owl.dateFormat');
-    }
-
-    /**
-     * @param string $pickerFormat
-     *
-     * @return $this
-     */
-    public function setPickerFormat($pickerFormat)
-    {
-        $this->pickerFormat = $pickerFormat;
-
-        return $this;
     }
 
     /**
@@ -133,100 +126,15 @@ class Date extends Text
     }
 
     /**
-     * @return string
-     */
-    public function getSearchFormat()
-    {
-        return $this->searchFormat;
-    }
-
-    /**
-     * @param string $searchFormat
-     *
-     * @return $this
-     */
-    public function setSearchFormat($searchFormat)
-    {
-        $this->searchFormat = $searchFormat;
-
-        return $this;
-    }
-
-    /**
-     * @param RepositoryInterface  $repository
-     * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $search
-     * @param string               $fullSearch
-     *
-     * @return void
-     */
-    public function apply(
-        RepositoryInterface $repository,
-        NamedColumnInterface $column,
-        Builder $query,
-        $search,
-        $fullSearch
-    ) {
-        if (empty($search)) {
-            return;
-        }
-
-        $date = $this->parserDate($search);
-        $name = $column->getName();
-
-        if ($repository->hasColumn($name)) {
-            $this->buildQuery($query, $name, $date);
-        } elseif (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $fieldName = array_pop($parts);
-            $relationName = implode('.', $parts);
-
-            $query->whereHas($relationName, function ($q) use ($name, $date) {
-                $this->buildQuery($q, $name, $date);
-            });
-        }
-    }
-
-    /**
      * @return array
      */
     public function toArray()
     {
-        $format = $this->getPickerFormat();
-        if (empty($format)) {
-            $format = $this->getFormat();
-        }
-
         return parent::toArray() + [
             'seconds'      => $this->hasSeconds(),
-            'format'       => $this->getFormat(),
-            'pickerFormat' => $this->generatePickerFormat(
-                $this->getPickerFormat()
-            ),
+            'pickerFormat' => $this->getJsPickerFormat(),
             'width'        => $this->getWidth(),
         ];
-    }
-
-    /**
-     * @return string
-     */
-    protected function generatePickerFormat($format)
-    {
-        return strtr($format, [
-            'i' => 'mm',
-            's' => 'ss',
-            'h' => 'hh',
-            'H' => 'HH',
-            'g' => 'h',
-            'G' => 'H',
-            'd' => 'DD',
-            'j' => 'D',
-            'm' => 'MM',
-            'n' => 'M',
-            'Y' => 'YYYY',
-            'y' => 'YY',
-        ]);
     }
 
     /**
@@ -250,6 +158,6 @@ class Date extends Text
             }
         }
 
-        return $date->format($this->getSearchFormat());
+        return $date->format($this->getFormat());
     }
 }

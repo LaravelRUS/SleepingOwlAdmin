@@ -4,10 +4,11 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Exception;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 
 class DateTime extends NamedFormElement
 {
+    use \SleepingOwl\Admin\Traits\DatePicker;
+
     /**
      * @var string
      */
@@ -21,7 +22,7 @@ class DateTime extends NamedFormElement
     /**
      * @var string
      */
-    protected $pickerFormat;
+    protected $view = 'form.element.datetime';
 
     /**
      * @return string
@@ -46,9 +47,9 @@ class DateTime extends NamedFormElement
     /**
      * @return $this|NamedFormElement|mixed|null|string
      */
-    public function getValue()
+    public function getValueFromModel()
     {
-        $value = parent::getValue();
+        $value = parent::getValueFromModel();
         if (! empty($value)) {
             return $this->parseValue($value);
         }
@@ -75,15 +76,17 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param Model $model
-     * @param string $attribute
      * @param mixed $value
+     *
+     * @return void
      */
-    public function setValue(Model $model, $attribute, $value)
+    public function setModelAttribute($value)
     {
-        $value = ! empty($value) ? Carbon::createFromFormat($this->getPickerFormat(), $value)->format($this->getFormat()) : null;
+        $value = ! empty($value)
+            ? Carbon::createFromFormat($this->getPickerFormat(), $value)->format($this->getFormat())
+            : null;
 
-        parent::setValue($model, $attribute, $value);
+        parent::setModelAttribute($value);
     }
 
     /**
@@ -91,17 +94,10 @@ class DateTime extends NamedFormElement
      */
     public function toArray()
     {
-        $pickerFormat = $this->getPickerFormat();
-        if (empty($pickerFormat)) {
-            $pickerFormat = $this->getFormat();
-        }
-
         return parent::toArray() + [
             'seconds'      => $this->hasSeconds(),
             'format'       => $this->getFormat(),
-            'pickerFormat' => $this->generatePickerFormat(
-                $pickerFormat
-            ),
+            'pickerFormat' => $this->getJsPickerFormat(),
         ];
     }
 
@@ -114,18 +110,6 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param string $pickerFormat
-     *
-     * @return $this
-     */
-    public function setPickerFormat($pickerFormat)
-    {
-        $this->pickerFormat = $pickerFormat;
-
-        return $this;
-    }
-
-    /**
      * @return $this
      *
      * SMELLS This function does more than it says.
@@ -135,29 +119,6 @@ class DateTime extends NamedFormElement
         $this->defaultValue = Carbon::now()->format($this->getFormat());
 
         return $this;
-    }
-
-    /**
-     * @param string $format
-     *
-     * @return string
-     */
-    protected function generatePickerFormat($format)
-    {
-        return strtr($format, [
-            'i' => 'mm',
-            's' => 'ss',
-            'h' => 'hh',
-            'H' => 'HH',
-            'g' => 'h',
-            'G' => 'H',
-            'd' => 'DD',
-            'j' => 'D',
-            'm' => 'MM',
-            'n' => 'M',
-            'Y' => 'YYYY',
-            'y' => 'YY',
-        ]);
     }
 
     /**
@@ -177,6 +138,8 @@ class DateTime extends NamedFormElement
             }
         }
 
-        return $time->format($this->getPickerFormat());
+        return $time->format(
+            $this->getPickerFormat()
+        );
     }
 }

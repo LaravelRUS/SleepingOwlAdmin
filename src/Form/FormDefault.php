@@ -2,20 +2,19 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Request;
-use Validator;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Element\Upload;
-use SleepingOwl\Admin\Contracts\FormInterface;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use Illuminate\Validation\ValidationException;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use SleepingOwl\Admin\Contracts\FormButtonsInterface;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -80,8 +79,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $this->setButtons(
             app(FormButtonsInterface::class)
         );
-
-        $this->initializePackage();
     }
 
     /**
@@ -94,25 +91,29 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         }
 
         $this->initialized = true;
-        $this->repository = app(RepositoryInterface::class, [$this->class]);
+        $this->repository = app(RepositoryInterface::class);
+        $this->repository->setClass($this->class);
 
-        $this->setModel(app($this->class));
+        $model = $this->makeModel();
+        parent::setModel($model);
+        $this->getButtons()->setModel($model);
 
         parent::initialize();
 
-        $this->getElements()->each(function ($element) {
-            if ($element instanceof Upload and ! $this->hasHtmlAttribute('enctype')) {
-                $this->setHtmlAttribute('enctype', 'multipart/form-data');
-            }
-        });
+        if (! $this->hasHtmlAttribute('enctype')) {
+            // Try to find upload element
+            $this->getElements()->each(function ($element) {
 
-        $this->setHtmlAttribute('method', 'POST');
+                // TODO: this not works withs nested elements
+                if ($element instanceof Upload and ! $this->hasHtmlAttribute('enctype')) {
+                    $this->setHtmlAttribute('enctype', 'multipart/form-data');
+                }
+            });
+        }
 
         $this->getButtons()->setModelConfiguration(
             $this->getModelConfiguration()
         );
-
-        $this->includePackage();
     }
 
     /**
@@ -144,26 +145,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param \Illuminate\View\View|string $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getAction()
@@ -182,8 +163,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             $this->action = $action;
         }
 
-        $this->setHtmlAttribute('action', $this->action);
-
         return $this;
     }
 
@@ -199,6 +178,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param string $class
      *
      * @return $this
+     * @throws FormException
      */
     public function setModelClass($class)
     {
@@ -259,7 +239,10 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     {
         if (is_null($this->id) and ! is_null($id) and ($model = $this->getRepository()->find($id))) {
             $this->id = $id;
-            $this->setModel($model);
+
+            parent::setModel($model);
+            $this->getButtons()->setModel($model);
+            $this->setModelClass(get_class($model));
         }
     }
 
@@ -269,7 +252,13 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function getModelConfiguration()
     {
-        return app('sleeping_owl')->getModel($this->class);
+        $class = $this->class;
+
+        if (is_null($class) and $this->getModel() instanceof Model) {
+            $class = $this->getModel();
+        }
+
+        return app('sleeping_owl')->getModel($class);
     }
 
     /**
@@ -287,58 +276,67 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setModel(Model $model)
     {
-        $this->model = $model;
+    }
 
-        parent::setModel($model);
-
-        $this->getButtons()->setModel($this->getModel());
-
-        return $this;
+    /**
+     * @param ModelConfigurationInterface $modelConfiguration
+     *
+     * @return bool
+     */
+    public function validModelConfiguration(ModelConfigurationInterface $modelConfiguration = null)
+    {
+        return is_null($modelConfiguration) || $modelConfiguration === $this->getModelConfiguration();
     }
 
     /**
      * Save instance.
      *
+     * @param \Illuminate\Http\Request $request
      * @param ModelConfigurationInterface $modelConfiguration
      *
      * @return bool
      */
-    public function saveForm(ModelConfigurationInterface $modelConfiguration)
+    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
-        if ($modelConfiguration !== $this->getModelConfiguration()) {
-            return;
-        }
-
-        parent::save();
-
-        $this->saveBelongsToRelations();
-
-        $loaded = $this->getModel()->exists;
-
-        if ($modelConfiguration->fireEvent($loaded ? 'updating' : 'creating', true, $this->getModel()) === false) {
+        if (! $this->validModelConfiguration($modelConfiguration)) {
             return false;
         }
 
-        if ($modelConfiguration->fireEvent('saving', true, $this->getModel()) === false) {
+        parent::save($request);
+
+        $model = $this->getModel();
+
+        $this->saveBelongsToRelations($model);
+
+        $loaded = $model->exists;
+
+        if ($this->getModelConfiguration()->fireEvent($loaded ? 'updating' : 'creating', true, $model) === false) {
             return false;
         }
 
-        $this->getModel()->save();
+        if ($this->getModelConfiguration()->fireEvent('saving', true, $model) === false) {
+            return false;
+        }
 
-        $this->saveHasOneRelations();
+        $model->save();
 
-        parent::afterSave();
+        $this->saveHasOneRelations($model);
 
-        $modelConfiguration->fireEvent($loaded ? 'updated' : 'created', false, $this->getModel());
-        $modelConfiguration->fireEvent('saved', false, $this->getModel());
+        parent::afterSave($request);
+
+        $this->getModelConfiguration()->fireEvent($loaded ? 'updated' : 'created', false, $model);
+        $this->getModelConfiguration()->fireEvent('saved', false, $model);
 
         return true;
     }
 
-    protected function saveBelongsToRelations()
+    /**
+     * @param Model $model
+     *
+     * @return void
+     */
+    protected function saveBelongsToRelations(Model $model)
     {
-        $model = $this->getModel();
-
         foreach ($model->getRelations() as $name => $relation) {
             if ($model->{$name}() instanceof BelongsTo && ! is_null($relation)) {
                 $relation->save();
@@ -347,10 +345,13 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         }
     }
 
-    protected function saveHasOneRelations()
+    /**
+     * @param Model $model
+     *
+     * @return void
+     */
+    protected function saveHasOneRelations(Model $model)
     {
-        $model = $this->getModel();
-
         foreach ($model->getRelations() as $name => $relation) {
             if ($model->{$name}() instanceof HasOneOrMany && ! is_null($relation)) {
                 if (is_array($relation) || $relation instanceof \Traversable) {
@@ -363,23 +364,23 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
      * @param ModelConfigurationInterface $modelConfiguration
      *
-     * @return \Illuminate\Contracts\Validation\Validator|null|bool
+     * @throws ValidationException
      */
-    public function validateForm(ModelConfigurationInterface $modelConfiguration)
+    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
-        if ($modelConfiguration !== $this->getModelConfiguration()) {
+        if (! $this->validModelConfiguration($modelConfiguration)) {
             return;
         }
 
-        $data = Request::all();
-
         $verifier = app('validation.presence');
+
         $verifier->setConnection($this->getModel()->getConnectionName());
 
-        $validator = Validator::make(
-            $data,
+        $validator = \Validator::make(
+            $request->all(),
             $this->getValidationRules(),
             $this->getValidationMessages(),
             $this->getValidationLabels()
@@ -387,7 +388,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         $validator->setPresenceVerifier($verifier);
 
-        return $validator->fails() ? $validator : true;
+        $this->getModelConfiguration()->fireEvent('validate', false, $this->getModel(), $validator);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
     }
 
     /**
@@ -397,6 +402,10 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function toArray()
     {
+        // This element needs only in template
+        $this->setHtmlAttribute('method', 'POST');
+        $this->setHtmlAttribute('action', $this->getAction());
+
         return [
             'items' => $this->getElements()->onlyVisible(),
             'instance' => $this->getModel(),
@@ -407,18 +416,12 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return Model
      */
-    public function render()
+    protected function makeModel()
     {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
-    }
+        $class = $this->getClass();
 
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
+        return new $class();
     }
 }

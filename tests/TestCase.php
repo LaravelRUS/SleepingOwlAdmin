@@ -1,6 +1,7 @@
 <?php
 
 use Mockery as m;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 class TestCase extends Orchestra\Testbench\TestCase
@@ -23,7 +24,12 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         /** @var \Illuminate\Http\Request $request */
         $request = $app['request'];
-        $request->setSession($session = m::mock(Illuminate\Session\Store::class));
+
+        if (! version_compare($app->version(), '5.4', '>=')) {
+            $request->setSession($session = m::mock(Illuminate\Session\Store::class));
+        } else {
+            $request->setLaravelSession($session = m::mock(Illuminate\Session\Store::class));
+        }
     }
 
     protected function getPackageAliases($app)
@@ -44,5 +50,71 @@ class TestCase extends Orchestra\Testbench\TestCase
         $request->headers->set('referer', 'http://www.site.com/hello/world');
 
         return $request;
+    }
+
+    /**
+     * @return m\MockInterface|\Illuminate\Translation\Translator
+     */
+    public function getTranslatorMock()
+    {
+        return $this->app['translator'] = m::mock(\Illuminate\Translation\Translator::class);
+    }
+
+    /**
+     * @return m\MockInterface|\Illuminate\Contracts\Routing\UrlGenerator
+     */
+    public function getRouterMock()
+    {
+        return $this->app['url'] = m::mock(\Illuminate\Contracts\Routing\UrlGenerator::class);
+    }
+
+    /**
+     * @return m\MockInterface|ViewFactory
+     */
+    public function getViewMock()
+    {
+        $this->app->instance(ViewFactory::class, $mock = m::mock(ViewFactory::class));
+
+        return $mock;
+    }
+
+    /**
+     * @return m\MockInterface|Illuminate\Contracts\Cache\Repository
+     */
+    public function getCacheMock()
+    {
+        return $this->app['cache'] = m::mock(\Illuminate\Cache\CacheManager::class);
+    }
+
+    /**
+     * @return m\MockInterface|\Illuminate\Config\Repository
+     */
+    public function getConfigMock()
+    {
+        return $this->app['config'] = m::mock(\Illuminate\Config\Repository::class);
+    }
+
+    /**
+     * @return m\MockInterface|\DaveJamesMiller\Breadcrumbs\Manager
+     */
+    public function getBreadcrumbsMock()
+    {
+        return $this->app['breadcrumbs'] = m::mock(DaveJamesMiller\Breadcrumbs\Manager::class);
+    }
+
+    /**
+     * @return m\MockInterface|\SleepingOwl\Admin\Contracts\TemplateInterface
+     */
+    public function getTemplateMock()
+    {
+        return $this->app['sleeping_owl.template'] = m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class);
+    }
+
+    /**
+     * @return m\MockInterface|\SleepingOwl\Admin\Contracts\TemplateInterface
+     */
+    public function getSleepingOwlMock()
+    {
+        return $this->app['sleeping_owl'] = m::mock(\SleepingOwl\Admin\Admin::class);
     }
 }

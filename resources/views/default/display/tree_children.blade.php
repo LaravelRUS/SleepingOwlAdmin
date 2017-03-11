@@ -14,7 +14,7 @@
             <div class="pull-right">
                 @foreach ($controls as $control)
 
-                    @if($control instanceof \SleepingOwl\Admin\Contracts\ColumnInterface)
+                    @if($control instanceof \SleepingOwl\Admin\Contracts\Display\ColumnInterface)
                         <?php $control->setModel($entry); ?><?php
                         $control->initialize();
                         ?>

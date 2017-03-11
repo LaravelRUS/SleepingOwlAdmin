@@ -5,6 +5,11 @@ use SleepingOwl\Admin\Form\Element\NamedFormElement;
 
 class NamedFormElementTest extends TestCase
 {
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @param string $path
      * @param string|null $label
@@ -54,8 +59,8 @@ class NamedFormElementTest extends TestCase
     {
         $element = $this->getElement();
 
-        $element->setAttribute('test');
-        $this->assertEquals('test', $element->getAttribute());
+        $element->setModelAttributeKey('test');
+        $this->assertEquals('test', $element->getModelAttributeKey());
     }
 
     /**
@@ -176,7 +181,7 @@ class NamedFormElementTest extends TestCase
         $element = $this->getElement('key.subkey', 'Label');
         $session->shouldReceive('getOldInput')->andReturn('test');
 
-        $this->assertEquals('test', $element->getValueFromRequest());
+        $this->assertEquals('test', $element->getValueFromRequest($request));
     }
 
     /**
@@ -194,11 +199,11 @@ class NamedFormElementTest extends TestCase
 
         $element = $this->getElement('key.subkey1', 'Label');
         $session->shouldReceive('getOldInput')->andReturn(null);
-        $this->assertEquals('hello world', $element->getValueFromRequest());
+        $this->assertEquals('hello world', $element->getValueFromRequest($request));
     }
 
     /**
-     * @covers NamedFormElement:;getValue
+     * @covers NamedFormElement::getValue
      */
     public function test_gets_value_with_request()
     {
@@ -212,11 +217,11 @@ class NamedFormElementTest extends TestCase
             'subkey' => 'hello world',
         ]);
 
-        $this->assertEquals('hello world', $element->getValue());
+        $this->assertEquals('hello world', $element->getValueFromModel());
     }
 
     /**
-     * @covers NamedFormElement:;getValue
+     * @covers NamedFormElement::getValue
      */
     public function test_gets_value()
     {
@@ -226,7 +231,7 @@ class NamedFormElementTest extends TestCase
 
         $element = $this->getElement('key', 'Label');
 
-        $this->assertNull($element->getValue());
+        $this->assertNull($element->getValueFromModel());
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
         $model->shouldReceive('getAttribute')->with('key')->andReturn('value');
@@ -234,11 +239,11 @@ class NamedFormElementTest extends TestCase
         $this->assertNull($element->getValue());
 
         $model->exists = true;
-        $this->assertEquals('value', $element->getValue());
+        $this->assertEquals('value', $element->getValueFromModel());
     }
 
     /**
-     * @covers NamedFormElement:;resolvePath
+     * @covers NamedFormElement::resolvePath
      */
     public function test_resolving_path()
     {
@@ -303,9 +308,131 @@ class NamedFormElementTest extends TestCase
         ], $element->toArray());
     }
 
-    public function test_saving()
+    public function test_save()
     {
-        $this->markTestSkipped('NamedFormElement::save() not tested');
+        $request = $this->app['request'];
+
+        $session = $request->getSession();
+        $session->shouldReceive('getOldInput')->andReturn(null);
+
+        $request->offsetSet($key = 'key', $value = 'hello world');
+        $element = $this->getElement($key, 'Label');
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('setAttribute')->with('key', $value);
+
+        $element->save($request);
+    }
+
+    public function test_sets_model_attribute()
+    {
+        $element = $this->getElement('key', 'Label');
+        $value = 'value';
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('setAttribute')->with('key', $value);
+
+        $element->setModelAttribute($value);
+    }
+
+    /**
+     * @covers FormElement::isValueSkipped()
+     * @covers FormElement::setValueSkipped()
+     */
+    public function test_does_not_set_skipped_values()
+    {
+        $nameElement = $this->getElement('name', 'Name');
+        $passwordElement = $this->getElement('password', 'Password')->setValueSkipped(true);
+
+        $model = new NamedFormElementTestModuleForTestingSkippedValues();
+        foreach ([$nameElement, $passwordElement] as $element) {
+            /* @var $element NamedFormElement  */
+            $element->setModel($model);
+            $element->setModelAttribute($element->getLabel());
+        }
+
+        $attributes = array_keys($model->getAttributes());
+        $this->assertFalse(in_array('password', $attributes, true));
+        $this->assertCount(1, $attributes);
+    }
+
+    public function test_prepare_value()
+    {
+        $element = $this->getElement('key', 'Label');
+        $value = 'value';
+
+        $this->assertEquals($value, $element->prepareValue($value));
+
+        $element->mutateValue(function ($value) {
+            return strtoupper($value);
+        });
+
+        $this->assertEquals('VALUE', $element->prepareValue($value));
+    }
+
+    public function test_mutator()
+    {
+        $element = $this->getElement('key', 'Label');
+        $this->assertFalse($element->hasMutator());
+
+        $element->mutateValue(function ($value) {
+            return strtoupper($value);
+        });
+        $this->assertTrue($element->hasMutator());
+    }
+
+    public function test_get_model_by_path()
+    {
+        $element = $this->getElement('key', 'Label');
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+
+        $this->assertEquals($model, $this->callMethodByPath($element, 'key'));
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')->with('key')->andReturn('test');
+
+        $this->assertNull($this->callMethodByPath($element, 'key.key1'));
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')->with('key')->andReturn(
+            $model1 = m::mock(\Illuminate\Database\Eloquent\Model::class)
+        );
+
+        $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
+    }
+
+    /**
+     * @expectedException LogicException
+     */
+    public function test_get_model_by_path_exception()
+    {
+        $element = $this->getElement('key', 'Label');
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')->with('key')->andReturn(
+            $model1 = m::mock(\Illuminate\Database\Eloquent\Model::class)
+        );
+
+        $model1->shouldReceive('getAttribute')->with('key1');
+
+        $this->callMethodByPath($element, 'key.key1.title');
+    }
+
+    /**
+     * @param NamedFormElement $element
+     * @param $path
+     *
+     * @return mixed
+     */
+    protected function callMethodByPath(NamedFormElement $element, $path)
+    {
+        $reflection = new ReflectionClass($element);
+
+        $method = $reflection->getMethod('getModelByPath');
+        $method->setAccessible(true);
+
+        return $method->invoke($element, $path);
     }
 }
 
@@ -330,9 +457,15 @@ class NamedFormElementTestModuleForTestingResolvePath extends \Illuminate\Databa
 class NamedFormElementTestModuleForTestingResolvePathBelongsTo extends \Illuminate\Database\Eloquent\Model
 {
 }
+
 class NamedFormElementTestModuleForTestingResolvePathHasOne extends \Illuminate\Database\Eloquent\Model
 {
 }
+
 class NamedFormElementTestModuleForTestingResolvePathHasMany extends \Illuminate\Database\Eloquent\Model
+{
+}
+
+class NamedFormElementTestModuleForTestingSkippedValues extends \Illuminate\Database\Eloquent\Model
 {
 }

@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\View\View;
+
 class ControlButton extends ControlLink
 {
     /**

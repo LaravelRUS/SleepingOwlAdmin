@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use SleepingOwl\Admin\Admin;
+
 class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
     public function register()
@@ -9,50 +11,34 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
 
-        $this->registerProviders();
+        $this->registerCore();
         $this->registerCommands();
-
-        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
-            include $assetsFile;
-        }
     }
 
     /**
-     * @param \SleepingOwl\Admin\Admin $admin
+     * @param Admin $admin
      */
-    public function boot(\SleepingOwl\Admin\Admin $admin)
+    public function boot(Admin $admin)
     {
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
-        $this->publishes([
-            __DIR__.'/../../public' => public_path('packages/sleepingowl/'),
-        ], 'assets');
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../../public' => public_path('packages/sleepingowl/'),
+            ], 'assets');
 
-        $this->publishes([
-            __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
-        ], 'config');
+            $this->publishes([
+                __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
+            ], 'config');
+        }
 
         parent::boot($admin);
     }
 
-    public function registerProviders()
+    protected function registerCore()
     {
-        $providers = [
-            AliasesServiceProvider::class,
-            \KodiCMS\Assets\AssetsServiceProvider::class,
-            \Collective\Html\HtmlServiceProvider::class,
-            \DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
-            AdminServiceProvider::class,
-        ];
-
-        foreach ($providers as $providerClass) {
-            $this->app->register($providerClass);
-        }
-
-        /* Workaround to allow use ServiceProvider-based configurations in old fashion */
-        if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
-            $this->app->register($this->app->getNamespace().'Providers\\AdminSectionsServiceProvider');
-        }
+        $this->app->instance('sleeping_owl', $admin = new Admin($this->app));
+        $admin->setTemplate($this->app['sleeping_owl.template']);
     }
 
     protected function registerCommands()

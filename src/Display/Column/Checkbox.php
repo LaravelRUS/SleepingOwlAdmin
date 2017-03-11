@@ -26,12 +26,20 @@ class Checkbox extends TableColumn
     }
 
     /**
+     * @return string
+     */
+    public function getModelValue()
+    {
+        return $this->getModel()->getKey();
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
         return parent::toArray() + [
-            'value' => $this->getModel()->getKey(),
+            'value' => $this->getModelValue(),
         ];
     }
 }

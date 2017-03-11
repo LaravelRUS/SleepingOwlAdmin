@@ -5,8 +5,13 @@ use SleepingOwl\Admin\Form\FormElement;
 
 class FormElementTest extends TestCase
 {
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
-     * @return FormElement
+     * @return FormElement|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getElement()
     {
@@ -14,13 +19,28 @@ class FormElementTest extends TestCase
     }
 
     /**
+     * FormDefault::__construct
+     * FormDefault::getElements
+     * FormDefault::getButtons.
+     */
+    public function test_constructor()
+    {
+        PackageManager::shouldReceive('load')->once();
+        PackageManager::shouldReceive('add')->once();
+
+        $this->getElement();
+    }
+
+    /**
      * @covers FormElement::initialize
      */
     public function test_initializable()
     {
-        \KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
+        //\KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
 
-        $this->getElement()->initialize();
+        $this->assertNull(
+            $this->getElement()->initialize()
+        );
     }
 
     /**
@@ -34,7 +54,8 @@ class FormElementTest extends TestCase
         $this->assertEmpty($element->getValidationRules());
 
         $rule = 'some_rule';
-        $element->addValidationRule($rule);
+
+        $this->assertEquals($element, $element->addValidationRule($rule));
         $this->assertEquals([$rule], $element->getValidationRules());
     }
 
@@ -69,9 +90,12 @@ class FormElementTest extends TestCase
         $element = $this->getElement();
         $this->assertEmpty($element->getValidationMessages());
 
-        $element->addValidationMessage(
-            $rule = 'min:10',
-            $message = 'my custom message'
+        $this->assertEquals(
+            $element,
+            $element->addValidationMessage(
+                $rule = 'min:10',
+                $message = 'my custom message'
+            )
         );
 
         $element->addValidationMessage(
@@ -91,10 +115,13 @@ class FormElementTest extends TestCase
         $element = $this->getElement();
         $this->assertEmpty($element->getValidationMessages());
 
-        $element->setValidationMessages([
-            'min' => 'test',
-            'max' => 'test',
-        ]);
+        $this->assertEquals(
+            $element,
+            $element->setValidationMessages([
+                'min' => 'test',
+                'max' => 'test',
+            ])
+        );
 
         $this->assertEquals(['min' => 'test', 'max' => 'test'], $element->getValidationMessages());
 
@@ -114,10 +141,14 @@ class FormElementTest extends TestCase
         $element = $this->getElement();
 
         $this->assertEmpty($element->getValidationRules());
-        $element->setValidationRules([
-            'rule|one',
-            'rule|two',
-        ]);
+
+        $this->assertEquals(
+            $element,
+            $element->setValidationRules([
+                'rule|one',
+                'rule|two',
+            ])
+        );
 
         $this->assertEquals([
             'rule', 'one', 'rule', 'two',
@@ -140,24 +171,13 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getView
-     */
-    public function test_get_default_view()
-    {
-        $element = $this->getElement();
-
-        $className = strtolower((new \ReflectionClass($element))->getShortName());
-
-        $this->assertEquals('form.element.'.$className, $element->getView());
-    }
-
-    /**
      * @covers FormElement::setView
      */
     public function test_set_view()
     {
         $element = $this->getElement();
-        $element->setView('my.custom.view');
+
+        $this->assertEquals($element, $element->setView('my.custom.view'));
 
         $this->assertEquals('my.custom.view', $element->getView());
     }
@@ -173,7 +193,7 @@ class FormElementTest extends TestCase
 
         $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
 
-        $element->setModel($model);
+        $this->assertEquals($element, $element->setModel($model));
         $this->assertEquals($model, $element->getModel());
     }
 
@@ -194,11 +214,10 @@ class FormElementTest extends TestCase
     {
         $template = m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class);
         $template->shouldReceive('view')->andReturn($view = m::mock(\Illuminate\Contracts\View\View::class));
-        $view->shouldReceive('render')->once()->andReturn('hello world');
 
         $this->app->instance('sleeping_owl.template', $template);
 
-        $this->assertEquals('hello world', $this->getElement()->render());
+        $this->assertEquals($view, $this->getElement()->render());
     }
 
     /**
@@ -207,11 +226,11 @@ class FormElementTest extends TestCase
     public function test_converts_into_string()
     {
         $template = m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class);
-        $template->shouldReceive('view->render')->andReturn('hello world');
+        $template->shouldReceive('view->__toString')->andReturn('hello world');
 
         $this->app->instance('sleeping_owl.template', $template);
 
-        $this->assertEquals('hello world', $this->getElement()->__toString());
+        $this->assertEquals('hello world', (string) $this->getElement());
     }
 
     /**
@@ -222,7 +241,7 @@ class FormElementTest extends TestCase
     {
         $element = $this->getElement();
 
-        $element->setReadonly(true);
+        $this->assertEquals($element, $element->setReadonly(true));
         $this->assertTrue($element->isReadonly());
 
         $element->setReadonly(false);
@@ -241,6 +260,32 @@ class FormElementTest extends TestCase
     }
 
     /**
+     * @covers FormElement::isValueSkipped()
+     * @covers FormElement::setValueSkipped()
+     */
+    public function test_valueSkipped()
+    {
+        $element = $this->getElement();
+
+        $this->assertEquals($element, $element->setValueSkipped(true));
+        $this->assertTrue($element->isValueSkipped());
+
+        $element->setValueSkipped(false);
+        $this->assertFalse($element->isValueSkipped());
+
+        $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
+        $model->shouldReceive('isAuthor')->andReturn(true)->once();
+
+        $element->setModel($model);
+
+        $element->setValueSkipped(function ($model) {
+            return $model->isAuthor();
+        });
+
+        $this->assertTrue($element->isValueSkipped());
+    }
+
+    /**
      * @covers FormElement::setVisibilityCondition
      * @covers FormElement::isVisible
      */
@@ -251,9 +296,12 @@ class FormElementTest extends TestCase
         $model->shouldReceive('isAuthor')->andReturn(true)->once();
         $element->setModel($model);
 
-        $element->setVisibilityCondition(function ($model) {
-            return $model->isAuthor();
-        });
+        $this->assertEquals(
+            $element,
+            $element->setVisibilityCondition(function ($model) {
+                return $model->isAuthor();
+            })
+        );
 
         $this->assertTrue($element->isVisible());
     }

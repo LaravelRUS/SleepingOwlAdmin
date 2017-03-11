@@ -2,12 +2,15 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
+use Illuminate\Config\Repository;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
+use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface;
 
-class Manager
+class Manager implements WysiwygMangerInterface
 {
     /**
      * @var
@@ -17,13 +20,28 @@ class Manager
     /**
      * Available wysiwyg editors.
      *
-     * @var Collection|Editor[]
+     * @var Collection|WysiwygEditorInterface[]
      */
     protected $filters;
 
-    public function __construct()
+    /**
+     * @var Application
+     */
+    protected $app;
+
+    /**
+     * Manager constructor.
+     *
+     * @param Application $application
+     */
+    public function __construct(Application $application)
     {
         $this->filters = new Collection();
+        $this->app = $application;
+
+        $this->config = new Repository(
+            $this->app['config']->get('sleeping_owl.wysiwyg', [])
+        );
     }
 
     /**
@@ -31,7 +49,7 @@ class Manager
      */
     public function getDefaultEditorId()
     {
-        return config('sleeping_owl.wysiwyg.default', 'ckeditor');
+        return $this->config->get('default', 'ckeditor');
     }
 
     /**
@@ -43,17 +61,15 @@ class Manager
      */
     public function register($editorId, WysiwygFilterInterface $filter = null, $name = null)
     {
-        $config = config('sleeping_owl.wysiwyg.'.$editorId, []);
-
         $this->getFilters()->push(
-            $editor = new Editor($editorId, $name, $filter, $config)
+            $editor = new Editor($editorId, $name, $filter, $this->config->get($editorId, []))
         );
 
         return $editor;
     }
 
     /**
-     * @return Collection|Editor[]
+     * @return Collection|WysiwygEditorInterface[]
      */
     public function getFilters()
     {

@@ -1,0 +1,51 @@
+@import (less) "../../../../node_modules/select2/dist/css/select2.css";
+
+.select2-container--default {
+  .select2-selection__arrow,
+  .select2-selection--single {
+    height: @input-height-base !important;
+  }
+
+  .select2-selection--multiple,
+  .select2-selection--single {
+    border-radius: @input-radius !important;
+    border-color:  @input-border;
+  }
+
+  .select2-selection--single {
+    .select2-selection__rendered {
+      line-height: @input-height-base;
+      color:       @input-color;
+    }
+  }
+
+  .select2-selection--multiple {
+    min-height: @input-height-base;
+
+    .select2-selection__choice {
+      border-radius:    @input-radius !important;
+      background-color: whitesmoke;
+      border-color:     @input-border;
+      color:            @input-color;
+    }
+  }
+
+  &.select2-container--open,
+  &.select2-container--focus {
+    .select2-selection--multiple,
+    .select2-selection--single {
+      border-color: @input-border-focus;
+    }
+  }
+
+  .select2-dropdown {
+    border-radius: 0 !important;
+    border-color:  @input-border-focus;
+
+    .select2-search__field {
+      border-radius: @input-radius !important;
+      border-color:  @input-border;
+      color:         @input-color;
+    }
+  }
+}

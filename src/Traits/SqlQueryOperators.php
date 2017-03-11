@@ -72,11 +72,12 @@ trait SqlQueryOperators
     {
         $params = $this->getOperatorParams();
         $method = $params['method'];
+        $value = array_get($params, 'value', $value);
 
         switch ($method) {
             case 'where':
                 $value = str_replace('?', $value, array_get($params, 'mod', '?'));
-                $query->where($column, $params['op'], $value);
+                $query->{$method}($column, $params['op'], $value);
                 break;
             case 'whereNull':
             case 'whereNotNull':
@@ -88,7 +89,8 @@ trait SqlQueryOperators
                 break;
             case 'whereIn':
             case 'whereNotIn':
-                $query->{$method}($column, (array) $value);
+
+            $query->{$method}($column, (array) $value);
                 break;
         }
     }

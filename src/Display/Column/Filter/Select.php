@@ -2,28 +2,21 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
 
 class Select extends BaseColumnFilter
 {
+    use \SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+
     /**
      * @var string
      */
-    protected $view = 'select';
+    protected $view = 'column.filter.select';
 
     /**
      * @var Model
      */
     protected $model;
-
-    /**
-     * @var string
-     */
-    protected $display = 'title';
 
     /**
      * @var array
@@ -36,85 +29,91 @@ class Select extends BaseColumnFilter
     protected $placeholder;
 
     /**
-     * @var string
+     * @var bool
      */
-    protected $filterField = '';
+    protected $multiple = false;
+
+    /**
+     * @var bool
+     */
+    protected $sortable = true;
+
+    /**
+     * @param array|Model|string|null $options
+     * @param string|null $title
+     */
+    public function __construct($options = null, $title = null)
+    {
+        parent::__construct();
+
+        if (is_array($options)) {
+            $this->setOptions($options);
+        } elseif (($options instanceof Model) or is_string($options)) {
+            $this->setModelForOptions($options);
+        }
+
+        if (! is_null($title)) {
+            $this->setDisplay($title);
+        }
+    }
+
+    /**
+     * @return $this
+     */
+    public function multiple()
+    {
+        $this->multiple = true;
+
+        return $this;
+    }
 
     public function initialize()
     {
         parent::initialize();
 
-        $this->setHtmlAttribute('class', 'form-control column-filter');
+        $this->setHtmlAttribute('class', 'form-control input-select column-filter');
         $this->setHtmlAttribute('data-type', 'select');
+
+        if ($this->multiple) {
+            $this->setHtmlAttribute('multiple', 'multiple');
+
+            if (! in_array($this->operator, ['in', 'not_in'])) {
+                $this->setOperator('in');
+            }
+        } else {
+            $this->setHtmlAttribute('placeholder', $this->getPlaceholder());
+        }
     }
 
     /**
-     * @return Model
+     * @param bool $sortable
+     *
+     * @return $this
      */
-    public function getModel()
+    public function setSortable($sortable)
     {
-        return $this->model;
+        $this->sortable = (bool) $sortable;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSortable()
+    {
+        return $this->sortable;
     }
 
     /**
      * @param Model|string $model
      *
+     * @deprecated use setModelForOptions
      * @return $this
-     * @throws \Exception
      */
     public function setModel($model)
     {
-        if (is_string($model) and class_exists($model)) {
-            $model = new $model;
-        }
-
-        if (! ($model instanceof Model)) {
-            throw new \Exception('Model must be an instance of Illuminate\Database\Eloquent\Model');
-        }
-
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilterField()
-    {
-        return $this->filterField;
-    }
-
-    /**
-     * @param string $filterField
-     *
-     * @return $this
-     */
-    public function setFilterField($filterField)
-    {
-        $this->filterField = $filterField;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDisplay()
-    {
-        return $this->display;
-    }
-
-    /**
-     * @param string $display
-     *
-     * @return $this
-     */
-    public function setDisplay($display)
-    {
-        $this->display = $display;
-
-        return $this;
+        return $this->setModelForOptions($model);
     }
 
     /**
@@ -122,12 +121,16 @@ class Select extends BaseColumnFilter
      */
     public function getOptions()
     {
-        if (! is_null($this->getModel()) and ! is_null($this->getDisplay())) {
-            $this->loadOptions();
+        if (! is_null($this->getModelForOptions()) and ! is_null($this->getDisplay())) {
+            $this->setOptions(
+                $this->loadOptions()
+            );
         }
 
         $options = $this->options;
-        asort($options);
+        if ($this->isSortable()) {
+            asort($options);
+        }
 
         return $options;
     }
@@ -171,61 +174,20 @@ class Select extends BaseColumnFilter
     {
         return parent::toArray() + [
             'options'     => $this->getOptions(),
-            'placeholder' => $this->getPlaceholder(),
         ];
     }
 
     /**
-     * @param RepositoryInterface  $repository
-     * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $search
-     * @param array|string         $fullSearch
+     * @param mixed $selected
      *
-     * @return void
+     * @return array
      */
-    public function apply(
-        RepositoryInterface $repository,
-        NamedColumnInterface $column,
-        Builder $query,
-        $search,
-        $fullSearch
-    ) {
-        if ($search === '') {
-            return;
-        }
-
-        if ($this->getFilterField()) {
-            $query->where($this->getFilterField(), '=', $search);
-
-            return;
-        }
-
-        $name = $column->getName();
-        if ($repository->hasColumn($name)) {
-            $this->buildQuery($query, $name, $search);
-        } elseif (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $fieldName = array_pop($parts);
-            $relationName = implode('.', $parts);
-            $query->whereHas($relationName, function ($q) use ($search, $fieldName) {
-                $this->buildQuery($q, $fieldName, $search);
-            });
-        }
-    }
-
-    protected function loadOptions()
+    public function parseValue($selected)
     {
-        $repository = app(RepositoryInterface::class, [$this->getModel()]);
-
-        $key = $repository->getModel()->getKeyName();
-        $options = $repository->getQuery()->get()->pluck($this->getDisplay(), $key);
-
-        if ($options instanceof Collection) {
-            $options = $options->all();
+        if (is_string($selected) && strpos($selected, ',') !== false) {
+            return explode(',', $selected);
         }
 
-        $options = array_unique($options);
-        $this->setOptions($options);
+        return $selected;
     }
 }

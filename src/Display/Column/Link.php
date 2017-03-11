@@ -5,6 +5,11 @@ namespace SleepingOwl\Admin\Display\Column;
 class Link extends Url
 {
     /**
+     * @var string
+     */
+    protected $view = 'column.link';
+
+    /**
      * Check if instance editable.
      *
      * @return bool

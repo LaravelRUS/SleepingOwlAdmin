@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Display\Filter;
 
 use Closure;
-use SleepingOwl\Admin\Contracts\FilterInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
 
 abstract class FilterBase implements FilterInterface
 {

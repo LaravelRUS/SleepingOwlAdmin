@@ -1,8 +1,9 @@
 ![bg](https://cloud.githubusercontent.com/assets/773481/14028746/24d7efa8-f20f-11e5-8e38-3d264739f0aa.png)
 
-## Laravel 5.* Admin Module
+## Laravel >=5.2 Admin Module
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/?branch=development)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
 [![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://badges.gitter.im/LaravelRUS/SleepingOwlAdmin.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Latest Stable Version](https://poser.pugx.org/laravelrus/sleepingowl/v/stable)](https://packagist.org/packages/laravelrus/sleepingowl)
@@ -15,6 +16,11 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 
 Official site: [http://sleepingowladmin.ru](http://sleepingowladmin.ru)
 
+## Requirements
+
+ - php >= 5.6
+ - Laravel >= 5.2
+ - Capable hands
 
 ## Documentation
 
@@ -37,7 +43,6 @@ You can download the demo project at https://github.com/SleepingOwlAdmin/demo
 
   ```
   "require": {
-    "php": ">=5.5.9",
     ...
     "laravelrus/sleepingowl": "4.*@dev"
   },
@@ -70,10 +75,6 @@ $ php artisan sleepingowl:install
 ```
 
 ### Installation
-
-- After all actions: open `config/sleeping_owl.php` and change `'middleware' => ['web']` to `'middleware' => []`
-
----
 
 ## Authentication
 By default, admin module uses Laravel authentication.

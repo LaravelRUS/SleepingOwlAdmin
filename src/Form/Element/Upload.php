@@ -2,37 +2,48 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
 use Illuminate\Http\UploadedFile;
 
 class Upload extends NamedFormElement
 {
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.upload';
+
     /**
      * @return array
      */
     public function toArray()
     {
         return [
-            'value' => $this->getModel()->getAttribute($this->getAttribute()),
+            'value' => $this->getModel()->getAttribute($this->getModelAttributeKey()),
         ] + parent::toArray();
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     *
      * @return UploadedFile|null
      */
-    public function getValue()
+    public function getValueFromRequest(\Illuminate\Http\Request $request)
     {
-        return Request::file($this->getPath());
+        return $request->file($this->getPath());
     }
 
-    public function save()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
     {
-        $value = $this->getValue();
+        $value = $this->getValueFromRequest($request);
 
-        if (Request::input($this->getPath().'_remove')) {
-            $this->setValue($this->getModel(), $this->getAttribute(), null);
+        if ($request->input($this->getPath().'_remove')) {
+            $this->setModelAttribute(null);
         } elseif (! is_null($value)) {
-            $this->setValue($this->getModel(), $this->getAttribute(), $value);
+            $this->setModelAttribute($value);
         }
     }
 }

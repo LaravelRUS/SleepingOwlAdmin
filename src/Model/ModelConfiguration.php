@@ -4,10 +4,9 @@ namespace SleepingOwl\Admin\Model;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
@@ -65,11 +64,6 @@ class ModelConfiguration extends ModelConfigurationManager
      * @var Closure|null
      */
     protected $edit;
-
-    /**
-     * @var array
-     */
-    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
 
     /**
      * @var Closure|null
@@ -136,35 +130,6 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param string $redirect
-     * @return void
-     */
-    public function setRedirect($redirect)
-    {
-        $this->redirect = $redirect;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRedirect()
-    {
-        return collect($this->redirect);
-    }
-
-    /**
-     * @param bool $deletable
-     *
-     * @return $this
-     */
-    public function setDeletable($deletable)
-    {
-        $this->deletable = $deletable;
-
-        return $this;
-    }
-
-    /**
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getCreateTitle()
@@ -213,139 +178,6 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return Closure|null
-     */
-    public function getRestore()
-    {
-        return $this->restore;
-    }
-
-    /**
-     * @return Closure|null
-     */
-    public function getDelete()
-    {
-        return $this->delete;
-    }
-
-    /**
-     * @return Closure|null
-     */
-    public function getDestroy()
-    {
-        return $this->destroy;
-    }
-
-    /**
-     * @return Closure|null
-     */
-    public function getEdit()
-    {
-        return $this->edit;
-    }
-
-    /**
-     * @return Closure|null
-     */
-    public function getCreate()
-    {
-        return $this->create;
-    }
-
-    /**
-     * @return Closure|null
-     */
-    public function getDisplay()
-    {
-        return $this->display;
-    }
-
-    /**
-     * @param Closure|null $callback
-     *
-     * @return $this
-     */
-    public function onCreate(Closure $callback = null)
-    {
-        $this->create = $callback;
-
-        return $this;
-    }
-
-    /**
-     * @param Closure|null $callback
-     *
-     * @return $this
-     */
-    public function onEdit(Closure $callback = null)
-    {
-        $this->edit = $callback;
-
-        return $this;
-    }
-
-    /**
-     * @param Closure|null $callback
-     *
-     * @return $this
-     */
-    public function onCreateAndEdit(Closure $callback = null)
-    {
-        $this->onCreate($callback);
-        $this->onEdit($callback);
-
-        return $this;
-    }
-
-    /**
-     * @param Closure|null $callback
-     *
-     * @return $this
-     */
-    public function onDelete(Closure $callback = null)
-    {
-        $this->delete = $callback;
-
-        return $this;
-    }
-
-    /**
-     * @param Closure|null $callback
-     *
-     * @return $this
-     */
-    public function onDestroy(Closure $callback = null)
-    {
-        $this->destroy = $callback;
-
-        return $this;
-    }
-
-    /**
-     * @param Closure|null $callback
-     *
-     * @return $this
-     */
-    public function onRestore(Closure $callback = null)
-    {
-        $this->restore = $callback;
-
-        return $this;
-    }
-
-    /**
-     * @param Closure $callback
-     *
-     * @return $this
-     */
-    public function onDisplay(Closure $callback)
-    {
-        $this->display = $callback;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function isDisplayable()
@@ -361,6 +193,21 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->displayable = false;
 
         return $this;
+    }
+
+    /**
+     * @param string $action
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
+    public function can($action, Model $model)
+    {
+        if (! $this->checkAccess) {
+            return true;
+        }
+
+        return \Gate::allows($action, $model);
     }
 
     /**
@@ -410,6 +257,18 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param bool $deletable
+     *
+     * @return $this
+     */
+    public function setDeletable($deletable)
+    {
+        $this->deletable = (bool) $deletable;
+
+        return $this;
+    }
+
+    /**
      * @param Model $model
      *
      * @return bool
@@ -424,7 +283,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function disableDeleting()
     {
-        $this->deletable = false;
+        $this->setDeletable(false);
 
         return $this;
     }
@@ -478,21 +337,21 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return $this
+     * @return Closure|null
      */
-    public function enableAccessCheck()
+    public function getDisplay()
     {
-        $this->checkAccess = true;
-
-        return $this;
+        return $this->display;
     }
 
     /**
+     * @param Closure $callback
+     *
      * @return $this
      */
-    public function disableAccessCheck()
+    public function onDisplay(Closure $callback)
     {
-        $this->checkAccess = false;
+        $this->display = $callback;
 
         return $this;
     }
@@ -502,13 +361,16 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireDisplay()
     {
-        if (! is_callable($this->display)) {
+        if (! is_callable($this->getDisplay())) {
             return;
         }
 
-        $display = app()->call($this->display);
+        $display = $this->app->call($this->getDisplay());
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
+        }
+
+        if ($display instanceof Initializable) {
             $display->initialize();
         }
 
@@ -516,44 +378,88 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @return Closure|null
+     */
+    public function getCreate()
+    {
+        return $this->create;
+    }
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function onCreate(Closure $callback = null)
+    {
+        $this->create = $callback;
+
+        return $this;
+    }
+
+    /**
      * @return mixed|void
      */
     public function fireCreate()
     {
-        if (! is_callable($this->create)) {
+        if (! is_callable($this->getCreate())) {
             return;
         }
 
-        $form = app()->call($this->create);
+        $form = $this->app->call($this->getCreate());
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
-        }
-
-        if ($form instanceof Initializable) {
-            $form->initialize();
         }
 
         if ($form instanceof FormInterface) {
             $form->setAction($this->getStoreUrl());
         }
 
+        if ($form instanceof Initializable) {
+            $form->initialize();
+        }
+
         return $form;
     }
 
     /**
-     * @param $id
+     * @return Closure|null
+     */
+    public function getEdit()
+    {
+        return $this->edit;
+    }
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function onEdit(Closure $callback = null)
+    {
+        $this->edit = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param int|string $id
      *
      * @return mixed|void
      */
     public function fireEdit($id)
     {
-        if (! is_callable($this->edit)) {
+        if (! is_callable($this->getEdit())) {
             return;
         }
 
-        $form = app()->call($this->edit, ['id' => $id]);
+        $form = $this->app->call($this->getEdit(), ['id' => $id]);
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
+        }
+
+        if ($form instanceof FormInterface) {
+            $form->setAction($this->getUpdateUrl($id));
         }
 
         if ($form instanceof Initializable) {
@@ -561,7 +467,6 @@ class ModelConfiguration extends ModelConfigurationManager
         }
 
         if ($form instanceof FormInterface) {
-            $form->setAction($this->getUpdateUrl($id));
             $form->setId($id);
         }
 
@@ -569,41 +474,112 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function onCreateAndEdit(Closure $callback = null)
+    {
+        $this->onCreate($callback);
+        $this->onEdit($callback);
+
+        return $this;
+    }
+
+    /**
+     * @return Closure|null
+     */
+    public function getDelete()
+    {
+        return $this->delete;
+    }
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function onDelete(Closure $callback = null)
+    {
+        $this->delete = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param int|string $id
      *
      * @return mixed
      */
     public function fireDelete($id)
     {
         if (is_callable($this->getDelete())) {
-            return app()->call($this->getDelete(), [$id]);
+            return $this->app->call($this->getDelete(), [$id]);
         }
     }
 
     /**
-     * @param $id
+     * @return Closure|null
+     */
+    public function getDestroy()
+    {
+        return $this->destroy;
+    }
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function onDestroy(Closure $callback = null)
+    {
+        $this->destroy = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param int|string $id
      *
      * @return mixed
      */
     public function fireDestroy($id)
     {
         if (is_callable($this->getDestroy())) {
-            return app()->call($this->getDestroy(), [$id]);
+            return $this->app->call($this->getDestroy(), [$id]);
         }
     }
 
     /**
-     * @param $id
+     * @return Closure|null
+     */
+    public function getRestore()
+    {
+        return $this->restore;
+    }
+
+    /**
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function onRestore(Closure $callback = null)
+    {
+        $this->restore = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param int|string $id
      *
      * @return bool|mixed
      */
     public function fireRestore($id)
     {
         if (is_callable($this->getRestore())) {
-            return app()->call($this->getRestore(), [$id]);
+            return $this->app->call($this->getRestore(), [$id]);
         }
-
-        return $this->getRestore();
     }
 
     /**
@@ -611,8 +587,8 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function getMessageOnCreate()
     {
-        if (is_null($this->messageOnUpdate)) {
-            $this->messageOnUpdate = parent::getMessageOnCreate();
+        if (is_null($this->messageOnCreate)) {
+            $this->messageOnCreate = parent::getMessageOnCreate();
         }
 
         return $this->messageOnCreate;
@@ -620,10 +596,14 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param string $messageOnCreate
+     *
+     * @return $this
      */
     public function setMessageOnCreate($messageOnCreate)
     {
         $this->messageOnCreate = $messageOnCreate;
+
+        return $this;
     }
 
     /**
@@ -663,18 +643,6 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return string
-     */
-    public function getMessageOnDestroy()
-    {
-        if (is_null($this->messageOnDestroy)) {
-            $this->messageOnDestroy = parent::getMessageOnDestroy();
-        }
-
-        return $this->messageOnDestroy;
-    }
-
-    /**
      * @param string $messageOnDelete
      *
      * @return $this
@@ -684,6 +652,18 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->messageOnDelete = $messageOnDelete;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageOnDestroy()
+    {
+        if (is_null($this->messageOnDestroy)) {
+            $this->messageOnDestroy = parent::getMessageOnDestroy();
+        }
+
+        return $this->messageOnDestroy;
     }
 
     /**
@@ -720,42 +700,5 @@ class ModelConfiguration extends ModelConfigurationManager
         $this->messageOnRestore = $messageOnRestore;
 
         return $this;
-    }
-
-    /**
-     * @param string $controllerClass
-     *
-     * @return $this
-     */
-    public function setControllerClass($controllerClass)
-    {
-        $this->controllerClass = $controllerClass;
-
-        return $this;
-    }
-
-    /**
-     * @param ColumnEditableInterface $column
-     * @param $value
-     * @param $id
-     */
-    public function saveColumn(ColumnEditableInterface $column, $value, $id)
-    {
-        $repository = $this->getRepository();
-        $item = $repository->find($id);
-
-        if (is_null($item) || ! $this->isEditable($item)) {
-            abort(404);
-        }
-
-        $column->setModel($item);
-
-        if ($this->fireEvent('updating', true, $item) === false) {
-            return;
-        }
-
-        $column->save($value);
-
-        $this->fireEvent('updated', false, $item);
     }
 }

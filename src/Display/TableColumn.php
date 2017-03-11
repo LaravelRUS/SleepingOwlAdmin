@@ -4,17 +4,19 @@ namespace SleepingOwl\Admin\Display;
 
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Display\Column\OrderByClause;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 abstract class TableColumn implements ColumnInterface
 {
-    use HtmlAttributes, Assets;
+    use HtmlAttributes, Assets, Renderable;
 
     /**
      * Column header.
@@ -43,11 +45,6 @@ abstract class TableColumn implements ColumnInterface
      * @var string
      */
     protected $width = null;
-
-    /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view;
 
     /**
      * @var OrderByClauseInterface
@@ -95,38 +92,17 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param string $width
+     * @param int|string $width
      *
      * @return $this
      */
     public function setWidth($width)
     {
-        $this->width = $width;
-
-        return $this;
-    }
-
-    /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        if (is_null($this->view)) {
-            $reflect = new \ReflectionClass($this);
-            $this->view = 'column.'.strtolower($reflect->getShortName());
+        if (is_int($width)) {
+            $width = $width.'px';
         }
 
-        return $this->view;
-    }
-
-    /**
-     * @param string|\Illuminate\View\View $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
+        $this->width = $width;
 
         return $this;
     }
@@ -169,20 +145,11 @@ abstract class TableColumn implements ColumnInterface
         $this->model = $model;
         $append = $this->getAppends();
 
-        if (! is_null($append)) {
+        if ($append instanceof WithModel) {
             $append->setModel($model);
         }
 
         return $this;
-    }
-
-    /**
-     * Get related model configuration.
-     * @return ModelConfigurationInterface
-     */
-    protected function getModelConfiguration()
-    {
-        return app('sleeping_owl')->getModel(get_class($this->getModel()));
     }
 
     /**
@@ -221,6 +188,14 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
+     * @return OrderByClauseInterface
+     */
+    public function getOrderByClause()
+    {
+        return $this->orderByClause;
+    }
+
+    /**
      * Check if column is orderable.
      * @return bool
      */
@@ -231,15 +206,19 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * @param Builder $query
-     * @param $condition
+     * @param string $direction
+     *
+     * @return $this
      */
-    public function orderBy(Builder $query, $condition)
+    public function orderBy(Builder $query, $direction)
     {
         if (! $this->isOrderable()) {
             throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
         }
 
-        $this->orderByClause->modifyQuery($query, $condition);
+        $this->orderByClause->modifyQuery($query, $direction);
+
+        return $this;
     }
 
     /**
@@ -257,21 +236,13 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @return string
+     * Get related model configuration.
+     * @return ModelConfigurationInterface
      */
-    public function __toString()
+    protected function getModelConfiguration()
     {
-        return (string) $this->render();
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view(
-            $this->getView(),
-            $this->toArray()
+        return app('sleeping_owl')->getModel(
+            $this->getModel()
         );
     }
 }

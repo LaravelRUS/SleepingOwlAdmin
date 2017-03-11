@@ -9,15 +9,25 @@ class Password extends NamedFormElement
      */
     protected $allowEmpty = false;
 
-    public function save()
-    {
-        $value = $this->getValue();
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.password';
 
-        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists() and empty($value)) {
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
+    {
+        $value = $this->getValueFromModel();
+
+        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists and empty($value)) {
             return;
         }
 
-        parent::save();
+        parent::save($request);
     }
 
     /**
@@ -27,7 +37,7 @@ class Password extends NamedFormElement
     {
         $data = parent::getValidationRules();
 
-        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists()) {
+        if (! $this->isAllowedEmptyValue() and $this->getModel()->exists) {
             foreach ($data as $field => $rules) {
                 foreach ($rules as $i => $rule) {
                     if ($rule == 'required') {

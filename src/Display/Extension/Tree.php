@@ -7,11 +7,11 @@ use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 
 class Tree extends Extension implements Initializable, Renderable
 {
-    use HtmlAttributes;
+    use HtmlAttributes, \SleepingOwl\Admin\Traits\Renderable;
 
     /**
      * @var bool
@@ -84,7 +84,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\ColumnInterface[]
+     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
      */
     public function all()
     {
@@ -92,7 +92,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\ColumnInterface[]
+     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
      */
     public function allWithControl()
     {
@@ -118,26 +118,6 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param string|\Illuminate\View\View $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
      * Get the instance as an array.
      *
      * @return array
@@ -157,15 +137,5 @@ class Tree extends Extension implements Initializable, Renderable
         });
 
         $this->setHtmlAttribute('class', 'table table-striped');
-    }
-
-    /**
-     * Get the evaluated contents of the object.
-     *
-     * @return string
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
     }
 }

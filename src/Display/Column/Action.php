@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use SleepingOwl\Admin\Contracts\ActionInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 
 class Action extends NamedColumn implements ActionInterface
 {

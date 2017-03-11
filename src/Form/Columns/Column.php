@@ -20,6 +20,11 @@ class Column extends FormElements implements ColumnInterface
      */
     protected $size = 'col-md-';
 
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.column';
+
     public function initialize()
     {
         parent::initialize();

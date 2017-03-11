@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 
 class Custom extends TableColumn
@@ -61,18 +60,17 @@ class Custom extends TableColumn
     /**
      * Get value from callback.
      *
-     * @param Model $model
-     *
      * @return mixed
+     *
      * @throws \Exception
      */
-    protected function getValue(Model $model)
+    public function getModelValue()
     {
         if (! is_callable($callback = $this->getCallback())) {
             throw new \Exception('Invalid custom column callback');
         }
 
-        return call_user_func($callback, $model);
+        return call_user_func($callback, $this->getModel());
     }
 
     /**
@@ -82,7 +80,7 @@ class Custom extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'value'  => $this->getValue($this->getModel()),
+            'value'  => $this->getModelValue(),
         ];
     }
 }

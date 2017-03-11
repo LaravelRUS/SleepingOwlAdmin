@@ -10,6 +10,11 @@ class Textarea extends NamedFormElement
     protected $rows = 10;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.textarea';
+
+    /**
      * @return int
      */
     public function getRows()
@@ -40,10 +45,6 @@ class Textarea extends NamedFormElement
     public function toArray()
     {
         return parent::toArray() + [
-            'name'     => $this->getName(),
-            'label'    => $this->getLabel(),
-            'readonly' => $this->isReadonly(),
-            'value'    => $this->getValue(),
             'rows'     => $this->getRows(),
         ];
     }

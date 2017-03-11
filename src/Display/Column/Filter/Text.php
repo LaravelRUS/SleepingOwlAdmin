@@ -2,16 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
-use SleepingOwl\Admin\Contracts\NamedColumnInterface;
-
 class Text extends BaseColumnFilter
 {
     /**
      * @var string
      */
-    protected $view = 'text';
+    protected $view = 'column.filter.text';
 
     /**
      * @var string
@@ -21,10 +17,11 @@ class Text extends BaseColumnFilter
     public function initialize()
     {
         parent::initialize();
+
         $this->setHtmlAttribute('class', 'form-control column-filter');
         $this->setHtmlAttribute('data-type', 'text');
         $this->setHtmlAttribute('type', 'text');
-        $this->setHtmlAttribute('placeholder', $this->placeholder);
+        $this->setHtmlAttribute('placeholder', $this->getPlaceholder());
     }
 
     /**
@@ -45,40 +42,6 @@ class Text extends BaseColumnFilter
         $this->placeholder = $placeholder;
 
         return $this;
-    }
-
-    /**
-     * @param RepositoryInterface  $repository
-     * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $search
-     * @param array|string         $fullSearch
-     *
-     * @return void
-     */
-    public function apply(
-        RepositoryInterface $repository,
-        NamedColumnInterface $column,
-        Builder $query,
-        $search,
-        $fullSearch
-    ) {
-        if (empty($search)) {
-            return;
-        }
-
-        $name = $column->getName();
-
-        if ($repository->hasColumn($name)) {
-            $this->buildQuery($query, $name, $search);
-        } elseif (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $fieldName = array_pop($parts);
-            $relationName = implode('.', $parts);
-            $query->whereHas($relationName, function ($q) use ($search, $fieldName) {
-                $this->buildQuery($q, $fieldName, $search);
-            });
-        }
     }
 
     /**

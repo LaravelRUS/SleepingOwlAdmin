@@ -10,6 +10,11 @@ class Date extends DateTime
     protected $format = 'Y-m-d';
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.date';
+
+    /**
      * @return string
      */
     public function getPickerFormat()

@@ -3,12 +3,13 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 trait FormElements
 {
@@ -17,6 +18,9 @@ trait FormElements
      */
     protected $elements;
 
+    /**
+     * @return void
+     */
     public function initializeElements()
     {
         $this->getElements()->each(function ($element) {
@@ -114,14 +118,24 @@ trait FormElements
         return $this->getValidationLabelsForElements();
     }
 
-    public function save()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
     {
-        $this->saveElements();
+        $this->saveElements($request);
     }
 
-    public function afterSave()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function afterSave(\Illuminate\Http\Request $request)
     {
-        $this->afterSaveElements();
+        $this->afterSaveElements($request);
     }
 
     /**
@@ -134,11 +148,7 @@ trait FormElements
         $this->getElements()->each(function ($element) use ($model) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof FormElementInterface) {
-                $element->setModel($model);
-            }
-
-            if ($element instanceof ColumnInterface) {
+            if ($element instanceof WithModel) {
                 $element->setModel($model);
             }
         });
@@ -156,7 +166,7 @@ trait FormElements
         $this->getElements()->onlyActive()->each(function ($element) use (&$rules) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof FormElementInterface) {
+            if ($element instanceof Validable) {
                 $rules += $element->getValidationRules();
             }
         });
@@ -174,7 +184,7 @@ trait FormElements
         $this->getElements()->onlyActive()->each(function ($element) use (&$messages) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof FormElementInterface) {
+            if ($element instanceof Validable) {
                 $messages += $element->getValidationMessages();
             }
         });
@@ -192,7 +202,7 @@ trait FormElements
         $this->getElements()->onlyActive()->each(function ($element) use (&$labels) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof NamedFormElement) {
+            if ($element instanceof Validable) {
                 $labels += $element->getValidationLabels();
             }
         });
@@ -200,24 +210,34 @@ trait FormElements
         return $labels;
     }
 
-    protected function saveElements()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    protected function saveElements(\Illuminate\Http\Request $request)
     {
-        $this->getElements()->onlyActive()->each(function ($element) {
+        $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
-                $element->save();
+                $element->save($request);
             }
         });
     }
 
-    protected function afterSaveElements()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    protected function afterSaveElements(\Illuminate\Http\Request $request)
     {
-        $this->getElements()->onlyActive()->each(function ($element) {
+        $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
-                $element->afterSave();
+                $element->afterSave($request);
             }
         });
     }

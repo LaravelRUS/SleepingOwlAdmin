@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 
 class DateRange extends Date
 {
@@ -21,6 +20,11 @@ class DateRange extends Date
      * @var string
      */
     protected $defaultTo;
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.daterange';
 
     /**
      * @return string
@@ -75,17 +79,17 @@ class DateRange extends Date
     }
 
     /**
-     * @param Model $model
-     * @param string $attribute
      * @param mixed $value
+     *
+     * @return void
      */
-    public function setValue(Model $model, $attribute, $value)
+    public function setModelAttribute($value)
     {
         $value = ! empty($value) ? array_map(function ($date) {
             return Carbon::createFromFormat($this->getPickerFormat(), $date);
         }, explode('::', $value)) : null;
 
-        $model->setAttribute($attribute, $value);
+        parent::setModelAttribute($value);
     }
 
     /**

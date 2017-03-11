@@ -12,11 +12,16 @@ class Timestamp extends DateTime
     protected $seconds = true;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.timestamp';
+
+    /**
      * @return $this|NamedFormElement|mixed|null|string
      */
-    public function getValue()
+    public function getValueFromModel()
     {
-        $value = parent::getValue();
+        $value = parent::getValueFromModel();
 
         if (empty($value)) {
             $value = Carbon::now()->format($this->getFormat());

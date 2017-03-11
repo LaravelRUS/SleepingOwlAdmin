@@ -1,17 +1,18 @@
 language: php
 
 php:
-  - 5.5
   - 5.6
   - 7.0
   - nightly
-  - hhvm
 
 allow_failures:
   - php: nightly
 
 before_script:
   - travis_retry composer self-update
+
+script:
+  - vendor/bin/phpunit
 
 install:
   - travis_retry composer install --no-interaction --prefer-dist

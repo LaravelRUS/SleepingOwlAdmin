@@ -13,9 +13,24 @@ class Image extends File
     protected static $route = 'image';
 
     /**
+     * @var \Closure
+     */
+    protected $saveCallback;
+
+    /**
+     * @var array
+     */
+    protected $uploadValidationRules = ['required', 'image'];
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.image';
+
+    /**
      * @param Validator $validator
      */
-    protected static function validate(Validator $validator)
+    public function customValidation(Validator $validator)
     {
         $validator->after(function ($validator) {
             /** @var \Illuminate\Http\UploadedFile $file */
@@ -30,28 +45,53 @@ class Image extends File
     }
 
     /**
+     * Set.
+     * @param \Closure $callable
+     */
+    public function setSaveCallback(\Closure $callable)
+    {
+        $this->saveCallback = $callable;
+    }
+
+    /**
+     * Return save callback.
+     * @return \Closure
+     */
+    public function getSaveCallback()
+    {
+        return $this->saveCallback;
+    }
+
+    /**
      * @param UploadedFile $file
      * @param string $path
      * @param string $filename
      * @param array $settings
+     * @return \Closure|File|array
      */
-    protected static function saveFile(UploadedFile $file, $path, $filename, array $settings)
+    public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
-        if (
-            class_exists('Intervention\Image\Facades\Image')
-            and
-            (bool) getimagesize($file->getRealPath())
-        ) {
+        if ($this->getSaveCallback()) {
+            $callable = $this->getSaveCallback();
+
+            return call_user_func($callable, [$file, $path, $filename, $settings]);
+        }
+
+        if (class_exists('Intervention\Image\Facades\Image') and (bool) getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {
                 call_user_func_array([$image, $method], $args);
             }
 
-            return $image->save($path.'/'.$filename);
+            $value = $path.'/'.$filename;
+
+            $image->save($value);
+
+            return ['path' => asset($value), 'value' => $value];
         }
 
-        $file->move($path, $filename);
+        return parent::saveFile($file, $path, $filename, $settings);
     }
 
     /**
@@ -59,23 +99,8 @@ class Image extends File
      *
      * @return string
      */
-    protected static function defaultUploadPath(UploadedFile $file)
+    public function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.imagesUploadDirectory', 'images/uploads');
     }
-
-    /**
-     * @return array
-     */
-    protected static function defaultUploadValidationRules()
-    {
-        return [
-            'file' => 'image',
-        ];
-    }
-
-    /**
-     * @var array
-     */
-    protected $uploadValidationRules = ['required', 'image'];
 }

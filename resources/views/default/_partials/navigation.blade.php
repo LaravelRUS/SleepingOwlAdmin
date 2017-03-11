@@ -1,14 +1,14 @@
 <section class="sidebar">
 
-	@yield('sidebar.top')
+	@stack('sidebar.top')
 
 	<ul class="sidebar-menu">
-		@yield('sidebar.ul.top')
+		@stack('sidebar.ul.top')
 
-		{!! app('sleeping_owl.navigation')->render() !!}
+		{!! $template->renderNavigation() !!}
 
-		@yield('sidebar.ul.bottom')
+		@stack('sidebar.ul.bottom')
 	</ul>
 
-	@yield('sidebar.bottom')
+	@stack('sidebar.bottom')
 </section>

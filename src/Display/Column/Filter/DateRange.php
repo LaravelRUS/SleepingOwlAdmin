@@ -7,7 +7,7 @@ class DateRange extends Date
     /**
      * @var string
      */
-    protected $view = 'daterange';
+    protected $view = 'column.filter.daterange';
 
     /**
      * Initialize column filter.
@@ -32,12 +32,12 @@ class DateRange extends Date
      *
      * @return string
      */
-    public function parserValue($date)
+    public function parseValue($date)
     {
-        $dates = explode('::', $date);
+        $dates = explode('::', $date, 2);
 
         foreach ($dates as $i => $date) {
-            $dates[$i] = parent::parserValue($date);
+            $dates[$i] = parent::parseValue($date);
         }
 
         return $dates;

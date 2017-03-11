@@ -2,11 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Http\JsonResponse;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class DependentSelect extends Select implements WithRoutesInterface
 {
@@ -18,56 +15,10 @@ class DependentSelect extends Select implements WithRoutesInterface
         $routeName = 'admin.form.element.dependent-select';
 
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/dependent-select/{field}/{id?}', ['as' => $routeName, function (
-                Request $request,
-                ModelConfigurationInterface $model,
-                $field,
-                $id = null
-            ) {
-                if (! is_null($id)) {
-                    $item = $model->getRepository()->find($id);
-                    if (is_null($item) || ! $model->isEditable($item)) {
-                        return new JsonResponse([
-                            'message' => trans('lang.message.access_denied'),
-                        ], 403);
-                    }
-
-                    $form = $model->fireEdit($id);
-                } else {
-                    if (! $model->isCreatable()) {
-                        return new JsonResponse([
-                            'message' => trans('lang.message.access_denied'),
-                        ], 403);
-                    }
-
-                    $form = $model->fireCreate();
-                }
-
-                if (is_null($element = $form->getElement($field))) {
-                    return new JsonResponse([
-                        'message' => 'Element not found',
-                    ], 404);
-                }
-
-                $element->setAjaxParameters(
-                    $request->input('depdrop_all_params', [])
-                );
-
-                $options = $element->getOptions();
-
-                if ($element->isNullable()) {
-                    $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
-                }
-
-                $options = array_except($options, $element->exclude);
-
-                return new JsonResponse([
-                    'output' => collect($options)->map(function ($value, $key) {
-                        return ['id' => $key, 'name' => $value];
-                    }),
-                    'selected' => $element->getValue(),
-                ]);
-            }]);
+            $router->post('{adminModel}/dependent-select/{field}/{id?}', [
+                'as' => $routeName,
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect',
+            ]);
         }
     }
 
@@ -85,6 +36,11 @@ class DependentSelect extends Select implements WithRoutesInterface
      * @var array
      */
     protected $params;
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.dependentselect';
 
     /**
      * DependentSelect constructor.
@@ -165,6 +121,18 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
+     * @param array $params
+     *
+     * @return $this
+     */
+    public function setAjaxParameters(array $params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -189,22 +157,10 @@ class DependentSelect extends Select implements WithRoutesInterface
             'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
             'options' => $this->getOptions(),
-            'value' => $this->getValue(),
+            'value' => $this->getValueFromModel(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
             'attributes' => $attributes,
         ];
-    }
-
-    /**
-     * @param array $params
-     *
-     * @return $this
-     */
-    protected function setAjaxParameters(array $params)
-    {
-        $this->params = $params;
-
-        return $this;
     }
 }

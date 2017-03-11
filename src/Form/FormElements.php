@@ -2,12 +2,18 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 class FormElements extends FormElement implements ElementsInterface
 {
     use \SleepingOwl\Admin\Traits\FormElements;
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.formelements';
 
     /**
      * @param array $elements
@@ -47,18 +53,28 @@ class FormElements extends FormElement implements ElementsInterface
         );
     }
 
-    public function save()
+    /**
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function save(Request $request)
     {
-        parent::save();
+        parent::save($request);
 
-        $this->saveElements();
+        $this->saveElements($request);
     }
 
-    public function afterSave()
+    /**
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function afterSave(Request $request)
     {
-        parent::afterSave();
+        parent::afterSave($request);
 
-        $this->afterSaveElements();
+        $this->afterSaveElements($request);
     }
 
     /**

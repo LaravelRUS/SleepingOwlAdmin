@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 
@@ -27,6 +26,11 @@ class Wysiwyg extends NamedFormElement
      * @var bool
      */
     protected $filterValue = true;
+
+    /**
+     * @var string
+     */
+    protected $view = 'form.element.wysiwyg';
 
     /**
      * @param string      $path
@@ -69,6 +73,14 @@ class Wysiwyg extends NamedFormElement
         $this->filterValue = false;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canFilterValue()
+    {
+        return $this->filterValue;
     }
 
     /**
@@ -141,32 +153,43 @@ class Wysiwyg extends NamedFormElement
     public function toArray()
     {
         return parent::toArray() + [
-            'name'       => $this->getName(),
-            'label'      => $this->getLabel(),
-            'value'      => $this->getValue(),
             'parameters' => json_encode($this->getParameters()),
             'editor'     => $this->getEditor(),
         ];
     }
 
     /**
-     * @param Model  $model
-     * @param string $attribute
      * @param mixed  $value
+     *
+     * @return void
      */
-    protected function setValue(Model $model, $attribute, $value)
+    public function setModelAttribute($value)
     {
-        if ($this->filterValue) {
-            $filteredValue = app('sleeping_owl.wysiwyg')->applyFilter($this->getEditor(), $value);
+        if (! empty($this->filteredFieldKey)) {
+            parent::setModelAttribute($value);
+
+            $this->setModelAttributeKey($this->filteredFieldKey);
+            parent::setModelAttribute(
+                $this->filterValue($value)
+            );
         } else {
-            $filteredValue = $value;
+            parent::setModelAttribute(
+                $this->filterValue($value)
+            );
+        }
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function filterValue($value)
+    {
+        if ($this->canFilterValue()) {
+            return app('sleeping_owl.wysiwyg')->applyFilter($this->getEditor(), $value);
         }
 
-        if (! empty($this->filteredFieldKey)) {
-            parent::setValue($model, $attribute, $value);
-            parent::setValue($model, $this->filteredFieldKey, $filteredValue);
-        } else {
-            parent::setValue($model, $attribute, $filteredValue);
-        }
+        return $value;
     }
 }

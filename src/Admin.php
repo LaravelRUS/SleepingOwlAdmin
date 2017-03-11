@@ -3,20 +3,27 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
+use Illuminate\Filesystem\Filesystem;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Model\ModelCollection;
+use Illuminate\Foundation\ProviderRepository;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\TemplateInterface;
+use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
-class Admin
+class Admin implements AdminInterface
 {
     /**
-     * @var ModelConfigurationInterface[]
+     * @var ModelConfigurationInterface[]|ModelCollection
      */
-    protected $models = [];
+    protected $models;
 
     /**
      * @var TemplateInterface
@@ -24,18 +31,60 @@ class Admin
     protected $template;
 
     /**
-     * @var Page[]
+     * @var Application
      */
-    protected $menuItems = [];
+    protected $app;
 
     /**
-     * @return string[]
+     * @var array
      */
-    public function modelAliases()
+    protected $missedSections = [];
+
+    /**
+     * Admin constructor.
+     *
+     * @param Application $application
+     */
+    public function __construct(Application $application)
     {
-        return array_map(function (ModelConfigurationInterface $model) {
-            return $model->getAlias();
-        }, $this->getModels());
+        $this->app = $application;
+        $this->models = new ModelCollection();
+
+        $this->registerBaseServiceProviders();
+        $this->registerCoreContainerAliases();
+    }
+
+    /**
+     * @param TemplateInterface $template
+     */
+    public function setTemplate(TemplateInterface $template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * Initialize class.
+     */
+    public function initialize()
+    {
+        $this->template->initialize();
+    }
+
+    /**
+     * @param string $class
+     * @param Closure|null $callback
+     *
+     * @return $this
+     */
+    public function registerModel($class, Closure $callback = null)
+    {
+        $this->register($model = new ModelConfiguration($this->app, $class));
+
+        if (is_callable($callback)) {
+            call_user_func($callback, $model);
+        }
+
+        return $this;
     }
 
     /**
@@ -55,24 +104,46 @@ class Admin
     }
 
     /**
-     * @param string $class
-     * @param Closure|null $callback
+     * @param array $sections
      *
      * @return $this
      */
-    public function registerModel($class, Closure $callback = null)
+    public function registerSections(array $sections)
     {
-        $this->register($model = new ModelConfiguration($class));
-
-        if (is_callable($callback)) {
-            call_user_func($callback, $model);
+        foreach ($sections as $model => $section) {
+            if (class_exists($section)) {
+                $this->register(new $section($this->app, $model));
+            } else {
+                $this->missedSections[$model] = $section;
+            }
         }
 
         return $this;
     }
 
     /**
+     * @return array
+     */
+    public function getMissedSections()
+    {
+        return $this->missedSections;
+    }
+
+    /**
      * @param string $class
+     * @param ModelConfigurationInterface $model
+     *
+     * @return $this
+     */
+    public function setModel($class, ModelConfigurationInterface $model)
+    {
+        $this->models->put($class, $model);
+
+        return $this;
+    }
+
+    /**
+     * @param string|Model $class
      * @return ModelConfigurationInterface
      */
     public function getModel($class)
@@ -85,11 +156,11 @@ class Admin
             $this->registerModel($class);
         }
 
-        return array_get($this->models, $class);
+        return $this->models->get($class);
     }
 
     /**
-     * @return ModelConfigurationInterface[]
+     * @return ModelConfigurationInterface[]|ModelCollection
      */
     public function getModels()
     {
@@ -103,16 +174,23 @@ class Admin
      */
     public function hasModel($class)
     {
-        return array_key_exists($class, $this->models);
+        return $this->models->has($class);
     }
 
     /**
-     * @param string             $class
-     * @param ModelConfigurationInterface $model
+     * @return NavigationInterface
      */
-    public function setModel($class, ModelConfigurationInterface $model)
+    public function navigation()
     {
-        $this->models[$class] = $model;
+        return $this->template()->navigation();
+    }
+
+    /**
+     * @return MetaInterface
+     */
+    public function meta()
+    {
+        return $this->template()->meta();
     }
 
     /**
@@ -120,11 +198,6 @@ class Admin
      */
     public function template()
     {
-        if (is_null($this->template)) {
-            $templateClass = config('sleeping_owl.template');
-            $this->template = app($templateClass);
-        }
-
         return $this->template;
     }
 
@@ -141,10 +214,12 @@ class Admin
 
     /**
      * @return Navigation
+     *
+     * @deprecated
      */
     public function getNavigation()
     {
-        return app('sleeping_owl.navigation');
+        return $this->navigation();
     }
 
     /**
@@ -155,8 +230,55 @@ class Admin
      */
     public function view($content, $title = null)
     {
-        $controller = app(AdminController::class);
+        return $this->app[AdminController::class]->renderContent($content, $title);
+    }
 
-        return $controller->renderContent($content, $title);
+    /**
+     * Register all of the base service providers.
+     *
+     * @return void
+     */
+    protected function registerBaseServiceProviders()
+    {
+        $providers = [
+            \SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
+            \Collective\Html\HtmlServiceProvider::class,
+            \SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider::class,
+            \SleepingOwl\Admin\Providers\AdminServiceProvider::class,
+        ];
+
+        /* Workaround to allow use ServiceProvider-based configurations in old fashion */
+        if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
+            $providers[] = $this->app->getNamespace().'Providers\\AdminSectionsServiceProvider';
+        }
+
+        $manifestPath = $this->app->bootstrapPath().'/cache/sleepingowladmin-services.php';
+
+        (new ProviderRepository($this->app, new Filesystem(), $manifestPath))->load($providers);
+    }
+
+    /**
+     * Register the core class aliases in the container.
+     *
+     * @return void
+     */
+    protected function registerCoreContainerAliases()
+    {
+        $aliases = [
+            'sleeping_owl' => ['SleepingOwl\Admin\Admin', 'SleepingOwl\Admin\Contracts\AdminInterface'],
+            'sleeping_owl.template' => ['SleepingOwl\Admin\Contracts\Template\TemplateInterface'],
+            'sleeping_owl.breadcrumbs' => ['SleepingOwl\Admin\Contracts\Template\Breadcrumbs'],
+            'sleeping_owl.widgets' => ['SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface', 'SleepingOwl\Admin\Widgets\WidgetsRegistry'],
+            'sleeping_owl.message' => ['SleepingOwl\Admin\Widgets\Messages\MessageStack'],
+            'sleeping_owl.navigation' => ['SleepingOwl\Admin\Navigation', 'SleepingOwl\Admin\Contracts\Navigation\NavigationInterface'],
+            'sleeping_owl.wysiwyg' => ['SleepingOwl\Admin\Wysiwyg\Manager', 'SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygMangerInterface'],
+            'sleeping_owl.meta' => ['assets.meta', 'SleepingOwl\Admin\Contracts\Template\MetaInterface', 'SleepingOwl\Admin\Templates\Meta'],
+        ];
+
+        foreach ($aliases as $key => $aliases) {
+            foreach ($aliases as $alias) {
+                $this->app->alias($key, $alias);
+            }
+        }
     }
 }

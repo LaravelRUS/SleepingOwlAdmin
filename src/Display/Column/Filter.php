@@ -22,6 +22,11 @@ class Filter extends NamedColumn
     protected $orderable = false;
 
     /**
+     * @var string
+     */
+    protected $view = 'column.filter';
+
+    /**
      * @return string
      */
     public function getRelatedModel()

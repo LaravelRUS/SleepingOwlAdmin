@@ -5,12 +5,13 @@ namespace SleepingOwl\Admin\Display;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
 
 class ControlLink implements ControlButtonInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Renderable;
 
     /**
      * @var Closure
@@ -58,8 +59,6 @@ class ControlLink implements ControlButtonInterface
     protected $condition;
 
     /**
-     * ControlButton constructor.
-     *
      * @param Closure $url
      * @param string $text
      * @param int $position
@@ -169,14 +168,6 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
-     * @return View|string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
      * @param string $text
      *
      * @return $this
@@ -221,6 +212,14 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
+     * @return Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -229,30 +228,11 @@ class ControlLink implements ControlButtonInterface
     {
         return [
             'attributes' => $this->getConditionAttributes($this->model)->htmlAttributesToString(),
-            'url' => $this->getUrl($this->model),
+            'url' => $this->getUrl($this->getModel()),
             'position' => $this->getPosition(),
             'text' => $this->text,
             'icon' => $this->getIcon(),
             'hideText' => $this->hideText,
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view(
-            $this->getView(),
-            $this->toArray()
-        )->render();
     }
 }

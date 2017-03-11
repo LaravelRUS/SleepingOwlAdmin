@@ -3,24 +3,22 @@
 namespace SleepingOwl\Admin\Form;
 
 use Closure;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Contracts\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets, VisibleCondition;
+    use Assets, VisibleCondition, Renderable;
 
     /**
-     * @var \SleepingOwl\Admin\Contracts\TemplateInterface
+     * @var TemplateInterface
      */
     protected $template;
-
-    /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view;
 
     /**
      * @var Model
@@ -38,9 +36,19 @@ abstract class FormElement implements FormElementInterface
     protected $validationMessages = [];
 
     /**
-     * @var bool
+     * @var bool|callable
      */
     protected $readonly = false;
+
+    /**
+     * @var bool|callable
+     */
+    protected $valueSkipped = false;
+
+    /**
+     * @var mixed
+     */
+    protected $value;
 
     public function __construct()
     {
@@ -146,31 +154,6 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return string|\Illuminate\View\View
-     */
-    public function getView()
-    {
-        if (is_null($this->view)) {
-            $name = (new \ReflectionClass($this))->getShortName();
-            $this->view = 'form.element.'.strtolower($name);
-        }
-
-        return $this->view;
-    }
-
-    /**
-     * @param \Illuminate\View\View|string $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
      * @return Model
      */
     public function getModel()
@@ -203,6 +186,30 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isValueSkipped()
+    {
+        if (is_callable($this->valueSkipped)) {
+            return (bool) call_user_func($this->valueSkipped, $this->getModel());
+        }
+
+        return (bool) $this->valueSkipped;
+    }
+
+    /**
+     * @param Closure|bool $valueSkipped
+     *
+     * @return $this
+     */
+    public function setValueSkipped($valueSkipped)
+    {
+        $this->valueSkipped = $valueSkipped;
+
+        return $this;
+    }
+
+    /**
      * @param Closure|bool $readonly
      *
      * @return $this
@@ -219,13 +226,36 @@ abstract class FormElement implements FormElementInterface
      */
     public function getValue()
     {
+        return $this->value;
     }
 
-    public function save()
+    /**
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function save(Request $request)
     {
     }
 
-    public function afterSave()
+    /**
+     * @param Request $request
+     *
+     * @return void
+     */
+    public function afterSave(Request $request)
     {
     }
 
@@ -239,21 +269,5 @@ abstract class FormElement implements FormElementInterface
             'readonly' => $this->isReadonly(),
             'model' => $this->getModel(),
         ];
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view($this->getView(), $this->toArray())->render();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 }

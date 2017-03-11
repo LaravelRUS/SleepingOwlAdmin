@@ -5,8 +5,6 @@
         @endforeach
     </colgroup>
 
-    @yield('table.header')
-
     <thead>
     <tr>
         @foreach ($columns as $column)
@@ -16,6 +14,8 @@
         @endforeach
     </tr>
     </thead>
+
+    @yield('table.header')
     <tbody>
     @foreach ($collection as $model)
         <tr>

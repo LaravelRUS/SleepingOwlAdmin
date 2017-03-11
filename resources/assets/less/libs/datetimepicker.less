@@ -1,0 +1,21 @@
+@import "../../../../node_modules/eonasdan-bootstrap-datetimepicker/src/less/_bootstrap-datetimepicker";
+@bs-datetimepicker-border-radius: @input-radius;
+
+.bootstrap-datetimepicker-widget {
+  &.dropdown-menu {
+    padding: 0;
+    border-radius: @input-radius;
+    border-color:  @input-border-focus;
+  }
+
+  .datepicker {
+    table {
+      tr {
+        th {
+          border-radius: @input-radius;
+        }
+      }
+    }
+  }
+}
+

@@ -1,7 +1,7 @@
 Admin.Modules.add('display.datatables', () => {
-    $.fn.dataTable.ext.errMode = () => {
+    $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
-            i18next.t('lang.table.error')
+            dt.jqXHR.responseJSON.message || i18next.t('lang.table.error')
         )
     };
 
@@ -12,7 +12,7 @@ Admin.Modules.add('display.datatables', () => {
     }
 
     function iterateColumnFilters(datatableId, callback) {
-        $('[data-datatables-id="' + datatableId + '"] .column-filter[data-type]').each((i, subitem) => {
+        $(`[data-datatables-id="${datatableId}"] .column-filter[data-type]`).each((i, subitem) => {
             let $element = $(subitem)
 
             callback(
@@ -175,8 +175,20 @@ window.columnFilters = {
         let $input = $(input);
 
         $input.on('change', () => {
-            let val = $input.val() ? $input.find(':selected').text() : '';
-            column.search(val).draw()
+            let selected = [];
+            $input.find(':selected').each((i, e) => {
+                let $option = $(e);
+
+                if ($option.val().length) {
+                    selected.push($option.text());
+                }
+            })
+
+            if (serverSide) {
+                column.search(selected.join(',')).draw()
+            } else {
+                column.search(selected.join('|'), true, false, true).draw()
+            }
         });
     },
     text (input, table, column, index, serverSide) {

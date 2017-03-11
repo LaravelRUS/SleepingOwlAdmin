@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
+use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
@@ -100,17 +101,26 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     }
 
     /**
-     * Save form item.
+     * @param \Illuminate\Http\Request $request
      *
-     * @param mixed $value
+     * @return void
      */
-    public function save($value)
+    public function save(\Illuminate\Http\Request $request)
     {
-        if (is_array($value)) {
-            $value = array_shift($value);
-        }
+        $form = new FormDefault([
+            new \SleepingOwl\Admin\Form\Element\Checkbox(
+                $this->getName()
+            ),
+        ]);
 
-        $this->getModel()->setAttribute($this->getName(), (bool) $value);
-        $this->getModel()->save();
+        $model = $this->getModel();
+
+        $request->offsetSet($this->getName(), (bool) $request->input('value.0', false));
+
+        $form->setModelClass(get_class($model));
+        $form->initialize();
+        $form->setId($model->getKey());
+
+        $form->saveForm($request);
     }
 }

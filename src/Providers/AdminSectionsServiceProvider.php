@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Auth\Access\Gate;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
@@ -20,17 +21,11 @@ class AdminSectionsServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the service provider.
-     *
      * @param \SleepingOwl\Admin\Admin $admin
      */
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
-        foreach ($this->sections as $model => $section) {
-            if (class_exists($section)) {
-                $admin->register(new $section($model));
-            }
-        }
+        $admin->registerSections($this->sections());
     }
 
     /**
@@ -41,5 +36,33 @@ class AdminSectionsServiceProvider extends ServiceProvider
     public function register()
     {
         // TODO: Implement register() method.
+    }
+
+    /**
+     * @param string|null $namespace
+     *
+     * @return array
+     */
+    public function policies($namespace = null)
+    {
+        if (is_null($namespace)) {
+            $namespace = config('sleeping_owl.policies_namespace', '\\App\\Policies\\');
+        }
+        $policies = [];
+        foreach ($this->sections as $model => $section) {
+            $policies[$section] = $namespace.class_basename($section).'SectionModelPolicy';
+        }
+
+        return $policies;
+    }
+
+    /**
+     * @param string|null $namespace
+     */
+    public function registerPolicies($namespace = null)
+    {
+        foreach ($this->policies($namespace) as $section => $policy) {
+            $this->app[Gate::class]->policy($section, $policy);
+        }
     }
 }

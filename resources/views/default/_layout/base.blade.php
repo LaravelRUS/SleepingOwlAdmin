@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{!!
-		Meta::setTitle(AdminTemplate::makeTitle($title))
-			->addMeta(['charset' => 'utf-8'], 'meta::charset')
-			->addMeta(['content' => csrf_token(), 'name' => 'csrf-token'])
-			->addMeta(['content' => 'width=device-width, initial-scale=1', 'name' => 'viewport'])
-			->addMeta(['content' => 'IE=edge', 'http-equiv' => 'X-UA-Compatible'])
-			->render()
-	!!}
+	{!! $template->renderMeta($title) !!}
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -21,7 +14,7 @@
 <body class="skin-blue sidebar-mini">
 	@yield('content')
 
-	{!! Meta::renderScripts(true) !!}
+	{!! $template->meta()->renderScripts(true) !!}
 	@stack('footer-scripts')
 </body>
 </html>

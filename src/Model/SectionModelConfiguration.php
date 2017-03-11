@@ -3,34 +3,12 @@
 namespace SleepingOwl\Admin\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
-    /**
-     * @var array
-     */
-    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
-
-    /**
-     * @param string $redirect
-     * @return void
-     */
-    public function setRedirect($redirect)
-    {
-        $this->redirect = $redirect;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRedirect()
-    {
-        return collect($this->redirect);
-    }
-
     /**
      * @return bool
      */
@@ -58,7 +36,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $display = app()->call([$this, 'onDisplay']);
+        $display = $this->app->call([$this, 'onDisplay']);
 
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
@@ -77,7 +55,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $form = app()->call([$this, 'onCreate']);
+        $form = $this->app->call([$this, 'onCreate']);
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -104,7 +82,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $form = app()->call([$this, 'onEdit'], ['id' => $id]);
+        $form = $this->app->call([$this, 'onEdit'], ['id' => $id]);
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -129,7 +107,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireDelete($id)
     {
         if (method_exists($this, 'onDelete')) {
-            return app()->call([$this, 'onDelete'], ['id' => $id]);
+            return $this->app->call([$this, 'onDelete'], ['id' => $id]);
         }
     }
 
@@ -141,7 +119,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireDestroy($id)
     {
         if (method_exists($this, 'onDestroy')) {
-            return app()->call([$this, 'onDestroy'], ['id' => $id]);
+            return $this->app->call([$this, 'onDestroy'], ['id' => $id]);
         }
     }
 
@@ -153,7 +131,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function fireRestore($id)
     {
         if (method_exists($this, 'onRestore')) {
-            return app()->call([$this, 'onRestore'], ['id' => $id]);
+            return $this->app->call([$this, 'onRestore'], ['id' => $id]);
         }
     }
 }

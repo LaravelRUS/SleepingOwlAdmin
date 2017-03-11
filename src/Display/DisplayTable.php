@@ -5,12 +5,10 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\ColumnInterface;
 use SleepingOwl\Admin\Display\Extension\Columns;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
-use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 /**
  * Class DisplayTable.
@@ -182,14 +180,7 @@ class DisplayTable extends Display
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
 
-        $params['extensions'] = $this->getExtensions()
-            ->filter(function (DisplayExtensionInterface $ext) {
-                return $ext instanceof Renderable;
-            })
-            ->sortBy(function (DisplayExtensionInterface $extension) {
-                return $extension->getOrder();
-            });
-
+        $params['extensions'] = $this->getExtensions()->renderable()->sortByOrder();
         $params['newEntryButtonText'] = $this->getNewEntryButtonText();
 
         return $params;
@@ -212,7 +203,6 @@ class DisplayTable extends Display
         $query = $this->getRepository()->getQuery();
 
         $this->modifyQuery($query);
-        $this->applyOrders($query);
 
         return $this->collection = $this->usePagination()
             ? $query->paginate($this->paginate, ['*'], $this->pageName)->appends(request()->except($this->pageName))
@@ -220,43 +210,10 @@ class DisplayTable extends Display
     }
 
     /**
-     * Apply orders to the query.
-     *
-     * @param $query
-     */
-    protected function applyOrders(Builder $query)
-    {
-        $orders = Request::input('order', []);
-
-        $columns = $this->getColumns()->all();
-
-        if (! is_int(key($orders))) {
-            $orders = [$orders];
-        }
-
-        foreach ($orders as $order) {
-            $columnIndex = array_get($order, 'column');
-            $direction = array_get($order, 'dir', 'asc');
-
-            if (! $columnIndex && $columnIndex !== '0') {
-                continue;
-            }
-
-            $column = $columns->get($columnIndex);
-
-            if ($column instanceof ColumnInterface && $column->isOrderable()) {
-                $column->orderBy($query, $direction);
-            }
-        }
-    }
-
-    /**
      * @param \Illuminate\Database\Eloquent\Builder|Builder $query
      */
     protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $this->extensions->each(function (DisplayExtensionInterface $extension) use ($query) {
-            $extension->modifyQuery($query);
-        });
+        $this->extensions->modifyQuery($query);
     }
 }

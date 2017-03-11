@@ -2,11 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Support\Collection;
+use Request;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Placable;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -48,7 +49,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\ActionInterface[]
+     * @return ColumnFilterInterface[]
      */
     public function all()
     {
@@ -138,6 +139,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
             'filters' => $this->columnFilters,
             'attributes' => $this->htmlAttributesToString(),
             'tag' => $this->getPlacement() == 'table.header' ? 'thead' : 'tfoot',
+            'displayClass' => get_class($this->getDisplay()),
         ];
     }
 
@@ -150,19 +152,75 @@ class ColumnFilters extends Extension implements Initializable, Placable
             return;
         }
 
+        $this->validNumberOfFilters();
+
         foreach ($this->all() as $filter) {
             if ($filter instanceof Initializable) {
                 $filter->initialize();
             }
         }
 
+        $this->validNumberOfFilters();
+        $this->prepareView();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $search = Request::input('columns', []);
+
+        $display = $this->getDisplay();
+
+        if (! $display->getExtensions()->has('columns')) {
+            return;
+        }
+
+        $columns = $display->getColumns()->all();
+
+        if (! is_int(key($search))) {
+            $search = [$search];
+        }
+
+        foreach ($search as $index => $columnData) {
+            $column = $columns->get($index);
+            $columnFilter = array_get($this->all(), $index);
+
+            if ($column && $column instanceof NamedColumnInterface && $columnFilter) {
+                $columnFilter->apply(
+                    $column,
+                    $query,
+                    array_get($columnData, 'search.value'),
+                    array_get($columnData, 'search')
+                );
+            }
+        }
+    }
+
+    protected function validNumberOfFilters()
+    {
+        $display = $this->getDisplay();
+
+        if ($display->getExtensions()->has('columns')) {
+            $totalColumns = count($display->getColumns()->all());
+            $totalFilters = count($this->all());
+            $missedFilters = $totalColumns - $totalFilters;
+
+            while ($missedFilters > 0) {
+                $this->push(null);
+                $missedFilters--;
+            }
+        }
+    }
+
+    protected function prepareView()
+    {
         if (! in_array($this->getPlacement(), ['table.footer', 'table.header']) && $this->view == 'display.extensions.columns_filters_table') {
             $this->view = 'display.extensions.columns_filters';
             $this->setHtmlAttribute('class', 'table table-default');
         }
 
-        if (! $this->hasHtmlAttribute('class')) {
-            $this->setHtmlAttribute('class', 'panel-footer');
-        }
+        $this->setHtmlAttribute('class', 'display-filters');
     }
 }

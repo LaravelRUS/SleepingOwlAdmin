@@ -3,20 +3,27 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use SleepingOwl\Admin\Traits\Assets;
+use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
-use SleepingOwl\Admin\Contracts\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
-    use SqlQueryOperators, HtmlAttributes, Assets;
+    use SqlQueryOperators, HtmlAttributes, Assets, \SleepingOwl\Admin\Traits\Renderable;
 
     /**
-     * @var string
+     * @var \Closure|null
      */
-    protected $view;
+    protected $callback;
+
+    /**
+     * @var string|null
+     */
+    protected $columnName;
 
     public function __construct()
     {
@@ -32,11 +39,23 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getView()
+    public function getColumnName()
     {
-        return $this->view;
+        return $this->columnName;
+    }
+
+    /**
+     * @param null|string $name
+     *
+     * @return $this
+     */
+    public function setColumnName($name)
+    {
+        $this->columnName = $name;
+
+        return $this;
     }
 
     /**
@@ -50,6 +69,65 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @return \Closure|null
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function setCallback(\Closure $callback)
+    {
+        $this->callback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param NamedColumnInterface $column
+     * @param Builder              $query
+     * @param string               $queryString
+     * @param array|string         $queryParams
+     *
+     * @return void
+     */
+    public function apply(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
+    {
+        $queryString = $this->parseValue($queryString);
+
+        if (is_callable($callback = $this->getCallback())) {
+            $callback($column, $query, $queryString, $queryParams);
+
+            return;
+        }
+
+        if (empty($queryString)) {
+            return;
+        }
+
+        if (is_null($name = $this->getColumnName())) {
+            $name = $column->getName();
+        }
+
+        if (strpos($name, '.') !== false) {
+            $parts = explode('.', $name);
+            $fieldName = array_pop($parts);
+            $relationName = implode('.', $parts);
+
+            $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {
+                $this->buildQuery($q, $fieldName, $queryString);
+            });
+        } else {
+            $this->buildQuery($query, $name, $queryString);
+        }
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -58,22 +136,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     {
         return [
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view('column.filter.'.$this->getView(), $this->toArray());
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 }

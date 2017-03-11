@@ -14,6 +14,11 @@ class DateTime extends NamedColumn
     protected $format;
 
     /**
+     * @var string
+     */
+    protected $view = 'column.datetime';
+
+    /**
      * @param Model $model
      *
      * @return $this
@@ -56,19 +61,28 @@ class DateTime extends NamedColumn
     public function toArray()
     {
         $value = $this->getModelValue();
-        $originalValue = $value;
-
-        if (! is_null($value)) {
-            if (! $value instanceof Carbon) {
-                $value = Carbon::parse($value);
-            }
-
-            $value = $value->format($this->getFormat());
-        }
 
         return parent::toArray() + [
-            'value' => $value,
-            'originalValue' => $originalValue,
+            'value' => $this->getFormatedDate($value),
+            'originalValue' => $value,
         ];
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return null|string
+     */
+    protected function getFormatedDate($date)
+    {
+        if (! is_null($date)) {
+            if (! $date instanceof Carbon) {
+                $date = Carbon::parse($date);
+            }
+
+            $date = $date->format($this->getFormat());
+        }
+
+        return $date;
     }
 }

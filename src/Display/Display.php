@@ -2,21 +2,19 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Scopes;
-use SleepingOwl\Admin\Contracts\ActionInterface;
-use SleepingOwl\Admin\Contracts\FilterInterface;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Filters;
-use SleepingOwl\Admin\Contracts\Display\Placable;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
 
 /**
  * Class Display.
@@ -35,12 +33,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
  */
 abstract class Display implements DisplayInterface
 {
-    use HtmlAttributes, Assets;
-
-    /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view;
+    use HtmlAttributes, Assets, Renderable;
 
     /**
      * @var string
@@ -68,7 +61,7 @@ abstract class Display implements DisplayInterface
     protected $repository;
 
     /**
-     * @var DisplayExtensionInterface[]|Collection
+     * @var DisplayExtensionInterface[]|ExtensionCollection
      */
     protected $extensions;
 
@@ -82,7 +75,7 @@ abstract class Display implements DisplayInterface
      */
     public function __construct()
     {
-        $this->extensions = new Collection();
+        $this->extensions = new ExtensionCollection();
 
         $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
@@ -116,7 +109,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface[]
+     * @return ExtensionCollection|DisplayExtensionInterface[]
      */
     public function getExtensions()
     {
@@ -167,11 +160,7 @@ abstract class Display implements DisplayInterface
         $this->repository = $this->makeRepository();
         $this->repository->with($this->with);
 
-        $this->extensions->each(function (DisplayExtensionInterface $extension) {
-            if ($extension instanceof Initializable) {
-                $extension->initialize();
-            }
-        });
+        $this->extensions->initialize();
 
         $this->includePackage();
 
@@ -237,26 +226,6 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return string
-     */
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param string|\Illuminate\View\View $view
-     *
-     * @return $this
-     */
-    public function setView($view)
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
-    /**
      * Get the evaluated contents of the object.
      *
      * @return string
@@ -265,18 +234,7 @@ abstract class Display implements DisplayInterface
     {
         $view = app('sleeping_owl.template')->view($this->getView(), $this->toArray());
 
-        $blocks = [];
-
-        $placableExtensions = $this->getExtensions()->filter(function ($extension) {
-            return $extension instanceof Placable;
-        });
-
-        foreach ($placableExtensions as $extension) {
-            $blocks[$extension->getPlacement()][] = (string) app('sleeping_owl.template')->view(
-                $extension->getView(),
-                $extension->toArray()
-            );
-        }
+        $blocks = $this->getExtensions()->placableBlocks();
 
         foreach ($blocks as $block => $data) {
             foreach ($data as $html) {
@@ -289,14 +247,6 @@ abstract class Display implements DisplayInterface
         }
 
         return $view;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
     }
 
     /**
@@ -336,11 +286,12 @@ abstract class Display implements DisplayInterface
      */
     protected function makeRepository()
     {
-        $repository = app($this->repositoryClass, [$this->modelClass]);
-
+        $repository = app($this->repositoryClass);
         if (! ($repository instanceof RepositoryInterface)) {
             throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
         }
+
+        $repository->setClass($this->modelClass);
 
         return $repository;
     }

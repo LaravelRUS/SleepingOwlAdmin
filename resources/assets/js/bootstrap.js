@@ -47,7 +47,7 @@ window.Admin.log = (error) => {
     console.log(error)
 }
 
-// window.Admin.Messages = require('./components/messages');
+window.Admin.Messages = require('./components/messages');
 window.Admin.Modules = require('./components/modules');
 window.Admin.WYSIWYG = require('./components/wysiwyg');
 

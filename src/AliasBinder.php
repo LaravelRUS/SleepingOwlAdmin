@@ -3,8 +3,9 @@
 namespace SleepingOwl\Admin;
 
 use BadMethodCallException;
+use SleepingOwl\Admin\Contracts\AliasBinderInterface;
 
-class AliasBinder
+class AliasBinder implements AliasBinderInterface
 {
     /**
      * @var array
@@ -12,11 +13,31 @@ class AliasBinder
     protected static $routes = [];
 
     /**
-     * @return array
+     * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
+     * @return void
      */
-    public static function routes()
+    public static function registerRoutes(\Illuminate\Contracts\Routing\Registrar $router)
     {
-        return self::$routes;
+        foreach (self::$routes as $i => $route) {
+            call_user_func($route, $router);
+            unset(self::$routes[$i]);
+        }
+    }
+
+    /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
+
+    /**
+     * AliasBinder constructor.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $application
+     */
+    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    {
+        $this->app = $application;
     }
 
     /**
@@ -25,14 +46,14 @@ class AliasBinder
     protected $aliases = [];
 
     /**
-     * Register new alias.
+     * Bind new alias.
      *
      * @param string $alias
      * @param string $class
      *
      * @return $this
      */
-    public function add($alias, $class)
+    public function bind($alias, $class)
     {
         $this->aliases[$alias] = $class;
 
@@ -44,17 +65,38 @@ class AliasBinder
     }
 
     /**
+     * @param string $alias
+     * @param string $class
+     *
+     * @return $this
+     *
+     * @deprecated Use `bind` method
+     */
+    public function add($alias, $class)
+    {
+        return $this->bind($alias, $class);
+    }
+
+    /**
      * @param array $classes
      *
      * @return $this
      */
     public function register(array $classes)
     {
-        foreach ($classes as $key => $class) {
-            $this->add($key, $class);
+        foreach ($classes as $alias => $class) {
+            $this->bind($alias, $class);
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 
     /**
@@ -82,6 +124,19 @@ class AliasBinder
     }
 
     /**
+     * @param string $alias
+     * @param array $arguments
+     *
+     * @return object
+     */
+    public function makeClass($alias, array $arguments)
+    {
+        $reflection = new \ReflectionClass($this->getAlias($alias));
+
+        return $reflection->newInstanceArgs($arguments);
+    }
+
+    /**
      * Create new instance by alias.
      *
      * @param string $name
@@ -95,6 +150,6 @@ class AliasBinder
             throw new BadMethodCallException($name);
         }
 
-        return app($this->getAlias($name), $arguments);
+        return $this->makeClass($name, $arguments);
     }
 }

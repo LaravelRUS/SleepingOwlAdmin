@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 
 abstract class Extension implements DisplayExtensionInterface

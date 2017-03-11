@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -34,9 +33,9 @@ class MultiSelect extends Select
     /**
      * @return array
      */
-    public function getValue()
+    public function getValueFromModel()
     {
-        $value = parent::getValue();
+        $value = parent::getValueFromModel();
         if ($value instanceof Collection && $value->count() > 0) {
             $value = $value->pluck($value->first()->getKeyName())->all();
         }
@@ -109,69 +108,109 @@ class MultiSelect extends Select
         ] + parent::toArray();
     }
 
-    public function save()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
     {
         if (is_null($this->getModelForOptions())) {
-            parent::save();
+            parent::save($request);
         }
     }
 
-    public function afterSave()
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function afterSave(\Illuminate\Http\Request $request)
     {
         if (is_null($this->getModelForOptions())) {
             return;
         }
 
-        $attribute = $this->getAttribute();
+        $attribute = $this->getModelAttributeKey();
 
-        if (is_null(Request::input($this->getPath()))) {
+        if (is_null($request->input($this->getPath()))) {
             $values = [];
         } else {
-            $values = $this->getValue();
+            $values = $this->getValueFromModel();
         }
 
         $relation = $this->getModel()->{$attribute}();
 
         if ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
-            foreach ($values as $i => $value) {
-                if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
-                    $model = clone $this->getModelForOptions();
-                    $model->{$this->getDisplay()} = $value;
-                    $model->save();
-
-                    $values[$i] = $model->getKey();
-                }
-            }
-
-            $relation->sync($values);
+            $this->syncBelongsToManyRelation($relation, $values);
         } elseif ($relation instanceof \Illuminate\Database\Eloquent\Relations\HasMany) {
-            foreach ($relation->get() as $item) {
-                if (! in_array($item->getKey(), $values)) {
-                    if ($this->isDeleteRelatedItem()) {
-                        $item->delete();
-                    } else {
-                        $item->{$relation->getPlainForeignKey()} = null;
-                        $item->save();
-                    }
-                }
-            }
+            $this->deleteOldItemsFromHasManyRelation($relation, $values);
+            $this->attachItemsToHasManyRelation($relation, $values);
+        }
+    }
 
-            foreach ($values as $i => $value) {
-                /** @var Model $model */
+    /**
+     * @param \Illuminate\Database\Eloquent\Relations\BelongsToMany $relation
+     * @param array $values
+     *
+     * @return void
+     */
+    protected function syncBelongsToManyRelation(\Illuminate\Database\Eloquent\Relations\BelongsToMany $relation, array $values)
+    {
+        foreach ($values as $i => $value) {
+            if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
                 $model = clone $this->getModelForOptions();
-                $item = $model->find($value);
+                $model->{$this->getDisplay()} = $value;
+                $model->save();
 
-                if (is_null($item)) {
-                    if (! $this->isTaggable()) {
-                        continue;
-                    }
+                $values[$i] = $model->getKey();
+            }
+        }
 
-                    $model->{$this->getDisplay()} = $value;
-                    $item = $model;
+        $relation->sync($values);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
+     * @param array $values
+     */
+    protected function deleteOldItemsFromHasManyRelation(\Illuminate\Database\Eloquent\Relations\HasMany $relation, array $values)
+    {
+        $items = $relation->get();
+
+        foreach ($items as $item) {
+            if (! in_array($item->getKey(), $values)) {
+                if ($this->isDeleteRelatedItem()) {
+                    $item->delete();
+                } else {
+                    $item->{$relation->getPlainForeignKey()} = null;
+                    $item->save();
+                }
+            }
+        }
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
+     * @param array $values
+     */
+    protected function attachItemsToHasManyRelation(\Illuminate\Database\Eloquent\Relations\HasMany $relation, array $values)
+    {
+        foreach ($values as $i => $value) {
+            /** @var Model $model */
+            $model = clone $this->getModelForOptions();
+            $item = $model->find($value);
+
+            if (is_null($item)) {
+                if (! $this->isTaggable()) {
+                    continue;
                 }
 
-                $relation->save($item);
+                $model->{$this->getDisplay()} = $value;
+                $item = $model;
             }
+
+            $relation->save($item);
         }
     }
 }

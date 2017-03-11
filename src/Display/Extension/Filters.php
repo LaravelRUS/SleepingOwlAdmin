@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\FilterInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
 
 class Filters extends Extension implements Initializable
 {
@@ -36,7 +36,7 @@ class Filters extends Extension implements Initializable
     /**
      * @param array|FilterInterface $filters
      *
-     * @return \SleepingOwl\Admin\Contracts\DisplayInterface
+     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
     public function set($filters)
     {
@@ -54,7 +54,7 @@ class Filters extends Extension implements Initializable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\FilterInterface[]
+     * @return Collection|\SleepingOwl\Admin\Contracts\Display\FilterInterface[]
      */
     public function all()
     {

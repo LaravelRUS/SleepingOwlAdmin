@@ -7,9 +7,9 @@ use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
 use Illuminate\Contracts\Events\Dispatcher;
-use SleepingOwl\Admin\Contracts\RepositoryInterface;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 /**
  * @method bool creating(\Closure $callback)
@@ -52,6 +52,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected static $dispatcher;
 
     /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
+
+    /**
      * @var string
      */
     protected $class;
@@ -87,24 +92,28 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected $checkAccess = false;
 
     /**
+     * @var array
+     */
+    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
+
+    /**
      * @var RepositoryInterface
      */
     private $repository;
 
     /**
-     * SectionModelConfiguration constructor.
-     *
+     * @param \Illuminate\Contracts\Foundation\Application $app
      * @param string $class
-     *
-     * @throws \Exception
      */
-    public function __construct($class)
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
+        $this->app = $app;
         $this->class = $class;
-        $this->model = app($class);
 
-        $this->repository = app(RepositoryInterface::class, [$class]);
+        $this->model = $app->make($class);
 
+        $this->repository = $app->make(RepositoryInterface::class);
+        $this->repository->setClass($class);
         if (! $this->alias) {
             $this->setDefaultAlias();
         }
@@ -267,6 +276,26 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @return $this
+     */
+    public function enableAccessCheck()
+    {
+        $this->checkAccess = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableAccessCheck()
+    {
+        $this->checkAccess = false;
+
+        return $this;
+    }
+
+    /**
      * @param string $action
      * @param \Illuminate\Database\Eloquent\Model $model
      *
@@ -278,7 +307,19 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             return true;
         }
 
-        return \Gate::allows($action, $model);
+        return \Gate::allows($action, [$this, $model]);
+    }
+
+    /**
+     * @param string $controllerClass
+     *
+     * @return $this
+     */
+    public function setControllerClass($controllerClass)
+    {
+        $this->controllerClass = $controllerClass;
+
+        return $this;
     }
 
     /**
@@ -427,6 +468,21 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function addToNavigation($priority = 100, $badge = null)
     {
+        $page = $this->makePage($priority, $badge);
+
+        $this->app['sleeping_owl.navigation']->addPage($page);
+
+        return $page;
+    }
+
+    /**
+     * @param int $priority
+     * @param string|\Closure|BadgeInterface $badge
+     *
+     * @return Page
+     */
+    protected function makePage($priority = 100, $badge = null)
+    {
         $page = new Page($this->getClass());
         $page->setPriority($priority);
 
@@ -438,21 +494,39 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             $page->setBadge($badge);
         }
 
-        app('sleeping_owl.navigation')->addPage($page);
-
         return $page;
+    }
+
+    /**
+     * @param array $redirect
+     * @return $this
+     */
+    public function setRedirect(array $redirect)
+    {
+        $this->redirect = $redirect;
+
+        return $this;
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function getRedirect()
+    {
+        return collect($this->redirect);
     }
 
     /**
      * Fire the given event for the model.
      *
-     * @param string     $event
-     * @param bool       $halt
+     * @param string $event
+     * @param bool $halt
      * @param Model|null $model
+     * @param array $payload
      *
      * @return mixed
      */
-    public function fireEvent($event, $halt = true, Model $model = null)
+    public function fireEvent($event, $halt = true, Model $model = null, ...$payload)
     {
         if (! isset(self::$dispatcher)) {
             return true;
@@ -469,7 +543,9 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
         $method = $halt ? 'until' : 'fire';
 
-        return self::$dispatcher->$method($event, [$this, $model]);
+        array_unshift($payload, $this, $model);
+
+        return self::$dispatcher->$method($event, $payload);
     }
 
     /**

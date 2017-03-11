@@ -5,6 +5,11 @@ namespace SleepingOwl\Admin\Display\Column;
 class Url extends NamedColumn
 {
     /**
+     * @var string
+     */
+    protected $view = 'column.url';
+
+    /**
      * @var array
      */
     protected $linkAttributes = [];

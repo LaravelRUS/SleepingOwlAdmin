@@ -169,11 +169,10 @@ return [
         // Components
         'Assets' => KodiCMS\Assets\Facades\Assets::class,
         'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
-        'Meta' => KodiCMS\Assets\Facades\Meta::class,
+        'Meta' => KodiCMS\Assets\Facades\Meta::class, // todo избавиться
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'WysiwygManager' => SleepingOwl\Admin\Facades\WysiwygManager::class,
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'MessagesStack' => SleepingOwl\Admin\Facades\MessageStack::class,
 
         // Presenters
@@ -187,5 +186,6 @@ return [
         'AdminForm' => SleepingOwl\Admin\Facades\Form::class,
         'AdminFormElement' => SleepingOwl\Admin\Facades\FormElement::class,
         'AdminDisplay' => SleepingOwl\Admin\Facades\Display::class,
+        'AdminWidgets' => SleepingOwl\Admin\Facades\Widgets::class,
     ],
 ];

@@ -45,6 +45,7 @@ class DisplayDatatables extends DisplayTable
 
         foreach ($this->getColumns()->all() as $column) {
             $attributes['columns'][] = [
+                'orderable' => $column->isOrderable(),
                 'orderDataType' => class_basename($column),
             ];
         }

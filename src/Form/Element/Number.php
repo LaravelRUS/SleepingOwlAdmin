@@ -20,6 +20,11 @@ class Number extends NamedFormElement
     protected $step;
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.number';
+
+    /**
      * @return int
      */
     public function getMin()
@@ -96,7 +101,7 @@ class Number extends NamedFormElement
      *
      * @return null|int
      */
-    protected function prepareValue($value)
+    public function prepareValue($value)
     {
         if ($value == '') {
             return;

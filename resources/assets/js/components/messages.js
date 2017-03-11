@@ -10,7 +10,7 @@ module.exports = {
         }
     },
     show (msg, type, icon) {
-        window.top.noty({
+        window.noty({
             layout: 'topRight',
             type: type || 'success',
             icon: icon || 'fa fa-ok',

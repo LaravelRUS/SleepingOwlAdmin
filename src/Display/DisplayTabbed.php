@@ -6,11 +6,10 @@ use Closure;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\Validation\Validator;
-use SleepingOwl\Admin\Contracts\FormInterface;
 use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Contracts\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 /**
@@ -18,7 +17,7 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
  */
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-    use FormElements, VisibleCondition;
+    use FormElements, VisibleCondition, \SleepingOwl\Admin\Traits\Renderable;
 
     /**
      * @var string
@@ -53,7 +52,21 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
+     * @return Model $model|null
+     */
+    public function getModel()
+    {
+        foreach ($this->getTabs() as $tab) {
+            if ($tab->getContent() instanceof FormInterface) {
+                return $tab->getContent()->getModel();
+            }
+        }
+    }
+
+    /**
      * @param string $class
+     *
+     * @return $this
      */
     public function setModelClass($class)
     {
@@ -62,6 +75,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 $tab->setModelClass($class);
             }
         });
+
+        return $this;
     }
 
     /**
@@ -113,9 +128,9 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
-        $tab = app('sleeping_owl.display')->tab($display)->setLabel($label)->setActive($active);
-
-        $this->addElement($tab);
+        $this->addElement(
+            $tab = app('sleeping_owl.display')->tab($display, $label)->setActive($active)
+        );
 
         return $tab;
     }
@@ -134,6 +149,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
 
     /**
      * @param string $action
+     *
+     * @return $this
      */
     public function setAction($action)
     {
@@ -142,10 +159,14 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 $tab->setAction($action);
             }
         });
+
+        return $this;
     }
 
     /**
      * @param int $id
+     *
+     * @return $this
      */
     public function setId($id)
     {
@@ -154,39 +175,42 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 $tab->setId($id);
             }
         });
+
+        return $this;
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
      * @param ModelConfigurationInterface $model
      *
-     * @return Validator|null
+     * @return void
      */
-    public function validateForm(ModelConfigurationInterface $model)
+    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
     {
-        foreach ($this->getTabs() as $tab) {
+        $this->getTabs()->each(function ($tab) use ($request, $model) {
             if ($tab instanceof FormInterface) {
-                $result = $tab->validateForm($model);
-                if (! is_null($result)) {
-                    return $result;
-                }
-            }
-        }
-    }
-
-    /**
-     * @param ModelConfigurationInterface $model
-     */
-    public function saveForm(ModelConfigurationInterface $model)
-    {
-        $this->getTabs()->each(function (TabInterface $tab) use ($model) {
-            if ($tab instanceof FormInterface) {
-                $tab->saveForm($model);
+                $tab->validateForm($request, $model);
             }
         });
     }
 
     /**
-     * @return mixed
+     * @param \Illuminate\Http\Request $request
+     * @param ModelConfigurationInterface $model
+     *
+     * @return void
+     */
+    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    {
+        $this->getTabs()->each(function (TabInterface $tab) use ($request, $model) {
+            if ($tab instanceof FormInterface) {
+                $tab->saveForm($request, $model);
+            }
+        });
+    }
+
+    /**
+     * @return null
      */
     public function getValue()
     {
@@ -201,11 +225,11 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getView()
+    public function isValueSkipped()
     {
-        return $this->view;
+        return false;
     }
 
     /**
@@ -219,25 +243,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function render()
-    {
-        return app('sleeping_owl.template')->view(
-            $this->getView(),
-            $this->toArray()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->render();
-    }
-
-    /**
      * Using in trait FormElements;.
      *
      * @param $object
@@ -247,17 +252,5 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     protected function getElementContainer($object)
     {
         return $object->getContent();
-    }
-
-    /**
-     * @return Model $model
-     */
-    public function getModel()
-    {
-        foreach ($this->getTabs() as $tab) {
-            if ($tab->getContent() instanceof FormInterface) {
-                return $tab->getContent()->getModel();
-            }
-        }
     }
 }

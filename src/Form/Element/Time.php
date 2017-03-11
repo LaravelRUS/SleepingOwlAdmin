@@ -10,6 +10,11 @@ class Time extends DateTime
     protected $format = 'H:i:s';
 
     /**
+     * @var string
+     */
+    protected $view = 'form.element.time';
+
+    /**
      * @return string
      */
     public function getPickerFormat()
