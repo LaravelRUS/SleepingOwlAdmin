@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;
-use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelCollection;
@@ -13,12 +12,13 @@ use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Config\Repository as ConfigRepository;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
-use Illuminate\Config\Repository as ConfigRepository;
 
 class Admin implements AdminInterface
 {

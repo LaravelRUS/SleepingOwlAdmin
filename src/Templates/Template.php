@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 abstract class Template implements TemplateInterface
 {
@@ -50,8 +50,7 @@ abstract class Template implements TemplateInterface
         MetaInterface $meta,
         NavigationInterface $navigation,
         Breadcrumbs $breadcrumbs
-    )
-    {
+    ) {
         $this->app = $application;
         $this->meta = $meta;
         $this->navigation = $navigation;
@@ -60,13 +59,13 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Название с указанием версии
+     * Название с указанием версии.
      *
      * @return string
      */
     public function longName()
     {
-        return $this->name() . ' v.'. $this->version();
+        return $this->name().' v.'.$this->version();
     }
 
     /**
@@ -94,7 +93,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Генерация относительно пути до asset файлов для текущей темы
+     * Генерация относительно пути до asset файлов для текущей темы.
      *
      * @param string $path относительный путь до файла, например `js/app.js`
      *
@@ -160,7 +159,6 @@ abstract class Template implements TemplateInterface
         return view($this->getViewPath($view), $data, $mergeData);
     }
 
-
     /**
      * @param string $key
      *
@@ -188,7 +186,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Регистрация стандартных глобальных Javascript перменных
+     * Регистрация стандартных глобальных Javascript перменных.
      */
     protected function setGlobalVariables()
     {
@@ -224,7 +222,7 @@ abstract class Template implements TemplateInterface
             'view_namespace' => $this->getViewNamespace(),
             'name' => $this->name(),
             'version' => $this->version(),
-            'homepage' => $this->homepage()
+            'homepage' => $this->homepage(),
         ];
     }
 }

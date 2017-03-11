@@ -6,9 +6,8 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 trait ProvidesScriptVariables
 {
-
     /**
-     * Получение массива глобальных переменных для JavaScript
+     * Получение массива глобальных переменных для JavaScript.
      *
      * @return array
      */
@@ -27,7 +26,7 @@ trait ProvidesScriptVariables
             'lang' => $lang,
             'wysiwyg' => $this->config['wysiwyg'],
             'template' => $this->app[TemplateInterface::class]->toArray(),
-            'user_id' => auth()->id()
+            'user_id' => auth()->id(),
         ];
     }
 }

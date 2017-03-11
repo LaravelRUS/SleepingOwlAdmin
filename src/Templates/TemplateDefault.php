@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Templates;
 class TemplateDefault extends Template
 {
     /**
-     * Получение названия текущего шаблона
+     * Получение названия текущего шаблона.
      *
      * @return string
      */
@@ -15,7 +15,7 @@ class TemplateDefault extends Template
     }
 
     /**
-     * Версия темы
+     * Версия темы.
      *
      * @return string
      */
@@ -25,7 +25,7 @@ class TemplateDefault extends Template
     }
 
     /**
-     * URL проекта
+     * URL проекта.
      *
      * @return string
      */
@@ -50,7 +50,7 @@ class TemplateDefault extends Template
     }
 
     /**
-     * Получение относительного пути хранения asset файлов
+     * Получение относительного пути хранения asset файлов.
      *
      * @return string
      */

@@ -9,26 +9,25 @@ use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 interface TemplateInterface extends Initializable, Arrayable
 {
     /**
-     * Получение названия текущего шаблона
+     * Получение названия текущего шаблона.
      *
      * @return string
      */
     public function name();
 
     /**
-     * Версия темы
+     * Версия темы.
      *
      * @return string
      */
     public function version();
 
     /**
-     * URL проекта
+     * URL проекта.
      *
      * @return string
      */
     public function homepage();
-
 
     /**
      * @return string
@@ -86,14 +85,14 @@ interface TemplateInterface extends Initializable, Arrayable
     public function renderNavigation();
 
     /**
-     * Получение относительного пути хранения asset файлов
+     * Получение относительного пути хранения asset файлов.
      *
      * @return string
      */
     public function assetDir();
 
     /**
-     * Генерация относительно пути до asset файлов для текущей темы
+     * Генерация относительно пути до asset файлов для текущей темы.
      *
      * @param string $path относительный путь до файла, например `js/app.js`
      *
