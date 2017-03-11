@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+...
+
+
+## 4.82.20
+
 ### Changed
  * Добавлен колбек на сохранение файлов (читать в документации)
      ```php
@@ -71,6 +76,44 @@
 	
  * Вынос логики роутов отдельных компонентов из анонимных функций в контроллеры для возможности кеширования роутов.
  * Phpunit version `~4.1 -> ~5.0`
+ * Полностью переработал принцип работы с различными типами репозиториев, которые используются для построения дерева.
+
+   Теперь за каждый тип дерева отвечает отдельный класс, https://github.com/LaravelRUS/SleepingOwlAdmin/tree/development/src/Display/Tree Это позволяет нам полностью отвязать `TreeRepository` от конкретного пакета построения дерева и использовать свои реализации.
+
+   Для поддержки своего типа дерева необходимо добавить свой класс, для удобства его можно наследовать от `SleepingOwl\Admin\Display\Tree\NestedsetType` и реализовать те методы, которые он попросит. В случае @lunatig будет выглядеть как-то так:
+
+   ```php
+   <?php
+
+   namespace Admin\Tree;
+
+   use Illuminate\Database\Eloquent\Model;
+   use SleepingOwl\Admin\Display\Tree\BaumNodeType;
+
+   /**
+    * @see https://github.com/etrepat/baum
+    */
+   class CustomBaumNodeType extends BaumNodeType
+   {
+       /**
+        * Get tree structure.
+        *
+        * @param \Illuminate\Database\Eloquent\Collection $collection
+        *
+        * @return mixed
+        */
+       public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+       {
+           return $collection->toSortedHierarchy();
+       }
+   }
+   ```
+
+   А дальше при инициализации `DisplayTree` мы указываем этот класс
+
+   ```php
+   AdminDisplay::tree(\Admin\Tree\CustomBaumNodeType::class)->...
+   ```
 
 
 ### Added
