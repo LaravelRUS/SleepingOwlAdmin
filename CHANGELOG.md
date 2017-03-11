@@ -2,12 +2,12 @@
 
 ## [Unreleased]
 
-### Changed
- * Рефакторинг JS кода
+ * Рефакторинг JS кода (http://sleepingowladmin.ru/docs/javascript)
 
     Отказ от хранения настроек по url `admin/scripts`, теперь глобальный конфиг хранится в body шаблона.
     Перенос `app.js` в футер
 
+### 4.82.20
  * Добавлен колбек на сохранение файлов (читать в документации)
      ```php
        AdminFormElement::images('some_images', "Some Label")
