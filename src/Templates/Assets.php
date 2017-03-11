@@ -1,21 +1,21 @@
 <?php
+
 namespace SleepingOwl\Admin\Templates;
 
+use KodiCMS\Assets\Html;
 use KodiCMS\Assets\Assets as BaseAssets;
 use KodiCMS\Assets\Contracts\AssetElementInterface;
-use KodiCMS\Assets\Html;
 use SleepingOwl\Admin\Contracts\Template\Assets as AssetsContract;
 
 class Assets extends BaseAssets implements AssetsContract
 {
-
     /**
      * @var array
      */
     protected $globalVars = [];
 
     /**
-     * Gets or sets javascript assets
+     * Gets or sets javascript assets.
      *
      * @param bool|string  $handle
      * @param string       $src        Asset source
@@ -30,7 +30,7 @@ class Assets extends BaseAssets implements AssetsContract
     }
 
     /**
-     * Добавление глобальной переменной
+     * Добавление глобальной переменной.
      *
      * @param string $key
      * @param mixed $value
@@ -45,7 +45,7 @@ class Assets extends BaseAssets implements AssetsContract
     }
 
     /**
-     * Получение массива глобальных перменных
+     * Получение массива глобальных перменных.
      *
      * @return array
      */
@@ -71,5 +71,4 @@ class Assets extends BaseAssets implements AssetsContract
 
         return (new Html())->vars("{$this->namespace}.GlobalConfig = {$json};");
     }
-
 }

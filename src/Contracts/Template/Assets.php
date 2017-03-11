@@ -6,9 +6,8 @@ use KodiCMS\Assets\Contracts\AssetsInterface;
 
 interface Assets extends AssetsInterface
 {
-
     /**
-     * Добавление глобальной переменной
+     * Добавление глобальной переменной.
      *
      * @param string $key
      * @param mixed $value
@@ -18,7 +17,7 @@ interface Assets extends AssetsInterface
     public function putGlobalVar($key, $value);
 
     /**
-     * Получение массива глобальных перменных
+     * Получение массива глобальных перменных.
      *
      * @return array
      */
