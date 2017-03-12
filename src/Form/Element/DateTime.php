@@ -7,7 +7,6 @@ use Carbon\Carbon;
 
 class DateTime extends NamedFormElement
 {
-
     use \SleepingOwl\Admin\Traits\DatePicker;
 
     /**
@@ -51,7 +50,7 @@ class DateTime extends NamedFormElement
     public function getValueFromModel()
     {
         $value = parent::getValueFromModel();
-        if ( ! empty($value)) {
+        if (! empty($value)) {
             return $this->parseValue($value);
         }
     }
@@ -61,7 +60,7 @@ class DateTime extends NamedFormElement
      */
     public function hasSeconds()
     {
-        return (bool)$this->seconds;
+        return (bool) $this->seconds;
     }
 
     /**
@@ -97,11 +96,11 @@ class DateTime extends NamedFormElement
     {
         $this->setHtmlAttributes([
             'data-date-format'     => $this->getJsPickerFormat(),
-            'data-date-pickdate'   => "true",
-            'data-date-picktime'   => "false",
+            'data-date-pickdate'   => 'true',
+            'data-date-picktime'   => 'false',
             'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
-            'class'                => "form-control",
-            'type'                 => "text",
+            'class'                => 'form-control',
+            'type'                 => 'text',
         ]);
 
         return parent::toArray() + [
