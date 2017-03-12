@@ -161,28 +161,28 @@ class Select extends NamedFormElement
      */
     public function toArray()
     {
-        $attributes = [
+        $this->setHtmlAttributes([
             'id' => $this->getName(),
             'size' => 2,
             'data-select-type' => 'single',
             'class' => 'form-control input-select',
-        ];
+        ]);
 
         if ($this->isReadonly()) {
-            $attributes['disabled'] = 'disabled';
+            $this->setHtmlAttribute('disabled', 'disabled');
         }
 
         $options = $this->getOptions();
 
         if ($this->isNullable()) {
-            $attributes['data-nullable'] = 'true';
+            $this->setHtmlAttribute('data-nullable', 'true');
             $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
         }
 
         return parent::toArray() + [
             'options' => $options,
             'nullable' => $this->isNullable(),
-            'attributes' => $attributes,
+            'attributes' => $this->getHtmlAttributes(),
         ];
     }
 

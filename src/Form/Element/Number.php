@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Number extends NamedFormElement
 {
+
     /**
      * @var int
      */
@@ -39,7 +40,7 @@ class Number extends NamedFormElement
      */
     public function setMin($min)
     {
-        $this->min = (int) $min;
+        $this->min = (int)$min;
 
         return $this;
     }
@@ -59,7 +60,7 @@ class Number extends NamedFormElement
      */
     public function setMax($max)
     {
-        $this->max = (int) $max;
+        $this->max = (int)$max;
 
         return $this;
     }
@@ -79,7 +80,7 @@ class Number extends NamedFormElement
      */
     public function setStep($step)
     {
-        $this->step = (int) $step;
+        $this->step = (int)$step;
 
         return $this;
     }
@@ -89,11 +90,19 @@ class Number extends NamedFormElement
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'class' => "form-control",
+            'type'  => "number",
+            'max'   => $this->getMax(),
+            'min'   => $this->getMin(),
+            'step'  => $this->getStep()
+        ]);
+
         return parent::toArray() + [
-            'min' => $this->getMin(),
-            'max' => $this->getMax(),
-            'step' => $this->getStep(),
-        ];
+                'min'  => $this->getMin(),
+                'max'  => $this->getMax(),
+                'step' => $this->getStep(),
+            ];
     }
 
     /**
@@ -108,7 +117,7 @@ class Number extends NamedFormElement
         }
 
         return parent::prepareValue(
-            (int) $value
+            (int)$value
         );
     }
 }
