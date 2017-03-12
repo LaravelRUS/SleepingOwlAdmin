@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Textarea extends NamedFormElement
 {
-
     /**
      * @var int
      */
@@ -46,8 +45,8 @@ class Textarea extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'class' => "form-control",
-            'rows'  => $this->getRows()
+            'class' => 'form-control',
+            'rows'  => $this->getRows(),
         ]);
 
         return parent::toArray() + [

@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Hidden extends NamedFormElement
 {
-
     public function __construct($path, $label = null)
     {
         parent::__construct($path, $label);
@@ -13,6 +12,7 @@ class Hidden extends NamedFormElement
             'type' => 'hidden',
         ]);
     }
+
     /**
      * @var string
      */

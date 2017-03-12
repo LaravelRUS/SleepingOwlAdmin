@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class TextAddon extends NamedFormElement
 {
-
     /**
      * @var string
      */
@@ -85,10 +84,9 @@ class TextAddon extends NamedFormElement
      */
     public function toArray()
     {
-
         $this->setHtmlAttributes([
-            'class' => "form-control",
-            'type'  => "text",
+            'class' => 'form-control',
+            'type'  => 'text',
         ]);
 
         return parent::toArray() + [
