@@ -88,24 +88,24 @@ class MultiSelect extends Select
      */
     public function toArray()
     {
-        $attributes = [
-            'id' => $this->getName(),
+        $this->setHtmlAttributes([
+            'id'    => $this->getName(),
             'class' => 'form-control input-select',
             'multiple',
-        ];
+        ]);
 
         if ($this->isTaggable()) {
-            $attributes['class'] .= ' input-taggable';
+            $this->setHtmlAttribute('class', 'input-taggable');
         }
 
         if ($this->isReadonly()) {
-            $attributes['disabled'] = 'disabled';
+            $this->setHtmlAttribute('disabled', 'disabled');
         }
 
         return [
-            'tagable' => $this->isTaggable(),
-            'attributes' => $attributes,
-        ] + parent::toArray();
+                'tagable'    => $this->isTaggable(),
+                'attributes' => $this->getHtmlAttributes(),
+            ] + parent::toArray();
     }
 
     /**
@@ -155,8 +155,10 @@ class MultiSelect extends Select
      *
      * @return void
      */
-    protected function syncBelongsToManyRelation(\Illuminate\Database\Eloquent\Relations\BelongsToMany $relation, array $values)
-    {
+    protected function syncBelongsToManyRelation(
+        \Illuminate\Database\Eloquent\Relations\BelongsToMany $relation,
+        array $values
+    ) {
         foreach ($values as $i => $value) {
             if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
                 $model = clone $this->getModelForOptions();
@@ -174,8 +176,10 @@ class MultiSelect extends Select
      * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
      * @param array $values
      */
-    protected function deleteOldItemsFromHasManyRelation(\Illuminate\Database\Eloquent\Relations\HasMany $relation, array $values)
-    {
+    protected function deleteOldItemsFromHasManyRelation(
+        \Illuminate\Database\Eloquent\Relations\HasMany $relation,
+        array $values
+    ) {
         $items = $relation->get();
 
         foreach ($items as $item) {
@@ -194,8 +198,10 @@ class MultiSelect extends Select
      * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
      * @param array $values
      */
-    protected function attachItemsToHasManyRelation(\Illuminate\Database\Eloquent\Relations\HasMany $relation, array $values)
-    {
+    protected function attachItemsToHasManyRelation(
+        \Illuminate\Database\Eloquent\Relations\HasMany $relation,
+        array $values
+    ) {
         foreach ($values as $i => $value) {
             /** @var Model $model */
             $model = clone $this->getModelForOptions();
