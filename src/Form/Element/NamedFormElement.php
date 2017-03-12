@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use KodiComponents\Support\HtmlAttributes;
 use LogicException;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
@@ -14,6 +15,7 @@ use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 
 abstract class NamedFormElement extends FormElement
 {
+    use HtmlAttributes;
     /**
      * @var string
      */
@@ -71,6 +73,35 @@ abstract class NamedFormElement extends FormElement
         parent::__construct();
     }
 
+    /**
+     * @return string
+     */
+    public function htmlAttributesToString()
+    {
+        $html = [];
+
+        $prepareAttributeValue = function ($key, $value) {
+            if (is_numeric($key)) {
+                $key = $value;
+            }
+
+            if (! is_null($value)) {
+                return $key.'='.e($value);
+            }
+        };
+
+        foreach ((array) $this->getHtmlAttributes() as $key => $value) {
+            $element = $prepareAttributeValue($key, $value);
+
+            if (! is_null($element)) {
+                $html[] = $element;
+            }
+        }
+
+        return count($html) > 0
+            ? ' '.implode(' ', $html)
+            : '';
+    }
     /**
      * Compose html name from array like this: 'first[second][third]'.
      *
@@ -533,12 +564,18 @@ abstract class NamedFormElement extends FormElement
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'id' => $this->getName(),
+            'name' => $this->getName(),
+        ]);
+
         return array_merge(parent::toArray(), [
             'id' => $this->getName(),
             'value' => $this->getValueFromModel(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
+            'attributes'=> $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);

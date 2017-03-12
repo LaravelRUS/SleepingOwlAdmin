@@ -6,6 +6,7 @@ use Carbon\Carbon;
 
 class DateRange extends Date
 {
+
     /**
      * @var string
      */
@@ -31,7 +32,7 @@ class DateRange extends Date
      */
     public function getDefaultFrom()
     {
-        if (! $this->defaultFrom) {
+        if ( ! $this->defaultFrom) {
             $this->defaultFrom = Carbon::now();
         }
 
@@ -57,7 +58,7 @@ class DateRange extends Date
      */
     public function getDefaultTo()
     {
-        if (! $this->defaultTo) {
+        if ( ! $this->defaultTo) {
             $this->defaultTo = Carbon::now();
         }
 
@@ -97,10 +98,18 @@ class DateRange extends Date
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'data-format'    => $this->getJsPickerFormat(),
+            'data-startDate' => $this->getDefaultFrom(),
+            'data-endDate'   => $this->getDefaultTo(),
+            'class'          => "form-control input-daterange",
+            'type'           => "text",
+        ]);
+
         return parent::toArray() + [
-            'startDate' => $this->getDefaultFrom(),
-            'endDate' => $this->getDefaultTo(),
-        ];
+                'startDate' => $this->getDefaultFrom(),
+                'endDate'   => $this->getDefaultTo(),
+            ];
     }
 
     /**

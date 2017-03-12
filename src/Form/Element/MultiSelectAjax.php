@@ -88,16 +88,16 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
      */
     public function toArray()
     {
-        $attributes = [
+        $this->setHtmlAttributes([
             'id' => $this->getName(),
             'class' => 'form-control js-data-ajax',
             'multiple',
             'field' => $this->display,
             'model' => get_class($this->getModelForOptions()),
             'search_url' => $this->getSearchUrl(),
-        ];
+        ]);
 
-        return ['attributes' => $attributes] + parent::toArray();
+        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray();
     }
 
     /**
