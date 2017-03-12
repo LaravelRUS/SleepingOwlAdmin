@@ -1,7 +1,8 @@
 # Release Notes
 
 ## [Unreleased]
-
+ * Добавлена поддержка HtmlAttributes для всех AdminFormElement кроме File,Upload,Image,Images
+    Теперь AdminFormElement поддерживает методы setHtmlAttributes, setHtmlAttribute и прочие.
  * Рефакторинг JS кода (http://sleepingowladmin.ru/docs/javascript)
 
     Отказ от хранения настроек по url `admin/scripts`, теперь глобальный конфиг хранится в body шаблона.
