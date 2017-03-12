@@ -3,7 +3,7 @@
        class="inline-editable"
        data-name="{{ $name }}"
        data-value="{{ $value }}"
-       data-url="{{ request()->url() }}"
+       data-url="{{ strstr(request()->url(), 'async', true) }}"
        data-type="checklist"
        data-pk="{{ $id }}"
        data-source="{ 1 : '{{ $checkedLabel }}' }"
@@ -13,4 +13,5 @@
 @else
     @if($value) {{ $checkedLabel }} @else {{ $uncheckedLabel }} @endif
 @endif
+
 {!! $append !!}
