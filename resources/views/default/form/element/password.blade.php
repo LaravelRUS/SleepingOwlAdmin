@@ -6,7 +6,7 @@
             <span class="form-element-required">*</span>
         @endif
     </label>
-    <input {{$attributes}}
+    <input {!! $attributes !!}
            value=""
            @if($readonly) readonly @endif
     >

@@ -7,7 +7,7 @@
 		@endif
 	</label>
 	<div class="input-date input-group">
-		<input {{$attributes}} value="{{$value}}"
+		<input {!! $attributes !!} value="{{$value}}"
 			   @if($readonly) readonly @endif
 		>
 		<span class="input-group-addon"><span class="fa fa-calendar"></span></span>

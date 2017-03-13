@@ -7,7 +7,7 @@
 		@endif
 	</label>
 	<div class="input-date input-group">
-		<input {{$attributes}}
+		<input {!! $attributes !!}
 			   value="{{ $value }}"
 			   @if($readonly) readonly @endif
 		>

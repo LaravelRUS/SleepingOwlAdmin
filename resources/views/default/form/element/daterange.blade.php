@@ -8,7 +8,7 @@
     </label>
 
     <div class="input-group">
-        <input {{$attributes}}
+        <input {!! $attributes !!}
                value="{{ $value }}"
                @if($readonly) readonly @endif
         >

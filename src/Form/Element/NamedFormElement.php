@@ -74,36 +74,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return string
-     */
-    public function htmlAttributesToString()
-    {
-        $html = [];
-
-        $prepareAttributeValue = function ($key, $value) {
-            if (is_numeric($key)) {
-                $key = $value;
-            }
-
-            if (! is_null($value)) {
-                return $key.'='.e($value);
-            }
-        };
-
-        foreach ((array) $this->getHtmlAttributes() as $key => $value) {
-            $element = $prepareAttributeValue($key, $value);
-
-            if (! is_null($element)) {
-                $html[] = $element;
-            }
-        }
-
-        return count($html) > 0
-            ? ' '.implode(' ', $html)
-            : '';
-    }
-
-    /**
      * Compose html name from array like this: 'first[second][third]'.
      *
      * @param array $parts

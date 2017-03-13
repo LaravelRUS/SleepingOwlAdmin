@@ -1,1 +1,1 @@
-<input {{$attributes}} value="{{ $value }}" />
+<input {!! $attributes !!} value="{{ $value }}" />
