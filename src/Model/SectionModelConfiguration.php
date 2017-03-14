@@ -30,13 +30,13 @@ class SectionModelConfiguration extends ModelConfigurationManager
     /**
      * @return DisplayInterface|mixed
      */
-    public function fireDisplay()
+    public function fireDisplay(array $payload = [])
     {
         if (! method_exists($this, 'onDisplay')) {
             return;
         }
 
-        $display = $this->app->call([$this, 'onDisplay']);
+        $display = $this->app->call([$this, 'onDisplay', $payload]);
 
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
