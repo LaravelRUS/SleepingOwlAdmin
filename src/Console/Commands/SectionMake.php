@@ -71,7 +71,7 @@ class SectionMake extends GeneratorCommand
     {
         $stub = parent::replaceClass($stub, $name);
 
-        return str_replace('DummyModel', '\\'.trim($this->argument('model')), $stub);
+        return str_replace('DummyModel', '\\'.trim($this->argument('model'), '\\'), $stub);
     }
 
     /**

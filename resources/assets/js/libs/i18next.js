@@ -7,12 +7,16 @@
 window.i18next = require('i18next');
 
 i18next.init({
-    lng: Admin.Settings.locale,
+    lng: Admin.locale,
     resources: {
-        [Admin.Settings.locale]: {
+        [Admin.locale]: {
             translation: {
-                lang: Admin.Settings.lang
+                lang: Admin.Config.get('lang')
             }
         }
     }
 });
+
+window.trans = function (key) {
+    return i18next.t(key);
+}

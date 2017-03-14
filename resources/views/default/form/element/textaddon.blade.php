@@ -10,7 +10,7 @@
 		@if ($placement == 'before')
 			<span class="input-group-addon">{!! $addon !!}</span>
 		@endif
-		<input class="form-control" name="{{ $name }}" type="text" id="{{ $name }}" value="{{ $value }}">
+		<input {!! $attributes !!} value="{{ $value }}">
 		@if ($placement == 'after')
 			<span class="input-group-addon">{!! $addon !!}</span>
 		@endif

@@ -13,6 +13,11 @@ class Image extends File
     protected static $route = 'image';
 
     /**
+     * @var \Closure
+     */
+    protected $saveCallback;
+
+    /**
      * @var array
      */
     protected $uploadValidationRules = ['required', 'image'];
@@ -40,13 +45,40 @@ class Image extends File
     }
 
     /**
+     * Set.
+     * @param \Closure $callable
+     */
+    public function setSaveCallback(\Closure $callable)
+    {
+        $this->saveCallback = $callable;
+
+        return $this;
+    }
+
+    /**
+     * Return save callback.
+     * @return \Closure
+     */
+    public function getSaveCallback()
+    {
+        return $this->saveCallback;
+    }
+
+    /**
      * @param UploadedFile $file
      * @param string $path
      * @param string $filename
      * @param array $settings
+     * @return \Closure|File|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
+        if ($this->getSaveCallback()) {
+            $callable = $this->getSaveCallback();
+
+            return call_user_func($callable, [$file, $path, $filename, $settings]);
+        }
+
         if (class_exists('Intervention\Image\Facades\Image') and (bool) getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
@@ -54,10 +86,14 @@ class Image extends File
                 call_user_func_array([$image, $method], $args);
             }
 
-            return $image->save($path.'/'.$filename);
+            $value = $path.'/'.$filename;
+
+            $image->save($value);
+
+            return ['path' => asset($value), 'value' => $value];
         }
 
-        parent::saveFile($file, $path, $filename, $settings);
+        return parent::saveFile($file, $path, $filename, $settings);
     }
 
     /**

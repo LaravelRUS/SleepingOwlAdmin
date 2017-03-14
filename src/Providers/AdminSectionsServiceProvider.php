@@ -2,12 +2,11 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Auth\Access\Gate;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
-
     /**
      * @var array  Associative array in form of: Model::class => Section::class
      */
@@ -26,11 +25,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
-        foreach ($this->sections as $model => $section) {
-            if (class_exists($section)) {
-                $admin->register(new $section($model));
-            }
-        }
+        $admin->registerSections($this->sections());
     }
 
     /**

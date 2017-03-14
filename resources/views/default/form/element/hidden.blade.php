@@ -1,1 +1,1 @@
-<input name="{{ $name }}" type="hidden" value="{{ $value }}" />
+<input {!! $attributes !!} value="{{ $value }}" />

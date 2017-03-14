@@ -2,11 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Http\JsonResponse;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class DependentSelect extends Select implements WithRoutesInterface
 {
@@ -20,7 +17,7 @@ class DependentSelect extends Select implements WithRoutesInterface
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/dependent-select/{field}/{id?}', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect'
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect',
             ]);
         }
     }
@@ -140,17 +137,17 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     public function toArray()
     {
-        $attributes = [
+        $this->setHtmlAttributes([
             'id' => $this->getName(),
             'size' => 2,
             'data-select-type' => 'single',
             'data-url' => $this->getDataUrl(),
             'data-depends' => $this->getDataDepends(),
             'class' => 'form-control input-select input-select-dependent',
-        ];
+        ]);
 
         if ($this->isReadonly()) {
-            $attributes['disabled'] = 'disabled';
+            $this->setHtmlAttribute('disabled', 'disabled');
         }
 
         return [
@@ -163,7 +160,7 @@ class DependentSelect extends Select implements WithRoutesInterface
             'value' => $this->getValueFromModel(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
-            'attributes' => $attributes,
+            'attributes' => $this->getHtmlAttributes(),
         ];
     }
 }

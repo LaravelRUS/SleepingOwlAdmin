@@ -97,10 +97,18 @@ class DateRange extends Date
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'data-format'    => $this->getJsPickerFormat(),
+            'data-startDate' => $this->getDefaultFrom(),
+            'data-endDate'   => $this->getDefaultTo(),
+            'class'          => 'form-control input-daterange',
+            'type'           => 'text',
+        ]);
+
         return parent::toArray() + [
-            'startDate' => $this->getDefaultFrom(),
-            'endDate' => $this->getDefaultTo(),
-        ];
+                'startDate' => $this->getDefaultFrom(),
+                'endDate'   => $this->getDefaultTo(),
+            ];
     }
 
     /**

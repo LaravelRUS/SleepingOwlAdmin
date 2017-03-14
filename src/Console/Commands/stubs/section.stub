@@ -2,13 +2,22 @@
 
 namespace DummyNamespace;
 
-use SleepingOwl\Admin\Contracts\DisplayInterface;
-use SleepingOwl\Admin\Contracts\FormInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
 
+/**
+ * Class DummyClass
+ *
+ * @property DummyModel $model
+ *
+ * @see http://sleepingowladmin.ru/docs/model_configuration_section
+ */
 class DummyClass extends Section
 {
     /**
+     * @see http://sleepingowladmin.ru/docs/model_configuration#ограничение-прав-доступа
+     *
      * @var bool
      */
     protected $checkAccess = false;

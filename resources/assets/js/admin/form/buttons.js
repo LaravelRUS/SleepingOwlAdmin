@@ -1,12 +1,12 @@
-Admin.Modules.add('form.buttons', () => {
+Admin.Modules.register('form.buttons', () => {
     var formRequest = (url, params) => {
-        let form = '<form method="POST" action="' + url + '">';
+        let form = $(`<form method="POST" action="${url}"></form>`);
         for (let name in params) {
-            form += '<input type="hidden" name="' + name + '" value="' + params[name] + '">';
+            form.append(`<input type="hidden" name="${name}" value="${params[name]}">`);
         }
 
-        form += '</form>';
-        $(form).submit();
+        form.appendTo('body');
+        form.submit();
     }
 
     var clickEvent = (selector, question, method) => {
@@ -15,7 +15,7 @@ Admin.Modules.add('form.buttons', () => {
             var url = jSelector.data('url'),
                 redirect = jSelector.data('redirect'),
                 params = {
-                    _token: Admin.Settings.token,
+                    _token: Admin.token,
                 };
 
             if (!_.isUndefined(method)) {
@@ -38,14 +38,7 @@ Admin.Modules.add('form.buttons', () => {
                 return prepareData(self);
             }
 
-            swal({
-                title: question,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: i18next.t('lang.button.yes')
-            }).then(() => {
+            Admin.Messages.confirm(question).then(() => {
                 prepareData(self);
             }, dismiss => {
 
@@ -53,7 +46,7 @@ Admin.Modules.add('form.buttons', () => {
         });
     };
 
-    clickEvent('.form-buttons button.btn-delete', i18next.t('lang.table.delete-confirm'), 'DELETE');
-    clickEvent('.form-buttons button.btn-destroy', i18next.t('lang.table.destroy-confirm'), 'DELETE');
+    clickEvent('.form-buttons button.btn-delete', trans('lang.table.delete-confirm'), 'DELETE');
+    clickEvent('.form-buttons button.btn-destroy', trans('lang.table.destroy-confirm'), 'DELETE');
     clickEvent('.form-buttons button.btn-restore');
 });

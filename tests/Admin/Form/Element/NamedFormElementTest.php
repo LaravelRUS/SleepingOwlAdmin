@@ -203,7 +203,7 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @covers NamedFormElement:;getValue
+     * @covers NamedFormElement::getValue
      */
     public function test_gets_value_with_request()
     {
@@ -221,7 +221,7 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @covers NamedFormElement:;getValue
+     * @covers NamedFormElement::getValue
      */
     public function test_gets_value()
     {
@@ -243,7 +243,7 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @covers NamedFormElement:;resolvePath
+     * @covers NamedFormElement::resolvePath
      */
     public function test_resolving_path()
     {
@@ -305,6 +305,7 @@ class NamedFormElementTest extends TestCase
             'label' => 'Label',
             'helpText' => null,
             'required' => false,
+            'attributes' => ' id="key2[subkey]" name="key2[subkey]"',
         ], $element->toArray());
     }
 
@@ -333,6 +334,27 @@ class NamedFormElementTest extends TestCase
         $model->shouldReceive('setAttribute')->with('key', $value);
 
         $element->setModelAttribute($value);
+    }
+
+    /**
+     * @covers FormElement::isValueSkipped()
+     * @covers FormElement::setValueSkipped()
+     */
+    public function test_does_not_set_skipped_values()
+    {
+        $nameElement = $this->getElement('name', 'Name');
+        $passwordElement = $this->getElement('password', 'Password')->setValueSkipped(true);
+
+        $model = new NamedFormElementTestModuleForTestingSkippedValues();
+        foreach ([$nameElement, $passwordElement] as $element) {
+            /* @var $element NamedFormElement  */
+            $element->setModel($model);
+            $element->setModelAttribute($element->getLabel());
+        }
+
+        $attributes = array_keys($model->getAttributes());
+        $this->assertFalse(in_array('password', $attributes, true));
+        $this->assertCount(1, $attributes);
     }
 
     public function test_prepare_value()
@@ -436,9 +458,15 @@ class NamedFormElementTestModuleForTestingResolvePath extends \Illuminate\Databa
 class NamedFormElementTestModuleForTestingResolvePathBelongsTo extends \Illuminate\Database\Eloquent\Model
 {
 }
+
 class NamedFormElementTestModuleForTestingResolvePathHasOne extends \Illuminate\Database\Eloquent\Model
 {
 }
+
 class NamedFormElementTestModuleForTestingResolvePathHasMany extends \Illuminate\Database\Eloquent\Model
+{
+}
+
+class NamedFormElementTestModuleForTestingSkippedValues extends \Illuminate\Database\Eloquent\Model
 {
 }

@@ -1,4 +1,4 @@
-Admin.Modules.add('form.elements.select', () => {
+Admin.Modules.register('form.elements.select', () => {
     $('.input-select').each((e, item) => {
         let options = {},
             $self = $(item);

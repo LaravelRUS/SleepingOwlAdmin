@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Traits\OrderableModel;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class DisplayColumnController extends Controller
 {

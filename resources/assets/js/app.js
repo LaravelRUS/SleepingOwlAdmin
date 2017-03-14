@@ -16,6 +16,7 @@ require('./wysiwyg/tinymce')
  * Initialize display
  */
 require('./admin/display/datatables')
+//require('./admin/display/table') // TODO доделать
 require('./admin/display/actions')
 require('./admin/display/treeview')
 require('./admin/display/columns/checkbox')
@@ -30,17 +31,15 @@ require('./admin/form/buttons')
 require('./admin/form/datetime')
 require('./admin/form/daterange')
 require('./admin/form/select')
+require('./admin/form/selectajax')
 require('./admin/form/dependent-select')
 require('./admin/form/file')
 require('./admin/form/image')
 require('./admin/form/images')
+require('./admin/events')
 
-$(() => {
-    require('./admin/events');
+Admin.Modules.boot()
 
-    Admin.Modules.init();
-
-    var app = new Vue({
-        el: 'body'
-    });
-})
+const app = new Vue({
+    el: 'body'
+});

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class NamedColumnTest extends TestCase
@@ -141,7 +141,6 @@ class NamedColumnTestOrderByClause implements \SleepingOwl\Admin\Contracts\Displ
 {
     public function setName($name)
     {
-
     }
 
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query, $direction = 'asc')

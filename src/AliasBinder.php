@@ -132,6 +132,7 @@ class AliasBinder implements AliasBinderInterface
     public function makeClass($alias, array $arguments)
     {
         $reflection = new \ReflectionClass($this->getAlias($alias));
+
         return $reflection->newInstanceArgs($arguments);
     }
 

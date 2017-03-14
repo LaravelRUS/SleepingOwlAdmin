@@ -25,6 +25,18 @@ interface AdminInterface extends Initializable
     public function registerModel($class, \Closure $callback = null);
 
     /**
+     * @param array $sections
+     *
+     * @return $this
+     */
+    public function registerSections(array $sections);
+
+    /**
+     * @return array
+     */
+    public function getMissedSections();
+
+    /**
      * @param string $alias
      *
      * @return ModelConfigurationInterface|null

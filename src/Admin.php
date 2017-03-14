@@ -12,14 +12,18 @@ use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Config\Repository as ConfigRepository;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 class Admin implements AdminInterface
 {
+    use ProvidesScriptVariables;
+
     /**
      * @var ModelConfigurationInterface[]|ModelCollection
      */
@@ -36,6 +40,16 @@ class Admin implements AdminInterface
     protected $app;
 
     /**
+     * @var ConfigRepository
+     */
+    protected $config;
+
+    /**
+     * @var array
+     */
+    protected $missedSections = [];
+
+    /**
      * Admin constructor.
      *
      * @param Application $application
@@ -44,6 +58,9 @@ class Admin implements AdminInterface
     {
         $this->app = $application;
         $this->models = new ModelCollection();
+        $this->config = new ConfigRepository(
+            $this->app['config']->get('sleeping_owl', [])
+        );
 
         $this->registerBaseServiceProviders();
         $this->registerCoreContainerAliases();
@@ -73,7 +90,7 @@ class Admin implements AdminInterface
      */
     public function registerModel($class, Closure $callback = null)
     {
-        $this->register($model = new ModelConfiguration($class));
+        $this->register($model = new ModelConfiguration($this->app, $class));
 
         if (is_callable($callback)) {
             call_user_func($callback, $model);
@@ -96,6 +113,32 @@ class Admin implements AdminInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param array $sections
+     *
+     * @return $this
+     */
+    public function registerSections(array $sections)
+    {
+        foreach ($sections as $model => $section) {
+            if (class_exists($section)) {
+                $this->register(new $section($this->app, $model));
+            } else {
+                $this->missedSections[$model] = $section;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMissedSections()
+    {
+        return $this->missedSections;
     }
 
     /**

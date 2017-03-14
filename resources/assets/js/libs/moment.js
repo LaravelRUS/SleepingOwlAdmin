@@ -4,4 +4,4 @@
  * @see http://momentjs.com/docs/
  */
 window.moment = require('moment');
-moment.locale(Admin.Settings.locale);
+moment.locale(Admin.locale);

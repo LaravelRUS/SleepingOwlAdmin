@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Form\Element\File;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use SleepingOwl\Admin\Form\Element\File;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UploadController extends Controller
 {
@@ -58,7 +58,7 @@ class UploadController extends Controller
         if ($validator->fails()) {
             return new JsonResponse([
                 'message' => trans('lang.message.validation_error'),
-                'errors' => $validator->errors()->get('file'),
+                'errors'  => $validator->errors()->get('file'),
             ], 400);
         }
 
@@ -68,13 +68,9 @@ class UploadController extends Controller
         $path = $element->getUploadPath($file);
         $settings = $element->getUploadSettings();
 
-        $element->saveFile($file, public_path($path), $filename, $settings);
+        $result = $element->saveFile($file, $path, $filename, $settings);
 
-        $value = $path.'/'.$filename;
-
-        return new JsonResponse([
-            'url' => asset($value),
-            'value' => $value,
-        ]);
+        /* When driver not file */
+        return new JsonResponse($result);
     }
 }

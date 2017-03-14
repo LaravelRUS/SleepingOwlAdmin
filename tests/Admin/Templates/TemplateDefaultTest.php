@@ -23,7 +23,7 @@ class TemplateDefaultTest extends TestCase
      */
     public function test_getViewNamespace()
     {
-        $this->assertEquals('sleeping_owl::', $this->getTemplate()->getViewNamespace());
+        $this->assertEquals('sleeping_owl::default', $this->getTemplate()->getViewNamespace());
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\Command;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 
 class SectionGenerate extends Command
 {
@@ -23,21 +24,13 @@ class SectionGenerate extends Command
     /**
      * Execute the console command.
      *
+     * @param AdminInterface $admin
+     *
      * @return void
      */
-    public function fire()
+    public function fire(AdminInterface $admin)
     {
-        $provider = $this->laravel->getProvider(
-            $this->laravel->getNamespace().'Providers\\AdminSectionsServiceProvider'
-        );
-
-        if (! $provider) {
-            $this->error('[App\Providers\AdminSectionsServiceProvider] not found');
-
-            return;
-        }
-
-        foreach ($provider->sections() as $model => $section) {
+        foreach ($admin->getMissedSections() as $model => $section) {
             $this->callSilent('sleepingowl:section:make', ['name' => $section, 'model' => $model]);
         }
 

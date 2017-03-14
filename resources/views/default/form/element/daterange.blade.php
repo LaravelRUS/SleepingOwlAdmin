@@ -8,13 +8,7 @@
     </label>
 
     <div class="input-group">
-        <input data-format="{{ $pickerFormat }}"
-               data-startDate="{{ $startDate }}"
-               data-endDate="{{ $endDate }}"
-               class="form-control input-daterange"
-               name="{{ $name }}"
-               type="text"
-               id="{{ $name }}"
+        <input {!! $attributes !!}
                value="{{ $value }}"
                @if($readonly) readonly @endif
         >

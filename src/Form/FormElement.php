@@ -4,12 +4,12 @@ namespace SleepingOwl\Admin\Form;
 
 use Closure;
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 abstract class FormElement implements FormElementInterface
 {
@@ -36,9 +36,14 @@ abstract class FormElement implements FormElementInterface
     protected $validationMessages = [];
 
     /**
-     * @var bool
+     * @var bool|callable
      */
     protected $readonly = false;
+
+    /**
+     * @var bool|callable
+     */
+    protected $valueSkipped = false;
 
     /**
      * @var mixed
@@ -178,6 +183,30 @@ abstract class FormElement implements FormElementInterface
         }
 
         return (bool) $this->readonly;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValueSkipped()
+    {
+        if (is_callable($this->valueSkipped)) {
+            return (bool) call_user_func($this->valueSkipped, $this->getModel());
+        }
+
+        return (bool) $this->valueSkipped;
+    }
+
+    /**
+     * @param Closure|bool $valueSkipped
+     *
+     * @return $this
+     */
+    public function setValueSkipped($valueSkipped)
+    {
+        $this->valueSkipped = $valueSkipped;
+
+        return $this;
     }
 
     /**

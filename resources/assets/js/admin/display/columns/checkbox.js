@@ -1,4 +1,4 @@
-Admin.Modules.add('display.columns.checkbox', () => {
+Admin.Modules.register('display.columns.checkbox', () => {
     $('.adminCheckboxRow').on('change', (e) => {
         let $self = $(e.target),
             $row = $self.closest('tr')

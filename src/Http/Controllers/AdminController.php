@@ -3,16 +3,15 @@
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class AdminController extends Controller
 {
@@ -488,47 +487,6 @@ class AdminController extends Controller
             ->with('title', $title)
             ->with('content', $content)
             ->with('breadcrumbKey', $this->parentBreadcrumb);
-    }
-
-    /**
-     * @return Response
-     */
-    public function getScripts()
-    {
-        $lang = trans('sleeping_owl::lang');
-        if ($lang == 'sleeping_owl::lang') {
-            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
-        }
-
-        $data = [
-            'locale' => $this->app->getLocale(),
-            'url_prefix' => config('sleeping_owl.url_prefix'),
-            'base_url' => asset('/'),
-            'lang' => $lang,
-            'wysiwyg' => config('sleeping_owl.wysiwyg'),
-        ];
-
-        $content = 'window.Admin = {Settings: '.json_encode($data, JSON_PRETTY_PRINT).'}';
-
-        return $this->cacheResponse(
-            new Response($content, 200, [
-                'Content-Type' => 'text/javascript',
-            ])
-        );
-    }
-
-    /**
-     * @param Response $response
-     *
-     * @return Response
-     */
-    protected function cacheResponse(Response $response)
-    {
-        $response->setSharedMaxAge(31536000);
-        $response->setMaxAge(31536000);
-        $response->setExpires(new \DateTime('+1 year'));
-
-        return $response;
     }
 
     /**

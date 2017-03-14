@@ -6,13 +6,7 @@
 			<span class="form-element-required">*</span>
 		@endif
 	</label>
-	<input class="form-control"
-		   name="{{ $name }}"
-		   type="number"
-		   id="{{ $name }}"
-		   max="{{ $max }}"
-		   min="{{ $min }}"
-		   step="{{ $step }}"
+	<input {!! $attributes !!}
 		   value="{{ $value }}"
 		   @if($readonly) readonly @endif
 	>

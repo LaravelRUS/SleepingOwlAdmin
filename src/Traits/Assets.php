@@ -25,7 +25,7 @@ trait Assets
             $handle = $script;
         }
 
-        $this->package->js($handle, $script, $dependency);
+        $this->package->js($handle, $script, $dependency, true);
 
         return $this;
     }
@@ -73,6 +73,6 @@ trait Assets
 
     protected function includePackage()
     {
-        Meta::loadPackage($this->package->getName());
+        app('sleeping_owl.meta')->loadPackage($this->package->getName());
     }
 }

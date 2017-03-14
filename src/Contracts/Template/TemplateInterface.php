@@ -2,11 +2,33 @@
 
 namespace SleepingOwl\Admin\Contracts\Template;
 
+use Illuminate\Contracts\Support\Arrayable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
-interface TemplateInterface extends Initializable
+interface TemplateInterface extends Initializable, Arrayable
 {
+    /**
+     * Получение названия текущего шаблона.
+     *
+     * @return string
+     */
+    public function name();
+
+    /**
+     * Версия темы.
+     *
+     * @return string
+     */
+    public function version();
+
+    /**
+     * URL проекта.
+     *
+     * @return string
+     */
+    public function homepage();
+
     /**
      * @return string
      */
@@ -61,4 +83,20 @@ interface TemplateInterface extends Initializable
      * @return string
      */
     public function renderNavigation();
+
+    /**
+     * Получение относительного пути хранения asset файлов.
+     *
+     * @return string
+     */
+    public function assetDir();
+
+    /**
+     * Генерация относительно пути до asset файлов для текущей темы.
+     *
+     * @param string $path относительный путь до файла, например `js/app.js`
+     *
+     * @return string
+     */
+    public function assetPath($path = null);
 }

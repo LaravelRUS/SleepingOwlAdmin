@@ -1,4 +1,4 @@
-Admin.Modules.add('display.actions', () => {
+Admin.Modules.register('display.actions', () => {
     $('form[data-type="display-actions"]').on('submit', function (e) {
         var $btn = $(e.target.action),
             $checkboxes = $('.adminCheckboxRow').filter(':checked')

@@ -6,3 +6,7 @@
  */
 window.Dropzone = require('dropzone');
 Dropzone.autoDiscover = false;
+
+Dropzone.prototype.defaultOptions.headers = {
+    'X-CSRF-TOKEN': Admin.token
+}

@@ -1,14 +1,11 @@
-window.Admin.Settings.token = document.querySelector("meta[name='csrf-token']").getAttribute('content')
+import Admin from './components/admin';
 
-/**
- * Underscore is a JavaScript library that provides a whole mess of useful
- * functional programming helpers without extending any built-in objects.
- * It’s the answer to the question: “If I sit down in front of a blank HTML
- * page, and want to start being productive immediately, what do I need?”
- *
- * @see http://underscorejs.org
- */
-window._ = require('underscore');
+window._ = require('lodash');
+
+window.Admin = new Admin(
+    document.querySelector("meta[name='csrf-token']").getAttribute('content'),
+    window.GlobalConfig || {}
+)
 
 window.Admin.Events = require('./components/events');
 
@@ -37,17 +34,11 @@ require('./libs/dependent-dropdown')
  * @see https://almsaeedstudio.com/preview
  */
 require('admin-lte')
-
 require('./libs/vuejs')
 
-/**
- * Components
- */
-window.Admin.log = (error) => {
-    console.log(error)
-}
-
-window.Admin.Messages = require('./components/messages');
-window.Admin.Modules = require('./components/modules');
-window.Admin.WYSIWYG = require('./components/wysiwyg');
+window.Admin.Messages = require('./components/messages')
+window.Admin.Storage = require('./components/storage')
+window.Admin.Asset = require('./components/asset')
+window.Admin.Modules = require('./components/modules')
+window.Admin.WYSIWYG = require('./components/wysiwyg')
 

@@ -6,6 +6,7 @@ use LogicException;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
+use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -14,6 +15,7 @@ use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 
 abstract class NamedFormElement extends FormElement
 {
+    use HtmlAttributes;
     /**
      * @var string
      */
@@ -371,7 +373,11 @@ abstract class NamedFormElement extends FormElement
         $count = count($relations);
 
         if ($count === 1) {
-            return $model->getAttribute($this->getModelAttributeKey());
+            $attribute = $model->getAttribute($this->getModelAttributeKey());
+
+            if (! empty($attribute) or is_null($value)) {
+                return $attribute;
+            }
         }
 
         foreach ($relations as $relation) {
@@ -381,10 +387,16 @@ abstract class NamedFormElement extends FormElement
             }
 
             if ($count === 2) {
-                return $model->getAttribute($relation);
+                $attribute = $model->getAttribute($relation);
+
+                if (! empty($attribute) or is_null($value)) {
+                    return $attribute;
+                }
             }
 
-            throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
+            if (is_null($this->getDefaultValue())) {
+                throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
+            }
         }
 
         return $value;
@@ -414,6 +426,10 @@ abstract class NamedFormElement extends FormElement
         $model = $this->getModelByPath(
             $this->getPath()
         );
+
+        if ($this->isValueSkipped()) {
+            return;
+        }
 
         $model->setAttribute(
             $this->getModelAttributeKey(),
@@ -519,12 +535,18 @@ abstract class NamedFormElement extends FormElement
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'id' => $this->getName(),
+            'name' => $this->getName(),
+        ]);
+
         return array_merge(parent::toArray(), [
             'id' => $this->getName(),
             'value' => $this->getValueFromModel(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
+            'attributes'=> $this instanceof Select ? $this->getHtmlAttributes() : $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);

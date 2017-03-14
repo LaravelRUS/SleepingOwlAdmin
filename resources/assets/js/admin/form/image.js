@@ -36,9 +36,6 @@ Vue.component('element-image', Vue.extend({
                 previewsContainer: false,
                 acceptedFiles: 'image/*',
                 dictDefaultMessage: '',
-                headers: {
-                    'X-CSRF-TOKEN': window.Admin.Settings.token
-                },
                 sending () {
                     self.closeAlert()
                 },
@@ -55,17 +52,8 @@ Vue.component('element-image', Vue.extend({
         remove () {
             var self = this;
 
-            swal({
-                title: i18next.t('lang.message.are_you_sure'),
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: i18next.t('lang.button.yes')
-            }).then(() => {
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
                 self.value = '';
-            }, dismiss => {
-
             });
         },
         closeAlert () {
@@ -77,7 +65,7 @@ Vue.component('element-image', Vue.extend({
             return this.value.length > 0
         },
         image () {
-            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Settings.base_url + this.value)
+            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Url.upload(this.value))
         }
     }
 }));

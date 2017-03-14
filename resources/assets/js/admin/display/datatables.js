@@ -1,7 +1,7 @@
-Admin.Modules.add('display.datatables', () => {
+Admin.Modules.register('display.datatables', () => {
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
-            dt.jqXHR.responseJSON.message || i18next.t('lang.table.error')
+            dt.jqXHR.responseJSON.message || trans('lang.table.error')
         )
     };
 
@@ -12,7 +12,7 @@ Admin.Modules.add('display.datatables', () => {
     }
 
     function iterateColumnFilters(datatableId, callback) {
-        $('[data-datatables-id="' + datatableId + '"] .column-filter[data-type]').each((i, subitem) => {
+        $(`[data-datatables-id="${datatableId}"] .column-filter[data-type]`).each((i, subitem) => {
             let $element = $(subitem)
 
             callback(

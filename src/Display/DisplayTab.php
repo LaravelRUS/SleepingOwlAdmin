@@ -3,18 +3,18 @@
 namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Form\FormElementsCollection;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
-use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
 
@@ -353,6 +353,18 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
             return $content->isReadonly();
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValueSkipped()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->isValueSkipped();
         }
 
         return false;

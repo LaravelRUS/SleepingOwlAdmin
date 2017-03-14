@@ -6,11 +6,7 @@
 			<span class="form-element-required">*</span>
 		@endif
 	</label>
-	<input class="form-control"
-		   name="{{ $name }}"
-		   type="text"
-		   id="{{ $name }}"
-		   value="{{ $value }}"
+	<input {!! $attributes !!} value="{{$value}}"
 		   @if($readonly) readonly @endif
 	>
 

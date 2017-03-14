@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class BreadcrumbsServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -33,7 +32,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
     {
         return [
             'sleeping_owl.breadcrumbs',
-            'SleepingOwl\Admin\Contracts\Template\Breadcrumbs'
+            'SleepingOwl\Admin\Contracts\Template\Breadcrumbs',
         ];
     }
 }

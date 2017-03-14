@@ -89,11 +89,19 @@ class Number extends NamedFormElement
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'class' => 'form-control',
+            'type'  => 'number',
+            'max'   => $this->getMax(),
+            'min'   => $this->getMin(),
+            'step'  => $this->getStep(),
+        ]);
+
         return parent::toArray() + [
-            'min' => $this->getMin(),
-            'max' => $this->getMax(),
-            'step' => $this->getStep(),
-        ];
+                'min'  => $this->getMin(),
+                'max'  => $this->getMax(),
+                'step' => $this->getStep(),
+            ];
     }
 
     /**
