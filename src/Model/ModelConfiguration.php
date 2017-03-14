@@ -263,7 +263,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function setDeletable($deletable)
     {
-        $this->deletable = (bool)$deletable;
+        $this->deletable = (bool) $deletable;
 
         return $this;
     }
