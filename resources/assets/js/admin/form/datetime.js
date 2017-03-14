@@ -4,7 +4,7 @@ Admin.Modules.register('form.elements.datetime', () => {
 
         $self.datetimepicker({
             locale: Admin.locale
-        }).trigger('dp.change').on('dp.change', () => {
+        }).on('dp.change', () => {
             $self.change()
         })
     })
