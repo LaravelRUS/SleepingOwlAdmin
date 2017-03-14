@@ -36,7 +36,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $display = $this->app->call([$this, 'onDisplay', $payload]);
+        $display = $this->app->call([$this, 'onDisplay'], $payload);
 
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());
