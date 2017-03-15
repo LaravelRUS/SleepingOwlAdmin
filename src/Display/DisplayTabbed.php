@@ -188,9 +188,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function ($tab) use ($request, $model) {
-
             $tabId = $request->get('sleeping_owl_tab_id');
-            
+
             if ($tab instanceof FormInterface && $tab->getName() == $tabId) {
                 $tab->validateForm($request, $model);
             }
@@ -206,7 +205,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function (TabInterface $tab) use ($request, $model) {
-
             $tabId = $request->get('sleeping_owl_tab_id');
 
             if ($tab instanceof FormInterface && $tab->getName() == $tabId) {
