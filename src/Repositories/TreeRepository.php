@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Repositories;
 
-use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Display\Tree\BaumNodeType;
 use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
 use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
