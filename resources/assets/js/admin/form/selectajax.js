@@ -5,7 +5,7 @@ Admin.Modules.register('form.elements.selectajax', () => {
 
         options = {
             placeholder: "Search ...",
-            minimumInputLength: 3,
+            minimumInputLength: $self.data('min-symbols'),
             ajax: {
                 url: $self.attr('search_url'),
                 dataType: 'json',
