@@ -496,8 +496,7 @@ abstract class NamedFormElement extends FormElement
     {
         return method_exists($relation, 'getForeignKeyName')
             ? $relation->getForeignKeyName()
-            : $relation->getPlainForeignKey()
-        ;
+            : $relation->getPlainForeignKey();
     }
 
     /**
