@@ -187,7 +187,7 @@ class MultiSelect extends Select
                 if ($this->isDeleteRelatedItem()) {
                     $item->delete();
                 } else {
-                    $item->{$relation->getForeignKeyName()} = null;
+                    $item->{$this->getForeignKeyNameFromRelation($relation)} = null;
                     $item->save();
                 }
             }

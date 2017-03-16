@@ -471,7 +471,7 @@ abstract class NamedFormElement extends FormElement
                         case HasOne::class:
                         case MorphOne::class:
                             $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($relationObject->getForeignKeyName(), $relationObject->getParentKey());
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }
@@ -490,6 +490,14 @@ abstract class NamedFormElement extends FormElement
         }
 
         return $model;
+    }
+
+    protected function getForeignKeyNameFromRelation($relation)
+    {
+        return method_exists($relation, 'getForeignKeyName')
+            ? $relation->getForeignKeyName()
+            : $relation->getPlainForeignKey()
+        ;
     }
 
     /**
