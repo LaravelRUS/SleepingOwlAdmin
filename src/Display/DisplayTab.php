@@ -3,13 +3,12 @@
 namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Initializable;
-use KodiComponents\Navigation\Contracts\BadgeInterface;
-use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -22,7 +21,6 @@ use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
-
     use VisibleCondition, \SleepingOwl\Admin\Traits\Renderable;
 
     /**
@@ -70,15 +68,15 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         $this->content = $content;
 
-        if ( ! is_null($label)) {
+        if (! is_null($label)) {
             $this->setLabel($label);
         }
 
-        if ( ! is_null($icon)) {
+        if (! is_null($icon)) {
             $this->setIcon($icon);
         }
 
-        if ( ! is_null($badge)) {
+        if (! is_null($badge)) {
             $this->setBadge($badge);
         }
     }
@@ -98,6 +96,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         }
 
         $this->badge = $badgeData;
+
         return $this;
     }
 
@@ -144,7 +143,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function setActive($active = true)
     {
-        $this->active = (bool)$active;
+        $this->active = (bool) $active;
 
         return $this;
     }
@@ -457,7 +456,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             'active' => $this->isActive(),
             'name'   => $this->getName(),
             'icon'   => $this->getIcon(),
-            'badge'  => $this->getBadge()
+            'badge'  => $this->getBadge(),
         ];
     }
 }
