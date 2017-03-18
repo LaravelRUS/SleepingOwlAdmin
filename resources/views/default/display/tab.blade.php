@@ -5,5 +5,8 @@
         @endif
 
         {{ $label }}
+        @if($badge)
+            {!! $badge->render() !!}
+        @endif
     </a>
 </li>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static \SleepingOwl\Admin\Display\DisplayDatatables datatables()
  * @method static \SleepingOwl\Admin\Display\DisplayDatatablesAsync datatablesAsync()
- * @method static \SleepingOwl\Admin\Display\DisplayTab tab(\Illuminate\Contracts\Support\Renderable $display, string $label = null, string $icon = null)
+ * @method static \SleepingOwl\Admin\Display\DisplayTab tab(\Illuminate\Contracts\Support\Renderable $display, string $label = null, string $icon = null, $badge = null)
  * @method static \SleepingOwl\Admin\Display\DisplayTabbed tabbed(\Closure|array $tabs = null)
  * @method static \SleepingOwl\Admin\Display\DisplayTable table()
  * @method static \SleepingOwl\Admin\Display\DisplayTree tree()
