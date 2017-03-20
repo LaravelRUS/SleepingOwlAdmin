@@ -74,6 +74,9 @@ return [
             'next' => '&rarr;',
             'last' => 'Last',
         ],
+        'filters' => [
+            'control' => 'Filter',
+        ]
     ],
     'tree' => [
         'expand' => 'Expand all',
