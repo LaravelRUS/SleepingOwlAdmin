@@ -375,7 +375,7 @@ abstract class NamedFormElement extends FormElement
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
 
-            if (! empty($attribute) || $attribute == 0 || is_null($value)) {
+            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
         }
