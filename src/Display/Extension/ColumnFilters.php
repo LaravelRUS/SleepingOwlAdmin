@@ -6,9 +6,9 @@ use Request;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Display\Column\Filter\Control;
 use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
-use SleepingOwl\Admin\Display\Column\Filter\Control;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -70,13 +70,12 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * Remove last element
+     * Remove last element.
      */
     public function pop()
     {
         array_pop($this->columnFilters);
     }
-
 
     /**
      * @return string|\Illuminate\View\View
@@ -172,7 +171,6 @@ class ColumnFilters extends Extension implements Initializable, Placable
         }
 
         $this->validNumberOfFilters();
-
 
         $filters = collect($this->columnFilters);
 
