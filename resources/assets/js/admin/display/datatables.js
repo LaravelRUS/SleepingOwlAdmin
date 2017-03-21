@@ -188,6 +188,12 @@ Admin.Modules.register('display.datatables', () => {
         $("#filters-exec").on('click', function () {
             table.api().draw();
         });
+
+        $(".display-filters td[data-index] input").on('keyup', function(e){
+            if(e.keyCode === 13){
+                table.api().draw();
+            }
+        });
     })
 })
 
