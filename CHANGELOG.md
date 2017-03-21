@@ -1,6 +1,9 @@
 # Release Notes
 
 ## [Unreleased]
+ * Пофикшены issue #467 и #504
+ * Фильтры переработаны с эвентов keyup и change на эвенты keyup (keyCode=ENTER) и общую кнопку
+ * Добавлены баджи к tab (имеется проблема с css, но не у всех) читать в документации
  * Добавлена поддержка HtmlAttributes для всех AdminFormElement кроме File,Upload,Image,Images
     Теперь AdminFormElement поддерживает методы setHtmlAttributes, setHtmlAttribute и прочие.
  * Рефакторинг JS кода (http://sleepingowladmin.ru/docs/javascript)
