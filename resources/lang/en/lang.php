@@ -76,7 +76,7 @@ return [
         ],
         'filters' => [
             'control' => 'Filter',
-        ]
+        ],
     ],
     'tree' => [
         'expand' => 'Expand all',

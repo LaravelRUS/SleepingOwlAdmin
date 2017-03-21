@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display\Column\Filter;
 
 class Control extends BaseColumnFilter
 {
-
     /**
      * Control constructor.
      */
