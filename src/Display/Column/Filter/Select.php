@@ -184,8 +184,8 @@ class Select extends BaseColumnFilter
      */
     public function parseValue($selected)
     {
-        if (is_string($selected) && strpos($selected, ',') !== false) {
-            return explode(',', $selected);
+        if (is_string($selected) && strpos($selected, ':::') !== false) {
+            return explode(':::', $selected);
         }
 
         return $selected;

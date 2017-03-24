@@ -320,7 +320,7 @@ window.columnFilters = {
             })
 
             if (serverSide) {
-                column.search(selected.join(','))
+                column.search(selected.join(':::'))
             } else {
                 column.search(selected.join('|'), true, false, true)
             }
