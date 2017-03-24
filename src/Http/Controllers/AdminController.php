@@ -4,15 +4,13 @@ namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
-use SleepingOwl\Admin\Display\DisplayTab;
-use SleepingOwl\Admin\Display\DisplayTabbed;
-use SleepingOwl\Admin\Display\DisplayTable;
-use SleepingOwl\Admin\Form\Columns\Column;
-use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -322,20 +320,17 @@ class AdminController extends Controller
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
-        $field   = $request->input('name');
-        $id      = $request->input('pk');
+        $field = $request->input('name');
+        $id = $request->input('pk');
         $display = $model->fireDisplay();
-        $column  = null;
+        $column = null;
 
-
-        /** @var ColumnEditableInterface|null $column */
+        /* @var ColumnEditableInterface|null $column */
         if (method_exists($display, 'getColumns')) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
                 return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
             })->first();
-
         } else {
-
             if ($display instanceof DisplayTabbed) {
                 foreach ($display->getTabs() as $tab) {
                     $content = $tab->getContent();
@@ -367,11 +362,8 @@ class AdminController extends Controller
                             }
                         }
                     }
-
                 }
             }
-
-
         }
 
         if (is_null($column)) {
@@ -379,9 +371,9 @@ class AdminController extends Controller
         }
 
         $repository = $model->getRepository();
-        $item       = $repository->find($id);
+        $item = $repository->find($id);
 
-        if (is_null($item) || !$model->isEditable($item)) {
+        if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
