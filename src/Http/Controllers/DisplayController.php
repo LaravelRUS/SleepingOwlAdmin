@@ -5,18 +5,17 @@ namespace SleepingOwl\Admin\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Display\DisplayTree;
+use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Form\Columns\Column;
-use SleepingOwl\Admin\Form\FormElements;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DisplayController extends Controller
 {
-
     /**
      * @param ModelConfigurationInterface $model
      * @param Request $request
@@ -47,9 +46,9 @@ class DisplayController extends Controller
 
                         //Try to find data table in columns
                         if ($element instanceof Column) {
-                            foreach($element->getElements() as $columnElement){
+                            foreach ($element->getElements() as $columnElement) {
                                 if ($columnElement instanceof DisplayDatatablesAsync) {
-                                    if($columnElement->getName() == $name){
+                                    if ($columnElement->getName() == $name) {
                                         return $this->renderFindedTable($columnElement, $application, $request);
                                     }
                                 }
@@ -64,7 +63,6 @@ class DisplayController extends Controller
                         return $this->renderFindedTable($content, $application, $request);
                     }
                 }
-
             }
         }
 
