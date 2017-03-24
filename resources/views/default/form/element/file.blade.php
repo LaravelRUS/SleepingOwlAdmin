@@ -9,7 +9,7 @@
 
 	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-	<element-file
+	<element-file @keyup.enter="return false;"
 			url="{{ route('admin.form.element.file', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
@@ -38,7 +38,7 @@
                         <i class="fa fa-cloud-download"></i>
                     </a>
 
-                    <button v-if="has_value" class="btn btn-danger btn-xs" @click.prevent="remove()">
+                    <button v-if="has_value" class="btn btn-danger btn-xs" @keyup.enter="return false;" @click.prevent="remove()">
                         <i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
                     </button>
                 </div>
