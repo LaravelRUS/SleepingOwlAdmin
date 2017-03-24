@@ -7,6 +7,12 @@ use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Display\DisplayTab;
+use SleepingOwl\Admin\Display\DisplayTabbed;
+use SleepingOwl\Admin\Display\DisplayTable;
+use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -316,24 +322,66 @@ class AdminController extends Controller
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
-        $field = $request->input('name');
-        $id = $request->input('pk');
-
+        $field   = $request->input('name');
+        $id      = $request->input('pk');
         $display = $model->fireDisplay();
+        $column  = null;
+
 
         /** @var ColumnEditableInterface|null $column */
-        $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
-            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
-        })->first();
+        if (method_exists($display, 'getColumns')) {
+            $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
+                return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+            })->first();
+
+        } else {
+
+            if ($display instanceof DisplayTabbed) {
+                foreach ($display->getTabs() as $tab) {
+                    $content = $tab->getContent();
+
+                    if ($content instanceof DisplayTable) {
+                        $column = $content->getColumns()->all()->filter(function ($column) use ($field) {
+                            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                        })->first();
+                    }
+                    if ($content instanceof FormElements) {
+                        foreach ($content->getElements() as $element) {
+
+                            //Return data-table if inside FormElements
+                            if ($element instanceof DisplayTable) {
+                                $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
+                                    return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                                })->first();
+                            }
+
+                            //Try to find inline Editable in columns
+                            if ($element instanceof Column) {
+                                foreach ($element->getElements() as $columnElement) {
+                                    if ($columnElement instanceof DisplayTable) {
+                                        $column = $columnElement->getColumns()->all()->filter(function ($column) use ($field) {
+                                            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                                        })->first();
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+        }
 
         if (is_null($column)) {
             abort(404);
         }
 
         $repository = $model->getRepository();
-        $item = $repository->find($id);
+        $item       = $repository->find($id);
 
-        if (is_null($item) || ! $model->isEditable($item)) {
+        if (is_null($item) || !$model->isEditable($item)) {
             abort(404);
         }
 
