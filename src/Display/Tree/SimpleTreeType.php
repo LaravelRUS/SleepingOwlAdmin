@@ -10,7 +10,15 @@ class SimpleTreeType implements TreeTypeInterface
     /**
      * @var TreeRepositoryInterface
      */
-    private $repository;
+    protected $repository;
+
+    /**
+     * @return TreeRepositoryInterface
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
 
     /**
      * @param TreeRepositoryInterface $repository
@@ -69,7 +77,7 @@ class SimpleTreeType implements TreeTypeInterface
             $instance->save();
 
             if (isset($item['children'])) {
-                $this->reorder($item['children'], $id);
+                $this->recursiveReorder($item['children'], $id);
             }
         }
     }
