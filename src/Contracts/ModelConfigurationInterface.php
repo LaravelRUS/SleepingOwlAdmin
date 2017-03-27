@@ -165,6 +165,13 @@ interface ModelConfigurationInterface
     public function getCreateUrl(array $parameters = []);
 
     /**
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function getCancelUrl(array $parameters = []);
+
+    /**
      * @return string
      */
     public function getStoreUrl();

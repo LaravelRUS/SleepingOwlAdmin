@@ -355,6 +355,16 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      *
      * @return string
      */
+    public function getCancelUrl(array $parameters = [])
+    {
+        return $this->getDisplayUrl();
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return string
+     */
     public function getCreateUrl(array $parameters = [])
     {
         array_unshift($parameters, $this->getAlias());
