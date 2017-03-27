@@ -20,6 +20,7 @@ Vue.component('element-images', Vue.extend({
         return {
             errors: [],
             values: [],
+            uploading: false,
         }
     },
     ready () {
@@ -47,6 +48,7 @@ Vue.component('element-images', Vue.extend({
                 clickable: button[0],
                 dictDefaultMessage: '',
                 sending () {
+                    self.uploading = true;
                     self.closeAlert();
                 },
                 success (file, response) {
@@ -56,6 +58,9 @@ Vue.component('element-images', Vue.extend({
                     if(_.isArray(response.errors)) {
                         self.$set('errors', response.errors);
                     }
+                },
+                complete(){
+                    self.uploading = false;
                 }
             });
         },
@@ -76,6 +81,12 @@ Vue.component('element-images', Vue.extend({
         }
     },
     computed: {
+        uploadClass() {
+            if (!this.uploading) {
+                return 'fa fa-upload';
+            }
+            return 'fa fa-spinner fa-spin'
+        },
         has_values () {
             return this.values.length > 0
         },
