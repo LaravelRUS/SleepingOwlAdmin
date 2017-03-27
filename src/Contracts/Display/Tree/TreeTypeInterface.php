@@ -19,4 +19,11 @@ interface TreeTypeInterface
      * @param $data
      */
     public function reorder(array $data);
+
+    /**
+     * Return repository.
+     *
+     * @return mixed
+     */
+    public function getRepository();
 }

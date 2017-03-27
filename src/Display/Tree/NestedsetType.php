@@ -11,7 +11,15 @@ abstract class NestedsetType implements TreeTypeInterface
     /**
      * @var TreeRepositoryInterface
      */
-    private $repository;
+    protected $repository;
+
+    /**
+     * @return TreeRepositoryInterface
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
 
     /**
      * @param TreeRepositoryInterface $repository
