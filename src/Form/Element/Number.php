@@ -5,17 +5,17 @@ namespace SleepingOwl\Admin\Form\Element;
 class Number extends NamedFormElement
 {
     /**
-     * @var int
+     * @var double
      */
     protected $min;
 
     /**
-     * @var int
+     * @var double
      */
     protected $max;
 
     /**
-     * @var int
+     * @var double
      */
     protected $step;
 
@@ -25,7 +25,7 @@ class Number extends NamedFormElement
     protected $view = 'form.element.number';
 
     /**
-     * @return int
+     * @return double
      */
     public function getMin()
     {
@@ -33,19 +33,19 @@ class Number extends NamedFormElement
     }
 
     /**
-     * @param int $min
+     * @param double $min
      *
      * @return $this
      */
     public function setMin($min)
     {
-        $this->min = (int) $min;
+        $this->min = (double) $min;
 
         return $this;
     }
 
     /**
-     * @return int
+     * @return double
      */
     public function getMax()
     {
@@ -53,19 +53,19 @@ class Number extends NamedFormElement
     }
 
     /**
-     * @param int $max
+     * @param double $max
      *
      * @return $this
      */
     public function setMax($max)
     {
-        $this->max = (int) $max;
+        $this->max = (double) $max;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return double
      */
     public function getStep()
     {
@@ -73,13 +73,13 @@ class Number extends NamedFormElement
     }
 
     /**
-     * @param int $step
+     * @param double $step
      *
      * @return $this
      */
     public function setStep($step)
     {
-        $this->step = (int) $step;
+        $this->step = (double) $step;
 
         return $this;
     }
