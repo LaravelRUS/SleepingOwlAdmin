@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Contracts\Form;
 
 use SleepingOwl\Admin\Form\Buttons;
 
-
 /**
  * @method static Buttons\Save save()
  * @method static Buttons\SaveAndCreate saveAndCreate()

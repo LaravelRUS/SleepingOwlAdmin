@@ -3,13 +3,12 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
- * Class Save
+ * Class Save.
  */
 class Delete extends FormButton
 {
-
-    protected $show      = true;
-    protected $name      = 'delete';
+    protected $show = true;
+    protected $name = 'delete';
     protected $iconClass = 'fa-times';
 
     public function __construct()
@@ -18,31 +17,31 @@ class Delete extends FormButton
     }
 
     /**
-     * Init Cancel Button
+     * Init Cancel Button.
      */
     public function initialize()
     {
         parent::initialize();
         $this->setHtmlAttributes([
-            'type'          => "submit",
-            'name'          => "next_action",
-            'class'         => "btn btn-danger",
+            'type'          => 'submit',
+            'name'          => 'next_action',
+            'class'         => 'btn btn-danger',
             'data-url'      => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
             'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
         ]);
     }
 
     /**
-     * Show policy
+     * Show policy.
      * @return bool
      */
     public function canShow()
     {
-        if (is_null($this->getModel()->getKey()) || !$this->show) {
+        if (is_null($this->getModel()->getKey()) || ! $this->show) {
             return false;
         }
 
-        $this->show = !$this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
+        $this->show = ! $this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
         parent::canShow();
     }
 }

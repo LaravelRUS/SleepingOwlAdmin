@@ -3,13 +3,12 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
- * Class Cancel
+ * Class Cancel.
  */
 class Cancel extends FormButton
 {
-
-    protected $show      = true;
-    protected $name      = 'cancel';
+    protected $show = true;
+    protected $name = 'cancel';
     protected $iconClass = 'fa-ban';
 
     public function __construct()
@@ -18,7 +17,7 @@ class Cancel extends FormButton
     }
 
     /**
-     * Init Cancel Button
+     * Init Cancel Button.
      */
     public function initialize()
     {

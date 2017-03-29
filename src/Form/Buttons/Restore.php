@@ -4,32 +4,32 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
- * Class Save
+ * Class Save.
  */
 class Restore extends FormButton
 {
-
-    protected $show      = true;
-    protected $name      = 'restore';
+    protected $show = true;
+    protected $name = 'restore';
     protected $iconClass = 'fa-reply';
 
     public function __construct()
     {
         $this->setText(trans('sleeping_owl::lang.table.restore'));
     }
+
     /**
-     * Init Cancel Button
+     * Init Cancel Button.
      */
     public function initialize()
     {
         parent::initialize();
 
         $this->setHtmlAttributes([
-            'type'  => "submit",
-            'name'  => "next_action",
-            'class' => "btn btn-warning",
+            'type'  => 'submit',
+            'name'  => 'next_action',
+            'class' => 'btn btn-warning',
             'data-url'=> $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
-            'data-redirect'=> $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey())
+            'data-redirect'=> $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
         ]);
     }
 
@@ -38,12 +38,11 @@ class Restore extends FormButton
      */
     public function canShow()
     {
-        if (is_null($this->getModel()->getKey()) || !$this->show) {
+        if (is_null($this->getModel()->getKey()) || ! $this->show) {
             return false;
         }
 
         $this->show = $this->isTrashed() &&
             $this->getModelConfiguration()->isRestorable($this->getModel());
-
     }
 }

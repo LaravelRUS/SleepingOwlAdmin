@@ -17,7 +17,6 @@ use SleepingOwl\Admin\Contracts\Form\FormButtonsFactoryInterface;
  */
 class FormButtonsFactory extends AliasBinder implements FormButtonsFactoryInterface
 {
-
     /**
      * FormFactory constructor.
      *

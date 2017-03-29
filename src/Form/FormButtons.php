@@ -4,24 +4,23 @@ namespace SleepingOwl\Admin\Form;
 
 use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\Buttons\Save;
+use SleepingOwl\Admin\Traits\Renderable;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Buttons\Cancel;
 use SleepingOwl\Admin\Form\Buttons\Delete;
 use SleepingOwl\Admin\Form\Buttons\FormButton;
-use SleepingOwl\Admin\Form\Buttons\Save;
 use SleepingOwl\Admin\Form\Buttons\SaveAndClose;
 use SleepingOwl\Admin\Form\Buttons\SaveAndCreate;
-use SleepingOwl\Admin\Traits\Renderable;
-use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormButtons implements FormButtonsInterface
 {
-
     use HtmlAttributes, Renderable;
 
     /**
-     * @var $placements
+     * @var
      */
     protected $placements;
 
@@ -199,7 +198,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * Set start buttons. Default logic
+     * Set start buttons. Default logic.
      */
     protected function setButtonsOnConstruct()
     {
@@ -208,12 +207,11 @@ class FormButtons implements FormButtonsInterface
             'delete' => new Delete(),
             'save'   => (new Save())->setGroupElements([
                 'save_and_create' => new SaveAndCreate(),
-                'save_and_close'  => new SaveAndClose()
+                'save_and_close'  => new SaveAndClose(),
             ]),
-            'cancel' => new Cancel()
+            'cancel' => new Cancel(),
         ];
     }
-
 
     /**
      * @return bool
@@ -222,7 +220,6 @@ class FormButtons implements FormButtonsInterface
     {
         return method_exists($this->getModel(), 'trashed') ? $this->getModel()->trashed() : false;
     }
-
 
     /**
      * @deprecated new version available
@@ -461,11 +458,11 @@ class FormButtons implements FormButtonsInterface
      */
     public function isShowDeleteButton()
     {
-        if (is_null($this->getModel()->getKey()) || !$this->showDeleteButton) {
+        if (is_null($this->getModel()->getKey()) || ! $this->showDeleteButton) {
             return false;
         }
 
-        $this->showDeleteButton = !$this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
+        $this->showDeleteButton = ! $this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
 
         return $this->showDeleteButton;
     }
@@ -487,7 +484,7 @@ class FormButtons implements FormButtonsInterface
      */
     public function isShowDestroyButton()
     {
-        if (is_null($this->getModel()->getKey()) || !$this->showDestroyButton) {
+        if (is_null($this->getModel()->getKey()) || ! $this->showDestroyButton) {
             return false;
         }
 
@@ -514,7 +511,7 @@ class FormButtons implements FormButtonsInterface
      */
     public function isShowRestoreButton()
     {
-        if (is_null($this->getModel()->getKey()) || !$this->showRestoreButton) {
+        if (is_null($this->getModel()->getKey()) || ! $this->showRestoreButton) {
             return false;
         }
 
