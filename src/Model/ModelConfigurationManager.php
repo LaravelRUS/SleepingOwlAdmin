@@ -496,6 +496,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @param $page_id
+     * @return Page|null
+     */
+    public function getNavigationPage($page_id)
+    {
+        return $this->getNavigation()->findById($page_id);
+    }
+
+    /**
      * @param int $priority
      * @param string|\Closure|BadgeInterface $badge
      *
