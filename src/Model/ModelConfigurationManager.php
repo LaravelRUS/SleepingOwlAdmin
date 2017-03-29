@@ -471,6 +471,14 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @return Navigation
+     */
+    public function getNavigation()
+    {
+        return $this->app['sleeping_owl.navigation'];
+    }
+
+    /**
      * @param int $priority
      * @param string|\Closure|BadgeInterface $badge
      *
@@ -480,9 +488,18 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         $page = $this->makePage($priority, $badge);
 
-        $this->app['sleeping_owl.navigation']->addPage($page);
+        $this->getNavigation()->addPage($page);
 
         return $page;
+    }
+
+    /**
+     * @param $page_id
+     * @return \KodiComponents\Navigation\Contracts\PageInterface|null
+     */
+    public function getNavigationPage($page_id)
+    {
+        return $this->getNavigation()->getPages()->findById($page_id);
     }
 
     /**
