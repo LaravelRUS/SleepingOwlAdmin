@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
 use Illuminate\Support\Facades\URL;
+use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
@@ -481,9 +482,17 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         $page = $this->makePage($priority, $badge);
 
-        $this->app['sleeping_owl.navigation']->addPage($page);
+        $this->getNavigation()->addPage($page);
 
         return $page;
+    }
+
+    /**
+     * @return Navigation
+     */
+    public function getNavigation()
+    {
+        return $this->app['sleeping_owl.navigation'];
     }
 
     /**
