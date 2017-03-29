@@ -326,7 +326,7 @@ class AdminController extends Controller
         $column = null;
 
         /* @var ColumnEditableInterface|null $column */
-        if (method_exists($display, 'getColumns')) {
+        if (is_callable([$display, 'getColumns'])) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
                 return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
             })->first();
