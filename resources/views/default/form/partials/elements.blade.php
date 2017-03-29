@@ -6,9 +6,13 @@
     <div class="form-elements">
         @foreach ($items as $item)
             @if($item instanceof \Illuminate\Contracts\Support\Renderable)
-                @yield('before.'. $item->getName())
+                @if(method_exists($item, 'getName'))
+                    @yield('before.'. $item->getName())
+                @endif
                 {!! $item->render() !!}
-                @yield('after.'. $item->getName())
+                @if(method_exists($item, 'getName'))
+                    @yield('after.'. $item->getName())
+                @endif
             @else
                 {!! $item !!}
             @endif
