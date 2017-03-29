@@ -3,10 +3,9 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Contracts\Form\FormButtonsFactoryInterface;
-use SleepingOwl\Admin\Factories\FormButtonsFactory;
 use SleepingOwl\Admin\Factories\FormFactory;
 use SleepingOwl\Admin\Factories\DisplayFactory;
+use SleepingOwl\Admin\Factories\FormButtonsFactory;
 use SleepingOwl\Admin\Factories\FormElementFactory;
 use SleepingOwl\Admin\Factories\DisplayColumnFactory;
 use SleepingOwl\Admin\Factories\DisplayFilterFactory;
@@ -14,6 +13,7 @@ use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
 use SleepingOwl\Admin\Factories\DisplayColumnFilterFactory;
 use SleepingOwl\Admin\Factories\DisplayColumnEditableFactory;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsFactoryInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
@@ -22,7 +22,6 @@ use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 
 class AliasesServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
         $this->registerColumns();

@@ -3,16 +3,15 @@
 
 namespace SleepingOwl\Admin\Form\Buttons;
 
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\Renderable;
+use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormButton implements FormButtonsInterface, Initializable
 {
-
     use HtmlAttributes, Renderable;
     /**
      * @var string
@@ -25,7 +24,7 @@ class FormButton implements FormButtonsInterface, Initializable
     protected $iconClass;
 
     /**
-     * @var Model $model
+     * @var Model
      */
     protected $model;
     /**
@@ -34,13 +33,12 @@ class FormButton implements FormButtonsInterface, Initializable
     protected $name;
 
     /**
-     * Show button
+     * Show button.
      */
     protected $show;
 
     /**
-     * This is URL
-     *
+     * This is URL.
      */
     protected $url;
 
@@ -55,7 +53,7 @@ class FormButton implements FormButtonsInterface, Initializable
     protected $next_action;
 
     /**
-     * @var $group
+     * @var
      */
     protected $groupElements;
 
@@ -64,15 +62,11 @@ class FormButton implements FormButtonsInterface, Initializable
      */
     protected $modelConfiguration;
 
-
     public function initialize()
     {
         $this->canShow();
     }
 
-    /**
-     *
-     */
     public function canShow()
     {
         return true;
@@ -156,7 +150,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * Show button
+     * Show button.
      */
     public function show()
     {
@@ -164,7 +158,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * Hide button
+     * Hide button.
      */
     public function hide()
     {
@@ -208,7 +202,6 @@ class FormButton implements FormButtonsInterface, Initializable
     {
         return $this->url;
     }
-
 
     /**
      * @return mixed
@@ -274,10 +267,9 @@ class FormButton implements FormButtonsInterface, Initializable
             'name'          => $this->getName(),
             'show'          => $this->getShow(),
             'iconClass'     => $this->getIconClass(),
-            'url'           => $this->getUrl()
+            'url'           => $this->getUrl(),
         ];
     }
-
 
     /**
      * @return bool
@@ -286,6 +278,4 @@ class FormButton implements FormButtonsInterface, Initializable
     {
         return method_exists($this->getModel(), 'trashed') ? $this->getModel()->trashed() : false;
     }
-
-
 }
