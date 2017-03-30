@@ -2,7 +2,7 @@
     <div class="panel-heading">
         @if ($creatable)
             <a class="btn btn-primary" href="{{ $createUrl }}">
-                <i class="fa fa-plus"></i> @lang('sleeping_owl::lang.table.new-entry')
+                <i class="fa fa-plus"></i> {{ $newEntryButtonText }}
             </a>
         @endif
     </div>
