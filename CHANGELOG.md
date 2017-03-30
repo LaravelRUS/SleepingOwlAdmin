@@ -1,6 +1,31 @@
 # Release Notes
 
 ## [Unreleased]
+ * Поправлено поведение payload реализованном в этом #432 issue ( не работал с async )
+    
+    ```php
+    if(!is_null($id))
+    {
+         $contacts = AdminSection::getModel(Contact::class)->fireDisplay(['scopes' => ['withBusiness', $id]]);
+    
+         $tabs[] = AdminDisplay::tab($contacts)
+             ->setLabel("Contacts")
+             ->setIcon('<i class="fa fa-credit-card"></i>');
+    }
+    ```
+    
+    В секции должно быть что то типо
+    ```php
+    public function onDisplay($scopes = [])
+    {
+    
+            $display = AdminDisplay::datatablesAsync()->paginate(10);
+            if($scopes){
+                  $display->getScopes()->push($scopes);
+            }
+    }
+    
+    ```
  * Пофикшено поведение AdminColumnEditable, в нашем случае checkbox в табах и коламнах
  * Добавлен метод getCancelUrl для установки Url кнопки Отмены
  * Переработан механизм кнопок формы
