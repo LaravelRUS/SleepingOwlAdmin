@@ -42,7 +42,8 @@ Admin.Modules.register('display.datatables', () => {
                         if (name = $element.data('ajax-data-name')) {
                             d.columns[index]['search'][name] = $element.val()
                         }
-                    })
+                    });
+                    d.payload = payload;
                 }
             };
         }
