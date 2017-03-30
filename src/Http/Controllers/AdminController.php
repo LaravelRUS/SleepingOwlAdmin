@@ -52,7 +52,7 @@ class AdminController extends Controller
         $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
 
-        $admin->navigation()->setCurrentUrl($request->url());
+        $admin->navigation()->setCurrentUrl($request->getUri());
 
         if (! $this->breadcrumbs->exists('home')) {
             $this->breadcrumbs->register('home', function ($breadcrumbs) {
