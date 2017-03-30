@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
@@ -37,6 +38,10 @@ class SectionModelConfiguration extends ModelConfigurationManager
         }
 
         $display = $this->app->call([$this, 'onDisplay'], $payload);
+
+        if ($display instanceof DisplayDatatablesAsync) {
+            $display->setPayload($payload);
+        }
 
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());

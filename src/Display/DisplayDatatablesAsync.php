@@ -40,6 +40,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         }
     }
 
+    protected $payload;
     /**
      * @var string
      */
@@ -86,7 +87,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         array_unshift($attributes, $this->getName());
         array_unshift($attributes, $this->getModelConfiguration()->getAlias());
 
+        $this->setHtmlAttribute('style', 'width:100%');
         $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes));
+        $this->setHtmlAttribute('data-payload', json_encode($this->payload));
+
     }
 
     /**
@@ -245,5 +249,32 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function getCollection()
     {
+    }
+
+    /**
+     * @param $payload
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $params = parent::toArray();
+        $params['payload'] = $this->payload;
+
+        return $params;
     }
 }
