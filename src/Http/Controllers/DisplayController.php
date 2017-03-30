@@ -27,7 +27,10 @@ class DisplayController extends Controller
      */
     public function async(ModelConfigurationInterface $model, Request $request, Application $application, $name = null)
     {
-        $display = $model->fireDisplay();
+        $payload = $request->payload ?: [];
+
+        $display = $model->fireDisplay($payload);
+
         if ($display instanceof DisplayTabbed) {
             $tabs = $display->getTabs();
 
