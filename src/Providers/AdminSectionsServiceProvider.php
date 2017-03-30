@@ -13,6 +13,11 @@ class AdminSectionsServiceProvider extends ServiceProvider
     protected $sections = [];
 
     /**
+     * @var array  Associative array in form of: Section::class => Policy::class
+     */
+    protected $policies = [];
+
+    /**
      * @return array
      */
     public function sections()
@@ -48,8 +53,17 @@ class AdminSectionsServiceProvider extends ServiceProvider
         if (is_null($namespace)) {
             $namespace = config('sleeping_owl.policies_namespace', '\\App\\Policies\\');
         }
+
         $policies = [];
+        $preparedPolicies = collect($this->policies);
+
         foreach ($this->sections as $model => $section) {
+
+            if($preparedPolicies->has($section)){
+                $policies[$section] = $preparedPolicies->get($section);
+                continue;
+            }
+
             $policies[$section] = $namespace.class_basename($section).'SectionModelPolicy';
         }
 

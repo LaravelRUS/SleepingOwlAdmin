@@ -1,6 +1,13 @@
 # Release Notes
 
 ## [Unreleased]
+ * Теперь политики поддерживают Light-DDD структуру
+    AdminSectionServiceProvider теперь имеется $policies  (property)не путать с методом. 
+    это ассоциативный массив Section::class => Policy::class. Если для секции правило в этом массиве не определено,
+    то Gate будет запрашивать неймспейс политик указанный в sleeping_owl.php + имя секции + SectionModelPolicy
+    т.е. Если секция называется Users то политика будет к примеру App\Policy\UsersSectionModelPolicy.php - это не всегда удобно.
+    Теперь с помощью $policies можно хранить политики где угодно.
+    
  * Поправлено поведение payload реализованном в этом #432 issue ( не работал с async )
     
     ```php
