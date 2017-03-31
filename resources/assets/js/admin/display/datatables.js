@@ -28,11 +28,15 @@ Admin.Modules.register('display.datatables', () => {
             id = $this.data('id'),
             params = $this.data('attributes') || {},
             url = $this.data('url'),
-            payload = $this.data('payload')
+            payload = $this.data('payload'),
+            searching = $this.data('display-searching')
 
         if (url && url.length > 0) {
-            params.serverSide = true
-            params.processing = true
+            params.serverSide = true;
+            params.processing = true;
+            params.paging     = false;
+            params.searching  = searching;
+
             params.ajax = {
                 url: url,
                 data (d) {

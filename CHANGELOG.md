@@ -1,6 +1,7 @@
 # Release Notes
 
 ## [Unreleased]
+ * Добавлен метод setDisplaySearch(true|false) для установки параметра отображения общего поля поиска для DataTablesAsync
  * Добавлен коллбек на мультиселект и ajax-мультиселект который контролирует pivot-data
    ```php
     AdminFormElement::multiselectajax('someBelongToManyRelation', "SomeLabel")
