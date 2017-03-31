@@ -65,7 +65,7 @@ class Number extends NamedFormElement
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getStep()
     {

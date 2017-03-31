@@ -29,7 +29,7 @@ class Scopes extends Extension
     {
         $this->scopes = func_get_args();
 
-        if(is_array($scopes)){
+        if (is_array($scopes)) {
             $this->scopes = $scopes;
         }
 
