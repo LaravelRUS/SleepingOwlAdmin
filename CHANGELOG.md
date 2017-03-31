@@ -1,6 +1,24 @@
 # Release Notes
 
 ## [Unreleased]
+ * Добавлен коллбек на мультиселект и ajax-мультиселект который контролирует pivot-data
+   ```php
+    AdminFormElement::multiselectajax('someBelongToManyRelation', "SomeLabel")
+        ->setModelForOptions(SomeModelWithBelongsToRelation::class)
+        ->setDisplay('some_display_field')
+  
+        ->setPivotCallback(function($values){
+           //$values - массив данных что будет передаваться в sync
+           //Обычно это массив id [1, 2, 3];
+           //Что бы sync сьел данные с pivot нужно сделать так 
+           //[1 => ['order' => 9], 2 => ['order' => 6], 3 => ['order' => 7] ]
+           //И после вернуть значение $values
+           
+           return $values;
+        }),
+  
+        ->required()
+   ```
  * Теперь после обработки формы если у вас на форме есть таб и если даже этот таб внутри таба
    родительский определится и будет активным. Больше не нужно переключаться все время с первого на нужный
    Протестировать можно [тут](https://demo.sleepingowl.ru/admin/contact5s)
