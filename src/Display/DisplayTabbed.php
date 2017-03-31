@@ -39,7 +39,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * Initialize tabbed interface
+     * Initialize tabbed interface.
      */
     public function initialize()
     {
@@ -48,11 +48,10 @@ class DisplayTabbed implements DisplayInterface, FormInterface
         $tabs = $this->getTabs();
 
         foreach ($tabs as $tab) {
-
             if (method_exists($tab->getContent(), 'getElements')) {
                 $elements = $tab->getContent()->getElements();
                 foreach ($elements as $element) {
-                    if ($element instanceof DisplayTabbed) {
+                    if ($element instanceof self) {
                         foreach ($element->getTabs() as $subTab) {
                             if ($subTab->getName() == session('sleeping_owl_tab_id')) {
                                 $tab->setActive(true);
@@ -71,7 +70,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
         $activeTabs = $this->getTabs()->filter(function (TabInterface $tab) {
             return $tab->isActive();
         })->count();
-
 
         if ($activeTabs === 0 and $firstTab = $this->getTabs()->first()) {
             $firstTab->setActive(true);

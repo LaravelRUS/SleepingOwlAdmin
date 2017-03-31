@@ -58,8 +58,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
         $preparedPolicies = collect($this->policies);
 
         foreach ($this->sections as $model => $section) {
-
-            if($preparedPolicies->has($section)){
+            if ($preparedPolicies->has($section)) {
                 $policies[$section] = $preparedPolicies->get($section);
                 continue;
             }

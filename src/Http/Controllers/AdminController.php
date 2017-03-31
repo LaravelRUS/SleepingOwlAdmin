@@ -172,7 +172,7 @@ class AdminController extends Controller
                 if ($createForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
                         '_redirectBack' => $backUrl,
-                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
             } catch (ValidationException $exception) {
@@ -181,7 +181,7 @@ class AdminController extends Controller
                     ->withInput()
                     ->with([
                         '_redirectBack' => $backUrl,
-                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
         }
@@ -202,7 +202,7 @@ class AdminController extends Controller
                 $redirectUrl
             )->with([
                 '_redirectBack' => $backUrl,
-                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } elseif ($nextAction == 'save_and_create') {
             $response = redirect()->to($model->getCreateUrl($request->except([
@@ -212,7 +212,7 @@ class AdminController extends Controller
                 'next_action',
             ])))->with([
                 '_redirectBack' => $backUrl,
-                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
             $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));
@@ -272,7 +272,7 @@ class AdminController extends Controller
                 if ($editForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
                         '_redirectBack' => $backUrl,
-                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
             } catch (ValidationException $exception) {
@@ -281,7 +281,7 @@ class AdminController extends Controller
                     ->withInput()
                     ->with([
                         '_redirectBack' => $backUrl,
-                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
         }
@@ -291,7 +291,7 @@ class AdminController extends Controller
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
                 '_redirectBack' => $backUrl,
-                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
 
             if ($redirectPolicy->get('edit') == 'display') {
@@ -299,7 +299,7 @@ class AdminController extends Controller
                     $model->getDisplayUrl()
                 )->with([
                     '_redirectBack' => $backUrl,
-                    'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                    'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                 ]);
             }
         } elseif ($nextAction == 'save_and_create') {
@@ -310,7 +310,7 @@ class AdminController extends Controller
                 'next_action',
             ])))->with([
                 '_redirectBack' => $backUrl,
-                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
             $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));

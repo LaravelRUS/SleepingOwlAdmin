@@ -4,11 +4,9 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Form\Buttons\SaveAndClose;
 
 class MultiSelect extends Select
 {
-
     /**
      * @var bool
      */
@@ -34,7 +32,7 @@ class MultiSelect extends Select
      */
     public function getName()
     {
-        return parent::getName() . '[]';
+        return parent::getName().'[]';
     }
 
     /**
@@ -186,9 +184,8 @@ class MultiSelect extends Select
         array $values
     ) {
         foreach ($values as $i => $value) {
-            if (!array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
-
-                $model                        = clone $this->getModelForOptions();
+            if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
+                $model = clone $this->getModelForOptions();
                 $model->{$this->getDisplay()} = $value;
                 $model->save();
 
@@ -214,7 +211,7 @@ class MultiSelect extends Select
         $items = $relation->get();
 
         foreach ($items as $item) {
-            if (!in_array($item->getKey(), $values)) {
+            if (! in_array($item->getKey(), $values)) {
                 if ($this->isDeleteRelatedItem()) {
                     $item->delete();
                 } else {
@@ -236,15 +233,15 @@ class MultiSelect extends Select
         foreach ($values as $i => $value) {
             /** @var Model $model */
             $model = clone $this->getModelForOptions();
-            $item  = $model->find($value);
+            $item = $model->find($value);
 
             if (is_null($item)) {
-                if (!$this->isTaggable()) {
+                if (! $this->isTaggable()) {
                     continue;
                 }
 
                 $model->{$this->getDisplay()} = $value;
-                $item                         = $model;
+                $item = $model;
             }
 
             $relation->save($item);
