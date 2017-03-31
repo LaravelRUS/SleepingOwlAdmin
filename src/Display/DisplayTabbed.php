@@ -38,13 +38,40 @@ class DisplayTabbed implements DisplayInterface, FormInterface
         }
     }
 
+    /**
+     * Initialize tabbed interface
+     */
     public function initialize()
     {
         $this->initializeElements();
 
+        $tabs = $this->getTabs();
+
+        foreach ($tabs as $tab) {
+
+            if (method_exists($tab->getContent(), 'getElements')) {
+                $elements = $tab->getContent()->getElements();
+                foreach ($elements as $element) {
+                    if ($element instanceof DisplayTabbed) {
+                        foreach ($element->getTabs() as $subTab) {
+                            if ($subTab->getName() == session('sleeping_owl_tab_id')) {
+                                $tab->setActive(true);
+                                $subTab->setActive(true);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($tab->getName() == session('sleeping_owl_tab_id')) {
+                $tab->setActive(true);
+            }
+        }
+
         $activeTabs = $this->getTabs()->filter(function (TabInterface $tab) {
             return $tab->isActive();
         })->count();
+
 
         if ($activeTabs === 0 and $firstTab = $this->getTabs()->first()) {
             $firstTab->setActive(true);

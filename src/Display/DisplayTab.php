@@ -3,6 +3,12 @@
 namespace SleepingOwl\Admin\Display;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Form\Columns\Columns;
+use SleepingOwl\Admin\Form\Element\Hidden;
+use SleepingOwl\Admin\Form\FormDefault;
+use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Form\FormPanel;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
@@ -18,6 +24,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
+
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
@@ -144,6 +151,66 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function setActive($active = true)
     {
         $this->active = (bool) $active;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addTabElement()
+    {
+        if ($this->content instanceof FormInterface) {
+            $this->content->addElement(
+                new FormElements([
+                    (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName())
+                ])
+            );
+        }
+
+
+        if ($this->content instanceof FormElements) {
+            foreach ($this->content->getElements() as $element) {
+
+                if ($element instanceof FormDefault && $element instanceof FormPanel) {
+                    $element->addElement(
+                        new FormElements([
+                            (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName())
+                        ])
+                    );
+                }
+
+                if ($element instanceof FormElements){
+                    foreach($element->getElements() as $subElement){
+                        if($subElement instanceof FormDefault){
+                            $subElement->addElement(
+                                new FormElements([
+                                    (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName())
+                                ])
+                            );
+                        }
+                    }
+                }
+
+                if($element instanceof Columns){
+                    foreach($element->getElements() as $column){
+                        if($column instanceof Column){
+                            foreach($column->getElements() as $columnElement){
+                                if($columnElement instanceof FormInterface){
+                                    $columnElement->addElement(
+                                        new FormElements([
+                                            (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName())
+                                        ])
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        }
 
         return $this;
     }
