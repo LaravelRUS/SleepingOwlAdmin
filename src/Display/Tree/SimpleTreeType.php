@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Tree;
 
 use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class SimpleTreeType implements TreeTypeInterface
 {
@@ -43,7 +44,7 @@ class SimpleTreeType implements TreeTypeInterface
             ->orderBy($this->repository->getOrderField(), 'asc')
             ->get();
 
-        return $this->repository->getChildren(
+        return $this->getChildren(
             $collection,
             $this->repository->getRootParentId()
         );
@@ -92,7 +93,7 @@ class SimpleTreeType implements TreeTypeInterface
      */
     protected function getChildren($collection, $id)
     {
-        $parentField = $this->getParentField();
+        $parentField = $this->repository->getParentField();
         $result = [];
         foreach ($collection as $instance) {
             if ((int) $instance->$parentField != $id) {
