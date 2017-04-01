@@ -1,7 +1,1 @@
-<button {!! $attributes !!}>
-	@if ($icon)
-	<i class="{{ $icon }}"></i>
-	@endif
-
-	{{ $title }}
-</button>
+<option data-method="{{$method}}" value="{{$action}}">{{$title}}</option>

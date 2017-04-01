@@ -37,6 +37,8 @@ return [
         ],
     ],
     'table' => [
+        'no-action' => 'No action',
+        'make-action' => 'Submit',
         'new-entry' => 'New Entry',
         'edit' => 'Edit',
         'restore' => 'Restore',
