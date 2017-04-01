@@ -205,7 +205,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             return;
         }
 
-        $query->offset($offset)->limit($limit);
+        $query->offset((int) $offset)->limit((int) $limit);
     }
 
     /**
