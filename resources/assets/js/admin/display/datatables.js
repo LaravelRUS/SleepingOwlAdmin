@@ -34,7 +34,6 @@ Admin.Modules.register('display.datatables', () => {
         if (url && url.length > 0) {
             params.serverSide = true;
             params.processing = true;
-            params.paging     = false;
             params.searching  = searching;
 
             params.ajax = {

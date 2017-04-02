@@ -30,7 +30,7 @@ class Scopes extends Extension
         $this->scopes = func_get_args();
 
         if (is_array($scopes)) {
-            $this->scopes = $scopes;
+            $this->scopes[] = $scopes;
         }
 
         return $this->getDisplay();
