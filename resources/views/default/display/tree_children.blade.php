@@ -24,7 +24,7 @@
                 @endforeach
             </div>
         </div>
-        @if ($entry->children->count() > 0)
+        @if ($entry->children && $entry->children->count() > 0)
             <ol class="dd-list">
                 @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $entry->children])
             </ol>

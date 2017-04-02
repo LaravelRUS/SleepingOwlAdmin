@@ -7,13 +7,16 @@
         @endif
     </div>
 
-    <menu id="nestable-menu" class="panel-heading no-margin" >
-        <button type="button" data-action="expand-all" class="btn btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
-        <button type="button" data-action="collapse-all" class="btn btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
-    </menu>
-
+    @if($max_depth)
+        <menu id="nestable-menu" class="panel-heading no-margin">
+            <button type="button" data-action="expand-all"
+                    class="btn btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
+            <button type="button" data-action="collapse-all"
+                    class="btn btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
+        </menu>
+    @endif
     <div class="panel-body">
-        <div class="dd nestable" data-url="{{ $url }}/reorder">
+        <div class="dd nestable" {!! $attributes !!} data-url="{{ $url }}/reorder">
             <ol class="dd-list">
                 @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
             </ol>

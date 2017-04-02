@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Collection;
+use SleepingOwl\Admin\Display\Tree\OrderTreeType;
 use SleepingOwl\Admin\Repositories\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -16,17 +17,23 @@ use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
  */
 class DisplayTree extends Display implements WithRoutesInterface
 {
+
     /**
      * @param Router $router
      */
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.tree.reorder';
-        if (! $router->has($routeName)) {
-            $router->post('{adminModel}/reorder', ['as' => $routeName, 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@treeReorder']);
+        if (!$router->has($routeName)) {
+            $router->post('{adminModel}/reorder',
+                ['as' => $routeName, 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@treeReorder']);
         }
     }
 
+    /**
+     * @var int
+     */
+    protected $max_depth = 20;
     /**
      * @var string
      */
@@ -106,13 +113,41 @@ class DisplayTree extends Display implements WithRoutesInterface
         parent::initialize();
 
         $repository = $this->getRepository()
-             ->setParentField($this->getParentField())
-             ->setOrderField($this->getOrderField())
-             ->setRootParentId($this->getRootParentId());
+            ->setOrderField($this->getOrderField())
+            ->setRootParentId($this->getRootParentId());
 
-        if (! is_null($this->treeType)) {
+        if ($this->getParentField()) {
+            $repository = $repository->setParentField($this->getParentField());
+        }
+        if (!is_null($this->treeType)) {
             $repository->setTreeType($this->treeType);
         }
+
+        if($this->treeType == OrderTreeType::class){
+            $this->setMaxDepth(0);
+        }
+
+        $this->setHtmlAttribute('data-max-depth', $this->getMaxDepth());
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaxDepth()
+    {
+        return $this->max_depth;
+    }
+
+    /**
+     * @param string|callable $value
+     *
+     * @return $this
+     */
+    public function setMaxDepth($value)
+    {
+        $this->max_depth = $value;
+
+        return $this;
     }
 
     /**
@@ -241,7 +276,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -267,7 +302,7 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     public function setReorderable($reorderable)
     {
-        $this->reorderable = (bool) $reorderable;
+        $this->reorderable = (bool)$reorderable;
 
         return $this;
     }
@@ -280,15 +315,16 @@ class DisplayTree extends Display implements WithRoutesInterface
         $model = $this->getModelConfiguration();
 
         return parent::toArray() + [
-            'items' => $this->getRepository()->getTree($this->getCollection()),
-            'reorderable' => $this->isReorderable(),
-            'url' => $model->getDisplayUrl(),
-            'value' => $this->getValue(),
-            'creatable' => $model->isCreatable(),
-            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
-            'controls' => [app('sleeping_owl.table.column')->treeControl()],
-            'newEntryButtonText' => $this->getNewEntryButtonText(),
-        ];
+                'items'              => $this->getRepository()->getTree($this->getCollection()),
+                'reorderable'        => $this->isReorderable(),
+                'url'                => $model->getDisplayUrl(),
+                'value'              => $this->getValue(),
+                'creatable'          => $model->isCreatable(),
+                'createUrl'          => $model->getCreateUrl($this->getParameters() + Request::all()),
+                'controls'           => [app('sleeping_owl.table.column')->treeControl()],
+                'newEntryButtonText' => $this->getNewEntryButtonText(),
+                'max_depth'          => $this->getMaxDepth()
+            ];
     }
 
     /**
@@ -305,11 +341,11 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     public function getCollection()
     {
-        if (! $this->isInitialized()) {
+        if (!$this->isInitialized()) {
             throw new \Exception('Display is not initialized');
         }
 
-        if (! is_null($this->collection)) {
+        if (!is_null($this->collection)) {
             return $this->collection;
         }
 
@@ -340,7 +376,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         $repository = parent::makeRepository();
 
-        if (! ($repository instanceof TreeRepositoryInterface)) {
+        if (!($repository instanceof TreeRepositoryInterface)) {
             throw new \Exception('Repository class must be instanced of [TreeRepositoryInterface]');
         }
 

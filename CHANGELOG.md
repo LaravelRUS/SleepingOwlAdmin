@@ -1,6 +1,11 @@
 # Release Notes
 
 ## [Unreleased]
+ * Добавлен тип `OrderTreeType::class` который ограничивает дерево только на первый уровень 
+ (работает без parent_id) и позволяет сортировать элементы
+    Пример можно увидеть по [ссылке в демо](https://demo.sleepingowl.ru/admin/page_orders) 
+    Пример кода можно увидеть в секции [PageOrders.php](https://github.com/SleepingOwlAdmin/demo/blob/master/admin/Http/Sections/PageOrders.php#L56)
+ * Добавлена возможность указывать деревьям максимальный уровень вложенности `setMaxDepth(10)`
  * Добавлен метод setDisplaySearch(true|false) для установки параметра отображения общего поля поиска для DataTablesAsync
  * Добавлен коллбек на мультиселект и ajax-мультиселект который контролирует pivot-data
    ```php
