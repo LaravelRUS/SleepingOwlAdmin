@@ -203,12 +203,11 @@ class FormButtons implements FormButtonsInterface
     protected function setButtonsOnConstruct()
     {
         $this->buttons = [
-
-            'delete' => new Delete(),
             'save'   => (new Save())->setGroupElements([
                 'save_and_create' => new SaveAndCreate(),
                 'save_and_close'  => new SaveAndClose(),
             ]),
+            'delete' => new Delete(),
             'cancel' => new Cancel(),
         ];
     }
