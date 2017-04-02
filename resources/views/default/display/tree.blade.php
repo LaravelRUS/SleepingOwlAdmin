@@ -7,7 +7,7 @@
         @endif
     </div>
 
-    @if($max_depth)
+    @if($max_depth > 1)
         <menu id="nestable-menu" class="panel-heading no-margin">
             <button type="button" data-action="expand-all"
                     class="btn btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
