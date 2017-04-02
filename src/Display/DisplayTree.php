@@ -122,7 +122,7 @@ class DisplayTree extends Display implements WithRoutesInterface
             $repository->setTreeType($this->treeType);
         }
 
-        if($this->treeType == OrderTreeType::class){
+        if ($this->treeType == OrderTreeType::class) {
             $this->setMaxDepth(1);
         }
 
