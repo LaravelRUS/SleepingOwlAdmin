@@ -17,14 +17,13 @@ use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
  */
 class DisplayTree extends Display implements WithRoutesInterface
 {
-
     /**
      * @param Router $router
      */
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.tree.reorder';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->post('{adminModel}/reorder',
                 ['as' => $routeName, 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@treeReorder']);
         }
@@ -119,11 +118,11 @@ class DisplayTree extends Display implements WithRoutesInterface
         if ($this->getParentField()) {
             $repository = $repository->setParentField($this->getParentField());
         }
-        if (!is_null($this->treeType)) {
+        if (! is_null($this->treeType)) {
             $repository->setTreeType($this->treeType);
         }
 
-        if($this->treeType == OrderTreeType::class){
+        if ($this->treeType == OrderTreeType::class) {
             $this->setMaxDepth(0);
         }
 
@@ -302,7 +301,7 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     public function setReorderable($reorderable)
     {
-        $this->reorderable = (bool)$reorderable;
+        $this->reorderable = (bool) $reorderable;
 
         return $this;
     }
@@ -323,7 +322,7 @@ class DisplayTree extends Display implements WithRoutesInterface
                 'createUrl'          => $model->getCreateUrl($this->getParameters() + Request::all()),
                 'controls'           => [app('sleeping_owl.table.column')->treeControl()],
                 'newEntryButtonText' => $this->getNewEntryButtonText(),
-                'max_depth'          => $this->getMaxDepth()
+                'max_depth'          => $this->getMaxDepth(),
             ];
     }
 
@@ -341,11 +340,11 @@ class DisplayTree extends Display implements WithRoutesInterface
      */
     public function getCollection()
     {
-        if (!$this->isInitialized()) {
+        if (! $this->isInitialized()) {
             throw new \Exception('Display is not initialized');
         }
 
-        if (!is_null($this->collection)) {
+        if (! is_null($this->collection)) {
             return $this->collection;
         }
 
@@ -376,7 +375,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         $repository = parent::makeRepository();
 
-        if (!($repository instanceof TreeRepositoryInterface)) {
+        if (! ($repository instanceof TreeRepositoryInterface)) {
             throw new \Exception('Repository class must be instanced of [TreeRepositoryInterface]');
         }
 
