@@ -2,15 +2,14 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Str;
 use Mockery\Matcher\Closure;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 class OrderByClause implements OrderByClauseInterface
 {
-
     /**
      * @var string|Closure
      */
@@ -68,15 +67,14 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * TODO: EagerLoad
+     * TODO: EagerLoad.
      */
     protected function eagerLoad()
     {
-
     }
 
     /**
-     * Load Relations by this->name
+     * Load Relations by this->name.
      * @param Builder $query
      * @param $direction
      */
@@ -87,7 +85,7 @@ class OrderByClause implements OrderByClauseInterface
         //Without Eager Load
         //TODO: With Eager Load
         if ($relations->count() == 2) {
-            $model    = $query->getModel();
+            $model = $query->getModel();
             $relation = $relations->first();
 
             if (method_exists($model, $relation)) {
@@ -95,16 +93,16 @@ class OrderByClause implements OrderByClauseInterface
                 /** @var Relation $relationClass */
                 $relationClass = $model->{$relation}();
                 $relationModel = $relationClass->getRelated();
-                $foreignKey    = $relationClass->getOwnerKey();
-                $ownerKey      = $relationClass->getForeignKey();
-                $ownerTable    = $model->getTable();
-                $foreignTable  = $relationModel->getTable();
+                $foreignKey = $relationClass->getOwnerKey();
+                $ownerKey = $relationClass->getForeignKey();
+                $ownerTable = $model->getTable();
+                $foreignTable = $relationModel->getTable();
 
-                $ownerColumn   = implode('.', [$ownerTable, $ownerKey]);
+                $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
                 $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-                $sortedColumn  = implode('.', [$foreignTable, $relations->last()]);
+                $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
 
-                $query->select([$ownerTable . ".*", $foreignTable . "." . $relations->last()])
+                $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
                     ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
                     ->orderBy($foreignColumn, $direction);
             }
@@ -122,6 +120,5 @@ class OrderByClause implements OrderByClauseInterface
         } else {
             $query->orderBy($this->name, $direction);
         }
-
     }
 }
