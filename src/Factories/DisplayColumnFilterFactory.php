@@ -7,6 +7,7 @@ use SleepingOwl\Admin\Display\Column\Filter\Date;
 use SleepingOwl\Admin\Display\Column\Filter\Text;
 use SleepingOwl\Admin\Display\Column\Filter\Range;
 use SleepingOwl\Admin\Display\Column\Filter\Select;
+use SleepingOwl\Admin\Display\Column\Filter\Control;
 use SleepingOwl\Admin\Display\Column\Filter\DateRange;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
 
@@ -16,6 +17,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
  * @method DateRange daterange()
  * @method Select select()
  * @method Range range()
+ * @method Control control()
  */
 class DisplayColumnFilterFactory extends AliasBinder implements DisplayColumnFilterFactoryInterface
 {
@@ -34,6 +36,7 @@ class DisplayColumnFilterFactory extends AliasBinder implements DisplayColumnFil
             'daterange' => DateRange::class,
             'range' => Range::class,
             'select' => Select::class,
+            'control' => Control::class,
         ]);
     }
 }

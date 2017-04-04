@@ -35,6 +35,8 @@ class BaseColumnFilterTest extends TestCase
         $filter->setOperator($operator);
 
         $column = m::mock(NamedColumnInterface::class);
+        $column->shouldReceive('getMetaData')->once()->andReturn(null);
+        $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('columnName');
 
         $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
@@ -53,6 +55,8 @@ class BaseColumnFilterTest extends TestCase
         $filter->setOperator($operator);
 
         $column = m::mock(NamedColumnInterface::class);
+        $column->shouldReceive('getMetaData')->once()->andReturn(null);
+        $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('column.test.columnName');
 
         $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);

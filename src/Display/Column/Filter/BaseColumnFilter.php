@@ -8,6 +8,7 @@ use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
@@ -69,6 +70,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @deprecated
      * @return \Closure|null
      */
     public function getCallback()
@@ -78,7 +80,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @param \Closure $callback
-     *
+     * @deprecated
      * @return $this
      */
     public function setCallback(\Closure $callback)
@@ -90,15 +92,29 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $queryString
-     * @param array|string         $queryParams
+     * @param Builder $query
+     * @param string $queryString
+     * @param array|string $queryParams
      *
      * @return void
      */
     public function apply(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
     {
         $queryString = $this->parseValue($queryString);
+
+        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+            if (method_exists($metaInstance, 'onFilterSearch')) {
+                $metaInstance->onFilterSearch($column, $query, $queryString, $queryParams);
+
+                return;
+            }
+        }
+
+        if (is_callable($callback = $column->getFilterCallback())) {
+            $callback($column, $query, $queryString, $queryParams);
+
+            return;
+        }
 
         if (is_callable($callback = $this->getCallback())) {
             $callback($column, $query, $queryString, $queryParams);
@@ -135,7 +151,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function toArray()
     {
         return [
-            'attributes' => $this->htmlAttributesToString(),
+            'attributes'      => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
         ];
     }

@@ -1,0 +1,3 @@
+<small {!! $attributes !!}>
+    {{ $value }}
+</small>

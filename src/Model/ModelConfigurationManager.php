@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Illuminate\Support\Facades\URL;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
@@ -355,6 +356,16 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      *
      * @return string
      */
+    public function getCancelUrl(array $parameters = [])
+    {
+        return URL::previous() ?: $this->getDisplayUrl($parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return string
+     */
     public function getCreateUrl(array $parameters = [])
     {
         array_unshift($parameters, $this->getAlias());
@@ -461,6 +472,14 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @return Navigation
+     */
+    public function getNavigation()
+    {
+        return $this->app['sleeping_owl.navigation'];
+    }
+
+    /**
      * @param int $priority
      * @param string|\Closure|BadgeInterface $badge
      *
@@ -470,9 +489,18 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         $page = $this->makePage($priority, $badge);
 
-        $this->app['sleeping_owl.navigation']->addPage($page);
+        $this->getNavigation()->addPage($page);
 
         return $page;
+    }
+
+    /**
+     * @param $page_id
+     * @return \KodiComponents\Navigation\Contracts\PageInterface|null
+     */
+    public function getNavigationPage($page_id)
+    {
+        return $this->getNavigation()->getPages()->findById($page_id);
     }
 
     /**

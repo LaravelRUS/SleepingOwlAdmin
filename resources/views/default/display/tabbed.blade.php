@@ -7,7 +7,7 @@
 	<div class="tab-content">
 	@foreach ($tabs as $tab)
 		<div role="tabpanel" class="tab-pane {!! ($tab->isActive()) ? 'in active' : '' !!}" id="{{ $tab->getName() }}">
-			{!! $tab->getContent()->render() !!}
+			{!!  $tab->addTabElement()->getContent()->render() !!}
 		</div>
 	@endforeach
 	</div>

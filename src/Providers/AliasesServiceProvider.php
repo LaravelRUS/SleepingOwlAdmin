@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Providers;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Factories\FormFactory;
 use SleepingOwl\Admin\Factories\DisplayFactory;
+use SleepingOwl\Admin\Factories\FormButtonsFactory;
 use SleepingOwl\Admin\Factories\FormElementFactory;
 use SleepingOwl\Admin\Factories\DisplayColumnFactory;
 use SleepingOwl\Admin\Factories\DisplayFilterFactory;
@@ -12,6 +13,7 @@ use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
 use SleepingOwl\Admin\Factories\DisplayColumnFilterFactory;
 use SleepingOwl\Admin\Factories\DisplayColumnEditableFactory;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsFactoryInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
@@ -29,6 +31,13 @@ class AliasesServiceProvider extends ServiceProvider
         $this->registerForms();
         $this->registerFormElements();
         $this->registerFilters();
+        $this->registerFormButtons();
+    }
+
+    protected function registerFormButtons()
+    {
+        $this->app->instance('sleeping_owl.form_buttons', $this->app->make(FormButtonsFactory::class));
+        $this->app->alias('sleeping_owl.form_buttons', FormButtonsFactoryInterface::class);
     }
 
     protected function registerColumnFilters()
@@ -51,7 +60,8 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerColumnEditable()
     {
-        $this->app->instance('sleeping_owl.table.column.editable', $this->app->make(DisplayColumnEditableFactory::class));
+        $this->app->instance('sleeping_owl.table.column.editable',
+            $this->app->make(DisplayColumnEditableFactory::class));
         $this->app->alias('sleeping_owl.table.column.editable', DisplayColumnEditableFactoryInterface::class);
     }
 

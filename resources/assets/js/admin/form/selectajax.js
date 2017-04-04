@@ -1,11 +1,11 @@
-Admin.Modules.add('form.elements.selectajax', () => {
+Admin.Modules.register('form.elements.selectajax', () => {
     $('.js-data-ajax').each((e, item) => {
         let options = {},
             $self = $(item);
 
         options = {
             placeholder: "Search ...",
-            minimumInputLength: 3,
+            minimumInputLength: $self.data('min-symbols'),
             ajax: {
                 url: $self.attr('search_url'),
                 dataType: 'json',

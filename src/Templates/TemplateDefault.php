@@ -2,79 +2,43 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Contracts\Template\Breadcrumbs;
-use SleepingOwl\Admin\Contracts\Template\MetaInterface;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
-
-class TemplateDefault implements TemplateInterface
+class TemplateDefault extends Template
 {
     /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
-     * @var MetaInterface
-     */
-    private $meta;
-
-    /**
-     * @var NavigationInterface
-     */
-    private $navigation;
-
-    /**
-     * @var Breadcrumbs
-     */
-    private $breadcrumbs;
-
-    /**
-     * TemplateDefault constructor.
+     * Получение названия текущего шаблона.
      *
-     * @param Application $application
-     * @param MetaInterface $meta
-     * @param NavigationInterface $navigation
-     * @param Breadcrumbs $breadcrumbs
+     * @return string
      */
-    public function __construct(Application $application, MetaInterface $meta, NavigationInterface $navigation, Breadcrumbs $breadcrumbs)
+    public function name()
     {
-        $this->app = $application;
-        $this->meta = $meta;
-        $this->navigation = $navigation;
-        $this->breadcrumbs = $breadcrumbs;
+        return 'AdminLTE 2';
+    }
+
+    /**
+     * Версия темы.
+     *
+     * @return string
+     */
+    public function version()
+    {
+        return '2.3.8';
+    }
+
+    /**
+     * URL проекта.
+     *
+     * @return string
+     */
+    public function homepage()
+    {
+        return 'https://almsaeedstudio.com/';
     }
 
     public function initialize()
     {
-        $this->meta->addJs('admin-default', resources_url('js/admin-app.js'), ['admin-scripts'])
-            ->addJs('admin-scripts', route('admin.scripts'))
-            ->addCss('admin-default', resources_url('css/admin-app.css'));
-    }
-
-    /**
-     * @return Manager
-     */
-    public function breadcrumbs()
-    {
-        return $this->breadcrumbs;
-    }
-
-    /**
-     * @return MetaInterface
-     */
-    public function meta()
-    {
-        return $this->meta;
-    }
-
-    /**
-     * @return NavigationInterface
-     */
-    public function navigation()
-    {
-        return $this->navigation;
+        $this->meta()
+            ->addJs('admin-default', $this->assetPath('js/admin-app.js'))
+            ->addCss('admin-default', $this->assetPath('css/admin-app.css'));
     }
 
     /**
@@ -82,62 +46,17 @@ class TemplateDefault implements TemplateInterface
      */
     public function getViewNamespace()
     {
-        return 'sleeping_owl::';
+        return 'sleeping_owl::default';
     }
 
     /**
-     * @param string $view
+     * Получение относительного пути хранения asset файлов.
      *
      * @return string
      */
-    public function getViewPath($view)
+    public function assetDir()
     {
-        if ($view instanceof \Illuminate\View\View) {
-            return $view->getPath();
-        }
-
-        return $this->getViewNamespace().'default.'.$view;
-    }
-
-    /**
-     * @param string|\Illuminate\View\View $view
-     * @param array  $data
-     * @param array  $mergeData
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function view($view, array $data = [], $mergeData = [])
-    {
-        $data['template'] = $this;
-
-        if ($view instanceof \Illuminate\View\View) {
-            return $view->with($data);
-        }
-
-        return view($this->getViewPath($view), $data, $mergeData);
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return config('sleeping_owl.title');
-    }
-
-    /**
-     * @param string $title
-     * @param string $separator
-     *
-     * @return string
-     */
-    public function makeTitle($title, $separator = ' | ')
-    {
-        if (empty($title)) {
-            return $this->getTitle();
-        }
-
-        return $title."{$separator}".$this->getTitle();
+        return 'packages/sleepingowl/default';
     }
 
     /**
@@ -154,47 +73,5 @@ class TemplateDefault implements TemplateInterface
     public function getLogoMini()
     {
         return config('sleeping_owl.logo_mini');
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return string
-     */
-    public function renderBreadcrumbs($key)
-    {
-        if (config('sleeping_owl.breadcrumbs')) {
-            $this->breadcrumbs()->setView(
-                $this->getViewPath('_partials.breadcrumbs')
-            );
-
-            return $this->breadcrumbs()->renderIfExists($key);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function renderNavigation()
-    {
-        return $this->navigation()->render(
-            $this->getViewPath('_partials.navigation.navigation')
-        );
-    }
-
-    /**
-     * @param string $title
-     *
-     * @return string
-     */
-    public function renderMeta($title)
-    {
-        return $this->meta()
-            ->setTitle($this->makeTitle($title))
-            ->addMeta(['charset' => 'utf-8'], 'meta::charset')
-            ->addMeta(['content' => csrf_token(), 'name' => 'csrf-token'])
-            ->addMeta(['content' => 'width=device-width, initial-scale=1', 'name' => 'viewport'])
-            ->addMeta(['content' => 'IE=edge', 'http-equiv' => 'X-UA-Compatible'])
-            ->render();
     }
 }

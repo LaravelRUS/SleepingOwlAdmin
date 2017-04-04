@@ -2,7 +2,6 @@
 @import (less) "../../../node_modules/x-editable/dist/jquery-editable/css/jquery-editable.css";
 @import (less) "../../../node_modules/sweetalert2/dist/sweetalert2.min.css";
 @import (less) "../../../node_modules/bootstrap-daterangepicker/daterangepicker.css";
-
 @import "libs/dataTables";
 @import "libs/nestable";
 @import "libs/dropzone";
@@ -11,26 +10,26 @@
 
 @font-face {
   font-family: 'Open Sans';
-  font-style:  italic;
+  font-style: italic;
   font-weight: 400;
-  src:         local('Open Sans Italic'), local('Open-Sans-Italic'),
-               url('../fonts/OpenSans-Italic.ttf') format('truetype');
+  src: local('Open Sans Italic'), local('Open-Sans-Italic'),
+  url('../fonts/OpenSans-Italic.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
-  font-style:  bold;
+  font-style: bold;
   font-weight: 700;
-  src:         local('Open Sans Bold'), local('Open-Sans-Bold'),
-               url('../fonts/OpenSans-Bold.ttf') format('truetype');
+  src: local('Open Sans Bold'), local('Open-Sans-Bold'),
+  url('../fonts/OpenSans-Bold.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
-  font-style:  normal;
+  font-style: normal;
   font-weight: 400;
-  src:         local('Open Sans Regular'), local('Open-Sans-Regular'),
-               url('../fonts/OpenSans-Regular.ttf') format('truetype');
+  src: local('Open Sans Regular'), local('Open-Sans-Regular'),
+  url('../fonts/OpenSans-Regular.ttf') format('truetype');
 }
 
 // Bootstrap 3
@@ -58,7 +57,7 @@ body {
 }
 
 .sidebar-menu .treeview-menu > li > a {
-  padding-top:    12px;
+  padding-top: 12px;
   padding-bottom: 12px;
 }
 
@@ -72,18 +71,18 @@ body {
 }
 
 .btn-actions {
-  padding:       10px !important;
-  box-shadow:    0 6px 12px rgba(0, 0, 0, .175);
+  padding: 10px !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   border-radius: 0;
-  background:    whitesmoke;
+  background: whitesmoke;
 
   .btn {
     text-align: left !important;
-    border:     1px solid #fff;
+    border: 1px solid #fff;
   }
 
   .divider {
-    margin-left:  -10px;
+    margin-left: -10px;
     margin-right: -10px;
   }
 }
@@ -91,7 +90,16 @@ body {
 /*******************
     Panels
 ********************/
-
+.nav-tabs-custom {
+  .nav-tabs {
+    a {
+      small {
+        margin-top: 3px;
+        margin-left: 5px;
+      }
+    }
+  }
+}
 
 .panel-footer {
   .pagination {
@@ -99,8 +107,7 @@ body {
   }
 }
 
-
 .panel-wide {
-  margin-left:  -@panel-body-padding;
+  margin-left: -@panel-body-padding;
   margin-right: -@panel-body-padding;
 }

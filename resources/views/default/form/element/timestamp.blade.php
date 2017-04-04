@@ -7,13 +7,7 @@
 		@endif
 	</label>
 	<div class="input-date input-group">
-		<input data-date-format="{{ $pickerFormat }}"
-			   data-date-pickdate="true"
-			   data-date-picktime="false"
-			   data-date-useseconds="{{ $seconds ? 'true' : 'false' }}"
-			   class="form-control" name="{{ $name }}"
-			   type="text"
-			   id="{{ $name }}"
+		<input {!! $attributes !!}
 			   value="{{ $value }}"
 			   @if($readonly) readonly @endif
 		>

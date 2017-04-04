@@ -18,4 +18,4 @@ let exec_handler = (editor, command, textareaId, data) => {
     }
 }
 
-Admin.WYSIWYG.add('simplemde', switchOn_handler, switchOff_handler, exec_handler);
+Admin.WYSIWYG.register('simplemde', switchOn_handler, switchOff_handler, exec_handler);

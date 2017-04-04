@@ -25,7 +25,7 @@ trait Assets
             $handle = $script;
         }
 
-        $this->package->js($handle, $script, $dependency);
+        $this->package->js($handle, $script, $dependency, true);
 
         return $this;
     }

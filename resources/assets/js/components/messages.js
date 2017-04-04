@@ -1,23 +1,77 @@
-module.exports = {
-    parse (messages, type) {
-        for (let i in messages) {
-            if (i == '_external') {
-                this.parse(messages[i], type);
-                continue;
-            }
+module.exports = (function () {
 
-            this.show(messages[i], type);
-        }
-    },
-    show (msg, type, icon) {
-        window.noty({
-            layout: 'topRight',
-            type: type || 'success',
-            icon: icon || 'fa fa-ok',
-            text: decodeURIComponent(msg)
-        });
-    },
-    error (message) {
-        this.show(message, 'error');
+    return {
+
+        /**
+         * Вывод сообщения об ошибке
+         *
+         * @param {String} title заголовок
+         * @param {String} message текст
+         * @returns {*}
+         */
+        error(title, message) {
+            return this.message(title, message, "error")
+        },
+
+        /**
+         * Вывод Success сообщения
+         * @param {String} title заголовок
+         * @param {String} message текст
+         * @returns {*}
+         */
+        success(title, message) {
+            return this.message(title, message, "success")
+        },
+
+        /**
+         * Вывод сообщения
+         *
+         * @param {String} title заголовок
+         * @param {String} message текст
+         * @param {String} type Тип сообщения (error, success)
+         * @returns {*}
+         */
+        message(title, message, type) {
+            return swal(title, message, type || 'success')
+        },
+
+        /**
+         * Вывод сообщения с подтверждением
+         *
+         * @param {String} title заголовок
+         * @param {String} message текст
+         * @param {Function} callback Код выполняемый при подтверждении
+         */
+        confirm(title, message) {
+            return swal({
+                title: title,
+                text: message || '',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3c8dbc',
+                cancelButtonColor: '#d33',
+                confirmButtonText: trans('lang.button.yes')
+            })
+        },
+
+        /**
+         * Вывод сообщения с полем ввода
+         *
+         * @param {String} title
+         * @param {String} message
+         * @param {Function} callback Код выполняемый при подтверждении
+         * @param {String} inputPlaceholder Вспомогательный текст для поля ввода
+         */
+        prompt(title, message, inputPlaceholder) {
+            return swal({
+                title: title,
+                text: message || '',
+                input: 'text',
+                showCancelButton: true,
+                closeOnConfirm: false,
+                inputPlaceholder: inputPlaceholder || ''
+            })
+        },
     }
-}
+
+})()

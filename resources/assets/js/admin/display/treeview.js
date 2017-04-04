@@ -1,6 +1,8 @@
-Admin.Modules.add('display.tree', () => {
-    $('.nestable').nestable({
-        maxDepth: 20
+Admin.Modules.register('display.tree', () => {
+    let $elem = $('.nestable'), maxDepth = $elem.data('max-depth');
+
+    $elem.nestable({
+        maxDepth: maxDepth
     }).on('change', (e) => {
         let $object = $(e.target)
 

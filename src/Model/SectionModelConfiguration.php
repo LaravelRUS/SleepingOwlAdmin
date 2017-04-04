@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Model;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager
@@ -30,13 +31,17 @@ class SectionModelConfiguration extends ModelConfigurationManager
     /**
      * @return DisplayInterface|mixed
      */
-    public function fireDisplay()
+    public function fireDisplay(array $payload = [])
     {
         if (! method_exists($this, 'onDisplay')) {
             return;
         }
 
-        $display = $this->app->call([$this, 'onDisplay']);
+        $display = $this->app->call([$this, 'onDisplay'], $payload);
+
+        if ($display instanceof DisplayDatatablesAsync) {
+            $display->setPayload($payload);
+        }
 
         if ($display instanceof DisplayInterface) {
             $display->setModelClass($this->getClass());

@@ -1,7 +1,7 @@
-Admin.Modules.add('display.datatables', () => {
+Admin.Modules.register('display.datatables', () => {
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
-            dt.jqXHR.responseJSON.message || i18next.t('lang.table.error')
+            dt.jqXHR.responseJSON.message || trans('lang.table.error')
         )
     };
 
@@ -27,21 +27,26 @@ Admin.Modules.add('display.datatables', () => {
         let $this = $(item),
             id = $this.data('id'),
             params = $this.data('attributes') || {},
-            url = $this.data('url')
+            url = $this.data('url'),
+            payload = $this.data('payload'),
+            searching = $this.data('display-searching')
 
         if (url && url.length > 0) {
-            params.serverSide = true
-            params.processing = true
+            params.serverSide = true;
+            params.processing = true;
+            params.searching  = searching;
+
             params.ajax = {
                 url: url,
                 data (d) {
                     Admin.Events.fire('datatables::ajax::data', d)
 
-                    iterateColumnFilters(id, function($element, index, type) {
+                    iterateColumnFilters(id, function ($element, index, type) {
                         if (name = $element.data('ajax-data-name')) {
                             d.columns[index]['search'][name] = $element.val()
                         }
-                    })
+                    });
+                    d.payload = payload;
                 }
             };
         }
@@ -52,11 +57,21 @@ Admin.Modules.add('display.datatables', () => {
 
         let table = $this.DataTable(params);
 
-        iterateColumnFilters(id, function($element, index, type) {
+        iterateColumnFilters(id, function ($element, index, type) {
             if (_.isFunction(window.columnFilters[type])) {
                 window.columnFilters[type]($element, table.api(), table.api().column(index), index, params.serverSide);
             }
-        })
+        });
+
+        $("#filters-exec").on('click', function () {
+            table.api().draw();
+        });
+
+        $(".display-filters td[data-index] input").on('keyup', function(e){
+            if(e.keyCode === 13){
+                table.api().draw();
+            }
+        });
     })
 })
 
@@ -100,12 +115,14 @@ window.checkDateRange = (fromValue, toValue, value) => {
     return value.isBetween(fromValue, toValue)
 }
 
+
+
 window.columnFilters = {
     daterange (dateField, table, column, index, serverSide) {
         let $dateField = $(dateField);
 
         $dateField.on('apply.daterangepicker', function(e, date) {
-            column.search($dateField.val()).draw();
+            column.search($dateField.val());
         })
     },
     range (container, table, column, index, serverSide) {
@@ -121,7 +138,7 @@ window.columnFilters = {
             .add(to)
             .on('keyup change', function () {
                 if (serverSide) {
-                    column.search(from.val() + '::' + to.val()).draw()
+                    column.search(from.val() + '::' + to.val())
                 } else {
                     table.draw();
                 }
@@ -132,9 +149,7 @@ window.columnFilters = {
                 .add(to.closest('.input-date'))
                 .on('dp.change', function () {
                     if (serverSide) {
-                        column.search(from.val() + '::' + to.val()).draw()
-                    } else {
-                        table.draw();
+                        column.search(from.val() + '::' + to.val())
                     }
                 });
 
@@ -185,9 +200,9 @@ window.columnFilters = {
             })
 
             if (serverSide) {
-                column.search(selected.join(',')).draw()
+                column.search(selected.join(':::'))
             } else {
-                column.search(selected.join('|'), true, false, true).draw()
+                column.search(selected.join('|'), true, false, true)
             }
         });
     },
@@ -195,7 +210,7 @@ window.columnFilters = {
         let $input = $(input)
 
         $input.on('keyup change', () => {
-            column.search($input.val()).draw();
+            column.search($input.val());
         })
     }
 }

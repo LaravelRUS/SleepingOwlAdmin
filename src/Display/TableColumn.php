@@ -168,7 +168,7 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * @param OrderByClauseInterface|bool|string|\Closure $orderable
-     *
+     * @deprecated
      * @return $this
      */
     public function setOrderable($orderable)
@@ -207,7 +207,7 @@ abstract class TableColumn implements ColumnInterface
     /**
      * @param Builder $query
      * @param string $direction
-     *
+     * @deprecated
      * @return $this
      */
     public function orderBy(Builder $query, $direction)
@@ -231,7 +231,7 @@ abstract class TableColumn implements ColumnInterface
         return [
             'attributes' => $this->htmlAttributesToString(),
             'model'      => $this->getModel(),
-            'append' => $this->getAppends(),
+            'append'     => $this->getAppends(),
         ];
     }
 

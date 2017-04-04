@@ -1,14 +1,14 @@
-Admin.Modules.add('display.actions', () => {
+Admin.Modules.register('display.actions', () => {
     $('form[data-type="display-actions"]').on('submit', function (e) {
-        var $btn = $(e.target.action),
-            $checkboxes = $('.adminCheckboxRow').filter(':checked')
+        var $checkboxes = $('.adminCheckboxRow').filter(':checked'),
+            $selectActions = $("#sleepingOwlActionsStore");
 
         $.ajax({
-            type: $btn.data('method'),
-            url: $btn.data('action'),
+            type: $selectActions.find('option:selected').data('method'),
+            url: $selectActions.val(),
             data: $checkboxes.serialize()
-        })
-            .done(function (msg) {
+
+        }).done(function (msg) {
                 // TODO Add success message
             });
 

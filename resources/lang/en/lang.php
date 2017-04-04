@@ -37,6 +37,8 @@ return [
         ],
     ],
     'table' => [
+        'no-action' => 'No action',
+        'make-action' => 'Submit',
         'new-entry' => 'New Entry',
         'edit' => 'Edit',
         'restore' => 'Restore',
@@ -74,6 +76,9 @@ return [
             'next' => '&rarr;',
             'last' => 'Last',
         ],
+        'filters' => [
+            'control' => 'Filter',
+        ],
     ],
     'tree' => [
         'expand' => 'Expand all',
@@ -105,11 +110,11 @@ return [
         'no' => 'No',
     ],
     'message' => [
-        'created' => '<i class="fa fa-check fa-lg"></i> Record created successfully',
-        'updated' => '<i class="fa fa-check fa-lg"></i> Record updated successfully',
-        'deleted' => '<i class="fa fa-check fa-lg"></i> Record deleted successfully',
-        'destroyed' => '<i class="fa fa-check fa-lg"></i> Record destroyed successfully',
-        'restored' => '<i class="fa fa-check fa-lg"></i> Record restored successfully',
+        'created' => '<i class="fa fa-check fa-lg"></i> Record has been created successfully',
+        'updated' => '<i class="fa fa-check fa-lg"></i> Record has been updated successfully',
+        'deleted' => '<i class="fa fa-check fa-lg"></i> Record has been deleted successfully',
+        'destroyed' => '<i class="fa fa-check fa-lg"></i> Record has been destroyed successfully',
+        'restored' => '<i class="fa fa-check fa-lg"></i> Record has been restored successfully',
         'something_went_wrong' => 'Something went wrong!',
         'are_you_sure' => 'Are you sure?',
         'access_denied' => 'Access denied',

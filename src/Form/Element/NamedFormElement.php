@@ -6,6 +6,7 @@ use LogicException;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
+use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -14,6 +15,7 @@ use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 
 abstract class NamedFormElement extends FormElement
 {
+    use HtmlAttributes;
     /**
      * @var string
      */
@@ -373,7 +375,7 @@ abstract class NamedFormElement extends FormElement
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
 
-            if (! empty($attribute) or is_null($value)) {
+            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
         }
@@ -469,7 +471,7 @@ abstract class NamedFormElement extends FormElement
                         case HasOne::class:
                         case MorphOne::class:
                             $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($relationObject->getPlainForeignKey(), $relationObject->getParentKey());
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }
@@ -488,6 +490,13 @@ abstract class NamedFormElement extends FormElement
         }
 
         return $model;
+    }
+
+    protected function getForeignKeyNameFromRelation($relation)
+    {
+        return method_exists($relation, 'getForeignKeyName')
+            ? $relation->getForeignKeyName()
+            : $relation->getPlainForeignKey();
     }
 
     /**
@@ -533,12 +542,18 @@ abstract class NamedFormElement extends FormElement
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'id' => $this->getName(),
+            'name' => $this->getName(),
+        ]);
+
         return array_merge(parent::toArray(), [
             'id' => $this->getName(),
             'value' => $this->getValueFromModel(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
+            'attributes'=> $this instanceof Select ? $this->getHtmlAttributes() : $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);

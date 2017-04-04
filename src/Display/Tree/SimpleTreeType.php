@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Tree;
 
+use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
@@ -10,7 +11,15 @@ class SimpleTreeType implements TreeTypeInterface
     /**
      * @var TreeRepositoryInterface
      */
-    private $repository;
+    protected $repository;
+
+    /**
+     * @return TreeRepositoryInterface
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
 
     /**
      * @param TreeRepositoryInterface $repository
@@ -35,7 +44,7 @@ class SimpleTreeType implements TreeTypeInterface
             ->orderBy($this->repository->getOrderField(), 'asc')
             ->get();
 
-        return $this->repository->getChildren(
+        return $this->getChildren(
             $collection,
             $this->repository->getRootParentId()
         );
@@ -69,8 +78,36 @@ class SimpleTreeType implements TreeTypeInterface
             $instance->save();
 
             if (isset($item['children'])) {
-                $this->reorder($item['children'], $id);
+                $this->recursiveReorder($item['children'], $id);
             }
         }
+    }
+
+    /**
+     * Get children for simple tree type structure.
+     *
+     * @param $collection
+     * @param $id
+     *
+     * @return Collection
+     */
+    protected function getChildren($collection, $id)
+    {
+        $parentField = $this->repository->getParentField();
+        $result = [];
+        foreach ($collection as $instance) {
+            if ((int) $instance->$parentField != $id) {
+                continue;
+            }
+
+            $instance->setRelation(
+                'children',
+                $this->getChildren($collection, $instance->getKey())
+            );
+
+            $result[] = $instance;
+        }
+
+        return new Collection($result);
     }
 }

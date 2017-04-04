@@ -2,9 +2,16 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use SleepingOwl\Admin\Form\FormPanel;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\FormDefault;
+use SleepingOwl\Admin\Navigation\Badge;
+use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Form\Element\Hidden;
+use SleepingOwl\Admin\Form\Columns\Columns;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -48,6 +55,11 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $content;
 
     /**
+     * @var
+     */
+    protected $badge;
+
+    /**
      * @var string
      */
     protected $view = 'display.tab';
@@ -56,8 +68,9 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      * @param Renderable $content
      * @param string|null $label
      * @param string|null $icon
+     * @param Badge|string|\Closure|null $badge
      */
-    public function __construct(Renderable $content, $label = null, $icon = null)
+    public function __construct(Renderable $content, $label = null, $icon = null, $badge = null)
     {
         $this->content = $content;
 
@@ -68,6 +81,37 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         if (! is_null($icon)) {
             $this->setIcon($icon);
         }
+
+        if (! is_null($badge)) {
+            $this->setBadge($badge);
+        }
+    }
+
+    /**
+     * @param Badge|string|\Closure|null $badge
+     * @return $this
+     */
+    public function setBadge($badge)
+    {
+        $badgeData = null;
+
+        if (is_string($badge) || is_callable($badge) || is_numeric($badge)) {
+            $badgeData = new Badge();
+            $badgeData->setView('_partials.tabs.badge');
+            $badgeData->setValue($badge);
+        }
+
+        $this->badge = $badgeData;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBadge()
+    {
+        return $this->badge;
     }
 
     /**
@@ -106,6 +150,62 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function setActive($active = true)
     {
         $this->active = (bool) $active;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addTabElement()
+    {
+        if ($this->content instanceof FormInterface) {
+            $this->content->addElement(
+                new FormElements([
+                    (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName()),
+                ])
+            );
+        }
+
+        if ($this->content instanceof FormElements) {
+            foreach ($this->content->getElements() as $element) {
+                if ($element instanceof FormDefault && $element instanceof FormPanel) {
+                    $element->addElement(
+                        new FormElements([
+                            (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName()),
+                        ])
+                    );
+                }
+
+                if ($element instanceof FormElements) {
+                    foreach ($element->getElements() as $subElement) {
+                        if ($subElement instanceof FormDefault) {
+                            $subElement->addElement(
+                                new FormElements([
+                                    (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName()),
+                                ])
+                            );
+                        }
+                    }
+                }
+
+                if ($element instanceof Columns) {
+                    foreach ($element->getElements() as $column) {
+                        if ($column instanceof Column) {
+                            foreach ($column->getElements() as $columnElement) {
+                                if ($columnElement instanceof FormInterface) {
+                                    $columnElement->addElement(
+                                        new FormElements([
+                                            (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName()),
+                                        ])
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         return $this;
     }
@@ -414,10 +514,11 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function toArray()
     {
         return [
-            'label' => $this->getLabel(),
+            'label'  => $this->getLabel(),
             'active' => $this->isActive(),
-            'name' => $this->getName(),
-            'icon' => $this->getIcon(),
+            'name'   => $this->getName(),
+            'icon'   => $this->getIcon(),
+            'badge'  => $this->getBadge(),
         ];
     }
 }

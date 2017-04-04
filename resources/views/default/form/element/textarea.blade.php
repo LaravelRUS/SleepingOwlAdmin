@@ -9,9 +9,7 @@
 
 	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-	<textarea class="form-control"
-			  rows="{{ $rows }}"
-			  name="{{ $name }}"
+	<textarea {!! $attributes !!}
 			  @if($readonly) readonly @endif
 	>{!! $value !!}</textarea>
 	@include(AdminTemplate::getViewPath('form.element.partials.errors'))

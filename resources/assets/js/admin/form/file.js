@@ -17,7 +17,8 @@ Vue.component('element-file', Vue.extend({
     },
     data () {
         return {
-            errors: []
+            errors: [],
+            uploading: false,
         }
     },
     ready () {
@@ -34,8 +35,10 @@ Vue.component('element-file', Vue.extend({
                 method: 'POST',
                 uploadMultiple: false,
                 previewsContainer: false,
+
                 dictDefaultMessage: '',
                 sending () {
+                    self.uploading = true;
                     self.closeAlert()
                 },
                 success (file, response) {
@@ -45,23 +48,17 @@ Vue.component('element-file', Vue.extend({
                     if(_.isArray(response.errors)) {
                         self.$set('errors', response.errors);
                     }
+                },
+                complete(){
+                    self.uploading = false;
                 }
             });
         },
         remove () {
             var self = this;
 
-            swal({
-                title: i18next.t('lang.message.are_you_sure'),
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: i18next.t('lang.button.yes')
-            }).then(() => {
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
                 self.value = '';
-            }, dismiss => {
-
             });
         },
         closeAlert () {
@@ -69,11 +66,17 @@ Vue.component('element-file', Vue.extend({
         }
     },
     computed: {
+        uploadClass() {
+            if (!this.uploading) {
+                return 'fa fa-upload';
+            }
+            return 'fa fa-spinner fa-spin'
+        },
         has_value () {
             return this.value.length > 0
         },
         file () {
-            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Settings.base_url + this.value)
+            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Url.upload(this.value))
         }
     }
 }));

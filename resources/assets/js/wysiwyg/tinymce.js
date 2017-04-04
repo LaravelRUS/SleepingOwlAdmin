@@ -18,4 +18,4 @@ let exec_handler = (editor, command, textareaId, data) => {
     }
 }
 
-Admin.WYSIWYG.add('tinymce', switchOn_handler, switchOff_handler, exec_handler);
+Admin.WYSIWYG.register('tinymce', switchOn_handler, switchOff_handler, exec_handler);

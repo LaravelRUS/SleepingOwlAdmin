@@ -38,6 +38,8 @@ return [
         ],
     ],
     'table' => [
+        'no-action' => 'Без дiй',
+        'make-action' => 'Вiдправити',
         'new-entry' => 'Новий запис',
         'edit' => 'Редагувати',
         'restore' => 'Відновити',

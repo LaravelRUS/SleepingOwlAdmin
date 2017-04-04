@@ -49,7 +49,7 @@
 		<div v-if="!readonly">
 			<br />
 			<div class="btn btn-primary upload-button">
-				<i class="fa fa-upload"></i> {{ trans('sleeping_owl::lang.image.browse') }}
+				<i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browse') }}
 			</div>
 		</div>
 

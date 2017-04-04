@@ -4,6 +4,8 @@ namespace SleepingOwl\Admin\Navigation;
 
 class Badge extends \KodiComponents\Navigation\Badge
 {
+    public $view = null;
+
     /**
      * @return array
      */
@@ -16,9 +18,29 @@ class Badge extends \KodiComponents\Navigation\Badge
         }
 
         return [
-            'value' => $value,
+            'value'      => $value,
             'attributes' => $this->htmlAttributesToString(),
         ];
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getView()
+    {
+        if ($this->view) {
+            return $this->view;
+        }
+
+        return '_partials.navigation.badge';
+    }
+
+    /**
+     * @param $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
     }
 
     /**
@@ -26,6 +48,6 @@ class Badge extends \KodiComponents\Navigation\Badge
      */
     public function render()
     {
-        return app('sleeping_owl.template')->view('_partials.navigation.badge', $this->toArray());
+        return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
     }
 }

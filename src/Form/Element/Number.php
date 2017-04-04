@@ -5,17 +5,17 @@ namespace SleepingOwl\Admin\Form\Element;
 class Number extends NamedFormElement
 {
     /**
-     * @var int
+     * @var float
      */
     protected $min;
 
     /**
-     * @var int
+     * @var float
      */
     protected $max;
 
     /**
-     * @var int
+     * @var float
      */
     protected $step;
 
@@ -25,7 +25,7 @@ class Number extends NamedFormElement
     protected $view = 'form.element.number';
 
     /**
-     * @return int
+     * @return float
      */
     public function getMin()
     {
@@ -33,19 +33,19 @@ class Number extends NamedFormElement
     }
 
     /**
-     * @param int $min
+     * @param float $min
      *
      * @return $this
      */
     public function setMin($min)
     {
-        $this->min = (int) $min;
+        $this->min = (float) $min;
 
         return $this;
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getMax()
     {
@@ -53,19 +53,19 @@ class Number extends NamedFormElement
     }
 
     /**
-     * @param int $max
+     * @param float $max
      *
      * @return $this
      */
     public function setMax($max)
     {
-        $this->max = (int) $max;
+        $this->max = (float) $max;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return float
      */
     public function getStep()
     {
@@ -73,13 +73,13 @@ class Number extends NamedFormElement
     }
 
     /**
-     * @param int $step
+     * @param float $step
      *
      * @return $this
      */
     public function setStep($step)
     {
-        $this->step = (int) $step;
+        $this->step = (float) $step;
 
         return $this;
     }
@@ -89,11 +89,19 @@ class Number extends NamedFormElement
      */
     public function toArray()
     {
+        $this->setHtmlAttributes([
+            'class' => 'form-control',
+            'type'  => 'number',
+            'max'   => $this->getMax(),
+            'min'   => $this->getMin(),
+            'step'  => $this->getStep(),
+        ]);
+
         return parent::toArray() + [
-            'min' => $this->getMin(),
-            'max' => $this->getMax(),
-            'step' => $this->getStep(),
-        ];
+                'min'  => $this->getMin(),
+                'max'  => $this->getMax(),
+                'step' => $this->getStep(),
+            ];
     }
 
     /**

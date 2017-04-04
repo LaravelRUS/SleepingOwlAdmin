@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Repositories;
 
-use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Display\Tree\BaumNodeType;
 use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
 use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
@@ -184,33 +183,5 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
         }
 
         $this->setTreeType($type);
-    }
-
-    /**
-     * Get children for simple tree type structure.
-     *
-     * @param $collection
-     * @param $id
-     *
-     * @return Collection
-     */
-    protected function getChildren($collection, $id)
-    {
-        $parentField = $this->getParentField();
-        $result = [];
-        foreach ($collection as $instance) {
-            if ((int) $instance->$parentField != $id) {
-                continue;
-            }
-
-            $instance->setRelation(
-                'children',
-                $this->getChildren($collection, $instance->getKey())
-            );
-
-            $result[] = $instance;
-        }
-
-        return new Collection($result);
     }
 }

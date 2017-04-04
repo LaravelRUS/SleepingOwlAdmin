@@ -13,6 +13,11 @@ class MultiSelect extends Select
     protected $taggable = false;
 
     /**
+     * @var \Closure
+     */
+    protected $pivotCallback;
+
+    /**
      * @var bool
      */
     protected $deleteRelatedItem = false;
@@ -66,6 +71,25 @@ class MultiSelect extends Select
     }
 
     /**
+     * @return \Closure
+     */
+    public function getPivotCallback()
+    {
+        return $this->pivotCallback;
+    }
+
+    /**
+     * @param \Closure $callable
+     * @return $this
+     */
+    public function setPivotCallback(\Closure $callable)
+    {
+        $this->pivotCallback = $callable;
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isDeleteRelatedItem()
@@ -88,24 +112,24 @@ class MultiSelect extends Select
      */
     public function toArray()
     {
-        $attributes = [
-            'id' => $this->getName(),
+        $this->setHtmlAttributes([
+            'id'    => $this->getName(),
             'class' => 'form-control input-select',
             'multiple',
-        ];
+        ]);
 
         if ($this->isTaggable()) {
-            $attributes['class'] .= ' input-taggable';
+            $this->setHtmlAttribute('class', 'input-taggable');
         }
 
         if ($this->isReadonly()) {
-            $attributes['disabled'] = 'disabled';
+            $this->setHtmlAttribute('disabled', 'disabled');
         }
 
         return [
-            'tagable' => $this->isTaggable(),
-            'attributes' => $attributes,
-        ] + parent::toArray();
+                'tagable'    => $this->isTaggable(),
+                'attributes' => $this->getHtmlAttributes(),
+            ] + parent::toArray();
     }
 
     /**
@@ -155,8 +179,10 @@ class MultiSelect extends Select
      *
      * @return void
      */
-    protected function syncBelongsToManyRelation(\Illuminate\Database\Eloquent\Relations\BelongsToMany $relation, array $values)
-    {
+    protected function syncBelongsToManyRelation(
+        \Illuminate\Database\Eloquent\Relations\BelongsToMany $relation,
+        array $values
+    ) {
         foreach ($values as $i => $value) {
             if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
                 $model = clone $this->getModelForOptions();
@@ -167,6 +193,10 @@ class MultiSelect extends Select
             }
         }
 
+        if (is_callable($this->getPivotCallback())) {
+            $values = call_user_func($this->pivotCallback, $values) ?: $values;
+        }
+
         $relation->sync($values);
     }
 
@@ -174,8 +204,10 @@ class MultiSelect extends Select
      * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
      * @param array $values
      */
-    protected function deleteOldItemsFromHasManyRelation(\Illuminate\Database\Eloquent\Relations\HasMany $relation, array $values)
-    {
+    protected function deleteOldItemsFromHasManyRelation(
+        \Illuminate\Database\Eloquent\Relations\HasMany $relation,
+        array $values
+    ) {
         $items = $relation->get();
 
         foreach ($items as $item) {
@@ -183,7 +215,7 @@ class MultiSelect extends Select
                 if ($this->isDeleteRelatedItem()) {
                     $item->delete();
                 } else {
-                    $item->{$relation->getPlainForeignKey()} = null;
+                    $item->{$this->getForeignKeyNameFromRelation($relation)} = null;
                     $item->save();
                 }
             }
@@ -194,8 +226,10 @@ class MultiSelect extends Select
      * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
      * @param array $values
      */
-    protected function attachItemsToHasManyRelation(\Illuminate\Database\Eloquent\Relations\HasMany $relation, array $values)
-    {
+    protected function attachItemsToHasManyRelation(
+        \Illuminate\Database\Eloquent\Relations\HasMany $relation,
+        array $values
+    ) {
         foreach ($values as $i => $value) {
             /** @var Model $model */
             $model = clone $this->getModelForOptions();

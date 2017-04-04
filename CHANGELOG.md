@@ -1,13 +1,161 @@
 # Release Notes
 
 ## [Unreleased]
+ * Добавлены колбеки на поля. Теперь каждому полю доступен ряд колбеков и ряд логики с операциями Order, 
+   Search(основной на Async) и FilterSearch (отдельный фильтр на колонке переопределение его логики)
+   Если у вас есть кастомная логика на Order или Search или FilterSearch вы можете вызвать на коламне:
+    ```php
+    setSearchCallback(function($column, $query, $search){
+      //Тут ваша логика
+      //например $query->where($column->getName(), 'like', "%$search%");
+    })
+    ```
+    ```php
+      setOrderCallback(function($column, $query, $search){
+         //Тут ваша логика
+         //например $query->orderBy($column->getName(), 'asc');
+      })
+    ```
+    ```php
+     setFilterCallback(function($column, $query, $search){
+        //Тут ваша логика
+     })
+     ```
+     
+     Если у вас много однотипной логики, которую вы не хотите прописывать в каждом коламне
+     вы можете вызвать:
+     ```php
+       ->setMetaData(SomeColumnMetaData::class)
+     ```
+     `SomeColumnMetaData.php`
+     ```php
 
-...
+     namespace App\Modules\Nhs\Admin\ColumnsMeta;
+     
+     
+     use Illuminate\Database\Eloquent\Builder;
+     use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+     use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
+     
+     class SomeColumnMetaData implements ColumnMetaInterface
+     {
+         public function onFilterSearch(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
+         {
+             // TODO: Implement onFilterSearch() method.
+         }
+         
+         public function onOrderBy(NamedColumnInterface $column, Builder $query, $direction)
+         {
+             // TODO: Implement onOrderBy() method.
+         }
+         
+         public function onSearch(NamedColumnInterface $column, Builder $query, $queryString)
+         {
+             // TODO: Implement onSearch() method.
+         }
+     
+     }
+     ```
+     Вы можете создать любой из этих методов - и все они будут работать.
+     Так же на каждом фильтре есть свой колбек (если честно надобность его я не особо понимаю однако оставил ввиду обратной совестимости)
+     Вызвать его можно на фильтре setCallback()
+     
+     Помните про приоритет прерывания (расположены по старшинству):
+     
+     - Если у вас есть ColumnMeta::class - сработает только тот метод который будет в нем (onSearch onFilterSearch onOrderBy)
+     дальнейшую логику он прервет 
+     - Если у вас setSearchCallback - сработает он и дальнейшая логика будет прервана
+     - Если у вас есть setCallback - непосредственно на фильтре - в операции Filter он сработает если не будет ни колбека на коламне - ни колбека в ColumnMeta::class
+     - Если у вас нету ничего из вышеперечисленного - сработает дефолтная логика всех 3 операций
+     
+     **Всем добра**
+     
+ * Исправлена дефолтная логика сортировки для столбцов с отношениями. Теперь в секции Users поле post.name
+   поле будет сортироваться без ошибок. Однако эта сортировка не будет работать с EagerLoad, то есть она не будет сортировать поле
+   в секции `Posts` - `category.user.name` (TODO)
+ * Добавлен тип `OrderTreeType::class` который ограничивает дерево только на первый уровень 
+ (работает без parent_id) и позволяет сортировать элементы
+    Пример можно увидеть по [ссылке в демо](https://demo.sleepingowl.ru/admin/page_orders) 
+    Пример кода можно увидеть в секции [PageOrders.php](https://github.com/SleepingOwlAdmin/demo/blob/master/admin/Http/Sections/PageOrders.php#L56)
+ * Добавлена возможность указывать деревьям максимальный уровень вложенности `setMaxDepth(10)`
+ * Добавлен метод setDisplaySearch(true|false) для установки параметра отображения общего поля поиска для DataTablesAsync
+ * Добавлен коллбек на мультиселект и ajax-мультиселект который контролирует pivot-data
+   ```php
+    AdminFormElement::multiselectajax('someBelongToManyRelation', "SomeLabel")
+        ->setModelForOptions(SomeModelWithBelongsToRelation::class)
+        ->setDisplay('some_display_field')
+  
+        ->setPivotCallback(function($values){
+           //$values - массив данных что будет передаваться в sync
+           //Обычно это массив id [1, 2, 3];
+           //Что бы sync сьел данные с pivot нужно сделать так 
+           //[1 => ['order' => 9], 2 => ['order' => 6], 3 => ['order' => 7] ]
+           //И после вернуть значение $values
+           
+           return $values;
+        }),
+  
+        ->required()
+   ```
+ * Теперь после обработки формы если у вас на форме есть таб и если даже этот таб внутри таба
+   родительский определится и будет активным. Больше не нужно переключаться все время с первого на нужный
+   Протестировать можно [тут](https://demo.sleepingowl.ru/admin/contact5s)
+ * Теперь политики поддерживают Light-DDD структуру
+    AdminSectionServiceProvider теперь имеется $policies  (property)не путать с методом. 
+    это ассоциативный массив Section::class => Policy::class. Если для секции правило в этом массиве не определено,
+    то Gate будет запрашивать неймспейс политик указанный в sleeping_owl.php + имя секции + SectionModelPolicy
+    т.е. Если секция называется Users то политика будет к примеру App\Policy\UsersSectionModelPolicy.php - это не всегда удобно.
+    Теперь с помощью $policies можно хранить политики где угодно.
+    
+ * Поправлено поведение payload реализованном в этом #432 issue ( не работал с async )
+    
+    ```php
+    if(!is_null($id))
+    {
+         $contacts = AdminSection::getModel(Contact::class)->fireDisplay(['scopes' => ['withBusiness', $id]]);
+    
+         $tabs[] = AdminDisplay::tab($contacts)
+             ->setLabel("Contacts")
+             ->setIcon('<i class="fa fa-credit-card"></i>');
+    }
+    ```
+    
+    В секции должно быть что то типо
+    ```php
+    public function onDisplay($scopes = [])
+    {
+    
+            $display = AdminDisplay::datatablesAsync()->paginate(10);
+            if($scopes){
+                  $display->getScopes()->push($scopes);
+            }
+    }
+    
+    ```
+ * Пофикшено поведение AdminColumnEditable, в нашем случае checkbox в табах и коламнах
+ * Добавлен метод getCancelUrl для установки Url кнопки Отмены
+ * Переработан механизм кнопок формы
+    * Теперь кнопки формы можно засунуть под либо над любым полем в форме (помимо стандартного их места нахождения)
+    * Кнопки теперь отдельные объекты с возможностью указать свои аттрибуты.
+    * Кнопки теперь можно менять местами и заменять в стандартном наборе
+    * Каждая кнопка имеет набор групповых параметров groupElements которые являеются элементами ( выводятся в дропдауне )
+    * Можно добавлять в набор свои кнопки используя класс FormButton
+    * Ищите примеры в [демо-репозитори](https://github.com/SleepingOwlAdmin/demo)  - документацию в ближайшее время подотовит @lunatig
+ * Исправлены поведения фильтров ( пофикшена работа с BigData - добавлены эвенты обработки на Enter и Доп. Кнопка 
+  в ControlColumn, которую кстати можно задавать самостоятельно)
+ * Исправлена работа dataTablesAsync в AdminDisplayTabbed
+ * Пофикшены проблемы, идентифицированы новые ( скорее всего добавлены новые )
+ * Пофикшены issue #467 и #504
+ * Фильтры переработаны с эвентов keyup и change на эвенты keyup (keyCode=ENTER) и общую кнопку
+ * Добавлены баджи к tab (имеется проблема с css, но не у всех) читать в документации
+ * Добавлена поддержка HtmlAttributes для всех AdminFormElement кроме File,Upload,Image,Images
+    Теперь AdminFormElement поддерживает методы setHtmlAttributes, setHtmlAttribute и прочие.
+ * Рефакторинг JS кода (http://sleepingowladmin.ru/docs/javascript)
 
+    Отказ от хранения настроек по url `admin/scripts`, теперь глобальный конфиг хранится в body шаблона.
+    Перенос `app.js` в футер
 
-## 4.82.20
-
-### Changed
+### 4.82.20
  * Добавлен колбек на сохранение файлов (читать в документации)
      ```php
        AdminFormElement::images('some_images', "Some Label")
@@ -19,6 +167,7 @@
            }),
      ```
  * Исправлена проблема с заменой контроллера для раздела для Laravel версии > 5.2
+
  * Перенос интерфейсов `SleepingOwl\Admin\Contracts\RepositoryInterface` и `SleepingOwl\Admin\Contracts\TreeRepositoryInterface` в директорию `SleepingOwl\Admin\Contracts\Repositories`
  * Замена название директории `src\Repository` в `src\Repositories`
  * Добавлена поддержка Laravel 5.4

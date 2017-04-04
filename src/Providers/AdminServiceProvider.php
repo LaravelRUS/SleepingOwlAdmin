@@ -60,7 +60,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('sleeping_owl.meta', function ($app) {
             return new \SleepingOwl\Admin\Templates\Meta(
-                new \KodiCMS\Assets\Assets(
+                new \SleepingOwl\Admin\Templates\Assets(
                     $app['assets.packages']
                 )
             );
@@ -107,15 +107,6 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->registerMessages();
         $this->registerBootstrap();
-
-        $this->registerRoutes(function (Router $route) {
-            $route->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function ($route) {
-                $route->get('assets/admin.scripts', [
-                    'as'   => 'scripts',
-                    'uses' => 'AdminController@getScripts',
-                ]);
-            });
-        });
     }
 
     protected function registerMessages()

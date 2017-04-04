@@ -11,6 +11,8 @@ use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -26,7 +28,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async';
         if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
-                'as' => $routeName,
+                'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
         }
@@ -34,12 +36,13 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async.inlineEdit';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
-                'as' => $routeName,
+                'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
     }
 
+    protected $payload;
     /**
      * @var string
      */
@@ -49,6 +52,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param string|null $name
      */
     protected $distinct;
+
+    /**
+     * @var
+     */
+    protected $displaySearch = false;
 
     /**
      * @var array
@@ -86,7 +94,32 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         array_unshift($attributes, $this->getName());
         array_unshift($attributes, $this->getModelConfiguration()->getAlias());
 
+        $this->setHtmlAttribute('style', 'width:100%');
         $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes));
+        $this->setHtmlAttribute('data-payload', json_encode($this->payload));
+
+        if ($this->getSearching()) {
+            $this->setHtmlAttribute('data-display-searching', 1);
+        }
+    }
+
+    /**
+     * @param $searching
+     * @return $this
+     */
+    public function setSearching($searching)
+    {
+        $this->displaySearch = $searching;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSearching()
+    {
+        return $this->displaySearch;
     }
 
     /**
@@ -174,7 +207,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             return;
         }
 
-        $query->offset($offset)->limit($limit);
+        $query->offset((int) $offset)->limit((int) $limit);
     }
 
     /**
@@ -192,8 +225,23 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $query->where(function ($query) use ($search) {
             $columns = $this->getColumns()->all();
+
             foreach ($columns as $column) {
                 if (in_array(get_class($column), $this->searchableColumns)) {
+                    if ($column instanceof NamedColumnInterface) {
+                        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+                            if (method_exists($metaInstance, 'onSearch')) {
+                                $metaInstance->onSearch($column, $query, $search);
+                                continue;
+                            }
+                        }
+
+                        if (is_callable($callback = $column->getSearchCallback())) {
+                            $callback($column, $query, $search);
+                            continue;
+                        }
+                    }
+
                     $query->orWhere($column->getName(), 'like', '%'.$search.'%');
                 }
             }
@@ -210,8 +258,12 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      *
      * @return array
      */
-    protected function prepareDatatablesStructure(\Illuminate\Http\Request $request, Collection $collection, $totalCount, $filteredCount)
-    {
+    protected function prepareDatatablesStructure(
+        \Illuminate\Http\Request $request,
+        Collection $collection,
+        $totalCount,
+        $filteredCount
+    ) {
         $columns = $this->getColumns();
 
         $result = [];
@@ -245,5 +297,32 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function getCollection()
     {
+    }
+
+    /**
+     * @param $payload
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $params = parent::toArray();
+        $params['payload'] = $this->payload;
+
+        return $params;
     }
 }

@@ -10,6 +10,6 @@ window.$ = global.jQuery = require('jquery');
 
 $.ajaxSetup({
     headers: {
-        'X-CSRF-TOKEN': window.Admin.Settings.token
+        'X-CSRF-TOKEN': Admin.token
     }
 });

@@ -21,7 +21,7 @@ require('vue-resource');
  * included with Laravel will automatically verify the header's value.
  */
 Vue.http.interceptors.push((request, next) => {
-    request.headers['X-CSRF-TOKEN'] = window.Admin.Settings.token;
+    request.headers['X-CSRF-TOKEN'] = Admin.token;
 
     next((response) => {
         switch (response.status) {
@@ -30,10 +30,9 @@ Vue.http.interceptors.push((request, next) => {
             case 400:
                 break;
             default:
-                sweetAlert(
-                    i18next.t('lang.message.something_went_wrong'),
-                    response.data.message || '',
-                    'error'
+                Admin.Messages.error(
+                    trans('lang.message.something_went_wrong'),
+                    response.data.message || ''
                 )
         }
     });

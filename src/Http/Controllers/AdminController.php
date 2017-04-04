@@ -3,9 +3,12 @@
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
@@ -49,7 +52,7 @@ class AdminController extends Controller
         $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
 
-        $admin->navigation()->setCurrentUrl($request->url());
+        $admin->navigation()->setCurrentUrl($request->getUri());
 
         if (! $this->breadcrumbs->exists('home')) {
             $this->breadcrumbs->register('home', function ($breadcrumbs) {
@@ -169,6 +172,7 @@ class AdminController extends Controller
                 if ($createForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
                         '_redirectBack' => $backUrl,
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
             } catch (ValidationException $exception) {
@@ -177,6 +181,7 @@ class AdminController extends Controller
                     ->withInput()
                     ->with([
                         '_redirectBack' => $backUrl,
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
         }
@@ -197,6 +202,7 @@ class AdminController extends Controller
                 $redirectUrl
             )->with([
                 '_redirectBack' => $backUrl,
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } elseif ($nextAction == 'save_and_create') {
             $response = redirect()->to($model->getCreateUrl($request->except([
@@ -206,6 +212,7 @@ class AdminController extends Controller
                 'next_action',
             ])))->with([
                 '_redirectBack' => $backUrl,
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
             $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));
@@ -265,6 +272,7 @@ class AdminController extends Controller
                 if ($editForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
                         '_redirectBack' => $backUrl,
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
             } catch (ValidationException $exception) {
@@ -273,6 +281,7 @@ class AdminController extends Controller
                     ->withInput()
                     ->with([
                         '_redirectBack' => $backUrl,
+                        'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
         }
@@ -282,6 +291,7 @@ class AdminController extends Controller
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
                 '_redirectBack' => $backUrl,
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
 
             if ($redirectPolicy->get('edit') == 'display') {
@@ -289,6 +299,7 @@ class AdminController extends Controller
                     $model->getDisplayUrl()
                 )->with([
                     '_redirectBack' => $backUrl,
+                    'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                 ]);
             }
         } elseif ($nextAction == 'save_and_create') {
@@ -299,6 +310,7 @@ class AdminController extends Controller
                 'next_action',
             ])))->with([
                 '_redirectBack' => $backUrl,
+                'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
             $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));
@@ -319,13 +331,49 @@ class AdminController extends Controller
     {
         $field = $request->input('name');
         $id = $request->input('pk');
-
         $display = $model->fireDisplay();
+        $column = null;
 
-        /** @var ColumnEditableInterface|null $column */
-        $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
-            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
-        })->first();
+        /* @var ColumnEditableInterface|null $column */
+        if (is_callable([$display, 'getColumns'])) {
+            $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
+                return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+            })->first();
+        } else {
+            if ($display instanceof DisplayTabbed) {
+                foreach ($display->getTabs() as $tab) {
+                    $content = $tab->getContent();
+
+                    if ($content instanceof DisplayTable) {
+                        $column = $content->getColumns()->all()->filter(function ($column) use ($field) {
+                            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                        })->first();
+                    }
+                    if ($content instanceof FormElements) {
+                        foreach ($content->getElements() as $element) {
+
+                            //Return data-table if inside FormElements
+                            if ($element instanceof DisplayTable) {
+                                $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
+                                    return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                                })->first();
+                            }
+
+                            //Try to find inline Editable in columns
+                            if ($element instanceof Column) {
+                                foreach ($element->getElements() as $columnElement) {
+                                    if ($columnElement instanceof DisplayTable) {
+                                        $column = $columnElement->getColumns()->all()->filter(function ($column) use ($field) {
+                                            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                                        })->first();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         if (is_null($column)) {
             abort(404);
@@ -488,47 +536,6 @@ class AdminController extends Controller
             ->with('title', $title)
             ->with('content', $content)
             ->with('breadcrumbKey', $this->parentBreadcrumb);
-    }
-
-    /**
-     * @return Response
-     */
-    public function getScripts()
-    {
-        $lang = trans('sleeping_owl::lang');
-        if ($lang == 'sleeping_owl::lang') {
-            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
-        }
-
-        $data = [
-            'locale' => $this->app->getLocale(),
-            'url_prefix' => config('sleeping_owl.url_prefix'),
-            'base_url' => asset('/'),
-            'lang' => $lang,
-            'wysiwyg' => config('sleeping_owl.wysiwyg'),
-        ];
-
-        $content = 'window.Admin = {Settings: '.json_encode($data, JSON_PRETTY_PRINT).'}';
-
-        return $this->cacheResponse(
-            new Response($content, 200, [
-                'Content-Type' => 'text/javascript',
-            ])
-        );
-    }
-
-    /**
-     * @param Response $response
-     *
-     * @return Response
-     */
-    protected function cacheResponse(Response $response)
-    {
-        $response->setSharedMaxAge(31536000);
-        $response->setMaxAge(31536000);
-        $response->setExpires(new \DateTime('+1 year'));
-
-        return $response;
     }
 
     /**

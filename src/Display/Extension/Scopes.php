@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class Scopes extends Extension
 {
@@ -22,11 +23,15 @@ class Scopes extends Extension
     /**
      * @param array|string $scopes
      *
-     * @return $this
+     * @return DisplayInterface|Scopes
      */
     public function set($scopes)
     {
         $this->scopes = func_get_args();
+
+        if (is_array($scopes)) {
+            $this->scopes[] = $scopes;
+        }
 
         return $this->getDisplay();
     }
