@@ -104,10 +104,11 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
         $queryString = $this->parseValue($queryString);
 
         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+            if(method_exists($metaInstance, 'onFilterSearch')){
+                $metaInstance->onFilterSearch($column, $query, $queryString, $queryParams);
 
-            $metaInstance->onFilterSearch($column, $query, $queryString, $queryParams);
-
-            return;
+                return;
+            }
         }
 
         if (is_callable($callback = $column->getFilterCallback())) {

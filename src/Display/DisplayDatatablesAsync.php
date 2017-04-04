@@ -232,8 +232,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
                     if ($column instanceof NamedColumnInterface) {
                         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
-                            $metaInstance->onSearch($column, $query, $search);
-                            continue;
+                            if(method_exists($metaInstance, 'onSearch')) {
+                                $metaInstance->onSearch($column, $query, $search);
+                                continue;
+                            }
                         }
 
                         if (is_callable($callback = $column->getSearchCallback())){
