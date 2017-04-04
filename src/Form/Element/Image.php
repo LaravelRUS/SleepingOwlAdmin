@@ -7,7 +7,6 @@ use Illuminate\Validation\Validator;
 
 class Image extends File
 {
-
     /**
      * @var string
      */
@@ -39,7 +38,7 @@ class Image extends File
 
             $size = getimagesize($file->getRealPath());
 
-            if (!$size) {
+            if (! $size) {
                 $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
             }
         });
@@ -79,14 +78,14 @@ class Image extends File
             return $callback($file, $path, $filename, $settings);
         }
 
-        if (class_exists('Intervention\Image\Facades\Image') and (bool)getimagesize($file->getRealPath())) {
+        if (class_exists('Intervention\Image\Facades\Image') and (bool) getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {
                 call_user_func_array([$image, $method], $args);
             }
 
-            $value = $path . '/' . $filename;
+            $value = $path.'/'.$filename;
 
             $image->save($value);
 
