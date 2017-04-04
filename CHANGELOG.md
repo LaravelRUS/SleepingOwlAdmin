@@ -7,15 +7,17 @@
     ```php
     setSearchCallback(function($column, $query, $search){
       //Тут ваша логика
+      //например $query->where($column->getName(), 'like', "%$search%");
     })
     ```
     ```php
       setOrderCallback(function($column, $query, $search){
          //Тут ваша логика
+         //например $query->orderBy($column->getName(), 'asc');
       })
     ```
     ```php
-     setOrderCallback(function($column, $query, $search){
+     setFilterCallback(function($column, $query, $search){
         //Тут ваша логика
      })
      ```
