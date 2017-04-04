@@ -10,6 +10,7 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
+
     /**
      * @var string
      */
@@ -25,10 +26,10 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.'.static::$route;
+        $routeName = 'admin.form.element.' . static::$route;
 
-        if (! $router->has($routeName)) {
-            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
+        if (!$router->has($routeName)) {
+            $router->post('{adminModel}/' . static::$route . '/{field}/{id?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField',
             ]);
@@ -98,7 +99,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function setDriver($driver, $driverOptions = [])
     {
-        $this->driver = $driver;
+        $this->driver        = $driver;
         $this->driverOptions = $driverOptions;
 
         return $this;
@@ -127,7 +128,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function getUploadPath(UploadedFile $file)
     {
-        if (! is_callable($this->uploadPath)) {
+        if (!is_callable($this->uploadPath)) {
             return $this->defaultUploadPath($file);
         }
 
@@ -153,7 +154,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function getUploadFileName(UploadedFile $file)
     {
-        if (! is_callable($this->uploadFileName)) {
+        if (!is_callable($this->uploadFileName)) {
             return $this->defaultUploadFilename($file);
         }
 
@@ -178,7 +179,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function getUploadSettings()
     {
         if (empty($this->uploadSettings) && in_array(Upload::class, class_uses($this->getModel()))) {
-            return (array) array_get($this->getModel()->getUploadSettings(), $this->getPath());
+            return (array)array_get($this->getModel()->getUploadSettings(), $this->getPath());
         }
 
         return $this->uploadSettings;
@@ -228,7 +229,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function maxSize($size)
     {
-        $this->addValidationRule('max:'.(int) $size);
+        $this->addValidationRule('max:' . (int)$size);
 
         return $this;
     }
@@ -240,7 +241,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function minSize($size)
     {
-        $this->addValidationRule('min:'.(int) $size);
+        $this->addValidationRule('min:' . (int)$size);
 
         return $this;
     }
@@ -274,16 +275,14 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
-        if ($this->getSaveCallback()) {
-            $callable = $this->getSaveCallback();
-
-            return call_user_func($callable, [$file, $path, $filename, $settings]);
+        if (is_callable($callback = $this->getSaveCallback())) {
+            return $callback($file, $path, $filename, $settings);
         }
 
         $file->move($path, $filename);
 
         //TODO: Make sense take s3, rackspace or some cloud storage url
-        $value = $path.'/'.$filename;
+        $value = $path . '/' . $filename;
 
         return ['path' => asset($value), 'value' => $value];
     }
@@ -302,7 +301,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function defaultUploadFilename(UploadedFile $file)
     {
-        return md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+        return md5(time() . $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
     }
 
     /**
