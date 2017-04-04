@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
@@ -187,7 +188,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @return Collection
+     * @return Collection|LengthAwarePaginator|Builder
      * @throws \Exception
      */
     public function getCollection()

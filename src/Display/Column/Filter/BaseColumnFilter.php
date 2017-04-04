@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
@@ -13,6 +14,7 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
+
     use SqlQueryOperators, HtmlAttributes, Assets, \SleepingOwl\Admin\Traits\Renderable;
 
     /**
@@ -69,6 +71,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @deprecated
      * @return \Closure|null
      */
     public function getCallback()
@@ -78,7 +81,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @param \Closure $callback
-     *
+     * @deprecated
      * @return $this
      */
     public function setCallback(\Closure $callback)
@@ -90,15 +93,30 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @param NamedColumnInterface $column
-     * @param Builder              $query
-     * @param string               $queryString
-     * @param array|string         $queryParams
+     * @param Builder $query
+     * @param string $queryString
+     * @param array|string $queryParams
      *
      * @return void
      */
     public function apply(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
     {
         $queryString = $this->parseValue($queryString);
+
+        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+            if(method_exists($metaInstance, 'onFilterSearch')){
+                $metaInstance->onFilterSearch($column, $query, $queryString, $queryParams);
+
+                return;
+            }
+        }
+
+        if (is_callable($callback = $column->getFilterCallback())) {
+            $callback($column, $query, $queryString, $queryParams);
+
+            return;
+        }
+
 
         if (is_callable($callback = $this->getCallback())) {
             $callback($column, $query, $queryString, $queryParams);
@@ -115,8 +133,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
         }
 
         if (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $fieldName = array_pop($parts);
+            $parts        = explode('.', $name);
+            $fieldName    = array_pop($parts);
             $relationName = implode('.', $parts);
 
             $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {
@@ -135,7 +153,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function toArray()
     {
         return [
-            'attributes' => $this->htmlAttributesToString(),
+            'attributes'      => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
         ];
     }

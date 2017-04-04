@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Container\Container;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnMetaInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\Renderable;
@@ -16,6 +18,7 @@ use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 abstract class TableColumn implements ColumnInterface
 {
+
     use HtmlAttributes, Assets, Renderable;
 
     /**
@@ -60,7 +63,7 @@ abstract class TableColumn implements ColumnInterface
     {
         $this->header = app(TableHeaderColumnInterface::class);
 
-        if (! is_null($label)) {
+        if (!is_null($label)) {
             $this->setLabel($label);
         }
 
@@ -99,7 +102,7 @@ abstract class TableColumn implements ColumnInterface
     public function setWidth($width)
     {
         if (is_int($width)) {
-            $width = $width.'px';
+            $width = $width . 'px';
         }
 
         $this->width = $width;
@@ -143,7 +146,7 @@ abstract class TableColumn implements ColumnInterface
     public function setModel(Model $model)
     {
         $this->model = $model;
-        $append = $this->getAppends();
+        $append      = $this->getAppends();
 
         if ($append instanceof WithModel) {
             $append->setModel($model);
@@ -168,7 +171,7 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * @param OrderByClauseInterface|bool|string|\Closure $orderable
-     *
+     * @deprecated
      * @return $this
      */
     public function setOrderable($orderable)
@@ -177,7 +180,7 @@ abstract class TableColumn implements ColumnInterface
             $orderable = new OrderByClause($orderable);
         }
 
-        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
+        if ($orderable !== false && !$orderable instanceof OrderByClauseInterface) {
             throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
         }
 
@@ -207,12 +210,12 @@ abstract class TableColumn implements ColumnInterface
     /**
      * @param Builder $query
      * @param string $direction
-     *
+     * @deprecated
      * @return $this
      */
     public function orderBy(Builder $query, $direction)
     {
-        if (! $this->isOrderable()) {
+        if (!$this->isOrderable()) {
             throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
         }
 
@@ -231,7 +234,7 @@ abstract class TableColumn implements ColumnInterface
         return [
             'attributes' => $this->htmlAttributesToString(),
             'model'      => $this->getModel(),
-            'append' => $this->getAppends(),
+            'append'     => $this->getAppends(),
         ];
     }
 

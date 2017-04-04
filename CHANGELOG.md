@@ -1,6 +1,73 @@
 # Release Notes
 
 ## [Unreleased]
+ * Добавлены колбеки на поля. Теперь каждому полю доступен ряд колбеков и ряд логики с операциями Order, 
+   Search(основной на Async) и FilterSearch (отдельный фильтр на колонке переопределение его логики)
+   Если у вас есть кастомная логика на Order или Search или FilterSearch вы можете вызвать на коламне:
+    ```php
+    setSearchCallback(function($column, $query, $search){
+      //Тут ваша логика
+    })
+    ```
+    ```php
+      setOrderCallback(function($column, $query, $search){
+         //Тут ваша логика
+      })
+    ```
+    ```php
+     setOrderCallback(function($column, $query, $search){
+        //Тут ваша логика
+     })
+     ```
+     
+     Если у вас много однотипной логики, которую вы не хотите прописывать в каждом коламне
+     вы можете вызвать:
+     ```php
+       ->setMetaData(SomeColumnMetaData::class)
+     ```
+     `SomeColumnMetaData.php`
+     ```php
+
+     namespace App\Modules\Nhs\Admin\ColumnsMeta;
+     
+     
+     use Illuminate\Database\Eloquent\Builder;
+     use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+     use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
+     
+     class SomeColumnMetaData implements ColumnMetaInterface
+     {
+         public function onFilterSearch(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
+         {
+             // TODO: Implement onFilterSearch() method.
+         }
+         
+         public function onOrderBy(NamedColumnInterface $column, Builder $query, $direction)
+         {
+             // TODO: Implement onOrderBy() method.
+         }
+         
+         public function onSearch(NamedColumnInterface $column, Builder $query, $queryString)
+         {
+             // TODO: Implement onSearch() method.
+         }
+     
+     }
+     ```
+     Вы можете создать любой из этих методов - и все они будут работать.
+     Так же на каждом фильтре есть свой колбек (если честно надобность его я не особо понимаю однако оставил ввиду обратной совестимости)
+     Вызвать его можно на фильтре setCallback()
+     
+     Помните про приоритет прерывания (расположены по старшинству):
+     
+     - Если у вас есть ColumnMeta::class - сработает только тот метод который будет в нем (onSearch onFilterSearch onOrderBy)
+     дальнейшую логику он прервет 
+     - Если у вас setSearchCallback - сработает он и дальнейшая логика будет прервана
+     - Если у вас есть setCallback - непосредственно на фильтре - в операции Filter он сработает если не будет ни колбека на коламне - ни колбека в ColumnMeta::class
+     - Если у вас нету ничего из вышеперечисленного - сработает дефолтная логика всех 3 операций
+     
+     **Всем добра**
+     
  * Исправлена дефолтная логика сортировки для столбцов с отношениями. Теперь в секции Users поле post.name
    поле будет сортироваться без ошибок. Однако эта сортировка не будет работать с EagerLoad, то есть она не будет сортировать поле
    в секции `Posts` - `category.user.name` (TODO)
