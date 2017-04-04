@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;

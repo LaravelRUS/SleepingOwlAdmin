@@ -4,10 +4,8 @@ namespace SleepingOwl\Admin\Contracts\Display;
 
 use Illuminate\Database\Eloquent\Builder;
 
-
 /**
- * Interface ColumnMetaInterface
- * @package SleepingOwl\Admin\Contracts\Display
+ * Interface ColumnMetaInterface.
  *
  * @method onSearch(NamedColumnInterface $column, Builder $query, $queryString)
  * @method onFilterSearch(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)

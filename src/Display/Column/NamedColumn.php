@@ -11,19 +11,18 @@ use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
-
     /**
-     * @var \Closure $searchCallback
+     * @var \Closure
      */
     protected $searchCallback = null;
 
     /**
-     * @var \Closure $orderCallback
+     * @var \Closure
      */
     protected $orderCallback = null;
 
     /**
-     * @var \Closure $filterCallback
+     * @var \Closure
      */
     protected $filterCallback = null;
 
@@ -78,7 +77,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
         return $this;
     }
-
 
     /**
      * @param $columnMetaClass
