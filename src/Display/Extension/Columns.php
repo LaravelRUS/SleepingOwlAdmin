@@ -5,11 +5,11 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 
 class Columns extends Extension implements Initializable, Renderable
 {
@@ -221,16 +221,15 @@ class Columns extends Extension implements Initializable, Renderable
             $column = $columns->get($columnIndex);
 
             if ($column instanceof ColumnInterface && $column->isOrderable()) {
-
                 if ($column instanceof NamedColumnInterface) {
                     if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
-                        if(method_exists($metaInstance, 'onOrderBy')) {
+                        if (method_exists($metaInstance, 'onOrderBy')) {
                             $metaInstance->onOrderBy($column, $query, $direction);
                             continue;
                         }
                     }
 
-                    if (is_callable($callback = $column->getOrderCallback())){
+                    if (is_callable($callback = $column->getOrderCallback())) {
                         $callback($column, $query, $direction);
                         continue;
                     }

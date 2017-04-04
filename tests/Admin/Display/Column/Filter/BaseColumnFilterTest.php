@@ -1,7 +1,6 @@
 <?php
 
 use Mockery as m;
-use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
@@ -40,7 +39,6 @@ class BaseColumnFilterTest extends TestCase
         $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('columnName');
 
-
         $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
         $builder->shouldReceive($condition)->withArgs($args);
 
@@ -60,7 +58,7 @@ class BaseColumnFilterTest extends TestCase
         $column->shouldReceive('getMetaData')->once()->andReturn(null);
         $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('column.test.columnName');
-        
+
         $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
         $subBuilder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
         $subBuilder->shouldReceive($condition)->withArgs($args);
@@ -69,8 +67,6 @@ class BaseColumnFilterTest extends TestCase
             $this->assertEquals('column.test', $relation);
             $callback($subBuilder);
         });
-
-
 
         $filter->apply($column, $builder, 'keyword', []);
     }
