@@ -19,7 +19,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      * @param string|null $label
      * @param array|Model $options
      */
-    public function __construct($path, $label = null, $options = [])
+    public function __construct($path, $label = null)
     {
         parent::__construct($path, $label);
 

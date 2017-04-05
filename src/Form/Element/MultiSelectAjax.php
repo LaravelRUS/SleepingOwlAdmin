@@ -26,9 +26,9 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
      * @param null $label
      * @param array $options
      */
-    public function __construct($path, $label = null, $options = [])
+    public function __construct($path, $label = null)
     {
-        parent::__construct($path, $label, $options);
+        parent::__construct($path, $label);
 
         $this->setLoadOptionsQueryPreparer(function ($item, $query) {
             $repository = app(RepositoryInterface::class);
