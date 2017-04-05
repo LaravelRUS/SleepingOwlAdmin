@@ -1,7 +1,43 @@
 # Release Notes
 
 ## [Unreleased]
-
+ * Пофикшено поведение элемента lists и сопутствующих работающих с belongs to many, has many и тд
+   теперь в lists могут отображаться hasMany.(hasMany|BelongsToMany|hasManyThrough).(attribute)
+   поидее могут работать несколько уровней вложенности, но это поведение не тестировалось
+   пример: 
+   ```php
+       AdminColumn::lists('subscriptions.nhs.name')
+                    ->setLabel("some label"),
+   ```
+   `ModelOfSection.php`
+   ```php
+       public function subscriptions()
+       {
+           return $this->hasMany(
+               AnotherModel::class,
+               'some_id',
+               'id'
+           )->where('terminate_at', '>', Carbon::now());
+       }
+   ```
+   
+   `AnotherModel.php`
+   ```php
+        public function nhs()
+        {
+            return $this->belongsToMany(
+                BelongsToManyModel::class,
+                'someTable',
+                'modelofsection_another_id',
+                'nh_id'
+            );
+        }
+   ```
+   ну и понятно атрибут в модели BelongsToManyModel например `name`
+   
+   Все для примера - тестируйте.
+   
+ * Пофикшено поведение $query->count() - Включался order для Async
 ### 4.95.29
  * Добавлены колбеки на поля. Теперь каждому полю доступен ряд колбеков и ряд логики с операциями Order, 
    Search(основной на Async) и FilterSearch (отдельный фильтр на колонке переопределение его логики)

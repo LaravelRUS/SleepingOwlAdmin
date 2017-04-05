@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
+use Illuminate\Support\Collection as SuportCollection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,6 +12,7 @@ use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
+
     /**
      * @var \Closure
      */
@@ -51,7 +53,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         parent::__construct($label);
         $this->setName($name);
 
-        $this->setHtmlAttribute('class', 'row-'.strtolower(class_basename(get_called_class())));
+        $this->setHtmlAttribute('class', 'row-' . strtolower(class_basename(get_called_class())));
 
         if ($this->orderable) {
             $this->setOrderable();
@@ -171,8 +173,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     public function setOrderable($orderable = true)
     {
-        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
-            if (! is_string($orderable) && ! $orderable instanceof Closure) {
+        if ($orderable !== false && !$orderable instanceof OrderByClauseInterface) {
+            if (!is_string($orderable) && !$orderable instanceof Closure) {
                 $orderable = $this->getName();
             }
         }
@@ -196,7 +198,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      * Get column value from instance.
      *
      * @param Collection|Model|Closure $instance
-     * @param string           $name
+     * @param string $name
      *
      * @return mixed
      */
@@ -207,15 +209,27 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         }
 
         $parts = explode('.', $name);
-        $part = array_shift($parts);
+        $part  = array_shift($parts);
 
         if ($instance instanceof Collection) {
+
             $instance = $instance->pluck($part);
-        } elseif (! is_null($instance)) {
+
+        } elseif ($instance instanceof SuportCollection) {
+            $instance = $instance->first();
+            if ($instance instanceof Collection) {
+                $instance = $instance->pluck($part);
+            }
+
+            if($instance == null){
+                $instance = collect();
+            }
+        } elseif (!is_null($instance)) {
+
             $instance = $instance->getAttribute($part);
         }
 
-        if (! empty($parts) && ! is_null($instance)) {
+        if (!empty($parts) && !is_null($instance)) {
             return $this->getValueFromObject($instance, implode('.', $parts));
         }
 
