@@ -15,7 +15,7 @@ class MultiSelect extends Select
     /**
      * @var \Closure
      */
-    protected $pivotCallback;
+    protected $syncCallback;
 
     /**
      * @var bool
@@ -73,18 +73,18 @@ class MultiSelect extends Select
     /**
      * @return \Closure
      */
-    public function getPivotCallback()
+    public function getSyncCallback()
     {
-        return $this->pivotCallback;
+        return $this->syncCallback;
     }
 
     /**
      * @param \Closure $callable
      * @return $this
      */
-    public function setPivotCallback(\Closure $callable)
+    public function setSyncCallback(\Closure $callable)
     {
-        $this->pivotCallback = $callable;
+        $this->syncCallback = $callable;
 
         return $this;
     }
@@ -193,8 +193,10 @@ class MultiSelect extends Select
             }
         }
 
-        if (is_callable($this->getPivotCallback())) {
-            $values = call_user_func($this->pivotCallback, $values) ?: $values;
+        if (is_callable($callback = $this->getSyncCallback())) {
+            $callbackModel = $this->getModel();
+            $callback($values, $callbackModel);
+            return;
         }
 
         $relation->sync($values);
