@@ -1,6 +1,9 @@
 # Release Notes
 
 ## [Unreleased] (Only in `development` branch)
+ * [Bug-fix] Пофикшено поведение Scopes с нашими `SimpleTreeType`, `OrderTreeType` и скоупы не срабатывали ни в табе 
+    ни до таба, ни в основном окне, ни через payload в fireDisplay.
+    Наслаждайтесь.
  * [Refactor] `setPivotCallback` -> `setSyncCallback` - теперь он отвечает не за формирование массива для sync, 
    а полностью за функцию приаттачивания или синка после сохранения модели. Иногда требуется дополнительная логика 
    приаттачивания записей к модели. (Работает пока что только для `belongsToMany`) 

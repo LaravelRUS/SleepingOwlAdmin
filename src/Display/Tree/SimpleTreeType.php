@@ -38,11 +38,8 @@ class SimpleTreeType implements TreeTypeInterface
      */
     public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
     {
-        $collection = $this->repository
-            ->getQuery()
-            ->orderBy($this->repository->getParentField(), 'asc')
-            ->orderBy($this->repository->getOrderField(), 'asc')
-            ->get();
+        $collection = $collection->sortBy($this->repository->getParentField())
+            ->sortBy($this->repository->getOrderField());
 
         return $this->getChildren(
             $collection,

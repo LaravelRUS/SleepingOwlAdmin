@@ -37,10 +37,7 @@ class OrderTreeType implements TreeTypeInterface
      */
     public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
     {
-        $collection = $this->repository
-            ->getQuery()
-            ->orderBy($this->repository->getOrderField(), 'asc')
-            ->get();
+        $collection = $collection->sortBy($this->repository->getOrderField());
 
         return $collection;
     }
