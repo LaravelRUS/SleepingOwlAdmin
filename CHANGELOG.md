@@ -1,6 +1,6 @@
 # Release Notes
 
-## [Unreleased]
+## [Unreleased] (Only in `development` branch)
  * [Refactor] `setPivotCallback` -> `setSyncCallback` - теперь он отвечает не за формирование массива для sync, 
    а полностью за функцию приаттачивания или синка после сохранения модели. Иногда требуется дополнительная логика 
    приаттачивания записей к модели. (Работает пока что только для `belongsToMany`) 
