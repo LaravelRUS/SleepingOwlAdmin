@@ -22,6 +22,6 @@ class Cancel extends FormButton
     public function initialize()
     {
         parent::initialize();
-        $this->setUrl($this->getModelConfiguration()->getDisplayUrl());
+        $this->setUrl($this->getModelConfiguration()->getCancelUrl());
     }
 }
