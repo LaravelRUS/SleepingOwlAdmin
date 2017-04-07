@@ -521,6 +521,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
             $page->setBadge($badge);
         }
+        
+        if (! empty($this->title)) {
+            $page->setTitle($this->title);
+        }
 
         return $page;
     }
