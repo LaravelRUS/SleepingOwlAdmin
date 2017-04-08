@@ -196,6 +196,7 @@ class MultiSelect extends Select
         if (is_callable($callback = $this->getSyncCallback())) {
             $callbackModel = $this->getModel();
             $callback($values, $callbackModel);
+
             return;
         }
 
