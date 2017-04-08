@@ -76,9 +76,9 @@ return [
             'next' => '&rarr;',
             'last' => 'Последняя',
         ],
-				'filters'=>[
-					'control'=>'Фильтр',
-				],
+                'filters'=>[
+                    'control'=>'Фильтр',
+                ],
     ],
     'tree' => [
         'expand' => 'Развернуть все',

@@ -2,19 +2,18 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Mockery\Matcher\Closure;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 class OrderByClause implements OrderByClauseInterface
 {
-
     /**
      * @var string|Closure
      */
@@ -90,7 +89,7 @@ class OrderByClause implements OrderByClauseInterface
         //Without Eager Load
         //TODO: With Eager Load
         if ($relations->count() == 2) {
-            $model    = $query->getModel();
+            $model = $query->getModel();
             $relation = $relations->first();
 
             if (method_exists($model, $relation)) {
@@ -99,18 +98,14 @@ class OrderByClause implements OrderByClauseInterface
                 $relationClass = $model->{$relation}();
                 $relationModel = $relationClass->getRelated();
 
-
                 call_user_func([$this, implode('', [class_basename(get_class($relationClass)), 'Load'])],
                     $relations, $relationClass, $relationModel, $model, $query, $direction);
-
-
-
             }
         }
     }
 
     /**
-     * Load HasOneOrMany keys
+     * Load HasOneOrMany keys.
      * @param Collection $relations
      * @param HasOneOrMany $relationClass
      * @param Model $relationModel
@@ -129,9 +124,8 @@ class OrderByClause implements OrderByClauseInterface
         $this->HasOneOrManyLoad($relations, $relationClass, $relationModel, $model, $query, $direction);
     }
 
-
     /**
-     * Load HasMany keys
+     * Load HasMany keys.
      * @param Collection $relations
      * @param HasOneOrMany $relationClass
      * @param Model $relationModel
@@ -150,9 +144,8 @@ class OrderByClause implements OrderByClauseInterface
         $this->HasOneOrManyLoad($relations, $relationClass, $relationModel, $model, $query, $direction);
     }
 
-
     /**
-     * Load HasOneOrMany keys
+     * Load HasOneOrMany keys.
      * @param Collection $relations
      * @param HasOneOrMany $relationClass
      * @param Model $relationModel
@@ -168,18 +161,17 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
-        $ownerTable   = $model->getTable();
+        $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
 
-        $ownerColumn   = $relationClass->getQualifiedForeignKeyName();
+        $ownerColumn = $relationClass->getQualifiedForeignKeyName();
         $foreignColumn = $relationClass->getQualifiedParentKeyName();
-        $sortedColumn  = implode('.', [$foreignTable, $relations->last()]);
+        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable . '.*', $foreignTable . '.' . $relations->last()])
+        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
             ->orderBy($sortedColumn, $direction);
     }
-
 
     /**
      * Load keys for BelongsTo.
@@ -200,16 +192,16 @@ class OrderByClause implements OrderByClauseInterface
         $direction
     ) {
         $foreignKey = $relationClass->getOwnerKey();
-        $ownerKey   = $relationClass->getForeignKey();
+        $ownerKey = $relationClass->getForeignKey();
 
-        $ownerTable   = $model->getTable();
+        $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
 
-        $ownerColumn   = implode('.', [$ownerTable, $ownerKey]);
+        $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
         $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-        $sortedColumn  = implode('.', [$foreignTable, $relations->last()]);
+        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable . '.*', $foreignTable . '.' . $relations->last()])
+        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
             ->orderBy($sortedColumn, $direction);
     }
