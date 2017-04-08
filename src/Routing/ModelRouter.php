@@ -65,7 +65,7 @@ class ModelRouter
 
             if ($model->hasCustomControllerClass() && $route->getActionName() !== 'Closure') {
                 list($controller, $action) = explode('@', $route->getActionName(), 2);
-                
+
                 if(method_exists($model->getControllerClass(), $action)) {
                     $this->runCustomController($route, $model->getControllerClass(), $action);
                 }
