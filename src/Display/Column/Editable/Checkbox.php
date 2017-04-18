@@ -8,6 +8,7 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Checkbox extends NamedColumn implements ColumnEditableInterface
 {
+
     /**
      * @var string
      */
@@ -24,6 +25,11 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     protected $uncheckedLabel;
 
     /**
+     * @var string
+     */
+    protected $url = null;
+
+    /**
      * Checkbox constructor.
      *
      * @param             $name
@@ -34,7 +40,7 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     {
         parent::__construct($name);
 
-        $this->checkedLabel = $checkedLabel;
+        $this->checkedLabel   = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
     }
 
@@ -87,17 +93,41 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     }
 
     /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        if (! $this->url) {
+            return request()->url();
+        }
+
+        return $this->url;
+    }
+
+    /**
+     * @param $url
+     * @return string
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
         return parent::toArray() + [
-            'id'             => $this->getModel()->getKey(),
-            'value'          => $this->getModelValue(),
-            'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-            'checkedLabel'   => $this->getCheckedLabel(),
-            'uncheckedLabel' => $this->getUncheckedLabel(),
-        ];
+                'id'             => $this->getModel()->getKey(),
+                'value'          => $this->getModelValue(),
+                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
+                'checkedLabel'   => $this->getCheckedLabel(),
+                'uncheckedLabel' => $this->getUncheckedLabel(),
+                'url'            => $this->getUrl(),
+            ];
     }
 
     /**
@@ -115,7 +145,7 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
 
         $model = $this->getModel();
 
-        $request->offsetSet($this->getName(), (bool) $request->input('value.0', false));
+        $request->offsetSet($this->getName(), (bool)$request->input('value.0', false));
 
         $form->setModelClass(get_class($model));
         $form->initialize();
