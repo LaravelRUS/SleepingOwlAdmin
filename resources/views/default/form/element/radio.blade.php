@@ -9,7 +9,7 @@
 	@foreach ($options as $optionValue => $optionLabel)
 		<div class="radio">
 			<label>
-				<input {!! $attributes !!} value="{{ $optionValue }}" {!! ($value == $optionValue) ? 'checked' : '' !!}/>
+				<input {!! $htmlStringAttributes !!} value="{{ $optionValue }}" {!! ($value == $optionValue) ? 'checked' : '' !!}/>
 				{{ $optionLabel }}
 			</label>
 		</div>
