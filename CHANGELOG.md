@@ -1,6 +1,7 @@
 # Release Notes
 
 ## [Unreleased] (Only in `development` branch)
+ * [Bug-fix] Пофикшено поведение селект-фильтра
  * [Feature] ColumnEditable::checkbox обзавелся методом setUrl - теперь вы можете установить свой url для отправки 
     данных и принятия их допустим в Кастом контроллере
  * [Bug-fix] Пофишкено поведение column editable
