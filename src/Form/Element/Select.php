@@ -182,7 +182,7 @@ class Select extends NamedFormElement
         return parent::toArray() + [
             'options' => $options,
             'nullable' => $this->isNullable(),
-            'attributes' => $this->getHtmlAttributes()
+            'attributes' => $this->getHtmlAttributes(),
         ];
     }
 
