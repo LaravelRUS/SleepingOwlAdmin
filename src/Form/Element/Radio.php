@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Radio extends Select
 {
-
     /**
      * @var string
      */
@@ -16,7 +15,7 @@ class Radio extends Select
 
         $this->setHtmlAttributes([
             'type'  => 'radio',
-            'name'  => $this->getName()
+            'name'  => $this->getName(),
         ]);
     }
 
