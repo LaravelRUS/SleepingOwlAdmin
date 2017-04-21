@@ -195,7 +195,7 @@ window.columnFilters = {
                 let $option = $(e);
 
                 if ($option.val().length) {
-                    selected.push($option.text());
+                    selected.push($option.val());
                 }
             })
 
