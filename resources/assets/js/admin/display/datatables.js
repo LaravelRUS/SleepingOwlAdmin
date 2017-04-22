@@ -29,12 +29,25 @@ Admin.Modules.register('display.datatables', () => {
             params = $this.data('attributes') || {},
             url = $this.data('url'),
             payload = $this.data('payload'),
-            searching = $this.data('display-searching')
+            search = $this.data('display-search') || false,
+            dtlength = $this.data('display-dtlength') || false;
 
         if (url && url.length > 0) {
             params.serverSide = true;
             params.processing = true;
-            params.searching  = searching;
+
+            //<"H"lfr>t<"F"ip>
+            params.sDom = '<"H"';
+
+            if(dtlength){
+                params.sDom += 'l';
+            }
+
+            if(search){
+                params.sDom += 'f';
+            }
+
+            params.sDom += 'r>t<"F"ip>';
 
             params.ajax = {
                 url: url,

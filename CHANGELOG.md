@@ -1,7 +1,9 @@
 # Release Notes
 
 ## [Unreleased] (Only in `development` branch)
- * [Bug-fix] Пофикшено поведение селект-фильтра
+ * [Feature] Добавлен метод для DataTablesAsync setDisplayLength что бы отключать селект выбора количества записей на страницу
+ * [Bug-fix] Повикшено поведение setDisplaySearch для Async Tables теперь можно отключить поле поиска без выключения общего поиска.
+ * [Bug-fix] Пофикшено поведение селект-фильтра - теперь отправляет не текст - а ключ значения.
  * [Feature] ColumnEditable::checkbox обзавелся методом setUrl - теперь вы можете установить свой url для отправки 
     данных и принятия их допустим в Кастом контроллере
  * [Bug-fix] Пофишкено поведение column editable

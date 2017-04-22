@@ -59,6 +59,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected $displaySearch = false;
 
     /**
+     * @var
+     */
+    protected $displayLength = false;
+
+    /**
      * @var array
      */
     protected $searchableColumns = [
@@ -98,18 +103,24 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes));
         $this->setHtmlAttribute('data-payload', json_encode($this->payload));
 
-        if ($this->getSearching()) {
-            $this->setHtmlAttribute('data-display-searching', 1);
+        if ($this->getDisplaySearch()) {
+            $this->setHtmlAttribute('data-display-search', 1);
+        }
+
+        if($this->getDisplayLength()){
+            $this->setHtmlAttribute('data-display-dtlength', 1);
         }
     }
 
+
     /**
-     * @param $searching
+     *
+     * @param bool $length
      * @return $this
      */
-    public function setSearching($searching)
+    public function setDisplayLength($length)
     {
-        $this->displaySearch = $searching;
+        $this->displayLength = $length;
 
         return $this;
     }
@@ -117,7 +128,26 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * @return bool
      */
-    public function getSearching()
+    public function getDisplayLength()
+    {
+        return $this->displayLength;
+    }
+
+    /**
+     * @param $search
+     * @return $this
+     */
+    public function setDisplaySearch($search)
+    {
+        $this->displaySearch = $search;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDisplaySearch()
     {
         return $this->displaySearch;
     }
