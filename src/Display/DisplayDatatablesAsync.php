@@ -107,14 +107,12 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             $this->setHtmlAttribute('data-display-search', 1);
         }
 
-        if ($this->getDisplayLength()){
+        if ($this->getDisplayLength()) {
             $this->setHtmlAttribute('data-display-dtlength', 1);
         }
     }
 
-
     /**
-     *
      * @param bool $length
      * @return $this
      */
