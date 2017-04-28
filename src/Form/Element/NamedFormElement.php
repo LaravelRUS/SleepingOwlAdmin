@@ -542,13 +542,16 @@ abstract class NamedFormElement extends FormElement
      */
     public function toArray()
     {
-        $this->setHtmlAttributes([
-            'id' => $this->getName(),
+        $attributes = $this->getHtmlAttributes();
+        $set = [
             'name' => $this->getName(),
-        ]);
+            'id'   => isset($attributes['id']) ? $attributes['id'] : $this->getName(),
+        ];
+
+        $this->setHtmlAttributes($set);
 
         return array_merge(parent::toArray(), [
-            'id' => $this->getName(),
+            'id' => $set['id'],
             'value' => $this->getValueFromModel(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
