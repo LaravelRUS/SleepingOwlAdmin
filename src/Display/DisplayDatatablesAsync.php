@@ -255,8 +255,9 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             return;
         }
 
-        $query->where(function ($query) use ($search) {
-            $columns = $this->getColumns()->all();
+        $columns = $this->getColumns()->all();
+
+        $query->where(function ($query) use ($search, $columns) {
 
             foreach ($columns as $column) {
                 if (in_array(get_class($column), $this->searchableColumns)) {
@@ -278,6 +279,24 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 }
             }
         });
+
+        foreach ($columns as $column) {
+            if (in_array(get_class($column), $this->searchableColumns)) {
+                if ($column instanceof NamedColumnInterface) {
+                    if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+                        if (method_exists($metaInstance, 'onSearchOuter')) {
+                            $metaInstance->onSearchOuter($column, $query, $search);
+                            continue;
+                        }
+                    }
+
+                    if (is_callable($callback = $column->getSearchOuterCallback())) {
+                        $callback($column, $query, $search);
+                        continue;
+                    }
+                }
+            }
+        }
     }
 
     /**
