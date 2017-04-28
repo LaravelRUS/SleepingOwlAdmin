@@ -176,7 +176,7 @@ abstract class NamedFormElement extends FormElement
         $messages = parent::getValidationMessages();
 
         foreach ($messages as $rule => $message) {
-            $messages[$this->getName() . '.' . $rule] = $message;
+            $messages[$this->getName().'.'.$rule] = $message;
             unset($messages[$rule]);
         }
 
@@ -221,9 +221,9 @@ abstract class NamedFormElement extends FormElement
             $model = $this->resolvePath();
             $table = $model->getTable();
 
-            $rule = 'unique:' . $table . ',' . $this->getModelAttributeKey();
+            $rule = 'unique:'.$table.','.$this->getModelAttributeKey();
             if ($model->exists) {
-                $rule .= ',' . $model->getKey();
+                $rule .= ','.$model->getKey();
             }
         }
         unset($rule);
@@ -379,8 +379,8 @@ abstract class NamedFormElement extends FormElement
                     break;
                 } elseif (is_null($relatedModel)) {
                     throw new LogicException("Field [{$path}] can't be mapped to relations of model "
-                                             . get_class($model)
-                                             . '. Probably some dot delimeted segment is not a supported relation type');
+                                             .get_class($model)
+                                             .'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
