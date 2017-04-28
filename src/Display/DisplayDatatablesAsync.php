@@ -256,7 +256,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $columns = $this->getColumns()->all();
 
         $query->where(function ($query) use ($search, $columns) {
-
             foreach ($columns as $column) {
                 if (in_array(get_class($column), $this->searchableColumns)) {
                     if ($column instanceof NamedColumnInterface) {
