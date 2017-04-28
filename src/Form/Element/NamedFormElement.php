@@ -52,7 +52,7 @@ abstract class NamedFormElement extends FormElement
     protected $mutator;
 
     /**
-     * @param string $path
+     * @param string      $path
      * @param string|null $label
      *
      * @throws FormElementException
@@ -113,7 +113,7 @@ abstract class NamedFormElement extends FormElement
     {
         $this->addValidationRule('_unique');
 
-        if (!is_null($message)) {
+        if (! is_null($message)) {
             $this->addValidationMessage('unique', $message);
         }
 
@@ -176,7 +176,7 @@ abstract class NamedFormElement extends FormElement
         $messages = parent::getValidationMessages();
 
         foreach ($messages as $rule => $message) {
-            $messages[$this->getName().'.'.$rule] = $message;
+            $messages[$this->getName() . '.' . $rule] = $message;
             unset($messages[$rule]);
         }
 
@@ -221,9 +221,9 @@ abstract class NamedFormElement extends FormElement
             $model = $this->resolvePath();
             $table = $model->getTable();
 
-            $rule = 'unique:'.$table.','.$this->getModelAttributeKey();
+            $rule = 'unique:' . $table . ',' . $this->getModelAttributeKey();
             if ($model->exists) {
-                $rule .= ','.$model->getKey();
+                $rule .= ',' . $model->getKey();
             }
         }
         unset($rule);
@@ -251,7 +251,9 @@ abstract class NamedFormElement extends FormElement
                 return $model;
             }
 
-            if ($model->exists && ($value = $model->getAttribute($relation)) instanceof Model) {
+            if ($model->exists
+                && ($value = $model->getAttribute($relation)) instanceof Model
+            ) {
                 $model = $value;
 
                 $count--;
@@ -309,7 +311,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -358,12 +360,15 @@ abstract class NamedFormElement extends FormElement
 
                     switch (get_class($relationObject)) {
                         case BelongsTo::class:
-                            $relationObject->associate($relatedModel = $relationObject->getRelated());
+                            $relationObject->associate(
+                                $relatedModel = $relationObject->getRelated());
                             break;
                         case HasOne::class:
                         case MorphOne::class:
-                            $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
+                            $relatedModel =
+                                $relationObject->getRelated()->newInstance();
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject),
+                                $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }
@@ -373,8 +378,9 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model)
-                        .'. Probably some dot delimeted segment is not a supported relation type');
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model "
+                                             . get_class($model)
+                                             . '. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
@@ -421,7 +427,7 @@ abstract class NamedFormElement extends FormElement
     public function getValueFromRequest(\Illuminate\Http\Request $request)
     {
         if ($request->hasSession()
-            && !is_null($value = $request->old($this->getPath()))
+            && ! is_null($value = $request->old($this->getPath()))
         ) {
             return $value;
         }
@@ -436,21 +442,23 @@ abstract class NamedFormElement extends FormElement
     {
         $attributes = $this->getHtmlAttributes();
         $set = [
-            'id' => isset($attributes['id']) ? $attributes['id'] : $this->getName(),
+            'id'   => isset($attributes['id']) ? $attributes['id']
+                : $this->getName(),
             'name' => $this->getName(),
         ];
 
         $this->setHtmlAttributes($set);
 
         return array_merge(parent::toArray(), [
-            'id' => $set['id'],
-            'value' => $this->getValueFromModel(),
-            'name' => $this->getName(),
-            'path' => $this->getPath(),
-            'label' => $this->getLabel(),
-            'attributes'=> $this instanceof Select ? $this->getHtmlAttributes() : $this->htmlAttributesToString(),
-            'helpText' => $this->getHelpText(),
-            'required' => in_array('required', $this->validationRules),
+            'id'         => $set['id'],
+            'value'      => $this->getValueFromModel(),
+            'name'       => $this->getName(),
+            'path'       => $this->getPath(),
+            'label'      => $this->getLabel(),
+            'attributes' => $this instanceof Select ? $this->getHtmlAttributes()
+                : $this->htmlAttributesToString(),
+            'helpText'   => $this->getHelpText(),
+            'required'   => in_array('required', $this->validationRules),
         ]);
     }
 
@@ -459,7 +467,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromModel()
     {
-        if (!is_null($value = $this->getValueFromRequest(request()))) {
+        if (! is_null($value = $this->getValueFromRequest(request()))) {
             return $value;
         }
 
@@ -467,7 +475,7 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-        if (is_null($model) or !$model->exists) {
+        if (is_null($model) or ! $model->exists) {
             return $value;
         }
 
@@ -477,7 +485,7 @@ abstract class NamedFormElement extends FormElement
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
 
-            if (!empty($attribute) || $attribute === 0 || is_null($value)) {
+            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
         }
@@ -491,7 +499,7 @@ abstract class NamedFormElement extends FormElement
             if ($count === 2) {
                 $attribute = $model->getAttribute($relation);
 
-                if (!empty($attribute) or is_null($value)) {
+                if (! empty($attribute) or is_null($value)) {
                     return $attribute;
                 }
             }
