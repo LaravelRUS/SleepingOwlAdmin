@@ -93,6 +93,42 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @param string|null $message
+     *
+     * @return $this
+     */
+    public function required($message = null)
+    {
+        $this->addValidationRule('required', $message);
+
+        return $this;
+    }
+
+    /**
+     * @param string|null $message
+     *
+     * @return $this
+     */
+    public function unique($message = null)
+    {
+        $this->addValidationRule('_unique');
+
+        if (!is_null($message)) {
+            $this->addValidationMessage('unique', $message);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationLabels()
+    {
+        return [$this->getPath() => $this->getLabel()];
+    }
+
+    /**
      * @return string
      */
     public function getPath()
@@ -108,26 +144,6 @@ abstract class NamedFormElement extends FormElement
     public function setPath($path)
     {
         $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
 
         return $this;
     }
@@ -153,98 +169,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return string
-     */
-    public function getModelAttributeKey()
-    {
-        return $this->modelAttributeKey;
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return $this
-     */
-    public function setModelAttributeKey($key)
-    {
-        $this->modelAttributeKey = $key;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDefaultValue()
-    {
-        return $this->defaultValue;
-    }
-
-    /**
-     * @param mixed $defaultValue
-     *
-     * @return $this
-     */
-    public function setDefaultValue($defaultValue)
-    {
-        $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHelpText()
-    {
-        if ($this->helpText instanceof Htmlable) {
-            return $this->helpText->toHtml();
-        }
-
-        return $this->helpText;
-    }
-
-    /**
-     * @param string|Htmlable $helpText
-     *
-     * @return $this
-     */
-    public function setHelpText($helpText)
-    {
-        $this->helpText = $helpText;
-
-        return $this;
-    }
-
-    /**
-     * @param string|null $message
-     *
-     * @return $this
-     */
-    public function required($message = null)
-    {
-        $this->addValidationRule('required', $message);
-
-        return $this;
-    }
-
-    /**
-     * @param string|null $message
-     *
-     * @return $this
-     */
-    public function unique($message = null)
-    {
-        $this->addValidationRule('_unique');
-
-        if (! is_null($message)) {
-            $this->addValidationMessage('unique', $message);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getValidationMessages()
@@ -260,11 +184,23 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getValidationLabels()
+    public function getName()
     {
-        return [$this->getPath() => $this->getLabel()];
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -339,67 +275,23 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return array|string
+     * @return string
      */
-    public function getValueFromRequest(\Illuminate\Http\Request $request)
+    public function getModelAttributeKey()
     {
-        if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
-            return $value;
-        }
-
-        return $request->input($this->getPath());
+        return $this->modelAttributeKey;
     }
 
     /**
-     * @return mixed
+     * @param string $key
+     *
+     * @return $this
      */
-    public function getValueFromModel()
+    public function setModelAttributeKey($key)
     {
-        if (! is_null($value = $this->getValueFromRequest(request()))) {
-            return $value;
-        }
+        $this->modelAttributeKey = $key;
 
-        $model = $this->getModel();
-        $path = $this->getPath();
-        $value = $this->getDefaultValue();
-
-        if (is_null($model) or ! $model->exists) {
-            return $value;
-        }
-
-        $relations = explode('.', $path);
-        $count = count($relations);
-
-        if ($count === 1) {
-            $attribute = $model->getAttribute($this->getModelAttributeKey());
-
-            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
-                return $attribute;
-            }
-        }
-
-        foreach ($relations as $relation) {
-            if ($model->{$relation} instanceof Model) {
-                $model = $model->{$relation};
-                continue;
-            }
-
-            if ($count === 2) {
-                $attribute = $model->getAttribute($relation);
-
-                if (! empty($attribute) or is_null($value)) {
-                    return $attribute;
-                }
-            }
-
-            if (is_null($this->getDefaultValue())) {
-                throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
-            }
-        }
-
-        return $value;
+        return $this;
     }
 
     /**
@@ -500,30 +392,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * Field->mutateValue(function($value) {
-     *     return bcrypt($value);
-     * }).
-     *
-     * @param \Closure $mutator
-     *
-     * @return $this
-     */
-    public function mutateValue(\Closure $mutator)
-    {
-        $this->mutator = $mutator;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasMutator()
-    {
-        return is_callable($this->mutator);
-    }
-
-    /**
      * @param mixed $value
      *
      * @return mixed
@@ -538,14 +406,38 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @return bool
+     */
+    public function hasMutator()
+    {
+        return is_callable($this->mutator);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array|string
+     */
+    public function getValueFromRequest(\Illuminate\Http\Request $request)
+    {
+        if ($request->hasSession()
+            && !is_null($value = $request->old($this->getPath()))
+        ) {
+            return $value;
+        }
+
+        return $request->input($this->getPath());
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
         $attributes = $this->getHtmlAttributes();
         $set = [
+            'id' => isset($attributes['id']) ? $attributes['id'] : $this->getName(),
             'name' => $this->getName(),
-            'id'   => isset($attributes['id']) ? $attributes['id'] : $this->getName(),
         ];
 
         $this->setHtmlAttributes($set);
@@ -560,5 +452,115 @@ abstract class NamedFormElement extends FormElement
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValueFromModel()
+    {
+        if (!is_null($value = $this->getValueFromRequest(request()))) {
+            return $value;
+        }
+
+        $model = $this->getModel();
+        $path = $this->getPath();
+        $value = $this->getDefaultValue();
+
+        if (is_null($model) or !$model->exists) {
+            return $value;
+        }
+
+        $relations = explode('.', $path);
+        $count = count($relations);
+
+        if ($count === 1) {
+            $attribute = $model->getAttribute($this->getModelAttributeKey());
+
+            if (!empty($attribute) || $attribute === 0 || is_null($value)) {
+                return $attribute;
+            }
+        }
+
+        foreach ($relations as $relation) {
+            if ($model->{$relation} instanceof Model) {
+                $model = $model->{$relation};
+                continue;
+            }
+
+            if ($count === 2) {
+                $attribute = $model->getAttribute($relation);
+
+                if (!empty($attribute) or is_null($value)) {
+                    return $attribute;
+                }
+            }
+
+            if (is_null($this->getDefaultValue())) {
+                throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
+    }
+
+    /**
+     * @param mixed $defaultValue
+     *
+     * @return $this
+     */
+    public function setDefaultValue($defaultValue)
+    {
+        $this->defaultValue = $defaultValue;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelpText()
+    {
+        if ($this->helpText instanceof Htmlable) {
+            return $this->helpText->toHtml();
+        }
+
+        return $this->helpText;
+    }
+
+    /**
+     * @param string|Htmlable $helpText
+     *
+     * @return $this
+     */
+    public function setHelpText($helpText)
+    {
+        $this->helpText = $helpText;
+
+        return $this;
+    }
+
+    /**
+     * Field->mutateValue(function($value) {
+     *     return bcrypt($value);
+     * }).
+     *
+     * @param \Closure $mutator
+     *
+     * @return $this
+     */
+    public function mutateValue(\Closure $mutator)
+    {
+        $this->mutator = $mutator;
+
+        return $this;
     }
 }
