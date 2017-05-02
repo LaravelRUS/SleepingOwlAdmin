@@ -23,6 +23,11 @@ class Image extends File
     protected $uploadValidationRules = ['required', 'image'];
 
     /**
+     * After save callback
+     * @var
+     */
+    protected $afterSaveCallback;
+    /**
      * @var string
      */
     protected $view = 'form.element.image';
@@ -65,6 +70,28 @@ class Image extends File
         return $this->saveCallback;
     }
 
+
+    /**
+     * Set.
+     * @param \Closure $callable
+     * @return $this
+     */
+    public function setAfterSaveCallback(\Closure $callable)
+    {
+        $this->afterSaveCallback = $callable;
+
+        return $this;
+    }
+
+    /**
+     * Return save callback.
+     * @return \Closure
+     */
+    public function getAfterSaveCallback()
+    {
+        return $this->afterSaveCallback;
+    }
+
     /**
      * @param UploadedFile $file
      * @param string $path
@@ -103,5 +130,20 @@ class Image extends File
     public function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.imagesUploadDirectory', 'images/uploads');
+    }
+
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return mixed
+     */
+    public function afterSave(\Illuminate\Http\Request $request)
+    {
+        $value = $request->input($this->getPath());
+        $model = $this->getModel();
+
+        if (is_callable($callback = $this->getAfterSaveCallback())) {
+            return $callback($value, $model);
+        }
     }
 }
