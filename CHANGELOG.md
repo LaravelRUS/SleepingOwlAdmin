@@ -1,6 +1,7 @@
 # Release Notes
 
 ## [Unreleased] (Only in `development` branch)
+ * [Bug-fix] Исправлена работа `AdminFormElement::images('name', 'label')->storeAsJson()`. 
  * [Feature] Добавлен метод для DataTablesAsync setDisplayLength что бы отключать селект выбора количества записей на страницу
  * [Bug-fix] Повикшено поведение setDisplaySearch для Async Tables теперь можно отключить поле поиска без выключения общего поиска.
  * [Bug-fix] Пофикшено поведение селект-фильтра - теперь отправляет не текст - а ключ значения.
