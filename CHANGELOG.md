@@ -1,6 +1,7 @@
 # Release Notes
 
 ## [Unreleased] (Only in `development` branch)
+ * [Bug-fix] Исправлена работа `AdminFormElement::images('name', 'label')->storeAsJson()`.
  * [Feature] Добавлен метод setAfterSaveCallback() в Images - полезен когда нужно сколлектировать логику сохранения изображений и привязываний их в модель
    Пример:
    ```php
