@@ -23,7 +23,7 @@ class Image extends File
     protected $uploadValidationRules = ['required', 'image'];
 
     /**
-     * After save callback
+     * After save callback.
      * @var
      */
     protected $afterSaveCallback;
@@ -69,7 +69,6 @@ class Image extends File
     {
         return $this->saveCallback;
     }
-
 
     /**
      * Set.
@@ -131,7 +130,6 @@ class Image extends File
     {
         return config('sleeping_owl.imagesUploadDirectory', 'images/uploads');
     }
-
 
     /**
      * @param \Illuminate\Http\Request $request
