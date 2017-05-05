@@ -80,13 +80,15 @@ class Filter extends NamedColumn
      */
     public function getUrl()
     {
-        request()->merge([
+        $request = clone request();
+
+        $request->merge([
             $this->getName() => $this->getValue(),
         ]);
 
         return app('sleeping_owl')
             ->getModel($this->getRelatedModel())
-            ->getDisplayUrl(request()->all());
+            ->getDisplayUrl($request->all());
     }
 
     /**
