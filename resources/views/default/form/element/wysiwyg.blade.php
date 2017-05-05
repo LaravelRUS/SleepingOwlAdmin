@@ -1,11 +1,11 @@
 @push('footer-scripts')
 <script>
-    Admin.WYSIWYG.switchOn('{{ $name }}', '{{ $editor }}', {!! $parameters !!})
+    Admin.WYSIWYG.switchOn('{{ $id }}', '{{ $editor }}', {!! $parameters !!})
 </script>
 @endpush
 
 <div class="form-group form-element-wysiwyg {{ $errors->has($name) ? 'has-error' : '' }}">
-    <label for="{{ $name }}" class="control-label">
+    <label for="{{ $id }}" class="control-label">
         {{ $label }}
 
         @if($required)
@@ -17,7 +17,7 @@
 
     {!! Form::textarea($name, $value, [
         'class' => 'form-control',
-        'id' => $name
+        'id' => $id
     ]) !!}
 
     @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))

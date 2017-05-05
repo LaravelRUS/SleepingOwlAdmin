@@ -52,7 +52,7 @@ abstract class NamedFormElement extends FormElement
     protected $mutator;
 
     /**
-     * @param string $path
+     * @param string      $path
      * @param string|null $label
      *
      * @throws FormElementException
@@ -93,130 +93,6 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return $this
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    /**
-     * @param string $label
-     *
-     * @return $this
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getModelAttributeKey()
-    {
-        return $this->modelAttributeKey;
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return $this
-     */
-    public function setModelAttributeKey($key)
-    {
-        $this->modelAttributeKey = $key;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDefaultValue()
-    {
-        return $this->defaultValue;
-    }
-
-    /**
-     * @param mixed $defaultValue
-     *
-     * @return $this
-     */
-    public function setDefaultValue($defaultValue)
-    {
-        $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHelpText()
-    {
-        if ($this->helpText instanceof Htmlable) {
-            return $this->helpText->toHtml();
-        }
-
-        return $this->helpText;
-    }
-
-    /**
-     * @param string|Htmlable $helpText
-     *
-     * @return $this
-     */
-    public function setHelpText($helpText)
-    {
-        $this->helpText = $helpText;
-
-        return $this;
-    }
-
-    /**
      * @param string|null $message
      *
      * @return $this
@@ -247,6 +123,54 @@ abstract class NamedFormElement extends FormElement
     /**
      * @return array
      */
+    public function getValidationLabels()
+    {
+        return [$this->getPath() => $this->getLabel()];
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return $this
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string $label
+     *
+     * @return $this
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
     public function getValidationMessages()
     {
         $messages = parent::getValidationMessages();
@@ -260,11 +184,23 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getValidationLabels()
+    public function getName()
     {
-        return [$this->getPath() => $this->getLabel()];
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -315,7 +251,9 @@ abstract class NamedFormElement extends FormElement
                 return $model;
             }
 
-            if ($model->exists && ($value = $model->getAttribute($relation)) instanceof Model) {
+            if ($model->exists
+                && ($value = $model->getAttribute($relation)) instanceof Model
+            ) {
                 $model = $value;
 
                 $count--;
@@ -339,17 +277,189 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @return string
+     */
+    public function getModelAttributeKey()
+    {
+        return $this->modelAttributeKey;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return $this
+     */
+    public function setModelAttributeKey($key)
+    {
+        $this->modelAttributeKey = $key;
+
+        return $this;
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function save(\Illuminate\Http\Request $request)
+    {
+        $this->setModelAttribute(
+            $this->getValueFromRequest(
+                $request
+            )
+        );
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function setModelAttribute($value)
+    {
+        $model = $this->getModelByPath(
+            $this->getPath()
+        );
+
+        if ($this->isValueSkipped()) {
+            return;
+        }
+
+        $model->setAttribute(
+            $this->getModelAttributeKey(),
+            $this->prepareValue($value)
+        );
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return Model|null
+     */
+    protected function getModelByPath($path)
+    {
+        $model = $this->getModel();
+
+        $relations = explode('.', $path);
+        $count = count($relations);
+        $i = 1;
+
+        if ($count > 1) {
+            $i++;
+            $previousModel = $model;
+
+            /* @var Model $model */
+            foreach ($relations as $relation) {
+                $relatedModel = null;
+                if ($previousModel->getAttribute($relation) instanceof Model) {
+                    $relatedModel = $previousModel->getAttribute($relation);
+                } elseif (method_exists($previousModel, $relation)) {
+
+                    /* @var Relation $relation */
+                    $relationObject = $previousModel->{$relation}();
+
+                    switch (get_class($relationObject)) {
+                        case BelongsTo::class:
+                            $relationObject->associate(
+                                $relatedModel = $relationObject->getRelated());
+                            break;
+                        case HasOne::class:
+                        case MorphOne::class:
+                            $relatedModel =
+                                $relationObject->getRelated()->newInstance();
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject),
+                                $relationObject->getParentKey());
+                            $model->setRelation($relation, $relatedModel);
+                            break;
+                    }
+                }
+
+                $previousModel = $relatedModel;
+                if ($i === $count) {
+                    break;
+                } elseif (is_null($relatedModel)) {
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model "
+                                             .get_class($model)
+                                             .'. Probably some dot delimeted segment is not a supported relation type');
+                }
+            }
+
+            $model = $previousModel;
+        }
+
+        return $model;
+    }
+
+    protected function getForeignKeyNameFromRelation($relation)
+    {
+        return method_exists($relation, 'getForeignKeyName')
+            ? $relation->getForeignKeyName()
+            : $relation->getPlainForeignKey();
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function prepareValue($value)
+    {
+        if ($this->hasMutator()) {
+            $value = call_user_func($this->mutator, $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMutator()
+    {
+        return is_callable($this->mutator);
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      *
      * @return array|string
      */
     public function getValueFromRequest(\Illuminate\Http\Request $request)
     {
-        if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
+        if ($request->hasSession()
+            && ! is_null($value = $request->old($this->getPath()))
+        ) {
             return $value;
         }
 
         return $request->input($this->getPath());
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $attributes = $this->getHtmlAttributes();
+        $set = [
+            'id'   => isset($attributes['id']) ? $attributes['id']
+                : $this->getName(),
+            'name' => $this->getName(),
+        ];
+
+        $this->setHtmlAttributes($set);
+
+        return array_merge(parent::toArray(), [
+            'id'         => $set['id'],
+            'value'      => $this->getValueFromModel(),
+            'name'       => $this->getName(),
+            'path'       => $this->getPath(),
+            'label'      => $this->getLabel(),
+            'attributes' => $this instanceof Select ? $this->getHtmlAttributes()
+                : $this->htmlAttributesToString(),
+            'helpText'   => $this->getHelpText(),
+            'required'   => in_array('required', $this->validationRules),
+        ]);
     }
 
     /**
@@ -403,100 +513,47 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return void
+     * @return mixed
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function getDefaultValue()
     {
-        $this->setModelAttribute(
-            $this->getValueFromRequest(
-                $request
-            )
-        );
+        return $this->defaultValue;
     }
 
     /**
-     * @param mixed  $value
+     * @param mixed $defaultValue
      *
-     * @return void
+     * @return $this
      */
-    public function setModelAttribute($value)
+    public function setDefaultValue($defaultValue)
     {
-        $model = $this->getModelByPath(
-            $this->getPath()
-        );
+        $this->defaultValue = $defaultValue;
 
-        if ($this->isValueSkipped()) {
-            return;
-        }
-
-        $model->setAttribute(
-            $this->getModelAttributeKey(),
-            $this->prepareValue($value)
-        );
+        return $this;
     }
 
     /**
-     * @param string $path
-     *
-     * @return Model|null
+     * @return string
      */
-    protected function getModelByPath($path)
+    public function getHelpText()
     {
-        $model = $this->getModel();
-
-        $relations = explode('.', $path);
-        $count = count($relations);
-        $i = 1;
-
-        if ($count > 1) {
-            $i++;
-            $previousModel = $model;
-
-            /* @var Model $model */
-            foreach ($relations as $relation) {
-                $relatedModel = null;
-                if ($previousModel->getAttribute($relation) instanceof Model) {
-                    $relatedModel = $previousModel->getAttribute($relation);
-                } elseif (method_exists($previousModel, $relation)) {
-
-                    /* @var Relation $relation */
-                    $relationObject = $previousModel->{$relation}();
-
-                    switch (get_class($relationObject)) {
-                        case BelongsTo::class:
-                            $relationObject->associate($relatedModel = $relationObject->getRelated());
-                            break;
-                        case HasOne::class:
-                        case MorphOne::class:
-                            $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
-                            $model->setRelation($relation, $relatedModel);
-                            break;
-                    }
-                }
-
-                $previousModel = $relatedModel;
-                if ($i === $count) {
-                    break;
-                } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model)
-                        .'. Probably some dot delimeted segment is not a supported relation type');
-                }
-            }
-
-            $model = $previousModel;
+        if ($this->helpText instanceof Htmlable) {
+            return $this->helpText->toHtml();
         }
 
-        return $model;
+        return $this->helpText;
     }
 
-    protected function getForeignKeyNameFromRelation($relation)
+    /**
+     * @param string|Htmlable $helpText
+     *
+     * @return $this
+     */
+    public function setHelpText($helpText)
     {
-        return method_exists($relation, 'getForeignKeyName')
-            ? $relation->getForeignKeyName()
-            : $relation->getPlainForeignKey();
+        $this->helpText = $helpText;
+
+        return $this;
     }
 
     /**
@@ -513,49 +570,5 @@ abstract class NamedFormElement extends FormElement
         $this->mutator = $mutator;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasMutator()
-    {
-        return is_callable($this->mutator);
-    }
-
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    public function prepareValue($value)
-    {
-        if ($this->hasMutator()) {
-            $value = call_user_func($this->mutator, $value);
-        }
-
-        return $value;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        $this->setHtmlAttributes([
-            'id' => $this->getName(),
-            'name' => $this->getName(),
-        ]);
-
-        return array_merge(parent::toArray(), [
-            'id' => $this->getName(),
-            'value' => $this->getValueFromModel(),
-            'name' => $this->getName(),
-            'path' => $this->getPath(),
-            'label' => $this->getLabel(),
-            'attributes'=> $this instanceof Select ? $this->getHtmlAttributes() : $this->htmlAttributesToString(),
-            'helpText' => $this->getHelpText(),
-            'required' => in_array('required', $this->validationRules),
-        ]);
     }
 }
