@@ -2,6 +2,9 @@
 
 ## [Unreleased] (Only in `development` branch)
  * [Bug-fix] Исправлена работа `AdminFormElement::images('name', 'label')->storeAsJson()`.
+ * [Bug-Fix] Исправлено поведение кнопки на AdminFormElement::images() - кнопка удаления реагировала на Enter
+ * [Bug-Fix] Исправлено поведение AdminFormElement::images() с дублями
+ * [Feature] Добавлен новый элемент AdminColumnEditable::text() - читаем в документации
  * [Feature] Добавлен метод setAfterSaveCallback() в Images - полезен когда нужно сколлектировать логику сохранения изображений и привязываний их в модель
    Пример:
    ```php
