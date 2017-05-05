@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Display\Column\Editable;
+namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
