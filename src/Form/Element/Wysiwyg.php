@@ -62,7 +62,7 @@ class Wysiwyg extends NamedFormElement
         $config = $editor->getConfig();
         $config->set($this->parameters);
 
-        if(!$this->hasHtmlAttribute('id')){
+        if (! $this->hasHtmlAttribute('id')) {
             $this->setHtmlAttribute('id', $this->getName());
         }
 
@@ -159,7 +159,7 @@ class Wysiwyg extends NamedFormElement
         return parent::toArray() + [
             'parameters' => json_encode($this->getParameters()),
             'editor'     => $this->getEditor(),
-            'attributes' => $this->getHtmlAttributes()
+            'attributes' => $this->getHtmlAttributes(),
         ];
     }
 

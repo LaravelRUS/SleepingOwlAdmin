@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
 use SleepingOwl\Admin\Display\Column\Editable\Text;
+use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 
 /**

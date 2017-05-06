@@ -73,7 +73,6 @@ class Text extends NamedColumn implements ColumnEditableInterface
      */
     public function save(\Illuminate\Http\Request $request)
     {
-
         $form = new FormDefault([
             new \SleepingOwl\Admin\Form\Element\Text(
                 $this->getName()
