@@ -15,7 +15,7 @@
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-    {!! Form::textarea($name, $value, $attributes) !!}
+    {!! Form::textarea($name, $value, (array)$attributes) !!}
 
     @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
 </div>
