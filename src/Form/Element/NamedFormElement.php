@@ -553,7 +553,7 @@ abstract class NamedFormElement extends FormElement
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
-            'attributes'=> $this instanceof Select ? $this->getHtmlAttributes() : $this->htmlAttributesToString(),
+            'attributes'=> $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);
