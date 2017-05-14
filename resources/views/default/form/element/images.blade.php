@@ -26,7 +26,10 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 
-			<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
+			<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i>
+				<span v-if="_.isObject(error)">@{{ error.title }} - @{{ error.detail }} - check logs</span>
+				<span v-if="!_.isObject(error)">@{{ error }}</span>
+			</p>
 		</div>
 
 		<div class="form-element-files dropzone clearfix">
