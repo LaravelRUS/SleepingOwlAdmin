@@ -1,6 +1,8 @@
 # Release Notes
 
 ## [Unreleased] (Only in `development` branch)
+ * [Feature] Добавлены SweetAlert2 к массовым действиям - контроллер который отвечает за получение и обработку ID должен возвращать json-data
+   {text: "Текст заголовка", message: "Полный текст сообщения", type: "error|success"}
  * [Bug-fix] Исправлена работа `AdminFormElement::images('name', 'label')->storeAsJson()`.
  * [Bug-Fix] Исправлено поведение кнопки на AdminFormElement::images() - кнопка удаления реагировала на Enter
  * [Bug-Fix] Исправлено поведение AdminFormElement::images() с дублями
