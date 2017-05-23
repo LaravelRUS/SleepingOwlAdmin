@@ -84,6 +84,7 @@ class Filter extends NamedColumn
 
         $request->merge([
             $this->getName() => $this->getValue(),
+            'page' => 1,
         ]);
 
         return app('sleeping_owl')
