@@ -2,10 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts\Navigation;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\Navigation\Page;
 
-interface PageInterface extends Renderable, Arrayable
+interface PageInterface extends NavigationInterface
 {
     /**
      * @param string|array|PageInterface|null $page
@@ -15,9 +14,19 @@ interface PageInterface extends Renderable, Arrayable
     public function addPage($page = null);
 
     /**
+     * @return mixed
+     */
+    public function getAliasId();
+
+    /**
      * @return string
      */
     public function getTitle();
+
+    /**
+     * @return mixed
+     */
+    public function setAliasId();
 
     /**
      * @return string

@@ -3,14 +3,22 @@
 namespace SleepingOwl\Admin\Navigation;
 
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
-class Page extends \KodiComponents\Navigation\Page
+class Page extends \KodiComponents\Navigation\Page implements PageInterface
 {
+
     /**
      * Menu item related model class.
      * @var string
      */
     protected $model;
+
+    /**
+     * Menu item by url id
+     * @var string
+     */
+    protected $aliasId;
 
     /**
      * @param string|null $modelClass
@@ -24,6 +32,25 @@ class Page extends \KodiComponents\Navigation\Page
         if ($this->hasModel()) {
             $this->setIcon($this->getModelConfiguration()->getIcon());
         }
+    }
+
+    /**
+     * Set Alias Id
+     */
+    public function setAliasId()
+    {
+        $url = parse_url($this->getUrl(), PHP_URL_PATH);
+        if($url){
+            $this->aliasId = md5($url);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAliasId()
+    {
+        return $this->aliasId;
     }
 
     /**
@@ -83,7 +110,7 @@ class Page extends \KodiComponents\Navigation\Page
     }
 
     /**
-     * @return Closure
+     * @return \Closure
      */
     public function getAccessLogic()
     {
