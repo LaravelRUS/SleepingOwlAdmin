@@ -1,6 +1,7 @@
 # Release Notes
 
 ## [Unreleased] (Only in `development` branch)
+ * [Bug-fix] Не выводились метки для редактируемых колонок. Теперь можно делать так: `AdminColumnEditable::text('fieldName', 'ColumnLabel')` и `AdminColumnEditable::checkbox('fieldName', 'CheckedLabel', 'UncheckedLabel', 'ColumnLabel')`, или по-старинке `->setLabel('ColumnLabel')`
  * [Bug-Fix] Теперь afterSave у MultiSelect учитывает ValueSkipped у элемента формы
  * [Feature] Добавлены SweetAlert2 к массовым действиям - контроллер который отвечает за получение и обработку ID должен возвращать json-data
    {text: "Текст заголовка", message: "Полный текст сообщения", type: "error|success"}

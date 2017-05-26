@@ -31,13 +31,14 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     /**
      * Checkbox constructor.
      *
-     * @param             $name
+     * @param string      $name
      * @param string|null $checkedLabel
      * @param string|null $uncheckedLabel
+     * @param string|null $columnLabel
      */
-    public function __construct($name, $checkedLabel = null, $uncheckedLabel = null)
+    public function __construct($name, $checkedLabel = null, $uncheckedLabel = null, $columnLabel = null)
     {
-        parent::__construct($name);
+        parent::__construct($name, $columnLabel);
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
