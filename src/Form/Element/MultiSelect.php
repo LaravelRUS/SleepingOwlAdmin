@@ -154,6 +154,10 @@ class MultiSelect extends Select
         if (is_null($this->getModelForOptions())) {
             return;
         }
+        
+        if ($this->isValueSkipped()) {
+            return;
+        }
 
         $attribute = $this->getModelAttributeKey();
 
