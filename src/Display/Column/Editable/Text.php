@@ -19,15 +19,14 @@ class Text extends NamedColumn implements ColumnEditableInterface
     protected $url = null;
 
     /**
-     * Checkbox constructor.
+     * Text constructor.
      *
      * @param             $name
-     * @param string|null $checkedLabel
-     * @param string|null $uncheckedLabel
+     * @param             $label
      */
-    public function __construct($name)
+    public function __construct($name, $label = null)
     {
-        parent::__construct($name);
+        parent::__construct($name, $label);
     }
 
     /**
