@@ -318,7 +318,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             return false;
         }
 
-        $model->save();
+        if($model->save() === false) {
+            return false;
+        }
 
         $this->saveHasOneRelations($model);
 

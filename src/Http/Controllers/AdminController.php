@@ -419,7 +419,9 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
-        $model->getRepository()->delete($id);
+        if ($model->getRepository()->delete($id) === false) {
+            return redirect()->back();
+        }
 
         $model->fireEvent('deleted', false, $item);
 
@@ -454,7 +456,9 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
-        $model->getRepository()->forceDelete($id);
+        if ($model->getRepository()->forceDelete($id)) {
+            return redirect()->back();
+        }
 
         $model->fireEvent('destroyed', false, $item);
 
@@ -489,7 +493,9 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
-        $model->getRepository()->restore($id);
+        if ($model->getRepository()->restore($id) === false) {
+            return redirect()->back();
+        }
 
         $model->fireEvent('restored', false, $item);
 
