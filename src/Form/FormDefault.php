@@ -318,7 +318,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             return false;
         }
 
-        if($model->save() === false) {
+        if ($model->save() === false) {
             return false;
         }
 
