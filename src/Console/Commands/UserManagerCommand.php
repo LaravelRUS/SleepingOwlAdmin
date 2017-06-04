@@ -100,6 +100,9 @@ class UserManagerCommand extends Command
 
             $this->info("User [{$user->id}] created.");
         } catch (\Exception $e) {
+            \Log::error('unable to create new user!', [
+                'exception' => $e,
+            ]);
             $this->error('Something went wrong. User not created');
 
             return;

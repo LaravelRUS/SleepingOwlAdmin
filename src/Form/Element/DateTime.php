@@ -140,9 +140,19 @@ class DateTime extends NamedFormElement
         try {
             $time = Carbon::parse($value);
         } catch (Exception $e) {
+            \Log::info('unable to parse date, re-trying with given format', [
+                'exception' => $e,
+                'date'      => $value,
+            ]);
             try {
                 $time = Carbon::createFromFormat($this->getPickerFormat(), $value);
             } catch (Exception $e) {
+                \Log::error('unable to parse date!', [
+                    'exception'     => $e,
+                    'pickerFormat'  => $this->getPickerFormat(),
+                    'date'          => $value,
+                ]);
+
                 return;
             }
         }

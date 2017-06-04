@@ -93,6 +93,10 @@ class FilterRelated extends FilterField
 
             return $modelObject->{$this->getDisplay()};
         } catch (ModelNotFoundException $e) {
+            \Log::debug('related model instance not found', [
+                'model' => $model,
+                'id'    => $this->getValue(),
+            ]);
         }
     }
 }
