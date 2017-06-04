@@ -18,7 +18,9 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     public function getCurrentPage()
     {
         $this->setAliasesId($this->getPages());
-        return parent::getCurrentPage();
+        $this->findActivePage();
+
+        return $this->currentPage;
     }
 
     /**
