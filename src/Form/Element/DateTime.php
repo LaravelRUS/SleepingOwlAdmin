@@ -152,6 +152,7 @@ class DateTime extends NamedFormElement
                     'pickerFormat'  => $this->getPickerFormat(),
                     'date'          => $value,
                 ]);
+
                 return;
             }
         }
