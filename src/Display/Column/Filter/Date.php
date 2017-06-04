@@ -153,15 +153,15 @@ class Date extends Text
         } catch (Exception $e) {
             \Log::info('unable to parse date, re-trying with given format', [
                 'exception' => $e,
-                'date' => $date
+                'date'      => $date,
             ]);
             try {
                 $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
             } catch (Exception $e) {
                 \Log::error('unable to parse date!', [
-                    'exception' => $e,
-                    'pickerFormat' => $this->getPickerFormat(),
-                    'date' => $date,
+                    'exception'     => $e,
+                    'pickerFormat'  => $this->getPickerFormat(),
+                    'date'          => $date,
                 ]);
 
                 return;
