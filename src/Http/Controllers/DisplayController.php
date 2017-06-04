@@ -112,8 +112,9 @@ class DisplayController extends Controller
             return $datatable->renderAsync($request);
         } catch (\Exception $exception) {
             \Log::error('unable to render finded table!', [
-                'exception' => $exception
+                'exception' => $exception,
             ]);
+
             return new JsonResponse([
                 'message' => $application->isLocal()
                     ? $exception->getMessage()

@@ -161,7 +161,7 @@ class Date extends Text
                 \Log::error('unable to parse date!', [
                     'exception' => $e,
                     'pickerFormat' => $this->getPickerFormat(),
-                    'date' => $date
+                    'date' => $date,
                 ]);
 
                 return;
