@@ -41,5 +41,5 @@ require('./admin/events')
 Admin.Modules.boot()
 
 const app = new Vue({
-    el: 'body'
+    el: 'span.vueApp'
 });

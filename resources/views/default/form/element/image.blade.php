@@ -21,15 +21,13 @@
 			name="{{ $name }}"
 			inline-template
 	>
+		<div>
 			<div v-if="errors.length" class="alert alert-warning">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
 					<span aria-hidden="true">&times;</span>
 				</button>
 
-				<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i>
-					<span v-if="_.isObject(error)">@{{ error.title }} - @{{ error.detail }} - check logs</span>
-					<span v-if="!_.isObject(error)">@{{ error }}</span>
-				</p>
+				<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
 			</div>
 			<div class="form-element-files clearfix" v-if="has_value">
 				<div class="form-element-files__item">
@@ -41,8 +39,7 @@
 							<i class="fa fa-cloud-download"></i>
 						</a>
 
-                        <button v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()"
-                                type="button">
+						<button v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()">
 							<i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
 						</button>
 					</div>
@@ -56,7 +53,8 @@
 
 			</div>
 
-			<input name="@{{ name }}" type="hidden" value="@{{ value }}">
+			<input :name="name" type="hidden" :value="value">
+		</div>
 	</element-image>
 
 

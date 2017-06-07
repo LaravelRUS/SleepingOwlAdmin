@@ -1,7 +1,7 @@
 var elixir = require('laravel-elixir'),
     path = require('path');
 
-require('laravel-elixir-vue');
+require('laravel-elixir-vue-2');
 
 /*
  |--------------------------------------------------------------------------
