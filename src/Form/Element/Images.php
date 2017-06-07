@@ -41,16 +41,18 @@ class Images extends Image
      */
     public function getValueFromModel()
     {
-        $value = parent::getValueFromModel();
+        $images = $value = parent::getValueFromModel();
+
         if (is_null($value)) {
-            $value = [];
+            $images = [];
+        } elseif (is_string($value)
+                   && (($images = json_decode($value)) === false
+                       || is_null($images))
+        ) {
+            $images = preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
         }
 
-        if (is_string($value) && ($value = json_decode($value)) === false) {
-            $value = preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
-        }
-
-        return $value;
+        return $images;
     }
 
     /**
