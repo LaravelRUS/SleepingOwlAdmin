@@ -5,7 +5,7 @@ Vue.component('element-images', Vue.extend({
         },
         values: {
             type: Array,
-            default: () => new Array
+            default: () => []
         },
         readonly: {
             type: Boolean,
@@ -19,12 +19,13 @@ Vue.component('element-images', Vue.extend({
     data () {
         return {
             errors: [],
-            values: [],
+            vals: [],
             uploading: false,
         }
     },
-    ready () {
-        this.initUpload()
+    mounted () {
+        this.vals = this.values;
+        this.initUpload();
     },
     methods: {
         initUpload () {
@@ -52,11 +53,11 @@ Vue.component('element-images', Vue.extend({
                     self.closeAlert();
                 },
                 success (file, response) {
-                    self.values.push(response.value);
+                    self.vals.push(response.value);
                 },
                 error (file, response) {
                     if(_.isArray(response.errors)) {
-                        self.$set('errors', response.errors);
+                        self.$set(self.errors, response.errors);
                     }
                 },
                 complete(){
@@ -68,17 +69,17 @@ Vue.component('element-images', Vue.extend({
             return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
         },
         remove (image) {
-            var self = this;
+            let self = this;
 
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.$set('values', _.filter(self.values, function (img, key) {
+                self.$set('values', _.filter(self.vals, function (img, key) {
 
-                    return image != key
+                    return image !== key
                 }));
             });
         },
         closeAlert () {
-            this.$set('errors', []);
+            this.$set(this.errors, []);
         }
     },
     computed: {
@@ -89,10 +90,10 @@ Vue.component('element-images', Vue.extend({
             return 'fa fa-spinner fa-spin'
         },
         has_values () {
-            return this.values.length > 0
+            return this.vals.length > 0
         },
         serializedValues () {
-            return this.values.join(',')
+            return this.vals.join(',')
         }
     }
 }));

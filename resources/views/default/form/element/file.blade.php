@@ -53,7 +53,7 @@
 				</div>
 			</div>
 
-			<input :name="name" type="hidden" :value="value">
+			<input :name="name" type="hidden" :value="val">
 		</div>
 	</element-file>
 
