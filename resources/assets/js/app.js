@@ -38,8 +38,10 @@ require('./admin/form/image')
 require('./admin/form/images')
 require('./admin/events')
 
+const app = new Vue({
+    el: '#vueApp'
+});
+
 Admin.Modules.boot()
 
-const app = new Vue({
-    el: 'span.vueApp'
-});
+

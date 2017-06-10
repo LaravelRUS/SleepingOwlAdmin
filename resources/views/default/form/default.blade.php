@@ -1,4 +1,4 @@
-<span class="vueApp">
+
 	<form {!! $attributes !!}>
 
 		<input type="hidden" name="_redirectBack" value="{{ $backUrl }}"/>
@@ -8,4 +8,3 @@
 
 		{!! $buttons->render() !!}
 	</form>
-</span>

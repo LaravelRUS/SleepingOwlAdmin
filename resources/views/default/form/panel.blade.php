@@ -1,4 +1,4 @@
-<span class="vueApp">
+
     <form {!! $attributes !!}>
 
         @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $items])
@@ -10,4 +10,4 @@
         {!! $buttons->render() !!}
 
     </form>
-</span>
+
