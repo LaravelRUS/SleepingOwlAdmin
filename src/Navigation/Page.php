@@ -2,12 +2,11 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class Page extends \KodiComponents\Navigation\Page implements PageInterface
 {
-
     /**
      * Menu item related model class.
      * @var string
@@ -15,7 +14,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     protected $model;
 
     /**
-     * Menu item by url id
+     * Menu item by url id.
      * @var string
      */
     protected $aliasId;
@@ -35,12 +34,12 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * Set Alias Id
+     * Set Alias Id.
      */
     public function setAliasId()
     {
         $url = parse_url($this->getUrl(), PHP_URL_PATH);
-        if($url){
+        if ($url) {
             $this->aliasId = md5($url);
         }
     }
