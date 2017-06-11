@@ -1,6 +1,5 @@
-# Release Notes
+<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
-## [Unreleased] (Only in `development` branch)
  * [Feature] Обновление vue -> vue2 | vue-resource -> vue-resource2
  * [Bug-Fix] Ошибка при получении данных для `AdminFormElement::images` из модели (`storeAsComaSeparatedValue()`) или если возникла ошибка сохранения формы.
  * [Bug-fix] Не выводились метки для редактируемых колонок. Теперь можно делать так: `AdminColumnEditable::text('fieldName', 'ColumnLabel')` и `AdminColumnEditable::checkbox('fieldName', 'CheckedLabel', 'UncheckedLabel', 'ColumnLabel')`, или по-старинке `->setLabel('ColumnLabel')`
