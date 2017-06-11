@@ -13,12 +13,12 @@
  * [Feature] Добавлен метод setAfterSaveCallback() в Images - полезен когда нужно сколлектировать логику сохранения изображений и привязываний их в модель
    Пример:
    ```php
-       ->setAfterSaveCallback(function ($value, $model) {
-           if ($value) {
-               //... сюда приходит value с поля и модель после сохранения
-               //... Имейте ввиду что этот колбек вызовется только после всех валидаций и сохранения модели
-           }
-       })
+   ->setAfterSaveCallback(function ($value, $model) {
+       if ($value) {
+           //... сюда приходит value с поля и модель после сохранения
+           //... Имейте ввиду что этот колбек вызовется только после всех валидаций и сохранения модели
+       }
+   })
    ```
  * [Feature] Добавлен метод для DataTablesAsync setDisplayLength что бы отключать селект выбора количества записей на страницу
  * [Bug-fix] Повикшено поведение setDisplaySearch для Async Tables теперь можно отключить поле поиска без выключения общего поиска.
@@ -37,19 +37,19 @@
    поидее могут работать несколько уровней вложенности, но это поведение не тестировалось
    пример: 
    ```php
-       AdminColumn::lists('subscriptions.nhs.name')
-                    ->setLabel("some label"),
+   AdminColumn::lists('subscriptions.nhs.name')
+                ->setLabel("some label"),
    ```
    `ModelOfSection.php`
    ```php
-       public function subscriptions()
-       {
-           return $this->hasMany(
-               AnotherModel::class,
-               'some_id',
-               'id'
-           )->where('terminate_at', '>', Carbon::now());
-       }
+   public function subscriptions()
+   {
+       return $this->hasMany(
+           AnotherModel::class,
+           'some_id',
+           'id'
+       )->where('terminate_at', '>', Carbon::now());
+   }
    ```
    
    `AnotherModel.php`
