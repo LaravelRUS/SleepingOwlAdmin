@@ -16,9 +16,27 @@ require('laravel-elixir-vue-2');
 
 
 elixir(function(mix) {
-	mix
-		.less('common.less', 'public/default/css/admin-app.css')
-		.webpack('app.js', 'public/default/js/admin-app.js', false, {
+    mix
+        .less('common.less', 'public/default/css/admin-app.css')
+        .webpack('app.js', 'public/default/js/admin-app.js', false, {
+            resolve: {
+                // add alias for application code directory
+                alias: {
+                    jquery: path.resolve(__dirname, './node_modules/jquery/dist/jquery'),
+                    moment: path.resolve(__dirname, './node_modules/moment/moment')
+                }
+            }
+        })
+        .webpack('vue_init.js', 'public/default/js/vue.js', false, {
+            resolve: {
+                // add alias for application code directory
+                alias: {
+                    jquery: path.resolve(__dirname, './node_modules/jquery/dist/jquery'),
+                    moment: path.resolve(__dirname, './node_modules/moment/moment')
+                }
+            }
+        })
+        .webpack('modules_load.js', 'public/default/js/modules.js', false, {
             resolve: {
                 // add alias for application code directory
                 alias: {
@@ -28,6 +46,6 @@ elixir(function(mix) {
             }
         })
         .copy('resources/assets/fonts', 'public/default/fonts')
-		.copy('node_modules/bootstrap/fonts', 'public/default/fonts')
-		.copy('node_modules/font-awesome/fonts', 'public/default/fonts');
+        .copy('node_modules/bootstrap/fonts', 'public/default/fonts')
+        .copy('node_modules/font-awesome/fonts', 'public/default/fonts');
 });

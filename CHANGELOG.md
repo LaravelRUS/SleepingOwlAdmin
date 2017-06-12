@@ -1,5 +1,34 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
+ * [Feature] Появилась возможность создавать свои компоненты vue и крепить их к кастомным темплейтам. Подключать файлы можно обычным способом - зависимость admin-default. Структура компонента обычная.
+        
+   ```javascript
+   Vue.component('element-image-example', Vue.extend({
+       props: {
+           //....
+       },
+       data () {
+           return {
+               //....
+           }
+       },
+       mounted () {
+           //....
+       },
+       methods: {
+           //....
+       },
+       computed: {
+           //....
+       }
+       //....
+   }));
+   ```
+   
+   В шаблон блейд такое + props если есть.
+   ```html
+    <element-image-sample></element-image-sample>
+   ```
  * [Feature] Обновление vue -> vue2 | vue-resource -> vue-resource2
  * [Bug-Fix] Ошибка при получении данных для `AdminFormElement::images` из модели (`storeAsComaSeparatedValue()`) или если возникла ошибка сохранения формы.
  * [Bug-fix] Не выводились метки для редактируемых колонок. Теперь можно делать так: `AdminColumnEditable::text('fieldName', 'ColumnLabel')` и `AdminColumnEditable::checkbox('fieldName', 'CheckedLabel', 'UncheckedLabel', 'ColumnLabel')`, или по-старинке `->setLabel('ColumnLabel')`
