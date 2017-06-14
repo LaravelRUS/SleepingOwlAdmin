@@ -72,7 +72,7 @@ Vue.component('element-images', Vue.extend({
             let self = this;
 
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.$set('values', _.filter(self.vals, function (img, key) {
+                self.$set(self.vals, _.filter(self.vals, function (img, key) {
 
                     return image !== key
                 }));
