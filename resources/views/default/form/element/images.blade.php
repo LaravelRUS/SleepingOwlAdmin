@@ -30,7 +30,7 @@
 			</div>
 
 			<div class="form-element-files dropzone clearfix">
-				<div class="form-element-files__item" v-for="uri in values">
+				<div class="form-element-files__item" v-for="uri in vals">
 					<a :href="image(uri)" class="form-element-files__image" data-toggle="images">
 						<img :src="image(uri)"/>
 					</a>
