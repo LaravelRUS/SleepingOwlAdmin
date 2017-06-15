@@ -30,7 +30,7 @@
 			</div>
 
 			<div class="form-element-files dropzone clearfix">
-				<div class="form-element-files__item" v-for="uri in vals">
+				<div class="form-element-files__item" v-for="(uri, index) in vals">
 					<a :href="image(uri)" class="form-element-files__image" data-toggle="images">
 						<img :src="image(uri)"/>
 					</a>
@@ -39,7 +39,7 @@
 							<i class="fa fa-cloud-download"></i>
 						</a>
 
-						<button @click.prevent="remove(uri)" v-if="!readonly" class="btn btn-danger btn-xs"
+						<button @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs"
 								aria-label="{{ trans('sleeping_owl::lang.image.remove') }}">
 							<i class="fa fa-times"></i>
 						</button>

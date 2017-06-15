@@ -19,7 +19,7 @@ Vue.component('element-image', Vue.extend({
         return {
             errors: [],
             uploading: false,
-            val: false,
+            val: '',
         }
     },
     mounted () {
@@ -60,7 +60,7 @@ Vue.component('element-image', Vue.extend({
             let self = this;
 
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.val = false;
+                self.val = '';
             });
         },
         closeAlert () {

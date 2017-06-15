@@ -9,7 +9,6 @@
 
 	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-
 	<element-image
 			url="{{ route('admin.form.element.image', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
