@@ -48,7 +48,7 @@ Vue.component('element-file', Vue.extend({
                 },
                 error (file, response) {
                     if(_.isArray(response.errors)) {
-                        self.$set(self.errors, response.errors);
+                        self.errors = response.errors;
                     }
                 },
                 complete(){
@@ -64,7 +64,7 @@ Vue.component('element-file', Vue.extend({
             });
         },
         closeAlert () {
-            this.$set(this.errors, []);
+            this.errors = [];
         }
     },
     computed: {

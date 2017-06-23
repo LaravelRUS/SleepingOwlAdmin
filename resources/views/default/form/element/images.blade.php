@@ -39,7 +39,7 @@
 							<i class="fa fa-cloud-download"></i>
 						</a>
 
-						<button @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs"
+						<button type="button" @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs"
 								aria-label="{{ trans('sleeping_owl::lang.image.remove') }}">
 							<i class="fa fa-times"></i>
 						</button>
