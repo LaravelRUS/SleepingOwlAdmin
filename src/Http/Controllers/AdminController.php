@@ -415,13 +415,13 @@ class AdminController extends Controller
 
         $model->fireDelete($id);
 
-        if ($model->fireEvent('deleting', true, $item) === false) {
+        if ($model->fireEvent('deleting', true, $item, $request) === false) {
             return redirect()->back();
         }
 
         $model->getRepository()->delete($id);
 
-        $model->fireEvent('deleted', false, $item);
+        $model->fireEvent('deleted', false, $item, $request);
 
         return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDelete());
@@ -450,13 +450,13 @@ class AdminController extends Controller
 
         $model->fireDestroy($id);
 
-        if ($model->fireEvent('destroying', true, $item) === false) {
+        if ($model->fireEvent('destroying', true, $item, $request) === false) {
             return redirect()->back();
         }
 
         $model->getRepository()->forceDelete($id);
 
-        $model->fireEvent('destroyed', false, $item);
+        $model->fireEvent('destroyed', false, $item, $request);
 
         return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDestroy());
