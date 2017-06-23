@@ -39,12 +39,12 @@ Admin.Modules.register('form.buttons', () => {
                 return prepareData(self);
             }
 
-            Admin.Messages.confirm(question, null, selector).then(() => {
-                Admin.Events.fire("datatables::confirm::submitting", self);
+            Admin.Messages.confirm(question, null, $(this)).then(() => {
+                Admin.Events.fire("datatables::confirm::submitting", $(this));
                 prepareData(self);
-                Admin.Events.fire("datatables::confirm::submitted", self);
+                Admin.Events.fire("datatables::confirm::submitted", $(this));
             }, dismiss => {
-                Admin.Events.fire("datatables::confirm::cancel", self);
+                Admin.Events.fire("datatables::confirm::cancel", $(this));
             });
         });
     };

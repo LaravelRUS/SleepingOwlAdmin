@@ -5,7 +5,7 @@ Admin.Modules.register('display.columns.control', () => {
 
             let $form = $(this).closest('form');
 
-            Admin.Messages.confirm(question, null, selector).then(() => {
+            Admin.Messages.confirm(question, null, $(this)).then(() => {
                 Admin.Events.fire("datatables::confirm::submitting", $form, selector);
                 $form.submit()
                 Admin.Events.fire("datatables::confirm::submitted", $form, selector);
