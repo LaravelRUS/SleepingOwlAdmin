@@ -56,7 +56,7 @@ module.exports = (function () {
 
 
 
-            Admin.Events.fire("datatables::confirm::init", settings);
+            Admin.Events.fire("datatables::confirm::init", settings, id);
 
             return swal(settings)
         },
