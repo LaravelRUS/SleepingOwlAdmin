@@ -39,9 +39,11 @@ Admin.Modules.register('form.buttons', () => {
             }
 
             Admin.Messages.confirm(question).then(() => {
+                Admin.Events.fire("datatables::confirm::submitting", self);
                 prepareData(self);
+                Admin.Events.fire("datatables::confirm::submitted", self);
             }, dismiss => {
-
+                Admin.Events.fire("datatables::confirm::cancel", self);
             });
         });
     };
