@@ -25,8 +25,9 @@ Admin.Modules.register('form.buttons', () => {
             if (!_.isUndefined(redirect)) {
                 params._redirectBack = redirect;
             }
-
+            Admin.Events.fire("datatables::confirm::submitting::data", params)
             formRequest(url, params);
+            Admin.Events.fire("datatables::confirm::submitted::data", params)
         };
 
         $(selector).on('click', function (e) {
@@ -38,7 +39,7 @@ Admin.Modules.register('form.buttons', () => {
                 return prepareData(self);
             }
 
-            Admin.Messages.confirm(question).then(() => {
+            Admin.Messages.confirm(question, null, selector).then(() => {
                 Admin.Events.fire("datatables::confirm::submitting", self);
                 prepareData(self);
                 Admin.Events.fire("datatables::confirm::submitted", self);
