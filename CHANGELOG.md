@@ -1,6 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
  
  * [Feature] Появилась пара новых эвентов
+     * datatables::actions::submitting - эвент до действия после согласия SweetAlert в масс экшнс
+     * datatables::actions::submitted  - эвент после действия после согласия SweetAlert масс экшнс
+     * datatables::actions::cancel - эвент отказа окна SweetAlert во время масс экшнс
+     
+ * [Feature] Появилась пара новых эвентов
     * datatables::confirm::init - эвент при котором вы можете получить данные настроек SweetAlert и импровизировать как угодно
     * datatables::confirm::submitting - эвент до действия после согласия SweetAlert
     * datatables::confirm::submitted  - эвент после действия после согласия SweetAlert (обычно это отправка формы редирект или что то в этом роде
