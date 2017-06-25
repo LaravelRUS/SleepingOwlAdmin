@@ -73,6 +73,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     ];
 
     /**
+     * @var array
+     */
+    protected $unsearchableColumns = [];
+
+    /**
      * DisplayDatatablesAsync constructor.
      *
      * @param string|null $name
@@ -191,6 +196,18 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
+     * @param array $columns
+     *
+     * @return $this
+     */
+    public function setUnsearchableColumns(array $columns)
+    {
+        $this->unsearchableColumns = $columns;
+
+        return $this;
+    }
+
+    /**
      * Render async request.
      *
      * @param \Illuminate\Http\Request $request
@@ -257,7 +274,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             $columns = $this->getColumns()->all();
 
             foreach ($columns as $column) {
-                if (in_array(get_class($column), $this->searchableColumns)) {
+                if (in_array(get_class($column), $this->searchableColumns) &&
+                    ! in_array($column->getName(), $this->unsearchableColumns)) {
                     if ($column instanceof NamedColumnInterface) {
                         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                             if (method_exists($metaInstance, 'onSearch')) {
