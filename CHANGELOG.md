@@ -1,5 +1,6 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
  
+ * [Feature] Появилась возможность редактировать JSON поля. Установка атрибутов идет в AtributeName через `field->key`
  * [Feature] Появилась пара новых эвентов
      * datatables::actions::submitting - эвент до действия после согласия SweetAlert в масс экшнс
      * datatables::actions::submitted  - эвент после действия после согласия SweetAlert масс экшнс

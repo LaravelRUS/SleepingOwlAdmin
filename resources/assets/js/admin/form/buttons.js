@@ -1,5 +1,5 @@
 Admin.Modules.register('form.buttons', () => {
-    var formRequest = (url, params) => {
+    let formRequest = (url, params) => {
         let form = $(`<form method="POST" action="${url}"></form>`);
         for (let name in params) {
             form.append(`<input type="hidden" name="${name}" value="${params[name]}">`);
@@ -9,10 +9,10 @@ Admin.Modules.register('form.buttons', () => {
         form.submit();
     }
 
-    var clickEvent = (selector, question, method) => {
+    let clickEvent = (selector, question, method) => {
 
-        var prepareData = (jSelector) => {
-            var url = jSelector.data('url'),
+        let prepareData = (jSelector) => {
+            let url = jSelector.data('url'),
                 redirect = jSelector.data('redirect'),
                 params = {
                     _token: Admin.token,
