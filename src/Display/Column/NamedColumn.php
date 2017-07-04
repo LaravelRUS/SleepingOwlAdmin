@@ -20,6 +20,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * @var \Closure
      */
+    protected $searchOuterCallback = null;
+
+    /**
+     * @var \Closure
+     */
     protected $orderCallback = null;
 
     /**
@@ -126,6 +131,17 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      * @param \Closure $callable
      * @return $this
      */
+    public function setSearchOuterCallback(\Closure $callable)
+    {
+        $this->searchOuterCallback = $callable;
+
+        return $this;
+    }
+
+    /**
+     * @param \Closure $callable
+     * @return $this
+     */
     public function setFilterCallback(\Closure $callable)
     {
         $this->filterCallback = $callable;
@@ -147,6 +163,14 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function getSearchCallback()
     {
         return $this->searchCallback;
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function getSearchOuterCallback()
+    {
+        return $this->searchOuterCallback;
     }
 
     /**
