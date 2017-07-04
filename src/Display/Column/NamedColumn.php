@@ -13,26 +13,6 @@ use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
     /**
-     * @var \Closure
-     */
-    protected $searchCallback = null;
-
-    /**
-     * @var \Closure
-     */
-    protected $orderCallback = null;
-
-    /**
-     * @var \Closure
-     */
-    protected $filterCallback = null;
-
-    /**
-     * @var null
-     */
-    protected $columMetaClass = null;
-
-    /**
      * Column field name.
      * @var string
      */
@@ -77,84 +57,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * @param $columnMetaClass
-     * @return $this
-     */
-    public function setMetaData($columnMetaClass)
-    {
-        $this->columMetaClass = $columnMetaClass;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMetaData()
-    {
-        return $this->columMetaClass
-            ? app()->make($this->columMetaClass)
-            : false;
-    }
-
-    /**
-     * @param \Closure $callable
-     * @return $this
-     */
-    public function setOrderCallback(\Closure $callable)
-    {
-        $this->orderCallback = $callable;
-
-        return $this->setOrderable($callable);
-    }
-
-    /**
-     * @param \Closure $callable
-     * @return $this
-     */
-    public function setSearchCallback(\Closure $callable)
-    {
-        $this->searchCallback = $callable;
-
-        return $this;
-    }
-
-    /**
-     * @param \Closure $callable
-     * @return $this
-     */
-    public function setFilterCallback(\Closure $callable)
-    {
-        $this->filterCallback = $callable;
-
-        return $this;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getOrderCallback()
-    {
-        return $this->orderCallback;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getSearchCallback()
-    {
-        return $this->searchCallback;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getFilterCallback()
-    {
-        return $this->filterCallback;
     }
 
     /**
