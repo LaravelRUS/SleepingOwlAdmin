@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
@@ -9,7 +10,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
@@ -91,14 +91,14 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param NamedColumnInterface $column
+     * @param ColumnInterface $column
      * @param Builder $query
      * @param string $queryString
      * @param array|string $queryParams
      *
      * @return void
      */
-    public function apply(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
+    public function apply(ColumnInterface $column, Builder $query, $queryString, $queryParams)
     {
         $queryString = $this->parseValue($queryString);
 

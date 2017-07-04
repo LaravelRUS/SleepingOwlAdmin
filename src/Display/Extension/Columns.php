@@ -221,7 +221,7 @@ class Columns extends Extension implements Initializable, Renderable
             $column = $columns->get($columnIndex);
 
             if ($column instanceof ColumnInterface && $column->isOrderable()) {
-                if ($column instanceof NamedColumnInterface) {
+                if ($column instanceof ColumnInterface) {
                     if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                         if (method_exists($metaInstance, 'onOrderBy')) {
                             $metaInstance->onOrderBy($column, $query, $direction);
