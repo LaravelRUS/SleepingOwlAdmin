@@ -4,10 +4,10 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Request;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Display\Column\Filter\Control;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 class ColumnFilters extends Extension implements Initializable, Placable

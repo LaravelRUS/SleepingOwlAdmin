@@ -370,10 +370,10 @@ abstract class NamedFormElement extends FormElement
             return $value;
         }
 
-        /**
+        /*
          * Implement json parsing
          */
-        if(strpos($path, "->") !== false){
+        if (strpos($path, '->') !== false) {
             $jsonParts = collect(explode('->', $path));
 
             $jsonAttr = $model->{$jsonParts->first()};

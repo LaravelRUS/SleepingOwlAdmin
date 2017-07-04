@@ -172,7 +172,6 @@ abstract class TableColumn implements ColumnInterface
         return $this->filterCallback;
     }
 
-
     /**
      * @return TableHeaderColumnInterface
      */

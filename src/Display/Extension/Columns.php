@@ -9,7 +9,6 @@ use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 
 class Columns extends Extension implements Initializable, Renderable
 {
