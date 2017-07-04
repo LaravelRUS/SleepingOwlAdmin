@@ -23,11 +23,6 @@ Admin.Modules.register('display.actions', () => {
             $.ajax(settings).done(function (msg) {
                 if (msg.hasOwnProperty('text')) {
                     swal({title: msg.text, text: msg.message, type: msg.type, timer: 5000})
-                    setTimeout(function(){
-                        location.reload();
-                        window.location.reload();
-                    }, 5000);
-
                 }
             });
 
