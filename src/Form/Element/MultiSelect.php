@@ -25,7 +25,7 @@ class MultiSelect extends Select
     /**
      * @var string
      */
-    protected $view = 'form.element.select';
+    protected $view = 'form.element.multiselect';
 
     /**
      * @return string
@@ -114,7 +114,7 @@ class MultiSelect extends Select
     {
         $this->setHtmlAttributes([
             'id'    => $this->getName(),
-            'class' => 'form-control input-select',
+            'class' => 'form-control',
             'multiple',
         ]);
 

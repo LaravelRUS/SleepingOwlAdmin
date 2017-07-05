@@ -7,9 +7,22 @@
         @endif
     </label>
 
-    <div>
-        {!! Form::select($name, $options, $value, $attributes) !!}
-    </div>
+    <deselect :value="{{json_encode($value)}}" :multi="true" :options="{{json_encode($options)}}" inline-template>
+        <div>
+            <multiselect v-model="val"
+                         track-by="id"
+                         label="text"
+                         :multiple="multi"
+                         :limit="3"
+                         :searchable="true"
+                         :options="opts">
+            </multiselect>
+
+            <div v-show="true == false">
+                {!! Form::select($name, $options, $value, $attributes + ['v-model' => 'selValue']) !!}
+            </div>
+        </div>
+    </deselect>
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
     @include(AdminTemplate::getViewPath('form.element.partials.errors'))

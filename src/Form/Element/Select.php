@@ -165,7 +165,7 @@ class Select extends NamedFormElement
             'id'               => $this->getName(),
             'size'             => 2,
             'data-select-type' => 'single',
-            'class'            => 'form-control input-select',
+            'class'            => 'form-control',
         ]);
 
         if ($this->isReadonly()) {
