@@ -3,39 +3,29 @@ import Multiselect from 'vue-multiselect'
 
 Vue.component('deselect', Vue.extend({
     props: {
-        value: {},
-        options: {},
-        multi: false,
+        value: {
+            type: [Number, Array]
+        },
+        options: {
+            type: Array,
+            default: []
+        },
+        multiple: {
+            type: Boolean
+        }
     },
-
+    mounted() {
+        this.val = _.first(this.options.filter(a => a.id === this.value));
+        if (this.multiple) {
+            this.val = this.options.filter(a => this.value.indexOf(a.id) !== -1)
+        }
+    },
     computed: {
-        val(){
-            if (!this.multi) {
-                return this.opts.filter(a => a.id === this.value);
-            }
-
-            return this.opts.filter(a => {
-                console.log(a.id, this.value.indexOf(a.id));
-                return this.value.indexOf(a.id) !== -1
-            })
-
-        },
-        opts(){
-            let opts = [];
-            _.each(this.options, function (elem, index) {
-                opts.push({id: parseInt(index) || index, text: elem});
-            });
-            return opts;
-        },
-        selValue(){
-            if (this.multi) {
-                let opts = [];
-                _.each(this.val, function (elem, index) {
-                    opts.push(index);
-                });
-                return opts;
-            }
+        preparedVal(){
             if (this.val) {
+                if (this.multiple) {
+                    return this.val.map(a => a.id);
+                }
                 return this.val.id;
             }
         }
@@ -43,7 +33,17 @@ Vue.component('deselect', Vue.extend({
     components: {
         Multiselect
     },
+    methods: {
+        hasOption(id){
+            if (this.preparedVal) {
+                return this.preparedVal.indexOf(id) !== -1;
+            }
+            return false;
+        }
+    },
     data () {
-        return {}
+        return {
+            val: '',
+        }
     }
 }));

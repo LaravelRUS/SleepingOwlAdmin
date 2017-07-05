@@ -7,20 +7,24 @@
         @endif
     </label>
 
-    <deselect :value="{{json_encode($value)}}" :multi="true" :options="{{json_encode($options)}}" inline-template>
+    <deselect :value="{{json_encode($value)}}" :multiple="true" :options="{{json_encode($options)}}" inline-template>
         <div>
             <multiselect v-model="val"
                          track-by="id"
                          label="text"
-                         :multiple="multi"
+                         :multiple="multiple"
                          :limit="3"
                          :searchable="true"
-                         :options="opts">
+                         :options="options">
             </multiselect>
 
-            <div v-show="true == false">
-                {!! Form::select($name, $options, $value, $attributes + ['v-model' => 'selValue']) !!}
-            </div>
+            <select v-show="true == false" multiple name="{{$name}}">
+
+                <option :selected="hasOption(opt.id)" :value="opt.id"
+                        v-for="opt in options">
+                    @{{ opt.text }}
+                </option>
+            </select>
         </div>
     </deselect>
 
