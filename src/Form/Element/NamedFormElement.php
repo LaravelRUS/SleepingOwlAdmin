@@ -370,11 +370,11 @@ abstract class NamedFormElement extends FormElement
             return $value;
         }
 
-        /**
+        /*
          * Implement json parsing
          */
-        if (strpos($path, "->") !== false) {
-            $casts     = collect($model->getCasts());
+        if (strpos($path, '->') !== false) {
+            $casts = collect($model->getCasts());
             $jsonParts = collect(explode('->', $path));
 
             $jsonAttr = $model->{$jsonParts->first()};
@@ -383,7 +383,6 @@ abstract class NamedFormElement extends FormElement
 
             if ($cast == 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-
             } elseif ($cast != 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
