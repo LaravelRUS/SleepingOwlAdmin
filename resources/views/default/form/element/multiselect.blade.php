@@ -15,7 +15,12 @@
                          :multiple="multiple"
                          :limit="3"
                          :searchable="true"
-                         :options="options">
+                         :options="options"
+                         placeholder="{{ trans('sleeping_owl::lang.select.placeholder') }}"
+                         :selectlabel="{{trans('sleeping_owl::lang.select.init')}}"
+                         :SelectedLabel="{{trans('sleeping_owl::lang.select.selected')}}"
+                         :DeselectLabel="{{trans('sleeping_owl::lang.select.deselect')}}"
+            >
             </multiselect>
 
             <select v-show="true == false" multiple name="{{$name}}">

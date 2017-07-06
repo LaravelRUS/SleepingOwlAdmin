@@ -14,7 +14,12 @@
                          label="text"
                          :multiple="multiple"
                          :searchable="true"
-                         :options="options">
+                         :options="options"
+                         placeholder="{{ trans('sleeping_owl::lang.select.placeholder') }}"
+                         :selectlabel="{{trans('sleeping_owl::lang.select.init')}}"
+                         :SelectedLabel="{{trans('sleeping_owl::lang.select.selected')}}"
+                         :DeselectLabel="{{trans('sleeping_owl::lang.select.deselect')}}"
+            >
             </multiselect>
 
             <input type="hidden" name="{{$name}}" v-model="preparedVal">
