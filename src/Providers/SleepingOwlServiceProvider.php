@@ -25,8 +25,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../../public' => public_path('packages/sleepingowl/'),
-                __DIR__.'/../../resources/assets/less/vue-multiselect.min.css' =>
-                    public_path('packages/sleepingowl/default/css/multiselect.css')
+                __DIR__.'/../../resources/assets/less/vue-multiselect.min.css' => public_path('packages/sleepingowl/default/css/multiselect.css'),
             ], 'assets');
 
             $this->publishes([

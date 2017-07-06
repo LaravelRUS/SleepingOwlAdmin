@@ -97,7 +97,7 @@ return [
         'placeholder' => 'Выберите из списка',
         'init'        => 'Нажмите Enter что бы выбрать',
         'limit'       => 'и еще ${count}',
-        'deselect'    => 'Нажмите Enter что бы сбросить'
+        'deselect'    => 'Нажмите Enter что бы сбросить',
     ],
     'image'     => [
         'browse'         => 'Выбор изображения',
