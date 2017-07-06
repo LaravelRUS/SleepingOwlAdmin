@@ -69,6 +69,20 @@ class Select extends NamedFormElement
     }
 
     /**
+     * @return array
+     */
+    public function mutateOptions()
+    {
+        $options = [];
+        $temp = $this->getOptions();
+        foreach ($temp as $key => $value) {
+            $options[] = ['id' => $key, 'text' => $value];
+        }
+
+        return $options;
+    }
+
+    /**
      * @param array
      *
      * @return $this
@@ -165,14 +179,14 @@ class Select extends NamedFormElement
             'id'               => $this->getName(),
             'size'             => 2,
             'data-select-type' => 'single',
-            'class'            => 'form-control input-select',
+            'class'            => 'form-control',
         ]);
 
         if ($this->isReadonly()) {
             $this->setHtmlAttribute('disabled', 'disabled');
         }
 
-        $options = $this->getOptions();
+        $options = $this->mutateOptions();
 
         if ($this->isNullable()) {
             $this->setHtmlAttribute('data-nullable', 'true');
