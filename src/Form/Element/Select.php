@@ -75,13 +75,12 @@ class Select extends NamedFormElement
     {
         $options = [];
         $temp = $this->getOptions();
-        foreach($temp as $key => $value){
+        foreach ($temp as $key => $value) {
             $options[] = ['id' => $key, 'text' => $value];
         }
 
         return $options;
     }
-
 
     /**
      * @param array

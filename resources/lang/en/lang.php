@@ -97,7 +97,7 @@ return [
         'placeholder' => 'Select from the list',
         'init'        => 'Press Enter to select',
         'limit'       => 'and ${count} more',
-        'deselect'    => 'Press Enter to deselect'
+        'deselect'    => 'Press Enter to deselect',
     ],
     'image' => [
         'browse' => 'Select Image',
