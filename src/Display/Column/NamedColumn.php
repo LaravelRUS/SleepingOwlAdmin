@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SuportCollection;
@@ -110,12 +110,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
             return $name($instance);
         }
 
-
-        /**
+        /*
          * Implement json parsing
          */
-        if (strpos($name, "->") !== false) {
-            $casts     = collect($instance->getCasts());
+        if (strpos($name, '->') !== false) {
+            $casts = collect($instance->getCasts());
             $jsonParts = collect(explode('->', $name));
 
             $jsonAttr = $instance->{$jsonParts->first()};
@@ -124,7 +123,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
             if ($cast == 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-
             } elseif ($cast != 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
