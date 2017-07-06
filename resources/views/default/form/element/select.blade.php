@@ -16,9 +16,9 @@
                          :searchable="true"
                          :options="options"
                          placeholder="{{ trans('sleeping_owl::lang.select.placeholder') }}"
-                         :selectlabel="{{trans('sleeping_owl::lang.select.init')}}"
-                         :SelectedLabel="{{trans('sleeping_owl::lang.select.selected')}}"
-                         :DeselectLabel="{{trans('sleeping_owl::lang.select.deselect')}}"
+                         :selectLabel="'{{trans('sleeping_owl::lang.select.init')}}'"
+                         :selectedLabel="'{{trans('sleeping_owl::lang.select.selected')}}'"
+                         :seselectLabel="'{{trans('sleeping_owl::lang.select.deselect')}}'"
             >
             </multiselect>
 
