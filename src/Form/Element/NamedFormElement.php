@@ -383,7 +383,7 @@ abstract class NamedFormElement extends FormElement
 
             if ($cast == 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-                
+
             } elseif ($cast != 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
