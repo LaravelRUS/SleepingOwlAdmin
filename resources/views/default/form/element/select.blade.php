@@ -7,7 +7,7 @@
         @endif
     </label>
 
-    <deselect :value="{{ $value }}" :multiple="false" :options="{{json_encode($options)}}" inline-template>
+    <deselect :value="{{ (is_numeric($value) ? $value : json_encode($value)) }}" :multiple="false" :options="{{json_encode($options)}}" inline-template>
         <div>
             <multiselect v-model="val"
                          track-by="id"
