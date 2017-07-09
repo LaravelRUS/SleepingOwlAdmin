@@ -190,7 +190,7 @@ class Select extends NamedFormElement
 
         if ($this->isNullable()) {
             $this->setHtmlAttribute('data-nullable', 'true');
-            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
+            $options = [0 => trans('sleeping_owl::lang.select.nothing')] + $options;
         }
 
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
