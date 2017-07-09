@@ -36,7 +36,7 @@ class Delete extends FormButton
      */
     public function canShow()
     {
-        if (is_null($this->getModel()->getKey()) || ! $this->show) {
+        if (is_null($this->getModel()->getKey())) {
             return false;
         }
 
