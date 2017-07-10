@@ -41,6 +41,13 @@ class MultiSelect extends Select
     public function getValueFromModel()
     {
         $value = parent::getValueFromModel();
+
+        if(is_array($value)){
+            foreach($value as $key => $val){
+                $value[$key] = (int) $val;
+            }
+        }
+
         if ($value instanceof Collection && $value->count() > 0) {
             $value = $value->pluck($value->first()->getKeyName())->all();
         }
