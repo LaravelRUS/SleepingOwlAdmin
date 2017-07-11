@@ -358,7 +358,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getCancelUrl(array $parameters = [])
     {
-        return URL::previous() ?: $this->getDisplayUrl($parameters);
+        return $this->getDisplayUrl($parameters);
     }
 
     /**
