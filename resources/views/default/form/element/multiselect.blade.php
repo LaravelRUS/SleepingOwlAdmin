@@ -23,7 +23,7 @@
             >
             </multiselect>
 
-            <select v-show="true == false" multiple name="{{$name}}">
+            <select v-show="true == false" id="{{$name}}" multiple name="{{$name}}">
 
                 <option :selected="hasOption(opt.id)" :value="opt.id"
                         v-for="opt in options">

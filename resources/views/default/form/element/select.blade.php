@@ -22,7 +22,7 @@
             >
             </multiselect>
 
-            <input type="hidden" name="{{$name}}" v-model="preparedVal">
+            <input type="hidden" id="{{$name}}" name="{{$name}}" v-model="preparedVal">
         </div>
     </deselect>
 
