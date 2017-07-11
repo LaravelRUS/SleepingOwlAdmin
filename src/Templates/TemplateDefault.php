@@ -40,8 +40,7 @@ class TemplateDefault extends Template
             ->addJs('admin-default', $this->assetPath('js/admin-app.js'))
             ->addJs('admin-vue-init', $this->assetPath('js/vue.js'))
             ->addJs('admin-modules-load', $this->assetPath('js/modules.js'))
-            ->addCss('admin-default', $this->assetPath('css/admin-app.css'))
-            ->addCss('multiselect', $this->assetPath('css/multiselect.css'));
+            ->addCss('admin-default', $this->assetPath('css/admin-app.css'));
     }
 
     /**
