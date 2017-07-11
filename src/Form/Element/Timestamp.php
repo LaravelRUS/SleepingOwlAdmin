@@ -24,7 +24,7 @@ class Timestamp extends DateTime
         $value = parent::getValueFromModel();
 
         if (empty($value)) {
-            $value = Carbon::now()->format($this->getFormat());
+            $value = Carbon::now()->timezone($this->getTimezone())->format($this->getFormat());
         }
 
         return $value;
