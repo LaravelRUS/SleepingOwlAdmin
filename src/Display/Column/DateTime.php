@@ -14,6 +14,12 @@ class DateTime extends NamedColumn
     protected $format;
 
     /**
+     * Datetime timezone.
+     * @var string
+     */
+    protected $timezone;
+
+    /**
      * @var string
      */
     protected $view = 'column.datetime';
@@ -44,6 +50,18 @@ class DateTime extends NamedColumn
     }
 
     /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        if (is_null($this->timezone)) {
+            $this->timezone = config('sleeping_owl.timezone');
+        }
+
+        return $this->timezone;
+    }
+
+    /**
      * @param string $format
      *
      * @return $this
@@ -51,6 +69,18 @@ class DateTime extends NamedColumn
     public function setFormat($format)
     {
         $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * @param string $timezone
+     *
+     * @return $this
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
 
         return $this;
     }
@@ -80,7 +110,7 @@ class DateTime extends NamedColumn
                 $date = Carbon::parse($date);
             }
 
-            $date = $date->format($this->getFormat());
+            $date = $date->timezone($this->getTimezone())->format($this->getFormat());
         }
 
         return $date;
