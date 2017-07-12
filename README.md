@@ -8,7 +8,7 @@
 [![Laravel Support](https://img.shields.io/badge/Laravel-5.2--5.5-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-5.6--7.x-brightgreen.svg)]()
 
-[![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://demo.sleepingowl.ru)
+[![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowl.ru)
 [![Demo Site](https://img.shields.io/badge/demo-site-blue.svg)](https://demo.sleepingowl.ru)
 [![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://img.shields.io/badge/gitter-chat-yellowgreen.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin)
 [![Telegram Chat](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/sleeping_owl)
