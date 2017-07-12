@@ -42,8 +42,8 @@ class MultiSelect extends Select
     {
         $value = parent::getValueFromModel();
 
-        if(is_array($value)){
-            foreach($value as $key => $val){
+        if (is_array($value)) {
+            foreach ($value as $key => $val) {
                 $value[$key] = (int) $val;
             }
         }
