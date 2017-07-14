@@ -1,23 +1,22 @@
 <?php
 /**
- * Laravel IDE Helper Generator
+ * Laravel IDE Helper Generator.
  *
  * @author    Barry vd. Heuvel <barryvdh@gmail.com>
  * @copyright 2014 Barry vd. Heuvel / Fruitcake Studio (http://www.fruitcakestudio.nl)
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/barryvdh/laravel-ide-helper
  */
-
 namespace SleepingOwl\Admin\Console;
 
 use Illuminate\Support\Collection;
-use Barryvdh\LaravelIdeHelper\Generator as IdeHelperGenerator;
 use Barryvdh\LaravelIdeHelper\Alias;
+use Barryvdh\LaravelIdeHelper\Generator as IdeHelperGenerator;
 
 class Generator extends IdeHelperGenerator
 {
     /**
-     * Regroup aliases by namespace of extended classes
+     * Regroup aliases by namespace of extended classes.
      *
      * @return Collection
      */
@@ -25,12 +24,12 @@ class Generator extends IdeHelperGenerator
     {
         $aliases = $this->getValidAliases();
 
-        $aliases = $aliases->filter(function(Alias $item){
-             return !collect(config('sleeping_owl.aliases'))->keys()->search($item->getAlias());
+        $aliases = $aliases->filter(function (Alias $item) {
+            return ! collect(config('sleeping_owl.aliases'))->keys()->search($item->getAlias());
         });
 
         return $aliases->groupBy(function (Alias $alias) {
-                return $alias->getExtendsNamespace();
+            return $alias->getExtendsNamespace();
         });
     }
 }
