@@ -13,7 +13,9 @@
                          track-by="id"
                          label="text"
                          :multiple="multiple"
-                         :limit="3"
+                         @if($limit)
+                         :limit="{!! $limit !!}"
+                         @endif
                          :searchable="true"
                          :options="options"
                          placeholder="{{ trans('sleeping_owl::lang.select.placeholder') }}"
