@@ -7,7 +7,9 @@
         @endif
     </label>
 
-    <deselect :value="{{json_encode($value)}}" :id="{!! $name !!}" :multiple="true" :options="{{json_encode($options)}}" inline-template>
+    <deselect :value="{{json_encode($value)}}"
+              :id="'{{str_replace(['[', ']'], '', $name)}}'"
+              :multiple="true" :options="{{json_encode($options)}}" inline-template>
         <div>
             <multiselect v-model="val"
                          track-by="id"
@@ -25,7 +27,7 @@
             >
             </multiselect>
 
-            <select v-show="true == false" id="{{$name}}" multiple name="{{$name}}">
+            <select v-show="true == false" id="{{str_replace(['[', ']'], '', $name)}}" multiple name="{{$name}}">
 
                 <option :selected="hasOption(opt.id)" :value="opt.id"
                         v-for="opt in options">
