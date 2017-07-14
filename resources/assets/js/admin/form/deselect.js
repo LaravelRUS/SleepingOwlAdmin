@@ -6,6 +6,9 @@ Vue.component('deselect', Vue.extend({
         value: {
             type: [Number, Array]
         },
+        id:{
+            type: String
+        },
         options: {
             type: Array,
             default: []
@@ -28,6 +31,12 @@ Vue.component('deselect', Vue.extend({
                 }
                 return this.val.id;
             }
+        }
+    },
+    watch: {
+        // whenever question changes, this function will run
+        preparedVal: function (val) {
+            $("#" + this.id).trigger('change');
         }
     },
     components: {
