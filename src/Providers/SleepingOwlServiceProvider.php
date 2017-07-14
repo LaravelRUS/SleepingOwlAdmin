@@ -2,12 +2,11 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use SleepingOwl\Admin\Admin;
-use Illuminate\View\Engines\EngineResolver;
-use Illuminate\View\Engines\PhpEngine;
 use Illuminate\View\Factory;
+use SleepingOwl\Admin\Admin;
 use Illuminate\View\FileViewFinder;
-
+use Illuminate\View\Engines\PhpEngine;
+use Illuminate\View\Engines\EngineResolver;
 
 class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
@@ -55,7 +54,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $resolver->register('php', function () {
             return new PhpEngine();
         });
-        $finder = new FileViewFinder($this->app['files'], [__DIR__ . '/../../resources/views']);
+        $finder = new FileViewFinder($this->app['files'], [__DIR__.'/../../resources/views']);
         $factory = new Factory($resolver, $finder, $this->app['events']);
         $factory->addExtension('php', 'php');
 
@@ -74,7 +73,6 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
                 \SleepingOwl\Admin\Console\Commands\SectionProvider::class,
             ]);
 
-
             $localViewFactory = $this->createLocalViewFactory();
             $this->app->singleton(
                 'command.sleepingowl.ide.generate',
@@ -84,7 +82,6 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
             );
 
             $this->commands('command.sleepingowl.ide.generate');
-
         }
     }
 }
