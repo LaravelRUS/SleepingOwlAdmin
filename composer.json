@@ -6,7 +6,8 @@
     "laravel",
     "admin",
     "administrator",
-    "crud"
+    "crud",
+    "panel"
   ],
   "license": "MIT",
   "support": {
@@ -32,7 +33,8 @@
     "laravelcollective/html": "5.*",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
-    "davejamesmiller/laravel-breadcrumbs": "^3.0"
+    "davejamesmiller/laravel-breadcrumbs": "^3.0",
+    "barryvdh/laravel-ide-helper": "^2.4"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.0",

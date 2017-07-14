@@ -1,5 +1,6 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
  
+ * [Feature] Пофикшено поведение ide-helper generator - после его выполнения нужно запускать команду php artisan sleepingowl:ide:generate
  * [Feature] Изменились селекты. Теперь по умолчанию стоит [vue-multiselect](http://monterail.github.io/vue-multiselect) 
              Очень не завидую тем у кого появлялись кастомные темплейты на элементы AdminFormElement::select и AdminFormElement::multiselect
              их придется слегка подпилить. 

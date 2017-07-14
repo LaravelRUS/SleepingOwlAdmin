@@ -34,6 +34,8 @@ class UpdateCommand extends Installation\Command
                 $installer->showInfo();
             });
 
+        $this->callSilent('sleepingowl:ide:generate');
+
         $this->comment('SleepingOwl Framework successfully updated.');
     }
 }
