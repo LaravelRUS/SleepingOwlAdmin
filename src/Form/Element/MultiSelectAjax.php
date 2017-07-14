@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
@@ -44,7 +44,6 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
         $this->setFetchColumns([$this->getDisplay()]);
     }
-
 
     /**
      * @return null

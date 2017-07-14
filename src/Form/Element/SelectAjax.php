@@ -9,11 +9,10 @@ use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 class SelectAjax extends Select implements Initializable, WithRoutesInterface
 {
-
-    protected static $route        = 'selectajax';
-    protected        $view         = 'form.element.selectajax';
-    protected        $search_url   = null;
-    protected        $search       = null;
+    protected static $route = 'selectajax';
+    protected $view = 'form.element.selectajax';
+    protected $search_url = null;
+    protected $search = null;
 
     /**
      * @param string $path

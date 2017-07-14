@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\FormPanel;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Form\FormElements;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Form\Columns\Column;
@@ -527,7 +527,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             'icon'   => $this->getIcon(),
             'badge'  => $this->getBadge(),
             'arrayAttributes' => $this->getHtmlAttributes(),
-            'attributes' => $this->htmlAttributesToString()
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 }
