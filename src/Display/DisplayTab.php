@@ -154,7 +154,9 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         $this->active = (bool) $active;
 
-        $this->setHtmlAttribute('class', 'active');
+        if ($active) {
+            $this->setHtmlAttribute('class', 'active');
+        }
 
         return $this;
     }
