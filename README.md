@@ -1,4 +1,4 @@
-![bg](https://cloud.githubusercontent.com/assets/773481/14028746/24d7efa8-f20f-11e5-8e38-3d264739f0aa.png)
+![bg](https://lh3.google.com/u/0/d/0B00DFs1BVIb6eERsLWh4dkQzS3c=w2530-h1570-iv1)
 
 ## Laravel Amin Panel
 
