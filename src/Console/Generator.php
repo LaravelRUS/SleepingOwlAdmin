@@ -7,6 +7,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/barryvdh/laravel-ide-helper
  */
+
 namespace SleepingOwl\Admin\Console;
 
 use Illuminate\Support\Collection;
@@ -15,6 +16,7 @@ use Barryvdh\LaravelIdeHelper\Generator as IdeHelperGenerator;
 
 class Generator extends IdeHelperGenerator
 {
+
     /**
      * Regroup aliases by namespace of extended classes.
      *
@@ -25,7 +27,19 @@ class Generator extends IdeHelperGenerator
         $aliases = $this->getValidAliases();
 
         $aliases = $aliases->filter(function (Alias $item) {
-            return ! collect(config('sleeping_owl.aliases'))->keys()->search($item->getAlias());
+            return ! collect([
+                'MessageStack',
+                'AdminSection',
+                'AdminTemplate',
+                'AdminNavigation',
+                'AdminColumn',
+                'AdminColumnEditable',
+                'AdminColumnFilter',
+                'AdminDisplayFilter',
+                'AdminForm',
+                'AdminFormElement',
+                'AdminDisplay'
+            ])->search($item->getAlias());
         });
 
         return $aliases->groupBy(function (Alias $alias) {
