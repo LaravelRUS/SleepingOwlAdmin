@@ -7,7 +7,6 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/barryvdh/laravel-ide-helper
  */
-
 namespace SleepingOwl\Admin\Console;
 
 use Illuminate\Support\Collection;
@@ -16,7 +15,6 @@ use Barryvdh\LaravelIdeHelper\Generator as IdeHelperGenerator;
 
 class Generator extends IdeHelperGenerator
 {
-
     /**
      * Regroup aliases by namespace of extended classes.
      *
@@ -38,7 +36,7 @@ class Generator extends IdeHelperGenerator
                 'AdminDisplayFilter',
                 'AdminForm',
                 'AdminFormElement',
-                'AdminDisplay'
+                'AdminDisplay',
             ])->search($item->getAlias());
         });
 
