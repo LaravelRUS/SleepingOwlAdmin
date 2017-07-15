@@ -41,8 +41,6 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
             return $query->whereIn($key, $this->getValueFromModel() ? $this->getValueFromModel() : []);
         });
-
-        $this->setFetchColumns([$this->getDisplay()]);
     }
 
     /**
