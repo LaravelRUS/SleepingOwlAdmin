@@ -63,21 +63,21 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
     
     __Example__:
     ```
-		"post-update-cmd": [
+	"post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan sleepingowl:update",
             "php artisan optimize",
-        ]
+    ]
     ```
     __NOTE__: So if you use a laravel-ide-helper package place `sleepingowl:update` after it commands:
     ```
-		"post-update-cmd": [
+	"post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
             "php artisan sleepingowl:update",
             "php artisan optimize",
-        ]
+    ]
     ```
     
 
