@@ -135,7 +135,6 @@ class Select extends NamedColumn implements ColumnEditableInterface
         return $this->setOptions(array_combine($values, $values));
     }
 
-
     /**
      * @return string
      */
@@ -164,7 +163,6 @@ class Select extends NamedColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-
         return parent::toArray() + [
                 'id'             => $this->getModel()->getKey(),
                 'options'        => $this->mutateOptions(),
@@ -173,7 +171,6 @@ class Select extends NamedColumn implements ColumnEditableInterface
                 'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
                 'url'            => $this->getUrl(),
                 'headerTitle'    => $this->header->getTitle(),
-
             ];
     }
 
