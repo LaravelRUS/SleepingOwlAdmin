@@ -8,7 +8,6 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Select extends NamedColumn implements ColumnEditableInterface
 {
-
     use \SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
     /**
