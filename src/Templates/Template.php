@@ -138,6 +138,10 @@ abstract class Template implements TemplateInterface
             return $view->getPath();
         }
 
+        if(strpos($view, "::") !== false){
+            return $view;
+        }
+
         return $this->getViewNamespace().'.'.$view;
     }
 
