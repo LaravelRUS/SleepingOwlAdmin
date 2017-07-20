@@ -1,5 +1,6 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
  
+ * [Bug-Fix] Пофикшено поведение breadcrumbs - теперь добавляет промежуточные
  * [Feature] Добавлен метод к selectajax и multiselectajax `setSearch` - он позволяет задать поле поиска.
              Пофикшено поведение этих элементов после сохранения в связи с последними обновлениями select и multiselect
  * [Feature] Пофикшено поведение ide-helper generator - после его выполнения нужно запускать команду php artisan sleepingowl:ide:generate

@@ -3,16 +3,19 @@
 namespace SleepingOwl\Admin;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+use Route;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+
 
 class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
 {
+
     protected $currentPage;
     protected $currentUrl;
 
     /**
-     * Overload current page.
+     * Overload current page
      * @return \KodiComponents\Navigation\Contracts\PageInterface|null
      */
     public function getCurrentPage()
@@ -24,12 +27,13 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     }
 
     /**
-     * Set Alias Id to Page.
+     * Set Alias Id to Page
      * @param Collection $pages
      */
     public function setAliasesId(Collection $pages)
     {
         $pages->each(function (PageInterface $page) {
+
             $page->setAliasId();
 
             if ($page->getPages()->count()) {
@@ -38,14 +42,16 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
         });
     }
 
+
     /**
      * @param string $url
      * @param array $foundPages
      */
-    protected function findActive($url, array &$foundPages)
+    protected function findActive($url, array & $foundPages)
     {
         $this->findPageByAliasId($this->getPages(), $url);
     }
+
 
     /**
      * @param Collection $pages
@@ -54,7 +60,21 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     protected function findPageByAliasId(Collection $pages, $url)
     {
         $pages->each(function (PageInterface $page) use ($url) {
+
             $urlPath = parse_url($url, PHP_URL_PATH);
+
+            if (Route::current()) {
+                $parameters = collect(Route::current()->parameters());
+
+                if ($parameters->has('adminModelId')) {
+                    $routeUrl = route('admin.model', [
+                        'adminModel' => $parameters->get('adminModel')
+                    ]);
+
+                    $urlPath = parse_url($routeUrl, PHP_URL_PATH);
+                }
+            }
+
             if ($urlPath) {
                 if (md5($urlPath) == $page->getAliasId()) {
                     $this->currentPage = $page;
