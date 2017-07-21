@@ -16,6 +16,7 @@ use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Templates\Breadcrumbs;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,11 @@ class AdminController extends Controller
      * @var \DaveJamesMiller\Breadcrumbs\Manager
      */
     protected $breadcrumbs;
+
+    /**
+     * @var
+     */
+    protected $breadCrumbsData;
 
     /**
      * @var AdminInterface
@@ -60,11 +66,12 @@ class AdminController extends Controller
             });
         }
 
-        $breadcrumbs = [];
+        $this->breadCrumbsData = [];
 
         if ($currentPage = $admin->navigation()->getCurrentPage()) {
+
             foreach ($currentPage->getPathArray() as $page) {
-                $breadcrumbs[] = [
+                $this->breadCrumbsData[] = [
                     'id' => $page['id'],
                     'title' => $page['title'],
                     'url' => $page['url'],
@@ -75,14 +82,6 @@ class AdminController extends Controller
             }
         }
 
-        foreach ($breadcrumbs as  $breadcrumb) {
-            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
-                $this->breadcrumbs->register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
-                    $breadcrumbs->parent($breadcrumb['parent']);
-                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
-                });
-            }
-        }
     }
 
     /**
@@ -125,7 +124,11 @@ class AdminController extends Controller
             abort(404);
         }
 
-        return $this->render($model, $model->fireDisplay());
+        $display = $model->fireDisplay();
+
+        $this->registerBreadcrumbs($model);
+
+        return $this->render($model, $display);
     }
 
     /**
@@ -144,7 +147,7 @@ class AdminController extends Controller
         $create = $model->fireCreate();
 
         $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
-
+        $this->registerBreadcrumbs($model);
         return $this->render($model, $create, $model->getCreateTitle());
     }
 
@@ -239,7 +242,11 @@ class AdminController extends Controller
 
         $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
 
-        return $this->render($model, $model->fireEdit($id), $model->getEditTitle());
+        $edit = $model->fireEdit($id);
+
+        $this->registerBreadcrumbs($model);
+
+        return $this->render($model, $edit, $model->getEditTitle());
     }
 
     /**
@@ -415,13 +422,13 @@ class AdminController extends Controller
 
         $model->fireDelete($id);
 
-        if ($model->fireEvent('deleting', true, $item, $request) === false) {
+        if ($model->fireEvent('deleting', true, $item) === false) {
             return redirect()->back();
         }
 
         $model->getRepository()->delete($id);
 
-        $model->fireEvent('deleted', false, $item, $request);
+        $model->fireEvent('deleted', false, $item);
 
         return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDelete());
@@ -450,13 +457,13 @@ class AdminController extends Controller
 
         $model->fireDestroy($id);
 
-        if ($model->fireEvent('destroying', true, $item, $request) === false) {
+        if ($model->fireEvent('destroying', true, $item) === false) {
             return redirect()->back();
         }
 
         $model->getRepository()->forceDelete($id);
 
-        $model->fireEvent('destroyed', false, $item, $request);
+        $model->fireEvent('destroyed', false, $item);
 
         return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDestroy());
@@ -570,5 +577,24 @@ class AdminController extends Controller
         });
 
         $this->parentBreadcrumb = 'render';
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     */
+    protected function registerBreadcrumbs(ModelConfigurationInterface $model)
+    {
+
+        $this->breadCrumbsData = $this->breadCrumbsData + (array) $model->getBreadCrumbs();
+
+        foreach ($this->breadCrumbsData as  $breadcrumb) {
+            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
+                $this->breadcrumbs->register($breadcrumb['id'], function ($breadcrumbs) use ($breadcrumb) {
+                    $breadcrumbs->parent($breadcrumb['parent']);
+                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
+                });
+            }
+        }
+
     }
 }

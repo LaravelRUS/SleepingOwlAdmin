@@ -1,5 +1,35 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
  
+ * [Feature] Теперь в админке есть менеджер BreadCrumbs
+    * Вы можете добавлять breadcrumbs прямо из секции (initialize, onDisplay, onEdit )
+    * Вы можете указывать родительские breadcrumbs 
+    * Вы можете указывать breadcrumbs c ссылкой и без ссылки
+    ```php
+    $this->addBreadCrumb([
+        "id" => "App\Model\Forms\Form"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "forms-examples"
+    ])
+    ```
+    or
+    ```php
+    $this->addBreadCrumb([
+        "id" => "some_name"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "App\Model\Forms\Form"
+    ])
+    ```
+    or
+    ```php
+    $this->addBreadCrumb([
+        "id" => "some_end_name"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "some_name"
+    ])
+    ```
  * [Bug-Fix] Пофикшено поведение breadcrumbs - теперь добавляет промежуточные
  * [Feature] Добавлен метод к selectajax и multiselectajax `setSearch` - он позволяет задать поле поиска.
              Пофикшено поведение этих элементов после сохранения в связи с последними обновлениями select и multiselect

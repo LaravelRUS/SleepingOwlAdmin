@@ -13,6 +13,17 @@ interface ModelConfigurationInterface
     public function getRepository();
 
     /**
+     * @return Collection
+     */
+    public function getBreadCrumbs();
+
+    /**
+     * @param $breadcrumb
+     * @return mixed
+     */
+    public function addBreadCrumb($breadcrumb);
+
+    /**
      * @return string
      */
     public function getClass();
