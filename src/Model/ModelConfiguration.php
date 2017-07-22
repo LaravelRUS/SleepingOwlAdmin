@@ -122,7 +122,6 @@ class ModelConfiguration extends ModelConfigurationManager
         return $this->breadcrumbs->toArray();
     }
 
-
     /**
      * @param $breadcrumb
      * @return mixed|void
