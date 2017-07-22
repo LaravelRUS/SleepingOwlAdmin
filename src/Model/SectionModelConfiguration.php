@@ -10,7 +10,6 @@ use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
-
     protected $breadcrumbs = null;
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)

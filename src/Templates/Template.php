@@ -138,7 +138,7 @@ abstract class Template implements TemplateInterface
             return $view->getPath();
         }
 
-        if(strpos($view, "::") !== false){
+        if (strpos($view, '::') !== false) {
             return $view;
         }
 

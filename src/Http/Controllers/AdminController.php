@@ -16,7 +16,6 @@ use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Templates\Breadcrumbs;
 
 class AdminController extends Controller
 {
@@ -69,7 +68,6 @@ class AdminController extends Controller
         $this->breadCrumbsData = [];
 
         if ($currentPage = $admin->navigation()->getCurrentPage()) {
-
             foreach ($currentPage->getPathArray() as $page) {
                 $this->breadCrumbsData[] = [
                     'id' => $page['id'],
@@ -81,7 +79,6 @@ class AdminController extends Controller
                 $this->parentBreadcrumb = $page['id'];
             }
         }
-
     }
 
     /**
@@ -148,6 +145,7 @@ class AdminController extends Controller
 
         $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
         $this->registerBreadcrumbs($model);
+
         return $this->render($model, $create, $model->getCreateTitle());
     }
 
@@ -584,7 +582,6 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
-
         $this->breadCrumbsData = $this->breadCrumbsData + (array) $model->getBreadCrumbs();
 
         foreach ($this->breadCrumbsData as  $breadcrumb) {
@@ -595,6 +592,5 @@ class AdminController extends Controller
                 });
             }
         }
-
     }
 }
