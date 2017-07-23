@@ -4,6 +4,8 @@ namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 interface ModelConfigurationInterface
 {

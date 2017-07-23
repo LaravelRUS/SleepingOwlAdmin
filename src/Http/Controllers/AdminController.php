@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
+use DaveJamesMiller\Breadcrumbs\Manager;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use SleepingOwl\Admin\Form\FormElements;
@@ -404,11 +405,9 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param int                $id
-     *
+     * @param Request $request
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function deleteDelete(ModelConfigurationInterface $model, Request $request, $id)
     {
@@ -570,6 +569,7 @@ class AdminController extends Controller
     protected function registerBreadcrumb($title, $parent)
     {
         $this->breadcrumbs->register('render', function ($breadcrumbs) use ($title, $parent) {
+
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title);
         });
