@@ -394,13 +394,13 @@ class AdminController extends Controller
 
         $column->setModel($item);
 
-        if ($model->fireEvent('updating', true, $item) === false) {
+        if ($model->fireEvent('updating', true, $item, $request) === false) {
             return;
         }
 
         $column->save($request, $model);
 
-        $model->fireEvent('updated', false, $item);
+        $model->fireEvent('updated', false, $item, $request);
     }
 
     /**
@@ -419,13 +419,13 @@ class AdminController extends Controller
 
         $model->fireDelete($id);
 
-        if ($model->fireEvent('deleting', true, $item) === false) {
+        if ($model->fireEvent('deleting', true, $item, $request) === false) {
             return redirect()->back();
         }
 
         $model->getRepository()->delete($id);
 
-        $model->fireEvent('deleted', false, $item);
+        $model->fireEvent('deleted', false, $item, $request);
 
         return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDelete());
@@ -454,13 +454,13 @@ class AdminController extends Controller
 
         $model->fireDestroy($id);
 
-        if ($model->fireEvent('destroying', true, $item) === false) {
+        if ($model->fireEvent('destroying', true, $item, $request) === false) {
             return redirect()->back();
         }
 
         $model->getRepository()->forceDelete($id);
 
-        $model->fireEvent('destroyed', false, $item);
+        $model->fireEvent('destroyed', false, $item, $request);
 
         return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnDestroy());
@@ -489,13 +489,13 @@ class AdminController extends Controller
 
         $model->fireRestore($id);
 
-        if ($model->fireEvent('restoring', true, $item) === false) {
+        if ($model->fireEvent('restoring', true, $item, $request) === false) {
             return redirect()->back();
         }
 
         $model->getRepository()->restore($id);
 
-        $model->fireEvent('restored', false, $item);
+        $model->fireEvent('restored', false, $item, $request);
 
         return redirect($request->input('_redirectBack', back()->getTargetUrl()))
             ->with('success_message', $model->getMessageOnRestore());
