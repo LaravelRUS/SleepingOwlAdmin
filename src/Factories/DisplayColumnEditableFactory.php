@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Display\Column\Editable\Text;
-use SleepingOwl\Admin\Display\Column\Editable\Select2;
+use SleepingOwl\Admin\Display\Column\Editable\Select;
 use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
 use SleepingOwl\Admin\Display\Column\Editable\Textarea;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
@@ -27,7 +27,7 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
             'checkbox' => Checkbox::class,
             'text'     => Text::class,
             'textarea' => Textarea::class,
-            'select2'  => Select2::class,
+            'select'  => Select::class,
         ]);
     }
 }
