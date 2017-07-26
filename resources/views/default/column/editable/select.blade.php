@@ -1,13 +1,13 @@
-<a href="#"
+<a  href="#"
     class="inline-editable"
     data-name="{{ $name }}"
-    data-value="{{ $value }}"
+    data-value="{{ $key }}"
     data-url="{{ $url }}"
-    data-type="select2"
+    data-type="select"
     data-pk="{{ $id }}"
     data-title="{{ $headerTitle }}"
-    data-data= "{id: 1, name: 'text1'}"
-    style="text-align:right; color: green;"
+    data-source="{{ json_encode($options) }}"
 >{{ $value }}</a>
+
 
 {!! $append !!}
