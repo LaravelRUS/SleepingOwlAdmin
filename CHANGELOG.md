@@ -1,5 +1,5 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
- 
+ * [Feature] Добавлен новый элемент AdminColumnEditable::select() - он подобен элементу AdminFormElement::select и имеет схожие методы задания списка. 
  * [Feature] Теперь в админке есть менеджер BreadCrumbs
     * Вы можете добавлять breadcrumbs прямо из секции (initialize, onDisplay, onEdit )
     * Вы можете указывать родительские breadcrumbs 
