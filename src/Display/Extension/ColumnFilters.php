@@ -189,7 +189,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $search = Request::input('columns', []);
+        $search = \Request::input('columns', []);
 
         $display = $this->getDisplay();
 

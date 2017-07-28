@@ -201,7 +201,7 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $orders = Request::input('order', []);
+        $orders = \Request::input('order', []);
 
         $columns = $this->all();
 
