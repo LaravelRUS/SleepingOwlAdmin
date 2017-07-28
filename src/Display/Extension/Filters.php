@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
@@ -54,7 +55,7 @@ class Filters extends Extension implements Initializable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\Display\FilterInterface[]
+     * @return Collection|FilterInterface[]
      */
     public function all()
     {
@@ -120,9 +121,9 @@ class Filters extends Extension implements Initializable
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param Builder $query
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    public function modifyQuery(Builder $query)
     {
         $this->getActive()->each(function (FilterInterface $filter) use ($query) {
             $filter->apply($query);

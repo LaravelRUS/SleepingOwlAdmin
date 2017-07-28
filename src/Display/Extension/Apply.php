@@ -22,7 +22,7 @@ class Apply extends Extension
     /**
      * @param Closure $applies
      *
-     * @return $this
+     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
     public function set($applies)
     {

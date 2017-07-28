@@ -2,8 +2,18 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Navigation;
+use SleepingOwl\Admin\Templates\Assets;
+use SleepingOwl\Admin\Templates\Meta;
+use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
+use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
+use SleepingOwl\Admin\Widgets\Messages\MessageStack;
+use SleepingOwl\Admin\Widgets\Messages\SuccessMessages;
+use SleepingOwl\Admin\Widgets\Messages\WarningMessages;
+use SleepingOwl\Admin\Wysiwyg\Manager;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -59,14 +69,14 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('sleeping_owl.meta', function ($app) {
-            return new \SleepingOwl\Admin\Templates\Meta(
-                new \SleepingOwl\Admin\Templates\Assets(
+            return new Meta(
+                new Assets(
                     $app['assets.packages']
                 )
             );
         });
 
-        $this->app->singleton('sleeping_owl.template', function ($app) {
+        $this->app->singleton('sleeping_owl.template', function (Application $app) {
             if (! class_exists($class = $this->getConfig('template'))) {
                 throw new TemplateException("Template class [{$class}] not found");
             }
@@ -109,41 +119,62 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerBootstrap();
     }
 
+    /**
+     * Global register messages of adminpanel
+     */
     protected function registerMessages()
     {
         $messageTypes = [
-            'error' => \SleepingOwl\Admin\Widgets\Messages\ErrorMessages::class,
-            'info' => \SleepingOwl\Admin\Widgets\Messages\InfoMessages::class,
-            'success' => \SleepingOwl\Admin\Widgets\Messages\SuccessMessages::class,
-            'warning' => \SleepingOwl\Admin\Widgets\Messages\WarningMessages::class,
+            'error' => ErrorMessages::class,
+            'info' => InfoMessages::class,
+            'success' => SuccessMessages::class,
+            'warning' => WarningMessages::class,
         ];
         foreach ($messageTypes as $messageType) {
             $this->app[WidgetsRegistryInterface::class]->registerWidget($messageType);
         }
 
         $this->app->singleton('sleeping_owl.message', function () use ($messageTypes) {
-            return new \SleepingOwl\Admin\Widgets\Messages\MessageStack($messageTypes);
+            return new MessageStack($messageTypes);
         });
     }
 
     protected function initializeNavigation()
     {
-        $this->app->bind(TableHeaderColumnInterface::class, \SleepingOwl\Admin\Display\TableHeaderColumn::class);
-        $this->app->bind(RepositoryInterface::class, \SleepingOwl\Admin\Repositories\BaseRepository::class);
-        $this->app->bind(FormButtonsInterface::class, \SleepingOwl\Admin\Form\FormButtons::class);
+        $this->app->bind(
+            TableHeaderColumnInterface::class,
+            \SleepingOwl\Admin\Display\TableHeaderColumn::class
+        );
 
-        $this->app->bind(\KodiComponents\Navigation\Contracts\PageInterface::class, \SleepingOwl\Admin\Navigation\Page::class);
-        $this->app->bind(\KodiComponents\Navigation\Contracts\BadgeInterface::class, \SleepingOwl\Admin\Navigation\Badge::class);
+        $this->app->bind(
+            RepositoryInterface::class,
+            \SleepingOwl\Admin\Repositories\BaseRepository::class
+        );
+
+        $this->app->bind(
+            FormButtonsInterface::class,
+            \SleepingOwl\Admin\Form\FormButtons::class
+        );
+
+        $this->app->bind(
+            \KodiComponents\Navigation\Contracts\PageInterface::class,
+            \SleepingOwl\Admin\Navigation\Page::class
+        );
+
+        $this->app->bind(
+            \KodiComponents\Navigation\Contracts\BadgeInterface::class,
+            \SleepingOwl\Admin\Navigation\Badge::class
+        );
 
         $this->app->singleton('sleeping_owl.navigation', function () {
-            return new \SleepingOwl\Admin\Navigation();
+            return new Navigation();
         });
     }
 
     protected function registerWysiwyg()
     {
         $this->app->singleton('sleeping_owl.wysiwyg', function () {
-            return new \SleepingOwl\Admin\Wysiwyg\Manager($this->app);
+            return new Manager($this->app);
         });
     }
 
@@ -213,6 +244,9 @@ class AdminServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Register navigation file
+     */
     protected function registerNavigationFile()
     {
         if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {

@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Request;
+use Illuminate\Http\Request;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Placable;

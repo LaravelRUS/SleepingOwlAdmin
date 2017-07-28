@@ -106,7 +106,7 @@ class Filter extends NamedColumn
      */
     protected function getValue()
     {
-        return $this->getModelValue($this->getModel(), $this->getField());
+        return $this->getModelValue();
     }
 
     /**

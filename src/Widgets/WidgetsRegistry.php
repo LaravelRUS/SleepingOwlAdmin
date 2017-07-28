@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 
 class WidgetsRegistry implements WidgetsRegistryInterface
 {
+
     /**
      * @var Collection|WidgetInterface[]
      */
@@ -28,7 +29,7 @@ class WidgetsRegistry implements WidgetsRegistryInterface
      */
     public function __construct(Container $container)
     {
-        $this->widgets = new Collection();
+        $this->widgets   = new Collection();
         $this->container = $container;
     }
 
@@ -86,7 +87,7 @@ class WidgetsRegistry implements WidgetsRegistryInterface
     }
 
     /**
-     * @param  mixed  $widget
+     * @param  mixed $widget
      * @return mixed
      */
     public function makeWidget($widget)

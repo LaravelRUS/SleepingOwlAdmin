@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
@@ -66,11 +67,11 @@ class Text extends NamedColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $form = new FormDefault([
             new \SleepingOwl\Admin\Form\Element\Text(

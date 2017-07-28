@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Routing;
 
+use Illuminate\Routing\ControllerDispatcher;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Model\ModelCollection;
@@ -83,7 +84,7 @@ class ModelRouter
     protected function runCustomController(Route $route, $controller, $action)
     {
         $route->uses(function () use ($route, $controller, $action) {
-            return (new \Illuminate\Routing\ControllerDispatcher($this->app))->dispatch(
+            return (new ControllerDispatcher($this->app))->dispatch(
                 $route, $this->app->make($controller), $action
             );
         });

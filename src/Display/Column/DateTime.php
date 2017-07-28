@@ -86,7 +86,7 @@ class DateTime extends NamedColumn
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return array
      */
     public function toArray()
     {

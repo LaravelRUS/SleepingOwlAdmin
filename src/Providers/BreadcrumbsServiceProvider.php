@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Templates\Breadcrumbs;
 
 class BreadcrumbsServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('sleeping_owl.breadcrumbs', function () {
-            return $this->app->make(\SleepingOwl\Admin\Templates\Breadcrumbs::class);
+            return $this->app->make(Breadcrumbs::class);
         });
     }
 

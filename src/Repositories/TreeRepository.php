@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Display\Tree\BaumNodeType;
 use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
 use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
@@ -77,11 +78,11 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     /**
      * Get tree structure.
      *
-     * @param \Illuminate\Database\Eloquent\Collection $collection
+     * @param Collection $collection
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+    public function getTree(Collection $collection)
     {
         return $this->treeType->getTree($collection);
     }

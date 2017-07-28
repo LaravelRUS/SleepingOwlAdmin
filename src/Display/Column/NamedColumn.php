@@ -71,7 +71,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * @param OrderByClauseInterface|bool $orderable
      * @deprecated
-     * @return $this
+     * @return TableColumn
      */
     public function setOrderable($orderable = true)
     {
