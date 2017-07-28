@@ -18,7 +18,11 @@
                          :multiple="multiple"
                          :searchable="true"
                          :options="options"
+                         @if(count($options))
                          placeholder="{{ trans('sleeping_owl::lang.select.placeholder') }}"
+                         @else
+                         placeholder="{{ trans('sleeping_owl::lang.select.no_items') }}"
+                         @endif
                          :select-label="'{{trans('sleeping_owl::lang.select.init')}}'"
                          :selected-label="'{{trans('sleeping_owl::lang.select.selected')}}'"
                          :deselect-label="'{{trans('sleeping_owl::lang.select.deselect')}}'"

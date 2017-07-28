@@ -95,6 +95,7 @@ return [
         'nothing' => 'Nothing selected',
         'selected' => 'selected',
         'placeholder' => 'Select from the list',
+        'no_items'    => 'No items',
         'init'        => 'Press Enter to select',
         'limit'       => 'and ${count} more',
         'deselect'    => 'Press Enter to deselect',

@@ -95,6 +95,7 @@ return [
         'nothing'     => 'Ничего не выбрано',
         'selected'    => 'выбрано',
         'placeholder' => 'Выберите из списка',
+        'no_items'    => 'Нет элементов',
         'init'        => 'Нажмите Enter что бы выбрать',
         'limit'       => 'и еще ${count}',
         'deselect'    => 'Нажмите Enter что бы сбросить',
