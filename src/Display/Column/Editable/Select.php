@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
-use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
-class Select extends NamedColumn implements ColumnEditableInterface
+class Select extends EditableColumn implements ColumnEditableInterface
 {
     use SelectOptionsFromModel;
 
@@ -37,11 +37,6 @@ class Select extends NamedColumn implements ColumnEditableInterface
      * @var bool
      */
     protected $sortable = true;
-
-    /**
-     * @var string
-     */
-    protected $url = null;
 
     /**
      * Text constructor.
@@ -116,6 +111,16 @@ class Select extends NamedColumn implements ColumnEditableInterface
     }
 
     /**
+     * @param $key
+     * @return mixed|null
+     */
+    public function getOptionName($value)
+    {
+        if(isset($value))
+            return $this->optionList[$value];
+    }
+
+    /**
      * @param array
      *
      * @return $this
@@ -137,42 +142,17 @@ class Select extends NamedColumn implements ColumnEditableInterface
         return $this->setOptions(array_combine($values, $values));
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        if (! $this->url) {
-            return request()->url();
-        }
-
-        return $this->url;
-    }
-
-    /**
-     * @param $url
-     * @return string
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
 
     /**
      * @return array
      */
     public function toArray()
     {
+//        dd($this->getOptionName($this->getModelValue()));
+
         return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
                 'options'        => $this->mutateOptions(),
-                'key'            => $this->getModelValue(),
-                'value'          => $this->optionList[$this->getModelValue()],
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
-                'headerTitle'    => $this->header->getTitle(),
+                'optionName'     => $this->getOptionName($this->getModelValue()),
             ];
     }
 
