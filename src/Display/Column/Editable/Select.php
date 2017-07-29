@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Select extends NamedColumn implements ColumnEditableInterface
 {

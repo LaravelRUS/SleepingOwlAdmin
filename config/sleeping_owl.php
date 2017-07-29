@@ -123,7 +123,6 @@ return [
             'height'       => 200,
             'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
 
-
             /*
              *  //Sample of route
              *

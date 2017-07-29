@@ -221,7 +221,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Render func
+     * Render func.
      * @return array
      */
     public function toArray()

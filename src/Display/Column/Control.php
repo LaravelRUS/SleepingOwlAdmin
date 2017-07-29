@@ -125,7 +125,6 @@ class Control extends TableColumn
      * @param array $buttons
      * @return $this
      * @internal param ControlButtonInterface $button
-     *
      */
     public function addButtons(array $buttons)
     {
