@@ -29,7 +29,7 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
             'text'     => Text::class,
             'textarea' => Textarea::class,
             'select'   => Select::class,
-            'DateTime' => DateTime::class,
+            'datetime' => DateTime::class,
         ]);
     }
 }
