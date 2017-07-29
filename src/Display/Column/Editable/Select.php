@@ -121,6 +121,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
           if(isset($this->optionList[$value])){
               return $this->optionList[$value];
           }
+
           return $value;
         }
 
@@ -154,8 +155,6 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-//        dd($this->getOptionName($this->getModelValue()));
-
         return parent::toArray() + [
                 'options'        => $this->mutateOptions(),
                 'optionName'     => $this->getOptionName($this->getModelValue()),
