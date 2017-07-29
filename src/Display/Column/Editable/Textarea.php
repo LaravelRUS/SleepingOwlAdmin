@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
 use SleepingOwl\Admin\Form\FormDefault;
-use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Textarea extends EditableColumn implements ColumnEditableInterface

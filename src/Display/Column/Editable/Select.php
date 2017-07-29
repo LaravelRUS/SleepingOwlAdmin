@@ -2,12 +2,11 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
-use SleepingOwl\Admin\Display\Column\NamedColumn;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Select extends EditableColumn implements ColumnEditableInterface
 {
@@ -116,15 +115,13 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function getOptionName($value)
     {
-        if(isset($value)){
+        if (isset($value)) {
+            if (isset($this->optionList[$value])) {
+                return $this->optionList[$value];
+            }
 
-          if(isset($this->optionList[$value])){
-              return $this->optionList[$value];
-          }
-
-          return $value;
+            return $value;
         }
-
     }
 
     /**
@@ -148,7 +145,6 @@ class Select extends EditableColumn implements ColumnEditableInterface
     {
         return $this->setOptions(array_combine($values, $values));
     }
-
 
     /**
      * @return array
