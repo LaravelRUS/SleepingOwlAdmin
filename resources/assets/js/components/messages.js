@@ -40,10 +40,11 @@ module.exports = (function () {
          *
          * @param {String} title заголовок
          * @param {String} message текст
-         * @param {Function} callback Код выполняемый при подтверждении
+         * @param {Object} id
          */
-        confirm(title, message) {
-            return swal({
+        confirm(title, message, id) {
+
+            let settings = {
                 title: title,
                 text: message || '',
                 type: 'warning',
@@ -51,7 +52,13 @@ module.exports = (function () {
                 confirmButtonColor: '#3c8dbc',
                 cancelButtonColor: '#d33',
                 confirmButtonText: trans('lang.button.yes')
-            })
+            };
+
+
+
+            Admin.Events.fire("datatables::confirm::init", settings, id);
+
+            return swal(settings)
         },
 
         /**

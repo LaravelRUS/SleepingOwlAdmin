@@ -11,8 +11,8 @@ use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -258,7 +258,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
             foreach ($columns as $column) {
                 if (in_array(get_class($column), $this->searchableColumns)) {
-                    if ($column instanceof NamedColumnInterface) {
+                    if ($column instanceof ColumnInterface) {
                         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                             if (method_exists($metaInstance, 'onSearch')) {
                                 $metaInstance->onSearch($column, $query, $search);

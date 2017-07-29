@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,26 +13,6 @@ use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
-    /**
-     * @var \Closure
-     */
-    protected $searchCallback = null;
-
-    /**
-     * @var \Closure
-     */
-    protected $orderCallback = null;
-
-    /**
-     * @var \Closure
-     */
-    protected $filterCallback = null;
-
-    /**
-     * @var null
-     */
-    protected $columMetaClass = null;
-
     /**
      * Column field name.
      * @var string
@@ -80,84 +61,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param $columnMetaClass
-     * @return $this
-     */
-    public function setMetaData($columnMetaClass)
-    {
-        $this->columMetaClass = $columnMetaClass;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMetaData()
-    {
-        return $this->columMetaClass
-            ? app()->make($this->columMetaClass)
-            : false;
-    }
-
-    /**
-     * @param \Closure $callable
-     * @return $this
-     */
-    public function setOrderCallback(\Closure $callable)
-    {
-        $this->orderCallback = $callable;
-
-        return $this->setOrderable($callable);
-    }
-
-    /**
-     * @param \Closure $callable
-     * @return $this
-     */
-    public function setSearchCallback(\Closure $callable)
-    {
-        $this->searchCallback = $callable;
-
-        return $this;
-    }
-
-    /**
-     * @param \Closure $callable
-     * @return $this
-     */
-    public function setFilterCallback(\Closure $callable)
-    {
-        $this->filterCallback = $callable;
-
-        return $this;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getOrderCallback()
-    {
-        return $this->orderCallback;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getSearchCallback()
-    {
-        return $this->searchCallback;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getFilterCallback()
-    {
-        return $this->filterCallback;
-    }
-
-    /**
      * @return mixed
      */
     public function getModelValue()
@@ -168,7 +71,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * @param OrderByClauseInterface|bool $orderable
      * @deprecated
-     * @return $this
+     * @return TableColumn
      */
     public function setOrderable($orderable = true)
     {
@@ -205,6 +108,26 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     {
         if ($name instanceof Closure) {
             return $name($instance);
+        }
+
+        /*
+         * Implement json parsing
+         */
+        if (strpos($name, '->') !== false) {
+            $casts = collect($instance->getCasts());
+            $jsonParts = collect(explode('->', $name));
+
+            $jsonAttr = $instance->{$jsonParts->first()};
+
+            $cast = $casts->get($jsonParts->first(), false);
+
+            if ($cast == 'object') {
+                $jsonAttr = json_decode(json_encode($jsonAttr), true);
+            } elseif ($cast != 'array') {
+                $jsonAttr = json_decode($jsonAttr);
+            }
+
+            return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
         }
 
         $parts = explode('.', $name);

@@ -1,5 +1,5 @@
 Admin.Modules.register('form.buttons', () => {
-    var formRequest = (url, params) => {
+    let formRequest = (url, params) => {
         let form = $(`<form method="POST" action="${url}"></form>`);
         for (let name in params) {
             form.append(`<input type="hidden" name="${name}" value="${params[name]}">`);
@@ -9,10 +9,10 @@ Admin.Modules.register('form.buttons', () => {
         form.submit();
     }
 
-    var clickEvent = (selector, question, method) => {
+    let clickEvent = (selector, question, method) => {
 
-        var prepareData = (jSelector) => {
-            var url = jSelector.data('url'),
+        let prepareData = (jSelector) => {
+            let url = jSelector.data('url'),
                 redirect = jSelector.data('redirect'),
                 params = {
                     _token: Admin.token,
@@ -25,8 +25,9 @@ Admin.Modules.register('form.buttons', () => {
             if (!_.isUndefined(redirect)) {
                 params._redirectBack = redirect;
             }
-
+            Admin.Events.fire("datatables::confirm::submitting::data", params)
             formRequest(url, params);
+            Admin.Events.fire("datatables::confirm::submitted::data", params)
         };
 
         $(selector).on('click', function (e) {
@@ -38,10 +39,12 @@ Admin.Modules.register('form.buttons', () => {
                 return prepareData(self);
             }
 
-            Admin.Messages.confirm(question).then(() => {
+            Admin.Messages.confirm(question, null, $(this)).then(() => {
+                Admin.Events.fire("datatables::confirm::submitting", $(this));
                 prepareData(self);
+                Admin.Events.fire("datatables::confirm::submitted", $(this));
             }, dismiss => {
-
+                Admin.Events.fire("datatables::confirm::cancel", $(this));
             });
         });
     };

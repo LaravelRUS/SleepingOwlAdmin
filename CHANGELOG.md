@@ -1,15 +1,107 @@
-# Release Notes
-
-## [Unreleased] (Only in `development` branch)
+<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
+ 
+ * [Feature] Добавлена кнопка отмены фильтров на таблице
+ * [Feature] Добавлен новый элемент AdminColumnEditable::select() - он подобен элементу AdminFormElement::select и имеет схожие методы задания списка. 
+ * [Feature] Теперь в админке есть менеджер BreadCrumbs
+    * Вы можете добавлять breadcrumbs прямо из секции (initialize, onDisplay, onEdit )
+    * Вы можете указывать родительские breadcrumbs 
+    * Вы можете указывать breadcrumbs c ссылкой и без ссылки
+    ```php
+    $this->addBreadCrumb([
+        "id" => "App\Model\Forms\Form"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "forms-examples"
+    ])
+    ```
+    or
+    ```php
+    $this->addBreadCrumb([
+        "id" => "some_name"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "App\Model\Forms\Form"
+    ])
+    ```
+    or
+    ```php
+    $this->addBreadCrumb([
+        "id" => "some_end_name"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "some_name"
+    ])
+    ```
+ * [Bug-Fix] Пофикшено поведение breadcrumbs - теперь добавляет промежуточные
+ * [Feature] Добавлен метод к selectajax и multiselectajax `setSearch` - он позволяет задать поле поиска.
+             Пофикшено поведение этих элементов после сохранения в связи с последними обновлениями select и multiselect
+ * [Feature] Пофикшено поведение ide-helper generator - после его выполнения нужно запускать команду php artisan sleepingowl:ide:generate
+ * [Feature] Изменились селекты. Теперь по умолчанию стоит [vue-multiselect](http://monterail.github.io/vue-multiselect) 
+             Очень не завидую тем у кого появлялись кастомные темплейты на элементы AdminFormElement::select и AdminFormElement::multiselect
+             их придется слегка подпилить. 
+             Оставляйте фидбеки.
+ * [Feature] Появилась возможность редактировать JSON поля. Установка атрибутов идет в AtributeName через `field->key`
+ * [Feature] Появилась пара новых эвентов
+     * datatables::actions::submitting - эвент до действия после согласия SweetAlert в масс экшнс
+     * datatables::actions::submitted  - эвент после действия после согласия SweetAlert масс экшнс
+     * datatables::actions::cancel - эвент отказа окна SweetAlert во время масс экшнс
+     
+ * [Feature] Появилась пара новых эвентов
+    * datatables::confirm::init - эвент при котором вы можете получить данные настроек SweetAlert и импровизировать как угодно
+    * datatables::confirm::submitting - эвент до действия после согласия SweetAlert
+    * datatables::confirm::submitted  - эвент после действия после согласия SweetAlert (обычно это отправка формы редирект или что то в этом роде
+    * datatables::confirm::cancel - эвент отказа окна SweetAlert
+    
+    На них на всех можно подписаться как описано в документации - это открывает некоторые возможности заполнения форм.
+    Сами скажете как это можно использовать или усовершенствовать.
+ * [Feature] Появилась возможность создавать свои компоненты vue и крепить их к кастомным темплейтам. Подключать файлы можно обычным способом - зависимость admin-default. Структура компонента обычная.
+        
+   ```javascript
+   Vue.component('element-image-example', Vue.extend({
+       props: {
+           //....
+       },
+       data () {
+           return {
+               //....
+           }
+       },
+       mounted () {
+           //....
+       },
+       methods: {
+           //....
+       },
+       computed: {
+           //....
+       }
+       //....
+   }));
+   ```
+   
+   В шаблон блейд такое + props если есть.
+   ```html
+    <element-image-sample></element-image-sample>
+   ```
+ * [Feature] Обновление vue -> vue2 | vue-resource -> vue-resource2
+ * [Bug-Fix] Ошибка при получении данных для `AdminFormElement::images` из модели (`storeAsComaSeparatedValue()`) или если возникла ошибка сохранения формы.
+ * [Bug-fix] Не выводились метки для редактируемых колонок. Теперь можно делать так: `AdminColumnEditable::text('fieldName', 'ColumnLabel')` и `AdminColumnEditable::checkbox('fieldName', 'CheckedLabel', 'UncheckedLabel', 'ColumnLabel')`, или по-старинке `->setLabel('ColumnLabel')`
+ * [Bug-Fix] Теперь afterSave у MultiSelect учитывает ValueSkipped у элемента формы
+ * [Feature] Добавлены SweetAlert2 к массовым действиям - контроллер который отвечает за получение и обработку ID должен возвращать json-data
+   {text: "Текст заголовка", message: "Полный текст сообщения", type: "error|success"}
+ * [Bug-fix] Исправлена работа `AdminFormElement::images('name', 'label')->storeAsJson()`.
+ * [Bug-Fix] Исправлено поведение кнопки на AdminFormElement::images() - кнопка удаления реагировала на Enter
+ * [Bug-Fix] Исправлено поведение AdminFormElement::images() с дублями
+ * [Feature] Добавлен новый элемент AdminColumnEditable::text() - читаем в документации
  * [Feature] Добавлен метод setAfterSaveCallback() в Images - полезен когда нужно сколлектировать логику сохранения изображений и привязываний их в модель
    Пример:
    ```php
-       ->setAfterSaveCallback(function ($value, $model) {
-           if ($value) {
-               //... сюда приходит value с поля и модель после сохранения
-               //... Имейте ввиду что этот колбек вызовется только после всех валидаций и сохранения модели
-           }
-       })
+   ->setAfterSaveCallback(function ($value, $model) {
+       if ($value) {
+           //... сюда приходит value с поля и модель после сохранения
+           //... Имейте ввиду что этот колбек вызовется только после всех валидаций и сохранения модели
+       }
+   })
    ```
  * [Feature] Добавлен метод для DataTablesAsync setDisplayLength что бы отключать селект выбора количества записей на страницу
  * [Bug-fix] Повикшено поведение setDisplaySearch для Async Tables теперь можно отключить поле поиска без выключения общего поиска.
@@ -28,19 +120,19 @@
    поидее могут работать несколько уровней вложенности, но это поведение не тестировалось
    пример: 
    ```php
-       AdminColumn::lists('subscriptions.nhs.name')
-                    ->setLabel("some label"),
+   AdminColumn::lists('subscriptions.nhs.name')
+                ->setLabel("some label"),
    ```
    `ModelOfSection.php`
    ```php
-       public function subscriptions()
-       {
-           return $this->hasMany(
-               AnotherModel::class,
-               'some_id',
-               'id'
-           )->where('terminate_at', '>', Carbon::now());
-       }
+   public function subscriptions()
+   {
+       return $this->hasMany(
+           AnotherModel::class,
+           'some_id',
+           'id'
+       )->where('terminate_at', '>', Carbon::now());
+   }
    ```
    
    `AnotherModel.php`

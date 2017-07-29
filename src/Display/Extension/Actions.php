@@ -45,7 +45,7 @@ class Actions extends Extension implements Initializable, Placable
     /**
      * @param ActionInterface $actions
      *
-     * @return $this
+     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
     public function set($actions)
     {

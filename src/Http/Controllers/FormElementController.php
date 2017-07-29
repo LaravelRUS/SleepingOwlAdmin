@@ -105,7 +105,7 @@ class FormElementController extends Controller
 
         if ($request->q && is_object($model)) {
             return new JsonResponse(
-                $model::where($request->field, 'like', "%{$request->q}%")
+                $model::where($request->search, 'like', "%{$request->q}%")
                     ->get()
                     ->map(function ($item) use ($field) {
                         return [
@@ -159,7 +159,7 @@ class FormElementController extends Controller
 
         if ($request->q && is_object($model)) {
             return new JsonResponse(
-                $model::where($request->field, 'like', "%{$request->q}%")
+                $model::where($request->search, 'like', "%{$request->q}%")
                     ->get()
                     ->map(function ($item) use ($field) {
                         return [

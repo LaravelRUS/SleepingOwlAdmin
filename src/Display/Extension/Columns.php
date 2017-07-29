@@ -2,14 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 
 class Columns extends Extension implements Initializable, Renderable
 {
@@ -202,7 +200,7 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $orders = Request::input('order', []);
+        $orders = \Request::input('order', []);
 
         $columns = $this->all();
 
@@ -221,7 +219,7 @@ class Columns extends Extension implements Initializable, Renderable
             $column = $columns->get($columnIndex);
 
             if ($column instanceof ColumnInterface && $column->isOrderable()) {
-                if ($column instanceof NamedColumnInterface) {
+                if ($column instanceof ColumnInterface) {
                     if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                         if (method_exists($metaInstance, 'onOrderBy')) {
                             $metaInstance->onOrderBy($column, $query, $direction);

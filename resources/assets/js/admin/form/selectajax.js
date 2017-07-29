@@ -17,6 +17,7 @@ Admin.Modules.register('form.elements.selectajax', () => {
                         page: params.page,
                         model: $self.attr('model'),
                         field: $self.attr('field'),
+                        search: $self.attr('search')
                     };
                 },
                 processResults: function (data, params) {

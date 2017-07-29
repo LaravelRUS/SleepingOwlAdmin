@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
@@ -134,25 +135,29 @@ abstract class Template implements TemplateInterface
      */
     public function getViewPath($view)
     {
-        if ($view instanceof \Illuminate\View\View) {
+        if ($view instanceof View) {
             return $view->getPath();
+        }
+
+        if (strpos($view, '::') !== false) {
+            return $view;
         }
 
         return $this->getViewNamespace().'.'.$view;
     }
 
     /**
-     * @param string|\Illuminate\View\View $view
+     * @param string|View $view
      * @param array  $data
      * @param array  $mergeData
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|View
      */
     public function view($view, array $data = [], $mergeData = [])
     {
         $data['template'] = $this;
 
-        if ($view instanceof \Illuminate\View\View) {
+        if ($view instanceof View) {
             return $view->with($data);
         }
 
@@ -215,6 +220,10 @@ abstract class Template implements TemplateInterface
             ->render();
     }
 
+    /**
+     * Render func.
+     * @return array
+     */
     public function toArray()
     {
         return [

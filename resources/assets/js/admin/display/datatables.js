@@ -80,6 +80,14 @@ Admin.Modules.register('display.datatables', () => {
             table.api().draw();
         });
 
+        $("#filters-cancel").on('click', function () {
+            $(".display-filters td[data-index] input").val(null);
+
+            let selector = $(".display-filters td[data-index] select");
+            selector.val(null);
+            selector.trigger('change');
+        });
+
         $(".display-filters td[data-index] input").on('keyup', function(e){
             if(e.keyCode === 13){
                 table.api().draw();

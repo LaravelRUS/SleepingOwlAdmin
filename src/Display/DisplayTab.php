@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Form\FormElements;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Form\Columns\Column;
@@ -27,7 +28,7 @@ use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
-    use VisibleCondition, \SleepingOwl\Admin\Traits\Renderable;
+    use VisibleCondition, \SleepingOwl\Admin\Traits\Renderable, HtmlAttributes;
 
     /**
      * @var string
@@ -85,6 +86,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         if (! is_null($badge)) {
             $this->setBadge($badge);
         }
+
+        $this->setHtmlAttribute('role', 'presentation');
     }
 
     /**
@@ -150,6 +153,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function setActive($active = true)
     {
         $this->active = (bool) $active;
+
+        if ($active) {
+            $this->setHtmlAttribute('class', 'active');
+        }
 
         return $this;
     }
@@ -519,6 +526,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             'name'   => $this->getName(),
             'icon'   => $this->getIcon(),
             'badge'  => $this->getBadge(),
+            'arrayAttributes' => $this->getHtmlAttributes(),
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 }

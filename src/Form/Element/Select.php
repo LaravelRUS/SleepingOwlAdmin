@@ -29,12 +29,17 @@ class Select extends NamedFormElement
     protected $exclude = [];
 
     /**
+     * @var int
+     */
+    protected $limit = 0;
+
+    /**
      * @var string
      */
     protected $view = 'form.element.select';
 
     /**
-     * @param string      $path
+     * @param string $path
      * @param string|null $label
      * @param array|Model $options
      */
@@ -63,6 +68,20 @@ class Select extends NamedFormElement
         $options = array_except($this->options, $this->exclude);
         if ($this->isSortable()) {
             asort($options);
+        }
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function mutateOptions()
+    {
+        $options = [];
+        $temp = $this->getOptions();
+        foreach ($temp as $key => $value) {
+            $options[] = ['id' => $key, 'text' => $value];
         }
 
         return $options;
@@ -129,6 +148,25 @@ class Select extends NamedFormElement
     }
 
     /**
+     * @return int
+     */
+    protected function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param $limit
+     * @return $this
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
      * @param array $keys
      *
      * @return $this
@@ -162,28 +200,28 @@ class Select extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
-            'size' => 2,
+            'id'               => $this->getName(),
+            'size'             => 2,
             'data-select-type' => 'single',
-            'class' => 'form-control input-select',
+            'class'            => 'form-control',
         ]);
 
         if ($this->isReadonly()) {
             $this->setHtmlAttribute('disabled', 'disabled');
         }
 
-        $options = $this->getOptions();
+        $options = $this->mutateOptions();
 
         if ($this->isNullable()) {
             $this->setHtmlAttribute('data-nullable', 'true');
-            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
+            $options = [0 => trans('sleeping_owl::lang.select.nothing')] + $options;
         }
 
-        return parent::toArray() + [
-            'options' => $options,
-            'nullable' => $this->isNullable(),
-            'attributes' => $this->getHtmlAttributes(),
-        ];
+        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
+                'options'  => $options,
+                'limit'    => $this->getLimit(),
+                'nullable' => $this->isNullable(),
+            ];
     }
 
     /**

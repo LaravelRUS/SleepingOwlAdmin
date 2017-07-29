@@ -25,7 +25,7 @@ class MultiSelect extends Select
     /**
      * @var string
      */
-    protected $view = 'form.element.select';
+    protected $view = 'form.element.multiselect';
 
     /**
      * @return string
@@ -41,6 +41,13 @@ class MultiSelect extends Select
     public function getValueFromModel()
     {
         $value = parent::getValueFromModel();
+
+        if (is_array($value)) {
+            foreach ($value as $key => $val) {
+                $value[$key] = (int) $val;
+            }
+        }
+
         if ($value instanceof Collection && $value->count() > 0) {
             $value = $value->pluck($value->first()->getKeyName())->all();
         }
@@ -114,7 +121,7 @@ class MultiSelect extends Select
     {
         $this->setHtmlAttributes([
             'id'    => $this->getName(),
-            'class' => 'form-control input-select',
+            'class' => 'form-control',
             'multiple',
         ]);
 
@@ -152,6 +159,10 @@ class MultiSelect extends Select
     public function afterSave(\Illuminate\Http\Request $request)
     {
         if (is_null($this->getModelForOptions())) {
+            return;
+        }
+
+        if ($this->isValueSkipped()) {
             return;
         }
 
