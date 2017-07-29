@@ -36,6 +36,12 @@ class EditableColumn extends NamedColumn
     public function __construct($name, $label = null)
     {
         parent::__construct($name, $label);
+
+        $this->clearHtmlAttributes();
+
+        $this->setHtmlAttributes([
+            'class' => 'inline-editable',
+        ]);
     }
 
     /**
@@ -111,11 +117,7 @@ class EditableColumn extends NamedColumn
      */
     public function toArray()
     {
-        $this->setHtmlAttributes([
-            'class' => 'inline-editable',
-        ]);
-
-        return parent::toArray() + [
+            return parent::toArray() + [
                 'id'             => $this->getModel()->getKey(),
                 'value'          => $this->getModelValue(),
                 'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
