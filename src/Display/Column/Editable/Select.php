@@ -116,8 +116,14 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function getOptionName($value)
     {
-        if(isset($value))
-            return $this->optionList[$value];
+        if(isset($value)){
+
+          if(isset($this->optionList[$value])){
+              return $this->optionList[$value];
+          }
+          return $value;
+        }
+
     }
 
     /**
