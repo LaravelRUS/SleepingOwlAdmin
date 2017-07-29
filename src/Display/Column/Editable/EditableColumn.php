@@ -2,12 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class EditableColumn extends NamedColumn
 {
@@ -25,7 +21,6 @@ class EditableColumn extends NamedColumn
      * @var string
      */
     protected $editableMode = 'popup';
-
 
     /**
      * Text constructor.
@@ -51,10 +46,11 @@ class EditableColumn extends NamedColumn
      */
     public function getTitle()
     {
-        if(isset($this->title))
+        if (isset($this->title)) {
             return $this->title;
-        else
+        } else {
             return $this->header->getTitle();
+        }
     }
 
     /**
@@ -106,8 +102,9 @@ class EditableColumn extends NamedColumn
      */
     public function setEditableMode($mode)
     {
-        if(isset($mode) && in_array($mode, ['inline','popup']))
+        if (isset($mode) && in_array($mode, ['inline', 'popup'])) {
             $this->editableMode = $mode;
+        }
 
         return $this;
     }
@@ -117,7 +114,7 @@ class EditableColumn extends NamedColumn
      */
     public function toArray()
     {
-            return parent::toArray() + [
+        return parent::toArray() + [
                 'id'             => $this->getModel()->getKey(),
                 'value'          => $this->getModelValue(),
                 'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
