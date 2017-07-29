@@ -1,13 +1,11 @@
 <a href="#"
-    class="inline-editable"
+    {!! $attributes !!}
     data-name="{{ $name }}"
     data-value="{{ $value }}"
     data-url="{{ $url }}"
     data-type="textarea"
     data-pk="{{ $id }}"
-
-    {{ $attributes }}
-
+    data-mode="{{ $mode }}"
 >{{ $value }}</a>
 
 {!! $append !!}
