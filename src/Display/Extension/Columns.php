@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;

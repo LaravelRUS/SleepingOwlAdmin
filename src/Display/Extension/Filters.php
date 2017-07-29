@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
 

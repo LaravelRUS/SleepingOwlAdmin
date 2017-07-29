@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use SleepingOwl\Admin\Admin;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Access\Gate;
-use SleepingOwl\Admin\Admin;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {

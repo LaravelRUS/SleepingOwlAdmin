@@ -2,26 +2,26 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
-use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Navigation;
-use SleepingOwl\Admin\Templates\Assets;
-use SleepingOwl\Admin\Templates\Meta;
-use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
-use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
-use SleepingOwl\Admin\Widgets\Messages\MessageStack;
-use SleepingOwl\Admin\Widgets\Messages\SuccessMessages;
-use SleepingOwl\Admin\Widgets\Messages\WarningMessages;
-use SleepingOwl\Admin\Wysiwyg\Manager;
+use SleepingOwl\Admin\AliasBinder;
 use Symfony\Component\Finder\Finder;
+use SleepingOwl\Admin\Templates\Meta;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Foundation\Application;
+use SleepingOwl\Admin\Wysiwyg\Manager;
 use Illuminate\Support\ServiceProvider;
+use SleepingOwl\Admin\Templates\Assets;
 use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 use SleepingOwl\Admin\Exceptions\TemplateException;
+use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
+use SleepingOwl\Admin\Widgets\Messages\MessageStack;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
+use SleepingOwl\Admin\Widgets\Messages\SuccessMessages;
+use SleepingOwl\Admin\Widgets\Messages\WarningMessages;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
@@ -120,7 +120,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Global register messages of adminpanel
+     * Global register messages of adminpanel.
      */
     protected function registerMessages()
     {
@@ -245,7 +245,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register navigation file
+     * Register navigation file.
      */
     protected function registerNavigationFile()
     {
