@@ -4,10 +4,9 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
 use SleepingOwl\Admin\Form\FormDefault;
-use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
-class Checkbox extends NamedColumn implements ColumnEditableInterface
+class Checkbox extends EditableColumn implements ColumnEditableInterface
 {
     /**
      * @var string
@@ -23,11 +22,6 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
      * @var null|string
      */
     protected $uncheckedLabel;
-
-    /**
-     * @var string
-     */
-    protected $url = null;
 
     /**
      * Checkbox constructor.
@@ -94,40 +88,13 @@ class Checkbox extends NamedColumn implements ColumnEditableInterface
     }
 
     /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        if (! $this->url) {
-            return request()->url();
-        }
-
-        return $this->url;
-    }
-
-    /**
-     * @param $url
-     * @return string
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function toArray()
     {
         return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getModelValue(),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
                 'checkedLabel'   => $this->getCheckedLabel(),
                 'uncheckedLabel' => $this->getUncheckedLabel(),
-                'url'            => $this->getUrl(),
             ];
     }
 

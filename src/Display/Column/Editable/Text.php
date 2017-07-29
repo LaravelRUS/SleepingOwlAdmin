@@ -7,17 +7,12 @@ use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
-class Text extends NamedColumn implements ColumnEditableInterface
+class Text extends EditableColumn implements ColumnEditableInterface
 {
     /**
      * @var string
      */
     protected $view = 'column.editable.text';
-
-    /**
-     * @var string
-     */
-    protected $url = null;
 
     /**
      * Text constructor.
@@ -28,42 +23,6 @@ class Text extends NamedColumn implements ColumnEditableInterface
     public function __construct($name, $label = null)
     {
         parent::__construct($name, $label);
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        if (! $this->url) {
-            return request()->url();
-        }
-
-        return $this->url;
-    }
-
-    /**
-     * @param $url
-     * @return string
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getModelValue(),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
-            ];
     }
 
     /**
