@@ -29,7 +29,6 @@ use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class AdminServiceProvider extends ServiceProvider
 {
-
     /**
      * @var string
      */
@@ -207,7 +206,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Alias from App
+     * Register Alias from App.
      */
     protected function registerAliases()
     {
@@ -215,7 +214,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Custom Routes From Users
+     * Register Custom Routes From Users.
      */
     protected function registerCustomRoutes()
     {
@@ -227,7 +226,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Default Admin Routes
+     * Register Default Admin Routes.
      */
     protected function registerDefaultRoutes()
     {
@@ -243,7 +242,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register CKEditor Upload and D&D plugins
+     * Register CKEditor Upload and D&D plugins.
      */
     protected function registerSupportRoutes()
     {
@@ -253,12 +252,12 @@ class AdminServiceProvider extends ServiceProvider
         ], function ($route) {
             $route->get('ckeditor/upload/image', [
                 'as'   => 'ckeditor.upload',
-                'uses' => 'UploadController@ckEditorStore'
+                'uses' => 'UploadController@ckEditorStore',
             ]);
 
             $route->post('ckeditor/upload/image', [
                 'as'   => 'ckeditor.upload',
-                'uses' => 'UploadController@ckEditorStore'
+                'uses' => 'UploadController@ckEditorStore',
             ]);
         });
     }

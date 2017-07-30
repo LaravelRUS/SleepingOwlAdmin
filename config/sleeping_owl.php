@@ -167,8 +167,7 @@ return [
                 //code behind explaining that 2 params
             */
 
-
-            /**
+            /*
              * WARNING!!!! CKEDITOR on D & D and UploadImageDialog
              * BY DEFAULT IMAGES WILL STORE TO imagesUploadDirectory = /images/uploads
              */

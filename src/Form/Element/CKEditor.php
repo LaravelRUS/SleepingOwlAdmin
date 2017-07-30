@@ -13,9 +13,8 @@ class CKEditor extends Wysiwyg
         parent::__construct($path, $label, 'ckeditor');
     }
 
-
     /**
-     * Add Params Editor for Upload files
+     * Add Params Editor for Upload files.
      */
     public function initialize()
     {
@@ -23,11 +22,11 @@ class CKEditor extends Wysiwyg
 
         $params = collect($this->getParameters());
 
-        if(!$params->has('uploadUrl')){
+        if (! $params->has('uploadUrl')) {
             $this->parameters['uploadUrl'] = route('admin.ckeditor.upload');
         }
 
-        if(!$params->has('filebrowserUploadUrl')){
+        if (! $params->has('filebrowserUploadUrl')) {
             $this->parameters['filebrowserUploadUrl'] = route('admin.ckeditor.upload');
         }
     }
