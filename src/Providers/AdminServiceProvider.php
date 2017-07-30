@@ -29,6 +29,7 @@ use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class AdminServiceProvider extends ServiceProvider
 {
+
     /**
      * @var string
      */
@@ -54,6 +55,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             $this->registerCustomRoutes();
             $this->registerDefaultRoutes();
+            $this->registerSupportRoutes();
             $this->registerNavigationFile();
 
             $this->app['sleeping_owl']->initialize();
@@ -125,8 +127,8 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerMessages()
     {
         $messageTypes = [
-            'error' => ErrorMessages::class,
-            'info' => InfoMessages::class,
+            'error'   => ErrorMessages::class,
+            'info'    => InfoMessages::class,
             'success' => SuccessMessages::class,
             'warning' => WarningMessages::class,
         ];
@@ -204,11 +206,17 @@ class AdminServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Register Alias from App
+     */
     protected function registerAliases()
     {
         AliasLoader::getInstance(config('sleeping_owl.aliases', []));
     }
 
+    /**
+     * Register Custom Routes From Users
+     */
     protected function registerCustomRoutes()
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
@@ -218,6 +226,9 @@ class AdminServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Register Default Admin Routes
+     */
     protected function registerDefaultRoutes()
     {
         $this->registerRoutes(function (Router $router) {
@@ -232,12 +243,33 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register CKEditor Upload and D&D plugins
+     */
+    protected function registerSupportRoutes()
+    {
+        $this->app['router']->group([
+            'prefix' => $this->getConfig('url_prefix'),
+
+        ], function ($route) {
+            $route->get('ckeditor/upload/image', [
+                'as'   => 'ckeditor.upload',
+                'uses' => 'UploadController@ckEditorStore'
+            ]);
+
+            $route->post('ckeditor/upload/image', [
+                'as'   => 'ckeditor.upload',
+                'uses' => 'UploadController@ckEditorStore'
+            ]);
+        });
+    }
+
+    /**
      * @param \Closure $callback
      */
     protected function registerRoutes(\Closure $callback)
     {
         $this->app['router']->group([
-            'prefix' => $this->getConfig('url_prefix'),
+            'prefix'     => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
         ], function ($route) use ($callback) {
             call_user_func($callback, $route);

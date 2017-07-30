@@ -1,5 +1,8 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
  
+ * [Feature] Добавлены плагины image2, youtube, uploadimage - в CKEditor. Параметры uploadUrl и filebrowserUploadUrl 
+             Как и раньше отвечали за линк сохранения изображений - если этих параметров нет изображения будут сохраняться
+             в дефолтную папку указанную в imagesUploadDirectory 
  * [Feature] Добавлена кнопка отмены фильтров на таблице
  * [Feature] Добавлен новый элемент AdminColumnEditable::select() - он подобен элементу AdminFormElement::select и имеет схожие методы задания списка. 
  * [Feature] Теперь в админке есть менеджер BreadCrumbs

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
+use Illuminate\Http\UploadedFile;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -72,5 +73,40 @@ class UploadController extends Controller
 
         /* When driver not file */
         return new JsonResponse($result);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\Response
+     */
+    public function ckEditorStore(Request $request){
+        //dropZone && CKEDITOR fileBrowser && CKEDITOR drag&drop
+        /** @var UploadedFile $file */
+        $file = $request->image ?? $request->file;
+        $file = $file ?? $request->upload;
+        if (is_array($file)) {
+            $file = $file[0];
+        }
+
+        $result = [];
+
+        $extensions = collect(['jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif']);
+
+        if ($extensions->search($file->getClientOriginalExtension())) {
+
+            if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
+
+                $file->store(public_path(config("sleeping_owl.imagesUploadDirectory")));
+
+                $result['url'] = asset(
+                    config("sleeping_owl.imagesUploadDirectory") . "/" . $file->getFilename()
+                );
+
+                return app('sleeping_owl.template')
+                    ->view("helper.ckeditor.ckeditor_upload_file", compact('result'));
+            }
+        }
+
+        return response("Something wrong", 500);
     }
 }

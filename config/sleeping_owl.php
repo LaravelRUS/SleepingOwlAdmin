@@ -167,8 +167,13 @@ return [
                 //code behind explaining that 2 params
             */
 
-            'uploadUrl'            => '/storage/images_admin',
-            'filebrowserUploadUrl' => '/storage/images_admin',
+
+            /**
+             * WARNING!!!! CKEDITOR on D & D and UploadImageDialog
+             * BY DEFAULT IMAGES WILL STORE TO imagesUploadDirectory = /images/uploads
+             */
+            //'uploadUrl'            => '/storage/images_admin',
+            //'filebrowserUploadUrl' => '/storage/images_admin',
         ],
 
         /*
