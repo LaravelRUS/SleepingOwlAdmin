@@ -124,6 +124,8 @@ class Select extends NamedFormElement
     {
         $this->nullable = true;
 
+        $this->addValidationRule('nullable');
+
         return $this;
     }
 
@@ -214,7 +216,7 @@ class Select extends NamedFormElement
 
         if ($this->isNullable()) {
             $this->setHtmlAttribute('data-nullable', 'true');
-            $options = [0 => trans('sleeping_owl::lang.select.nothing')] + $options;
+            $options = collect($options)->prepend(['id' => null, 'text' => trans('sleeping_owl::lang.select.nothing')]);
         }
 
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
