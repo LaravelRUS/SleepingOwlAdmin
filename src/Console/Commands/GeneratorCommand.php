@@ -31,7 +31,7 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         if (file_exists(base_path().'/vendor/compiled.php') ||
             file_exists(base_path().'/bootstrap/cache/compiled.php') ||
