@@ -36,7 +36,9 @@ Vue.component('deselect', Vue.extend({
     watch: {
         // whenever question changes, this function will run
         preparedVal: function (val) {
-            $("#" + this.id).trigger('change');
+            this.$nextTick(() => {
+                $("#" + this.id).trigger('change')
+            });
         }
     },
     components: {

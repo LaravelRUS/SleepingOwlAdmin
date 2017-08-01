@@ -29,7 +29,10 @@
             >
             </multiselect>
 
-            <input type="hidden" id="{{ str_replace(['[', ']'], '', $name) }}" name="{{$name}}" v-model="preparedVal">
+            <input type="hidden"
+                   id="{{ str_replace(['[', ']'], '', $name) }}"
+                   name="{{$name}}"
+                   v-model="preparedVal">
         </div>
     </deselect>
 
