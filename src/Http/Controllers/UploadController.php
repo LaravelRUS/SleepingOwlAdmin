@@ -94,16 +94,25 @@ class UploadController extends Controller
         $extensions = collect(['jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif']);
 
         if ($extensions->search($file->getClientOriginalExtension())) {
+
+            $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $file->getClientOriginalName());
+
+            $result['url'] = asset(
+                config('sleeping_owl.imagesUploadDirectory').'/'.$file->getClientOriginalName()
+            );
+            $result['uploaded'] = 1;
+            $result['fileName'] = $file->getClientOriginalName();
+
             if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
-                $file->store(public_path(config('sleeping_owl.imagesUploadDirectory')));
-
-                $result['url'] = asset(
-                    config('sleeping_owl.imagesUploadDirectory').'/'.$file->getFilename()
-                );
-
                 return app('sleeping_owl.template')
                     ->view('helper.ckeditor.ckeditor_upload_file', compact('result'));
             }
+
+            if ($result) {
+                return response($result);
+            }
+
+
         }
 
         return response('Something wrong', 500);
