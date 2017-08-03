@@ -94,7 +94,6 @@ class UploadController extends Controller
         $extensions = collect(['jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif']);
 
         if ($extensions->search($file->getClientOriginalExtension())) {
-
             $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $file->getClientOriginalName());
 
             $result['url'] = asset(
@@ -111,8 +110,6 @@ class UploadController extends Controller
             if ($result) {
                 return response($result);
             }
-
-
         }
 
         return response('Something wrong', 500);
