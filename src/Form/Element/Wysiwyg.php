@@ -66,7 +66,18 @@ class Wysiwyg extends NamedFormElement
             $this->setHtmlAttribute('id', $this->getName());
         }
 
+
         $this->parameters = (array) $config->all();
+
+        $params = collect($this->parameters);
+
+        if (! $params->has('uploadUrl')) {
+            $this->parameters['uploadUrl'] = route('admin.ckeditor.upload');
+        }
+
+        if (! $params->has('filebrowserUploadUrl')) {
+            $this->parameters['filebrowserUploadUrl'] = route('admin.ckeditor.upload');
+        }
     }
 
     /**

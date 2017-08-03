@@ -122,57 +122,13 @@ return [
         'ckeditor'  => [
             'height'       => 200,
             'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
-
-            /*
-             *  //Sample of route
-             *
-                Route::post('storage/images_admin', [
-                    'as'   => 'upload.image.s3',
-                    'uses' => "ImageController@store"
-                ]);
-
-               //Sample of controller
-
-               class ImageController extends Conoller
-               {
-
-
-                    public function store(ImageRequest $request)
-                    {
-
-                        //CKEDITOR fileBrowser && CKEDITOR drag&drop
-
-
-                        $file = $request->image ?? $request->file;
-                        $file = $file ?? $request->upload;
-                        if (is_array($file)) {
-                            $file = $file[0];
-                        }
-
-                        $result = [];
-
-                        //Your upload logic complete to $result look into ckeditor_upload_file.blade.php
-
-
-                        if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
-
-                            //Sample of view - put it to your own resources/views directory
-                            // /vendor/laravelrus/sleepingowl/resources/views/default/helper/ckeditor/ckeditor_upload_file.blade.php
-
-                            return view('helper.ckeditor.ckeditor_upload_file', compact('result'));
-                        }
-                    }
-                }
-
-                //code behind explaining that 2 params
-            */
-
             /*
              * WARNING!!!! CKEDITOR on D & D and UploadImageDialog
              * BY DEFAULT IMAGES WILL STORE TO imagesUploadDirectory = /images/uploads
              */
-            //'uploadUrl'            => '/storage/images_admin',
-            //'filebrowserUploadUrl' => '/storage/images_admin',
+
+            //'uploadUrl'            => '/path/to/your/action',
+            //'filebrowserUploadUrl' => '/path/to/your/action',
         ],
 
         /*
