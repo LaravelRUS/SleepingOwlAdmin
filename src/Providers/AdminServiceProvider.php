@@ -251,7 +251,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app['router']->group([
             'prefix' => $this->getConfig('url_prefix'),
 
-        ], function (Route $route) {
+        ], function (Router $route) {
             $route->get('ckeditor/upload/image', [
                 'as'   => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
@@ -272,7 +272,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app['router']->group([
             'prefix'     => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
-        ], function (Route $route) use ($callback) {
+        ], function (Router $route) use ($callback) {
             call_user_func($callback, $route);
         });
     }

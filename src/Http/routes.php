@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Routing\Route;
+use Illuminate\Routing\Router;
 
-$router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function (Route $router) {
+$router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function (Router $router) {
     if (! $router->has('admin.dashboard')) {
         $router->get('', ['as' => 'dashboard', 'uses' => 'AdminController@getDashboard']);
     }
