@@ -33,7 +33,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
     {
         return [
             'sleeping_owl.breadcrumbs',
-            'SleepingOwl\Admin\Contracts\Template\Breadcrumbs',
+            'SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface',
         ];
     }
 }

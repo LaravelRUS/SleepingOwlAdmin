@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Templates;
 
 use DaveJamesMiller\Breadcrumbs\Manager as BreadcrumbsManager;
-use SleepingOwl\Admin\Contracts\Template\Breadcrumbs as BreadcrumbsContract;
+use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
 
 class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
