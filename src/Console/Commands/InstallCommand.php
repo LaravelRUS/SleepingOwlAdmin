@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use SleepingOwl\Admin\Console\Installation;
+use SleepingOwl\Admin\Contracts\Console\Installator;
 
 class InstallCommand extends Installation\Command
 {
@@ -31,12 +32,12 @@ class InstallCommand extends Installation\Command
             Installation\CreateSectionServiceProvider::class,
             Installation\CreatePublicDirectory::class,
         ])
-            ->map(function ($installer) {
+            ->map(function (Installator $installer) {
                 return new $installer($this, $this->config);
             })
-            ->filter(function ($installer) {
+            ->filter(function (Installator $installer) {
                 return $this->option('force') ? true : ! $installer->installed();
-            })->each(function ($installer) {
+            })->each(function (Installator $installer) {
                 $installer->install();
                 $installer->showInfo();
             });

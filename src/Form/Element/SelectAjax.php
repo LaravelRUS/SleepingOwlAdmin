@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
@@ -22,7 +23,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     {
         parent::__construct($path, $label);
 
-        $this->setLoadOptionsQueryPreparer(function ($item, $query) {
+        $this->setLoadOptionsQueryPreparer(function ($item, Builder $query) {
             $repository = app(RepositoryInterface::class);
             $repository->setModel($this->getModelForOptions());
             $key = $repository->getModel()->getKeyName();

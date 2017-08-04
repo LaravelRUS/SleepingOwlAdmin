@@ -141,7 +141,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
                 $instance = $instance->pluck($part);
             }
 
-            if ($instance == null) {
+            if ($instance === null) {
                 $instance = collect();
             }
         } elseif (! is_null($instance)) {

@@ -37,7 +37,7 @@ class Image extends File
      */
     public function customValidation(Validator $validator)
     {
-        $validator->after(function ($validator) {
+        $validator->after(function (Validator $validator) {
             /** @var \Illuminate\Http\UploadedFile $file */
             $file = array_get($validator->attributes(), 'file');
 

@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use FilesystemIterator;
+use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
+use League\Flysystem\FilesystemInterface;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\AliasBinder;
 use Symfony\Component\Finder\Finder;
@@ -196,7 +199,7 @@ class AdminServiceProvider extends ServiceProvider
             ->notName('routes.php')
             ->notName('navigation.php')
             ->in($directory)
-            ->sort(function ($a) {
+            ->sort(function (FilesystemIterator $a) {
                 return $a->getFilename() != 'bootstrap.php';
             });
 
@@ -270,7 +273,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app['router']->group([
             'prefix'     => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
-        ], function ($route) use ($callback) {
+        ], function (Route $route) use ($callback) {
             call_user_func($callback, $route);
         });
     }
