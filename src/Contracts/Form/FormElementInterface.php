@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Contracts\Form;
 
 use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 
 interface FormElementInterface extends Renderable, Arrayable, Initializable, WithModelInterface, Validable
 {
