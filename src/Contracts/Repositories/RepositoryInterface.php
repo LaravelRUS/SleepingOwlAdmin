@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Contracts\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Exceptions\RepositoryException;
 
-interface RepositoryInterface extends \SleepingOwl\Admin\Contracts\WithModel
+interface RepositoryInterface extends \SleepingOwl\Admin\Contracts\WithModelInterface
 {
     /**
      * @return string

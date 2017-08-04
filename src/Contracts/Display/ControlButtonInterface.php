@@ -4,11 +4,11 @@ namespace SleepingOwl\Admin\Contracts\Display;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 
-interface ControlButtonInterface extends Renderable, Arrayable, WithModel
+interface ControlButtonInterface extends Renderable, Arrayable, WithModelInterface
 {
     /**
      * @return int

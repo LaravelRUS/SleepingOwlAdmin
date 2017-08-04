@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Display\Column\OrderByClause;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -242,7 +242,7 @@ abstract class TableColumn implements ColumnInterface
         $this->model = $model;
         $append = $this->getAppends();
 
-        if ($append instanceof WithModel) {
+        if ($append instanceof WithModelInterface) {
             $append->setModel($model);
         }
 

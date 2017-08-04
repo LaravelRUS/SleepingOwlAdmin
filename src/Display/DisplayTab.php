@@ -9,7 +9,7 @@ use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Form\Element\Hidden;
 use SleepingOwl\Admin\Form\Columns\Columns;
@@ -365,7 +365,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function setModel(Model $model)
     {
-        if (($content = $this->getContent()) instanceof WithModel) {
+        if (($content = $this->getContent()) instanceof WithModelInterface) {
             $content->setModel($model);
         }
 
@@ -377,7 +377,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getModel()
     {
-        if (($content = $this->getContent()) instanceof WithModel) {
+        if (($content = $this->getContent()) instanceof WithModelInterface) {
             return $content->getModel();
         }
     }
