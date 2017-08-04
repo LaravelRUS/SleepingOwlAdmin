@@ -194,17 +194,17 @@
      {
          public function onFilterSearch(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
          {
-             // TODO: Implement onFilterSearch() method.
+             // Implement onFilterSearch() method.
          }
          
          public function onOrderBy(NamedColumnInterface $column, Builder $query, $direction)
          {
-             // TODO: Implement onOrderBy() method.
+             // Implement onOrderBy() method.
          }
          
          public function onSearch(NamedColumnInterface $column, Builder $query, $queryString)
          {
-             // TODO: Implement onSearch() method.
+             // Implement onSearch() method.
          }
      
      }
@@ -225,7 +225,7 @@
      
  * Исправлена дефолтная логика сортировки для столбцов с отношениями. Теперь в секции Users поле post.name
    поле будет сортироваться без ошибок. Однако эта сортировка не будет работать с EagerLoad, то есть она не будет сортировать поле
-   в секции `Posts` - `category.user.name` (TODO)
+   в секции `Posts` - `category.user.name` 
  * Добавлен тип `OrderTreeType::class` который ограничивает дерево только на первый уровень 
  (работает без parent_id) и позволяет сортировать элементы
     Пример можно увидеть по [ссылке в демо](https://demo.sleepingowl.ru/admin/page_orders) 

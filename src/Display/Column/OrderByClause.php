@@ -71,7 +71,7 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * TODO: EagerLoad.
+     * Make EagerLoad.
      */
     protected function eagerLoad()
     {
@@ -87,7 +87,7 @@ class OrderByClause implements OrderByClauseInterface
         $relations = collect(explode('.', $this->name));
 
         //Without Eager Load
-        //TODO: With Eager Load
+        //With Eager Load
         if ($relations->count() == 2) {
             $model = $query->getModel();
             $relation = $relations->first();

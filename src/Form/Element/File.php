@@ -280,7 +280,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         $file->move($path, $filename);
 
-        //TODO: Make sense take s3, rackspace or some cloud storage url
+        //S3 Implement
         $value = $path.'/'.$filename;
 
         return ['path' => asset($value), 'value' => $value];
