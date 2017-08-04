@@ -26,6 +26,10 @@ trait SelectOptionsFromModel
     protected $foreignKey = null;
 
     /**
+     * @var string|null
+     */
+    protected $usageKey = null;
+    /**
      * @var array
      */
     protected $fetchColumns = [];
@@ -66,6 +70,16 @@ trait SelectOptionsFromModel
 
         $this->modelForOptions = $modelForOptions;
 
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return $this
+     */
+    public function setUsageKey($key)
+    {
+        $this->usageKey = $key;
         return $this;
     }
 
@@ -197,7 +211,7 @@ trait SelectOptionsFromModel
     {
         $repository = app(RepositoryInterface::class);
         $repository->setModel($this->getModelForOptions());
-        $key = $repository->getModel()->getKeyName();
+        $key = ($this->usageKey) ? $this->usageKey : $repository->getModel()->getKeyName();;
 
         $options = $repository->getQuery();
 

@@ -1,5 +1,6 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
  
+ * [Feature] Появился setUsage у селекто-подобных элементов (dev-mode) - не известно какие проблемы это повлечет за собой - однако несколько уже решаются.
  * [Feature] Добавлены плагины image2, youtube, uploadimage - в CKEditor. Параметры uploadUrl и filebrowserUploadUrl 
              Как и раньше отвечали за линк сохранения изображений - если этих параметров нет изображения будут сохраняться
              в дефолтную папку указанную в imagesUploadDirectory 
