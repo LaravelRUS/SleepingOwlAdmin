@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Providers;
 use FilesystemIterator;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
-use League\Flysystem\FilesystemInterface;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\AliasBinder;
 use Symfony\Component\Finder\Finder;

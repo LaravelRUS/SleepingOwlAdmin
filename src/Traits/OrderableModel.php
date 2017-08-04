@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 trait OrderableModel
 {

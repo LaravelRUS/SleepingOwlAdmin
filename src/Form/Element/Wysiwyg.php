@@ -66,7 +66,6 @@ class Wysiwyg extends NamedFormElement
             $this->setHtmlAttribute('id', $this->getName());
         }
 
-
         $this->parameters = (array) $config->all();
 
         $params = collect($this->parameters);

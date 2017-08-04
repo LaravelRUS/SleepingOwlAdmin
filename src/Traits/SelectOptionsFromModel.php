@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
@@ -80,6 +80,7 @@ trait SelectOptionsFromModel
     public function setUsageKey($key)
     {
         $this->usageKey = $key;
+
         return $this;
     }
 
@@ -211,7 +212,7 @@ trait SelectOptionsFromModel
     {
         $repository = app(RepositoryInterface::class);
         $repository->setModel($this->getModelForOptions());
-        $key = ($this->usageKey) ? $this->usageKey : $repository->getModel()->getKeyName();;
+        $key = ($this->usageKey) ? $this->usageKey : $repository->getModel()->getKeyName();
 
         $options = $repository->getQuery();
 

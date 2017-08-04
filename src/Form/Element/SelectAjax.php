@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;

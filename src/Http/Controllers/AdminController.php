@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use DaveJamesMiller\Breadcrumbs\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use SleepingOwl\Admin\Form\FormElements;
+use DaveJamesMiller\Breadcrumbs\Generator;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
