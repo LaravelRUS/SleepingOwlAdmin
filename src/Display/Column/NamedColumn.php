@@ -113,7 +113,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         /*
          * Implement json parsing
          */
-        if (strpos($name, '->') !== false) {
+        if (strpos($name, '.') === false && strpos($name, '->') !== false) {
             $casts = collect($instance->getCasts());
             $jsonParts = collect(explode('->', $name));
 
