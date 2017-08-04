@@ -175,11 +175,11 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 
         if ($model instanceof \Baum\Node) {
             $type = BaumNodeType::class;
-        } elseif (class_exists('Kalnoy\Nestedset\Node') and $model instanceof \Kalnoy\Nestedset\Node) {
+        } elseif (class_exists('Kalnoy\Nestedset\Node') && $model instanceof \Kalnoy\Nestedset\Node) {
             $type = KalnoyNestedsetType::class;
-        } elseif (function_exists('trait_uses_recursive') and $traits = trait_uses_recursive($model) and in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+        } elseif (function_exists('trait_uses_recursive') && $traits = trait_uses_recursive($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
-        } elseif ($traits = class_uses($model) and in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+        } elseif ($traits = class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
         }
 

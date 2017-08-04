@@ -69,7 +69,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function hasModel()
     {
-        return ! is_null($this->model) and class_exists($this->model);
+        return ! is_null($this->model) && class_exists($this->model);
     }
 
     /**
@@ -77,7 +77,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function getId()
     {
-        if (is_null($this->id) and $this->hasModel()) {
+        if (is_null($this->id) && $this->hasModel()) {
             return $this->model;
         }
 
@@ -89,7 +89,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function getTitle()
     {
-        if (is_null($this->title) and $this->hasModel()) {
+        if (is_null($this->title) && $this->hasModel()) {
             return $this->getModelConfiguration()->getTitle();
         }
 
@@ -101,7 +101,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function getUrl()
     {
-        if (is_null($this->url) and $this->hasModel()) {
+        if (is_null($this->url) && $this->hasModel()) {
             return $this->getModelConfiguration()->getDisplayUrl();
         }
 

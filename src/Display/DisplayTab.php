@@ -223,7 +223,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getName()
     {
-        if (is_null($this->name) and is_null($this->getLabel())) {
+        if (is_null($this->name) && is_null($this->getLabel())) {
             throw new DisplayTabException('You should set name or label');
         }
 

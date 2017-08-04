@@ -175,7 +175,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
         $options = $repository->getQuery();
         $relation = $this->getModelAttributeKey();
 
-        if ($this->isEmptyRelation() and ! is_null($foreignKey = $this->getForeignKey())) {
+        if ($this->isEmptyRelation() && ! is_null($foreignKey = $this->getForeignKey())) {
             $model = $this->getModel();
 
             if ($model->{$relation}() instanceof HasOneOrMany) {

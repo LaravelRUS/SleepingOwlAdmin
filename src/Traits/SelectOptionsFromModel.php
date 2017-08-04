@@ -200,7 +200,7 @@ trait SelectOptionsFromModel
 
         $options = $repository->getQuery();
 
-        if ($this->isEmptyRelation() and ! is_null($foreignKey = $this->getForeignKey())) {
+        if ($this->isEmptyRelation() && ! is_null($foreignKey = $this->getForeignKey())) {
             $relation = $this->getModelAttributeKey();
             $model = $this->getModel();
 

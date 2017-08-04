@@ -342,7 +342,7 @@ class AdminController extends Controller
         /* @var ColumnEditableInterface|null $column */
         if (is_callable([$display, 'getColumns'])) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
-                return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
             })->first();
         } else {
             if ($display instanceof DisplayTabbed) {
@@ -351,7 +351,7 @@ class AdminController extends Controller
 
                     if ($content instanceof DisplayTable) {
                         $column = $content->getColumns()->all()->filter(function ($column) use ($field) {
-                            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                            return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
                         })->first();
                     }
                     if ($content instanceof FormElements) {
@@ -360,7 +360,7 @@ class AdminController extends Controller
                             //Return data-table if inside FormElements
                             if ($element instanceof DisplayTable) {
                                 $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
-                                    return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                                    return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
                                 })->first();
                             }
 
@@ -369,7 +369,7 @@ class AdminController extends Controller
                                 foreach ($element->getElements() as $columnElement) {
                                     if ($columnElement instanceof DisplayTable) {
                                         $column = $columnElement->getColumns()->all()->filter(function ($column) use ($field) {
-                                            return ($column instanceof ColumnEditableInterface) and $field == $column->getName();
+                                            return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
                                         })->first();
                                     }
                                 }

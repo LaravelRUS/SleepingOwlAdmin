@@ -336,7 +336,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function hasCustomControllerClass()
     {
-        return ! is_null($controller = $this->getControllerClass()) and class_exists($controller);
+        return ! is_null($controller = $this->getControllerClass()) && class_exists($controller);
     }
 
     /**
