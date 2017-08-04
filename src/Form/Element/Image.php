@@ -37,7 +37,7 @@ class Image extends File
      */
     public function customValidation(Validator $validator)
     {
-        $validator->after(function ($validator) {
+        $validator->after(function (Validator $validator) {
             /** @var \Illuminate\Http\UploadedFile $file */
             $file = array_get($validator->attributes(), 'file');
 
@@ -104,7 +104,7 @@ class Image extends File
             return $callback($file, $path, $filename, $settings);
         }
 
-        if (class_exists('Intervention\Image\Facades\Image') and (bool) getimagesize($file->getRealPath())) {
+        if (class_exists('Intervention\Image\Facades\Image') && (bool) getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {

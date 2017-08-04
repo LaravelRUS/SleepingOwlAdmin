@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts\Template;
 
-use KodiCMS\Assets\Contracts\AssetsInterface;
+use KodiCMS\Assets\Contracts\AssetsInterface as KodiAssetsInterface;
 
-interface Assets extends AssetsInterface
+interface AssetsInterface extends KodiAssetsInterface
 {
     /**
      * Добавление глобальной переменной.

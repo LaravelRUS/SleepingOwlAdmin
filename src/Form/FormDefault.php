@@ -103,9 +103,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         if (! $this->hasHtmlAttribute('enctype')) {
             // Try to find upload element
             $this->getElements()->each(function ($element) {
-
-                // TODO: this not works withs nested elements
-                if ($element instanceof Upload and ! $this->hasHtmlAttribute('enctype')) {
+                // Try to get nested - will be implemented
+                if ($element instanceof Upload && ! $this->hasHtmlAttribute('enctype')) {
                     $this->setHtmlAttribute('enctype', 'multipart/form-data');
                 }
             });
@@ -237,7 +236,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setId($id)
     {
-        if (is_null($this->id) and ! is_null($id) and ($model = $this->getRepository()->find($id))) {
+        if (is_null($this->id) && ! is_null($id) && ($model = $this->getRepository()->find($id))) {
             $this->id = $id;
 
             parent::setModel($model);
@@ -254,7 +253,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     {
         $class = $this->class;
 
-        if (is_null($class) and $this->getModel() instanceof Model) {
+        if (is_null($class) && $this->getModel() instanceof Model) {
             $class = $this->getModel();
         }
 

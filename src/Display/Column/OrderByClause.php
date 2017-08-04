@@ -71,7 +71,7 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * TODO: EagerLoad.
+     * Make EagerLoad.
      */
     protected function eagerLoad()
     {
@@ -87,7 +87,7 @@ class OrderByClause implements OrderByClauseInterface
         $relations = collect(explode('.', $this->name));
 
         //Without Eager Load
-        //TODO: With Eager Load
+        //With Eager Load
         if ($relations->count() == 2) {
             $model = $query->getModel();
             $relation = $relations->first();
@@ -98,7 +98,7 @@ class OrderByClause implements OrderByClauseInterface
                 $relationClass = $model->{$relation}();
                 $relationModel = $relationClass->getRelated();
 
-                call_user_func([$this, implode('', [class_basename(get_class($relationClass)), 'Load'])],
+                call_user_func([$this, implode('', ['load', class_basename(get_class($relationClass))])],
                     $relations, $relationClass, $relationModel, $model, $query, $direction);
             }
         }
@@ -113,7 +113,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param Builder $query
      * @param $direction
      */
-    protected function HasOneLoad(
+    protected function loadHasOne(
         Collection $relations,
         HasOneOrMany $relationClass,
         Model $relationModel,
@@ -121,7 +121,7 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
-        $this->HasOneOrManyLoad($relations, $relationClass, $relationModel, $model, $query, $direction);
+        $this->loadHasOneOrMany($relations, $relationClass, $relationModel, $model, $query, $direction);
     }
 
     /**
@@ -133,7 +133,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param Builder $query
      * @param $direction
      */
-    protected function HasManyLoad(
+    protected function loadHasMany(
         Collection $relations,
         HasOneOrMany $relationClass,
         Model $relationModel,
@@ -141,7 +141,7 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
-        $this->HasOneOrManyLoad($relations, $relationClass, $relationModel, $model, $query, $direction);
+        $this->loadHasOneOrMany($relations, $relationClass, $relationModel, $model, $query, $direction);
     }
 
     /**
@@ -153,7 +153,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param Builder $query
      * @param $direction
      */
-    protected function HasOneOrManyLoad(
+    protected function loadHasOneOrMany(
         Collection $relations,
         HasOneOrMany $relationClass,
         Model $relationModel,
@@ -183,7 +183,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param $direction
      * @return array
      */
-    protected function BelongsToLoad(
+    protected function loadBelongsTo(
         Collection $relations,
         BelongsTo $relationClass,
         Model $relationModel,

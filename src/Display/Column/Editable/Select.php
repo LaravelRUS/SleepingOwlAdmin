@@ -49,7 +49,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } elseif (($options instanceof Model) or is_string($options)) {
+        } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
     }

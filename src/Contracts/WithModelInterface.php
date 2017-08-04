@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
-interface WithModel
+interface WithModelInterface
 {
     /**
      * @param Model $model

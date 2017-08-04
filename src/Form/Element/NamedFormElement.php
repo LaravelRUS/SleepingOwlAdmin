@@ -366,7 +366,7 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-        if (is_null($model) or ! $model->exists) {
+        if (is_null($model) || ! $model->exists) {
             return $value;
         }
 
@@ -410,7 +410,7 @@ abstract class NamedFormElement extends FormElement
             if ($count === 2) {
                 $attribute = $model->getAttribute($relation);
 
-                if (! empty($attribute) or is_null($value)) {
+                if (! empty($attribute) || is_null($value)) {
                     return $attribute;
                 }
             }

@@ -253,7 +253,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             return;
         }
 
-        $query->where(function ($query) use ($search) {
+        $query->where(function (Builder $query) use ($search) {
             $columns = $this->getColumns()->all();
 
             foreach ($columns as $column) {

@@ -2,6 +2,6 @@
 
 namespace SleepingOwl\Admin\Contracts\Template;
 
-interface Breadcrumbs
+interface BreadcrumbsInterface
 {
 }

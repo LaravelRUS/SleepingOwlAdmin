@@ -279,7 +279,7 @@ class Admin implements AdminInterface
         $aliases = [
             'sleeping_owl' => ['SleepingOwl\Admin\Admin', 'SleepingOwl\Admin\Contracts\AdminInterface'],
             'sleeping_owl.template' => ['SleepingOwl\Admin\Contracts\Template\TemplateInterface'],
-            'sleeping_owl.breadcrumbs' => ['SleepingOwl\Admin\Contracts\Template\Breadcrumbs'],
+            'sleeping_owl.breadcrumbs' => ['SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface'],
             'sleeping_owl.widgets' => ['SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface', 'SleepingOwl\Admin\Widgets\WidgetsRegistry'],
             'sleeping_owl.message' => ['SleepingOwl\Admin\Widgets\Messages\MessageStack'],
             'sleeping_owl.navigation' => ['SleepingOwl\Admin\Navigation', 'SleepingOwl\Admin\Contracts\Navigation\NavigationInterface'],

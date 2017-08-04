@@ -42,7 +42,7 @@ abstract class Extension implements DisplayExtensionInterface
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        // TODO: Implement modifyQuery() method.
+        //Implement modifyQuery() method.
     }
 
     /**

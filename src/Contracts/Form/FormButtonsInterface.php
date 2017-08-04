@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Contracts\Form;
 
-use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
-interface FormButtonsInterface extends Renderable, Arrayable, WithModel
+interface FormButtonsInterface extends Renderable, Arrayable, WithModelInterface
 {
     /**
      * @param ModelConfigurationInterface $modelConfiguration

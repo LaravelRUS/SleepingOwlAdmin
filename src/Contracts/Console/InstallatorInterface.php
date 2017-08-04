@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts\Console;
 
-interface Installator
+interface InstallatorInterface
 {
     /**
      * Вывод информации о текущей конфигурации.

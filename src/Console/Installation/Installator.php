@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Console\Installation;
 
 use Illuminate\Config\Repository;
-use SleepingOwl\Admin\Contracts\Console\Installator as InstallatorContract;
+use SleepingOwl\Admin\Contracts\Console\InstallatorInterface as InstallatorContract;
 
 abstract class Installator implements InstallatorContract
 {

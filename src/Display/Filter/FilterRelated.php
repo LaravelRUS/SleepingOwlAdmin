@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class FilterRelated extends FilterField
 {
     /**
-     * TODO: возможно стоит изменить название параметра на $field.
      * @var string
      */
     protected $display = 'title';

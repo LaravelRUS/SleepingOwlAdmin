@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
@@ -40,7 +41,9 @@ class FormElementController extends Controller
         }
 
         /** @var DependentSelect $element */
-        if (is_null($element = $form->getElement($field))) {
+        $element = $form->getElement($field);
+
+        if (is_null($element)) {
             return new JsonResponse([
                 'message' => 'Element not found',
             ], 404);
@@ -94,7 +97,9 @@ class FormElementController extends Controller
         }
 
         /** @var DependentSelect $element */
-        if (is_null($element = $form->getElement($field))) {
+        $element = $form->getElement($field);
+
+        if (is_null($element)) {
             return new JsonResponse([
                 'message' => 'Element not found',
             ], 404);
@@ -107,7 +112,7 @@ class FormElementController extends Controller
             return new JsonResponse(
                 $model::where($request->search, 'like', "%{$request->q}%")
                     ->get()
-                    ->map(function ($item) use ($field) {
+                    ->map(function (Model $item) use ($field) {
                         return [
                             'tag_name'    => $item->{$field},
                             'id'          => $item->id,
@@ -161,7 +166,7 @@ class FormElementController extends Controller
             return new JsonResponse(
                 $model::where($request->search, 'like', "%{$request->q}%")
                     ->get()
-                    ->map(function ($item) use ($field) {
+                    ->map(function (Model $item) use ($field) {
                         return [
                             'tag_name'    => $item->{$field},
                             'id'          => $item->id,

@@ -195,7 +195,7 @@ class MultiSelect extends Select
         array $values
     ) {
         foreach ($values as $i => $value) {
-            if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
+            if (! array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
                 $model = clone $this->getModelForOptions();
                 $model->{$this->getDisplay()} = $value;
                 $model->save();

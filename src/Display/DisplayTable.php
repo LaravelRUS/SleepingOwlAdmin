@@ -71,7 +71,7 @@ class DisplayTable extends Display
         parent::initialize();
 
         if ($this->getModelConfiguration()->isRestorableModel()) {
-            $this->setApply(function ($q) {
+            $this->setApply(function (Builder $q) {
                 return $q->withTrashed();
             });
         }
