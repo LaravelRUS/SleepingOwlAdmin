@@ -15,3 +15,4 @@
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
     @include(AdminTemplate::getViewPath('form.element.partials.errors'))
 </div>
+

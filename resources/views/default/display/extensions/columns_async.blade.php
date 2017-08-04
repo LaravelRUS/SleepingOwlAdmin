@@ -16,3 +16,4 @@
     @yield('table.header')
     @yield('table.footer')
 </table>
+
