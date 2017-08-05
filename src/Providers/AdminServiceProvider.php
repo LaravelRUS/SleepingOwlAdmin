@@ -2,8 +2,6 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use FilesystemIterator;
-use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\AliasBinder;
@@ -14,6 +12,7 @@ use Illuminate\Foundation\Application;
 use SleepingOwl\Admin\Wysiwyg\Manager;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Templates\Assets;
+use Symfony\Component\Finder\SplFileInfo;
 use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
 use SleepingOwl\Admin\Exceptions\TemplateException;
@@ -28,7 +27,6 @@ use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
-use Symfony\Component\Finder\SplFileInfo;
 
 class AdminServiceProvider extends ServiceProvider
 {
