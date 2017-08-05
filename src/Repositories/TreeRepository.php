@@ -170,14 +170,14 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     protected function detectType()
     {
         $model = $this->getModel();
-
+        $traits = trait_uses_recursive($model);
         $type = SimpleTreeType::class;
 
         if ($model instanceof \Baum\Node) {
             $type = BaumNodeType::class;
         } elseif (class_exists('Kalnoy\Nestedset\Node') && $model instanceof \Kalnoy\Nestedset\Node) {
             $type = KalnoyNestedsetType::class;
-        } elseif (function_exists('trait_uses_recursive') && $traits = trait_uses_recursive($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+        } elseif (function_exists('trait_uses_recursive') && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
         } elseif ($traits = class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
