@@ -28,6 +28,7 @@ use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use Symfony\Component\Finder\SplFileInfo;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -198,7 +199,7 @@ class AdminServiceProvider extends ServiceProvider
             ->notName('routes.php')
             ->notName('navigation.php')
             ->in($directory)
-            ->sort(function (FilesystemIterator $a) {
+            ->sort(function (SplFileInfo $a) {
                 return $a->getFilename() != 'bootstrap.php';
             });
 
