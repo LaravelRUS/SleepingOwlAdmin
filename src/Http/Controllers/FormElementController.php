@@ -11,7 +11,6 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormElementController extends Controller
 {
-
     /**
      * @param ModelConfigurationInterface $model
      * @param null $id
