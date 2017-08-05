@@ -31,8 +31,10 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     public function renderIfExists($name = null)
     {
         if (is_null($name)) {
-            list($name, $params) = $this->currentRoute->get();
+            $params = $this->currentRoute->get();
+            $name = $params[0];
         }
+
 
         if (! $this->exists($name)) {
             return '';

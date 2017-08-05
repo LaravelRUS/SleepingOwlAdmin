@@ -1,17 +1,5 @@
 <?php
 
-if (! function_exists('resources_url')) {
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    function resources_url($path)
-    {
-        return app(\SleepingOwl\Admin\Contracts\Template\TemplateInterface::class)->assetPath($path);
-    }
-}
-
 /*
 |--------------------------------------------------------------------------
 | Wysiwyg Editors
