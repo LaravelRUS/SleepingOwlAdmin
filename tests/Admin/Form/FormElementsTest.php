@@ -3,9 +3,9 @@
 use Mockery as m;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormElementsTest extends TestCase
