@@ -3,7 +3,7 @@
 use Mockery as m;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModel;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
@@ -253,7 +253,7 @@ abstract class FormElementsTestInitializableMock implements Initializable
 {
 }
 
-abstract class FormElementsTestInitializableMockWithoutInitializable implements WithModel, Arrayable
+abstract class FormElementsTestInitializableMockWithoutInitializable implements WithModelInterface, Arrayable
 {
 }
 

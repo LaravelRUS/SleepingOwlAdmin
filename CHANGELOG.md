@@ -424,7 +424,7 @@
  * Collection `SleepingOwl\Admin\Form\FormElementsCollection`
  * Collection `SleepingOwl\Admin\Display\DisplayTabsCollection`
  * Collection `SleepingOwl\Admin\Display\ExtensionCollection`
- * Interface `SleepingOwl\Admin\Contracts\WithModel`
+ * Interface `SleepingOwl\Admin\Contracts\WithModelInterface`
  * Admin Element Factories
 
 	```php
