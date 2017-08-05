@@ -4,9 +4,11 @@ namespace SleepingOwl\Admin\Display\Column;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\DateFormat;
 
 class DateTime extends NamedColumn
 {
+    use DateFormat;
     /**
      * Datetime format.
      * @var string
@@ -33,54 +35,6 @@ class DateTime extends NamedColumn
     {
         parent::setModel($model);
         $this->setHtmlAttribute('data-value', $this->getModelValue());
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFormat()
-    {
-        if (is_null($this->format)) {
-            $this->format = config('sleeping_owl.datetimeFormat');
-        }
-
-        return $this->format;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTimezone()
-    {
-        if (is_null($this->timezone)) {
-            $this->timezone = config('sleeping_owl.timezone');
-        }
-
-        return $this->timezone;
-    }
-
-    /**
-     * @param string $format
-     *
-     * @return $this
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    /**
-     * @param string $timezone
-     *
-     * @return $this
-     */
-    public function setTimezone($timezone)
-    {
-        $this->timezone = $timezone;
 
         return $this;
     }
