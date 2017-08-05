@@ -83,8 +83,8 @@ class UploadController extends Controller
     {
         //dropZone && CKEDITOR fileBrowser && CKEDITOR drag&drop
         /** @var UploadedFile $file */
-        $file = $request->image ?? $request->file;
-        $file = $file ?? $request->upload;
+        $file = $request->image ? $request->image : $request->file;
+        $file = $file ? $file : $request->upload;
         if (is_array($file)) {
             $file = $file[0];
         }
