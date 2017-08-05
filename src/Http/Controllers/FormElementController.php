@@ -153,7 +153,9 @@ class FormElementController extends Controller
         }
 
         /** @var DependentSelect $element */
-        if (is_null($element = $form->getElement($field))) {
+        $element = $form->getElement($field);
+
+        if (is_null($element)) {
             return new JsonResponse([
                 'message' => 'Element not found',
             ], 404);
