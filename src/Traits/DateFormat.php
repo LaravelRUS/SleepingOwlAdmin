@@ -1,15 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Aios
+ * User: Aios.
  */
-
 namespace SleepingOwl\Admin\Traits;
-
 
 trait DateFormat
 {
-
     /**
      * @return string
      */
@@ -53,5 +50,4 @@ trait DateFormat
 
         return $this;
     }
-
 }

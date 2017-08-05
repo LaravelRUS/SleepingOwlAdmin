@@ -35,7 +35,6 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
             $name = $params[0];
         }
 
-
         if (! $this->exists($name)) {
             return '';
         }
