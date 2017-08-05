@@ -1,4 +1,4 @@
 <?php
 
 // PackageManager::load('admin-default')
-//    ->css('extend', resources_url('css/extend.css'));
+//    ->css('extend', public_path('packages/sleepingowl/default/css/extend.css'));
