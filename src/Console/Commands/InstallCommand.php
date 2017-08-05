@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use SleepingOwl\Admin\Console\Installation;
-use SleepingOwl\Admin\Contracts\Console\Installator;
+use SleepingOwl\Admin\Contracts\Console\InstallatorInterface as Installator;
 
 class InstallCommand extends Installation\Command
 {
