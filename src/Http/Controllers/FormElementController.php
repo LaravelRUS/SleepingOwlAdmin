@@ -92,37 +92,7 @@ class FormElementController extends Controller
      */
     public function multiselectSearch(Request $request, ModelConfigurationInterface $model, $field, $id = null)
     {
-        $form = $this->getModelLogic($model, $id);
-
-        if ($form instanceof JsonResponse) {
-            return $form;
-        }
-
-        /** @var DependentSelect $element */
-        $element = $form->getElement($field);
-
-        if (is_null($element)) {
-            return new JsonResponse([
-                'message' => 'Element not found',
-            ], 404);
-        }
-
-        $field = $request->field;
-        $model = new $request->model;
-
-        if ($request->q && is_object($model)) {
-            return new JsonResponse(
-                $model::where($request->search, 'like', "%{$request->q}%")
-                    ->get()
-                    ->map(function (Model $item) use ($field) {
-                        return [
-                            'tag_name'    => $item->{$field},
-                            'id'          => $item->id,
-                            'custom_name' => $item->custom_name,
-                        ];
-                    })
-            );
-        }
+        return $this->selectSearch($request, $model, $field, $id);
     }
 
     /**
