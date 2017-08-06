@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\Console\InstallatorInterface as Installator;
 
 class InstallCommand extends Installation\Command
 {
-
     /**
      * The name and signature of the console command.
      *
