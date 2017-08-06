@@ -7,6 +7,7 @@ use SleepingOwl\Admin\Contracts\Console\InstallatorInterface as Installator;
 
 class InstallCommand extends Installation\Command
 {
+
     /**
      * The name and signature of the console command.
      *
@@ -31,16 +32,14 @@ class InstallCommand extends Installation\Command
             Installation\CreateRoutesFile::class,
             Installation\CreateSectionServiceProvider::class,
             Installation\CreatePublicDirectory::class,
-        ])
-            ->map(function (Installator $installer) {
-                return new $installer($this, $this->config);
-            })
-            ->filter(function (Installator $installer) {
-                return $this->option('force') ? true : ! $installer->installed();
-            })->each(function (Installator $installer) {
-                $installer->install();
-                $installer->showInfo();
-            });
+        ])->map(function ($installer) {
+            return new $installer($this, $this->config);
+        })->filter(function (Installator $installer) {
+            return $this->option('force') ? true : ! $installer->installed();
+        })->each(function (Installator $installer) {
+            $installer->install();
+            $installer->showInfo();
+        });
 
         $this->comment('SleepingOwl Framework successfully installed.');
     }
