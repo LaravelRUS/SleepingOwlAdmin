@@ -1,21 +1,29 @@
-*Note: for support questions, please use gitter: https://gitter.im/LaravelRUS/SleepingOwlAdmin
+*en*
+## Version in Composer.json
 
-Read this before asking (Прочитай, прежде чем задавать вопросы):
+## Steps to reproduce
 
- - http://programmers.stackexchange.com/help/how-to-ask
- - https://www.propublica.org/nerds/item/how-to-ask-programming-questions
- - https://habrahabr.ru/post/127967/
- - https://mkdev.me/posts/kak-zadavat-voprosy-mentoru-ili-starshemu-razrabotchiku
+1.
+2.
+3.
 
-Do you want to request a feature or report a bug?
+## What is expected?
+1.
 
-What is the current behavior?
-If the current behavior is a bug, please provide the steps to reproduce and if possible show log error for this bug.
+## What is actually happening?
+1.
+_______________________________________________________________
+*ru*
+## Версия в композере
 
-What is the expected behavior?
+## Что надо сделать что бы увидеть ошибку?
 
-What is the motivation / use case for changing the behavior?
+1.
+2.
+3.
 
-Which versions of SleepingOwl and Laravel are affected by this issue?
+## Что должно сработать?
+1.
 
-Other information (e.g. code, stacktraces, related issues, suggestions how to fix)
+## Что сработало?
+1.
