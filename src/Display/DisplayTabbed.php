@@ -33,7 +33,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     {
         $this->elements = new DisplayTabsCollection();
 
-        if (is_array($tabs) or is_callable($tabs)) {
+        if (is_array($tabs) || is_callable($tabs)) {
             $this->setTabs($tabs);
         }
     }
@@ -71,7 +71,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
             return $tab->isActive();
         })->count();
 
-        if ($activeTabs === 0 and $firstTab = $this->getTabs()->first()) {
+        if ($activeTabs === 0 && $firstTab = $this->getTabs()->first()) {
             $firstTab->setActive(true);
         }
     }

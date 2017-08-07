@@ -29,12 +29,25 @@ Admin.Modules.register('display.datatables', () => {
             params = $this.data('attributes') || {},
             url = $this.data('url'),
             payload = $this.data('payload'),
-            searching = $this.data('display-searching')
+            search = $this.data('display-search') || false,
+            dtlength = $this.data('display-dtlength') || false;
 
         if (url && url.length > 0) {
             params.serverSide = true;
             params.processing = true;
-            params.searching  = searching;
+
+            //<"H"lfr>t<"F"ip>
+            params.sDom = '<"H"';
+
+            if(dtlength){
+                params.sDom += 'l';
+            }
+
+            if(search){
+                params.sDom += 'f';
+            }
+
+            params.sDom += 'r>t<"F"ip>';
 
             params.ajax = {
                 url: url,
@@ -65,6 +78,14 @@ Admin.Modules.register('display.datatables', () => {
 
         $("#filters-exec").on('click', function () {
             table.api().draw();
+        });
+
+        $("#filters-cancel").on('click', function () {
+            $(".display-filters td[data-index] input").val(null);
+
+            let selector = $(".display-filters td[data-index] select");
+            selector.val(null);
+            selector.trigger('change');
         });
 
         $(".display-filters td[data-index] input").on('keyup', function(e){
@@ -195,7 +216,7 @@ window.columnFilters = {
                 let $option = $(e);
 
                 if ($option.val().length) {
-                    selected.push($option.text());
+                    selected.push($option.val());
                 }
             })
 

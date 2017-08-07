@@ -4,8 +4,12 @@ namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Support\Str;
 use Mockery\Matcher\Closure;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 class OrderByClause implements OrderByClauseInterface
@@ -67,7 +71,7 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * TODO: EagerLoad.
+     * Make EagerLoad.
      */
     protected function eagerLoad()
     {
@@ -83,7 +87,7 @@ class OrderByClause implements OrderByClauseInterface
         $relations = collect(explode('.', $this->name));
 
         //Without Eager Load
-        //TODO: With Eager Load
+        //With Eager Load
         if ($relations->count() == 2) {
             $model = $query->getModel();
             $relation = $relations->first();
@@ -93,20 +97,113 @@ class OrderByClause implements OrderByClauseInterface
                 /** @var Relation $relationClass */
                 $relationClass = $model->{$relation}();
                 $relationModel = $relationClass->getRelated();
-                $foreignKey = $relationClass->getOwnerKey();
-                $ownerKey = $relationClass->getForeignKey();
-                $ownerTable = $model->getTable();
-                $foreignTable = $relationModel->getTable();
 
-                $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
-                $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-                $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
-
-                $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
-                    ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-                    ->orderBy($foreignColumn, $direction);
+                call_user_func([$this, implode('', ['load', class_basename(get_class($relationClass))])],
+                    $relations, $relationClass, $relationModel, $model, $query, $direction);
             }
         }
+    }
+
+    /**
+     * Load HasOneOrMany keys.
+     * @param Collection $relations
+     * @param HasOneOrMany $relationClass
+     * @param Model $relationModel
+     * @param Model $model
+     * @param Builder $query
+     * @param $direction
+     */
+    protected function loadHasOne(
+        Collection $relations,
+        HasOneOrMany $relationClass,
+        Model $relationModel,
+        Model $model,
+        Builder $query,
+        $direction
+    ) {
+        $this->loadHasOneOrMany($relations, $relationClass, $relationModel, $model, $query, $direction);
+    }
+
+    /**
+     * Load HasMany keys.
+     * @param Collection $relations
+     * @param HasOneOrMany $relationClass
+     * @param Model $relationModel
+     * @param Model $model
+     * @param Builder $query
+     * @param $direction
+     */
+    protected function loadHasMany(
+        Collection $relations,
+        HasOneOrMany $relationClass,
+        Model $relationModel,
+        Model $model,
+        Builder $query,
+        $direction
+    ) {
+        $this->loadHasOneOrMany($relations, $relationClass, $relationModel, $model, $query, $direction);
+    }
+
+    /**
+     * Load HasOneOrMany keys.
+     * @param Collection $relations
+     * @param HasOneOrMany $relationClass
+     * @param Model $relationModel
+     * @param Model $model
+     * @param Builder $query
+     * @param $direction
+     */
+    protected function loadHasOneOrMany(
+        Collection $relations,
+        HasOneOrMany $relationClass,
+        Model $relationModel,
+        Model $model,
+        Builder $query,
+        $direction
+    ) {
+        $ownerTable = $model->getTable();
+        $foreignTable = $relationModel->getTable();
+
+        $ownerColumn = $relationClass->getQualifiedForeignKeyName();
+        $foreignColumn = $relationClass->getQualifiedParentKeyName();
+        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
+
+        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
+            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
+            ->orderBy($sortedColumn, $direction);
+    }
+
+    /**
+     * Load keys for BelongsTo.
+     * @param Collection $relations
+     * @param BelongsTo $relationClass
+     * @param Model $relationModel
+     * @param Model $model
+     * @param Builder $query
+     * @param $direction
+     * @return array
+     */
+    protected function loadBelongsTo(
+        Collection $relations,
+        BelongsTo $relationClass,
+        Model $relationModel,
+        Model $model,
+        Builder $query,
+        $direction
+    ) {
+        $foreignKey = $relationClass->getOwnerKey();
+        $ownerKey = $relationClass->getForeignKey();
+
+        $ownerTable = $model->getTable();
+        $foreignTable = $relationModel->getTable();
+
+        $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
+        $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
+        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
+
+        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
+            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
+            ->orderBy($sortedColumn, $direction);
     }
 
     /**

@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Form\FormElements;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Form\Element\Hidden;
 use SleepingOwl\Admin\Form\Columns\Columns;
@@ -18,6 +18,7 @@ use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
@@ -27,7 +28,7 @@ use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
-    use VisibleCondition, \SleepingOwl\Admin\Traits\Renderable;
+    use VisibleCondition, \SleepingOwl\Admin\Traits\Renderable, HtmlAttributes;
 
     /**
      * @var string
@@ -85,6 +86,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         if (! is_null($badge)) {
             $this->setBadge($badge);
         }
+
+        $this->setHtmlAttribute('role', 'presentation');
     }
 
     /**
@@ -151,6 +154,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         $this->active = (bool) $active;
 
+        if ($active) {
+            $this->setHtmlAttribute('class', 'active');
+        }
+
         return $this;
     }
 
@@ -216,7 +223,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getName()
     {
-        if (is_null($this->name) and is_null($this->getLabel())) {
+        if (is_null($this->name) && is_null($this->getLabel())) {
             throw new DisplayTabException('You should set name or label');
         }
 
@@ -358,7 +365,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function setModel(Model $model)
     {
-        if (($content = $this->getContent()) instanceof WithModel) {
+        if (($content = $this->getContent()) instanceof WithModelInterface) {
             $content->setModel($model);
         }
 
@@ -370,7 +377,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      */
     public function getModel()
     {
-        if (($content = $this->getContent()) instanceof WithModel) {
+        if (($content = $this->getContent()) instanceof WithModelInterface) {
             return $content->getModel();
         }
     }
@@ -519,6 +526,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             'name'   => $this->getName(),
             'icon'   => $this->getIcon(),
             'badge'  => $this->getBadge(),
+            'arrayAttributes' => $this->getHtmlAttributes(),
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 }

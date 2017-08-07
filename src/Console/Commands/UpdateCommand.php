@@ -21,18 +21,8 @@ class UpdateCommand extends Installation\Command
 
     protected function runInstaller()
     {
-        collect([
-            Installation\PublishAssets::class,
-        ])
-            ->map(function ($installer) {
-                return new $installer($this, $this->config);
-            })
-            ->filter(function ($installer) {
-                return $this->hasOption('force') ? true : ! $installer->installed();
-            })->each(function ($installer) {
-                $installer->install();
-                $installer->showInfo();
-            });
+        $this->call('vendor:publish', ['--tag' => 'assets', '--force']);
+        $this->callSilent('sleepingowl:ide:generate');
 
         $this->comment('SleepingOwl Framework successfully updated.');
     }

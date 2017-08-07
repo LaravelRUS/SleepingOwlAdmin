@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Templates;
 use KodiCMS\Assets\Html;
 use KodiCMS\Assets\Assets as BaseAssets;
 use KodiCMS\Assets\Contracts\AssetElementInterface;
-use SleepingOwl\Admin\Contracts\Template\Assets as AssetsContract;
+use SleepingOwl\Admin\Contracts\Template\AssetsInterface as AssetsContract;
 
 class Assets extends BaseAssets implements AssetsContract
 {

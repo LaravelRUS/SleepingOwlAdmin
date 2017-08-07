@@ -4,14 +4,22 @@ namespace SleepingOwl\Admin\Display\Column;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\DateFormat;
 
 class DateTime extends NamedColumn
 {
+    use DateFormat;
     /**
      * Datetime format.
      * @var string
      */
     protected $format;
+
+    /**
+     * Datetime timezone.
+     * @var string
+     */
+    protected $timezone;
 
     /**
      * @var string
@@ -32,31 +40,7 @@ class DateTime extends NamedColumn
     }
 
     /**
-     * @return string
-     */
-    public function getFormat()
-    {
-        if (is_null($this->format)) {
-            $this->format = config('sleeping_owl.datetimeFormat');
-        }
-
-        return $this->format;
-    }
-
-    /**
-     * @param string $format
-     *
-     * @return $this
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-
-        return $this;
-    }
-
-    /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return array
      */
     public function toArray()
     {
@@ -80,7 +64,7 @@ class DateTime extends NamedColumn
                 $date = Carbon::parse($date);
             }
 
-            $date = $date->format($this->getFormat());
+            $date = $date->timezone($this->getTimezone())->format($this->getFormat());
         }
 
         return $date;

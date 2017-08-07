@@ -2,15 +2,22 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
-class Page extends \KodiComponents\Navigation\Page
+class Page extends \KodiComponents\Navigation\Page implements PageInterface
 {
     /**
      * Menu item related model class.
      * @var string
      */
     protected $model;
+
+    /**
+     * Menu item by url id.
+     * @var string
+     */
+    protected $aliasId;
 
     /**
      * @param string|null $modelClass
@@ -24,6 +31,25 @@ class Page extends \KodiComponents\Navigation\Page
         if ($this->hasModel()) {
             $this->setIcon($this->getModelConfiguration()->getIcon());
         }
+    }
+
+    /**
+     * Set Alias Id.
+     */
+    public function setAliasId()
+    {
+        $url = parse_url($this->getUrl(), PHP_URL_PATH);
+        if ($url) {
+            $this->aliasId = md5($url);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAliasId()
+    {
+        return $this->aliasId;
     }
 
     /**
@@ -43,7 +69,7 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function hasModel()
     {
-        return ! is_null($this->model) and class_exists($this->model);
+        return ! is_null($this->model) && class_exists($this->model);
     }
 
     /**
@@ -51,7 +77,7 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function getId()
     {
-        if (is_null($this->id) and $this->hasModel()) {
+        if (is_null($this->id) && $this->hasModel()) {
             return $this->model;
         }
 
@@ -63,7 +89,7 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function getTitle()
     {
-        if (is_null($this->title) and $this->hasModel()) {
+        if (is_null($this->title) && $this->hasModel()) {
             return $this->getModelConfiguration()->getTitle();
         }
 
@@ -75,7 +101,7 @@ class Page extends \KodiComponents\Navigation\Page
      */
     public function getUrl()
     {
-        if (is_null($this->url) and $this->hasModel()) {
+        if (is_null($this->url) && $this->hasModel()) {
             return $this->getModelConfiguration()->getDisplayUrl();
         }
 
@@ -83,7 +109,7 @@ class Page extends \KodiComponents\Navigation\Page
     }
 
     /**
-     * @return Closure
+     * @return \Closure
      */
     public function getAccessLogic()
     {

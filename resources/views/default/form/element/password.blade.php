@@ -9,6 +9,7 @@
     <input {!! $attributes !!}
            value=""
            @if($readonly) readonly @endif
+            autocomplete="off"
     >
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

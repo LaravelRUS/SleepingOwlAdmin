@@ -274,15 +274,13 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
-        if ($this->getSaveCallback()) {
-            $callable = $this->getSaveCallback();
-
-            return call_user_func($callable, [$file, $path, $filename, $settings]);
+        if (is_callable($callback = $this->getSaveCallback())) {
+            return $callback($file, $path, $filename, $settings);
         }
 
         $file->move($path, $filename);
 
-        //TODO: Make sense take s3, rackspace or some cloud storage url
+        //S3 Implement
         $value = $path.'/'.$filename;
 
         return ['path' => asset($value), 'value' => $value];

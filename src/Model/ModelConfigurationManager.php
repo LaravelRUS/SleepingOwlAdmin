@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
-use Illuminate\Support\Facades\URL;
+use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
@@ -336,7 +336,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function hasCustomControllerClass()
     {
-        return ! is_null($controller = $this->getControllerClass()) and class_exists($controller);
+        return ! is_null($controller = $this->getControllerClass()) && class_exists($controller);
     }
 
     /**
@@ -358,7 +358,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getCancelUrl(array $parameters = [])
     {
-        return URL::previous() ?: $this->getDisplayUrl($parameters);
+        return $this->getDisplayUrl($parameters);
     }
 
     /**

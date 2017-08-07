@@ -4,6 +4,8 @@ namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
 interface ModelConfigurationInterface
 {
@@ -11,6 +13,17 @@ interface ModelConfigurationInterface
      * @return RepositoryInterface
      */
     public function getRepository();
+
+    /**
+     * @return Collection
+     */
+    public function getBreadCrumbs();
+
+    /**
+     * @param $breadcrumb
+     * @return mixed
+     */
+    public function addBreadCrumb($breadcrumb);
 
     /**
      * @return string

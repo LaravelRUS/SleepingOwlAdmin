@@ -94,6 +94,7 @@
                 }
             }
             $el.trigger('depdrop.init');
+            $el.trigger('select2:select');
         },
         parseDisabled: function () {
             var self = this;

@@ -1,7 +1,7 @@
 @extends(AdminTemplate::getViewPath('_layout.base'))
 
 @section('content')
-	<div class="wrapper">
+	<div class="wrapper" id="vueApp">
 		<header class="main-header">
 			@include(AdminTemplate::getViewPath('_partials.header'))
 		</header>

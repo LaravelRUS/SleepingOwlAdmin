@@ -36,50 +36,99 @@ class AliasesServiceProvider extends ServiceProvider
 
     protected function registerFormButtons()
     {
-        $this->app->instance('sleeping_owl.form_buttons', $this->app->make(FormButtonsFactory::class));
-        $this->app->alias('sleeping_owl.form_buttons', FormButtonsFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.form_buttons',
+            $this->app->make(FormButtonsFactory::class)
+        );
+        $this->app->alias(
+            'sleeping_owl.form_buttons',
+            FormButtonsFactoryInterface::class
+        );
     }
 
     protected function registerColumnFilters()
     {
-        $this->app->instance('sleeping_owl.column_filter', $this->app->make(DisplayColumnFilterFactory::class));
-        $this->app->alias('sleeping_owl.column_filter', DisplayColumnFilterFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.column_filter',
+            $this->app->make(DisplayColumnFilterFactory::class)
+        );
+        $this->app->alias(
+            'sleeping_owl.column_filter',
+            DisplayColumnFilterFactoryInterface::class
+        );
     }
 
     protected function registerDisplays()
     {
-        $this->app->instance('sleeping_owl.display', $this->app->make(DisplayFactory::class));
-        $this->app->alias('sleeping_owl.display', DisplayFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.display',
+            $this->app->make(DisplayFactory::class)
+        );
+        $this->app->alias(
+            'sleeping_owl.display',
+            DisplayFactoryInterface::class
+        );
     }
 
     protected function registerColumns()
     {
-        $this->app->instance('sleeping_owl.table.column', $this->app->make(DisplayColumnFactory::class));
-        $this->app->alias('sleeping_owl.table.column', DisplayColumnFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.table.column',
+            $this->app->make(DisplayColumnFactory::class)
+        );
+        $this->app->alias(
+            'sleeping_owl.table.column',
+            DisplayColumnFactoryInterface::class
+        );
     }
 
     protected function registerColumnEditable()
     {
-        $this->app->instance('sleeping_owl.table.column.editable',
-            $this->app->make(DisplayColumnEditableFactory::class));
-        $this->app->alias('sleeping_owl.table.column.editable', DisplayColumnEditableFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.table.column.editable',
+            $this->app->make(DisplayColumnEditableFactory::class)
+        );
+
+        $this->app->alias(
+            'sleeping_owl.table.column.editable',
+            DisplayColumnEditableFactoryInterface::class
+        );
     }
 
     protected function registerFormElements()
     {
-        $this->app->instance('sleeping_owl.form.element', $this->app->make(FormElementFactory::class));
-        $this->app->alias('sleeping_owl.form.element', FormElementFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.form.element',
+            $this->app->make(FormElementFactory::class)
+        );
+        $this->app->alias(
+            'sleeping_owl.form.element',
+            FormElementFactoryInterface::class
+        );
     }
 
     protected function registerForms()
     {
-        $this->app->instance('sleeping_owl.form', $this->app->make(FormFactory::class));
-        $this->app->alias('sleeping_owl.form', FormFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.form',
+            $this->app->make(FormFactory::class)
+        );
+        $this->app->alias(
+            'sleeping_owl.form',
+            FormFactoryInterface::class
+        );
     }
 
     protected function registerFilters()
     {
-        $this->app->instance('sleeping_owl.display.filter', $this->app->make(DisplayFilterFactory::class));
-        $this->app->alias('sleeping_owl.display.filter', DisplayFilterFactoryInterface::class);
+        $this->app->instance(
+            'sleeping_owl.display.filter',
+            $this->app->make(DisplayFilterFactory::class)
+        );
+
+        $this->app->alias(
+            'sleeping_owl.display.filter',
+            DisplayFilterFactoryInterface::class
+        );
     }
 }

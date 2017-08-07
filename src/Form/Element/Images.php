@@ -37,6 +37,25 @@ class Images extends Image
     }
 
     /**
+     * @return string
+     */
+    public function getValueFromModel()
+    {
+        $images = $value = parent::getValueFromModel();
+
+        if (is_null($value)) {
+            $images = [];
+        } elseif (is_string($value)
+                   && (($images = json_decode($value)) === false
+                       || is_null($images))
+        ) {
+            $images = preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
+        }
+
+        return $images;
+    }
+
+    /**
      * @param \Illuminate\Http\Request $request
      *
      * @return void
@@ -55,22 +74,5 @@ class Images extends Image
         $request->merge([$name => $value]);
 
         parent::save($request);
-    }
-
-    /**
-     * @return string
-     */
-    public function getValueFromModel()
-    {
-        $value = parent::getValueFromModel();
-        if (is_null($value)) {
-            $value = [];
-        }
-
-        if (is_string($value)) {
-            $value = preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
-        }
-
-        return $value;
     }
 }

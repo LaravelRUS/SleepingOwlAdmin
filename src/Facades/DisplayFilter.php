@@ -5,10 +5,10 @@ namespace SleepingOwl\Admin\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \SleepingOwl\Admin\Display\Filter\FilterCustom custom($name, string|\Closure|null $title, \Closure $callback)
- * @method static \SleepingOwl\Admin\Display\Filter\FilterField field($name, string|\Closure|null $title)
- * @method static \SleepingOwl\Admin\Display\Filter\FilterRelated related($name, string|\Closure|null $title)
- * @method static \SleepingOwl\Admin\Display\Filter\FilterScope scope($name, string|\Closure|null $title)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterCustom custom($name, string|\Closure|null $title = null, \Closure $callback)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterField field($name, string|\Closure|null $title = null)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterRelated related($name, string|\Closure|null $title = null)
+ * @method static \SleepingOwl\Admin\Display\Filter\FilterScope scope($name, string|\Closure|null $title = null)
  */
 class DisplayFilter extends Facade
 {

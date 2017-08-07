@@ -48,7 +48,7 @@ class Select extends BaseColumnFilter
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } elseif (($options instanceof Model) or is_string($options)) {
+        } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
 
@@ -121,7 +121,7 @@ class Select extends BaseColumnFilter
      */
     public function getOptions()
     {
-        if (! is_null($this->getModelForOptions()) and ! is_null($this->getDisplay())) {
+        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
             $this->setOptions(
                 $this->loadOptions()
             );

@@ -3,7 +3,7 @@
         @if($iconClass)<i class="fa {{ $iconClass }}"></i>@endif {{$text}}
     </button>
 @else
-    <a href="{{$url}}" class="btn btn-link">
+    <a href="{{$url}}" class="btn btn-warning">
         <i class="fa {{$iconClass}}"></i> {{ $text }}
     </a>
 @endif

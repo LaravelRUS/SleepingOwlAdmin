@@ -102,8 +102,6 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         parent::__construct();
 
-        // TODO: move tree building to extension
-        // $this->extend('tree', new Tree());
         $this->treeType = $treeType;
     }
 

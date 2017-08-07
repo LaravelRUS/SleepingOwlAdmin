@@ -11,8 +11,8 @@ use SleepingOwl\Admin\Display\Column\Text;
 use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -59,6 +59,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected $displaySearch = false;
 
     /**
+     * @var
+     */
+    protected $displayLength = false;
+
+    /**
      * @var array
      */
     protected $searchableColumns = [
@@ -98,18 +103,22 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes));
         $this->setHtmlAttribute('data-payload', json_encode($this->payload));
 
-        if ($this->getSearching()) {
-            $this->setHtmlAttribute('data-display-searching', 1);
+        if ($this->getDisplaySearch()) {
+            $this->setHtmlAttribute('data-display-search', 1);
+        }
+
+        if ($this->getDisplayLength()) {
+            $this->setHtmlAttribute('data-display-dtlength', 1);
         }
     }
 
     /**
-     * @param $searching
+     * @param bool $length
      * @return $this
      */
-    public function setSearching($searching)
+    public function setDisplayLength($length)
     {
-        $this->displaySearch = $searching;
+        $this->displayLength = $length;
 
         return $this;
     }
@@ -117,7 +126,26 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * @return bool
      */
-    public function getSearching()
+    public function getDisplayLength()
+    {
+        return $this->displayLength;
+    }
+
+    /**
+     * @param $search
+     * @return $this
+     */
+    public function setDisplaySearch($search)
+    {
+        $this->displaySearch = $search;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDisplaySearch()
     {
         return $this->displaySearch;
     }
@@ -183,7 +211,9 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $this->applySearch($query, $request);
 
         if (is_null($this->distinct)) {
-            $filteredCount = $query->count();
+            $countQuery = clone $query;
+            $countQuery->getQuery()->orders = null;
+            $filteredCount = $countQuery->count();
         }
 
         $this->applyOffset($query, $request);
@@ -223,12 +253,12 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             return;
         }
 
-        $query->where(function ($query) use ($search) {
+        $query->where(function (Builder $query) use ($search) {
             $columns = $this->getColumns()->all();
 
             foreach ($columns as $column) {
                 if (in_array(get_class($column), $this->searchableColumns)) {
-                    if ($column instanceof NamedColumnInterface) {
+                    if ($column instanceof ColumnInterface) {
                         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                             if (method_exists($metaInstance, 'onSearch')) {
                                 $metaInstance->onSearch($column, $query, $search);
