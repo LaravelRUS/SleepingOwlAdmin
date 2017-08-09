@@ -12,7 +12,8 @@ Admin.Modules.register('display.columns.checkbox', () => {
 
     $('.adminCheckboxAll').on('change', (e) => {
         let $self = $(e.target),
-            $checkboxes = $('.adminCheckboxRow')
+            $bodyContainer = $self.parent().parent().parent().next(),
+            $checkboxes = $bodyContainer.find('.adminCheckboxRow');
 
         if ($self.is(':checked')) {
             $checkboxes.not(':checked').each((i, item) => {
