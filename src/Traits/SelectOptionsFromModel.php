@@ -237,7 +237,10 @@ trait SelectOptionsFromModel
         }
 
         $options = $options->get();
-
+        
+        //some fix for setUsage
+        $key = str_replace('->', '.', $key);
+        
         if (is_callable($makeDisplay = $this->getDisplay())) {
             // make dynamic display text
             if ($options instanceof Collection) {
