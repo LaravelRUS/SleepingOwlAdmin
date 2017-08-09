@@ -11,7 +11,7 @@ use SleepingOwl\Admin\Display\DisplayDatatables;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 
 /**
- * @method DisplayDatatables datatables()
+ * @method DisplayDatatablesAsync datatables()
  * @method DisplayDatatablesAsync datatablesAsync()
  * @method DisplayTab tab(Renderable $content, $label = null, $icon = null)
  * @method DisplayTabbed tabbed(\Closure|array $tabs = null)
