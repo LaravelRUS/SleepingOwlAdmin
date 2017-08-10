@@ -4,10 +4,11 @@ namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Exception;
 use Carbon\Carbon;
+use SleepingOwl\Admin\Traits\DatePicker;
 
 class Date extends Text
 {
-    use \SleepingOwl\Admin\Traits\DatePicker;
+    use DatePicker;
 
     /**
      * @var string
@@ -151,9 +152,19 @@ class Date extends Text
         try {
             $date = Carbon::parse($date);
         } catch (Exception $e) {
+            \Log::info('unable to parse date, re-trying with given format', [
+                'exception' => $e,
+                'date'      => $date,
+            ]);
             try {
                 $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
             } catch (Exception $e) {
+                \Log::error('unable to parse date!', [
+                    'exception'     => $e,
+                    'pickerFormat'  => $this->getPickerFormat(),
+                    'date'          => $date,
+                ]);
+
                 return;
             }
         }

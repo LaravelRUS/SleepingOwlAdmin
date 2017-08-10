@@ -24,7 +24,7 @@ class Restore extends FormButton
     {
         parent::initialize();
 
-        $this->setHtmlAttributes([
+        $this->setHtmlAttributes($this->getHtmlAttributes() + [
             'type'  => 'submit',
             'name'  => 'next_action',
             'class' => 'btn btn-warning',

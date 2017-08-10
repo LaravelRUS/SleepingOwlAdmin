@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use LogicException;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
@@ -365,8 +366,28 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-        if (is_null($model) or ! $model->exists) {
+        if (is_null($model) || ! $model->exists) {
             return $value;
+        }
+
+        /*
+         * Implement json parsing
+         */
+        if (strpos($path, '->') !== false) {
+            $casts = collect($model->getCasts());
+            $jsonParts = collect(explode('->', $path));
+
+            $jsonAttr = $model->{$jsonParts->first()};
+
+            $cast = $casts->get($jsonParts->first(), false);
+
+            if ($cast == 'object') {
+                $jsonAttr = json_decode(json_encode($jsonAttr), true);
+            } elseif ($cast != 'array') {
+                $jsonAttr = json_decode($jsonAttr);
+            }
+
+            return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
         }
 
         $relations = explode('.', $path);
@@ -389,7 +410,7 @@ abstract class NamedFormElement extends FormElement
             if ($count === 2) {
                 $attribute = $model->getAttribute($relation);
 
-                if (! empty($attribute) or is_null($value)) {
+                if (! empty($attribute) || is_null($value)) {
                     return $attribute;
                 }
             }
@@ -553,7 +574,7 @@ abstract class NamedFormElement extends FormElement
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
-            'attributes'=> $this instanceof Select ? $this->getHtmlAttributes() : $this->htmlAttributesToString(),
+            'attributes'=> $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);

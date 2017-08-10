@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use SleepingOwl\Admin\Console\Installation;
+use SleepingOwl\Admin\Contracts\Console\InstallatorInterface as Installator;
 
 class InstallCommand extends Installation\Command
 {
@@ -30,16 +31,14 @@ class InstallCommand extends Installation\Command
             Installation\CreateRoutesFile::class,
             Installation\CreateSectionServiceProvider::class,
             Installation\CreatePublicDirectory::class,
-        ])
-            ->map(function ($installer) {
-                return new $installer($this, $this->config);
-            })
-            ->filter(function ($installer) {
-                return $this->option('force') ? true : ! $installer->installed();
-            })->each(function ($installer) {
-                $installer->install();
-                $installer->showInfo();
-            });
+        ])->map(function ($installer) {
+            return new $installer($this, $this->config);
+        })->filter(function (Installator $installer) {
+            return $this->option('force') ? true : ! $installer->installed();
+        })->each(function (Installator $installer) {
+            $installer->install();
+            $installer->showInfo();
+        });
 
         $this->comment('SleepingOwl Framework successfully installed.');
     }

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class FilterRelated extends FilterField
 {
     /**
-     * TODO: возможно стоит изменить название параметра на $field.
      * @var string
      */
     protected $display = 'title';
@@ -93,6 +92,10 @@ class FilterRelated extends FilterField
 
             return $modelObject->{$this->getDisplay()};
         } catch (ModelNotFoundException $e) {
+            \Log::debug('related model instance not found', [
+                'model' => $model,
+                'id'    => $this->getValue(),
+            ]);
         }
     }
 }

@@ -62,7 +62,21 @@ class Wysiwyg extends NamedFormElement
         $config = $editor->getConfig();
         $config->set($this->parameters);
 
+        if (! $this->hasHtmlAttribute('id')) {
+            $this->setHtmlAttribute('id', $this->getName());
+        }
+
         $this->parameters = (array) $config->all();
+
+        $params = collect($this->parameters);
+
+        if (! $params->has('uploadUrl')) {
+            $this->parameters['uploadUrl'] = route('admin.ckeditor.upload');
+        }
+
+        if (! $params->has('filebrowserUploadUrl')) {
+            $this->parameters['filebrowserUploadUrl'] = route('admin.ckeditor.upload');
+        }
     }
 
     /**
@@ -152,7 +166,7 @@ class Wysiwyg extends NamedFormElement
      */
     public function toArray()
     {
-        return parent::toArray() + [
+        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
             'parameters' => json_encode($this->getParameters()),
             'editor'     => $this->getEditor(),
         ];

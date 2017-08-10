@@ -3,10 +3,10 @@
 use Mockery as m;
 use SleepingOwl\Admin\Display\DisplayTab;
 use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModel;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
@@ -442,7 +442,7 @@ abstract class DisplayTabTestInitializable implements Renderable, Initializable
 {
 }
 
-abstract class DisplayTabTestWithModel implements Renderable, WithModel
+abstract class DisplayTabTestWithModel implements Renderable, WithModelInterface
 {
 }
 

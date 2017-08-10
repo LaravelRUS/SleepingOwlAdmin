@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
+
 trait OrderableModel
 {
     /**
@@ -9,13 +12,19 @@ trait OrderableModel
      */
     protected static function bootOrderableModel()
     {
-        static::creating(function ($row) {
+        static::creating(function (Model $row) {
             $row->updateOrderFieldOnCreate();
         });
 
-        static::deleted(function ($row) {
+        static::deleted(function (Model $row) {
             $row->updateOrderFieldOnDelete();
         });
+
+        if (in_array("Illuminate\Database\Eloquent\SoftDeletes", trait_uses_recursive(new static()))) {
+            static::restored(function (Model $row) {
+                $row->updateOrderFieldOnRestore();
+            });
+        }
     }
 
     /**
@@ -78,6 +87,16 @@ trait OrderableModel
     }
 
     /**
+     * Update order field on restore.
+     */
+    protected function updateOrderFieldOnRestore()
+    {
+        static::orderModel()
+            ->where($this->getOrderField(), '>', $this->getOrderValue())
+            ->increment($this->getOrderField());
+    }
+
+    /**
      * Order scope.
      *
      * @param $query
@@ -90,12 +109,12 @@ trait OrderableModel
     }
 
     /**
-     * @param $query
+     * @param Builder $query
      * @param int $position
      *
      * @return mixed
      */
-    public function scopeFindByPosition($query, $position)
+    public function scopeFindByPosition(Builder $query, $position)
     {
         $query->where($this->getOrderField(), $position);
     }

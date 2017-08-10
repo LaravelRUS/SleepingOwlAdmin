@@ -18,10 +18,12 @@ Vue.component('element-image', Vue.extend({
     data () {
         return {
             errors: [],
-            uploading: false
+            uploading: false,
+            val: '',
         }
     },
-    ready () {
+    mounted () {
+        this.val = this.value;
         this.initUpload()
     },
     methods: {
@@ -42,11 +44,11 @@ Vue.component('element-image', Vue.extend({
                     self.closeAlert()
                 },
                 success (file, response) {
-                    self.value = response.value;
+                    self.val = response.value;
                 },
                 error (file, response) {
                     if(_.isArray(response.errors)) {
-                        self.$set('errors', response.errors);
+                        self.errors = response.errors;
                     }
                 },
                 complete(){
@@ -55,14 +57,14 @@ Vue.component('element-image', Vue.extend({
             });
         },
         remove () {
-            var self = this;
+            let self = this;
 
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.value = '';
+                self.val = '';
             });
         },
         closeAlert () {
-            this.$set('errors', []);
+            this.errors = [];
         }
     },
     computed: {
@@ -73,10 +75,10 @@ Vue.component('element-image', Vue.extend({
             return 'fa fa-spinner fa-spin'
         },
         has_value () {
-            return this.value.length > 0
+            return this.val.length > 0
         },
         image () {
-            return ((this.value.indexOf('http') === 0) ? this.value : Admin.Url.upload(this.value))
-        }
+            return ((this.val.indexOf('http') === 0) ? this.val : Admin.Url.upload(this.val))
+        },
     }
 }));

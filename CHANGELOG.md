@@ -1,7 +1,159 @@
-# Release Notes
-
-## [Unreleased]
-
+<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
+ 
+ * [Feature] Появился setUsage у селекто-подобных элементов (dev-mode) - не известно какие проблемы это повлечет за собой - однако несколько уже решаются.
+ * [Feature] Добавлены плагины image2, youtube, uploadimage - в CKEditor. Параметры uploadUrl и filebrowserUploadUrl 
+             Как и раньше отвечали за линк сохранения изображений - если этих параметров нет изображения будут сохраняться
+             в дефолтную папку указанную в imagesUploadDirectory 
+ * [Feature] Добавлена кнопка отмены фильтров на таблице
+ * [Feature] Добавлен новый элемент AdminColumnEditable::select() - он подобен элементу AdminFormElement::select и имеет схожие методы задания списка. 
+ * [Feature] Теперь в админке есть менеджер BreadCrumbs
+    * Вы можете добавлять breadcrumbs прямо из секции (initialize, onDisplay, onEdit )
+    * Вы можете указывать родительские breadcrumbs 
+    * Вы можете указывать breadcrumbs c ссылкой и без ссылки
+    ```php
+    $this->addBreadCrumb([
+        "id" => "App\Model\Forms\Form"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "forms-examples"
+    ])
+    ```
+    or
+    ```php
+    $this->addBreadCrumb([
+        "id" => "some_name"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "App\Model\Forms\Form"
+    ])
+    ```
+    or
+    ```php
+    $this->addBreadCrumb([
+        "id" => "some_end_name"
+        "title" => "All Form Items"
+        "url" => "https://demo.sleepingowladmin.ru/admin/forms"
+        "parent" => "some_name"
+    ])
+    ```
+ * [Bug-Fix] Пофикшено поведение breadcrumbs - теперь добавляет промежуточные
+ * [Feature] Добавлен метод к selectajax и multiselectajax `setSearch` - он позволяет задать поле поиска.
+             Пофикшено поведение этих элементов после сохранения в связи с последними обновлениями select и multiselect
+ * [Feature] Пофикшено поведение ide-helper generator - после его выполнения нужно запускать команду php artisan sleepingowl:ide:generate
+ * [Feature] Изменились селекты. Теперь по умолчанию стоит [vue-multiselect](http://monterail.github.io/vue-multiselect) 
+             Очень не завидую тем у кого появлялись кастомные темплейты на элементы AdminFormElement::select и AdminFormElement::multiselect
+             их придется слегка подпилить. 
+             Оставляйте фидбеки.
+ * [Feature] Появилась возможность редактировать JSON поля. Установка атрибутов идет в AtributeName через `field->key`
+ * [Feature] Появилась пара новых эвентов
+     * datatables::actions::submitting - эвент до действия после согласия SweetAlert в масс экшнс
+     * datatables::actions::submitted  - эвент после действия после согласия SweetAlert масс экшнс
+     * datatables::actions::cancel - эвент отказа окна SweetAlert во время масс экшнс
+     
+ * [Feature] Появилась пара новых эвентов
+    * datatables::confirm::init - эвент при котором вы можете получить данные настроек SweetAlert и импровизировать как угодно
+    * datatables::confirm::submitting - эвент до действия после согласия SweetAlert
+    * datatables::confirm::submitted  - эвент после действия после согласия SweetAlert (обычно это отправка формы редирект или что то в этом роде
+    * datatables::confirm::cancel - эвент отказа окна SweetAlert
+    
+    На них на всех можно подписаться как описано в документации - это открывает некоторые возможности заполнения форм.
+    Сами скажете как это можно использовать или усовершенствовать.
+ * [Feature] Появилась возможность создавать свои компоненты vue и крепить их к кастомным темплейтам. Подключать файлы можно обычным способом - зависимость admin-default. Структура компонента обычная.
+        
+   ```javascript
+   Vue.component('element-image-example', Vue.extend({
+       props: {
+           //....
+       },
+       data () {
+           return {
+               //....
+           }
+       },
+       mounted () {
+           //....
+       },
+       methods: {
+           //....
+       },
+       computed: {
+           //....
+       }
+       //....
+   }));
+   ```
+   
+   В шаблон блейд такое + props если есть.
+   ```html
+    <element-image-sample></element-image-sample>
+   ```
+ * [Feature] Обновление vue -> vue2 | vue-resource -> vue-resource2
+ * [Bug-Fix] Ошибка при получении данных для `AdminFormElement::images` из модели (`storeAsComaSeparatedValue()`) или если возникла ошибка сохранения формы.
+ * [Bug-fix] Не выводились метки для редактируемых колонок. Теперь можно делать так: `AdminColumnEditable::text('fieldName', 'ColumnLabel')` и `AdminColumnEditable::checkbox('fieldName', 'CheckedLabel', 'UncheckedLabel', 'ColumnLabel')`, или по-старинке `->setLabel('ColumnLabel')`
+ * [Bug-Fix] Теперь afterSave у MultiSelect учитывает ValueSkipped у элемента формы
+ * [Feature] Добавлены SweetAlert2 к массовым действиям - контроллер который отвечает за получение и обработку ID должен возвращать json-data
+   {text: "Текст заголовка", message: "Полный текст сообщения", type: "error|success"}
+ * [Bug-fix] Исправлена работа `AdminFormElement::images('name', 'label')->storeAsJson()`.
+ * [Bug-Fix] Исправлено поведение кнопки на AdminFormElement::images() - кнопка удаления реагировала на Enter
+ * [Bug-Fix] Исправлено поведение AdminFormElement::images() с дублями
+ * [Feature] Добавлен новый элемент AdminColumnEditable::text() - читаем в документации
+ * [Feature] Добавлен метод setAfterSaveCallback() в Images - полезен когда нужно сколлектировать логику сохранения изображений и привязываний их в модель
+   Пример:
+   ```php
+   ->setAfterSaveCallback(function ($value, $model) {
+       if ($value) {
+           //... сюда приходит value с поля и модель после сохранения
+           //... Имейте ввиду что этот колбек вызовется только после всех валидаций и сохранения модели
+       }
+   })
+   ```
+ * [Feature] Добавлен метод для DataTablesAsync setDisplayLength что бы отключать селект выбора количества записей на страницу
+ * [Bug-fix] Повикшено поведение setDisplaySearch для Async Tables теперь можно отключить поле поиска без выключения общего поиска.
+ * [Bug-fix] Пофикшено поведение селект-фильтра - теперь отправляет не текст - а ключ значения.
+ * [Feature] ColumnEditable::checkbox обзавелся методом setUrl - теперь вы можете установить свой url для отправки 
+    данных и принятия их допустим в Кастом контроллере
+ * [Bug-fix] Пофишкено поведение column editable
+ * [Bug-fix] Пофикшено поведение Scopes с нашими `SimpleTreeType`, `OrderTreeType` и скоупы не срабатывали ни в табе 
+    ни до таба, ни в основном окне, ни через payload в fireDisplay.
+    Наслаждайтесь.
+ * [Refactor] `setPivotCallback` -> `setSyncCallback` - теперь он отвечает не за формирование массива для sync, 
+   а полностью за функцию приаттачивания или синка после сохранения модели. Иногда требуется дополнительная логика 
+   приаттачивания записей к модели. (Работает пока что только для `belongsToMany`) 
+ * [Bug-fix] Пофикшено поведение элемента lists и сопутствующих работающих с belongs to many, has many и тд
+   теперь в lists могут отображаться hasMany.(hasMany|BelongsToMany|hasManyThrough).(attribute)
+   поидее могут работать несколько уровней вложенности, но это поведение не тестировалось
+   пример: 
+   ```php
+   AdminColumn::lists('subscriptions.nhs.name')
+                ->setLabel("some label"),
+   ```
+   `ModelOfSection.php`
+   ```php
+   public function subscriptions()
+   {
+       return $this->hasMany(
+           AnotherModel::class,
+           'some_id',
+           'id'
+       )->where('terminate_at', '>', Carbon::now());
+   }
+   ```
+   
+   `AnotherModel.php`
+   ```php
+        public function nhs()
+        {
+            return $this->belongsToMany(
+                BelongsToManyModel::class,
+                'someTable',
+                'modelofsection_another_id',
+                'nh_id'
+            );
+        }
+   ```
+   ну и понятно атрибут в модели BelongsToManyModel например `name`
+ * [Bug-fix] Пофикшено поведение $query->count() - Включался order для Async
+ 
 ### 4.95.29
  * Добавлены колбеки на поля. Теперь каждому полю доступен ряд колбеков и ряд логики с операциями Order, 
    Search(основной на Async) и FilterSearch (отдельный фильтр на колонке переопределение его логики)
@@ -43,17 +195,17 @@
      {
          public function onFilterSearch(NamedColumnInterface $column, Builder $query, $queryString, $queryParams)
          {
-             // TODO: Implement onFilterSearch() method.
+             // Implement onFilterSearch() method.
          }
          
          public function onOrderBy(NamedColumnInterface $column, Builder $query, $direction)
          {
-             // TODO: Implement onOrderBy() method.
+             // Implement onOrderBy() method.
          }
          
          public function onSearch(NamedColumnInterface $column, Builder $query, $queryString)
          {
-             // TODO: Implement onSearch() method.
+             // Implement onSearch() method.
          }
      
      }
@@ -74,7 +226,7 @@
      
  * Исправлена дефолтная логика сортировки для столбцов с отношениями. Теперь в секции Users поле post.name
    поле будет сортироваться без ошибок. Однако эта сортировка не будет работать с EagerLoad, то есть она не будет сортировать поле
-   в секции `Posts` - `category.user.name` (TODO)
+   в секции `Posts` - `category.user.name` 
  * Добавлен тип `OrderTreeType::class` который ограничивает дерево только на первый уровень 
  (работает без parent_id) и позволяет сортировать элементы
     Пример можно увидеть по [ссылке в демо](https://demo.sleepingowl.ru/admin/page_orders) 
@@ -272,7 +424,7 @@
  * Collection `SleepingOwl\Admin\Form\FormElementsCollection`
  * Collection `SleepingOwl\Admin\Display\DisplayTabsCollection`
  * Collection `SleepingOwl\Admin\Display\ExtensionCollection`
- * Interface `SleepingOwl\Admin\Contracts\WithModel`
+ * Interface `SleepingOwl\Admin\Contracts\WithModelInterface`
  * Admin Element Factories
 
 	```php

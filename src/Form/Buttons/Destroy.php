@@ -22,7 +22,7 @@ class Destroy extends FormButton
     public function initialize()
     {
         parent::initialize();
-        $this->setHtmlAttributes([
+        $this->setHtmlAttributes($this->getHtmlAttributes() + [
             'type'  => 'submit',
             'name'  => 'next_action',
             'class' => 'btn btn-danger',

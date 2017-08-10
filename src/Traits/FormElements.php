@@ -4,9 +4,9 @@ namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModel;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\FormElementsCollection;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
@@ -148,7 +148,7 @@ trait FormElements
         $this->getElements()->each(function ($element) use ($model) {
             $element = $this->getElementContainer($element);
 
-            if ($element instanceof WithModel) {
+            if ($element instanceof WithModelInterface) {
                 $element->setModel($model);
             }
         });

@@ -1,11 +1,12 @@
-<form {!! $attributes !!}>
 
-    @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $items])
+    <form {!! $attributes !!}>
 
-    <input type="hidden" name="_method" value="post" />
-    <input type="hidden" name="_redirectBack" value="{{ $backUrl }}" />
-    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $items])
 
-    {!! $buttons->render() !!}
+        <input type="hidden" name="_method" value="post" />
+        <input type="hidden" name="_redirectBack" value="{{ $backUrl }}" />
+        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-</form>
+        {!! $buttons->render() !!}
+
+    </form>

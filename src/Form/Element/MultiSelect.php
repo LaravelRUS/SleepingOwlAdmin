@@ -15,7 +15,7 @@ class MultiSelect extends Select
     /**
      * @var \Closure
      */
-    protected $pivotCallback;
+    protected $syncCallback;
 
     /**
      * @var bool
@@ -25,7 +25,7 @@ class MultiSelect extends Select
     /**
      * @var string
      */
-    protected $view = 'form.element.select';
+    protected $view = 'form.element.multiselect';
 
     /**
      * @return string
@@ -41,6 +41,13 @@ class MultiSelect extends Select
     public function getValueFromModel()
     {
         $value = parent::getValueFromModel();
+
+        if (is_array($value)) {
+            foreach ($value as $key => $val) {
+                $value[$key] = (int) $val;
+            }
+        }
+
         if ($value instanceof Collection && $value->count() > 0) {
             $value = $value->pluck($value->first()->getKeyName())->all();
         }
@@ -73,18 +80,18 @@ class MultiSelect extends Select
     /**
      * @return \Closure
      */
-    public function getPivotCallback()
+    public function getSyncCallback()
     {
-        return $this->pivotCallback;
+        return $this->syncCallback;
     }
 
     /**
      * @param \Closure $callable
      * @return $this
      */
-    public function setPivotCallback(\Closure $callable)
+    public function setSyncCallback(\Closure $callable)
     {
-        $this->pivotCallback = $callable;
+        $this->syncCallback = $callable;
 
         return $this;
     }
@@ -114,7 +121,7 @@ class MultiSelect extends Select
     {
         $this->setHtmlAttributes([
             'id'    => $this->getName(),
-            'class' => 'form-control input-select',
+            'class' => 'form-control',
             'multiple',
         ]);
 
@@ -155,6 +162,10 @@ class MultiSelect extends Select
             return;
         }
 
+        if ($this->isValueSkipped()) {
+            return;
+        }
+
         $attribute = $this->getModelAttributeKey();
 
         if (is_null($request->input($this->getPath()))) {
@@ -184,7 +195,7 @@ class MultiSelect extends Select
         array $values
     ) {
         foreach ($values as $i => $value) {
-            if (! array_key_exists($value, $this->getOptions()) and $this->isTaggable()) {
+            if (! array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
                 $model = clone $this->getModelForOptions();
                 $model->{$this->getDisplay()} = $value;
                 $model->save();
@@ -193,8 +204,11 @@ class MultiSelect extends Select
             }
         }
 
-        if (is_callable($this->getPivotCallback())) {
-            $values = call_user_func($this->pivotCallback, $values) ?: $values;
+        if (is_callable($callback = $this->getSyncCallback())) {
+            $callbackModel = $this->getModel();
+            $callback($values, $callbackModel);
+
+            return;
         }
 
         $relation->sync($values);

@@ -29,12 +29,17 @@ class Select extends NamedFormElement
     protected $exclude = [];
 
     /**
+     * @var int
+     */
+    protected $limit = 0;
+
+    /**
      * @var string
      */
     protected $view = 'form.element.select';
 
     /**
-     * @param string      $path
+     * @param string $path
      * @param string|null $label
      * @param array|Model $options
      */
@@ -44,7 +49,7 @@ class Select extends NamedFormElement
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } elseif (($options instanceof Model) or is_string($options)) {
+        } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
     }
@@ -63,6 +68,20 @@ class Select extends NamedFormElement
         $options = array_except($this->options, $this->exclude);
         if ($this->isSortable()) {
             asort($options);
+        }
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function mutateOptions()
+    {
+        $options = [];
+        $temp = $this->getOptions();
+        foreach ($temp as $key => $value) {
+            $options[] = ['id' => $key, 'text' => $value];
         }
 
         return $options;
@@ -105,6 +124,8 @@ class Select extends NamedFormElement
     {
         $this->nullable = true;
 
+        $this->addValidationRule('nullable');
+
         return $this;
     }
 
@@ -126,6 +147,25 @@ class Select extends NamedFormElement
     public function isSortable()
     {
         return $this->sortable;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param $limit
+     * @return $this
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
     }
 
     /**
@@ -162,28 +202,28 @@ class Select extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
-            'size' => 2,
+            'id'               => $this->getName(),
+            'size'             => 2,
             'data-select-type' => 'single',
-            'class' => 'form-control input-select',
+            'class'            => 'form-control',
         ]);
 
         if ($this->isReadonly()) {
             $this->setHtmlAttribute('disabled', 'disabled');
         }
 
-        $options = $this->getOptions();
+        $options = $this->mutateOptions();
 
         if ($this->isNullable()) {
             $this->setHtmlAttribute('data-nullable', 'true');
-            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
+            $options = collect($options)->prepend(['id' => null, 'text' => trans('sleeping_owl::lang.select.nothing')]);
         }
 
-        return parent::toArray() + [
-            'options' => $options,
-            'nullable' => $this->isNullable(),
-            'attributes' => $this->getHtmlAttributes(),
-        ];
+        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
+                'options'  => $options,
+                'limit'    => $this->getLimit(),
+                'nullable' => $this->isNullable(),
+            ];
     }
 
     /**
@@ -193,7 +233,7 @@ class Select extends NamedFormElement
      */
     public function prepareValue($value)
     {
-        if ($this->isNullable() and $value == '') {
+        if ($this->isNullable() && $value == '') {
             return;
         }
 

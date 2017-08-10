@@ -2,7 +2,11 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use Illuminate\View\Factory;
 use SleepingOwl\Admin\Admin;
+use Illuminate\View\FileViewFinder;
+use Illuminate\View\Engines\PhpEngine;
+use Illuminate\View\Engines\EngineResolver;
 
 class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
@@ -41,9 +45,30 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $admin->setTemplate($this->app['sleeping_owl.template']);
     }
 
+    /**
+     * @return Factory
+     */
+    private function createLocalViewFactory()
+    {
+        $resolver = new EngineResolver();
+        $resolver->register('php', function () {
+            return new PhpEngine();
+        });
+        $finder = new FileViewFinder($this->app['files'], [__DIR__.'/../../resources/views']);
+        $factory = new Factory($resolver, $finder, $this->app['events']);
+        $factory->addExtension('php', 'php');
+
+        return $factory;
+    }
+
     protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
+            if (! class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider') &&
+                ! $this->app->resolved('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
+                $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
+            }
+
             $this->commands([
                 \SleepingOwl\Admin\Console\Commands\InstallCommand::class,
                 \SleepingOwl\Admin\Console\Commands\UpdateCommand::class,
@@ -52,6 +77,16 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
                 \SleepingOwl\Admin\Console\Commands\SectionMake::class,
                 \SleepingOwl\Admin\Console\Commands\SectionProvider::class,
             ]);
+
+            $localViewFactory = $this->createLocalViewFactory();
+            $this->app->singleton(
+                'command.sleepingowl.ide.generate',
+                function ($app) use ($localViewFactory) {
+                    return new \SleepingOwl\Admin\Console\Commands\GeneratorCommand($app['config'], $app['files'], $localViewFactory);
+                }
+            );
+
+            $this->commands('command.sleepingowl.ide.generate');
         }
     }
 }

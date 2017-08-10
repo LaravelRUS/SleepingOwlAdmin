@@ -10,6 +10,32 @@ use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
+    protected $breadcrumbs = null;
+
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
+    {
+        parent::__construct($app, $class);
+
+        $this->breadcrumbs = collect();
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection|null
+     */
+    public function getBreadCrumbs()
+    {
+        return $this->breadcrumbs->toArray();
+    }
+
+    /**
+     * @param $breadcrumb
+     * @return mixed|void
+     */
+    public function addBreadCrumb($breadcrumb)
+    {
+        $this->breadcrumbs->push($breadcrumb);
+    }
+
     /**
      * @return bool
      */

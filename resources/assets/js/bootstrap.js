@@ -26,6 +26,7 @@ require('./libs/nestable')
 require('./libs/sweetalert')
 require('./libs/dependent-dropdown')
 
+require('./libs/vuejs')
 /**
  * Best open source admin dashboard & control panel theme.
  * Built on top of Bootstrap 3, AdminLTE provides a range of
@@ -34,7 +35,7 @@ require('./libs/dependent-dropdown')
  * @see https://almsaeedstudio.com/preview
  */
 require('admin-lte')
-require('./libs/vuejs')
+
 
 window.Admin.Messages = require('./components/messages')
 window.Admin.Storage = require('./components/storage')
@@ -42,3 +43,42 @@ window.Admin.Asset = require('./components/asset')
 window.Admin.Modules = require('./components/modules')
 window.Admin.WYSIWYG = require('./components/wysiwyg')
 
+/**
+ * Initialize Wysiwyg editors
+ */
+require('./wysiwyg/ckeditor')
+require('./wysiwyg/simplemde')
+require('./wysiwyg/tinymce')
+
+
+/**
+ * Initialize App
+ */
+
+
+/**
+ * Initialize display
+ */
+require('./admin/display/datatables')
+
+require('./admin/display/actions')
+require('./admin/display/treeview')
+require('./admin/display/columns/checkbox')
+require('./admin/display/columns/control')
+require('./admin/display/columns/tree_control')
+require('./admin/display/columns/inline_edit')
+
+/**
+ * Initialize form
+ */
+require('./admin/form/buttons')
+require('./admin/form/datetime')
+require('./admin/form/daterange')
+require('./admin/form/select')
+require('./admin/form/selectajax')
+require('./admin/form/dependent-select')
+require('./admin/form/deselect')
+require('./admin/form/file')
+require('./admin/form/image')
+require('./admin/form/images')
+require('./admin/events')

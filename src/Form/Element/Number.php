@@ -116,7 +116,7 @@ class Number extends NamedFormElement
         }
 
         return parent::prepareValue(
-            (int) $value
+            $value
         );
     }
 }

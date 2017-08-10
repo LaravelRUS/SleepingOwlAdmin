@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 
@@ -24,6 +25,10 @@ trait SelectOptionsFromModel
      */
     protected $foreignKey = null;
 
+    /**
+     * @var string|null
+     */
+    protected $usageKey = null;
     /**
      * @var array
      */
@@ -64,6 +69,17 @@ trait SelectOptionsFromModel
         }
 
         $this->modelForOptions = $modelForOptions;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return $this
+     */
+    public function setUsageKey($key)
+    {
+        $this->usageKey = $key;
 
         return $this;
     }
@@ -196,11 +212,11 @@ trait SelectOptionsFromModel
     {
         $repository = app(RepositoryInterface::class);
         $repository->setModel($this->getModelForOptions());
-        $key = $repository->getModel()->getKeyName();
+        $key = ($this->usageKey) ? $this->usageKey : $repository->getModel()->getKeyName();
 
         $options = $repository->getQuery();
 
-        if ($this->isEmptyRelation() and ! is_null($foreignKey = $this->getForeignKey())) {
+        if ($this->isEmptyRelation() && ! is_null($foreignKey = $this->getForeignKey())) {
             $relation = $this->getModelAttributeKey();
             $model = $this->getModel();
 
@@ -221,6 +237,9 @@ trait SelectOptionsFromModel
         }
 
         $options = $options->get();
+
+        //some fix for setUsage
+        $key = str_replace('->', '.', $key);
 
         if (is_callable($makeDisplay = $this->getDisplay())) {
             // make dynamic display text

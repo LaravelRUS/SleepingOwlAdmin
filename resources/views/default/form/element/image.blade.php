@@ -9,7 +9,6 @@
 
 	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-
 	<element-image
 			url="{{ route('admin.form.element.image', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
@@ -21,6 +20,7 @@
 			name="{{ $name }}"
 			inline-template
 	>
+		<div>
 			<div v-if="errors.length" class="alert alert-warning">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
 					<span aria-hidden="true">&times;</span>
@@ -38,7 +38,7 @@
 							<i class="fa fa-cloud-download"></i>
 						</a>
 
-						<button v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()">
+						<button type="button" v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()">
 							<i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
 						</button>
 					</div>
@@ -52,7 +52,8 @@
 
 			</div>
 
-			<input name="@{{ name }}" type="hidden" value="@{{ value }}">
+			<input :name="name" type="hidden" :value="val">
+		</div>
 	</element-image>
 
 
@@ -60,3 +61,4 @@
 		@include(AdminTemplate::getViewPath('form.element.partials.errors'))
 	</div>
 </div>
+
