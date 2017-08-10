@@ -22,7 +22,10 @@ class Delete extends FormButton
     public function initialize()
     {
         parent::initialize();
-        $this->setHtmlAttributes([
+
+
+
+        $this->setHtmlAttributes($this->getHtmlAttributes() + [
             'name'          => 'next_action',
             'class'         => 'btn btn-danger btn-delete',
             'data-url'      => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
