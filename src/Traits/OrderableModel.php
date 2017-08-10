@@ -19,6 +19,10 @@ trait OrderableModel
         static::deleted(function (Model $row) {
             $row->updateOrderFieldOnDelete();
         });
+
+        static::restored(function (Model $row) {
+            $row->updateOrderFieldOnRestore();
+        });
     }
 
     /**
@@ -78,6 +82,16 @@ trait OrderableModel
         static::orderModel()
               ->where($this->getOrderField(), '>', $this->getOrderValue())
               ->decrement($this->getOrderField());
+    }
+
+    /**
+     * Update order field on restore.
+     */
+    protected function updateOrderFieldOnRestore()
+    {
+        static::orderModel()
+            ->where($this->getOrderField(), '>', $this->getOrderValue())
+            ->increment($this->getOrderField());
     }
 
     /**
