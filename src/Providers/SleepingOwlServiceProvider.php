@@ -64,9 +64,8 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
-
-            if(!class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider') &&
-                !$this->app->resolved('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')){
+            if (! class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider') &&
+                ! $this->app->resolved('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
                 $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
             }
 

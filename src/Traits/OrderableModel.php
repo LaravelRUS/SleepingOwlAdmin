@@ -20,8 +20,7 @@ trait OrderableModel
             $row->updateOrderFieldOnDelete();
         });
 
-
-        if(in_array("Illuminate\Database\Eloquent\SoftDeletes", trait_uses_recursive(new static()))){
+        if (in_array("Illuminate\Database\Eloquent\SoftDeletes", trait_uses_recursive(new static()))) {
             static::restored(function (Model $row) {
                 $row->updateOrderFieldOnRestore();
             });
