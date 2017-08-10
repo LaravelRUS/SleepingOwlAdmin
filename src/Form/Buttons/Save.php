@@ -16,7 +16,6 @@ class Save extends FormButton
     {
         $this->setText(trans('sleeping_owl::lang.table.save'));
 
-
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
             'type'  => 'submit',
             'name'  => 'next_action',

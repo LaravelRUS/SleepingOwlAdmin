@@ -10,7 +10,6 @@ use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Display\DisplayDatatables;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
 
