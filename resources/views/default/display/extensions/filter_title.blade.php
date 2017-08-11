@@ -7,7 +7,7 @@
     <small class="label label-default">
         {{ $filter->getTitle() }}
 
-        <a href="{{ URL::current() }}?{!! http_build_query(request()->except($filter->getName())) !!}">
+        <a href="{{ URL::current() }}?{!! http_build_query(request()->except($filter->getAlias())) !!}">
             <span aria-hidden="true">&times;</span>
         </a>
     </small>

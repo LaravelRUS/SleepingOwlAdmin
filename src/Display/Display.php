@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use SleepingOwl\Admin\Display\Extension\Links;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
@@ -81,6 +82,7 @@ abstract class Display implements DisplayInterface
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
+        $this->extend('links', new Links());
 
         $this->initializePackage();
     }
