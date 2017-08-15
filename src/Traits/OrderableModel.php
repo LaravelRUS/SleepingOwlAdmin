@@ -2,9 +2,15 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait OrderableModel
+ * @package SleepingOwl\Admin\Traits
+ * @method static $this orderModel()
+ * @method Builder findByPosition($position)
+ */
 trait OrderableModel
 {
     /**
@@ -21,7 +27,7 @@ trait OrderableModel
         });
 
         if (in_array("Illuminate\Database\Eloquent\SoftDeletes", trait_uses_recursive(new static()))) {
-            static::restored(function (Model $row) {
+            static::restoring(function (Model $row) {
                 $row->updateOrderFieldOnRestore();
             });
         }
