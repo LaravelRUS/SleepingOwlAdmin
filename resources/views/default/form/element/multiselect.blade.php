@@ -11,7 +11,10 @@
               :id="'{{str_replace(['[', ']'], '', $name)}}'"
               :multiple="true" :options="{{json_encode($options)}}" inline-template>
         <div>
-            <multiselect v-model="val"
+            <multiselect @if($readonly)
+                         :disabled="true"
+                         @endif
+                         v-model="val"
                          track-by="id"
                          label="text"
                          :multiple="multiple"
