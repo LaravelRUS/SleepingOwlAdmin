@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Select extends NamedFormElement
 {
+
     use \SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
     /**
@@ -21,7 +22,8 @@ class Select extends NamedFormElement
     /**
      * @var bool
      */
-    protected $sortable = true;
+    protected $sortable       = true;
+    protected $sortable_flags = null;
 
     /**
      * @var array
@@ -67,7 +69,7 @@ class Select extends NamedFormElement
 
         $options = array_except($this->options, $this->exclude);
         if ($this->isSortable()) {
-            asort($options);
+            asort($options, $this->getSortableFlags());
         }
 
         return $options;
@@ -79,7 +81,7 @@ class Select extends NamedFormElement
     public function mutateOptions()
     {
         $options = [];
-        $temp = $this->getOptions();
+        $temp    = $this->getOptions();
         foreach ($temp as $key => $value) {
             $options[] = ['id' => $key, 'text' => $value];
         }
@@ -132,14 +134,25 @@ class Select extends NamedFormElement
     /**
      * @param bool $sortable
      *
+     * @param null $sortable_flags
      * @return $this
      */
-    public function setSortable($sortable)
+    public function setSortable($sortable, $sortable_flags = null)
     {
-        $this->sortable = (bool) $sortable;
+        $this->sortable       = (bool)$sortable;
+        $this->sortable_flags = $sortable_flags;
 
         return $this;
     }
+
+    /**
+     * @return null
+     */
+    protected function getSortableFlags()
+    {
+        return $this->sortable_flags;
+    }
+
 
     /**
      * @return bool
