@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Display\Element;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
-use SleepingOwl\Admin\Display\Element;
 
 class ColumnsTotal extends Extension implements Placable
 {
@@ -37,7 +37,7 @@ class ColumnsTotal extends Extension implements Placable
     public function set(array $elements, $columnsNumber = 0)
     {
         array_map(function ($element) {
-            if (!is_object($element)) {
+            if (! is_object($element)) {
                 $element = Element::create($element);
             }
             $this->elements->push($element);
