@@ -60,7 +60,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
             if (Route::current()) {
                 $parameters = collect(Route::current()->parameters());
 
-                if ($parameters->has('adminModelId')) {
+                if ($parameters->has('adminModel')) {
                     $routeUrl = route('admin.model', [
                         'adminModel' => snake_case(class_basename($parameters->get('adminModel'))),
                     ]);
