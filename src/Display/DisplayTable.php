@@ -2,14 +2,15 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
-use SleepingOwl\Admin\Display\Extension\Columns;
-use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use Illuminate\Support\Collection;
+use Request;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use SleepingOwl\Admin\Display\Extension\Columns;
+use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
 
 /**
  * Class DisplayTable.
@@ -61,6 +62,7 @@ class DisplayTable extends Display
 
         $this->extend('columns', new Columns());
         $this->extend('column_filters', new ColumnFilters());
+        $this->extend('columns_total', new ColumnsTotal());
     }
 
     /**
