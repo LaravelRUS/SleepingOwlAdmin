@@ -7,7 +7,7 @@ use KodiComponents\Support\HtmlAttributes;
 class Element
 {
     use HtmlAttributes;
-    
+
     protected $text;
     protected $tag;
 

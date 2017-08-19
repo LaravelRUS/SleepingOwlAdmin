@@ -18,7 +18,7 @@ trait DateFormat
 
         return $this->format;
     }
-    
+
     /**
      * @return string
      */
