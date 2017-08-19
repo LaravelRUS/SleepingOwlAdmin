@@ -2,19 +2,19 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Request;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
-use Request;
-use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
-use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
+use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 /**
  * Class DisplayTable.
-
+ *
  * @method Columns getColumns()
  * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
  *
