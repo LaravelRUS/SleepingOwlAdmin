@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Http\Request;
 
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\DisplayTable;
 
 class ExportModelHandler
@@ -18,7 +19,7 @@ class ExportModelHandler
      * @param ModelConfigurationInterface $model
      * @throws \Exception
      */
-    protected function initDisplay(ModelConfigurationInterface $model)
+    public function initDisplay(ModelConfigurationInterface $model)
     {
         /** @var DisplayTable $display */
         $display = $model->onDisplay();
@@ -42,7 +43,9 @@ class ExportModelHandler
     protected function getCollectionArray()
     {
         return $this->display->getCollection()->map(function ($model) {
-            return $this->display->getColumns()->all()->map(function ($column) use ($model) {
+            return $this->display->getColumns()->all()->filter(function ($column) {
+                return ! $column instanceof Control;
+            })->map(function ($column) use ($model) {
                 $column->setModel($model);
 
                 if ( ! method_exists($column, 'getModelValue')) {
@@ -63,7 +66,9 @@ class ExportModelHandler
      */
     protected function getHeadersArray()
     {
-        return $this->display->getColumns()->all()->map(function ($column) {
+        return $this->display->getColumns()->all()->filter(function ($column) {
+            return ! $column instanceof Control;
+        })->map(function ($column) {
             $value = $column->getHeader()->getTitle();
 
             return ! is_object($value) ? $value : '';
@@ -127,7 +132,7 @@ class ExportModelHandler
      *
      * @return array
      */
-    protected function getData(ModelConfigurationInterface $model)
+    public function getData(ModelConfigurationInterface $model)
     {
         $data = $this->getCollectionArray();
         $headers = $this->getHeadersArray();
