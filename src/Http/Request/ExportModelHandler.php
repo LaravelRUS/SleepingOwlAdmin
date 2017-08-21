@@ -25,7 +25,7 @@ class ExportModelHandler
         $display = $model->onDisplay();
 
         if (! $display instanceof DisplayTable) {
-            throw new \Exception('Display is not instance of "' . DisplayTable::class . '" class');
+            throw new \Exception('Display is not instance of "'.DisplayTable::class.'" class');
         }
 
         $display->setModelClass($model->getClass());
