@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
- * Class Save.
+ * Class Delete.
  */
 class Delete extends FormButton
 {
@@ -17,7 +17,7 @@ class Delete extends FormButton
     }
 
     /**
-     * Init Cancel Button.
+     * Init Delete Button.
      */
     public function initialize()
     {
