@@ -25,7 +25,7 @@ class Cancel extends FormButton
 
         $this->setUrl($this->getModelConfiguration()->getCancelUrl());
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'class' => 'btn btn-warning'
+            'class' => 'btn btn-warning',
         ]);
     }
 }
