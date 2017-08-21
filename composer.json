@@ -34,7 +34,8 @@
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
-    "barryvdh/laravel-ide-helper": "^2.4"
+    "barryvdh/laravel-ide-helper": "^2.4",
+    "maatwebsite/excel": "~2.1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.0",
