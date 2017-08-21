@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Http\Request;
 
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Display\DisplayTable;
+use SleepingOwl\Admin\Display\Column\Control;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class ExportModelHandler
 {
@@ -14,7 +14,7 @@ class ExportModelHandler
     protected $display;
 
     /**
-     * Initialize DisplayTable
+     * Initialize DisplayTable.
      *
      * @param ModelConfigurationInterface $model
      * @throws \Exception
@@ -24,7 +24,7 @@ class ExportModelHandler
         /** @var DisplayTable $display */
         $display = $model->onDisplay();
 
-        if ( ! $display instanceof DisplayTable) {
+        if (! $display instanceof DisplayTable) {
             throw new \Exception('Display is not instance of "' . DisplayTable::class . '" class');
         }
 
@@ -36,7 +36,7 @@ class ExportModelHandler
     }
 
     /**
-     * Return data array without pagination
+     * Return data array without pagination.
      *
      * @return array
      */
@@ -48,7 +48,7 @@ class ExportModelHandler
             })->map(function ($column) use ($model) {
                 $column->setModel($model);
 
-                if ( ! method_exists($column, 'getModelValue')) {
+                if (! method_exists($column, 'getModelValue')) {
                     return false;
                 }
 
@@ -60,7 +60,7 @@ class ExportModelHandler
     }
 
     /**
-     * Return array of columns header
+     * Return array of columns header.
      *
      * @return array
      */
@@ -83,8 +83,8 @@ class ExportModelHandler
         $filters = $this->display->getFilters()->toArray();
 
         return array_map(function ($filter) {
-                return $filter->getTitle();
-            },
+            return $filter->getTitle();
+        },
             $filters['filters']
         );
     }
@@ -94,7 +94,7 @@ class ExportModelHandler
      */
     protected function getTotalsArray(ModelConfigurationInterface $model)
     {
-        if ( ! method_exists($model, 'getTotalRow')) {
+        if (! method_exists($model, 'getTotalRow')) {
             return [];
         }
 
@@ -128,7 +128,7 @@ class ExportModelHandler
     }
 
     /**
-     * Get data array for write to excel file
+     * Get data array for write to excel file.
      *
      * @return array
      */

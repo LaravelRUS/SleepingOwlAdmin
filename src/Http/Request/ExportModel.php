@@ -7,10 +7,10 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class ExportModel extends NewExcelFile
 {
-    /** @var  string */
+    /** @var string */
     protected $filename;
 
-    /** @var  ModelConfigurationInterface */
+    /** @var ModelConfigurationInterface */
     protected $model;
 
     /**

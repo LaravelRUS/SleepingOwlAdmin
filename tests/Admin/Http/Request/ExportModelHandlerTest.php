@@ -8,12 +8,12 @@ use SleepingOwl\Admin\Model\SectionModelConfiguration;
 class ExportModelHandlerTest extends TestCase
 {
     const COLLECTION = [
-        ['field1' => 'test1', 'field2' => 'test2']
+        ['field1' => 'test1', 'field2' => 'test2'],
     ];
 
     const COLUMNS = [
         'field1' => 'Test1',
-        'field2' => 'Test2'
+        'field2' => 'Test2',
     ];
 
     public function tearDown()
@@ -41,23 +41,23 @@ class ExportModelHandlerTest extends TestCase
     protected function getColumns()
     {
         return array_map(function ($fieldName, $label) {
-                return \AdminColumn::text($fieldName, $label);
-            },
+            return \AdminColumn::text($fieldName, $label);
+        },
             array_keys(self::COLUMNS),
             self::COLUMNS
         );
     }
 
     /**
-     * Transform array of array to array of Models
+     * Transform array of array to array of Models.
      * @param array $collection
      * @return array
      */
     protected function transformCollectionToModel(array $collection)
     {
         $collection = array_map(function ($data) {
-                return $this->getModel($data);
-            },
+            return $this->getModel($data);
+        },
             $collection
         );
 
@@ -115,10 +115,10 @@ class ExportModelHandlerTest extends TestCase
 
 class TestTableSection extends \SleepingOwl\Admin\Section
 {
-    /** @var  \Illuminate\Support\Collection */
+    /** @var \Illuminate\Support\Collection */
     protected $collection;
 
-    /** @var  array */
+    /** @var array */
     protected $columns;
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
@@ -158,11 +158,12 @@ class TestTableSection extends \SleepingOwl\Admin\Section
 }
 
 class TestEloquentModel extends \Illuminate\Database\Eloquent\Model
-{}
+{
+}
 
 class TestDisplayTable extends \SleepingOwl\Admin\Display\DisplayTable
 {
-    /** @var  array */
+    /** @var array */
     protected $collection;
 
     /**
