@@ -66,11 +66,11 @@ class ExportModelHandlerTest extends TestCase
 
     /**
      * @param array $data
-     * @return TestModel
+     * @return TestEloquentModel
      */
     protected function getModel(array $data = [])
     {
-        $testModel = new TestModel();
+        $testModel = new TestEloquentModel();
 
         if (count($data)) {
             foreach ($data as $key => $element) {
@@ -123,7 +123,7 @@ class TestTableSection extends \SleepingOwl\Admin\Section
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
-        parent::__construct($app, TestModel::class);
+        parent::__construct($app, TestEloquentModel::class);
     }
 
     public function setColumns($columns)
@@ -157,7 +157,7 @@ class TestTableSection extends \SleepingOwl\Admin\Section
     }
 }
 
-class TestModel extends \Illuminate\Database\Eloquent\Model
+class TestEloquentModel extends \Illuminate\Database\Eloquent\Model
 {}
 
 class TestDisplayTable extends \SleepingOwl\Admin\Display\DisplayTable
