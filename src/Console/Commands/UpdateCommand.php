@@ -21,7 +21,7 @@ class UpdateCommand extends Installation\Command
 
     protected function runInstaller()
     {
-        $this->call('vendor:publish', ['--tag' => 'assets', '--force']);
+        $this->call('vendor:publish', ['--tag' => 'assets', '--force' => true]);
         $this->callSilent('sleepingowl:ide:generate');
 
         $this->comment('SleepingOwl Framework successfully updated.');
