@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
+use Illuminate\Filesystem\Filesystem;
 use SleepingOwl\Admin\Console\Installation;
 
 class UpdateCommand extends Installation\Command
@@ -18,6 +19,16 @@ class UpdateCommand extends Installation\Command
      * @var string
      */
     protected $description = 'Update the SleepingOwl Admin package';
+
+    /**
+     * Execute the console command.
+     *
+     * @param Filesystem $files
+     */
+    public function fire(Filesystem $files)
+    {
+        $this->runInstaller();
+    }
 
     protected function runInstaller()
     {
