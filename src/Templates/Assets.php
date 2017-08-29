@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Illuminate\Support\Collection;
+use KodiCMS\Assets\AssetElement;
 use KodiCMS\Assets\Html;
 use KodiCMS\Assets\Assets as BaseAssets;
 use KodiCMS\Assets\Contracts\AssetElementInterface;
@@ -9,6 +11,7 @@ use SleepingOwl\Admin\Contracts\Template\AssetsInterface as AssetsContract;
 
 class Assets extends BaseAssets implements AssetsContract
 {
+
     /**
      * @var array
      */
@@ -17,16 +20,132 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * Gets or sets javascript assets.
      *
-     * @param bool|string  $handle
-     * @param string       $src        Asset source
+     * @param bool|string $handle
+     * @param string $src Asset source
      * @param array|string $dependency Dependencies
-     * @param bool         $footer     Whether to show in header or footer
+     * @param bool $footer Whether to show in header or footer
      *
      * @return AssetElementInterface Setting returns asset array, getting returns asset HTML
      */
     public function addJs($handle = false, $src = null, $dependency = null, $footer = true)
     {
         return parent::addJs($handle, $src, $dependency, $footer);
+    }
+
+    /**
+     * @param AssetElementInterface[] $assets
+     * @return array|bool|static
+     */
+    protected function sort($assets)
+    {
+        $mainAssets = collect($assets)->filter(function (AssetElement $item) {
+            return ! array_filter($item->getDependency());
+        });
+
+
+        $depAssets = collect($assets)->filter(function (AssetElement $item) {
+            return array_filter($item->getDependency());
+        });
+
+        foreach ($depAssets as $key => $asset) {
+            $mainAssets = $this->insertOn($asset, $mainAssets, collect($assets));
+        }
+
+        return $mainAssets;
+
+        //return parent::sort($assets);
+    }
+
+    /**
+     * @param AssetElement $asset
+     * @param Collection $mainAssets
+     * @param Collection $assets
+     * @return array|bool
+     */
+    protected function insertOn(AssetElement $asset, Collection &$mainAssets, Collection $assets)
+    {
+        $dependency = collect($asset->getDependency());
+        $checkedDep = null;
+        $hasNotDep  = null;
+
+        foreach ($dependency as $dep) {
+            if (! $mainAssets->has($dep)) {
+                $hasNotDep = $dep;
+                break;
+            }
+
+            $checkedDep = $dep;
+        }
+
+
+        if ($hasNotDep) {
+            return $this->insertOn($assets->get($hasNotDep), $mainAssets, $assets);
+        }
+
+        return $mainAssets = $this->insertAfter($checkedDep, $mainAssets, $asset->getHandle(), $asset);
+    }
+
+
+    /**
+     * Inserts a new key/value before the key in the array.
+     *
+     * @param $key
+     *   The key to insert before.
+     * @param $array
+     *   An array to insert in to.
+     * @param $new_key
+     *   The key to insert.
+     * @param $new_value
+     *   An value to insert.
+     * @return array|bool The new array if the key exists, FALSE otherwise.
+     * @see array_insert_after()
+     */
+    protected function insertBefore($key, &$array, $new_key, $new_value)
+    {
+        if (array_key_exists($key, $array)) {
+            $new = [];
+            foreach ($array as $k => $value) {
+                if ($k === $key) {
+                    $new[$new_key] = $new_value;
+                }
+                $new[$k] = $value;
+            }
+
+            return $new;
+        }
+
+        return false;
+    }
+
+    /**
+     * Inserts a new key/value after the key in the array.
+     *
+     * @param $key
+     *   The key to insert after.
+     * @param $array
+     *   An array to insert in to.
+     * @param $new_key
+     *   The key to insert.
+     * @param $new_value
+     *   An value to insert.
+     * @return array|bool The new array if the key exists, FALSE otherwise.
+     * @see array_insert_before()
+     */
+    protected function insertAfter($key, Collection &$array, $new_key, $new_value)
+    {
+        if ($array->has($key)) {
+            $new = [];
+            foreach ($array as $k => $value) {
+                $new[$k] = $value;
+                if ($k === $key) {
+                    $new[$new_key] = $new_value;
+                }
+            }
+
+            return collect($new);
+        }
+
+        return false;
     }
 
     /**
@@ -45,10 +164,6 @@ class Assets extends BaseAssets implements AssetsContract
     }
 
     /**
-     * Получение массива глобальны�
-     * перменны�
-     * .
-     *
      * @return array
      */
     public function globalVars()
