@@ -51,16 +51,18 @@ class Assets extends BaseAssets implements AssetsContract
             $mainAssets = $this->insertOn($asset, $mainAssets, collect($assets));
         }
 
-        return $mainAssets;
+        if($mainAssets->count()){
+            return $mainAssets;
+        }
 
-        //return parent::sort($assets);
+        return parent::sort($assets);
     }
 
     /**
      * @param AssetElement $asset
      * @param Collection $mainAssets
      * @param Collection $assets
-     * @return array|bool
+     * @return Collection
      */
     protected function insertOn(AssetElement $asset, Collection &$mainAssets, Collection $assets)
     {
@@ -78,11 +80,15 @@ class Assets extends BaseAssets implements AssetsContract
         }
 
 
-        if ($hasNotDep) {
+        if ($hasNotDep && $assets->get($hasNotDep)) {
             return $this->insertOn($assets->get($hasNotDep), $mainAssets, $assets);
         }
 
-        return $mainAssets = $this->insertAfter($checkedDep, $mainAssets, $asset->getHandle(), $asset);
+        if($checkedDep){
+            return $mainAssets = $this->insertAfter($checkedDep, $mainAssets, $asset->getHandle(), $asset);
+        }
+
+        return $mainAssets;
     }
 
 
@@ -128,8 +134,7 @@ class Assets extends BaseAssets implements AssetsContract
      *   The key to insert.
      * @param $new_value
      *   An value to insert.
-     * @return array|bool The new array if the key exists, FALSE otherwise.
-     * @see array_insert_before()
+     * @return Collection|bool The new array if the key exists, FALSE otherwise.
      */
     protected function insertAfter($key, Collection &$array, $new_key, $new_value)
     {

@@ -22,6 +22,10 @@
     {
       "name": "Pavel Buchnev",
       "email": "butschster@gmail.com"
+    },
+    {
+      "name": "Dave Gabrielyan",
+      "email": "aioslike@gmail.com"
     }
   ],
   "require": {
@@ -30,14 +34,14 @@
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
     "doctrine/dbal": "~2.3",
-    "laravelcollective/html": "5.*",
+    "laravelcollective/html": "^5.4",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
     "barryvdh/laravel-ide-helper": "^2.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0",
+    "phpunit/phpunit": "~6.0",
     "mockery/mockery": "0.9.*",
     "orchestra/testbench": "~3.0"
   },
