@@ -34,7 +34,7 @@
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
     "doctrine/dbal": "~2.3",
-    "laravelcollective/html": "^5.4",
+    "laravelcollective/html": "dev-master",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
