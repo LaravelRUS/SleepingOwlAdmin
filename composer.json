@@ -1,7 +1,7 @@
 {
   "name": "laravelrus/sleepingowl",
   "description": "Administrative interface builder for Laravel.",
-  "homepage": "http://sleeping-owl.github.io",
+  "homepage": "http://sleepingowl.ru",
   "keywords": [
     "laravel",
     "admin",
@@ -60,5 +60,6 @@
     "branch-alias": {
       "dev-development": "4.x-dev"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
