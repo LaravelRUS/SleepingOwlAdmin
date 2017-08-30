@@ -30,6 +30,14 @@ class UpdateCommand extends Installation\Command
         $this->runInstaller();
     }
 
+    /**
+     * @param Filesystem $files
+     */
+    public function handle(Filesystem $files)
+    {
+        $this->runInstaller();
+    }
+
     protected function runInstaller()
     {
         $this->call('vendor:publish', ['--tag' => 'assets', '--force' => true]);
