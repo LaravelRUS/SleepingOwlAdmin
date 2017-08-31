@@ -34,7 +34,7 @@
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
     "doctrine/dbal": "~2.3",
-    "laravelcollective/html": "dev-master",
+    "laravelcollective/html": "@dev",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
@@ -56,10 +56,16 @@
       "tests/TestCase.php"
     ]
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./html/",
+      "packagist.org": false
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-development": "4.x-dev"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
