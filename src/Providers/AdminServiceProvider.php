@@ -249,7 +249,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->app['router']->group([
             'prefix' => $this->getConfig('url_prefix'),
-
+            'middleware' => $this->getConfig('middleware')
         ], function (Router $route) {
             $route->get('ckeditor/upload/image', [
                 'as'   => 'admin.ckeditor.upload',
@@ -270,7 +270,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->app['router']->group([
             'prefix'     => $this->getConfig('url_prefix'),
-            'middleware' => $this->getConfig('middleware'),
+            'middleware' => $this->getConfig('middleware')
         ], function (Router $route) use ($callback) {
             call_user_func($callback, $route);
         });
