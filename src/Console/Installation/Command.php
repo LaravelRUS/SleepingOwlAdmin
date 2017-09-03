@@ -43,7 +43,30 @@ abstract class Command extends ConsoleCommand
 
         $this->runInstaller();
     }
+    
+    /**
+     * Execute the console command.
+     *
+     * @param Filesystem $files
+     */
+    public function handle(Filesystem $files)
+    {
+        if (! defined('SLEEPINGOWL_STUB_PATH')) {
+            define('SLEEPINGOWL_STUB_PATH', __DIR__.'/stubs');
+        }
 
+        if (! $this->confirmToProceed('SleepingOwl Admin')) {
+            return;
+        }
+
+        $this->call('vendor:publish', ['--tag' => 'config']);
+        $this->config = new Repository($this->laravel['config']->get('sleeping_owl'));
+
+        $this->files = $files;
+
+        $this->runInstaller();
+    }
+    
     abstract protected function runInstaller();
 
     /**
