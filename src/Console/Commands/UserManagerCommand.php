@@ -36,6 +36,22 @@ class UserManagerCommand extends Command
         $this->getUsers();
     }
 
+    public function handle()
+    {
+        if ($this->option('create')) {
+            return $this->createNewUser();
+        }
+
+        if ($this->option('delete')) {
+            return $this->deleteUser();
+        }
+
+        if ($this->option('password')) {
+            return $this->changePassword();
+        }
+
+        $this->getUsers();
+    }
     /**
      * @return string
      * @throws \Exception

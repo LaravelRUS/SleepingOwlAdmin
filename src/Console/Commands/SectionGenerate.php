@@ -36,4 +36,20 @@ class SectionGenerate extends Command
 
         $this->info('Sections generated successfully!');
     }
+
+    /**
+     * Execute the console command.
+     *
+     * @param AdminInterface $admin
+     *
+     * @return void
+     */
+    public function handle(AdminInterface $admin)
+    {
+        foreach ($admin->getMissedSections() as $model => $section) {
+            $this->callSilent('sleepingowl:section:make', ['name' => $section, 'model' => $model]);
+        }
+
+        $this->info('Sections generated successfully!');
+    }
 }
