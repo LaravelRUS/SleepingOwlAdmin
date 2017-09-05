@@ -5,7 +5,7 @@
     data-url="{{ $url }}"
     data-type="{{ $type }}"
     data-format = "{{ $format }}"
-    data-viewformat = "dd/mm/yyyy"
+    data-viewformat = "{{ $viewformat }}"
     data-mode="{{ $mode }}"
     data-pk="{{ $id }}"
 >{{ $value }}</a>
