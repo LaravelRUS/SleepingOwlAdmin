@@ -44,7 +44,7 @@ class MultiSelect extends Select
 
         if (is_array($value)) {
             foreach ($value as $key => $val) {
-                $value[$key] = (int) $val;
+                $value[$key] = $val;
             }
         }
 
