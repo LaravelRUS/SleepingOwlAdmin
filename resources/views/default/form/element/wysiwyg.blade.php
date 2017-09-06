@@ -1,6 +1,6 @@
 @push('footer-scripts')
 <script>
-    Admin.WYSIWYG.switchOn('{{ $name }}', '{{ $editor }}', {!! $parameters !!})
+    Admin.WYSIWYG.switchOn('{!!  $name !!}', '{{ $editor }}', {!! $parameters !!})
 </script>
 @endpush
 
