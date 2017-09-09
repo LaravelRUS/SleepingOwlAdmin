@@ -32,7 +32,7 @@
             >
             </multiselect>
 
-            <input type="hidden"
+            <input type="hidden"  {!! $attributes !!}
                    id="{{ str_replace(['[', ']'], '', $name) }}"
                    name="{{$name}}"
                    v-model="preparedVal">
