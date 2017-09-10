@@ -230,7 +230,7 @@ class Select extends NamedFormElement
             $options = collect($options)->prepend(['id' => null, 'text' => trans('sleeping_owl::lang.select.nothing')]);
         }
 
-        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
+        return ['attributes' => $this->htmlAttributesToString()] + parent::toArray() + [
                 'options'  => $options,
                 'limit'    => $this->getLimit(),
                 'nullable' => $this->isNullable(),
