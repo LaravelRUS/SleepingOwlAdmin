@@ -4,7 +4,7 @@ import Multiselect from 'vue-multiselect'
 Vue.component('deselect', Vue.extend({
     props: {
         value: {
-            type: [Number, Array]
+            type: [Number, Array, String]
         },
         id:{
             type: String
