@@ -1,6 +1,4 @@
 {!! $value !!} {!! $append !!}
 @if($small)
-  <p>
-    <small>{!! $small !!}</small>
-  </p>
+<small class="clearfix">{!! $small !!}</small>
 @endif
