@@ -16,6 +16,7 @@ class Text extends NamedColumn
     {
         return parent::toArray() + [
             'value'  => $this->getModelValue(),
+            'small' => $this->getModelSmallValue(),
         ];
     }
 }

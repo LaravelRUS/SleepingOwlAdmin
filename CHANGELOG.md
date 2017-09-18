@@ -2,7 +2,9 @@
 
  #coming soon....
 
- * test
+ * [Feature] Добавлено поведение для коламнов `text` и `link`. Может быть пропущен.
+    Добавлен третий параметр, для сноски под текстом / ссылкой `AdminColumn::text('name', 'Name', 'user.created_at')` или `AdminColumn::link('name', 'Name', 'user.created_at')`
+    ЗЫ: упрощайте свои кастомы
 
  * [Bug-Fix] Исправлено поведение `AdminFormElement::checkbox(...)->setReadonly(true)`
 
