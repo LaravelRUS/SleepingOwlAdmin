@@ -36,7 +36,7 @@
             >
             </multiselect>
 
-            <select v-show="true == false" id="{{str_replace(['[', ']'], '', $name)}}" multiple name="{{$name}}">
+            <select v-show="true == false" id="{{str_replace(['[', ']'], '', $name)}}" multiple name="{{$name}}" {!! $attributes !!}>
 
                 <option :selected="hasOption(opt.id)" :value="opt.id"
                         v-for="opt in options">

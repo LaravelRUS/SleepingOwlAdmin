@@ -135,7 +135,7 @@ class MultiSelect extends Select
 
         return [
                 'tagable'    => $this->isTaggable(),
-                'attributes' => $this->getHtmlAttributes(),
+                'attributes' => $this->htmlAttributesToString(),
             ] + parent::toArray();
     }
 
