@@ -28,10 +28,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      * @param Closure|null|string $name
      * @param null|string $label
      */
-    public function __construct($name, $label = null)
+    public function __construct($name, $label = null, $small = null)
     {
         parent::__construct($label);
         $this->setName($name);
+        $this->setSmall($small);
 
         $this->setHtmlAttribute('class', 'row-'.strtolower(class_basename(get_called_class())));
 
@@ -61,11 +62,39 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
+     * @return string
+     */
+    public function getSmall()
+    {
+        return $this->small;
+    }
+
+    /**
+     * @param string $small
+     *
+     * @return $this
+     */
+    public function setSmall($small)
+    {
+        $this->small = $small;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getModelValue()
     {
         return $this->getValueFromObject($this->getModel(), $this->getName());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModelSmallValue()
+    {
+        return $this->getValueFromObject($this->getModel(), $this->getSmall());
     }
 
     /**
