@@ -38,4 +38,22 @@ class SectionProvider extends Command
 
         $installer->install();
     }
+
+
+    /**
+     * Execute the console command.
+     *
+     * @param Filesystem $files
+     */
+    public function handle(Filesystem $files)
+    {
+        $installer = new CreateSectionServiceProvider($this, $files);
+        if ($installer->installed()) {
+            $this->line('File <info>AdminSectionsServiceProvider</info> exists');
+
+            return;
+        }
+
+        $installer->install();
+    }
 }

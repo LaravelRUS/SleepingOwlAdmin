@@ -51,7 +51,8 @@ module.exports = (function () {
                 showCancelButton: true,
                 confirmButtonColor: '#3c8dbc',
                 cancelButtonColor: '#d33',
-                confirmButtonText: trans('lang.button.yes')
+                confirmButtonText: trans('lang.button.yes'),
+                cancelButtonText: trans('lang.button.cancel')
             };
 
 
@@ -76,7 +77,8 @@ module.exports = (function () {
                 input: 'text',
                 showCancelButton: true,
                 closeOnConfirm: false,
-                inputPlaceholder: inputPlaceholder || ''
+                inputPlaceholder: inputPlaceholder || '',
+                cancelButtonText: trans('lang.button.cancel')
             })
         },
     }

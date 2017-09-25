@@ -2,12 +2,11 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Trait OrderableModel
- * @package SleepingOwl\Admin\Traits
+ * Trait OrderableModel.
  * @method static $this orderModel()
  * @method Builder findByPosition($position)
  */

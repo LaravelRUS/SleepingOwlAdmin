@@ -24,7 +24,7 @@ class Save extends FormButton
     }
 
     /**
-     * Init Cancel Button.
+     * Init Save Button.
      */
     public function initialize()
     {

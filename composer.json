@@ -1,7 +1,7 @@
 {
   "name": "laravelrus/sleepingowl",
   "description": "Administrative interface builder for Laravel.",
-  "homepage": "http://sleeping-owl.github.io",
+  "homepage": "http://sleepingowl.ru",
   "keywords": [
     "laravel",
     "admin",
@@ -22,6 +22,10 @@
     {
       "name": "Pavel Buchnev",
       "email": "butschster@gmail.com"
+    },
+    {
+      "name": "Dave Gabrielyan",
+      "email": "aioslike@gmail.com"
     }
   ],
   "require": {
@@ -30,14 +34,14 @@
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
     "doctrine/dbal": "~2.3",
-    "laravelcollective/html": "5.*",
+    "laravelcollective/html": "@dev",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
     "barryvdh/laravel-ide-helper": "^2.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0",
+    "phpunit/phpunit": "~6.0",
     "mockery/mockery": "0.9.*",
     "orchestra/testbench": "~3.0"
   },
@@ -52,9 +56,21 @@
       "tests/TestCase.php"
     ]
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./html/",
+      "packagist.org": false
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-development": "4.x-dev"
+    },
+    "laravel": {
+      "providers": [
+         "SleepingOwl\\Admin\\Providers\\SleepingOwlServiceProvider"
+      ]
     }
   }
 }

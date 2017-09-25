@@ -1,7 +1,7 @@
 <table {!! $attributes !!}>
     <colgroup>
         @foreach ($columns as $column)
-            <col width="{!! $column->getWidth() !!}" />
+            <col width="{!! $column->getWidth() !!}"/>
         @endforeach
     </colgroup>
 
@@ -22,14 +22,22 @@
             @foreach ($columns as $column)
                 <?php
                 $column->setModel($model);
-                if($column instanceof \SleepingOwl\Admin\Display\Column\Control) {
+                if ($column instanceof \SleepingOwl\Admin\Display\Column\Control) {
                     $column->initialize();
                 }
+                if($column instanceof \SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface) {
                 ?>
 
-                <td {!! $column->htmlAttributesToString() !!}>
+                <td>
                     {!! $column->render() !!}
                 </td>
+                <?php } else { ?>
+                    <td  {!! $column->htmlAttributesToString() !!}>
+                        {!! $column->render() !!}
+                    </td>
+                <?php
+                }
+                ?>
             @endforeach
         </tr>
     @endforeach

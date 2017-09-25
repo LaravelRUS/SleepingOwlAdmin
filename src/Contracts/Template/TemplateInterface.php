@@ -85,7 +85,8 @@ interface TemplateInterface extends Initializable, Arrayable
     public function renderNavigation();
 
     /**
-     * Получение относительного пути хранения asset файлов.
+     * Получение относительного пути �
+     * ранения asset файлов.
      *
      * @return string
      */
