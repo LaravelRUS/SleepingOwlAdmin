@@ -2,7 +2,7 @@
 
  #coming soon....
 
- * [Feature] Добавлено поведение для коламнов `text` и `link`. Может быть пропущен.
+ * [Feature] Добавлено поведение для коламнов `text`, `link` и `relatedLink`. Может быть пропущен.
     Добавлен третий параметр, для сноски под текстом / ссылкой `AdminColumn::text('name', 'Name', 'user.created_at')` или `AdminColumn::link('name', 'Name', 'user.created_at')`
     ЗЫ: упрощайте свои кастомы
 
