@@ -247,9 +247,11 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerSupportRoutes()
     {
+        $middlewares = collect($this->getConfig('middleware'));
+        $middlewares = $middlewares->filter(function($item){return $item != 'web';});
         $this->app['router']->group([
             'prefix' => $this->getConfig('url_prefix'),
-            'middleware' => $this->getConfig('middleware')
+            'middleware' => $middlewares
         ], function (Router $route) {
             $route->get('ckeditor/upload/image', [
                 'as'   => 'admin.ckeditor.upload',
