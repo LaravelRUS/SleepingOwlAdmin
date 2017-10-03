@@ -54,7 +54,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     public function policies($namespace = null)
     {
         if (is_null($namespace)) {
-            $namespace = config('sleeping_owl.policies_namespace', $this->getAppNamespace() . 'Policies\\');
+            $namespace = config('sleeping_owl.policies_namespace', $this->getAppNamespace().'Policies\\');
         }
 
         $policies = [];
