@@ -5,9 +5,12 @@ namespace SleepingOwl\Admin\Providers;
 use SleepingOwl\Admin\Admin;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Console\DetectsApplicationNamespace;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
+    use DetectsApplicationNamespace;
+    
     /**
      * @var array  Associative array in form of: Model::class => Section::class
      */
@@ -51,7 +54,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     public function policies($namespace = null)
     {
         if (is_null($namespace)) {
-            $namespace = config('sleeping_owl.policies_namespace', '\\App\\Policies\\');
+            $namespace = config('sleeping_owl.policies_namespace', $this->getAppNamespace().'Policies\\');
         }
 
         $policies = [];
