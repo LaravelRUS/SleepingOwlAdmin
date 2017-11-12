@@ -2,6 +2,8 @@
 
  #coming soon....
 
+ * [Feature] Subdomain routes for admin
+             Вы должны добавить в sleeping_owl.php ключ 'domain' => 'admin.example.com' где example.com и будет ваш домен.
  * [Feature] Добавлено поведение для коламнов `text`, `link` и `relatedLink`. Может быть пропущен.
     Добавлен третий параметр, для сноски под текстом / ссылкой `AdminColumn::text('name', 'Name', 'user.created_at')` или `AdminColumn::link('name', 'Name', 'user.created_at')`
     ЗЫ: упрощайте свои кастомы
