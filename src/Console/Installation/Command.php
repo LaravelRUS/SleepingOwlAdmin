@@ -6,6 +6,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\Command as ConsoleCommand;
+use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 abstract class Command extends ConsoleCommand
 {
@@ -36,7 +37,10 @@ abstract class Command extends ConsoleCommand
             return;
         }
 
-        $this->call('vendor:publish', ['--tag' => 'config']);
+        $this->call('vendor:publish', [
+            '--tag' => 'config',
+            '--provider' => SleepingOwlServiceProvider::class
+        ]);
         $this->config = new Repository($this->laravel['config']->get('sleeping_owl'));
 
         $this->files = $files;
@@ -59,7 +63,11 @@ abstract class Command extends ConsoleCommand
             return;
         }
 
-        $this->call('vendor:publish', ['--tag' => 'config']);
+        $this->call('vendor:publish', [
+            '--tag' => 'config',
+            '--provider' => SleepingOwlServiceProvider::class
+        ]);
+        
         $this->config = new Repository($this->laravel['config']->get('sleeping_owl'));
 
         $this->files = $files;
