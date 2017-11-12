@@ -263,7 +263,7 @@ class AdminServiceProvider extends ServiceProvider
             $configGroup->put('domain', $domain);
         }
 
-        $this->app['router']->group($configGroup, function (Router $route) {
+        $this->app['router']->group($configGroup->toArray(), function (Router $route) {
             $route->get('ckeditor/upload/image', [
                 'as'   => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
@@ -291,7 +291,7 @@ class AdminServiceProvider extends ServiceProvider
             $configGroup->put('domain', $domain);
         }
 
-        $this->app['router']->group($configGroup, function (Router $route) use ($callback) {
+        $this->app['router']->group($configGroup->toArray(), function (Router $route) use ($callback) {
             call_user_func($callback, $route);
         });
     }
