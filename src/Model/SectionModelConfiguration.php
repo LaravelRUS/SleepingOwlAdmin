@@ -53,6 +53,11 @@ class SectionModelConfiguration extends ModelConfigurationManager
     {
         return method_exists($this, 'onEdit') && parent::isEditable($model);
     }
+    
+    public function isDeletable(Model $model)
+    {
+        return method_exists($this, 'onDelete') && parent::isDeletable($model);
+    }
 
     /**
      * @return DisplayInterface|mixed
