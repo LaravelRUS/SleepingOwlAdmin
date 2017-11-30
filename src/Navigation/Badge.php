@@ -44,9 +44,10 @@ class Badge extends \KodiComponents\Navigation\Badge
     }
 
     /**
+     * @param null $view
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function render()
+    public function render($view = null)
     {
         return app('sleeping_owl.template')->view($this->getView(), $this->toArray());
     }
