@@ -56,4 +56,9 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'as'   => 'wildcard',
         'uses' => 'AdminController@getWildcard',
     ]);
+
+    $router->get('export/{adminModel}', [
+        'as'   => 'export',
+        'uses' => 'ExportController@export',
+    ]);
 });
