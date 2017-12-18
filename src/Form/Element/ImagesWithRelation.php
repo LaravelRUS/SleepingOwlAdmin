@@ -25,7 +25,7 @@ class ImagesWithRelation extends MultiSelect
     {
         return $this->saveCallback;
     }
-    protected $view = 'form.element.imagesx';
+    protected $view = 'form.element.images';
 
     public function toArray()
     {
