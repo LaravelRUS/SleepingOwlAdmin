@@ -56,6 +56,9 @@
       "tests/TestCase.php"
     ]
   },
+
+  "minimum-stability": "dev",
+ 
   "extra": {
     "branch-alias": {
       "dev-development": "4.x-dev"
