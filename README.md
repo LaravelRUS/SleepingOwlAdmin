@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/?branch=development)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
-[![Laravel Support](https://img.shields.io/badge/Laravel-5.2--5.5-brightgreen.svg)]()
+[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--5.6-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-5.6--7.x-brightgreen.svg)]()
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5906214c-a896-432c-ac24-b28144d6af1b/mini.png)](https://insight.sensiolabs.com/projects/5906214c-a896-432c-ac24-b28144d6af1b)
 
