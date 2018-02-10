@@ -34,7 +34,7 @@
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
     "doctrine/dbal": "~2.3",
-    "laravelcollective/html": "dev-master",
+    "laravelcollective/html": "5.5.*",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
@@ -55,10 +55,7 @@
     "classmap": [
       "tests/TestCase.php"
     ]
-  },
-
-  "minimum-stability": "dev",
- 
+  }, 
   "extra": {
     "branch-alias": {
       "dev-development": "4.x-dev"
