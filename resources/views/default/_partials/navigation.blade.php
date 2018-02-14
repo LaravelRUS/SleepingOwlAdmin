@@ -2,7 +2,7 @@
 
 	@stack('sidebar.top')
 
-	<ul class="sidebar-menu">
+	<ul class="sidebar-menu" data-widget="tree">
 		@stack('sidebar.ul.top')
 
 		{!! $template->renderNavigation() !!}
