@@ -6,11 +6,22 @@ use Route;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use KodiComponents\Support\HtmlAttributes;
 
-class Navigation extends \KodiComponents\Navigation\Navigation implements PageInterface
+class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
 {
+
     protected $currentPage;
     protected $currentUrl;
+
+    /**
+     * Переопределяем метод toArray(), вносим класс, treeview для активации меню tree в adminlte 2.4
+     * @return array
+     */
+    public function __construct(){
+        $class = config('navigation.class.has_child', 'treeview')
+        $this->setHtmlAttribute('class', $class);
+    }
 
     /**
      * Overload current page.
@@ -107,33 +118,5 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements PageIn
         }
 
         return false;
-    }
-
-    /**
-     * Переопределяем метод toArray(), вносим класс, treeview для активации меню tree в adminlte 2.4
-     * @return array
-     */
-    public function toArray()
-    {
-        if ($this->isActive() and ! $this->hasClassProperty($class = config('navigation.class.active', 'active'))) {
-            $this->setHtmlAttribute('class', $class);
-        }
-        if ($this->hasChild() and ! $this->hasClassProperty($class = config('navigation.class.has_child', 'treeview'))) {
-            $this->setHtmlAttribute('class', $class);
-        }
-        return parent::toArray() + [
-                'hasChild' => $this->hasChild(),
-                'id' => $this->getId(),
-                'title' => $this->getTitle(),
-                'icon' => $this->getIcon(),
-                'priority' => $this->getPriority(),
-                'url' => $this->getUrl(),
-                'path' => $this->getPath(),
-                'isActive' => $this->isActive(),
-                'attributes' => $this->htmlAttributesToString(),
-                'badges' => $this->getBadges()->sortBy(function (BadgeInterface $badge) {
-                    return $badge->getPriority();
-                }),
-            ];
     }
 }
