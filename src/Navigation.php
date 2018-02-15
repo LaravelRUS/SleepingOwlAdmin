@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
-class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface PageInterface
+class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface, PageInterface
 {
     protected $currentPage;
     protected $currentUrl;
