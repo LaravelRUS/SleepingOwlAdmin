@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
-class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
+class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface PageInterface
 {
     protected $currentPage;
     protected $currentUrl;
@@ -108,7 +108,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
 
         return false;
     }
-    
+
     /**
      * Переопределяем метод toArray(), вносим класс, treeview для активации меню tree в adminlte 2.4
      * @return array
