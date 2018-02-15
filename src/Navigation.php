@@ -10,6 +10,7 @@ use KodiComponents\Support\HtmlAttributes;
 
 class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
 {
+    use HtmlAttributes;
 
     protected $currentPage;
     protected $currentUrl;
