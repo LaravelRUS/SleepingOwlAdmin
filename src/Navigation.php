@@ -19,7 +19,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
      * @return array
      */
     public function __construct(){
-        $class = config('navigation.class.has_child', 'treeview')
+        $class = config('navigation.class.has_child', 'treeview');
         $this->setHtmlAttribute('class', $class);
     }
 
