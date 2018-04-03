@@ -13,7 +13,7 @@
 					   {!! $htmlStringAttributes !!}
 					   value="{{ $option['id'] }}"
 				/>
-				{{$option['text']}}
+				{!! $option['text'] !!}
 			</label>
 		</div>
 	@endforeach
