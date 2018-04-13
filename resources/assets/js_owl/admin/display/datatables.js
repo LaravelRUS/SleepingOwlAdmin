@@ -81,11 +81,14 @@ Admin.Modules.register('display.datatables', () => {
         });
 
         $("#filters-cancel").on('click', function () {
-            $(".display-filters td[data-index] input").val(null);
+            let input = $(".display-filters td[data-index] input").val(null);
+            input.trigger('change');
 
             let selector = $(".display-filters td[data-index] select");
             selector.val(null);
             selector.trigger('change');
+
+            table.api().draw();
         });
 
         $(".display-filters td[data-index] input").on('keyup', function(e){
