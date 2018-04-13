@@ -7,6 +7,9 @@ window.Admin = new Admin(
     window.GlobalConfig || {}
 )
 
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 window.Admin.Events = require('./components/events');
 
 require('./libs/jquery')
