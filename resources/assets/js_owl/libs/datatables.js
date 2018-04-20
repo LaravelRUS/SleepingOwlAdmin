@@ -9,8 +9,6 @@
 // window.DataTable = require('imports?define=>false!datatables.net')(window, $);
 //
 
-window.$ = window.jQuery = require('jquery');
-
 window.DataTable = require("datatables.net");
 require("datatables.net-responsive");
 
