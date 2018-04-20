@@ -66,15 +66,20 @@ Vue.component('element-images', Vue.extend({
             });
         },
         image (uri) {
+            console.log(uri);
             return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
         },
         remove (image) {
             let self = this;
 
-            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.vals = _.filter(self.vals, function (img, key) {
-                    return image !== key
-                });
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(result => {
+                if(result.value){
+                    self.vals = _.filter(self.vals, function (img, key) {
+                        return image !== key
+                    });
+                }else{
+                    return false;
+                }
             });
         },
         closeAlert () {

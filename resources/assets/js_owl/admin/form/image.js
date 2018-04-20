@@ -59,8 +59,11 @@ Vue.component('element-image', Vue.extend({
         remove () {
             let self = this;
 
-            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.val = '';
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
+                if(result.value)
+                    self.val = '';
+                else
+                    return false;
             });
         },
         closeAlert () {
