@@ -13,4 +13,7 @@
  */
 window.noty = require('noty')
 
-$.noty.defaults.theme = 'relax';
+//$.noty.defaults.theme = 'relax';
+Noty.overrideDefaults({
+    theme    : 'metroui'
+});
