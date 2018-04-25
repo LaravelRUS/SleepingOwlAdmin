@@ -3,7 +3,6 @@
 @import (less) "../../../node_modules/sweetalert2/dist/sweetalert2.min.css";
 @import (less) "../../../node_modules/bootstrap-daterangepicker/daterangepicker.css";
 @import "libs/dataTables";
-@import "../../../node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css";
 @import "libs/nestable";
 @import "libs/dropzone";
 @import "libs/select2";
@@ -41,7 +40,7 @@
 
 // Font awesome
 @import "../../../node_modules/font-awesome/less/font-awesome";
-@fa-font-path: "../fonts";
+@fa-font-path: "../../../sleepingowl/default/fonts";
 
 // Admin LTE
 @import "libs/AdminLTE";
@@ -60,14 +59,10 @@ body {
 }
 
 .sidebar-menu .treeview-menu > li > a {
-  padding: 5px 5px 5px 15px;
-  display: block;
-  font-size: 14px;
- }
-
-.treeview-menu .treeview-menu {
-  padding-left: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
+
 .tab-content {
   padding: 10px 0;
 }
