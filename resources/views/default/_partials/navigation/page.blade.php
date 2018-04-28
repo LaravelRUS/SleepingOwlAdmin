@@ -1,5 +1,5 @@
 @if($hasChild)
-<li {{-- {!! $attributes !!} --}} class="treeview">
+<li {!! $attributes !!}>
     <a href="#" >
         {!! $icon !!}
         <span>{!! $title !!}</span>
