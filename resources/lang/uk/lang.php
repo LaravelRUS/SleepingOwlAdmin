@@ -77,7 +77,8 @@ return [
             'next' => '&rarr;',
             'last' => 'Остання',
         ],
-        'filters' => [
+
+        'filters'         => [
             'control' => 'Фільтр',
         ],
     ],
