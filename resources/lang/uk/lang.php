@@ -77,6 +77,9 @@ return [
             'next' => '&rarr;',
             'last' => 'Остання',
         ],
+        'filters' => [
+            'control' => 'Фільтр',
+        ],
     ],
     'editable' => [
         'checkbox' => [
@@ -103,6 +106,7 @@ return [
     'button' => [
         'yes' => 'Так',
         'no' => 'Ні',
+        'cancel' => 'Відхилити',
     ],
     'message' => [
         'created' => '<i class="fa fa-check fa-lg"></i> Запис успішно створено',
