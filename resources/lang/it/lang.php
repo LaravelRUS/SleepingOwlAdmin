@@ -1,4 +1,5 @@
-﻿<?php
+<?php
+
 return [
 
     'dashboard' => 'Pannello',
