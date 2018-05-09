@@ -52,6 +52,7 @@ class UserManagerCommand extends Command
 
         $this->getUsers();
     }
+
     /**
      * @return string
      * @throws \Exception

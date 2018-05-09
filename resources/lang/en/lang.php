@@ -113,7 +113,7 @@ return [
     'button' => [
         'yes' => 'Yes',
         'no' => 'No',
-        'cancel' => 'Cancel'
+        'cancel' => 'Cancel',
     ],
     'message' => [
         'created' => '<i class="fa fa-check fa-lg"></i> Record has been created successfully',

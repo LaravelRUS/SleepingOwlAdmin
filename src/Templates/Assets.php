@@ -2,16 +2,15 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Illuminate\Support\Collection;
-use KodiCMS\Assets\AssetElement;
 use KodiCMS\Assets\Html;
+use KodiCMS\Assets\AssetElement;
+use Illuminate\Support\Collection;
 use KodiCMS\Assets\Assets as BaseAssets;
 use KodiCMS\Assets\Contracts\AssetElementInterface;
 use SleepingOwl\Admin\Contracts\Template\AssetsInterface as AssetsContract;
 
 class Assets extends BaseAssets implements AssetsContract
 {
-
     /**
      * @var array
      */
@@ -42,7 +41,6 @@ class Assets extends BaseAssets implements AssetsContract
             return ! array_filter($item->getDependency());
         });
 
-
         $depAssets = collect($assets)->filter(function (AssetElement $item) {
             return array_filter($item->getDependency());
         });
@@ -51,7 +49,7 @@ class Assets extends BaseAssets implements AssetsContract
             $mainAssets = $this->insertOn($asset, $mainAssets, collect($assets));
         }
 
-        if($mainAssets->count()){
+        if ($mainAssets->count()) {
             return $mainAssets;
         }
 
@@ -68,7 +66,7 @@ class Assets extends BaseAssets implements AssetsContract
     {
         $dependency = collect($asset->getDependency());
         $checkedDep = null;
-        $hasNotDep  = null;
+        $hasNotDep = null;
 
         foreach ($dependency as $dep) {
             if (! $mainAssets->has($dep)) {
@@ -79,18 +77,16 @@ class Assets extends BaseAssets implements AssetsContract
             $checkedDep = $dep;
         }
 
-
         if ($hasNotDep && $assets->get($hasNotDep)) {
             return $this->insertOn($assets->get($hasNotDep), $mainAssets, $assets);
         }
 
-        if($checkedDep){
+        if ($checkedDep) {
             return $mainAssets = $this->insertAfter($checkedDep, $mainAssets, $asset->getHandle(), $asset);
         }
 
         return $mainAssets;
     }
-
 
     /**
      * Inserts a new key/value before the key in the array.

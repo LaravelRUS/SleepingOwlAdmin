@@ -16,7 +16,6 @@ use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
-
     /**
      * Register display routes.
      *
@@ -200,8 +199,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function renderAsync(\Illuminate\Http\Request $request)
     {
-        $query         = $this->getRepository()->getQuery();
-        $totalCount    = $query->count();
+        $query = $this->getRepository()->getQuery();
+        $totalCount = $query->count();
         $filteredCount = 0;
 
         if (! is_null($this->distinct)) {
@@ -212,9 +211,9 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $this->applySearch($query, $request);
 
         if (is_null($this->distinct)) {
-            $countQuery                     = clone $query;
+            $countQuery = clone $query;
             $countQuery->getQuery()->orders = null;
-            $filteredCount                  = $countQuery->count();
+            $filteredCount = $countQuery->count();
         }
 
         $this->applyOffset($query, $request);
@@ -232,19 +231,18 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected function applyOffset($query, \Illuminate\Http\Request $request)
     {
         $offset = $request->input('start', 0);
-        $limit  = $request->input('length', 10);
+        $limit = $request->input('length', 10);
 
         if ($limit == -1) {
             return;
         }
 
-        $query->offset((int)$offset)->limit((int)$limit);
+        $query->offset((int) $offset)->limit((int) $limit);
     }
 
-
     /**
-     * Check if column is searchable
-     * 
+     * Check if column is searchable.
+     *
      * @param ColumnInterface $column
      * @return bool
      */
@@ -315,11 +313,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     ) {
         $columns = $this->getColumns();
 
-        $result                    = [];
-        $result['draw']            = $request->input('draw', 0);
-        $result['recordsTotal']    = $totalCount;
+        $result = [];
+        $result['draw'] = $request->input('draw', 0);
+        $result['recordsTotal'] = $totalCount;
         $result['recordsFiltered'] = $filteredCount;
-        $result['data']            = [];
+        $result['data'] = [];
 
         foreach ($collection as $instance) {
             $_row = [];
@@ -331,7 +329,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                     $column->initialize();
                 }
 
-                $_row[] = (string)$column;
+                $_row[] = (string) $column;
             }
 
             $result['data'][] = $_row;
@@ -369,7 +367,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      */
     public function toArray()
     {
-        $params            = parent::toArray();
+        $params = parent::toArray();
         $params['payload'] = $this->payload;
 
         return $params;
