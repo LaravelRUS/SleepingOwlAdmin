@@ -11,8 +11,11 @@ php:
 allow_failures:
   - php: nightly
 
+before_install:
+  - travis_wait
+
 before_script:
-  - travis_retry composer self-update
+  - travis_wait travis_retry composer self-update
 
 script:
   - vendor/bin/phpunit
