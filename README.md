@@ -35,7 +35,7 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 
  1. Require this package in your composer.json and run composer update:
 
-  	`composer require laravelrus/sleepingowl:4.*@dev`
+  	`composer require laravelrus/sleepingowl:4.x-dev`
     
 
  2. After composer update, insert service provider in config/app.php
