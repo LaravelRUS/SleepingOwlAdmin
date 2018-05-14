@@ -3,15 +3,12 @@
  *
  * @see http://mm.onokumus.com/
  */
+require('metismenu');
 
-
-
-// require('metismenu');
-//
 $(function() {
+
     // $('.sidebar-menu').metisMenu({
     //     toggle: true
     // });
 
-    // $('ul').tree();
 });
