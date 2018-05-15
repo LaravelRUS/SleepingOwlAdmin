@@ -5,7 +5,7 @@
     "dev": "npm run development",
   },
   "devDependencies": {
-    "admin-lte": "^2.4.2",
+    "admin-lte": "^2.4.3",
     "axios": "^0.17.1",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -17,6 +17,7 @@
     "bootstrap-daterangepicker": "^2.1.24",
     "datatables.net": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
+    "datatables.net-responsive": "^2.2.1",
     "dropzone": "4.3.0",
     "cross-env": "^5.0.1",
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
