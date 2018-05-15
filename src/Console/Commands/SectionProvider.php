@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
-use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
+use Illuminate\Config\Repository;
 use SleepingOwl\Admin\Console\Installation\CreateSectionServiceProvider;
 
 class SectionProvider extends Command
@@ -36,7 +36,6 @@ class SectionProvider extends Command
 
         $installer->install();
     }
-
 
     /**
      * @param Repository $files

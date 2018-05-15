@@ -241,6 +241,23 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
+     * Check if column is searchable.
+     *
+     * @param ColumnInterface $column
+     * @return bool
+     */
+    public function checkSearchableColumns(ColumnInterface $column)
+    {
+        foreach ($this->searchableColumns as $searchableColumn) {
+            if ($column instanceof $searchableColumn) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Apply search to the query.
      *
      * @param Builder $query
@@ -257,7 +274,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             $columns = $this->getColumns()->all();
 
             foreach ($columns as $column) {
-                if (in_array(get_class($column), $this->searchableColumns)) {
+                if ($this->checkSearchableColumns($column)) {
                     if ($column instanceof ColumnInterface) {
                         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                             if (method_exists($metaInstance, 'onSearch')) {

@@ -30,7 +30,6 @@ use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 
 class AdminServiceProvider extends ServiceProvider
 {
-
     /**
      * @var string
      */
@@ -182,7 +181,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register bootstrap file
+     * Register bootstrap file.
      */
     protected function registerBootstrap()
     {
@@ -256,7 +255,7 @@ class AdminServiceProvider extends ServiceProvider
         });
         $configGroup = collect([
             'prefix'     => $this->getConfig('url_prefix'),
-            'middleware' => $middlewares
+            'middleware' => $middlewares,
         ]);
 
         if ($domain) {
@@ -281,10 +280,10 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerRoutes(\Closure $callback)
     {
-        $domain      = config('sleeping_owl.domain', false);
+        $domain = config('sleeping_owl.domain', false);
         $configGroup = collect([
             'prefix'     => $this->getConfig('url_prefix'),
-            'middleware' => $this->getConfig('middleware')
+            'middleware' => $this->getConfig('middleware'),
         ]);
 
         if ($domain) {

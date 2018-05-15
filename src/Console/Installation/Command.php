@@ -39,7 +39,7 @@ abstract class Command extends ConsoleCommand
 
         $this->call('vendor:publish', [
             '--tag' => 'config',
-            '--provider' => SleepingOwlServiceProvider::class
+            '--provider' => SleepingOwlServiceProvider::class,
         ]);
         $this->config = new Repository($this->laravel['config']->get('sleeping_owl'));
 
@@ -47,7 +47,7 @@ abstract class Command extends ConsoleCommand
 
         $this->runInstaller();
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -65,16 +65,16 @@ abstract class Command extends ConsoleCommand
 
         $this->call('vendor:publish', [
             '--tag' => 'config',
-            '--provider' => SleepingOwlServiceProvider::class
+            '--provider' => SleepingOwlServiceProvider::class,
         ]);
-        
+
         $this->config = new Repository($this->laravel['config']->get('sleeping_owl'));
 
         $this->files = $files;
 
         $this->runInstaller();
     }
-    
+
     abstract protected function runInstaller();
 
     /**

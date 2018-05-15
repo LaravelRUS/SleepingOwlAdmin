@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
 
@@ -114,7 +114,7 @@ return [
     'button'    => [
         'yes' => 'Sì',
         'no'  => 'No',
-        'cancel' => 'Cancellazione'
+        'cancel' => 'Cancellazione',
     ],
     'message'   => [
         'created'              => '<i class="fa fa-check fa-lg"></i> La registrazione è stata creata correttamente',
