@@ -7,7 +7,7 @@
         @endif
     </label>
     <input {!! $attributes !!}
-           value=""
+           value="{{$value}}"
            @if($readonly) readonly @endif
             autocomplete="off"
     >

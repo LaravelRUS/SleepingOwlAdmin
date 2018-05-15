@@ -9,6 +9,7 @@
 @import "libs/datetimepicker";
 @import "libs/vue-multiselect";
 
+
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
@@ -39,7 +40,7 @@
 
 // Font awesome
 @import "../../../node_modules/font-awesome/less/font-awesome";
-@fa-font-path: "../fonts";
+@fa-font-path: "../../../sleepingowl/default/fonts";
 
 // Admin LTE
 @import "libs/AdminLTE";
@@ -58,10 +59,14 @@ body {
 }
 
 .sidebar-menu .treeview-menu > li > a {
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
+  padding: 5px 5px 5px 15px;
+  display: block;
+  font-size: 14px;
+ }
 
+.treeview-menu .treeview-menu {
+  padding-left: 20px;
+}
 .tab-content {
   padding: 10px 0;
 }

@@ -131,6 +131,10 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function render($view = null)
     {
+        if ($this->hasChild() and ! $this->hasClassProperty($class = config('navigation.class.has_child', 'treeview'))) {
+            $this->setHtmlAttribute('class', $class);
+        }
+        
         $data = $this->toArray();
 
         if (! is_null($view)) {
