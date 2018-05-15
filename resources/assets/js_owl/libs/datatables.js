@@ -6,12 +6,9 @@
  *
  * @see https://datatables.net/manual/index
  */
-// window.DataTable = require('imports?define=>false!datatables.net')(window, $);
-//
 
 window.DataTable = require("datatables.net");
 require("datatables.net-responsive");
-
 
 /**
  * DataTables integration for Bootstrap 3.

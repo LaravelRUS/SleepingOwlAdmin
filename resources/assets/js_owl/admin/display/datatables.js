@@ -6,7 +6,7 @@ Admin.Modules.register('display.datatables', () => {
     };
 
     $.fn.dataTable.ext.order['DateTime'] = function (settings, col) {
-        return this.api().column(col, {order: 'index'}).nodes().map((td, i) => {
+        return this.column(col, {order: 'index'}).nodes().map((td, i) => {
             return $(td).data('value');
         });
     }
@@ -64,7 +64,7 @@ Admin.Modules.register('display.datatables', () => {
             };
         }
 
-        params.fnDrawCallback = function (Settings) {
+        params.fnDrawCallback = function (oSettings) {
             Admin.Events.fire('datatables::draw', this)
         }
 
@@ -72,15 +72,18 @@ Admin.Modules.register('display.datatables', () => {
 
         iterateColumnFilters(id, function ($element, index, type) {
             if (_.isFunction(window.columnFilters[type])) {
-                window.columnFilters[type]($element, table.api(), table.column(index), index, params.serverSide);
+                window.columnFilters[type]($element, table, table.column(index), index, params.serverSide);
             }
         });
 
-        $("#filters-exec").on('click', function () {
-            table.api().draw();
+        $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
+
+            table.draw();
+
+
         });
 
-        $("#filters-cancel").on('click', function () {
+        $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
             $(".display-filters td[data-index] input").val(null);
 
             let selector = $(".display-filters td[data-index] select");
@@ -88,9 +91,9 @@ Admin.Modules.register('display.datatables', () => {
             selector.trigger('change');
         });
 
-        $(".display-filters td[data-index] input").on('keyup', function(e){
+        $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e){
             if(e.keyCode === 13){
-                table.api().draw();
+                table.draw();
             }
         });
     })
