@@ -6,11 +6,9 @@ use Route;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
-use KodiComponents\Support\HtmlAttributes;
 
 class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
 {
-
     protected $currentPage;
     protected $currentUrl;
 
