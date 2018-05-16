@@ -11,9 +11,9 @@
  *
  * @see http://ned.im/noty/
  */
-window.noty = require('noty')
 
-//$.noty.defaults.theme = 'relax';
+window.Noty = require('noty')
+
 Noty.overrideDefaults({
     theme    : 'metroui'
 });
