@@ -6,12 +6,21 @@ use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Display\Element;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Traits\ElementPlacementTrait;
+use SleepingOwl\Admin\Traits\ElementViewTrait;
 
 class ColumnsTotal extends Extension implements Placable
 {
-    use HtmlAttributes;
+    use HtmlAttributes, ElementPlacementTrait, ElementViewTrait;
 
+    /**
+     * @var string|\Illuminate\View\View
+     */
     protected $view = 'display.extensions.columns_total';
+
+    /**
+     * @var string
+     */
     protected $placement = 'table.header';
 
     /**
@@ -24,15 +33,6 @@ class ColumnsTotal extends Extension implements Placable
         $this->elements = new Collection();
     }
 
-    public function getPlacement()
-    {
-        return $this->placement;
-    }
-
-    public function getView()
-    {
-        return $this->view;
-    }
 
     public function set(array $elements, $columnsNumber = 0)
     {
