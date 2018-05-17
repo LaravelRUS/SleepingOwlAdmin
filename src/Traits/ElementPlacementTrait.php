@@ -6,11 +6,6 @@ trait ElementPlacementTrait
 {
 
     /**
-     * @var string
-     */
-    protected $placement ;
-
-    /**
      * @return string
      */
     public function getPlacement()

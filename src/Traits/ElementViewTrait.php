@@ -2,14 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Closure;
-
 trait ElementViewTrait
 {
-    /**
-     * @var string|\Illuminate\View\View
-     */
-    protected $view;
 
     /**
      * @return string|\Illuminate\View\View
