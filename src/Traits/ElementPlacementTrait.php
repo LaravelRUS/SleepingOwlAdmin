@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Traits;
 
 trait ElementPlacementTrait
 {
-
     /**
      * @return string
      */
@@ -44,6 +43,4 @@ trait ElementPlacementTrait
     {
         return $this->setPlacement($position);
     }
-
-
 }
