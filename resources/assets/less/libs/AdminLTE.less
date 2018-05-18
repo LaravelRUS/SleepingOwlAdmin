@@ -1,5 +1,4 @@
 @path: '../../../../node_modules/admin-lte/build/less/';
-
 //MISC
 //----
 @import "@{path}core";
@@ -30,6 +29,7 @@
 //@import "@{path}users-list";
 //@import "@{path}carousel";
 @import "@{path}modal";
+@import "@{path}treeview";
 //@import "@{path}social-widgets";
 
 //PAGES
@@ -98,6 +98,8 @@
   .skin-dark-sidebar(@light-blue);
 }
 
-.skin-blue.layout-top-nav .main-header > .logo {
-  .logo-variant(@light-blue);
-}
+ .skin-blue.layout-top-nav .main-header > .logo {
+    .logo-variant(@light-blue);
+  }
+//Переопределяем переменную
+@boxed-layout-bg-image-path: "../../../../node_modules/admin-lte/dist/img/boxed-bg.jpg";
