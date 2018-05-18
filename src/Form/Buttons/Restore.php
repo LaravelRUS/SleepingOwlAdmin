@@ -4,7 +4,7 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
- * Class Save.
+ * Class Restore.
  */
 class Restore extends FormButton
 {
@@ -18,7 +18,7 @@ class Restore extends FormButton
     }
 
     /**
-     * Init Cancel Button.
+     * Init Restore Button.
      */
     public function initialize()
     {

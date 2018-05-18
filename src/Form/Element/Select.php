@@ -22,6 +22,7 @@ class Select extends NamedFormElement
      * @var bool
      */
     protected $sortable = true;
+    protected $sortable_flags = null;
 
     /**
      * @var array
@@ -67,7 +68,7 @@ class Select extends NamedFormElement
 
         $options = array_except($this->options, $this->exclude);
         if ($this->isSortable()) {
-            asort($options);
+            asort($options, $this->getSortableFlags());
         }
 
         return $options;
@@ -132,13 +133,23 @@ class Select extends NamedFormElement
     /**
      * @param bool $sortable
      *
+     * @param null $sortable_flags
      * @return $this
      */
-    public function setSortable($sortable)
+    public function setSortable($sortable, $sortable_flags = null)
     {
         $this->sortable = (bool) $sortable;
+        $this->sortable_flags = $sortable_flags;
 
         return $this;
+    }
+
+    /**
+     * @return null
+     */
+    protected function getSortableFlags()
+    {
+        return $this->sortable_flags;
     }
 
     /**
@@ -219,7 +230,7 @@ class Select extends NamedFormElement
             $options = collect($options)->prepend(['id' => null, 'text' => trans('sleeping_owl::lang.select.nothing')]);
         }
 
-        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
+        return ['attributes' => $this->htmlAttributesToString()] + parent::toArray() + [
                 'options'  => $options,
                 'limit'    => $this->getLimit(),
                 'nullable' => $this->isNullable(),

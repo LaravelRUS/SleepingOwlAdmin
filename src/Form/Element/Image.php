@@ -43,7 +43,7 @@ class Image extends File
 
             $size = getimagesize($file->getRealPath());
 
-            if (! $size) {
+            if (! $size && $file->getMimeType() !== 'image/svg+xml') {
                 $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
             }
         });

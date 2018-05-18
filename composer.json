@@ -1,7 +1,7 @@
 {
   "name": "laravelrus/sleepingowl",
   "description": "Administrative interface builder for Laravel.",
-  "homepage": "http://sleeping-owl.github.io",
+  "homepage": "http://sleepingowl.ru",
   "keywords": [
     "laravel",
     "admin",
@@ -22,24 +22,28 @@
     {
       "name": "Pavel Buchnev",
       "email": "butschster@gmail.com"
+    },
+    {
+      "name": "Dave Gabrielyan",
+      "email": "aioslike@gmail.com"
     }
   ],
   "require": {
-    "php": ">=5.6.4",
-    "laravel/framework": "~5.2",
+    "php": ">=7.0",
+    "laravel/framework": "~5.5",
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
     "doctrine/dbal": "~2.3",
-    "laravelcollective/html": "5.*",
+    "laravelcollective/html": "5.5.*",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
-    "barryvdh/laravel-ide-helper": "^2.4"
+    "barryvdh/laravel-ide-helper": "^2.4.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0",
+    "phpunit/phpunit": "^6.0 || ^7.0",
     "mockery/mockery": "0.9.*",
-    "orchestra/testbench": "~3.0"
+    "orchestra/testbench": "^3.5 || ^3.6"
   },
   "autoload": {
     "psr-4": {
@@ -51,10 +55,15 @@
     "classmap": [
       "tests/TestCase.php"
     ]
-  },
+  }, 
   "extra": {
     "branch-alias": {
       "dev-development": "4.x-dev"
+    },
+    "laravel": {
+      "providers": [
+         "SleepingOwl\\Admin\\Providers\\SleepingOwlServiceProvider"
+      ]
     }
   }
 }

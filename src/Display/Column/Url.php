@@ -42,6 +42,7 @@ class Url extends NamedColumn
         return parent::toArray() + [
             'linkAttributes' => $this->getLinkAttributes(),
             'value' => $this->getModelValue(),
+            'small' => $this->getModelSmallValue(),
         ];
     }
 }

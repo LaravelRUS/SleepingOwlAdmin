@@ -25,9 +25,9 @@ class RelatedLink extends Link
      * @param \Closure|null|string $name
      * @param null|string $label
      */
-    public function __construct($name, $label = null)
+    public function __construct($name, $label = null, $small = null)
     {
-        parent::__construct($name, $label);
+        parent::__construct($name, $label, $small);
         $this->originalName = $name;
     }
 

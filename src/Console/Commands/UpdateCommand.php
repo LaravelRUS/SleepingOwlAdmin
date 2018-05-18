@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
+use Illuminate\Filesystem\Filesystem;
 use SleepingOwl\Admin\Console\Installation;
 
 class UpdateCommand extends Installation\Command
@@ -19,9 +20,27 @@ class UpdateCommand extends Installation\Command
      */
     protected $description = 'Update the SleepingOwl Admin package';
 
+    /**
+     * Execute the console command.
+     *
+     * @param Filesystem $files
+     */
+    public function fire(Filesystem $files)
+    {
+        $this->runInstaller();
+    }
+
+    /**
+     * @param Filesystem $files
+     */
+    public function handle(Filesystem $files)
+    {
+        $this->runInstaller();
+    }
+
     protected function runInstaller()
     {
-        $this->call('vendor:publish', ['--tag' => 'assets', '--force']);
+        $this->call('vendor:publish', ['--tag' => 'assets', '--force' => true]);
         $this->callSilent('sleepingowl:ide:generate');
 
         $this->comment('SleepingOwl Framework successfully updated.');

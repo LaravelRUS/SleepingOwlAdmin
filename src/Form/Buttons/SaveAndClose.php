@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
- * Class Save.
+ * Class SaveAndClose.
  */
 class SaveAndClose extends FormButton
 {
@@ -22,7 +22,7 @@ class SaveAndClose extends FormButton
     }
 
     /**
-     * Init Cancel Button.
+     * Init SaveAndClose Button.
      */
     public function initialize()
     {

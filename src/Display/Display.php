@@ -6,6 +6,7 @@ use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Display\Extension\Apply;
+use SleepingOwl\Admin\Display\Extension\Links;
 use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\Filters;
@@ -81,6 +82,7 @@ abstract class Display implements DisplayInterface
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
+        $this->extend('links', new Links());
 
         $this->initializePackage();
     }

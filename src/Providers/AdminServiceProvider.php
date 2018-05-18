@@ -181,7 +181,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return array
+     * Register bootstrap file.
      */
     protected function registerBootstrap()
     {
@@ -247,10 +247,22 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerSupportRoutes()
     {
-        $this->app['router']->group([
-            'prefix' => $this->getConfig('url_prefix'),
+        $domain = config('sleeping_owl.domain', false);
 
-        ], function (Router $route) {
+        $middlewares = collect($this->getConfig('middleware'));
+        $middlewares = $middlewares->filter(function ($item) {
+            return $item != 'web';
+        });
+        $configGroup = collect([
+            'prefix'     => $this->getConfig('url_prefix'),
+            'middleware' => $middlewares,
+        ]);
+
+        if ($domain) {
+            $configGroup->put('domain', $domain);
+        }
+
+        $this->app['router']->group($configGroup->toArray(), function (Router $route) {
             $route->get('ckeditor/upload/image', [
                 'as'   => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
@@ -268,10 +280,17 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerRoutes(\Closure $callback)
     {
-        $this->app['router']->group([
+        $domain = config('sleeping_owl.domain', false);
+        $configGroup = collect([
             'prefix'     => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
-        ], function (Router $route) use ($callback) {
+        ]);
+
+        if ($domain) {
+            $configGroup->put('domain', $domain);
+        }
+
+        $this->app['router']->group($configGroup->toArray(), function (Router $route) use ($callback) {
             call_user_func($callback, $route);
         });
     }

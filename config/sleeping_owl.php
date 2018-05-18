@@ -33,6 +33,11 @@ return [
     'url_prefix' => 'admin',
 
     /*
+     * Subdomain & Domain support routes
+     */
+    'domain' => false,
+
+    /*
     |--------------------------------------------------------------------------
     | Middleware to use in admin routes
     |--------------------------------------------------------------------------

@@ -1,1 +1,1 @@
-{!! $value !!} {!! $append !!}
+<div {!! $attributes !!}>{!! $value !!} {!! $append !!}</div>

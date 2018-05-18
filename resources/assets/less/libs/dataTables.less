@@ -32,7 +32,8 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 
 div.dataTables_wrapper div.dataTables_filter {
-  text-align: right
+  text-align: right;
+  padding: 10px 10px 0;
 }
 
 div.dataTables_wrapper div.dataTables_filter label {
@@ -48,14 +49,16 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 div.dataTables_wrapper div.dataTables_info {
-  padding-top: 8px;
-  white-space: nowrap
+  padding:     8px;
+  white-space: nowrap;
+  float:       left;
 }
 
 div.dataTables_wrapper div.dataTables_paginate {
   margin:      0;
   white-space: nowrap;
-  text-align:  right
+  text-align:  right;
+  padding:     0 8px
 }
 
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {
@@ -139,6 +142,9 @@ div.dataTables_scrollFoot table {
 @media screen and (max-width: 767px) {
   div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
     text-align: center
+  }
+  div.dataTables_wrapper div.dataTables_info {
+    float: none
   }
 }
 

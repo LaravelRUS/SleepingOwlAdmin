@@ -7,7 +7,9 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 trait ProvidesScriptVariables
 {
     /**
-     * Получение массива глобальных переменных для JavaScript.
+     * Получение массива глобальны�
+     * переменны�
+     * для JavaScript.
      *
      * @return array
      */

@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Config\Repository;
 use SleepingOwl\Admin\Console\Installation\CreateSectionServiceProvider;
 
 class SectionProvider extends Command
@@ -23,11 +23,24 @@ class SectionProvider extends Command
     protected $description = 'Create [AdminSectionsServiceProvider] class';
 
     /**
-     * Execute the console command.
-     *
-     * @param Filesystem $files
+     * @param Repository $files
      */
-    public function fire(Filesystem $files)
+    public function fire(Repository $files)
+    {
+        $installer = new CreateSectionServiceProvider($this, $files);
+        if ($installer->installed()) {
+            $this->line('File <info>AdminSectionsServiceProvider</info> exists');
+
+            return;
+        }
+
+        $installer->install();
+    }
+
+    /**
+     * @param Repository $files
+     */
+    public function handle(Repository $files)
     {
         $installer = new CreateSectionServiceProvider($this, $files);
         if ($installer->installed()) {
