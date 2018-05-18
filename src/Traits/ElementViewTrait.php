@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Traits;
 
 trait ElementViewTrait
 {
-
     /**
      * @return string|\Illuminate\View\View
      */
