@@ -93,7 +93,7 @@ class FormPanel extends FormDefault
         }
 
         $class = $this->getElements()->last();
-        if (is_object($class) and get_class($class) === Body::class) {
+        if (is_object($class) && get_class($class) === Body::class) {
             $this->addElement(new Html('<hr />'));
         }
 
