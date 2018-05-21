@@ -23,7 +23,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     {
         parent::__construct($path, $label);
 
-        $this->setLoadOptionsQueryPreparer(function($item, Builder $query) {
+        $this->setLoadOptionsQueryPreparer(function ($item, Builder $query) {
             $repository = app(RepositoryInterface::class);
             $repository->setModel($this->getModelForOptions());
             $key = $repository->getModel()->getKeyName();
@@ -39,7 +39,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     {
         $routeName = 'admin.form.element.'.static::$route;
 
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@selectSearch',

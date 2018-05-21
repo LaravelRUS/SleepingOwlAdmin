@@ -13,11 +13,11 @@ class DisplayTabsCollection extends FormElementsCollection
      */
     public function onlyActive()
     {
-        return $this->filter(function(TabInterface $tab) {
+        return $this->filter(function (TabInterface $tab) {
             $element = $tab->getContent();
 
             if ($element instanceof FormElementInterface) {
-                return !$element->isReadonly();
+                return ! $element->isReadonly();
             }
 
             return true;
@@ -29,7 +29,7 @@ class DisplayTabsCollection extends FormElementsCollection
      */
     public function onlyVisible()
     {
-        return $this->filter(function(TabInterface $tab) {
+        return $this->filter(function (TabInterface $tab) {
             return $tab->isVisible();
         });
     }

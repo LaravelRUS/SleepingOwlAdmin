@@ -135,7 +135,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
 
-            $query->whereHas($relationName, function($q) use ($queryString, $fieldName) {
+            $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {
                 $this->buildQuery($q, $fieldName, $queryString);
             });
         } else {

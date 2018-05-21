@@ -28,7 +28,7 @@ class Order extends TableColumn implements WithRoutesInterface
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.column.move-up';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->post('{adminModel}/{adminModelId}/up', [
                 'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderUp',
@@ -36,7 +36,7 @@ class Order extends TableColumn implements WithRoutesInterface
         }
 
         $routeName = 'admin.display.column.move-down';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->post('{adminModel}/{adminModelId}/down', [
                 'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderDown',
@@ -56,7 +56,7 @@ class Order extends TableColumn implements WithRoutesInterface
      */
     public function getModel()
     {
-        if (!in_array(OrderableModel::class, trait_uses_recursive($class = get_class($this->model)))) {
+        if (! in_array(OrderableModel::class, trait_uses_recursive($class = get_class($this->model)))) {
             throw new \Exception("Model [$class] should uses trait [SleepingOwl\\Admin\\Traits\\OrderableModel]");
         }
 

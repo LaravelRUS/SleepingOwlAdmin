@@ -75,15 +75,15 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         $this->content = $content;
 
-        if (!is_null($label)) {
+        if (! is_null($label)) {
             $this->setLabel($label);
         }
 
-        if (!is_null($icon)) {
+        if (! is_null($icon)) {
             $this->setIcon($icon);
         }
 
-        if (!is_null($badge)) {
+        if (! is_null($badge)) {
             $this->setBadge($badge);
         }
 

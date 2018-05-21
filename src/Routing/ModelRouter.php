@@ -59,7 +59,7 @@ class ModelRouter
      */
     protected function registerModelBindings(Collection $aliases)
     {
-        $this->router->bind('adminModel', function($model, Route $route) use ($aliases) {
+        $this->router->bind('adminModel', function ($model, Route $route) use ($aliases) {
             if (is_null($model = $aliases->get($model))) {
                 throw new ModelNotFoundException();
             }
@@ -85,7 +85,7 @@ class ModelRouter
      */
     protected function runCustomController(Route $route, $controller, $action)
     {
-        $route->uses(function() use ($route, $controller, $action) {
+        $route->uses(function () use ($route, $controller, $action) {
             return (new ControllerDispatcher($this->app))->dispatch(
                 $route, $this->app->make($controller), $action
             );

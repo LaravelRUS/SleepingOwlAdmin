@@ -88,7 +88,7 @@ class DisplayDatatables extends DisplayTable
      */
     public function setOrder($order)
     {
-        if (!is_array($order)) {
+        if (! is_array($order)) {
             $order = func_get_args();
         }
 

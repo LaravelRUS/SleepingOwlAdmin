@@ -15,7 +15,7 @@ class Images extends Image
      */
     public function storeAsJson()
     {
-        $this->mutateValue(function($value) {
+        $this->mutateValue(function ($value) {
             return json_encode($value);
         });
 
@@ -29,7 +29,7 @@ class Images extends Image
      */
     public function storeAsComaSeparatedValue()
     {
-        $this->mutateValue(function($value) {
+        $this->mutateValue(function ($value) {
             return implode(',', $value);
         });
 
@@ -65,7 +65,7 @@ class Images extends Image
         $name = $this->getName();
         $value = $request->input($name, '');
 
-        if (!empty($value)) {
+        if (! empty($value)) {
             $value = explode(',', $value);
         } else {
             $value = [];

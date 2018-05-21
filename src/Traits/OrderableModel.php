@@ -17,16 +17,16 @@ trait OrderableModel
      */
     protected static function bootOrderableModel()
     {
-        static::creating(function(Model $row) {
+        static::creating(function (Model $row) {
             $row->updateOrderFieldOnCreate();
         });
 
-        static::deleted(function(Model $row) {
+        static::deleted(function (Model $row) {
             $row->updateOrderFieldOnDelete();
         });
 
         if (in_array("Illuminate\Database\Eloquent\SoftDeletes", trait_uses_recursive(new static()))) {
-            static::restoring(function(Model $row) {
+            static::restoring(function (Model $row) {
                 $row->updateOrderFieldOnRestore();
             });
         }

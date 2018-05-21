@@ -26,7 +26,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.async';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
@@ -34,7 +34,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         }
 
         $routeName = 'admin.display.async.inlineEdit';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
@@ -203,7 +203,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $totalCount = $query->count();
         $filteredCount = 0;
 
-        if (!is_null($this->distinct)) {
+        if (! is_null($this->distinct)) {
             $filteredCount = $query->distinct()->count($this->getDistinct());
         }
 
@@ -270,7 +270,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             return;
         }
 
-        $query->where(function(Builder $query) use ($search) {
+        $query->where(function (Builder $query) use ($search) {
             $columns = $this->getColumns()->all();
 
             foreach ($columns as $column) {

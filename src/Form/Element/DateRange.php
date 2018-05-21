@@ -31,7 +31,7 @@ class DateRange extends Date
      */
     public function getDefaultFrom()
     {
-        if (!$this->defaultFrom) {
+        if (! $this->defaultFrom) {
             $this->defaultFrom = Carbon::now();
         }
 
@@ -57,7 +57,7 @@ class DateRange extends Date
      */
     public function getDefaultTo()
     {
-        if (!$this->defaultTo) {
+        if (! $this->defaultTo) {
             $this->defaultTo = Carbon::now();
         }
 
@@ -85,7 +85,7 @@ class DateRange extends Date
      */
     public function setModelAttribute($value)
     {
-        $value = !empty($value) ? array_map(function($date) {
+        $value = ! empty($value) ? array_map(function ($date) {
             return Carbon::createFromFormat($this->getPickerFormat(), $date);
         }, explode('::', $value)) : null;
 

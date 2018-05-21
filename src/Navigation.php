@@ -30,7 +30,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
      */
     public function setAliasesId(Collection $pages)
     {
-        $pages->each(function(PageInterface $page) {
+        $pages->each(function (PageInterface $page) {
             $page->setAliasId();
 
             if ($page->getPages()->count()) {
@@ -54,7 +54,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
      */
     protected function findPageByAliasId(Collection $pages, $url)
     {
-        $pages->each(function(PageInterface $page) use ($url) {
+        $pages->each(function (PageInterface $page) use ($url) {
             $urlPath = parse_url($url, PHP_URL_PATH);
 
             if (Route::current()) {
@@ -86,7 +86,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
      */
     protected function findActivePage()
     {
-        if (!is_null($this->currentPage)) {
+        if (! is_null($this->currentPage)) {
             return true;
         }
 
@@ -96,7 +96,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
 
         $this->findActive($url, $foundPages);
 
-        if (!is_null($this->currentPage)) {
+        if (! is_null($this->currentPage)) {
             $this->currentPage->setActive();
         }
 

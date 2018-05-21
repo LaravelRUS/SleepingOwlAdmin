@@ -23,7 +23,7 @@ trait FormElements
      */
     public function initializeElements()
     {
-        $this->getElements()->each(function($element) {
+        $this->getElements()->each(function ($element) {
             if ($element instanceof Initializable) {
                 $element->initialize();
             }
@@ -41,7 +41,7 @@ trait FormElements
 
         foreach ($this->getElements() as $element) {
             if ($element instanceof ElementsInterface) {
-                if (!is_null($found = $element->getElement($path))) {
+                if (! is_null($found = $element->getElement($path))) {
                     return $found;
                 }
             }
@@ -145,7 +145,7 @@ trait FormElements
      */
     protected function setModelForElements(Model $model)
     {
-        $this->getElements()->each(function($element) use ($model) {
+        $this->getElements()->each(function ($element) use ($model) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof WithModelInterface) {
@@ -163,7 +163,7 @@ trait FormElements
      */
     protected function getValidationRulesFromElements(array $rules = [])
     {
-        $this->getElements()->onlyActive()->each(function($element) use (&$rules) {
+        $this->getElements()->onlyActive()->each(function ($element) use (&$rules) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof Validable) {
@@ -181,7 +181,7 @@ trait FormElements
      */
     protected function getValidationMessagesForElements(array $messages = [])
     {
-        $this->getElements()->onlyActive()->each(function($element) use (&$messages) {
+        $this->getElements()->onlyActive()->each(function ($element) use (&$messages) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof Validable) {
@@ -199,7 +199,7 @@ trait FormElements
      */
     protected function getValidationLabelsForElements(array $labels = [])
     {
-        $this->getElements()->onlyActive()->each(function($element) use (&$labels) {
+        $this->getElements()->onlyActive()->each(function ($element) use (&$labels) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof Validable) {
@@ -217,7 +217,7 @@ trait FormElements
      */
     protected function saveElements(\Illuminate\Http\Request $request)
     {
-        $this->getElements()->onlyActive()->each(function($element) use ($request) {
+        $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {
@@ -233,7 +233,7 @@ trait FormElements
      */
     protected function afterSaveElements(\Illuminate\Http\Request $request)
     {
-        $this->getElements()->onlyActive()->each(function($element) use ($request) {
+        $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
 
             if ($element instanceof FormElementInterface) {

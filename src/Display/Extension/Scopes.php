@@ -43,7 +43,7 @@ class Scopes extends Extension
      */
     public function push($scope)
     {
-        if (!is_array($scope)) {
+        if (! is_array($scope)) {
             $scope = func_get_args();
         }
 
@@ -70,7 +70,7 @@ class Scopes extends Extension
     public function modifyQuery(Builder $query)
     {
         foreach ($this->scopes as $scope) {
-            if (!is_null($scope)) {
+            if (! is_null($scope)) {
                 if (is_array($scope)) {
                     $method = array_shift($scope);
                     $params = $scope;

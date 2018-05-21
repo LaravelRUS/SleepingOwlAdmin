@@ -85,7 +85,7 @@ abstract class NamedFormElement extends FormElement
     {
         $name = array_shift($parts);
 
-        while (!empty($parts)) {
+        while (! empty($parts)) {
             $part = array_shift($parts);
             $name .= "[$part]";
         }
@@ -238,7 +238,7 @@ abstract class NamedFormElement extends FormElement
     {
         $this->addValidationRule('_unique');
 
-        if (!is_null($message)) {
+        if (! is_null($message)) {
             $this->addValidationMessage('unique', $message);
         }
 
@@ -346,7 +346,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromRequest(\Illuminate\Http\Request $request)
     {
-        if ($request->hasSession() && !is_null($value = $request->old($this->getPath()))) {
+        if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
             return $value;
         }
 
@@ -358,7 +358,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromModel()
     {
-        if (!is_null($value = $this->getValueFromRequest(request()))) {
+        if (! is_null($value = $this->getValueFromRequest(request()))) {
             return $value;
         }
 
@@ -366,7 +366,7 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-        if (is_null($model) || !$model->exists) {
+        if (is_null($model) || ! $model->exists) {
             return $value;
         }
 
@@ -396,7 +396,7 @@ abstract class NamedFormElement extends FormElement
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
 
-            if (!empty($attribute) || $attribute === 0 || is_null($value)) {
+            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
         }
@@ -410,7 +410,7 @@ abstract class NamedFormElement extends FormElement
             if ($count === 2) {
                 $attribute = $model->getAttribute($relation);
 
-                if (!empty($attribute) || is_null($value)) {
+                if (! empty($attribute) || is_null($value)) {
                     return $attribute;
                 }
             }
