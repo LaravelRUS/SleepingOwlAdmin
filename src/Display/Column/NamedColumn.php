@@ -20,6 +20,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $name;
 
     /**
+     * @var null
+     */
+    protected $small = null;
+
+    /**
      * @var bool
      */
     protected $orderable = true;

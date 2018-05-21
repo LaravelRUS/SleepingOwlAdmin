@@ -40,17 +40,16 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param bool $sortable
-     *
-     * @return $this
+     * @return string
      */
     public function getTitle()
     {
         if (isset($this->title)) {
             return $this->title;
-        } else {
-            return $this->header->getTitle();
         }
+
+        return $this->header->getTitle();
+
     }
 
     /**

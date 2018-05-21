@@ -40,7 +40,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @return null|string
+     * @return null|string|array
      */
     public function getCheckedLabel()
     {
@@ -64,7 +64,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @return null|string
+     * @return null|string|array
      */
     public function getUncheckedLabel()
     {
@@ -100,8 +100,8 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
     /**
      * @param Request $request
-     *
-     * @return void
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)
     {

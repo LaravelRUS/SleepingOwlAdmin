@@ -14,6 +14,10 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     use DatePicker, DateFormat;
 
     /**
+     * @var null
+     */
+    protected $defaultValue = null;
+    /**
      * @var string
      */
     protected $format = 'Y-m-d H:i:s';
@@ -96,6 +100,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         if (! empty($value)) {
             return $this->parseValue($value);
         }
+
+        return null;
     }
 
     /**

@@ -29,8 +29,7 @@ class DateRange extends Date
 
     /**
      * @param string $date
-     *
-     * @return string
+     * @return array|string
      */
     public function parseValue($date)
     {

@@ -64,8 +64,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get order value from instance.
-     * @return int
+     * @return mixed
+     * @throws \Exception
      */
     protected function getOrderValue()
     {
@@ -82,8 +82,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Check if instance is movable up.
      * @return bool
+     * @throws \Exception
      */
     protected function movableUp()
     {
@@ -91,8 +91,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get instance move up url.
      * @return string
+     * @throws \Exception
      */
     protected function moveUpUrl()
     {
@@ -103,8 +103,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Check if instance is movable down.
      * @return bool
+     * @throws \Exception
      */
     protected function movableDown()
     {
@@ -112,8 +112,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get instance move down url.
      * @return string
+     * @throws \Exception
      */
     protected function moveDownUrl()
     {
@@ -125,6 +125,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

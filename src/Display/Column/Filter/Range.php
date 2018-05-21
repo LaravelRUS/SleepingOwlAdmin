@@ -90,14 +90,14 @@ class Range extends BaseColumnFilter
     }
 
     /**
-     * @param string $range
-     *
-     * @return string
+     * @param mixed $range
+     * @return array|mixed|null
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
     public function parseValue($range)
     {
         if (strpos($range, '::') === false) {
-            return;
+            return null;
         }
 
         list($from, $to) = explode('::', $range, 2);

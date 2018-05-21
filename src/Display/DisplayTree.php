@@ -105,6 +105,7 @@ class DisplayTree extends Display implements WithRoutesInterface
         $this->treeType = $treeType;
     }
 
+
     public function initialize()
     {
         parent::initialize();
@@ -148,7 +149,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return string
+     * @return callable|string
      */
     public function getValue()
     {
@@ -188,7 +189,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return null|string
+     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     public function getNewEntryButtonText()
     {
@@ -306,6 +307,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

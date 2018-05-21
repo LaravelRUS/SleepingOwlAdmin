@@ -184,7 +184,7 @@ class Control extends TableColumn
     /**
      * Check if instance supports soft-deletes and trashed.
      *
-     * @return bool
+     * @return bool|Illuminate\Database\Eloquent\Builder
      */
     protected function isTrashed()
     {
