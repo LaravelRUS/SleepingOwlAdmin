@@ -49,7 +49,6 @@ class EditableColumn extends NamedColumn
         }
 
         return $this->header->getTitle();
-
     }
 
     /**

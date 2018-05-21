@@ -100,8 +100,6 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         if (! empty($value)) {
             return $this->parseValue($value);
         }
-
-        return null;
     }
 
     /**
