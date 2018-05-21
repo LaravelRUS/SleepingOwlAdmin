@@ -192,7 +192,7 @@ abstract class Display implements DisplayInterface
             $this->title,
         ];
 
-        $this->getExtensions()->each(function (DisplayExtensionInterface $extension) use (&$titles) {
+        $this->getExtensions()->each(function(DisplayExtensionInterface $extension) use (&$titles) {
             if (method_exists($extension, $method = 'getTitle')) {
                 $titles[] = call_user_func([$extension, $method]);
             }
@@ -240,7 +240,7 @@ abstract class Display implements DisplayInterface
 
         foreach ($blocks as $block => $data) {
             foreach ($data as $html) {
-                if (! empty($html)) {
+                if (!empty($html)) {
                     $view->getFactory()->startSection($block);
                     echo $html;
                     $view->getFactory()->yieldSection();
@@ -291,7 +291,7 @@ abstract class Display implements DisplayInterface
     protected function makeRepository()
     {
         $repository = app($this->repositoryClass);
-        if (! ($repository instanceof RepositoryInterface)) {
+        if (!($repository instanceof RepositoryInterface)) {
             throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
         }
 

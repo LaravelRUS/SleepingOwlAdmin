@@ -46,7 +46,7 @@ class View extends Custom
     {
         $this->view = $view;
 
-        $this->setDisplay(function ($model) {
+        $this->setDisplay(function($model) {
             $this->data['model'] = $model;
 
             return view($this->getView(), $this->data);

@@ -73,7 +73,7 @@ class DisplayTable extends Display
         parent::initialize();
 
         if ($this->getModelConfiguration()->isRestorableModel()) {
-            $this->setApply(function (Builder $q) {
+            $this->setApply(function(Builder $q) {
                 return $q->withTrashed();
             });
         }
@@ -195,11 +195,11 @@ class DisplayTable extends Display
      */
     public function getCollection()
     {
-        if (! $this->isInitialized()) {
+        if (!$this->isInitialized()) {
             throw new \Exception('Display is not initialized');
         }
 
-        if (! is_null($this->collection)) {
+        if (!is_null($this->collection)) {
             return $this->collection;
         }
 

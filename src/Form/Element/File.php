@@ -27,7 +27,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     {
         $routeName = 'admin.form.element.'.static::$route;
 
-        if (! $router->has($routeName)) {
+        if (!$router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField',
@@ -127,7 +127,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function getUploadPath(UploadedFile $file)
     {
-        if (! is_callable($this->uploadPath)) {
+        if (!is_callable($this->uploadPath)) {
             return $this->defaultUploadPath($file);
         }
 
@@ -153,7 +153,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function getUploadFileName(UploadedFile $file)
     {
-        if (! is_callable($this->uploadFileName)) {
+        if (!is_callable($this->uploadFileName)) {
             return $this->defaultUploadFilename($file);
         }
 

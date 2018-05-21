@@ -1,7 +1,7 @@
 {
   "name": "laravelrus/sleepingowl",
   "description": "Administrative interface builder for Laravel.",
-  "homepage": "http://sleepingowl.ru",
+  "homepage": "http://sleepingowladmin.ru",
   "keywords": [
     "laravel",
     "admin",

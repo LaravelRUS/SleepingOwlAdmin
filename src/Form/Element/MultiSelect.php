@@ -195,7 +195,7 @@ class MultiSelect extends Select
         array $values
     ) {
         foreach ($values as $i => $value) {
-            if (! array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
+            if (!array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
                 $model = clone $this->getModelForOptions();
                 $model->{$this->getDisplay()} = $value;
                 $model->save();
@@ -225,7 +225,7 @@ class MultiSelect extends Select
         $items = $relation->get();
 
         foreach ($items as $item) {
-            if (! in_array($item->getKey(), $values)) {
+            if (!in_array($item->getKey(), $values)) {
                 if ($this->isDeleteRelatedItem()) {
                     $item->delete();
                 } else {
@@ -250,7 +250,7 @@ class MultiSelect extends Select
             $item = $model->find($value);
 
             if (is_null($item)) {
-                if (! $this->isTaggable()) {
+                if (!$this->isTaggable()) {
                     continue;
                 }
 

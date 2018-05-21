@@ -64,7 +64,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
      */
     public function fireDisplay(array $payload = [])
     {
-        if (! method_exists($this, 'onDisplay')) {
+        if (!method_exists($this, 'onDisplay')) {
             return;
         }
 
@@ -87,7 +87,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
      */
     public function fireCreate()
     {
-        if (! method_exists($this, 'onCreate')) {
+        if (!method_exists($this, 'onCreate')) {
             return;
         }
 
@@ -114,7 +114,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
      */
     public function fireEdit($id)
     {
-        if (! method_exists($this, 'onEdit')) {
+        if (!method_exists($this, 'onEdit')) {
             return;
         }
 

@@ -26,7 +26,7 @@ class Apply extends Extension
      */
     public function set($applies)
     {
-        if (! is_array($applies)) {
+        if (!is_array($applies)) {
             $applies = func_get_args();
         }
 

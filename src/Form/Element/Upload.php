@@ -42,7 +42,7 @@ class Upload extends NamedFormElement
 
         if ($request->input($this->getPath().'_remove')) {
             $this->setModelAttribute(null);
-        } elseif (! is_null($value)) {
+        } elseif (!is_null($value)) {
             $this->setModelAttribute($value);
         }
     }

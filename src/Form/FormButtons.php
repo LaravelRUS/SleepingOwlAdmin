@@ -457,11 +457,11 @@ class FormButtons implements FormButtonsInterface
      */
     public function isShowDeleteButton()
     {
-        if (is_null($this->getModel()->getKey()) || ! $this->showDeleteButton) {
+        if (is_null($this->getModel()->getKey()) || !$this->showDeleteButton) {
             return false;
         }
 
-        $this->showDeleteButton = ! $this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
+        $this->showDeleteButton = !$this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
 
         return $this->showDeleteButton;
     }
@@ -483,7 +483,7 @@ class FormButtons implements FormButtonsInterface
      */
     public function isShowDestroyButton()
     {
-        if (is_null($this->getModel()->getKey()) || ! $this->showDestroyButton) {
+        if (is_null($this->getModel()->getKey()) || !$this->showDestroyButton) {
             return false;
         }
 
@@ -510,7 +510,7 @@ class FormButtons implements FormButtonsInterface
      */
     public function isShowRestoreButton()
     {
-        if (is_null($this->getModel()->getKey()) || ! $this->showRestoreButton) {
+        if (is_null($this->getModel()->getKey()) || !$this->showRestoreButton) {
             return false;
         }
 

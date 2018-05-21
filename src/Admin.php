@@ -164,7 +164,7 @@ class Admin implements AdminInterface
             $class = get_class($class);
         }
 
-        if (! $this->hasModel($class)) {
+        if (!$this->hasModel($class)) {
             $this->registerModel($class);
         }
 

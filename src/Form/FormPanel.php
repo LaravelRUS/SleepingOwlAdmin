@@ -40,7 +40,7 @@ class FormPanel extends FormDefault
      */
     public function setItems($items)
     {
-        if (! is_array($items)) {
+        if (!is_array($items)) {
             $items = func_get_args();
         }
 
@@ -72,7 +72,7 @@ class FormPanel extends FormDefault
      */
     public function addHeader($items)
     {
-        if (! is_array($items)) {
+        if (!is_array($items)) {
             $items = func_get_args();
         }
 
@@ -88,7 +88,7 @@ class FormPanel extends FormDefault
      */
     public function addBody($items)
     {
-        if (! is_array($items)) {
+        if (!is_array($items)) {
             $items = func_get_args();
         }
 
@@ -109,7 +109,7 @@ class FormPanel extends FormDefault
      */
     public function addFooter($items)
     {
-        if (! is_array($items)) {
+        if (!is_array($items)) {
             $items = func_get_args();
         }
 

@@ -115,7 +115,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
         $this->repository = $app->make(RepositoryInterface::class);
         $this->repository->setClass($class);
-        if (! $this->alias) {
+        if (!$this->alias) {
             $this->setDefaultAlias();
         }
     }
@@ -304,7 +304,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function can($action, Model $model)
     {
-        if (! $this->checkAccess) {
+        if (!$this->checkAccess) {
             return true;
         }
 
@@ -338,7 +338,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         $controller = $this->getControllerClass();
 
-        return ! is_null($controller) && class_exists($controller);
+        return !is_null($controller) && class_exists($controller);
     }
 
     /**
@@ -517,7 +517,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         $page->setPriority($priority);
 
         if ($badge) {
-            if (! ($badge instanceof BadgeInterface)) {
+            if (!($badge instanceof BadgeInterface)) {
                 $badge = new Badge($badge);
             }
 
@@ -558,7 +558,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function fireEvent($event, $halt = true, Model $model = null, ...$payload)
     {
-        if (! isset(self::$dispatcher)) {
+        if (!isset(self::$dispatcher)) {
             return true;
         }
 

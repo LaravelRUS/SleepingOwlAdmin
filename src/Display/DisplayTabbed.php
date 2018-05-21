@@ -67,7 +67,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
             }
         }
 
-        $activeTabs = $this->getTabs()->filter(function (TabInterface $tab) {
+        $activeTabs = $this->getTabs()->filter(function(TabInterface $tab) {
             return $tab->isActive();
         })->count();
 
@@ -95,7 +95,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setModelClass($class)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($class) {
+        $this->getTabs()->each(function(TabInterface $tab) use ($class) {
             if ($tab instanceof DisplayInterface) {
                 $tab->setModelClass($class);
             }
@@ -179,7 +179,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setAction($action)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($action) {
+        $this->getTabs()->each(function(TabInterface $tab) use ($action) {
             if ($tab instanceof FormInterface) {
                 $tab->setAction($action);
             }
@@ -195,7 +195,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setId($id)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($id) {
+        $this->getTabs()->each(function(TabInterface $tab) use ($id) {
             if ($tab instanceof FormInterface) {
                 $tab->setId($id);
             }
@@ -212,7 +212,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
     {
-        $this->getTabs()->each(function ($tab) use ($request, $model) {
+        $this->getTabs()->each(function($tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');
 
             if ($tab instanceof FormInterface && $tab->getName() == $tabId) {
@@ -229,7 +229,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($request, $model) {
+        $this->getTabs()->each(function(TabInterface $tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');
 
             if ($tab instanceof FormInterface && $tab->getName() == $tabId) {

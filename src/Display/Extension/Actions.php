@@ -49,7 +49,7 @@ class Actions extends Extension implements Initializable, Placable
      */
     public function set($actions)
     {
-        if (! is_array($actions)) {
+        if (!is_array($actions)) {
             $actions = func_get_args();
         }
 
@@ -145,13 +145,13 @@ class Actions extends Extension implements Initializable, Placable
             return;
         }
 
-        $this->all()->each(function (ActionInterface $action) {
+        $this->all()->each(function(ActionInterface $action) {
             $action->initialize();
         });
 
         $this->setHtmlAttribute('data-type', 'display-actions');
 
-        if (! $this->hasHtmlAttribute('class')) {
+        if (!$this->hasHtmlAttribute('class')) {
             $this->setHtmlAttribute('class', 'panel-footer');
         }
     }

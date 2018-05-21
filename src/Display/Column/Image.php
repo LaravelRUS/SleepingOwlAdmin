@@ -40,7 +40,7 @@ class Image extends NamedColumn
     public function toArray()
     {
         $value = $this->getModelValue();
-        if (! empty($value) && (strpos($value, '://') === false)) {
+        if (!empty($value) && (strpos($value, '://') === false)) {
             $value = asset($value);
         }
 

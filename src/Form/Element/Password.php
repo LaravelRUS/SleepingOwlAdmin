@@ -33,7 +33,7 @@ class Password extends NamedFormElement
     {
         $value = $this->getValueFromModel();
 
-        if (! $this->isAllowedEmptyValue() && $this->getModel()->exists && empty($value)) {
+        if (!$this->isAllowedEmptyValue() && $this->getModel()->exists && empty($value)) {
             return;
         }
 
@@ -47,7 +47,7 @@ class Password extends NamedFormElement
     {
         $data = parent::getValidationRules();
 
-        if (! $this->isAllowedEmptyValue() && $this->getModel()->exists) {
+        if (!$this->isAllowedEmptyValue() && $this->getModel()->exists) {
             foreach ($data as $field => $rules) {
                 foreach ($rules as $i => $rule) {
                     if ($rule == 'required') {
@@ -83,7 +83,7 @@ class Password extends NamedFormElement
      */
     public function hashWithBcrypt()
     {
-        return $this->mutateValue(function ($value) {
+        return $this->mutateValue(function($value) {
             return bcrypt($value);
         });
     }
@@ -93,7 +93,7 @@ class Password extends NamedFormElement
      */
     public function hashWithMD5()
     {
-        return $this->mutateValue(function ($value) {
+        return $this->mutateValue(function($value) {
             return md5($value);
         });
     }
@@ -103,7 +103,7 @@ class Password extends NamedFormElement
      */
     public function hashWithSHA1()
     {
-        return $this->mutateValue(function ($value) {
+        return $this->mutateValue(function($value) {
             return sha1($value);
         });
     }

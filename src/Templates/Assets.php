@@ -37,11 +37,11 @@ class Assets extends BaseAssets implements AssetsContract
      */
     protected function sort($assets)
     {
-        $mainAssets = collect($assets)->filter(function (AssetElement $item) {
-            return ! array_filter($item->getDependency());
+        $mainAssets = collect($assets)->filter(function(AssetElement $item) {
+            return !array_filter($item->getDependency());
         });
 
-        $depAssets = collect($assets)->filter(function (AssetElement $item) {
+        $depAssets = collect($assets)->filter(function(AssetElement $item) {
             return array_filter($item->getDependency());
         });
 
@@ -69,7 +69,7 @@ class Assets extends BaseAssets implements AssetsContract
         $hasNotDep = null;
 
         foreach ($dependency as $dep) {
-            if (! $mainAssets->has($dep)) {
+            if (!$mainAssets->has($dep)) {
                 $hasNotDep = $dep;
                 break;
             }

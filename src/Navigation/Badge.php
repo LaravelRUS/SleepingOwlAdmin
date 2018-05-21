@@ -13,7 +13,7 @@ class Badge extends \KodiComponents\Navigation\Badge
     {
         $value = $this->getValue();
 
-        if (! $this->hasClassProperty('label-', 'bg-')) {
+        if (!$this->hasClassProperty('label-', 'bg-')) {
             $this->setHtmlAttribute('class', 'label-primary');
         }
 

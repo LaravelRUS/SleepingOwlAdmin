@@ -36,7 +36,7 @@ class Destroy extends FormButton
      */
     public function canShow()
     {
-        if (is_null($this->getModel()->getKey()) || ! $this->show) {
+        if (is_null($this->getModel()->getKey()) || !$this->show) {
             return false;
         }
 

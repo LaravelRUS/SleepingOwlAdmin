@@ -104,15 +104,15 @@ class Range extends BaseColumnFilter
         $from = $this->from->parseValue($from);
         $to = $this->to->parseValue($to);
 
-        if (! empty($from) && ! empty($to)) {
+        if (!empty($from) && !empty($to)) {
             $this->setOperator('between');
 
             return [$from, $to];
-        } elseif (! empty($from)) {
+        } elseif (!empty($from)) {
             $this->setOperator('greater_or_equal');
 
             return $from;
-        } elseif (! empty($to)) {
+        } elseif (!empty($to)) {
             $this->setOperator('less_or_equal');
 
             return $to;

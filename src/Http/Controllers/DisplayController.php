@@ -86,7 +86,7 @@ class DisplayController extends Controller
         $display = $model->fireDisplay();
 
         if ($display instanceof DisplayTabbed) {
-            $display->getTabs()->each(function (DisplayTab $tab) use ($request) {
+            $display->getTabs()->each(function(DisplayTab $tab) use ($request) {
                 $content = $tab->getContent();
                 if ($content instanceof DisplayTree) {
                     $content->getRepository()->reorder(

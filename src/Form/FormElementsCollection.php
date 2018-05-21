@@ -12,9 +12,9 @@ class FormElementsCollection extends Collection
      */
     public function onlyActive()
     {
-        return $this->filter(function ($element) {
+        return $this->filter(function($element) {
             if ($element instanceof FormElementInterface) {
-                return ! $element->isReadonly();
+                return !$element->isReadonly();
             }
 
             return true;
@@ -26,7 +26,7 @@ class FormElementsCollection extends Collection
      */
     public function onlyVisible()
     {
-        return $this->filter(function ($element) {
+        return $this->filter(function($element) {
             if ($element instanceof FormElementInterface) {
                 return $element->isVisible();
             }

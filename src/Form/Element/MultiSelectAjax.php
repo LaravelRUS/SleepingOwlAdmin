@@ -34,7 +34,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         parent::__construct($path, $label);
 
-        $this->setLoadOptionsQueryPreparer(function ($item, Builder $query) {
+        $this->setLoadOptionsQueryPreparer(function($item, Builder $query) {
             $repository = app(RepositoryInterface::class);
             $repository->setModel($this->getModelForOptions());
             $key = $repository->getModel()->getKeyName();
@@ -107,7 +107,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         $routeName = 'admin.form.element.'.static::$route;
 
-        if (! $router->has($routeName)) {
+        if (!$router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@multiselectSearch',
@@ -175,7 +175,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
         $options = $repository->getQuery();
         $relation = $this->getModelAttributeKey();
 
-        if ($this->isEmptyRelation() && ! is_null($foreignKey = $this->getForeignKey())) {
+        if ($this->isEmptyRelation() && !is_null($foreignKey = $this->getForeignKey())) {
             $model = $this->getModel();
 
             if ($model->{$relation}() instanceof HasOneOrMany) {
@@ -190,7 +190,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
         }
 
         // call the pre load options query preparer if has be set
-        if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
+        if (!is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
             $options = $preparer($this, $options);
         }
 
@@ -208,7 +208,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
             // iterate for all options and redefine it as
             // list of KEY and TEXT pair
-            $options = array_map(function ($opt) use ($key, $makeDisplay) {
+            $options = array_map(function($opt) use ($key, $makeDisplay) {
                 // get the KEY and make the display text
                 return [data_get($opt, $key), $makeDisplay($opt)];
             }, $options);
@@ -235,7 +235,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         $attribute = $this->getModelAttributeKey();
 
-        if (! method_exists($this->getModel(), $attribute)) {
+        if (!method_exists($this->getModel(), $attribute)) {
             return;
         }
 

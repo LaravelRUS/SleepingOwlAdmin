@@ -37,13 +37,13 @@ class Image extends File
      */
     public function customValidation(Validator $validator)
     {
-        $validator->after(function (Validator $validator) {
+        $validator->after(function(Validator $validator) {
             /** @var \Illuminate\Http\UploadedFile $file */
             $file = array_get($validator->attributes(), 'file');
 
             $size = getimagesize($file->getRealPath());
 
-            if (! $size && $file->getMimeType() !== 'image/svg+xml') {
+            if (!$size && $file->getMimeType() !== 'image/svg+xml') {
                 $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
             }
         });

@@ -32,7 +32,7 @@ class Custom extends TableColumn
     public function __construct($label = null, Closure $callback = null)
     {
         parent::__construct($label);
-        if (! is_null($callback)) {
+        if (!is_null($callback)) {
             $this->setCallback($callback);
         }
     }
@@ -66,7 +66,7 @@ class Custom extends TableColumn
      */
     public function getModelValue()
     {
-        if (! is_callable($callback = $this->getCallback())) {
+        if (!is_callable($callback = $this->getCallback())) {
             throw new \Exception('Invalid custom column callback');
         }
 

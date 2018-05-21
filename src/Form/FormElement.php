@@ -137,7 +137,7 @@ abstract class FormElement implements FormElementInterface
      */
     public function setValidationRules($validationRules)
     {
-        if (! is_array($validationRules)) {
+        if (!is_array($validationRules)) {
             $validationRules = func_get_args();
         }
 

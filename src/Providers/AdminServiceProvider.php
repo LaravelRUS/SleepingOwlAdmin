@@ -42,17 +42,17 @@ class AdminServiceProvider extends ServiceProvider
         $this->initializeNavigation();
         $this->registerAliases();
 
-        $this->app->singleton('sleeping_owl.widgets', function () {
+        $this->app->singleton('sleeping_owl.widgets', function() {
             return new WidgetsRegistry($this->app);
         });
 
-        $this->app->booted(function () {
+        $this->app->booted(function() {
             $this->app['sleeping_owl.widgets']->placeWidgets(
                 $this->app[ViewFactory::class]
             );
         });
 
-        $this->app->booted(function () {
+        $this->app->booted(function() {
             $this->registerCustomRoutes();
             $this->registerDefaultRoutes();
             $this->registerSupportRoutes();
@@ -66,11 +66,11 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerTemplate()
     {
-        $this->app->singleton('assets.packages', function ($app) {
+        $this->app->singleton('assets.packages', function($app) {
             return new \KodiCMS\Assets\PackageManager();
         });
 
-        $this->app->singleton('sleeping_owl.meta', function ($app) {
+        $this->app->singleton('sleeping_owl.meta', function($app) {
             return new Meta(
                 new Assets(
                     $app['assets.packages']
@@ -78,8 +78,8 @@ class AdminServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->singleton('sleeping_owl.template', function (Application $app) {
-            if (! class_exists($class = $this->getConfig('template'))) {
+        $this->app->singleton('sleeping_owl.template', function(Application $app) {
+            if (!class_exists($class = $this->getConfig('template'))) {
                 throw new TemplateException("Template class [{$class}] not found");
             }
 
@@ -108,7 +108,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function getBootstrapPath($path = null)
     {
-        if (! is_null($path)) {
+        if (!is_null($path)) {
             $path = DIRECTORY_SEPARATOR.$path;
         }
 
@@ -136,7 +136,7 @@ class AdminServiceProvider extends ServiceProvider
             $this->app[WidgetsRegistryInterface::class]->registerWidget($messageType);
         }
 
-        $this->app->singleton('sleeping_owl.message', function () use ($messageTypes) {
+        $this->app->singleton('sleeping_owl.message', function() use ($messageTypes) {
             return new MessageStack($messageTypes);
         });
     }
@@ -168,14 +168,14 @@ class AdminServiceProvider extends ServiceProvider
             \SleepingOwl\Admin\Navigation\Badge::class
         );
 
-        $this->app->singleton('sleeping_owl.navigation', function () {
+        $this->app->singleton('sleeping_owl.navigation', function() {
             return new Navigation();
         });
     }
 
     protected function registerWysiwyg()
     {
-        $this->app->singleton('sleeping_owl.wysiwyg', function () {
+        $this->app->singleton('sleeping_owl.wysiwyg', function() {
             return new Manager($this->app);
         });
     }
@@ -187,7 +187,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $directory = $this->getBootstrapPath();
 
-        if (! is_dir($directory)) {
+        if (!is_dir($directory)) {
             return;
         }
 
@@ -197,7 +197,7 @@ class AdminServiceProvider extends ServiceProvider
             ->notName('routes.php')
             ->notName('navigation.php')
             ->in($directory)
-            ->sort(function (SplFileInfo $a) {
+            ->sort(function(SplFileInfo $a) {
                 return $a->getFilename() != 'bootstrap.php';
             });
 
@@ -220,7 +220,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerCustomRoutes()
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
-            $this->registerRoutes(function (Router $route) use ($file) {
+            $this->registerRoutes(function(Router $route) use ($file) {
                 require $file;
             });
         }
@@ -231,7 +231,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerDefaultRoutes()
     {
-        $this->registerRoutes(function (Router $router) {
+        $this->registerRoutes(function(Router $router) {
             (new ModelRouter($this->app, $router))->register($this->app['sleeping_owl']->getModels());
 
             if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
@@ -250,7 +250,7 @@ class AdminServiceProvider extends ServiceProvider
         $domain = config('sleeping_owl.domain', false);
 
         $middlewares = collect($this->getConfig('middleware'));
-        $middlewares = $middlewares->filter(function ($item) {
+        $middlewares = $middlewares->filter(function($item) {
             return $item != 'web';
         });
         $configGroup = collect([
@@ -262,7 +262,7 @@ class AdminServiceProvider extends ServiceProvider
             $configGroup->put('domain', $domain);
         }
 
-        $this->app['router']->group($configGroup->toArray(), function (Router $route) {
+        $this->app['router']->group($configGroup->toArray(), function(Router $route) {
             $route->get('ckeditor/upload/image', [
                 'as'   => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
@@ -290,7 +290,7 @@ class AdminServiceProvider extends ServiceProvider
             $configGroup->put('domain', $domain);
         }
 
-        $this->app['router']->group($configGroup->toArray(), function (Router $route) use ($callback) {
+        $this->app['router']->group($configGroup->toArray(), function(Router $route) use ($callback) {
             call_user_func($callback, $route);
         });
     }

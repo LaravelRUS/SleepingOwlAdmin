@@ -14,7 +14,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     {
         $routeName = 'admin.form.element.dependent-select';
 
-        if (! $router->has($routeName)) {
+        if (!$router->has($routeName)) {
             $router->post('{adminModel}/dependent-select/{field}/{id?}', [
                 'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect',

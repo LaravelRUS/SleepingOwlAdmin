@@ -64,20 +64,20 @@ class Control extends TableColumn
     {
         parent::initialize();
 
-        $this->buttons->put('edit', $button = new ControlLink(function (Model $model) {
+        $this->buttons->put('edit', $button = new ControlLink(function(Model $model) {
             return $this->getModelConfiguration()->getEditUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.edit'), 100));
         $button->hideText();
-        $button->setCondition(function () {
+        $button->setCondition(function() {
             return $this->isEditable();
         });
         $button->setIcon('fa fa-pencil');
         $button->setHtmlAttribute('class', 'btn-primary');
 
-        $this->buttons->put('delete', $button = new ControlButton(function (Model $model) {
+        $this->buttons->put('delete', $button = new ControlButton(function(Model $model) {
             return $this->getModelConfiguration()->getDeleteUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.delete'), 200));
-        $button->setCondition(function () {
+        $button->setCondition(function() {
             return $this->isDeletable();
         });
 
@@ -86,10 +86,10 @@ class Control extends TableColumn
         $button->setIcon('fa fa-trash');
         $button->setHtmlAttribute('class', 'btn-danger btn-delete');
 
-        $this->buttons->put('destroy', $button = new ControlButton(function (Model $model) {
+        $this->buttons->put('destroy', $button = new ControlButton(function(Model $model) {
             return $this->getModelConfiguration()->getDestroyUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.destroy'), 300));
-        $button->setCondition(function () {
+        $button->setCondition(function() {
             return $this->isDestroyable();
         });
 
@@ -98,10 +98,10 @@ class Control extends TableColumn
         $button->setIcon('fa fa-trash');
         $button->setHtmlAttribute('class', 'btn-danger btn-destroy');
 
-        $this->buttons->put('restore', $button = new ControlButton(function (Model $model) {
+        $this->buttons->put('restore', $button = new ControlButton(function(Model $model) {
             return $this->getModelConfiguration()->getRestoreUrl($model->getKey());
         }, trans('sleeping_owl::lang.table.restore'), 400));
-        $button->setCondition(function () {
+        $button->setCondition(function() {
             return $this->isRestorable();
         });
         $button->hideText();
@@ -205,7 +205,7 @@ class Control extends TableColumn
         return
             $this->editable
             &&
-            ! $this->isTrashed()
+            !$this->isTrashed()
             &&
             $this->getModelConfiguration()->isEditable(
                 $this->getModel()
@@ -222,7 +222,7 @@ class Control extends TableColumn
         return
             $this->deletable
             &&
-            ! $this->isTrashed()
+            !$this->isTrashed()
             &&
             $this->getModelConfiguration()->isDeletable(
                 $this->getModel()
@@ -282,13 +282,13 @@ class Control extends TableColumn
     {
         return parent::toArray() + [
             'buttons' => $this->buttons
-                ->each(function (ControlButtonInterface $button) {
+                ->each(function(ControlButtonInterface $button) {
                     $button->setModel($this->getModel());
                 })
-                ->filter(function (ControlButtonInterface $button) {
+                ->filter(function(ControlButtonInterface $button) {
                     return $button->isActive();
                 })
-                ->sortBy(function (ControlButtonInterface $button) {
+                ->sortBy(function(ControlButtonInterface $button) {
                     return $button->getPosition();
                 }),
         ];

@@ -86,7 +86,7 @@ class UserManagerCommand extends Command
             return;
         }
 
-        if (! is_null($userClass::where('email', $email)->first())) {
+        if (!is_null($userClass::where('email', $email)->first())) {
             $this->error("User with same email [{$email}] exists.");
 
             return;
@@ -140,7 +140,7 @@ class UserManagerCommand extends Command
         }
 
         $confirm = $this->confirm("Are you sure want to delete user with id [{$id}]?", false);
-        if (! $confirm) {
+        if (!$confirm) {
             return;
         }
 
