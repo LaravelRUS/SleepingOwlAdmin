@@ -21,7 +21,7 @@ class FilterCustom extends FilterField
     {
         parent::__construct($name, $title);
 
-        if (!is_null($callback)) {
+        if (! is_null($callback)) {
             $this->setCallback($callback);
         }
     }

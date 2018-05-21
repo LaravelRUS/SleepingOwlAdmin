@@ -52,7 +52,7 @@ class Select extends BaseColumnFilter
             $this->setModelForOptions($options);
         }
 
-        if (!is_null($title)) {
+        if (! is_null($title)) {
             $this->setDisplay($title);
         }
     }
@@ -77,7 +77,7 @@ class Select extends BaseColumnFilter
         if ($this->multiple) {
             $this->setHtmlAttribute('multiple', 'multiple');
 
-            if (!in_array($this->operator, ['in', 'not_in'])) {
+            if (! in_array($this->operator, ['in', 'not_in'])) {
                 $this->setOperator('in');
             }
         } else {
@@ -121,7 +121,7 @@ class Select extends BaseColumnFilter
      */
     public function getOptions()
     {
-        if (!is_null($this->getModelForOptions()) && !is_null($this->getDisplay())) {
+        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
             $this->setOptions(
                 $this->loadOptions()
             );

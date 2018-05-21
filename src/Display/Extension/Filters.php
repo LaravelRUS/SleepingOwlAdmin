@@ -41,7 +41,7 @@ class Filters extends Extension implements Initializable
      */
     public function set($filters)
     {
-        if (!is_array($filters)) {
+        if (! is_array($filters)) {
             $filters = func_get_args();
         }
 
@@ -79,7 +79,7 @@ class Filters extends Extension implements Initializable
      */
     public function getActive()
     {
-        return $this->filters->filter(function(FilterInterface $filter) {
+        return $this->filters->filter(function (FilterInterface $filter) {
             return $filter->isActive();
         });
     }
@@ -125,7 +125,7 @@ class Filters extends Extension implements Initializable
      */
     public function modifyQuery(Builder $query)
     {
-        $this->getActive()->each(function(FilterInterface $filter) use ($query) {
+        $this->getActive()->each(function (FilterInterface $filter) use ($query) {
             $filter->apply($query);
         });
     }
@@ -135,7 +135,7 @@ class Filters extends Extension implements Initializable
      */
     public function initialize()
     {
-        $this->filters->each(function(FilterInterface $filter) {
+        $this->filters->each(function (FilterInterface $filter) {
             $filter->initialize();
         });
     }

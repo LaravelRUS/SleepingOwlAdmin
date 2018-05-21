@@ -51,7 +51,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     private function createLocalViewFactory()
     {
         $resolver = new EngineResolver();
-        $resolver->register('php', function() {
+        $resolver->register('php', function () {
             return new PhpEngine();
         });
         $finder = new FileViewFinder($this->app['files'], [__DIR__.'/../../resources/views']);
@@ -64,8 +64,8 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
-            if (!class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider') &&
-                !$this->app->resolved('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
+            if (! class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider') &&
+                ! $this->app->resolved('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
                 $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
             }
 
@@ -81,7 +81,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
             $localViewFactory = $this->createLocalViewFactory();
             $this->app->singleton(
                 'command.sleepingowl.ide.generate',
-                function($app) use ($localViewFactory) {
+                function ($app) use ($localViewFactory) {
                     return new \SleepingOwl\Admin\Console\Commands\GeneratorCommand($app['config'], $app['files'], $localViewFactory);
                 }
             );

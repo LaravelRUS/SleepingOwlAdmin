@@ -91,10 +91,10 @@ class Columns extends Extension implements Initializable, Renderable
         $this->controlActive = false;
 
         if ($this->isInitialize()) {
-            $this->columns = $this->columns->filter(function($column) {
+            $this->columns = $this->columns->filter(function ($column) {
                 $class = get_class($this->getControlColumn());
 
-                return !($column instanceof $class);
+                return ! ($column instanceof $class);
             });
         }
 
@@ -116,7 +116,7 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function set($columns)
     {
-        if (!is_array($columns)) {
+        if (! is_array($columns)) {
             $columns = func_get_args();
         }
 
@@ -162,7 +162,7 @@ class Columns extends Extension implements Initializable, Renderable
 
     public function initialize()
     {
-        $this->all()->each(function(ColumnInterface $column) {
+        $this->all()->each(function (ColumnInterface $column) {
             $column->initialize();
         });
 
@@ -204,7 +204,7 @@ class Columns extends Extension implements Initializable, Renderable
 
         $columns = $this->all();
 
-        if (!is_int(key($orders))) {
+        if (! is_int(key($orders))) {
             $orders = [$orders];
         }
 
@@ -212,7 +212,7 @@ class Columns extends Extension implements Initializable, Renderable
             $columnIndex = array_get($order, 'column');
             $direction = array_get($order, 'dir', 'asc');
 
-            if (!$columnIndex && $columnIndex !== '0') {
+            if (! $columnIndex && $columnIndex !== '0') {
                 continue;
             }
 

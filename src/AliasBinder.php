@@ -146,7 +146,7 @@ class AliasBinder implements AliasBinderInterface
      */
     public function __call($name, $arguments)
     {
-        if (!$this->hasAlias($name)) {
+        if (! $this->hasAlias($name)) {
             throw new BadMethodCallException($name);
         }
 

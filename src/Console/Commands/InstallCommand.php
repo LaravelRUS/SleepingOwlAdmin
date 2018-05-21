@@ -31,11 +31,11 @@ class InstallCommand extends Installation\Command
             Installation\CreateRoutesFile::class,
             Installation\CreateSectionServiceProvider::class,
             Installation\CreatePublicDirectory::class,
-        ])->map(function($installer) {
+        ])->map(function ($installer) {
             return new $installer($this, $this->config);
-        })->filter(function(Installator $installer) {
-            return $this->option('force') ? true : !$installer->installed();
-        })->each(function(Installator $installer) {
+        })->filter(function (Installator $installer) {
+            return $this->option('force') ? true : ! $installer->installed();
+        })->each(function (Installator $installer) {
             $installer->install();
             $installer->showInfo();
         });

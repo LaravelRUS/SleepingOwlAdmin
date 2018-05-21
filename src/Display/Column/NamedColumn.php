@@ -104,8 +104,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     public function setOrderable($orderable = true)
     {
-        if ($orderable !== false && !$orderable instanceof OrderByClauseInterface) {
-            if (!is_string($orderable) && !$orderable instanceof Closure) {
+        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
+            if (! is_string($orderable) && ! $orderable instanceof Closure) {
                 $orderable = $this->getName();
             }
         }
@@ -173,11 +173,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
             if ($instance === null) {
                 $instance = collect();
             }
-        } elseif (!is_null($instance)) {
+        } elseif (! is_null($instance)) {
             $instance = $instance->getAttribute($part);
         }
 
-        if (!empty($parts) && !is_null($instance)) {
+        if (! empty($parts) && ! is_null($instance)) {
             return $this->getValueFromObject($instance, implode('.', $parts));
         }
 

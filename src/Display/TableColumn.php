@@ -79,7 +79,7 @@ abstract class TableColumn implements ColumnInterface
     {
         $this->header = app(TableHeaderColumnInterface::class);
 
-        if (!is_null($label)) {
+        if (! is_null($label)) {
             $this->setLabel($label);
         }
 
@@ -274,7 +274,7 @@ abstract class TableColumn implements ColumnInterface
             $orderable = new OrderByClause($orderable);
         }
 
-        if ($orderable !== false && !$orderable instanceof OrderByClauseInterface) {
+        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
             throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
         }
 
@@ -309,7 +309,7 @@ abstract class TableColumn implements ColumnInterface
      */
     public function orderBy(Builder $query, $direction)
     {
-        if (!$this->isOrderable()) {
+        if (! $this->isOrderable()) {
             throw new \InvalidArgumentException('Argument must be instance of SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface interface');
         }
 

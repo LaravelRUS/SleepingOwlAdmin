@@ -21,7 +21,7 @@ class BreadcrumbsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('sleeping_owl.breadcrumbs', function() {
+        $this->app->singleton('sleeping_owl.breadcrumbs', function () {
             return $this->app->make(Breadcrumbs::class);
         });
     }

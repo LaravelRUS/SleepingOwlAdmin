@@ -26,7 +26,7 @@ class Custom extends FormElement
      */
     public function __construct(Closure $callback = null)
     {
-        if (!is_null($callback)) {
+        if (! is_null($callback)) {
             $this->setCallback($callback);
         }
 

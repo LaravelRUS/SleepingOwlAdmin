@@ -53,7 +53,7 @@ class FilterRelated extends FilterField
      */
     public function setModel($model)
     {
-        if (!class_exists($model)) {
+        if (! class_exists($model)) {
             throw new Exception("Class model [$model] not found");
         }
 

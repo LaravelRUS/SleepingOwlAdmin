@@ -70,7 +70,7 @@ class Columns extends FormElements implements ColumnInterface
             $element = new Column($element);
         }
 
-        if (!($element instanceof ColumnInterface)) {
+        if (! ($element instanceof ColumnInterface)) {
             throw new \Exception('Column should be instance of ColumnInterface');
         }
 
@@ -85,16 +85,16 @@ class Columns extends FormElements implements ColumnInterface
     {
         $this->setHtmlAttribute('class', 'row');
 
-        $count = $this->getElements()->filter(function(ColumnInterface $column) {
+        $count = $this->getElements()->filter(function (ColumnInterface $column) {
             return $column->getWidth() === 0;
         })->count();
 
-        $width = $this->maxWidth - $this->getElements()->sum(function(ColumnInterface $column) {
+        $width = $this->maxWidth - $this->getElements()->sum(function (ColumnInterface $column) {
             return $column->getWidth();
         });
 
-        $this->getElements()->each(function(ColumnInterface $column) use ($width, $count) {
-            if (!$column->getWidth()) {
+        $this->getElements()->each(function (ColumnInterface $column) use ($width, $count) {
+            if (! $column->getWidth()) {
                 $column->setWidth(floor($width / $count));
             }
         });
@@ -134,7 +134,7 @@ class Columns extends FormElements implements ColumnInterface
      */
     public function setSize($size)
     {
-        $this->getColumns()->each(function(ColumnInterface $column) use ($size) {
+        $this->getColumns()->each(function (ColumnInterface $column) use ($size) {
             $column->setSize($size);
         });
     }

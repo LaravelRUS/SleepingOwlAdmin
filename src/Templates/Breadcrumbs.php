@@ -35,7 +35,7 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
             $name = $params[0];
         }
 
-        if (!$this->exists($name)) {
+        if (! $this->exists($name)) {
             return '';
         }
 
@@ -61,7 +61,7 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
      */
     public function renderIfExistsArray($name, $params = [])
     {
-        if (!$this->exists($name)) {
+        if (! $this->exists($name)) {
             return '';
         }
 

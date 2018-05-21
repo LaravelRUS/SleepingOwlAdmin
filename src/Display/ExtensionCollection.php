@@ -15,7 +15,7 @@ class ExtensionCollection extends Collection
      */
     public function placable()
     {
-        return $this->filter(function(DisplayExtensionInterface $extension) {
+        return $this->filter(function (DisplayExtensionInterface $extension) {
             return $extension instanceof Placable;
         });
     }
@@ -42,7 +42,7 @@ class ExtensionCollection extends Collection
      */
     public function renderable()
     {
-        return $this->filter(function(DisplayExtensionInterface $extension) {
+        return $this->filter(function (DisplayExtensionInterface $extension) {
             return $extension instanceof Renderable;
         });
     }
@@ -52,7 +52,7 @@ class ExtensionCollection extends Collection
      */
     public function sortByOrder()
     {
-        return $this->sortBy(function(DisplayExtensionInterface $extension) {
+        return $this->sortBy(function (DisplayExtensionInterface $extension) {
             return $extension->getOrder();
         });
     }
@@ -62,7 +62,7 @@ class ExtensionCollection extends Collection
      */
     public function initialize()
     {
-        $this->each(function(DisplayExtensionInterface $extension) {
+        $this->each(function (DisplayExtensionInterface $extension) {
             if ($extension instanceof Initializable) {
                 $extension->initialize();
             }
@@ -76,7 +76,7 @@ class ExtensionCollection extends Collection
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $this->each(function(DisplayExtensionInterface $extension) use ($query) {
+        $this->each(function (DisplayExtensionInterface $extension) use ($query) {
             $extension->modifyQuery($query);
         });
 

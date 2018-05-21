@@ -24,8 +24,8 @@ class Generator extends IdeHelperGenerator
     {
         $aliases = $this->getValidAliases();
 
-        $aliases = $aliases->filter(function(Alias $item) {
-            return !collect([
+        $aliases = $aliases->filter(function (Alias $item) {
+            return ! collect([
                 'MessageStack',
                 'AdminSection',
                 'AdminTemplate',
@@ -40,7 +40,7 @@ class Generator extends IdeHelperGenerator
             ])->search($item->getAlias());
         });
 
-        return $aliases->groupBy(function(Alias $alias) {
+        return $aliases->groupBy(function (Alias $alias) {
             return $alias->getExtendsNamespace();
         });
     }

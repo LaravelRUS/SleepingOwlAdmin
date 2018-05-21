@@ -35,7 +35,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
      */
     public function set($columnFilters)
     {
-        if (!is_array($columnFilters)) {
+        if (! is_array($columnFilters)) {
             $columnFilters = func_get_args();
         }
 
@@ -192,13 +192,13 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
         $display = $this->getDisplay();
 
-        if (!$display->getExtensions()->has('columns')) {
+        if (! $display->getExtensions()->has('columns')) {
             return;
         }
 
         $columns = $display->getColumns()->all();
 
-        if (!is_int(key($search))) {
+        if (! is_int(key($search))) {
             $search = [$search];
         }
 
@@ -235,7 +235,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
     protected function prepareView()
     {
-        if (!in_array($this->getPlacement(), ['table.footer', 'table.header']) && $this->view == 'display.extensions.columns_filters_table') {
+        if (! in_array($this->getPlacement(), ['table.footer', 'table.header']) && $this->view == 'display.extensions.columns_filters_table') {
             $this->view = 'display.extensions.columns_filters';
             $this->setHtmlAttribute('class', 'table table-default');
         }

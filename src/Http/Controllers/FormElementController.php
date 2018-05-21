@@ -18,9 +18,9 @@ class FormElementController extends Controller
      */
     public function getModelLogic(ModelConfigurationInterface $model, $id = null)
     {
-        if (!is_null($id)) {
+        if (! is_null($id)) {
             $item = $model->getRepository()->find($id);
-            if (is_null($item) || !$model->isEditable($item)) {
+            if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
                     'message' => trans('lang.message.access_denied'),
                 ], 403);
@@ -29,7 +29,7 @@ class FormElementController extends Controller
             return $model->fireEdit($id);
         }
 
-        if (!$model->isCreatable()) {
+        if (! $model->isCreatable()) {
             return new JsonResponse([
                 'message' => trans('lang.message.access_denied'),
             ], 403);
@@ -74,7 +74,7 @@ class FormElementController extends Controller
         }
 
         return new JsonResponse([
-            'output'   => collect($options)->map(function($value, $key) {
+            'output'   => collect($options)->map(function ($value, $key) {
                 return ['id' => $key, 'name' => $value];
             }),
             'selected' => $element->getValueFromModel(),
@@ -126,7 +126,7 @@ class FormElementController extends Controller
             return new JsonResponse(
                 $model::where($request->search, 'like', "%{$request->q}%")
                     ->get()
-                    ->map(function(Model $item) use ($field) {
+                    ->map(function (Model $item) use ($field) {
                         return [
                             'tag_name'    => $item->{$field},
                             'id'          => $item->id,
