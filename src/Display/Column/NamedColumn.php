@@ -20,9 +20,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $name;
 
     /**
-     * @var null
+     * @var string
      */
-    protected $small = null;
+    protected $small;
 
     /**
      * @var bool
@@ -30,8 +30,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $orderable = true;
 
     /**
-     * @param Closure|null|string $name
-     * @param null|string $label
+     * NamedColumn constructor.
+     * @param $name
+     * @param null $label
+     * @param null $small
      */
     public function __construct($name, $label = null, $small = null)
     {

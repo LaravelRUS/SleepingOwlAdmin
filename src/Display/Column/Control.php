@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
 
 class Control extends TableColumn
 {
+
     /**
      * @var string
      */
@@ -143,7 +144,7 @@ class Control extends TableColumn
      */
     public function setEditable($editable)
     {
-        $this->editable = (bool) $editable;
+        $this->editable = (bool)$editable;
 
         return $this;
     }
@@ -154,7 +155,7 @@ class Control extends TableColumn
      */
     public function setDeletable($deletable)
     {
-        $this->deletable = (bool) $deletable;
+        $this->deletable = (bool)$deletable;
 
         return $this;
     }
@@ -165,7 +166,7 @@ class Control extends TableColumn
      */
     public function setDestroyable($destroyable)
     {
-        $this->destroyable = (bool) $destroyable;
+        $this->destroyable = (bool)$destroyable;
 
         return $this;
     }
@@ -176,7 +177,7 @@ class Control extends TableColumn
      */
     public function setRestorable($restorable)
     {
-        $this->restorable = (bool) $restorable;
+        $this->restorable = (bool)$restorable;
 
         return $this;
     }
@@ -184,7 +185,7 @@ class Control extends TableColumn
     /**
      * Check if instance supports soft-deletes and trashed.
      *
-     * @return bool|Illuminate\Database\Eloquent\Builder
+     * @return bool|\Illuminate\Database\Eloquent\Builder
      */
     protected function isTrashed()
     {
@@ -281,16 +282,16 @@ class Control extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'buttons' => $this->buttons
-                ->each(function (ControlButtonInterface $button) {
-                    $button->setModel($this->getModel());
-                })
-                ->filter(function (ControlButtonInterface $button) {
-                    return $button->isActive();
-                })
-                ->sortBy(function (ControlButtonInterface $button) {
-                    return $button->getPosition();
-                }),
-        ];
+                'buttons' => $this->buttons
+                    ->each(function (ControlButtonInterface $button) {
+                        $button->setModel($this->getModel());
+                    })
+                    ->filter(function (ControlButtonInterface $button) {
+                        return $button->isActive();
+                    })
+                    ->sortBy(function (ControlButtonInterface $button) {
+                        return $button->getPosition();
+                    }),
+            ];
     }
 }

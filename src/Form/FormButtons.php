@@ -25,37 +25,38 @@ class FormButtons implements FormButtonsInterface
     protected $placements;
 
     /**
-     * @var string|null
+     * @var string|null|array
      */
     protected $cancelButtonText;
 
     /**
-     * @var string|null
+     * @var string|null|array
      */
     protected $saveButtonText;
 
     /**
-     * @var string|null
+     * @var string|null|array
      */
     protected $saveAndCloseButtonText;
 
     /**
-     * @var string|null
+     * @var string|null|array
      */
     protected $saveAndCreateButtonText;
 
     /**
-     * @var string|null
+     * @var string|null|array
      */
     protected $deleteButtonText;
 
     /**
-     * @var string|null
+     * @var string|null|array
      */
     protected $destroyButtonText;
 
     /**
-     * @var string|null
+     * @var string|null|array
+     *
      */
     protected $restoreButtonText;
 
@@ -213,7 +214,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return bool
+     * @return bool|\Illuminate\Database\Eloquent\Builder
      */
     protected function isTrashed()
     {
@@ -222,7 +223,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @deprecated new version available
-     * @return null|string
+     * @return null|string|array
      */
     public function getCancelButtonText()
     {
@@ -247,7 +248,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @deprecated new version available
-     * @return string
+     * @return string|array
      */
     public function getSaveButtonText()
     {
@@ -272,7 +273,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @deprecated new version available
-     * @return string
+     * @return string|array
      */
     public function getSaveAndCloseButtonText()
     {
@@ -298,7 +299,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @deprecated new version available
-     * @return string
+     * @return string|array
      */
     public function getSaveAndCreateButtonText()
     {
@@ -324,7 +325,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @deprecated new version available
-     * @return string
+     * @return string|array
      */
     public function getDeleteButtonText()
     {
@@ -349,7 +350,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @deprecated new version available
-     * @return null
+     * @return null|string|array
      */
     public function getDestroyButtonText()
     {

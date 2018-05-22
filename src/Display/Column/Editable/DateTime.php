@@ -14,9 +14,9 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     use DatePicker, DateFormat;
 
     /**
-     * @var null
+     * @var string
      */
-    protected $defaultValue = null;
+    protected $defaultValue;
     /**
      * @var string
      */

@@ -17,7 +17,7 @@ class DependentSelect extends Select implements WithRoutesInterface
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/dependent-select/{field}/{id?}', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect',
+                'uses' => '\SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect',
             ]);
         }
     }
@@ -44,8 +44,7 @@ class DependentSelect extends Select implements WithRoutesInterface
 
     /**
      * DependentSelect constructor.
-     *
-     * @param string $path
+     * @param $path
      * @param null $label
      * @param array $depends
      */

@@ -36,7 +36,7 @@ class MultiSelect extends Select
     }
 
     /**
-     * @return array
+     * @return array|string
      */
     public function getValueFromModel()
     {
