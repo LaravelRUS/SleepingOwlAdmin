@@ -56,7 +56,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @var string|null|array
-     *
      */
     protected $restoreButtonText;
 
