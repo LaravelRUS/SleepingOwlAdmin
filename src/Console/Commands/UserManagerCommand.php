@@ -27,7 +27,8 @@ class UserManagerCommand extends Command
     {
         if ($this->option('create')) {
             $this->createNewUser();
-            return null;
+
+            return;
         }
 
         if ($this->option('delete')) {
@@ -39,8 +40,6 @@ class UserManagerCommand extends Command
         }
 
         $this->getUsers();
-
-        return null;
     }
 
     /**
@@ -62,8 +61,6 @@ class UserManagerCommand extends Command
         }
 
         $this->getUsers();
-
-        return null;
     }
 
     /**
