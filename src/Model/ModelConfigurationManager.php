@@ -334,7 +334,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return null|string|boolean
+     * @return null|string|bool
      */
     public function hasCustomControllerClass()
     {
@@ -445,7 +445,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @return string|array
-     *
      */
     public function getMessageOnUpdate()
     {
