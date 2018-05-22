@@ -31,7 +31,7 @@ class Order extends TableColumn implements WithRoutesInterface
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/{adminModelId}/up', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderUp',
+                'uses' => '\SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderUp',
             ]);
         }
 
@@ -39,7 +39,7 @@ class Order extends TableColumn implements WithRoutesInterface
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/{adminModelId}/down', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderDown',
+                'uses' => '\SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderDown',
             ]);
         }
     }
@@ -73,8 +73,7 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get models total count.
-     * @return int
+     * @return mixed
      */
     protected function totalCount()
     {

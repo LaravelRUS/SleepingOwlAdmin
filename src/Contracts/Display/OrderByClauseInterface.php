@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 interface OrderByClauseInterface
 {
     /**
-     * @param  string|Closure $name
+     * @param  string|\Closure $name
      */
     public function setName($name);
 

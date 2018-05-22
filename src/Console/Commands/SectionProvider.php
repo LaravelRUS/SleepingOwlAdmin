@@ -24,6 +24,7 @@ class SectionProvider extends Command
 
     /**
      * @param Repository $files
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function fire(Repository $files)
     {
@@ -39,6 +40,7 @@ class SectionProvider extends Command
 
     /**
      * @param Repository $files
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle(Repository $files)
     {

@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
+use Illuminate\Console\GeneratorCommand as SectionGeneratorCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-class SectionMake extends GeneratorCommand
+class SectionMake extends SectionGeneratorCommand
 {
     /**
      * The console command name.
@@ -71,7 +71,7 @@ class SectionMake extends GeneratorCommand
     {
         $stub = parent::replaceClass($stub, $name);
 
-        return str_replace('DummyModel', '\\'.trim($this->argument('model'), '\\'), $stub);
+        return str_replace('DummyModel', '\\'.trim((string)$this->argument('model'), '\\'), $stub);
     }
 
     /**

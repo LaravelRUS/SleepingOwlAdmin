@@ -27,7 +27,7 @@ class Filter extends NamedColumn
     protected $view = 'column.filter';
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getRelatedModel()
     {
