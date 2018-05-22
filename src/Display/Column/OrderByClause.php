@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Support\Str;
+use Mockery\Matcher\Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,7 +22,7 @@ class OrderByClause implements OrderByClauseInterface
     /**
      * OrderByClause constructor.
      *
-     * @param string|\Closure $name
+     * @param string|Closure $name
      */
     public function __construct($name)
     {
@@ -34,13 +35,13 @@ class OrderByClause implements OrderByClauseInterface
      */
     public function modifyQuery(Builder $query, $direction = 'asc')
     {
-        $this->name instanceof \Closure
+        $this->name instanceof Closure
             ? $this->callCallable($query, $direction)
             : $this->callDefaultClause($query, $direction);
     }
 
     /**
-     * @param string|\Closure $name
+     * @param string|Closure $name
      *
      * @return $this
      */
@@ -180,6 +181,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param Model $model
      * @param Builder $query
      * @param $direction
+     * @return array
      */
     protected function loadBelongsTo(
         Collection $relations,

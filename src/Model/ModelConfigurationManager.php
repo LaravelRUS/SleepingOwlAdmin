@@ -103,8 +103,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     private $repository;
 
     /**
+     * ModelConfigurationManager constructor.
      * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param string $class
+     * @param $class
+     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
@@ -186,7 +188,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|\Symfony\Component\Translation\TranslatorInterface|array
      */
     public function getCreateTitle()
     {
@@ -194,7 +196,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|\Symfony\Component\Translation\TranslatorInterface|array
      */
     public function getEditTitle()
     {
@@ -332,7 +334,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return null|string
+     * @return null|string|boolean
      */
     public function hasCustomControllerClass()
     {
@@ -434,7 +436,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnCreate()
     {
@@ -442,7 +444,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
+     *
      */
     public function getMessageOnUpdate()
     {
@@ -450,7 +453,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnDelete()
     {
@@ -458,7 +461,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnRestore()
     {
@@ -466,7 +469,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnDestroy()
     {
