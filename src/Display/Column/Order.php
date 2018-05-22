@@ -10,7 +10,6 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class Order extends TableColumn implements WithRoutesInterface
 {
-
     /**
      * @var bool
      */
