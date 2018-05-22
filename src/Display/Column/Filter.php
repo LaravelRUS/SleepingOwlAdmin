@@ -8,7 +8,7 @@ class Filter extends NamedColumn
 {
     /**
      * Filter related model.
-     * @var Model $model
+     * @var Model
      */
     protected $relatedModel;
 

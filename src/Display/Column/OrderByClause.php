@@ -180,7 +180,6 @@ class OrderByClause implements OrderByClauseInterface
      * @param Model $model
      * @param Builder $query
      * @param $direction
-     * 
      */
     protected function loadBelongsTo(
         Collection $relations,
