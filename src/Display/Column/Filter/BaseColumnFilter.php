@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
@@ -14,7 +15,10 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
+
     use SqlQueryOperators, HtmlAttributes, Assets, \SleepingOwl\Admin\Traits\Renderable;
+
+    protected $view;
 
     /**
      * @var \Closure|null
@@ -102,7 +106,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     {
         $queryString = $this->parseValue($queryString);
 
-        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+        if ($column instanceof NamedColumnInterface &&
+            ($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
             if (method_exists($metaInstance, 'onFilterSearch')) {
                 $metaInstance->onFilterSearch($column, $query, $queryString, $queryParams);
 
@@ -131,8 +136,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
         }
 
         if (strpos($name, '.') !== false) {
-            $parts = explode('.', $name);
-            $fieldName = array_pop($parts);
+            $parts        = explode('.', $name);
+            $fieldName    = array_pop($parts);
             $relationName = implode('.', $parts);
 
             $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {

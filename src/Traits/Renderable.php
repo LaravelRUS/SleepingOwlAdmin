@@ -11,6 +11,7 @@ trait Renderable
      */
     protected $viewPath;
 
+
     /**
      * @param string|View $view
      *
