@@ -11,21 +11,12 @@ use SleepingOwl\Admin\Form\Related\Elements;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Class ManyToMany
- *
- * @package Admin\Form\Elements\RelatedElements\Forms
+ * Class ManyToMany.
  *
  * @method BelongsToMany getEmptyRelation()
  */
 class ManyToMany extends Elements
 {
-    /**
-     * Relation name of the model.
-     *
-     * @var string
-     */
-    protected $relationName;
-
     protected $primaries;
 
     protected $relatedElement;
@@ -67,7 +58,6 @@ class ManyToMany extends Elements
     {
         $this->initializeRelatedElement();
         parent::initializeElements();
-
     }
 
     protected function initializeRelatedElement()
