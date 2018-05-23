@@ -129,5 +129,5 @@ return [
     'related' => [
         'add' => 'Add',
         'remove' => 'Remove',
-    ]
+    ],
 ];
