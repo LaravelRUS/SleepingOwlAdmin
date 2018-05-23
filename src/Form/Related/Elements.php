@@ -372,7 +372,7 @@ abstract class Elements extends FormElements
         $cast = $casts->get($jsonParts->first(), false);
 
         if (! in_array($cast, ['json', 'array'])) {
-            return null;
+            return;
         }
 
         $jsonAttr = $model->{$jsonParts->first()};
