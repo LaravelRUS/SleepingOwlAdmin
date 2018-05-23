@@ -128,6 +128,6 @@ return [
     ],
     'related' => [
         'add' => 'Add',
-        'remove' => 'Remove'
+        'remove' => 'Remove',
     ]
 ];

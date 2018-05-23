@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
-use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\Related\Elements;
 
 class HasMany extends Elements

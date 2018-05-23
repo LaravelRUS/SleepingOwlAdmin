@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Related;
 
 use DB;
-use Validator;
 use Illuminate\Http\Request;
 use Admin\Contracts\HasFakeModel;
 use Illuminate\Support\Collection;
@@ -503,7 +502,7 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * Checks if count of
+     * Checks if count of limit is exceeded.
      *
      * @return int
      */
