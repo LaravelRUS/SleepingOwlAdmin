@@ -331,11 +331,11 @@ abstract class Elements extends FormElements
 
         $this->forEachElement($elements = $this->getNewElements(), function (NamedFormElement $el) use ($model, $key, $old) {
             // Setting default value, name and model for element with name attribute
-            $el->setDefaultValue($el->prepareValue($model->getAttribute($el->getModelAttributeKey())));
+            $el->setDefaultValue($el->prepareValue($this->getElementValue($model, $el)));
             $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?: $model->getKey(), $this->formatElementName($el->getName())));
             $el->setModel($model);
 
-            if ($old) {
+            if ($old && strpos($el->getPath(), '->') === false) {
                 // If there were old values (validation fail, etc.) each element must have different path to get the old
                 // value. If we don't do it, there will be collision if two elements with same name present in main form
                 // and related form. For example: we have "Company" and "Shop" models with field "name" and include HasMany
@@ -350,6 +350,34 @@ abstract class Elements extends FormElements
         }
 
         return $group;
+    }
+
+    /**
+     * Returns value from model for given element.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \SleepingOwl\Admin\Form\Element\NamedFormElement $el
+     *
+     * @return mixed|null
+     */
+    protected function getElementValue(Model $model, NamedFormElement $el)
+    {
+        $attribute = $el->getModelAttributeKey();
+        if (strpos($attribute, '->') === false) {
+            return $model->getAttribute($attribute);
+        }
+
+        $casts = collect($model->getCasts());
+        $jsonParts = collect(explode('->', $attribute));
+        $cast = $casts->get($jsonParts->first(), false);
+
+        if (! in_array($cast, ['json', 'array'])) {
+            return null;
+        }
+
+        $jsonAttr = $model->{$jsonParts->first()};
+
+        return array_get($jsonAttr, $jsonParts->slice(1)->implode('.'));
     }
 
     protected function formatElementName($name)
@@ -385,7 +413,16 @@ abstract class Elements extends FormElements
     protected function safeFillModel(Model $model, array $attributes = [])
     {
         foreach ($attributes as $attribute => $value) {
-            $model->setAttribute($attribute, $value);
+            // Prevent numeric attribute name. If it is, so it's an error
+            if (is_numeric($attribute)) {
+                continue;
+            }
+
+            try {
+                $model->setAttribute($attribute, $value);
+            } catch (\Exception $exception) {
+                // Ignore attribute set exception
+            }
         }
 
         return $model;
