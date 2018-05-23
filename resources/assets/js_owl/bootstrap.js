@@ -1,16 +1,16 @@
-import Admin from './components/admin';
+import Admin from './components/admin'
 
-window._ = require('lodash');
+window._ = require('lodash')
 
 window.Admin = new Admin(
-    document.querySelector("meta[name='csrf-token']").getAttribute('content'),
-    window.GlobalConfig || {}
+  document.querySelector('meta[name=\'csrf-token\']').getAttribute('content'),
+  window.GlobalConfig || {},
 )
 
-window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios = require('axios')
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
-window.Admin.Events = require('./components/events');
+window.Admin.Events = require('./components/events')
 
 require('./libs/jquery')
 require('./libs/moment')
@@ -52,11 +52,9 @@ require('./wysiwyg/ckeditor')
 require('./wysiwyg/simplemde')
 require('./wysiwyg/tinymce')
 
-
 /**
  * Initialize App
  */
-
 
 /**
  * Initialize display
@@ -83,4 +81,5 @@ require('./admin/form/deselect')
 require('./admin/form/file')
 require('./admin/form/image')
 require('./admin/form/images')
+require('./admin/form/related')
 require('./admin/events')
