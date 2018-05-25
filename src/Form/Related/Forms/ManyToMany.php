@@ -41,17 +41,29 @@ class ManyToMany extends Elements
         ];
     }
 
+    /**
+     * Sets primaries of relation.
+     *
+     * @param array $primaries
+     */
     public function setPrimaries(array $primaries)
     {
         $this->primaries = $primaries;
     }
 
+    /**
+     * Returns related element (first select if it's important).
+     *
+     * @return mixed
+     */
     public function getRelatedElement()
     {
         return $this->relatedElement;
     }
 
     /**
+     * Initializes all elements.
+     *
      * @return void
      */
     public function initializeElements()
@@ -60,6 +72,9 @@ class ManyToMany extends Elements
         parent::initializeElements();
     }
 
+    /**
+     * Initializes related element. First element (select) is created by default because it's many-to-many, you know.
+     */
     protected function initializeRelatedElement()
     {
         $select = $this->getRelatedElement();
@@ -80,6 +95,13 @@ class ManyToMany extends Elements
         }
     }
 
+    /**
+     * Retrieves related values from given query.
+     *
+     * @param $query
+     *
+     * @return Collection
+     */
     protected function retrieveRelationValuesFromQuery($query)
     {
         return $query->get()->pluck('pivot')->keyBy(function ($item) {
@@ -116,6 +138,11 @@ class ManyToMany extends Elements
         });
     }
 
+    /**
+     * Returns related foreign key name.
+     *
+     * @return string
+     */
     protected function getRelatedForeignKeyName()
     {
         return $this->getEmptyRelation()->getRelatedPivotKeyName();
@@ -130,6 +157,11 @@ class ManyToMany extends Elements
         $relation->sync($this->buildRelatedMap($this->relatedValues));
     }
 
+    /**
+     * @param array $data
+     *
+     * @return mixed|void
+     */
     protected function prepareRelatedValues(array $data)
     {
         $elements = $this->flatNamedElements($this->getNewElements());
@@ -146,21 +178,39 @@ class ManyToMany extends Elements
         }
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\Pivot
+     */
     protected function getModelForElements()
     {
         return $this->getEmptyRelation()->newPivot();
     }
 
+    /**
+     * Wraps first element into given columns. It's useful when you have Columns in your form and want the related
+     * element to be inside this columns.
+     *
+     * @param \SleepingOwl\Admin\Form\Columns\Columns $columns
+     */
     public function wrapRelatedInto(Columns $columns)
     {
         $this->relatedWrapper = $columns;
     }
 
+    /**
+     * Cancels related element wrapping.
+     */
     public function dontWrap()
     {
         $this->relatedWrapper = null;
     }
 
+    /**
+     * Proxies method call to related element.
+     *
+     * @param $name
+     * @param $arguments
+     */
     public function __call($name, $arguments)
     {
         if (method_exists($this->getRelatedElement(), $name)) {
