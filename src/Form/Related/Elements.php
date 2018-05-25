@@ -154,7 +154,7 @@ abstract class Elements extends FormElements
         });
     }
 
-    protected function initializeRemoveEntities(): void
+    protected function initializeRemoveEntities()
     {
         $key = $this->relationName.'.'.static::REMOVE;
         $newKey = 'remove_'.$this->relationName;
