@@ -38,7 +38,6 @@ trait ManipulatesRequestRelations
                 $remove[] = $this->relationName;
             }
             $this->makeCopyOfRelations($request);
-
         }
 
         return $request->replace($request->except($remove));
