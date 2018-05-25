@@ -59,7 +59,6 @@ trait ManipulatesRequestRelations
             $newData["new_{$counter}"] = $values;
             $counter++;
         }
-
         $request->merge([$this->relationName => $newData]);
     }
 }
