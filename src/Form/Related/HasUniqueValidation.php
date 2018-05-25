@@ -9,6 +9,8 @@ trait HasUniqueValidation
     protected $unique;
 
     /**
+     * Columns, that should be unique.
+     *
      * @param array $columns
      * @param string|null $message
      *

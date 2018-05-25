@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\RelationNotFoundException;
 
 abstract class Elements extends FormElements
 {
-    use HtmlAttributes, HasUniqueValidation;
+    use HtmlAttributes, HasUniqueValidation, ManipulatesRequestRelations;
 
     protected $view = 'form.element.related.elements';
 
@@ -40,6 +40,11 @@ abstract class Elements extends FormElements
      */
     protected $relationName;
 
+    /**
+     * New relations counter.
+     *
+     * @var int
+     */
     protected $new = 0;
 
     /**
@@ -68,11 +73,14 @@ abstract class Elements extends FormElements
 
     protected $stubElements;
 
+    /**
+     * Elements that are about to be removed.
+     *
+     * @var \Illuminate\Support\Collection
+     */
     protected $toRemove;
 
     protected $emptyRelation;
-
-    protected $unique;
 
     /**
      * @var
@@ -89,6 +97,7 @@ abstract class Elements extends FormElements
         parent::__construct($elements);
 
         $this->setRelationName($relationName);
+        $this->initializeRemoveEntities();
     }
 
     /**
@@ -103,6 +112,13 @@ abstract class Elements extends FormElements
         return $this;
     }
 
+    /**
+     * Adds query modifier callback for related values select. Here you may define your ordering, etc.
+     *
+     * @param callable $callback
+     *
+     * @return $this
+     */
     public function modifyQuery(callable $callback)
     {
         $this->queryCallbacks[] = $callback;
@@ -110,6 +126,13 @@ abstract class Elements extends FormElements
         return $this;
     }
 
+    /**
+     * Sets the label of related form.
+     *
+     * @param $label
+     *
+     * @return $this
+     */
     public function setLabel($label)
     {
         $this->label = $label;
@@ -129,17 +152,21 @@ abstract class Elements extends FormElements
                 $element->setPath('');
             }
         });
-
-        $this->initializeRemoveEntities();
     }
 
-    protected function initializeRemoveEntities()
+    protected function initializeRemoveEntities(): void
     {
         $key = $this->relationName.'.'.static::REMOVE;
+        $newKey = 'remove_'.$this->relationName;
+        $request = request();
 
-        $this->toRemove = collect(request()->input($key, []));
+        $remove = $request->input($key, $request->old($key, []));
+        if ($remove) {
+            $request->merge([$newKey => $remove]);
+        }
 
-        request()->replace(array_except(request()->all(), $this->relationName.'.'.static::REMOVE));
+        $this->toRemove = collect($request->input($newKey, $request->old($newKey, [])));
+        $request->replace($request->except($key));
     }
 
     /**
@@ -165,11 +192,18 @@ abstract class Elements extends FormElements
      *
      * @return string
      */
-    protected function getCompositeKey($item, array $columns)
+    protected function getCompositeKey($item, array $columns): string
     {
         $primaries = [];
+        if ($item instanceof Model) {
+            $item = $item->getAttributes();
+        }
+
         foreach ($columns as $name) {
-            $primaries[] = $item[$name];
+            // Only existing keys must be in primaries array
+            if (array_key_exists($name, $item)) {
+                $primaries[] = $item[$name];
+            }
         }
 
         return implode('_', $primaries);
@@ -306,7 +340,17 @@ abstract class Elements extends FormElements
     {
         $collection = collect();
         foreach ($values as $key => $attributes) {
+            if ($key === static::REMOVE) {
+                // If key is about to be removed we need to save it and show later in rendered form. But we don't
+                // need to put value with this relation in collection of elements, that's why we need to continue the
+                // loop
+                $this->toRemove = collect($attributes);
+                continue;
+            }
+
             if (strpos($key, static::NEW_ITEM) !== false) {
+                // If item is new wee need to implement counter of new items to prevent duplicates,
+                // check limits and etc.
                 $this->new++;
             }
 
@@ -314,12 +358,22 @@ abstract class Elements extends FormElements
                 $attributes = $this->safeFillModel($this->relatedValues->get($key), $attributes);
             }
 
+            // Finally, we put filled model values into collection of future groups
             $collection->put($key, $attributes);
         }
 
         return $collection;
     }
 
+    /**
+     * Creates new group of relation and returns it.
+     *
+     * @param array|Model $attributes Attributes of one group (relation)
+     * @param bool $old Is it old data from previous request after validation error or something like that
+     * @param null $key Key of attributes
+     *
+     * @return \SleepingOwl\Admin\Form\Related\Group
+     */
     protected function createGroup($attributes, $old = false, $key = null)
     {
         $model = $attributes instanceof Model ? $attributes : $this->safeCreateModel($this->getModelClassForElements(), $attributes);
@@ -335,7 +389,7 @@ abstract class Elements extends FormElements
             $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?: $model->getKey(), $this->formatElementName($el->getName())));
             $el->setModel($model);
 
-            if ($old && strpos($el->getPath(), '->') === false) {
+            if ($old && strpos($el->getPath(), '->') === false && ! ($el instanceof HasFakeModel)) {
                 // If there were old values (validation fail, etc.) each element must have different path to get the old
                 // value. If we don't do it, there will be collision if two elements with same name present in main form
                 // and related form. For example: we have "Company" and "Shop" models with field "name" and include HasMany
@@ -367,6 +421,7 @@ abstract class Elements extends FormElements
             return $model->getAttribute($attribute);
         }
 
+        // Parse json attributes
         $casts = collect($model->getCasts());
         $jsonParts = collect(explode('->', $attribute));
         $cast = $casts->get($jsonParts->first(), false);
@@ -380,11 +435,24 @@ abstract class Elements extends FormElements
         return array_get($jsonAttr, $jsonParts->slice(1)->implode('.'));
     }
 
+    /**
+     * Replaces element name to key of entity.
+     *
+     * @param string $name
+     *
+     * @return null|string|string[]
+     */
     protected function formatElementName($name)
     {
         return preg_replace("/{$this->relationName}\[[\w]+\]\[(.+?)\]/", '$1', $name);
     }
 
+    /**
+     * Applies given callback to every element of form.
+     *
+     * @param \Illuminate\Support\Collection $elements
+     * @param $callback
+     */
     protected function forEachElement(Collection $elements, $callback)
     {
         foreach ($this->flatNamedElements($elements) as $element) {
@@ -392,12 +460,21 @@ abstract class Elements extends FormElements
         }
     }
 
+    /**
+     * Returns flat collection of elements in form ignoring everything but NamedFormElement. Works recursive.
+     *
+     * @param \Illuminate\Support\Collection $elements
+     *
+     * @return mixed
+     */
     protected function flatNamedElements(Collection $elements)
     {
         return $elements->reduce(function (Collection $initial, $element) {
             if ($element instanceof NamedFormElement) {
+                // Is it what we're loogin for? if so we'll push it to final collection
                 $initial->push($element);
             } elseif ($element instanceof FormElements) {
+                // Go deeper and repeat everything again
                 return $initial->merge($this->flatNamedElements($element->getElements()));
             }
 
@@ -405,11 +482,28 @@ abstract class Elements extends FormElements
         }, collect());
     }
 
+    /**
+     * Creates new model of given class and calls fill on it.
+     *
+     * @param $modelClass
+     * @param array $attributes
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     protected function safeCreateModel($modelClass, array $attributes = [])
     {
         return $this->safeFillModel(new $modelClass, $attributes);
     }
 
+    /**
+     * Fills given model with given attributes using setAttributes, not batch fill
+     * to prevent guard errors of model attributes.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param array $attributes
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     protected function safeFillModel(Model $model, array $attributes = [])
     {
         foreach ($attributes as $attribute => $value) {
@@ -429,19 +523,30 @@ abstract class Elements extends FormElements
     }
 
     /**
+     * Returns empty relation of model.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
     protected function getEmptyRelation()
     {
-        return $this->emptyRelation ?: $this->emptyRelation = $this->getModel()
-            ->{$this->relationName}();
+        return $this->emptyRelation ?: $this->emptyRelation = $this->getModel()->{$this->relationName}();
     }
 
+    /**
+     * Returns relation of current instance.
+     *
+     * @return mixed
+     */
     protected function getRelation()
     {
         return $this->instance->{$this->relationName}();
     }
 
+    /**
+     * Saves request.
+     *
+     * @param \Illuminate\Http\Request $request
+     */
     public function save(Request $request)
     {
         $this->prepareRelatedValues($this->getRequestData($request));
@@ -451,6 +556,11 @@ abstract class Elements extends FormElements
         // Nothing to do here...
     }
 
+    /**
+     * @param array $rules
+     *
+     * @return array
+     */
     public function getValidationRulesFromElements(array $rules = [])
     {
         $this->flatNamedElements($this->getElements())->each(function ($element) use (&$rules) {
@@ -478,6 +588,8 @@ abstract class Elements extends FormElements
             $this->setInstance($this->getModel());
             $this->proceedSave($request);
             DB::commit();
+
+            $this->prepareRequestToBeCopied($request);
         } catch (\Throwable $exception) {
             \Session::flash('success_message', 'Произошла ошибка сохранения');
             DB::rollBack($this->transactionLevel);
@@ -496,6 +608,14 @@ abstract class Elements extends FormElements
         return get_class($this->getModelForElements());
     }
 
+    /**
+     * Modifies validation parameters appending asterisk (*) to every field. We need this stuff because we're creating
+     * grouped forms here, you know :).
+     *
+     * @param array $parameters
+     *
+     * @return array
+     */
     protected function modifyValidationParameters(array $parameters)
     {
         $result = [];
@@ -580,6 +700,13 @@ abstract class Elements extends FormElements
         return $this;
     }
 
+    /**
+     * Retrieves related values from given query.
+     *
+     * @param $query
+     *
+     * @return Collection
+     */
     abstract protected function retrieveRelationValuesFromQuery($query);
 
     /**
@@ -596,7 +723,21 @@ abstract class Elements extends FormElements
      */
     abstract protected function getFreshModelForElements();
 
+    /**
+     * Proceeds saving related values after all validations passes.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
     abstract protected function proceedSave(Request $request);
 
+    /**
+     * Here you must add all new relations to main collection and etc.
+     *
+     * @param array $data
+     *
+     * @return mixed
+     */
     abstract protected function prepareRelatedValues(array $data);
 }
