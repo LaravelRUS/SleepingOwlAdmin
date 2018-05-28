@@ -8,14 +8,6 @@ const defaults = {
 }
 
 class FormGroupEditor {
-  name = ''
-  created = 0
-  $el = null
-  $addButton = null
-  selector = null
-  limit = null
-  $template = null
-
   constructor(selector = '.grouped-elements') {
     this.selector = selector
     this.$el = $(selector)
@@ -38,6 +30,7 @@ class FormGroupEditor {
       }
 
       this.appendTemplate()
+      Admin.Modules.call('form.elements.datetime')
 
       this.checkLimit()
     })
@@ -110,6 +103,6 @@ class FormGroupEditor {
 
 Admin.Modules.register('related-form', () => {
   $('.grouped-elements').each((x, el) => {
-    (new FormGroupEditor($(el))).init()
+    new FormGroupEditor(el).init()
   })
 }, 0, ['bootstrap::tab::shown'])

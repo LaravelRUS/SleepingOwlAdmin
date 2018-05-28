@@ -21,6 +21,8 @@ class ManyToMany extends Elements
 
     protected $relatedElement;
 
+    protected $relatedElementDisplayName;
+
     /**
      * @var Columns
      */
@@ -84,6 +86,7 @@ class ManyToMany extends Elements
         $select->setPath($this->getEmptyRelation()->getRelated()->getKeyName());
         $select->setModelForOptions(get_class($this->getEmptyRelation()->getRelated()));
         $select->setModel($this->getModelForElements());
+        $select->setDisplay($this->getRelatedElementDisplayName());
         $select->required();
 
         $this->unique([$name], trans('sleeping_owl::lang.form.unique'));
@@ -170,10 +173,11 @@ class ManyToMany extends Elements
 
             foreach ($elements as $index => $element) {
                 $attribute = $element->getModelAttributeKey();
-                $value = $element->prepareValue(array_get($attributes, $attribute));
-                $related->setAttribute($attribute, $value);
 
                 $element->setModel($related);
+                $element->setPath($attribute);
+                $element->setValueSkipped(false);
+                $element->setModelAttribute(array_get($attributes, $attribute));
             }
         }
     }
@@ -228,5 +232,24 @@ class ManyToMany extends Elements
     protected function getFreshModelForElements()
     {
         return $this->getModelForElements();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelatedElementDisplayName()
+    {
+        return $this->relatedElementDisplayName;
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setRelatedElementDisplayName($value)
+    {
+        $this->relatedElementDisplayName = $value;
+
+        return $this;
     }
 }

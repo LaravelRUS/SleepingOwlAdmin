@@ -23,5 +23,5 @@
 </div>
 
 <script type='text/template' id='{{ $name }}_template' class='hidden'>
-    @include(AdminTemplate::getViewPath('form.element.related.group'), ['group' => new \Admin\Form\Elements\Related\Group(null, $stub->all())])
+    @include(AdminTemplate::getViewPath('form.element.related.group'), ['group' => new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all())])
 </script>
