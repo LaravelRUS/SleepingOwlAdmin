@@ -301,12 +301,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             return false;
         }
 
-        parent::save($request);
-
         $model = $this->getModel();
-
-        $this->saveBelongsToRelations($model);
-
         $loaded = $model->exists;
 
         if ($this->getModelConfiguration()->fireEvent($loaded ? 'updating' : 'creating', true, $model) === false) {
@@ -316,6 +311,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         if ($this->getModelConfiguration()->fireEvent('saving', true, $model) === false) {
             return false;
         }
+
+        parent::save($request);
+        $this->saveBelongsToRelations($model);
 
         $model->save();
 
