@@ -92,7 +92,7 @@ class ModelConfigurationManagerTest extends TestCase
             ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], null)
             ->andReturn('string');
 
-        $this->assertEquals('string', $model->getEditTitle());
+        $this->assertEquals('string', $model->getEditTitle($model->getModel()));
     }
 
     /**
@@ -297,11 +297,11 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.store',
-            $model->getAlias(),
+            [$model->getAlias(), 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getStoreUrl());
+        $this->assertEquals('http://site.com', $model->getStoreUrl(['locale' => 'en']));
     }
 
     /**
@@ -313,11 +313,11 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.edit',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getEditUrl(1));
+        $this->assertEquals('http://site.com', $model->getEditUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -329,11 +329,11 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.update',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getUpdateUrl(1));
+        $this->assertEquals('http://site.com', $model->getUpdateUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -345,11 +345,11 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.delete',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getDeleteUrl(1));
+        $this->assertEquals('http://site.com', $model->getDeleteUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -361,11 +361,11 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.destroy',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getDestroyUrl(1));
+        $this->assertEquals('http://site.com', $model->getDestroyUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -377,11 +377,11 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.restore',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getRestoreUrl(1));
+        $this->assertEquals('http://site.com', $model->getRestoreUrl(1, ['locale' => 'en']));
     }
 
     /**

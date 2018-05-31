@@ -78,10 +78,10 @@ class ModelConfigurationTest extends TestCase
             ->once()
             ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], null)
             ->andReturn('string');
-        $this->assertEquals('string', $model->getEditTitle());
+        $this->assertEquals('string', $model->getEditTitle($model->getModel()));
 
         $this->assertEquals($model, $model->setEditTitle('test'));
-        $this->assertEquals('test', $model->getEditTitle());
+        $this->assertEquals('test', $model->getEditTitle($model->getModel()));
     }
 
     /**
