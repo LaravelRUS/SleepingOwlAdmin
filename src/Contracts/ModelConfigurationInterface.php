@@ -51,9 +51,10 @@ interface ModelConfigurationInterface
     public function getCreateTitle();
 
     /**
+     * @param Model $model
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
-    public function getEditTitle();
+    public function getEditTitle(Model $model);
 
     /**
      * @return bool
@@ -185,44 +186,51 @@ interface ModelConfigurationInterface
     public function getCancelUrl(array $parameters = []);
 
     /**
-     * @return string
-     */
-    public function getStoreUrl();
-
-    /**
-     * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getEditUrl($id);
+    public function getStoreUrl(array $parameters = []);
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getUpdateUrl($id);
+    public function getEditUrl($id, array $parameters = []);
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getDeleteUrl($id);
+    public function getUpdateUrl($id, array $parameters = []);
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getDestroyUrl($id);
+    public function getDeleteUrl($id, array $parameters = []);
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getRestoreUrl($id);
+    public function getDestroyUrl($id, array $parameters = []);
+
+    /**
+     * @param string|int $id
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function getRestoreUrl($id, array $parameters = []);
 
     /**
      * @return string

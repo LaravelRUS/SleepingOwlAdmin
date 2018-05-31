@@ -239,13 +239,13 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
+        $this->registerBreadcrumb($model->getEditTitle($item), $this->parentBreadcrumb);
 
         $edit = $model->fireEdit($id);
 
         $this->registerBreadcrumbs($model);
 
-        return $this->render($model, $edit, $model->getEditTitle());
+        return $this->render($model, $edit, $model->getEditTitle($item));
     }
 
     /**
