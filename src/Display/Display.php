@@ -279,7 +279,7 @@ abstract class Display implements DisplayInterface
     /**
      * @return ModelConfigurationInterface
      */
-    protected function getModelConfiguration()
+    public function getModelConfiguration()
     {
         return app('sleeping_owl')->getModel($this->modelClass);
     }

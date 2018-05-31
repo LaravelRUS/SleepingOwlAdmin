@@ -325,14 +325,6 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return ModelConfigurationInterface
-     */
-    protected function getModelConfiguration()
-    {
-        return app('sleeping_owl')->getModel($this->modelClass);
-    }
-
-    /**
      * @return Collection
      * @throws \Exception
      */
