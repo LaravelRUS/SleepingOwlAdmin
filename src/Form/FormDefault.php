@@ -103,16 +103,30 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         if (! $this->hasHtmlAttribute('enctype')) {
             // Try to find upload element
             $this->getElements()->each(function ($element) {
+
                 // Try to get nested - will be implemented
                 if ($element instanceof Upload && ! $this->hasHtmlAttribute('enctype')) {
-                    $this->setHtmlAttribute('enctype', 'multipart/form-data');
+                    $this->withFiles();
                 }
+
             });
         }
 
         $this->getButtons()->setModelConfiguration(
             $this->getModelConfiguration()
         );
+    }
+
+    /**
+     * Set enctype multipart/form-data
+     *
+     * @return $this
+     */
+    public function withFiles()
+    {
+        $this->setHtmlAttribute('enctype', 'multipart/form-data');
+
+        return $this;
     }
 
     /**
