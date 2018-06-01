@@ -2,7 +2,6 @@
 
 use Mockery as m;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
 class BaseColumnFilterTest extends TestCase
@@ -50,8 +49,6 @@ class BaseColumnFilterTest extends TestCase
         $builder->shouldReceive($condition)->withArgs($args);
 
         $filter->apply($column, $builder, 'keyword', []);
-
-
     }
 
     /**
