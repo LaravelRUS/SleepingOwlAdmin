@@ -30,4 +30,9 @@ interface ColumnInterface extends Initializable, Renderable, Arrayable, WithMode
      * @return bool
      */
     public function isOrderable();
+
+    /**
+     * @return mixed
+     */
+    public function geMetaData();
 }

@@ -2,7 +2,6 @@
 
 use Mockery as m;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
 class BaseColumnFilterTest extends TestCase
@@ -35,7 +34,7 @@ class BaseColumnFilterTest extends TestCase
 
         $filter->setOperator($operator);
 
-        $column = m::mock(NamedColumnInterface::class);
+        $column = m::mock(ColumnInterface::class);
         $column->shouldReceive('getMetaData')->once()->andReturn(null);
         $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('columnName');
