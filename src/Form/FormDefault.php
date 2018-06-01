@@ -2,19 +2,19 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Form\Element\Upload;
-use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Exceptions\Form\FormException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Form\Element\Upload;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -100,15 +100,16 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         parent::initialize();
 
-        if (! $this->hasHtmlAttribute('enctype')) {
-            // Try to find upload element
-            $this->getElements()->each(function ($element) {
+        if (!$this->hasHtmlAttribute('enctype')) {
 
-                // Try to get nested - will be implemented
-                if ($element instanceof Upload && ! $this->hasHtmlAttribute('enctype')) {
+            // Recursive iterate subset of form elements
+            // and if subset contains an upload element then add to for
+            $this->recursiveIterateElements(function ($element) {
+                if ($element instanceof Upload) {
                     $this->withFiles();
-                }
 
+                    return true;
+                }
             });
         }
 

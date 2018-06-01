@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Form\FormElementsCollection;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
-use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
+use SleepingOwl\Admin\Form\Element\NamedFormElement;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 
 trait FormElements
 {
@@ -28,6 +28,31 @@ trait FormElements
                 $element->initialize();
             }
         });
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return bool|void
+     */
+    public function recursiveIterateElements(\Closure $callback)
+    {
+        // If Callback function returns TRUE then recurse iterator should stop.
+        $result = null;
+
+        foreach ($this->getElements() as $element) {
+            if ($element instanceof ElementsInterface) {
+                $result = $element->recursiveIterateElements($callback);
+            } else {
+                $result = $callback($element);
+            }
+
+            if ($result === true) {
+                break;
+            }
+        }
+
+        return $result;
     }
 
     /**
