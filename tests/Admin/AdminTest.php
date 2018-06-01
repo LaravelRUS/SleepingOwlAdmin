@@ -1,7 +1,7 @@
 <?php
 
-use KodiComponents\Navigation\Contracts\PageInterface;
 use Mockery as m;
+use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class AdminTest extends TestCase
@@ -136,7 +136,6 @@ class AdminTest extends TestCase
         $navigation->shouldReceive('addPage')->once();
 
         $this->assertInstanceOf(PageInterface::class, $this->admin->addMenuPage(TestModel::class));
-
     }
 
     /**
