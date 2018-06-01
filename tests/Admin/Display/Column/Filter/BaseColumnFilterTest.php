@@ -35,7 +35,7 @@ class BaseColumnFilterTest extends TestCase
 
         $filter->setOperator($operator);
 
-        $column = m::mock(NamedColumnInterface::class);
+        $column = m::mock(ColumnInterface::class);
         $column->shouldReceive('getMetaData')->once()->andReturn(null);
         $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
         $column->shouldReceive('getName')->andReturn('columnName');
