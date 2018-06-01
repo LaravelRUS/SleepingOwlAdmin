@@ -1,12 +1,11 @@
 <?php
 
-use KodiComponents\Navigation\Contracts\PageInterface;
 use Mockery as m;
+use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class AdminTest extends TestCase
 {
-
     /**
      * @var SleepingOwl\Admin\Admin
      */
@@ -136,7 +135,6 @@ class AdminTest extends TestCase
         $navigation->shouldReceive('addPage')->once();
 
         $this->assertInstanceOf(PageInterface::class, $this->admin->addMenuPage(TestModel::class));
-
     }
 
     /**
@@ -160,8 +158,8 @@ class AdminTest extends TestCase
      */
     public function test_renders_view()
     {
-        $arguments       = ['content', 'title'];
-        $viewClass       = \Illuminate\View\View::class;
+        $arguments = ['content', 'title'];
+        $viewClass = \Illuminate\View\View::class;
         $controllerClass = \SleepingOwl\Admin\Http\Controllers\AdminController::class;
 
         $controller = m::mock($controllerClass);
@@ -182,15 +180,12 @@ class AdminTest extends TestCase
 
 class TestModel extends \Illuminate\Database\Eloquent\Model
 {
-
 }
 
 class OtherTestModel extends \Illuminate\Database\Eloquent\Model
 {
-
 }
 
 abstract class TestModelConfiguration implements \SleepingOwl\Admin\Contracts\ModelConfigurationInterface, \SleepingOwl\Admin\Contracts\Initializable
 {
-
 }
