@@ -160,6 +160,7 @@ class AdminTest extends TestCase
     public function test_renders_view()
     {
         $arguments = ['content', 'title'];
+        $testArrayArgs = [\Illuminate\View\View::class, \Illuminate\Contracts\View\Factory::class];
         $controllerClass = \SleepingOwl\Admin\Http\Controllers\AdminController::class;
 
         $controller = m::mock($controllerClass);
@@ -168,11 +169,8 @@ class AdminTest extends TestCase
                    ->withArgs($arguments)
                    ->once();
 
-        $this->assertInstanceOf(\Illuminate\View\View::class, $this->admin->view($arguments[0], $arguments[1]));
-        $this->assertInstanceOf(
-            \Illuminate\Contracts\View\Factory::class,
-            $this->admin->view($arguments[0], $arguments[1])
-        );
+        $testInstanceOf = get_class($this->admin->view($arguments[0], $arguments[1]));
+        $this->assertContains($testInstanceOf, $testArrayArgs);
     }
 }
 
