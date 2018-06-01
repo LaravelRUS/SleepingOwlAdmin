@@ -10,7 +10,6 @@ use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
-use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
