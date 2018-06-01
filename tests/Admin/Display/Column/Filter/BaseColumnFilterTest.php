@@ -14,8 +14,8 @@ class BaseColumnFilterTest extends TestCase
 
     /**
      * @param string $operator
-     *
-     * @return BaseColumnFilter
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     public function getFilter($operator = 'equal')
     {
@@ -27,7 +27,13 @@ class BaseColumnFilterTest extends TestCase
     }
 
     /**
+     * @param $operator
+     * @param $condition
+     * @param $args
+     * @throws ReflectionException
+     *
      * @dataProvider sqlOperatorsProvider
+     * @doesNotPerformAssertions
      */
     public function testApply($operator, $condition, $args)
     {
@@ -44,6 +50,8 @@ class BaseColumnFilterTest extends TestCase
         $builder->shouldReceive($condition)->withArgs($args);
 
         $filter->apply($column, $builder, 'keyword', []);
+
+
     }
 
     /**

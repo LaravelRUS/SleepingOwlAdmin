@@ -6,6 +6,7 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class AdminTest extends TestCase
 {
+
     /**
      * @var SleepingOwl\Admin\Admin
      */
@@ -159,28 +160,37 @@ class AdminTest extends TestCase
      */
     public function test_renders_view()
     {
-        $arguments = ['content', 'title'];
-        $testArrayArgs = [\Illuminate\View\View::class, \Illuminate\Contracts\View\Factory::class];
+        $arguments       = ['content', 'title'];
+        $viewClass       = \Illuminate\View\View::class;
         $controllerClass = \SleepingOwl\Admin\Http\Controllers\AdminController::class;
 
         $controller = m::mock($controllerClass);
         $this->app->instance($controllerClass, $controller);
-        $controller->shouldReceive('renderContent')
-                   ->withArgs($arguments)
-                   ->once();
+        $view = m::mock($viewClass);
 
-        $testInstanceOf = get_class($this->admin->view($arguments[0], $arguments[1]));
-        $this->assertContains($testInstanceOf, $testArrayArgs);
+        $controller->shouldReceive('renderContent')
+            ->withArgs($arguments)
+            ->once()
+            ->andReturn($view);
+
+        $this->assertEquals(
+            $view,
+            $this->admin->view($arguments[0], $arguments[1])
+        );
     }
 }
 
 class TestModel extends \Illuminate\Database\Eloquent\Model
 {
+
 }
+
 class OtherTestModel extends \Illuminate\Database\Eloquent\Model
 {
+
 }
 
 abstract class TestModelConfiguration implements \SleepingOwl\Admin\Contracts\ModelConfigurationInterface, \SleepingOwl\Admin\Contracts\Initializable
 {
+
 }
