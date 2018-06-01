@@ -1,5 +1,6 @@
 <?php
 
+use KodiComponents\Navigation\Contracts\PageInterface;
 use Mockery as m;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
@@ -133,7 +134,8 @@ class AdminTest extends TestCase
         $this->app->instance('sleeping_owl.navigation', $navigation);
         $navigation->shouldReceive('addPage')->once();
 
-        $this->admin->addMenuPage(TestModel::class);
+        $this->assertInstanceOf(PageInterface::class, $this->admin->addMenuPage(TestModel::class));
+
     }
 
     /**
@@ -166,7 +168,11 @@ class AdminTest extends TestCase
                    ->withArgs($arguments)
                    ->once();
 
-        $this->admin->view($arguments[0], $arguments[1]);
+        $this->assertInstanceOf(\Illuminate\View\View::class, $this->admin->view($arguments[0], $arguments[1]));
+        $this->assertInstanceOf(
+            \Illuminate\Contracts\View\Factory::class,
+            $this->admin->view($arguments[0], $arguments[1])
+        );
     }
 }
 
