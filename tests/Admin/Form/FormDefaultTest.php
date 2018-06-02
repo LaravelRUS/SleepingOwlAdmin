@@ -1,11 +1,11 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
-use SleepingOwl\Admin\Form\FormDefault;
 
 class FormDefaultTest extends TestCase
 {
@@ -16,7 +16,7 @@ class FormDefaultTest extends TestCase
         return new FormDefault($elements);
     }
 
-    function test_without_upload_fields()
+    public function test_without_upload_fields()
     {
         $form = $this->makeFormDefault([
             $this->makeMockForFormElement(FormElementInterface::class),
@@ -32,8 +32,8 @@ class FormDefaultTest extends TestCase
             new \SleepingOwl\Admin\Form\Panel\Header([
                 new \SleepingOwl\Admin\Form\Panel\Footer([
                     $this->makeMockForFormElement(FormElementInterface::class),
-                ])
-            ])
+                ]),
+            ]),
         ]);
 
         $this->assertFalse($form->hasHtmlAttribute('enctype'));
@@ -41,7 +41,7 @@ class FormDefaultTest extends TestCase
         $this->assertFalse($form->hasHtmlAttribute('enctype'));
     }
 
-    function test_auto_append_enctype_with_one_level()
+    public function test_auto_append_enctype_with_one_level()
     {
         $form = $this->makeFormDefault([
             $this->makeMockForFormElement(FormElementInterface::class),
@@ -55,15 +55,15 @@ class FormDefaultTest extends TestCase
         $this->assertEquals('multipart/form-data', $form->getHtmlAttribute('enctype'));
     }
 
-    function test_auto_append_enctype_with_sub_level()
+    public function test_auto_append_enctype_with_sub_level()
     {
         $form = $this->makeFormDefault([
             $this->makeMockForFormElement(FormElementInterface::class),
             new \SleepingOwl\Admin\Form\Panel\Header([
                 new \SleepingOwl\Admin\Form\Panel\Footer([
                     $this->makeMockForFormElement(\SleepingOwl\Admin\Form\Element\Upload::class),
-                ])
-            ])
+                ]),
+            ]),
         ]);
 
         $this->assertFalse($form->hasHtmlAttribute('enctype'));
@@ -103,7 +103,6 @@ class FormDefaultTest extends TestCase
         ]);
 
         $form->setAction('action');
-
 
         $this->assertNull($form->getRepository());
 
