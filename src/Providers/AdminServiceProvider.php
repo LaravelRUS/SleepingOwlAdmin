@@ -250,9 +250,6 @@ class AdminServiceProvider extends ServiceProvider
         $domain = config('sleeping_owl.domain', false);
 
         $middlewares = collect($this->getConfig('middleware'));
-        $middlewares = $middlewares->filter(function ($item) {
-            return $item != 'web';
-        });
         $configGroup = collect([
             'prefix'     => $this->getConfig('url_prefix'),
             'middleware' => $middlewares,
