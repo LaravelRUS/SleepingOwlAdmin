@@ -13,6 +13,8 @@ use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 trait FormElements
 {
+    use FormElementsRecursiveIterator;
+
     /**
      * @var FormElementsCollection
      */

@@ -141,6 +141,30 @@ class FormElementsTest extends TestCase
         $this->assertEquals(3, $count);
     }
 
+    public function test_recursive_iterator_with_tabs()
+    {
+        $tabs = AdminDisplay::tabbed();
+
+        $tabs->appendTab(AdminForm::elements([
+            $element4 = m::mock(FormElementInterface::class),
+        ]), 'Форма');
+
+
+        // One level
+        $elements = $this->getElement([
+            $element1 = m::mock(FormElementInterface::class),
+            $tabs
+        ]);
+
+        $count = 0;
+        $elements->recursiveIterateElements(function ($element) use (&$count) {
+            $count++;
+        });
+
+        $this->assertEquals(2, $count);
+    }
+
+
     /**
      * FormElements::setModel
      * FormElements::getModel
