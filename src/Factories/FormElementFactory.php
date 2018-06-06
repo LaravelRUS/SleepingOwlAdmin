@@ -6,6 +6,7 @@ use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\Related\Forms;
 use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 
 /**
@@ -79,6 +80,8 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'dependentselect' => Element\DependentSelect::class,
             'selectajax' => Element\SelectAjax::class,
             'multiselectajax' => Element\MultiSelectAjax::class,
+            'hasMany' => Forms\HasMany::class,
+            'manyToMany' => Forms\ManyToMany::class,
         ]);
     }
 }

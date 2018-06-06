@@ -60,6 +60,111 @@ class FormElementsTest extends TestCase
         $this->assertEquals(3, $element->getElements()->count());
     }
 
+    public function test_recursive_iterator()
+    {
+        // One level
+        $elements = $this->getElement([
+            $element1 = m::mock(FormElementInterface::class),
+            $element3 = m::mock(FormElementsTestInitializableMock::class),
+            $element4 = m::mock(FormElementsTestInitializableMockWithoutInitializable::class),
+        ]);
+
+        $count = 0;
+        $elements->recursiveIterateElements(function ($element) use (&$count) {
+            $count++;
+        });
+
+        $this->assertEquals(3, $count);
+
+        // With sublevel
+        $elements = $this->getElement([
+            m::mock(FormElementInterface::class),
+            m::mock(FormElementsTestInitializableMock::class),
+            $this->getElement([
+                m::mock(FormElementInterface::class),
+                m::mock(FormElementsTestInitializableMock::class),
+                $this->getElement([
+                    m::mock(FormElementInterface::class),
+                    m::mock(FormElementsTestInitializableMock::class),
+                ]),
+            ]),
+        ]);
+
+        $count = 0;
+        $elements->recursiveIterateElements(function ($element) use (&$count) {
+            $count++;
+        });
+
+        $this->assertEquals(6, $count);
+
+        // One level with break
+        $elements = $this->getElement([
+            $element1 = m::mock(FormElementInterface::class),
+            $element3 = m::mock(FormElementsTestInitializableMock::class),
+            $element4 = m::mock(FormElementsTestInitializableMockWithoutInitializable::class),
+        ]);
+
+        $count = 0;
+        $elements->recursiveIterateElements(function ($element) use ($element3, &$count) {
+            if ($element === $element3) {
+                return true;
+            }
+
+            $count++;
+        });
+
+        $this->assertEquals(1, $count);
+
+        // Sublevel With break
+        $elements = $this->getElement([
+            m::mock(FormElementInterface::class),
+            m::mock(FormElementsTestInitializableMock::class),
+            $this->getElement([
+                m::mock(FormElementInterface::class),
+                $element2 = m::mock(FormElementsTestInitializableMock::class),
+                $this->getElement([
+                    m::mock(FormElementInterface::class),
+                    m::mock(FormElementsTestInitializableMock::class),
+                ]),
+            ]),
+        ]);
+
+        $count = 0;
+        $elements->recursiveIterateElements(function ($element) use ($element2, &$count) {
+            if ($element === $element2) {
+                return true;
+            }
+
+            $count++;
+        });
+
+        $this->assertEquals(3, $count);
+    }
+
+    public function test_recursive_iterator_with_tabs()
+    {
+        $tabs = AdminDisplay::tabbed();
+
+        $tabs->appendTab(AdminForm::elements([
+            $element4 = m::mock(FormElementInterface::class),
+        ]), 'Форма');
+
+
+        // One level
+        $elements = $this->getElement([
+            $element1 = m::mock(FormElementInterface::class),
+            $tabs
+        ]);
+
+        $count = 0;
+        $elements->recursiveIterateElements(function ($element) use (&$count) {
+            $count++;
+        });
+
+        $this->assertEquals(2, $count);
+    }
+
+
     /**
      * FormElements::setModel
      * FormElements::getModel

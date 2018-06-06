@@ -15,6 +15,7 @@ use SleepingOwl\Admin\Form\Columns\Columns;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Traits\FormElementsRecursiveIterator;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -28,7 +29,7 @@ use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
-    use VisibleCondition, \SleepingOwl\Admin\Traits\Renderable, HtmlAttributes;
+    use VisibleCondition, \SleepingOwl\Admin\Traits\Renderable, HtmlAttributes, FormElementsRecursiveIterator;
 
     /**
      * @var string

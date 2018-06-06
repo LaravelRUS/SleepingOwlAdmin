@@ -76,11 +76,11 @@ class Wysiwyg extends NamedFormElement
         $params = collect($this->parameters);
 
         if (! $params->has('uploadUrl')) {
-            $this->parameters['uploadUrl'] = route('admin.ckeditor.upload');
+            $this->parameters['uploadUrl'] = route('admin.ckeditor.upload', ['_token' => csrf_token()]);
         }
 
         if (! $params->has('filebrowserUploadUrl')) {
-            $this->parameters['filebrowserUploadUrl'] = route('admin.ckeditor.upload');
+            $this->parameters['filebrowserUploadUrl'] = route('admin.ckeditor.upload', ['_token' => csrf_token()]);
         }
     }
 

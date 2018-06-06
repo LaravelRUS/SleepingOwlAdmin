@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Display\Tree\OrderTreeType;
 use SleepingOwl\Admin\Repositories\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
 /**
@@ -323,14 +322,6 @@ class DisplayTree extends Display implements WithRoutesInterface
                 'newEntryButtonText' => $this->getNewEntryButtonText(),
                 'max_depth'          => $this->getMaxDepth(),
             ];
-    }
-
-    /**
-     * @return ModelConfigurationInterface
-     */
-    protected function getModelConfiguration()
-    {
-        return app('sleeping_owl')->getModel($this->modelClass);
     }
 
     /**

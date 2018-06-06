@@ -126,4 +126,8 @@ return [
         'access_denied' => 'Access denied',
         'validation_error' => 'Validation error',
     ],
+    'related' => [
+        'add' => 'Add',
+        'remove' => 'Remove',
+    ],
 ];
