@@ -19,6 +19,11 @@ class Tree extends Extension implements Initializable, Renderable
     protected $controlActive = true;
 
     /**
+     * @var Collection
+     */
+    protected $columns;
+
+    /**
      * @var string|\Illuminate\View\View
      */
     protected $view = 'display.columns';

@@ -60,7 +60,7 @@ class DateTime extends NamedColumn
     protected function getFormatedDate($date)
     {
         if (! is_null($date)) {
-            if (! $date instanceof Carbon) {
+            if (! ($date instanceof Carbon)) {
                 $date = Carbon::parse($date);
             }
 

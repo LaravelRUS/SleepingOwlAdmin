@@ -17,8 +17,8 @@ interface AssetsInterface extends KodiAssetsInterface
     public function putGlobalVar($key, $value);
 
     /**
-     * Получение массива глобальны�
-     * перменны�
+     * Получение массива глобальных
+     * перменных
      * .
      *
      * @return array

@@ -145,8 +145,8 @@ abstract class FormElement implements FormElementInterface
         foreach ($validationRules as $rule) {
             $rules = explode('|', $rule);
 
-            foreach ($rules as $rule) {
-                $this->addValidationRule($rule);
+            foreach ($rules as $addRule) {
+                $this->addValidationRule($addRule);
             }
         }
 

@@ -19,35 +19,45 @@ class UserManagerCommand extends Command
      */
     protected $description = 'Manage your users.';
 
+    /**
+     * @return null|void
+     * @throws \Exception
+     */
     public function fire()
     {
         if ($this->option('create')) {
-            return $this->createNewUser();
+            $this->createNewUser();
+
+            return;
         }
 
         if ($this->option('delete')) {
-            return $this->deleteUser();
+            $this->deleteUser();
         }
 
         if ($this->option('password')) {
-            return $this->changePassword();
+            $this->changePassword();
         }
 
         $this->getUsers();
     }
 
+    /**
+     * @return null|void
+     * @throws \Exception
+     */
     public function handle()
     {
         if ($this->option('create')) {
-            return $this->createNewUser();
+            $this->createNewUser();
         }
 
         if ($this->option('delete')) {
-            return $this->deleteUser();
+            $this->deleteUser();
         }
 
         if ($this->option('password')) {
-            return $this->changePassword();
+            $this->changePassword();
         }
 
         $this->getUsers();
@@ -66,6 +76,9 @@ class UserManagerCommand extends Command
         return $userClass;
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function getUsers()
     {
         $userClass = $this->getUserClass();
@@ -76,6 +89,9 @@ class UserManagerCommand extends Command
         $this->table($headers, $users);
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function createNewUser()
     {
         $userClass = $this->getUserClass();
@@ -126,6 +142,9 @@ class UserManagerCommand extends Command
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function deleteUser()
     {
         $userClass = $this->getUserClass();
@@ -149,7 +168,7 @@ class UserManagerCommand extends Command
     }
 
     /**
-     * Change administrator's password.
+     * @throws \Exception
      */
     protected function changePassword()
     {

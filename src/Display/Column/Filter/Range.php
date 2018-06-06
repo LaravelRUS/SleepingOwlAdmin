@@ -12,12 +12,12 @@ class Range extends BaseColumnFilter
     protected $view = 'column.filter.range';
 
     /**
-     * @var ColumnFilterInterface
+     * @var ColumnFilterInterface|BaseColumnFilter
      */
     protected $from;
 
     /**
-     * @var ColumnFilterInterface
+     * @var ColumnFilterInterface|BaseColumnFilter
      */
     protected $to;
 
@@ -39,7 +39,7 @@ class Range extends BaseColumnFilter
     }
 
     /**
-     * @return ColumnFilterInterface
+     * @return ColumnFilterInterface|BaseColumnFilter
      */
     public function getFrom()
     {
@@ -59,7 +59,7 @@ class Range extends BaseColumnFilter
     }
 
     /**
-     * @return ColumnFilterInterface
+     * @return ColumnFilterInterface|BaseColumnFilter
      */
     public function getTo()
     {
@@ -90,9 +90,9 @@ class Range extends BaseColumnFilter
     }
 
     /**
-     * @param string $range
-     *
-     * @return string
+     * @param mixed $range
+     * @return array|mixed|null
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
     public function parseValue($range)
     {

@@ -181,7 +181,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @return int
+     * @return int|string
      */
     public function getWidth()
     {

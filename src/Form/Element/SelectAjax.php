@@ -48,7 +48,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     }
 
     /**
-     * @return null
+     * @return null|string
      */
     public function getSearch()
     {

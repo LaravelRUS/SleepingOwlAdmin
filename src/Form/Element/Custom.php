@@ -34,7 +34,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @return string
+     * @return Closure|mixed|string
      */
     public function getDisplay()
     {

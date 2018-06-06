@@ -29,21 +29,30 @@ class Order extends TableColumn implements WithRoutesInterface
     {
         $routeName = 'admin.display.column.move-up';
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/{adminModelId}/up', [
-                'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderUp',
-            ]);
+            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController'],
+                function ($router) use ($routeName) {
+                    $router->post('{adminModel}/{adminModelId}/up', [
+                        'as'   => $routeName,
+                        'uses' => 'DisplayColumnController@orderUp',
+                    ]);
+                });
         }
 
         $routeName = 'admin.display.column.move-down';
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/{adminModelId}/down', [
-                'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderDown',
-            ]);
+            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController'],
+                function ($router) use ($routeName) {
+                    $router->post('{adminModel}/{adminModelId}/down', [
+                        'as'   => $routeName,
+                        'uses' => 'DisplayColumnController@orderDown',
+                    ]);
+                });
         }
     }
 
+    /**
+     * Order constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -64,8 +73,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get order value from instance.
-     * @return int
+     * @return mixed
+     * @throws \Exception
      */
     protected function getOrderValue()
     {
@@ -73,8 +82,7 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get models total count.
-     * @return int
+     * @return mixed
      */
     protected function totalCount()
     {
@@ -82,8 +90,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Check if instance is movable up.
      * @return bool
+     * @throws \Exception
      */
     protected function movableUp()
     {
@@ -91,8 +99,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get instance move up url.
      * @return string
+     * @throws \Exception
      */
     protected function moveUpUrl()
     {
@@ -103,8 +111,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Check if instance is movable down.
      * @return bool
+     * @throws \Exception
      */
     protected function movableDown()
     {
@@ -112,8 +120,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get instance move down url.
      * @return string
+     * @throws \Exception
      */
     protected function moveDownUrl()
     {
@@ -125,14 +133,15 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {
         return parent::toArray() + [
-            'movableUp' => $this->movableUp(),
-            'moveUpUrl' => $this->moveUpUrl(),
-            'movableDown' => $this->movableDown(),
-            'moveDownUrl' => $this->moveDownUrl(),
-        ];
+                'movableUp'   => $this->movableUp(),
+                'moveUpUrl'   => $this->moveUpUrl(),
+                'movableDown' => $this->movableDown(),
+                'moveDownUrl' => $this->moveDownUrl(),
+            ];
     }
 }

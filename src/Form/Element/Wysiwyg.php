@@ -33,9 +33,11 @@ class Wysiwyg extends NamedFormElement
     protected $view = 'form.element.wysiwyg';
 
     /**
-     * @param string      $path
-     * @param string|null $label
-     * @param string|null $editor
+     * Wysiwyg constructor.
+     * @param $path
+     * @param null $label
+     * @param null $editor
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null, $editor = null)
     {
@@ -48,6 +50,9 @@ class Wysiwyg extends NamedFormElement
         $this->setEditor($editor);
     }
 
+    /**
+     * @throws WysiwygException
+     */
     public function initialize()
     {
         /** @var WysiwygEditorInterface $editor */

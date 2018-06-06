@@ -15,7 +15,7 @@ use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 class OrderByClause implements OrderByClauseInterface
 {
     /**
-     * @var string|Closure
+     * @var string|\Closure
      */
     protected $name;
 
@@ -35,7 +35,7 @@ class OrderByClause implements OrderByClauseInterface
      */
     public function modifyQuery(Builder $query, $direction = 'asc')
     {
-        $this->name instanceof \Closure
+        $this->name instanceof Closure
             ? $this->callCallable($query, $direction)
             : $this->callDefaultClause($query, $direction);
     }

@@ -22,7 +22,7 @@ abstract class Installator implements InstallatorContract
     /**
      * Create a new installer instance.
      *
-     * @param \SleepingOwl\Admin\Console\Commands\InstallCommand $command
+     * @param \Illuminate\Console\Command $command
      * @param Repository $config
      */
     public function __construct($command, Repository $config)

@@ -2,11 +2,13 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Illuminate\Database\Eloquent\Model;
+
 class Filter extends NamedColumn
 {
     /**
      * Filter related model.
-     * @var string
+     * @var Model
      */
     protected $relatedModel;
 
@@ -27,7 +29,7 @@ class Filter extends NamedColumn
     protected $view = 'column.filter';
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getRelatedModel()
     {

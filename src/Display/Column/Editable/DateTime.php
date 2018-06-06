@@ -16,6 +16,10 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     /**
      * @var string
      */
+    protected $defaultValue;
+    /**
+     * @var string
+     */
     protected $format = 'Y-m-d H:i:s';
     //    protected $format = 'YYYY-MM-DD';
 

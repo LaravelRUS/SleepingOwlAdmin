@@ -16,6 +16,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 {
     use SqlQueryOperators, HtmlAttributes, Assets, \SleepingOwl\Admin\Traits\Renderable;
 
+    protected $view;
+
     /**
      * @var \Closure|null
      */

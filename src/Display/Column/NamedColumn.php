@@ -20,13 +20,20 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $small;
+
+    /**
      * @var bool
      */
     protected $orderable = true;
 
     /**
-     * @param Closure|null|string $name
-     * @param null|string $label
+     * NamedColumn constructor.
+     * @param $name
+     * @param $label string
+     * @param $small string
      */
     public function __construct($name, $label = null, $small = null)
     {

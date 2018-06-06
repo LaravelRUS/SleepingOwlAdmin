@@ -7,8 +7,8 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 trait ProvidesScriptVariables
 {
     /**
-     * Получение массива глобальны�
-     * переменны�
+     * Получение массива глобальных
+     * переменных
      * для JavaScript.
      *
      * @return array
@@ -17,7 +17,7 @@ trait ProvidesScriptVariables
     {
         $lang = trans('sleeping_owl::lang');
         if ($lang == 'sleeping_owl::lang') {
-            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
+            $lang = trans('sleeping_owl::lang', [], 'en');
         }
 
         return [
