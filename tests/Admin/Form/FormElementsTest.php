@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Contracts\Support\Arrayable;
 use Mockery as m;
-use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Contracts\Validable;
+use Illuminate\Contracts\Support\Arrayable;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormElementsTest extends TestCase
 {
@@ -70,7 +70,7 @@ class FormElementsTest extends TestCase
         ]);
 
         $count = 0;
-        $elements->recursiveIterateElements(function($element) use(&$count) {
+        $elements->recursiveIterateElements(function ($element) use (&$count) {
             $count++;
         });
 
@@ -86,12 +86,12 @@ class FormElementsTest extends TestCase
                 $this->getElement([
                     m::mock(FormElementInterface::class),
                     m::mock(FormElementsTestInitializableMock::class),
-                ])
-            ])
+                ]),
+            ]),
         ]);
 
         $count = 0;
-        $elements->recursiveIterateElements(function($element) use(&$count) {
+        $elements->recursiveIterateElements(function ($element) use (&$count) {
             $count++;
         });
 
@@ -105,7 +105,7 @@ class FormElementsTest extends TestCase
         ]);
 
         $count = 0;
-        $elements->recursiveIterateElements(function($element) use($element3, &$count) {
+        $elements->recursiveIterateElements(function ($element) use ($element3, &$count) {
             if ($element === $element3) {
                 return true;
             }
@@ -125,12 +125,12 @@ class FormElementsTest extends TestCase
                 $this->getElement([
                     m::mock(FormElementInterface::class),
                     m::mock(FormElementsTestInitializableMock::class),
-                ])
-            ])
+                ]),
+            ]),
         ]);
 
         $count = 0;
-        $elements->recursiveIterateElements(function($element) use($element2, &$count) {
+        $elements->recursiveIterateElements(function ($element) use ($element2, &$count) {
             if ($element === $element2) {
                 return true;
             }
@@ -139,7 +139,6 @@ class FormElementsTest extends TestCase
         });
 
         $this->assertEquals(3, $count);
-
     }
 
     /**
