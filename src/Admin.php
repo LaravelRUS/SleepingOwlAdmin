@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\Filesystem;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
@@ -19,6 +20,9 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Providers\AdminServiceProvider;
+use SleepingOwl\Admin\Providers\AliasesServiceProvider;
+use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
 
 class Admin implements AdminInterface
 {
@@ -85,8 +89,8 @@ class Admin implements AdminInterface
     /**
      * @param string $class
      * @param Closure|null $callback
-     *
-     * @return $this
+     * @return $this|AdminInterface
+     * @throws Exceptions\RepositoryException
      */
     public function registerModel($class, Closure $callback = null)
     {
@@ -155,8 +159,9 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string|Model $class
-     * @return ModelConfigurationInterface
+     * @param string $class
+     * @return mixed|null|ModelConfigurationInterface
+     * @throws Exceptions\RepositoryException
      */
     public function getModel($class)
     {
@@ -214,24 +219,14 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
-     * @param int    $priority
-     *
-     * @return Page
+     * @param null $class
+     * @param int $priority
+     * @return mixed
+     * @throws Exceptions\RepositoryException
      */
     public function addMenuPage($class = null, $priority = 100)
     {
         return $this->getModel($class)->addToNavigation($priority);
-    }
-
-    /**
-     * @return Navigation
-     *
-     * @deprecated
-     */
-    public function getNavigation()
-    {
-        return $this->navigation();
     }
 
     /**
@@ -253,10 +248,10 @@ class Admin implements AdminInterface
     protected function registerBaseServiceProviders()
     {
         $providers = [
-            \SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
+            AliasesServiceProvider::class,
             \Collective\Html\HtmlServiceProvider::class,
-            \SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider::class,
-            \SleepingOwl\Admin\Providers\AdminServiceProvider::class,
+            BreadcrumbsServiceProvider::class,
+            AdminServiceProvider::class,
         ];
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
