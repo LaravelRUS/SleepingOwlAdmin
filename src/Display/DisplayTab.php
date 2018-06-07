@@ -15,7 +15,6 @@ use SleepingOwl\Admin\Form\Columns\Columns;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Traits\FormElementsRecursiveIterator;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -24,6 +23,7 @@ use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Traits\FormElementsRecursiveIterator;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
 

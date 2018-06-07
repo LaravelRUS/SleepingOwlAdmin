@@ -149,11 +149,10 @@ class FormElementsTest extends TestCase
             $element4 = m::mock(FormElementInterface::class),
         ]), 'Форма');
 
-
         // One level
         $elements = $this->getElement([
             $element1 = m::mock(FormElementInterface::class),
-            $tabs
+            $tabs,
         ]);
 
         $count = 0;
@@ -163,7 +162,6 @@ class FormElementsTest extends TestCase
 
         $this->assertEquals(2, $count);
     }
-
 
     /**
      * FormElements::setModel
