@@ -3,9 +3,7 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\Filesystem;
-use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelCollection;
 use Illuminate\Foundation\ProviderRepository;
@@ -14,15 +12,15 @@ use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Config\Repository as ConfigRepository;
+use SleepingOwl\Admin\Providers\AdminServiceProvider;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Providers\AliasesServiceProvider;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
 use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
-use SleepingOwl\Admin\Providers\AdminServiceProvider;
-use SleepingOwl\Admin\Providers\AliasesServiceProvider;
-use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
 
 class Admin implements AdminInterface
 {
