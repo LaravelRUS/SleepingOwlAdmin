@@ -66,9 +66,8 @@ return [
      *
      */
     'env_editor_excluded_keys' => [
-        'APP_KEY', 'DB_*'
+        'APP_KEY', 'DB_*',
     ],
-
 
     'env_editor_middlewares' => [],
 

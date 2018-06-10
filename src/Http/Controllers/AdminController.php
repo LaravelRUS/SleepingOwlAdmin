@@ -20,7 +20,6 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class AdminController extends Controller
 {
-
     /**
      * @var \DaveJamesMiller\Breadcrumbs\Manager
      */
@@ -55,8 +54,8 @@ class AdminController extends Controller
      */
     public function __construct(Request $request, AdminInterface $admin, Application $application)
     {
-        $this->app         = $application;
-        $this->admin       = $admin;
+        $this->app = $application;
+        $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
 
         $admin->navigation()->setCurrentUrl($request->getUri());
@@ -115,11 +114,11 @@ class AdminController extends Controller
      */
     public function getEnvEditor()
     {
-        $envFile    = app()->environmentFilePath();
+        $envFile = app()->environmentFilePath();
         $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
 
         /**
-         * Use filter masks
+         * Use filter masks.
          * @param $key
          * @return bool
          */
@@ -139,14 +138,13 @@ class AdminController extends Controller
      */
     public function postEnvEditor(Request $request)
     {
-        $envFile    = app()->environmentFilePath();
+        $envFile = app()->environmentFilePath();
         $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
 
         $requestContent = collect($request->input('variables'));
         $removeContent = collect();
 
         foreach ($envContent as $key => $value) {
-
             if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
                 if ($requestContent->has($key)) {
                     $envContent[$key] = $requestContent[$key]['value'];
@@ -158,24 +156,22 @@ class AdminController extends Controller
             }
         }
 
-        foreach($requestContent as $key => $value){
+        foreach ($requestContent as $key => $value) {
             if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
                 $this->writeEnvData($key, $value['value'], 1);
             }
             $requestContent->forget($key);
         }
 
-
-        foreach($removeContent as $key => $value){
+        foreach ($removeContent as $key => $value) {
             $this->writeEnvData($key);
         }
 
-        foreach($envContent as $key => $value){
+        foreach ($envContent as $key => $value) {
             $this->writeEnvData($key, $value);
         }
 
-
-        return redirect()->back()->with('success_message', "Env Updated");
+        return redirect()->back()->with('success_message', 'Env Updated');
     }
 
     /**
@@ -184,7 +180,6 @@ class AdminController extends Controller
      */
     public function filterKey($key)
     {
-
         foreach (config('sleeping_owl.env_editor_excluded_keys') as $val) {
             if (strpos($val, '*') !== false) {
                 $val = str_replace('*', '', $val);
@@ -195,7 +190,6 @@ class AdminController extends Controller
         }
 
         return false;
-
     }
 
     /**
@@ -209,20 +203,21 @@ class AdminController extends Controller
         $envFile = app()->environmentFilePath();
         $str = file_get_contents($envFile);
 
-        if(is_null($data)){
-
-            $str = preg_replace("/$key=.*/m", "", $str);
+        if (is_null($data)) {
+            $str = preg_replace("/$key=.*/m", '', $str);
             file_put_contents($envFile, $str);
+
             return false;
         }
 
-        if(is_null($new)){
+        if (is_null($new)) {
             $str = preg_replace("/$key=.*/m", "$key=$data", $str);
             file_put_contents($envFile, $str);
+
             return false;
         }
 
-        $str = $str . "\r\n$key=$data";
+        $str = $str."\r\n$key=$data";
         file_put_contents($envFile, $str);
 
         return true;
@@ -304,10 +299,10 @@ class AdminController extends Controller
         }
 
         if ($nextAction == 'save_and_continue') {
-            $newModel   = $createForm->getModel();
+            $newModel = $createForm->getModel();
             $primaryKey = $newModel->getKeyName();
 
-            $redirectUrl    = $model->getEditUrl($newModel->{$primaryKey});
+            $redirectUrl = $model->getEditUrl($newModel->{$primaryKey});
             $redirectPolicy = $model->getRedirect();
 
             /* Make redirect when use in model config && Fix editable redirect */
@@ -374,7 +369,7 @@ class AdminController extends Controller
     {
         /** @var FormInterface $editForm */
         $editForm = $model->fireEdit($id);
-        $item     = $editForm->getModel();
+        $item = $editForm->getModel();
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
@@ -448,10 +443,10 @@ class AdminController extends Controller
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
-        $field   = $request->input('name');
-        $id      = $request->input('pk');
+        $field = $request->input('name');
+        $id = $request->input('pk');
         $display = $model->fireDisplay();
-        $column  = null;
+        $column = null;
 
         /* @var ColumnEditableInterface|null $column */
         if (is_callable([$display, 'getColumns'])) {
@@ -501,7 +496,7 @@ class AdminController extends Controller
         }
 
         $repository = $model->getRepository();
-        $item       = $repository->find($id);
+        $item = $repository->find($id);
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
@@ -698,7 +693,7 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
-        $this->breadCrumbsData = $this->breadCrumbsData + (array)$model->getBreadCrumbs();
+        $this->breadCrumbsData = $this->breadCrumbsData + (array) $model->getBreadCrumbs();
 
         foreach ($this->breadCrumbsData as $breadcrumb) {
             if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
