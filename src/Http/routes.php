@@ -58,7 +58,6 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
     ]);
 
     $router->group(['middleware' => config('sleeping_owl.env_editor_middlewares')], function (Router $router) {
-
         $router->get(config('sleeping_owl.env_editor_url'), [
             'as'   => 'env.editor',
             'uses' => 'AdminController@getEnvEditor',
@@ -67,6 +66,5 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
             'as'   => 'env.editor.post',
             'uses' => 'AdminController@postEnvEditor',
         ]);
-
     });
 });
