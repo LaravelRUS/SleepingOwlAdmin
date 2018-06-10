@@ -20,6 +20,7 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class AdminController extends Controller
 {
+
     /**
      * @var \DaveJamesMiller\Breadcrumbs\Manager
      */
@@ -54,8 +55,8 @@ class AdminController extends Controller
      */
     public function __construct(Request $request, AdminInterface $admin, Application $application)
     {
-        $this->app = $application;
-        $this->admin = $admin;
+        $this->app         = $application;
+        $this->admin       = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
 
         $admin->navigation()->setCurrentUrl($request->getUri());
@@ -71,9 +72,9 @@ class AdminController extends Controller
         if ($currentPage = $admin->navigation()->getCurrentPage()) {
             foreach ($currentPage->getPathArray() as $page) {
                 $this->breadCrumbsData[] = [
-                    'id' => $page['id'],
-                    'title' => $page['title'],
-                    'url' => $page['url'],
+                    'id'     => $page['id'],
+                    'title'  => $page['title'],
+                    'url'    => $page['url'],
                     'parent' => $this->parentBreadcrumb,
                 ];
 
@@ -110,11 +111,127 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function getEnvEditor()
+    {
+        $envFile    = app()->environmentFilePath();
+        $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
+
+        /**
+         * Use filter masks
+         * @param $key
+         * @return bool
+         */
+        $envContent = $envContent->filter(function ($value, $key) {
+            return ! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key);
+        });
+
+        return $this->renderContent(
+            $this->admin->template()->view('env_editor', ['data' => $envContent]),
+            trans('sleeping_owl::lang.env_editor.title')
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postEnvEditor(Request $request)
+    {
+        $envFile    = app()->environmentFilePath();
+        $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
+
+        $requestContent = collect($request->input('variables'));
+        $removeContent = collect();
+
+        foreach ($envContent as $key => $value) {
+
+            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
+                if ($requestContent->has($key)) {
+                    $envContent[$key] = $requestContent[$key]['value'];
+                    $requestContent->forget($key);
+                } else {
+                    $envContent->forget($key);
+                    $removeContent->put($key, null);
+                }
+            }
+        }
+
+        foreach($requestContent as $key => $value){
+            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
+                $this->writeEnvData($key, $value['value'], 1);
+            }
+            $requestContent->forget($key);
+        }
+
+
+        foreach($removeContent as $key => $value){
+            $this->writeEnvData($key);
+        }
+
+        foreach($envContent as $key => $value){
+            $this->writeEnvData($key, $value);
+        }
+
+
+        return redirect()->back()->with('success_message', "Env Updated");
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function filterKey($key)
+    {
+
+        foreach (config('sleeping_owl.env_editor_excluded_keys') as $val) {
+            if (strpos($val, '*') !== false) {
+                $val = str_replace('*', '', $val);
+                if (strpos($key, $val) !== false) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @param $key
+     * @param null $data
+     * @param bool $new
+     * @return bool
+     */
+    public function writeEnvData($key, $data = null, $new = null)
+    {
+        $envFile = app()->environmentFilePath();
+        $str = file_get_contents($envFile);
+
+        if(is_null($data)){
+
+            $str = preg_replace("/$key=.*/m", "", $str);
+            file_put_contents($envFile, $str);
+            return false;
+        }
+
+        if(is_null($new)){
+            $str = preg_replace("/$key=.*/m", "$key=$data", $str);
+            file_put_contents($envFile, $str);
+            return false;
+        }
+
+        $str = $str . "\r\n$key=$data";
+        file_put_contents($envFile, $str);
+
+        return true;
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
@@ -131,10 +248,8 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     public function getCreate(ModelConfigurationInterface $model)
     {
@@ -173,7 +288,7 @@ class AdminController extends Controller
 
                 if ($createForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
-                        '_redirectBack' => $backUrl,
+                        '_redirectBack'       => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
@@ -182,17 +297,17 @@ class AdminController extends Controller
                     ->withErrors($exception->validator)
                     ->withInput()
                     ->with([
-                        '_redirectBack' => $backUrl,
+                        '_redirectBack'       => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
         }
 
         if ($nextAction == 'save_and_continue') {
-            $newModel = $createForm->getModel();
+            $newModel   = $createForm->getModel();
             $primaryKey = $newModel->getKeyName();
 
-            $redirectUrl = $model->getEditUrl($newModel->{$primaryKey});
+            $redirectUrl    = $model->getEditUrl($newModel->{$primaryKey});
             $redirectPolicy = $model->getRedirect();
 
             /* Make redirect when use in model config && Fix editable redirect */
@@ -203,7 +318,7 @@ class AdminController extends Controller
             $response = redirect()->to(
                 $redirectUrl
             )->with([
-                '_redirectBack' => $backUrl,
+                '_redirectBack'       => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } elseif ($nextAction == 'save_and_create') {
@@ -213,7 +328,7 @@ class AdminController extends Controller
                 'url',
                 'next_action',
             ])))->with([
-                '_redirectBack' => $backUrl,
+                '_redirectBack'       => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
@@ -225,11 +340,9 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param int                $id
-     *
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     public function getEdit(ModelConfigurationInterface $model, $id)
     {
@@ -261,7 +374,7 @@ class AdminController extends Controller
     {
         /** @var FormInterface $editForm */
         $editForm = $model->fireEdit($id);
-        $item = $editForm->getModel();
+        $item     = $editForm->getModel();
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
@@ -277,7 +390,7 @@ class AdminController extends Controller
 
                 if ($editForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
-                        '_redirectBack' => $backUrl,
+                        '_redirectBack'       => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
@@ -286,7 +399,7 @@ class AdminController extends Controller
                     ->withErrors($exception->validator)
                     ->withInput()
                     ->with([
-                        '_redirectBack' => $backUrl,
+                        '_redirectBack'       => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
@@ -296,7 +409,7 @@ class AdminController extends Controller
 
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
-                '_redirectBack' => $backUrl,
+                '_redirectBack'       => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
 
@@ -304,7 +417,7 @@ class AdminController extends Controller
                 $response = redirect()->to(
                     $model->getDisplayUrl()
                 )->with([
-                    '_redirectBack' => $backUrl,
+                    '_redirectBack'       => $backUrl,
                     'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                 ]);
             }
@@ -315,7 +428,7 @@ class AdminController extends Controller
                 'url',
                 'next_action',
             ])))->with([
-                '_redirectBack' => $backUrl,
+                '_redirectBack'       => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
@@ -335,10 +448,10 @@ class AdminController extends Controller
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
-        $field = $request->input('name');
-        $id = $request->input('pk');
+        $field   = $request->input('name');
+        $id      = $request->input('pk');
         $display = $model->fireDisplay();
-        $column = null;
+        $column  = null;
 
         /* @var ColumnEditableInterface|null $column */
         if (is_callable([$display, 'getColumns'])) {
@@ -369,7 +482,9 @@ class AdminController extends Controller
                             if ($element instanceof Column) {
                                 foreach ($element->getElements() as $columnElement) {
                                     if ($columnElement instanceof DisplayTable) {
-                                        $column = $columnElement->getColumns()->all()->filter(function ($column) use ($field) {
+                                        $column = $columnElement->getColumns()->all()->filter(function ($column) use (
+                                            $field
+                                        ) {
                                             return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
                                         })->first();
                                     }
@@ -386,7 +501,7 @@ class AdminController extends Controller
         }
 
         $repository = $model->getRepository();
-        $item = $repository->find($id);
+        $item       = $repository->find($id);
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
@@ -526,7 +641,7 @@ class AdminController extends Controller
 
     /**
      * @param Renderable|string $content
-     * @param string|null       $title
+     * @param string|null $title
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -563,8 +678,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param string $title
-     * @param string $parent
+     * @param $title
+     * @param $parent
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     protected function registerBreadcrumb($title, $parent)
     {
@@ -578,12 +694,13 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
-        $this->breadCrumbsData = $this->breadCrumbsData + (array) $model->getBreadCrumbs();
+        $this->breadCrumbsData = $this->breadCrumbsData + (array)$model->getBreadCrumbs();
 
-        foreach ($this->breadCrumbsData as  $breadcrumb) {
+        foreach ($this->breadCrumbsData as $breadcrumb) {
             if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
                 $this->breadcrumbs->register($breadcrumb['id'], function (Generator $breadcrumbs) use ($breadcrumb) {
                     $breadcrumbs->parent($breadcrumb['parent']);

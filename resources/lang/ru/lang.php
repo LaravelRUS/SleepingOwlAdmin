@@ -20,6 +20,13 @@ return [
     'links'     => [
         'index_page' => 'На сайт',
     ],
+    'env_editor' => [
+        'title' => 'Редактор ENV-файла',
+        'key' => 'Ключ',
+        'new-entry' => 'Новая пара',
+        'save' => 'Сохранить',
+        'var' => 'Значение',
+    ],
     'ckeditor'  => [
         'upload'        => [
             'success' => 'Файл был успешно загружен: \\n- Размер: :size кб \\n- ширина/высота: :width x :height',

@@ -31,7 +31,7 @@
       "name": "TheArdent",
       "email": "oleksii.yaryi@gmail.com"
     }
-  ],
+  ],en
   "require": {
     "php": ">=7.0",
     "laravel/framework": "~5.5",

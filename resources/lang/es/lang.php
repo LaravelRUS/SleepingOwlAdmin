@@ -28,6 +28,13 @@ return [
             'subtitle' => 'Selecciona imágen a insertar',
         ],
     ],
+    'env_editor' => [
+        'title' => 'Environment variables editor',
+        'key' => 'Key',
+        'new-entry' => 'New Entry',
+        'save' => 'Save',
+        'var' => 'Variable',
+    ],
     'table'    => [
         'new-entry'      => 'Nuevo registro',
         'edit'           => 'Editar',

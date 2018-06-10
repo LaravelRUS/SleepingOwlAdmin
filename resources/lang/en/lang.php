@@ -36,6 +36,13 @@ return [
             'subtitle' => 'Choose image to insert',
         ],
     ],
+    'env_editor' => [
+        'title' => 'Environment variables editor',
+        'key' => 'Key',
+        'new-entry' => 'New Entry',
+        'save' => 'Save',
+        'var' => 'Variable',
+    ],
     'table' => [
         'no-action' => 'No action',
         'make-action' => 'Submit',
