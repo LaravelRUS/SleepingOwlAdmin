@@ -23,6 +23,8 @@
           
           
               'env_editor_middlewares' => [],
+              
+              'env_editor_policy' => Policy::class,
 
              ```
              

@@ -9,7 +9,7 @@
         @stack('block.top.column.right')
     </div>
 </div>
-<env_editor :data="{{ json_encode($data) }}" inline-template>
+<env_editor :data="{{ json_encode($data) }}" :error-text="'{{ trans('sleeping_owl::validation.access_denied') }}'" inline-template>
     {{ Form::open(['method' => 'POST', 'url' => route('admin.env.editor.post')]) }}
     <div class="links-row"></div>
     <div class="panel panel-default">
@@ -35,17 +35,17 @@
             <tr v-for="(value, key) in values">
                 <td class="row-link">
                     <input type="text" :name="'variables[' + value.key + '][key]'" v-model="value.key"
-                           :value="value.key"
+                           :value="value.key" :readonly="!value.editable"
                            class="form-control">
                 </td>
                 <td class="row-datetime">
                     <input type="text" :name="'variables[' + value.key + '][value]'" v-model="value.value"
-                           :value="value.value"
+                           :value="value.value" :readonly="!value.editable"
                            class="form-control">
                 </td>
                 <td class="row-link" style="vertical-align: inherit;">
                     <div class="pull-right">
-                        <a title="delete" @click="values.splice(key, 1)" class="btn btn-xs btn-danger">
+                        <a title="delete" @click="removeEnv(key)" class="btn btn-xs btn-danger">
                             <i class="fa fa-times"></i>
                         </a>
                     </div>
