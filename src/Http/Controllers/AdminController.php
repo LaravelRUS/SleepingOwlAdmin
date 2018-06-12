@@ -46,6 +46,11 @@ class AdminController extends Controller
     public $app;
 
     /**
+     * @var
+     */
+    protected $envPolicy;
+
+    /**
      * AdminController constructor.
      *
      * @param Request $request
@@ -57,6 +62,10 @@ class AdminController extends Controller
         $this->app = $application;
         $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
+
+        if ($this->envPolicy = config('sleeping_owl.env_editor_policy')) {
+            $this->envPolicy = new $this->envPolicy;
+        }
 
         $admin->navigation()->setCurrentUrl($request->getUri());
 
@@ -126,10 +135,45 @@ class AdminController extends Controller
             return ! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key);
         });
 
+        $envContent = $envContent->filter(function ($value, $key) {
+            return $this->validatePolicy('display', $key);
+        });
+
+        $envContent = $envContent->map(function ($value, $key) {
+            return (object)[
+                'value'     => $value,
+                'editable'  => $this->validatePolicy('edit', $key),
+                'deletable' => $this->validatePolicy('delete', $key),
+            ];
+        });
+
         return $this->renderContent(
             $this->admin->template()->view('env_editor', ['data' => $envContent]),
             trans('sleeping_owl::lang.env_editor.title')
         );
+    }
+
+    /**
+     * @param $permission
+     * @param $key
+     * @return bool
+     */
+    protected function validatePolicy($permission, $key)
+    {
+        return ($this->envPolicy && ((method_exists($this->envPolicy, $permission)
+                    && $this->envPolicy->$permission(\Auth::user(), $key) !== false)))
+            || ! method_exists($this->envPolicy, $permission) || ! $this->envPolicy || $this->validateBeforePolicy($key);
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    protected function validateBeforePolicy($key)
+    {
+        return ($this->envPolicy && (method_exists($this->envPolicy, 'before'))
+                && $this->envPolicy->before(\Auth::user(),$key) == true)
+            || ! method_exists($this->envPolicy,'before') || ! $this->envPolicy;
     }
 
     /**
@@ -147,7 +191,9 @@ class AdminController extends Controller
         foreach ($envContent as $key => $value) {
             if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
                 if ($requestContent->has($key)) {
-                    $envContent[$key] = $requestContent[$key]['value'];
+                    if ($this->validatePolicy('edit', $key)) {
+                        $envContent[$key] = $requestContent[$key]['value'];
+                    }
                     $requestContent->forget($key);
                 } else {
                     $envContent->forget($key);
@@ -157,14 +203,17 @@ class AdminController extends Controller
         }
 
         foreach ($requestContent as $key => $value) {
-            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
+            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)
+                && $this->validatePolicy('create', $key)) {
                 $this->writeEnvData($key, $value['value'], 1);
             }
             $requestContent->forget($key);
         }
 
         foreach ($removeContent as $key => $value) {
-            $this->writeEnvData($key);
+            if ($this->validatePolicy('delete', $key)) {
+                $this->writeEnvData($key);
+            }
         }
 
         foreach ($envContent as $key => $value) {
