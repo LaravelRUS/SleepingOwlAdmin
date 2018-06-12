@@ -140,7 +140,7 @@ class AdminController extends Controller
         });
 
         $envContent = $envContent->map(function ($value, $key) {
-            return (object)[
+            return (object) [
                 'value'     => $value,
                 'editable'  => $this->validatePolicy('edit', $key),
                 'deletable' => $this->validatePolicy('delete', $key),
@@ -172,8 +172,8 @@ class AdminController extends Controller
     protected function validateBeforePolicy($key)
     {
         return ($this->envPolicy && (method_exists($this->envPolicy, 'before'))
-                && $this->envPolicy->before(\Auth::user(),$key) == true)
-            || ! method_exists($this->envPolicy,'before') || ! $this->envPolicy;
+                && $this->envPolicy->before(\Auth::user(), $key) == true)
+            || ! method_exists($this->envPolicy, 'before') || ! $this->envPolicy;
     }
 
     /**
