@@ -10,6 +10,11 @@ class Email extends NamedColumn
     protected $view = 'column.email';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * @return array
      */
     public function toArray()

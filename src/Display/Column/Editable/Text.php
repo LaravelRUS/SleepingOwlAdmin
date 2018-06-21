@@ -14,6 +14,11 @@ class Text extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.text';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * Text constructor.
      *
      * @param             $name
@@ -28,6 +33,8 @@ class Text extends EditableColumn implements ColumnEditableInterface
      * @param Request $request
      *
      * @return void
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)
     {

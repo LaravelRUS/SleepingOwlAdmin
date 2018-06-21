@@ -64,15 +64,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected $displayLength = false;
 
     /**
-     * @var array
-     */
-    protected $searchableColumns = [
-        Text::class,
-        Link::class,
-        Email::class,
-    ];
-
-    /**
      * DisplayDatatablesAsync constructor.
      *
      * @param string|null $name
@@ -241,23 +232,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * Check if column is searchable.
-     *
-     * @param ColumnInterface $column
-     * @return bool
-     */
-    public function checkSearchableColumns(ColumnInterface $column)
-    {
-        foreach ($this->searchableColumns as $searchableColumn) {
-            if ($column instanceof $searchableColumn) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Apply search to the query.
      *
      * @param Builder $query
@@ -274,7 +248,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             $columns = $this->getColumns()->all();
 
             foreach ($columns as $column) {
-                if ($this->checkSearchableColumns($column)) {
+                if ($column->isSearchable()) {
                     if ($column instanceof ColumnInterface) {
                         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                             if (method_exists($metaInstance, 'onSearch')) {
@@ -339,8 +313,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @return Collection
-     * @throws \Exception
+     * @return void
      */
     public function getCollection()
     {
