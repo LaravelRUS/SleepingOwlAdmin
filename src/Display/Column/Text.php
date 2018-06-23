@@ -10,6 +10,11 @@ class Text extends NamedColumn
     protected $view = 'column.text';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * @return array
      */
     public function toArray()
