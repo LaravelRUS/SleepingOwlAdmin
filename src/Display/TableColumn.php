@@ -71,7 +71,7 @@ abstract class TableColumn implements ColumnInterface
     protected $orderByClause;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isSearchable = false;
 
@@ -319,7 +319,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * Check if column is Searchable
+     * Check if column is Searchable.
      * @return bool
      */
     public function isSearchable()
