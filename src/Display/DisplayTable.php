@@ -191,6 +191,14 @@ class DisplayTable extends Display
     }
 
     /**
+     * $collection Collection|LengthAwarePaginator|Builder.
+     */
+    public function setCollection($collection)
+    {
+        $this->collection = $collection;
+    }
+
+    /**
      * @return Collection|LengthAwarePaginator|Builder
      * @throws \Exception
      */
