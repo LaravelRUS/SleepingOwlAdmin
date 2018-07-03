@@ -189,9 +189,9 @@ class DisplayTable extends Display
 
         return $params;
     }
-    
+
     /**
-     * $collection Collection|LengthAwarePaginator|Builder
+     * $collection Collection|LengthAwarePaginator|Builder.
      */
     public function setCollection($collection)
     {
