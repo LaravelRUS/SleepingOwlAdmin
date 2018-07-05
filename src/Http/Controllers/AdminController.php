@@ -663,7 +663,7 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param Renderable|string $content
+     * @param Renderable|RedirectResponse|string $content
      * @param string|null $title
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse
