@@ -73,7 +73,6 @@ return [
      */
     'env_editor_middlewares' => [],
 
-
     /*
      * Show link in navigation
      */

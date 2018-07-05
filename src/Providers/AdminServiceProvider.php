@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Providers;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Widgets\EnvEditor;
 use Symfony\Component\Finder\Finder;
 use SleepingOwl\Admin\Templates\Meta;
 use Illuminate\Foundation\AliasLoader;
@@ -13,6 +12,7 @@ use Illuminate\Foundation\Application;
 use SleepingOwl\Admin\Wysiwyg\Manager;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Templates\Assets;
+use SleepingOwl\Admin\Widgets\EnvEditor;
 use Symfony\Component\Finder\SplFileInfo;
 use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
@@ -37,7 +37,7 @@ class AdminServiceProvider extends ServiceProvider
     protected $directory;
 
     /**
-     * All global widgets
+     * All global widgets.
      * @var array
      */
     protected $widgets = [
@@ -132,13 +132,13 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Global register widgets
+     * Global register widgets.
      */
     protected function registerWidgets()
     {
         $widgetsRegistry = $this->app[WidgetsRegistryInterface::class];
 
-        foreach ($this->widgets as $widget){
+        foreach ($this->widgets as $widget) {
             $widgetsRegistry->registerWidget($widget);
         }
     }
