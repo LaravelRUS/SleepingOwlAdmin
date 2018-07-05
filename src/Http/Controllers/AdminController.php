@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\RedirectResponse;
 use SleepingOwl\Admin\Form\FormElements;
 use DaveJamesMiller\Breadcrumbs\Generator;
 use SleepingOwl\Admin\Form\Columns\Column;
@@ -665,10 +666,14 @@ class AdminController extends Controller
      * @param Renderable|string $content
      * @param string|null $title
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function render(ModelConfigurationInterface $model, $content, $title = null)
     {
+        if ($content instanceof RedirectResponse) {
+            return $content;
+        }
+
         if ($content instanceof Renderable) {
             $content = $content->render();
         }
