@@ -37,7 +37,7 @@ class Scopes extends Extension
     }
 
     /**
-     * @param string $scope
+     * @param array $scope
      *
      * @return $this
      */
@@ -72,17 +72,10 @@ class Scopes extends Extension
         foreach ($this->scopes as $scope) {
             if (! is_null($scope)) {
                 if (is_array($scope)) {
-                    $method = array_shift($scope);
-                    $params = $scope;
-                } else {
-                    $method = $scope;
-                    $params = [];
+                    $field = array_shift($scope);
+                    $value = $scope;
+                    $query->where($field, $value);
                 }
-
-                call_user_func_array([
-                    $query,
-                    $method,
-                ], $params);
             }
         }
     }
