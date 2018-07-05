@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Widgets;
 
-use \SleepingOwl\Admin\Facades\Template as AdminTemplate;
+use SleepingOwl\Admin\Facades\Template as AdminTemplate;
 
 class EnvEditor extends Widget
 {
