@@ -54,7 +54,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Middleware to use in admin routes
+    | Env Editor
     |--------------------------------------------------------------------------
     | Url for env editor
     |
@@ -62,14 +62,22 @@ return [
     'env_editor_url' => 'env/editor',
 
     /*
-     *
-     *
+     * Excluded keys
      */
     'env_editor_excluded_keys' => [
         'APP_KEY', 'DB_*',
     ],
 
+    /*
+     * Env editor middlewares
+     */
     'env_editor_middlewares' => [],
+
+
+    /*
+     * Show link in navigation
+     */
+    'show_editor' => false,
 
     /*
      * --------------------------------------------------------------------------

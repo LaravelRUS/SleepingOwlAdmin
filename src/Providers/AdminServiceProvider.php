@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Providers;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Widgets\EnvEditor;
 use Symfony\Component\Finder\Finder;
 use SleepingOwl\Admin\Templates\Meta;
 use Illuminate\Foundation\AliasLoader;
@@ -34,6 +35,14 @@ class AdminServiceProvider extends ServiceProvider
      * @var string
      */
     protected $directory;
+
+    /**
+     * All global widgets
+     * @var array
+     */
+    protected $widgets = [
+        EnvEditor::class,
+    ];
 
     public function register()
     {
@@ -119,6 +128,19 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->registerMessages();
         $this->registerBootstrap();
+        $this->registerWidgets();
+    }
+
+    /**
+     * Global register widgets
+     */
+    protected function registerWidgets()
+    {
+        $widgetsRegistry = $this->app[WidgetsRegistryInterface::class];
+
+        foreach ($this->widgets as $widget){
+            $widgetsRegistry->registerWidget($widget);
+        }
     }
 
     /**
