@@ -4,14 +4,14 @@ namespace SleepingOwl\Admin\Form;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Dimensions;
-use Illuminate\Validation\Rules\Exists;
 use Illuminate\Validation\Rules\In;
-use Illuminate\Validation\Rules\NotIn;
-use Illuminate\Validation\Rules\Unique;
 use SleepingOwl\Admin\Traits\Assets;
+use Illuminate\Validation\Rules\NotIn;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rules\Exists;
+use Illuminate\Validation\Rules\Unique;
 use SleepingOwl\Admin\Traits\Renderable;
+use Illuminate\Validation\Rules\Dimensions;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
@@ -148,7 +148,7 @@ abstract class FormElement implements FormElementInterface
 
         $this->validationRules = [];
         foreach ($validationRules as $rule) {
-            if($rule instanceof \Illuminate\Validation\Rule || $rule instanceof \Illuminate\Contracts\Validation\Rule || $rule instanceof Dimensions || $rule instanceof Exists || $rule instanceof In || $rule instanceof NotIn || $rule instanceof Unique){
+            if ($rule instanceof \Illuminate\Validation\Rule || $rule instanceof \Illuminate\Contracts\Validation\Rule || $rule instanceof Dimensions || $rule instanceof Exists || $rule instanceof In || $rule instanceof NotIn || $rule instanceof Unique) {
                 $this->addValidationRule($rule);
             } else {
                 $rules = explode('|', $rule);
