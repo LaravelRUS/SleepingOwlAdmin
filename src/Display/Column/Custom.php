@@ -3,9 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use SleepingOwl\Admin\Display\TableColumn;
 
-class Custom extends TableColumn
+class Custom extends NamedColumn
 {
     /**
      * Callback to render column contents.
