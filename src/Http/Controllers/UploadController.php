@@ -94,13 +94,15 @@ class UploadController extends Controller
         $extensions = collect(['jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif']);
 
         if ($extensions->search($file->getClientOriginalExtension())) {
-            $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $file->getClientOriginalName());
+            $uploadFileName = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+
+            $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $uploadFileName);
 
             $result['url'] = asset(
-                config('sleeping_owl.imagesUploadDirectory').'/'.$file->getClientOriginalName()
+                config('sleeping_owl.imagesUploadDirectory').'/'.$uploadFileName
             );
             $result['uploaded'] = 1;
-            $result['fileName'] = $file->getClientOriginalName();
+            $result['fileName'] = $uploadFileName;
 
             if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
                 return app('sleeping_owl.template')

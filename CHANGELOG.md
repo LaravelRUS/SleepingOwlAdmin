@@ -1,7 +1,36 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
- #coming soon....
+ * [Feature] Добавлен ENV-редактор
+             Для тех кто уже с нами:
+             В sleeping_owl.php
+             ```
+             /*
+              |--------------------------------------------------------------------------
+              | Middleware to use in admin routes
+              |--------------------------------------------------------------------------
+              | Url for env editor
+              |
+              */
+              'env_editor_url' => 'env/editor',
+          
+              /*
+               *
+               *
+               */
+              'env_editor_excluded_keys' => [
+                  'APP_KEY', 'DB_*'
+              ],
+          
+          
+              'env_editor_middlewares' => [],
+              
+              'env_editor_policy' => Policy::class,
+              
+              'show_editor' => false,
 
+             ```
+             
+             
  * [Feature] Subdomain routes for admin
              Вы должны добавить в sleeping_owl.php ключ 'domain' => 'admin.example.com' где example.com и будет ваш домен.
  * [Feature] Добавлено поведение для коламнов `text`, `link` и `relatedLink`. Может быть пропущен.

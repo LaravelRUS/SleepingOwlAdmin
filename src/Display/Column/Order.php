@@ -29,7 +29,7 @@ class Order extends TableColumn implements WithRoutesInterface
     {
         $routeName = 'admin.display.column.move-up';
         if (! $router->has($routeName)) {
-            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController'],
+            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
                 function ($router) use ($routeName) {
                     $router->post('{adminModel}/{adminModelId}/up', [
                         'as'   => $routeName,
@@ -40,7 +40,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
         $routeName = 'admin.display.column.move-down';
         if (! $router->has($routeName)) {
-            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController'],
+            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
                 function ($router) use ($routeName) {
                     $router->post('{adminModel}/{adminModelId}/down', [
                         'as'   => $routeName,

@@ -6,6 +6,8 @@ use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 class TestCase extends Orchestra\Testbench\TestCase
 {
+    use \SleepingOwl\Tests\Helpers\FormHelpers;
+
     protected function getPackageProviders($app)
     {
         return [

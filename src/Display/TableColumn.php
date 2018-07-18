@@ -71,6 +71,11 @@ abstract class TableColumn implements ColumnInterface
     protected $orderByClause;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * TableColumn constructor.
      *
      * @param string|null $label
@@ -205,6 +210,18 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
+     * @param $isSearchable
+     *
+     * @return TableColumn
+     */
+    public function setSearchable($isSearchable)
+    {
+        $this->isSearchable = $isSearchable;
+
+        return $this;
+    }
+
+    /**
      * @return ColumnInterface
      */
     public function getAppends()
@@ -299,6 +316,15 @@ abstract class TableColumn implements ColumnInterface
     public function isOrderable()
     {
         return $this->orderByClause instanceof OrderByClauseInterface;
+    }
+
+    /**
+     * Check if column is Searchable.
+     * @return bool
+     */
+    public function isSearchable()
+    {
+        return $this->isSearchable;
     }
 
     /**

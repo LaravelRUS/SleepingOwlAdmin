@@ -7,6 +7,26 @@ trait ElementPlacementTrait
     /**
      * @return string
      */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param string $tag
+     *
+     * @return $this
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getPlacement()
     {
         return $this->placement;
@@ -19,7 +39,7 @@ trait ElementPlacementTrait
      */
     public function setPlacement($placement)
     {
-        $this->placement = $placement;
+        $this->setTag($placement == 'table.header' ? 'thead' : 'tfoot');
 
         return $this;
     }

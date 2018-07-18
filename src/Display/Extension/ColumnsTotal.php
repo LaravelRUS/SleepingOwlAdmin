@@ -24,6 +24,11 @@ class ColumnsTotal extends Extension implements Placable
     protected $placement = 'table.header';
 
     /**
+     * @var string
+     */
+    protected $tag = 'thead';
+
+    /**
      * @var Collection
      */
     protected $elements;
@@ -54,7 +59,7 @@ class ColumnsTotal extends Extension implements Placable
         return [
             'elements' => $this->elements,
             'attributes' => $this->htmlAttributesToString(),
-            'tag' => $this->getPlacement() == 'table.header' ? 'thead' : 'tfoot',
+            'tag' => $this->getTag(),
         ];
     }
 }

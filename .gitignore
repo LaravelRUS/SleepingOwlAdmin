@@ -4,6 +4,5 @@ composer.phar
 composer.lock
 .DS_Store
 /.idea
-webpack.mix.js
 yarn.lock
 package-lock.json

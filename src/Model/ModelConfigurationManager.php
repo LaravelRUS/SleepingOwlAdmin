@@ -198,7 +198,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string|\Symfony\Component\Translation\TranslatorInterface|array
      */
-    public function getEditTitle()
+    public function getEditTitle(Model $model)
     {
         return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
     }
@@ -378,61 +378,80 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @param array $parameters
+     *
      * @return string
      */
-    public function getStoreUrl()
+    public function getStoreUrl(array $parameters = [])
     {
-        return route('admin.model.store', $this->getAlias());
+        array_unshift($parameters, $this->getAlias());
+
+        return route('admin.model.store', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getEditUrl($id)
+    public function getEditUrl($id, array $parameters = [])
     {
-        return route('admin.model.edit', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.edit', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getUpdateUrl($id)
+    public function getUpdateUrl($id, array $parameters = [])
     {
-        return route('admin.model.update', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.update', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getDeleteUrl($id)
+    public function getDeleteUrl($id, array $parameters = [])
     {
-        return route('admin.model.delete', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.delete', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getDestroyUrl($id)
+    public function getDestroyUrl($id, array $parameters = [])
     {
-        return route('admin.model.destroy', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.destroy', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getRestoreUrl($id)
+    public function getRestoreUrl($id, array $parameters = [])
     {
-        return route('admin.model.restore', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.restore', $parameters);
     }
 
     /**
@@ -591,7 +610,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function __call($method, $arguments)
     {
         if (in_array($method, [
-            'creating', 'created', 'updating', 'updated',
+            'creating', 'created', 'updating', 'updated', 'saving', 'saved',
             'deleting', 'deleted', 'restoring', 'restored',
         ])) {
             array_unshift($arguments, $method);
