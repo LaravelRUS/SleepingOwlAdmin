@@ -358,7 +358,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromModel()
     {
-          if (!is_null($value = $this->getValueFromRequest(request()))) {
+        if (! is_null($value = $this->getValueFromRequest(request()))) {
             return $value;
         }
 
@@ -366,7 +366,7 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-        if (is_null($model) || !$model->exists) {
+        if (is_null($model) || ! $model->exists) {
             return $value;
         }
 
@@ -376,7 +376,7 @@ abstract class NamedFormElement extends FormElement
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
 
-            if (!empty($attribute) || $attribute === 0 || is_null($value)) {
+            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
         }
@@ -395,7 +395,7 @@ abstract class NamedFormElement extends FormElement
                 } else {
                     $attribute = $model->getAttribute($relation);
                 }
-                if (!empty($attribute) || is_null($value)) {
+                if (! empty($attribute) || is_null($value)) {
                     return $attribute;
                 }
             }
@@ -424,8 +424,6 @@ abstract class NamedFormElement extends FormElement
 
             return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
         }
-
-
 
         return $value;
     }
