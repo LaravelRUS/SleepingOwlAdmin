@@ -12,7 +12,7 @@
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowl.ru)
 [![Demo Site](https://img.shields.io/badge/demo-site-blue.svg)](https://demo.sleepingowl.ru)
 [![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://img.shields.io/badge/gitter-chat-yellowgreen.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin)
-[![Telegram Chat](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/sleeping_owl)
+[![Telegram Chat](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/prtcls)
 [![Latest Stable Version](https://poser.pugx.org/laravelrus/sleepingowl/v/stable)](https://packagist.org/packages/laravelrus/sleepingowl)
 [![Total Downloads](https://poser.pugx.org/laravelrus/sleepingowl/downloads)](https://packagist.org/packages/laravelrus/sleepingowl)
 [![License](https://poser.pugx.org/laravelrus/sleepingowl/license)](https://packagist.org/packages/laravelrus/sleepingowl)
