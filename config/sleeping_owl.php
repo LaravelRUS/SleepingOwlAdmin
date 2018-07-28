@@ -125,6 +125,7 @@ return [
          * See http://docs.ckeditor.com/#!/api/CKEDITOR.config
          */
         'ckeditor'  => [
+            'defaultLanguage' => config('app.locale'),
             'height'       => 200,
             'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
             /*
