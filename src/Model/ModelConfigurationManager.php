@@ -198,7 +198,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string|\Symfony\Component\Translation\TranslatorInterface|array
      */
-    public function getEditTitle(Model $model)
+    public function getEditTitle()
     {
         return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
     }
