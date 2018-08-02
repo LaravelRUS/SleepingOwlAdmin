@@ -183,10 +183,10 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param Model $model
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
-    public function getEditTitle(Model $model)
+    public function getEditTitle()
     {
         if (is_null($this->editTitle)) {
-            return parent::getEditTitle($model);
+            return parent::getEditTitle();
         }
 
         return $this->editTitle;
