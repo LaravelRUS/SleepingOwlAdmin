@@ -54,7 +54,7 @@ interface ModelConfigurationInterface
      * @param Model $model
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
-    public function getEditTitle(Model $model);
+    public function getEditTitle();
 
     /**
      * @return bool
