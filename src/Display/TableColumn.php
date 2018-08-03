@@ -73,6 +73,11 @@ abstract class TableColumn implements ColumnInterface
     /**
      * @var bool
      */
+    protected $visible = true;
+
+    /**
+     * @var bool
+     */
     protected $isSearchable = false;
 
     /**
@@ -222,6 +227,17 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
+     * @param bool $visible
+     * @return $this
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
      * @return ColumnInterface
      */
     public function getAppends()
@@ -316,6 +332,15 @@ abstract class TableColumn implements ColumnInterface
     public function isOrderable()
     {
         return $this->orderByClause instanceof OrderByClauseInterface;
+    }
+
+    /**
+     * Check if column is visible.
+     * @return bool
+     */
+    public function isVisible()
+    {
+        return $this->visible;
     }
 
     /**
