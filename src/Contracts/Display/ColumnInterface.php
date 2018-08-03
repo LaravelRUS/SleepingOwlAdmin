@@ -34,5 +34,10 @@ interface ColumnInterface extends Initializable, Renderable, Arrayable, WithMode
     /**
      * @return bool
      */
+    public function isVisible();
+
+    /**
+     * @return bool
+     */
     public function isSearchable();
 }
