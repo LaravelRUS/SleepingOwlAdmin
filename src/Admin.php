@@ -157,7 +157,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
+     * @param string|object $class
      * @return mixed|null|ModelConfigurationInterface
      * @throws Exceptions\RepositoryException
      */
@@ -217,7 +217,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param null $class
+     * @param $class
      * @param int $priority
      * @return mixed
      * @throws Exceptions\RepositoryException

@@ -188,7 +188,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface|array
+     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getCreateTitle()
     {
@@ -196,7 +196,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface|array
+     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getEditTitle()
     {

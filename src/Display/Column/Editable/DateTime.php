@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\DateFormat;
 use SleepingOwl\Admin\Traits\DatePicker;
@@ -92,7 +93,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @return $this|NamedFormElement|mixed|null|string
+     * @return null
      */
     public function getValueFromModel()
     {
@@ -100,6 +101,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         if (! empty($value)) {
             return $this->parseValue($value);
         }
+
+        return null;
     }
 
     /**
@@ -139,8 +142,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
 
     /**
      * @param Request $request
-     *
-     * @return void
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)
     {

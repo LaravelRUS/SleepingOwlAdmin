@@ -89,8 +89,10 @@ class Filter extends NamedColumn
             'page' => 1,
         ]);
 
-        return app('sleeping_owl')
-            ->getModel($this->getRelatedModel())
+        /** @var \SleepingOwl\Admin\Contracts\AdminInterface $so */
+        $so = app('sleeping_owl');
+
+        return $so->getModel($this->getRelatedModel())
             ->getDisplayUrl($request->all());
     }
 

@@ -34,6 +34,7 @@
   ],
   "require": {
     "php": ">=7.0",
+    "ext-json": "*",
     "laravel/framework": "~5.5",
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
