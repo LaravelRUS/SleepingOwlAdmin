@@ -337,8 +337,8 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::isValueSkipped()
-     * @covers FormElement::setValueSkipped()
+     * @covers SleepingOwl\Admin\Form\FormElement::isValueSkipped()
+     * @covers SleepingOwl\Admin\Form\FormElement::setValueSkipped()
      */
     public function test_does_not_set_skipped_values()
     {

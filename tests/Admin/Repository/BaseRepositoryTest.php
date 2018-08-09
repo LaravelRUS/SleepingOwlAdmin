@@ -12,9 +12,9 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @param string|Model $model
-     *
+     * @param string $model
      * @return BaseRepository
+     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function getRepository($model = BaseRepositoryTestModel::class)
     {
@@ -29,9 +29,9 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @param string|Model $model
-     *
+     * @param string $model
      * @return BaseRepository
+     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function getRepositoryWithBuilder($model = BaseRepositoryTestModel::class)
     {
@@ -47,9 +47,9 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::__construct
-     * @covers BaseRepository::getClass
-     * @covers BaseRepository::getModel
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::__construct
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::getClass
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::getModel
      */
     public function test_constructor()
     {
@@ -61,8 +61,8 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::getClass
-     * @covers BaseRepository::setClass
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::getClass
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::setClass
      */
     public function test_gets_and_sets_class()
     {
@@ -84,8 +84,8 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::setModel
-     * @covers BaseRepository::getModel
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::setModel
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::getModel
      */
     public function test_gets_and_sets_model()
     {
@@ -98,8 +98,8 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::getWith
-     * @covers BaseRepository::with
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::getWith
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::with
      */
     public function test_gets_and_sets_with()
     {
@@ -113,7 +113,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::getQuery
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::getQuery
      */
     public function test_getQuery()
     {
@@ -135,7 +135,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::find
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::find
      */
     public function test_find()
     {
@@ -149,7 +149,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::find
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::find
      */
     public function test_find_restorable()
     {
@@ -163,7 +163,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::findOnlyTrashed
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::findOnlyTrashed
      */
     public function test_findOnlyTrashed()
     {
@@ -177,7 +177,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::findMany
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::findMany
      */
     public function test_findMany()
     {
@@ -194,7 +194,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::findMany
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::findMany
      */
     public function test_findMany_restorable()
     {
@@ -211,7 +211,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::delete
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::delete
      */
     public function test_delete()
     {
@@ -225,7 +225,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::forceDelete
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::forceDelete
      */
     public function test_forceDelete()
     {
@@ -240,7 +240,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::restore
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::restore
      */
     public function test_restore()
     {
@@ -255,7 +255,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers BaseRepository::isRestorable
+     * @covers SleepingOwl\Admin\Repositories\BaseRepository::isRestorable
      */
     public function test_isRestorable()
     {

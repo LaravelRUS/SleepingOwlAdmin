@@ -11,7 +11,7 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @return TemplateDefault
+     * @return SleepingOwl\Admin\Templates\TemplateDefault
      */
     protected function getTemplate()
     {
@@ -19,7 +19,7 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @covers TemplateDefault::getViewNamespace
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::getViewNamespace
      */
     public function test_getViewNamespace()
     {
@@ -27,7 +27,7 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @covers TemplateDefault::getViewPath
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::getViewPath
      */
     public function test_getViewPath()
     {
@@ -39,8 +39,8 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @covers TemplateDefault::view
-     * @covers TemplateDefault::getViewPath
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::view
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::getViewPath
      */
     public function test_view()
     {
@@ -64,7 +64,7 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @covers TemplateDefault::getTitle
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::getTitle
      */
     public function test_getTitle()
     {
@@ -78,7 +78,7 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @covers TemplateDefault::makeTitle
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::makeTitle
      */
     public function test_makeTitle()
     {
@@ -113,7 +113,7 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @covers TemplateDefault::getLogo
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::getLogo
      */
     public function test_getLogo()
     {
@@ -127,7 +127,7 @@ class TemplateDefaultTest extends TestCase
     }
 
     /**
-     * @covers TemplateDefault::getLogoMini
+     * @covers SleepingOwl\Admin\Templates\TemplateDefault::getLogoMini
      */
     public function test_getLogoMini()
     {

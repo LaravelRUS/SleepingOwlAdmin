@@ -76,7 +76,7 @@ class FormDefaultTest extends TestCase
     /**
      * @covers SleepingOwl\Admin\Form\FormDefault::__construct
      * @covers SleepingOwl\Admin\Form\FormDefault::getElements
-     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons.
+     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons
      */
     public function test_constructor()
     {
