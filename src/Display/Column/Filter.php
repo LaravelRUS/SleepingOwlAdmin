@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filter extends NamedColumn
 {
-
     /**
      * Filter related model.
      * @var Model

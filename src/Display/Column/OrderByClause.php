@@ -61,7 +61,6 @@ class OrderByClause implements OrderByClauseInterface
         call_user_func_array($this->name, [$query, $direction]);
     }
 
-
     /**
      * @param Builder $query
      * @param string $direction

@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Console\Input\InputOption;
 
 class UserManagerCommand extends Command
