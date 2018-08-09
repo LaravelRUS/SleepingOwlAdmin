@@ -167,7 +167,6 @@ class DisplayTabTest extends TestCase
 
     /**
      * @covers SleepingOwl\Admin\Display\DisplayTab::setModelClass
-     *
      */
     public function test_sets_model_class_with_display_content()
     {

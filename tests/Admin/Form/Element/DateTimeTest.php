@@ -4,7 +4,6 @@ use SleepingOwl\Admin\Form\Element\DateTime;
 
 class DateTimeTest extends TestCase
 {
-
     /**
      * @return DateTime
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
