@@ -43,7 +43,7 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::__constructor
+     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::__construct
      * @expectedException  \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function test_constructor_exception()
@@ -52,8 +52,8 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::setAttribute
-     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::getAttribute
+     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::getModelAttributeKey
+     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::setModelAttributeKey
      */
     public function test_gets_and_sets_attribute()
     {

@@ -47,7 +47,6 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Repositories\BaseRepository::__construct
      * @covers SleepingOwl\Admin\Repositories\BaseRepository::getClass
      * @covers SleepingOwl\Admin\Repositories\BaseRepository::getModel
      */
