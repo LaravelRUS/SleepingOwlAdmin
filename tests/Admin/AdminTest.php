@@ -16,7 +16,6 @@ class AdminTest extends TestCase
         m::close();
     }
 
-
     public function setUp()
     {
         parent::setUp();
@@ -137,7 +136,6 @@ class AdminTest extends TestCase
 
         $this->assertInstanceOf(PageInterface::class, $this->admin->addMenuPage(TestModel::class));
     }
-
 
     /**
      * @covers SleepingOwl\Admin\Admin::view
