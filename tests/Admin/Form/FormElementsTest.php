@@ -26,7 +26,7 @@ class FormElementsTest extends TestCase
     }
 
     /**
-     * @covers FormElements::__construct
+     * @covers SleepingOwl\Admin\Form\FormElements::__construct
      */
     public function test_constructor()
     {

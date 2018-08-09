@@ -74,9 +74,9 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * FormDefault::__construct
-     * FormDefault::getElements
-     * FormDefault::getButtons.
+     * @covers SleepingOwl\Admin\Form\FormDefault::__construct
+     * @covers SleepingOwl\Admin\Form\FormDefault::getElements
+     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons.
      */
     public function test_constructor()
     {
@@ -90,8 +90,8 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::initialize
-     * @covers FormDefault::getRepository
+     * @covers SleepingOwl\Admin\Form\FormDefault::initialize
+     * @covers SleepingOwl\Admin\Form\FormDefault::getRepository
      */
     public function test_initialize()
     {
@@ -116,8 +116,8 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::getButtons
-     * @covers FormDefault::setButtons
+     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons
+     * @covers SleepingOwl\Admin\Form\FormDefault::setButtons
      */
     public function test_gets_and_sets_buttons()
     {
@@ -131,7 +131,7 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::getButtons
+     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons
      */
     public function test_redefine_default_buttons()
     {
@@ -142,8 +142,8 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::getView
-     * @covers FormDefault::setView
+     * @covers SleepingOwl\Admin\Form\FormDefault::getView
+     * @covers SleepingOwl\Admin\Form\FormDefault::setView
      */
     public function test_gets_and_sets_view()
     {
@@ -155,8 +155,8 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::setAction
-     * @covers FormDefault::getAction
+     * @covers SleepingOwl\Admin\Form\FormDefault::setAction
+     * @covers SleepingOwl\Admin\Form\FormDefault::getAction
      */
     public function test_gets_and_sets_action()
     {
@@ -167,9 +167,9 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::setModelClass
-     * @covers FormDefault::getClass
-     * @covers FormDefault::getModel
+     * @covers SleepingOwl\Admin\Form\FormDefault::setModelClass
+     * @covers SleepingOwl\Admin\Form\FormDefault::getClass
+     * @covers SleepingOwl\Admin\Form\FormDefault::getModel
      */
     public function test_gets_and_sets_model_class()
     {
@@ -191,7 +191,7 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::getModelConfiguration
+     * @covers SleepingOwl\Admin\Form\FormDefault::getModelConfiguration
      */
     public function test_gets_model_configuration()
     {
@@ -204,8 +204,8 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::getModel
-     * @covers FormDefault::setModel
+     * @covers SleepingOwl\Admin\Form\FormDefault::getModel
+     * @covers SleepingOwl\Admin\Form\FormDefault::setModel
      */
     //public function test_gets_model()
     //{
@@ -237,7 +237,7 @@ class FormDefaultTest extends TestCase
     //}
 
     /**
-     * @covers FormDefault::saveForm
+     * @covers SleepingOwl\Admin\Form\FormDefault::saveForm
      */
     public function test_save_form()
     {

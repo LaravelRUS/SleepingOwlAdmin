@@ -14,8 +14,8 @@ class ModelConfigurationTest extends TestCase
 
     /**
      * @param string $class
-     *
-     * @return ModelConfiguration|PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getConfiguration($class = ModelConfigurationTestModel::class)
     {
@@ -23,8 +23,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getAlias
-     * @covers ModelConfiguration:setAlias
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getAlias
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setAlias
      */
     public function test_gets_and_sets_alias()
     {
@@ -36,8 +36,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getTitle
-     * @covers ModelConfiguration:setTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setTitle
      */
     public function test_gets_and_sets_title()
     {
@@ -49,8 +49,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getCreateTitle
-     * @covers ModelConfiguration:setCreateTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getCreateTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setCreateTitle
      */
     public function test_gets_and_sets_create_title()
     {
@@ -67,8 +67,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getEditTitle
-     * @covers ModelConfiguration:setEditTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getEditTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setEditTitle
      */
     public function test_gets_and_sets_edit_title()
     {
@@ -85,9 +85,9 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:onDisplay
-     * @covers ModelConfiguration:getDisplay
-     * @covers ModelConfiguration:fireDisplay
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::onDisplay
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getDisplay
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::fireDisplay
      */
     public function test_display()
     {
@@ -129,9 +129,9 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:onCreate
-     * @covers ModelConfiguration:getCreate
-     * @covers ModelConfiguration:fireCreate
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::onCreate
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getCreate
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::fireCreate
      */
     public function test_create()
     {
@@ -186,9 +186,9 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:onEdit
-     * @covers ModelConfiguration:getEdit
-     * @covers ModelConfiguration:fireEdit
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::onEdit
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getEdit
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::fireEdit
      */
     public function test_edit()
     {
@@ -224,7 +224,7 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:onCreateAndEdit
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::onCreateAndEdit
      */
     public function test_create_and_edit()
     {
@@ -240,9 +240,9 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:onDelete
-     * @covers ModelConfiguration:fireDelete
-     * @covers ModelConfiguration:getDelete
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::onDelete
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::fireDelete
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getDelete
      */
     public function test_delete()
     {
@@ -260,9 +260,9 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:onDestroy
-     * @covers ModelConfiguration:fireDestroy
-     * @covers ModelConfiguration:getDestroy
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::onDestroy
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::fireDestroy
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getDestroy
      */
     public function test_destroy()
     {
@@ -280,9 +280,9 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:onRestore
-     * @covers ModelConfiguration:fireRestore
-     * @covers ModelConfiguration:getRestore
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::onRestore
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::fireRestore
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getRestore
      */
     public function test_restore()
     {
@@ -300,8 +300,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isDisplayable
-     * @covers ModelConfiguration:disableDisplay
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isDisplayable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::disableDisplay
      */
     public function test_displayable()
     {
@@ -313,8 +313,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isCreatable
-     * @covers ModelConfiguration:disableCreating
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isCreatable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::disableCreating
      */
     public function test_creatable()
     {
@@ -330,8 +330,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isEditable
-     * @covers ModelConfiguration:disableEditing
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isEditable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::disableEditing
      */
     public function test_editable()
     {
@@ -348,9 +348,9 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isDeletable
-     * @covers ModelConfiguration:disableDeleting
-     * @covers ModelConfiguration:setDeletable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isDeletable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::disableDeleting
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setDeletable
      */
     public function test_deletable()
     {
@@ -375,7 +375,7 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isDestroyable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isDestroyable
      */
     public function test_destroyable()
     {
@@ -385,8 +385,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isDestroyable
-     * @covers ModelConfiguration:disableDestroying
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isDestroyable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::disableDestroying
      */
     public function test_destroyable_soft_delete()
     {
@@ -399,7 +399,7 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isRestorable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isRestorable
      */
     public function test_restorable()
     {
@@ -409,8 +409,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isRestorable
-     * @covers ModelConfiguration:disableRestoring
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isRestorable
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::disableRestoring
      */
     public function test_restorable_soft_delete()
     {
@@ -423,7 +423,7 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isRestorableModel
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isRestorableModel
      */
     public function test_restorable_model()
     {
@@ -433,7 +433,7 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:isRestorableModel
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::isRestorableModel
      */
     public function test_restorable_model_soft_delete()
     {
@@ -443,8 +443,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getMessageOnCreate
-     * @covers ModelConfiguration:setMessageOnCreate
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getMessageOnCreate
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setMessageOnCreate
      */
     public function test_gets_and_sets_message_on_create()
     {
@@ -461,8 +461,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getMessageOnUpdate
-     * @covers ModelConfiguration:setMessageOnUpdate
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getMessageOnUpdate
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setMessageOnUpdate
      */
     public function test_gets_and_sets_message_on_update()
     {
@@ -480,8 +480,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getMessageOnDelete
-     * @covers ModelConfiguration:setMessageOnDelete
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getMessageOnDelete
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setMessageOnDelete
      */
     public function test_gets_and_sets_message_on_delete()
     {
@@ -498,8 +498,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getMessageOnDestroy
-     * @covers ModelConfiguration:setMessageOnDestroy
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getMessageOnDestroy
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setMessageOnDestroy
      */
     public function test_gets_and_sets_message_on_destroy()
     {
@@ -517,8 +517,8 @@ class ModelConfigurationTest extends TestCase
     }
 
     /**
-     * @covers ModelConfiguration:getMessageOnRestore
-     * @covers ModelConfiguration:setMessageOnRestore
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::getMessageOnRestore
+     * @covers SleepingOwl\Admin\Model\ModelConfiguration::setMessageOnRestore
      */
     public function test_gets_and_sets_message_on_restore()
     {
