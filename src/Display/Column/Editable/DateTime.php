@@ -96,7 +96,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     public function getValueFromModel()
     {
-        $value = parent::getValueFromModel();
+        $value = parent::getModelValue();
         if (! empty($value)) {
             return $this->parseValue($value);
         }

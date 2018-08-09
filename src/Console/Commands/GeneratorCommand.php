@@ -39,7 +39,7 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
             );
         } else {
             $filename = (string) $this->argument('filename');
-            $format = $this->option('format');
+            $format = (string) $this->option('format');
 
             // Strip the php extension
             if (substr($filename, -4, 4) == '.php') {
@@ -65,7 +65,7 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
 
             $generator = new Generator($this->config, $this->view, $this->getOutput(), $helpers);
             $content = $generator->generate($format);
-            $written = $this->files->put($filename, $content);
+            $written = (int) $this->files->put($filename, $content);
 
             if ($written === false) {
                 $this->error("The helper file could not be created at $filename");

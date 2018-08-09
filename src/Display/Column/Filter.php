@@ -6,17 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filter extends NamedColumn
 {
+
     /**
      * Filter related model.
      * @var Model
      */
-    protected $relatedModel;
+    protected $relatedModel = null;
 
     /**
      * Field to get filter value from.
      * @var string
      */
-    protected $field;
+    protected $field = null;
 
     /**
      * @var bool
@@ -41,7 +42,7 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @param string $relatedModel
+     * @param string|Model $relatedModel
      *
      * @return $this
      */
@@ -86,7 +87,7 @@ class Filter extends NamedColumn
 
         $request->merge([
             $this->getName() => $this->getValue(),
-            'page' => 1,
+            'page'           => 1,
         ]);
 
         /** @var \SleepingOwl\Admin\Contracts\AdminInterface $so */
@@ -119,10 +120,10 @@ class Filter extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'icon' => $this->isSelf() ? 'fa fa-filter' : 'fa fa-arrow-circle-o-right',
-            'title' => $this->isSelf() ? trans('sleeping_owl::lang.table.filter') : trans('sleeping_owl::lang.table.filter-goto'),
-            'url' => $this->getUrl(),
-            'value' => $this->getValue(),
-        ];
+                'icon'  => $this->isSelf() ? 'fa fa-filter' : 'fa fa-arrow-circle-o-right',
+                'title' => $this->isSelf() ? trans('sleeping_owl::lang.table.filter') : trans('sleeping_owl::lang.table.filter-goto'),
+                'url'   => $this->getUrl(),
+                'value' => $this->getValue(),
+            ];
     }
 }

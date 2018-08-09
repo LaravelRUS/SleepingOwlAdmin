@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Contracts\Display\Extension;
 
 use Illuminate\Database\Eloquent\Builder;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 

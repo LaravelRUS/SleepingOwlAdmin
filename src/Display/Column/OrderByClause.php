@@ -35,13 +35,13 @@ class OrderByClause implements OrderByClauseInterface
      */
     public function modifyQuery(Builder $query, $direction = 'asc')
     {
-        $this->name instanceof Closure
+        $this->name instanceof \Closure
             ? $this->callCallable($query, $direction)
             : $this->callDefaultClause($query, $direction);
     }
 
     /**
-     * @param string|Closure $name
+     * @param string|\Closure $name
      *
      * @return $this
      */
@@ -59,6 +59,20 @@ class OrderByClause implements OrderByClauseInterface
     protected function callCallable(Builder $query, $direction)
     {
         call_user_func_array($this->name, [$query, $direction]);
+    }
+
+
+    /**
+     * @param Builder $query
+     * @param string $direction
+     */
+    protected function callDefaultClause(Builder $query, $direction)
+    {
+        if ($this->isRelationName($this->name)) {
+            $this->loadRelationOrder($query, $direction);
+        } else {
+            $query->orderBy($this->name, $direction);
+        }
     }
 
     /**
@@ -204,18 +218,5 @@ class OrderByClause implements OrderByClauseInterface
         $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
             ->orderBy($sortedColumn, $direction);
-    }
-
-    /**
-     * @param Builder $query
-     * @param string $direction
-     */
-    protected function callDefaultClause(Builder $query, $direction)
-    {
-        if ($this->isRelationName($this->name)) {
-            $this->loadRelationOrder($query, $direction);
-        } else {
-            $query->orderBy($this->name, $direction);
-        }
     }
 }

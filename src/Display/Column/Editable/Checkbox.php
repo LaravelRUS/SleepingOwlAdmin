@@ -113,7 +113,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
         $model = $this->getModel();
 
-        $request->offsetSet($this->getName(), (bool) $request->input('value.0', false));
+        $request->offsetSet($this->getName(), $request->input('value.0') ?? false);
 
         $form->setModelClass(get_class($model));
         $form->initialize();

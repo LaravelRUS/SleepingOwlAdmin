@@ -97,7 +97,7 @@ class Range extends BaseColumnFilter
     public function parseValue($range)
     {
         if (strpos($range, '::') === false) {
-            return;
+            return null;
         }
 
         list($from, $to) = explode('::', $range, 2);
@@ -117,5 +117,7 @@ class Range extends BaseColumnFilter
 
             return $to;
         }
+
+        return null;
     }
 }

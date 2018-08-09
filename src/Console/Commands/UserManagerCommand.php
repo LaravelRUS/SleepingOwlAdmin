@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Input\InputOption;
 
 class UserManagerCommand extends Command
@@ -96,7 +98,9 @@ class UserManagerCommand extends Command
     {
         $userClass = $this->getUserClass();
 
-        if (is_null($email = $this->ask('Email'))) {
+        $email = $this->ask('Email');
+
+        if (is_null($email)) {
             $this->error('You should specify email.');
 
             return;
@@ -108,7 +112,9 @@ class UserManagerCommand extends Command
             return;
         }
 
-        if (is_null($password = $this->secret('Password'))) {
+        $password = $this->secret('Password');
+
+        if (is_null($password)) {
             $this->error('You should specify password.');
 
             return;
@@ -133,7 +139,7 @@ class UserManagerCommand extends Command
 
             $this->info("User [{$user->id}] created.");
         } catch (\Exception $e) {
-            \Log::error('unable to create new user!', [
+            Log::error('unable to create new user!', [
                 'exception' => $e,
             ]);
             $this->error('Something went wrong. User not created');
