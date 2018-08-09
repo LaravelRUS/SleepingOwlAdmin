@@ -25,7 +25,7 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::__constructor
+     * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::__construct
      * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::getLabel
      * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::setLabel
      * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::getPath
