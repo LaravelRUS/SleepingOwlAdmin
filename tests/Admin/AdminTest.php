@@ -16,6 +16,7 @@ class AdminTest extends TestCase
         m::close();
     }
 
+
     public function setUp()
     {
         parent::setUp();
@@ -137,21 +138,6 @@ class AdminTest extends TestCase
         $this->assertInstanceOf(PageInterface::class, $this->admin->addMenuPage(TestModel::class));
     }
 
-    /**
-     * @covers SleepingOwl\Admin\Admin::getNavigation
-     */
-    public function test_get_navigation()
-    {
-        $navigation = m::mock(\SleepingOwl\Admin\Navigation::class);
-
-        $this->admin->setTemplate($template = m::mock(TemplateInterface::class));
-        $template->shouldReceive('navigation')->once()->andReturn($navigation);
-
-        $this->assertEquals(
-            $navigation,
-            $this->admin->navigation()
-        );
-    }
 
     /**
      * @covers SleepingOwl\Admin\Admin::view

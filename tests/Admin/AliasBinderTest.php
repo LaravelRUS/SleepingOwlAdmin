@@ -20,10 +20,10 @@ class AliasBinderTest extends TestCase
     }
 
     /**
-     * @covers AliasBinder::bind
-     * @covers AliasBinder::getAlias
-     * @covers AliasBinder::hasAlias
-     * @covers AliasBinder::hasAlias
+     * @covers \SleepingOwl\Admin\AliasBinder::bind
+     * @covers \SleepingOwl\Admin\AliasBinder::getAlias
+     * @covers \SleepingOwl\Admin\AliasBinder::hasAlias
+     * @covers \SleepingOwl\Admin\AliasBinder::hasAlias
      */
     public function test_binds_and_gets_alias()
     {
