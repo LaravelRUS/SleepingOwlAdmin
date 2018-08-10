@@ -46,7 +46,7 @@ interface TemplateInterface extends Initializable, Arrayable
      * @param array  $data
      * @param array  $mergeData
      *
-     * @return \BladeView|bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function view($view, array $data = [], $mergeData = []);
 

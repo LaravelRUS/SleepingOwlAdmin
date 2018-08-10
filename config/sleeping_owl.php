@@ -54,6 +54,39 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Env Editor
+    |--------------------------------------------------------------------------
+    | Url for env editor
+    |
+    */
+    'env_editor_url' => 'env/editor',
+
+    /*
+     * Excluded keys
+     */
+    'env_editor_excluded_keys' => [
+        'APP_KEY', 'DB_*',
+    ],
+
+    /*
+     * Env editor middlewares
+     */
+    'env_editor_middlewares' => [],
+
+    /*
+     * Show link in navigation
+     */
+    'show_editor' => false,
+
+    /*
+     * --------------------------------------------------------------------------
+     * Add your policy class here.
+     * --------------------------------------------------------------------------
+     */
+//    'env_editor_policy' => \Admin\Policies\EnvPolicy::class,
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication default provider
     |--------------------------------------------------------------------------
     |
@@ -104,8 +137,8 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'datetimeFormat' => 'd.m.Y H:i',
-    'dateFormat'     => 'd.m.Y',
+    'datetimeFormat' => 'd-m-Y H:i',
+    'dateFormat'     => 'd-m-Y',
     'timeFormat'     => 'H:i',
     'timezone'       => 'UTC',
 
@@ -125,6 +158,7 @@ return [
          * See http://docs.ckeditor.com/#!/api/CKEDITOR.config
          */
         'ckeditor'  => [
+            'defaultLanguage' => config('app.locale'),
             'height'       => 200,
             'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
             /*

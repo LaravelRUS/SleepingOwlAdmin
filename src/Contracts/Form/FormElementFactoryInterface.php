@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Contracts\Form;
 use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\Related\Forms;
 
 /**
  * @method Element\Text text($name, $label = null)
@@ -33,6 +34,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method Element\DependentSelect dependentselect($name, $label = null, array|Model $options)
  * @method Element\SelectAjax selectajax($name, $label = null, array|Model $options)
  * @method Element\MultiSelectAjax multiselectajax($name, $label = null, array|Model $options)
+ * @method Forms\HasMany hasMany(string $relationName, array $elements)
+ * @method Forms\ManyToMany manyToMany(string $relationName, array $elements)
  */
 interface FormElementFactoryInterface
 {

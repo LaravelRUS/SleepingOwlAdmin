@@ -82,7 +82,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @return null|string
+     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     public function getNewEntryButtonText()
     {
@@ -172,6 +172,7 @@ class DisplayTable extends Display
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {
@@ -187,6 +188,14 @@ class DisplayTable extends Display
         $params['newEntryButtonText'] = $this->getNewEntryButtonText();
 
         return $params;
+    }
+
+    /**
+     * $collection Collection|LengthAwarePaginator|Builder.
+     */
+    public function setCollection($collection)
+    {
+        $this->collection = $collection;
     }
 
     /**

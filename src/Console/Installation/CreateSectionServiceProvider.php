@@ -15,9 +15,7 @@ class CreateSectionServiceProvider extends Installator
     }
 
     /**
-     * Установка компонентов текущей конфигурации.
-     *
-     * @return void
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function install()
     {

@@ -12,7 +12,7 @@ class DateRange extends Date
     protected $format = 'Y-m-d';
 
     /**
-     * @var string
+     * @var mixed
      */
     protected $defaultFrom;
 

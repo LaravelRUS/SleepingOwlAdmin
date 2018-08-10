@@ -10,6 +10,11 @@ class Link extends Url
     protected $view = 'column.link';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * Check if instance editable.
      *
      * @return bool

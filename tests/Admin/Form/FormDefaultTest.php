@@ -11,20 +11,72 @@ class FormDefaultTest extends TestCase
 {
     use \SleepingOwl\Tests\AssetsTesterTrait;
 
-    public function tearDown()
-    {
-        m::close();
-    }
-
     public function getFormElement(array $elements = [])
     {
         return new FormDefault($elements);
     }
 
+    public function test_without_upload_fields()
+    {
+        $form = $this->makeFormDefault([
+            $this->makeMockForFormElement(FormElementInterface::class),
+            $this->makeMockForFormElement(FormElementInterface::class),
+        ]);
+
+        $this->assertFalse($form->hasHtmlAttribute('enctype'));
+        $form->initialize();
+        $this->assertFalse($form->hasHtmlAttribute('enctype'));
+
+        $form = $this->makeFormDefault([
+            $this->makeMockForFormElement(FormElementInterface::class),
+            new \SleepingOwl\Admin\Form\Panel\Header([
+                new \SleepingOwl\Admin\Form\Panel\Footer([
+                    $this->makeMockForFormElement(FormElementInterface::class),
+                ]),
+            ]),
+        ]);
+
+        $this->assertFalse($form->hasHtmlAttribute('enctype'));
+        $form->initialize();
+        $this->assertFalse($form->hasHtmlAttribute('enctype'));
+    }
+
+    public function test_auto_append_enctype_with_one_level()
+    {
+        $form = $this->makeFormDefault([
+            $this->makeMockForFormElement(FormElementInterface::class),
+            $this->makeMockForFormElement(\SleepingOwl\Admin\Form\Element\Upload::class),
+        ]);
+
+        $this->assertFalse($form->hasHtmlAttribute('enctype'));
+
+        $form->initialize();
+
+        $this->assertEquals('multipart/form-data', $form->getHtmlAttribute('enctype'));
+    }
+
+    public function test_auto_append_enctype_with_sub_level()
+    {
+        $form = $this->makeFormDefault([
+            $this->makeMockForFormElement(FormElementInterface::class),
+            new \SleepingOwl\Admin\Form\Panel\Header([
+                new \SleepingOwl\Admin\Form\Panel\Footer([
+                    $this->makeMockForFormElement(\SleepingOwl\Admin\Form\Element\Upload::class),
+                ]),
+            ]),
+        ]);
+
+        $this->assertFalse($form->hasHtmlAttribute('enctype'));
+
+        $form->initialize();
+
+        $this->assertEquals('multipart/form-data', $form->getHtmlAttribute('enctype'));
+    }
+
     /**
-     * FormDefault::__construct
-     * FormDefault::getElements
-     * FormDefault::getButtons.
+     * @covers SleepingOwl\Admin\Form\FormDefault::__construct
+     * @covers SleepingOwl\Admin\Form\FormDefault::getElements
+     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons
      */
     public function test_constructor()
     {
@@ -38,63 +90,34 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::initialize
-     * @covers FormDefault::getRepository
+     * @covers SleepingOwl\Admin\Form\FormDefault::initialize
+     * @covers SleepingOwl\Admin\Form\FormDefault::getRepository
      */
     public function test_initialize()
     {
         $this->packageInitialized();
 
-        $this->app->instance(
-            RepositoryInterface::class,
-            $repository = m::mock(RepositoryInterface::class)
-        );
-
-        $repository->shouldReceive('setClass')->once();
-
-        $class = FormDefaultTestMockModel::class;
-
-        $this->app->instance(
-            FormButtonsInterface::class,
-            $buttons = m::mock(FormButtonsInterface::class)
-        );
-
-        $this->getSleepingOwlMock()->shouldReceive('getModel')
-            ->once()
-            ->with($class)
-            ->andReturn(m::mock(ModelConfigurationInterface::class));
-
-        $buttons->shouldReceive('setModel')->once();
-        $buttons->shouldReceive('setModelConfiguration')->once();
-
-        $form = $this->getFormElement([
-            $element = m::mock(FormElementInterface::class),
-            $uploadElement = m::mock(\SleepingOwl\Admin\Form\Element\Upload::class),
+        $form = $this->makeFormDefault([
+            $element = $this->makeMockForFormElement(FormElementInterface::class),
+            $element2 = $this->makeMockForFormElement(FormElementInterface::class),
         ]);
 
-        $element->shouldReceive('setModel')->once();
-        $element->shouldReceive('initialize')->once();
-
-        $uploadElement->shouldReceive('setModel')->once();
-        $uploadElement->shouldReceive('initialize')->once();
-
-        $this->assertFalse($form->hasHtmlAttribute('enctype'));
         $form->setAction('action');
 
-        $form->setModelClass($class);
-        $form->initialize();
+        $this->assertNull($form->getRepository());
 
-        $this->assertEquals('multipart/form-data', $form->getHtmlAttribute('enctype'));
+        $form->initialize();
 
         //$this->assertEquals('POST', $form->getHtmlAttribute('method'));
         //$this->assertEquals('action', $form->getHtmlAttribute('action'));
 
-        $this->assertEquals($repository, $form->getRepository());
+        $this->assertInstanceOf(RepositoryInterface::class, $form->getRepository());
+        $this->assertFalse($form->hasHtmlAttribute('enctype'));
     }
 
     /**
-     * @covers FormDefault::getButtons
-     * @covers FormDefault::setButtons
+     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons
+     * @covers SleepingOwl\Admin\Form\FormDefault::setButtons
      */
     public function test_gets_and_sets_buttons()
     {
@@ -102,31 +125,25 @@ class FormDefaultTest extends TestCase
 
         $this->assertInstanceOf(FormButtonsInterface::class, $form->getButtons());
 
-        $this->assertEquals(
-            $form,
-            $form->setButtons($buttons = m::mock(FormDefaultTestMockFormButtons::class))
-        );
+        $this->assertEquals($form, $form->setButtons($buttons = m::mock(FormDefaultTestMockFormButtons::class)));
 
         $this->assertEquals($buttons, $form->getButtons());
     }
 
     /**
-     * @covers FormDefault::getButtons
+     * @covers SleepingOwl\Admin\Form\FormDefault::getButtons
      */
     public function test_redefine_default_buttons()
     {
-        $this->app->instance(
-            FormButtonsInterface::class,
-            $buttons = m::mock(FormButtonsInterface::class)
-        );
+        $this->app->instance(FormButtonsInterface::class, $buttons = m::mock(FormButtonsInterface::class));
 
         $form = $this->getFormElement();
         $this->assertEquals($buttons, $form->getButtons());
     }
 
     /**
-     * @covers FormDefault::getView
-     * @covers FormDefault::setView
+     * @covers SleepingOwl\Admin\Form\FormDefault::getView
+     * @covers SleepingOwl\Admin\Form\FormDefault::setView
      */
     public function test_gets_and_sets_view()
     {
@@ -138,8 +155,8 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::setAction
-     * @covers FormDefault::getAction
+     * @covers SleepingOwl\Admin\Form\FormDefault::setAction
+     * @covers SleepingOwl\Admin\Form\FormDefault::getAction
      */
     public function test_gets_and_sets_action()
     {
@@ -150,18 +167,15 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::setModelClass
-     * @covers FormDefault::getClass
-     * @covers FormDefault::getModel
+     * @covers SleepingOwl\Admin\Form\FormDefault::setModelClass
+     * @covers SleepingOwl\Admin\Form\FormDefault::getClass
+     * @covers SleepingOwl\Admin\Form\FormDefault::getModel
      */
     public function test_gets_and_sets_model_class()
     {
         $form = $this->getFormElement();
 
-        $this->assertEquals(
-            $form,
-            $form->setModelClass($class = FormDefaultTestMockModel::class)
-        );
+        $this->assertEquals($form, $form->setModelClass($class = FormDefaultTestMockModel::class));
 
         $this->assertEquals($class, $form->getClass());
     }
@@ -177,15 +191,11 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::getModelConfiguration
+     * @covers SleepingOwl\Admin\Form\FormDefault::getModelConfiguration
      */
     public function test_gets_model_configuration()
     {
-        $this->getSleepingOwlMock()
-            ->shouldReceive('getModel')
-            ->once()
-            ->with($model = FormDefaultTestMockModel::class)
-            ->andReturn($return = 'model_configuration');
+        $this->getSleepingOwlMock()->shouldReceive('getModel')->once()->with($model = FormDefaultTestMockModel::class)->andReturn($return = 'model_configuration');
 
         $form = $this->getFormElement();
         $form->setModelClass($model);
@@ -194,8 +204,8 @@ class FormDefaultTest extends TestCase
     }
 
     /**
-     * @covers FormDefault::getModel
-     * @covers FormDefault::setModel
+     * @covers SleepingOwl\Admin\Form\FormDefault::getModel
+     * @covers SleepingOwl\Admin\Form\FormDefault::setModel
      */
     //public function test_gets_model()
     //{
@@ -227,7 +237,7 @@ class FormDefaultTest extends TestCase
     //}
 
     /**
-     * @covers FormDefault::saveForm
+     * @covers SleepingOwl\Admin\Form\FormDefault::saveForm
      */
     public function test_save_form()
     {
@@ -242,14 +252,9 @@ class FormDefaultTest extends TestCase
         $modelConfiguration = m::mock(ModelConfigurationInterface::class);
         $modelConfiguration->shouldReceive('fireEvent')->times(4)->andReturn(true);
 
-        $this->getSleepingOwlMock()
-            ->shouldReceive('getModel')
-            ->andReturn($modelConfiguration);
+        $this->getSleepingOwlMock()->shouldReceive('getModel')->andReturn($modelConfiguration);
 
-        $this->app->instance(
-            RepositoryInterface::class,
-            $repository = m::mock(RepositoryInterface::class)
-        );
+        $this->app->instance(RepositoryInterface::class, $repository = m::mock(RepositoryInterface::class));
 
         $repository->shouldReceive('setClass')->once();
 
@@ -301,27 +306,21 @@ class FormDefaultTest extends TestCase
         $modelConfiguration = m::mock(ModelConfigurationInterface::class);
         $modelConfiguration->shouldReceive('fireEvent')->once()->andReturn(true);
 
-        $this->app->instance(
-            RepositoryInterface::class,
-            $repository = m::mock(RepositoryInterface::class)
-        );
+        $this->app->instance(RepositoryInterface::class, $repository = m::mock(RepositoryInterface::class));
         $repository->shouldReceive('setClass')->once();
 
         $model = m::mock(FormDefaultTestMockModel::class);
 
         $model->shouldReceive('getConnectionName')->andReturn('default');
 
-        $this->getSleepingOwlMock()
-            ->shouldReceive('getModel')
-            ->andReturn($modelConfiguration);
+        $this->getSleepingOwlMock()->shouldReceive('getModel')->andReturn($modelConfiguration);
 
         $form = $this->getFormElement([
             $element = m::mock(FormElementInterface::class),
         ]);
         $element->shouldReceive('initialize')->once();
         $element->shouldReceive('setModel');
-        $element->shouldReceive('getValidationRules')->once()
-            ->andReturn(['element' => 'required']);
+        $element->shouldReceive('getValidationRules')->once()->andReturn(['element' => 'required']);
         $element->shouldReceive('getValidationMessages')->once()->andReturn([]);
         $element->shouldReceive('getValidationLabels')->once()->andReturn([
             'element' => 'Element label',
@@ -334,9 +333,7 @@ class FormDefaultTest extends TestCase
         $form->initialize();
         $repository->shouldReceive('find')->with(1)->andReturn($model);
 
-        $this->assertNull(
-            $form->validateForm($request, $modelConfiguration)
-        );
+        $this->assertNull($form->validateForm($request, $modelConfiguration));
     }
 }
 

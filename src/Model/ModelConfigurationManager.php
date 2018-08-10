@@ -103,8 +103,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     private $repository;
 
     /**
+     * ModelConfigurationManager constructor.
      * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param string $class
+     * @param $class
+     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
@@ -186,7 +188,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getCreateTitle()
     {
@@ -194,7 +196,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getEditTitle()
     {
@@ -332,7 +334,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return null|string
+     * @return null|string|bool
      */
     public function hasCustomControllerClass()
     {
@@ -376,65 +378,84 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
+     * @param array $parameters
+     *
      * @return string
      */
-    public function getStoreUrl()
+    public function getStoreUrl(array $parameters = [])
     {
-        return route('admin.model.store', $this->getAlias());
+        array_unshift($parameters, $this->getAlias());
+
+        return route('admin.model.store', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getEditUrl($id)
+    public function getEditUrl($id, array $parameters = [])
     {
-        return route('admin.model.edit', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.edit', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getUpdateUrl($id)
+    public function getUpdateUrl($id, array $parameters = [])
     {
-        return route('admin.model.update', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.update', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getDeleteUrl($id)
+    public function getDeleteUrl($id, array $parameters = [])
     {
-        return route('admin.model.delete', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.delete', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getDestroyUrl($id)
+    public function getDestroyUrl($id, array $parameters = [])
     {
-        return route('admin.model.destroy', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.destroy', $parameters);
     }
 
     /**
      * @param string|int $id
+     * @param array $parameters
      *
      * @return string
      */
-    public function getRestoreUrl($id)
+    public function getRestoreUrl($id, array $parameters = [])
     {
-        return route('admin.model.restore', [$this->getAlias(), $id]);
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.restore', $parameters);
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnCreate()
     {
@@ -442,7 +463,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnUpdate()
     {
@@ -450,7 +471,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnDelete()
     {
@@ -458,7 +479,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnRestore()
     {
@@ -466,7 +487,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnDestroy()
     {
@@ -589,7 +610,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function __call($method, $arguments)
     {
         if (in_array($method, [
-            'creating', 'created', 'updating', 'updated',
+            'creating', 'created', 'updating', 'updated', 'saving', 'saved',
             'deleting', 'deleted', 'restoring', 'restored',
         ])) {
             array_unshift($arguments, $method);

@@ -29,15 +29,14 @@ class DateRange extends Date
 
     /**
      * @param string $date
-     *
-     * @return string
+     * @return array|string
      */
     public function parseValue($date)
     {
         $dates = explode('::', $date, 2);
 
-        foreach ($dates as $i => $date) {
-            $dates[$i] = parent::parseValue($date);
+        foreach ($dates as $i => $data) {
+            $dates[$i] = parent::parseValue($data);
         }
 
         return $dates;

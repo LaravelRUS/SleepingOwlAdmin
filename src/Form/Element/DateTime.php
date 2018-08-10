@@ -161,8 +161,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param string $value
-     *
+     * @param $value mixed
      * @return string|void
      */
     protected function parseValue($value)

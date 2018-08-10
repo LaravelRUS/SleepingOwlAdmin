@@ -12,7 +12,7 @@
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowl.ru)
 [![Demo Site](https://img.shields.io/badge/demo-site-blue.svg)](https://demo.sleepingowl.ru)
 [![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://img.shields.io/badge/gitter-chat-yellowgreen.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin)
-[![Telegram Chat](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/sleeping_owl)
+[![Telegram Chat](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/prtcls)
 [![Latest Stable Version](https://poser.pugx.org/laravelrus/sleepingowl/v/stable)](https://packagist.org/packages/laravelrus/sleepingowl)
 [![Total Downloads](https://poser.pugx.org/laravelrus/sleepingowl/downloads)](https://packagist.org/packages/laravelrus/sleepingowl)
 [![License](https://poser.pugx.org/laravelrus/sleepingowl/license)](https://packagist.org/packages/laravelrus/sleepingowl)
@@ -35,32 +35,15 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 
  1. Require this package in your composer.json and run composer update:
 
-  	`composer require laravelrus/sleepingowl:4.x-dev`
+  	`composer require laravelrus/sleepingowl:4.x-new`
     
 
- 2. After composer update, insert service provider in config/app.php
-	```
-    ...
-    /*
-     * SleepingOwl Service Provider
-     */
-      SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
-
-    /*
-     * Application Service Providers...
-     */
-    App\Providers\AppServiceProvider::class,
-    ...
-	```
-  
-   
-
- 3. Run this command in the terminal (if you want to know more about what exactly this command does, see [install command documentation](https://en.sleepingowladmin.ru/docs/installation)):
+ 2. Run this command in the terminal (if you want to know more about what exactly this command does, see [install command documentation](https://en.sleepingowladmin.ru/docs/installation)):
 
     ```
     $ php artisan sleepingowl:install
     ```
- 4. After you have to update in `composer.json` post-update section:
+ 3. After you have to update in `composer.json` post-update section:
     
     __Example__:
     ```
@@ -117,39 +100,6 @@ and append middleware `auth` to `config/sleeping_owl.php`
       'middleware' => ['web', 'permission:admin'],
       ```
 
-
-## Npm Packages
-* ```js
-  "devDependencies": {
-    "admin-lte": "^2.3.5",
-    "bootstrap": "^3.3.7",
-    "bootstrap-daterangepicker": "^2.1.24",
-    "datatables.net": "^1.10.12",
-    "dropzone": "4.3.0",
-    "eonasdan-bootstrap-datetimepicker": "^4.15.35",
-    "font-awesome": "^4.6.3",
-    "gulp": "^3.9.1",
-    "i18next": "^3.4.1",
-    "imports-loader": "^0.6.5",
-    "jquery": "^2.1.1",
-    "laravel-elixir": "^6.0.0-11",
-    "laravel-elixir-vue-2": "^0.3.0",
-    "laravel-elixir-webpack-official": "^1.0.2",
-    "lodash": "^4.17.4",
-    "magnific-popup": "^1.1.0",
-    "metismenu": "^2.5.2",
-    "moment": "^2.14.1",
-    "nestable": "^0.2.0",
-    "noty": "^2.3.8",
-    "select2": "^4.0.3",
-    "sortablejs": "1.4.2",
-    "sweetalert2": "^4.1.0",
-    "vue": "^2.3.3",
-    "vue-multiselect": "^2.0.2",
-    "vue-resource": "^1.3.3",
-    "x-editable": "^1.5.1"
-  }
-  ```
 ## Copyright and License
 
 Admin was written by Sleeping Owl for the Laravel framework and is released under the MIT License. 

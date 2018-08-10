@@ -13,8 +13,8 @@ class ModelConfigurationManagerTest extends TestCase
 
     /**
      * @param string $class
-     *
-     * @return ModelConfigurationManager|PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getConfiguration($class = ModelConfigurationManagerTestModel::class)
     {
@@ -22,11 +22,11 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::__construct
-     * @covers ModelConfigurationManager::getClass
-     * @covers ModelConfigurationManager::getModel
-     * @covers ModelConfigurationManager::getRepository
-     * @covers ModelConfigurationManager::getAlias
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::__construct
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getClass
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getModel
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getRepository
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getAlias
      */
     public function test_constructor()
     {
@@ -39,7 +39,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getTitle
      */
     public function test_gets_title()
     {
@@ -48,8 +48,8 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getIcon
-     * @covers ModelConfigurationManager::setIcon
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getIcon
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::setIcon
      */
     public function test_gets_and_sets_icon()
     {
@@ -64,7 +64,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getCreateTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getCreateTitle
      */
     public function test_gets_create_title()
     {
@@ -80,7 +80,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getEditTitle
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getEditTitle
      */
     public function test_gets_edit_title()
     {
@@ -92,12 +92,12 @@ class ModelConfigurationManagerTest extends TestCase
             ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], null)
             ->andReturn('string');
 
-        $this->assertEquals('string', $model->getEditTitle());
+        $this->assertEquals('string', $model->getEditTitle($model->getModel()));
     }
 
     /**
-     * @covers ModelConfigurationManager::setEventDispatcher
-     * @covers ModelConfigurationManager::fireEvent
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::setEventDispatcher
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::fireEvent
      */
     public function test_firing_events_with_halt_default_model()
     {
@@ -111,8 +111,8 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::setEventDispatcher
-     * @covers ModelConfigurationManager::fireEvent
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::setEventDispatcher
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::fireEvent
      */
     public function test_firing_events_with_halt()
     {
@@ -158,7 +158,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::__call
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::__call
      */
     public function test_registering_event()
     {
@@ -188,7 +188,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::addToNavigation
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::addToNavigation
      */
     public function test_adds_navigation_page()
     {
@@ -203,7 +203,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::can
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::can
      */
     public function test_access_checking_disable_access_check()
     {
@@ -215,8 +215,8 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::enableAccessCheck
-     * @covers ModelConfigurationManager::disableAccessCheck
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::enableAccessCheck
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::disableAccessCheck
      */
     public function test_access_checking_enable_access_check()
     {
@@ -236,9 +236,9 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::setControllerClass
-     * @covers ModelConfigurationManager::getControllerClass
-     * @covers ModelConfigurationManager::hasCustomControllerClass
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::setControllerClass
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getControllerClass
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::hasCustomControllerClass
      */
     public function test_gets_and_sets_controller_class()
     {
@@ -257,7 +257,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getDisplayUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getDisplayUrl
      */
     public function test_gets_display_url()
     {
@@ -273,7 +273,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getCreateUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getCreateUrl
      */
     public function test_gets_create_url()
     {
@@ -289,7 +289,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getStoreUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getStoreUrl
      */
     public function test_gets_store_url()
     {
@@ -297,15 +297,15 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.store',
-            $model->getAlias(),
+            [$model->getAlias(), 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getStoreUrl());
+        $this->assertEquals('http://site.com', $model->getStoreUrl(['locale' => 'en']));
     }
 
     /**
-     * @covers ModelConfigurationManager::getEditUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getEditUrl
      */
     public function test_gets_edit_url()
     {
@@ -313,15 +313,15 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.edit',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getEditUrl(1));
+        $this->assertEquals('http://site.com', $model->getEditUrl(1, ['locale' => 'en']));
     }
 
     /**
-     * @covers ModelConfigurationManager::getUpdateUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getUpdateUrl
      */
     public function test_gets_update_url()
     {
@@ -329,15 +329,15 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.update',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getUpdateUrl(1));
+        $this->assertEquals('http://site.com', $model->getUpdateUrl(1, ['locale' => 'en']));
     }
 
     /**
-     * @covers ModelConfigurationManager::getDeleteUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getDeleteUrl
      */
     public function test_gets_delete_url()
     {
@@ -345,15 +345,15 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.delete',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getDeleteUrl(1));
+        $this->assertEquals('http://site.com', $model->getDeleteUrl(1, ['locale' => 'en']));
     }
 
     /**
-     * @covers ModelConfigurationManager::getDestroyUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getDestroyUrl
      */
     public function test_gets_destroy_url()
     {
@@ -361,15 +361,15 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.destroy',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getDestroyUrl(1));
+        $this->assertEquals('http://site.com', $model->getDestroyUrl(1, ['locale' => 'en']));
     }
 
     /**
-     * @covers ModelConfigurationManager::getRestoreUrl
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getRestoreUrl
      */
     public function test_gets_restore_url()
     {
@@ -377,15 +377,15 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
             'admin.model.restore',
-            [$model->getAlias(), 1],
+            [$model->getAlias(), 1, 'locale' => 'en'],
             true,
         ])->andReturn('http://site.com');
 
-        $this->assertEquals('http://site.com', $model->getRestoreUrl(1));
+        $this->assertEquals('http://site.com', $model->getRestoreUrl(1, ['locale' => 'en']));
     }
 
     /**
-     * @covers ModelConfigurationManager::getMessageOnCreate
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getMessageOnCreate
      */
     public function test_gets_message_on_create()
     {
@@ -401,7 +401,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getMessageOnUpdate
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getMessageOnUpdate
      */
     public function test_gets_message_on_update()
     {
@@ -417,7 +417,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getMessageOnDelete
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getMessageOnDelete
      */
     public function test_gets_message_on_delete()
     {
@@ -433,7 +433,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getMessageOnRestore
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getMessageOnRestore
      */
     public function test_gets_message_on_restore()
     {
@@ -449,7 +449,7 @@ class ModelConfigurationManagerTest extends TestCase
     }
 
     /**
-     * @covers ModelConfigurationManager::getMessageOnDestroy
+     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::getMessageOnDestroy
      */
     public function test_gets_message_on_destroy()
     {

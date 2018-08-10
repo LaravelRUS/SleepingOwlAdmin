@@ -23,8 +23,7 @@ class BaumNodeType extends NestedsetType
 
     /**
      * @param Model $model
-     *
-     * @return string
+     * @return mixed
      */
     public function getLeftColumn(Model $model)
     {
@@ -33,8 +32,7 @@ class BaumNodeType extends NestedsetType
 
     /**
      * @param Model $model
-     *
-     * @return string
+     * @return mixed
      */
     public function getRightColumn(Model $model)
     {
@@ -44,7 +42,7 @@ class BaumNodeType extends NestedsetType
     /**
      * @param Model $model
      *
-     * @return string
+     * @return mixed
      */
     public function getParentColumn(Model $model)
     {

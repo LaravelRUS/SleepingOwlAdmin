@@ -5,4 +5,4 @@
  *
  * @see https://vitalets.github.io/x-editable/
  */
-require('../../../../node_modules/x-editable/dist/bootstrap3-editable/js/bootstrap-editable');
+require('x-editable/dist/bootstrap3-editable/js/bootstrap-editable');

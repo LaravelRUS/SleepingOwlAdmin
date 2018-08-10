@@ -28,7 +28,7 @@ class Checkbox extends TableColumn
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getModelValue()
     {

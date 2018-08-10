@@ -17,7 +17,7 @@ trait ProvidesScriptVariables
     {
         $lang = trans('sleeping_owl::lang');
         if ($lang == 'sleeping_owl::lang') {
-            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
+            $lang = trans('sleeping_owl::lang', [], 'en');
         }
 
         return [

@@ -15,7 +15,7 @@ use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 class OrderByClause implements OrderByClauseInterface
 {
     /**
-     * @var string|Closure
+     * @var string|\Closure
      */
     protected $name;
 
@@ -41,7 +41,7 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * @param string|Closure $name
+     * @param string|\Closure $name
      *
      * @return $this
      */
@@ -59,6 +59,19 @@ class OrderByClause implements OrderByClauseInterface
     protected function callCallable(Builder $query, $direction)
     {
         call_user_func_array($this->name, [$query, $direction]);
+    }
+
+    /**
+     * @param Builder $query
+     * @param string $direction
+     */
+    protected function callDefaultClause(Builder $query, $direction)
+    {
+        if ($this->isRelationName($this->name)) {
+            $this->loadRelationOrder($query, $direction);
+        } else {
+            $query->orderBy($this->name, $direction);
+        }
     }
 
     /**
@@ -204,18 +217,5 @@ class OrderByClause implements OrderByClauseInterface
         $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
             ->orderBy($sortedColumn, $direction);
-    }
-
-    /**
-     * @param Builder $query
-     * @param string $direction
-     */
-    protected function callDefaultClause(Builder $query, $direction)
-    {
-        if ($this->isRelationName($this->name)) {
-            $this->loadRelationOrder($query, $direction);
-        } else {
-            $query->orderBy($this->name, $direction);
-        }
     }
 }

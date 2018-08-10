@@ -21,7 +21,7 @@ class DisplayTabTest extends TestCase
      * @param string $label
      * @param string $icon
      *
-     * @return DisplayTab
+     * @return SleepingOwl\Admin\Display\DisplayTab
      */
     public function getTab($label = 'Test Label', $icon = 'Test icon')
     {
@@ -31,7 +31,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::__construct
+     * @covers SleepingOwl\Admin\Display\DisplayTab::__construct
      */
     public function test_constructor_without_optional_args()
     {
@@ -51,7 +51,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::__construct
+     * @covers SleepingOwl\Admin\Display\DisplayTab::__construct
      */
     public function test_constructor_with_optional_args()
     {
@@ -68,8 +68,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::setLabel
-     * @covers DisplayTab::getLabel
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setLabel
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getLabel
      */
     public function test_gets_and_sets_label()
     {
@@ -81,8 +81,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::isActive
-     * @covers DisplayTab::setActive
+     * @covers SleepingOwl\Admin\Display\DisplayTab::isActive
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setActive
      */
     public function test_gets_and_sets_active()
     {
@@ -104,8 +104,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::getName
-     * @covers DisplayTab::setName
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getName
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setName
      */
     public function test_gets_and_sets_name()
     {
@@ -129,8 +129,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::setIcon
-     * @covers DisplayTab::getIcon
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setIcon
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getIcon
      */
     public function test_gets_and_sets_icon()
     {
@@ -142,7 +142,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::getContent
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getContent
      */
     public function test_gets_content()
     {
@@ -151,7 +151,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::setModelClass
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setModelClass
      */
     public function test_sets_model_class()
     {
@@ -165,6 +165,9 @@ class DisplayTabTest extends TestCase
         $this->assertEquals($tab, $tab->setModelClass('class'));
     }
 
+    /**
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setModelClass
+     */
     public function test_sets_model_class_with_display_content()
     {
         $renderable = m::mock(DisplayInterface::class);
@@ -177,7 +180,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::initialize
+     * @covers SleepingOwl\Admin\Display\DisplayTab::initialize
      */
     public function test_initialize()
     {
@@ -201,8 +204,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::setAction
-     * @covers DisplayTab::setId
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setAction
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setId
      */
     public function test_sets_action_and_id()
     {
@@ -230,7 +233,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::validateForm
+     * @covers SleepingOwl\Admin\Display\DisplayTab::validateForm
      */
     public function test_validate_form()
     {
@@ -258,7 +261,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::saveForm
+     * @covers SleepingOwl\Admin\Display\DisplayTab::saveForm
      */
     public function test_save_form()
     {
@@ -286,8 +289,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::setModel
-     * @covers DisplayTab::getModel
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setModel
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getModel
      */
     public function test_sets_and_gets_model()
     {
@@ -315,9 +318,9 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::getValidationRules
-     * @covers DisplayTab::getValidationMessages
-     * @covers DisplayTab::getValidationLabels
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getValidationRules
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getValidationMessages
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getValidationLabels
      */
     public function test_gets_validation()
     {
@@ -348,10 +351,10 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::save
-     * @covers DisplayTab::afterSave
-     * @covers DisplayTab::getValue
-     * @covers DisplayTab::isReadonly
+     * @covers SleepingOwl\Admin\Display\DisplayTab::save
+     * @covers SleepingOwl\Admin\Display\DisplayTab::afterSave
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getValue
+     * @covers SleepingOwl\Admin\Display\DisplayTab::isReadonly
      */
     public function test_save()
     {
@@ -372,8 +375,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::save
-     * @covers DisplayTab::afterSave
+     * @covers SleepingOwl\Admin\Display\DisplayTab::save
+     * @covers SleepingOwl\Admin\Display\DisplayTab::afterSave
      */
     public function test_save_with_savable_content()
     {
@@ -394,9 +397,9 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::getElement
-     * @covers DisplayTab::getElements
-     * @covers DisplayTab::setElements
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getElement
+     * @covers SleepingOwl\Admin\Display\DisplayTab::getElements
+     * @covers SleepingOwl\Admin\Display\DisplayTab::setElements
      */
     public function test_gets_element()
     {
@@ -426,7 +429,7 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers DisplayTab::toArray
+     * @covers SleepingOwl\Admin\Display\DisplayTab::toArray
      */
     public function test_to_array()
     {

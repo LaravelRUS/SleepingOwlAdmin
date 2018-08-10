@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Console\Input\InputOption;
 
 class UserManagerCommand extends Command
@@ -19,35 +21,45 @@ class UserManagerCommand extends Command
      */
     protected $description = 'Manage your users.';
 
+    /**
+     * @return null|void
+     * @throws \Exception
+     */
     public function fire()
     {
         if ($this->option('create')) {
-            return $this->createNewUser();
+            $this->createNewUser();
+
+            return;
         }
 
         if ($this->option('delete')) {
-            return $this->deleteUser();
+            $this->deleteUser();
         }
 
         if ($this->option('password')) {
-            return $this->changePassword();
+            $this->changePassword();
         }
 
         $this->getUsers();
     }
 
+    /**
+     * @return null|void
+     * @throws \Exception
+     */
     public function handle()
     {
         if ($this->option('create')) {
-            return $this->createNewUser();
+            $this->createNewUser();
         }
 
         if ($this->option('delete')) {
-            return $this->deleteUser();
+            $this->deleteUser();
         }
 
         if ($this->option('password')) {
-            return $this->changePassword();
+            $this->changePassword();
         }
 
         $this->getUsers();
@@ -66,6 +78,9 @@ class UserManagerCommand extends Command
         return $userClass;
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function getUsers()
     {
         $userClass = $this->getUserClass();
@@ -76,11 +91,16 @@ class UserManagerCommand extends Command
         $this->table($headers, $users);
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function createNewUser()
     {
         $userClass = $this->getUserClass();
 
-        if (is_null($email = $this->ask('Email'))) {
+        $email = $this->ask('Email');
+
+        if (is_null($email)) {
             $this->error('You should specify email.');
 
             return;
@@ -92,7 +112,9 @@ class UserManagerCommand extends Command
             return;
         }
 
-        if (is_null($password = $this->secret('Password'))) {
+        $password = $this->secret('Password');
+
+        if (is_null($password)) {
             $this->error('You should specify password.');
 
             return;
@@ -117,7 +139,7 @@ class UserManagerCommand extends Command
 
             $this->info("User [{$user->id}] created.");
         } catch (\Exception $e) {
-            \Log::error('unable to create new user!', [
+            Log::error('unable to create new user!', [
                 'exception' => $e,
             ]);
             $this->error('Something went wrong. User not created');
@@ -126,6 +148,9 @@ class UserManagerCommand extends Command
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function deleteUser()
     {
         $userClass = $this->getUserClass();
@@ -149,7 +174,7 @@ class UserManagerCommand extends Command
     }
 
     /**
-     * Change administrator's password.
+     * @throws \Exception
      */
     protected function changePassword()
     {

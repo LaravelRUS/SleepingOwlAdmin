@@ -180,6 +180,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param Model $model
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getEditTitle()

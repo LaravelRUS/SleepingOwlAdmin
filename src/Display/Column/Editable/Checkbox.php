@@ -40,7 +40,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @return null|string
+     * @return null|string|array
      */
     public function getCheckedLabel()
     {
@@ -64,7 +64,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @return null|string
+     * @return null|string|array
      */
     public function getUncheckedLabel()
     {
@@ -100,8 +100,8 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
     /**
      * @param Request $request
-     *
-     * @return void
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)
     {
@@ -113,7 +113,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
         $model = $this->getModel();
 
-        $request->offsetSet($this->getName(), (bool) $request->input('value.0', false));
+        $request->offsetSet($this->getName(), $request->input('value.0') ?? false);
 
         $form->setModelClass(get_class($model));
         $form->initialize();

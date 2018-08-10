@@ -1,7 +1,7 @@
 {
   "name": "laravelrus/sleepingowl",
   "description": "Administrative interface builder for Laravel.",
-  "homepage": "http://sleepingowl.ru",
+  "homepage": "http://sleepingowladmin.ru",
   "keywords": [
     "laravel",
     "admin",
@@ -26,10 +26,15 @@
     {
       "name": "Dave Gabrielyan",
       "email": "aioslike@gmail.com"
+    },
+    {
+      "name": "TheArdent",
+      "email": "oleksii.yaryi@gmail.com"
     }
   ],
   "require": {
     "php": ">=7.0",
+    "ext-json": "*",
     "laravel/framework": "~5.5",
     "kodicomponents/support": "0.*",
     "kodicomponents/navigation": "0.*",
@@ -58,7 +63,8 @@
   }, 
   "extra": {
     "branch-alias": {
-      "dev-development": "4.x-dev"
+      "dev-development": "4.x-dev",
+      "dev-new": "4.x-new"
     },
     "laravel": {
       "providers": [

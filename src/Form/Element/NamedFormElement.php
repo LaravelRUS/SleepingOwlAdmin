@@ -370,6 +370,41 @@ abstract class NamedFormElement extends FormElement
             return $value;
         }
 
+        $relations = explode('.', $path);
+        $count = count($relations);
+
+        if ($count === 1) {
+            $attribute = $model->getAttribute($this->getModelAttributeKey());
+
+            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
+                return $attribute;
+            }
+        }
+
+        foreach ($relations as $relation) {
+            if ($model->{$relation} instanceof Model) {
+                $model = $model->{$relation};
+                continue;
+            }
+            if ($count === 2) {
+                if (str_contains($relation, '->')) {
+                    $parts = explode('->', $relation);
+                    $relationField = array_shift($array);
+                    $jsonPath = implode('.', $parts);
+                    $attribute = data_get($model->{$relationField}, $jsonPath);
+                } else {
+                    $attribute = $model->getAttribute($relation);
+                }
+                if (! empty($attribute) || is_null($value)) {
+                    return $attribute;
+                }
+            }
+
+            if (is_null($this->getDefaultValue())) {
+                throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
+            }
+        }
+
         /*
          * Implement json parsing
          */
@@ -388,36 +423,6 @@ abstract class NamedFormElement extends FormElement
             }
 
             return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
-        }
-
-        $relations = explode('.', $path);
-        $count = count($relations);
-
-        if ($count === 1) {
-            $attribute = $model->getAttribute($this->getModelAttributeKey());
-
-            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
-                return $attribute;
-            }
-        }
-
-        foreach ($relations as $relation) {
-            if ($model->{$relation} instanceof Model) {
-                $model = $model->{$relation};
-                continue;
-            }
-
-            if ($count === 2) {
-                $attribute = $model->getAttribute($relation);
-
-                if (! empty($attribute) || is_null($value)) {
-                    return $attribute;
-                }
-            }
-
-            if (is_null($this->getDefaultValue())) {
-                throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
-            }
         }
 
         return $value;

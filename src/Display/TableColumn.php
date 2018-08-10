@@ -71,6 +71,16 @@ abstract class TableColumn implements ColumnInterface
     protected $orderByClause;
 
     /**
+     * @var bool
+     */
+    protected $visible = true;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * TableColumn constructor.
      *
      * @param string|null $label
@@ -181,7 +191,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @return int
+     * @return int|string
      */
     public function getWidth()
     {
@@ -200,6 +210,29 @@ abstract class TableColumn implements ColumnInterface
         }
 
         $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @param $isSearchable
+     *
+     * @return TableColumn
+     */
+    public function setSearchable($isSearchable)
+    {
+        $this->isSearchable = $isSearchable;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $visible
+     * @return $this
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
 
         return $this;
     }
@@ -299,6 +332,24 @@ abstract class TableColumn implements ColumnInterface
     public function isOrderable()
     {
         return $this->orderByClause instanceof OrderByClauseInterface;
+    }
+
+    /**
+     * Check if column is visible.
+     * @return bool
+     */
+    public function isVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Check if column is Searchable.
+     * @return bool
+     */
+    public function isSearchable()
+    {
+        return $this->isSearchable;
     }
 
     /**

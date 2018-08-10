@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Display\Tree\OrderTreeType;
 use SleepingOwl\Admin\Repositories\TreeRepository;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
 /**
@@ -148,7 +147,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return string
+     * @return callable|string
      */
     public function getValue()
     {
@@ -188,7 +187,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return null|string
+     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     public function getNewEntryButtonText()
     {
@@ -306,6 +305,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {
@@ -322,14 +322,6 @@ class DisplayTree extends Display implements WithRoutesInterface
                 'newEntryButtonText' => $this->getNewEntryButtonText(),
                 'max_depth'          => $this->getMaxDepth(),
             ];
-    }
-
-    /**
-     * @return ModelConfigurationInterface
-     */
-    protected function getModelConfiguration()
-    {
-        return app('sleeping_owl')->getModel($this->modelClass);
     }
 
     /**

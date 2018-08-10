@@ -87,8 +87,8 @@ trait OrderableModel
     protected function updateOrderFieldOnDelete()
     {
         static::orderModel()
-              ->where($this->getOrderField(), '>', $this->getOrderValue())
-              ->decrement($this->getOrderField());
+                ->where($this->getOrderField(), '>', $this->getOrderValue())
+                ->decrement($this->getOrderField());
     }
 
     /**

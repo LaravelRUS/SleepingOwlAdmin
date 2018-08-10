@@ -47,7 +47,7 @@ abstract class NestedsetType implements TreeTypeInterface
      *
      * @param Model $model
      *
-     * @return string
+     * @return mixed
      */
     abstract public function getLeftColumn(Model $model);
 
@@ -56,7 +56,7 @@ abstract class NestedsetType implements TreeTypeInterface
      *
      * @param Model $model
      *
-     * @return string
+     * @return mixed
      */
     abstract public function getRightColumn(Model $model);
 
@@ -65,7 +65,7 @@ abstract class NestedsetType implements TreeTypeInterface
      *
      * @param Model $model
      *
-     * @return string
+     * @return mixed
      */
     abstract public function getParentColumn(Model $model);
 
