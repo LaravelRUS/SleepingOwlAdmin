@@ -2,12 +2,11 @@
 
 ## Laravel Admin Panel
 
-[![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
+[![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=master)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/?branch=development)
-[![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
+[![StyleCI](https://styleci.io/repos/52141393/shield?branch=master)](https://styleci.io/repos/52141393)
 [![Laravel Support](https://img.shields.io/badge/Laravel-5.5--5.6-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-7.x-brightgreen.svg)]()
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5906214c-a896-432c-ac24-b28144d6af1b/mini.png)](https://insight.sensiolabs.com/projects/5906214c-a896-432c-ac24-b28144d6af1b)
 
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowl.ru)
 [![Demo Site](https://img.shields.io/badge/demo-site-blue.svg)](https://demo.sleepingowl.ru)
@@ -35,7 +34,7 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 
  1. Require this package in your composer.json and run composer update:
 
-  	`composer require laravelrus/sleepingowl:4.x-new`
+  	`composer require laravelrus/sleepingowl:5.6`
     
 
  2. Run this command in the terminal (if you want to know more about what exactly this command does, see [install command documentation](https://en.sleepingowladmin.ru/docs/installation)):
@@ -50,7 +49,6 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 	"post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan sleepingowl:update",
-            "php artisan optimize",
     ]
     ```
     __NOTE__: So if you use a laravel-ide-helper package place `sleepingowl:update` after it commands:
@@ -60,7 +58,6 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
             "php artisan sleepingowl:update",
-            "php artisan optimize",
     ]
     ```
     
