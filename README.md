@@ -3,14 +3,12 @@
 ## Laravel Admin Panel
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=master)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/badges/quality-score.png?b=development)](https://scrutinizer-ci.com/g/LaravelRUS/SleepingOwlAdmin/?branch=development)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=master)](https://styleci.io/repos/52141393)
 [![Laravel Support](https://img.shields.io/badge/Laravel-5.5--5.6-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-7.x-brightgreen.svg)]()
 
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowl.ru)
 [![Demo Site](https://img.shields.io/badge/demo-site-blue.svg)](https://demo.sleepingowl.ru)
-[![Join the chat at https://gitter.im/LaravelRUS/SleepingOwlAdmin](https://img.shields.io/badge/gitter-chat-yellowgreen.svg)](https://gitter.im/LaravelRUS/SleepingOwlAdmin)
 [![Telegram Chat](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/prtcls)
 [![Latest Stable Version](https://poser.pugx.org/laravelrus/sleepingowl/v/stable)](https://packagist.org/packages/laravelrus/sleepingowl)
 [![Total Downloads](https://poser.pugx.org/laravelrus/sleepingowl/downloads)](https://packagist.org/packages/laravelrus/sleepingowl)
