@@ -16,7 +16,6 @@ use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 
 abstract class NamedFormElement extends FormElement
 {
-
     use HtmlAttributes;
     /**
      * @var string
@@ -304,9 +303,9 @@ abstract class NamedFormElement extends FormElement
      */
     public function resolvePath()
     {
-        $model     = $this->getModel();
+        $model = $this->getModel();
         $relations = explode('.', $this->getPath());
-        $count     = count($relations);
+        $count = count($relations);
 
         if ($count === 1) {
             return $model;
@@ -363,17 +362,15 @@ abstract class NamedFormElement extends FormElement
             return $value;
         }
 
-
         $model = $this->getModel();
-        $path  = $this->getPath();
+        $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-
-        /**
+        /*
          * Implement json parsing
          */
         if (strpos($path, '->') !== false) {
-            $casts     = collect($model->getCasts());
+            $casts = collect($model->getCasts());
             $jsonParts = collect(explode('->', $path));
 
             $jsonAttr = $model->{$jsonParts->first()};
@@ -394,7 +391,7 @@ abstract class NamedFormElement extends FormElement
         }
 
         $relations = explode('.', $path);
-        $count     = count($relations);
+        $count = count($relations);
 
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
@@ -411,10 +408,10 @@ abstract class NamedFormElement extends FormElement
             }
             if ($count === 2) {
                 if (str_contains($relation, '->')) {
-                    $parts         = explode('->', $relation);
+                    $parts = explode('->', $relation);
                     $relationField = array_shift($array);
-                    $jsonPath      = implode('.', $parts);
-                    $attribute     = data_get($model->{$relationField}, $jsonPath);
+                    $jsonPath = implode('.', $parts);
+                    $attribute = data_get($model->{$relationField}, $jsonPath);
                 } else {
                     $attribute = $model->getAttribute($relation);
                 }
@@ -476,8 +473,8 @@ abstract class NamedFormElement extends FormElement
         $model = $this->getModel();
 
         $relations = explode('.', $path);
-        $count     = count($relations);
-        $i         = 1;
+        $count = count($relations);
+        $i = 1;
 
         if ($count > 1) {
             $i++;
