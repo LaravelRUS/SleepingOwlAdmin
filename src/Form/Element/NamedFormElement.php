@@ -16,6 +16,7 @@ use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 
 abstract class NamedFormElement extends FormElement
 {
+
     use HtmlAttributes;
     /**
      * @var string
@@ -303,9 +304,9 @@ abstract class NamedFormElement extends FormElement
      */
     public function resolvePath()
     {
-        $model = $this->getModel();
+        $model     = $this->getModel();
         $relations = explode('.', $this->getPath());
-        $count = count($relations);
+        $count     = count($relations);
 
         if ($count === 1) {
             return $model;
@@ -362,16 +363,38 @@ abstract class NamedFormElement extends FormElement
             return $value;
         }
 
+
         $model = $this->getModel();
-        $path = $this->getPath();
+        $path  = $this->getPath();
         $value = $this->getDefaultValue();
+
+
+        /**
+         * Implement json parsing
+         */
+        if (strpos($path, '->') !== false) {
+            $casts     = collect($model->getCasts());
+            $jsonParts = collect(explode('->', $path));
+
+            $jsonAttr = $model->{$jsonParts->first()};
+
+            $cast = $casts->get($jsonParts->first(), false);
+
+            if ($cast == 'object') {
+                $jsonAttr = json_decode(json_encode($jsonAttr), true);
+            } elseif ($cast != 'array') {
+                $jsonAttr = json_decode($jsonAttr);
+            }
+
+            return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
+        }
 
         if (is_null($model) || ! $model->exists) {
             return $value;
         }
 
         $relations = explode('.', $path);
-        $count = count($relations);
+        $count     = count($relations);
 
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
@@ -388,10 +411,10 @@ abstract class NamedFormElement extends FormElement
             }
             if ($count === 2) {
                 if (str_contains($relation, '->')) {
-                    $parts = explode('->', $relation);
+                    $parts         = explode('->', $relation);
                     $relationField = array_shift($array);
-                    $jsonPath = implode('.', $parts);
-                    $attribute = data_get($model->{$relationField}, $jsonPath);
+                    $jsonPath      = implode('.', $parts);
+                    $attribute     = data_get($model->{$relationField}, $jsonPath);
                 } else {
                     $attribute = $model->getAttribute($relation);
                 }
@@ -403,26 +426,6 @@ abstract class NamedFormElement extends FormElement
             if (is_null($this->getDefaultValue())) {
                 throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
             }
-        }
-
-        /*
-         * Implement json parsing
-         */
-        if (strpos($path, '->') !== false) {
-            $casts = collect($model->getCasts());
-            $jsonParts = collect(explode('->', $path));
-
-            $jsonAttr = $model->{$jsonParts->first()};
-
-            $cast = $casts->get($jsonParts->first(), false);
-
-            if ($cast == 'object') {
-                $jsonAttr = json_decode(json_encode($jsonAttr), true);
-            } elseif ($cast != 'array') {
-                $jsonAttr = json_decode($jsonAttr);
-            }
-
-            return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
         }
 
         return $value;
@@ -443,7 +446,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -473,8 +476,8 @@ abstract class NamedFormElement extends FormElement
         $model = $this->getModel();
 
         $relations = explode('.', $path);
-        $count = count($relations);
-        $i = 1;
+        $count     = count($relations);
+        $i         = 1;
 
         if ($count > 1) {
             $i++;
@@ -497,7 +500,8 @@ abstract class NamedFormElement extends FormElement
                         case HasOne::class:
                         case MorphOne::class:
                             $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject),
+                                $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }
@@ -569,19 +573,19 @@ abstract class NamedFormElement extends FormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
+            'id'   => $this->getName(),
             'name' => $this->getName(),
         ]);
 
         return array_merge(parent::toArray(), [
-            'id' => $this->getName(),
-            'value' => $this->getValueFromModel(),
-            'name' => $this->getName(),
-            'path' => $this->getPath(),
-            'label' => $this->getLabel(),
-            'attributes'=> $this->htmlAttributesToString(),
-            'helpText' => $this->getHelpText(),
-            'required' => in_array('required', $this->validationRules),
+            'id'         => $this->getName(),
+            'value'      => $this->getValueFromModel(),
+            'name'       => $this->getName(),
+            'path'       => $this->getPath(),
+            'label'      => $this->getLabel(),
+            'attributes' => $this->htmlAttributesToString(),
+            'helpText'   => $this->getHelpText(),
+            'required'   => in_array('required', $this->validationRules),
         ]);
     }
 }
