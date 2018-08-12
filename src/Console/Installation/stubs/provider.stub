@@ -17,6 +17,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     /**
      * Register sections.
      *
+     * @param \SleepingOwl\Admin\Admin $admin
      * @return void
      */
     public function boot(\SleepingOwl\Admin\Admin $admin)
