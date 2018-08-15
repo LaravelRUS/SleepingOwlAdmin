@@ -32,7 +32,7 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
 
  1. Require this package in your composer.json and run composer update:
 
-  	`composer require laravelrus/sleepingowl:5.6`
+  	`composer require laravelrus/sleepingowl`
     
 
  2. Run this command in the terminal (if you want to know more about what exactly this command does, see [install command documentation](https://en.sleepingowladmin.ru/docs/installation)):
