@@ -10,7 +10,6 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Select extends EditableColumn implements ColumnEditableInterface
 {
-
     use SelectOptionsFromModel;
 
     /**
@@ -110,7 +109,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function setSortable($sortable)
     {
-        $this->sortable = (bool)$sortable;
+        $this->sortable = (bool) $sortable;
 
         return $this;
     }
@@ -122,7 +121,6 @@ class Select extends EditableColumn implements ColumnEditableInterface
     {
         return $this->sortable;
     }
-
 
     /**
      * @return array
@@ -213,7 +211,6 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function save(Request $request)
     {
-
         $model = $this->getModel();
 
         if (strpos($this->getName(), '.') !== false) {
@@ -222,10 +219,8 @@ class Select extends EditableColumn implements ColumnEditableInterface
             } else {
                 //@TODO Make Relation Resolver
                 $relationName = explode('.', $this->getName());
-
             }
         }
-
 
         $form = new FormDefault([
             new \SleepingOwl\Admin\Form\Element\Select(
