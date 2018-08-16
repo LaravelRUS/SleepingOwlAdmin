@@ -18,6 +18,10 @@ class Select extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.select';
 
     /**
+     * @var null
+     */
+    protected $relationKey = null;
+    /**
      * @var array
      */
     protected $options = [];
@@ -38,10 +42,16 @@ class Select extends EditableColumn implements ColumnEditableInterface
     protected $sortable = true;
 
     /**
-     * Text constructor.
-     *
-     * @param             $name
-     * @param             $label
+     * @var null
+     */
+    protected $defaultValue = null;
+
+    /**
+     * Select constructor.
+     * @param $name
+     * @param null $label
+     * @param array $options
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function __construct($name, $label = null, $options = [])
     {
@@ -52,6 +62,44 @@ class Select extends EditableColumn implements ColumnEditableInterface
         } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
+    }
+
+    /**
+     * @param $relationKey
+     * @return $this
+     */
+    public function setRelationKey($relationKey)
+    {
+        $this->relationKey = $relationKey;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getRelationKey()
+    {
+        return $this->relationKey;
+    }
+
+    /**
+     * @param $defaultValue
+     * @return $this
+     */
+    public function setDefaultValue($defaultValue)
+    {
+        $this->defaultValue = $defaultValue;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
     }
 
     /**
@@ -152,27 +200,35 @@ class Select extends EditableColumn implements ColumnEditableInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'options'        => $this->mutateOptions(),
-                'optionName'     => $this->getOptionName($this->getModelValue()),
+                'options'    => $this->mutateOptions(),
+                'optionName' => $this->getOptionName($this->getModelValue()),
             ];
     }
 
     /**
      * @param Request $request
-     *
-     * @return void
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)
     {
+        $model = $this->getModel();
+
+        if (strpos($this->getName(), '.') !== false) {
+            if ($this->getRelationKey()) {
+                $this->setName($this->getRelationKey());
+            } else {
+                //@TODO Make Relation Resolver
+                $relationName = explode('.', $this->getName());
+            }
+        }
+
         $form = new FormDefault([
             new \SleepingOwl\Admin\Form\Element\Select(
                 $this->getName()
             ),
         ]);
 
-        $model = $this->getModel();
-
-        $request->offsetSet($this->getName(), $request->input('value', null));
+        $request->offsetSet($this->getName(), $request->input('value', $this->getDefaultValue()));
 
         $form->setModelClass(get_class($model));
         $form->initialize();
