@@ -58,8 +58,12 @@ trait SelectOptionsFromModel
      * @return $this
      * @throws SelectException
      */
-    public function setModelForOptions($modelForOptions)
+    public function setModelForOptions($modelForOptions, $display = null)
     {
+        if ($display){
+            $this->display = $display;    
+        }
+        
         if (is_string($modelForOptions)) {
             $modelForOptions = app($modelForOptions);
         }
