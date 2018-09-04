@@ -60,7 +60,7 @@ trait SelectOptionsFromModel
      */
     public function setModelForOptions($modelForOptions, $display = null)
     {
-        if ($display){
+        if ($display) {
             $this->display = $display;    
         }
         
