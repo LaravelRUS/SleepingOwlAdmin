@@ -61,9 +61,9 @@ trait SelectOptionsFromModel
     public function setModelForOptions($modelForOptions, $display = null)
     {
         if ($display) {
-            $this->display = $display;    
+            $this->display = $display;
         }
-        
+
         if (is_string($modelForOptions)) {
             $modelForOptions = app($modelForOptions);
         }
