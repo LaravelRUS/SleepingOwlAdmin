@@ -62,8 +62,7 @@
     ]
   }, 
   "extra": {
-    "branch-alias": {
-      "dev-master": "5.6.x-latest",
+    "branch-alias": {      
       "dev-development": "5.6.x-dev"
     },
     "laravel": {
