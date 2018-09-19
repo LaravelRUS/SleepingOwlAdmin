@@ -31,6 +31,9 @@ class Custom extends NamedColumn
     public function __construct($label = null, Closure $callback = null)
     {
         parent::__construct($label);
+        if (! is_null($label)) {
+            $this->setLabel($label);
+        }
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }
