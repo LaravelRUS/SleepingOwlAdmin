@@ -47,6 +47,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
             'lists' => Column\Lists::class,
             'order' => Column\Order::class,
             'text' => Column\Text::class,
+            'bln' => Column\Bln::class,
             'link' => Column\Link::class,
             'relatedLink' => Column\RelatedLink::class,
             'email' => Column\Email::class,

@@ -1,5 +1,13 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
+* [Add] Добавлен новый тип столбца `AdminColumn::bln('active', 'Published'),` (алиас `text`) который просто рисует галочку при `true` и минус при `false`. Да еще и с равнением по центру.
+  Уже просто достало постоянно рисовать что-то типа:
+  ```
+  AdminColumn::custom('Published', function ($instance) {
+    return $instance->active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-minus"></i>';})
+    ->setHtmlAttribute('class', 'text-center'),
+  ```
+
  * [Feature] Добавлен ENV-редактор
              Для тех кто уже с нами:
              В sleeping_owl.php
@@ -12,7 +20,7 @@
               |
               */
               'env_editor_url' => 'env/editor',
-          
+
               /*
                *
                *
@@ -20,17 +28,17 @@
               'env_editor_excluded_keys' => [
                   'APP_KEY', 'DB_*'
               ],
-          
-          
+
+
               'env_editor_middlewares' => [],
-              
+
               'env_editor_policy' => Policy::class,
-              
+
               'show_editor' => false,
 
              ```
-             
-             
+
+
  * [Feature] Subdomain routes for admin
              Вы должны добавить в sleeping_owl.php ключ 'domain' => 'admin.example.com' где example.com и будет ваш домен.
  * [Feature] Добавлено поведение для коламнов `text`, `link` и `relatedLink`. Может быть пропущен.
