@@ -18,6 +18,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
  * @method Column\Lists lists($name, $label = null)
  * @method Column\Order order()
  * @method Column\Text text($name, $label = null)
+ * @method Column\Boolean text($name, $label = null)
  * @method Column\Link link($name, $label = null)
  * @method Column\RelatedLink relatedLink($name, $label = null)
  * @method Column\Email email($name, $label = null)
@@ -47,7 +48,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
             'lists' => Column\Lists::class,
             'order' => Column\Order::class,
             'text' => Column\Text::class,
-            'bln' => Column\Bln::class,
+            'boolean' => Column\Boolean::class,
             'link' => Column\Link::class,
             'relatedLink' => Column\RelatedLink::class,
             'email' => Column\Email::class,

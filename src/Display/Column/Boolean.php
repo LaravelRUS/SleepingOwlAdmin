@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-class Bln extends NamedColumn
+class Boolean extends NamedColumn
 {
     /**
      * @var string
      */
-    protected $view = 'column.bln';
+    protected $view = 'column.boolean';
 
     /**
      * @var bool
