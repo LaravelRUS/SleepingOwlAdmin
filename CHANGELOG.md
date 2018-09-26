@@ -1,11 +1,15 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
-* [Add] Добавлен новый тип столбца `AdminColumn::boolean('active', 'Published'),` (алиас `text`) который просто рисует галочку при `true` и минус при `false`. Да еще и с равнением по центру.
-  Уже просто достало постоянно рисовать что-то типа:
+* [Add] Добавлен новый тип столбца `AdminColumn::boolean('active', 'Published'),` (алиас `text`) который просто рисует галочку при `true` и минус при `false`. C равнением по центру.
+  Замена коду:
   ```
+  //было
   AdminColumn::custom('Published', function ($instance) {
     return $instance->active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-minus"></i>';})
     ->setHtmlAttribute('class', 'text-center'),
+
+  //станет
+  AdminColumn::boolean('active', 'Published'),
   ```
 
  * [Feature] Добавлен ENV-редактор
