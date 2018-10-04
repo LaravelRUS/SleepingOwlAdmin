@@ -160,6 +160,7 @@ return [
         'ckeditor'  => [
             'defaultLanguage' => config('app.locale'),
             'height'       => 200,
+            'allowedContent' => false,
             'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
             /*
              * WARNING!!!! CKEDITOR on D & D and UploadImageDialog
