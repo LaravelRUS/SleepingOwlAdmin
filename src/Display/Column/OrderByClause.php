@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use DB;
 use Illuminate\Support\Str;
 use Mockery\Matcher\Closure;
 use Illuminate\Support\Collection;
@@ -11,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
-use DB;
 
 class OrderByClause implements OrderByClauseInterface
 {
