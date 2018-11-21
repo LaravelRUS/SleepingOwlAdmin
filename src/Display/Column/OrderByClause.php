@@ -214,7 +214,6 @@ class OrderByClause implements OrderByClauseInterface
 
         $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
         $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-        #$sortedColumn = implode('.', [$foreignTable, $relations->last()]);
         $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
