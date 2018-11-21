@@ -60,7 +60,7 @@ class ControlLink implements ControlButtonInterface
 
     /**
      * @param Closure $url
-     * @param string $text
+     * @param Closure|string $text
      * @param int $position
      */
     public function __construct(Closure $url, $text, $position = 0)
@@ -71,7 +71,7 @@ class ControlLink implements ControlButtonInterface
 
         $this->setHtmlAttributes([
             'class' => 'btn btn-xs',
-            'title' => $this->text,
+            'title' => is_string($this->text) ? $this->text : '',
             'data-toggle' => 'tooltip',
         ]);
     }
@@ -168,7 +168,24 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
-     * @param string $text
+     * @param Model|null $model
+     *
+     * @return mixed
+     */
+    public function getText($model = null)
+    {
+        if (is_callable($this->text) && is_object($model)) {
+            $text = call_user_func($this->text, $model);
+            $this->setHtmlAttribute('title', $text);
+
+            return $text;
+        }
+
+        return $this->text;
+    }
+
+    /**
+     * @param Closure|string $text
      *
      * @return $this
      */
@@ -227,10 +244,10 @@ class ControlLink implements ControlButtonInterface
     public function toArray()
     {
         return [
+            'text' => $this->getText($this->getModel()),
             'attributes' => $this->getConditionAttributes($this->model)->htmlAttributesToString(),
             'url' => $this->getUrl($this->getModel()),
             'position' => $this->getPosition(),
-            'text' => $this->text,
             'icon' => $this->getIcon(),
             'hideText' => $this->hideText,
         ];
