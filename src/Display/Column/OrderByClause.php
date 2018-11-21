@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
+use DB;
 
 class OrderByClause implements OrderByClauseInterface
 {
@@ -179,11 +180,12 @@ class OrderByClause implements OrderByClauseInterface
 
         $ownerColumn = $relationClass->getQualifiedForeignKeyName();
         $foreignColumn = $relationClass->getQualifiedParentKeyName();
-        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
+        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
+        $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
+        $query->select([$ownerTable.'.*', DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-            ->orderBy($sortedColumn, $direction);
+            ->orderBy(DB::raw($sortedColumnAlias), $direction);
     }
 
     /**
@@ -212,10 +214,12 @@ class OrderByClause implements OrderByClauseInterface
 
         $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
         $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
+        #$sortedColumn = implode('.', [$foreignTable, $relations->last()]);
+        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
+        $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
+        $query->select([$ownerTable.'.*', DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-            ->orderBy($sortedColumn, $direction);
+            ->orderBy(DB::raw($sortedColumnAlias), $direction);
     }
 }
