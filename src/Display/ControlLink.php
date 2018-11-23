@@ -36,12 +36,27 @@ class ControlLink implements ControlButtonInterface
     /**
      * @var string
      */
+    protected $class = 'btn btn-xs';
+
+    /**
+     * @var Closure|string
+     */
     protected $text;
+
+    /**
+     * @var Closure|string
+     */
+    protected $title;
 
     /**
      * @var bool
      */
     protected $hideText = false;
+
+    /**
+     * @var bool
+     */
+    protected $hideTitle = false;
 
     /**
      * @var string
@@ -62,18 +77,22 @@ class ControlLink implements ControlButtonInterface
      * @param Closure $url
      * @param Closure|string $text
      * @param int $position
+     * @param string $title
+     * @param string $class
      */
-    public function __construct(Closure $url, $text, $position = 0)
+    public function __construct(Closure $url, $text, $position = 0, $title = null, $class = null)
     {
         $this->url = $url;
         $this->position = (int) $position;
         $this->text = $text;
 
-        $this->setHtmlAttributes([
-            'class' => 'btn btn-xs',
-            'title' => is_string($this->text) ? $this->text : '',
-            'data-toggle' => 'tooltip',
-        ]);
+        if ($title !== null) {
+            $this->setTitle($title);
+        }
+
+        if ($class !== null) {
+            $this->setClass($class);
+        }
     }
 
     /**
@@ -138,6 +157,16 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
+     * @return $this
+     */
+    public function hideTitle()
+    {
+        $this->hideTitle = true;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getPosition()
@@ -174,14 +203,29 @@ class ControlLink implements ControlButtonInterface
      */
     public function getText($model = null)
     {
-        if (is_callable($this->text) && is_object($model)) {
-            $text = call_user_func($this->text, $model);
-            $this->setHtmlAttribute('title', $text);
+        $text = (is_callable($this->text) && is_object($model)) ? call_user_func($this->text, $model) : $this->text;
 
-            return $text;
+        $title = null;
+        if (is_callable($this->title) && is_object($model)) {
+            $title = call_user_func($this->title, $model);
+        } elseif ($this->title !== null) {
+            $title = $this->title;
+        } else {
+            $title = $text;
         }
 
-        return $this->text;
+        if (! $this->hideTitle) {
+            $this->setHtmlAttributes([
+                'title' => $title,
+                'data-toggle' => 'tooltip',
+            ]);
+        }
+
+        $this->setHtmlAttributes([
+            'class' => $this->class,
+        ]);
+
+        return $text;
     }
 
     /**
@@ -192,6 +236,18 @@ class ControlLink implements ControlButtonInterface
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * @param Closure|string $title
+     *
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
         return $this;
     }
@@ -212,6 +268,26 @@ class ControlLink implements ControlButtonInterface
     public function setIcon($icon)
     {
         $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param string $class
+     *
+     * @return $this
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
 
         return $this;
     }
