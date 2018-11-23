@@ -316,7 +316,7 @@ class ControlLink implements ControlButtonInterface
      */
     public function toArray()
     {
-        $return = [
+        return [
             'text' => $this->getText($this->getModel()),
             'attributes' => $this->getConditionAttributes($this->model)->htmlAttributesToString(),
             'url' => $this->getUrl($this->getModel()),
@@ -324,7 +324,5 @@ class ControlLink implements ControlButtonInterface
             'icon' => $this->getIcon(),
             'hideText' => $this->hideText,
         ];
-
-        return $return;
     }
 }
