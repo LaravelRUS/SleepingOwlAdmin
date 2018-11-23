@@ -86,11 +86,13 @@ class ControlLink implements ControlButtonInterface
         $this->position = (int) $position;
         $this->text = $text;
 
-        if ($title !== null)
+        if ($title !== null) {
             $this->setTitle($title);
+        }
 
-        if ($class !== null)
+        if ($class !== null) {
             $this->setClass($class);
+        }
     }
 
     /**
@@ -212,11 +214,12 @@ class ControlLink implements ControlButtonInterface
             $title = $text;
         }
 
-        if (!$this->hideTitle)
+        if (! $this->hideTitle) {
             $this->setHtmlAttributes([
                 'title' => $title,
                 'data-toggle' => 'tooltip',
             ]);
+        }
 
         $this->setHtmlAttributes([
             'class' => $this->class,
