@@ -488,7 +488,7 @@ class ModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $payload = array_merge(['id' => $id], (array)$payload);
+        $payload = array_merge(['id' => $id], (array) $payload);
 
         $form = $this->app->call($this->getEdit(), $payload);
 
