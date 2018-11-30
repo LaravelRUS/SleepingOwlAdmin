@@ -385,7 +385,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param array|null $payload
-     * @return DisplayInterface|mixed
+     * @return DisplayInterface|mixed|void
      */
     public function fireDisplay(array $payload = [])
     {
@@ -431,15 +431,17 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param array|null $payload
      * @return mixed|void
      */
-    public function fireCreate()
+    public function fireCreate(array $payload = [])
     {
         if (! is_callable($this->getCreate())) {
             return;
         }
 
-        $form = $this->app->call($this->getCreate());
+        $form = $this->app->call($this->getCreate(), $payload);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -477,16 +479,19 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param int|string $id
-     *
+     * @param array|null $payload
      * @return mixed|void
      */
-    public function fireEdit($id)
+    public function fireEdit($id, array $payload = [])
     {
         if (! is_callable($this->getEdit())) {
             return;
         }
 
-        $form = $this->app->call($this->getEdit(), ['id' => $id]);
+        array_unshift($payload, $id);
+
+        $form = $this->app->call($this->getEdit(), $payload);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
