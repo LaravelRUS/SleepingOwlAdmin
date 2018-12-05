@@ -86,7 +86,7 @@ class Columns extends FormElements implements ColumnInterface
         $this->setHtmlAttribute('class', 'row');
 
         $count = $this->getElements()->filter(function (ColumnInterface $column) {
-            return $column->getWidth() === 0;
+            return ! $column->getWidth();
         })->count();
 
         $width = $this->maxWidth - $this->getElements()->sum(function (ColumnInterface $column) {
