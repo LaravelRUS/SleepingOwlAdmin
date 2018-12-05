@@ -90,7 +90,7 @@ class Columns extends FormElements implements ColumnInterface
         })->count();
 
         $width = $this->maxWidth - $this->getElements()->sum(function (ColumnInterface $column) {
-            return $column->getWidth();
+            return is_numeric($column->getWidth()) ? (int)$column->getWidth() : 0;
         });
 
         $this->getElements()->each(function (ColumnInterface $column) use ($width, $count) {

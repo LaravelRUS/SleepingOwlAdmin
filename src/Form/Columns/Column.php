@@ -28,6 +28,8 @@ class Column extends FormElements implements ColumnInterface
     public function initialize()
     {
         parent::initialize();
+
+        $this->setHtmlAttribute('class', $this->getClass());
     }
 
     /**
@@ -100,8 +102,6 @@ class Column extends FormElements implements ColumnInterface
      */
     public function toArray()
     {
-        $this->setHtmlAttribute('class', $this->getClass());
-
         return parent::toArray() + [
             'width' => $this->getWidth(),
             'elements' => $this->getElements()->onlyVisible(),
