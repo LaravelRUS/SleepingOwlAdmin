@@ -291,6 +291,7 @@ class Control extends TableColumn
                     ->sortBy(function (ControlButtonInterface $button) {
                         return $button->getPosition();
                     }),
+                'attributes' => $this->htmlAttributesToString(),
             ];
     }
 }
