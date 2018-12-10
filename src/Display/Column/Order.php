@@ -91,8 +91,9 @@ class Order extends TableColumn implements WithRoutesInterface
      */
     protected function totalCount()
     {
-        if ($this->totalCountValue !== null)
+        if ($this->totalCountValue !== null) {
             return $this->totalCountValue;
+        }
 
         $request = \Request::capture();
         $query = $this->getModelConfiguration()->getRepository()->getQuery();
