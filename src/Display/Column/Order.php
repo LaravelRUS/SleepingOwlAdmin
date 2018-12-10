@@ -21,6 +21,11 @@ class Order extends TableColumn implements WithRoutesInterface
     protected $view = 'column.order';
 
     /**
+     * @var null|int
+     */
+    protected $totalCountValue = null;
+
+    /**
      * Register routes.
      *
      * @param Router $router
@@ -86,14 +91,18 @@ class Order extends TableColumn implements WithRoutesInterface
      */
     protected function totalCount()
     {
+        if ($this->totalCountValue !== null)
+            return $this->totalCountValue;
+
         $request = \Request::capture();
         $query = $this->getModelConfiguration()->getRepository()->getQuery();
         $onDisplay = $this->getModelConfiguration()->onDisplay();
         $onDisplay->getExtensions()->modifyQuery($query);
         $onDisplay->applySearch($query, $request);
         $onDisplay->applyOffset($query, $request);
+        $this->totalCountValue = $query->count();
 
-        return $query->count();
+        return $this->totalCountValue;
     }
 
     /**
