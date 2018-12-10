@@ -22,9 +22,11 @@ trait AdditionalOrderableModel
      */
     public function scopeOrderModel($query)
     {
-        return $query
-            ->where($this->getParentFieldName(), $this->{$this->getParentFieldName()})
-            ->orderBy($this->getOrderField(), 'ASC');
+        $parentFields = (array)$this->getParentFieldName();
+        foreach ($parentFields as $parentFieldName) {
+            $query->where($parentFieldName, $this->{$parentFieldName});
+        }
+        return $query->orderBy($this->getOrderField());
     }
 
     /**
