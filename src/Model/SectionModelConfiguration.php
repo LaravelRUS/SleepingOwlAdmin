@@ -82,7 +82,6 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return $display;
     }
 
-
     /**
      * @param array $payload
      *
@@ -110,7 +109,6 @@ class SectionModelConfiguration extends ModelConfigurationManager
 
         return $form;
     }
-
 
     /**
      * @param       $id
