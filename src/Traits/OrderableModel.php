@@ -110,7 +110,7 @@ trait OrderableModel
      */
     public function scopeOrderModel($query)
     {
-        return $query;
+        return $query->orderBy($this->getOrderField(), 'ASC');
     }
 
     /**
@@ -130,6 +130,6 @@ trait OrderableModel
      */
     public function getOrderField()
     {
-        return 'order';
+        return $this->orderField ?: 'order';
     }
 }

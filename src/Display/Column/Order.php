@@ -86,7 +86,14 @@ class Order extends TableColumn implements WithRoutesInterface
      */
     protected function totalCount()
     {
-        return $this->getModelConfiguration()->getRepository()->getQuery()->count();
+        $request = \Request::capture();
+        $query = $this->getModelConfiguration()->getRepository()->getQuery();
+        $onDisplay = $this->getModelConfiguration()->onDisplay();
+        $onDisplay->getExtensions()->modifyQuery($query);
+        $onDisplay->applySearch($query, $request);
+        $onDisplay->applyOffset($query, $request);
+
+        return $query->count();
     }
 
     /**
