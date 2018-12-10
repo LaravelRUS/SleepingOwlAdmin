@@ -82,16 +82,20 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return $display;
     }
 
+
     /**
+     * @param array $payload
+     *
      * @return mixed|void
      */
-    public function fireCreate()
+    public function fireCreate(array $payload = [])
     {
         if (! method_exists($this, 'onCreate')) {
             return;
         }
 
-        $form = $this->app->call([$this, 'onCreate']);
+        $form = $this->app->call([$this, 'onCreate'], $payload);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -107,18 +111,23 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return $form;
     }
 
+
     /**
-     * @param $id
+     * @param       $id
+     * @param array $payload
      *
      * @return mixed|void
      */
-    public function fireEdit($id)
+    public function fireEdit($id, array $payload = [])
     {
         if (! method_exists($this, 'onEdit')) {
             return;
         }
 
-        $form = $this->app->call([$this, 'onEdit'], ['id' => $id]);
+        $payload = array_merge(['id' => $id], (array) $payload);
+
+        $form = $this->app->call([$this, 'onEdit'], $payload);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
