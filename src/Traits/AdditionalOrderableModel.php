@@ -26,7 +26,7 @@ trait AdditionalOrderableModel
         foreach ($parentFields as $parentFieldName) {
             $query->where($parentFieldName, $this->{$parentFieldName});
         }
-        return $query->orderBy($this->getOrderField());
+        return $query->orderBy($this->getOrderField(), 'ASC');
     }
 
     /**
