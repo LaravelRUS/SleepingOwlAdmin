@@ -384,10 +384,10 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param array|null $payload
+     * @param mixed $payload
      * @return DisplayInterface|mixed|void
      */
-    public function fireDisplay(array $payload = [])
+    public function fireDisplay($payload = [])
     {
         if (! is_callable($this->getDisplay())) {
             return;
@@ -431,10 +431,10 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param array|null $payload
+     * @param mixed $payload
      * @return mixed|void
      */
-    public function fireCreate(array $payload = [])
+    public function fireCreate($payload = [])
     {
         if (! is_callable($this->getCreate())) {
             return;
@@ -479,10 +479,10 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param int|string $id
-     * @param array|null $payload
+     * @param mixed $payload
      * @return mixed|void
      */
-    public function fireEdit($id, array $payload = [])
+    public function fireEdit($id, $payload = [])
     {
         if (! is_callable($this->getEdit())) {
             return;
