@@ -60,7 +60,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param array $payload
+     * @param mixed $payload
      * @return mixed|DisplayInterface|void
      */
     public function fireDisplay($payload = [])
