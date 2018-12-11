@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Request;
 use Illuminate\Routing\Router;
+use SleepingOwl\Admin\Traits\PanelControl;
 use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Display\Tree\OrderTreeType;
 use SleepingOwl\Admin\Repositories\TreeRepository;
@@ -16,6 +17,8 @@ use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
  */
 class DisplayTree extends Display implements WithRoutesInterface
 {
+    use PanelControl;
+
     /**
      * @param Router $router
      */
@@ -102,6 +105,8 @@ class DisplayTree extends Display implements WithRoutesInterface
         parent::__construct();
 
         $this->treeType = $treeType;
+
+        $this->setPanelClass('panel-tree');
     }
 
     public function initialize()
@@ -321,6 +326,7 @@ class DisplayTree extends Display implements WithRoutesInterface
                 'controls'           => [app('sleeping_owl.table.column')->treeControl()],
                 'newEntryButtonText' => $this->getNewEntryButtonText(),
                 'max_depth'          => $this->getMaxDepth(),
+                'panel_class'        => $this->getPanelClass(),
             ];
     }
 

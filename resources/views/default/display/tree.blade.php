@@ -1,6 +1,6 @@
 @yield('before.panel')
 
-<div class="panel panel-default">
+<div class="panel panel-default {!! $panel_class !!}">
     <div class="panel-heading">
         @if ($creatable)
             <a class="btn btn-primary" href="{{ $createUrl }}">
