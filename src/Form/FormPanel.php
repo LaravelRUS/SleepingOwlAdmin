@@ -7,9 +7,12 @@ use SleepingOwl\Admin\Form\Element\Html;
 use SleepingOwl\Admin\Form\Panel\Footer;
 use SleepingOwl\Admin\Form\Panel\Header;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Traits\PanelControl;
 
 class FormPanel extends FormDefault
 {
+    use PanelControl;
+
     const POSITION_HEADER = 'header';
     const POSITION_BODY = 'body';
     const POSITION_FOOTER = 'footer';
@@ -22,13 +25,30 @@ class FormPanel extends FormDefault
     protected $view = 'form.panel';
 
     /**
+     * @var string
+     */
+    protected $panelClass = null;
+
+    /**
+     * FormPanel constructor.
+     *
+     * @param array $elements
+     */
+    public function __construct(array $elements = [])
+    {
+        parent::__construct($elements);
+
+        $this->setPanelClass('panel-form');
+    }
+
+    /**
      * Initialize form.
      */
     public function initialize()
     {
         $this->getButtons()->setHtmlAttribute('class', 'panel-footer');
 
-        $this->setHtmlAttribute('class', 'panel panel-default');
+        $this->setHtmlAttribute('class', 'panel panel-default ' . $this->getPanelClass());
 
         parent::initialize();
     }

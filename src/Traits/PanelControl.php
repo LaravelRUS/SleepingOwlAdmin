@@ -7,7 +7,7 @@ trait PanelControl
     /**
      * @var string|null
      */
-    public $panelClass = null;
+    protected $panelClass = null;
 
     /**
      * @return string
