@@ -18,7 +18,8 @@ class FormTabbed extends FormDefault
      *
      * @param array $elements
      */
-    public function __construct(array $elements = []) {
+    public function __construct(array $elements = [])
+    {
         parent::__construct($elements);
 
         $this->setPanelClass('panel-form-tabbed');
