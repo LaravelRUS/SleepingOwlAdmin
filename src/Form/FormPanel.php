@@ -25,11 +25,6 @@ class FormPanel extends FormDefault
     protected $view = 'form.panel';
 
     /**
-     * @var string
-     */
-    protected $panelClass = null;
-
-    /**
      * FormPanel constructor.
      *
      * @param array $elements
