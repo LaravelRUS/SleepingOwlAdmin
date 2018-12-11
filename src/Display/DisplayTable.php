@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Traits\PanelControl;
 
 /**
  * Class DisplayTable.
@@ -23,6 +24,8 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
  */
 class DisplayTable extends Display
 {
+    use PanelControl;
+
     /**
      * @var string
      */
@@ -186,6 +189,7 @@ class DisplayTable extends Display
 
         $params['extensions'] = $this->getExtensions()->renderable()->sortByOrder();
         $params['newEntryButtonText'] = $this->getNewEntryButtonText();
+        $params['panel_class'] = $this->getPanelClass();
 
         return $params;
     }
