@@ -60,9 +60,10 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return DisplayInterface|mixed
+     * @param array $payload
+     * @return mixed|DisplayInterface|void
      */
-    public function fireDisplay(array $payload = [])
+    public function fireDisplay($payload = [])
     {
         if (! method_exists($this, 'onDisplay')) {
             return;
@@ -83,11 +84,10 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param array $payload
-     *
+     * @param mixed $payload
      * @return mixed|void
      */
-    public function fireCreate(array $payload = [])
+    public function fireCreate($payload = [])
     {
         if (! method_exists($this, 'onCreate')) {
             return;
@@ -111,12 +111,12 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param       $id
-     * @param array $payload
+     * @param int   $id
+     * @param mixed $payload
      *
      * @return mixed|void
      */
-    public function fireEdit($id, array $payload = [])
+    public function fireEdit($id, $payload = [])
     {
         if (! method_exists($this, 'onEdit')) {
             return;
