@@ -48,7 +48,7 @@ class FormPanel extends FormDefault
     {
         $this->getButtons()->setHtmlAttribute('class', 'panel-footer');
 
-        $this->setHtmlAttribute('class', 'panel panel-default ' . $this->getPanelClass());
+        $this->setHtmlAttribute('class', 'panel panel-default '.$this->getPanelClass());
 
         parent::initialize();
     }
