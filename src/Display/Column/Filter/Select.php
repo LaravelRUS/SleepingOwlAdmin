@@ -39,6 +39,11 @@ class Select extends BaseColumnFilter
     protected $sortable = true;
 
     /**
+     * @var bool
+     */
+    protected $defaultValue = null;
+
+    /**
      * @param array|Model|string|null $options
      * @param string|null $title
      */
@@ -148,6 +153,26 @@ class Select extends BaseColumnFilter
     }
 
     /**
+     * @return mixed
+     */
+    public function getDefault()
+    {
+        return $this->defaultValue;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function setDefault($value)
+    {
+        $this->defaultValue = $value;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getPlaceholder()
@@ -173,8 +198,9 @@ class Select extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-            'options'     => $this->getOptions(),
-        ];
+                'options' => $this->getOptions(),
+                'default' => $this->getDefault(),
+            ];
     }
 
     /**
