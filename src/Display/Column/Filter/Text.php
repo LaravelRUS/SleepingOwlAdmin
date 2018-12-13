@@ -74,8 +74,9 @@ class Text extends BaseColumnFilter
      */
     public function toArray()
     {
-        if ($this->getDefault())
+        if ($this->getDefault()) {
             $this->setHtmlAttribute('value', $this->getDefault());
+        }
 
         return parent::toArray() + [
                 'placeholder' => $this->getPlaceholder(),
