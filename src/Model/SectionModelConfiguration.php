@@ -69,7 +69,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $display = $this->app->call([$this, 'onDisplay'], $payload);
+        $display = $this->app->call([$this, 'onDisplay'], ['payload' => $payload]);
 
         if ($display instanceof DisplayDatatablesAsync) {
             $display->setPayload($payload);
@@ -93,7 +93,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $form = $this->app->call([$this, 'onCreate'], $payload);
+        $form = $this->app->call([$this, 'onCreate'], ['payload' => $payload]);
 
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
@@ -122,7 +122,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $payload = array_merge(['id' => $id], (array) $payload);
+        $payload = array_merge(['id' => $id], ['payload' => $payload]);
 
         $form = $this->app->call([$this, 'onEdit'], $payload);
 
