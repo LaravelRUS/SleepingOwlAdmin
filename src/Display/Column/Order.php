@@ -87,7 +87,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * @return mixed
+     * @return int
+     * @throws \Exception
      */
     protected function totalCount()
     {
@@ -96,8 +97,20 @@ class Order extends TableColumn implements WithRoutesInterface
         }
 
         $request = \Request::capture();
-        $query = $this->getModelConfiguration()->getRepository()->getQuery();
-        $onDisplay = $this->getModelConfiguration()->onDisplay();
+        $modelConfiguration = $this->getModelConfiguration();
+        $query = $modelConfiguration->getRepository()->getQuery();
+        if ($modelConfiguration instanceof \SleepingOwl\Admin\Section) {
+            $onDisplay = $modelConfiguration->onDisplay();
+        } elseif ($modelConfiguration instanceof \SleepingOwl\Admin\Model\ModelConfiguration) {
+            $onDisplay = $modelConfiguration->getDisplay();
+            $onDisplay = call_user_func($onDisplay, ['payload' => \Input::get('payload')]);
+        } else {
+            /**
+             * @see https://sleepingowladmin.ru/docs/model_configuration
+             * @see https://sleepingowladmin.ru/docs/model_configuration_section
+             */
+            throw new \Exception('Unknown type of the Model Configuration. Use Section or AdminSection::registerModel()');
+        }
         $onDisplay->getExtensions()->modifyQuery($query);
         $onDisplay->applySearch($query, $request);
         $onDisplay->applyOffset($query, $request);
