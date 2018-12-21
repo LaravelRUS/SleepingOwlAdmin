@@ -1,6 +1,11 @@
 .tab-content {
-  .tab-pane {
-    margin-top: 1em;
-  }
+  margin-bottom: 2em;
 
+  .tab-pane {
+    padding-top: 1em;
+    background-color: $white;
+    border: 1px solid $gray-300;
+    border-top: 0;
+    padding: 0.5em;
+  }
 }

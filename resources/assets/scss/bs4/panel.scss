@@ -1,5 +1,14 @@
 .panel-heading {
   margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 
-  
+  .panel-footer {
+    display: flex;
+    min-width: 25em;
+    justify-content: space-around;
+  }
+
 }

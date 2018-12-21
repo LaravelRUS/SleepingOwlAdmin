@@ -8,16 +8,8 @@
 		</a>
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-<li class="nav-item">
-	<a href="pages/calendar.html" class="nav-link">
-		<i class="nav-icon fa fa-calendar"></i>
-		<p>
-			Calendar
-			<span class="badge badge-info right">2</span>
-		</p>
-	</a>
-</li>
-<li class="nav-header">EXAMPLES</li>
+
+				<li class="nav-header">EXAMPLES</li>
 
 				@stack('sidebar.ul.top')
 				{!! $template->renderNavigation() !!}

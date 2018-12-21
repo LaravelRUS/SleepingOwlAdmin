@@ -1,21 +1,22 @@
 @if($hasChild)
-<li class="nav-item has-treeview" {!! $attributes !!}>
-    <a href="#" class="nav-link">
+<li class="nav-item has-treeview {!! ($isActive) ? 'menu-open' : '' !!}">
+    <a href="#" class="nav-link" {!! $attributes !!}>
         {!! $icon !!}
-        <p>{!! $title !!}</p>
-        <i class="fa fa-angle-left pull-right"></i>
-        {{-- <span class="pull-right-container">
+        <p>
+          {!! $title !!}
+          <span class="pull-right-container">
 
             @if($badges->count() > 0)
-            <span class="sidebar-page-badges">
-            @foreach($badges as $badge)
-                    {!! $badge->render() !!}
+              <span class="sidebar-page-badges">
+                @foreach($badges as $badge)
+                  {!! $badge->render() !!}
                 @endforeach
-            </span>
+              </span>
             @endif
-        </span> --}}
+          </span>
+          <i class="fa fa-angle-left right"></i>
+        </p>
     </a>
-
     <ul class="nav nav-treeview">
         @foreach($pages as $page)
            {!! $page->render() !!}
@@ -23,20 +24,22 @@
     </ul>
 </li>
 @else
-<li {!! $attributes !!} class="nav-item">
-    <a href="{{ $url }}" class="nav-link">
+<li class="nav-item">
+    <a href="{{ $url }}" class="nav-link {!! ($isActive) ? 'active' : '' !!}" {!! $attributes !!}>
         {!! $icon !!}
-        <p>{!! $title !!}</p>
-
-        {{-- @if($badges->count() > 0)
-        <span class="pull-right-container">
-            <span class="sidebar-page-badges">
-            @foreach($badges as $badge)
-                {!! $badge->render() !!}
-            @endforeach
+        <p>
+          {!! $title !!}
+          @if($badges->count() > 0)
+            <span class="pull-right-container">
+              <span class="sidebar-page-badges">
+                @foreach($badges as $badge)
+                  {!! $badge->render() !!}
+                @endforeach
+              </span>
             </span>
-        </span>
-        @endif --}}
+          @endif
+        </p>
+
     </a>
 </li>
 @endif

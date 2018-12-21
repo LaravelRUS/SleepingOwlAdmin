@@ -1,4 +1,6 @@
 .pagination {
+  display: flex;
+  flex-wrap: wrap;
   margin: 1em 0;
 
   li {
@@ -34,8 +36,12 @@
     & > span:hover {
       border-color: transparent;
       color: $gray-500;
-      cursor: no-drop;
+      cursor: default;
       background-color: transparent;
     }
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
   }
 }
