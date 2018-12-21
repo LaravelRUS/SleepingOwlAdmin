@@ -36,7 +36,7 @@ class ControlLink implements ControlButtonInterface
     /**
      * @var string
      */
-    protected $class = 'btn btn-xs';
+    protected $class = 'btn btn-sm';
 
     /**
      * @var Closure|string

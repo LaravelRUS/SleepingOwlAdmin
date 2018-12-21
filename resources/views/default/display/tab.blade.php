@@ -1,5 +1,5 @@
-<li {!! $attributes !!}>
-    <a href="#{{ $name }}" aria-controls="{{ $name }}" role="tab" data-toggle="tab">
+{{-- <li {!! $attributes !!} class="nav-item">
+    <a href="#{{ $name }}" aria-controls="{{ $name }}" role="tab" data-toggle="tab" class="nav-link">
         @if($icon)
             {!! $icon !!}
         @endif
@@ -9,4 +9,8 @@
             {!! $badge->render() !!}
         @endif
     </a>
-</li>
+</li> --}}
+
+<a class="nav-item nav-link {!! ($active) ? 'active' : '' !!}" id="{{ $name }}-tab" data-toggle="tab" href="#{{ $name }}" role="tab" aria-controls="{{ $name }}" aria-selected="true">
+  {{ $label }}
+</a>

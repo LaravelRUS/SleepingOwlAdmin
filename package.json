@@ -10,9 +10,9 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
-    "admin-lte": "^2.4.3",
+    "ajv": "^6.6.1",
     "axios": "^0.18.0",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.3",
     "bootstrap-daterangepicker": "^3.0.3",
     "datatables.net": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
@@ -21,10 +21,11 @@
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "font-awesome": "^4.6.3",
     "i18next": "^11.5.0",
+    "imagemin": "^6.0.0",
     "imagemin-pngquant": "5.0.1",
     "jquery": "^3.1.1",
     "jquery-form": "^4.2.2",
-    "laravel-mix": "^2.1.11",
+    "laravel-mix": "^2.1.14",
     "lodash": "^4.17.4",
     "magnific-popup": "^1.1.0",
     "moment": "^2.19.1",
@@ -40,6 +41,7 @@
     "x-editable": "^1.5.1"
   },
   "devDependencies": {
+    "bootstrap-vue": "^2.0.0-rc.11",
     "cross-env": "^5.0.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",

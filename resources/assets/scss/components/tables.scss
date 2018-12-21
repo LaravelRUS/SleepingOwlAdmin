@@ -1,0 +1,42 @@
+@mixin table-color($color, $text: #fff) {
+  table {
+    border-top-color: darken(desaturate($color, 15%), 12%) !important;
+  }
+
+  .table-header,
+  thead,
+  thead th,
+  thead tr {
+    border-color: darken(desaturate($color, 15%), 12%) !important;
+    color: $text;
+  }
+
+  thead th,
+  thead tr {
+    background: darken(desaturate($color, 8%), 6%);
+  }
+
+  .table-header {
+    background: $color;
+  }
+}
+
+.table-primary {
+  @include table-color($primary);
+}
+
+.table-success {
+  @include table-color($success);
+}
+
+.table-danger {
+  @include table-color($danger);
+}
+
+.table-warning {
+  @include table-color($warning);
+}
+
+.table-info {
+  @include table-color($info);
+}

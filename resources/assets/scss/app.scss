@@ -1,0 +1,39 @@
+//new
+@import "variable";
+
+
+// @import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
+@import "~bootstrap/scss/bootstrap";
+@import "fix_bs3";
+
+
+
+// old style
+@import "~magnific-popup/src/css/main";
+@import "~x-editable/dist/jquery-editable/css/jquery-editable.css";
+@import "~bootstrap-daterangepicker/daterangepicker.css";
+// @import "libs/dataTables";
+@import "libs/nestable";
+@import "libs/dropzone";
+@import '~select2/src/scss/core';
+@import "libs/datetimepicker";
+@import "libs/vue-multiselect";
+@import "~noty/lib/noty.css";
+@import "~noty/lib/themes/metroui.css";
+
+//new
+@import "font";
+
+
+
+@import "~font-awesome/scss/font-awesome";
+@import "~admin-lte/build/scss/AdminLTE-raw.scss";
+// @import "libs/AdminLTE";
+@import "components/form-elements";
+// @import "components/tables";
+
+//bootstrap4
+@import "bs4/panel";
+@import "bs4/tabs";
+
+@import "bs4/datatables";

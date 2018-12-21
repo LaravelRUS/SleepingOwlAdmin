@@ -1,10 +1,10 @@
 @if($hasChild)
-<li {!! $attributes !!}>
-    <a href="#" >
+<li class="nav-item has-treeview" {!! $attributes !!}>
+    <a href="#" class="nav-link">
         {!! $icon !!}
-        <span>{!! $title !!}</span>
-        <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
+        <p>{!! $title !!}</p>
+        <i class="fa fa-angle-left pull-right"></i>
+        {{-- <span class="pull-right-container">
 
             @if($badges->count() > 0)
             <span class="sidebar-page-badges">
@@ -13,30 +13,30 @@
                 @endforeach
             </span>
             @endif
-        </span>
+        </span> --}}
     </a>
 
-    <ul class="treeview-menu">
+    <ul class="nav nav-treeview">
         @foreach($pages as $page)
            {!! $page->render() !!}
         @endforeach
     </ul>
 </li>
 @else
-<li {!! $attributes !!}>
-    <a href="{{ $url }}">
+<li {!! $attributes !!} class="nav-item">
+    <a href="{{ $url }}" class="nav-link">
         {!! $icon !!}
-        <span>{!! $title !!}</span>
+        <p>{!! $title !!}</p>
 
-        @if($badges->count() > 0)
+        {{-- @if($badges->count() > 0)
         <span class="pull-right-container">
             <span class="sidebar-page-badges">
             @foreach($badges as $badge)
                 {!! $badge->render() !!}
             @endforeach
             </span>
-        </span>    
-        @endif
+        </span>
+        @endif --}}
     </a>
 </li>
 @endif
