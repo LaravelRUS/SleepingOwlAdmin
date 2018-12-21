@@ -1,13 +1,16 @@
-<div class="input-date form-group input-group" style="width:{{ $width }}px">
+<div class="input-group input-date form-group" style="width:{{ $width }}px">
 	<input
-			data-date-format="{{ $pickerFormat }}"
-			data-date-useseconds="{{ $seconds ? 'true' : 'false' }}"
-			class="form-control column-filter"
-			type="text"
-			placeholder="{{ $placeholder }}"
-			{!! $attributes !!} >
+		data-date-format="{{ $pickerFormat }}"
+		data-date-useseconds="{{ $seconds ? 'true' : 'false' }}"
+		class="form-control column-filter"
+		type="text"
+		placeholder="{{ $placeholder }}"
+		aria-label="{{ $placeholder }}"
+		{!! $attributes !!} />
 
-	<span class="input-group-addon">
-		<span class="fa fa-calendar"></span>
-	</span>
+	<div class="input-group-prepend input-group-addon">
+		<div class="input-group-text">
+			<span class="fa fa-calendar"></span>
+		</div>
+	</div>
 </div>

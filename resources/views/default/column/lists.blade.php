@@ -1,5 +1,5 @@
 @foreach ($values as $value)
-<span class="label label-info">{{ $value }}</span>
+<span class="badge badge-info">{{ $value }}</span>
 @endforeach
 
 {!! $append !!}

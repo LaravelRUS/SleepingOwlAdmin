@@ -21387,3 +21387,65 @@ a.text-muted:hover {
   margin-bottom: 1em;
 }
 
+.tab-content .tab-pane {
+  margin-top: 1em;
+}
+
+.dataTables_filter {
+  margin-bottom: 1em;
+}
+
+.dataTables_filter label > input {
+  margin-left: 1em;
+}
+
+.btn-group-xs > .btn,
+.btn-xs {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.6rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+.pagination {
+  margin: 1em 0;
+}
+
+.pagination li {
+  margin-bottom: 0.5em;
+}
+
+.pagination li > span,
+.pagination li a {
+  padding: 0.3em 0.8em;
+  border: 1px solid #adb5bd;
+  color: #343a40;
+  border-radius: 0.2rem;
+  background-color: #f8f9fa;
+  display: block;
+  margin-right: 0.1em;
+}
+
+.pagination li > span:hover,
+.pagination li a:hover {
+  text-decoration: none;
+  color: #000;
+  background-color: #ced4da;
+}
+
+.pagination li.active > span,
+.pagination li.active > span:hover {
+  background-color: rgba(0, 123, 255, 0.2);
+  color: #007bff;
+}
+
+.pagination li > span,
+.pagination li > span:hover,
+.pagination li.disabled > span,
+.pagination li.disabled > span:hover {
+  border-color: transparent;
+  color: #adb5bd;
+  cursor: no-drop;
+  background-color: transparent;
+}
+

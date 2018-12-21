@@ -1,0 +1,41 @@
+.pagination {
+  margin: 1em 0;
+
+  li {
+    margin-bottom: 0.5em;
+
+    & > span,
+    a {
+      padding: 0.3em 0.8em;
+      border: 1px solid $gray-500;
+      color: $gray-800;
+      border-radius: 0.2rem;
+      background-color: $gray-100;
+      display: block;
+      margin-right: 0.1em;
+
+      &:hover {
+        text-decoration: none;
+        color: $black;
+        background-color: $gray-400;
+      }
+    }
+
+    &.active > span,
+    &.active > span:hover {
+      background-color: transparentize($primary, 0.8);
+      color: $primary;
+    }
+  }
+
+  li,
+  li.disabled {
+    & > span,
+    & > span:hover {
+      border-color: transparent;
+      color: $gray-500;
+      cursor: no-drop;
+      background-color: transparent;
+    }
+  }
+}

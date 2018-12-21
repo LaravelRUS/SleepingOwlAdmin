@@ -1,3 +1,9 @@
-.datatables {
+.dataTables_filter {
+  margin-bottom: 1em;
 
+  label > input {
+    margin-left: 1em;
+  }
 }
+
+.datatables {}

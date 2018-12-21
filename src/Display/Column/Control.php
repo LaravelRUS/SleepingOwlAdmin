@@ -19,7 +19,7 @@ class Control extends TableColumn
     /**
      * @var string
      */
-    protected $width = '90px';
+    protected $width = '110px';
 
     /**
      * @var Collection
