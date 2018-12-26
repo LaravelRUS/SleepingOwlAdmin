@@ -1,27 +1,27 @@
 <?php
 
 namespace SleepingOwl\Admin\Navigation;
+
 use KodiComponents\Support\HtmlAttributes;
 
 class Badge extends \KodiComponents\Navigation\Badge
 {
+    // fix KodiComponents for bootstrap 4
+    // http://bootstrap-4.ru/docs/4.0/migration/#labels-and-badges
+    use HtmlAttributes;
 
-  // fix KodiComponents for bootstrap 4
-  // http://bootstrap-4.ru/docs/4.0/migration/#labels-and-badges
-  use HtmlAttributes;
+    public function __construct($value = null, $priority = 0)
+    {
+        if (! is_null($value)) {
+            $this->setValue($value);
+        }
 
-  public function __construct($value = null, $priority = 0)
-  {
-    if (! is_null($value)) {
-      $this->setValue($value);
+        $this->setPriority($priority);
+
+        $this->setHtmlAttribute('class', 'badge');
     }
 
-    $this->setPriority($priority);
-
-    $this->setHtmlAttribute('class', 'badge');
-  }
-
-  // end fix
+    // end fix
 
     public $view = null;
 
