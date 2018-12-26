@@ -1,16 +1,11 @@
-{{-- <li {!! $attributes !!} class="nav-item">
-    <a href="#{{ $name }}" aria-controls="{{ $name }}" role="tab" data-toggle="tab" class="nav-link">
-        @if($icon)
-            {!! $icon !!}
-        @endif
+<a class="nav-item nav-link {!! ($active) ? 'active' : '' !!}" data-toggle="tab" href="#nav-{{ $name }}" aria-selected="true" aria-controls="nav-{{ $name }}" {!! $attributes !!}>
+  {{-- ##fix## setHtmlAttribute не работает на добавление классов (только role="tab") --}}
+  @if($icon)
+      {!! $icon !!}
+  @endif
 
-        {{ $label }}
-        @if($badge)
-            {!! $badge->render() !!}
-        @endif
-    </a>
-</li> --}}
-
-<a class="nav-item nav-link {!! ($active) ? 'active' : '' !!}" id="{{ $name }}-tab" data-toggle="tab" href="#{{ $name }}" role="tab" aria-controls="{{ $name }}" aria-selected="true">
   {{ $label }}
+  @if($badge)
+      {!! $badge->render() !!}
+  @endif
 </a>

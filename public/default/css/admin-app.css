@@ -21619,6 +21619,7 @@ textarea::-webkit-scrollbar-track {
   position: absolute;
   left: 50%;
   top: 0;
+  z-index: 999;
 }
 
 .dataTables_processing i {
