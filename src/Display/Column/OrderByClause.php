@@ -21,6 +21,16 @@ class OrderByClause implements OrderByClauseInterface
     protected $name;
 
     /**
+     * @var string|null
+     */
+    protected $sortedColumnAlias = null;
+
+    /**
+     * @var string|null
+     */
+    protected $direction = null;
+
+    /**
      * OrderByClause constructor.
      *
      * @param string|Closure $name
@@ -98,23 +108,36 @@ class OrderByClause implements OrderByClauseInterface
      */
     protected function loadRelationOrder(Builder $query, $direction)
     {
+        /** @var Relation $relationClass */
         $relations = collect(explode('.', $this->name));
+        $loop = 0;
+        if ($relations->count() >= 2) {
 
-        //Without Eager Load
-        //With Eager Load
-        if ($relations->count() == 2) {
-            $model = $query->getModel();
-            $relation = $relations->first();
+            $query->select($query->getModel()->getTable().'.*');
 
-            if (method_exists($model, $relation)) {
+            do {
 
-                /** @var Relation $relationClass */
-                $relationClass = $model->{$relation}();
-                $relationModel = $relationClass->getRelated();
+                $model = !$loop++ ? $query->getModel() : $relationClass->getModel();
+                $relation = $relations->shift();
 
-                call_user_func([$this, implode('', ['load', class_basename(get_class($relationClass))])],
-                    $relations, $relationClass, $relationModel, $model, $query, $direction);
-            }
+                if (method_exists($model, $relation)) {
+
+                    $relationClass = $model->{$relation}();
+                    $relationModel = $relationClass->getRelated();
+
+                    $loadRelationMethod = implode('', ['load', class_basename(get_class($relationClass))]);
+                    call_user_func([$this, $loadRelationMethod],
+                        $relations, $relationClass, $relationModel, $model, $query, $direction);
+
+                } else {
+
+                    break;
+                }
+
+            } while (true);
+
+            if ($this->sortedColumnAlias)
+                $query->orderBy(DB::raw($this->sortedColumnAlias), $direction);
         }
     }
 
@@ -183,9 +206,13 @@ class OrderByClause implements OrderByClauseInterface
         $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable.'.*', DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
+        $this->sortedColumnAlias = $sortedColumnAlias;
+        $this->direction = $direction;
+
+        $query
+            ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-            ->orderBy(DB::raw($sortedColumnAlias), $direction);
+        ;
     }
 
     /**
@@ -196,7 +223,6 @@ class OrderByClause implements OrderByClauseInterface
      * @param Model $model
      * @param Builder $query
      * @param $direction
-     * @return array
      */
     protected function loadBelongsTo(
         Collection $relations,
@@ -217,8 +243,12 @@ class OrderByClause implements OrderByClauseInterface
         $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable.'.*', DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
+        $this->sortedColumnAlias = $sortedColumnAlias;
+        $this->direction = $direction;
+
+        $query
+            ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-            ->orderBy(DB::raw($sortedColumnAlias), $direction);
+        ;
     }
 }
