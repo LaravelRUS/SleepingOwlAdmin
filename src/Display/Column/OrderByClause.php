@@ -112,28 +112,22 @@ class OrderByClause implements OrderByClauseInterface
         $relations = collect(explode('.', $this->name));
         $loop = 0;
         if ($relations->count() >= 2) {
-
             $query->select($query->getModel()->getTable().'.*');
 
             do {
-
                 $model = ! $loop++ ? $query->getModel() : $relationClass->getModel();
                 $relation = $relations->shift();
 
                 if (method_exists($model, $relation)) {
-
                     $relationClass = $model->{$relation}();
                     $relationModel = $relationClass->getRelated();
 
                     $loadRelationMethod = implode('', ['load', class_basename(get_class($relationClass))]);
                     call_user_func([$this, $loadRelationMethod],
                         $relations, $relationClass, $relationModel, $model, $query, $direction);
-
                 } else {
-
                     break;
                 }
-
             } while (true);
 
             if ($this->sortedColumnAlias) {
