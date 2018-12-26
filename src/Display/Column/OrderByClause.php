@@ -117,7 +117,7 @@ class OrderByClause implements OrderByClauseInterface
 
             do {
 
-                $model = !$loop++ ? $query->getModel() : $relationClass->getModel();
+                $model = ! $loop++ ? $query->getModel() : $relationClass->getModel();
                 $relation = $relations->shift();
 
                 if (method_exists($model, $relation)) {
@@ -136,8 +136,9 @@ class OrderByClause implements OrderByClauseInterface
 
             } while (true);
 
-            if ($this->sortedColumnAlias)
+            if ($this->sortedColumnAlias) {
                 $query->orderBy(DB::raw($this->sortedColumnAlias), $direction);
+            }
         }
     }
 
@@ -211,8 +212,7 @@ class OrderByClause implements OrderByClauseInterface
 
         $query
             ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
-            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-        ;
+            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left');
     }
 
     /**
@@ -248,7 +248,6 @@ class OrderByClause implements OrderByClauseInterface
 
         $query
             ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
-            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-        ;
+            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left');
     }
 }
