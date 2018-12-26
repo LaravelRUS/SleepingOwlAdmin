@@ -33,7 +33,6 @@
 @import "components/tables";
 
 //bootstrap4
-@import "bs4/_fix_bootstrap4";
 @import "bs4/body";
 @import "bs4/scrollbar";
 @import "bs4/panel";
@@ -41,3 +40,8 @@
 @import "bs4/datatables";
 @import "bs4/button";
 @import "bs4/pagination";
+@import "bs4/order";
+
+//fix
+@import "bs4/fix_bootstrap4";
+@import "bs4/fix_form";

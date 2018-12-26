@@ -1,5 +1,5 @@
 <div class="form-group form-element-upload {{ $errors->has($name) ? 'has-error' : '' }} well">
-    <label for="{{ $name }}" class="control-label">
+    <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
         {{ $label }}
 
         @if($required)

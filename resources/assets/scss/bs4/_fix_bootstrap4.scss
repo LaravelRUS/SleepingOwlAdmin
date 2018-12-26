@@ -5,7 +5,32 @@
   }
 }
 
-
 .form-elements {
   width: 100%;
+}
+
+.popover {
+  min-width: 3em;
+  min-height: 2em;
+}
+
+.mfp-bg {
+  z-index: 2000;
+}
+
+.mfp-wrap {
+  z-index: 2001;
+}
+
+.table thead th {
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.swal2-header {
+  overflow: hidden;
+}
+
+.swal2-popup .swal2-title {
+  word-break: break-all;
 }

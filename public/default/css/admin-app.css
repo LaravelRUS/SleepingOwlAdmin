@@ -21262,10 +21262,10 @@ a.text-muted:hover {
 
 .form-element-errors {
   border-radius: 4px;
-  color: #cc0000;
+  color: #d73925;
   font-size: 13px;
   padding: 10px 10px 10px 30px;
-  background: whitesmoke;
+  background: #fff;
   position: relative;
   margin-top: 11px;
 }
@@ -21278,7 +21278,7 @@ a.text-muted:hover {
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-bottom: 6px solid whitesmoke;
+  border-bottom: 6px solid #fff;
 }
 
 .form-element-helptext {
@@ -21287,13 +21287,24 @@ a.text-muted:hover {
 }
 
 .form-element-required {
-  color: red;
+  color: #d73925;
   vertical-align: super;
 }
 
 .form-element-multiselect.has-error .select2-selection,
 .form-element-select.has-error .select2-selection {
-  border-color: red !important;
+  border-color: #d73925 !important;
+}
+
+.form-element-files.dropzone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .form-element-file .form-element-helptext,
@@ -21308,7 +21319,7 @@ a.text-muted:hover {
 .form-element-file .form-element-helptext,
 .form-element-image .form-element-helptext,
 .form-element-images .form-element-helptext {
-  background: whitesmoke;
+  background: #f8f9fa;
   padding: 3px 6px;
 }
 
@@ -21325,9 +21336,9 @@ a.text-muted:hover {
  */
 
 .form-element-files__item {
-  float: left;
-  width: 206px;
-  border: 1px solid #d8d8d8;
+  max-width: 206px;
+  width: 100%;
+  border: 1px solid #dee2e6;
   margin-bottom: 10px;
   margin-right: 10px;
   padding: 3px;
@@ -21341,7 +21352,7 @@ a.text-muted:hover {
 
 .form-element-files__info {
   padding: 10px;
-  background: #f4f4f4;
+  background: #f8f9fa;
   height: 50px;
 }
 
@@ -21353,13 +21364,12 @@ a.text-muted:hover {
 
 .form-element-files__file {
   font-size: 65px;
-  color: #666;
+  color: #6c757d;
   background: #fff;
   padding: 20px 10px;
 }
 
 .form-element-files__image {
-  background: #000;
   height: 200px;
   overflow: hidden;
 }
@@ -21367,6 +21377,8 @@ a.text-muted:hover {
 .form-element-files__image > img {
   width: auto;
   max-height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 /**
@@ -21517,15 +21529,6 @@ a.text-muted:hover {
   background: #17a2b8;
 }
 
-.table td,
-.table th {
-  vertical-align: middle;
-}
-
-.form-elements {
-  width: 100%;
-}
-
 .clearfix {
   display: block;
 }
@@ -21633,6 +21636,7 @@ table.dataTable thead .sorting_desc,
 table.dataTable thead .sorting_desc_disabled {
   cursor: pointer;
   position: relative;
+  padding-right: 1.8em;
 }
 
 table.dataTable thead .sorting:after,
@@ -21646,9 +21650,10 @@ table.dataTable thead .sorting_desc:before,
 table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
   position: absolute;
-  bottom: 0.9em;
   display: block;
   opacity: 0.3;
+  top: 50%;
+  margin-top: -0.5em;
 }
 
 table.dataTable thead .sorting:before,
@@ -21728,15 +21733,20 @@ table.dataTable thead .sorting_desc_disabled:after {
 }
 
 .pagination li.active > span,
-.pagination li.active > span:hover {
+.pagination li.active > span:hover,
+.pagination li.paginate_button.active > a {
+  cursor: default;
+  border-color: transparent;
   background-color: rgba(60, 141, 188, 0.2);
   color: #3c8dbc;
 }
 
 .pagination li > span,
 .pagination li > span:hover,
+.pagination li.disabled > a,
 .pagination li.disabled > span,
-.pagination li.disabled > span:hover {
+.pagination li.disabled > span:hover,
+.pagination li.disabled.disabled > a {
   border-color: transparent;
   color: #adb5bd;
   cursor: default;
@@ -21749,5 +21759,72 @@ table.dataTable thead .sorting_desc_disabled:after {
         -ms-flex-pack: center;
             justify-content: center;
   }
+}
+
+.order-block {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.order-block form {
+  padding: 0 0.5em;
+}
+
+.order-block form .btn {
+  min-width: 2em;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.form-elements {
+  width: 100%;
+}
+
+.popover {
+  min-width: 3em;
+  min-height: 2em;
+}
+
+.mfp-bg {
+  z-index: 2000;
+}
+
+.mfp-wrap {
+  z-index: 2001;
+}
+
+.table thead th {
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.swal2-header {
+  overflow: hidden;
+}
+
+.swal2-popup .swal2-title {
+  word-break: break-all;
+}
+
+.form-group label {
+  position: relative;
+}
+
+.form-group label.required {
+  padding-left: 0.8em;
+}
+
+.form-group label .form-element-required {
+  position: absolute;
+  top: -0.25rem;
+  left: 0;
 }
 

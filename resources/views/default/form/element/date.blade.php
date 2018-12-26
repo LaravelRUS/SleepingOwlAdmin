@@ -1,5 +1,5 @@
 <div class="form-group form-element-date {{ $errors->has($name) ? 'has-error' : '' }}">
-	<label for="{{ $name }}" class="control-label">
+	<label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
 		{{ $label }}
 
 		@if($required)

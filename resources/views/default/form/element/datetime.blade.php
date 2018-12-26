@@ -1,5 +1,5 @@
 <div class="form-group form-element-date {{ $errors->has($name) ? 'has-error' : '' }}">
-	<label for="{{ $name }}" class="control-label">
+	<label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
 		{{ $label }}
 
 		@if($required)
@@ -11,7 +11,11 @@
 			   value="{{ $value }}"
 			   @if($readonly) readonly @endif
 		>
-		<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+		<span class="input-group-prepend input-group-addon">
+			<div class="input-group-text">
+				<span class="fa fa-calendar"></span>
+			</div>
+		</span>
 	</div>
 
 	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))

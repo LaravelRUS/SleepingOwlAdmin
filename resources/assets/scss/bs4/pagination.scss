@@ -24,7 +24,10 @@
     }
 
     &.active > span,
-    &.active > span:hover {
+    &.active > span:hover,
+    &.paginate_button.active > a {
+      cursor: default;
+      border-color: transparent;
       background-color: transparentize($primary, 0.8);
       color: $primary;
     }
@@ -33,14 +36,14 @@
   li,
   li.disabled {
     & > span,
-    & > span:hover {
+    & > span:hover,
+    &.disabled > a {
       border-color: transparent;
       color: $gray-500;
       cursor: default;
       background-color: transparent;
     }
   }
-
   @media (max-width: 768px) {
     justify-content: center;
   }

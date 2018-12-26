@@ -115862,11 +115862,15 @@ Admin.Modules.register('related-form', function () {
 /***/ (function(module, exports) {
 
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    var tab = $(e.target).attr('aria-controls');
-    Admin.Events.fire('bootstrap::tab::shown', tab);
+  var tab = $(e.target).attr('aria-controls');
+  Admin.Events.fire('bootstrap::tab::shown', tab);
 }).on('hidden.bs.tab', function (e) {
-    var tab = $(e.target).attr('aria-controls');
-    Admin.Events.fire('bootstrap::tab::hidden', tab);
+  var tab = $(e.target).attr('aria-controls');
+  Admin.Events.fire('bootstrap::tab::hidden', tab);
+});
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 /***/ }),

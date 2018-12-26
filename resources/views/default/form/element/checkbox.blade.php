@@ -1,9 +1,12 @@
 <div class="form-group form-element-checkbox {{ $errors->has($name) ? 'has-error' : '' }}">
 	<div class="checkbox">
-		<label>
+		<label class="{{ $required ? 'required' : '' }}">
 			<input {!! $attributes !!} @if($readonly) disabled @endif type="checkbox" value="1" {!! $value ? 'checked="checked"' : '' !!} />
 
 			{{ $label }}
+			@if($required)
+					<span class="form-element-required">*</span>
+			@endif
 		</label>
 
 		@include(AdminTemplate::getViewPath('form.element.partials.helptext'))

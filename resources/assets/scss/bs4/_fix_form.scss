@@ -1,0 +1,15 @@
+.form-group {
+  label {
+    position: relative;
+
+    &.required {
+      padding-left: 0.8em;
+    }
+
+    .form-element-required {
+      position: absolute;
+      top: -0.25rem;
+      left: 0;
+    }
+  }
+}

@@ -2,16 +2,16 @@
 
 }
 
-$errors-text-color: darken($brand-danger, 10%);
-$errors-bg-color: whitesmoke;
+$errors-text-color: darken($danger, 10%);
+$errors-bg-color: $gray-100;
 $arrow-size: 6px;
 
 .form-element-errors {
   border-radius: 4px;
-  color:         $errors-text-color;
+  color:         $danger;
   font-size:     13px;
   padding:       10px 10px 10px 30px;
-  background:    $errors-bg-color;
+  background:    $white;
   position:      relative;
   margin-top:    $arrow-size + 5px;
 
@@ -23,7 +23,7 @@ $arrow-size: 6px;
     height:        0;
     border-left:   $arrow-size solid transparent;
     border-right:  $arrow-size solid transparent;
-    border-bottom: $arrow-size solid $errors-bg-color;
+    border-bottom: $arrow-size solid $white;
   }
 }
 
@@ -33,7 +33,7 @@ $arrow-size: 6px;
 }
 
 .form-element-required {
-  color:          $brand-warning;
+  color:          $danger;
   vertical-align: super;
 }
 
@@ -93,7 +93,7 @@ $arrow-size: 6px;
 .form-element-select {
   &.has-error {
     .select2-selection {
-      border-color: $state-danger-text !important;
+      border-color: $danger !important;
     }
   }
 }
@@ -131,7 +131,11 @@ $arrow-size: 6px;
 }
 
 .form-element-files {
-
+  &.dropzone {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
 
 .form-element-file,
@@ -149,7 +153,7 @@ $arrow-size: 6px;
 .form-element-image,
 .form-element-images {
   .form-element-helptext {
-    background: whitesmoke;
+    background: $gray-100;
     padding:    3px 6px;
   }
 }
@@ -168,9 +172,11 @@ $arrow-size: 6px;
  * Thumbnails
  */
 .form-element-files__item {
-  float:         left;
-  width:         206px;
-  border:        1px solid #d8d8d8;
+  // float:         left;
+  // max-width: 230px;
+  max-width:         206px;
+  width: 100%;
+  border:        1px solid $gray-300;
   margin-bottom: 10px;
   margin-right:  10px;
   padding:       3px;
@@ -184,7 +190,7 @@ $arrow-size: 6px;
 
 .form-element-files__info {
   padding:    10px;
-  background: #f4f4f4;
+  background: $gray-100;
   height:     50px;
 }
 
@@ -196,18 +202,18 @@ $arrow-size: 6px;
 
 .form-element-files__file {
   font-size:  65px;
-  color:      #666;
-  background: #fff;
+  color:      $secondary;
+  background: $white;
   padding:    20px 10px;
 }
 
 .form-element-files__image {
-  background: #000;
   height:     200px;
   overflow:   hidden;
   > img {
     width:      auto;
     max-height: 100%;
+    object-fit: cover;
   }
 }
 

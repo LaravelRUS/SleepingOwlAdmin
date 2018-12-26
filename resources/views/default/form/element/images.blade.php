@@ -1,5 +1,5 @@
 <div class="form-group form-element-images {{ $errors->has($name) ? 'has-error' : '' }}">
-	<label for="{{ $name }}" class="control-label">
+	<label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
 		{{ $label }}
 
 		@if($required)
@@ -35,7 +35,7 @@
 						<img :src="image(uri)"/>
 					</a>
 					<div class="form-element-files__info">
-						<a :href="image(uri)" class="btn btn-default btn-xs pull-right">
+						<a :href="image(uri)" class="btn btn-default btn-xs pull-right" target="_blank">
 							<i class="fa fa-cloud-download"></i>
 						</a>
 
