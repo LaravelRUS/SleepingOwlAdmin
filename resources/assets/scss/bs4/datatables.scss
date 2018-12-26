@@ -11,4 +11,56 @@
   font-size: 85%;
 }
 
-.datatables {}
+.dataTables_wrapper {
+  position: relative;
+  min-height: 7em;
+}
+
+.dataTables_processing {
+  position: absolute;
+  left: 50%;
+  top: 0;
+
+  i {
+    color: $black;
+  }
+}
+
+table.dataTable thead {
+  .sorting,
+  .sorting_asc,
+  .sorting_asc_disabled,
+  .sorting_desc,
+  .sorting_desc_disabled {
+    cursor: pointer;
+    position: relative;
+
+    &:after,
+    &:before {
+      position: absolute;
+      bottom: 0.9em;
+      display: block;
+      opacity: 0.3;
+    }
+
+    &:before {
+      right: 1em;
+      content: '\2191';
+    }
+
+    &:after {
+      right: 0.5em;
+      content: '\2193';
+    }
+  }
+
+  .sorting_asc:before,
+  .sorting_desc:after {
+    opacity: 1;
+  }
+
+  .sorting_asc_disabled:before,
+  .sorting_desc_disabled:after {
+    opacity: 0;
+  }
+}

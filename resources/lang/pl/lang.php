@@ -49,7 +49,7 @@ return [
         'cancel'          => 'Anuluj',
         'download'        => 'Pobierz',
         'all'             => 'Wszystkie',
-        'processing'      => '<i class="fa fa-5x fa-circle-o-notch fa-spin"></i>',
+        'processing'      => '<i class="fa fa-5x fa-spinner fa-spin"></i>',
         'loadingRecords'  => 'Ładowanie...',
         'lengthMenu'      => 'Pokaż _MENU_ wpisy',
         'zeroRecords'     => 'Nie znaleziono rekordów.',

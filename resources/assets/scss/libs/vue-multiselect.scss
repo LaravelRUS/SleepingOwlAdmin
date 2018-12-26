@@ -3,6 +3,12 @@
 .multiselect {
   min-height: 34px;
 
+  .multiselect__tags-wrap {
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding: 0.3rem 0;
+  }
+
   .multiselect__select {
     height: 34px;
   }

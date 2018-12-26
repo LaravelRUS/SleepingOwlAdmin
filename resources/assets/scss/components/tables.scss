@@ -19,24 +19,30 @@
   .table-header {
     background: $color;
   }
+
 }
 
 .table-primary {
   @include table-color($primary);
+  background-color: inherit;
 }
 
 .table-success {
   @include table-color($success);
+  background-color: inherit;
 }
 
 .table-danger {
   @include table-color($danger);
+  background-color: inherit;
 }
 
 .table-warning {
   @include table-color($warning);
+  background-color: inherit;
 }
 
 .table-info {
   @include table-color($info);
+  background-color: inherit;
 }

@@ -57,7 +57,7 @@ return [
         'cancel' => 'İptal',
         'download' => 'İndir',
         'all' => 'Tümü',
-        'processing' => '<i class="fa fa-5x fa-circle-o-notch fa-spin"></i>',
+        'processing' => '<i class="fa fa-5x fa-spinner fa-spin"></i>',
         'loadingRecords' => 'Yükleniyor...',
         'lengthMenu' => '_MENU_ öğe görüntüle',
         'zeroRecords' => 'Eşleşen kayıt bulunamadı.',

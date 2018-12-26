@@ -61,7 +61,7 @@ return [
         'cancel'          => 'Annullare',
         'download'        => 'Scaricare',
         'all'             => 'Tutto',
-        'processing'      => '<i class="fa fa-5x fa-circle-o-notch fa-spin"></i>',
+        'processing'      => '<i class="fa fa-5x fa-spinner fa-spin"></i>',
         'loadingRecords'  => 'Aspettare...',
         'lengthMenu'      => 'Display _MENU_ record',
         'zeroRecords'     => 'Nessun dato corrispondente trovato.',

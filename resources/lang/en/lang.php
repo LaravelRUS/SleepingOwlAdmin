@@ -67,7 +67,7 @@ return [
         'cancel' => 'Cancel',
         'download' => 'Download',
         'all' => 'All',
-        'processing' => '<i class="fa fa-5x fa-circle-o-notch fa-spin"></i>',
+        'processing' => '<i class="fa fa-5x fa-spinner fa-spin"></i>',
         'loadingRecords' => 'Loading...',
         'lengthMenu' => 'Show _MENU_ entries',
         'zeroRecords' => 'No matching records found.',

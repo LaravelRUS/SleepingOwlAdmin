@@ -30,9 +30,11 @@
 @import "~admin-lte/build/scss/AdminLTE-raw.scss";
 // @import "libs/AdminLTE";
 @import "components/form-elements";
-// @import "components/tables";
+@import "components/tables";
 
 //bootstrap4
+@import "bs4/_fix_bootstrap4";
+@import "bs4/body";
 @import "bs4/scrollbar";
 @import "bs4/panel";
 @import "bs4/tabs";

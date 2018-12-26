@@ -54,7 +54,7 @@ return [
         'cancel' => '取消',
         'download' => '下载',
         'all' => '全选',
-        'processing' => '<i class="fa fa-5x fa-circle-o-notch fa-spin"></i>',
+        'processing' => '<i class="fa fa-5x fa-spinner fa-spin"></i>',
         'loadingRecords' => '载入...',
         'lengthMenu' => '显示 _MENU_ 项目',
         'zeroRecords' => '没有找到相关内容.',
