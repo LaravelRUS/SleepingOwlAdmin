@@ -26,11 +26,6 @@ class OrderByClause implements OrderByClauseInterface
     protected $sortedColumnAlias = null;
 
     /**
-     * @var string|null
-     */
-    protected $direction = null;
-
-    /**
      * OrderByClause constructor.
      *
      * @param string|Closure $name
@@ -202,7 +197,6 @@ class OrderByClause implements OrderByClauseInterface
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
         $this->sortedColumnAlias = $sortedColumnAlias;
-        $this->direction = $direction;
 
         $query
             ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
@@ -238,7 +232,6 @@ class OrderByClause implements OrderByClauseInterface
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
         $this->sortedColumnAlias = $sortedColumnAlias;
-        $this->direction = $direction;
 
         $query
             ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
