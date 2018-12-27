@@ -21828,3 +21828,67 @@ table.dataTable thead .sorting_desc_disabled:after {
   left: 0;
 }
 
+.navbar-nav .user-menu .user-image {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin: 0 0.5em;
+}
+
+.navbar-nav .user-menu .dropdown-menu {
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.8);
+  right: 0;
+  left: inherit;
+  text-align: center;
+  padding: 1em;
+  min-width: 15em;
+}
+
+.navbar-nav .user-menu .dropdown-menu .user-header p {
+  margin-top: 1em;
+}
+
+.navbar-nav .user-menu .dropdown-menu .user-header img {
+  max-width: 10em;
+}
+
+.navbar-nav .user-menu a {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.navbar-nav .user-menu a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.navbar-nav .nav-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navbar-nav > li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navbar-nav > li > a {
+  padding: 0 0.5em;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.navbar-nav > li > a:hover {
+  text-decoration: none;
+  color: #000;
+}
+

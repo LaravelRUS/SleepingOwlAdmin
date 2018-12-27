@@ -1,36 +1,24 @@
-{{-- <a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="logo">
-	<span class="logo-lg">{!! AdminTemplate::getLogo() !!}</span>
-	<span class="logo-mini">{!! AdminTemplate::getLogoMini() !!}</span>
-</a> --}}
+<ul class="nav navbar-nav ">
+	<li class="nav-item">
+		<a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+	</li>
+	@stack('navbar.left')
 
-{{-- <nav class="navbar navbar-static-top" role="navigation"> --}}
-	<!-- Sidebar toggle button-->
-	{{-- <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-		<span class="sr-only">Toggle navigation</span>
-	</a> --}}
+	{{-- ======================= --}}
+	<li class="nav-item d-none d-sm-inline-block">
+		<a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="nav-link">
+			<i class="fa fa-home fa-lg" aria-hidden="true"></i>
+		</a>
+	</li>
+	<li class="nav-item d-none d-sm-inline-block">
+		<span class="nav-link">{!! $title !!}</span>
+	</li>
+	{{-- ======================= --}}
 
-	{{-- <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom"> --}}
-		<ul class="nav navbar-nav ">
-			<li class="nav-item">
-				<a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-			</li>
-			@stack('navbar.left')
+	@stack('navbar')
+</ul>
 
-			{{-- ======================= --}}
-			<li class="nav-item d-none d-sm-inline-block">
-				<a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="nav-link">
-					<i class="fa fa-home fa-lg" aria-hidden="true"></i>
-				</a>
-			</li>
-			<li class="nav-item d-none d-sm-inline-block">
-				<span class="nav-link">{!! $title !!}</span>
-			</li>
-			{{-- ======================= --}}
-
-			@stack('navbar')
-		</ul>
-
-		<!-- SEARCH FORM -->
+<!-- SEARCH FORM -->
 <form class="form-inline ml-3">
 	<div class="input-group input-group-sm">
 		<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -43,11 +31,11 @@
 </form>
 
 		<ul class="navbar-nav ml-auto">
-			{{-- @stack('navbar.right') --}}
+			@stack('navbar.right')
 
 
 			{{-- ======================= --}}
-			<li class="nav-item dropdown">
+			{{-- <li class="nav-item dropdown">
 				<a class="nav-link" data-toggle="dropdown" href="#">
 					<i class="fa fa-bell-o"></i>
 					<span class="badge badge-warning navbar-badge">15</span>
@@ -73,13 +61,12 @@
 					<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
 				</div>
 			</li>
+
 			<li class="nav-item">
-				<a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-					class="fa fa-th-large"></i></a>
-				</li>
+				<a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+					<i class="fa fa-th-large"></i>
+				</a>
+			</li> --}}
 				{{-- ======================= --}}
 
 			</ul>
-	{{-- </nav> --}}
-
-{{-- </nav> --}}
