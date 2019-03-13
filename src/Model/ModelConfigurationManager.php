@@ -592,7 +592,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         // event set individually instead of catching event for all the models.
         $event = "sleeping_owl.section.{$event}: ".$this->getClass();
 
-        $method = $halt ? 'until' : 'fire';
+        $method = $halt ? 'until' : 'dispatch';
 
         array_unshift($payload, $this, $model);
 

@@ -42,7 +42,7 @@
     "laravelcollective/html": "5.5.* || 5.6.* || 5.7.*",
     "kodicms/laravel-assets": "0.*",
     "erusev/parsedown": "1.*",
-    "davejamesmiller/laravel-breadcrumbs": "^3.0",
+    "davejamesmiller/laravel-breadcrumbs": "^5.2.1",
     "barryvdh/laravel-ide-helper": "^2.4.3"
   },
   "require-dev": {
