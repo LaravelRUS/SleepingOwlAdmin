@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Illuminate\Support\HtmlString;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager as BreadcrumbsManager;
 use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
-use \Illuminate\Support\HtmlString;
 
 class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
@@ -73,7 +73,6 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 
         return $this->renderArray($name, $params);
     }
-
 
     /**
      * Render breadcrumbs for a page with the specified view.
