@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=master)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=master)](https://styleci.io/repos/52141393)
-[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--5.6-brightgreen.svg)]()
+[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--5.8-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-7.x-brightgreen.svg)]()
 
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowl.ru)

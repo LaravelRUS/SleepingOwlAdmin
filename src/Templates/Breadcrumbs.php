@@ -2,25 +2,31 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use DaveJamesMiller\Breadcrumbs\Manager as BreadcrumbsManager;
+use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager as BreadcrumbsManager;
 use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
+use \Illuminate\Support\HtmlString;
 
 class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
     /**
-     * @param string|null $name
+     * Render breadcrumbs for a page with the default view.
      *
-     * @return string
+     * @param string|null $name The name of the current page.
+     * @param mixed ...$params The parameters to pass to the closure for the current page.
+     * @return \Illuminate\Support\HtmlString The generated HTML.
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route doesn't have an associated name.
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException if no view has been set.
      */
-    public function render($name = null)
+    public function render(string $name = null, ...$params): HtmlString
     {
-        if (is_null($name)) {
-            list($name, $params) = $this->currentRoute->get();
-        } else {
-            $params = array_slice(func_get_args(), 1);
+        $view = config('breadcrumbs.view');
+
+        if (! $view) {
+            throw new ViewNotSetException('Breadcrumbs view not specified (check config/breadcrumbs.php)');
         }
 
-        return $this->view($this->generator->generate($this->callbacks, $name, $params));
+        return $this->view($view, $name, ...$params);
     }
 
     /**
@@ -68,13 +74,24 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
         return $this->renderArray($name, $params);
     }
 
+
     /**
-     * @param array $breadcrumbs
+     * Render breadcrumbs for a page with the specified view.
      *
-     * @return string
+     * @param string $view The name of the view to render.
+     * @param string|null $name The name of the current page.
+     * @param mixed ...$params The parameters to pass to the closure for the current page.
+     * @return \Illuminate\Support\HtmlString The generated HTML.
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException if the name is (or any ancestor names are) not registered.
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException if no name is given and the current route doesn't have an associated name.
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException if no view has been set.
      */
-    protected function view(array $breadcrumbs)
+    public function view(string $view, string $name = null, ...$params): HtmlString
     {
-        return $this->view->render($this->viewName, $breadcrumbs);
+        $breadcrumbs = $this->generate($name, ...$params);
+
+        $html = $this->viewFactory->make($view, compact('breadcrumbs'))->render();
+
+        return new HtmlString($html);
     }
 }
