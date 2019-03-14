@@ -73,7 +73,7 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
      *
      * @return string
      */
-    protected function view(array $breadcrumbs)
+    public function view(array $breadcrumbs)
     {
         return $this->view->render($this->viewName, $breadcrumbs);
     }
