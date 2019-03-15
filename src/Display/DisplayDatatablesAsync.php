@@ -216,7 +216,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param $query
      * @param \Illuminate\Http\Request $request
      */
-    protected function applyOffset($query, \Illuminate\Http\Request $request)
+    public function applyOffset($query, \Illuminate\Http\Request $request)
     {
         $offset = $request->input('start', 0);
         $limit = $request->input('length', 10);
@@ -234,7 +234,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param Builder $query
      * @param \Illuminate\Http\Request $request
      */
-    protected function applySearch(Builder $query, \Illuminate\Http\Request $request)
+    public function applySearch(Builder $query, \Illuminate\Http\Request $request)
     {
         $search = $request->input('search.value');
         if (empty($search)) {
