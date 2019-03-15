@@ -12,7 +12,7 @@ use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class DisplayTabTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown() : void
     {
         m::close();
     }

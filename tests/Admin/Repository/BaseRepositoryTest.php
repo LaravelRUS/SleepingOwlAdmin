@@ -6,7 +6,7 @@ use SleepingOwl\Admin\Repositories\BaseRepository;
 
 class BaseRepositoryTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown() : void
     {
         m::close();
     }

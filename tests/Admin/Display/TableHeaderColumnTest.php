@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Display\TableHeaderColumn;
 
 class TableHeaderColumnTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown() : void
     {
         m::close();
     }

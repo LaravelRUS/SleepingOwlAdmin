@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Display\Column\Filter\DateRange;
 
 class DateRangeTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown() : void
     {
         m::close();
     }

@@ -6,7 +6,7 @@ use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
 class BaseColumnFilterTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown() : void
     {
         m::close();
     }

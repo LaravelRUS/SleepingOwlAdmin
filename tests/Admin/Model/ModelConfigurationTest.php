@@ -7,7 +7,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class ModelConfigurationTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown() : void
     {
         m::close();
     }
