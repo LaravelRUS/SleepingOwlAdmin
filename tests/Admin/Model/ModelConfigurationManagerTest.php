@@ -6,7 +6,6 @@ use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
 class ModelConfigurationManagerTest extends TestCase
 {
-
     public function tearDown(): void
     {
         m::close();
@@ -118,7 +117,7 @@ class ModelConfigurationManagerTest extends TestCase
      */
     public function test_firing_events_with_halt()
     {
-        $model       = $this->getConfiguration();
+        $model = $this->getConfiguration();
         $modelObject = m::mock(ModelConfigurationManagerTestModel::class);
 
         $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
@@ -469,10 +468,8 @@ class ModelConfigurationManagerTest extends TestCase
 
 class ModelConfigurationManagerTestModel extends \Illuminate\Database\Eloquent\Model
 {
-
 }
 
 class ModelConfigurationManagerTestController
 {
-
 }
