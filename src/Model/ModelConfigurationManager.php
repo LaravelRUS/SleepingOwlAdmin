@@ -596,7 +596,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         if (version_compare('5.8.0', $this->app->version(), '<=') ||
             version_compare('5.5.0', $this->app->version(), '>')) {
             $fireMethod = 'dispatch';
-        }else{
+        } else {
             $fireMethod = 'fire';
         }
 
