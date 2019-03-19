@@ -592,7 +592,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         // event set individually instead of catching event for all the models.
         $event = "sleeping_owl.section.{$event}: ".$this->getClass();
 
-        $method = $halt ? 'until' : 'fire';
+        // Laravel 5.8 and 5.4 support fire method
+        if (version_compare('5.8.0', $this->app->version(), '<=') ||
+            version_compare('5.5.0', $this->app->version(), '>')) {
+            $fireMethod = 'dispatch';
+        } else {
+            $fireMethod = 'fire';
+        }
+
+        $method = $halt ? 'until' : $fireMethod;
 
         array_unshift($payload, $this, $model);
 
