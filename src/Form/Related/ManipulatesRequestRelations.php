@@ -38,6 +38,7 @@ trait ManipulatesRequestRelations
                 $remove[] = $this->relationName;
             }
             $this->makeCopyOfRelations($request);
+
         }
 
         return $request->replace($request->except($remove));
@@ -54,9 +55,10 @@ trait ManipulatesRequestRelations
         $data = $request->input($this->relationName, []);
 
         $counter = 1;
+        $newKey = static::NEW_ITEM;
 
         foreach ($data as $key => $values) {
-            $newData["new_{$counter}"] = $values;
+            $newData["{$newKey}_{$counter}"] = $values;
             $counter++;
         }
 

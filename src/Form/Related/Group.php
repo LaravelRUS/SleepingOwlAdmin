@@ -24,7 +24,7 @@ class Group extends \Illuminate\Support\Collection
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return null|\Illuminate\Database\Eloquent\Model
      */
     public function getModel()
     {
@@ -39,7 +39,17 @@ class Group extends \Illuminate\Support\Collection
             return $primary($this->getModel());
         }
 
-        return $primary ?: optional($this->getModel())->getKey();
+        if ($primary) {
+            return $primary;
+        }
+
+        $key = optional($this->getModel())->getKeyName();
+
+        if (is_array($key)) {
+            return implode('_', $this->getModel()->only($key));
+        }
+
+        return optional($this->getModel())->getKey();
     }
 
     public function setPrimary($primary)
@@ -52,9 +62,9 @@ class Group extends \Illuminate\Support\Collection
     /**
      * @param string $label
      *
-     * @return $this
+     * @return Group
      */
-    public function setLabel($label)
+    public function setLabel($label): Group
     {
         $this->label = $label;
 
@@ -62,10 +72,10 @@ class Group extends \Illuminate\Support\Collection
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getLabel()
     {
-        return is_callable($this->label) ? $this->label($this) : $this->label;
+        return is_callable($this->label) ? call_user_func($this->label, $this) : $this->label;
     }
 }
