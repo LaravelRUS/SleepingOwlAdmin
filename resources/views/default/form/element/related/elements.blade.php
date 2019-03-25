@@ -29,7 +29,7 @@
                 class='grouped-elements__action pull-right related-action_add btn btn-success btn-sm'
             >
                 <i class='icon icon-plus'></i>
-                Добавить
+                {{ trans('sleeping_owl::lang.related.add') }}
             </button>
 
         </div>

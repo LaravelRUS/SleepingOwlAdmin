@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
 use Illuminate\Support\Arr;
-use SleepingOwl\Admin\Form\Related\Elements;
-use SleepingOwl\Admin\Form\Related\Select;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Form\Related\Select;
 use SleepingOwl\Admin\Form\Columns\Columns;
+use SleepingOwl\Admin\Form\Related\Elements;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class ManyToMany

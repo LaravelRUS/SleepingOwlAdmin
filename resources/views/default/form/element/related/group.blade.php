@@ -28,7 +28,7 @@
                     data-toggle='tooltip'
                     class='btn btn-warning pull-right btn-sm grouped-element__delete'>
                 <i class='icon icon-trash'></i>
-                Удалить
+                {{ trans('sleeping_owl::lang.related.remove') }}
             </button>
         </div>
         <hr>
