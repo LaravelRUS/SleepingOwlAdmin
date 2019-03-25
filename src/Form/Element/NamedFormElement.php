@@ -2,21 +2,22 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use LogicException;
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
-use KodiComponents\Support\HtmlAttributes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Arr;
+use KodiComponents\Support\HtmlAttributes;
+use LogicException;
 use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+use SleepingOwl\Admin\Form\FormElement;
 
 abstract class NamedFormElement extends FormElement
 {
     use HtmlAttributes;
+
     /**
      * @var string
      */
@@ -396,7 +397,6 @@ abstract class NamedFormElement extends FormElement
 
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
-
             if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
@@ -436,11 +436,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function save(\Illuminate\Http\Request $request)
     {
-        $this->setModelAttribute(
-            $this->getValueFromRequest(
-                $request
-            )
-        );
+        $this->setModelAttribute($this->getValueFromRequest($request));
     }
 
     /**
@@ -450,18 +446,13 @@ abstract class NamedFormElement extends FormElement
      */
     public function setModelAttribute($value)
     {
-        $model = $this->getModelByPath(
-            $this->getPath()
-        );
+        $model = $this->getModelByPath($this->getPath());
 
         if ($this->isValueSkipped()) {
             return;
         }
 
-        $model->setAttribute(
-            $this->getModelAttributeKey(),
-            $this->prepareValue($value)
-        );
+        $model->setAttribute($this->getModelAttributeKey(), $this->prepareValue($value));
     }
 
     /**
@@ -498,8 +489,7 @@ abstract class NamedFormElement extends FormElement
                         case HasOne::class:
                         case MorphOne::class:
                             $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject),
-                                $relationObject->getParentKey());
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }
@@ -509,8 +499,7 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model)
-                        .'. Probably some dot delimeted segment is not a supported relation type');
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
@@ -522,8 +511,7 @@ abstract class NamedFormElement extends FormElement
 
     protected function getForeignKeyNameFromRelation($relation)
     {
-        return method_exists($relation, 'getForeignKeyName')
-            ? $relation->getForeignKeyName()
+        return method_exists($relation, 'getForeignKeyName') ? $relation->getForeignKeyName()
             : $relation->getPlainForeignKey();
     }
 
