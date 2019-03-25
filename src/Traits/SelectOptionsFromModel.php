@@ -29,6 +29,7 @@ trait SelectOptionsFromModel
      * @var string|null
      */
     protected $usageKey = null;
+
     /**
      * @var array
      */
@@ -79,6 +80,7 @@ trait SelectOptionsFromModel
 
     /**
      * @param string $key
+     *
      * @return $this
      */
     public function setUsageKey($key)
@@ -121,6 +123,7 @@ trait SelectOptionsFromModel
      * <code>setFetchColumns(['title', 'position'])</code>.
      *
      * @param string|array $columns
+     *
      * @return $this
      */
     public function setFetchColumns($columns)
@@ -161,6 +164,7 @@ trait SelectOptionsFromModel
      * </code>
      *
      * @param callable $callback The Callback with $item and $options args.
+     *
      * @return $this
      */
     public function setLoadOptionsQueryPreparer($callback)
@@ -172,6 +176,7 @@ trait SelectOptionsFromModel
 
     /**
      * Get Callback for prepare load options Query.
+     *
      * @return callable
      */
     public function getLoadOptionsQueryPreparer()
@@ -230,16 +235,13 @@ trait SelectOptionsFromModel
         }
 
         if (count($this->getFetchColumns()) > 0) {
-            $options->select(
-                array_merge([$key], $this->getFetchColumns())
-            );
+            $options->select(array_merge([$key], $this->getFetchColumns()));
         }
 
         // call the pre load options query preparer if has be set
         if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
             $options = $preparer($this, $options);
         }
-
         $options = $options->get();
 
         //some fix for setUsage

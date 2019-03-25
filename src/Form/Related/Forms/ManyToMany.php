@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
+use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Form\Related\Elements;
 use SleepingOwl\Admin\Form\Related\Select;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -32,7 +33,7 @@ class ManyToMany extends Elements
 
     public function __construct($relationName, array $elements = [])
     {
-        $elements = array_prepend($elements, $this->relatedElement = new Select('__new_element__'));
+        $elements = Arr::prepend($elements, $this->relatedElement = new Select('__new_element__'));
 
         parent::__construct($relationName, $elements);
     }
@@ -89,11 +90,13 @@ class ManyToMany extends Elements
         $select->setPath($this->getEmptyRelation()->getRelated()->getKeyName());
         $select->setModelForOptions(get_class($this->getEmptyRelation()->getRelated()));
         $select->setModel($this->getModelForElements());
-        $select->setDisplay($this->getRelatedElementDisplayName());
+        if ($display = $this->getRelatedElementDisplayName()) {
+            $select->setDisplay($display);
+        }
         $select->required();
 
-        $this->unique(empty($this->unique) ? [$name] :
-            array_merge([$name], $this->unique), trans('sleeping_owl::lang.form.unique'));
+        $this->unique(empty($this->unique) ? [$name]
+            : array_merge([$name], $this->unique), trans('sleeping_owl::lang.form.unique'));
 
         if ($this->relatedWrapper) {
             $this->getElements()->forget(0);
@@ -142,7 +145,7 @@ class ManyToMany extends Elements
                 $chunksIterator++;
             }
 
-            $chunks[$chunksIterator][$key] = array_except($pivot->getAttributes(), [
+            $chunks[$chunksIterator][$key] = Arr::except($pivot->getAttributes(), [
                 $relatedKey,
                 $this->getEmptyRelation()->getForeignPivotKeyName(),
             ]);
@@ -184,7 +187,7 @@ class ManyToMany extends Elements
 
             foreach ($elements as $index => $element) {
                 $attribute = $element->getModelAttributeKey();
-                $value = $element->prepareValue(array_get($attributes, $attribute));
+                $value = $element->prepareValue(Arr::get($attributes, $attribute));
                 $related->setAttribute($attribute, $value);
 
                 $element->setModel($related);
@@ -217,21 +220,6 @@ class ManyToMany extends Elements
     }
 
     /**
-     * Proxies method call to related element.
-     *
-     * @param $name
-     * @param $arguments
-     */
-    public function __call($name, $arguments)
-    {
-        if (method_exists($this->getRelatedElement(), $name)) {
-            $this->getRelatedElement()->$name(...$arguments);
-        }
-
-        throw new \RuntimeException("Method {$name} doesn't exist.");
-    }
-
-    /**
      * Returns fresh instance of model for each element in form.
      *
      * @return \Illuminate\Database\Eloquent\Model
@@ -251,11 +239,25 @@ class ManyToMany extends Elements
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setRelatedElementDisplayName($value)
     {
         $this->relatedElementDisplayName = $value;
+
+        return $this;
+    }
+
+    /**
+     * Proxies method call to related element.
+     *
+     * @param $name
+     * @param $arguments
+     */
+    public function __call($name, $arguments)
+    {
+        $this->getRelatedElement()->$name(...$arguments);
 
         return $this;
     }

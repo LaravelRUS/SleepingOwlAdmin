@@ -19,7 +19,7 @@
             <div v-for="index in newGroups">
                 @include(AdminTemplate::getViewPath('form.element.related.group'), [
                     'name' => $name,
-                    'group' => new \App\Panel\Form\Elements\Related\Group(null, $stub->all()),
+                    'group' => new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all()),
                 ])
             </div>
             <button

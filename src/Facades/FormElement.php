@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \SleepingOwl\Admin\Form\Element\Number number($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Related\Forms\HasMany hasMany(string $relationName, array $elements)
  * @method static \SleepingOwl\Admin\Form\Related\Forms\ManyToMany manyToMany(string $relationName, array $elements)
+ * @method static \SleepingOwl\Admin\Form\Related\Forms\BelongsTo belongsTo(string $relationName, array $elements)
  */
 class FormElement extends Facade
 {
