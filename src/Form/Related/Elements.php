@@ -272,7 +272,6 @@ abstract class Elements extends FormElements
     }
 
     /**
-     *
      * @throws \InvalidArgumentException
      * @throws \Illuminate\Database\Eloquent\RelationNotFoundException
      */
@@ -305,7 +304,6 @@ abstract class Elements extends FormElements
     }
 
     /**
-     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     protected function loadRelationValues()

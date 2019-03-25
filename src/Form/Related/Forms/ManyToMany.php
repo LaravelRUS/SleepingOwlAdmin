@@ -143,7 +143,6 @@ class ManyToMany extends Elements
         }
 
         return collect($chunks);
-
     }
 
     protected function getRelatedForeignKeyName(): string
