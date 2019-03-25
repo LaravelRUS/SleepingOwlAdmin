@@ -10,7 +10,7 @@ class Password extends NamedFormElement
 
         $this->setHtmlAttributes([
             'class' => 'form-control',
-            'type' => 'password',
+            'type'  => 'password',
         ]);
     }
 
@@ -38,6 +38,21 @@ class Password extends NamedFormElement
         }
 
         parent::save($request);
+    }
+
+    /**
+     * Checks if value exists only inside request instance. Otherwise it'll return null, because password hash
+     * should not be returned from model and rendered inside forms.
+     *
+     * @return array|mixed|null|string
+     */
+    public function getValueFromModel()
+    {
+        if (($value = $this->getValueFromRequest(request())) !== null) {
+            return $value;
+        }
+
+        return $this->getDefaultValue();
     }
 
     /**
