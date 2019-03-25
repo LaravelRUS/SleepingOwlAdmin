@@ -38,5 +38,4 @@ class PasswordTest extends \TestCase
 class TestModelForPasswordElement extends \Illuminate\Database\Eloquent\Model
 {
     protected $fillable = ['password'];
-
 }
