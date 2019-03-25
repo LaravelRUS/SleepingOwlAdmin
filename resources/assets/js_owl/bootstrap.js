@@ -3,7 +3,7 @@ import Admin from './components/admin';
 window._ = require('lodash');
 
 window.Admin = new Admin(
-    document.querySelector(`meta[name=["csrf-token"]`).getAttribute('content'),
+    document.querySelector(`meta[name="csrf-token"]`).getAttribute('content'),
     window.GlobalConfig || {},
 );
 
