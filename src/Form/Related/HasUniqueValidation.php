@@ -64,7 +64,6 @@ trait HasUniqueValidation
                     $pairs[$key] = true;
                 }
             }
-
         }
     }
 }

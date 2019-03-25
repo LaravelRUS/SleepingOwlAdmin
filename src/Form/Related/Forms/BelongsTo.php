@@ -23,7 +23,7 @@ class BelongsTo extends Elements
             return;
         }
 
-        /**@var $relation \Illuminate\Database\Eloquent\Relations\BelongsTo */
+        /** @var $relation \Illuminate\Database\Eloquent\Relations\BelongsTo */
         $parent = $this->relatedValues->first();
         $parent->save();
         // Fresh is used to be sure, that we'll have all attributes loaded in model

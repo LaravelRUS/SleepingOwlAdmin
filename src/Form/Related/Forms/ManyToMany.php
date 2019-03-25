@@ -9,15 +9,7 @@ use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Form\Related\Select;
 use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Form\Related\Elements;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * Class ManyToMany
- *
- * @package Admin\Form\Elements\RelatedElements\Forms
- *
- * @method BelongsToMany getEmptyRelation()
- */
 class ManyToMany extends Elements
 {
     protected $primaries;
@@ -75,7 +67,6 @@ class ManyToMany extends Elements
     {
         $this->initializeRelatedElement();
         parent::initializeElements();
-
     }
 
     /**

@@ -82,7 +82,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'multiselectajax' => Element\MultiSelectAjax::class,
             'hasMany' => Forms\HasMany::class,
             'manyToMany' => Forms\ManyToMany::class,
-            'belongsTo' => Forms\BelongsTo::class
+            'belongsTo' => Forms\BelongsTo::class,
         ]);
     }
 }

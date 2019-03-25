@@ -64,7 +64,7 @@ class Group extends \Illuminate\Support\Collection
      *
      * @return Group
      */
-    public function setLabel($label): Group
+    public function setLabel($label): self
     {
         $this->label = $label;
 

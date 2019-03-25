@@ -11,8 +11,8 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
 
@@ -105,21 +105,21 @@ abstract class Elements extends FormElements
      *
      * @return $this
      */
-    public function setLimit(int $limit): Elements
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
 
         return $this;
     }
 
-    public function modifyQuery(callable $callback): Elements
+    public function modifyQuery(callable $callback): self
     {
         $this->queryCallbacks[] = $callback;
 
         return $this;
     }
 
-    public function setLabel(string $label): Elements
+    public function setLabel(string $label): self
     {
         $this->label = $label;
 
@@ -297,7 +297,7 @@ abstract class Elements extends FormElements
      *
      * @return Elements
      */
-    public function setRelationName(string $name): Elements
+    public function setRelationName(string $name): self
     {
         $this->relationName = $name;
 
@@ -438,7 +438,7 @@ abstract class Elements extends FormElements
         $cast = $casts->get($jsonParts->first(), false);
 
         if (! in_array($cast, ['json', 'array'])) {
-            return null;
+            return;
         }
 
         $jsonAttr = $model->{$jsonParts->first()};
@@ -621,7 +621,7 @@ abstract class Elements extends FormElements
      *
      * @return Elements
      */
-    public function setGroupLabel(string $groupLabel): Elements
+    public function setGroupLabel(string $groupLabel): self
     {
         $this->groupLabel = $groupLabel;
 
@@ -629,7 +629,7 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * Checks if count of
+     * Checks if count of relations to be created exceeds limit.
      *
      * @return int
      */
@@ -663,7 +663,7 @@ abstract class Elements extends FormElements
     /**
      * @return Elements
      */
-    public function disableCreation(): Elements
+    public function disableCreation(): self
     {
         $this->setLimit(0);
 
