@@ -52,14 +52,7 @@ class Password extends NamedFormElement
             return $value;
         }
 
-        $model = $this->getModel();
-
-        if ($model === null || ! $model->exists) {
-            // Returning default value only if model is not stored and value was not hashed
-            return $this->getDefaultValue();
-        }
-
-        return null;
+        return $this->getDefaultValue();
     }
 
     /**

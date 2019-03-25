@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use LogicException;
 use Illuminate\Support\Arr;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
 use KodiComponents\Support\HtmlAttributes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
