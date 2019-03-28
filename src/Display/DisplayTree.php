@@ -112,7 +112,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
         $this->setPanelClass('panel-tree');
 
-        $this->extend('columns', new \SleepingOwl\Admin\Display\Extension\Columns());
+        $this->extend('columns', new Columns());
     }
 
     public function initialize()
