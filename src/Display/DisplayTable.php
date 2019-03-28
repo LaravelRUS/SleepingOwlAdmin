@@ -20,7 +20,7 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
  * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
  *
  * @method ColumnFilters getColumnFilters()
- * @method $this setColumnFilters(ColumnFilterInterface $filters = null, ...$filters)
+ * @method $this setColumnFilters(ColumnFilterInterface|ColumnFilterInterface[] $filters = null, ...$filters)
  */
 class DisplayTable extends Display
 {
