@@ -64,7 +64,7 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
    
 1. By default, admin module uses Laravel authentication.
 
-   If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/5.3/authentication) 
+   If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/authentication) 
 and append middleware `auth` to `config/sleeping_owl.php` 
 
    ```php
