@@ -172,7 +172,6 @@ abstract class Template implements TemplateInterface
     public function renderBreadcrumbs($key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
-
             return $this->breadcrumbs()->renderIfExists($key);
         }
     }
