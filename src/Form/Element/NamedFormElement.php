@@ -17,6 +17,7 @@ use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 abstract class NamedFormElement extends FormElement
 {
     use HtmlAttributes;
+
     /**
      * @var string
      */
@@ -358,13 +359,18 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromModel()
     {
-        if (! is_null($value = $this->getValueFromRequest(request()))) {
+        if (($value = $this->getValueFromRequest(request())) !== null) {
             return $value;
         }
 
         $model = $this->getModel();
         $path = $this->getPath();
         $value = $this->getDefaultValue();
+
+        if ($model === null || ! $model->exists) {
+            // First check for model existence must go here, before all checks are made
+            return $value;
+        }
 
         /*
          * Implement json parsing
@@ -377,17 +383,13 @@ abstract class NamedFormElement extends FormElement
 
             $cast = $casts->get($jsonParts->first(), false);
 
-            if ($cast == 'object') {
+            if ($cast === 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-            } elseif ($cast != 'array') {
+            } elseif ($cast !== 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
 
             return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
-        }
-
-        if (is_null($model) || ! $model->exists) {
-            return $value;
         }
 
         $relations = explode('.', $path);
@@ -395,7 +397,6 @@ abstract class NamedFormElement extends FormElement
 
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
-
             if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
@@ -420,7 +421,7 @@ abstract class NamedFormElement extends FormElement
                 }
             }
 
-            if (is_null($this->getDefaultValue())) {
+            if ($this->getDefaultValue() === null) {
                 throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
             }
         }
@@ -435,11 +436,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function save(\Illuminate\Http\Request $request)
     {
-        $this->setModelAttribute(
-            $this->getValueFromRequest(
-                $request
-            )
-        );
+        $this->setModelAttribute($this->getValueFromRequest($request));
     }
 
     /**
@@ -449,18 +446,13 @@ abstract class NamedFormElement extends FormElement
      */
     public function setModelAttribute($value)
     {
-        $model = $this->getModelByPath(
-            $this->getPath()
-        );
+        $model = $this->getModelByPath($this->getPath());
 
         if ($this->isValueSkipped()) {
             return;
         }
 
-        $model->setAttribute(
-            $this->getModelAttributeKey(),
-            $this->prepareValue($value)
-        );
+        $model->setAttribute($this->getModelAttributeKey(), $this->prepareValue($value));
     }
 
     /**
@@ -497,8 +489,7 @@ abstract class NamedFormElement extends FormElement
                         case HasOne::class:
                         case MorphOne::class:
                             $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject),
-                                $relationObject->getParentKey());
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }
@@ -508,8 +499,7 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model)
-                        .'. Probably some dot delimeted segment is not a supported relation type');
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
@@ -521,8 +511,7 @@ abstract class NamedFormElement extends FormElement
 
     protected function getForeignKeyNameFromRelation($relation)
     {
-        return method_exists($relation, 'getForeignKeyName')
-            ? $relation->getForeignKeyName()
+        return method_exists($relation, 'getForeignKeyName') ? $relation->getForeignKeyName()
             : $relation->getPlainForeignKey();
     }
 

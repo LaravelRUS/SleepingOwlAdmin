@@ -46,16 +46,16 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
     ```
 	"post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan sleepingowl:update",
+            "@php artisan sleepingowl:update",
     ]
     ```
     __NOTE__: So if you use a laravel-ide-helper package place `sleepingowl:update` after it commands:
     ```
 	"post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta",
-            "php artisan sleepingowl:update",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan sleepingowl:update",
     ]
     ```
     
@@ -64,7 +64,7 @@ SleepingOwl Admin is an administrative interface builder for Laravel.
    
 1. By default, admin module uses Laravel authentication.
 
-   If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/5.3/authentication) 
+   If you want to use auth, you can run artisan command `php artisan make:auth` (https://laravel.com/docs/authentication) 
 and append middleware `auth` to `config/sleeping_owl.php` 
 
    ```php

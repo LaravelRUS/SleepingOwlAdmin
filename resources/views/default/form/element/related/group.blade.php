@@ -1,10 +1,15 @@
-@if(!$group->isEmpty())
-    <div class='grouped-element' data-index='@isset($index){{ $index + 1 }}@endisset'
-         @if($group->getModel())data-pk='{{ $group->getPrimary() }}'@endif>
-        <div class='grouped-element__head'>
-            @if($group->getLabel() && isset($index))
-                <span><b>{{ $group->getLabel() }} {{ $index + 1 }}</b></span>
-            @endif
+<related-group
+    name="{{ $name }}"
+    :index="(typeof index === 'undefined') ? undefined : index"
+    primary="{{ trim((string)$group->getPrimary()) }}"
+    label="{{ $group->getLabel() }}"
+    :removed="removed.indexOf('{{ (string)$group->getPrimary() }}') !== -1"
+    @remove="removeGroup"
+    inline-template
+>
+    <div class="grouped-element" v-if="!removed">
+        <div class='grouped-element__head' v-if="label">
+            <span><b>{{ $group->getLabel() }}</b></span>
         </div>
         <div class='grouped-element__body'>
             @foreach ($group as $item)
@@ -17,13 +22,15 @@
         </div>
         <div class='form-group clearfix'>
             <button type='button'
-                    data-original-text='{!! trans('sleeping_owl::lang.related.remove') !!}'
+                    v-if="canRemove"
+                    @click="handleRemove"
+                    data-original-text='Удалить'
                     data-toggle='tooltip'
-                    class='btn btn-warning pull-right btn-sm grouped-element__delete related-action_remove'>
+                    class='btn btn-warning pull-right btn-sm grouped-element__delete'>
                 <i class='icon icon-trash'></i>
-                {!! trans('sleeping_owl::lang.related.remove') !!}
+                {{ trans('sleeping_owl::lang.related.remove') }}
             </button>
         </div>
         <hr>
     </div>
-@endif
+</related-group>

@@ -15,34 +15,36 @@
   ```
 
  * [Feature] Добавлен ENV-редактор
-             Для тех кто уже с нами:
-             В sleeping_owl.php
-             ```
-             /*
-              |--------------------------------------------------------------------------
-              | Middleware to use in admin routes
-              |--------------------------------------------------------------------------
-              | Url for env editor
-              |
-              */
-              'env_editor_url' => 'env/editor',
+ 
+    Для тех кто уже с нами:
 
-              /*
-               *
-               *
-               */
-              'env_editor_excluded_keys' => [
-                  'APP_KEY', 'DB_*'
-              ],
+     ```php
+     //  sleeping_owl.php
+
+     /*
+      |--------------------------------------------------------------------------
+      | Middleware to use in admin routes
+      |--------------------------------------------------------------------------
+      | Url for env editor
+      |
+      */
+      'env_editor_url' => 'env/editor',
+
+      /*
+       *
+       *
+       */
+      'env_editor_excluded_keys' => [
+          'APP_KEY', 'DB_*'
+      ],
 
 
-              'env_editor_middlewares' => [],
+      'env_editor_middlewares' => [],
 
-              'env_editor_policy' => Policy::class,
+      'env_editor_policy' => Policy::class,
 
-              'show_editor' => false,
-
-             ```
+      'show_editor' => false,
+    ```
 
 
  * [Feature] Subdomain routes for admin
