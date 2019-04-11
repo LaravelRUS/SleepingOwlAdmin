@@ -220,8 +220,8 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
-        $foreignKey = $relationClass->getOwnerKey();
-        $ownerKey = $relationClass->getForeignKey();
+        $foreignKey = $relationClass->getOwnerKeyName();
+        $ownerKey = $relationClass->getForeignKeyName();
 
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();

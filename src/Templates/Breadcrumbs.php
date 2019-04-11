@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException;
 use Illuminate\Support\HtmlString;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager as BreadcrumbsManager;
 use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
@@ -20,7 +21,7 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
      */
     public function render(string $name = null, ...$params): HtmlString
     {
-        $view = config('breadcrumbs.view');
+        $view = "sleeping_owl::default._partials.breadcrumbs";
 
         if (! $view) {
             throw new ViewNotSetException('Breadcrumbs view not specified (check config/breadcrumbs.php)');
@@ -30,9 +31,11 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     }
 
     /**
-     * @param string|null $name
-     *
-     * @return string
+     * @param null $name
+     * @return HtmlString|string
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
      */
     public function renderIfExists($name = null)
     {
@@ -49,10 +52,12 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $params
-     *
-     * @return string
+     * @return HtmlString
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
      */
     public function renderArray($name, $params = [])
     {
@@ -60,10 +65,12 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $params
-     *
-     * @return string
+     * @return HtmlString|string
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
      */
     public function renderIfExistsArray($name, $params = [])
     {

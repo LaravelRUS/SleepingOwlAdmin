@@ -172,9 +172,6 @@ abstract class Template implements TemplateInterface
     public function renderBreadcrumbs($key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
-            $this->breadcrumbs()->setView(
-                $this->getViewPath('_partials.breadcrumbs')
-            );
 
             return $this->breadcrumbs()->renderIfExists($key);
         }
