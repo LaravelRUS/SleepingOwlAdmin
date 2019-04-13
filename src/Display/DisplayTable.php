@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Traits\PanelControl;
 use Illuminate\Pagination\LengthAwarePaginator;
 use SleepingOwl\Admin\Display\Extension\Columns;
@@ -200,6 +201,62 @@ class DisplayTable extends Display
     public function setCollection($collection)
     {
         $this->collection = $collection;
+    }
+
+    /**
+     * Apply offset and limit to the query.
+     *
+     * @param $query
+     * @param \Illuminate\Http\Request $request
+     */
+    public function applyOffset($query, \Illuminate\Http\Request $request)
+    {
+        $offset = $request->input('start', 0);
+        $limit = $request->input('length', 10);
+
+        if ($limit == -1) {
+            return;
+        }
+
+        $query->offset((int) $offset)->limit((int) $limit);
+    }
+
+    /**
+     * Apply search to the query.
+     *
+     * @param Builder $query
+     * @param \Illuminate\Http\Request $request
+     */
+    public function applySearch(Builder $query, \Illuminate\Http\Request $request)
+    {
+        $search = $request->input('search.value');
+        if (empty($search)) {
+            return;
+        }
+
+        $query->where(function (Builder $query) use ($search) {
+            $columns = $this->getColumns()->all();
+
+            foreach ($columns as $column) {
+                if ($column->isSearchable()) {
+                    if ($column instanceof ColumnInterface) {
+                        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+                            if (method_exists($metaInstance, 'onSearch')) {
+                                $metaInstance->onSearch($column, $query, $search);
+                                continue;
+                            }
+                        }
+
+                        if (is_callable($callback = $column->getSearchCallback())) {
+                            $callback($column, $query, $search);
+                            continue;
+                        }
+                    }
+
+                    $query->orWhere($column->getName(), 'like', '%'.$search.'%');
+                }
+            }
+        });
     }
 
     /**
