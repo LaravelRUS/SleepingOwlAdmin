@@ -46,6 +46,16 @@ abstract class NamedFormElement extends FormElement
     /**
      * @var mixed
      */
+    protected $exactValue;
+
+    /**
+     * @var boolean
+     */
+    protected $exactValueSet = false;
+
+    /**
+     * @var mixed
+     */
     protected $defaultValue;
 
     /**
@@ -554,6 +564,27 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @return mixed
+     */
+    public function getExactValue()
+    {
+        return $this->exactValue;
+    }
+
+    /**
+     * @param mixed $exactValue
+     *
+     * @return $this
+     */
+    public function setExactValue($exactValue)
+    {
+        $this->exactValue = $exactValue;
+        $this->exactValueSet = true;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -565,7 +596,7 @@ abstract class NamedFormElement extends FormElement
 
         return array_merge(parent::toArray(), [
             'id'         => $this->getName(),
-            'value'      => $this->getValueFromModel(),
+            'value'      => $this->exactValueSet ? $this->getExactValue() : $this->getValueFromModel(),
             'name'       => $this->getName(),
             'path'       => $this->getPath(),
             'label'      => $this->getLabel(),
