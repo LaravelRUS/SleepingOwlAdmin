@@ -49,7 +49,7 @@ abstract class NamedFormElement extends FormElement
     protected $exactValue;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $exactValueSet = false;
 
