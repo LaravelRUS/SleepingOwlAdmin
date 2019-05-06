@@ -100,7 +100,7 @@ class Range extends BaseColumnFilter
             return;
         }
 
-        list($from, $to) = explode('::', $range, 2);
+        [$from, $to] = explode('::', $range, 2);
         $from = $this->from->parseValue($from);
         $to = $this->to->parseValue($to);
 
