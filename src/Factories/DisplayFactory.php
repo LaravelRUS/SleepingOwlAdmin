@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsyncAlterPaginate;
 use SleepingOwl\Admin\Navigation\Page;
 use SleepingOwl\Admin\Display\DisplayTab;
 use SleepingOwl\Admin\Display\DisplayTree;
@@ -41,6 +42,7 @@ class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
             'table' => DisplayTable::class,
             'tree' => DisplayTree::class,
             'page' => Page::class,
+            'datatablesAsyncAlterPaginate' => DisplayDatatablesAsyncAlterPaginate::class,
         ]);
     }
 }
