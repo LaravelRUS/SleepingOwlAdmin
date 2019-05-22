@@ -1,20 +1,20 @@
 <?php
+
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Display\DisplayDatatablesAsyncAlterPaginate;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsyncAlterPaginate;
 
-class AlterPaginateDisplayController  extends Controller
+class AlterPaginateDisplayController extends Controller
 {
-
     /**
      * @param ModelConfigurationInterface $model
      * @param Request $request
@@ -121,5 +121,4 @@ class AlterPaginateDisplayController  extends Controller
             ], 403);
         }
     }
-
 }

@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Display\DisplayDatatablesAsyncAlterPaginate;
 use SleepingOwl\Admin\Navigation\Page;
 use SleepingOwl\Admin\Display\DisplayTab;
 use SleepingOwl\Admin\Display\DisplayTree;
@@ -13,6 +12,7 @@ use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsyncAlterPaginate;
 
 /**
  * @method DisplayDatatablesAsync datatables()

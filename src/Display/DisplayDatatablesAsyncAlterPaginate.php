@@ -18,7 +18,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.async.alter_paginate';
-        if ( ! $router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/alter_paginate/{adminDisplayName?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AlterPaginateDisplayController@async',
@@ -26,14 +26,13 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
         }
 
         $routeName = 'admin.display.async.inlineEdit';
-        if ( ! $router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
                 'as'   => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
     }
-
 
     /**
      * Render async request.
@@ -44,11 +43,11 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
      */
     public function renderAsync(\Illuminate\Http\Request $request)
     {
-        $query         = $this->getRepository()->getQuery();
-        $totalCount    = 0;
+        $query = $this->getRepository()->getQuery();
+        $totalCount = 0;
         $filteredCount = 0;
 
-        if ( ! is_null($this->distinct)) {
+        if (! is_null($this->distinct)) {
             $filteredCount = $query->distinct()->count($this->getDistinct());
         }
 
@@ -56,9 +55,9 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
         $this->applySearch($query, $request);
 
         if (is_null($this->distinct)) {
-            $countQuery                     = clone $query;
+            $countQuery = clone $query;
             $countQuery->getQuery()->orders = null;
-            $filteredCount                  = 500;
+            $filteredCount = 500;
         }
 
         $this->applyOffset($query, $request);
@@ -66,5 +65,4 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
 
         return $this->prepareDatatablesStructure($request, $collection, $totalCount, $filteredCount);
     }
-
 }
