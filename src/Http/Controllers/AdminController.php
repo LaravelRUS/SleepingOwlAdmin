@@ -581,7 +581,7 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
-        $this->breadCrumbsData = $this->breadCrumbsData + (array) $model->getBreadCrumbs();
+        $this->breadCrumbsData = array_merge($this->breadCrumbsData, $model->getBreadCrumbs());
 
         foreach ($this->breadCrumbsData as  $breadcrumb) {
             if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
