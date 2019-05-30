@@ -15,18 +15,4 @@ class Timestamp extends DateTime
      * @var string
      */
     protected $view = 'form.element.timestamp';
-
-    /**
-     * @return $this|NamedFormElement|mixed|null|string
-     */
-    public function getValueFromModel()
-    {
-        $value = parent::getValueFromModel();
-
-        if (empty($value)) {
-            $value = Carbon::now()->timezone($this->getTimezone())->format($this->getFormat());
-        }
-
-        return $value;
-    }
 }
