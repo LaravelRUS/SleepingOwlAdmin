@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Traits\ElementSaveRelationTrait;
 

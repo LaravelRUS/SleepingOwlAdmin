@@ -48,6 +48,7 @@ trait ElementSaveRelationTrait
     public function setSyncCallback(\Closure $callable)
     {
         $this->syncCallback = $callable;
+
         return $this;
     }
 

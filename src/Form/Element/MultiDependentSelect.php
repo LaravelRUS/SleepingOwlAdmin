@@ -40,7 +40,7 @@ class MultiDependentSelect extends DependentSelect
             'data-url' => $this->getDataUrl(),
             'data-depends' => $this->getDataDepends(),
             'class' => 'form-control input-select input-select-dependent',
-            'multiple'=>'multiple'
+            'multiple'=>'multiple',
         ]);
 
         if ($this->isReadonly()) {
@@ -60,5 +60,4 @@ class MultiDependentSelect extends DependentSelect
             'attributes' => $this->getHtmlAttributes(),
         ];
     }
-
 }
