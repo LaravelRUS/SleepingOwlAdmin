@@ -220,7 +220,7 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
-        if (version_compare(app()->version(),'5.8.0','gt')) {
+        if (version_compare(app()->version(), '5.8.0', 'gt')) {
             $foreignKey = $relationClass->getOwnerKeyName();
             $ownerKey = $relationClass->getForeignKeyName();
         } else {
