@@ -217,6 +217,7 @@ class AdminServiceProvider extends ServiceProvider
             ->files()
             ->name('/^.+\.php$/')
             ->notName('routes.php')
+            ->notName('*.blade.php')
             ->notName('navigation.php')
             ->in($directory)
             ->sort(function (SplFileInfo $a) {

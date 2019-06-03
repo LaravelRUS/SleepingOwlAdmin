@@ -244,6 +244,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $query->where(function (Builder $query) use ($search) {
             $columns = $this->getColumns()->all();
 
+            $_model = $query->getModel();
+
             foreach ($columns as $column) {
                 if ($column->isSearchable()) {
                     if ($column instanceof ColumnInterface) {
@@ -258,6 +260,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                             $callback($column, $query, $search);
                             continue;
                         }
+                    }
+
+                    if ($_model->getAttribute($column->getName())) {
+                        continue;
                     }
 
                     $query->orWhere($column->getName(), 'like', '%'.$search.'%');
