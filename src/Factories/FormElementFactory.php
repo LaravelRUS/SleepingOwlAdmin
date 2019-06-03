@@ -38,6 +38,7 @@ use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
  * @method Element\Upload upload($name, $label = null)
  * @method Element\Number number($name, $label = null)
  * @method Element\DependentSelect dependentselect($name, $label = null, array|Model $options)
+ * @method Element\MultiDependentSelect multidependentselect($name, $label = null, array|Model $options)
  */
 class FormElementFactory extends AliasBinder implements FormElementFactoryInterface
 {
@@ -78,6 +79,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'html' => Element\Html::class,
             'number' => Element\Number::class,
             'dependentselect' => Element\DependentSelect::class,
+            'multidependselect' => Element\MultiDependentSelect::class,
             'selectajax' => Element\SelectAjax::class,
             'multiselectajax' => Element\MultiSelectAjax::class,
             'hasMany' => Forms\HasMany::class,
