@@ -1,5 +1,7 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
+* [Feature] Добавлен новый элемент AdminColumnEditable::multidependselect() - он подобен элементу AdminFormElement::dependentselect но позволяет выбрать несколько опций.
+ 
 * [Add] Добавлена возможность передавать $payload в методы секции fireCreate() и fire Edit(), по аналогии с fireDisplay(). Это позволяет передавать дополнительные параметры в секцию для указанных методов.
 
 * [Add] Добавлен новый тип столбца `AdminColumn::boolean('active', 'Published'),` (алиас `text`) который просто рисует галочку при `true` и минус при `false`. C равнением по центру.
