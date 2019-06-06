@@ -56,9 +56,20 @@ Vue.component('related-elements', {
     },
 
     methods: {
+        initAdminEvents() {
+            this.$nextTick(() => {
+                Admin.Modules.call('form.elements.datetime');
+                Admin.Modules.call('form.elements.daterange');
+                Admin.Modules.call('form.elements.dependent-select');
+                Admin.Modules.call('form.elements.select');
+                Admin.Modules.call('form.elements.selectajax');
+            });
+        },
+
         addNewGroup() {
             const max = this.newGroups.length === 0 ? 0 : Math.max.apply(Math, this.newGroups);
             this.newGroups.push(max + 1);
+            this.initAdminEvents();
         },
 
         removeGroup(primary, index) {
