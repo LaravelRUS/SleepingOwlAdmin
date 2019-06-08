@@ -7,8 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Element\DependentSelect;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormElementController extends Controller
 {
