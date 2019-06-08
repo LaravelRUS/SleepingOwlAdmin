@@ -10,10 +10,9 @@ use SleepingOwl\Admin\Traits\ElementSaveRelation;
 use SleepingOwl\Admin\Traits\ElementSyncCallback;
 use SleepingOwl\Admin\Traits\ElementTaggable;
 
-class MultiDependentSelect extends DependentSelect implements Taggable, HasSyncCallback, MustDeleteRelatedItem
+class MultiDependentSelect extends DependentSelect implements HasSyncCallback, MustDeleteRelatedItem
 {
     use ElementSaveRelation,
-        ElementTaggable,
         ElementSyncCallback,
         ElementDeleteRelatedItem;
 
@@ -34,13 +33,6 @@ class MultiDependentSelect extends DependentSelect implements Taggable, HasSyncC
             'multiple',
         ]);
 
-        if ($this->isTaggable()) {
-            $this->setHtmlAttribute('class', 'input-taggable');
-        }
-
-        return [
-                'taggable'    => $this->isTaggable(),
-                'attributes' => $this->htmlAttributesToString(),
-            ] + parent::toArray();
+        return parent::toArray();
     }
 }
