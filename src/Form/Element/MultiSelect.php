@@ -2,26 +2,20 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Traits\ElementSaveRelationTrait;
+use SleepingOwl\Admin\Contracts\Form\Element\MustDeleteRelatedItem;
+use SleepingOwl\Admin\Contracts\Form\Element\HasSyncCallback;
+use SleepingOwl\Admin\Contracts\Form\Element\Taggable;
+use SleepingOwl\Admin\Traits\ElementDeleteRelatedItem;
+use SleepingOwl\Admin\Traits\ElementSaveRelation;
+use SleepingOwl\Admin\Traits\ElementSyncCallback;
+use SleepingOwl\Admin\Traits\ElementTaggable;
 
-class MultiSelect extends Select
+class MultiSelect extends Select implements Taggable, HasSyncCallback, MustDeleteRelatedItem
 {
-    use ElementSaveRelationTrait;
-    /**
-     * @var bool
-     */
-    protected $taggable = false;
-
-    /**
-     * @var \Closure
-     */
-    protected $syncCallback;
-
-    /**
-     * @var bool
-     */
-    protected $deleteRelatedItem = false;
+    use ElementSaveRelation,
+        ElementTaggable,
+        ElementSyncCallback,
+        ElementDeleteRelatedItem;
 
     /**
      * @var string
@@ -34,66 +28,6 @@ class MultiSelect extends Select
     public function getName()
     {
         return parent::getName().'[]';
-    }
-
-    /**
-     * @return array|string
-     */
-    public function getValueFromModel()
-    {
-        $value = parent::getValueFromModel();
-
-        if (is_array($value)) {
-            foreach ($value as $key => $val) {
-                $value[$key] = $val;
-            }
-        }
-
-        if ($value instanceof Collection && $value->count() > 0) {
-            $value = $value->pluck($value->first()->getKeyName())->all();
-        }
-
-        if ($value instanceof Collection) {
-            $value = $value->toArray();
-        }
-
-        return $value;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isTaggable()
-    {
-        return $this->taggable;
-    }
-
-    /**
-     * @return $this
-     */
-    public function taggable()
-    {
-        $this->taggable = true;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDeleteRelatedItem()
-    {
-        return $this->deleteRelatedItem;
-    }
-
-    /**
-     * @return $this
-     */
-    public function deleteRelatedItem()
-    {
-        $this->deleteRelatedItem = true;
-
-        return $this;
     }
 
     /**
@@ -116,7 +50,7 @@ class MultiSelect extends Select
         }
 
         return [
-                'tagable'    => $this->isTaggable(),
+                'taggable'    => $this->isTaggable(),
                 'attributes' => $this->htmlAttributesToString(),
             ] + parent::toArray();
     }

@@ -2,13 +2,14 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-trait ElementSaveRelationTrait
-{
-    /**
-     * @var \Closure
-     */
-    protected $syncCallback;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\Form\Element\HasSyncCallback;
+use SleepingOwl\Admin\Contracts\Form\Element\MustDeleteRelatedItem;
+use SleepingOwl\Admin\Contracts\Form\Element\Taggable;
 
+trait ElementSaveRelation
+{
     /**
      * @return array|string
      */
@@ -31,25 +32,6 @@ trait ElementSaveRelationTrait
         }
 
         return $value;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getSyncCallback()
-    {
-        return $this->syncCallback;
-    }
-
-    /**
-     * @param \Closure $callable
-     * @return $this
-     */
-    public function setSyncCallback(\Closure $callable)
-    {
-        $this->syncCallback = $callable;
-
-        return $this;
     }
 
     /**
@@ -106,17 +88,19 @@ trait ElementSaveRelationTrait
         \Illuminate\Database\Eloquent\Relations\BelongsToMany $relation,
         array $values
     ) {
-        foreach ($values as $i => $value) {
-            if (! array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
-                $model = clone $this->getModelForOptions();
-                $model->{$this->getDisplay()} = $value;
-                $model->save();
+        if($this instanceof Taggable) {
+            foreach ($values as $i => $value) {
+                if (! array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
+                    $model = clone $this->getModelForOptions();
+                    $model->{$this->getDisplay()} = $value;
+                    $model->save();
 
-                $values[$i] = $model->getKey();
+                    $values[$i] = $model->getKey();
+                }
             }
         }
 
-        if (is_callable($callback = $this->getSyncCallback())) {
+        if (($this instanceof HasSyncCallback) && is_callable($callback = $this->getSyncCallback())) {
             $callbackModel = $this->getModel();
             $callback($values, $callbackModel);
 
@@ -138,7 +122,7 @@ trait ElementSaveRelationTrait
 
         foreach ($items as $item) {
             if (! in_array($item->getKey(), $values)) {
-                if ($this->isDeleteRelatedItem()) {
+                if (($this instanceof MustDeleteRelatedItem) && $this->isDeleteRelatedItem()) {
                     $item->delete();
                 } else {
                     $item->{$this->getForeignKeyNameFromRelation($relation)} = null;
@@ -162,7 +146,7 @@ trait ElementSaveRelationTrait
             $item = $model->find($value);
 
             if (is_null($item)) {
-                if (! $this->isTaggable()) {
+                if (! ($this instanceof Taggable) && $this->isTaggable()) {
                     continue;
                 }
 

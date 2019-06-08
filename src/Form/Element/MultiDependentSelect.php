@@ -2,11 +2,20 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use SleepingOwl\Admin\Traits\ElementSaveRelationTrait;
+use SleepingOwl\Admin\Contracts\Form\Element\MustDeleteRelatedItem;
+use SleepingOwl\Admin\Contracts\Form\Element\HasSyncCallback;
+use SleepingOwl\Admin\Contracts\Form\Element\Taggable;
+use SleepingOwl\Admin\Traits\ElementDeleteRelatedItem;
+use SleepingOwl\Admin\Traits\ElementSaveRelation;
+use SleepingOwl\Admin\Traits\ElementSyncCallback;
+use SleepingOwl\Admin\Traits\ElementTaggable;
 
-class MultiDependentSelect extends DependentSelect
+class MultiDependentSelect extends DependentSelect implements Taggable, HasSyncCallback, MustDeleteRelatedItem
 {
-    use ElementSaveRelationTrait;
+    use ElementSaveRelation,
+        ElementTaggable,
+        ElementSyncCallback,
+        ElementDeleteRelatedItem;
 
     /**
      * @return string
@@ -17,47 +26,21 @@ class MultiDependentSelect extends DependentSelect
     }
 
     /**
-     * @return string
-     */
-    public function getDataUrl()
-    {
-        return $this->dataUrl ?: route('admin.form.element.dependent-select', [
-            'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
-            'field' => parent::getName(),
-            'id' => $this->model->getKey(),
-        ]);
-    }
-
-    /**
      * @return array
      */
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
-            'size' => 2,
-            'data-select-type' => 'single',
-            'data-url' => $this->getDataUrl(),
-            'data-depends' => $this->getDataDepends(),
-            'class' => 'form-control input-select input-select-dependent',
-            'multiple'=>'multiple',
+            'multiple',
         ]);
 
-        if ($this->isReadonly()) {
-            $this->setHtmlAttribute('disabled', 'disabled');
+        if ($this->isTaggable()) {
+            $this->setHtmlAttribute('class', 'input-taggable');
         }
 
         return [
-            'id' => $this->getName(),
-            'name' => $this->getName(),
-            'path' => $this->getPath(),
-            'label' => $this->getLabel(),
-            'readonly' => $this->isReadonly(),
-            'options' => $this->getOptions(),
-            'value' => $this->getValueFromModel(),
-            'helpText' => $this->getHelpText(),
-            'required' => in_array('required', $this->validationRules),
-            'attributes' => $this->getHtmlAttributes(),
-        ];
+                'taggable'    => $this->isTaggable(),
+                'attributes' => $this->htmlAttributesToString(),
+            ] + parent::toArray();
     }
 }
