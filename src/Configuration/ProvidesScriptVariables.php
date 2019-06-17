@@ -4,6 +4,11 @@ namespace SleepingOwl\Admin\Configuration;
 
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
+/**
+ * Trait ProvidesScriptVariables
+ * @package SleepingOwl\Admin\Configuration
+ * @property-read \Illuminate\Foundation\Application $app
+ */
 trait ProvidesScriptVariables
 {
     /**
