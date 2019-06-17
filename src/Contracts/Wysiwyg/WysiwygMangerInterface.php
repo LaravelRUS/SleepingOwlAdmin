@@ -21,7 +21,7 @@ interface WysiwygMangerInterface
     public function register($editorId, WysiwygFilterInterface $filter = null, $name = null);
 
     /**
-     * @return Collection|WysiwygEditorInterface[]
+     * @return \Illuminate\Support\Collection|WysiwygEditorInterface[]
      */
     public function getFilters();
 
