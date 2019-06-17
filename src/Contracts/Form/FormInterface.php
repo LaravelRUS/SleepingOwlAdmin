@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts\Form;
 
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -38,7 +39,7 @@ interface FormInterface extends FormElementInterface, ElementsInterface
      *
      * @return void
      */
-    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null);
+    public function validateForm(Request $request, ModelConfigurationInterface $model = null);
 
     /**
      * Save model.
@@ -48,5 +49,5 @@ interface FormInterface extends FormElementInterface, ElementsInterface
      *
      * @return void
      */
-    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null);
+    public function saveForm(Request $request, ModelConfigurationInterface $model = null);
 }
