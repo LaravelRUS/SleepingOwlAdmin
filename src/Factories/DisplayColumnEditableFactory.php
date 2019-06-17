@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Factories;
 
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Display\Column\Editable\Text;
 use SleepingOwl\Admin\Display\Column\Editable\Select;
@@ -20,15 +21,15 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         parent::__construct($application);
 
         $this->register([
             'checkbox' => Checkbox::class,
-            'text'     => Text::class,
+            'text' => Text::class,
             'textarea' => Textarea::class,
-            'select'   => Select::class,
+            'select' => Select::class,
             'datetime' => DateTime::class,
         ]);
     }

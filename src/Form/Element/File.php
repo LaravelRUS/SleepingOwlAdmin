@@ -25,11 +25,11 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.'.static::$route;
+        $routeName = 'admin.form.element.' . static::$route;
 
-        if (! $router->has($routeName)) {
-            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as'   => $routeName,
+        if (!$router->has($routeName)) {
+            $router->post('{adminModel}/' . static::$route . '/{field}/{id?}', [
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField',
             ]);
         }
@@ -127,7 +127,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function getUploadPath(UploadedFile $file)
     {
-        if (! is_callable($this->uploadPath)) {
+        if (!is_callable($this->uploadPath)) {
             return $this->defaultUploadPath($file);
         }
 
@@ -153,7 +153,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function getUploadFileName(UploadedFile $file)
     {
-        if (! is_callable($this->uploadFileName)) {
+        if (!is_callable($this->uploadFileName)) {
             return $this->defaultUploadFilename($file);
         }
 
@@ -178,7 +178,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function getUploadSettings()
     {
         if (empty($this->uploadSettings) && in_array(Upload::class, class_uses($this->getModel()))) {
-            return (array) array_get($this->getModel()->getUploadSettings(), $this->getPath());
+            return (array)array_get($this->getModel()->getUploadSettings(), $this->getPath());
         }
 
         return $this->uploadSettings;
@@ -198,9 +198,8 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     /**
      * @param string $rule
-     * @param string|null $message
-     *
-     * @return $this
+     * @param null $message
+     * @return $this|\SleepingOwl\Admin\Form\Element\File|\SleepingOwl\Admin\Form\Element\NamedFormElement
      */
     public function addValidationRule($rule, $message = null)
     {
@@ -228,7 +227,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function maxSize($size)
     {
-        $this->addValidationRule('max:'.(int) $size);
+        $this->addValidationRule('max:' . (int)$size);
 
         return $this;
     }
@@ -240,14 +239,14 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function minSize($size)
     {
-        $this->addValidationRule('min:'.(int) $size);
+        $this->addValidationRule('min:' . (int)$size);
 
         return $this;
     }
 
     /**
-     * Set save file callback.
      * @param \Closure $callable
+     * @return $this
      */
     public function setSaveCallback(\Closure $callable)
     {
@@ -281,7 +280,7 @@ class File extends NamedFormElement implements WithRoutesInterface
         $file->move($path, $filename);
 
         //S3 Implement
-        $value = $path.'/'.$filename;
+        $value = $path . '/' . $filename;
 
         return ['path' => asset($value), 'value' => $value];
     }
@@ -300,7 +299,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function defaultUploadFilename(UploadedFile $file)
     {
-        return md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+        return md5(time() . $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
     }
 
     /**

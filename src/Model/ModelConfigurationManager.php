@@ -37,7 +37,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
+     * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
      * @return void
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
@@ -117,7 +117,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
         $this->repository = $app->make(RepositoryInterface::class);
         $this->repository->setClass($class);
-        if (! $this->alias) {
+        if (!$this->alias) {
             $this->setDefaultAlias();
         }
     }
@@ -268,10 +268,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @deprecated
      * @param int $id
      *
      * @return $this
+     * @deprecated
      */
     public function fireFullEdit($id)
     {
@@ -306,7 +306,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function can($action, Model $model)
     {
-        if (! $this->checkAccess) {
+        if (!$this->checkAccess) {
             return true;
         }
 
@@ -340,7 +340,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     {
         $controller = $this->getControllerClass();
 
-        return ! is_null($controller) && class_exists($controller);
+        return !is_null($controller) && class_exists($controller);
     }
 
     /**
@@ -538,7 +538,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         $page->setPriority($priority);
 
         if ($badge) {
-            if (! ($badge instanceof BadgeInterface)) {
+            if (!($badge instanceof BadgeInterface)) {
                 $badge = new Badge($badge);
             }
 
@@ -579,7 +579,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function fireEvent($event, $halt = true, Model $model = null, ...$payload)
     {
-        if (! isset(self::$dispatcher)) {
+        if (!isset(self::$dispatcher)) {
             return true;
         }
 
@@ -590,7 +590,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         // We will append the names of the class to the event to distinguish it from
         // other model events that are fired, allowing us to listen on each model
         // event set individually instead of catching event for all the models.
-        $event = "sleeping_owl.section.{$event}: ".$this->getClass();
+        $event = "sleeping_owl.section.{$event}: " . $this->getClass();
 
         // Laravel 5.8 and 5.4 support fire method
         if (version_compare('5.8.0', $this->app->version(), '<=') ||
@@ -637,7 +637,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected function registerEvent($event, $callback, $priority = 0)
     {
         if (isset(self::$dispatcher)) {
-            self::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
+            self::$dispatcher->listen("sleeping_owl.section.{$event}: " . $this->getClass(), $callback, $priority);
         }
     }
 

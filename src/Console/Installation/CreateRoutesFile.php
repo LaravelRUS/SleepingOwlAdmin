@@ -18,7 +18,7 @@ class CreateRoutesFile extends Installator
     {
         $file = $this->getFilePath();
 
-        $contents = $this->command->files()->get(SLEEPINGOWL_STUB_PATH.'/routes.stub');
+        $contents = $this->command->files()->get(SLEEPINGOWL_STUB_PATH . '/routes.stub');
         $this->command->files()->put($file, $contents);
         $filePath = str_replace(base_path(), '', $file);
         $this->command->line("<info>Routes file is [{$filePath}]</info>");
@@ -41,6 +41,6 @@ class CreateRoutesFile extends Installator
     {
         $bootstrapDirectory = $this->config->get('bootstrapDirectory', app_path('Admin'));
 
-        return $bootstrapDirectory.'/routes.php';
+        return $bootstrapDirectory . '/routes.php';
     }
 }

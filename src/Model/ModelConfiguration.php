@@ -230,7 +230,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function can($action, Model $model)
     {
-        if (! $this->checkAccess) {
+        if (!$this->checkAccess) {
             return true;
         }
 
@@ -242,7 +242,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function isCreatable()
     {
-        if (! is_callable($this->getCreate())) {
+        if (!is_callable($this->getCreate())) {
             return false;
         }
 
@@ -266,7 +266,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function isEditable(Model $model)
     {
-        if (! is_callable($this->getEdit())) {
+        if (!is_callable($this->getEdit())) {
             return false;
         }
 
@@ -290,7 +290,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function setDeletable($deletable)
     {
-        $this->deletable = (bool) $deletable;
+        $this->deletable = (bool)$deletable;
 
         return $this;
     }
@@ -389,7 +389,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireDisplay($payload = [])
     {
-        if (! is_callable($this->getDisplay())) {
+        if (!is_callable($this->getDisplay())) {
             return;
         }
 
@@ -436,7 +436,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireCreate($payload = [])
     {
-        if (! is_callable($this->getCreate())) {
+        if (!is_callable($this->getCreate())) {
             return;
         }
 
@@ -484,7 +484,7 @@ class ModelConfiguration extends ModelConfigurationManager
      */
     public function fireEdit($id, $payload = [])
     {
-        if (! is_callable($this->getEdit())) {
+        if (!is_callable($this->getEdit())) {
             return;
         }
 

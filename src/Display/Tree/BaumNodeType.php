@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Tree;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,7 +17,7 @@ class BaumNodeType extends NestedsetType
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+    public function getTree(Collection $collection)
     {
         return $collection->toHierarchy();
     }

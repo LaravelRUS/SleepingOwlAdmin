@@ -112,7 +112,7 @@ trait OrderableModel
     {
         $parentFields = $this->getParentFieldName();
         if ($parentFields) {
-            $parentFields = (array) $parentFields;
+            $parentFields = (array)$parentFields;
             foreach ($parentFields as $parentFieldName) {
                 $query->where($parentFieldName, $this->{$parentFieldName});
             }

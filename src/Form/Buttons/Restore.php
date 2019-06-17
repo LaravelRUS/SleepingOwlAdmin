@@ -25,12 +25,12 @@ class Restore extends FormButton
         parent::initialize();
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'type'  => 'submit',
-            'name'  => 'next_action',
-            'class' => 'btn btn-warning',
-            'data-url'=> $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
-            'data-redirect'=> $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
-        ]);
+                'type' => 'submit',
+                'name' => 'next_action',
+                'class' => 'btn btn-warning',
+                'data-url' => $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
+                'data-redirect' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
+            ]);
     }
 
     /**
@@ -38,7 +38,7 @@ class Restore extends FormButton
      */
     public function canShow()
     {
-        if (is_null($this->getModel()->getKey()) || ! $this->show) {
+        if (is_null($this->getModel()->getKey()) || !$this->show) {
             return false;
         }
 

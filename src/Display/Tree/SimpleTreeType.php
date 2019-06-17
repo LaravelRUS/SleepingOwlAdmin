@@ -36,7 +36,7 @@ class SimpleTreeType implements TreeTypeInterface
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+    public function getTree(Collection $collection)
     {
         $collection = $collection->sortBy($this->repository->getParentField())
             ->sortBy($this->repository->getOrderField());
@@ -93,7 +93,7 @@ class SimpleTreeType implements TreeTypeInterface
         $parentField = $this->repository->getParentField();
         $result = [];
         foreach ($collection as $instance) {
-            if ((int) $instance->$parentField != $id) {
+            if ((int)$instance->$parentField != $id) {
                 continue;
             }
 

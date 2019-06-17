@@ -67,19 +67,19 @@ class Wysiwyg extends NamedFormElement
         $config = $editor->getConfig();
         $config->set($this->parameters);
 
-        if (! $this->hasHtmlAttribute('id')) {
+        if (!$this->hasHtmlAttribute('id')) {
             $this->setHtmlAttribute('id', $this->getName());
         }
 
-        $this->parameters = (array) $config->all();
+        $this->parameters = (array)$config->all();
 
         $params = collect($this->parameters);
 
-        if (! $params->has('uploadUrl')) {
+        if (!$params->has('uploadUrl')) {
             $this->parameters['uploadUrl'] = route('admin.ckeditor.upload', ['_token' => csrf_token()]);
         }
 
-        if (! $params->has('filebrowserUploadUrl')) {
+        if (!$params->has('filebrowserUploadUrl')) {
             $this->parameters['filebrowserUploadUrl'] = route('admin.ckeditor.upload', ['_token' => csrf_token()]);
         }
     }
@@ -129,7 +129,7 @@ class Wysiwyg extends NamedFormElement
      */
     public function setHeight($height)
     {
-        $this->parameters['height'] = (int) $height;
+        $this->parameters['height'] = (int)$height;
 
         return $this;
     }
@@ -172,19 +172,19 @@ class Wysiwyg extends NamedFormElement
     public function toArray()
     {
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
-            'parameters' => json_encode($this->getParameters()),
-            'editor'     => $this->getEditor(),
-        ];
+                'parameters' => json_encode($this->getParameters()),
+                'editor' => $this->getEditor(),
+            ];
     }
 
     /**
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      */
     public function setModelAttribute($value)
     {
-        if (! empty($this->filteredFieldKey)) {
+        if (!empty($this->filteredFieldKey)) {
             parent::setModelAttribute($value);
 
             $this->setModelAttributeKey($this->filteredFieldKey);

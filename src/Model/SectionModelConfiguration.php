@@ -65,7 +65,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
      */
     public function fireDisplay($payload = [])
     {
-        if (! method_exists($this, 'onDisplay')) {
+        if (!method_exists($this, 'onDisplay')) {
             return;
         }
 
@@ -89,7 +89,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
      */
     public function fireCreate($payload = [])
     {
-        if (! method_exists($this, 'onCreate')) {
+        if (!method_exists($this, 'onCreate')) {
             return;
         }
 
@@ -111,14 +111,14 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      * @param mixed $payload
      *
      * @return mixed|void
      */
     public function fireEdit($id, $payload = [])
     {
-        if (! method_exists($this, 'onEdit')) {
+        if (!method_exists($this, 'onEdit')) {
             return;
         }
 

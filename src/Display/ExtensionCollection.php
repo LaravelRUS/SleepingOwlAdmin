@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -72,9 +73,10 @@ class ExtensionCollection extends Collection
     }
 
     /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @return $this
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    public function modifyQuery(Builder $query)
     {
         $this->each(function (DisplayExtensionInterface $extension) use ($query) {
             $extension->modifyQuery($query);

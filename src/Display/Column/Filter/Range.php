@@ -84,9 +84,9 @@ class Range extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-            'from' => $this->getFrom(),
-            'to'   => $this->getTo(),
-        ];
+                'from' => $this->getFrom(),
+                'to' => $this->getTo(),
+            ];
     }
 
     /**
@@ -107,11 +107,11 @@ class Range extends BaseColumnFilter
             $this->setOperator('between');
 
             return [$from, $to];
-        } elseif (!empty($from)) {
+        } else if (!empty($from)) {
             $this->setOperator('greater_or_equal');
 
             return $from;
-        } elseif (!empty($to)) {
+        } else if (!empty($to)) {
             $this->setOperator('less_or_equal');
 
             return $to;

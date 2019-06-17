@@ -72,7 +72,7 @@ trait ElementSaveRelation
         $relation = $this->getModel()->{$attribute}();
         if ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
             $this->syncBelongsToManyRelation($relation, $values);
-        } elseif ($relation instanceof \Illuminate\Database\Eloquent\Relations\HasMany) {
+        } else if ($relation instanceof \Illuminate\Database\Eloquent\Relations\HasMany) {
             $this->deleteOldItemsFromHasManyRelation($relation, $values);
             $this->attachItemsToHasManyRelation($relation, $values);
         }
@@ -87,10 +87,11 @@ trait ElementSaveRelation
     protected function syncBelongsToManyRelation(
         \Illuminate\Database\Eloquent\Relations\BelongsToMany $relation,
         array $values
-    ) {
+    )
+    {
         if ($this instanceof Taggable) {
             foreach ($values as $i => $value) {
-                if (! array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
+                if (!array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
                     $model = clone $this->getModelForOptions();
                     $model->{$this->getDisplay()} = $value;
                     $model->save();
@@ -117,11 +118,12 @@ trait ElementSaveRelation
     protected function deleteOldItemsFromHasManyRelation(
         \Illuminate\Database\Eloquent\Relations\HasMany $relation,
         array $values
-    ) {
+    )
+    {
         $items = $relation->get();
 
         foreach ($items as $item) {
-            if (! in_array($item->getKey(), $values)) {
+            if (!in_array($item->getKey(), $values)) {
                 if (($this instanceof MustDeleteRelatedItem) && $this->isDeleteRelatedItem()) {
                     $item->delete();
                 } else {
@@ -139,14 +141,15 @@ trait ElementSaveRelation
     protected function attachItemsToHasManyRelation(
         \Illuminate\Database\Eloquent\Relations\HasMany $relation,
         array $values
-    ) {
+    )
+    {
         foreach ($values as $i => $value) {
             /** @var Model $model */
             $model = clone $this->getModelForOptions();
             $item = $model->find($value);
 
             if (is_null($item)) {
-                if (! ($this instanceof Taggable) && $this->isTaggable()) {
+                if (!($this instanceof Taggable) && $this->isTaggable()) {
                     continue;
                 }
 

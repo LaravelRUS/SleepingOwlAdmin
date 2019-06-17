@@ -3,10 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class Select extends BaseColumnFilter
 {
-    use \SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+    use SelectOptionsFromModel;
 
     /**
      * @var string
@@ -44,8 +45,10 @@ class Select extends BaseColumnFilter
     protected $defaultValue = null;
 
     /**
-     * @param array|Model|string|null $options
-     * @param string|null $title
+     * Select constructor.
+     * @param null $options
+     * @param null $title
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function __construct($options = null, $title = null)
     {
@@ -53,11 +56,11 @@ class Select extends BaseColumnFilter
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } elseif (($options instanceof Model) || is_string($options)) {
+        } else if (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
 
-        if (! is_null($title)) {
+        if (!is_null($title)) {
             $this->setDisplay($title);
         }
     }
@@ -72,6 +75,9 @@ class Select extends BaseColumnFilter
         return $this;
     }
 
+    /**
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
+     */
     public function initialize()
     {
         parent::initialize();
@@ -82,7 +88,7 @@ class Select extends BaseColumnFilter
         if ($this->multiple) {
             $this->setHtmlAttribute('multiple', 'multiple');
 
-            if (! in_array($this->operator, ['in', 'not_in'])) {
+            if (!in_array($this->operator, ['in', 'not_in'])) {
                 $this->setOperator('in');
             }
         } else {
@@ -97,7 +103,7 @@ class Select extends BaseColumnFilter
      */
     public function setSortable($sortable)
     {
-        $this->sortable = (bool) $sortable;
+        $this->sortable = (bool)$sortable;
 
         return $this;
     }
@@ -111,10 +117,9 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param Model|string $model
-     *
-     * @deprecated use setModelForOptions
-     * @return $this
+     * @param $model
+     * @return \SleepingOwl\Admin\Display\Column\Filter\Select
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function setModel($model)
     {
@@ -126,7 +131,7 @@ class Select extends BaseColumnFilter
      */
     public function getOptions()
     {
-        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
+        if (!is_null($this->getModelForOptions()) && !is_null($this->getDisplay())) {
             $this->setOptions(
                 $this->loadOptions()
             );

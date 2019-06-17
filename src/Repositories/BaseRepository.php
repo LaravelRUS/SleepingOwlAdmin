@@ -43,7 +43,7 @@ class BaseRepository implements RepositoryInterface
      */
     public function setClass($class)
     {
-        if (! class_exists($class)) {
+        if (!class_exists($class)) {
             throw new RepositoryException("Class {$class} not found.");
         }
 
@@ -90,7 +90,7 @@ class BaseRepository implements RepositoryInterface
      */
     public function with($with)
     {
-        if (! is_array($with)) {
+        if (!is_array($with)) {
             $with = func_get_args();
         }
 

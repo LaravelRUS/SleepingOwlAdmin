@@ -7,6 +7,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/barryvdh/laravel-ide-helper
  */
+
 namespace SleepingOwl\Admin\Console\Commands;
 
 use SleepingOwl\Admin\Console\Generator;
@@ -31,15 +32,15 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
      */
     public function handle()
     {
-        if (file_exists(base_path().'/vendor/compiled.php') ||
-            file_exists(base_path().'/bootstrap/cache/compiled.php') ||
-            file_exists(base_path().'/storage/framework/compiled.php')) {
+        if (file_exists(base_path() . '/vendor/compiled.php') ||
+            file_exists(base_path() . '/bootstrap/cache/compiled.php') ||
+            file_exists(base_path() . '/storage/framework/compiled.php')) {
             $this->error(
                 'Error generating IDE Helper: first delete your compiled file (php artisan clear-compiled)'
             );
         } else {
-            $filename = (string) $this->argument('filename');
-            $format = (string) $this->option('format');
+            $filename = (string)$this->argument('filename');
+            $format = (string)$this->option('format');
 
             // Strip the php extension
             if (substr($filename, -4, 4) == '.php') {
@@ -65,7 +66,7 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
 
             $generator = new Generator($this->config, $this->view, $this->getOutput(), $helpers);
             $content = $generator->generate($format);
-            $written = (int) $this->files->put($filename, $content);
+            $written = (int)$this->files->put($filename, $content);
 
             if ($written === false) {
                 $this->error("The helper file could not be created at $filename");

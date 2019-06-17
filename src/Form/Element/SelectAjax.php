@@ -41,11 +41,11 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      */
     public static function registerRoutes(Router $router)
     {
-        $routeName = 'admin.form.element.'.static::$route;
+        $routeName = 'admin.form.element.' . static::$route;
 
-        if (! $router->has($routeName)) {
-            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as'   => $routeName,
+        if (!$router->has($routeName)) {
+            $router->post('{adminModel}/' . static::$route . '/{field}/{id?}', [
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@selectSearch',
             ]);
         }
@@ -98,10 +98,10 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      */
     public function getSearchUrl()
     {
-        return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
+        return $this->search_url ? $this->search_url : route('admin.form.element.' . static::$route, [
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
-            'field'      => $this->getName(),
-            'id'         => $this->model->getKey(),
+            'field' => $this->getName(),
+            'id' => $this->model->getKey(),
         ]);
     }
 
@@ -111,14 +111,14 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     public function toArray()
     {
         $attributes = [
-            'id'               => $this->getName(),
-            'size'             => 2,
+            'id' => $this->getName(),
+            'size' => 2,
             'data-select-type' => 'single',
-            'class'            => 'form-control js-data-ajax',
-            'model'            => get_class($this->getModelForOptions()),
-            'field'            => $this->getDisplay(),
-            'search'           => $this->getSearch(),
-            'search_url'       => $this->getSearchUrl(),
+            'class' => 'form-control js-data-ajax',
+            'model' => get_class($this->getModelForOptions()),
+            'field' => $this->getDisplay(),
+            'search' => $this->getSearch(),
+            'search_url' => $this->getSearchUrl(),
         ];
 
         return ['attributes' => $attributes] + parent::toArray();

@@ -67,7 +67,7 @@ class EditableColumn extends NamedColumn
      */
     public function getUrl()
     {
-        if (! $this->url) {
+        if (!$this->url) {
             return request()->url();
         }
 
@@ -112,12 +112,12 @@ class EditableColumn extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getModelValue(),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
-                'title'          => $this->getTitle(),
-                'mode'           => $this->getEditableMode(),
+                'id' => $this->getModel()->getKey(),
+                'value' => $this->getModelValue(),
+                'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+                'url' => $this->getUrl(),
+                'title' => $this->getTitle(),
+                'mode' => $this->getEditableMode(),
             ];
     }
 }

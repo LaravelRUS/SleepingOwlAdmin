@@ -68,7 +68,7 @@ trait FormElements
 
         foreach ($this->getElements() as $element) {
             if ($element instanceof ElementsInterface) {
-                if (! is_null($found = $element->getElement($path))) {
+                if (!is_null($found = $element->getElement($path))) {
                     return $found;
                 }
             }

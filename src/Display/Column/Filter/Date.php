@@ -88,7 +88,7 @@ class Date extends Text
      */
     public function showSeconds($status = true)
     {
-        $this->seconds = (bool) $status;
+        $this->seconds = (bool)$status;
 
         return $this;
     }
@@ -122,7 +122,7 @@ class Date extends Text
             $width = 0;
         }
 
-        $this->width = (int) $width;
+        $this->width = (int)$width;
 
         return $this;
     }
@@ -133,10 +133,10 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-            'seconds'      => $this->hasSeconds(),
-            'pickerFormat' => $this->getJsPickerFormat(),
-            'width'        => $this->getWidth(),
-        ];
+                'seconds' => $this->hasSeconds(),
+                'pickerFormat' => $this->getJsPickerFormat(),
+                'width' => $this->getWidth(),
+            ];
     }
 
     /**
@@ -155,15 +155,15 @@ class Date extends Text
         } catch (Exception $e) {
             Log::info('unable to parse date, re-trying with given format', [
                 'exception' => $e,
-                'date'      => $date,
+                'date' => $date,
             ]);
             try {
                 $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
             } catch (Exception $e) {
                 Log::error('unable to parse date!', [
-                    'exception'     => $e,
-                    'pickerFormat'  => $this->getPickerFormat(),
-                    'date'          => $date,
+                    'exception' => $e,
+                    'pickerFormat' => $this->getPickerFormat(),
+                    'date' => $date,
                 ]);
 
                 return null;

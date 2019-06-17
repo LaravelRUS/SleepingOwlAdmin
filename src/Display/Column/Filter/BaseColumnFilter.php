@@ -73,8 +73,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @deprecated
      * @return \Closure|null
+     * @deprecated
      */
     public function getCallback()
     {
@@ -83,8 +83,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @param \Closure $callback
-     * @deprecated
      * @return $this
+     * @deprecated
      */
     public function setCallback(Closure $callback)
     {
@@ -154,7 +154,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function toArray()
     {
         return [
-            'attributes'      => $this->htmlAttributesToString(),
+            'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
         ];
     }

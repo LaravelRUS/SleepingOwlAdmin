@@ -24,11 +24,11 @@ class Delete extends FormButton
         parent::initialize();
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'name'          => 'next_action',
-            'class'         => 'btn btn-danger btn-delete',
-            'data-url'      => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
-            'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
-        ]);
+                'name' => 'next_action',
+                'class' => 'btn btn-danger btn-delete',
+                'data-url' => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
+                'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
+            ]);
     }
 
     /**
@@ -41,7 +41,7 @@ class Delete extends FormButton
             return false;
         }
 
-        $this->show = ! $this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
+        $this->show = !$this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
 
         return parent::canShow();
     }

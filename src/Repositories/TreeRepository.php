@@ -40,7 +40,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      */
     public function __construct($treeType = null)
     {
-        if (! is_null($treeType)) {
+        if (!is_null($treeType)) {
             $this->setTreeType($treeType);
         }
     }
@@ -54,7 +54,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     {
         $this->treeType = new $treeType($this);
 
-        if (! ($this->treeType instanceof TreeTypeInterface)) {
+        if (!($this->treeType instanceof TreeTypeInterface)) {
             throw new DisplayTreeException('Tree type class must be instanced of [SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface]');
         }
     }
@@ -175,11 +175,11 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 
         if ($model instanceof \Baum\Node) {
             $type = BaumNodeType::class;
-        } elseif (class_exists('Kalnoy\Nestedset\Node') && $model instanceof \Kalnoy\Nestedset\Node) {
+        } else if (class_exists('Kalnoy\Nestedset\Node') && $model instanceof \Kalnoy\Nestedset\Node) {
             $type = KalnoyNestedsetType::class;
-        } elseif (function_exists('trait_uses_recursive') && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+        } else if (function_exists('trait_uses_recursive') && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
-        } elseif ($traits = class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+        } else if ($traits = class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
         }
 

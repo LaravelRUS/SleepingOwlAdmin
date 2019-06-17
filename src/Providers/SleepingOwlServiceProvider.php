@@ -12,8 +12,8 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/sleeping_owl.php', 'sleeping_owl');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'sleeping_owl');
 
         $this->registerCore();
         $this->registerCommands();
@@ -24,15 +24,15 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
      */
     public function boot(Admin $admin)
     {
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'sleeping_owl');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../public' => public_path('packages/sleepingowl/'),
+                __DIR__ . '/../../public' => public_path('packages/sleepingowl/'),
             ], 'assets');
 
             $this->publishes([
-                __DIR__.'/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
+                __DIR__ . '/../../config/sleeping_owl.php' => config_path('sleeping_owl.php'),
             ], 'config');
         }
 
@@ -54,7 +54,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $resolver->register('php', function () {
             return new PhpEngine();
         });
-        $finder = new FileViewFinder($this->app['files'], [__DIR__.'/../../resources/views']);
+        $finder = new FileViewFinder($this->app['files'], [__DIR__ . '/../../resources/views']);
         $factory = new Factory($resolver, $finder, $this->app['events']);
         $factory->addExtension('php', 'php');
 
@@ -64,8 +64,8 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
-            if (! class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider') &&
-                ! $this->app->resolved('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
+            if (!class_exists('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider') &&
+                !$this->app->resolved('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider')) {
                 $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
             }
 

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Validator;
 
@@ -43,7 +44,7 @@ class Image extends File
 
             $size = getimagesize($file->getRealPath());
 
-            if (! $size && $file->getMimeType() !== 'image/svg+xml') {
+            if (!$size && $file->getMimeType() !== 'image/svg+xml') {
                 $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
             }
         });
@@ -104,14 +105,14 @@ class Image extends File
             return $callback($file, $path, $filename, $settings);
         }
 
-        if (class_exists('Intervention\Image\Facades\Image') && (bool) getimagesize($file->getRealPath())) {
+        if (class_exists('Intervention\Image\Facades\Image') && (bool)getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {
                 call_user_func_array([$image, $method], $args);
             }
 
-            $value = $path.'/'.$filename;
+            $value = $path . '/' . $filename;
 
             $image->save($value);
 
@@ -135,7 +136,7 @@ class Image extends File
      * @param \Illuminate\Http\Request $request
      * @return mixed
      */
-    public function afterSave(\Illuminate\Http\Request $request)
+    public function afterSave(Request $request)
     {
         $value = $request->input($this->getPath());
         $model = $this->getModel();

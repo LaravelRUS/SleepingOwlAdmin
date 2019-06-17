@@ -54,7 +54,7 @@ class Select extends NamedFormElement
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } elseif (($options instanceof Model) || is_string($options)) {
+        } else if (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
     }
@@ -64,7 +64,7 @@ class Select extends NamedFormElement
      */
     public function getOptions()
     {
-        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
+        if (!is_null($this->getModelForOptions()) && !is_null($this->getDisplay())) {
             $this->setOptions(
                 $this->loadOptions()
             );
@@ -142,7 +142,7 @@ class Select extends NamedFormElement
      */
     public function setSortable($sortable, $sortable_flags = null)
     {
-        $this->sortable = (bool) $sortable;
+        $this->sortable = (bool)$sortable;
         $this->sortable_flags = $sortable_flags;
 
         return $this;
@@ -190,7 +190,7 @@ class Select extends NamedFormElement
      */
     public function exclude($keys)
     {
-        if (! is_array($keys)) {
+        if (!is_array($keys)) {
             $keys = func_get_args();
         }
 
@@ -217,10 +217,10 @@ class Select extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id'               => $this->getName(),
-            'size'             => 2,
+            'id' => $this->getName(),
+            'size' => 2,
             'data-select-type' => 'single',
-            'class'            => 'form-control',
+            'class' => 'form-control',
         ]);
 
         if ($this->isReadonly()) {
@@ -235,8 +235,8 @@ class Select extends NamedFormElement
         }
 
         return ['attributes' => $this->htmlAttributesToString()] + parent::toArray() + [
-                'options'  => $options,
-                'limit'    => $this->getLimit(),
+                'options' => $options,
+                'limit' => $this->getLimit(),
                 'nullable' => $this->isNullable(),
             ];
     }

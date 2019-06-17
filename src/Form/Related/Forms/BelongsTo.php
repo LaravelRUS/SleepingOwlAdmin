@@ -2,19 +2,26 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\Related\Elements;
 
 class BelongsTo extends Elements
 {
+    /** @var int */
     protected $limit = 1;
 
-    protected function proceedSave(\Illuminate\Http\Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return mixed|void
+     */
+    protected function proceedSave(Request $request)
     {
         $relation = $this->getRelation();
 
         // First we need to remove all entities
-        if (! $this->toRemove->isEmpty()) {
+        if (!$this->toRemove->isEmpty()) {
             $class = get_class($relation->getRelated());
             $class::destroy($this->toRemove->first());
         }
@@ -32,6 +39,10 @@ class BelongsTo extends Elements
         $child->save();
     }
 
+    /**
+     * @param array $data
+     * @return mixed|void
+     */
     protected function prepareRelatedValues(array $data)
     {
         $elements = $this->flatNamedElements($this->getNewElements());
@@ -47,6 +58,10 @@ class BelongsTo extends Elements
         }
     }
 
+    /**
+     * @param $query
+     * @return \Illuminate\Support\Collection
+     */
     protected function retrieveRelationValuesFromQuery($query): Collection
     {
         $removeKeys = $this->toRemove->all();
@@ -55,7 +70,10 @@ class BelongsTo extends Elements
         return $query->get()->keyBy($related->getKeyName())->forget($removeKeys);
     }
 
-    protected function getModelForElements(): \Illuminate\Database\Eloquent\Model
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function getModelForElements(): Model
     {
         return $this->getEmptyRelation()->getRelated();
     }
@@ -65,7 +83,7 @@ class BelongsTo extends Elements
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function getFreshModelForElements(): \Illuminate\Database\Eloquent\Model
+    protected function getFreshModelForElements(): Model
     {
         $class = get_class($this->getEmptyRelation()->getRelated());
 

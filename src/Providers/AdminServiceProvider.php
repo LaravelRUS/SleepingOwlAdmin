@@ -88,14 +88,14 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('sleeping_owl.template', function (Application $app) {
-            if (! class_exists($class = $this->getConfig('template'))) {
+            if (!class_exists($class = $this->getConfig('template'))) {
                 throw new TemplateException("Template class [{$class}] not found");
             }
 
             return $app->make($class);
         });
 
-        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
+        if (file_exists($assetsFile = __DIR__ . '/../../resources/assets.php')) {
             include $assetsFile;
         }
     }
@@ -107,7 +107,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function getConfig($key)
     {
-        return $this->app['config']->get('sleeping_owl.'.$key);
+        return $this->app['config']->get('sleeping_owl.' . $key);
     }
 
     /**
@@ -117,11 +117,11 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function getBootstrapPath($path = null)
     {
-        if (! is_null($path)) {
-            $path = DIRECTORY_SEPARATOR.$path;
+        if (!is_null($path)) {
+            $path = DIRECTORY_SEPARATOR . $path;
         }
 
-        return $this->getConfig('bootstrapDirectory').$path;
+        return $this->getConfig('bootstrapDirectory') . $path;
     }
 
     public function boot()
@@ -149,8 +149,8 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerMessages()
     {
         $messageTypes = [
-            'error'   => ErrorMessages::class,
-            'info'    => InfoMessages::class,
+            'error' => ErrorMessages::class,
+            'info' => InfoMessages::class,
             'success' => SuccessMessages::class,
             'warning' => WarningMessages::class,
         ];
@@ -209,7 +209,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $directory = $this->getBootstrapPath();
 
-        if (! is_dir($directory)) {
+        if (!is_dir($directory)) {
             return;
         }
 
@@ -257,7 +257,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerRoutes(function (Router $router) {
             (new ModelRouter($this->app, $router))->register($this->app['sleeping_owl']->getModels());
 
-            if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
+            if (file_exists($routesFile = __DIR__ . '/../Http/routes.php')) {
                 require $routesFile;
             }
 
@@ -274,7 +274,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $middlewares = collect($this->getConfig('middleware'));
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $middlewares,
         ]);
 
@@ -284,12 +284,12 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app['router']->group($configGroup->toArray(), function (Router $route) {
             $route->get('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
+                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
 
             $route->post('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
+                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
         });
@@ -302,7 +302,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $domain = config('sleeping_owl.domain', false);
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
         ]);
 

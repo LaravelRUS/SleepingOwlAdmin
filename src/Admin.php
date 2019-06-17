@@ -173,7 +173,7 @@ class Admin implements AdminInterface
             $class = get_class($class);
         }
 
-        if (! $this->hasModel($class)) {
+        if (!$this->hasModel($class)) {
             $this->registerModel($class);
         }
 
@@ -235,7 +235,7 @@ class Admin implements AdminInterface
 
     /**
      * @param string|Renderable $content
-     * @param string|null       $title
+     * @param string|null $title
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
@@ -260,10 +260,10 @@ class Admin implements AdminInterface
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
         if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
-            $providers[] = $this->app->getNamespace().'Providers\\AdminSectionsServiceProvider';
+            $providers[] = $this->app->getNamespace() . 'Providers\\AdminSectionsServiceProvider';
         }
 
-        $manifestPath = $this->app->bootstrapPath().'/cache/sleepingowladmin-services.php';
+        $manifestPath = $this->app->bootstrapPath() . '/cache/sleepingowladmin-services.php';
 
         (new ProviderRepository($this->app, new Filesystem(), $manifestPath))->load($providers);
     }

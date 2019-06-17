@@ -19,7 +19,7 @@ class MultiDependentSelect extends DependentSelect implements HasSyncCallback, M
      */
     public function getName()
     {
-        return parent::getName().'[]';
+        return parent::getName() . '[]';
     }
 
     /**

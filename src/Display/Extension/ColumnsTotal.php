@@ -41,7 +41,7 @@ class ColumnsTotal extends Extension implements Placable
     public function set(array $elements, $columnsNumber = 0)
     {
         array_map(function ($element) {
-            if (! is_object($element)) {
+            if (!is_object($element)) {
                 $element = Element::create($element);
             }
             $this->elements->push($element);

@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-class Group extends \Illuminate\Support\Collection
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+
+class Group extends Collection
 {
     /**
      * @var \Illuminate\Database\Eloquent\Model
@@ -16,7 +19,7 @@ class Group extends \Illuminate\Support\Collection
 
     protected $primary;
 
-    public function __construct(\Illuminate\Database\Eloquent\Model $model = null, $items = [])
+    public function __construct(Model $model = null, $items = [])
     {
         $this->model = $model;
 

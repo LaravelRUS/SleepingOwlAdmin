@@ -34,7 +34,7 @@ class InstallCommand extends Installation\Command
         ])->map(function ($installer) {
             return new $installer($this, $this->config);
         })->filter(function (Installator $installer) {
-            return $this->option('force') ? true : ! $installer->installed();
+            return $this->option('force') ? true : !$installer->installed();
         })->each(function (Installator $installer) {
             $installer->install();
             $installer->showInfo();

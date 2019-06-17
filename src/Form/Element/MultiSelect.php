@@ -27,7 +27,7 @@ class MultiSelect extends Select implements Taggable, HasSyncCallback, MustDelet
      */
     public function getName()
     {
-        return parent::getName().'[]';
+        return parent::getName() . '[]';
     }
 
     /**
@@ -36,7 +36,7 @@ class MultiSelect extends Select implements Taggable, HasSyncCallback, MustDelet
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id'    => $this->getName(),
+            'id' => $this->getName(),
             'class' => 'form-control',
             'multiple',
         ]);
@@ -50,7 +50,7 @@ class MultiSelect extends Select implements Taggable, HasSyncCallback, MustDelet
         }
 
         return [
-                'taggable'    => $this->isTaggable(),
+                'taggable' => $this->isTaggable(),
                 'attributes' => $this->htmlAttributesToString(),
             ] + parent::toArray();
     }

@@ -67,7 +67,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
      */
     public function setOrderable($orderable)
     {
-        $this->orderable = (bool) $orderable;
+        $this->orderable = (bool)$orderable;
 
         return $this;
     }
@@ -82,8 +82,8 @@ class TableHeaderColumn implements TableHeaderColumnInterface
         $this->setHtmlAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
 
         return [
-            'attributes'  => $this->htmlAttributesToString(),
-            'title'       => $this->getTitle(),
+            'attributes' => $this->htmlAttributesToString(),
+            'title' => $this->getTitle(),
             'isOrderable' => $this->isOrderable(),
         ];
     }

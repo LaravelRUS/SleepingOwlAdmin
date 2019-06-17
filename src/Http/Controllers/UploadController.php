@@ -23,9 +23,9 @@ class UploadController extends Controller
      */
     public function fromField(Request $request, ModelConfigurationInterface $model, $field, $id = null)
     {
-        if (! is_null($id)) {
+        if (!is_null($id)) {
             $item = $model->getRepository()->find($id);
-            if (is_null($item) || ! $model->isEditable($item)) {
+            if (is_null($item) || !$model->isEditable($item)) {
                 return new JsonResponse([
                     'message' => trans('lang.message.access_denied'),
                 ], 403);
@@ -33,7 +33,7 @@ class UploadController extends Controller
 
             $form = $model->fireEdit($id);
         } else {
-            if (! $model->isCreatable()) {
+            if (!$model->isCreatable()) {
                 return new JsonResponse([
                     'message' => trans('lang.message.access_denied'),
                 ], 403);
@@ -59,7 +59,7 @@ class UploadController extends Controller
         if ($validator->fails()) {
             return new JsonResponse([
                 'message' => trans('lang.message.validation_error'),
-                'errors'  => $validator->errors()->get('file'),
+                'errors' => $validator->errors()->get('file'),
             ], 400);
         }
 
@@ -94,12 +94,12 @@ class UploadController extends Controller
         $extensions = collect(['jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif']);
 
         if ($extensions->search($file->getClientOriginalExtension())) {
-            $uploadFileName = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+            $uploadFileName = md5(time() . $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
 
             $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $uploadFileName);
 
             $result['url'] = asset(
-                config('sleeping_owl.imagesUploadDirectory').'/'.$uploadFileName
+                config('sleeping_owl.imagesUploadDirectory') . '/' . $uploadFileName
             );
             $result['uploaded'] = 1;
             $result['fileName'] = $uploadFileName;

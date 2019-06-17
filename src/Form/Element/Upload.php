@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 class Upload extends NamedFormElement
@@ -17,8 +18,8 @@ class Upload extends NamedFormElement
     public function toArray()
     {
         return [
-            'value' => $this->getModel()->getAttribute($this->getModelAttributeKey()),
-        ] + parent::toArray();
+                'value' => $this->getModel()->getAttribute($this->getModelAttributeKey()),
+            ] + parent::toArray();
     }
 
     /**
@@ -26,7 +27,7 @@ class Upload extends NamedFormElement
      *
      * @return UploadedFile|null
      */
-    public function getValueFromRequest(\Illuminate\Http\Request $request)
+    public function getValueFromRequest(Request $request)
     {
         return $request->file($this->getPath());
     }
@@ -36,13 +37,13 @@ class Upload extends NamedFormElement
      *
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $value = $this->getValueFromRequest($request);
 
-        if ($request->input($this->getPath().'_remove')) {
+        if ($request->input($this->getPath() . '_remove')) {
             $this->setModelAttribute(null);
-        } elseif (! is_null($value)) {
+        } else if (!is_null($value)) {
             $this->setModelAttribute($value);
         }
     }

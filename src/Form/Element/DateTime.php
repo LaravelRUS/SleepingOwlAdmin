@@ -4,10 +4,12 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use SleepingOwl\Admin\Traits\DatePicker;
 
 class DateTime extends NamedFormElement
 {
-    use \SleepingOwl\Admin\Traits\DatePicker;
+    use DatePicker;
 
     /**
      * @var string
@@ -79,7 +81,7 @@ class DateTime extends NamedFormElement
     public function getValueFromModel()
     {
         $value = parent::getValueFromModel();
-        if (! empty($value)) {
+        if (!empty($value)) {
             return $this->parseValue($value);
         }
     }
@@ -89,7 +91,7 @@ class DateTime extends NamedFormElement
      */
     public function hasSeconds()
     {
-        return (bool) $this->seconds;
+        return (bool)$this->seconds;
     }
 
     /**
@@ -111,9 +113,9 @@ class DateTime extends NamedFormElement
      */
     public function setModelAttribute($value)
     {
-        $value = ! empty($value)
+        $value = !empty($value)
             ? Carbon::createFromFormat($this->getPickerFormat(), $value, $this->getTimezone())
-                    ->timezone(config('app.timezone'))->format($this->getFormat())
+                ->timezone(config('app.timezone'))->format($this->getFormat())
             : null;
 
         parent::setModelAttribute($value);
@@ -125,17 +127,17 @@ class DateTime extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'data-date-format'     => $this->getJsPickerFormat(),
-            'data-date-pickdate'   => 'true',
-            'data-date-picktime'   => 'false',
+            'data-date-format' => $this->getJsPickerFormat(),
+            'data-date-pickdate' => 'true',
+            'data-date-picktime' => 'false',
             'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
-            'class'                => 'form-control',
-            'type'                 => 'text',
+            'class' => 'form-control',
+            'type' => 'text',
         ]);
 
         return parent::toArray() + [
-                'seconds'      => $this->hasSeconds(),
-                'format'       => $this->getFormat(),
+                'seconds' => $this->hasSeconds(),
+                'format' => $this->getFormat(),
                 'pickerFormat' => $this->getJsPickerFormat(),
             ];
     }
@@ -169,17 +171,17 @@ class DateTime extends NamedFormElement
         try {
             $time = Carbon::parse($value);
         } catch (Exception $e) {
-            \Log::info('unable to parse date, re-trying with given format', [
+            Log::info('unable to parse date, re-trying with given format', [
                 'exception' => $e,
-                'date'      => $value,
+                'date' => $value,
             ]);
             try {
                 $time = Carbon::createFromFormat($this->getPickerFormat(), $value);
             } catch (Exception $e) {
-                \Log::error('unable to parse date!', [
-                    'exception'     => $e,
-                    'pickerFormat'  => $this->getPickerFormat(),
-                    'date'          => $value,
+                Log::error('unable to parse date!', [
+                    'exception' => $e,
+                    'pickerFormat' => $this->getPickerFormat(),
+                    'date' => $value,
                 ]);
 
                 return;

@@ -57,7 +57,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function getModelConfiguration()
     {
-        if (! $this->hasModel()) {
+        if (!$this->hasModel()) {
             return;
         }
 
@@ -69,7 +69,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function hasModel()
     {
-        return ! is_null($this->model) && class_exists($this->model);
+        return !is_null($this->model) && class_exists($this->model);
     }
 
     /**
@@ -113,7 +113,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function getAccessLogic()
     {
-        if (! is_callable($this->accessLogic)) {
+        if (!is_callable($this->accessLogic)) {
             if ($this->hasModel()) {
                 return function () {
                     return $this->getModelConfiguration()->isDisplayable();
@@ -131,13 +131,13 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function render($view = null)
     {
-        if ($this->hasChild() && ! $this->hasClassProperty($class = config('navigation.class.has_child', 'treeview'))) {
+        if ($this->hasChild() && !$this->hasClassProperty($class = config('navigation.class.has_child', 'treeview'))) {
             $this->setHtmlAttribute('class', $class);
         }
 
         $data = $this->toArray();
 
-        if (! is_null($view)) {
+        if (!is_null($view)) {
             return view($view, $data)->render();
         }
 

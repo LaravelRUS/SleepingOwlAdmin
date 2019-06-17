@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Tree;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,7 +17,7 @@ class KalnoyNestedsetType extends NestedsetType
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+    public function getTree(Collection $collection)
     {
         return $collection->toTree();
     }
@@ -32,7 +33,7 @@ class KalnoyNestedsetType extends NestedsetType
     }
 
     /**
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */
@@ -42,7 +43,7 @@ class KalnoyNestedsetType extends NestedsetType
     }
 
     /**
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */

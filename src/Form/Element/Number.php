@@ -39,7 +39,7 @@ class Number extends NamedFormElement
      */
     public function setMin($min)
     {
-        $this->min = (float) $min;
+        $this->min = (float)$min;
 
         return $this;
     }
@@ -59,7 +59,7 @@ class Number extends NamedFormElement
      */
     public function setMax($max)
     {
-        $this->max = (float) $max;
+        $this->max = (float)$max;
 
         return $this;
     }
@@ -79,7 +79,7 @@ class Number extends NamedFormElement
      */
     public function setStep($step)
     {
-        $this->step = (float) $step;
+        $this->step = (float)$step;
 
         return $this;
     }
@@ -91,15 +91,15 @@ class Number extends NamedFormElement
     {
         $this->setHtmlAttributes([
             'class' => 'form-control',
-            'type'  => 'number',
-            'max'   => $this->getMax(),
-            'min'   => $this->getMin(),
-            'step'  => $this->getStep(),
+            'type' => 'number',
+            'max' => $this->getMax(),
+            'min' => $this->getMin(),
+            'step' => $this->getStep(),
         ]);
 
         return parent::toArray() + [
-                'min'  => $this->getMin(),
-                'max'  => $this->getMax(),
+                'min' => $this->getMin(),
+                'max' => $this->getMax(),
                 'step' => $this->getStep(),
             ];
     }
@@ -112,7 +112,7 @@ class Number extends NamedFormElement
     public function prepareValue($value)
     {
         if ($value == '') {
-            return;
+            return null;
         }
 
         return parent::prepareValue(

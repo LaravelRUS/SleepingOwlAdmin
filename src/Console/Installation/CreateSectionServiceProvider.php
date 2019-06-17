@@ -25,7 +25,7 @@ class CreateSectionServiceProvider extends Installator
         $contents = str_replace(
             '__NAMESPACE__',
             $ns,
-            $this->command->files()->get(SLEEPINGOWL_STUB_PATH.'/provider.stub')
+            $this->command->files()->get(SLEEPINGOWL_STUB_PATH . '/provider.stub')
         );
 
         $this->command->files()->put($file, $contents);

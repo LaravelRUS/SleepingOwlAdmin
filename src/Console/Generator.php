@@ -7,6 +7,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      https://github.com/barryvdh/laravel-ide-helper
  */
+
 namespace SleepingOwl\Admin\Console;
 
 use Illuminate\Support\Collection;
@@ -25,7 +26,7 @@ class Generator extends IdeHelperGenerator
         $aliases = $this->getValidAliases();
 
         $aliases = $aliases->filter(function (Alias $item) {
-            return ! collect([
+            return !collect([
                 'MessageStack',
                 'AdminSection',
                 'AdminTemplate',

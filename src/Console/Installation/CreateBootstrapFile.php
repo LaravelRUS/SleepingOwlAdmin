@@ -18,7 +18,7 @@ class CreateBootstrapFile extends Installator
     {
         $file = $this->getFilePath();
 
-        $contents = $this->command->files()->get(SLEEPINGOWL_STUB_PATH.'/bootstrap.stub');
+        $contents = $this->command->files()->get(SLEEPINGOWL_STUB_PATH . '/bootstrap.stub');
         $this->command->files()->put($file, $contents);
         $filePath = str_replace(base_path(), '', $file);
         $this->command->line("<info>Bootstrap file is [{$filePath}]</info>");
@@ -41,6 +41,6 @@ class CreateBootstrapFile extends Installator
     {
         $bootstrapDirectory = $this->config->get('bootstrapDirectory', app_path('Admin'));
 
-        return $bootstrapDirectory.'/bootstrap.php';
+        return $bootstrapDirectory . '/bootstrap.php';
     }
 }

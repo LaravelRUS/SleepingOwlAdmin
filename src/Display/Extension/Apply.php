@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
 
 class Apply extends Extension
 {
@@ -26,7 +27,7 @@ class Apply extends Extension
      */
     public function set($applies)
     {
-        if (! is_array($applies)) {
+        if (!is_array($applies)) {
             $applies = func_get_args();
         }
 
@@ -64,7 +65,7 @@ class Apply extends Extension
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    public function modifyQuery(Builder $query)
     {
         foreach ($this->applies as $apply) {
             call_user_func($apply, $query);

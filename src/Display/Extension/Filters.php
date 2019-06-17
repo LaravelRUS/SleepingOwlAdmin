@@ -41,7 +41,7 @@ class Filters extends Extension implements Initializable
      */
     public function set($filters)
     {
-        if (! is_array($filters)) {
+        if (!is_array($filters)) {
             $filters = func_get_args();
         }
 
@@ -116,7 +116,7 @@ class Filters extends Extension implements Initializable
     {
         return [
             'filters' => $this->filters->toArray(),
-            'title'   => $this->getTitle(),
+            'title' => $this->getTitle(),
         ];
     }
 

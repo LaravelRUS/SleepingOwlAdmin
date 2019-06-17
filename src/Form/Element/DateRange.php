@@ -31,7 +31,7 @@ class DateRange extends Date
      */
     public function getDefaultFrom()
     {
-        if (! $this->defaultFrom) {
+        if (!$this->defaultFrom) {
             $this->defaultFrom = Carbon::now();
         }
 
@@ -57,7 +57,7 @@ class DateRange extends Date
      */
     public function getDefaultTo()
     {
-        if (! $this->defaultTo) {
+        if (!$this->defaultTo) {
             $this->defaultTo = Carbon::now();
         }
 
@@ -85,7 +85,7 @@ class DateRange extends Date
      */
     public function setModelAttribute($value)
     {
-        $value = ! empty($value) ? array_map(function ($date) {
+        $value = !empty($value) ? array_map(function ($date) {
             return Carbon::createFromFormat($this->getPickerFormat(), $date);
         }, explode('::', $value)) : null;
 
@@ -98,16 +98,16 @@ class DateRange extends Date
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'data-format'    => $this->getJsPickerFormat(),
+            'data-format' => $this->getJsPickerFormat(),
             'data-startDate' => $this->getDefaultFrom(),
-            'data-endDate'   => $this->getDefaultTo(),
-            'class'          => 'form-control input-daterange',
-            'type'           => 'text',
+            'data-endDate' => $this->getDefaultTo(),
+            'class' => 'form-control input-daterange',
+            'type' => 'text',
         ]);
 
         return parent::toArray() + [
                 'startDate' => $this->getDefaultFrom(),
-                'endDate'   => $this->getDefaultTo(),
+                'endDate' => $this->getDefaultTo(),
             ];
     }
 

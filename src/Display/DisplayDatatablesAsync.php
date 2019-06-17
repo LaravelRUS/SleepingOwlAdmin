@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,17 +23,17 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.async';
-        if (! $router->has($routeName)) {
+        if (!$router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
         }
 
         $routeName = 'admin.display.async.inlineEdit';
-        if (! $router->has($routeName)) {
+        if (!$router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
@@ -191,7 +191,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $totalCount = $query->count();
         $filteredCount = 0;
 
-        if (! is_null($this->distinct)) {
+        if (!is_null($this->distinct)) {
             $filteredCount = $query->distinct()->count($this->getDistinct());
         }
 
@@ -213,7 +213,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Apply offset and limit to the query.
      *
-     * @param $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @param \Illuminate\Http\Request $request
      */
     public function applyOffset($query, \Illuminate\Http\Request $request)
@@ -225,7 +225,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
             return;
         }
 
-        $query->offset((int) $offset)->limit((int) $limit);
+        $query->offset((int)$offset)->limit((int)$limit);
     }
 
     /**
@@ -266,7 +266,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                         continue;
                     }
 
-                    $query->orWhere($column->getName(), 'like', '%'.$search.'%');
+                    $query->orWhere($column->getName(), 'like', '%' . $search . '%');
                 }
             }
         });
@@ -287,7 +287,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         Collection $collection,
         $totalCount,
         $filteredCount
-    ) {
+    )
+    {
         $columns = $this->getColumns();
 
         $result = [];
@@ -306,7 +307,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                     $column->initialize();
                 }
 
-                $_row[] = (string) $column;
+                $_row[] = (string)$column;
             }
 
             $result['data'][] = $_row;
@@ -340,6 +341,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Filter;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class FilterRelated extends FilterField
 {
@@ -53,7 +54,7 @@ class FilterRelated extends FilterField
      */
     public function setModel($model)
     {
-        if (! class_exists($model)) {
+        if (!class_exists($model)) {
             throw new Exception("Class model [$model] not found");
         }
 
@@ -76,7 +77,7 @@ class FilterRelated extends FilterField
     }
 
     /**
-     * @return null
+     * @return null|
      * @throws Exception
      */
     protected function getDisplayField()
@@ -84,7 +85,7 @@ class FilterRelated extends FilterField
         $model = $this->getModel();
 
         if (is_null($model)) {
-            throw new Exception('Specify model for filter: '.$this->getName());
+            throw new Exception('Specify model for filter: ' . $this->getName());
         }
 
         try {
@@ -92,10 +93,12 @@ class FilterRelated extends FilterField
 
             return $modelObject->{$this->getDisplay()};
         } catch (ModelNotFoundException $e) {
-            \Log::debug('related model instance not found', [
+            Log::debug('related model instance not found', [
                 'model' => $model,
-                'id'    => $this->getValue(),
+                'id' => $this->getValue(),
             ]);
         }
+
+        return null;
     }
 }

@@ -59,17 +59,17 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         $value = $this->getModelValue();
 
         return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getFormatedDate($value),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
+                'id' => $this->getModel()->getKey(),
+                'value' => $this->getFormatedDate($value),
+                'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+                'url' => $this->getUrl(),
 
-                'format'          => $this->getJsPickerFormat(),
-                'viewformat'      => $this->getJsPickerFormat(),
-                'data-date-pickdate'   => 'true',
-                'data-date-picktime'   => 'false',
+                'format' => $this->getJsPickerFormat(),
+                'viewformat' => $this->getJsPickerFormat(),
+                'data-date-pickdate' => 'true',
+                'data-date-picktime' => 'false',
                 'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
-                'type'                 => $this->type,
+                'type' => $this->type,
             ];
     }
 
@@ -80,8 +80,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     protected function getFormatedDate($date)
     {
-        if (! is_null($date)) {
-            if (! $date instanceof Carbon) {
+        if (!is_null($date)) {
+            if (!$date instanceof Carbon) {
                 $date = Carbon::parse($date);
             }
 
@@ -97,7 +97,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     public function getValueFromModel()
     {
         $value = parent::getModelValue();
-        if (! empty($value)) {
+        if (!empty($value)) {
             return $this->parseValue($value);
         }
     }
@@ -107,7 +107,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     public function hasSeconds()
     {
-        return (bool) $this->seconds;
+        return (bool)$this->seconds;
     }
 
     /**
@@ -129,7 +129,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     public function setModelAttribute($value)
     {
-        $value = ! empty($value)
+        $value = !empty($value)
             ? Carbon::createFromFormat($this->getPickerFormat(), $value, $this->getTimezone())
                 ->timezone(config('app.timezone'))->format($this->getFormat())
             : null;

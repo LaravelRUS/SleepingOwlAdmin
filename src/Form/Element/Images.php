@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
+
 class Images extends Image
 {
     /**
@@ -45,9 +47,9 @@ class Images extends Image
 
         if (is_null($value)) {
             $images = [];
-        } elseif (is_string($value)
-                   && (($images = json_decode($value)) === false
-                       || is_null($images))
+        } else if (is_string($value)
+            && (($images = json_decode($value)) === false
+                || is_null($images))
         ) {
             $images = preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
         }
@@ -60,12 +62,12 @@ class Images extends Image
      *
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $name = $this->getName();
         $value = $request->input($name, '');
 
-        if (! empty($value)) {
+        if (!empty($value)) {
             $value = explode(',', $value);
         } else {
             $value = [];

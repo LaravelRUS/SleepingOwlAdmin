@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\Related\Elements;
 
@@ -11,17 +14,21 @@ class HasMany extends Elements
     {
         parent::initialize();
 
-        $this->modifyQuery(function ($query) {
+        $this->modifyQuery(function (Builder $query) {
             $query->orderBy($this->getEmptyRelation()->getRelated()->getKeyName());
         });
     }
 
-    protected function proceedSave(\Illuminate\Http\Request $request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return mixed|void
+     */
+    protected function proceedSave(Request $request)
     {
         $relation = $this->getRelation();
 
         // First we need to remove all entities
-        if (! $this->toRemove->isEmpty()) {
+        if (!$this->toRemove->isEmpty()) {
             $class = get_class($relation->getRelated());
             $class::destroy($this->toRemove->all());
         }
@@ -29,6 +36,10 @@ class HasMany extends Elements
         $relation->saveMany($this->relatedValues);
     }
 
+    /**
+     * @param array $data
+     * @return mixed|void
+     */
     protected function prepareRelatedValues(array $data)
     {
         $elements = $this->flatNamedElements($this->getNewElements());
@@ -44,6 +55,10 @@ class HasMany extends Elements
         }
     }
 
+    /**
+     * @param $query
+     * @return \Illuminate\Support\Collection
+     */
     protected function retrieveRelationValuesFromQuery($query): Collection
     {
         $removeKeys = $this->toRemove->all();
@@ -52,7 +67,10 @@ class HasMany extends Elements
         return $query->get()->keyBy($related->getKeyName())->forget($removeKeys);
     }
 
-    protected function getModelForElements(): \Illuminate\Database\Eloquent\Model
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function getModelForElements(): Model
     {
         return $this->getEmptyRelation()->getRelated();
     }
@@ -62,7 +80,7 @@ class HasMany extends Elements
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function getFreshModelForElements(): \Illuminate\Database\Eloquent\Model
+    protected function getFreshModelForElements(): Model
     {
         $class = get_class($this->getEmptyRelation()->getRelated());
 

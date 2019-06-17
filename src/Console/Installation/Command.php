@@ -29,11 +29,11 @@ abstract class Command extends ConsoleCommand
      */
     public function fire(Filesystem $files)
     {
-        if (! defined('SLEEPINGOWL_STUB_PATH')) {
-            define('SLEEPINGOWL_STUB_PATH', __DIR__.'/stubs');
+        if (!defined('SLEEPINGOWL_STUB_PATH')) {
+            define('SLEEPINGOWL_STUB_PATH', __DIR__ . '/stubs');
         }
 
-        if (! $this->confirmToProceed('SleepingOwl Admin')) {
+        if (!$this->confirmToProceed('SleepingOwl Admin')) {
             return;
         }
 
@@ -55,11 +55,11 @@ abstract class Command extends ConsoleCommand
      */
     public function handle(Filesystem $files)
     {
-        if (! defined('SLEEPINGOWL_STUB_PATH')) {
-            define('SLEEPINGOWL_STUB_PATH', __DIR__.'/stubs');
+        if (!defined('SLEEPINGOWL_STUB_PATH')) {
+            define('SLEEPINGOWL_STUB_PATH', __DIR__ . '/stubs');
         }
 
-        if (! $this->confirmToProceed('SleepingOwl Admin')) {
+        if (!$this->confirmToProceed('SleepingOwl Admin')) {
             return;
         }
 
