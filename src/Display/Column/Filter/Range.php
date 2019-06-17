@@ -91,28 +91,27 @@ class Range extends BaseColumnFilter
 
     /**
      * @param mixed $range
-     * @return array|mixed|null
+     * @return array|mixed|null|void
      * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
     public function parseValue($range)
     {
         if (strpos($range, '::') === false) {
-            return;
+            return null;
         }
 
-        [$from, $to] = explode('::', $range, 2);
-        $from = $this->from->parseValue($from);
-        $to = $this->to->parseValue($to);
+        $from = $this->from->parseValue(explode('::', $range, 2)[0]);
+        $to = $this->to->parseValue(explode('::', $range, 2)[1]);
 
-        if (! empty($from) && ! empty($to)) {
+        if (!empty($from) && !empty($to)) {
             $this->setOperator('between');
 
             return [$from, $to];
-        } elseif (! empty($from)) {
+        } elseif (!empty($from)) {
             $this->setOperator('greater_or_equal');
 
             return $from;
-        } elseif (! empty($to)) {
+        } elseif (!empty($to)) {
             $this->setOperator('less_or_equal');
 
             return $to;
