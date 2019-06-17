@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Http\Request;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class EditableColumn extends NamedColumn

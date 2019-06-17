@@ -206,7 +206,9 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)

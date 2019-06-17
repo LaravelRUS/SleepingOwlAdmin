@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use Closure;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
@@ -85,7 +86,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      * @deprecated
      * @return $this
      */
-    public function setCallback(\Closure $callback)
+    public function setCallback(Closure $callback)
     {
         $this->callback = $callback;
 
