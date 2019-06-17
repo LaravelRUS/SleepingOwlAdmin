@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use AdminSection;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -16,8 +17,11 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     protected $search = null;
 
     /**
-     * @param string $path
-     * @param string|null $label
+     * SelectAjax constructor.
+     * @param $path
+     * @param null $label
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null)
     {
@@ -95,7 +99,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     public function getSearchUrl()
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
-            'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
+            'adminModel' => AdminSection::getModel($this->model)->getAlias(),
             'field'      => $this->getName(),
             'id'         => $this->model->getKey(),
         ]);

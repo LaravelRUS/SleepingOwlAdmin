@@ -27,8 +27,10 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
     /**
      * MultiSelectAjax constructor.
-     * @param string $path
+     * @param $path
      * @param null $label
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null)
     {
