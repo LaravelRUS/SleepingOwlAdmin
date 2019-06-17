@@ -314,33 +314,6 @@ class NamedFormElementTest extends TestCase
         ], $element->toArray());
     }
 
-    public function test_save()
-    {
-        $request = $this->app['request'];
-
-        $session = $request->getSession();
-        $session->shouldReceive('getOldInput')->andReturn(null);
-
-        $request->offsetSet($key = 'key', $value = 'hello world');
-        $element = $this->getElement($key, 'Label');
-
-        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('setAttribute')->with('key', $value);
-
-        $element->save($request);
-    }
-
-    public function test_sets_model_attribute()
-    {
-        $element = $this->getElement('key', 'Label');
-        $value = 'value';
-
-        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('setAttribute')->with('key', $value);
-
-        $element->setModelAttribute($value);
-    }
-
     /**
      * @covers SleepingOwl\Admin\Form\FormElement::isValueSkipped()
      * @covers SleepingOwl\Admin\Form\FormElement::setValueSkipped()
