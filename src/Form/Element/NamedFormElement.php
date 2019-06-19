@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Closure;
 use LogicException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
@@ -534,7 +535,7 @@ abstract class NamedFormElement extends FormElement
      *
      * @return $this
      */
-    public function mutateValue(\Closure $mutator)
+    public function mutateValue(Closure $mutator)
     {
         $this->mutator = $mutator;
 
@@ -590,19 +591,19 @@ abstract class NamedFormElement extends FormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id'   => $this->getName(),
+            'id' => $this->getName(),
             'name' => $this->getName(),
         ]);
 
         return array_merge(parent::toArray(), [
-            'id'         => $this->getName(),
-            'value'      => $this->exactValueSet ? $this->getExactValue() : $this->getValueFromModel(),
-            'name'       => $this->getName(),
-            'path'       => $this->getPath(),
-            'label'      => $this->getLabel(),
+            'id' => $this->getName(),
+            'value' => $this->exactValueSet ? $this->getExactValue() : $this->getValueFromModel(),
+            'name' => $this->getName(),
+            'path' => $this->getPath(),
+            'label' => $this->getLabel(),
             'attributes' => $this->htmlAttributesToString(),
-            'helpText'   => $this->getHelpText(),
-            'required'   => in_array('required', $this->validationRules),
+            'helpText' => $this->getHelpText(),
+            'required' => in_array('required', $this->validationRules),
         ]);
     }
 }

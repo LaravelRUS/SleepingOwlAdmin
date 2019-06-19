@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts\Form\Element;
 
+use Closure;
+
 interface HasSyncCallback
 {
     /**
@@ -13,5 +15,5 @@ interface HasSyncCallback
      * @param \Closure $callable
      * @return $this
      */
-    public function setSyncCallback(\Closure $callable);
+    public function setSyncCallback(Closure $callable);
 }

@@ -130,7 +130,7 @@ class Actions extends Extension implements Initializable, Placable
     public function toArray()
     {
         return [
-            'actions'  => $this->actions,
+            'actions' => $this->actions,
             'placement' => $this->getPlacement(),
             'attributes' => $this->htmlAttributesToString(),
         ];

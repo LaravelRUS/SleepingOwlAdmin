@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Display\Filter;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
 
 /**
@@ -19,7 +20,7 @@ class DisplayFilterFactory extends AliasBinder implements DisplayFilterFactoryIn
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         parent::__construct($application);
 

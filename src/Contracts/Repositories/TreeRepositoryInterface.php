@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface TreeRepositoryInterface extends RepositoryInterface
 {
     /**
@@ -11,7 +13,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection);
+    public function getTree(Collection $collection);
 
     /**
      * Get parent field name.

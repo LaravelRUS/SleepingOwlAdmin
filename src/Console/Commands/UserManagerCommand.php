@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Input\InputOption;
@@ -71,7 +72,7 @@ class UserManagerCommand extends Command
     public function getUserClass()
     {
         if (is_null($userClass = config('auth.providers.'.config('sleeping_owl.auth_provider', 'users').'.model'))) {
-            throw new \Exception('User class not specified in config/auth.php providers.');
+            throw new Exception('User class not specified in config/auth.php providers.');
         }
 
         return $userClass;
@@ -137,7 +138,7 @@ class UserManagerCommand extends Command
             ]);
 
             $this->info("User [{$user->id}] created.");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('unable to create new user!', [
                 'exception' => $e,
             ]);

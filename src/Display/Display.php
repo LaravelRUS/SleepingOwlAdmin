@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Exception;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
@@ -96,7 +97,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param string                    $name
+     * @param string $name
      * @param DisplayExtensionInterface $extension
      *
      * @return DisplayExtensionInterface
@@ -151,7 +152,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -255,7 +256,7 @@ abstract class Display implements DisplayInterface
 
     /**
      * @param string $name
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return DisplayExtensionInterface
      */
@@ -292,7 +293,7 @@ abstract class Display implements DisplayInterface
     {
         $repository = app($this->repositoryClass);
         if (! ($repository instanceof RepositoryInterface)) {
-            throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
+            throw new Exception('Repository class must be instanced of [RepositoryInterface]');
         }
 
         $repository->setClass($this->modelClass);

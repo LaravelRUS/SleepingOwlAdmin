@@ -53,9 +53,9 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string                      $editorId
+     * @param string $editorId
      * @param WysiwygFilterInterface|null $filter
-     * @param string|null                 $name
+     * @param string|null $name
      *
      * @return WysiwygEditorInterface
      */

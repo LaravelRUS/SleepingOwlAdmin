@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 trait HasUniqueValidation
 {

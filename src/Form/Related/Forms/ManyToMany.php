@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Related\Forms;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Form\Related\Select;
 use SleepingOwl\Admin\Form\Columns\Columns;
@@ -23,6 +24,13 @@ class ManyToMany extends Elements
      */
     protected $relatedWrapper;
 
+    /**
+     * ManyToMany constructor.
+     * @param $relationName
+     * @param array $elements
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     */
     public function __construct($relationName, array $elements = [])
     {
         $elements = Arr::prepend($elements, $this->relatedElement = new Select('__new_element__'));
@@ -30,6 +38,9 @@ class ManyToMany extends Elements
         parent::__construct($relationName, $elements);
     }
 
+    /**
+     * @return array
+     */
     public function getPrimaries(): array
     {
         return $this->primaries ?? [
@@ -145,11 +156,18 @@ class ManyToMany extends Elements
         return collect($chunks);
     }
 
+    /**
+     * @return string
+     */
     protected function getRelatedForeignKeyName(): string
     {
         return $this->getEmptyRelation()->getRelatedPivotKeyName();
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return mixed|void
+     */
     protected function proceedSave(Request $request)
     {
         // By this time getModel method will always return existed model object, not empty
@@ -185,7 +203,10 @@ class ManyToMany extends Elements
         }
     }
 
-    protected function getModelForElements(): \Illuminate\Database\Eloquent\Model
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function getModelForElements(): Model
     {
         return $this->getEmptyRelation()->newPivot();
     }
@@ -214,7 +235,7 @@ class ManyToMany extends Elements
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function getFreshModelForElements(): \Illuminate\Database\Eloquent\Model
+    protected function getFreshModelForElements(): Model
     {
         return $this->getModelForElements();
     }
@@ -240,10 +261,9 @@ class ManyToMany extends Elements
     }
 
     /**
-     * Proxies method call to related element.
-     *
      * @param $name
      * @param $arguments
+     * @return $this
      */
     public function __call($name, $arguments)
     {

@@ -91,15 +91,15 @@ class Number extends NamedFormElement
     {
         $this->setHtmlAttributes([
             'class' => 'form-control',
-            'type'  => 'number',
-            'max'   => $this->getMax(),
-            'min'   => $this->getMin(),
-            'step'  => $this->getStep(),
+            'type' => 'number',
+            'max' => $this->getMax(),
+            'min' => $this->getMin(),
+            'step' => $this->getStep(),
         ]);
 
         return parent::toArray() + [
-                'min'  => $this->getMin(),
-                'max'  => $this->getMax(),
+                'min' => $this->getMin(),
+                'max' => $this->getMax(),
                 'step' => $this->getStep(),
             ];
     }

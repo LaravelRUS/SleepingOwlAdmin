@@ -164,6 +164,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @return $this
+     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function addTabElement()
     {
@@ -518,15 +520,16 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @return array
+     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
      */
     public function toArray()
     {
         return [
-            'label'  => $this->getLabel(),
+            'label' => $this->getLabel(),
             'active' => $this->isActive(),
-            'name'   => $this->getName(),
-            'icon'   => $this->getIcon(),
-            'badge'  => $this->getBadge(),
+            'name' => $this->getName(),
+            'icon' => $this->getIcon(),
+            'badge' => $this->getBadge(),
             'arrayAttributes' => $this->getHtmlAttributes(),
             'attributes' => $this->htmlAttributesToString(),
         ];

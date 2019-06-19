@@ -81,9 +81,9 @@ class AdminController extends Controller
         if ($currentPage = $admin->navigation()->getCurrentPage()) {
             foreach ($currentPage->getPathArray() as $page) {
                 $this->breadCrumbsData[] = [
-                    'id'     => $page['id'],
-                    'title'  => $page['title'],
-                    'url'    => $page['url'],
+                    'id' => $page['id'],
+                    'title' => $page['title'],
+                    'url' => $page['url'],
                     'parent' => $this->parentBreadcrumb,
                 ];
 
@@ -142,8 +142,8 @@ class AdminController extends Controller
 
         $envContent = $envContent->map(function ($value, $key) {
             return (object) [
-                'value'     => $value,
-                'editable'  => $this->validatePolicy('edit', $key),
+                'value' => $value,
+                'editable' => $this->validatePolicy('edit', $key),
                 'deletable' => $this->validatePolicy('delete', $key),
             ];
         });
@@ -333,7 +333,7 @@ class AdminController extends Controller
 
                 if ($createForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
@@ -342,7 +342,7 @@ class AdminController extends Controller
                     ->withErrors($exception->validator)
                     ->withInput()
                     ->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
@@ -363,7 +363,7 @@ class AdminController extends Controller
             $response = redirect()->to(
                 $redirectUrl
             )->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } elseif ($nextAction == 'save_and_create') {
@@ -373,7 +373,7 @@ class AdminController extends Controller
                 'url',
                 'next_action',
             ])))->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
@@ -435,7 +435,7 @@ class AdminController extends Controller
 
                 if ($editForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
@@ -444,7 +444,7 @@ class AdminController extends Controller
                     ->withErrors($exception->validator)
                     ->withInput()
                     ->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
@@ -454,7 +454,7 @@ class AdminController extends Controller
 
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
 
@@ -462,7 +462,7 @@ class AdminController extends Controller
                 $response = redirect()->to(
                     $model->getDisplayUrl()
                 )->with([
-                    '_redirectBack'       => $backUrl,
+                    '_redirectBack' => $backUrl,
                     'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                 ]);
             }
@@ -473,7 +473,7 @@ class AdminController extends Controller
                 'url',
                 'next_action',
             ])))->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {

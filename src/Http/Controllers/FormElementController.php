@@ -78,7 +78,7 @@ class FormElementController extends Controller
         }
 
         return new JsonResponse([
-            'output'   => collect($options)->map(function ($value, $key) {
+            'output' => collect($options)->map(function ($value, $key) {
                 return ['id' => $key, 'name' => $value];
             }),
             'selected' => $element->getValueFromModel(),
@@ -135,8 +135,8 @@ class FormElementController extends Controller
                     ->get()
                     ->map(function (Model $item) use ($field) {
                         return [
-                            'tag_name'    => $item->{$field},
-                            'id'          => $item->id,
+                            'tag_name' => $item->{$field},
+                            'id' => $item->id,
                             'custom_name' => $item->custom_name,
                         ];
                     })

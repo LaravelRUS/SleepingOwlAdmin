@@ -44,7 +44,7 @@ class ControlButton extends ControlLink
     public function toArray()
     {
         return parent::toArray() + [
-            'method' => $this->getMethod(),
-        ];
+                'method' => $this->getMethod(),
+            ];
     }
 }

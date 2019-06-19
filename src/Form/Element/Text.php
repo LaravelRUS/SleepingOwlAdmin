@@ -10,7 +10,7 @@ class Text extends NamedFormElement
 
         $this->setHtmlAttributes([
             'class' => 'form-control',
-            'type'  => 'text',
+            'type' => 'text',
         ]);
     }
 

@@ -20,7 +20,7 @@ class Email extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'value'  => $this->getModelValue(),
-        ];
+                'value' => $this->getModelValue(),
+            ];
     }
 }

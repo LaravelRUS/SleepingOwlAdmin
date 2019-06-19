@@ -12,16 +12,16 @@ interface WysiwygMangerInterface
     public function getDefaultEditorId();
 
     /**
-     * @param string                      $editorId
+     * @param string $editorId
      * @param WysiwygFilterInterface|null $filter
-     * @param string|null                 $name
+     * @param string|null $name
      *
      * @return WysiwygEditorInterface
      */
     public function register($editorId, WysiwygFilterInterface $filter = null, $name = null);
 
     /**
-     * @return Collection|WysiwygEditorInterface[]
+     * @return \Illuminate\Support\Collection|WysiwygEditorInterface[]
      */
     public function getFilters();
 

@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
@@ -105,7 +106,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return TabInterface[]|DisplayTabsCollection
+     * @return TabInterface[]|\SleepingOwl\Admin\Form\FormElementsCollection
      */
     public function getTabs()
     {
@@ -210,7 +211,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      *
      * @return void
      */
-    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function validateForm(Request $request, ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function ($tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');
@@ -227,7 +228,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      *
      * @return void
      */
-    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function saveForm(Request $request, ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function (TabInterface $tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');

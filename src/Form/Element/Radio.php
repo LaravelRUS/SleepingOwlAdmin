@@ -14,8 +14,8 @@ class Radio extends Select
         parent::__construct($path, $label, $options);
 
         $this->setHtmlAttributes([
-            'type'  => 'radio',
-            'name'  => $this->getName(),
+            'type' => 'radio',
+            'name' => $this->getName(),
         ]);
     }
 

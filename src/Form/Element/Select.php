@@ -3,10 +3,11 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class Select extends NamedFormElement
 {
-    use \SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+    use SelectOptionsFromModel;
 
     /**
      * @var array
@@ -40,9 +41,12 @@ class Select extends NamedFormElement
     protected $view = 'form.element.select';
 
     /**
-     * @param string $path
-     * @param string|null $label
-     * @param array|Model $options
+     * Select constructor.
+     * @param $path
+     * @param null $label
+     * @param array $options
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null, $options = [])
     {
@@ -213,10 +217,10 @@ class Select extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id'               => $this->getName(),
-            'size'             => 2,
+            'id' => $this->getName(),
+            'size' => 2,
             'data-select-type' => 'single',
-            'class'            => 'form-control',
+            'class' => 'form-control',
         ]);
 
         if ($this->isReadonly()) {
@@ -231,8 +235,8 @@ class Select extends NamedFormElement
         }
 
         return ['attributes' => $this->htmlAttributesToString()] + parent::toArray() + [
-                'options'  => $options,
-                'limit'    => $this->getLimit(),
+                'options' => $options,
+                'limit' => $this->getLimit(),
                 'nullable' => $this->isNullable(),
             ];
     }

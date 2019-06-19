@@ -64,8 +64,8 @@ trait SqlQueryOperators
     }
 
     /**
-     * @param Builder      $query
-     * @param string       $column
+     * @param Builder $query
+     * @param string $column
      * @param string|array $value
      */
     protected function buildQuery(Builder $query, $column, $value)
@@ -90,7 +90,7 @@ trait SqlQueryOperators
             case 'whereIn':
             case 'whereNotIn':
 
-            $query->{$method}($column, (array) $value);
+                $query->{$method}($column, (array) $value);
                 break;
         }
     }

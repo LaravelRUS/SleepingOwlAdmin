@@ -3,9 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Routing\Router;
+use SleepingOwl\Admin\Section;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Traits\OrderableModel;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class Order extends TableColumn implements WithRoutesInterface
@@ -37,7 +39,7 @@ class Order extends TableColumn implements WithRoutesInterface
             $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
                 function ($router) use ($routeName) {
                     $router->post('{adminModel}/{adminModelId}/up', [
-                        'as'   => $routeName,
+                        'as' => $routeName,
                         'uses' => 'DisplayColumnController@orderUp',
                     ]);
                 });
@@ -48,7 +50,7 @@ class Order extends TableColumn implements WithRoutesInterface
             $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
                 function ($router) use ($routeName) {
                     $router->post('{adminModel}/{adminModelId}/down', [
-                        'as'   => $routeName,
+                        'as' => $routeName,
                         'uses' => 'DisplayColumnController@orderDown',
                     ]);
                 });
@@ -99,9 +101,9 @@ class Order extends TableColumn implements WithRoutesInterface
         $request = \Request::capture();
         $modelConfiguration = $this->getModelConfiguration();
         $query = $modelConfiguration->getRepository()->getQuery();
-        if ($modelConfiguration instanceof \SleepingOwl\Admin\Section) {
+        if ($modelConfiguration instanceof Section) {
             $onDisplay = $modelConfiguration->onDisplay();
-        } elseif ($modelConfiguration instanceof \SleepingOwl\Admin\Model\ModelConfiguration) {
+        } elseif ($modelConfiguration instanceof ModelConfiguration) {
             $onDisplay = $modelConfiguration->getDisplay();
             $onDisplay = call_user_func($onDisplay, ['payload' => \Input::get('payload')]);
         } else {
@@ -168,8 +170,8 @@ class Order extends TableColumn implements WithRoutesInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'movableUp'   => $this->movableUp(),
-                'moveUpUrl'   => $this->moveUpUrl(),
+                'movableUp' => $this->movableUp(),
+                'moveUpUrl' => $this->moveUpUrl(),
                 'movableDown' => $this->movableDown(),
                 'moveDownUrl' => $this->moveDownUrl(),
             ];

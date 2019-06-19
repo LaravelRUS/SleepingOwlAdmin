@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
@@ -25,7 +25,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async';
         if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
         }
@@ -33,7 +33,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async.inlineEdit';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
@@ -213,7 +213,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Apply offset and limit to the query.
      *
-     * @param $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @param \Illuminate\Http\Request $request
      */
     public function applyOffset($query, \Illuminate\Http\Request $request)
@@ -340,6 +340,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

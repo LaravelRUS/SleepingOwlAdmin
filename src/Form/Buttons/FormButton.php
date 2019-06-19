@@ -260,13 +260,13 @@ class FormButton implements FormButtonsInterface, Initializable
     public function toArray()
     {
         return [
-            'attributes'    => $this->htmlAttributesToString(),
+            'attributes' => $this->htmlAttributesToString(),
             'groupElements' => $this->getGroupElements(),
-            'text'          => $this->getText(),
-            'name'          => $this->getName(),
-            'show'          => $this->getShow(),
-            'iconClass'     => $this->getIconClass(),
-            'url'           => $this->getUrl(),
+            'text' => $this->getText(),
+            'name' => $this->getName(),
+            'show' => $this->getShow(),
+            'iconClass' => $this->getIconClass(),
+            'url' => $this->getUrl(),
         ];
     }
 
