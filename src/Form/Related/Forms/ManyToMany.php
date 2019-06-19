@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Form\Related\Select;
 use SleepingOwl\Admin\Form\Columns\Columns;
@@ -136,7 +136,7 @@ class ManyToMany extends Elements
         $chunksIterator = 0;
         $chunks = [];
         foreach ($values as $pivot) {
-            if (!array_key_exists($chunksIterator, $chunks)) {
+            if (! array_key_exists($chunksIterator, $chunks)) {
                 $chunks[$chunksIterator] = [];
             }
 

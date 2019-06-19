@@ -61,7 +61,7 @@ abstract class Extension implements DisplayExtensionInterface
      */
     public function setOrder($order)
     {
-        $this->order = (int)$order;
+        $this->order = (int) $order;
 
         return $this;
     }

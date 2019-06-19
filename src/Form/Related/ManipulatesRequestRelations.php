@@ -34,7 +34,7 @@ trait ManipulatesRequestRelations
     {
         $remove = [];
         if ($request->method() === 'POST' && $request->input('next_action') === 'save_and_create') {
-            if (!$this->copyAfterSave) {
+            if (! $this->copyAfterSave) {
                 $remove[] = $this->relationName;
             }
             $this->makeCopyOfRelations($request);

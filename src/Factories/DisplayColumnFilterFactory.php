@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\AliasBinder;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\Column\Filter\Date;
 use SleepingOwl\Admin\Display\Column\Filter\Text;
 use SleepingOwl\Admin\Display\Column\Filter\Range;

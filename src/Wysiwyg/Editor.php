@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
-use Meta;
 use Illuminate\Config\Repository;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;

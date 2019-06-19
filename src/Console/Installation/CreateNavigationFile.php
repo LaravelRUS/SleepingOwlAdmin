@@ -18,7 +18,7 @@ class CreateNavigationFile extends Installator
     {
         $file = $this->getFilePath();
 
-        $contents = $this->command->files()->get(SLEEPINGOWL_STUB_PATH . '/navigation.stub');
+        $contents = $this->command->files()->get(SLEEPINGOWL_STUB_PATH.'/navigation.stub');
         $this->command->files()->put($file, $contents);
         $filePath = str_replace(base_path(), '', $file);
         $this->command->line("<info>Navigation file is [{$filePath}]</info>");
@@ -41,6 +41,6 @@ class CreateNavigationFile extends Installator
     {
         $bootstrapDirectory = $this->config->get('bootstrapDirectory', app_path('Admin'));
 
-        return $bootstrapDirectory . '/navigation.php';
+        return $bootstrapDirectory.'/navigation.php';
     }
 }

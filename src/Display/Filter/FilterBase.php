@@ -35,7 +35,7 @@ abstract class FilterBase implements FilterInterface
     {
         $this->setName($name);
 
-        if (!is_null($title)) {
+        if (! is_null($title)) {
             $this->setTitle($title);
         }
     }
@@ -77,7 +77,7 @@ abstract class FilterBase implements FilterInterface
      */
     public function getAlias()
     {
-        if (!$this->alias) {
+        if (! $this->alias) {
             return $this->getName();
         }
 
@@ -149,6 +149,6 @@ abstract class FilterBase implements FilterInterface
      */
     public function isActive()
     {
-        return !is_null($this->getValue());
+        return ! is_null($this->getValue());
     }
 }

@@ -67,11 +67,11 @@ class Columns extends FormElements implements ColumnInterface
     {
         if (is_callable($element)) {
             $element = new Column($element());
-        } else if (is_array($element)) {
+        } elseif (is_array($element)) {
             $element = new Column($element);
         }
 
-        if (!($element instanceof ColumnInterface)) {
+        if (! ($element instanceof ColumnInterface)) {
             throw new Exception('Column should be instance of ColumnInterface');
         }
 
@@ -87,15 +87,15 @@ class Columns extends FormElements implements ColumnInterface
         $this->setHtmlAttribute('class', 'row');
 
         $count = $this->getElements()->filter(function (ColumnInterface $column) {
-            return !$column->getWidth();
+            return ! $column->getWidth();
         })->count();
 
         $width = $this->maxWidth - $this->getElements()->sum(function (ColumnInterface $column) {
-                return is_numeric($column->getWidth()) ? (int)$column->getWidth() : 0;
-            });
+            return is_numeric($column->getWidth()) ? (int) $column->getWidth() : 0;
+        });
 
         $this->getElements()->each(function (ColumnInterface $column) use ($width, $count) {
-            if (!$column->getWidth()) {
+            if (! $column->getWidth()) {
                 $column->setWidth(floor($width / $count));
             }
         });

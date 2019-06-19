@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Display\Filter;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
 
 /**

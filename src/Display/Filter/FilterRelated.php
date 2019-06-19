@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Filter;
 
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FilterRelated extends FilterField
 {
@@ -54,7 +54,7 @@ class FilterRelated extends FilterField
      */
     public function setModel($model)
     {
-        if (!class_exists($model)) {
+        if (! class_exists($model)) {
             throw new Exception("Class model [$model] not found");
         }
 
@@ -85,7 +85,7 @@ class FilterRelated extends FilterField
         $model = $this->getModel();
 
         if (is_null($model)) {
-            throw new Exception('Specify model for filter: ' . $this->getName());
+            throw new Exception('Specify model for filter: '.$this->getName());
         }
 
         try {
@@ -98,7 +98,5 @@ class FilterRelated extends FilterField
                 'id' => $this->getValue(),
             ]);
         }
-
-        return null;
     }
 }

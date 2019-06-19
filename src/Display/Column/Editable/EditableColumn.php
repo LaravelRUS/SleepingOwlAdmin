@@ -67,7 +67,7 @@ class EditableColumn extends NamedColumn
      */
     public function getUrl()
     {
-        if (!$this->url) {
+        if (! $this->url) {
             return request()->url();
         }
 

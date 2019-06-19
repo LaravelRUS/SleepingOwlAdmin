@@ -88,7 +88,7 @@ class Date extends Text
      */
     public function showSeconds($status = true)
     {
-        $this->seconds = (bool)$status;
+        $this->seconds = (bool) $status;
 
         return $this;
     }
@@ -122,7 +122,7 @@ class Date extends Text
             $width = 0;
         }
 
-        $this->width = (int)$width;
+        $this->width = (int) $width;
 
         return $this;
     }
@@ -147,7 +147,7 @@ class Date extends Text
     public function parseValue($date)
     {
         if (empty($date)) {
-            return null;
+            return;
         }
 
         try {
@@ -166,7 +166,7 @@ class Date extends Text
                     'date' => $date,
                 ]);
 
-                return null;
+                return;
             }
         }
 

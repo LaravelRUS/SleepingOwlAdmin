@@ -54,7 +54,7 @@ trait SqlQueryOperators
      */
     public function setOperator($operator)
     {
-        if (!array_key_exists($operator, $this->sqlOperators)) {
+        if (! array_key_exists($operator, $this->sqlOperators)) {
             throw new FilterOperatorException("Operator [$operator] not found");
         }
 
@@ -85,12 +85,12 @@ trait SqlQueryOperators
                 break;
             case 'whereBetween':
             case 'whereNotBetween':
-                $query->{$method}($column, (array)$value);
+                $query->{$method}($column, (array) $value);
                 break;
             case 'whereIn':
             case 'whereNotIn':
 
-                $query->{$method}($column, (array)$value);
+                $query->{$method}($column, (array) $value);
                 break;
         }
     }
@@ -119,13 +119,13 @@ trait SqlQueryOperators
                 break;
             case 'whereBetween':
             case 'whereNotBetween':
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $value = explode(',', $value, 2);
                 }
                 break;
             case 'whereIn':
             case 'whereNotIn':
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $value = explode(',', $value);
                 }
                 break;

@@ -97,7 +97,7 @@ abstract class NamedFormElement extends FormElement
     {
         $name = array_shift($parts);
 
-        while (!empty($parts)) {
+        while (! empty($parts)) {
             $part = array_shift($parts);
             $name .= "[$part]";
         }
@@ -250,7 +250,7 @@ abstract class NamedFormElement extends FormElement
     {
         $this->addValidationRule('_unique');
 
-        if (!is_null($message)) {
+        if (! is_null($message)) {
             $this->addValidationMessage('unique', $message);
         }
 
@@ -265,7 +265,7 @@ abstract class NamedFormElement extends FormElement
         $messages = parent::getValidationMessages();
 
         foreach ($messages as $rule => $message) {
-            $messages[$this->getName() . '.' . $rule] = $message;
+            $messages[$this->getName().'.'.$rule] = $message;
             unset($messages[$rule]);
         }
 
@@ -298,9 +298,9 @@ abstract class NamedFormElement extends FormElement
             $model = $this->resolvePath();
             $table = $model->getTable();
 
-            $rule = 'unique:' . $table . ',' . $this->getModelAttributeKey();
+            $rule = 'unique:'.$table.','.$this->getModelAttributeKey();
             if ($model->exists) {
-                $rule .= ',' . $model->getKey();
+                $rule .= ','.$model->getKey();
             }
         }
         unset($rule);
@@ -358,7 +358,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromRequest(\Illuminate\Http\Request $request)
     {
-        if ($request->hasSession() && !is_null($value = $request->old($this->getPath()))) {
+        if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
             return $value;
         }
 
@@ -378,7 +378,7 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-        if ($model === null || !$model->exists) {
+        if ($model === null || ! $model->exists) {
             // First check for model existence must go here, before all checks are made
             return $value;
         }
@@ -396,7 +396,7 @@ abstract class NamedFormElement extends FormElement
 
             if ($cast === 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-            } else if ($cast !== 'array') {
+            } elseif ($cast !== 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
 
@@ -408,7 +408,7 @@ abstract class NamedFormElement extends FormElement
 
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
-            if (!empty($attribute) || $attribute === 0 || is_null($value)) {
+            if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
         }
@@ -427,7 +427,7 @@ abstract class NamedFormElement extends FormElement
                 } else {
                     $attribute = $model->getAttribute($relation);
                 }
-                if (!empty($attribute) || is_null($value)) {
+                if (! empty($attribute) || is_null($value)) {
                     return $attribute;
                 }
             }
@@ -488,7 +488,7 @@ abstract class NamedFormElement extends FormElement
                 $relatedModel = null;
                 if ($previousModel->getAttribute($relation) instanceof Model) {
                     $relatedModel = $previousModel->getAttribute($relation);
-                } else if (method_exists($previousModel, $relation)) {
+                } elseif (method_exists($previousModel, $relation)) {
 
                     /* @var Relation $relation */
                     $relationObject = $previousModel->{$relation}();
@@ -509,8 +509,8 @@ abstract class NamedFormElement extends FormElement
                 $previousModel = $relatedModel;
                 if ($i === $count) {
                     break;
-                } else if (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model " . get_class($model) . '. Probably some dot delimeted segment is not a supported relation type');
+                } elseif (is_null($relatedModel)) {
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 

@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Form\Related\Elements;
 
 class HasMany extends Elements
@@ -28,7 +28,7 @@ class HasMany extends Elements
         $relation = $this->getRelation();
 
         // First we need to remove all entities
-        if (!$this->toRemove->isEmpty()) {
+        if (! $this->toRemove->isEmpty()) {
             $class = get_class($relation->getRelated());
             $class::destroy($this->toRemove->all());
         }

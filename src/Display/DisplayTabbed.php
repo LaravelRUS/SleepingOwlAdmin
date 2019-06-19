@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
@@ -87,8 +87,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                 return $tab->getContent()->getModel();
             }
         }
-
-        return null;
     }
 
     /**

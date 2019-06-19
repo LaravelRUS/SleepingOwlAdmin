@@ -70,7 +70,7 @@ class AdminController extends Controller
 
         $admin->navigation()->setCurrentUrl($request->getUri());
 
-        if (!$this->breadcrumbs->exists('home')) {
+        if (! $this->breadcrumbs->exists('home')) {
             $this->breadcrumbs->register('home', function (Generator $breadcrumbs) {
                 $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
             });
@@ -133,7 +133,7 @@ class AdminController extends Controller
          * @return bool
          */
         $envContent = $envContent->filter(function ($value, $key) {
-            return !in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && !$this->filterKey($key);
+            return ! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key);
         });
 
         $envContent = $envContent->filter(function ($value, $key) {
@@ -141,7 +141,7 @@ class AdminController extends Controller
         });
 
         $envContent = $envContent->map(function ($value, $key) {
-            return (object)[
+            return (object) [
                 'value' => $value,
                 'editable' => $this->validatePolicy('edit', $key),
                 'deletable' => $this->validatePolicy('delete', $key),
@@ -163,7 +163,7 @@ class AdminController extends Controller
     {
         return ($this->envPolicy && ((method_exists($this->envPolicy, $permission)
                     && $this->envPolicy->$permission(\Auth::user(), $key) !== false)))
-            || !method_exists($this->envPolicy, $permission) || !$this->envPolicy || $this->validateBeforePolicy($key);
+            || ! method_exists($this->envPolicy, $permission) || ! $this->envPolicy || $this->validateBeforePolicy($key);
     }
 
     /**
@@ -174,7 +174,7 @@ class AdminController extends Controller
     {
         return ($this->envPolicy && (method_exists($this->envPolicy, 'before'))
                 && $this->envPolicy->before(\Auth::user(), $key) == true)
-            || !method_exists($this->envPolicy, 'before') || !$this->envPolicy;
+            || ! method_exists($this->envPolicy, 'before') || ! $this->envPolicy;
     }
 
     /**
@@ -190,7 +190,7 @@ class AdminController extends Controller
         $removeContent = collect();
 
         foreach ($envContent as $key => $value) {
-            if (!in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && !$this->filterKey($key)) {
+            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
                 if ($requestContent->has($key)) {
                     if ($this->validatePolicy('edit', $key)) {
                         $envContent[$key] = $requestContent[$key]['value'];
@@ -204,7 +204,7 @@ class AdminController extends Controller
         }
 
         foreach ($requestContent as $key => $value) {
-            if (!in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && !$this->filterKey($key)
+            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)
                 && $this->validatePolicy('create', $key)) {
                 $this->writeEnvData($key, $value['value'], 1);
             }
@@ -267,7 +267,7 @@ class AdminController extends Controller
             return false;
         }
 
-        $str = $str . "\r\n$key=$data";
+        $str = $str."\r\n$key=$data";
         file_put_contents($envFile, $str);
 
         return true;
@@ -280,7 +280,7 @@ class AdminController extends Controller
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
-        if (!$model->isDisplayable()) {
+        if (! $model->isDisplayable()) {
             abort(404);
         }
 
@@ -298,7 +298,7 @@ class AdminController extends Controller
      */
     public function getCreate(ModelConfigurationInterface $model)
     {
-        if (!$model->isCreatable()) {
+        if (! $model->isCreatable()) {
             abort(404);
         }
 
@@ -318,7 +318,7 @@ class AdminController extends Controller
      */
     public function postStore(ModelConfigurationInterface $model, Request $request)
     {
-        if (!$model->isCreatable()) {
+        if (! $model->isCreatable()) {
             abort(404);
         }
 
@@ -356,7 +356,7 @@ class AdminController extends Controller
             $redirectPolicy = $model->getRedirect();
 
             /* Make redirect when use in model config && Fix editable redirect */
-            if ($redirectPolicy->get('create') == 'display' || !$model->isEditable($newModel)) {
+            if ($redirectPolicy->get('create') == 'display' || ! $model->isEditable($newModel)) {
                 $redirectUrl = $model->getDisplayUrl();
             }
 
@@ -366,7 +366,7 @@ class AdminController extends Controller
                 '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
-        } else if ($nextAction == 'save_and_create') {
+        } elseif ($nextAction == 'save_and_create') {
             $response = redirect()->to($model->getCreateUrl($request->except([
                 '_redirectBack',
                 '_token',
@@ -393,7 +393,7 @@ class AdminController extends Controller
     {
         $item = $model->getRepository()->find($id);
 
-        if (is_null($item) || !$model->isEditable($item)) {
+        if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
@@ -421,7 +421,7 @@ class AdminController extends Controller
         $editForm = $model->fireEdit($id);
         $item = $editForm->getModel();
 
-        if (is_null($item) || !$model->isEditable($item)) {
+        if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
@@ -466,7 +466,7 @@ class AdminController extends Controller
                     'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                 ]);
             }
-        } else if ($nextAction == 'save_and_create') {
+        } elseif ($nextAction == 'save_and_create') {
             $response = redirect()->to($model->getCreateUrl($request->except([
                 '_redirectBack',
                 '_token',
@@ -548,7 +548,7 @@ class AdminController extends Controller
         $repository = $model->getRepository();
         $item = $repository->find($id);
 
-        if (is_null($item) || !$model->isEditable($item)) {
+        if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
         }
 
@@ -573,7 +573,7 @@ class AdminController extends Controller
     {
         $item = $model->getRepository()->find($id);
 
-        if (is_null($item) || !$model->isDeletable($item)) {
+        if (is_null($item) || ! $model->isDeletable($item)) {
             abort(404);
         }
 
@@ -602,13 +602,13 @@ class AdminController extends Controller
      */
     public function deleteDestroy(ModelConfigurationInterface $model, Request $request, $id)
     {
-        if (!$model->isRestorableModel()) {
+        if (! $model->isRestorableModel()) {
             abort(404);
         }
 
         $item = $model->getRepository()->findOnlyTrashed($id);
 
-        if (is_null($item) || !$model->isRestorable($item)) {
+        if (is_null($item) || ! $model->isRestorable($item)) {
             abort(404);
         }
 
@@ -637,13 +637,13 @@ class AdminController extends Controller
      */
     public function postRestore(ModelConfigurationInterface $model, Request $request, $id)
     {
-        if (!$model->isRestorableModel()) {
+        if (! $model->isRestorableModel()) {
             abort(404);
         }
 
         $item = $model->getRepository()->findOnlyTrashed($id);
 
-        if (is_null($item) || !$model->isRestorable($item)) {
+        if (is_null($item) || ! $model->isRestorable($item)) {
             abort(404);
         }
 
@@ -750,7 +750,7 @@ class AdminController extends Controller
         $this->breadCrumbsData = array_merge($this->breadCrumbsData, $model->getBreadCrumbs());
 
         foreach ($this->breadCrumbsData as $breadcrumb) {
-            if (!$this->breadcrumbs->exists($breadcrumb['id'])) {
+            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
                 $this->breadcrumbs->register($breadcrumb['id'], function (Generator $breadcrumbs) use ($breadcrumb) {
                     $breadcrumbs->parent($breadcrumb['parent']);
                     $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);

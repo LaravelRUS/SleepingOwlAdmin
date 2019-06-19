@@ -18,7 +18,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.async.alter_paginate';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/alter_paginate/{adminDisplayName?}', [
                 'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AlterPaginateDisplayController@async',
@@ -26,7 +26,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
         }
 
         $routeName = 'admin.display.async.inlineEdit';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
                 'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
@@ -47,7 +47,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
         $totalCount = 0;
         $filteredCount = 0;
 
-        if (!is_null($this->distinct)) {
+        if (! is_null($this->distinct)) {
             $filteredCount = $query->distinct()->count($this->getDistinct());
         }
 

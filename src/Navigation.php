@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
@@ -86,7 +86,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
      */
     protected function findActivePage()
     {
-        if (!is_null($this->currentPage)) {
+        if (! is_null($this->currentPage)) {
             return true;
         }
 
@@ -96,7 +96,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
 
         $this->findActive($url, $foundPages);
 
-        if (!is_null($this->currentPage)) {
+        if (! is_null($this->currentPage)) {
             $this->currentPage->setActive();
         }
 

@@ -44,7 +44,7 @@ class Image extends File
 
             $size = getimagesize($file->getRealPath());
 
-            if (!$size && $file->getMimeType() !== 'image/svg+xml') {
+            if (! $size && $file->getMimeType() !== 'image/svg+xml') {
                 $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
             }
         });
@@ -105,14 +105,14 @@ class Image extends File
             return $callback($file, $path, $filename, $settings);
         }
 
-        if (class_exists('Intervention\Image\Facades\Image') && (bool)getimagesize($file->getRealPath())) {
+        if (class_exists('Intervention\Image\Facades\Image') && (bool) getimagesize($file->getRealPath())) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {
                 call_user_func_array([$image, $method], $args);
             }
 
-            $value = $path . '/' . $filename;
+            $value = $path.'/'.$filename;
 
             $image->save($value);
 

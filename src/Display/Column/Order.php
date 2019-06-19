@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Routing\Router;
+use SleepingOwl\Admin\Section;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Section;
 use SleepingOwl\Admin\Traits\OrderableModel;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class Order extends TableColumn implements WithRoutesInterface
@@ -35,7 +35,7 @@ class Order extends TableColumn implements WithRoutesInterface
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.column.move-up';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
                 function ($router) use ($routeName) {
                     $router->post('{adminModel}/{adminModelId}/up', [
@@ -46,7 +46,7 @@ class Order extends TableColumn implements WithRoutesInterface
         }
 
         $routeName = 'admin.display.column.move-down';
-        if (!$router->has($routeName)) {
+        if (! $router->has($routeName)) {
             $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
                 function ($router) use ($routeName) {
                     $router->post('{adminModel}/{adminModelId}/down', [
@@ -72,7 +72,7 @@ class Order extends TableColumn implements WithRoutesInterface
      */
     public function getModel()
     {
-        if (!in_array(OrderableModel::class, trait_uses_recursive($class = get_class($this->model)))) {
+        if (! in_array(OrderableModel::class, trait_uses_recursive($class = get_class($this->model)))) {
             throw new \Exception("Model [$class] should uses trait [SleepingOwl\\Admin\\Traits\\OrderableModel]");
         }
 
@@ -103,7 +103,7 @@ class Order extends TableColumn implements WithRoutesInterface
         $query = $modelConfiguration->getRepository()->getQuery();
         if ($modelConfiguration instanceof Section) {
             $onDisplay = $modelConfiguration->onDisplay();
-        } else if ($modelConfiguration instanceof ModelConfiguration) {
+        } elseif ($modelConfiguration instanceof ModelConfiguration) {
             $onDisplay = $modelConfiguration->getDisplay();
             $onDisplay = call_user_func($onDisplay, ['payload' => \Input::get('payload')]);
         } else {

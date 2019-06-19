@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Mockery\Matcher\Closure;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -107,10 +107,10 @@ class OrderByClause implements OrderByClauseInterface
         $relations = collect(explode('.', $this->name));
         $loop = 0;
         if ($relations->count() >= 2) {
-            $query->select($query->getModel()->getTable() . '.*');
+            $query->select($query->getModel()->getTable().'.*');
 
             do {
-                $model = !$loop++ ? $query->getModel() : $relationClass->getModel();
+                $model = ! $loop++ ? $query->getModel() : $relationClass->getModel();
                 $relation = $relations->shift();
 
                 if (method_exists($model, $relation)) {
@@ -147,8 +147,7 @@ class OrderByClause implements OrderByClauseInterface
         Model $model,
         Builder $query,
         $direction
-    )
-    {
+    ) {
         $this->loadHasOneOrMany($relations, $relationClass, $relationModel, $model, $query, $direction);
     }
 
@@ -168,8 +167,7 @@ class OrderByClause implements OrderByClauseInterface
         Model $model,
         Builder $query,
         $direction
-    )
-    {
+    ) {
         $this->loadHasOneOrMany($relations, $relationClass, $relationModel, $model, $query, $direction);
     }
 
@@ -189,20 +187,19 @@ class OrderByClause implements OrderByClauseInterface
         Model $model,
         Builder $query,
         $direction
-    )
-    {
+    ) {
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
 
         $ownerColumn = $relationClass->getQualifiedForeignKeyName();
         $foreignColumn = $relationClass->getQualifiedParentKeyName();
-        $sortedColumnRaw = '`' . $foreignTable . '`.`' . $relations->last() . '`';
+        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
         $this->sortedColumnAlias = $sortedColumnAlias;
 
         $query
-            ->addSelect([DB::raw($sortedColumnRaw . ' AS ' . $sortedColumnAlias)])
+            ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left');
     }
 
@@ -220,8 +217,7 @@ class OrderByClause implements OrderByClauseInterface
         Model $relationModel,
         Model $model,
         Builder $query
-    )
-    {
+    ) {
         if (version_compare(app()->version(), '5.8.0', 'gt')) {
             $foreignKey = $relationClass->getOwnerKeyName();
             $ownerKey = $relationClass->getForeignKeyName();
@@ -235,13 +231,13 @@ class OrderByClause implements OrderByClauseInterface
 
         $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
         $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-        $sortedColumnRaw = '`' . $foreignTable . '`.`' . $relations->last() . '`';
+        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
         $this->sortedColumnAlias = $sortedColumnAlias;
 
         $query
-            ->addSelect([DB::raw($sortedColumnRaw . ' AS ' . $sortedColumnAlias)])
+            ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
             ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left');
     }
 }

@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Element\Upload;
@@ -101,7 +100,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
         parent::initialize();
 
-        if (!$this->hasHtmlAttribute('enctype')) {
+        if (! $this->hasHtmlAttribute('enctype')) {
 
             // Recursive iterate subset of form elements
             // and if subset contains an upload element then add to for
@@ -221,11 +220,10 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @return $this
      * @deprecated 4.5.0
      * @see setElements()
-     *
      */
     public function setItems($items)
     {
-        if (!is_array($items)) {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 
@@ -238,7 +236,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @return $this
      * @deprecated 4.5.0
      * @see addElement()
-     *
      */
     public function addItem($item)
     {
@@ -253,7 +250,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setId($id)
     {
-        if (is_null($this->id) && !is_null($id) && ($model = $this->getRepository()->find($id))) {
+        if (is_null($this->id) && ! is_null($id) && ($model = $this->getRepository()->find($id))) {
             $this->id = $id;
 
             parent::setModel($model);
@@ -315,7 +312,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
-        if (!$this->validModelConfiguration($modelConfiguration)) {
+        if (! $this->validModelConfiguration($modelConfiguration)) {
             return false;
         }
 
@@ -353,7 +350,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     protected function saveBelongsToRelations(Model $model)
     {
         foreach ($model->getRelations() as $name => $relation) {
-            if ($model->{$name}() instanceof BelongsTo && !is_null($relation)) {
+            if ($model->{$name}() instanceof BelongsTo && ! is_null($relation)) {
                 $relation->save();
                 $model->{$name}()->associate($relation);
             }
@@ -368,7 +365,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     protected function saveHasOneRelations(Model $model)
     {
         foreach ($model->getRelations() as $name => $relation) {
-            if ($model->{$name}() instanceof HasOneOrMany && !is_null($relation)) {
+            if ($model->{$name}() instanceof HasOneOrMany && ! is_null($relation)) {
                 if (is_array($relation) || $relation instanceof \Traversable) {
                     $model->{$name}()->saveMany($relation);
                 } else {
@@ -386,7 +383,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
-        if (!$this->validModelConfiguration($modelConfiguration)) {
+        if (! $this->validModelConfiguration($modelConfiguration)) {
             return;
         }
 

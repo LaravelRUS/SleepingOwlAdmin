@@ -38,7 +38,7 @@ class FilterField extends FilterBase
             $relationName = implode('.', $parts);
         }
 
-        if (!is_null($relationName)) {
+        if (! is_null($relationName)) {
             $query->whereHas($relationName, function ($q) use ($name, $value) {
                 $this->buildQuery($q, $name, $value);
             });

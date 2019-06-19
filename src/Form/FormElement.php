@@ -142,7 +142,7 @@ abstract class FormElement implements FormElementInterface
      */
     public function setValidationRules($validationRules)
     {
-        if (!is_array($validationRules)) {
+        if (! is_array($validationRules)) {
             $validationRules = func_get_args();
         }
 
@@ -187,10 +187,10 @@ abstract class FormElement implements FormElementInterface
     public function isReadonly()
     {
         if (is_callable($this->readonly)) {
-            return (bool)call_user_func($this->readonly, $this->getModel());
+            return (bool) call_user_func($this->readonly, $this->getModel());
         }
 
-        return (bool)$this->readonly;
+        return (bool) $this->readonly;
     }
 
     /**
@@ -199,10 +199,10 @@ abstract class FormElement implements FormElementInterface
     public function isValueSkipped()
     {
         if (is_callable($this->valueSkipped)) {
-            return (bool)call_user_func($this->valueSkipped, $this->getModel());
+            return (bool) call_user_func($this->valueSkipped, $this->getModel());
         }
 
-        return (bool)$this->valueSkipped;
+        return (bool) $this->valueSkipped;
     }
 
     /**

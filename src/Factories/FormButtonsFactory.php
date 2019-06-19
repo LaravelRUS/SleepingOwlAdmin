@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Form;
 use SleepingOwl\Admin\AliasBinder;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsFactoryInterface;
 
 /**

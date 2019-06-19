@@ -97,21 +97,21 @@ class Range extends BaseColumnFilter
     public function parseValue($range)
     {
         if (strpos($range, '::') === false) {
-            return null;
+            return;
         }
 
         $from = $this->from->parseValue(explode('::', $range, 2)[0]);
         $to = $this->to->parseValue(explode('::', $range, 2)[1]);
 
-        if (!empty($from) && !empty($to)) {
+        if (! empty($from) && ! empty($to)) {
             $this->setOperator('between');
 
             return [$from, $to];
-        } else if (!empty($from)) {
+        } elseif (! empty($from)) {
             $this->setOperator('greater_or_equal');
 
             return $from;
-        } else if (!empty($to)) {
+        } elseif (! empty($to)) {
             $this->setOperator('less_or_equal');
 
             return $to;

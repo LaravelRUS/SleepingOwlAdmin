@@ -27,7 +27,7 @@ class MultiSelect extends Select implements Taggable, HasSyncCallback, MustDelet
      */
     public function getName()
     {
-        return parent::getName() . '[]';
+        return parent::getName().'[]';
     }
 
     /**

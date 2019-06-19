@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Collective\Html\HtmlServiceProvider;
 use Illuminate\Filesystem\Filesystem;
+use Collective\Html\HtmlServiceProvider;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelCollection;
 use Illuminate\Foundation\ProviderRepository;
@@ -24,8 +24,7 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 /**
- * Class Admin
- * @package SleepingOwl\Admin
+ * Class Admin.
  * @property-read \Illuminate\Foundation\Application $app
  */
 class Admin implements AdminInterface
@@ -173,7 +172,7 @@ class Admin implements AdminInterface
             $class = get_class($class);
         }
 
-        if (!$this->hasModel($class)) {
+        if (! $this->hasModel($class)) {
             $this->registerModel($class);
         }
 
@@ -260,10 +259,10 @@ class Admin implements AdminInterface
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
         if (is_file(app_path('Providers/AdminSectionsServiceProvider.php'))) {
-            $providers[] = $this->app->getNamespace() . 'Providers\\AdminSectionsServiceProvider';
+            $providers[] = $this->app->getNamespace().'Providers\\AdminSectionsServiceProvider';
         }
 
-        $manifestPath = $this->app->bootstrapPath() . '/cache/sleepingowladmin-services.php';
+        $manifestPath = $this->app->bootstrapPath().'/cache/sleepingowladmin-services.php';
 
         (new ProviderRepository($this->app, new Filesystem(), $manifestPath))->load($providers);
     }

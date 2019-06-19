@@ -47,7 +47,7 @@ class Images extends Image
 
         if (is_null($value)) {
             $images = [];
-        } else if (is_string($value)
+        } elseif (is_string($value)
             && (($images = json_decode($value)) === false
                 || is_null($images))
         ) {
@@ -67,7 +67,7 @@ class Images extends Image
         $name = $this->getName();
         $value = $request->input($name, '');
 
-        if (!empty($value)) {
+        if (! empty($value)) {
             $value = explode(',', $value);
         } else {
             $value = [];
