@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
