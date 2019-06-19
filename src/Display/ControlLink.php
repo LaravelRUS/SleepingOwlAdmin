@@ -83,7 +83,7 @@ class ControlLink implements ControlButtonInterface
     public function __construct(Closure $url, $text, $position = 0, $title = null, $class = null)
     {
         $this->url = $url;
-        $this->position = (int)$position;
+        $this->position = (int) $position;
         $this->text = $text;
 
         if ($title !== null) {
@@ -208,13 +208,13 @@ class ControlLink implements ControlButtonInterface
         $title = null;
         if (is_callable($this->title) && is_object($model)) {
             $title = call_user_func($this->title, $model);
-        } else if ($this->title !== null) {
+        } elseif ($this->title !== null) {
             $title = $this->title;
         } else {
             $title = $text;
         }
 
-        if (!$this->hideTitle) {
+        if (! $this->hideTitle) {
             $this->setHtmlAttributes([
                 'title' => $title,
                 'data-toggle' => 'tooltip',

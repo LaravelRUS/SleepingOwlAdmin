@@ -100,7 +100,7 @@ class Manager implements WysiwygMangerInterface
      */
     public function loadEditor($editorId)
     {
-        if (!is_null($editor = $this->getEditor($editorId))) {
+        if (! is_null($editor = $this->getEditor($editorId))) {
             if ($editor->isUsed()) {
                 return true;
             }
@@ -120,7 +120,7 @@ class Manager implements WysiwygMangerInterface
      */
     public function applyFilter($editorId, $text)
     {
-        if (!is_null($editor = $this->getEditor($editorId))) {
+        if (! is_null($editor = $this->getEditor($editorId))) {
             return $editor->applyFilter($text);
         }
 

@@ -59,7 +59,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
 
         if (is_array($options)) {
             $this->setOptions($options);
-        } else if (($options instanceof Model) || is_string($options)) {
+        } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
     }
@@ -109,7 +109,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function setSortable($sortable)
     {
-        $this->sortable = (bool)$sortable;
+        $this->sortable = (bool) $sortable;
 
         return $this;
     }
@@ -127,7 +127,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function getOptions()
     {
-        if (!is_null($this->getModelForOptions()) && !is_null($this->getDisplay())) {
+        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
             $this->setOptions(
                 $this->loadOptions()
             );

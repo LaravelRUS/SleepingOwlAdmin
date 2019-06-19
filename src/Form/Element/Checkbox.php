@@ -16,6 +16,6 @@ class Checkbox extends NamedFormElement
      */
     public function prepareValue($value)
     {
-        return parent::prepareValue((bool)$value);
+        return parent::prepareValue((bool) $value);
     }
 }

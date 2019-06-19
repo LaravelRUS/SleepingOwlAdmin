@@ -88,14 +88,14 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('sleeping_owl.template', function (Application $app) {
-            if (!class_exists($class = $this->getConfig('template'))) {
+            if (! class_exists($class = $this->getConfig('template'))) {
                 throw new TemplateException("Template class [{$class}] not found");
             }
 
             return $app->make($class);
         });
 
-        if (file_exists($assetsFile = __DIR__ . '/../../resources/assets.php')) {
+        if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
             include $assetsFile;
         }
     }
@@ -107,7 +107,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function getConfig($key)
     {
-        return $this->app['config']->get('sleeping_owl.' . $key);
+        return $this->app['config']->get('sleeping_owl.'.$key);
     }
 
     /**
@@ -117,11 +117,11 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function getBootstrapPath($path = null)
     {
-        if (!is_null($path)) {
-            $path = DIRECTORY_SEPARATOR . $path;
+        if (! is_null($path)) {
+            $path = DIRECTORY_SEPARATOR.$path;
         }
 
-        return $this->getConfig('bootstrapDirectory') . $path;
+        return $this->getConfig('bootstrapDirectory').$path;
     }
 
     public function boot()
@@ -209,7 +209,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $directory = $this->getBootstrapPath();
 
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             return;
         }
 
@@ -257,7 +257,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerRoutes(function (Router $router) {
             (new ModelRouter($this->app, $router))->register($this->app['sleeping_owl']->getModels());
 
-            if (file_exists($routesFile = __DIR__ . '/../Http/routes.php')) {
+            if (file_exists($routesFile = __DIR__.'/../Http/routes.php')) {
                 require $routesFile;
             }
 

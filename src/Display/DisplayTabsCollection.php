@@ -17,7 +17,7 @@ class DisplayTabsCollection extends FormElementsCollection
             $element = $tab->getContent();
 
             if ($element instanceof FormElementInterface) {
-                return !$element->isReadonly();
+                return ! $element->isReadonly();
             }
 
             return true;

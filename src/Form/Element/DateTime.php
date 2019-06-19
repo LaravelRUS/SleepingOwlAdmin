@@ -81,7 +81,7 @@ class DateTime extends NamedFormElement
     public function getValueFromModel()
     {
         $value = parent::getValueFromModel();
-        if (!empty($value)) {
+        if (! empty($value)) {
             return $this->parseValue($value);
         }
     }
@@ -91,7 +91,7 @@ class DateTime extends NamedFormElement
      */
     public function hasSeconds()
     {
-        return (bool)$this->seconds;
+        return (bool) $this->seconds;
     }
 
     /**
@@ -113,7 +113,7 @@ class DateTime extends NamedFormElement
      */
     public function setModelAttribute($value)
     {
-        $value = !empty($value)
+        $value = ! empty($value)
             ? Carbon::createFromFormat($this->getPickerFormat(), $value, $this->getTimezone())
                 ->timezone(config('app.timezone'))->format($this->getFormat())
             : null;

@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\PanelControl;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -150,7 +150,7 @@ class DisplayTable extends Display
      */
     public function paginate($perPage = 25, $pageName = 'page')
     {
-        $this->paginate = (int)$perPage;
+        $this->paginate = (int) $perPage;
         $this->pageName = $pageName;
 
         return $this;
@@ -209,11 +209,11 @@ class DisplayTable extends Display
      */
     public function getCollection()
     {
-        if (!$this->isInitialized()) {
+        if (! $this->isInitialized()) {
             throw new Exception('Display is not initialized');
         }
 
-        if (!is_null($this->collection)) {
+        if (! is_null($this->collection)) {
             return $this->collection;
         }
 

@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
+use Illuminate\Contracts\Pagination\Paginator;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
@@ -95,7 +95,7 @@ class Columns extends Extension implements Initializable, Renderable
             $this->columns = $this->columns->filter(function ($column) {
                 $class = get_class($this->getControlColumn());
 
-                return !($column instanceof $class);
+                return ! ($column instanceof $class);
             });
         }
 
@@ -117,7 +117,7 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function set($columns)
     {
-        if (!is_array($columns)) {
+        if (! is_array($columns)) {
             $columns = func_get_args();
         }
 
@@ -205,7 +205,7 @@ class Columns extends Extension implements Initializable, Renderable
 
         $columns = $this->all();
 
-        if (!is_int(key($orders))) {
+        if (! is_int(key($orders))) {
             $orders = [$orders];
         }
 
@@ -215,7 +215,7 @@ class Columns extends Extension implements Initializable, Renderable
             $columnIndex = array_get($order, 'column');
             $direction = array_get($order, 'dir', 'asc');
 
-            if (!$columnIndex && $columnIndex !== '0') {
+            if (! $columnIndex && $columnIndex !== '0') {
                 continue;
             }
 

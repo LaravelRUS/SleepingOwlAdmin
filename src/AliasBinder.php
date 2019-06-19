@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin;
 
-use BadMethodCallException;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\Registrar;
 use ReflectionClass;
+use BadMethodCallException;
+use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\AliasBinderInterface;
 
 class AliasBinder implements AliasBinderInterface
@@ -147,7 +147,7 @@ class AliasBinder implements AliasBinderInterface
      */
     public function __call($name, $arguments)
     {
-        if (!$this->hasAlias($name)) {
+        if (! $this->hasAlias($name)) {
             throw new BadMethodCallException($name);
         }
 

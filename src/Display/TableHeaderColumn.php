@@ -67,7 +67,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
      */
     public function setOrderable($orderable)
     {
-        $this->orderable = (bool)$orderable;
+        $this->orderable = (bool) $orderable;
 
         return $this;
     }

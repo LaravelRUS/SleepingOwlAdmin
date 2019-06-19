@@ -59,7 +59,7 @@ class DisplayDatatables extends DisplayTable
      */
     public function getDatatableAttributes()
     {
-        return array_merge(config('sleeping_owl.datatables', []), (array)$this->datatableAttributes);
+        return array_merge(config('sleeping_owl.datatables', []), (array) $this->datatableAttributes);
     }
 
     /**
@@ -89,7 +89,7 @@ class DisplayDatatables extends DisplayTable
      */
     public function setOrder($order)
     {
-        if (!is_array($order)) {
+        if (! is_array($order)) {
             $order = func_get_args();
         }
 

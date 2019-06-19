@@ -37,7 +37,6 @@ interface FormInterface extends FormElementInterface, ElementsInterface
      *
      * @return void
      * @throws ValidationException
-     *
      */
     public function validateForm(Request $request, ModelConfigurationInterface $model = null);
 

@@ -51,8 +51,7 @@ abstract class Template implements TemplateInterface
         MetaInterface $meta,
         NavigationInterface $navigation,
         Breadcrumbs $breadcrumbs
-    )
-    {
+    ) {
         $this->app = $application;
         $this->meta = $meta;
         $this->navigation = $navigation;
@@ -67,7 +66,7 @@ abstract class Template implements TemplateInterface
      */
     public function longName()
     {
-        return $this->name() . ' v.' . $this->version();
+        return $this->name().' v.'.$this->version();
     }
 
     /**
@@ -103,7 +102,7 @@ abstract class Template implements TemplateInterface
      */
     public function assetPath($path = null)
     {
-        return !is_null($path) ? $this->assetDir() . '/' . ltrim($path, '/') : $this->assetDir();
+        return ! is_null($path) ? $this->assetDir().'/'.ltrim($path, '/') : $this->assetDir();
     }
 
     /**
@@ -126,7 +125,7 @@ abstract class Template implements TemplateInterface
             return $this->getTitle();
         }
 
-        return $title . "{$separator}" . $this->getTitle();
+        return $title."{$separator}".$this->getTitle();
     }
 
     /**
@@ -144,7 +143,7 @@ abstract class Template implements TemplateInterface
             return $view;
         }
 
-        return $this->getViewNamespace() . '.' . $view;
+        return $this->getViewNamespace().'.'.$view;
     }
 
     /**

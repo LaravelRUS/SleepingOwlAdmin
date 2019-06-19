@@ -22,7 +22,6 @@ class AlterPaginateDisplayController extends Controller
      * @param null $name
      * @return JsonResponse
      * @throws NotFoundHttpException
-     *
      */
     public function async(ModelConfigurationInterface $model, Request $request, Application $application, $name = null)
     {

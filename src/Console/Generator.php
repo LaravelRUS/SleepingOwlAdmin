@@ -26,7 +26,7 @@ class Generator extends IdeHelperGenerator
         $aliases = $this->getValidAliases();
 
         $aliases = $aliases->filter(function (Alias $item) {
-            return !collect([
+            return ! collect([
                 'MessageStack',
                 'AdminSection',
                 'AdminTemplate',

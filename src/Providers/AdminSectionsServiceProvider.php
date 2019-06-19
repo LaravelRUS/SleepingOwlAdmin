@@ -63,7 +63,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
                 continue;
             }
 
-            $policies[$section] = $namespace . class_basename($section) . 'SectionModelPolicy';
+            $policies[$section] = $namespace.class_basename($section).'SectionModelPolicy';
         }
 
         return $policies;

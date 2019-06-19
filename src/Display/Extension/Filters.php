@@ -41,7 +41,7 @@ class Filters extends Extension implements Initializable
      */
     public function set($filters)
     {
-        if (!is_array($filters)) {
+        if (! is_array($filters)) {
             $filters = func_get_args();
         }
 

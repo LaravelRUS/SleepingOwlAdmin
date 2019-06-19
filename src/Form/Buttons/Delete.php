@@ -41,7 +41,7 @@ class Delete extends FormButton
             return false;
         }
 
-        $this->show = !$this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
+        $this->show = ! $this->isTrashed() && $this->getModelConfiguration()->isDeletable($this->getModel());
 
         return parent::canShow();
     }

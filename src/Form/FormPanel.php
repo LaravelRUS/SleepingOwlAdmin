@@ -43,7 +43,7 @@ class FormPanel extends FormDefault
     {
         $this->getButtons()->setHtmlAttribute('class', 'panel-footer');
 
-        $this->setHtmlAttribute('class', 'panel panel-default ' . $this->getPanelClass());
+        $this->setHtmlAttribute('class', 'panel panel-default '.$this->getPanelClass());
 
         parent::initialize();
     }
@@ -55,7 +55,7 @@ class FormPanel extends FormDefault
      */
     public function setItems($items)
     {
-        if (!is_array($items)) {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 
@@ -87,7 +87,7 @@ class FormPanel extends FormDefault
      */
     public function addHeader($items)
     {
-        if (!is_array($items)) {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 
@@ -103,7 +103,7 @@ class FormPanel extends FormDefault
      */
     public function addBody($items)
     {
-        if (!is_array($items)) {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 
@@ -124,7 +124,7 @@ class FormPanel extends FormDefault
      */
     public function addFooter($items)
     {
-        if (!is_array($items)) {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 

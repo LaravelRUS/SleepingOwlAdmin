@@ -72,7 +72,7 @@ class Column extends FormElements implements ColumnInterface
     public function setSize($size)
     {
         if (strpos($size, 'col-') === false) {
-            $size = 'col-' . $size . '-';
+            $size = 'col-'.$size.'-';
         }
 
         $this->size = $size;
@@ -88,10 +88,10 @@ class Column extends FormElements implements ColumnInterface
     {
         $width = $this->getWidth();
         if (is_numeric($width)) {
-            $class = $this->getSize() . $width;
-        } else if (is_array($width) && count($width)) {
+            $class = $this->getSize().$width;
+        } elseif (is_array($width) && count($width)) {
             $class = implode(' ', $width);
-        } else if (is_string($width)) {
+        } elseif (is_string($width)) {
             $class = $width;
         } else {
             throw new Exception('Column width should be integer (numeric), string (for example: col-sm-12 col-md-6) or array (list of the Bootstrap classes)');

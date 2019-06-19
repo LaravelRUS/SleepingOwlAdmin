@@ -2,23 +2,23 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-use Illuminate\Database\ConnectionInterface;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Throwable;
 use Illuminate\Http\Request;
 use Admin\Contracts\HasFakeModel;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Columns\Columns;
+use Illuminate\Database\ConnectionInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
-use Throwable;
+use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 
 abstract class Elements extends FormElements
 {
@@ -138,7 +138,7 @@ abstract class Elements extends FormElements
         $this->stubElements = $this->getNewElements();
         $this->forEachElement($this->stubElements, function ($element) {
             $element->setDefaultValue(null);
-            if (!$element instanceof HasFakeModel) {
+            if (! $element instanceof HasFakeModel) {
                 $element->setPath('');
             }
         });
@@ -146,8 +146,8 @@ abstract class Elements extends FormElements
 
     protected function initializeRemoveEntities()
     {
-        $key = $this->relationName . '.' . static::REMOVE;
-        $newKey = 'remove_' . $this->relationName;
+        $key = $this->relationName.'.'.static::REMOVE;
+        $newKey = 'remove_'.$this->relationName;
         $request = request();
 
         $remove = $request->input($key, $request->old($key, []));
@@ -212,7 +212,7 @@ abstract class Elements extends FormElements
 
     protected function makeValidationAttribute(string $name): string
     {
-        return $this->relationName . '.*.' . $name;
+        return $this->relationName.'.*.'.$name;
     }
 
     protected function getNewElements(): Collection
@@ -283,12 +283,12 @@ abstract class Elements extends FormElements
     {
         $model = $this->getModel();
         $class = get_class($model);
-        if (!method_exists($model, $this->relationName)) {
+        if (! method_exists($model, $this->relationName)) {
             throw new RelationNotFoundException("Relation {$this->relationName} doesn't exist on {$class}");
         }
 
         $relation = $model->{$this->relationName}();
-        if (!($relation instanceof BelongsToMany) && !($relation instanceof HasOneOrMany) && !($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsTo)) {
+        if (! ($relation instanceof BelongsToMany) && ! ($relation instanceof HasOneOrMany) && ! ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsTo)) {
             throw new \InvalidArgumentException("Relation {$this->relationName} of model {$class} must be instance of HasMany, BelongsTo or BelongsToMany");
         }
     }
@@ -312,7 +312,7 @@ abstract class Elements extends FormElements
      */
     protected function loadRelationValues()
     {
-        if (!$this->instance) {
+        if (! $this->instance) {
             throw new ModelNotFoundException("Model {$this->getModel()} wasn't found for loading relation");
         }
 
@@ -402,7 +402,7 @@ abstract class Elements extends FormElements
             $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?? $model->getKey(), $this->formatElementName($el->getName())));
             $el->setModel($model);
 
-            if ($old && strpos($el->getPath(), '->') === false && !($el instanceof HasFakeModel)) {
+            if ($old && strpos($el->getPath(), '->') === false && ! ($el instanceof HasFakeModel)) {
                 // If there were old values (validation fail, etc.) each element must have different path to get the old
                 // value. If we don't do it, there will be collision if two elements with same name present in main form
                 // and related form. For example: we have "Company" and "Shop" models with field "name" and include HasMany
@@ -439,7 +439,7 @@ abstract class Elements extends FormElements
         $jsonParts = collect(explode('->', $attribute));
         $cast = $casts->get($jsonParts->first(), false);
 
-        if (!in_array($cast, ['json', 'array'])) {
+        if (! in_array($cast, ['json', 'array'])) {
             return;
         }
 
@@ -479,7 +479,7 @@ abstract class Elements extends FormElements
             if ($element instanceof NamedFormElement) {
                 // Is it what we're looking for? if so we'll push it to final collection
                 $initial->push($element);
-            } else if ($element instanceof FormElements) {
+            } elseif ($element instanceof FormElements) {
                 // Go deeper and repeat everything again
                 return $initial->merge($this->flatNamedElements($element->getElements()));
             }
@@ -676,7 +676,7 @@ abstract class Elements extends FormElements
     {
         $related = $this->relatedValues->get($key) ?? $this->getFreshModelForElements();
 
-        if (!$related->exists && !$this->exceedsLimit()) {
+        if (! $related->exists && ! $this->exceedsLimit()) {
             $this->relatedValues->put($key, $related);
         }
 

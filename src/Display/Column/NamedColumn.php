@@ -41,7 +41,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         $this->setName($name);
         $this->setSmall($small);
 
-        $this->setHtmlAttribute('class', 'row-' . strtolower(class_basename(get_called_class())));
+        $this->setHtmlAttribute('class', 'row-'.strtolower(class_basename(get_called_class())));
 
         if ($this->orderable) {
             $this->setOrderable();
@@ -111,8 +111,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     public function setOrderable($orderable = true)
     {
-        if ($orderable !== false && !$orderable instanceof OrderByClauseInterface) {
-            if (!is_string($orderable) && !$orderable instanceof Closure) {
+        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
+            if (! is_string($orderable) && ! $orderable instanceof Closure) {
                 $orderable = $this->getName();
             }
         }
@@ -159,7 +159,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
             if ($cast == 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-            } else if ($cast != 'array') {
+            } elseif ($cast != 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
 
@@ -171,7 +171,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
         if ($instance instanceof Collection) {
             $instance = $instance->pluck($part);
-        } else if ($instance instanceof SuportCollection) {
+        } elseif ($instance instanceof SuportCollection) {
             $instance = $instance->first();
             if ($instance instanceof Collection) {
                 $instance = $instance->pluck($part);
@@ -180,11 +180,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
             if ($instance === null) {
                 $instance = collect();
             }
-        } else if (!is_null($instance)) {
+        } elseif (! is_null($instance)) {
             $instance = $instance->getAttribute($part);
         }
 
-        if (!empty($parts) && !is_null($instance)) {
+        if (! empty($parts) && ! is_null($instance)) {
             return $this->getValueFromObject($instance, implode('.', $parts));
         }
 

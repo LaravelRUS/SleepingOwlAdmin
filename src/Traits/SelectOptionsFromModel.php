@@ -69,7 +69,7 @@ trait SelectOptionsFromModel
             $modelForOptions = app($modelForOptions);
         }
 
-        if (!($modelForOptions instanceof Model)) {
+        if (! ($modelForOptions instanceof Model)) {
             throw new SelectException('Class must be instanced of Illuminate\Database\Eloquent\Model');
         }
 
@@ -128,7 +128,7 @@ trait SelectOptionsFromModel
      */
     public function setFetchColumns($columns)
     {
-        if (!is_array($columns)) {
+        if (! is_array($columns)) {
             $columns = func_get_args();
         }
 
@@ -225,7 +225,7 @@ trait SelectOptionsFromModel
 
         $options = $repository->getQuery();
 
-        if ($this->isEmptyRelation() && !is_null($foreignKey = $this->getForeignKey())) {
+        if ($this->isEmptyRelation() && ! is_null($foreignKey = $this->getForeignKey())) {
             $relation = $this->getModelAttributeKey();
             $model = $this->getModel();
 
@@ -239,7 +239,7 @@ trait SelectOptionsFromModel
         }
 
         // call the pre load options query preparer if has be set
-        if (!is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
+        if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
             $options = $preparer($this, $options);
         }
         $options = $options->get();
@@ -262,7 +262,7 @@ trait SelectOptionsFromModel
 
             // take options as array with KEY => VALUE pair
             $options = array_pluck($options, 1, 0);
-        } else if ($options instanceof Collection) {
+        } elseif ($options instanceof Collection) {
             // take options as array with KEY => VALUE pair
             $options = array_pluck($options->all(), $this->getDisplay(), $key);
         } else {

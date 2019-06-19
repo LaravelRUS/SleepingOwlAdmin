@@ -40,7 +40,7 @@ trait HasUniqueValidation
 
     protected function addUniqueValidation()
     {
-        if (count((array)$this->unique) > 0) {
+        if (count((array) $this->unique) > 0) {
             $pairs = [];
             $parameters = array_unique(array_merge([
                 $mainKey = $this->getModel()->getForeignKey(),
@@ -50,7 +50,7 @@ trait HasUniqueValidation
                 return $param !== $mainKey;
             });
 
-            $relations = (array)request($this->relationName);
+            $relations = (array) request($this->relationName);
 
             foreach ($relations as $index => $relation) {
                 $relation[$mainKey] = $this->getModel()->getKey();
@@ -58,7 +58,7 @@ trait HasUniqueValidation
 
                 if (array_key_exists($key, $pairs)) {
                     foreach ($errorColumns as $column) {
-                        $this->validationRules[$this->relationName . '.' . $index . '.' . $column] = 'unique_related';
+                        $this->validationRules[$this->relationName.'.'.$index.'.'.$column] = 'unique_related';
                     }
                 } else {
                     $pairs[$key] = true;
