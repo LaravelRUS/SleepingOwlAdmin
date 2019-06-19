@@ -28,6 +28,11 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      */
     protected $columnName;
 
+    /**
+     * @var string|null
+     */
+    protected $columnRawName;
+
     public function __construct()
     {
         $this->initializePackage();
@@ -57,6 +62,26 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function setColumnName($name)
     {
         $this->columnName = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getColumnRawName()
+    {
+        return $this->columnRawName;
+    }
+
+    /**
+     * @param null|string $name
+     *
+     * @return $this
+     */
+    public function setColumnRawName($name)
+    {
+        $this->columnRawName = $name;
 
         return $this;
     }
@@ -128,11 +153,13 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             return;
         }
 
-        if (is_null($name = $this->getColumnName())) {
-            $name = $column->getName();
+        if (is_null($name = $this->getColumnRawName())) {
+            if (is_null($name = $this->getColumnName())) {
+                $name = $column->getName();
+            }
         }
 
-        if (strpos($name, '.') !== false) {
+        if (strpos($name, '.') !== false && is_null($this->getColumnRawName())) {
             $parts = explode('.', $name);
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
