@@ -63,8 +63,8 @@ class Gravatar extends NamedColumn
     public function toArray()
     {
         $value = $this->getModelValue();
-        if (!empty($value)) {
-            $value = md5(strtolower(trim($value))) . '?';
+        if (! empty($value)) {
+            $value = md5(strtolower(trim($value))).'?';
         } else {
             $value = '205e460b479e2e5b48aec07710c08d50?f=y';
         }
