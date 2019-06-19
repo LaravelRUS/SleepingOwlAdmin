@@ -208,6 +208,8 @@ class Columns extends Extension implements Initializable, Renderable
             $orders = [$orders];
         }
 
+        $_model = $query->getModel();
+
         foreach ($orders as $order) {
             $columnIndex = array_get($order, 'column');
             $direction = array_get($order, 'dir', 'asc');
@@ -232,6 +234,11 @@ class Columns extends Extension implements Initializable, Renderable
                         continue;
                     }
                 }
+
+                if ($_model->getAttribute($column->getName())) {
+                    continue;
+                }
+
                 $column->orderBy($query, $direction);
             }
         }
