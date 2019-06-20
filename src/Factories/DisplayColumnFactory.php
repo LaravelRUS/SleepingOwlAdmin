@@ -45,6 +45,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
             'datetime' => Column\DateTime::class,
             'filter' => Column\Filter::class,
             'image' => Column\Image::class,
+            'gravatar' => Column\Gravatar::class,
             'lists' => Column\Lists::class,
             'order' => Column\Order::class,
             'text' => Column\Text::class,
