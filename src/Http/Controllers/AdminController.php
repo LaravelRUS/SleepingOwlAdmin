@@ -728,16 +728,19 @@ class AdminController extends Controller
     /**
      * @param $title
      * @param $parent
+     * @param $name
+     * @param $url
+     *
      * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
-    protected function registerBreadcrumb($title, $parent)
+    protected function registerBreadcrumb($title, $parent, $name = 'render', $url = null)
     {
-        $this->breadcrumbs->register('render', function (Generator $breadcrumbs) use ($title, $parent) {
+        $this->breadcrumbs->register($name, function (Generator $breadcrumbs) use ($title, $parent, $url) {
             $breadcrumbs->parent($parent);
-            $breadcrumbs->push($title);
+            $breadcrumbs->push($title, $url);
         });
 
-        $this->parentBreadcrumb = 'render';
+        $this->parentBreadcrumb = $name;
     }
 
     /**
