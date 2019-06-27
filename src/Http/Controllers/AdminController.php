@@ -304,8 +304,8 @@ class AdminController extends Controller
 
         $create = $model->fireCreate();
 
-        $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
         $this->registerBreadcrumbs($model);
+        $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
 
         return $this->render($model, $create, $model->getCreateTitle());
     }
@@ -397,11 +397,10 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
-
         $edit = $model->fireEdit($id);
 
         $this->registerBreadcrumbs($model);
+        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
 
         return $this->render($model, $edit, $model->getEditTitle());
     }
