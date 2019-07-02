@@ -84,7 +84,11 @@ Admin.Modules.register('display.datatables', () => {
             table.draw();
         });
 
+<<<<<<< HEAD
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
+=======
+        $("#filters-cancel").on('click', function () {
+>>>>>>> upstream/development
             let input = $(".display-filters td[data-index] input").val(null);
             input.trigger('change');
 
@@ -92,7 +96,11 @@ Admin.Modules.register('display.datatables', () => {
             selector.val(null);
             selector.trigger('change');
 
+<<<<<<< HEAD
             table.draw();
+=======
+            table.api().draw();
+>>>>>>> upstream/development
         });
 
         $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e){
