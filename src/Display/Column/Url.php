@@ -19,6 +19,15 @@ class Url extends NamedColumn
      */
     protected $icon = 'fa fa-arrow-circle-o-right';
 
+    /**
+     * @var string
+     */
+    protected $text = '';
+
+    /**
+     * @var boolean
+     */
+    protected $textStatic = false;
 
     /**
      * @return array
@@ -63,6 +72,31 @@ class Url extends NamedColumn
 
 
     /**
+     * @return string
+     */
+    public function getText()
+    {
+        if ($this->textStatic) {
+            return $this->text;
+        }
+
+        return $this->getValueFromObject($this->getModel(), $this->text);
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return $this
+     */
+    public function setText($text, $textStatic = false)
+    {
+        $this->text = $text;
+        $this->textStatic = $textStatic;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -72,6 +106,7 @@ class Url extends NamedColumn
                 'value' => $this->getModelValue(),
                 'small' => $this->getModelSmallValue(),
                 'icon' => $this->getIcon(),
+                'text' => $this->getText(),
             ];
     }
 }
