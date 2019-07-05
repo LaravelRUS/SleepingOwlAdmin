@@ -15,6 +15,12 @@ class Url extends NamedColumn
     protected $linkAttributes = [];
 
     /**
+     * @var string|boolean
+     */
+    protected $icon = 'fa fa-arrow-circle-o-right';
+
+
+    /**
      * @return array
      */
     public function getLinkAttributes()
@@ -34,6 +40,28 @@ class Url extends NamedColumn
         return $this;
     }
 
+
+    /**
+     * @return string|boolean
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string|boolean $icon
+     *
+     * @return $this
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+
     /**
      * @return array
      */
@@ -43,6 +71,7 @@ class Url extends NamedColumn
                 'linkAttributes' => $this->getLinkAttributes(),
                 'value' => $this->getModelValue(),
                 'small' => $this->getModelSmallValue(),
+                'icon' => $this->getIcon(),
             ];
     }
 }

@@ -1,6 +1,8 @@
 @if (!empty($value))
-<a href="{{ $value }}" {{ app('html')->attributes($linkAttributes) }}>
-	<i class="fa fa-arrow-circle-o-right" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.filter-goto') }}"></i>
-</a>
+    <a href="{{ $value }}" {{ app('html')->attributes($linkAttributes) }}>
+        @if ($icon)
+            <i class="{{$icon}}" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.filter-goto') }}"></i>
+        @endif
+    </a>
 @endif
 {!! $append !!}
