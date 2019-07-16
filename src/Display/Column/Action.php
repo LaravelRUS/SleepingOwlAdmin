@@ -59,7 +59,7 @@ class Action extends NamedColumn implements ActionInterface
     {
         $this->setHtmlAttributes([
             'class' => 'btn btn-action btn-default',
-            'name'  => 'action',
+            'name' => 'action',
             'value' => $this->getName(),
             'data-action' => $this->getAction(),
             'data-method' => $this->getMethod(),
@@ -192,10 +192,10 @@ class Action extends NamedColumn implements ActionInterface
     public function toArray()
     {
         return parent::toArray() + [
-            'icon'   => $this->getIcon(),
-            'action' => $this->getAction(),
-            'method' => $this->getMethod(),
-            'title'  => $this->getTitle(),
-        ];
+                'icon' => $this->getIcon(),
+                'action' => $this->getAction(),
+                'method' => $this->getMethod(),
+                'title' => $this->getTitle(),
+            ];
     }
 }

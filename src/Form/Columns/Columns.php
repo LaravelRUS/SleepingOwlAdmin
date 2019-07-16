@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Columns;
 
+use Exception;
 use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\FormElementsCollection;
@@ -31,9 +32,9 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param array|ColumnInterface[] $columns
-     *
-     * @return $this
+     * @param array $columns
+     * @return $this|\SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface|\SleepingOwl\Admin\Form\FormElements
+     * @throws \Exception
      */
     public function setElements(array $columns)
     {
@@ -45,10 +46,10 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param \SleepingOwl\Admin\Contracts\Form\FormElementInterface[]|\Closure|ColumnInterface $column
-     * @param int|null $width
-     *
-     * @return $this
+     * @param $column
+     * @param null $width
+     * @return \SleepingOwl\Admin\Form\Columns\Columns
+     * @throws \Exception
      */
     public function addColumn($column, $width = null)
     {
@@ -71,7 +72,7 @@ class Columns extends FormElements implements ColumnInterface
         }
 
         if (! ($element instanceof ColumnInterface)) {
-            throw new \Exception('Column should be instance of ColumnInterface');
+            throw new Exception('Column should be instance of ColumnInterface');
         }
 
         $element->setWidth($width);
@@ -108,20 +109,20 @@ class Columns extends FormElements implements ColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-            'columns' => $this->getElements()->onlyVisible(),
-            'attributes' => $this->htmlAttributesToString(),
-        ];
+                'columns' => $this->getElements()->onlyVisible(),
+                'attributes' => $this->htmlAttributesToString(),
+            ];
     }
 
     /**
-     * @return int
+     * @return void
      */
     public function getWidth()
     {
     }
 
     /**
-     * @return string
+     * @return void
      */
     public function getSize()
     {
@@ -129,8 +130,7 @@ class Columns extends FormElements implements ColumnInterface
 
     /**
      * @param string $size
-     *
-     * @return $this
+     * @return \SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface|void
      */
     public function setSize($size)
     {

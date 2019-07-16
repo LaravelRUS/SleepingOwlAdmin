@@ -200,13 +200,15 @@ class Select extends EditableColumn implements ColumnEditableInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'options'    => $this->mutateOptions(),
+                'options' => $this->mutateOptions(),
                 'optionName' => $this->getOptionName($this->getModelValue()),
             ];
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)

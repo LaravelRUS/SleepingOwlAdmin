@@ -41,30 +41,6 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Display\TableColumn::__construct
-     * @covers SleepingOwl\Admin\Display\TableColumn::setLabel
-     */
-    public function test_constructor_with_label()
-    {
-        $this->app->instance(TableHeaderColumnInterface::class, $header = m::mock(TableHeaderColumnInterface::class));
-
-        $header->shouldReceive('setTitle')->once()->with('Title');
-        $this->getColumn('Title');
-    }
-
-    /**
-     * @covers SleepingOwl\Admin\Display\TableColumn::initialize
-     */
-    public function test_initialize()
-    {
-        $column = $this->getColumn();
-
-        $this->packageInitialized();
-
-        $column->initialize();
-    }
-
-    /**
      * @covers SleepingOwl\Admin\Display\TableColumn::getWidth
      * @covers SleepingOwl\Admin\Display\TableColumn::setWidth
      */

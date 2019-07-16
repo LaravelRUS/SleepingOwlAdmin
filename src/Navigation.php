@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin;
 
-use Route;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 

@@ -2,8 +2,9 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\PanelControl;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -69,7 +70,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * Initialize display.
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -130,7 +131,7 @@ class DisplayTable extends Display
 
     /**
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -142,7 +143,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param int    $perPage
+     * @param int $perPage
      * @param string $pageName
      *
      * @return $this
@@ -209,7 +210,7 @@ class DisplayTable extends Display
     public function getCollection()
     {
         if (! $this->isInitialized()) {
-            throw new \Exception('Display is not initialized');
+            throw new Exception('Display is not initialized');
         }
 
         if (! is_null($this->collection)) {
@@ -228,7 +229,7 @@ class DisplayTable extends Display
     /**
      * @param \Illuminate\Database\Eloquent\Builder|Builder $query
      */
-    protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    protected function modifyQuery(Builder $query)
     {
         $this->extensions->modifyQuery($query);
     }

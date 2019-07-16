@@ -7,6 +7,7 @@ use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Related\Forms;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 
 /**
@@ -37,8 +38,8 @@ use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
  * @method Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method Element\Upload upload($name, $label = null)
  * @method Element\Number number($name, $label = null)
- * @method Element\DependentSelect dependentselect($name, $label = null, array|Model $options)
- * @method Element\MultiDependentSelect multidependentselect($name, $label = null, array|Model $options)
+ * @method Element\DependentSelect dependentselect($name, $label = null, array|Model $options = [])
+ * @method Element\MultiDependentSelect multidependentselect($name, $label = null, array|Model $options = [])
  */
 class FormElementFactory extends AliasBinder implements FormElementFactoryInterface
 {
@@ -47,7 +48,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         parent::__construct($application);
 

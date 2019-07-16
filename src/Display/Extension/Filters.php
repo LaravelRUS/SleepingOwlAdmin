@@ -116,7 +116,7 @@ class Filters extends Extension implements Initializable
     {
         return [
             'filters' => $this->filters->toArray(),
-            'title'   => $this->getTitle(),
+            'title' => $this->getTitle(),
         ];
     }
 

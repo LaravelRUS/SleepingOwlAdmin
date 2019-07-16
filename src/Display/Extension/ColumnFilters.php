@@ -117,8 +117,8 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @deprecated use getPlacement()
      * @return string
+     * @deprecated use getPlacement()
      */
     public function getPosition()
     {
@@ -126,10 +126,10 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @deprecated use setPlacement(string $placement)
      * @param string $position
      *
      * @return $this
+     * @deprecated use setPlacement(string $placement)
      */
     public function setPosition($position)
     {

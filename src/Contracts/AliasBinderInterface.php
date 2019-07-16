@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
+use Illuminate\Contracts\Routing\Registrar;
+
 interface AliasBinderInterface
 {
     /**
@@ -9,7 +11,7 @@ interface AliasBinderInterface
      *
      * @return void
      */
-    public static function registerRoutes(\Illuminate\Contracts\Routing\Registrar $router);
+    public static function registerRoutes(Registrar $router);
 
     /**
      * Bind new alias.

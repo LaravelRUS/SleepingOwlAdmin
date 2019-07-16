@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
@@ -20,7 +20,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
         $routeName = 'admin.display.async.alter_paginate';
         if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/alter_paginate/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AlterPaginateDisplayController@async',
             ]);
         }
@@ -28,7 +28,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
         $routeName = 'admin.display.async.inlineEdit';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
@@ -41,7 +41,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
      *
      * @return array
      */
-    public function renderAsync(\Illuminate\Http\Request $request)
+    public function renderAsync(Request $request)
     {
         $query = $this->getRepository()->getQuery();
         $totalCount = 0;

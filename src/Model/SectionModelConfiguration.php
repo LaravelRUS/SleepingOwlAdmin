@@ -111,7 +111,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      * @param mixed $payload
      *
      * @return mixed|void
