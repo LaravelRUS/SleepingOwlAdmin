@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "bootstrap-vue": "^2.0.0-rc.11",
-    "cross-env": "^5.0.1",
+    "cross-env": "^5.2.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "pngquant": "^1.3.0",

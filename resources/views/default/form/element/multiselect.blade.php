@@ -29,7 +29,7 @@
                          placeholder="{{ trans('sleeping_owl::lang.select.no_items') }}"
                          @endif
                          @tag="addTag"
-                         :taggable="{{ $tagable ? 'true' : 'false'}}"
+                         :taggable="{{ $taggable ? 'true' : 'false'}}"
                          :select-label="'{{trans('sleeping_owl::lang.select.init')}}'"
                          :selected-label="'{{trans('sleeping_owl::lang.select.selected')}}'"
                          :deselect-label="'{{trans('sleeping_owl::lang.select.deselect')}}'"

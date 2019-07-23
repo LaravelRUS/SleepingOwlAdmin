@@ -40,9 +40,9 @@ class Url extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'linkAttributes' => $this->getLinkAttributes(),
-            'value' => $this->getModelValue(),
-            'small' => $this->getModelSmallValue(),
-        ];
+                'linkAttributes' => $this->getLinkAttributes(),
+                'value' => $this->getModelValue(),
+                'small' => $this->getModelSmallValue(),
+            ];
     }
 }

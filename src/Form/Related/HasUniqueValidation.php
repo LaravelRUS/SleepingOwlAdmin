@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 trait HasUniqueValidation
 {
@@ -16,7 +16,7 @@ trait HasUniqueValidation
      *
      * @return static
      */
-    public function unique(array $columns, $message = null)
+    public function unique(array $columns, string $message = null)
     {
         $this->initializeUniqueValidator($message);
         $this->unique = $columns;
@@ -24,14 +24,14 @@ trait HasUniqueValidation
         return $this;
     }
 
-    protected function initializeUniqueValidator($message = null)
+    protected function initializeUniqueValidator(string $message = null)
     {
         Validator::extendImplicit('unique_related', function () {
             return false;
         }, $message);
     }
 
-    public function getValidationRules()
+    public function getValidationRules(): array
     {
         $this->addUniqueValidation();
 
@@ -54,7 +54,7 @@ trait HasUniqueValidation
 
             foreach ($relations as $index => $relation) {
                 $relation[$mainKey] = $this->getModel()->getKey();
-                $key = $this->getCompositeKey($relation, (array) $parameters);
+                $key = $this->getCompositeKey($relation, $parameters);
 
                 if (array_key_exists($key, $pairs)) {
                     foreach ($errorColumns as $column) {

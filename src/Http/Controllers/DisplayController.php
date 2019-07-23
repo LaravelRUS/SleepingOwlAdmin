@@ -22,9 +22,8 @@ class DisplayController extends Controller
      * @param Request $request
      * @param Application $application
      * @param null $name
-     * @throws NotFoundHttpException
-     *
      * @return JsonResponse
+     * @throws NotFoundHttpException
      */
     public function async(ModelConfigurationInterface $model, Request $request, Application $application, $name = null)
     {

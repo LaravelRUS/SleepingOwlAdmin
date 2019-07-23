@@ -27,8 +27,10 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
     /**
      * MultiSelectAjax constructor.
-     * @param string $path
+     * @param $path
      * @param null $label
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null)
     {
@@ -95,8 +97,8 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
-            'field'      => $this->getFieldName(),
-            'id'         => $this->model->getKey(),
+            'field' => $this->getFieldName(),
+            'id' => $this->model->getKey(),
         ]);
     }
 
@@ -109,7 +111,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@multiselectSearch',
             ]);
         }
@@ -150,13 +152,13 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id'               => $this->getName(),
-            'class'            => 'form-control js-data-ajax',
+            'id' => $this->getName(),
+            'class' => 'form-control js-data-ajax',
             'multiple',
-            'field'            => $this->getDisplay(),
-            'search'           => $this->getSearch(),
-            'model'            => get_class($this->getModelForOptions()),
-            'search_url'       => $this->getSearchUrl(),
+            'field' => $this->getDisplay(),
+            'search' => $this->getSearch(),
+            'model' => get_class($this->getModelForOptions()),
+            'search_url' => $this->getSearchUrl(),
             'data-min-symbols' => $this->getMinSymbols(),
         ]);
 

@@ -86,7 +86,7 @@ class WidgetsRegistry implements WidgetsRegistryInterface
     }
 
     /**
-     * @param  mixed $widget
+     * @param mixed $widget
      * @return mixed
      */
     public function makeWidget($widget)

@@ -17,6 +17,6 @@ mix
         processCssUrls: true,
         resourceRoot: '../',
         imgLoaderOptions: {
-            enabled: false
-        }
+            enabled: false,
+        },
     });

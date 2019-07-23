@@ -13,6 +13,7 @@ class NamedFormElementTest extends TestCase
     /**
      * @param string $path
      * @param null $label
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject
      * @throws ReflectionException
      */
@@ -157,7 +158,10 @@ class NamedFormElementTest extends TestCase
 
         $element->addValidationMessage('test', 'test message');
         $element->addValidationMessage('hello', 'hello message');
-        $this->assertEquals(['key.test' => 'test message', 'key.hello' => 'hello message'], $element->getValidationMessages());
+        $this->assertEquals([
+            'key.test'  => 'test message',
+            'key.hello' => 'hello message',
+        ], $element->getValidationMessages());
     }
 
     /**
@@ -258,7 +262,8 @@ class NamedFormElementTest extends TestCase
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
         $model->exists = true;
 
-        $model->shouldReceive('getAttribute')->andReturn($subModel = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')
+            ->andReturn($subModel = m::mock(\Illuminate\Database\Eloquent\Model::class));
 
         $this->assertEquals($subModel, $element->resolvePath());
 
@@ -296,44 +301,17 @@ class NamedFormElementTest extends TestCase
         $session->shouldReceive('getOldInput')->andReturn(null);
 
         $this->assertEquals([
-            'value' => null,
-            'readonly' => false,
-            'model' => null,
-            'id' => 'key2[subkey]',
-            'name' => 'key2[subkey]',
-            'path' => 'key2.subkey',
-            'label' => 'Label',
-            'helpText' => null,
-            'required' => false,
+            'value'      => null,
+            'readonly'   => false,
+            'model'      => null,
+            'id'         => 'key2[subkey]',
+            'name'       => 'key2[subkey]',
+            'path'       => 'key2.subkey',
+            'label'      => 'Label',
+            'helpText'   => null,
+            'required'   => false,
             'attributes' => ' id="key2[subkey]" name="key2[subkey]"',
         ], $element->toArray());
-    }
-
-    public function test_save()
-    {
-        $request = $this->app['request'];
-
-        $session = $request->getSession();
-        $session->shouldReceive('getOldInput')->andReturn(null);
-
-        $request->offsetSet($key = 'key', $value = 'hello world');
-        $element = $this->getElement($key, 'Label');
-
-        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('setAttribute')->with('key', $value);
-
-        $element->save($request);
-    }
-
-    public function test_sets_model_attribute()
-    {
-        $element = $this->getElement('key', 'Label');
-        $value = 'value';
-
-        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('setAttribute')->with('key', $value);
-
-        $element->setModelAttribute($value);
     }
 
     /**
@@ -347,7 +325,7 @@ class NamedFormElementTest extends TestCase
 
         $model = new NamedFormElementTestModuleForTestingSkippedValues();
         foreach ([$nameElement, $passwordElement] as $element) {
-            /* @var $element NamedFormElement  */
+            /* @var $element NamedFormElement */
             $element->setModel($model);
             $element->setModelAttribute($element->getLabel());
         }
@@ -396,9 +374,9 @@ class NamedFormElementTest extends TestCase
         $this->assertNull($this->callMethodByPath($element, 'key.key1'));
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('getAttribute')->with('key')->andReturn(
-            $model1 = m::mock(\Illuminate\Database\Eloquent\Model::class)
-        );
+        $model->shouldReceive('getAttribute')
+            ->with('key')
+            ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class));
 
         $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
     }
@@ -411,9 +389,9 @@ class NamedFormElementTest extends TestCase
         $element = $this->getElement('key', 'Label');
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('getAttribute')->with('key')->andReturn(
-            $model1 = m::mock(\Illuminate\Database\Eloquent\Model::class)
-        );
+        $model->shouldReceive('getAttribute')
+            ->with('key')
+            ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class));
 
         $model1->shouldReceive('getAttribute')->with('key1');
 
@@ -423,6 +401,7 @@ class NamedFormElementTest extends TestCase
     /**
      * @param NamedFormElement $element
      * @param $path
+     *
      * @return mixed
      * @throws ReflectionException
      */

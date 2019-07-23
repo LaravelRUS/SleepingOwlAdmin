@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Exceptions;
 
-class WysiwygException extends \Exception
+use Exception;
+
+class WysiwygException extends Exception
 {
 }

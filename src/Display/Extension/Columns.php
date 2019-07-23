@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
+use Illuminate\Contracts\Pagination\Paginator;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
@@ -184,7 +185,7 @@ class Columns extends Extension implements Initializable, Renderable
         $params['collection'] = $this->getDisplay()->getCollection();
         $params['pagination'] = null;
 
-        if ($params['collection'] instanceof \Illuminate\Contracts\Pagination\Paginator) {
+        if ($params['collection'] instanceof Paginator) {
             if (class_exists('Illuminate\Pagination\BootstrapThreePresenter')) {
                 $params['pagination'] = (new \Illuminate\Pagination\BootstrapThreePresenter($params['collection']))->render();
             } else {
@@ -207,6 +208,8 @@ class Columns extends Extension implements Initializable, Renderable
         if (! is_int(key($orders))) {
             $orders = [$orders];
         }
+
+        $_model = $query->getModel();
 
         foreach ($orders as $order) {
             $columnIndex = array_get($order, 'column');
@@ -232,6 +235,11 @@ class Columns extends Extension implements Initializable, Renderable
                         continue;
                     }
                 }
+
+                if ($_model->getAttribute($column->getName())) {
+                    continue;
+                }
+
                 $column->orderBy($query, $direction);
             }
         }

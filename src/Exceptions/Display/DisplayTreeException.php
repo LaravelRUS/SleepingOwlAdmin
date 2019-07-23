@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Exceptions\Display;
 
-class DisplayTreeException extends \Exception
+use Exception;
+
+class DisplayTreeException extends Exception
 {
 }

@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-class Group extends \Illuminate\Support\Collection
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+
+class Group extends Collection
 {
     /**
      * @var \Illuminate\Database\Eloquent\Model
@@ -16,7 +19,7 @@ class Group extends \Illuminate\Support\Collection
 
     protected $primary;
 
-    public function __construct(\Illuminate\Database\Eloquent\Model $model = null, $items = [])
+    public function __construct(Model $model = null, $items = [])
     {
         $this->model = $model;
 
@@ -24,7 +27,7 @@ class Group extends \Illuminate\Support\Collection
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return null|\Illuminate\Database\Eloquent\Model
      */
     public function getModel()
     {
@@ -39,7 +42,17 @@ class Group extends \Illuminate\Support\Collection
             return $primary($this->getModel());
         }
 
-        return $primary ?: optional($this->getModel())->getKey();
+        if ($primary) {
+            return $primary;
+        }
+
+        $key = optional($this->getModel())->getKeyName();
+
+        if (is_array($key)) {
+            return implode('_', $this->getModel()->only($key));
+        }
+
+        return optional($this->getModel())->getKey();
     }
 
     public function setPrimary($primary)
@@ -52,9 +65,9 @@ class Group extends \Illuminate\Support\Collection
     /**
      * @param string $label
      *
-     * @return $this
+     * @return Group
      */
-    public function setLabel($label)
+    public function setLabel($label): self
     {
         $this->label = $label;
 
@@ -62,10 +75,10 @@ class Group extends \Illuminate\Support\Collection
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getLabel()
     {
-        return is_callable($this->label) ? $this->label($this) : $this->label;
+        return is_callable($this->label) ? call_user_func($this->label, $this) : $this->label;
     }
 }

@@ -48,15 +48,16 @@ trait ManipulatesRequestRelations
      *
      * @param \Illuminate\Http\Request $request
      */
-    protected function makeCopyOfRelations(\Illuminate\Http\Request $request)
+    protected function makeCopyOfRelations(Request $request)
     {
         $newData = [];
         $data = $request->input($this->relationName, []);
 
         $counter = 1;
+        $newKey = static::NEW_ITEM;
 
         foreach ($data as $key => $values) {
-            $newData["new_{$counter}"] = $values;
+            $newData["{$newKey}_{$counter}"] = $values;
             $counter++;
         }
 

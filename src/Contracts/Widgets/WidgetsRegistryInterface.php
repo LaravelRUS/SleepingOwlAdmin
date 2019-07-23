@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts\Widgets;
 
+use Illuminate\Contracts\View\Factory;
+
 interface WidgetsRegistryInterface
 {
     /**
@@ -16,5 +18,5 @@ interface WidgetsRegistryInterface
      *
      * @return void
      */
-    public function placeWidgets(\Illuminate\Contracts\View\Factory $factory);
+    public function placeWidgets(Factory $factory);
 }

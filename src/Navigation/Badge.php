@@ -37,7 +37,7 @@ class Badge extends \KodiComponents\Navigation\Badge
         }
 
         return [
-            'value'      => $value,
+            'value' => $value,
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

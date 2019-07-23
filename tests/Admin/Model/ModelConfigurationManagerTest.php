@@ -144,38 +144,6 @@ class ModelConfigurationManagerTest extends TestCase
         $this->assertFalse($return);
     }
 
-    public function test_registering_events()
-    {
-        $model = $this->getConfiguration();
-        $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
-
-        $events = ['creating', 'created', 'updating', 'updated', 'deleting', 'deleted', 'restoring', 'restored'];
-        $event->shouldReceive('listen')->times(count($events));
-
-        foreach ($events as $event) {
-            $model->{$event}('test');
-        }
-    }
-
-    /**
-     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::__call
-     */
-    public function test_registering_event()
-    {
-        $model = $this->getConfiguration();
-        $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
-
-        $callback = 'callback';
-
-        $event->shouldReceive('listen')->once()->withArgs([
-            'sleeping_owl.section.creating: ModelConfigurationManagerTestModel',
-            $callback,
-            140,
-        ]);
-
-        $model->creating($callback, 140);
-    }
-
     /**
      * @expectedException BadMethodCallException
      */
