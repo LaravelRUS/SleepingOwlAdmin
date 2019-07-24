@@ -4,7 +4,10 @@
  *
  * @see http://i18next.com/
  */
-window.i18next = require('i18next');
+
+import i18next from 'i18next';
+
+// window.i18next = require('i18next');
 
 i18next.init({
     lng: Admin.locale,

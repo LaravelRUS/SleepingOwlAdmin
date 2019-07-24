@@ -26,7 +26,7 @@ require('./libs/daterangepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
 require('./libs/datatables');
-// require('./libs/xeditable');
+require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
 require('./libs/dependent-dropdown');

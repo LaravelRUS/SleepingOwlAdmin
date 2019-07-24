@@ -14,11 +14,11 @@
     </div>
     @yield('panel.heading')
     @if($max_depth > 1)
-        <menu id="nestable-menu" class="panel-heading no-margin">
+        <menu id="nestable-menu" class="no-gutters p-0">
             <button type="button" data-action="expand-all"
-                    class="btn btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
+                    class="btn btn-primary btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
             <button type="button" data-action="collapse-all"
-                    class="btn btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
+                    class="btn btn-secondary btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
         </menu>
     @endif
     <div class="panel-body">
