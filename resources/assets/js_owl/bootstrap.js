@@ -12,19 +12,21 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Admin.Events = require('./components/events');
 
+//
+require('./libs/select2');
+require('./libs/noty');
+
 require('./libs/jquery');
 require('./libs/jquery-form');
 require('./libs/moment');
-require('./libs/i18next');
 require('./libs/bootstrap');
-require('./libs/noty');
-require('./libs/select2');
-require('./libs/datetimepicker');
+require('./libs/i18next');
+// require('./libs/datetimepicker');  //bs3
 require('./libs/daterangepicker');
-require('./libs/xeditable');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
 require('./libs/datatables');
+// require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
 require('./libs/dependent-dropdown');
