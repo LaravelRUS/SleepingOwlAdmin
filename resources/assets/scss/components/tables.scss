@@ -1,4 +1,4 @@
-@mixin table-color($color, $text: #fff) {
+@mixin table-color($color, $text: $white) {
   tbody {
     background-color: $white;
     border-bottom: 1px solid $color;
@@ -7,41 +7,21 @@
   thead th {
     line-height: 1.2;
   }
-
-  // table {
-  //   border-top-color: darken(desaturate($color, 15%), 12%) !important;
-  // }
-  //
-  // .table-header,
-  // thead,
-  // thead th,
-  // thead tr {
-  //   border-color: darken(desaturate($color, 15%), 12%) !important;
-  //   color: $text;
-  // }
-  //
-  // thead th,
-  // thead tr {
-  //   background: darken(desaturate($color, 8%), 6%);
-  // }
-  //
-  // .table-header {
-  //   background: $color;
-  // }
-
 }
-
 
 .table {
   thead th {
     vertical-align: middle;
     word-break: inherit;
+    padding: 0.75rem 0.4rem;
   }
 
   tbody {
-    td, th {
+    td,
+    th {
       word-break: break-all;
-      padding: 0.4rem 0.75rem;
+      padding: 0.4rem;
+      min-width: 2em;
     }
   }
 }

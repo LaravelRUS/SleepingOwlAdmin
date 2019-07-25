@@ -1,22 +1,25 @@
-//new
+//Core
 @import "variables";
-
-
+@import "font";
 @import "~bootstrap/scss/bootstrap";
+@import "adminLte";
+
+
+//Component
+@import "components";
+
+
+//Awesome 4.7.0
+@import "~font-awesome/scss/font-awesome";
 
 
 
-
+// @import "~fullcalendar";
+//перепроверить
 
 // @import "~bootstrap-daterangepicker/daterangepicker.css";
-
-// @import '~select2/src/scss/core';
 // @import "libs/datetimepicker";
-
-@import "bs4/pagination";
-@import "bs4/datatables";
-
-
+// @import "libs/dataTables";
 
 // //bootstrap4
 // @import "bs4/body";
@@ -30,25 +33,3 @@
 // @import "bs4/fix_bootstrap4";
 // @import "bs4/fix_form";
 //
-// //support old version
-// @import "support/usermenu";
-
-
-// @import "~fullcalendar";
-
-
-
-
-
-
-//Core
-@import "font";
-@import "adminLte";
-
-
-//Component
-@import "components";
-
-
-//Awesome 4.7.0
-@import "~font-awesome/scss/font-awesome";

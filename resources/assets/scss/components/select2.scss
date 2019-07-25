@@ -2,15 +2,11 @@
 @import "~select2/src/scss/multiple";
 @import "~select2/src/scss/dropdown";
 
-
 .select2-selection--single {
   box-sizing: border-box;
-
   cursor: pointer;
   display: block;
-
   height: 28px;
-
   user-select: none;
   -webkit-user-select: none;
 
@@ -18,7 +14,6 @@
     display: block;
     padding-left: 8px;
     padding-right: 20px;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

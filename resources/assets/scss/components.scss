@@ -2,27 +2,30 @@
 @import "components/wrapper";
 @import "components/panel-tree";
 @import "components/label";
-
 @import "components/nestable";
-@import "components/dropzone";
-
-@import "components/select2";
-@import "components/vue-multiselect";
-
-@import "components/noty";
 @import "components/sweetalert2";
 
-@import "~x-editable-bs4/dist/jquery-editable/css/jquery-editable.css";
-@import "~magnific-popup/src/css/main";
+
+//NPM components and addition
+@import "components/dropzone";
+@import "components/select2";
+@import "components/vue-multiselect";
+@import "components/noty";
+@import "components/x-editable";
+@import "components/magnific-popup";
 
 
 //Fix AdminLTE
 @import "components/tables";
 @import "components/buttons";
 @import "components/panel";
+@import "components/pagination";
 @import "components/datatables-pagination";
+@import "components/dropdown";
+@import "components/pre";
+@import "components/datatables";
 
 
-//need test
-// @import "components/form-elements";
-// @import "libs/dataTables";
+//support old version
+@import "components/usermenu";
+@import "components/form-elements"; //need check

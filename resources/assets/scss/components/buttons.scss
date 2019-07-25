@@ -4,3 +4,15 @@
     font-size: 75%;
   }
 }
+
+.btn-group-vertical {
+  .btn {
+    white-space: nowrap;
+  }
+}
+
+form {
+  .form-buttons {
+    padding-bottom: 2em;
+  }
+}
