@@ -100,6 +100,9 @@ return [
         'selected' => 'вибрано',
         'no_items'    => 'Нема шо вибрать',
         'placeholder' => 'Виберіть зі списку',
+        'init'        => 'Виберіть',
+        'limit'       => 'и ще ${count}',
+        'deselect'    => 'Скинути',
     ],
     'image' => [
         'browse' => 'Вибір зображення',

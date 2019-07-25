@@ -1,66 +1,54 @@
 //new
-@import "variable";
+@import "variables";
 
 
-// @import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
 @import "~bootstrap/scss/bootstrap";
-@import "fix_bs3";
 
 
 
-// old style
-// @import "~magnific-popup/src/css/main";
-@import "~x-editable-bs4/dist/jquery-editable/css/jquery-editable.css";
+
+
 // @import "~bootstrap-daterangepicker/daterangepicker.css";
-@import "libs/dataTables";
-// @import "libs/nestable";
-@import "libs/dropzone";
+
 // @import '~select2/src/scss/core';
 // @import "libs/datetimepicker";
-// @import "libs/vue-multiselect";
-@import "~noty/lib/noty.css";
-// @import "~noty/lib/themes/metroui.css";
 
-//new
-@import "font";
-
-
-
-@import "~font-awesome/scss/font-awesome";
-// @import "~admin-lte/build/scss/AdminLTE";
-// @import "~admin-lte/build/scss/AdminLTE-raw";
-// @import "libs/AdminLTE";
-
-
-//bootstrap4
-@import "bs4/body";
-@import "bs4/scrollbar";
-@import "bs4/panel";
-@import "bs4/tabs";
-@import "bs4/datatables";
-@import "bs4/button";
 @import "bs4/pagination";
-@import "bs4/order";
-
-//fix
-@import "bs4/fix_bootstrap4";
-@import "bs4/fix_form";
-
-//support old version
-@import "support/usermenu";
+@import "bs4/datatables";
 
 
-// AdminLTE
+
+// //bootstrap4
+// @import "bs4/body";
+// @import "bs4/scrollbar";
+// @import "bs4/panel";
+// @import "bs4/tabs";
+// @import "bs4/button";
+// @import "bs4/order";
+//
+// //fix
+// @import "bs4/fix_bootstrap4";
+// @import "bs4/fix_form";
+//
+// //support old version
+// @import "support/usermenu";
+
+
 // @import "~fullcalendar";
 
 
 
 
-@import "components/form-elements";
-@import "components/tables";
 
 
-
-//New final
+//Core
+@import "font";
 @import "adminLte";
+
+
+//Component
 @import "components";
+
+
+//Awesome 4.7.0
+@import "~font-awesome/scss/font-awesome";

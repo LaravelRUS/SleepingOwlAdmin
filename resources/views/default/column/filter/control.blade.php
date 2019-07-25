@@ -4,7 +4,7 @@
     </button>
 
     <div class="btn-group">
-        <button type="button" class="btn btn-danger" id="filters-cancel">
+        <button type="button" class="btn btn-sm btn-danger" id="filters-cancel">
             <i class="fa fa-times"></i>
         </button>
     </div>

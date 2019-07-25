@@ -1,48 +1,80 @@
 @mixin table-color($color, $text: #fff) {
-  table {
-    border-top-color: darken(desaturate($color, 15%), 12%) !important;
+  tbody {
+    background-color: $white;
+    border-bottom: 1px solid $color;
   }
 
-  .table-header,
-  thead,
-  thead th,
-  thead tr {
-    border-color: darken(desaturate($color, 15%), 12%) !important;
-    color: $text;
+  thead th {
+    line-height: 1.2;
   }
 
-  thead th,
-  thead tr {
-    background: darken(desaturate($color, 8%), 6%);
+  // table {
+  //   border-top-color: darken(desaturate($color, 15%), 12%) !important;
+  // }
+  //
+  // .table-header,
+  // thead,
+  // thead th,
+  // thead tr {
+  //   border-color: darken(desaturate($color, 15%), 12%) !important;
+  //   color: $text;
+  // }
+  //
+  // thead th,
+  // thead tr {
+  //   background: darken(desaturate($color, 8%), 6%);
+  // }
+  //
+  // .table-header {
+  //   background: $color;
+  // }
+
+}
+
+
+.table {
+  thead th {
+    vertical-align: middle;
+    word-break: inherit;
   }
 
-  .table-header {
-    background: $color;
+  tbody {
+    td, th {
+      word-break: break-all;
+      padding: 0.4rem 0.75rem;
+    }
+  }
+}
+
+.table.datatables,
+.table.table-striped {
+  tbody {
+    border-bottom: 1px solid $gray;
   }
 
+  thead th {
+    line-height: 1.2;
+  }
 }
 
-.table-primary {
-  @include table-color($primary);
-  background-color: inherit;
-}
+.table {
+  &.table-primary {
+    @include table-color($primary);
+  }
 
-.table-success {
-  @include table-color($success);
-  background-color: inherit;
-}
+  &.table-success {
+    @include table-color($success);
+  }
 
-.table-danger {
-  @include table-color($danger);
-  background-color: inherit;
-}
+  &.table-danger {
+    @include table-color($danger);
+  }
 
-.table-warning {
-  @include table-color($warning);
-  background-color: inherit;
-}
+  &.table-warning {
+    @include table-color($warning);
+  }
 
-.table-info {
-  @include table-color($info);
-  background-color: inherit;
+  &.table-info {
+    @include table-color($info);
+  }
 }

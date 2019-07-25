@@ -10,8 +10,6 @@ window.Admin = new Admin(
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window.Admin.Events = require('./components/events');
-
 //
 require('./libs/select2');
 require('./libs/noty');
@@ -32,6 +30,9 @@ require('./libs/sweetalert');
 require('./libs/dependent-dropdown');
 
 require('./libs/vuejs');
+require('./libs/noty');
+
+
 /**
  * Best open source admin dashboard & control panel theme.
  * Built on top of Bootstrap 3, AdminLTE provides a range of
@@ -40,6 +41,9 @@ require('./libs/vuejs');
  * @see https://almsaeedstudio.com/preview
  */
 require('admin-lte');
+
+
+window.Admin.Events = require('./components/events');
 
 window.Admin.Messages = require('./components/messages');
 window.Admin.Storage = require('./components/storage');

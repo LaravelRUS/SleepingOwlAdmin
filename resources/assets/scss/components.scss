@@ -4,3 +4,25 @@
 @import "components/label";
 
 @import "components/nestable";
+@import "components/dropzone";
+
+@import "components/select2";
+@import "components/vue-multiselect";
+
+@import "components/noty";
+@import "components/sweetalert2";
+
+@import "~x-editable-bs4/dist/jquery-editable/css/jquery-editable.css";
+@import "~magnific-popup/src/css/main";
+
+
+//Fix AdminLTE
+@import "components/tables";
+@import "components/buttons";
+@import "components/panel";
+@import "components/datatables-pagination";
+
+
+//need test
+// @import "components/form-elements";
+// @import "libs/dataTables";

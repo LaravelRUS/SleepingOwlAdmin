@@ -32,7 +32,7 @@ module.exports = (function () {
          * @returns {*}
          */
         message(title, message, type) {
-            return swal(title, message, type || 'success')
+            return Swal.fire(title, message, type || 'success')
         },
 
         /**
@@ -59,7 +59,7 @@ module.exports = (function () {
 
             Admin.Events.fire("datatables::confirm::init", settings, id);
 
-            return swal(settings)
+            return Swal.fire(settings)
         },
 
         /**
@@ -71,7 +71,7 @@ module.exports = (function () {
          * @param {String} inputPlaceholder Вспомогательный текст для поля ввода
          */
         prompt(title, message, inputPlaceholder) {
-            return swal({
+            return Swal.fire({
                 title: title,
                 text: message || '',
                 input: 'text',

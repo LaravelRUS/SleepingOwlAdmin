@@ -3,4 +3,4 @@
  *
  * @see https://limonte.github.io/sweetalert2/
  */
-window.swal = require('sweetalert2');
+window.Swal = require('sweetalert2');

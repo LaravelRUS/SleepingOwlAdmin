@@ -1,0 +1,12 @@
+// not needed include scss
+// @import 'sweetalert2/src/sweetalert2.scss';
+
+.swal2-header {
+  overflow: hidden;
+}
+
+.swal2-popup .swal2-title {
+  word-break: break-word;
+  font-size: 1.5em;
+  overflow: hidden;
+}

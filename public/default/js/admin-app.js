@@ -113749,7 +113749,7 @@ Admin.Modules.register('display.actions', function () {
         Admin.Events.fire("datatables::actions::submitting", settings);
         $.ajax(settings).done(function (msg) {
           if (msg.hasOwnProperty('text')) {
-            swal({
+            Swal.fire({
               title: msg.text,
               text: msg.message,
               type: msg.type,
@@ -115005,8 +115005,7 @@ __webpack_require__.r(__webpack_exports__);
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.Admin = new _components_admin__WEBPACK_IMPORTED_MODULE_0__["default"](document.querySelector("meta[name=\"csrf-token\"]").getAttribute('content'), window.GlobalConfig || {});
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.Admin.Events = __webpack_require__(/*! ./components/events */ "./resources/assets/js_owl/components/events.js"); //
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; //
 
 __webpack_require__(/*! ./libs/select2 */ "./resources/assets/js_owl/libs/select2.js");
 
@@ -115040,6 +115039,8 @@ __webpack_require__(/*! ./libs/sweetalert */ "./resources/assets/js_owl/libs/swe
 __webpack_require__(/*! ./libs/dependent-dropdown */ "./resources/assets/js_owl/libs/dependent-dropdown.js");
 
 __webpack_require__(/*! ./libs/vuejs */ "./resources/assets/js_owl/libs/vuejs.js");
+
+__webpack_require__(/*! ./libs/noty */ "./resources/assets/js_owl/libs/noty.js");
 /**
  * Best open source admin dashboard & control panel theme.
  * Built on top of Bootstrap 3, AdminLTE provides a range of
@@ -115051,6 +115052,7 @@ __webpack_require__(/*! ./libs/vuejs */ "./resources/assets/js_owl/libs/vuejs.js
 
 __webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
 
+window.Admin.Events = __webpack_require__(/*! ./components/events */ "./resources/assets/js_owl/components/events.js");
 window.Admin.Messages = __webpack_require__(/*! ./components/messages */ "./resources/assets/js_owl/components/messages.js");
 window.Admin.Storage = __webpack_require__(/*! ./components/storage */ "./resources/assets/js_owl/components/storage.js");
 window.Admin.Asset = __webpack_require__(/*! ./components/asset */ "./resources/assets/js_owl/components/asset.js");
@@ -115563,7 +115565,7 @@ module.exports = function () {
      * @returns {*}
      */
     message: function message(title, _message, type) {
-      return swal(title, _message, type || 'success');
+      return Swal.fire(title, _message, type || 'success');
     },
 
     /**
@@ -115585,7 +115587,7 @@ module.exports = function () {
         cancelButtonText: trans('lang.button.cancel')
       };
       Admin.Events.fire("datatables::confirm::init", settings, id);
-      return swal(settings);
+      return Swal.fire(settings);
     },
 
     /**
@@ -115597,7 +115599,7 @@ module.exports = function () {
      * @param {String} inputPlaceholder Вспомогательный текст для поля ввода
      */
     prompt: function prompt(title, message, inputPlaceholder) {
-      return swal({
+      return Swal.fire({
         title: title,
         text: message || '',
         input: 'text',
@@ -116835,10 +116837,27 @@ window.nestable = __webpack_require__(/*! nestable */ "./node_modules/nestable/j
  * - information
  * - confirmation
  *
+ * Theme:
+ * - metroui
+ * - bootstrap-v4
+ * - light
+ * - mint
+ * - nest
+ * - relax
+ * - semanticui
+ * - sunset
+ *
  * messages as an alternative the standard alert dialog.
  *
  * @see http://ned.im/noty/
  */
+// new Noty({
+//   text: 'Notification text',
+//   progressBar: true,
+//   theme: 'light',
+//   timeout: 3000,
+//   type: 'error'
+// }).show();
 window.Noty = __webpack_require__(/*! noty */ "./node_modules/noty/lib/noty.js");
 Noty.overrideDefaults({
   theme: 'metroui'
@@ -116876,7 +116895,7 @@ __webpack_require__(/*! select2/dist/js/select2 */ "./node_modules/select2/dist/
  *
  * @see https://limonte.github.io/sweetalert2/
  */
-window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 
 /***/ }),
 

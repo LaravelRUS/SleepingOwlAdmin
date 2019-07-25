@@ -103,9 +103,9 @@ return [
         'selected' => 'selected',
         'placeholder' => 'Select from the list',
         'no_items'    => 'No items',
-        'init'        => 'Press Enter to select',
+        'init'        => 'Select',
         'limit'       => 'and ${count} more',
-        'deselect'    => 'Press Enter to deselect',
+        'deselect'    => 'Deselect',
     ],
     'image' => [
         'browse' => 'Select Image',
