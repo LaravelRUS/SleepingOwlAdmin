@@ -10,10 +10,15 @@
 }
 
 .table {
+  img {
+    object-fit: contain;
+  }
+
   thead th {
     vertical-align: middle;
     word-break: inherit;
     padding: 0.75rem 0.4rem;
+    text-align: center;
   }
 
   tbody {
@@ -21,6 +26,24 @@
     th {
       word-break: break-all;
       padding: 0.4rem;
+      min-width: 2em;
+    }
+  }
+
+  .clearfix {
+    display: block;
+    color: $gray-500;
+  }
+
+  .order-block {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+
+    > form:not(:last-child) {
+      margin-right: 0.5em;
+    }
+    .btn {
       min-width: 2em;
     }
   }
