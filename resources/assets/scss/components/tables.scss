@@ -2,6 +2,12 @@
   tbody {
     background-color: $white;
     border-bottom: 1px solid $color;
+
+    tr {
+      &:hover {
+        background-color: rgba($color, 0.3);
+      }
+    }
   }
 
   thead th {
@@ -28,6 +34,14 @@
       padding: 0.4rem;
       min-width: 2em;
     }
+
+    tr {
+      transition: background-color $trans;
+
+      &:hover {
+        background-color: rgba($black, 0.1);
+      }
+    }
   }
 
   .clearfix {
@@ -43,6 +57,7 @@
     > form:not(:last-child) {
       margin-right: 0.5em;
     }
+
     .btn {
       min-width: 2em;
     }

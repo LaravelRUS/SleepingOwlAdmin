@@ -19,7 +19,8 @@ require('./libs/jquery-form');
 require('./libs/moment');
 require('./libs/bootstrap');
 require('./libs/i18next');
-// require('./libs/datetimepicker');  //bs3
+require('./libs/bootstrap-datepicker');
+require('./libs/datetimepicker');
 require('./libs/daterangepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
@@ -77,9 +78,12 @@ require('./admin/display/columns/inline_edit');
 /**
  * Initialize form
  */
+ require('./admin/form/date');
+ require('./admin/form/daterange');
+ require('./admin/form/datetime');
+
+//OLD need test
 require('./admin/form/buttons');
-require('./admin/form/datetime');
-require('./admin/form/daterange');
 require('./admin/form/select');
 require('./admin/form/selectajax');
 require('./admin/form/dependent-select');

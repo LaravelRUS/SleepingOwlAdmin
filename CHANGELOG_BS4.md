@@ -41,26 +41,32 @@
 * Vue-Multiselect (scss + js)
 * Sweetalert2 (scss + all js)
 * Noty (по умолчанию тема metroui, но стили подключены все)
+* Datepicker на Bootstrap4 (заменен на Datetimepicker для BS4)
+* hover для таблиц
 
 
 ### Что сделать
-* Datepicker на Bootstrap4
+* стили datetime в фильтрах
+* `AdminFormElement::daterange` поправить бэк (склеить 2 даты в кучу и починить атрибуты)
+* Допилить `->setFormat()` на даты (не работает)
 * Display-action стили в шапке dataTables
 * В навигацию перенести заголовок (щас Examples)
 * Запомнить раскрыт ли сайдбар (localstorage или кука)
-* Табы поламалось добавление классов (setHtmlAttribute)
 * Запомнить последний таб (localstorage или кука)
-* Editable поля (поправить стили select)
 * DependentSelect переделать бы с select2 на Vue-Multiselect
-* Поправить input-group-addon
-* SCSS Components/form-element - подчистить
-* Вынести стилей и скрипты для персборки ассетов (частично сделано)
-* small для Display
-* Добвление класса для Таба (для pull-right, к примеру) + SCSS
+* Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
+* Табы поламалось добавление классов (setHtmlAttribute)
+* Editable поля (поправить стили select)
+* `AdminColumnEditable` - навесить политики (`data-disabled='true'`)
 
 
 ### Что изменено / планируется
 * Добавлены фонтавесомы 4 и 5 (может отключить старые?)
+
+
+### В доку дописать
+* `AdminColumnEditable::textarea`
+* `AdminColumn::boolean`
 
 
 ### Поиск багов

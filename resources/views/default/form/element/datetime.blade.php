@@ -6,10 +6,12 @@
 			<span class="form-element-required">*</span>
 		@endif
 	</label>
-	<div class="input-date input-group">
-		<input {!! $attributes !!}
-			   value="{{ $value }}"
-			   @if($readonly) readonly @endif
+	<div class="input-date input-group datetime">
+		<input
+			{!! $attributes !!}
+			class="form-control"
+			value="{{ $value }}"
+			@if($readonly) readonly @endif
 		>
 		<span class="input-group-prepend input-group-addon">
 			<div class="input-group-text">

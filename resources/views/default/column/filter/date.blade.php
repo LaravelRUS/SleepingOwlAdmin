@@ -1,4 +1,4 @@
-<div class="input-group input-date form-group" style="width:{{ $width }}px">
+<div class="input-group input-date form-group date" style="width:{{ $width }}px">
 	<input
 		data-date-format="{{ $pickerFormat }}"
 		data-date-useseconds="{{ $seconds ? 'true' : 'false' }}"

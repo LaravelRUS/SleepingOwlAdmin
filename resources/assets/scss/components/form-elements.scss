@@ -1,93 +1,73 @@
-.form-elements {
-
+.filter-badge {
+  a {
+    color: $white;
+    font-size: 1.1em;
+    padding: 0.1em 0.5em;
+    margin-right: -0.5em;
+  }
 }
 
+.form-elements {}
 $errors-text-color: darken($danger, 10%);
 $errors-bg-color: $gray-100;
 $arrow-size: 6px;
 
 .form-element-errors {
   border-radius: 4px;
-  color:         $danger;
-  font-size:     13px;
-  padding:       10px 10px 10px 30px;
-  background:    $white;
-  position:      relative;
-  margin-top:    $arrow-size + 5px;
+  color: $danger;
+  font-size: 13px;
+  padding: 10px 10px 10px 30px;
+  background: $white;
+  position: relative;
+  margin-top: $arrow-size + 5px;
 
   &:after {
-    content:       '';
-    position:      absolute;
-    top:           -$arrow-size;
-    width:         0;
-    height:        0;
-    border-left:   $arrow-size solid transparent;
-    border-right:  $arrow-size solid transparent;
+    content: '';
+    position: absolute;
+    top: -$arrow-size;
+    width: 0;
+    height: 0;
+    border-left: $arrow-size solid transparent;
+    border-right: $arrow-size solid transparent;
     border-bottom: $arrow-size solid $white;
   }
 }
 
 .form-element-helptext {
-  color:      $gray-400;
+  color: $gray-400;
   font-style: italic;
 }
 
 .form-element-required {
-  color:          $danger;
+  color: $danger;
   vertical-align: super;
 }
 
-.form-element-checkbox {
+.form-element-checkbox {}
 
-}
+.form-element-column {}
 
-.form-element-column {
+.form-element-columns {}
 
-}
+.form-element-date {}
 
-.form-element-columns {
+.form-element-daterange {}
 
-}
+.form-element-time {}
 
-.form-element-date {
+.form-element-timestamp {}
 
-}
+.form-element-dependentselect {}
 
-.form-element-daterange {
+.form-element-file {}
 
-}
+.form-element-image {}
 
-.form-element-time {
+.form-element-images {}
 
-}
+.form-element-multiselect {}
 
-.form-element-timestamp {
-
-}
-
-.form-element-dependentselect {
-
-}
-
-.form-element-file {
-
-}
-
-.form-element-image {
-
-}
-
-.form-element-images {
-
-}
-
-.form-element-multiselect {
-
-}
-
-.form-element-select {
-
-}
+.form-element-select {}
 
 .form-element-multiselect,
 .form-element-select {
@@ -98,37 +78,21 @@ $arrow-size: 6px;
   }
 }
 
-.form-element-number {
+.form-element-number {}
 
-}
+.form-element-password {}
 
-.form-element-password {
+.form-element-radio {}
 
-}
+.form-element-text {}
 
-.form-element-radio {
+.form-element-textaddon {}
 
-}
+.form-element-textarea {}
 
-.form-element-text {
+.form-element-upload {}
 
-}
-
-.form-element-textaddon {
-
-}
-
-.form-element-textarea {
-
-}
-
-.form-element-upload {
-
-}
-
-.form-element-wysiwyg {
-
-}
+.form-element-wysiwyg {}
 
 .form-element-files {
   &.dropzone {
@@ -138,12 +102,12 @@ $arrow-size: 6px;
   }
 }
 
+.form-element-checkbox,
 .form-element-file,
 .form-element-image,
 .form-element-images,
 .form-element-textarea,
-.form-element-wysiwyg,
-.form-element-checkbox {
+.form-element-wysiwyg {
   .form-element-helptext {
     display: block;
   }
@@ -154,7 +118,7 @@ $arrow-size: 6px;
 .form-element-images {
   .form-element-helptext {
     background: $gray-100;
-    padding:    3px 6px;
+    padding: 3px 6px;
   }
 }
 
@@ -168,18 +132,13 @@ $arrow-size: 6px;
   }
 }
 
-/**
- * Thumbnails
- */
 .form-element-files__item {
-  // float:         left;
-  // max-width: 230px;
-  max-width:         206px;
+  max-width: 206px;
   width: 100%;
-  border:        1px solid $gray-300;
+  border: 1px solid $gray-300;
   margin-bottom: 10px;
-  margin-right:  10px;
-  padding:       3px;
+  margin-right: 10px;
+  padding: 3px;
 }
 
 .form-element-files__image,
@@ -189,52 +148,48 @@ $arrow-size: 6px;
 }
 
 .form-element-files__info {
-  padding:    10px;
+  padding: 10px;
   background: $gray-100;
-  height:     50px;
+  height: 50px;
 }
 
 .form-element-files__file,
 .form-element-files__image {
   text-align: center;
-  padding:    0;
+  padding: 0;
 }
 
 .form-element-files__file {
-  font-size:  65px;
-  color:      $secondary;
+  font-size: 65px;
+  color: $secondary;
   background: $white;
-  padding:    20px 10px;
+  padding: 20px 10px;
 }
 
 .form-element-files__image {
-  height:     200px;
-  overflow:   hidden;
+  height: 200px;
+  overflow: hidden;
+
   > img {
-    width:      auto;
+    width: auto;
     max-height: 100%;
     object-fit: cover;
   }
 }
 
-.form-element-files__close {
-  // &:extend(.close);
-}
+.form-element-files__close {}
 
-/**
- * Dates
- */
 .form-element-date,
+.form-element-daterange,
 .form-element-time,
-.form-element-timestamp,
-.form-element-daterange {
+.form-element-timestamp {
   .input-group {
     width: 250px;
   }
 }
 
-/* Datetime */
-.input-group-addon .fa-calendar, .input-group-addon .fa-clock-o {
+.input-group-addon .fa-calendar,
+.input-group-addon .fa-clock-o {
   cursor: pointer;
 }
 

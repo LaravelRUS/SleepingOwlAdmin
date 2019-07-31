@@ -7,16 +7,18 @@
         @endif
     </label>
 
-    <div class="input-group">
-        <input {!! $attributes !!}
-               value="{{ $value }}"
-               @if($readonly) readonly @endif
-        >
-        <span class="input-group-prepend input-group-addon">
-    			<div class="input-group-text">
-    				<span class="fa fa-calendar"></span>
-    			</div>
-    		</span>
+    <div class="input-daterange input-group" id="datepicker">
+      <input type="text"
+        {{-- {!! $attributes !!} --}}
+        value="{{ $value }}"
+        @if($readonly) readonly @endif
+        class="input-sm form-control" name="start" />
+      <span class="input-group-addon-data">-</span>
+      <input
+        {{-- {!! $attributes !!} --}}
+        value="{{ $value }}"
+        @if($readonly) readonly @endif
+        type="text" class="input-sm form-control" name="end" />
     </div>
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

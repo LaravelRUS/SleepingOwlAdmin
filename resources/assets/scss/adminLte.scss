@@ -1,10 +1,12 @@
-
 @import "~admin-lte/build/scss/bootstrap-variables";
 @import "~admin-lte/build/scss/variables";
 @import "~admin-lte/build/scss/mixins";
+
+
 // Core
 // ---------------------------------------------------
 @import "~admin-lte/build/scss/layout";
+
 
 // COMPONENTS
 // ---------------------------------------------------
@@ -32,6 +34,7 @@
 @import "~admin-lte/build/scss/carousel";
 @import "~admin-lte/build/scss/social-widgets";
 
+
 // PAGES
 // ---------------------------------------------------
 @import "~admin-lte/build/scss/mailbox";
@@ -41,10 +44,6 @@
 @import "~admin-lte/build/scss/invoice";
 @import "~admin-lte/build/scss/profile";
 
-// Plugins
-// ---------------------------------------------------
-// @import "~fullcalendar";
-// @import "~select2";
 
 // Miscellaneous
 // ---------------------------------------------------

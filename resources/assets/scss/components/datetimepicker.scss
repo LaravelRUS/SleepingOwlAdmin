@@ -1,0 +1,10 @@
+
+//fix def variable BS3
+$btn-primary-bg: $primary !default;
+$btn-primary-color: $primary !default;
+$gray-lighter: $gray-300 !default;
+$gray-light: $gray-600 !default;
+
+
+
+@import "~bootstrap4-datetimepicker/src/sass/bootstrap-datetimepicker";
