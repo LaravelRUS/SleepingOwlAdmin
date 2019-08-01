@@ -118,7 +118,7 @@ class DateRange extends Date
      */
     protected function parseValue($value)
     {
-      return $value;
+        return $value;
         // dd($value);
     }
 }
