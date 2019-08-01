@@ -183,6 +183,19 @@ return [
         'simplemde' => [
             'hideIcons' => ['side-by-side', 'fullscreen'],
         ],
+
+        /*
+        * ver. 0.8.12
+        * See https://summernote.org/
+        * Need jQuery
+        */
+        'summernote' => [
+          'height' => 200,
+          'lang' => 'ru-RU',
+          'codemirror' => [
+            'theme' => 'monokai',
+          ],
+        ],
     ],
 
     /*

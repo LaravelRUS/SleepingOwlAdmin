@@ -58,6 +58,7 @@ window.Admin.WYSIWYG = require('./components/wysiwyg');
 require('./wysiwyg/ckeditor');
 require('./wysiwyg/simplemde');
 require('./wysiwyg/tinymce');
+require('./wysiwyg/summernote');
 
 /**
  * Initialize App
