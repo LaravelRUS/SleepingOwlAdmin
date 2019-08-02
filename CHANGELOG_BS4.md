@@ -9,11 +9,14 @@
 - Bootstrap 4.3.1
 - Noty 3.2.0-beta
 - добавлен редактор Summernote
+- добавлен ckeditor5, (4.7 оставлен как локальный)
+- Добавлен плагин js-cookie
 
 
 ## Переход
 * Взять ветку с новым дизайном `"laravelrus/sleepingowl": "dev-bs4"`
 * Нужно обновить ассеты `php artisan sleepingowl:update`
+* Проверить конфиг `App\config\sleeping_owl.php` и добавить новые пункты из `https://github.com/LaravelRUS/SleepingOwlAdmin/blob/bs4/config/sleeping_owl.php`
 
 
 ### Обновление конфига
@@ -44,6 +47,13 @@
 * Noty (по умолчанию тема metroui, но стили подключены все)
 * Datepicker на Bootstrap4 (заменен на Datetimepicker для BS4)
 * hover для таблиц
+* Респонсивность table
+
+
+### Респонсивность сделать
+* data-таблицам (частично)
+* Табам
+* Формам
 
 
 ### Что сделать
@@ -59,6 +69,7 @@
 * Табы поламалось добавление классов (setHtmlAttribute)
 * Editable поля (поправить стили select)
 * `AdminColumnEditable` - навесить политики (`data-disabled='true'`)
+* `AdminFormElement::checkbox` локализация чекнутого бокса
 
 
 ### Что изменено / планируется

@@ -18,6 +18,7 @@
 
 
 //Fix AdminLTE
+@import "components/adminltefix";
 @import "components/tables";
 @import "components/buttons";
 @import "components/panel";
@@ -27,6 +28,8 @@
 @import "components/pre";
 @import "components/datatables";
 @import "components/summernote";
+@import "components/scrollbar";
+@import "components/table-responsive";
 
 
 //support old version

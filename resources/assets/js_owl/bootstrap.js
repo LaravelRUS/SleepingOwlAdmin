@@ -29,6 +29,7 @@ require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
 require('./libs/dependent-dropdown');
+require('./libs/js-cookie');
 
 require('./libs/vuejs');
 require('./libs/noty');
@@ -56,6 +57,7 @@ window.Admin.WYSIWYG = require('./components/wysiwyg');
  * Initialize Wysiwyg editors
  */
 require('./wysiwyg/ckeditor');
+require('./wysiwyg/ckeditor5');
 require('./wysiwyg/simplemde');
 require('./wysiwyg/tinymce');
 require('./wysiwyg/summernote');

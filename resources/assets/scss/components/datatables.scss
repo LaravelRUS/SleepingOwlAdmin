@@ -35,26 +35,24 @@ table.dataTable thead {
   .sorting_desc_disabled {
     cursor: pointer;
     position: relative;
-    padding-right: 1.8em;
+    padding-right: 1em;
 
     &:after,
     &:before {
       position: absolute;
-      // bottom: 0.9em;
       display: block;
       opacity: 0.3;
-
       top: 50%;
       margin-top: -0.5em;
     }
 
     &:before {
-      right: 1em;
+      right: 0.7em;
       content: '\2191';
     }
 
     &:after {
-      right: 0.5em;
+      right: 0.2em;
       content: '\2193';
     }
   }

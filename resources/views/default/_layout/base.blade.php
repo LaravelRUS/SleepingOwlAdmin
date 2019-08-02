@@ -11,7 +11,7 @@
 
 	@stack('scripts')
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini sidebar-collapse">
 	@yield('content')
 
 	{!! $template->meta()->renderScripts(true) !!}
