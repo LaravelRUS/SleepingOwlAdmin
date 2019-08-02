@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="wrapper" id="vueApp">
-		<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+		<nav class="main-header navbar navbar-expand bg-white navbar-light">
 			@include(AdminTemplate::getViewPath('_partials.header'))
 		</nav>
 
