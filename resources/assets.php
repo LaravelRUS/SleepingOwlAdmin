@@ -11,7 +11,7 @@ $this->app['sleeping_owl.wysiwyg']->register('ckeditor')
 
 $this->app['sleeping_owl.wysiwyg']->register('ckeditor5')
     ->js(null, '//cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js', null, true)
-    ->js('translate', '//cdn.ckeditor.com/ckeditor5/12.3.1/classic/translations/'. app()->getLocale() .'.js', null, true);
+    ->js('translate', '//cdn.ckeditor.com/ckeditor5/12.3.1/classic/translations/'.app()->getLocale().'.js', null, true);
 
 $this->app['sleeping_owl.wysiwyg']->register('tinymce')
     ->js(null, '//cdn.tinymce.com/4/tinymce.min.js', null, true);
