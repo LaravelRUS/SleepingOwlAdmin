@@ -13,10 +13,6 @@
     </small>
 @endforeach
 
-@if ($filters)
-  <hr>
-@endif
-
 @if(!empty($filter_title))
     </h4>
 @endif

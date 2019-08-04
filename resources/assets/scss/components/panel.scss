@@ -1,6 +1,13 @@
 .panel {
   .panel-heading {
+    display: flex;
+    justify-content: space-between;
     padding: 0.5em 0 1rem;
+    align-items: center;
+
+    form {
+      display: inline-flex;
+    }
   }
 
   .panel-footer {

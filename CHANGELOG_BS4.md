@@ -48,6 +48,10 @@
 * Datepicker на Bootstrap4 (заменен на Datetimepicker для BS4)
 * hover для таблиц
 * Респонсивность table
+* Display-action стили в шапке dataTables
+* Запомнить раскрыт ли сайдбар (localstorage или кука)
+* Добавлен summernote редактор
+* стили datetime в фильтрах (проверить)
 
 
 ### Респонсивность сделать
@@ -57,12 +61,9 @@
 
 
 ### Что сделать
-* стили datetime в фильтрах
 * `AdminFormElement::daterange` поправить бэк (склеить 2 даты в кучу и починить атрибуты)
 * Допилить `->setFormat()` на даты (не работает)
-* Display-action стили в шапке dataTables
-* В навигацию перенести заголовок (щас Examples)
-* Запомнить раскрыт ли сайдбар (localstorage или кука)
+* В навигацию перенести заголовок (щас Main Menu)
 * Запомнить последний таб (localstorage или кука)
 * DependentSelect переделать бы с select2 на Vue-Multiselect
 * Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
@@ -74,7 +75,6 @@
 
 ### Что изменено / планируется
 * Обновить CKeditor
-* Добавить summernote
 * Добавлены фонтавесомы 4 и 5 (может отключить старые?)
 * `AdminColumnEditable::boolean` с обычным кликом, без попап
 

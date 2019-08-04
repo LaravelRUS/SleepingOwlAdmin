@@ -17,11 +17,12 @@
 			</a>
 		@endif
 
-		@yield('panel.buttons')
-
 		<div class="pull-right">
 			@yield('panel.heading.actions')
 		</div>
+
+		@yield('panel.buttons')
+
 	</div>
 
 	@yield('panel.heading')

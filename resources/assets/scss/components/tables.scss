@@ -10,9 +10,12 @@
     }
   }
 
-  thead th {
-    line-height: 1.2;
-  }
+}
+
+thead th {
+  line-height: 1.2;
+  width: auto!important;
+  min-width: 2.5em;
 }
 
 .table {
@@ -30,7 +33,7 @@
   tbody {
     td,
     th {
-      word-break: break-all;
+      word-break: break-word;
       padding: 0.4rem;
       min-width: 2em;
     }
