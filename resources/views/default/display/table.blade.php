@@ -13,7 +13,7 @@
 	<div class="panel-heading">
 		@if ($creatable)
 			<a href="{{ url($createUrl) }}" class="btn btn-primary">
-				<i class="fa fa-plus"></i> {{ $newEntryButtonText }}
+				<i class="fas fa-plus"></i> {{ $newEntryButtonText }}
 			</a>
 		@endif
 

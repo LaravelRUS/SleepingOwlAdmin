@@ -1,10 +1,10 @@
 @if(!$url)
     <button {!! $attributes !!} value="{{$name}}">
-        @if($iconClass)<i class="fa {{ $iconClass }}"></i>@endif {{$text}}
+        @if($iconClass)<i class="{{ $iconClass }}"></i>@endif {{$text}}
     </button>
 @else
     <a href="{{$url}}" {!! $attributes !!}>
-        @if($iconClass)<i class="fa {{$iconClass}}"></i>@endif {{ $text }}
+        @if($iconClass)<i class="{{$iconClass}}"></i>@endif {{ $text }}
     </a>
 @endif
 @if($groupElements)

@@ -136,7 +136,7 @@ class DisplayTabTest extends TestCase
         $tab = $this->getTab(null, null);
 
         $this->assertNull($tab->getIcon());
-        $this->assertEquals($tab, $tab->setIcon($icon = 'fa fa-test'));
+        $this->assertEquals($tab, $tab->setIcon($icon = 'fas fa-tachometer-alt'));
         $this->assertEquals($icon, $tab->getIcon());
     }
 

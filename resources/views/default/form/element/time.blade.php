@@ -13,7 +13,7 @@
 		>
 		<span class="input-group-prepend input-group-addon">
 			<div class="input-group-text">
-				<span class="fa fa-clock-o"></span>
+				<span class="fas fa-clock"></span>
 			</div>
 		</span>
 	</div>

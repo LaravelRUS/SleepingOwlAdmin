@@ -9,7 +9,7 @@ class Restore extends FormButton
 {
     protected $show = true;
     protected $name = 'restore';
-    protected $iconClass = 'fa-reply';
+    protected $iconClass = 'fas fa-reply';
 
     public function __construct()
     {

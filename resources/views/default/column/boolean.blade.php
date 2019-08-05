@@ -1,6 +1,6 @@
 <div {!! $attributes !!}>
   <div class="text-center">
-    {!! $value ? '<i class="fa fa-check"></i>' : '<i class="fa fa-minus"></i>' !!} {!! $append !!}
+    {!! $value ? '<i class="fas fa-check"></i>' : '<i class="fas fa-minus"></i>' !!} {!! $append !!}
   </div>
   @if($small)
   <small class="clearfix">{!! $small !!}</small>

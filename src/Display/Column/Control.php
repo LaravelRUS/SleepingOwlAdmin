@@ -57,7 +57,7 @@ class Control extends TableColumn
 
         $this->buttons = new Collection();
 
-        $this->setHtmlAttribute('class', 'text-right');
+        $this->setHtmlAttribute('class', 'table-control-btn');
     }
 
     public function initialize()
@@ -71,7 +71,7 @@ class Control extends TableColumn
         $button->setCondition(function () {
             return $this->isEditable();
         });
-        $button->setIcon('fa fa-pencil');
+        $button->setIcon('fas fa-pencil-alt');
         $button->setHtmlAttribute('class', 'btn-primary');
 
         $this->buttons->put('delete', $button = new ControlButton(function (Model $model) {
@@ -83,7 +83,7 @@ class Control extends TableColumn
 
         $button->setMethod('delete');
         $button->hideText();
-        $button->setIcon('fa fa-trash');
+        $button->setIcon('fas fa-trash-alt');
         $button->setHtmlAttribute('class', 'btn-danger btn-delete');
 
         $this->buttons->put('destroy', $button = new ControlButton(function (Model $model) {
@@ -95,7 +95,7 @@ class Control extends TableColumn
 
         $button->setMethod('delete');
         $button->hideText();
-        $button->setIcon('fa fa-trash');
+        $button->setIcon('fas fa-trash-alt');
         $button->setHtmlAttribute('class', 'btn-danger btn-destroy');
 
         $this->buttons->put('restore', $button = new ControlButton(function (Model $model) {
@@ -105,7 +105,7 @@ class Control extends TableColumn
             return $this->isRestorable();
         });
         $button->hideText();
-        $button->setIcon('fa fa-reply');
+        $button->setIcon('fas fa-reply');
         $button->setHtmlAttribute('class', 'btn-warning');
     }
 
@@ -205,8 +205,8 @@ class Control extends TableColumn
         return
             $this->editable
             &&
-            ! $this->isTrashed()
-            &&
+            // ! $this->isTrashed()
+            // &&
             $this->getModelConfiguration()->isEditable(
                 $this->getModel()
             );

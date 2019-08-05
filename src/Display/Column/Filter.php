@@ -119,7 +119,7 @@ class Filter extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'icon' => $this->isSelf() ? 'fa fa-filter' : 'fa fa-arrow-circle-o-right',
+                'icon' => $this->isSelf() ? 'fas fa-filter' : 'fas fa-long-arrow-alt-right',
                 'title' => $this->isSelf() ? trans('sleeping_owl::lang.table.filter') : trans('sleeping_owl::lang.table.filter-goto'),
                 'url' => $this->getUrl(),
                 'value' => $this->getValue(),

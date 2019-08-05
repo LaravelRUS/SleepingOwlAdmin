@@ -4,7 +4,7 @@
     <div class="panel-heading">
         @if ($creatable)
             <a class="btn btn-primary" href="{{ $createUrl }}">
-                <i class="fa fa-plus"></i> {{ $newEntryButtonText }}
+                <i class="fas fa-plus"></i> {{ $newEntryButtonText }}
             </a>
         @endif
         @yield('panel.buttons')

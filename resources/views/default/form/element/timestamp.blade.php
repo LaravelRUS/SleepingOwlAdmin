@@ -13,13 +13,11 @@
 		>
 		<span class="input-group-prepend input-group-addon">
 			<div class="input-group-text">
-				<span class="fa fa-calendar"></span>
+				<span class="far fa-calendar-alt"></span>
 			</div>
 		</span>
 
 	</div>
-
-	{{-- ##fix## не работают скрипты к полю --}}
 
 	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 	@include(AdminTemplate::getViewPath('form.element.partials.errors'))

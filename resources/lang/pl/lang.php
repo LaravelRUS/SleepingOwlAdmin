@@ -49,7 +49,7 @@ return [
         'cancel'          => 'Anuluj',
         'download'        => 'Pobierz',
         'all'             => 'Wszystkie',
-        'processing'      => '<i class="fa fa-5x fa-spinner fa-spin"></i>',
+        'processing'      => '<i class="fas fa-spinner fa-5x fa-spin"></i>',
         'loadingRecords'  => 'Ładowanie...',
         'lengthMenu'      => 'Pokaż _MENU_ wpisy',
         'zeroRecords'     => 'Nie znaleziono rekordów.',
@@ -89,9 +89,9 @@ return [
         'remove' => 'Usuń plik',
     ],
     'message'  => [
-        'created'  => '<i class="fa fa-check fa-lg"></i> Utworzono rekord',
-        'updated'  => '<i class="fa fa-check fa-lg"></i> Rekord zaktualizowany',
-        'deleted'  => '<i class="fa fa-check fa-lg"></i> Rekord usunięty',
-        'restored' => '<i class="fa fa-check fa-lg"></i> Przywrócono rekord',
+        'created'  => '<i class="fas fa-check fa-lg"></i> Utworzono rekord',
+        'updated'  => '<i class="fas fa-check fa-lg"></i> Rekord zaktualizowany',
+        'deleted'  => '<i class="fas fa-check fa-lg"></i> Rekord usunięty',
+        'restored' => '<i class="fas fa-check fa-lg"></i> Przywrócono rekord',
     ],
 ];

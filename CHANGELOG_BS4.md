@@ -52,7 +52,8 @@
 * Запомнить раскрыт ли сайдбар (localstorage или кука)
 * Добавлен summernote редактор
 * стили datetime в фильтрах (проверить)
-* Добавлены фонтавесомы 4 и 5 (пока не отключаем старые)
+* Добавлены фонтавесомы 5 (4-я версия отключена)
+* Editable поля (поправить стили select)
 
 
 ### Респонсивность сделать
@@ -69,9 +70,8 @@
 * DependentSelect переделать бы с select2 на Vue-Multiselect
 * Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
 * Табы поламалось добавление классов (setHtmlAttribute)
-* Editable поля (поправить стили select)
 * `AdminColumnEditable` - навесить политики (`data-disabled='true'`)
-* `AdminFormElement::checkbox` локализация чекнутого бокса
+* `AdminFormElement::file` проверить на ошибку в Vue
 
 
 ### Что изменено / планируется
@@ -82,6 +82,7 @@
 ### В доку дописать
 * `AdminColumnEditable::textarea`
 * `AdminColumn::boolean`
+* Третий параметр в обычных коламнах `AdminColumn::link('title', 'Title', 'created_at')`
 
 
 ### Поиск багов

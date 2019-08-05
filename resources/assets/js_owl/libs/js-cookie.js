@@ -51,7 +51,6 @@ function toggle() {
 
 
 $(window).on('load', () => {
-  console.log($(window).width() >= sizecolapsed);
   if (Cookies.get('menu-state') === 'open') {
     open();
   } else if (Cookies.get('menu-state') === 'close') {

@@ -3,10 +3,10 @@ Admin.Modules.register('form.elements.date', () => {
     locale: Admin.locale,
     format: 'L', //date only
     icons: {
-      // time: "fa fa-clock-o",
-      date: "fa fa-calendar",
-      up: "fa fa-arrow-up",
-      down: "fa fa-arrow-down"
+      // time: "fas fa-clock",
+      date: "far fa-calendar-alt",
+      up: "fas fa-arrow-up",
+      down: "fas fa-arrow-down"
     }
   });
 })

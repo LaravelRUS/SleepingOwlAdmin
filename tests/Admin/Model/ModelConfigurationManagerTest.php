@@ -57,10 +57,10 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->assertEquals(
             $model,
-            $model->setIcon('fa fa-test')
+            $model->setIcon('fas fa-tachometer-alt')
         );
 
-        $this->assertEquals('fa fa-test', $model->getIcon());
+        $this->assertEquals('fas fa-tachometer-alt', $model->getIcon());
     }
 
     /**

@@ -9,7 +9,7 @@ class Cancel extends FormButton
 {
     protected $show = true;
     protected $name = 'cancel';
-    protected $iconClass = 'fa-ban';
+    protected $iconClass = 'fas fa-ban';
 
     public function __construct()
     {

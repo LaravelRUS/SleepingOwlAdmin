@@ -26,7 +26,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 
-				<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
+				<p v-for="error in errors"><i class="fas fa-images" aria-hidden="true"></i> @{{ error }}</p>
 			</div>
 
 			<div class="form-element-files dropzone clearfix">
@@ -36,12 +36,12 @@
 					</a>
 					<div class="form-element-files__info">
 						<a :href="image(uri)" class="btn btn-default btn-xs pull-right" target="_blank">
-							<i class="fa fa-cloud-download"></i>
+							<i class="fas fa-cloud-upload-alt"></i>
 						</a>
 
 						<button type="button" @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs"
 								aria-label="{{ trans('sleeping_owl::lang.image.remove') }}">
-							<i class="fa fa-times"></i>
+							<i class="fas fa-times"></i>
 						</button>
 					</div>
 				</div>

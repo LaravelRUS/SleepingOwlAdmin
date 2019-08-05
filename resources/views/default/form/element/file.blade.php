@@ -26,22 +26,22 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 
-				<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
+				<p v-for="error in errors"><i class="fas fa-file-alt" aria-hidden="true"></i> @{{ error }}</p>
 			</div>
 
 			<div class="form-element-files clearfix" v-if="has_value">
 				<div class="form-element-files__item">
 					<div class="form-element-files__file">
-						<i class="fa fa-fw fa-lg fa-file-o"></i>
+						<i class="fa-fw fas fa-file-alt"></i>
 					</div>
 					<div class="form-element-files__info">
 						<a :href="file" class="btn btn-default btn-xs pull-right">
-							<i class="fa fa-cloud-download"></i>
+							<i class="fas fa-cloud-upload-alt"></i>
 						</a>
 
 						<button type="button"  v-if="has_value" class="btn btn-danger btn-xs"
 								@click.prevent="remove()">
-							<i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.file.remove') }}
+							<i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.file.remove') }}
 						</button>
 					</div>
 				</div>

@@ -1,8 +1,12 @@
 .btn {
   &.btn-xs {
-    padding: 0.2rem 0.4rem;
-    font-size: 75%;
+    padding: 0.1rem 0.3rem;
+    font-size: 70%;
   }
+}
+
+.table-control-btn {
+  text-align: right;
 }
 
 .btn-group-vertical {

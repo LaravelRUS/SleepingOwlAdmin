@@ -14,7 +14,7 @@
               </span>
             @endif
           </span>
-          <i class="fa fa-angle-left right"></i>
+          <i class="fas fa-angle-right right"></i>
         </p>
     </a>
     <ul class="nav nav-treeview">

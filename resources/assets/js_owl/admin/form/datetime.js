@@ -2,31 +2,11 @@ Admin.Modules.register('form.elements.datetime', () => {
   $('.input-group.datetime').datetimepicker({
     locale: Admin.locale,
     icons: {
-      time: "fa fa-clock-o",
-      date: "fa fa-calendar",
-      up: "fa fa-arrow-up",
-      down: "fa fa-arrow-down"
+      time: "fas fa-clock",
+      date: "far fa-calendar-alt",
+      up: "fas fa-arrow-up",
+      down: "fas fa-arrow-down"
     }
   });
 
 })
-
-
-// OLD variant
-// Admin.Modules.register('form.elements.datetime', () => {
-//   $('.input-group.datetime').each((i, item) => {
-//     let $self = $(item);
-//
-//     $self.datetimepicker({
-//       locale: Admin.locale,
-//       icons: {
-//         time: "fa fa-clock-o",
-//         date: "fa fa-calendar",
-//         up: "fa fa-arrow-up",
-//         down: "fa fa-arrow-down"
-//       }
-//     }).on('dp.change', () => {
-//       $self.change()
-//     })
-//   })
-// })

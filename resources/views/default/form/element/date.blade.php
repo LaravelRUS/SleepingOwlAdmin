@@ -13,7 +13,7 @@
 
 		<div class="input-group-prepend input-group-addon">
 			<div class="input-group-text">
-				<span class="fa fa-calendar"></span>
+				<span class="far fa-calendar-alt"></span>
 			</div>
 		</div>
 	</div>
