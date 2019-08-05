@@ -206,12 +206,11 @@ return [
 
           'alignment' => [
             'options' => [
-              'left', 'right'
-            ]
+              'left', 'right',
+            ],
           ],
 
-          'toolbar' =>
-          [
+          'toolbar' => [
             'undo', 'redo', '|',
             'heading', '|',
             'bold', 'italic', 'blockQuote', '|',
