@@ -151,7 +151,7 @@ return [
     */
 
     'wysiwyg'     => [
-        'default'   => 'ckeditor',
+        'default'   => 'ckeditor5',
 
         /*
          * See http://docs.ckeditor.com/#!/api/CKEDITOR.config
@@ -195,6 +195,35 @@ return [
           'codemirror' => [
             'theme' => 'monokai',
           ],
+        ],
+
+        /*
+         * See https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html
+         */
+        'ckeditor5' => [
+
+          'language' => app()->getLocale(),
+
+          'alignment' => [
+            'options' => [
+              'left', 'right'
+            ]
+          ],
+
+          'toolbar' =>
+          [
+            'undo', 'redo', '|',
+            'heading', '|',
+            'bold', 'italic', 'blockQuote', '|',
+            'numberedList', 'bulletedList', '|',
+            'CKFinder', 'ImageUpload', 'imageTextAlternative', 'MediaEmbed', 'imageStyle:full', 'imageStyle:side', '|',
+            'link', 'bulletedList', 'numberedList', '|',
+            'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+          ],
+
+            // 'extraPlugins'              => 'uploadimage,image2,justify,youtube,uploadfile',
+            'uploadUrl'                 => '/storage/images_admin',
+            'filebrowserUploadUrl'      => '/storage/images_admin',
         ],
     ],
 

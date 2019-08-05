@@ -17,6 +17,7 @@
 * Взять ветку с новым дизайном `"laravelrus/sleepingowl": "dev-bs4"`
 * Нужно обновить ассеты `php artisan sleepingowl:update`
 * Проверить конфиг `App\config\sleeping_owl.php` и добавить новые пункты из `https://github.com/LaravelRUS/SleepingOwlAdmin/blob/bs4/config/sleeping_owl.php`
+* Чтоб меню постоянно не разворачивалось нужно добавить исключение куки `'menu-state'` в файл `app\Http\Middleware\EncryptCookies.php` вашего проекта
 
 
 ### Обновление конфига
