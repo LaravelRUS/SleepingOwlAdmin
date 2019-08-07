@@ -46,7 +46,7 @@ class Text extends NamedColumn
     {
         $model_value = $this->getModelValue();
         if (is_callable($modifier = $this->getModifier())) {
-            $model_value = $modifier($model_value);
+            $model_value = $modifier($model_value, $this->getModel());
         }
 
         return parent::toArray() + [
