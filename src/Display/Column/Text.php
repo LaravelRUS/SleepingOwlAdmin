@@ -46,8 +46,7 @@ class Text extends NamedColumn
     public function toArray()
     {
         $model_value = $this->getModelValue();
-        if (is_callable($modifier = $this->getModifier()))
-        {
+        if (is_callable($modifier = $this->getModifier())) {
             $model_value = $modifier($model_value);
         }
 
