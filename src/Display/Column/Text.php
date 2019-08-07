@@ -10,7 +10,7 @@ class Text extends NamedColumn
     protected $view = 'column.text';
 
     /**
-     * @var mixed
+     * @var \Closure|mixed
      */
     protected $modifier = null;
 
@@ -18,7 +18,6 @@ class Text extends NamedColumn
      * @var bool
      */
     protected $isSearchable = true;
-
 
     /**
      * @return \Closure|mixed
