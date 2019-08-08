@@ -21,3 +21,8 @@
 .brand-link {
   padding: 0.6em 0;
 }
+
+.nav-sidebar>.nav-item>.nav-treeview {
+  border-bottom: 1px solid $gray-600;
+  margin-bottom: 0.5rem;
+}
