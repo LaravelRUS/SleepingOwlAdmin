@@ -12,12 +12,6 @@
 
 }
 
-thead th {
-  line-height: 1.2;
-  width: auto!important;
-  min-width: 2.5em;
-}
-
 .table {
   img {
     object-fit: contain;
@@ -28,6 +22,9 @@ thead th {
     word-break: inherit;
     padding: 0.75rem 0.4rem;
     text-align: center;
+    line-height: 1.2;
+    width: auto!important;
+    min-width: 2.5em;
   }
 
   tbody {
