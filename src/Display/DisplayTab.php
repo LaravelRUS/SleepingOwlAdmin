@@ -88,7 +88,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             $this->setBadge($badge);
         }
 
-        $this->setHtmlAttribute('role', 'tab');
+        $this->setHtmlAttribute('data-toggle', 'tab');
+        $this->setHtmlAttribute('class', 'nav-item nav-link');
     }
 
     /**
