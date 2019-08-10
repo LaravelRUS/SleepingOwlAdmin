@@ -1,13 +1,22 @@
-<div class="form-group form-element-daterange {{ $errors->has($name) ? 'has-error' : '' }}">
-    <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
-        {{ $label }}
+@php
+  $class = 'input-daterange';
 
-        @if($required)
-            <span class="form-element-required">*</span>
-        @endif
+  if ($readonly) {
+    $class = 'input-daterange-readonly';
+  }
+@endphp
+
+@if ($displayed)
+  <div class="form-group form-element-daterange {{ $errors->has($name) ? 'has-error' : '' }}">
+    <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
+      {{ $label }}
+
+      @if($required)
+        <span class="form-element-required">*</span>
+      @endif
     </label>
 
-    <div class="input-daterange input-group" id="datepicker">
+    <div class="{{ $class }} input-group" id="datepicker">
       <input type="text"
         {{-- {!! $attributes !!} --}}
         value="{{ $value }}"
@@ -23,4 +32,5 @@
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
     @include(AdminTemplate::getViewPath('form.element.partials.errors'))
-</div>
+  </div>
+@endif
