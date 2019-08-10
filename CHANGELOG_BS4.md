@@ -57,6 +57,7 @@
 * Editable поля (поправить стили select)
 * добавлен метод `setDisplayed(bool|Closure $status): static`. Установка атрибута "отображать или нет". Используется для политик или для других нужд.
 * Табы поломалось добавление классов (setHtmlAttribute) - поправлено
+* `AdminColumnEditable` - навесить политики (`data-disabled='true'`)
 
 
 ### Респонсивность сделать
@@ -72,7 +73,6 @@
 * Запомнить последний таб (localstorage или кука)
 * DependentSelect переделать бы с select2 на Vue-Multiselect
 * Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
-* `AdminColumnEditable` - навесить политики (`data-disabled='true'`)
 * `AdminFormElement::file` проверить на ошибку в Vue
 
 
