@@ -5,11 +5,8 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
