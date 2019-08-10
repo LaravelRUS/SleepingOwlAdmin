@@ -9,6 +9,7 @@
        data-pk="{{ $id }}"
        data-source="{ 1 : '{{ $checkedLabel }}' }"
        data-emptytext="{{ $uncheckedLabel }}"
+       data-disabled="{{ !$isEditable }}"
     ></a>
 
 @else

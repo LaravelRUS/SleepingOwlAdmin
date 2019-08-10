@@ -8,6 +8,7 @@
     data-viewformat = "{{ $viewformat }}"
     data-mode="{{ $mode }}"
     data-pk="{{ $id }}"
+    data-disabled="{{ !$isEditable }}"
 >{{ $value }}</a>
 
 {!! $append !!}
