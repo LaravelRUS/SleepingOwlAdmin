@@ -70,12 +70,14 @@
 ### Что сделать
 * `AdminFormElement::daterange` поправить бэк (склеить 2 даты в кучу и починить атрибуты)
 * Допилить `->setFormat()` на даты (не работает)
-* В навигацию перенести заголовок (щас Main Menu)
 * Запомнить последний таб (localstorage или кука)
-* DependentSelect переделать бы с select2 на Vue-Multiselect
 * Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
 * `AdminFormElement::file` проверить на ошибку в Vue
 
+
+### Отменено
+* В навигацию перенести заголовок (щас Main Menu)
+* DependentSelect переделать бы с select2 на Vue-Multiselect
 
 ### Что изменено / планируется
 * Обновить CKeditor
