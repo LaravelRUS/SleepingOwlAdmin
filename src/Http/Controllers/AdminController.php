@@ -598,32 +598,31 @@ class AdminController extends Controller
      */
     public function deletedAll(ModelConfigurationInterface $model, Request $request)
     {
-
-      if (is_null($request->_id)) {
-        return redirect()->back();
-      }
-
-      $items = $request->_id;
-
-      foreach ($items as $id) {
-        $item = $model->getRepository()->find($id);
-
-        if(!$item) {
-          return response()->Json(['error' => 'Haven`t row']);
+        if (is_null($request->_id)) {
+            return redirect()->back();
         }
 
-        if (isset($item->deleted_at) && $item->deleted_at) {
-          $model->getRepository()->forceDelete($id);
-        } else {
-          $model->getRepository()->delete($id);
-        }
-      }
+        $items = $request->_id;
 
-      $response = redirect()
+        foreach ($items as $id) {
+            $item = $model->getRepository()->find($id);
+
+            if (! $item) {
+                return response()->Json(['error' => 'Haven`t row']);
+            }
+
+            if (isset($item->deleted_at) && $item->deleted_at) {
+                $model->getRepository()->forceDelete($id);
+            } else {
+                $model->getRepository()->delete($id);
+            }
+        }
+
+        $response = redirect()
         ->to($request
         ->input('_redirectBack', $model->getDisplayUrl()));
 
-      return $response
+        return $response
         ->with('success_message', $model->getMessageOnDelete());
     }
 
