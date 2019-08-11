@@ -46,6 +46,7 @@ return [
     ],
     'table' => [
         'no-action' => 'Без дiй',
+        'deleted_all'     => 'Видалити вибрані',
         'make-action' => 'Вiдправити',
         'new-entry' => 'Новий запис',
         'edit' => 'Редагувати',

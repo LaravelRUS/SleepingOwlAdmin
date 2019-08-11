@@ -25,7 +25,7 @@ class Actions extends Extension implements Initializable, Placable
     /**
      * @var string
      */
-    protected $placement = 'panel.footer';
+    protected $placement = 'panel.buttons';
 
     public function __construct()
     {
@@ -38,7 +38,6 @@ class Actions extends Extension implements Initializable, Placable
     public function clear()
     {
         $this->actions = new Collection();
-
         return $this;
     }
 
@@ -47,7 +46,7 @@ class Actions extends Extension implements Initializable, Placable
      *
      * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
-    public function set($actions)
+    public function set($actions = null)
     {
         if (! is_array($actions)) {
             $actions = func_get_args();
@@ -141,9 +140,9 @@ class Actions extends Extension implements Initializable, Placable
      */
     public function initialize()
     {
-        if ($this->all()->count() < 1) {
-            return;
-        }
+        // if ($this->all()->count() < 1) {
+        //     return;
+        // }
 
         $this->all()->each(function (ActionInterface $action) {
             $action->initialize();
@@ -151,8 +150,8 @@ class Actions extends Extension implements Initializable, Placable
 
         $this->setHtmlAttribute('data-type', 'display-actions');
 
-        if (! $this->hasHtmlAttribute('class')) {
-            $this->setHtmlAttribute('class', 'panel-footer');
-        }
+        // if (! $this->hasHtmlAttribute('class')) {
+        //     $this->setHtmlAttribute('class', 'pull-right');
+        // }
     }
 }

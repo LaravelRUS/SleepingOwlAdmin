@@ -1,6 +1,15 @@
 Admin.Modules.register('display.actions', () => {
     $('form[data-type="display-actions"]').on('submit', function (e) {
 
+      let action_value = $("#sleepingOwlActionsStore").find('option:selected').val();
+
+      console.log(action_value);
+      
+      if (action_value == 0) {
+        console.log('No action');
+        return false;
+      }
+
         e.preventDefault();
         let self = $(this);
 
@@ -34,7 +43,9 @@ Admin.Modules.register('display.actions', () => {
             });
 
             Admin.Events.fire("datatables::actions::submitted", self);
-        //Исправлено для версии sweetalert 7.0.0
+
+            //reload datatables
+            $('.datatables').DataTable().draw();
         }else
             Admin.Events.fire("datatables::actions::cancel", self);
         });

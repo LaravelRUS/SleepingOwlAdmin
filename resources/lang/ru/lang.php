@@ -45,6 +45,7 @@ return [
     ],
     'table'     => [
         'no-action'       => 'Нет действия',
+        'deleted_all'     => 'Удалить выбранные',
         'make-action'     => 'Отправить',
         'new-entry'       => 'Новая запись',
         'edit'            => 'Редактировать',
@@ -126,6 +127,7 @@ return [
         'created'              => '<i class="fas fa-check fa-lg"></i> Запись успешно создана',
         'updated'              => '<i class="fas fa-check fa-lg"></i> Запись успешно обновлена',
         'deleted'              => '<i class="fas fa-check fa-lg"></i> Запись успешно удалена',
+        'destroyed'            => '<i class="fas fa-check fa-lg"></i> Запись полностью удалена',
         'restored'             => '<i class="fas fa-check fa-lg"></i> Запись успешно восстановлена',
         'something_went_wrong' => 'Что-то пошло не так!',
         'are_you_sure'         => 'Вы уверены?',

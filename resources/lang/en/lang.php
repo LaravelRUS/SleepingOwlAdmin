@@ -45,6 +45,7 @@ return [
     ],
     'table' => [
         'no-action' => 'No action',
+        'deleted_all'     => 'Delete selected',
         'make-action' => 'Submit',
         'new-entry' => 'New Entry',
         'edit' => 'Edit',

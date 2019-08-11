@@ -4,7 +4,7 @@
 
         <div class="action_select">
             <select class="form-control" id="sleepingOwlActionsStore" name="action" tabindex="-1" aria-hidden="true">
-                <option value="0">{{trans('sleeping_owl::lang.table.no-action')}}</option>
+                <option value="0" selected>{{trans('sleeping_owl::lang.table.no-action')}}</option>
                 @foreach ($actions as $action)
                     {!! $action->render() !!}
                 @endforeach

@@ -57,6 +57,11 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'uses' => 'AdminController@getWildcard',
     ]);
 
+    $router->post('{adminModel}/deletedAll', [
+        'as' => 'deletedAll',
+        'uses' => 'AdminController@deletedAll',
+    ]);
+
     $router->group(['middleware' => config('sleeping_owl.env_editor_middlewares')], function (Router $router) {
         $router->get(config('sleeping_owl.env_editor_url'), [
             'as' => 'env.editor',
