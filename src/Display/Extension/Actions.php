@@ -38,6 +38,7 @@ class Actions extends Extension implements Initializable, Placable
     public function clear()
     {
         $this->actions = new Collection();
+
         return $this;
     }
 
