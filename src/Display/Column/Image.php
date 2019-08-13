@@ -14,7 +14,6 @@ class Image extends NamedColumn
      */
     protected $width = '80px';
 
-
     /**
      * @var bool
      */
