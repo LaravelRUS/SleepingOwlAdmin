@@ -5,7 +5,7 @@
     </script>
   @endpush
 
-  <div class="card card-outline card-info {{ $errors->has($name) ? 'has-error' : '' }}">
+  <div class="card card-outline card-info {{ $collapsed ? 'collapsed-card':'' }} {{ $errors->has($name) ? 'has-error' : '' }}">
     <div class="card-header">
       <h3 class="card-title form-group">
         <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
@@ -18,15 +18,19 @@
       </h3>
 
       <div class="card-tools">
-        <button type="button" class="btn btn-tool btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+        @if ($collapsed)
+          <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"><i class="fas fa-plus"></i></button>
+        @else
+          <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"><i class="fas fa-minus"></i></button>
+        @endif
       </div>
+      @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
     </div>
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-    <div class="card-body pad">
+    <div class="card-body pad" {{ $collapsed ? 'style="display: none;"':'' }}>
       {!! Form::textarea($name, $value, $attributes) !!}
-      @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
     </div>
   </div>
 @endif

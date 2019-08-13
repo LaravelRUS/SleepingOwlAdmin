@@ -9,6 +9,12 @@ class Boolean extends NamedColumn
      */
     protected $view = 'column.boolean';
 
+
+    /**
+     * @var string
+     */
+    protected $width = '50px';
+
     /**
      * @var bool
      */

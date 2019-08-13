@@ -10,6 +10,16 @@ class Url extends NamedColumn
     protected $view = 'column.url';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * @var array
      */
     protected $linkAttributes = [];

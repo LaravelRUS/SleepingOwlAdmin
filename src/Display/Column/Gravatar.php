@@ -15,6 +15,21 @@ class Gravatar extends NamedColumn
     /**
      * @var string
      */
+    protected $width = '50px';
+
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
+     * @var string
+     */
     protected $view = 'column.gravatar';
 
     /**

@@ -1,11 +1,3 @@
-@php
-	if (Cookie::get('menu-state') == 'close') {
-		$menu_class = 'sidebar-collapse';
-	}	else {
-		$menu_class = 'sidebar-open';
-	}
-@endphp
-
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -24,5 +16,7 @@
 
 	{!! $template->meta()->renderScripts(true) !!}
 	@stack('footer-scripts')
+
+	@include(AdminTemplate::getViewPath('helper.autoupdate'))
 </body>
 </html>

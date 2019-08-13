@@ -12,6 +12,22 @@ class Image extends NamedColumn
     /**
      * @var string
      */
+    protected $width = '80px';
+
+
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
+     * @var string
+     */
     protected $view = 'column.image';
 
     /**

@@ -246,6 +246,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Autoupdate datatables
+    |--------------------------------------------------------------------------
+    |
+    | Interval in minutes. Do not set too low.
+    | dt_autoupdate_interval >= 1 and (int)
+    | dt_autoupdate_class - custom class if need (can be null)
+    | dt_autoupdate_color - color ProgressBar (can be null)
+    |
+    */
+    'dt_autoupdate' => true,
+    'dt_autoupdate_interval' => 1, //minutes
+    'dt_autoupdate_class' => '',
+    'dt_autoupdate_color' => '#dc3545',
+
+    /*
+    |--------------------------------------------------------------------------
     | Class Aliases
     |--------------------------------------------------------------------------
     |

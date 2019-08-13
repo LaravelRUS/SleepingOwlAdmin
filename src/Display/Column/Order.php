@@ -18,6 +18,11 @@ class Order extends TableColumn implements WithRoutesInterface
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * @var string
      */
     protected $view = 'column.order';

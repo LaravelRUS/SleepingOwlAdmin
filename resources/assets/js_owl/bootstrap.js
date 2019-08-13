@@ -30,6 +30,7 @@ require('./libs/nestable');
 require('./libs/sweetalert');
 require('./libs/dependent-dropdown');
 require('./libs/js-cookie');
+require('./libs/progressbar');
 
 require('./libs/vuejs');
 require('./libs/noty');

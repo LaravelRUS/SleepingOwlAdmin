@@ -33,6 +33,7 @@
     "nestable": "^0.2.0",
     "noty": "^3.2.0-beta",
     "popper": "^1.0.1",
+    "progressbar.js": "^1.0.1",
     "select2": "^4.0.8",
     "sweetalert2": "^8.14.0",
     "tempusdominus-core": "^5.0.3",

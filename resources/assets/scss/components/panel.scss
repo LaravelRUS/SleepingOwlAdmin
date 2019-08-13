@@ -8,6 +8,10 @@
     form {
       display: inline-flex;
     }
+
+    @media (max-width: 667px) {
+      flex-direction: column;
+    }
   }
 
   .panel-footer {

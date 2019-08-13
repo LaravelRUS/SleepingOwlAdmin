@@ -13,6 +13,11 @@ class Checkbox extends TableColumn
     protected $view = 'column.checkbox';
 
     /**
+     * @var string
+     */
+    protected $width = '30px';
+
+    /**
      * Checkbox constructor.
      *
      * @param string|null $label
@@ -26,6 +31,12 @@ class Checkbox extends TableColumn
 
         $this->setOrderable(false);
     }
+
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = true;
 
     /**
      * @return mixed
