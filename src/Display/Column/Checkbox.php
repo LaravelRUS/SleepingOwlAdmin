@@ -32,7 +32,6 @@ class Checkbox extends TableColumn
         $this->setOrderable(false);
     }
 
-
     /**
      * @var bool
      */

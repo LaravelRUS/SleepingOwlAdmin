@@ -13,8 +13,8 @@ class Wysiwyg extends NamedFormElement
     protected $editor;
 
     /**
-    * @var bool|null
-    */
+     * @var bool|null
+     */
     protected $collapsed;
 
     /**
