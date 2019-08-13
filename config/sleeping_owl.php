@@ -255,8 +255,8 @@ return [
     | dt_autoupdate_color - color ProgressBar (can be null)
     |
     */
-    'dt_autoupdate' => true,
-    'dt_autoupdate_interval' => 1, //minutes
+    'dt_autoupdate' => false,
+    'dt_autoupdate_interval' => 5, //minutes
     'dt_autoupdate_class' => '',
     'dt_autoupdate_color' => '#dc3545',
 
