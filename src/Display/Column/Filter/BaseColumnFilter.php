@@ -164,10 +164,23 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             $parts = explode('.', $name);
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
+            try {
+                $relation = $query->getModel()->{$relationName}();
+                $isMorphTo = $relation instanceof \Illuminate\Database\Eloquent\Relations\MorphTo;
+            } catch (\Exception $e) {
+                $isMorphTo = false;
+            }
 
-            $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {
-                $this->buildQuery($q, $fieldName, $queryString);
-            });
+            if ($isMorphTo) {
+                $query->whereHasMorph($relationName, '*', function ($q) use ($queryString, $fieldName) {
+                    $this->buildQuery($q, $fieldName, $queryString);
+                });
+            } else {
+                $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {
+                    $this->buildQuery($q, $fieldName, $queryString);
+                });
+            }
+            unset($relation);
         } else {
             $this->buildQuery($query, $name, $queryString);
         }
