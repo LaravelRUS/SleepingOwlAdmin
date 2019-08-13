@@ -1,6 +1,6 @@
 @if ( ! empty($title))
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-12 pt-3">
 			{!! $title !!}
 		</div>
 	</div>
