@@ -17,7 +17,7 @@ class Url extends NamedColumn
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected $orderable = true;
 
     /**
      * @var array

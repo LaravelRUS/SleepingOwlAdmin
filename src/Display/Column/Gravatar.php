@@ -25,7 +25,7 @@ class Gravatar extends NamedColumn
     /**
      * @var bool
      */
-    protected $isSearchable = true;
+    protected $isSearchable = false;
 
     /**
      * @var string
