@@ -61,7 +61,7 @@
 * Проблемы с `AdminColumn::order()` поправлены
 * Метод `onCollapse(bool)` для wysiwyg поля (свернуто)
 * Прикручен автоапдейт дататейблса. В конфиге можно включить и выставить значение в минутах
-* https://github.com/LaravelRUS/SleepingOwlAdmin/issues/900
+* https://github.com/LaravelRUS/SleepingOwlAdmin/issues/983
 
 
 ### Респонсивность сделать
@@ -92,7 +92,7 @@
 * https://github.com/LaravelRUS/SleepingOwlAdmin/issues/703 добавление динамических полей
 * https://github.com/LaravelRUS/SleepingOwlAdmin/issues/895 ошибка в табах
 * https://github.com/LaravelRUS/SleepingOwlAdmin/issues/993 (проверить)
-* https://github.com/LaravelRUS/SleepingOwlAdmin/issues/983
+* https://github.com/LaravelRUS/SleepingOwlAdmin/issues/900
 
 
 ### В доку дописать

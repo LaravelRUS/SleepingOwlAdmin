@@ -50,8 +50,8 @@ class Text extends NamedColumn
         }
 
         return parent::toArray() + [
-                'value' => strip_tags($model_value),
-                'small' => strip_tags($this->getModelSmallValue()),
+                'value' => htmlspecialchars($model_value),
+                'small' => htmlspecialchars($this->getModelSmallValue()),
             ];
     }
 }

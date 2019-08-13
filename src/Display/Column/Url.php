@@ -51,8 +51,8 @@ class Url extends NamedColumn
     {
         return parent::toArray() + [
                 'linkAttributes' => $this->getLinkAttributes(),
-                'value' => strip_tags($this->getModelValue()),
-                'small' => strip_tags($this->getModelSmallValue()),
+                'value' => htmlspecialchars($this->getModelValue()),
+                'small' => htmlspecialchars($this->getModelSmallValue()),
             ];
     }
 }

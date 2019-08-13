@@ -293,7 +293,7 @@ abstract class TableColumn implements ColumnInterface
      */
     public function setLabel($title)
     {
-        $this->getHeader()->setTitle(strip_tags($title));
+        $this->getHeader()->setTitle($title);
 
         return $this;
     }
