@@ -1,3 +1,4 @@
+
 .dataTables_filter {
   margin-bottom: 1em;
 
@@ -36,6 +37,8 @@ table.dataTable thead {
     cursor: pointer;
     position: relative;
     padding-right: 1.2em;
+    line-height: 1;
+    word-break: break-word;
 
     &:after,
     &:before {
@@ -43,11 +46,11 @@ table.dataTable thead {
       display: block;
       opacity: 0.3;
       top: 50%;
-      margin-top: -0.5em;
+      margin-top: -0.6em;
     }
 
     &:before {
-      right: 0.7em;
+      right: 0.5em;
       content: '\2191';
     }
 
