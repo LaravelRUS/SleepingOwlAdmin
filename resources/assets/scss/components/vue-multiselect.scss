@@ -28,7 +28,7 @@
   }
 
   .multiselect--active {
-    z-index: 3;
+    z-index: 9999;
   }
 
   .multiselect__content-wrapper {
@@ -39,5 +39,5 @@
 }
 
 .multiselect--active {
-  z-index: 3;
+  z-index: 9999;
 }
