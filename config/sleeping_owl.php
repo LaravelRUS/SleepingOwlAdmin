@@ -151,7 +151,7 @@ return [
     */
 
     'wysiwyg'     => [
-        'default'   => 'ckeditor5',
+        'default'   => 'ckeditor',
 
         /*
          * See http://docs.ckeditor.com/#!/api/CKEDITOR.config
