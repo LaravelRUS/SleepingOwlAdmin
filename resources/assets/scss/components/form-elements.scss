@@ -1,3 +1,7 @@
+.form-control::placeholder {
+  color: $gray-400;
+}
+
 .filter-badge {
   a {
     color: $white;
