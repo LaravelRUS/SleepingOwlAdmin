@@ -25,7 +25,7 @@
         	<div class="row mb-2 align-items-center">
           	<div class="col-sm-6">
 							<h1>
-								{{{ $title }}}
+								{!! $title !!}
 							</h1>
 						</div>
 
