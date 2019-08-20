@@ -3,22 +3,39 @@ Admin.Modules.register('display.actions', () => {
 
       let action_value = $("#sleepingOwlActionsStore").find('option:selected').val();
 
-      console.log(action_value);
-      
       if (action_value == 0) {
-        console.log('No action');
+        Swal.fire({
+          title: trans('lang.table.no-action'),
+          text: trans('lang.select.nothing'),
+          type: 'error',
+          timer: 5000
+        })
         return false;
       }
 
         e.preventDefault();
         let self = $(this);
 
+
+        let $checkboxes = $('.adminCheckboxRow').filter(':checked'),
+        $selectActions = $("#sleepingOwlActionsStore");
+
+
+        if ($checkboxes.length == 0) {
+          Swal.fire({
+            title: trans('lang.select.nothing'),
+            text: trans('lang.select.no_items'),
+            type: 'error',
+            timer: 5000
+          })
+
+          return false;
+        }
+
+
         Admin.Messages.confirm(trans('lang.table.action-confirm'), null, self).then(result => {
             //Исправлено для версии sweetalert 7.0.0
             if (result.value) {
-
-                let $checkboxes = $('.adminCheckboxRow').filter(':checked'),
-                    $selectActions = $("#sleepingOwlActionsStore");
 
                 let data = $checkboxes.serialize();
 
