@@ -191,7 +191,11 @@ class FormElementTest extends TestCase
     {
         $array = $this->getElement()->toArray();
         $this->assertTrue(is_array($array));
-        $this->assertEquals(['value', 'readonly', 'displayed', 'model'], array_keys($array));
+        $test_array = ['value', 'readonly', 'displayed', 'model'];
+        $real_array = array_keys($array);
+        sort($test_array);
+        sort($real_array);
+        $this->assertEquals($test_array, $real_array);
     }
 
     /**
