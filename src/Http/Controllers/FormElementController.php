@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Element\DependentSelect;
+use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
 class FormElementController extends Controller
@@ -54,8 +55,11 @@ class FormElementController extends Controller
             return $form;
         }
 
-        /** @var DependentSelect $element */
-        $element = $form->getElement($field);
+        // because field name in MultiDependentSelect ends with '[]'
+        $fieldPrepared = str_replace('[]', '', $field);
+
+        /** @var DependentSelect|MultiDependentSelect $element */
+        $element = $form->getElement($fieldPrepared);
 
         if (is_null($element)) {
             return new JsonResponse([
@@ -74,7 +78,7 @@ class FormElementController extends Controller
         }
 
         return new JsonResponse([
-            'output'   => collect($options)->map(function ($value, $key) {
+            'output' => collect($options)->map(function ($value, $key) {
                 return ['id' => $key, 'name' => $value];
             }),
             'selected' => $element->getValueFromModel(),
@@ -110,8 +114,11 @@ class FormElementController extends Controller
             return $form;
         }
 
-        /** @var DependentSelect $element */
-        $element = $form->getElement($field);
+        // because field name in MultiDependentSelect ends with '[]'
+        $fieldPrepared = str_replace('[]', '', $field);
+
+        /** @var DependentSelect|MultiDependentSelect $element */
+        $element = $form->getElement($fieldPrepared);
 
         if (is_null($element)) {
             return new JsonResponse([
@@ -128,8 +135,8 @@ class FormElementController extends Controller
                     ->get()
                     ->map(function (Model $item) use ($field) {
                         return [
-                            'tag_name'    => $item->{$field},
-                            'id'          => $item->id,
+                            'tag_name' => $item->{$field},
+                            'id' => $item->id,
                             'custom_name' => $item->custom_name,
                         ];
                     })

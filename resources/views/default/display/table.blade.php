@@ -1,6 +1,6 @@
 @if ( ! empty($title))
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-12 pt-3">
 			{!! $title !!}
 		</div>
 	</div>
@@ -13,15 +13,16 @@
 	<div class="panel-heading">
 		@if ($creatable)
 			<a href="{{ url($createUrl) }}" class="btn btn-primary">
-				<i class="fa fa-plus"></i> {{ $newEntryButtonText }}
+				<i class="fas fa-plus"></i> {{ $newEntryButtonText }}
 			</a>
 		@endif
-
-		@yield('panel.buttons')
 
 		<div class="pull-right">
 			@yield('panel.heading.actions')
 		</div>
+
+		@yield('panel.buttons')
+
 	</div>
 
 	@yield('panel.heading')

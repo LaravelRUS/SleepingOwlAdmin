@@ -117,8 +117,8 @@ class DisplayDatatables extends DisplayTable
     }
 
     /**
-     * Get view render parameters.
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

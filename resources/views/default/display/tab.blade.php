@@ -1,5 +1,6 @@
-<a class="nav-item nav-link {!! ($active) ? 'active' : '' !!}" data-toggle="tab" href="#nav-{{ $name }}" aria-selected="true" aria-controls="nav-{{ $name }}" {!! $attributes !!}>
-  {{-- ##fix## setHtmlAttribute не работает на добавление классов (только role="tab") --}}
+<a {!! $attributes !!}
+  href="#nav-{{ $name }}"
+  aria-selected="true" aria-controls="nav-{{ $name }}">
   @if($icon)
       {!! $icon !!}
   @endif

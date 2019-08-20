@@ -9,7 +9,7 @@ class Delete extends FormButton
 {
     protected $show = true;
     protected $name = 'delete';
-    protected $iconClass = 'fa-times';
+    protected $iconClass = 'fas fa-times';
 
     public function __construct()
     {
@@ -24,11 +24,11 @@ class Delete extends FormButton
         parent::initialize();
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'name'          => 'next_action',
-            'class'         => 'btn btn-danger btn-delete',
-            'data-url'      => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
-            'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
-        ]);
+                'name' => 'next_action',
+                'class' => 'btn btn-danger btn-delete',
+                'data-url' => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
+                'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
+            ]);
     }
 
     /**

@@ -31,7 +31,7 @@ class SectionMake extends SectionGeneratorCommand
     /**
      * Determine if the class already exists.
      *
-     * @param  string  $rawName
+     * @param string $rawName
      * @return bool
      */
     protected function alreadyExists($rawName)
@@ -52,7 +52,7 @@ class SectionMake extends SectionGeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
@@ -63,8 +63,8 @@ class SectionMake extends SectionGeneratorCommand
     /**
      * Replace the class name for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
      * @return string
      */
     protected function replaceClass($stub, $name)

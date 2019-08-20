@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Exceptions\Display;
 
-class DisplayTabException extends \Exception
+use Exception;
+
+class DisplayTabException extends Exception
 {
 }

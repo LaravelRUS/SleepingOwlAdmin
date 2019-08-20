@@ -54,7 +54,7 @@ return [
         'cancel' => '取消',
         'download' => '下载',
         'all' => '全选',
-        'processing' => '<i class="fa fa-5x fa-spinner fa-spin"></i>',
+        'processing' => '<i class="fas fa-spinner fa-5x fa-spin"></i>',
         'loadingRecords' => '载入...',
         'lengthMenu' => '显示 _MENU_ 项目',
         'zeroRecords' => '没有找到相关内容.',
@@ -94,9 +94,9 @@ return [
         'remove' => '移除文件',
     ],
     'message' => [
-        'created' => '<i class="fa fa-check fa-lg"></i> 创建成功！',
-        'updated' => '<i class="fa fa-check fa-lg"></i> 更新成功！',
-        'deleted' => '<i class="fa fa-check fa-lg"></i> 成功删除！',
-        'restored' => '<i class="fa fa-check fa-lg"></i> 已还原！',
+        'created' => '<i class="fas fa-check fa-lg"></i> 创建成功！',
+        'updated' => '<i class="fas fa-check fa-lg"></i> 更新成功！',
+        'deleted' => '<i class="fas fa-check fa-lg"></i> 成功删除！',
+        'restored' => '<i class="fas fa-check fa-lg"></i> 已还原！',
     ],
 ];

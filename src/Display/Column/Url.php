@@ -10,6 +10,16 @@ class Url extends NamedColumn
     protected $view = 'column.url';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
+     * @var bool
+     */
+    protected $orderable = true;
+
+    /**
      * @var array
      */
     protected $linkAttributes = [];
@@ -40,9 +50,9 @@ class Url extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'linkAttributes' => $this->getLinkAttributes(),
-            'value' => $this->getModelValue(),
-            'small' => $this->getModelSmallValue(),
-        ];
+                'linkAttributes' => $this->getLinkAttributes(),
+                'value' => htmlspecialchars($this->getModelValue()),
+                'small' => htmlspecialchars($this->getModelSmallValue()),
+            ];
     }
 }

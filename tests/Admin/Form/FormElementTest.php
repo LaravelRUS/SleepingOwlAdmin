@@ -19,19 +19,6 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * FormDefault::__construct
-     * FormDefault::getElements
-     * FormDefault::getButtons.
-     */
-    public function test_constructor()
-    {
-        PackageManager::shouldReceive('load')->once();
-        PackageManager::shouldReceive('add')->once();
-
-        $this->getElement();
-    }
-
-    /**
      * @covers SleepingOwl\Admin\Form\FormElement::initialize
      */
     public function test_initializable()
@@ -204,7 +191,7 @@ class FormElementTest extends TestCase
     {
         $array = $this->getElement()->toArray();
         $this->assertTrue(is_array($array));
-        $this->assertEquals(['value', 'readonly', 'model'], array_keys($array));
+        $this->assertEquals(['value', 'readonly', 'displayed', 'model'], array_keys($array));
     }
 
     /**

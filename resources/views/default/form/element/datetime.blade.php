@@ -1,23 +1,28 @@
-<div class="form-group form-element-date {{ $errors->has($name) ? 'has-error' : '' }}">
-	<label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
-		{{ $label }}
+@if ($displayed)
+	<div class="form-group form-element-date {{ $errors->has($name) ? 'has-error' : '' }}">
+		<label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
+			{{ $label }}
 
-		@if($required)
-			<span class="form-element-required">*</span>
-		@endif
-	</label>
-	<div class="input-date input-group">
-		<input {!! $attributes !!}
-			   value="{{ $value }}"
-			   @if($readonly) readonly @endif
-		>
-		<span class="input-group-prepend input-group-addon">
-			<div class="input-group-text">
-				<span class="fa fa-calendar"></span>
-			</div>
-		</span>
+			@if($required)
+				<span class="form-element-required">*</span>
+			@endif
+		</label>
+
+		<div class="input-date input-group datetime">
+			<input
+				{!! $attributes !!}
+				class="form-control"
+				value="{{ $value }}"
+				@if($readonly) readonly @endif
+			>
+			<span class="input-group-prepend input-group-addon">
+				<div class="input-group-text">
+					<span class="far fa-calendar-alt"></span>
+				</div>
+			</span>
+		</div>
+
+		@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
+		@include(AdminTemplate::getViewPath('form.element.partials.errors'))
 	</div>
-
-	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
-	@include(AdminTemplate::getViewPath('form.element.partials.errors'))
-</div>
+@endif

@@ -1,1 +1,1 @@
-{!! Form::select('', $options, null, $attributesArray) !!}
+{!! Form::select('', $options, $default, $attributesArray) !!}

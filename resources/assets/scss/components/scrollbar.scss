@@ -1,0 +1,27 @@
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 $scrollbar-size rgba($gray-300,0.3);
+  background-color: $gray-300;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: $scrollbar-size;
+  height: $scrollbar-size;
+  background-color: $gray-300;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $gray-600;
+}
+
+select,
+textarea {
+  &::-webkit-scrollbar {
+    width: $scrollbar-size-textarea;
+    background-color: $gray-800;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 $scrollbar-size-textarea rgba($gray-800,0.3);
+    background-color: $gray-800;
+  }
+}

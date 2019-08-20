@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SleepingOwl\Admin\Form\Buttons;
 
 /**
@@ -10,7 +9,7 @@ class Restore extends FormButton
 {
     protected $show = true;
     protected $name = 'restore';
-    protected $iconClass = 'fa-reply';
+    protected $iconClass = 'fas fa-reply';
 
     public function __construct()
     {
@@ -25,12 +24,12 @@ class Restore extends FormButton
         parent::initialize();
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'type'  => 'submit',
-            'name'  => 'next_action',
-            'class' => 'btn btn-warning',
-            'data-url'=> $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
-            'data-redirect'=> $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
-        ]);
+                'type' => 'submit',
+                'name' => 'next_action',
+                'class' => 'btn btn-warning',
+                'data-url' => $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
+                'data-redirect' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
+            ]);
     }
 
     /**

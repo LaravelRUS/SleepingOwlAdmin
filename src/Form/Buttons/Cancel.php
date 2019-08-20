@@ -9,7 +9,7 @@ class Cancel extends FormButton
 {
     protected $show = true;
     protected $name = 'cancel';
-    protected $iconClass = 'fa-ban';
+    protected $iconClass = 'fas fa-ban';
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class Cancel extends FormButton
 
         $this->setUrl($this->getModelConfiguration()->getCancelUrl());
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'class' => 'btn btn-warning',
-        ]);
+                'class' => 'btn btn-warning',
+            ]);
     }
 }

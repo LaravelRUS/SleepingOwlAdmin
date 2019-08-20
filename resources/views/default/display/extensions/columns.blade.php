@@ -1,3 +1,5 @@
+<div class="panel-table">
+
 <table {!! $attributes !!}>
     <colgroup>
         @foreach ($columns as $column)
@@ -46,6 +48,7 @@
     @yield('table.footer')
 </table>
 
+</div>
 @if(!is_null($pagination))
     <div class="panel-footer">
         {!! $pagination !!}

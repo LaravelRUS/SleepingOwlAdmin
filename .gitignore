@@ -6,3 +6,4 @@ composer.lock
 /.idea
 yarn.lock
 package-lock.json
+/build/logs

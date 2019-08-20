@@ -2,14 +2,11 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Request;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -25,7 +22,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async';
         if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
         }
@@ -33,7 +30,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async.inlineEdit';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
@@ -211,62 +208,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * Apply offset and limit to the query.
-     *
-     * @param $query
-     * @param \Illuminate\Http\Request $request
-     */
-    public function applyOffset($query, \Illuminate\Http\Request $request)
-    {
-        $offset = $request->input('start', 0);
-        $limit = $request->input('length', 10);
-
-        if ($limit == -1) {
-            return;
-        }
-
-        $query->offset((int) $offset)->limit((int) $limit);
-    }
-
-    /**
-     * Apply search to the query.
-     *
-     * @param Builder $query
-     * @param \Illuminate\Http\Request $request
-     */
-    public function applySearch(Builder $query, \Illuminate\Http\Request $request)
-    {
-        $search = $request->input('search.value');
-        if (empty($search)) {
-            return;
-        }
-
-        $query->where(function (Builder $query) use ($search) {
-            $columns = $this->getColumns()->all();
-
-            foreach ($columns as $column) {
-                if ($column->isSearchable()) {
-                    if ($column instanceof ColumnInterface) {
-                        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
-                            if (method_exists($metaInstance, 'onSearch')) {
-                                $metaInstance->onSearch($column, $query, $search);
-                                continue;
-                            }
-                        }
-
-                        if (is_callable($callback = $column->getSearchCallback())) {
-                            $callback($column, $query, $search);
-                            continue;
-                        }
-                    }
-
-                    $query->orWhere($column->getName(), 'like', '%'.$search.'%');
-                }
-            }
-        });
-    }
-
-    /**
      * Convert collection to the datatables structure.
      *
      * @param \Illuminate\Http\Request $request
@@ -334,6 +275,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

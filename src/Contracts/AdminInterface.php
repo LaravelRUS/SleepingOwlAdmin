@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
+use Closure;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
@@ -22,7 +23,7 @@ interface AdminInterface extends Initializable
      *
      * @return $this
      */
-    public function registerModel($class, \Closure $callback = null);
+    public function registerModel($class, Closure $callback = null);
 
     /**
      * @param array $sections

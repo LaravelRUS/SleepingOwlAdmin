@@ -1,30 +1,36 @@
-@push('footer-scripts')
-<script>
+@if ($displayed)
+  @push('footer-scripts')
+    <script>
     Admin.WYSIWYG.switchOn('{!!  $name !!}', '{{ $editor }}', {!! $parameters !!})
-</script>
-@endpush
+    </script>
+  @endpush
 
-<div class="card card-outline card-info {{ $errors->has($name) ? 'has-error' : '' }}">
-  <div class="card-header">
-    <h3 class="card-title form-group">
-      <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
-        {{ $label }}
+  <div class="card card-outline card-info {{ $collapsed ? 'collapsed-card':'' }} {{ $errors->has($name) ? 'has-error' : '' }}">
+    <div class="card-header">
+      <h3 class="card-title form-group">
+        <label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
+          {{ $label }}
 
-        @if($required)
-          <span class="form-element-required">*</span>
+          @if($required)
+            <span class="form-element-required">*</span>
+          @endif
+        </label>
+      </h3>
+
+      <div class="card-tools">
+        @if ($collapsed)
+          <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"><i class="fas fa-plus"></i></button>
+        @else
+          <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"><i class="fas fa-minus"></i></button>
         @endif
-      </label>
-    </h3>
+      </div>
+      @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
+    </div>
 
-    <div class="card-tools">
-      <button type="button" class="btn btn-tool btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+    @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
+
+    <div class="card-body pad" {{ $collapsed ? 'style="display: none;"':'' }}>
+      {!! Form::textarea($name, $value, $attributes) !!}
     </div>
   </div>
-
-  @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
-
-  <div class="card-body pad">
-    {!! Form::textarea($name, $value, $attributes) !!}
-    @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
-  </div>
-</div>
+@endif

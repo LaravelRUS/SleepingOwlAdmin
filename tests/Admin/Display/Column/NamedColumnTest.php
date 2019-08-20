@@ -34,14 +34,6 @@ class NamedColumnTest extends TestCase
         $this->assertTrue($column->isOrderable());
     }
 
-    public function test_initialize()
-    {
-        $column = $this->getColumn();
-        $this->packageInitialized();
-
-        $column->initialize();
-    }
-
     public function test_gets_or_sets_name()
     {
         $column = $this->getColumn();

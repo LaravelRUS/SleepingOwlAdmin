@@ -59,17 +59,17 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         $value = $this->getModelValue();
 
         return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getFormatedDate($value),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
+                'id' => $this->getModel()->getKey(),
+                'value' => $this->getFormatedDate($value),
+                'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+                'url' => $this->getUrl(),
 
-                'format'          => $this->getJsPickerFormat(),
-                'viewformat'      => $this->getJsPickerFormat(),
-                'data-date-pickdate'   => 'true',
-                'data-date-picktime'   => 'false',
+                'format' => $this->getJsPickerFormat(),
+                'viewformat' => $this->getJsPickerFormat(),
+                'data-date-pickdate' => 'true',
+                'data-date-picktime' => 'false',
                 'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
-                'type'                 => $this->type,
+                'type' => $this->type,
             ];
     }
 

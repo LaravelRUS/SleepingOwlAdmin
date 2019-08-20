@@ -11,7 +11,7 @@
                 {{ $entry->{$value} }}
             @endif
 
-            <div class="pull-right">
+            <div class="control-button">
                 @foreach ($controls as $control)
 
                     @if($control instanceof \SleepingOwl\Admin\Contracts\Display\ColumnInterface)
@@ -24,6 +24,7 @@
                 @endforeach
             </div>
         </div>
+
         @if ($entry->children && $entry->children->count() > 0)
             <ol class="dd-list">
                 @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $entry->children])

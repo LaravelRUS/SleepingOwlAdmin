@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Display\Column\DateTime datetime($name, $label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Filter filter($name, $label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Image image($name, $label = null)
+ * @method static \SleepingOwl\Admin\Display\Column\Gravatar gravatar($name, $label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Lists lists($name, $label = null)
  * @method static \SleepingOwl\Admin\Display\Column\Order order()
  * @method static \SleepingOwl\Admin\Display\Column\Text text($name, $label = null)

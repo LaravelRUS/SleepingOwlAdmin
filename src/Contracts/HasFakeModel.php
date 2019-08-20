@@ -2,6 +2,8 @@
 
 namespace Admin\Contracts;
 
+use Illuminate\Database\Eloquent\Model;
+
 interface HasFakeModel
 {
     /**
@@ -11,7 +13,7 @@ interface HasFakeModel
      *
      * @return \Admin\Contracts\HasFakeModel
      */
-    public function setFakeModel(\Illuminate\Database\Eloquent\Model $model);
+    public function setFakeModel(Model $model);
 
     /**
      * Retrieves fake model property.

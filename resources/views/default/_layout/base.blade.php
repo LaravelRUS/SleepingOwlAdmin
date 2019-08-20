@@ -11,10 +11,12 @@
 
 	@stack('scripts')
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini {{ $menu_class }}">
 	@yield('content')
 
 	{!! $template->meta()->renderScripts(true) !!}
 	@stack('footer-scripts')
+
+	@include(AdminTemplate::getViewPath('helper.autoupdate'))
 </body>
 </html>

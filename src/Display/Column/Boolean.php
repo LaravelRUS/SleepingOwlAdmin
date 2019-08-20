@@ -10,6 +10,11 @@ class Boolean extends NamedColumn
     protected $view = 'column.boolean';
 
     /**
+     * @var string
+     */
+    protected $width = '50px';
+
+    /**
      * @var bool
      */
     protected $isSearchable = false;
@@ -25,8 +30,8 @@ class Boolean extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'value'  => $this->getModelValue(),
-            'small' => $this->getModelSmallValue(),
-        ];
+                'value' => $this->getModelValue(),
+                'small' => $this->getModelSmallValue(),
+            ];
     }
 }

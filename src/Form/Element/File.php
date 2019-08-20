@@ -29,7 +29,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField',
             ]);
         }
@@ -198,9 +198,8 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     /**
      * @param string $rule
-     * @param string|null $message
-     *
-     * @return $this
+     * @param null $message
+     * @return $this|\SleepingOwl\Admin\Form\Element\File|\SleepingOwl\Admin\Form\Element\NamedFormElement
      */
     public function addValidationRule($rule, $message = null)
     {
@@ -246,8 +245,8 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * Set save file callback.
      * @param \Closure $callable
+     * @return $this
      */
     public function setSaveCallback(\Closure $callable)
     {

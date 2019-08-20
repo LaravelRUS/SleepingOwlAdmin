@@ -13,6 +13,11 @@ class Wysiwyg extends NamedFormElement
     protected $editor;
 
     /**
+     * @var bool|null
+     */
+    protected $collapsed;
+
+    /**
      * @var string|null
      */
     protected $filteredFieldKey;
@@ -111,6 +116,14 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
+     * @return null|string
+     */
+    public function getCollapsed()
+    {
+        return $this->collapsed;
+    }
+
+    /**
      * @param null|string $editor
      *
      * @return $this
@@ -118,6 +131,18 @@ class Wysiwyg extends NamedFormElement
     public function setEditor($editor)
     {
         $this->editor = $editor;
+
+        return $this;
+    }
+
+    /**
+     * @param null|bool $collapsed
+     *
+     * @return $this
+     */
+    public function setCollapsed($collapsed)
+    {
+        $this->collapsed = $collapsed;
 
         return $this;
     }
@@ -172,13 +197,14 @@ class Wysiwyg extends NamedFormElement
     public function toArray()
     {
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
-            'parameters' => json_encode($this->getParameters()),
-            'editor'     => $this->getEditor(),
-        ];
+                'parameters' => json_encode($this->getParameters()),
+                'editor' => $this->getEditor(),
+                'collapsed' => $this->getCollapsed(),
+            ];
     }
 
     /**
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      */

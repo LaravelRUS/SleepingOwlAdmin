@@ -1,74 +1,74 @@
 {
-  "name": "laravelrus/sleepingowl",
-  "description": "Administrative interface builder for Laravel.",
-  "homepage": "http://sleepingowladmin.ru",
-  "keywords": [
-    "laravel",
-    "admin",
-    "administrator",
-    "crud",
-    "panel"
-  ],
-  "license": "MIT",
-  "support": {
-    "issues": "https://github.com/LaravelRUS/SleepingOwlAdmin/issues",
-    "source": "https://github.com/LaravelRUS/SleepingOwlAdmin"
-  },
-  "authors": [
-    {
-      "name": "Sleeping Owl",
-      "email": "owl.sleeping@yahoo.com"
+    "name": "laravelrus/sleepingowl",
+    "description": "Administrative interface builder for Laravel.",
+    "homepage": "http://sleepingowladmin.ru",
+    "keywords": [
+        "laravel",
+        "admin",
+        "administrator",
+        "crud",
+        "panel"
+    ],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/LaravelRUS/SleepingOwlAdmin/issues",
+        "source": "https://github.com/LaravelRUS/SleepingOwlAdmin"
     },
-    {
-      "name": "Pavel Buchnev",
-      "email": "butschster@gmail.com"
+    "authors": [
+        {
+            "name": "Sleeping Owl",
+            "email": "owl.sleeping@yahoo.com"
+        },
+        {
+            "name": "Pavel Buchnev",
+            "email": "butschster@gmail.com"
+        },
+        {
+            "name": "Dave Gabrielyan",
+            "email": "aioslike@gmail.com"
+        },
+        {
+            "name": "TheArdent",
+            "email": "oleksii.yaryi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*",
+        "laravel/framework": "~5.5",
+        "kodicomponents/support": "0.*",
+        "kodicomponents/navigation": "0.*",
+        "doctrine/dbal": "~2.3",
+        "laravelcollective/html": "5.5.* || 5.6.* || 5.7.* || 5.8.*",
+        "kodicms/laravel-assets": "0.*",
+        "erusev/parsedown": "1.*",
+        "davejamesmiller/laravel-breadcrumbs": "^3.0",
+        "barryvdh/laravel-ide-helper": "^2.4.3"
     },
-    {
-      "name": "Dave Gabrielyan",
-      "email": "aioslike@gmail.com"
+    "require-dev": {
+        "phpunit/phpunit": "^6.0 || ^7.0",
+        "mockery/mockery": "0.9.*",
+        "orchestra/testbench": "^3.5 || ^3.6"
     },
-    {
-      "name": "TheArdent",
-      "email": "oleksii.yaryi@gmail.com"
+    "autoload": {
+        "psr-4": {
+            "SleepingOwl\\Admin\\": "src/",
+            "SleepingOwl\\Tests\\": "tests/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-development": "5.6.x-dev"
+        },
+        "laravel": {
+            "providers": [
+                "SleepingOwl\\Admin\\Providers\\SleepingOwlServiceProvider"
+            ]
+        }
     }
-  ],
-  "require": {
-    "php": ">=7.0",
-    "ext-json": "*",
-    "laravel/framework": "~5.5",
-    "kodicomponents/support": "0.*",
-    "kodicomponents/navigation": "0.*",
-    "doctrine/dbal": "~2.3",
-    "laravelcollective/html": "5.5.* || 5.6.* || 5.7.*",
-    "kodicms/laravel-assets": "0.*",
-    "erusev/parsedown": "1.*",
-    "davejamesmiller/laravel-breadcrumbs": "^3.0",
-    "barryvdh/laravel-ide-helper": "^2.4.3"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^6.0 || ^7.0",
-    "mockery/mockery": "0.9.*",
-    "orchestra/testbench": "^3.5 || ^3.6"
-  },
-  "autoload": {
-    "psr-4": {
-      "SleepingOwl\\Admin\\": "src/",
-      "SleepingOwl\\Tests\\": "tests/"
-    }
-  },
-  "autoload-dev": {
-    "classmap": [
-      "tests/TestCase.php"
-    ]
-  }, 
-  "extra": {
-    "branch-alias": {      
-      "dev-development": "5.6.x-dev"
-    },
-    "laravel": {
-      "providers": [
-         "SleepingOwl\\Admin\\Providers\\SleepingOwlServiceProvider"
-      ]
-    }
-  }
 }

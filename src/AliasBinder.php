@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin;
 
+use ReflectionClass;
 use BadMethodCallException;
+use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\AliasBinderInterface;
 
 class AliasBinder implements AliasBinderInterface
@@ -17,7 +20,7 @@ class AliasBinder implements AliasBinderInterface
      *
      * @return void
      */
-    public static function registerRoutes(\Illuminate\Contracts\Routing\Registrar $router)
+    public static function registerRoutes(Registrar $router)
     {
         foreach (self::$routes as $i => $route) {
             call_user_func($route, $router);
@@ -35,7 +38,7 @@ class AliasBinder implements AliasBinderInterface
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         $this->app = $application;
     }
@@ -126,23 +129,21 @@ class AliasBinder implements AliasBinderInterface
     /**
      * @param string $alias
      * @param array $arguments
-     *
      * @return object
+     * @throws \ReflectionException
      */
     public function makeClass($alias, array $arguments)
     {
-        $reflection = new \ReflectionClass($this->getAlias($alias));
+        $reflection = new ReflectionClass($this->getAlias($alias));
 
         return $reflection->newInstanceArgs($arguments);
     }
 
     /**
-     * Create new instance by alias.
-     *
-     * @param string $name
-     * @param        $arguments
-     *
-     * @return mixed
+     * @param $name
+     * @param $arguments
+     * @return object
+     * @throws \ReflectionException
      */
     public function __call($name, $arguments)
     {

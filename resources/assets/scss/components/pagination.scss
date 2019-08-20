@@ -1,0 +1,11 @@
+.pagination {
+  flex-wrap: wrap;
+
+  .page-item {
+    margin-bottom: 0.5em;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}

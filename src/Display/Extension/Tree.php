@@ -130,7 +130,7 @@ class Tree extends Extension implements Initializable, Renderable
     public function toArray()
     {
         return [
-            'columns'    => $this->allWithControl(),
+            'columns' => $this->allWithControl(),
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Form\Element\Upload;
@@ -83,6 +82,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
 
     /**
      * Initialize form.
+     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function initialize()
     {
@@ -204,10 +204,10 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @deprecated 4.5.0
+     * @return \SleepingOwl\Admin\Form\FormElementsCollection
      * @see getElements()
      *
-     * @return Collection[]
+     * @deprecated 4.5.0
      */
     public function getItems()
     {
@@ -215,12 +215,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @deprecated 4.5.0
-     * @see setElements()
-     *
-     * @param array|FormElementInterface $items
+     * @param array|\SleepingOwl\Admin\Contracts\Form\FormElementInterface $items
      *
      * @return $this
+     * @deprecated 4.5.0
+     * @see setElements()
      */
     public function setItems($items)
     {
@@ -232,12 +231,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @deprecated 4.5.0
-     * @see addElement()
-     *
-     * @param FormElementInterface $item
+     * @param \SleepingOwl\Admin\Contracts\Form\FormElementInterface $item
      *
      * @return $this
+     * @deprecated 4.5.0
+     * @see addElement()
      */
     public function addItem($item)
     {
@@ -248,6 +246,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * Set currently loaded model id.
      *
      * @param int $id
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function setId($id)
     {
@@ -290,6 +289,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setModel(Model $model)
     {
+        return $this->mo;
     }
 
     /**

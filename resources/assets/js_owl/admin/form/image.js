@@ -73,9 +73,9 @@ Vue.component('element-image', Vue.extend({
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fa fa-upload';
+                return 'fas fa-image';
             }
-            return 'fa fa-spinner fa-spin'
+            return 'fas fa-spinner fa-spin'
         },
         has_value () {
             return this.val.length > 0

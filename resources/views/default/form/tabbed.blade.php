@@ -7,12 +7,9 @@
         <ul class="nav nav-tabs" role="tablist">
             @php($active = null)
             @foreach ($items as $label => $_tmp)
-                @php
-                if (is_null($active)) {
-                    $active = $label;
-                }
-                @endphp
-                ?>
+                @if (is_null($active))
+                     @php($active = $label)
+                @endif
                 <li role="presentation" {!! ($active == $label) ? 'class="active"' : '' !!}>
                     <a href="#{{ md5($label) }}" aria-controls="{{ md5($label) }}" role="tab"
                        data-toggle="tab">{{ $label }}</a>

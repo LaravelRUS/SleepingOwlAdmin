@@ -393,7 +393,7 @@ class ModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $display = $this->app->call($this->getDisplay(), $payload);
+        $display = $this->app->call($this->getDisplay(), ['payload' => $payload]);
 
         if ($display instanceof DisplayDatatablesAsync) {
             $display->setPayload($payload);
@@ -440,7 +440,7 @@ class ModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $form = $this->app->call($this->getCreate(), $payload);
+        $form = $this->app->call($this->getCreate(), ['payload' => $payload]);
 
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
@@ -488,7 +488,7 @@ class ModelConfiguration extends ModelConfigurationManager
             return;
         }
 
-        $payload = array_merge(['id' => $id], (array) $payload);
+        $payload = array_merge(['id' => $id], ['payload' => $payload]);
 
         $form = $this->app->call($this->getEdit(), $payload);
 

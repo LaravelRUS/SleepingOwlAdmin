@@ -24,9 +24,14 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     protected $uncheckedLabel;
 
     /**
+     * @var string
+     */
+    protected $width = '50px';
+
+    /**
      * Checkbox constructor.
      *
-     * @param string      $name
+     * @param string $name
      * @param string|null $checkedLabel
      * @param string|null $uncheckedLabel
      * @param string|null $columnLabel
@@ -93,7 +98,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'checkedLabel'   => $this->getCheckedLabel(),
+                'checkedLabel' => $this->getCheckedLabel(),
                 'uncheckedLabel' => $this->getUncheckedLabel(),
             ];
     }

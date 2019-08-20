@@ -48,6 +48,11 @@ abstract class FormElement implements FormElementInterface
     /**
      * @var bool|callable
      */
+    protected $displayed = true;
+
+    /**
+     * @var bool|callable
+     */
     protected $valueSkipped = false;
 
     /**
@@ -196,6 +201,18 @@ abstract class FormElement implements FormElementInterface
     /**
      * @return bool
      */
+    public function isDisplayed()
+    {
+        if (is_callable($this->displayed)) {
+            return (bool) call_user_func($this->displayed, $this->getModel());
+        }
+
+        return (bool) $this->displayed;
+    }
+
+    /**
+     * @return bool
+     */
     public function isValueSkipped()
     {
         if (is_callable($this->valueSkipped)) {
@@ -225,6 +242,18 @@ abstract class FormElement implements FormElementInterface
     public function setReadonly($readonly)
     {
         $this->readonly = $readonly;
+
+        return $this;
+    }
+
+    /**
+     * @param Closure|bool $displayed
+     *
+     * @return $this
+     */
+    public function setDisplayed($displayed)
+    {
+        $this->displayed = $displayed;
 
         return $this;
     }
@@ -275,6 +304,7 @@ abstract class FormElement implements FormElementInterface
         return [
             'value' => $this->getValue(),
             'readonly' => $this->isReadonly(),
+            'displayed' => $this->isDisplayed(),
             'model' => $this->getModel(),
         ];
     }

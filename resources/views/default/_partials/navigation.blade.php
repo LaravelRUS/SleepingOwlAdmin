@@ -9,8 +9,6 @@
 		<nav class="mt-2">
 			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-				<li class="nav-header">Main Menu</li>
-
 				@stack('sidebar.ul.top')
 				{!! $template->renderNavigation() !!}
 			</ul>

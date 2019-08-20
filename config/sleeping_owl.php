@@ -183,6 +183,47 @@ return [
         'simplemde' => [
             'hideIcons' => ['side-by-side', 'fullscreen'],
         ],
+
+        /*
+        * ver. 0.8.12
+        * See https://summernote.org/
+        * Need jQuery
+        */
+        'summernote' => [
+          'height' => 200,
+          'lang' => 'ru-RU',
+          'codemirror' => [
+            'theme' => 'monokai',
+          ],
+        ],
+
+        /*
+         * See https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html
+         */
+        'ckeditor5' => [
+
+          'language' => app()->getLocale(),
+
+          'alignment' => [
+            'options' => [
+              'left', 'right',
+            ],
+          ],
+
+          'toolbar' => [
+            'undo', 'redo', '|',
+            'heading', '|',
+            'bold', 'italic', 'blockQuote', '|',
+            'numberedList', 'bulletedList', '|',
+            'CKFinder', 'ImageUpload', 'imageTextAlternative', 'MediaEmbed', 'imageStyle:full', 'imageStyle:side', '|',
+            'link', 'bulletedList', 'numberedList', '|',
+            'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+          ],
+
+            // 'extraPlugins'              => 'uploadimage,image2,justify,youtube,uploadfile',
+            'uploadUrl'                 => '/storage/images_admin',
+            'filebrowserUploadUrl'      => '/storage/images_admin',
+        ],
     ],
 
     /*
@@ -202,6 +243,22 @@ return [
     |
     */
     'breadcrumbs' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Autoupdate datatables
+    |--------------------------------------------------------------------------
+    |
+    | Interval in minutes. Do not set too low.
+    | dt_autoupdate_interval >= 1 and (int)
+    | dt_autoupdate_class - custom class if need (can be null)
+    | dt_autoupdate_color - color ProgressBar (can be null)
+    |
+    */
+    'dt_autoupdate' => false,
+    'dt_autoupdate_interval' => 5, //minutes
+    'dt_autoupdate_class' => '',
+    'dt_autoupdate_color' => '#dc3545',
 
     /*
     |--------------------------------------------------------------------------
