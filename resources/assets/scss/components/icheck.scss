@@ -5,14 +5,13 @@
  */
 
  .adminCheckboxAll {
-   width: 1em;
-   height: 1em;
+   width: 1.3rem;
+   height: 1.3rem;
  }
 
  [class*="icheck-"] {
-    min-height: 18px;
+    min-height: 1rem;
     margin-top: 4px;
-    // margin-bottom: 6px !important;
     padding-left: 0px;
 }
 
@@ -27,8 +26,8 @@
 
 [class*="icheck-"] > label {
     padding-left: 22px !important;
-    min-height: 18px;
-    line-height: 18px;
+    min-height: 1rem;
+    line-height: 1rem;
     display: inline-block;
     position: relative;
     vertical-align: top;
@@ -52,8 +51,8 @@
   content: "";
   display: inline-block;
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 1.3rem;
+  height: 1.3rem;
   border: 1px solid $gray-500;
   border-radius: 0px;
   margin-left: -22px;
@@ -66,13 +65,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 5px;
-  height: 8px;
+  width: 0.6em;
+  height: 0.6em;
   border: solid 2px $white;
   border-left: none;
   border-top: none;
-  transform: translate(6.5px, 4.5px) rotate(45deg);
-  -ms-transform: translate(6.5px, 4.5px) rotate(45deg);
+  transform: translate(0.35em, 0.2em) rotate(45deg);
+  -ms-transform: translate(0.35em, 0.2em) rotate(45deg);
 }
 
 [class*="icheck-"] > input[type="radio"]:first-child + label::before,
