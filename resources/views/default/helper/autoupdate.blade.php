@@ -16,7 +16,8 @@
 
   <script type="text/javascript">
     $(window).on('load', () => {
-
+      if ($('table').hasClass('datatables')) {
+        
       var bar = new ProgressBar.Line('.datatables', {
         strokeWidth: 2,
         duration: {{ $autoupdate_timer }},
@@ -53,7 +54,7 @@
         stop = 1;
         console.log('Stop autoupdate');
       })
-
+    }
     });
   </script>
 @endif
