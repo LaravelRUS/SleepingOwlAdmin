@@ -311,6 +311,7 @@ class NamedFormElementTest extends TestCase
             'helpText'   => null,
             'required'   => false,
             'attributes' => ' id="key2[subkey]" name="key2[subkey]"',
+            'displayed' => true,
         ], $element->toArray());
     }
 
