@@ -126,18 +126,41 @@ class FormElementController extends Controller
             ], 404);
         }
 
-        $field = $request->field;
+        #$field = $request->field;
         $model = new $request->model;
+        $display = $element->getDisplay();
+        $custom_name = $element->getCustomName();
 
         if ($request->q && is_object($model)) {
+            $model = $model->where($request->search, 'like', "%{$request->q}%");
+
+            // call the pre load options query preparer if has be set
+            if (is_callable($preparer = $element->getLoadOptionsQueryPreparer())) {
+                $model = $preparer($this, $model);
+            }
+
             return new JsonResponse(
-                $model::where($request->search, 'like', "%{$request->q}%")
+                $model
                     ->get()
-                    ->map(function (Model $item) use ($field) {
+                    ->map(function (Model $item) use ($display, $custom_name) {
+                        if (is_string($display)) {
+                            $value = $item->{$display};
+                        } elseif (is_callable($display)) {
+                            $value = $display($item);
+                        } else {
+                            $value = null;
+                        }
+                        if (is_string($custom_name)) {
+                            $custom_name_value = $item->{$custom_name};
+                        } elseif (is_callable($custom_name)) {
+                            $custom_name_value = $custom_name($item);
+                        } else {
+                            $custom_name_value = null;
+                        }
                         return [
-                            'tag_name' => $item->{$field},
+                            'tag_name' => $value,
                             'id' => $item->id,
-                            'custom_name' => $item->custom_name,
+                            'custom_name' => $custom_name_value,
                         ];
                     })
             );
