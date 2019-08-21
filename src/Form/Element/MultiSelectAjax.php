@@ -8,6 +8,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Traits\SelectAjaxFunctions;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
