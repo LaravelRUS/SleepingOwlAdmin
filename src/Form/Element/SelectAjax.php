@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -105,7 +104,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             'class' => 'form-control js-data-ajax',
             'data-select-type' => 'single',
             'model' => get_class($this->getModelForOptions()),
-            #'field' => $this->getDisplay(),
+            //'field' => $this->getDisplay(),
             'search' => $this->getSearch(),
             'search_url' => $this->getSearchUrl(),
             'data-min-symbols' => $this->getMinSymbols(),

@@ -105,7 +105,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             'class' => 'form-control js-data-ajax',
             'multiple',
             'model' => get_class($this->getModelForOptions()),
-            #'field' => $this->getDisplay(),
+            //'field' => $this->getDisplay(),
             'search' => $this->getSearch(),
             'search_url' => $this->getSearchUrl(),
             'data-min-symbols' => $this->getMinSymbols(),

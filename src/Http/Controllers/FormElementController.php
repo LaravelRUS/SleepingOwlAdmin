@@ -126,7 +126,7 @@ class FormElementController extends Controller
             ], 404);
         }
 
-        #$field = $request->field;
+        //$field = $request->field;
         $model = new $request->model;
         $display = $element->getDisplay();
         $custom_name = $element->getCustomName();
@@ -157,6 +157,7 @@ class FormElementController extends Controller
                         } else {
                             $custom_name_value = null;
                         }
+
                         return [
                             'tag_name' => $value,
                             'id' => $item->id,
