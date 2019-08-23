@@ -130,17 +130,22 @@ class FormElementController extends Controller
         $model = new $request->model;
         $display = $element->getDisplay();
         $custom_name = $element->getCustomName();
+        $exclude = $element->getExclude();
 
         if ($request->q && is_object($model)) {
-            $model = $model->where($request->search, 'like', "%{$request->q}%");
+            $query = $model->where($model->getTable().'.'.$request->search, 'like', "%{$request->q}%");
+
+            if (count($exclude)) {
+                $query = $query->whereNotIn($model->getTable().'.'.$model->getKeyName(), $exclude);
+            }
 
             // call the pre load options query preparer if has be set
             if (is_callable($preparer = $element->getLoadOptionsQueryPreparer())) {
-                $model = $preparer($this, $model);
+                $query = $preparer($this, $query);
             }
 
             return new JsonResponse(
-                $model
+                $query
                     ->get()
                     ->map(function (Model $item) use ($display, $custom_name) {
                         if (is_string($display)) {
