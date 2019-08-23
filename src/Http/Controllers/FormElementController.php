@@ -162,7 +162,7 @@ class FormElementController extends Controller
                         foreach ($search as $key => $val) {
                             if (is_numeric($key)) {
                                 $srch = $val;
-                                $value = '%' . $q . '%';
+                                $value = '%'.$q.'%';
                             } else {
                                 $srch = $key;
                                 switch ($val) {
@@ -170,14 +170,14 @@ class FormElementController extends Controller
                                         $value = $q;
                                         break;
                                     case 'begins_with':
-                                        $value = $q . '%';
+                                        $value = $q.'%';
                                         break;
                                     case 'ends_with':
-                                        $value = '%' . $q;
+                                        $value = '%'.$q;
                                         break;
                                     case 'contains':
                                     default:
-                                        $value = '%' . $q . '%';
+                                        $value = '%'.$q.'%';
                                         break;
                                 }
                             }
