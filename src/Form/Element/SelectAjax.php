@@ -38,7 +38,6 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             $key = $repository->getModel()->getKeyName();
 
             $return = $query->where([$key => $this->getValueFromModel()]);
-            #dd($return->toSql());
             return $return;
         });
         */
@@ -103,12 +102,20 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             'id' => $this->getName(),
             'class' => 'form-control js-data-ajax',
             'data-select-type' => 'single',
-            'model' => get_class($this->getModelForOptions()),
+            //'model' => get_class($this->getModelForOptions()),
             //'field' => $this->getDisplay(),
-            'search' => $this->getSearch(),
+            //'search' => $this->getSearch(),
             'search_url' => $this->getSearchUrl(),
             'data-min-symbols' => $this->getMinSymbols(),
         ]);
+
+        if ($this->getDataDepends() != '[]') {
+            $this->setHtmlAttributes([
+                'data-depends' => $this->getDataDepends(),
+                'data-url' => $this->getSearchUrl(),
+                'class' => 'input-select input-select-dependent',
+            ]);
+        }
 
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray();
     }

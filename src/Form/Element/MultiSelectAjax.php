@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Builder;
@@ -105,12 +106,20 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             'id' => $this->getName(),
             'class' => 'form-control js-data-ajax',
             'multiple',
-            'model' => get_class($this->getModelForOptions()),
+            //'model' => get_class($this->getModelForOptions()),
             //'field' => $this->getDisplay(),
-            'search' => $this->getSearch(),
+            //'search' => $this->getSearch(),
             'search_url' => $this->getSearchUrl(),
             'data-min-symbols' => $this->getMinSymbols(),
         ]);
+
+        if ($this->getDataDepends() != '[]') {
+            $this->setHtmlAttributes([
+                'data-depends' => $this->getDataDepends(),
+                'data-url' => $this->getSearchUrl(),
+                'class' => 'input-select input-select-dependent',
+            ]);
+        }
 
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray();
     }
@@ -175,13 +184,13 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             }, $options);
 
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, 1, 0);
+            $options = Arr::pluck($options, 1, 0);
         } elseif ($options instanceof Collection) {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options->all(), $this->getDisplay(), $key);
+            $options = Arr::pluck($options->all(), $this->getDisplay(), $key);
         } else {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, $this->getDisplay(), $key);
+            $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
 
         return $options;
