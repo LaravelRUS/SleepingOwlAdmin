@@ -133,18 +133,18 @@ trait SelectAjaxFunctions
                     $temp_fail = false;
                     foreach ($parts as $part) {
                         $temp = $temp->{$part};
-                        if (!$temp) {
+                        if (! $temp) {
                             $temp_fail = true;
                             break;
                         }
                     }
-                    if (!$temp_fail) {
+                    if (! $temp_fail) {
                         $depend_value = $temp->{$fieldName};
                     }
                 } else {
                     $depend_value = $model->{$depend};
                 }
-                if (!$depend_value) {
+                if (! $depend_value) {
                     $depend_value = $temp_element->getDefaultValue();
                 }
                 $data_depends[$depend] = $depend_value;
