@@ -162,7 +162,6 @@
                     if ($el.hasClass('js-data-ajax')) {
                         let correct = true;
                         $.each(vVal, function(index, value){
-                            console.log('vVal[' + index + '] = ' + vVal[index]);
                             if (!vVal[index]) {
                                 correct = false;
                             }

@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Support\Arr;
+use SleepingOwl\Admin\Http\Controllers\FormElementController;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 
 trait SelectAjaxFunctions
@@ -101,6 +102,51 @@ trait SelectAjaxFunctions
     public function mutateOptions()
     {
         return $this->getOptions();
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        // get model, model configuration interface, model logic
+        $model = $this->getModel();
+        $section = \AdminSection::getModel($this->getModel());
+        $form_element_controller = new FormElementController();
+        $form = $form_element_controller->getModelLogic($section, $model->id);
+
+        // if defined: get values of the depends form fields
+        $depends = json_decode($this->getDataDepends(), true);
+        if (is_array($depends) && count($depends)) {
+            $data_depends = [];
+            foreach ($depends as $depend) {
+                $temp_element = $form->getElement($depend);
+                $depend_value = $model->{$depend} ?: $temp_element->getDefaultValue();
+                $data_depends[$depend] = $depend_value;
+            }
+            $this->setAjaxParameters($data_depends);
+        }
+
+        // if defined: get model for options via callback
+        if (is_callable($callback = $callback = $this->getModelForOptionsCallback())) {
+            $result = $callback($this);
+            if ($result) {
+                $this->setModelForOptions($result);
+            }
+        }
+
+        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
+            $this->setOptions(
+                $this->loadOptions()
+            );
+        }
+
+        $options = Arr::except($this->options, $this->exclude);
+        if ($this->isSortable()) {
+            asort($options, $this->getSortableFlags());
+        }
+
+        return $options;
     }
 
     /**
