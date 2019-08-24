@@ -126,7 +126,9 @@ trait SelectAjaxFunctions
                     $parts = explode('.', $depend);
                     $fieldName = array_pop($parts);
                     $relationName = implode('.', $parts);
-                    $model->load($relationName);
+                    if (! $model->relationLoaded($relationName)) {
+                        $model->load($relationName);
+                    }
                     $temp = $model;
                     $temp_fail = false;
                     foreach ($parts as $part) {
