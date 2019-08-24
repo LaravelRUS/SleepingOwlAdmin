@@ -124,7 +124,6 @@ trait SelectAjaxFunctions
                 $depend_value = $model->{$depend} ?: $temp_element->getDefaultValue();
                 $data_depends[$depend] = $depend_value;
             }
-            #d($data_depends);
             $this->setAjaxParameters($data_depends);
         }
 
