@@ -121,7 +121,30 @@ trait SelectAjaxFunctions
             $data_depends = [];
             foreach ($depends as $depend) {
                 $temp_element = $form->getElement($depend);
-                $depend_value = $model->{$depend} ?: $temp_element->getDefaultValue();
+                $depend_value = null;
+                if (mb_strpos($depend, '.')) {
+                    $parts = explode('.', $depend);
+                    $fieldName = array_pop($parts);
+                    $relationName = implode('.', $parts);
+                    $model->load($relationName);
+                    $temp = $model;
+                    $temp_fail = false;
+                    foreach ($parts as $part) {
+                        $temp = $temp->{$part};
+                        if (!$temp) {
+                            $temp_fail = true;
+                            break;
+                        }
+                    }
+                    if (!$temp_fail) {
+                        $depend_value = $temp->{$fieldName};
+                    }
+                } else {
+                    $depend_value = $model->{$depend};
+                }
+                if (!$depend_value) {
+                    $depend_value = $temp_element->getDefaultValue();
+                }
                 $data_depends[$depend] = $depend_value;
             }
             $this->setAjaxParameters($data_depends);
