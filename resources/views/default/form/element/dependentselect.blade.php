@@ -1,5 +1,5 @@
 <div class="form-group form-element-dependentselect {{ $errors->has($name) ? 'has-error' : '' }}">
-    <label for="{{ $name }}" class="control-label">
+    <label for="{{ $id }}" class="control-label">
         {{ $label }}
 
         @if($required)

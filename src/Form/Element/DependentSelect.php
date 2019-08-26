@@ -140,7 +140,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'size' => 2,
             'data-select-type' => 'single',
             'data-url' => $this->getDataUrl(),
@@ -153,7 +153,7 @@ class DependentSelect extends Select implements WithRoutesInterface
         }
 
         return [
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),

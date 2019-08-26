@@ -235,12 +235,13 @@ class Select extends NamedFormElement
      */
     public function toArray()
     {
+        $this->setHtmlAttribute('id', ($this->getHtmlAttribute('id') ?: $this->getId()));
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
             'size' => 2,
             'data-select-type' => 'single',
-            'class' => 'form-control',
         ]);
+
+        $this->setHtmlAttribute('class', 'form-control');
 
         if ($this->isReadonly()) {
             $this->setHtmlAttribute('disabled', 'disabled');
@@ -253,11 +254,13 @@ class Select extends NamedFormElement
             $options = collect($options)->prepend(['id' => null, 'text' => trans('sleeping_owl::lang.select.nothing')]);
         }
 
-        return ['attributes' => $this->htmlAttributesToString()] + parent::toArray() + [
+        $return = ['attributes' => $this->htmlAttributesToString()] + parent::toArray() + [
                 'options' => $options,
                 'limit' => $this->getLimit(),
                 'nullable' => $this->isNullable(),
             ];
+
+        return $return;
     }
 
     /**

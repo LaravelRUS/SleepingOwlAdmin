@@ -203,6 +203,14 @@ trait SelectAjaxFunctions
     }
 
     /**
+     * @return array
+     */
+    public function getDataDependsArray()
+    {
+        return $this->dataDepends;
+    }
+
+    /**
      * @param array|string $depends
      *
      * @return $this

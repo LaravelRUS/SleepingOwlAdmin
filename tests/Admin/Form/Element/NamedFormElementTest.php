@@ -304,13 +304,13 @@ class NamedFormElementTest extends TestCase
             'value'      => null,
             'readonly'   => false,
             'model'      => null,
-            'id'         => 'key2[subkey]',
+            'id'         => 'key2__subkey',
             'name'       => 'key2[subkey]',
             'path'       => 'key2.subkey',
             'label'      => 'Label',
             'helpText'   => null,
             'required'   => false,
-            'attributes' => ' id="key2[subkey]" name="key2[subkey]"',
+            'attributes' => ' id="key2__subkey" name="key2[subkey]"',
         ], $element->toArray());
     }
 

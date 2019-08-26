@@ -99,7 +99,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
         $this->setLoadOptionsQueryPreparer($this->default_query_preparer);
 
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'class' => 'form-control js-data-ajax',
             'data-select-type' => 'single',
             //'model' => get_class($this->getModelForOptions()),
@@ -109,9 +109,15 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             'data-min-symbols' => $this->getMinSymbols(),
         ]);
 
-        if ($this->getDataDepends() != '[]') {
+        if (count($this->getDataDependsArray())) {
+            $depends = $this->getDataDependsArray();
+            $depends = array_map(function ($el) {
+                return strtr($el, ['.' => '__']);
+            }, $depends);
+            $depends = json_encode($depends);
+
             $this->setHtmlAttributes([
-                'data-depends' => $this->getDataDepends(),
+                'data-depends' => $depends,
                 'data-url' => $this->getSearchUrl(),
                 'class' => 'input-select input-select-dependent',
             ]);
