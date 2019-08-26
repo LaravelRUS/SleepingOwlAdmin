@@ -118,6 +118,8 @@ class FormElementController extends Controller
 
         // because field name in MultiSelectAjax ends with '[]'
         $fieldPrepared = str_replace('[]', '', $field);
+        // process fields with relations: user[role]
+        $fieldPrepared = strtr($fieldPrepared, ['[' => '.', ']' => '']);
 
         /** @var SelectAjax|MultiSelectAjax $element */
         $element = $form->getElement($fieldPrepared);
@@ -128,9 +130,16 @@ class FormElementController extends Controller
             ], 404);
         }
 
-        $element->setAjaxParameters(
-            $request->input('depdrop_all_params', [])
-        );
+        $params = $request->input('depdrop_all_params', []);
+        $temp = [];
+        foreach ($params as $key => $val) {
+            $key = strtr($key, ['[' => '.', ']' => '']);
+            $key = strtr($key, ['__' => '.']);
+            $temp[$key] = $val;
+        }
+        $params = $temp;
+
+        $element->setAjaxParameters($params);
 
         if (is_callable($closure = $element->getModelForOptionsCallback())) {
             $model_classname = $closure($element);

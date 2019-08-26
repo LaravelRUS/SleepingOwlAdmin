@@ -98,6 +98,26 @@
             }
             $el.trigger('depdrop.init');
             $el.trigger('select2:select');
+
+            ///////////////////////////////////////////////////////////
+            // 2019.08.24
+            // @sngrl
+            ///////////////////////////////////////////////////////////
+            if ($el.hasClass('js-data-ajax')) {
+                var correct = true;
+                $.each(depends, function (index, element) {
+                    let $dep_el = $('#' + element);
+                    let type = $dep_el.attr('type');
+                    let value = (type === "checkbox" || type === "radio") ? $dep_el.prop('checked') : $dep_el.val();
+                    if (!value) {
+                        correct = false;
+                    }
+                });
+                if (correct) {
+                    $el.removeAttr('disabled');
+                }
+            }
+            ///////////////////////////////////////////////////////////
         },
         parseDisabled: function () {
             var self = this;
