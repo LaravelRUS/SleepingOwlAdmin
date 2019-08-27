@@ -112,8 +112,9 @@ trait SelectAjaxFunctions
         // get model, model configuration interface, model logic
         $model = $this->getModel();
         $section = \AdminSection::getModel($this->getModel());
+        $payload = $section->getPayload();
         $form_element_controller = new FormElementController();
-        $form = $form_element_controller->getModelLogic($section, $model->id);
+        $form = $form_element_controller->getModelLogicPayload($section, $model->id, $payload);
 
         // if defined: get values of the depends form fields
         $depends = json_decode($this->getDataDepends(), true);

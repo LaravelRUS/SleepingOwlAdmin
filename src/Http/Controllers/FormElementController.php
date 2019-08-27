@@ -42,6 +42,34 @@ class FormElementController extends Controller
     }
 
     /**
+     * @param ModelConfigurationInterface $model
+     * @param null $id
+     * @param mixed $payload
+     * @return JsonResponse|mixed
+     */
+    public function getModelLogicPayload(ModelConfigurationInterface $model, $id = null, $payload = [])
+    {
+        if (! is_null($id)) {
+            $item = $model->getRepository()->find($id);
+            if (is_null($item) || ! $model->isEditable($item)) {
+                return new JsonResponse([
+                    'message' => trans('lang.message.access_denied'),
+                ], 403);
+            }
+
+            return $model->fireEdit($id, $payload);
+        }
+
+        if (! $model->isCreatable()) {
+            return new JsonResponse([
+                'message' => trans('lang.message.access_denied'),
+            ], 403);
+        }
+
+        return $model->fireCreate($payload);
+    }
+
+    /**
      * @param Request $request
      * @param ModelConfigurationInterface $model
      * @param string $field
