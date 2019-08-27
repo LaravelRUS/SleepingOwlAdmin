@@ -12,6 +12,11 @@ class SectionModelConfiguration extends ModelConfigurationManager
 {
     protected $breadcrumbs = null;
 
+    /**
+     * @var mixed
+     */
+    protected $payload = [];
+
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
         parent::__construct($app, $class);
@@ -69,6 +74,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
+        $this->setPayload($payload);
+
         $display = $this->app->call([$this, 'onDisplay'], ['payload' => $payload]);
 
         if ($display instanceof DisplayDatatablesAsync) {
@@ -92,6 +99,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
         if (! method_exists($this, 'onCreate')) {
             return;
         }
+
+        $this->setPayload($payload);
 
         $form = $this->app->call([$this, 'onCreate'], ['payload' => $payload]);
 
@@ -121,6 +130,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
         if (! method_exists($this, 'onEdit')) {
             return;
         }
+
+        $this->setPayload($payload);
 
         $payload = array_merge(['id' => $id], ['payload' => $payload]);
 
@@ -176,5 +187,25 @@ class SectionModelConfiguration extends ModelConfigurationManager
         if (method_exists($this, 'onRestore')) {
             return $this->app->call([$this, 'onRestore'], ['id' => $id]);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @param mixed $payload
+     *
+     * @return $this
+     */
+    public function setPayload($payload = [])
+    {
+        $this->payload = $payload;
+
+        return $this;
     }
 }
