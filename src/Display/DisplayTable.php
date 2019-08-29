@@ -184,6 +184,9 @@ class DisplayTable extends Display
 
         $params = parent::toArray();
 
+
+        $params['createForm'] = $model->fireCreate();
+        $params['alias'] = $model->getAlias();
         $params['creatable'] = $model->isCreatable();
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();

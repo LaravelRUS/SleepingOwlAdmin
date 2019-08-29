@@ -17,6 +17,14 @@
 			</a>
 		@endif
 
+		@if ($creatable)
+			<button id="new-entry-open-dialog-button"  class="btn btn-primary" data-toggle="modal" data-target="#new-entry-dialog">
+				<i class="fa fa-plus"></i> {{ $newEntryButtonText }} Modal
+			</button>
+
+			<modal id="new-entry-dialog" title="{{ $newEntryButtonText }}" style="display: none;">{!! $createForm !!} </modal>
+		@endif
+
 		@yield('panel.buttons')
 
 		<div class="pull-right">
