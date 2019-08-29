@@ -89,6 +89,10 @@ class TextAddon extends NamedFormElement
             'type' => 'text',
         ]);
 
+        if ($this->isReadonly()) {
+            $this->setHtmlAttribute('disabled', 'disabled');
+        }
+
         return parent::toArray() + [
                 'placement' => $this->getPlacement(),
                 'addon' => $this->getAddon(),
