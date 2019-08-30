@@ -150,7 +150,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * @param string $label
      * @param bool|false $active
      *
-     * @return TabInterface
+     * @return DisplayTab
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
@@ -196,9 +196,22 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setId($id)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($id) {
+        $model_class = get_class($this->getModel());
+        $this->getTabs()->each(function (TabInterface $tab) use ($id, $model_class) {
             if ($tab instanceof FormInterface) {
-                $tab->setId($id);
+                if (!$tab->getExternalForm()) {
+                    $tab_content = $tab->getContent();
+                    if ($tab_content instanceof FormInterface) {
+                        $tab_model = $tab->getModel();
+                        $tab_model_section = \AdminSection::getModel($tab_model);
+                        if (
+                            $model_class == get_class($tab_model)
+                            && $tab->getContent()->getAction() == $tab_model_section->getUpdateUrl($id)
+                        ) {
+                            $tab->setId($id);
+                        }
+                    }
+                }
             }
         });
 
