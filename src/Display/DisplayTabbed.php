@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Model\SectionModelConfiguration;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
@@ -203,11 +204,12 @@ class DisplayTabbed implements DisplayInterface, FormInterface
                     $tab_content = $tab->getContent();
                     if ($tab_content instanceof FormInterface) {
                         $tab_model = $tab->getModel();
+                        $set_id = $model_class == get_class($tab_model);
                         $tab_model_section = \AdminSection::getModel($tab_model);
-                        if (
-                            $model_class == get_class($tab_model)
-                            && $tab->getContent()->getAction() == $tab_model_section->getUpdateUrl($id)
-                        ) {
+                        if (is_object($tab_model_section) && $tab_model_section instanceof SectionModelConfiguration) {
+                            $set_id = $set_id && $tab->getContent()->getAction() == $tab_model_section->getUpdateUrl($id);
+                        }
+                        if ($set_id) {
                             $tab->setId($id);
                         }
                     }
