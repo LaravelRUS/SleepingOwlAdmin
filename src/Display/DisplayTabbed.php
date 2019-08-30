@@ -200,7 +200,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
         $model_class = get_class($this->getModel());
         $this->getTabs()->each(function (TabInterface $tab) use ($id, $model_class) {
             if ($tab instanceof FormInterface) {
-                if (!$tab->getExternalForm()) {
+                if (! $tab->getExternalForm()) {
                     $tab_content = $tab->getContent();
                     if ($tab_content instanceof FormInterface) {
                         $tab_model = $tab->getModel();
