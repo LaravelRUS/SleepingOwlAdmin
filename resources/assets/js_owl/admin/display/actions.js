@@ -8,8 +8,15 @@ Admin.Modules.register('display.actions', () => {
             //Исправлено для версии sweetalert 7.0.0
             if (result.value) {
 
-                let $checkboxes = $('.adminCheckboxRow').filter(':checked'),
-                    $selectActions = $("#sleepingOwlActionsStore");
+                //let $checkboxes = $('.adminCheckboxRow').filter(':checked'),
+                //    $selectActions = $("#sleepingOwlActionsStore");
+
+                let $datatable_wrapper = $(self).parents('.panel').find('.dataTables_wrapper'),
+                    $checkboxes = $datatable_wrapper.find('.adminCheckboxRow').filter(':checked'),
+                    $selectActions = $(self).find(".sleepingOwlActionsStore");
+
+                //console.log($checkboxes);
+                //console.log($selectActions);
 
                 let data = $checkboxes.serialize();
 
@@ -25,6 +32,14 @@ Admin.Modules.register('display.actions', () => {
             $.ajax(settings).done(function (msg) {
                 if (msg.hasOwnProperty('text')) {
                     swal({title: msg.text, text: msg.message, type: msg.type, timer: 5000})
+                }
+                if (msg.hasOwnProperty('__callback')) {
+                    let callback_name = msg.__callback;
+                    //console.log(callback_name);
+                    //console.log(window[callback_name]);
+                    if (typeof window[callback_name] == 'function') {
+                        window[callback_name]($datatable_wrapper, $selectActions);
+                    }
                 }
             });
 
