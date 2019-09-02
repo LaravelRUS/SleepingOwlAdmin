@@ -14,9 +14,9 @@ class FormElementsCollection extends Collection
     {
         return $this->filter(function ($element) {
             if ($element instanceof FormElementInterface) {
-              if (!$element->isReadonly() || !$element->isDisplayed()) {
-                return false;
-              }
+                if (! $element->isReadonly() || ! $element->isDisplayed()) {
+                    return false;
+                }
                 // return ! $element->isReadonly();
             }
 
