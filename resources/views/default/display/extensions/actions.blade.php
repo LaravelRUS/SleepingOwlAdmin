@@ -16,4 +16,5 @@
             </button>
         </div>
     </form>
+    <div class="clearfix"></div>
 @endif
