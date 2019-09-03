@@ -125,7 +125,7 @@ abstract class Template implements TemplateInterface
             return $this->getTitle();
         }
 
-        return $title."{$separator}".$this->getTitle();
+        return strip_tags($title)."{$separator}".$this->getTitle();
     }
 
     /**
