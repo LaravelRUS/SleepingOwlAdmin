@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Support\Arr;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Http\Controllers\FormElementController;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 
@@ -116,41 +117,43 @@ trait SelectAjaxFunctions
         $form_element_controller = new FormElementController();
         $form = $form_element_controller->getModelLogicPayload($section, $model->id, $payload);
 
-        // if defined: get values of the depends form fields
-        $depends = json_decode($this->getDataDepends(), true);
-        if (is_array($depends) && count($depends)) {
-            $data_depends = [];
-            foreach ($depends as $depend) {
-                $temp_element = $form->getElement($depend);
-                $depend_value = null;
-                if (mb_strpos($depend, '.')) {
-                    $parts = explode('.', $depend);
-                    $fieldName = array_pop($parts);
-                    $relationName = implode('.', $parts);
-                    if (! $model->relationLoaded($relationName)) {
-                        $model->load($relationName);
-                    }
-                    $temp = $model;
-                    $temp_fail = false;
-                    foreach ($parts as $part) {
-                        $temp = $temp->{$part};
-                        if (! $temp) {
-                            $temp_fail = true;
-                            break;
+        if ($form instanceof FormInterface) {
+            // if defined: get values of the depends form fields
+            $depends = json_decode($this->getDataDepends(), true);
+            if (is_array($depends) && count($depends)) {
+                $data_depends = [];
+                foreach ($depends as $depend) {
+                    $temp_element = $form->getElement($depend);
+                    $depend_value = null;
+                    if (mb_strpos($depend, '.')) {
+                        $parts = explode('.', $depend);
+                        $fieldName = array_pop($parts);
+                        $relationName = implode('.', $parts);
+                        if (! $model->relationLoaded($relationName)) {
+                            $model->load($relationName);
                         }
+                        $temp = $model;
+                        $temp_fail = false;
+                        foreach ($parts as $part) {
+                            $temp = $temp->{$part};
+                            if (! $temp) {
+                                $temp_fail = true;
+                                break;
+                            }
+                        }
+                        if (! $temp_fail) {
+                            $depend_value = $temp->{$fieldName};
+                        }
+                    } else {
+                        $depend_value = $model->{$depend};
                     }
-                    if (! $temp_fail) {
-                        $depend_value = $temp->{$fieldName};
+                    if (! $depend_value) {
+                        $depend_value = $temp_element->getDefaultValue();
                     }
-                } else {
-                    $depend_value = $model->{$depend};
+                    $data_depends[$depend] = $depend_value;
                 }
-                if (! $depend_value) {
-                    $depend_value = $temp_element->getDefaultValue();
-                }
-                $data_depends[$depend] = $depend_value;
+                $this->setAjaxParameters($data_depends);
             }
-            $this->setAjaxParameters($data_depends);
         }
 
         // if defined: get model for options via callback
