@@ -98,7 +98,8 @@ class Order extends TableColumn implements WithRoutesInterface
             return $this->totalCountValue;
         }
 
-        $request = \Request::capture();
+        //$request = \Request::capture();
+        $request = \Illuminate\Http\Request::capture();
         $modelConfiguration = $this->getModelConfiguration();
         $query = $modelConfiguration->getRepository()->getQuery();
         if ($modelConfiguration instanceof Section) {
