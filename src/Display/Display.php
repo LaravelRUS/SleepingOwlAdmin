@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Exception;
 use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Display\Extension\Apply;
@@ -26,7 +27,7 @@ use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
  * @method $this setActions(ActionInterface|array $action, ...$actions)
  *
  * @method ActionsForm getActionsForm()
- * @method $this setActionsForm(ActionInterface|array $action, ...$actions)
+ * @method $this setActionsForm(ActionInterface|array|FormElements $action, ...$actions)
  *
  * @method Filters getFilters()
  * @method $this setFilters(FilterInterface $filter, ...$filters)
