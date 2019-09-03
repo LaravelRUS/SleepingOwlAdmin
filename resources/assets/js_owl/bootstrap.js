@@ -62,6 +62,7 @@ require('./wysiwyg/tinymce');
 require('./admin/display/datatables');
 
 require('./admin/display/actions');
+require('./admin/display/actions_form');
 require('./admin/display/treeview');
 require('./admin/display/columns/checkbox');
 require('./admin/display/columns/control');

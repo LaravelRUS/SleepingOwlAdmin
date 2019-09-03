@@ -1,28 +1,21 @@
-Admin.Modules.register('display.actions', () => {
-    $('form[data-type="display-actions"]').on('submit', function (e) {
+Admin.Modules.register('display.actions_form', () => {
+    $('.display-actions-form-wrapper form').on('submit', function (e) {
 
         e.preventDefault();
         let self = $(this);
 
         Admin.Messages.confirm(trans('lang.table.action-confirm'), null, self).then(result => {
-            //Исправлено для версии sweetalert 7.0.0
             if (result.value) {
 
-                //let $checkboxes = $('.adminCheckboxRow').filter(':checked'),
-                //    $selectActions = $("#sleepingOwlActionsStore");
-
                 let $datatable_wrapper = $(self).parents('.panel').find('.dataTables_wrapper'),
-                    $checkboxes = $datatable_wrapper.find('.adminCheckboxRow').filter(':checked'),
-                    $selectActions = $(self).find(".sleepingOwlActionsStore");
+                    $checkboxes = $datatable_wrapper.find('.adminCheckboxRow').filter(':checked');
 
-                //console.log($checkboxes);
-                //console.log($selectActions);
-
-                let data = $checkboxes.serialize();
+                let data = $(self).serialize() + '&' + $checkboxes.serialize();
+                //console.log(data);
 
                 let settings = {
-                    type: $selectActions.find('option:selected').data('method'),
-                    url: $selectActions.val(),
+                    url: $(self).attr('action'),
+                    type: $(self).attr('method'),
                     data: data,
                     dataType: 'json'
                 };
@@ -36,15 +29,15 @@ Admin.Modules.register('display.actions', () => {
                     if (msg.hasOwnProperty('__callback')) {
                         let callback_name = msg.__callback;
                         if (typeof window[callback_name] == 'function') {
-                            window[callback_name]($datatable_wrapper, $checkboxes, $selectActions);
+                            window[callback_name]($datatable_wrapper, $checkboxes);
                         }
                     }
                 });
 
                 Admin.Events.fire("datatables::actions::submitted", self);
-                //Исправлено для версии sweetalert 7.0.0
-            }else
+            } else {
                 Admin.Events.fire("datatables::actions::cancel", self);
+            }
         });
 
         return false;
