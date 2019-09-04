@@ -42,6 +42,16 @@ class Select extends NamedFormElement
     protected $view = 'form.element.select';
 
     /**
+     * @var string
+     */
+    protected $view_select2 = 'form.element.select2';
+
+    /**
+     * @var bool
+     */
+    protected $select2_mode = false;
+
+    /**
      * Select constructor.
      * @param $path
      * @param null $label
@@ -185,6 +195,42 @@ class Select extends NamedFormElement
     }
 
     /**
+     * @return bool
+     */
+    public function getSelect2()
+    {
+        return $this->select2_mode;
+    }
+
+    /**
+     * @param bool $mode
+     *
+     * @return $this
+     */
+    public function setSelect2($mode)
+    {
+        $this->select2_mode = $mode;
+
+        $class = 'input-select';
+        $class_escaped = strtr($class, ['-' => '\-']);
+
+        if ($this->select2_mode) {
+            $this->setView($this->view_select2);
+            $this->setHtmlAttribute('class', $class);
+        } else {
+            $attrs = $this->getHtmlAttribute('class');
+            $pattern = "~(?:^{$class_escaped}$|^{$class_escaped}\s|s\{$class_escaped}$|\s{$class_escaped}\s)~s";
+            $replace = trim(preg_replace($pattern, ' ', $attrs));
+
+            $this->setView($this->view);
+            $this->removeHtmlAttribute('class');
+            $this->setHtmlAttribute('class', $replace);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getExclude()
@@ -254,7 +300,10 @@ class Select extends NamedFormElement
             $options = collect($options)->prepend(['id' => null, 'text' => trans('sleeping_owl::lang.select.nothing')]);
         }
 
-        $return = ['attributes' => $this->htmlAttributesToString()] + parent::toArray() + [
+        $return = [
+                'attributes' => $this->htmlAttributesToString(),
+                'attributes_array' => $this->getHtmlAttributes(),
+            ] + parent::toArray() + [
                 'options' => $options,
                 'limit' => $this->getLimit(),
                 'nullable' => $this->isNullable(),
