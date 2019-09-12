@@ -289,7 +289,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setModel(Model $model)
     {
-        return $this->mo;
     }
 
     /**
