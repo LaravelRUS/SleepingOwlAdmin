@@ -104,6 +104,7 @@
 ### В доку дописать
 * [ ] `AdminColumnEditable::textarea`
 * [ ] `AdminColumn::boolean`
+* [ ] `AdminColumn::textaddon` с методами
 * [ ] `AdminColumn::gravatar('email', 'Ava')` Граватарки
 * [ ] `setCollapsed(bool|Closure $collapses): static` для wysiwyg поля
 * [ ] `setDisplayed(bool|Closure $displayed): static` для всех полей
