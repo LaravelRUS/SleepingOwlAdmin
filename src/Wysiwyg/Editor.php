@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Config\Repository;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
@@ -47,7 +48,7 @@ final class Editor implements WysiwygEditorInterface
     public function __construct($id, $name = null, WysiwygFilterInterface $filter = null, array $config = [])
     {
         $this->id = $id;
-        $this->name = is_null($name) ? studly_case($id) : $name;
+        $this->name = is_null($name) ? Str::studly($id) : $name;
         $this->filter = is_null($filter) ? $this->loadDefaultFilter() : $filter;
         $this->config = new Repository($config);
 

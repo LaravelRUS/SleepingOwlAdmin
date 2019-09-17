@@ -8,7 +8,7 @@ class NamedColumnTest extends TestCase
 {
     use \SleepingOwl\Tests\AssetsTesterTrait;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
