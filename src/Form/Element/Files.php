@@ -295,7 +295,7 @@ class Files extends Images
                         $array['mime'] = $mime;
                     }
                     if (mb_strpos($mime, '/')) {
-                        list($mime1, $mime2) = explode('/', $mime);
+                        [$mime1, $mime2] = explode('/', $mime);
                         if (! isset($array['mime_base'])) {
                             $array['mime_base'] = $mime1;
                         }
