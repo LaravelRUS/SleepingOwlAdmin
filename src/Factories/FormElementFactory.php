@@ -74,6 +74,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'image' => Element\Image::class,
             'images' => Element\Images::class,
             'file' => Element\File::class,
+            'files' => Element\Files::class,
             'radio' => Element\Radio::class,
             'wysiwyg' => Element\Wysiwyg::class,
             'upload' => Element\Upload::class,

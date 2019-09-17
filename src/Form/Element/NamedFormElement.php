@@ -86,7 +86,7 @@ abstract class NamedFormElement extends FormElement
 
         $parts = explode('.', $path);
         $this->setName($this->composeName($parts));
-        $this->setId($this->composeId($parts));
+        $this->setId($this->composeId($path));
         $this->setModelAttributeKey(end($parts));
 
         parent::__construct();
@@ -114,13 +114,13 @@ abstract class NamedFormElement extends FormElement
     /**
      * Compose html id from array like this: 'first__second__third'.
      *
-     * @param array $parts
+     * @param string $path
      *
      * @return string
      */
-    private function composeId(array $parts)
+    private function composeId(string $path)
     {
-        $name = implode('__', $parts);
+        $name = strtr($path, ['.' => '__', '[' => '__', ']' => '']);
 
         return $name;
     }
@@ -143,6 +143,14 @@ abstract class NamedFormElement extends FormElement
         $this->path = $path;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameKey()
+    {
+        return strtr($this->getName(), ['[' => '.', ']' => '']);
     }
 
     /**
