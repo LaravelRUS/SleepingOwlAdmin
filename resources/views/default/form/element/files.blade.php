@@ -41,8 +41,8 @@
             <div class="fileThumbnail">
                 <div class="thumbnail">
                     <div class="fileicon">
-                        <div class="fileicon-inner" {!! @$item['mime_base'] == 'image' ? 'style="background-image:url(' . asset($item['url']) . ')"' : '' !!}>
-                            @if (@$item['mime_base'] != 'image')
+                        <div class="fileicon-inner" {!! @$item['mime_base'] == 'image' || @$item['ext'] == 'svg' ? 'style="background-image:url(' . asset($item['url']) . ')"' : '' !!}>
+                            @if (@$item['mime_base'] != 'image' && @$item['ext'] != 'svg')
                                 @if (@$item['ext'])
                                     <span class="file-extension">{{ $item['ext'] }}</span>
                                 @endif
