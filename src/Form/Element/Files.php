@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Form\Element;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use KodiCMS\Assets\Facades\Meta;
 use Illuminate\Http\UploadedFile;
 use KodiComponents\Support\Upload;
 use Illuminate\Support\Facades\File;
@@ -18,7 +17,6 @@ class Files extends Images
 
     public function initialize()
     {
-
     }
 
     /**
@@ -286,22 +284,22 @@ class Files extends Images
             foreach ($value_array as $v => $array) {
                 $file = $array['url'];
                 if ($file && File::exists($file)) {
-                    if (!isset($array['filesize'])) {
+                    if (! isset($array['filesize'])) {
                         $array['filesize'] = File::size($file);
                     }
-                    if (!isset($array['ext'])) {
+                    if (! isset($array['ext'])) {
                         $array['ext'] = File::extension($file);
                     }
                     $mime = File::mimeType($file);
-                    if (!isset($array['mime'])) {
+                    if (! isset($array['mime'])) {
                         $array['mime'] = $mime;
                     }
                     if (mb_strpos($mime, '/')) {
                         list($mime1, $mime2) = explode('/', $mime);
-                        if (!isset($array['mime_base'])) {
+                        if (! isset($array['mime_base'])) {
                             $array['mime_base'] = $mime1;
                         }
-                        if (!isset($array['mime_detail'])) {
+                        if (! isset($array['mime_detail'])) {
                             $array['mime_detail'] = $mime2;
                         }
                     }
