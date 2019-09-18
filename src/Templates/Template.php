@@ -168,14 +168,14 @@ abstract class Template implements TemplateInterface
      * @param string $key
      *
      * @return string
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
      */
     public function renderBreadcrumbs($key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
-            $this->breadcrumbs()->setView(
-                $this->getViewPath('_partials.breadcrumbs')
-            );
-
+            config()->set('breadcrumbs.view', $this->getViewPath('_partials.breadcrumbs'));
             return $this->breadcrumbs()->renderIfExists($key);
         }
     }

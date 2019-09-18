@@ -58,7 +58,7 @@ interface TemplateInterface extends Initializable, Arrayable
     public function renderBreadcrumbs($key);
 
     /**
-     * @return \DaveJamesMiller\Breadcrumbs\Manager
+     * @return \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
      */
     public function breadcrumbs();
 
