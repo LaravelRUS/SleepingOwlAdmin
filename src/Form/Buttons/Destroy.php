@@ -13,7 +13,7 @@ class Destroy extends FormButton
 
     public function __construct()
     {
-        $this->setText(trans('sleeping_owl::lang.table.destroy'));
+        $this->setText(trans('sleeping_owl::lang.button.destroy'));
     }
 
     /**

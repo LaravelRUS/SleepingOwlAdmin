@@ -66,7 +66,7 @@ class Control extends TableColumn
 
         $this->buttons->put('edit', $button = new ControlLink(function (Model $model) {
             return $this->getModelConfiguration()->getEditUrl($model->getKey());
-        }, (string) trans('sleeping_owl::lang.table.edit'), 100));
+        }, (string) trans('sleeping_owl::lang.button.edit'), 100));
         $button->hideText();
         $button->setCondition(function () {
             return $this->isEditable();
@@ -76,7 +76,7 @@ class Control extends TableColumn
 
         $this->buttons->put('delete', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getDeleteUrl($model->getKey());
-        }, (string) trans('sleeping_owl::lang.table.delete'), 200));
+        }, (string) trans('sleeping_owl::lang.button.delete'), 200));
         $button->setCondition(function () {
             return $this->isDeletable();
         });
@@ -88,7 +88,7 @@ class Control extends TableColumn
 
         $this->buttons->put('destroy', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getDestroyUrl($model->getKey());
-        }, (string) trans('sleeping_owl::lang.table.destroy'), 300));
+        }, (string) trans('sleeping_owl::lang.button.destroy'), 300));
         $button->setCondition(function () {
             return $this->isDestroyable();
         });
@@ -100,7 +100,7 @@ class Control extends TableColumn
 
         $this->buttons->put('restore', $button = new ControlButton(function (Model $model) {
             return $this->getModelConfiguration()->getRestoreUrl($model->getKey());
-        }, (string) trans('sleeping_owl::lang.table.restore'), 400));
+        }, (string) trans('sleeping_owl::lang.button.restore'), 400));
         $button->setCondition(function () {
             return $this->isRestorable();
         });

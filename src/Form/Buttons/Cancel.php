@@ -13,7 +13,7 @@ class Cancel extends FormButton
 
     public function __construct()
     {
-        $this->setText(trans('sleeping_owl::lang.table.cancel'));
+        $this->setText(trans('sleeping_owl::lang.button.cancel'));
     }
 
     /**

@@ -227,7 +227,7 @@ class FormButtons implements FormButtonsInterface
     public function getCancelButtonText()
     {
         if (is_null($this->cancelButtonText)) {
-            $this->cancelButtonText = trans('sleeping_owl::lang.table.cancel');
+            $this->cancelButtonText = trans('sleeping_owl::lang.button.cancel');
         }
 
         return $this->cancelButtonText;
@@ -252,7 +252,7 @@ class FormButtons implements FormButtonsInterface
     public function getSaveButtonText()
     {
         if (is_null($this->saveButtonText)) {
-            $this->saveButtonText = trans('sleeping_owl::lang.table.save');
+            $this->saveButtonText = trans('sleeping_owl::lang.button.save');
         }
 
         return $this->saveButtonText;
@@ -277,7 +277,7 @@ class FormButtons implements FormButtonsInterface
     public function getSaveAndCloseButtonText()
     {
         if (is_null($this->saveAndCloseButtonText)) {
-            $this->saveAndCloseButtonText = trans('sleeping_owl::lang.table.save_and_close');
+            $this->saveAndCloseButtonText = trans('sleeping_owl::lang.button.save_and_close');
         }
 
         return $this->saveAndCloseButtonText;
@@ -303,7 +303,7 @@ class FormButtons implements FormButtonsInterface
     public function getSaveAndCreateButtonText()
     {
         if (is_null($this->saveAndCreateButtonText)) {
-            $this->saveAndCreateButtonText = trans('sleeping_owl::lang.table.save_and_create');
+            $this->saveAndCreateButtonText = trans('sleeping_owl::lang.button.save_and_create');
         }
 
         return $this->saveAndCreateButtonText;
@@ -329,7 +329,7 @@ class FormButtons implements FormButtonsInterface
     public function getDeleteButtonText()
     {
         if (is_null($this->deleteButtonText)) {
-            $this->deleteButtonText = trans('sleeping_owl::lang.table.delete');
+            $this->deleteButtonText = trans('sleeping_owl::lang.button.delete');
         }
 
         return $this->deleteButtonText;
@@ -354,7 +354,7 @@ class FormButtons implements FormButtonsInterface
     public function getDestroyButtonText()
     {
         if (is_null($this->destroyButtonText)) {
-            $this->destroyButtonText = trans('sleeping_owl::lang.table.destroy');
+            $this->destroyButtonText = trans('sleeping_owl::lang.button.destroy');
         }
 
         return $this->destroyButtonText;
@@ -376,7 +376,7 @@ class FormButtons implements FormButtonsInterface
     public function getRestoreButtonText()
     {
         if (is_null($this->restoreButtonText)) {
-            $this->restoreButtonText = trans('sleeping_owl::lang.table.restore');
+            $this->restoreButtonText = trans('sleeping_owl::lang.button.restore');
         }
 
         return $this->restoreButtonText;

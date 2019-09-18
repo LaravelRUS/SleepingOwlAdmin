@@ -13,7 +13,7 @@ class Restore extends FormButton
 
     public function __construct()
     {
-        $this->setText(trans('sleeping_owl::lang.table.restore'));
+        $this->setText(trans('sleeping_owl::lang.button.restore'));
     }
 
     /**

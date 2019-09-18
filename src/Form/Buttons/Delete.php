@@ -13,7 +13,7 @@ class Delete extends FormButton
 
     public function __construct()
     {
-        $this->setText(trans('sleeping_owl::lang.table.delete'));
+        $this->setText(trans('sleeping_owl::lang.button.delete'));
     }
 
     /**
