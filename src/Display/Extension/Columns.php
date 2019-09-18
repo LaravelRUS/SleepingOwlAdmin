@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Display\Column\Control;
@@ -212,8 +213,8 @@ class Columns extends Extension implements Initializable, Renderable
         $_model = $query->getModel();
 
         foreach ($orders as $order) {
-            $columnIndex = array_get($order, 'column');
-            $direction = array_get($order, 'dir', 'asc');
+            $columnIndex = Arr::get($order, 'column');
+            $direction = Arr::get($order, 'dir', 'asc');
 
             if (! $columnIndex && $columnIndex !== '0') {
                 continue;

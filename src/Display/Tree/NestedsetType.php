@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Tree;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
@@ -81,7 +82,7 @@ abstract class NestedsetType implements TreeTypeInterface
     protected function recursiveReorder($root, $parentId, $left)
     {
         $right = $left + 1;
-        $children = array_get($root, 'children', []);
+        $children = Arr::get($root, 'children', []);
         foreach ($children as $child) {
             $right = $this->recursiveReorder($child, $root['id'], $right);
         }

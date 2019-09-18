@@ -2,8 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
@@ -133,7 +134,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
             );
         }
 
-        $options = array_except($this->options, $this->exclude);
+        $options = Arr::except($this->options, $this->exclude);
         if ($this->isSortable()) {
             asort($options);
         }

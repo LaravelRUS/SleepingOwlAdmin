@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -796,6 +797,6 @@ class AdminController extends Controller
             }
         }
 
-        $this->parentBreadcrumb = data_get(array_last($this->breadCrumbsData), 'id', 'render');
+        $this->parentBreadcrumb = data_get(Arr::last($this->breadCrumbsData), 'id', 'render');
     }
 }

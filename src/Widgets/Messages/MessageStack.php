@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Widgets\Messages;
 
+use Illuminate\Support\Str;
 use BadMethodCallException;
 use InvalidArgumentException;
 
@@ -30,7 +31,7 @@ class MessageStack
     {
         $type = strtolower(substr($name, 3));
 
-        if (starts_with($name, 'add') && array_key_exists($type, $this->types)) {
+        if (Str::startsWith($name, 'add') && array_key_exists($type, $this->types)) {
             if (isset($arguments[0])) {
                 return call_user_func("{$this->types[$type]}::addMessage", $arguments[0]);
             }

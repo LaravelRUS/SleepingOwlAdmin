@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Closure;
 use LogicException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
@@ -419,7 +420,7 @@ abstract class NamedFormElement extends FormElement
                 continue;
             }
             if ($count === 2) {
-                if (str_contains($relation, '->')) {
+                if (Str::contains($relation, '->')) {
                     $parts = explode('->', $relation);
                     $relationField = array_shift($array);
                     $jsonPath = implode('.', $parts);

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Support\Arr;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\Placable;
@@ -204,14 +205,14 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
         foreach ($search as $index => $columnData) {
             $column = $columns->get($index);
-            $columnFilter = array_get($this->all(), $index);
+            $columnFilter = Arr::get($this->all(), $index);
 
             if ($column && $column instanceof ColumnInterface && $columnFilter) {
                 $columnFilter->apply(
                     $column,
                     $query,
-                    array_get($columnData, 'search.value'),
-                    array_get($columnData, 'search')
+                    Arr::get($columnData, 'search.value'),
+                    Arr::get($columnData, 'search')
                 );
             }
         }
