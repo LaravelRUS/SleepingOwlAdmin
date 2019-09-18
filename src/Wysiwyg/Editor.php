@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
-use Illuminate\Config\Repository;
 use Illuminate\Support\Str;
+use Illuminate\Config\Repository;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
