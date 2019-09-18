@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\RedirectResponse;
 use SleepingOwl\Admin\Form\FormElements;
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
@@ -16,6 +15,7 @@ use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
