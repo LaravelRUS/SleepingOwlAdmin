@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;

@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 
 trait SqlQueryOperators

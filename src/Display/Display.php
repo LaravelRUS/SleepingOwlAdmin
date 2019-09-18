@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Links;
 use SleepingOwl\Admin\Display\Extension\Scopes;
