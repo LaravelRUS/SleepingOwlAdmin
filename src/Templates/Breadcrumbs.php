@@ -8,7 +8,6 @@ use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsCont
 
 class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
-
     /**
      * @param string|null $name
      *
@@ -63,5 +62,4 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 
         return $this->renderArray($name, $params);
     }
-
 }
