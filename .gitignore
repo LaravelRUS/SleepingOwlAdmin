@@ -3,6 +3,7 @@
 composer.phar
 composer.lock
 .DS_Store
+.phpunit.result.cache
 /.idea
 yarn.lock
 package-lock.json
