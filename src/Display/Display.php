@@ -7,6 +7,8 @@ use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Display\Extension\Apply;
 use SleepingOwl\Admin\Display\Extension\Links;
 use SleepingOwl\Admin\Display\Extension\Scopes;
@@ -152,7 +154,7 @@ abstract class Display implements DisplayInterface
      */
     public function with($relations)
     {
-        $this->with = array_flatten(func_get_args());
+        $this->with = Arr::flatten(func_get_args());
 
         return $this;
     }
@@ -268,11 +270,11 @@ abstract class Display implements DisplayInterface
      */
     public function __call($name, $arguments)
     {
-        $method = snake_case(substr($name, 3));
+        $method = Str::snake(substr($name, 3));
 
-        if (starts_with($name, 'get') && $this->extensions->has($method)) {
+        if (Str::startsWith($name, 'get') && $this->extensions->has($method)) {
             return $this->extensions->get($method);
-        } elseif (starts_with($name, 'set') && $this->extensions->has($method)) {
+        } elseif (Str::startsWith($name, 'set') && $this->extensions->has($method)) {
             $extension = $this->extensions->get($method);
 
             if (method_exists($extension, 'set')) {
