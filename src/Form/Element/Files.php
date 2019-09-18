@@ -15,8 +15,62 @@ class Files extends Images
 
     protected $view = 'form.element.files';
 
-    public function initialize()
+    protected $files_group_class = null;
+
+    protected $show_title = true;
+
+    protected $show_description = true;
+
+    protected $title_required = false;
+
+    protected $description_required = false;
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function showTitle($bool)
     {
+        $this->show_title = $bool;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function showDescription($bool)
+    {
+        $this->show_description = $bool;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setTitleRequired($bool)
+    {
+        $this->title_required = $bool;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setDescriptionRequired($bool)
+    {
+        $this->description_required = $bool;
+
+        return $this;
     }
 
     /**
@@ -273,6 +327,42 @@ class Files extends Images
     }
 
     /**
+     * @param string $mode
+     *
+     * @return $this
+     */
+    public function setListMode($mode)
+    {
+        if ($mode == 'vertical') {
+            $this->files_group_class = 'files-group-vertical';
+        } elseif ($mode == 'horizontal') {
+            $this->files_group_class = null;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setVertical()
+    {
+        $this->setListMode('vertical');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setHorizontal()
+    {
+        $this->setListMode('horizontal');
+
+        return $this;
+    }
+
+    /**
      * @param Request $request
      */
     public function save(Request $request)
@@ -322,6 +412,14 @@ class Files extends Images
     public function toArray()
     {
         $return = parent::toArray();
+
+        $return = array_merge($return, [
+            'files_group_class' => $this->files_group_class,
+            'show_title' => $this->show_title,
+            'show_description' => $this->show_description,
+            'title_required' => $this->title_required,
+            'description_required' => $this->description_required,
+        ]);
 
         return $return;
     }

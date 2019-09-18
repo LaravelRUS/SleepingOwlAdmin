@@ -24,19 +24,20 @@
                 </div>
                 <div class="file-actions">
                     <div class="fileinfo" data-id="file" data-src="[%=src%]" data-url="[%=url%]">[%=basename%]</div>
-                    <input type="text" class="tit" data-id="title" placeholder="Заголовок" />
-                    <textarea class="desc" data-id="description" rows="5" placeholder="Описание"></textarea>
+                    <input type="text" class="tit{{ $show_title ? '' : ' hidden' }}" data-id="title" placeholder="Заголовок"{{ $title_required ? ' required' : '' }} />
+                    <textarea class="desc{{ $show_description ? '' : ' hidden' }}" data-id="description" rows="5" placeholder="Описание"{{ $description_required ? ' required' : '' }}></textarea>
                     <div class="file-buttons">
                         <a href="#" class="btn btn-danger btn-xs pull-left fileRemove"><i class="fa fa-close"></i> Удалить</a>
                         <a href="[%=url%]" target="_blank" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                         <div class="clearfix"></div>
                     </div>
                 </div>
+                <div class="file-clearfix"></div>
             </div>
         </div>
     </script>
 
-    <div class="files-group dropzone">
+    <div class="files-group dropzone {{ $files_group_class }}">
         @foreach ($value ?? [] as $item)
             <div class="fileThumbnail">
                 <div class="thumbnail">
@@ -56,14 +57,15 @@
                     </div>
                     <div class="file-actions">
                         <div class="fileinfo" data-id="file" data-src="{{ @$item['url'] }}" data-url="{{ @asset($item['url']) }}">{{ @basename($item['url']) }}</div>
-                        <input type="text" class="tit" data-id="title" placeholder="Заголовок" value="{{ @$item['title'] }}" />
-                        <textarea class="desc" data-id="description" rows="5" placeholder="Описание">{{ @$item['desc'] }}</textarea>
+                        <input type="text" class="tit{{ $show_title ? '' : ' hidden' }}" data-id="title" placeholder="Заголовок" value="{{ @$item['title'] }}"{{ $title_required ? ' required' : '' }} />
+                        <textarea class="desc{{ $show_description ? '' : ' hidden' }}" data-id="description" rows="5" placeholder="Описание"{{ $description_required ? ' required' : '' }}>{{ @$item['desc'] }}</textarea>
                         <div class="file-buttons">
                             <a href="#" class="btn btn-danger btn-xs pull-left fileRemove"><i class="fa fa-close"></i> Удалить</a>
                             <a href="{{ @asset($item['url']) }}" target="_blank" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    <div class="file-clearfix"></div>
                 </div>
             </div>
         @endforeach
