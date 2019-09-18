@@ -20,7 +20,7 @@ return [
     'links' => [
         'index_page' => 'To site',
     ],
-	  'env_editor' => [
+      'env_editor' => [
         'title' => 'ENV-editor',
         'key' => 'Key',
         'var' => 'Value',
@@ -136,6 +136,6 @@ return [
         'validation_error' => 'Validation error',
     ],
     'related' => [
-		    'unique' => 'This relation not unique',
+            'unique' => 'This relation not unique',
     ],
 ];
