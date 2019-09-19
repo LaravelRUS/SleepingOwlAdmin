@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Arr;
 use Illuminate\Validation\Validator;
 
 class Image extends File

@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Navigation\Badge;
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Events\Dispatcher;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;

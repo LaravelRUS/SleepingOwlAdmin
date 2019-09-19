@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
