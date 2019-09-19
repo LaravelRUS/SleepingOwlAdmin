@@ -1,6 +1,6 @@
 <div class="form-group form-element-multiselect {{ $errors->has($name) ? 'has-error' : '' }}">
     <label for="{{ $id }}" class="control-label">
-        {{ $label }}
+        {!! $label !!}
 
         @if($required)
             <span class="form-element-required">*</span>

@@ -6,7 +6,8 @@
 			])  }}" data-token="{{ csrf_token() }}">
 
     <label for="{{ $id }}" class="control-label">
-        {{ $label }}
+        {!! $label !!}
+
         @if($required)
             <span class="form-element-required">*</span>
         @endif

@@ -318,10 +318,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      */
     public function toArray()
     {
-        $return = parent::toArray() + [
-                'class' => $this->getHtmlAttribute('class'),
-                'style' => $this->getHtmlAttribute('style'),
-            ];
+        $return = parent::toArray();
 
         return $return;
     }
