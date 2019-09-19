@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class Select extends NamedFormElement

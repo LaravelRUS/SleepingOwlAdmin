@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Widgets\Messages;
 
-use Illuminate\Support\Str;
 use BadMethodCallException;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class MessageStack

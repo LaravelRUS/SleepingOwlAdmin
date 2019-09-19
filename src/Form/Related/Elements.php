@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Form\Related;
 
 use Throwable;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Admin\Contracts\HasFakeModel;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElements;
