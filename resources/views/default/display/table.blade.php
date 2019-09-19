@@ -9,8 +9,8 @@
 
 @yield('before.panel')
 
-<div class="panel panel-default {!! $panel_class !!}">
-	<div class="panel-heading">
+<div class="panel card panel-default {!! $panel_class !!}">
+	<div class="panel-heading card-header">
 		@if ($creatable)
 			<a href="{{ url($createUrl) }}" class="btn btn-primary">
 				<i class="fas fa-plus"></i> {{ $newEntryButtonText }}

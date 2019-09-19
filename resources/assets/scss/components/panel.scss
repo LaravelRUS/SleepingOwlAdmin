@@ -2,7 +2,6 @@
   .panel-heading {
     display: flex;
     justify-content: space-between;
-    padding: 0.5em 0 1rem;
     align-items: center;
 
     form {
@@ -11,6 +10,12 @@
 
     @media (max-width: 667px) {
       flex-direction: column;
+    }
+
+    &.card-header {
+      &:after {
+        display: none;
+      }
     }
   }
 

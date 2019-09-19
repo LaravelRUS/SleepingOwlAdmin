@@ -1,22 +1,18 @@
-.label {
-  font-size: 80%;
-  padding: 0.2em 0.4em;
-  border-radius: 0.2em;
-}
-
+/*
+ * Component: Label
+ * ----------------
+ */
 .label-default {
   background-color: $gray-500;
-  color: $gray-800;
+  color: #444;
 }
 
 .label-danger {
   @extend .bg-danger;
-  color: $white;
 }
 
 .label-info {
   @extend .bg-info;
-  color: $white;
 }
 
 .label-warning {
@@ -25,10 +21,8 @@
 
 .label-primary {
   @extend .bg-primary;
-  color: $white;
 }
 
 .label-success {
   @extend .bg-success;
-  color: $white;
 }

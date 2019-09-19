@@ -40,7 +40,7 @@
     position: absolute;
     cursor: pointer;
     float: left;
-    left: -30px;
+    left: -25px;
     width: 25px;
     height: 20px;
     margin: 7px 0;
@@ -49,7 +49,8 @@
     white-space: nowrap;
     overflow: hidden;
     border: 0;
-    background: transparent;
+    background: $white;
+    border-radius: 1em;
     font-size: 10px;
     line-height: 1;
     text-align: center;
@@ -163,7 +164,7 @@
   left: 0;
   top: 0;
   cursor: move;
-  width: 30px;
+  width: 25px;
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;

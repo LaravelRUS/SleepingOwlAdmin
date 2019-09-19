@@ -21,7 +21,7 @@
                     class="btn btn-secondary btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
         </menu>
     @endif
-    <div class="panel-body">
+    <div class="panel-body card mt-3">
         <div class="dd nestable" {!! $attributes !!} data-url="{{ $url }}/reorder">
             <ol class="dd-list">
                 @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
