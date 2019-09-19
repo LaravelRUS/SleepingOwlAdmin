@@ -56,7 +56,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getTranslatorMock()->shouldReceive('get')
+        $this->getTranslatorMock()
+            ->shouldReceive('trans')
             ->once()
             ->with('sleeping_owl::lang.model.create', ['title' => $model->getTitle()], null)
             ->andReturn('string');
@@ -74,7 +75,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getTranslatorMock()->shouldReceive('get')
+        $this->getTranslatorMock()
+            ->shouldReceive('trans')
             ->once()
             ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], null)
             ->andReturn('string');
@@ -450,7 +452,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getTranslatorMock()->shouldReceive('get')
+        $this->getTranslatorMock()
+            ->shouldReceive('trans')
             ->once()
             ->with('sleeping_owl::lang.message.created', null, null)
             ->andReturn('string');
@@ -468,7 +471,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getTranslatorMock()->shouldReceive('get')
+        $this->getTranslatorMock()
+            ->shouldReceive('trans')
             ->once()
             ->with('sleeping_owl::lang.message.updated', null, null)
             ->andReturn('string');
@@ -487,7 +491,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getTranslatorMock()->shouldReceive('get')
+        $this->getTranslatorMock()
+            ->shouldReceive('trans')
             ->once()->with('sleeping_owl::lang.message.deleted', null, null)
             ->andReturn('string');
 
@@ -505,7 +510,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getTranslatorMock()->shouldReceive('get')
+        $this->getTranslatorMock()
+            ->shouldReceive('trans')
             ->once()
             ->with('sleeping_owl::lang.message.destroyed', null, null)
             ->andReturn('string');
@@ -524,7 +530,8 @@ class ModelConfigurationTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getTranslatorMock()->shouldReceive('get')
+        $this->getTranslatorMock()
+            ->shouldReceive('trans')
             ->once()
             ->with('sleeping_owl::lang.message.restored', null, null)
             ->andReturn('string');
