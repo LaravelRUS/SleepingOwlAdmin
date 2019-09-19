@@ -10,7 +10,7 @@ class AliasBinderTest extends TestCase
      */
     private $binder;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
