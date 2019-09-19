@@ -1,6 +1,6 @@
 <div class="form-group form-element-image{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
 	<label for="{{ $name }}" class="control-label">
-		{{ $label }}
+		{!! $label !!}
 
 		@if($required)
 			<span class="form-element-required">*</span>

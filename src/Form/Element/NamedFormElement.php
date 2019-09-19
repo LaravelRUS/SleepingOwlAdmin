@@ -665,6 +665,8 @@ abstract class NamedFormElement extends FormElement
             'attributes' => $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
+            'class' => $this->getHtmlAttribute('class'),
+            'style' => $this->getHtmlAttribute('style'),
         ]);
     }
 }

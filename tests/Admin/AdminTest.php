@@ -16,6 +16,11 @@ class AdminTest extends TestCase
         m::close();
     }
 
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
