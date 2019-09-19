@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
+use Illuminate\Support\Arr;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
@@ -65,7 +66,7 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     public function hasDependKey($key)
     {
-        return array_has($this->params, $key);
+        return Arr::has($this->params, $key);
     }
 
     /**
@@ -75,7 +76,7 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     public function getDependValue($key)
     {
-        return array_get($this->params, $key, $this->getModel()->getAttribute($key));
+        return Arr::get($this->params, $key, $this->getModel()->getAttribute($key));
     }
 
     /**

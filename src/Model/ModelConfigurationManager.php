@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
@@ -651,6 +652,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     protected function getDefaultClassTitle()
     {
-        return snake_case(str_plural(class_basename($this->getClass())));
+        return Str::snake(Str::plural(class_basename($this->getClass())));
     }
 }
