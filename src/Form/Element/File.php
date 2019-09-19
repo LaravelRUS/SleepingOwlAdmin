@@ -313,7 +313,6 @@ class File extends NamedFormElement implements WithRoutesInterface
         return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
     }
 
-
     /**
      * @return array
      */
