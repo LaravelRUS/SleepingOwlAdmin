@@ -163,20 +163,16 @@ class TableColumnTest extends TestCase
         $this->assertTrue($column->isOrderable());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function test_setOrderable_true()
     {
+        $this->expectException(InvalidArgumentException::class);
         $column = $this->getColumn();
         $column->setOrderable(true);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function test_setOrderable_wrong_class()
     {
+        $this->expectException(InvalidArgumentException::class);
         $column = $this->getColumn();
         $column->setOrderable(new TableColumnTestModel());
     }

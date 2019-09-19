@@ -138,17 +138,15 @@ class ModelConfigurationManagerTest extends TestCase
 
         $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
         $event->shouldNotReceive('until');
-        $event->shouldReceive('fire')->once()->andReturn(false);
+        $event->shouldReceive('dispatch')->once()->andReturn(false);
 
         $return = $model->fireEvent('test', false);
         $this->assertFalse($return);
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function test_registering_wrong_event()
     {
+        $this->expectException(BadMethodCallException::class);
         $model = $this->getConfiguration();
         $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
 
@@ -231,13 +229,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model',
-            [$model->getAlias(), 'test'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model', [$model->getAlias(), 'test'], true);
 
-        $this->assertEquals('http://site.com', $model->getDisplayUrl(['test']));
+        $this->assertEquals($val, $model->getDisplayUrl(['test']));
     }
 
     /**
@@ -247,13 +241,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.create',
-            [$model->getAlias(), 'test'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.create', [$model->getAlias(), 'test'], true);
 
-        $this->assertEquals('http://site.com', $model->getCreateUrl(['test']));
+        $this->assertEquals($val, $model->getCreateUrl(['test']));
     }
 
     /**
@@ -263,13 +253,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.store',
-            [$model->getAlias(), 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.store', [$model->getAlias(), 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getStoreUrl(['locale' => 'en']));
+        $this->assertEquals($val, $model->getStoreUrl(['locale' => 'en']));
     }
 
     /**
@@ -279,13 +265,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.edit',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.edit', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getEditUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getEditUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -295,13 +277,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.update',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.update', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getUpdateUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getUpdateUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -311,13 +289,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.delete',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.delete', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getDeleteUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getDeleteUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -327,13 +301,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.destroy',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.destroy', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getDestroyUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getDestroyUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -343,13 +313,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.restore',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.restore', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getRestoreUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getRestoreUrl(1, ['locale' => 'en']));
     }
 
     /**
