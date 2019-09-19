@@ -312,4 +312,17 @@ class File extends NamedFormElement implements WithRoutesInterface
     {
         return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $return = parent::toArray() + [
+                'class' => $this->getHtmlAttribute('class'),
+                'style' => $this->getHtmlAttribute('style'),
+            ];
+
+        return $return;
+    }
 }
