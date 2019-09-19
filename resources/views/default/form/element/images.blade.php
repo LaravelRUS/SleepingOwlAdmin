@@ -1,4 +1,4 @@
-<div class="form-group form-element-images {{ $errors->has($name) ? 'has-error' : '' }}">
+<div class="form-group form-element-images{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
 	<label for="{{ $name }}" class="control-label">
 		{{ $label }}
 

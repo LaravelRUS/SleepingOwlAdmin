@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
+use Illuminate\Support\Arr;
 use Illuminate\Routing\Router;
 use Illuminate\Http\UploadedFile;
 use KodiComponents\Support\Upload;
@@ -178,7 +179,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function getUploadSettings()
     {
         if (empty($this->uploadSettings) && in_array(Upload::class, class_uses($this->getModel()))) {
-            return (array) array_get($this->getModel()->getUploadSettings(), $this->getPath());
+            return (array) Arr::get($this->getModel()->getUploadSettings(), $this->getPath());
         }
 
         return $this->uploadSettings;
@@ -310,5 +311,19 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
+    }
+
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $return = parent::toArray() + [
+                'class' => $this->getHtmlAttribute('class'),
+                'style' => $this->getHtmlAttribute('style'),
+            ];
+
+        return $return;
     }
 }

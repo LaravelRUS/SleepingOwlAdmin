@@ -1,5 +1,5 @@
-<div class="form-group form-element-file fileUploadMultiple {{ $errors->has($name) ? 'has-error' : '' }}"
-     data-target="{{ route('admin.form.element.file', [
+<div class="form-group form-element-file fileUploadMultiple{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}
+    data-target="{{ route('admin.form.element.file', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
