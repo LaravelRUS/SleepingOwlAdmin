@@ -11,17 +11,12 @@ class AdminTest extends TestCase
      */
     private $admin;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

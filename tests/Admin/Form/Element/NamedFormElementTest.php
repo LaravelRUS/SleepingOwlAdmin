@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Form\Element\NamedFormElement;
 
 class NamedFormElementTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -45,10 +45,10 @@ class NamedFormElementTest extends TestCase
 
     /**
      * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::__construct
-     * @expectedException  \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function test_constructor_exception()
     {
+        $this->expectException(\SleepingOwl\Admin\Exceptions\Form\FormElementException::class);
         $this->getElement(null);
     }
 
@@ -311,6 +311,8 @@ class NamedFormElementTest extends TestCase
             'helpText'   => null,
             'required'   => false,
             'attributes' => ' id="key2__subkey" name="key2[subkey]"',
+            'class'      => null,
+            'style'      => null,
         ], $element->toArray());
     }
 
@@ -381,11 +383,9 @@ class NamedFormElementTest extends TestCase
         $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
     }
 
-    /**
-     * @expectedException LogicException
-     */
     public function test_get_model_by_path_exception()
     {
+        $this->expectException(LogicException::class);
         $element = $this->getElement('key', 'Label');
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
