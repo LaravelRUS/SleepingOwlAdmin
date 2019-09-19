@@ -3,6 +3,7 @@
 return [
     'dashboard' => 'Dashboard',
     '404'       => 'Page not found.',
+
     'auth'      => [
         'title'           => 'Authorization',
         'username'        => 'Username',
@@ -13,18 +14,22 @@ return [
         'wrong-password'  => 'or password',
         'since'           => 'Registered at :date',
     ],
+
     'model' => [
         'create'  => 'Create record in section :title',
         'edit'    => 'Update record in section :title',
     ],
+
     'links' => [
         'index_page' => 'To site',
     ],
-      'env_editor' => [
+
+    'env_editor' => [
         'title' => 'ENV-editor',
         'key' => 'Key',
         'var' => 'Value',
     ],
+
     'ckeditor' => [
         'upload' => [
             'success' => 'File was uploaded: \\n- Size: :size kb \\n- width/height: :width x :height',
@@ -37,11 +42,13 @@ return [
                 'imagesize_min_limit' => 'Width x Height = :width x :height \\n The minimum Width x Height must be: :minwidth x :minheight',
             ],
         ],
+
         'image_browser' => [
             'title' => 'Insert image from server',
             'subtitle' => 'Choose image to insert',
         ],
     ],
+
     'table' => [
         'no-action' => 'No action',
         'deleted_all' => 'Delete selected',
@@ -61,32 +68,37 @@ return [
         'lengthMenu' => 'Show _MENU_ entries',
         'zeroRecords' => 'No matching records found.',
         'info' => 'Showing _START_ to _END_ of _TOTAL_ entries',
-        'infoEmpty' => 'Showing 0 to 0 of 0 entries',
+        'infoEmpty' => 'No entries',
         'infoFiltered' => '(filtered from _MAX_ total entries)',
         'infoThousands' => ',',
         'infoPostFix' => '',
         'search' => 'Search: ',
         'emptyTable' => 'No data available in table',
+
         'paginate' => [
             'first' => 'First',
             'previous' => '&larr;',
             'next' => '&rarr;',
             'last' => 'Last',
         ],
+
         'filters' => [
             'control' => 'Filter',
         ],
     ],
+
     'tree' => [
         'expand' => 'Expand all',
         'collapse' => 'Collapse all',
     ],
+
     'editable' => [
         'checkbox' => [
             'checked' => 'Yes',
             'unchecked' => 'No',
         ],
     ],
+
     'select' => [
         'nothing' => 'Nothing selected',
         'selected' => 'selected',
@@ -96,21 +108,24 @@ return [
         'limit'       => 'and ${count} more',
         'deselect'    => 'Deselect',
     ],
+
     'image' => [
         'browse' => 'Select Image',
         'browseMultiple' => 'Select Images',
         'remove' => 'Remove Image',
-        'removeMultiple' => 'Remove',
+        'removeMultiple' => 'Remove Images',
     ],
+
     'file' => [
         'browse' => 'Select File',
         'remove' => 'Remove File',
     ],
+
     'button' => [
         'yes'       => 'Yes',
         'no'        => 'No',
         'cancel'    => 'Cancel',
-        'save'      => 'Save',
+        'save' => 'Save',
         'new-entry' => 'New Entry',
         'edit' => 'Edit',
         'restore' => 'Restore',
@@ -124,6 +139,7 @@ return [
         'add' => 'Add',
         'remove' => 'Remove',
     ],
+
     'message' => [
         'created' => 'Record has been created successfully',
         'updated' => 'Record has been updated successfully',
@@ -135,7 +151,8 @@ return [
         'access_denied' => 'Access denied',
         'validation_error' => 'Validation error',
     ],
+
     'related' => [
-            'unique' => 'This relation not unique',
+        'unique' => 'This relation not unique',
     ],
 ];
