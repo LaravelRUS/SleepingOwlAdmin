@@ -15,13 +15,13 @@ class Url extends NamedColumn
     protected $isSearchable = true;
 
     /**
-      * @var string|boolean
-      */
+     * @var string|bool
+     */
     protected $icon = 'fas fa-external-link-square-alt';
 
     /**
-      * @var string
-      */
+     * @var string
+     */
     protected $text = '';
 
     /**
@@ -54,9 +54,8 @@ class Url extends NamedColumn
         return $this;
     }
 
-
     /**
-     * @return string|boolean
+     * @return string|bool
      */
     public function getText()
     {
@@ -68,7 +67,7 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param string|boolean $icon
+     * @param string|bool $icon
      *
      * @return $this
      */
@@ -79,9 +78,8 @@ class Url extends NamedColumn
         return $this;
     }
 
-
     /**
-     * @return string|boolean
+     * @return string|bool
      */
     public function getIcon()
     {
@@ -89,13 +87,14 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param string|boolean $icon
+     * @param string|bool $icon
      *
      * @return $this
      */
     public function setIcon($icon)
     {
         $this->icon = $icon;
+
         return $this;
     }
 
