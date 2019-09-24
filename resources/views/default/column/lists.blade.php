@@ -1,5 +1,10 @@
-@foreach ($values as $value)
-<span class="badge badge-info">{{ $value }}</span>
-@endforeach
+<div {!! $attributes !!}>
+  @foreach ($values as $value)
+    <span class="badge table-badge">{{ $value }}</span>
+  @endforeach
 
-{!! $append !!}
+  {!! $append !!}
+  @if($small)
+  <small class="clearfix">{!! $small !!}</small>
+  @endif
+</div>

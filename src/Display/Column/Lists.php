@@ -22,6 +22,7 @@ class Lists extends NamedColumn
         return parent::toArray() + [
                 'values' => $this->getModelValue(),
                 'append' => $this->getAppends(),
+                'small' => htmlspecialchars($this->getModelSmallValue()),
             ];
     }
 }

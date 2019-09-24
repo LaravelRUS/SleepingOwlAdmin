@@ -1,13 +1,10 @@
 @media (max-width: 768px) {
   .panel-table {
-
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin-left: -1rem;
-    margin-right: -1rem;
 
     table {
-      min-width: 500px;
+      min-width: 700px;
     }
   }
 

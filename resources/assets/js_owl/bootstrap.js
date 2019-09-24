@@ -21,7 +21,6 @@ require('./libs/bootstrap');
 require('./libs/i18next');
 require('./libs/bootstrap-datepicker');
 require('./libs/datetimepicker');
-require('./libs/daterangepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
 require('./libs/datatables');

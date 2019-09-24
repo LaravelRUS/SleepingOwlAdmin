@@ -1,4 +1,7 @@
 .dropdown-menu {
+  min-width: 20rem;
+  left:inherit;
+  right: 0;
 
   &.btn-actions {
     padding: 0;

@@ -1,6 +1,8 @@
 
 .dataTables_filter {
+  display: flex;
   margin-bottom: 1em;
+  justify-content: start;
 
   label > input {
     margin-left: 1em;
@@ -16,6 +18,11 @@
 .dataTables_wrapper {
   position: relative;
   min-height: 7em;
+
+  & > div {
+    width: 100%;
+    padding: 0 1rem;
+  }
 }
 
 .dataTables_processing {

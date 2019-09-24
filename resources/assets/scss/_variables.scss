@@ -1,8 +1,5 @@
 
-
-// old
 $input-color: #666;
-
 $icon-font-path: "../fonts/"; // Font awesome
 $fa-font-path: "../fonts"; // Admin LTE
 
@@ -53,3 +50,11 @@ $gray:          $gray-400 !default;
 $link-color: $primary;
 
 //addition
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;

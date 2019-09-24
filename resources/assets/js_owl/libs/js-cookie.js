@@ -1,5 +1,5 @@
 /**
- * @see http://www.daterangepicker.com/
+ * @see https://github.com/js-cookie/js-cookie
  */
 window.Cookies = require('js-cookie')
 

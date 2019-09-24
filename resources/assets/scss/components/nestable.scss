@@ -9,7 +9,7 @@
 }
 
 .dd-list {
-  margin-left: 17px;
+  margin-left: 15px;
 
   .dd-list {
     padding-left: 1em;
@@ -22,7 +22,7 @@
 
 .dd-handle {
   display: block;
-  height: 2em;
+  height: 100%;
   cursor: move;
   margin: 1em 0;
   padding: 0.5em 0;
@@ -35,12 +35,17 @@
 }
 
 .dd-item {
+  transition: background-color $trans;
+  &:hover {
+    background-color: rgba($warning, 0.08);
+  }
+
   > button {
     display: block;
     position: absolute;
     cursor: pointer;
     float: left;
-    left: -25px;
+    left: -20px;
     width: 25px;
     height: 20px;
     margin: 7px 0;
@@ -131,18 +136,19 @@
   justify-content: space-between;
   align-items: center;
   transition: $trans;
-  height: 2em;
+  min-height: 2em;
   margin: 0.5em 0;
-  padding: 0.2em 1em 0.2em 3.5em;
+  padding: 0.2em 1em 0.2em 2.5em;
   color: $black;
   text-decoration: none;
   font-weight: 400;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   border-bottom: 1px solid $gray-400;
+  cursor: default;
 
-  &:hover {
-    color: $primary;
+  .control-button {
+    min-width: 4rem;
   }
 }
 
@@ -168,7 +174,7 @@
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
-  border-radius: 10px 0 0 0;
+  border-radius: 10px 0;
   background: $gray-400;
   color: $white;
 
@@ -177,7 +183,7 @@
     display: block;
     position: absolute;
     left: 0;
-    top: 2px;
+    top: 0.3rem;
     width: 100%;
     text-align: center;
     text-indent: 0;

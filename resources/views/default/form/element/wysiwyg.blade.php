@@ -19,9 +19,9 @@
 
       <div class="card-tools">
         @if ($collapsed)
-          <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"><i class="fas fa-plus"></i></button>
+          <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
         @else
-          <button type="button" class="btn btn-tool btn-sm" data-widget="collapse"><i class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
         @endif
       </div>
       @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
@@ -29,7 +29,7 @@
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-    <div class="card-body pad" {{ $collapsed ? 'style="display: none;"':'' }}>
+    <div class="card-body pad">
       {!! Form::textarea($name, $value, $attributes) !!}
     </div>
   </div>
