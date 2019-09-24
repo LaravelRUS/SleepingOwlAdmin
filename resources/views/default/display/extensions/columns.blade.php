@@ -34,7 +34,7 @@
                     {!! $column->render() !!}
                 </td>
                 <?php } else { ?>
-                    <td  {!! $column->htmlAttributesToString() !!}>
+                    <td>
                         {!! $column->render() !!}
                     </td>
                 <?php

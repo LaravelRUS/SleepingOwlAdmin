@@ -100,13 +100,14 @@
 * [ ] для респонсивности широких таблиц `->setHtmlAttribute('class', 'hidden-sm')`
 * [ ] `AdminColumnEditable::textarea`
 * [ ] `AdminColumn::boolean`
+* [ ] `AdminColumn::url` со всеми методами
 * [ ] `AdminColumn::textaddon` с методами
 * [ ] `AdminColumn::gravatar('email', 'Ava')` Граватарки
 * [ ] `setCollapsed(bool|Closure $collapses): static` для wysiwyg поля
 * [ ] `setDisplayed(bool|Closure $displayed): static` для всех полей
 * [ ] Автоапдейт для дататейблов как вкл/выкл
 * [ ] Остальные поля, которых нет и их методы
-* [ ] Третий параметр в обычных коламнах `AdminColumn::link('title', 'Title', 'created_at')` и во многих других полях
+* [ ] Третий параметр в обычных коламнах `AdminColumn::link('title', 'Title', 'created_at')` и во многих других полях или `->setSmall('Редактировать')` (или `->setSmall('created_at')`). Можно вернуть калбэк
 * [ ] Для табов появился класс `.last`. Добавление таба в конец списка и к правой стороне
 * [ ] Перепилить админку
 * [ ] Дописать, что при использовании поиска в дататейблсах на связи обязательно нужно калбеки на ордерабле(если есть), иначе поиск будет с ошибкой

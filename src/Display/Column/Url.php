@@ -15,6 +15,16 @@ class Url extends NamedColumn
     protected $isSearchable = true;
 
     /**
+      * @var string|boolean
+      */
+    protected $icon = 'fas fa-external-link-square-alt';
+
+    /**
+      * @var string
+      */
+    protected $text = '';
+
+    /**
      * @var bool
      */
     protected $orderable = true;
@@ -44,15 +54,61 @@ class Url extends NamedColumn
         return $this;
     }
 
+
+    /**
+     * @return string|boolean
+     */
+    public function getText()
+    {
+        if ($this->getValueFromObject($this->getModel(), $this->text)) {
+            return $this->getValueFromObject($this->getModel(), $this->text);
+        }
+
+        return $this->text;
+    }
+
+    /**
+     * @param string|boolean $icon
+     *
+     * @return $this
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+
+    /**
+     * @return string|boolean
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string|boolean $icon
+     *
+     * @return $this
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+        return $this;
+    }
+
     /**
      * @return array
      */
     public function toArray()
     {
         return parent::toArray() + [
-                'linkAttributes' => $this->getLinkAttributes(),
-                'value' => htmlspecialchars($this->getModelValue()),
-                'small' => htmlspecialchars($this->getModelSmallValue()),
-            ];
+            'linkAttributes' => $this->getLinkAttributes(),
+            'value' => htmlspecialchars($this->getModelValue()),
+            'icon' => $this->getIcon(),
+            'text' => $this->getText(),
+        ];
     }
 }

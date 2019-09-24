@@ -30,8 +30,8 @@ class Link extends Url
     public function toArray()
     {
         return parent::toArray() + [
-                'link' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
-                'isEditable' => $this->isEditable(),
-            ];
+            'link' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
+            'isEditable' => $this->isEditable(),
+        ];
     }
 }

@@ -6,5 +6,12 @@
 * [Fix] Responsive navbar `.dropdown-menu`
 * [Fix] Responsive navbar `#nestable-menu` (tree view)
 * [Fix] Checkbox background
-* [Fix] `AdminColumn::link` fix `setHtmlAttribute`
 * [Feature] Change the color of badges ('`AdminColumn::lists`') depending on the color of the table, and add class for force recolor `.badge-list-primary` or other BS4 color
+* [Add] `AdminColumn::boolean` fix `setHtmlAttribute` & third param
+* [Add] `AdminColumn::count` fix `setHtmlAttribute` & third param
+* [Add] `AdminColumn::datetime` fix `setHtmlAttribute` & third param
+* [Add] `AdminColumn::gravatar` fix `setHtmlAttribute` & third param
+* [Add] `AdminColumn::image` fix `setHtmlAttribute` & third param
+* [Fix] `AdminColumn::link` fix `setHtmlAttribute`
+* [Add] `AdminColumn::lists` fix `setHtmlAttribute` & third param
+* [Add] `AdminColumn::url` fix `setHtmlAttribute` & third param, add `setIcon('false')`, `setIcon('fas fa-address-book')`, `->setText('Random text')` (or `->setText('created_at')`)

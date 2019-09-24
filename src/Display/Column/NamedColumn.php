@@ -73,6 +73,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     public function getSmall()
     {
+        if ($this->getValueFromObject($this->getModel(), $this->small)) {
+            return $this->getValueFromObject($this->getModel(), $this->small);
+        }
+
         return $this->small;
     }
 
@@ -94,14 +98,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function getModelValue()
     {
         return $this->getValueFromObject($this->getModel(), $this->getName());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getModelSmallValue()
-    {
-        return $this->getValueFromObject($this->getModel(), $this->getSmall());
     }
 
     /**
@@ -128,8 +124,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'name' => $this->getName(),
-            ];
+            'name' => $this->getName(),
+            'small' => htmlspecialchars($this->getSmall()),
+        ];
     }
 
     /**

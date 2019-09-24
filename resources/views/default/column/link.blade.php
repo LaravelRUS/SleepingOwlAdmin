@@ -1,13 +1,14 @@
 <div {!! $attributes !!}>
   @if($isEditable)
   <a href="{{ $link }}" {!! app('html')->attributes($linkAttributes) !!}>
-      {!! $value !!}
+    {!! $value !!}
   </a>
   @else
-      {!! $value !!}
+    {!! $value !!}
   @endif
   {!! $append !!}
+
   @if($small)
-  <small class="clearfix">{!! $small !!}</small>
+    <small class="clearfix">{!! $small !!}</small>
   @endif
 </div>

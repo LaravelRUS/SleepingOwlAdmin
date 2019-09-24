@@ -51,7 +51,7 @@ class Checkbox extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'value' => $this->getModelValue(),
-            ];
+            'value' => $this->getModelValue(),
+        ];
     }
 }
