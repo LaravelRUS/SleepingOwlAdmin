@@ -14,4 +14,5 @@
 * [Add] `AdminColumn::image` fix `setHtmlAttribute` & third param
 * [Fix] `AdminColumn::link` fix `setHtmlAttribute`
 * [Add] `AdminColumn::lists` fix `setHtmlAttribute` & third param
-* [Add] `AdminColumn::url` fix `setHtmlAttribute` & third param, add `setIcon('false')`, `setIcon('fas fa-address-book')`, `->setText('Random text')` (or `->setText('created_at')`)
+* [Add] `AdminColumn::url` fix `setHtmlAttribute` & third param, add `setIcon('false')`, `setIcon('fas fa-address-book')`, `->setText('Random text', 1)` (or `->setText('created_at')`)
+* [Add] `AdminColumn::url('column', 'Title', 'column')` or `->setSmall('Random text', 1)` (or `->setSmall('created_at')`)

@@ -21,8 +21,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
     /**
      * @var string
+     * @var boolean
      */
     protected $small;
+    protected $smallString = false;
 
     /**
      * @var bool
@@ -73,11 +75,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     public function getSmall()
     {
-        if ($this->getValueFromObject($this->getModel(), $this->small)) {
-            return $this->getValueFromObject($this->getModel(), $this->small);
+        if ($this->smallString) {
+          return $this->small;
         }
 
-        return $this->small;
+        return $this->getValueFromObject($this->getModel(), $this->small);
     }
 
     /**
@@ -85,9 +87,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      *
      * @return $this
      */
-    public function setSmall($small)
+    public function setSmall($small, $smallString = false)
     {
         $this->small = $small;
+        $this->smallString = $smallString;
 
         return $this;
     }

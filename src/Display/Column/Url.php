@@ -21,8 +21,10 @@ class Url extends NamedColumn
 
     /**
      * @var string
+     * @var boolean
      */
     protected $text = '';
+    protected $textString = false;
 
     /**
      * @var bool
@@ -59,11 +61,11 @@ class Url extends NamedColumn
      */
     public function getText()
     {
-        if ($this->getValueFromObject($this->getModel(), $this->text)) {
-            return $this->getValueFromObject($this->getModel(), $this->text);
+        if ($this->textString) {
+            return $this->text;
         }
 
-        return $this->text;
+        return $this->getValueFromObject($this->getModel(), $this->text);
     }
 
     /**
@@ -71,9 +73,10 @@ class Url extends NamedColumn
      *
      * @return $this
      */
-    public function setText($text)
+    public function setText($text, $textString = false)
     {
         $this->text = $text;
+        $this->textString = $textString;
 
         return $this;
     }
