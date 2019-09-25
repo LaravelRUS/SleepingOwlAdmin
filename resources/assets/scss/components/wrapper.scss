@@ -3,5 +3,9 @@
 
   .content-wrapper {
     min-height: calc(100vh - 57px);
+
+    .content.body {
+      overflow: hidden;
+    }
   }
 }
