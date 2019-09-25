@@ -21,7 +21,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
     /**
      * @var string
-     * @var boolean
+     * @var bool
      */
     protected $small;
     protected $smallString = false;
@@ -76,7 +76,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function getSmall()
     {
         if ($this->smallString) {
-          return $this->small;
+            return $this->small;
         }
 
         return $this->getValueFromObject($this->getModel(), $this->small);

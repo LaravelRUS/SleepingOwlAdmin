@@ -21,7 +21,7 @@ class Url extends NamedColumn
 
     /**
      * @var string
-     * @var boolean
+     * @var bool
      */
     protected $text = '';
     protected $textString = false;
