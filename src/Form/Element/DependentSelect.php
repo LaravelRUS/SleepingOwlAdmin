@@ -87,6 +87,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function setLanguage($language)
     {
         $this->language = $language;
+
         return $this;
     }
 
@@ -104,6 +105,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function setInitializable($initializable)
     {
         $this->initializable = $initializable;
+
         return $this;
     }
 
