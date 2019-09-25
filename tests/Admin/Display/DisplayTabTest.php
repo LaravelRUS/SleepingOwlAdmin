@@ -11,7 +11,7 @@ use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class DisplayTabTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -117,9 +117,6 @@ class DisplayTabTest extends TestCase
         $this->assertEquals($name, $tab->getName());
     }
 
-    /**
-     * @expectedException \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
-     */
     public function test_gets_name_exception()
     {
         $tab = $this->getTab(null, null);

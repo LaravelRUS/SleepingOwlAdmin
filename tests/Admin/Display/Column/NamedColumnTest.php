@@ -8,16 +8,13 @@ class NamedColumnTest extends TestCase
 {
     use \SleepingOwl\Tests\AssetsTesterTrait;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
     /**
      * @param string $name
-     * @param string|null $label
-     *
-     * @return PHPUnit_Framework_MockObject_MockObject|NamedColumn
      */
     protected function getColumn($name = 'test_name', $label = 'Test Label')
     {

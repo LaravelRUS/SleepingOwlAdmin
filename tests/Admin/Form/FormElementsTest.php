@@ -10,7 +10,7 @@ use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormElementsTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }

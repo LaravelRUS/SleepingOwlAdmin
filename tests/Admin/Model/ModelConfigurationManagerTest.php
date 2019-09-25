@@ -6,7 +6,7 @@ use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
 class ModelConfigurationManagerTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }

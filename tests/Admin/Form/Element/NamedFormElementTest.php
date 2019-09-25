@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Form\Element\NamedFormElement;
 
 class NamedFormElementTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -45,7 +45,6 @@ class NamedFormElementTest extends TestCase
 
     /**
      * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::__construct
-     * @expectedException  \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function test_constructor_exception()
     {

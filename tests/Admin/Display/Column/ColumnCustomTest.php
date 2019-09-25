@@ -4,7 +4,7 @@ use Mockery as m;
 
 class ColumnCustomTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -52,9 +52,6 @@ class ColumnCustomTest extends TestCase
         $this->assertEquals('value', $column->getModelValue());
     }
 
-    /**
-     * @expectedException \Exception
-     */
     public function test_gets_model_value_exception()
     {
         $column = $this->getColumn();
