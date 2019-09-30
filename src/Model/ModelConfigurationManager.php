@@ -460,7 +460,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnCreate()
     {
-        return '<i class="fas fa-check fa-lg"></i> '.trans('sleeping_owl::lang.message.created');
+        return trans('sleeping_owl::lang.message.created');
     }
 
     /**
@@ -468,7 +468,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnUpdate()
     {
-        return '<i class="fas fa-check fa-lg"></i> '.trans('sleeping_owl::lang.message.updated');
+        return trans('sleeping_owl::lang.message.updated');
     }
 
     /**
@@ -476,7 +476,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnDelete()
     {
-        return '<i class="fas fa-check fa-lg"></i> '.trans('sleeping_owl::lang.message.deleted');
+        return trans('sleeping_owl::lang.message.deleted');
     }
 
     /**
@@ -484,7 +484,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnRestore()
     {
-        return '<i class="fas fa-check fa-lg"></i> '.trans('sleeping_owl::lang.message.restored');
+        return trans('sleeping_owl::lang.message.restored');
     }
 
     /**
@@ -492,7 +492,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getMessageOnDestroy()
     {
-        return '<i class="fas fa-check fa-lg"></i> '.trans('sleeping_owl::lang.message.destroyed');
+        return trans('sleeping_owl::lang.message.destroyed');
     }
 
     /**

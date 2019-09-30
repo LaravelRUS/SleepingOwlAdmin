@@ -138,7 +138,7 @@ class ModelConfigurationManagerTest extends TestCase
 
         $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
         $event->shouldNotReceive('until');
-        $event->shouldReceive('fire')->once()->andReturn(false);
+        $event->shouldReceive('dispatch')->once()->andReturn(false);
 
         $return = $model->fireEvent('test', false);
         $this->assertFalse($return);

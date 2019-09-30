@@ -4,6 +4,6 @@
             <span aria-hidden="true">&times;</span>
         </button>
 
-        {!! $messages !!}
+        <i class="fas fa-times fa-lg"></i> {!! $messages !!}
     </div>
 @endif
