@@ -125,5 +125,4 @@ class TemplateDefaultTest extends TestCase
 
         $this->assertEquals($logo, $this->getTemplate()->getLogo());
     }
-
 }
