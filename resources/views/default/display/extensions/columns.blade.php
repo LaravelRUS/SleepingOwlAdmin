@@ -22,24 +22,18 @@
     @foreach ($collection as $model)
         <tr>
             @foreach ($columns as $column)
-                <?php
-                $column->setModel($model);
-                if ($column instanceof \SleepingOwl\Admin\Display\Column\Control) {
-                    $column->initialize();
-                }
-                if($column instanceof \SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface) {
-                ?>
+                @php
+                    $column->setModel($model);
+
+                    if ($column instanceof \SleepingOwl\Admin\Display\Column\Control) {
+                        $column->initialize();
+                    }
+                @endphp
 
                 <td>
                     {!! $column->render() !!}
                 </td>
-                <?php } else { ?>
-                    <td>
-                        {!! $column->render() !!}
-                    </td>
-                <?php
-                }
-                ?>
+
             @endforeach
         </tr>
     @endforeach

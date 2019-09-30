@@ -43,14 +43,12 @@ return [
     |
     | In order to create authentication views and routes
     | don't forget to execute `php artisan make:auth`.
-    | See https://laravel.com/docs/5.2/authentication#authentication-quickstart
-    |
-    | Note: Please remove 'web' middleware for Laravel 5.1 or older
+    | See https://laravel.com/docs/authentication
     |
     */
 
     'middleware' => ['web'],
-    // 'middleware' => ['web', 'auth'],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -75,8 +73,9 @@ return [
 
     /*
      * Enable and show link in navigation
+     * 'show_editor' is @deprecated
      */
-    'show_editor' => false, //@deprecated
+    'show_editor' => false,
     'enable_editor' => false,
 
     /*
@@ -166,10 +165,10 @@ return [
             /*
              * WARNING!!!! CKEDITOR on D & D and UploadImageDialog
              * BY DEFAULT IMAGES WILL STORE TO imagesUploadDirectory = /images/uploads
+             * 'uploadUrl'            => '/path/to/your/action',
+             * 'filebrowserUploadUrl' => '/path/to/your/action',
              */
 
-            //'uploadUrl'            => '/path/to/your/action',
-            //'filebrowserUploadUrl' => '/path/to/your/action',
         ],
 
         /*
@@ -222,7 +221,10 @@ return [
             'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
           ],
 
-            // 'extraPlugins'              => 'uploadimage,image2,justify,youtube,uploadfile',
+            /*
+             * 'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
+             *
+             */
             'uploadUrl'                 => '/storage/images_admin',
             'filebrowserUploadUrl'      => '/storage/images_admin',
         ],

@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 /**

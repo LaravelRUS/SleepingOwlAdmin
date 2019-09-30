@@ -82,7 +82,6 @@ require('./admin/display/columns/inline_edit');
  * Initialize form
  */
  require('./admin/form/date');
- require('./admin/form/daterange');
  require('./admin/form/datetime');
 
 //OLD need test

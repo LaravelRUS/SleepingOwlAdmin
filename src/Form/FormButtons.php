@@ -222,7 +222,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return null|string|array
-     * @deprecated new version available
      */
     public function getCancelButtonText()
     {
@@ -236,7 +235,6 @@ class FormButtons implements FormButtonsInterface
     /**
      * @param string $cancelButtonText
      * @return $this
-     * @deprecated new version available
      */
     public function setCancelButtonText($cancelButtonText)
     {
@@ -247,7 +245,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return string|array
-     * @deprecated new version available
      */
     public function getSaveButtonText()
     {
@@ -261,7 +258,6 @@ class FormButtons implements FormButtonsInterface
     /**
      * @param string $saveButtonText
      * @return $this
-     * @deprecated
      */
     public function setSaveButtonText($saveButtonText)
     {
@@ -272,7 +268,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return string|array
-     * @deprecated new version available
      */
     public function getSaveAndCloseButtonText()
     {
@@ -285,9 +280,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @param string $saveAndCloseButtonText
-     *
      * @return $this
-     * @deprecated new version available
      */
     public function setSaveAndCloseButtonText($saveAndCloseButtonText)
     {
@@ -298,7 +291,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return string|array
-     * @deprecated new version available
      */
     public function getSaveAndCreateButtonText()
     {
@@ -311,9 +303,7 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @param null|string $saveAndCreateButtonText
-     *
      * @return $this
-     * @deprecated new version available
      */
     public function setSaveAndCreateButtonText($saveAndCreateButtonText)
     {
@@ -324,7 +314,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return string|array
-     * @deprecated new version available
      */
     public function getDeleteButtonText()
     {
@@ -338,7 +327,6 @@ class FormButtons implements FormButtonsInterface
     /**
      * @param null|string $deleteButtonText
      * @return $this
-     * @deprecated new version available
      */
     public function setDeleteButtonText($deleteButtonText)
     {
@@ -349,7 +337,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return null|string|array
-     * @deprecated new version available
      */
     public function getDestroyButtonText()
     {
@@ -362,7 +349,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @param null|string $destroyButtonText
-     * @deprecated new version available
      */
     public function setDestroyButtonText($destroyButtonText)
     {
@@ -371,7 +357,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return string
-     * @deprecated new version available
      */
     public function getRestoreButtonText()
     {
@@ -384,7 +369,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @param null|string $restoreButtonText
-     * @deprecated new version available
      */
     public function setRestoreButtonText($restoreButtonText)
     {
@@ -393,7 +377,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return bool
-     * @deprecated new version available
      */
     public function isShowCancelButton()
     {
@@ -402,7 +385,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return $this
-     * @deprecated new version available
      */
     public function hideCancelButton()
     {
@@ -413,7 +395,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return bool
-     * @deprecated new version available
      */
     public function isShowSaveAndCloseButton()
     {
@@ -422,7 +403,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return $this
-     * @deprecated new version available
      */
     public function hideSaveAndCloseButton()
     {
@@ -433,7 +413,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return bool
-     * @deprecated new version available
      */
     public function isShowSaveAndCreateButton()
     {
@@ -442,7 +421,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return $this
-     * @deprecated new version available
      */
     public function hideSaveAndCreateButton()
     {
@@ -453,7 +431,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return bool|null
-     * @deprecated new version available
      */
     public function isShowDeleteButton()
     {
@@ -468,7 +445,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return $this
-     * @deprecated new version available
      */
     public function hideDeleteButton()
     {
@@ -479,7 +455,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return bool|null
-     * @deprecated new version available
      */
     public function isShowDestroyButton()
     {
@@ -495,7 +470,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return $this
-     * @deprecated new version available
      */
     public function hideDestroyButton()
     {
@@ -506,7 +480,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return bool|null
-     * @deprecated new version available
      */
     public function isShowRestoreButton()
     {
@@ -522,7 +495,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @return $this
-     * @deprecated new version available
      */
     public function hideRestoreButton()
     {

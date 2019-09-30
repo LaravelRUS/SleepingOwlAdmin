@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \SleepingOwl\Admin\Form\Element\File file($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Time time($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Date date($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\DateRange daterange($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Timestamp timestamp($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\TextAddon textaddon($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Password password($name, $label = null)

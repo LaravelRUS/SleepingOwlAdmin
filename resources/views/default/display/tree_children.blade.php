@@ -13,13 +13,12 @@
 
             <div class="control-button">
                 @foreach ($controls as $control)
-
-                    @if($control instanceof \SleepingOwl\Admin\Contracts\Display\ColumnInterface)
-                        <?php $control->setModel($entry); ?><?php
-                        $control->initialize();
-                        ?>
-                    @endif
-
+                    @php
+                        if($control instanceof \SleepingOwl\Admin\Contracts\Display\ColumnInterface) {
+                            $control->setModel($entry);
+                            $control->initialize();
+                        }
+                    @endphp
                     {!! $control->render() !!}
                 @endforeach
             </div>

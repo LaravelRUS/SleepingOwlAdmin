@@ -510,6 +510,7 @@ abstract class Elements extends FormElements
             try {
                 $model->setAttribute($attribute, $value);
             } catch (Throwable $exception) {
+                // Not add Attribute
             }
         }
 

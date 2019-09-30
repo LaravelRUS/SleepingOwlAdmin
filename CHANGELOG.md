@@ -7,6 +7,8 @@
 * [Fix] `.content.body` min-height style
 * [Change] config `show_editor` on `enable_editor`
 * [Fix] Travis test fix
+* [Fix] Small fix Scrutinizer
+* [Deleted] `AdminColumn::daterange`
 
 
 ## 2019-09-24
