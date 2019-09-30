@@ -62,16 +62,16 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'uses' => 'AdminController@deletedAll',
     ]);
 
-    if (config('sleeping_owl.show_editor')) {
+    if (config('sleeping_owl.enable_editor')) {
         $router->group(['middleware' => config('sleeping_owl.env_editor_middlewares')], function (Router $router) {
             $router->get(config('sleeping_owl.env_editor_url'), [
-          'as' => 'env.editor',
-          'uses' => 'AdminController@getEnvEditor',
-        ]);
+                'as' => 'env.editor',
+                'uses' => 'AdminController@getEnvEditor',
+            ]);
             $router->post(config('sleeping_owl.env_editor_url'), [
-          'as' => 'env.editor.post',
-          'uses' => 'AdminController@postEnvEditor',
-        ]);
+                'as' => 'env.editor.post',
+                'uses' => 'AdminController@postEnvEditor',
+            ]);
         });
     }
 });

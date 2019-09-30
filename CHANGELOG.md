@@ -1,7 +1,14 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">bs-4</code> branch)</h2></p>
 
-## 2019-09-24
+## 2019-09-30
+* [Fix] `AdminColumn::wysiwyg` class
+* [Fix] `.dropdown` button style
+* [Fix] `.alert` color style
+* [Fix] `.content.body` min-height style
+* [Change] config `show_editor` on `enable_editor`
 
+
+## 2019-09-24
 * [Add] Add Bootstrap4 classes `.hidden-xs`, `.hidden-sm`, `.hidden-md`, `.hidden-lg`, `.hidden-xl`
 * [Fix] Responsive navbar `.dropdown-menu`
 * [Fix] Responsive navbar `#nestable-menu` (tree view)

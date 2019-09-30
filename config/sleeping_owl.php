@@ -50,6 +50,7 @@ return [
     */
 
     'middleware' => ['web'],
+    // 'middleware' => ['web', 'auth'],
 
     /*
     |--------------------------------------------------------------------------
@@ -73,16 +74,17 @@ return [
     'env_editor_middlewares' => [],
 
     /*
-     * Show link in navigation
+     * Enable and show link in navigation
      */
-    'show_editor' => false,
+    'show_editor' => false, //@deprecated
+    'enable_editor' => false,
 
     /*
      * --------------------------------------------------------------------------
      * Add your policy class here.
      * --------------------------------------------------------------------------
      */
-//    'env_editor_policy' => \Admin\Policies\EnvPolicy::class,
+   'env_editor_policy' => '',
 
     /*
     |--------------------------------------------------------------------------

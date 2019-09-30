@@ -14,6 +14,10 @@
   .column-filter {
     width: 100%;
 
+    .select2-container {
+      width: 100%!important;
+    }
+
     .form-group {
       width: 100%;
       input {

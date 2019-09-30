@@ -29,7 +29,7 @@
 
     @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-    <div class="card-body pad">
+    <div class="card-body pad pb-0">
       {!! Form::textarea($name, $value, $attributes) !!}
     </div>
   </div>
