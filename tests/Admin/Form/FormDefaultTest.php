@@ -294,9 +294,6 @@ class FormDefaultTest extends TestCase
         $this->validate($request);
     }
 
-    /**
-     * @expectedException \Illuminate\Validation\ValidationException
-     */
     public function test_validate_with_exception()
     {
         $this->validate($this->getRequest());

@@ -6,6 +6,7 @@
 * [Fix] `.alert` color style
 * [Fix] `.content.body` min-height style
 * [Change] config `show_editor` on `enable_editor`
+* [Fix] Travis test fix
 
 
 ## 2019-09-24

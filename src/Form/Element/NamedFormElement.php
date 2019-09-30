@@ -207,7 +207,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return string
+     * @return string|Htmlable $helpText
      */
     public function getHelpText()
     {

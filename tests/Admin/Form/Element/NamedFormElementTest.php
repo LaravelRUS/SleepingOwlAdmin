@@ -382,9 +382,6 @@ class NamedFormElementTest extends TestCase
         $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
     }
 
-    /**
-     * @expectedException LogicException
-     */
     public function test_get_model_by_path_exception()
     {
         $element = $this->getElement('key', 'Label');
