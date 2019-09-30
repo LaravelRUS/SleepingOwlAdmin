@@ -48,6 +48,7 @@ class NamedFormElementTest extends TestCase
      */
     public function test_constructor_exception()
     {
+        $this->expectException(\SleepingOwl\Admin\Exceptions\Form\FormElementException::class);
         $this->getElement(null);
     }
 

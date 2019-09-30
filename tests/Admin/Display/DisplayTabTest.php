@@ -119,6 +119,7 @@ class DisplayTabTest extends TestCase
 
     public function test_gets_name_exception()
     {
+        $this->expectException(\SleepingOwl\Admin\Exceptions\Display\DisplayTabException::class);
         $tab = $this->getTab(null, null);
 
         $tab->getName();

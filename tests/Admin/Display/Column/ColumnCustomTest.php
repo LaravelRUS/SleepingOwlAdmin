@@ -54,6 +54,7 @@ class ColumnCustomTest extends TestCase
 
     public function test_gets_model_value_exception()
     {
+        $this->expectException(\Exception::class);
         $column = $this->getColumn();
 
         $this->assertEquals('value', $column->getModelValue());

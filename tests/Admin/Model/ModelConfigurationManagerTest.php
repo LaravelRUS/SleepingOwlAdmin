@@ -71,7 +71,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.model.create', ['title' => $model->getTitle()], null)
             ->andReturn('string');
@@ -87,7 +87,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], null)
             ->andReturn('string');
@@ -149,6 +149,7 @@ class ModelConfigurationManagerTest extends TestCase
      */
     public function test_registering_wrong_event()
     {
+        $this->expectException(BadMethodCallException::class);
         $model = $this->getConfiguration();
         $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
 
@@ -360,7 +361,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.created', null, null)
             ->andReturn('string');
@@ -376,7 +377,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.updated', null, null)
             ->andReturn('string');
@@ -392,7 +393,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.deleted', null, null)
             ->andReturn('string');
@@ -408,7 +409,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.restored', null, null)
             ->andReturn('string');
@@ -424,7 +425,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.destroyed', null, null)
             ->andReturn('string');

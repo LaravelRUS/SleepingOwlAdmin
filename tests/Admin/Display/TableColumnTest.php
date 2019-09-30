@@ -171,6 +171,7 @@ class TableColumnTest extends TestCase
 
     public function test_setOrderable_wrong_class()
     {
+        $this->expectException(InvalidArgumentException::class);
         $column = $this->getColumn();
         $column->setOrderable(new TableColumnTestModel());
     }
