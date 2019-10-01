@@ -1,4 +1,4 @@
-<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">bs-4</code> branch)</h2></p>
+<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
 ## 2019-09-30
 * [Fix] `AdminColumn::wysiwyg` class

@@ -264,7 +264,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param SleepingOwl\Admin\Form\FormElement $visibled
+     * @param \SleepingOwl\Admin\Form\FormElement $visibled
      *
      * @return $this
      * @deprecated

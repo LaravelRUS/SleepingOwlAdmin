@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Widgets\Messages;
 
-use AdminTemplate;
+use SleepingOwl\Admin\Facades\Template as AdminTemplate;
 use SleepingOwl\Admin\Widgets\Widget;
 
 abstract class Messages extends Widget

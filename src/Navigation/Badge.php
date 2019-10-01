@@ -23,7 +23,10 @@ class Badge extends \KodiComponents\Navigation\Badge
 
     // end fix
 
-    public $view = null;
+    /**
+     * @param null $view
+     */
+    public $view;
 
     /**
      * @return array
@@ -57,7 +60,7 @@ class Badge extends \KodiComponents\Navigation\Badge
     /**
      * @param $view
      */
-    public function setView($view)
+    public function setView($view = null)
     {
         $this->view = $view;
     }

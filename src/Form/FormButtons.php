@@ -75,17 +75,17 @@ class FormButtons implements FormButtonsInterface
     protected $showSaveAndCreateButton = true;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     protected $showDeleteButton = true;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     protected $showDestroyButton = true;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     protected $showRestoreButton = true;
 
@@ -233,7 +233,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param string $cancelButtonText
+     * @param null|string $cancelButtonText
      * @return $this
      */
     public function setCancelButtonText($cancelButtonText)
@@ -244,7 +244,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return string|array
+     * @return null|string|array
      */
     public function getSaveButtonText()
     {
@@ -256,7 +256,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param string $saveButtonText
+     * @param null|string $saveButtonText
      * @return $this
      */
     public function setSaveButtonText($saveButtonText)
@@ -267,7 +267,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return string|array
+     * @return null|string|array
      */
     public function getSaveAndCloseButtonText()
     {
@@ -279,7 +279,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param string $saveAndCloseButtonText
+     * @param null|string $saveAndCloseButtonText
      * @return $this
      */
     public function setSaveAndCloseButtonText($saveAndCloseButtonText)
@@ -290,7 +290,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return string|array
+     * @return null|string|array
      */
     public function getSaveAndCreateButtonText()
     {
@@ -313,7 +313,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return string|array
+     * @return null|string|array
      */
     public function getDeleteButtonText()
     {
@@ -356,7 +356,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return string
+     * @return null|string|array
      */
     public function getRestoreButtonText()
     {
@@ -430,7 +430,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return bool|null
+     * @return bool
      */
     public function isShowDeleteButton()
     {
@@ -454,7 +454,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return bool|null
+     * @return bool
      */
     public function isShowDestroyButton()
     {
@@ -479,7 +479,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @return bool|null
+     * @return bool
      */
     public function isShowRestoreButton()
     {
