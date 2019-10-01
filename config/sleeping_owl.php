@@ -202,7 +202,7 @@ return [
          */
         'ckeditor5' => [
 
-          'language' => app()->getLocale(),
+          'language' => config('app.locale'),
 
           'alignment' => [
             'options' => [

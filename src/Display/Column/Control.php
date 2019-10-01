@@ -205,8 +205,6 @@ class Control extends TableColumn
         return
             $this->editable
             &&
-            // ! $this->isTrashed()
-            // &&
             $this->getModelConfiguration()->isEditable(
                 $this->getModel()
             );

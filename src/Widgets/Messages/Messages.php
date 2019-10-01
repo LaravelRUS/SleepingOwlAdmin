@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Widgets\Messages;
 
 use SleepingOwl\Admin\Widgets\Widget;
-use SleepingOwl\Admin\Facades\Template as AdminTemplate;
+use AdminTemplate;
 
 abstract class Messages extends Widget
 {
@@ -30,7 +30,7 @@ abstract class Messages extends Widget
     }
 
     /**
-     * @return string|array
+     * @return string|array|\SleepingOwl\Admin\Templates\Template
      */
     public function template()
     {

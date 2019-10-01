@@ -45,6 +45,8 @@ abstract class Elements extends FormElements
      */
     protected $relationName;
 
+    protected $emptyRelation;
+
     /**
      * New relations counter.
      *
@@ -93,6 +95,10 @@ abstract class Elements extends FormElements
     protected $groups;
 
     protected $queryCallbacks = [];
+
+
+    protected $transactionLevel;
+
 
     public function __construct(string $relationName, array $elements = [])
     {
@@ -644,7 +650,7 @@ abstract class Elements extends FormElements
     /**
      * @param string $groupLabel
      *
-     * @return Elements
+     * @return Elements|\Illuminate\Database\Eloquent\Model
      */
     public function setGroupLabel(string $groupLabel): self
     {
@@ -656,7 +662,7 @@ abstract class Elements extends FormElements
     /**
      * Checks if count of relations to be created exceeds limit.
      *
-     * @return int
+     * @return bool
      */
     public function exceedsLimit()
     {

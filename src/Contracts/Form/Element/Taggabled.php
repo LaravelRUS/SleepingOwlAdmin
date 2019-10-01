@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts\Form\Element;
 
-interface Taggable
+interface Taggabled
 {
     /**
      * @return bool
