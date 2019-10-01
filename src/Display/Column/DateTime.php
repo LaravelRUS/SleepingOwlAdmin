@@ -62,6 +62,7 @@ class DateTime extends NamedColumn
         if ($date instanceof Carbon) {
             $date = $date->timezone($this->getTimezone())->format($this->getFormat());
         }
+
         return $date;
     }
 }
