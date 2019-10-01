@@ -19,7 +19,6 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 abstract class FormElement implements FormElementInterface
 {
     use Assets, Renderable;
-    // use VisibleCondition;
 
     /**
      * @var TemplateInterface
