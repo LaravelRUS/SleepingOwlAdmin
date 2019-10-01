@@ -285,7 +285,7 @@ class FormElementTest extends TestCase
     {
         $element = $this->getElement();
         $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
-        $model->shouldReceive('isAuthor')->andReturn(true)->once();
+        $model->shouldReceive('isAuthor')->andReturn(true);
         $element->setModel($model);
 
         $this->assertEquals(
