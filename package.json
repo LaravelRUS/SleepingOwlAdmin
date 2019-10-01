@@ -18,6 +18,7 @@
     "datatables.net": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
     "datatables.net-responsive": "^2.2.1",
+    "dependent-dropdown": "^1.4.9",
     "dropzone": "5.5.1",
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "font-awesome": "^4.6.3",
