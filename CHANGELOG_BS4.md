@@ -26,7 +26,6 @@
 
 
 ### Что пока не поддерживается
-- Элемент формы timestamp (не работают скрипты) (deprecated либо алиас от datetime)
 
 
 ### Что поправлено
@@ -109,6 +108,7 @@
 * [ ] для респонсивности широких таблиц `->setHtmlAttribute('class', 'hidden-sm')`
 * [ ] `AdminColumnEditable::textarea`
 * [ ] `AdminColumn::boolean`
+* [ ] `AdminColumn::timestamp`
 * [ ] `AdminColumn::url` со всеми методами
 * [ ] `AdminColumn::textaddon` с методами
 * [ ] `AdminColumn::gravatar('email', 'Ava')` Граватарки

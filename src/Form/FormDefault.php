@@ -139,11 +139,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @param FormButtonsInterface $buttons
-     *
      * @return $this
      */
-    public function setButtons(FormButtonsInterface $buttons)
+    public function setButtons($buttons)
     {
         $this->buttons = $buttons;
 
@@ -312,18 +310,18 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
         if (! $this->validModelConfiguration($modelConfiguration)) {
-            return false;
+            return;
         }
 
         $model = $this->getModel();
         $loaded = $model->exists;
 
         if ($this->getModelConfiguration()->fireEvent($loaded ? 'updating' : 'creating', true, $model) === false) {
-            return false;
+            return;
         }
 
         if ($this->getModelConfiguration()->fireEvent('saving', true, $model) === false) {
-            return false;
+            return;
         }
 
         parent::save($request);

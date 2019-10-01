@@ -7,7 +7,8 @@
 				<span class="form-element-required">*</span>
 			@endif
 		</label>
-		<div class="input-date input-group">
+
+		<div class="input-date input-group datetime">
 			<input {!! $attributes !!}
 				value="{{ $value }}"
 				@if($readonly) readonly @endif

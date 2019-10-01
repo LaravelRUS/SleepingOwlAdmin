@@ -187,11 +187,7 @@ class Columns extends Extension implements Initializable, Renderable
         $params['pagination'] = null;
 
         if ($params['collection'] instanceof Paginator) {
-            if (class_exists('Illuminate\Pagination\BootstrapThreePresenter')) {
-                $params['pagination'] = (new \Illuminate\Pagination\BootstrapThreePresenter($params['collection']))->render();
-            } else {
-                $params['pagination'] = $params['collection']->render();
-            }
+            $params['pagination'] = $params['collection']->render();
         }
 
         return app('sleeping_owl.template')->view($this->getView(), $params)->render();

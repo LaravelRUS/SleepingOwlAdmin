@@ -268,7 +268,7 @@ interface ModelConfigurationInterface
     public function getControllerClass();
 
     /**
-     * @return SleepingOwl\Admin\Navigation\Page
+     * @return \SleepingOwl\Admin\Navigation\Page
      */
     public function addToNavigation();
 }

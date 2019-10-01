@@ -21,7 +21,6 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      * @var string
      */
     protected $format = 'Y-m-d H:i:s';
-    //    protected $format = 'YYYY-MM-DD';
 
     protected $type = 'combodate';
 
@@ -80,11 +79,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     protected function getFormatedDate($date)
     {
-        if (! is_null($date)) {
-            if (! $date instanceof Carbon) {
-                $date = Carbon::parse($date);
-            }
-
+        if ($date instanceof Carbon) {
             $date = $date->timezone($this->getTimezone())->format($this->getFormat());
         }
 
