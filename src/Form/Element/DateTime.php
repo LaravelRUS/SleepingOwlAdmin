@@ -44,11 +44,8 @@ class DateTime extends NamedFormElement
      */
     public function getTimezone()
     {
-        if (is_null($this->timezone)) {
-            $this->timezone = config('sleeping_owl.timezone');
-        }
 
-        return $this->timezone;
+        return $this->timezone ?: config('sleeping_owl.timezone');
     }
 
     /**
