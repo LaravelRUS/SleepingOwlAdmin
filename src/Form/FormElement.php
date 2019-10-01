@@ -258,19 +258,17 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Closure $condition
+     * @param Closure|bool $visibled
      *
      * @return $this
      * @deprecated
      */
-    public function setVisibilityCondition($visibled)
-    {
-        $this->visibled = $visibled;
-
-        return $this;
-    }
-
-    //setVisibilityCondition
+    // public function setVisibilityCondition($visibled)
+    // {
+    //     $this->visibled = $visibled;
+    //
+    //     return $this;
+    // }
 
     /**
      * @return mixed
