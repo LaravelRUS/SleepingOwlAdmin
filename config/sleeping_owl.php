@@ -220,10 +220,6 @@ return [
             'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
           ],
 
-            /*
-             * 'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
-             *
-             */
             'uploadUrl'                 => '/storage/images_admin',
             'filebrowserUploadUrl'      => '/storage/images_admin',
         ],

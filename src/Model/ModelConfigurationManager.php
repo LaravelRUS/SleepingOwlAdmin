@@ -189,7 +189,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getCreateTitle()
     {
@@ -197,7 +197,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getEditTitle()
     {
@@ -221,7 +221,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -231,7 +231,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -251,7 +251,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -301,7 +301,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param string $action
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -456,7 +456,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getMessageOnCreate()
     {
@@ -464,7 +464,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getMessageOnUpdate()
     {
@@ -472,7 +472,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getMessageOnDelete()
     {
@@ -480,7 +480,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getMessageOnRestore()
     {
@@ -488,7 +488,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getMessageOnDestroy()
     {

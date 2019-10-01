@@ -87,7 +87,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getNewEntryButtonText()
     {

@@ -46,13 +46,13 @@ interface ModelConfigurationInterface
     public function getIcon();
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getCreateTitle();
 
     /**
      * @param Model $model
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
      */
     public function getEditTitle();
 
