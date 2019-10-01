@@ -189,7 +189,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getCreateTitle()
     {
@@ -197,7 +197,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getEditTitle()
     {
@@ -456,7 +456,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getMessageOnCreate()
     {
@@ -464,7 +464,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getMessageOnUpdate()
     {
@@ -472,7 +472,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getMessageOnDelete()
     {
@@ -480,7 +480,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getMessageOnRestore()
     {
@@ -488,7 +488,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getMessageOnDestroy()
     {

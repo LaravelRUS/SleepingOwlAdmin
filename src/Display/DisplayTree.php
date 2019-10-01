@@ -200,7 +200,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Translation\TranslatorInterface|string
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getNewEntryButtonText()
     {
