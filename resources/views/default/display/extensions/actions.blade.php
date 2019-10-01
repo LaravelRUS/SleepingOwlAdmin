@@ -1,4 +1,4 @@
-@if(count($actions) >= 0)
+@if(count($actions) > 0)
     <form {!! $attributes !!}>
         {{ csrf_field() }}
 
