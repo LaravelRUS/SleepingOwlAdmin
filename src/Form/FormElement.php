@@ -12,7 +12,6 @@ use Illuminate\Validation\Rules\Exists;
 use Illuminate\Validation\Rules\Unique;
 use SleepingOwl\Admin\Traits\Renderable;
 use Illuminate\Validation\Rules\Dimensions;
-use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
