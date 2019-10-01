@@ -96,9 +96,7 @@ abstract class Elements extends FormElements
 
     protected $queryCallbacks = [];
 
-
     protected $transactionLevel;
-
 
     public function __construct(string $relationName, array $elements = [])
     {
