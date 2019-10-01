@@ -28,8 +28,8 @@ use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
  * @method Actions getActions()
  * @method $this setActions(ActionInterface|array $action, ...$actions)
  *
- * @method ActionsForm getActionForm()
- * @method $this setActionForm(ActionInterface|array|FormElements $action, ...$actions)
+ * @method ActionsForm getActionsForm()
+ * @method $this setActionsForm(ActionInterface|array|FormElements $action, ...$actions)
  *
  * @method Filters getFilters()
  * @method $this setFilters(FilterInterface $filter, ...$filters)
@@ -86,7 +86,7 @@ abstract class Display implements DisplayInterface
     {
         $this->extensions = new ExtensionCollection();
 
-        $this->extend('action_form', new ActionsForm());
+        $this->extend('actions_form', new ActionsForm());
         $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
@@ -248,13 +248,15 @@ abstract class Display implements DisplayInterface
         $blocks = $this->getExtensions()->placableBlocks();
 
         foreach ($blocks as $block => $data) {
+            #d('Block: ' . $block);
             foreach ($data as $html) {
+                #d(empty($html));
                 if (! empty($html)) {
                     $view->getFactory()->startSection($block);
                     echo $html;
                     $view->getFactory()->yieldSection();
                 } else {
-                    $view->getFactory()->flushSections();
+                    #$view->getFactory()->flushSections();
                 }
             }
         }

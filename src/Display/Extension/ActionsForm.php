@@ -16,7 +16,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     /**
      * @var ActionInterface[]|Collection
      */
-    protected $actions;
+    protected $action_form;
 
     /**
      * @var string|\Illuminate\View\View
@@ -38,7 +38,7 @@ class ActionsForm extends Extension implements Initializable, Placable
      */
     public function clear()
     {
-        $this->actions = new Collection();
+        $this->action_form = new Collection();
 
         return $this;
     }
@@ -48,15 +48,15 @@ class ActionsForm extends Extension implements Initializable, Placable
      *
      * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
-    public function set($actions)
+    public function set($action_form)
     {
-        if (! is_array($actions)) {
-            $actions = func_get_args();
+        if (! is_array($action_form)) {
+            $action_form = func_get_args();
         }
 
         $this->clear();
 
-        foreach ($actions as $action) {
+        foreach ($action_form as $action) {
             $this->push($action);
         }
 
@@ -68,7 +68,7 @@ class ActionsForm extends Extension implements Initializable, Placable
      */
     public function all()
     {
-        return $this->actions;
+        return $this->action_form;
     }
 
     /**
@@ -78,7 +78,7 @@ class ActionsForm extends Extension implements Initializable, Placable
      */
     public function push(FormElement $action)
     {
-        $this->actions->push($action);
+        $this->action_form->push($action);
 
         return $this;
     }
@@ -135,7 +135,7 @@ class ActionsForm extends Extension implements Initializable, Placable
         });
 
         $return = [
-            'actions' => $this->actions,
+            'action_form' => $this->action_form,
             'placement' => $this->getPlacement(),
             'attributes' => $this->htmlAttributesToString(),
         ];
