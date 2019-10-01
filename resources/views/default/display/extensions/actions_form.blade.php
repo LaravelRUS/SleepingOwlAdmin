@@ -4,5 +4,4 @@
             {!! $action->render() !!}
         @endforeach
     </div>
-    <div class="clearfix"></div>
 @endif
