@@ -11,7 +11,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @return FormElement|PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getElement()
     {

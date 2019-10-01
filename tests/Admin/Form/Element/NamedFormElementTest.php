@@ -384,6 +384,7 @@ class NamedFormElementTest extends TestCase
 
     public function test_get_model_by_path_exception()
     {
+        $this->expectException(LogicException::class);
         $element = $this->getElement('key', 'Label');
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));

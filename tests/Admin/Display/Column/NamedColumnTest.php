@@ -15,6 +15,10 @@ class NamedColumnTest extends TestCase
 
     /**
      * @param string $name
+     * @param string $label
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getColumn($name = 'test_name', $label = 'Test Label')
     {
