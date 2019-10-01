@@ -248,9 +248,7 @@ abstract class Display implements DisplayInterface
         $blocks = $this->getExtensions()->placableBlocks();
 
         foreach ($blocks as $block => $data) {
-            #d('Block: ' . $block);
             foreach ($data as $html) {
-                #d(empty($html));
                 if (! empty($html)) {
                     $view->getFactory()->startSection($block);
                     echo $html;
