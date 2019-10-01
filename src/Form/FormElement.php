@@ -128,7 +128,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param string|\Illuminate\Validation\Rule|\Illuminate\Contracts\Validation\Rule $rule
+     * @param string $rule
      * @param string|null $message
      *
      * @return $this
@@ -146,6 +146,7 @@ abstract class FormElement implements FormElementInterface
 
     /**
      * @param array|string $validationRules
+     * @param string|\Illuminate\Validation\Rule|\Illuminate\Contracts\Validation\Rule $rule
      *
      * @return $this
      */
@@ -263,7 +264,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Closure|bool $visibled
+     * @param SleepingOwl\Admin\Form\FormElement $visibled
      *
      * @return $this
      * @deprecated
