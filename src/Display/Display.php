@@ -86,8 +86,8 @@ abstract class Display implements DisplayInterface
     {
         $this->extensions = new ExtensionCollection();
 
-        $this->extend('actions', new Actions());
         $this->extend('actions_form', new ActionsForm());
+        $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
         $this->extend('scopes', new Scopes());
