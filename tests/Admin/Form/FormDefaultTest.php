@@ -264,7 +264,7 @@ class FormDefaultTest extends TestCase
 
         $element->shouldReceive('initialize')->once();
         $element->shouldReceive('setModel');
-        $element->shouldReceive('isReadonly')->twice()->andReturn(false);
+        $element->shouldReceive('isReadonly')->times(4)->andReturn(false);
         $element->shouldReceive('isVisible')->twice()->andReturn(true);
         $element->shouldReceive('save')->once()->with($request);
         $element->shouldReceive('afterSave')->once()->with($request);

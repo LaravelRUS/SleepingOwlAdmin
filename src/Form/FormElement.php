@@ -25,6 +25,11 @@ abstract class FormElement implements FormElementInterface
     protected $template;
 
     /**
+     * @var Renderable
+     */
+    protected $view;
+
+    /**
      * @var Model
      */
     protected $model;
@@ -123,7 +128,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param string $rule
+     * @param string|\Illuminate\Validation\Rule|\Illuminate\Contracts\Validation\Rule $rule
      * @param string|null $message
      *
      * @return $this
@@ -186,7 +191,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return bool
+     * @return bool|callable
      */
     public function isReadonly()
     {
@@ -198,7 +203,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return bool
+     * @return bool|callable
      */
     public function isVisible()
     {
@@ -263,12 +268,12 @@ abstract class FormElement implements FormElementInterface
      * @return $this
      * @deprecated
      */
-    // public function setVisibilityCondition($visibled)
-    // {
-    //     $this->visibled = $visibled;
-    //
-    //     return $this;
-    // }
+    public function setVisibilityCondition($visibled)
+    {
+        $this->visibled = $this->setVisible($visibled);
+
+        return $this;
+    }
 
     /**
      * @return mixed
