@@ -204,32 +204,26 @@ class FormElementsTest extends TestCase
         ]);
 
         $element1->shouldReceive('isReadonly')->once()->andReturn(false);
-        $element1->shouldReceive('isVisible')->once()->andReturn(true);
         $element1->shouldReceive('isDisplayed')->once()->andReturn(true);
         $element1->shouldReceive('getValidationRules')->once()->andReturn(['element1' => 'required']);
 
         $element2->shouldReceive('isReadonly')->once()->andReturn(true);
-        $element2->shouldNotReceive('isVisible');
         $element2->shouldNotReceive('isDisplayed');
         $element2->shouldNotReceive('getValidationRules');
 
         $element3->shouldReceive('isReadonly')->once()->andReturn(false);
-        $element3->shouldReceive('isVisible')->once()->andReturn(false);
         $element3->shouldReceive('isDisplayed')->once()->andReturn(false);
         $element3->shouldNotReceive('getValidationRules');
 
         $element4->shouldNotReceive('isReadonly');
-        $element4->shouldNotReceive('isVisible');
         $element4->shouldNotReceive('isDisplayed');
         $element4->shouldNotReceive('getValidationRules');
 
         $element5->shouldNotReceive('isReadonly');
-        $element5->shouldNotReceive('isVisible');
         $element5->shouldNotReceive('isDisplayed');
         $element5->shouldNotReceive('getValidationRules');
 
         $element6->shouldNotReceive('isReadonly');
-        $element6->shouldNotReceive('isVisible');
         $element6->shouldNotReceive('isDisplayed');
         $element6->shouldReceive('getValidationRules')->once()->andReturn(['element6' => 'unique']);
 
@@ -257,17 +251,14 @@ class FormElementsTest extends TestCase
         $request = $this->getRequest();
 
         $element1->shouldReceive('isReadonly')->once()->andReturn(false);
-        $element1->shouldReceive('isVisible')->once()->andReturn(true);
         $element1->shouldReceive('isDisplayed')->once()->andReturn(true);
         $element1->shouldReceive('save')->once()->with($request);
 
         $element2->shouldReceive('isReadonly')->once()->andReturn(true);
-        $element2->shouldNotReceive('isVisible');
         $element2->shouldNotReceive('isDisplayed');
         $element1->shouldNotReceive('save');
 
         $element3->shouldReceive('isReadonly')->once()->andReturn(false);
-        $element3->shouldReceive('isVisible')->once()->andReturn(false);
         $element3->shouldReceive('isDisplayed')->once()->andReturn(false);
         $element1->shouldNotReceive('save');
 
@@ -303,17 +294,14 @@ class FormElementsTest extends TestCase
         $request = $this->getRequest();
 
         $element1->shouldReceive('isReadonly')->once()->andReturn(false);
-        $element1->shouldReceive('isVisible')->once()->andReturn(true);
         $element1->shouldReceive('isDisplayed')->once()->andReturn(true);
         $element1->shouldReceive('afterSave')->once()->with($request);
 
         $element2->shouldReceive('isReadonly')->once()->andReturn(true);
-        $element2->shouldNotReceive('isVisible');
         $element2->shouldNotReceive('isDisplayed');
         $element1->shouldNotReceive('afterSave');
 
         $element3->shouldReceive('isReadonly')->once()->andReturn(false);
-        $element3->shouldReceive('isVisible')->once()->andReturn(false);
         $element3->shouldReceive('isDisplayed')->once()->andReturn(false);
         $element1->shouldNotReceive('afterSave');
 
