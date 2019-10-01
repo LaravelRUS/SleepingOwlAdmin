@@ -70,18 +70,18 @@
 * [x] бок с автоапдейтом (полностью спрятать кнопку закрыть)
 * [x] Добавить метод для `lists` выбор цвета, иначе пусть под цвет таблицы
 * [x] Добавить метод для `url` выбор иконки
+* [x] посмотреть `isVisible`, возможно убрать `setDisplayed` и заменить на `setVisible()`
+* [x] `AdminFormElement::daterange` выпилить
 
 
 ### Что сделать
 * [ ] медленное прорисовывание меню, поправить определение классов в хелпере меню
-* [ ] `AdminFormElement::daterange` выпилить
 * [ ] ПРнуть / потестить депендет аякс и селект2 из девки
 * [ ] `multiselect` поправить отображение required и внесение старых данных после ошибки
 * [ ] Допилить `->setFormat()` на даты (не работает)
 * [ ] `AdminFormElement::file` проверить на ошибку в Vue
 * [ ] Запомнить последний таб (localstorage или кука)
 * [ ] `AdminColumnEditable::date` поправить год
-* [ ] посмотреть `isVisible`, возможно убрать `setDisplayed` и заменить на `setVisible()`
 * [ ] посмотреть `setVisible`, к табам
 * [ ] Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
 
@@ -104,6 +104,8 @@
 
 ### В доку дописать
 * [ ] `->setVisible(true)` для display
+* [ ] `->setVisible(true)` для форм
+* [ ] `->setVisibilityCondition()` deprecated
 * [ ] для респонсивности широких таблиц `->setHtmlAttribute('class', 'hidden-sm')`
 * [ ] `AdminColumnEditable::textarea`
 * [ ] `AdminColumn::boolean`
