@@ -1,4 +1,4 @@
-@if ($displayed)
+@if ($visibled)
 	<div class="form-group form-element-image {{ $errors->has($name) ? 'has-error' : '' }}">
 		<label for="{{ $name }}" class="control-label {{ $required ? 'required' : '' }}">
 			{{ $label }}

@@ -81,6 +81,8 @@
 * [ ] `AdminFormElement::file` проверить на ошибку в Vue
 * [ ] Запомнить последний таб (localstorage или кука)
 * [ ] `AdminColumnEditable::date` поправить год
+* [ ] посмотреть `isVisible`, возможно убрать `setDisplayed` и заменить на `setVisible()`
+* [ ] посмотреть `setVisible`, к табам
 * [ ] Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
 
 
@@ -101,6 +103,7 @@
 
 
 ### В доку дописать
+* [ ] `->setVisible(true)` для display
 * [ ] для респонсивности широких таблиц `->setHtmlAttribute('class', 'hidden-sm')`
 * [ ] `AdminColumnEditable::textarea`
 * [ ] `AdminColumn::boolean`

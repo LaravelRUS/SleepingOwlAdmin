@@ -1,4 +1,4 @@
-@if ($displayed)
+@if ($visibled)
   @push('footer-scripts')
     <script>
     Admin.WYSIWYG.switchOn('{!!  $name !!}', '{{ $editor }}', {!! $parameters !!})

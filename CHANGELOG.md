@@ -9,6 +9,9 @@
 * [Fix] Travis test fix
 * [Fix] Small fix Scrutinizer
 * [Deleted] `AdminColumn::daterange`
+* [Fix] `->setVisibilityCondition()`
+* [Fix] `->setVisible()` in form
+* [Deleted] `->setDisplayed()`
 
 
 ## 2019-09-24

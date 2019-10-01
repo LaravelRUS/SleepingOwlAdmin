@@ -18,7 +18,8 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets, VisibleCondition, Renderable;
+    use Assets, Renderable;
+    // use VisibleCondition;
 
     /**
      * @var TemplateInterface
@@ -48,7 +49,7 @@ abstract class FormElement implements FormElementInterface
     /**
      * @var bool|callable
      */
-    protected $displayed = true;
+    protected $visibled = true;
 
     /**
      * @var bool|callable
@@ -201,13 +202,13 @@ abstract class FormElement implements FormElementInterface
     /**
      * @return bool
      */
-    public function isDisplayed()
+    public function isVisible()
     {
-        if (is_callable($this->displayed)) {
-            return (bool) call_user_func($this->displayed, $this->getModel());
+        if (is_callable($this->visibled)) {
+            return (bool) call_user_func($this->visibled, $this->getModel());
         }
 
-        return (bool) $this->displayed;
+        return (bool) $this->visibled;
     }
 
     /**
@@ -247,16 +248,31 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Closure|bool $displayed
+     * @param Closure|bool $visibled
      *
      * @return $this
      */
-    public function setDisplayed($displayed)
+    public function setVisible($visibled)
     {
-        $this->displayed = $displayed;
+        $this->visibled = $visibled;
 
         return $this;
     }
+
+    /**
+     * @param Closure $condition
+     *
+     * @return $this
+     * @deprecated
+     */
+    public function setVisibilityCondition($visibled)
+    {
+        $this->visibled = $visibled;
+
+        return $this;
+    }
+
+    //setVisibilityCondition
 
     /**
      * @return mixed
@@ -304,7 +320,7 @@ abstract class FormElement implements FormElementInterface
         return [
             'value' => $this->getValue(),
             'readonly' => $this->isReadonly(),
-            'displayed' => $this->isDisplayed(),
+            'visibled' => $this->isVisible(),
             'model' => $this->getModel(),
         ];
     }

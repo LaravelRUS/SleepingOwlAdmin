@@ -265,7 +265,6 @@ class FormDefaultTest extends TestCase
         $element->shouldReceive('initialize')->once();
         $element->shouldReceive('setModel');
         $element->shouldReceive('isReadonly')->twice()->andReturn(false);
-        $element->shouldReceive('isDisplayed')->twice()->andReturn(true);
         $element->shouldReceive('isVisible')->twice()->andReturn(true);
         $element->shouldReceive('save')->once()->with($request);
         $element->shouldReceive('afterSave')->once()->with($request);
@@ -326,7 +325,6 @@ class FormDefaultTest extends TestCase
         ]);
 
         $element->shouldReceive('isReadonly')->andReturn(false);
-        $element->shouldReceive('isDisplayed')->andReturn(true);
         $element->shouldReceive('isVisible')->andReturn(true);
 
         $form->setModelClass(FormDefaultTestMockModel::class);

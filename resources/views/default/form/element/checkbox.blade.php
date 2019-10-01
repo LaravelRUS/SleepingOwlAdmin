@@ -1,4 +1,4 @@
-@if ($displayed)
+@if ($visibled)
 	<div class="form-group form-element-checkbox {{ $errors->has($name) ? 'has-error' : '' }}">
 		<div class="checkbox">
 			<label class="{{ $required ? 'required' : '' }}">
