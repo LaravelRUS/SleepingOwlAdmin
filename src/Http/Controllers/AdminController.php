@@ -506,7 +506,7 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
         $column = null;
 
-        /**
+        /*
           * @var ColumnEditableInterface|null $column
           */
         if (is_callable([$display, 'getColumns'])) {
