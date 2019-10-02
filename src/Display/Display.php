@@ -248,7 +248,7 @@ abstract class Display implements DisplayInterface
                     echo $html;
                     $view->getFactory()->yieldSection();
                 } else {
-                    /**
+                    /*
                     * Need test for action (BUG)
                     */
                     $view->getFactory()->flushSections();
