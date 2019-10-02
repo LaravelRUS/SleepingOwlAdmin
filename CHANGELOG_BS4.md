@@ -83,6 +83,9 @@
 * [ ] `AdminColumnEditable::date` поправить год
 * [ ] посмотреть `setVisible`, к табам
 * [ ] Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
+* [ ] `Admin.Modules.register('display.datatables', () => {localStorage.clear();}` - переработать
+* [ ] Сохранить->сохранить/закрыть не возврат, а `->getDisplayUrl()`
+* [ ] Перепроверить stub
 
 
 ### Отменено

@@ -484,7 +484,7 @@ abstract class NamedFormElement extends FormElement
             $i++;
             $previousModel = $model;
 
-            /*
+            /**
               * @var Model $model
               */
             foreach ($relations as $relation) {

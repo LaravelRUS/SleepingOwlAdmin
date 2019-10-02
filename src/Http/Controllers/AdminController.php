@@ -506,9 +506,9 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
         $column = null;
 
-        /*
-         *@var ColumnEditableInterface|null $column
-         */
+        /**
+          * @var ColumnEditableInterface|null $column
+          */
         if (is_callable([$display, 'getColumns'])) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
                 return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
