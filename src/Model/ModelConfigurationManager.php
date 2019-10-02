@@ -104,9 +104,17 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     private $repository;
 
     /**
+     * @var Model|null
+     */
+    protected $model_value = null;
+
+    /**
      * ModelConfigurationManager constructor.
+     *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param $class
+     * @param                                              $class
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
@@ -137,6 +145,22 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * @return Model|null
+     */
+    public function getModelValue()
+    {
+        return $this->model_value;
+    }
+
+    /**
+     * @param Model $item
+     */
+    public function setModelValue($item)
+    {
+        $this->model_value = $item;
     }
 
     /**

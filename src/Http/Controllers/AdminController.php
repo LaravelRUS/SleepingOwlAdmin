@@ -55,9 +55,11 @@ class AdminController extends Controller
     /**
      * AdminController constructor.
      *
-     * @param Request $request
+     * @param Request        $request
      * @param AdminInterface $admin
-     * @param Application $application
+     * @param Application    $application
+     *
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function __construct(Request $request, AdminInterface $admin, Application $application)
     {
@@ -396,6 +398,10 @@ class AdminController extends Controller
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
+        }
+
+        if (method_exists($model, 'setModelValue')) {
+            $model->setModelValue($item);
         }
 
         $edit = $model->fireEdit($id);
