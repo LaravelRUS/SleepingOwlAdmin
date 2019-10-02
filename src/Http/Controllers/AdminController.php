@@ -356,7 +356,7 @@ class AdminController extends Controller
             $redirectUrl = $model->getEditUrl($newModel->{$primaryKey});
             $redirectPolicy = $model->getRedirect();
 
-            /**
+            /*
              * @see Make redirect when use in model config && Fix editable redirect
              */
             if ($redirectPolicy->get('create') == 'display' || ! $model->isEditable($newModel)) {
@@ -500,7 +500,7 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
         $column = null;
 
-        /**
+        /*
          *@var ColumnEditableInterface|null $column
          */
         if (is_callable([$display, 'getColumns'])) {
@@ -520,7 +520,7 @@ class AdminController extends Controller
                     if ($content instanceof FormElements) {
                         foreach ($content->getElements() as $element) {
 
-                            /**
+                            /*
                               * Return data-table if inside FormElements
                               */
                             if ($element instanceof DisplayTable) {
@@ -529,7 +529,7 @@ class AdminController extends Controller
                                 })->first();
                             }
 
-                            /**
+                            /*
                               * Try to find inline Editable in columns
                               */
                             if ($element instanceof Column) {

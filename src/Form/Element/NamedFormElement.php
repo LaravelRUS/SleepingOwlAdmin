@@ -484,7 +484,7 @@ abstract class NamedFormElement extends FormElement
             $i++;
             $previousModel = $model;
 
-            /**
+            /*
               * @var Model $model
               */
             foreach ($relations as $relation) {
@@ -494,8 +494,8 @@ abstract class NamedFormElement extends FormElement
                 } elseif (method_exists($previousModel, $relation)) {
 
                     /**
-                      * @var Relation $relation
-                      */
+                     * @var Relation
+                     */
                     $relationObject = $previousModel->{$relation}();
 
                     switch (get_class($relationObject)) {
