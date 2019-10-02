@@ -6,6 +6,7 @@ class DateTimeTest extends TestCase
 {
     /**
      * @return DateTime
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     protected function getElement()
     {
@@ -18,8 +19,8 @@ class DateTimeTest extends TestCase
     }
 
     /**
-     * @covers DateTime::getFormat
-     * @covers DateTime::setFormat
+     * @covers SleepingOwl\Admin\Form\Element\DateTime::getFormat
+     * @covers SleepingOwl\Admin\Form\Element\DateTime::setFormat
      */
     public function test_gets_and_sets_format()
     {
@@ -32,8 +33,8 @@ class DateTimeTest extends TestCase
     }
 
     /**
-     * @covers DateTime::getFormat
-     * @covers DateTime::setFormat
+     * @covers SleepingOwl\Admin\Form\Element\DateTime::getFormat
+     * @covers SleepingOwl\Admin\Form\Element\DateTime::setFormat
      */
     public function test_gets_and_sets_picker_format()
     {

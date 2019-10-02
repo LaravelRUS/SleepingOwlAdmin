@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\RedirectResponse;
 use SleepingOwl\Admin\Form\FormElements;
 use DaveJamesMiller\Breadcrumbs\Generator;
 use SleepingOwl\Admin\Form\Columns\Column;
@@ -46,6 +47,11 @@ class AdminController extends Controller
     public $app;
 
     /**
+     * @var
+     */
+    protected $envPolicy;
+
+    /**
      * AdminController constructor.
      *
      * @param Request $request
@@ -57,6 +63,10 @@ class AdminController extends Controller
         $this->app = $application;
         $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
+
+        if ($this->envPolicy = config('sleeping_owl.env_editor_policy')) {
+            $this->envPolicy = new $this->envPolicy;
+        }
 
         $admin->navigation()->setCurrentUrl($request->getUri());
 
@@ -110,11 +120,163 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function getEnvEditor()
+    {
+        $envFile = app()->environmentFilePath();
+        $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
+
+        /**
+         * Use filter masks.
+         * @param $key
+         * @return bool
+         */
+        $envContent = $envContent->filter(function ($value, $key) {
+            return ! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key);
+        });
+
+        $envContent = $envContent->filter(function ($value, $key) {
+            return $this->validatePolicy('display', $key);
+        });
+
+        $envContent = $envContent->map(function ($value, $key) {
+            return (object) [
+                'value' => $value,
+                'editable' => $this->validatePolicy('edit', $key),
+                'deletable' => $this->validatePolicy('delete', $key),
+            ];
+        });
+
+        return $this->renderContent(
+            $this->admin->template()->view('env_editor', ['data' => $envContent]),
+            trans('sleeping_owl::lang.env_editor.title')
+        );
+    }
+
+    /**
+     * @param $permission
+     * @param $key
+     * @return bool
+     */
+    protected function validatePolicy($permission, $key)
+    {
+        return ($this->envPolicy && ((method_exists($this->envPolicy, $permission)
+                    && $this->envPolicy->$permission(\Auth::user(), $key) !== false)))
+            || ! method_exists($this->envPolicy, $permission) || ! $this->envPolicy || $this->validateBeforePolicy($key);
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    protected function validateBeforePolicy($key)
+    {
+        return ($this->envPolicy && (method_exists($this->envPolicy, 'before'))
+                && $this->envPolicy->before(\Auth::user(), $key) == true)
+            || ! method_exists($this->envPolicy, 'before') || ! $this->envPolicy;
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postEnvEditor(Request $request)
+    {
+        $envFile = app()->environmentFilePath();
+        $envContent = collect(parse_ini_file($envFile, false, INI_SCANNER_RAW));
+
+        $requestContent = collect($request->input('variables'));
+        $removeContent = collect();
+
+        foreach ($envContent as $key => $value) {
+            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)) {
+                if ($requestContent->has($key)) {
+                    if ($this->validatePolicy('edit', $key)) {
+                        $envContent[$key] = $requestContent[$key]['value'];
+                    }
+                    $requestContent->forget($key);
+                } else {
+                    $envContent->forget($key);
+                    $removeContent->put($key, null);
+                }
+            }
+        }
+
+        foreach ($requestContent as $key => $value) {
+            if (! in_array($key, config('sleeping_owl.env_editor_excluded_keys')) && ! $this->filterKey($key)
+                && $this->validatePolicy('create', $key)) {
+                $this->writeEnvData($key, $value['value'], 1);
+            }
+            $requestContent->forget($key);
+        }
+
+        foreach ($removeContent as $key => $value) {
+            if ($this->validatePolicy('delete', $key)) {
+                $this->writeEnvData($key);
+            }
+        }
+
+        foreach ($envContent as $key => $value) {
+            $this->writeEnvData($key, $value);
+        }
+
+        return redirect()->back()->with('success_message', 'Env Updated');
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function filterKey($key)
+    {
+        foreach (config('sleeping_owl.env_editor_excluded_keys') as $val) {
+            if (strpos($val, '*') !== false) {
+                $val = str_replace('*', '', $val);
+                if (strpos($key, $val) !== false) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $key
+     * @param null $data
+     * @param bool $new
+     * @return bool
+     */
+    public function writeEnvData($key, $data = null, $new = null)
+    {
+        $envFile = app()->environmentFilePath();
+        $str = file_get_contents($envFile);
+
+        if (is_null($data)) {
+            $str = preg_replace("/$key=.*/m", '', $str);
+            file_put_contents($envFile, $str);
+
+            return false;
+        }
+
+        if (is_null($new)) {
+            $str = preg_replace("/$key=.*/m", "$key=$data", $str);
+            file_put_contents($envFile, $str);
+
+            return false;
+        }
+
+        $str = $str."\r\n$key=$data";
+        file_put_contents($envFile, $str);
+
+        return true;
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
@@ -131,10 +293,8 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     public function getCreate(ModelConfigurationInterface $model)
     {
@@ -144,8 +304,8 @@ class AdminController extends Controller
 
         $create = $model->fireCreate();
 
-        $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
         $this->registerBreadcrumbs($model);
+        $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
 
         return $this->render($model, $create, $model->getCreateTitle());
     }
@@ -225,11 +385,9 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param int                $id
-     *
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     public function getEdit(ModelConfigurationInterface $model, $id)
     {
@@ -239,11 +397,10 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
-
         $edit = $model->fireEdit($id);
 
         $this->registerBreadcrumbs($model);
+        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
 
         return $this->render($model, $edit, $model->getEditTitle());
     }
@@ -369,7 +526,9 @@ class AdminController extends Controller
                             if ($element instanceof Column) {
                                 foreach ($element->getElements() as $columnElement) {
                                     if ($columnElement instanceof DisplayTable) {
-                                        $column = $columnElement->getColumns()->all()->filter(function ($column) use ($field) {
+                                        $column = $columnElement->getColumns()->all()->filter(function ($column) use (
+                                            $field
+                                        ) {
                                             return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
                                         })->first();
                                     }
@@ -503,13 +662,17 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param Renderable|string $content
+     * @param Renderable|RedirectResponse|string $content
      * @param string|null $title
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function render(ModelConfigurationInterface $model, $content, $title = null)
     {
+        if ($content instanceof RedirectResponse) {
+            return $content;
+        }
+
         if ($content instanceof Renderable) {
             $content = $content->render();
         }
@@ -526,7 +689,7 @@ class AdminController extends Controller
 
     /**
      * @param Renderable|string $content
-     * @param string|null       $title
+     * @param string|null $title
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -563,27 +726,32 @@ class AdminController extends Controller
     }
 
     /**
-     * @param string $title
-     * @param string $parent
+     * @param $title
+     * @param $parent
+     * @param $name
+     * @param $url
+     *
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
-    protected function registerBreadcrumb($title, $parent)
+    protected function registerBreadcrumb($title, $parent, $name = 'render', $url = null)
     {
-        $this->breadcrumbs->register('render', function (Generator $breadcrumbs) use ($title, $parent) {
+        $this->breadcrumbs->register($name, function (Generator $breadcrumbs) use ($title, $parent, $url) {
             $breadcrumbs->parent($parent);
-            $breadcrumbs->push($title);
+            $breadcrumbs->push($title, $url);
         });
 
-        $this->parentBreadcrumb = 'render';
+        $this->parentBreadcrumb = $name;
     }
 
     /**
      * @param ModelConfigurationInterface $model
+     * @throws \DaveJamesMiller\Breadcrumbs\Exception
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
-        $this->breadCrumbsData = $this->breadCrumbsData + (array) $model->getBreadCrumbs();
+        $this->breadCrumbsData = array_merge($this->breadCrumbsData, $model->getBreadCrumbs());
 
-        foreach ($this->breadCrumbsData as  $breadcrumb) {
+        foreach ($this->breadCrumbsData as $breadcrumb) {
             if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
                 $this->breadcrumbs->register($breadcrumb['id'], function (Generator $breadcrumbs) use ($breadcrumb) {
                     $breadcrumbs->parent($breadcrumb['parent']);
@@ -591,5 +759,7 @@ class AdminController extends Controller
                 });
             }
         }
+
+        $this->parentBreadcrumb = data_get(array_last($this->breadCrumbsData), 'id', 'render');
     }
 }

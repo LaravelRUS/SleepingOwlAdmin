@@ -19,20 +19,7 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * FormDefault::__construct
-     * FormDefault::getElements
-     * FormDefault::getButtons.
-     */
-    public function test_constructor()
-    {
-        PackageManager::shouldReceive('load')->once();
-        PackageManager::shouldReceive('add')->once();
-
-        $this->getElement();
-    }
-
-    /**
-     * @covers FormElement::initialize
+     * @covers SleepingOwl\Admin\Form\FormElement::initialize
      */
     public function test_initializable()
     {
@@ -44,8 +31,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getValidationRules
-     * @covers FormElement::addValidationRule
+     * @covers SleepingOwl\Admin\Form\FormElement::getValidationRules
+     * @covers SleepingOwl\Admin\Form\FormElement::addValidationRule
      */
     public function test_adds_validation_rule()
     {
@@ -60,10 +47,10 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getValidationRules
-     * @covers FormElement::addValidationRule
-     * @covers FormElement::addValidationMessage
-     * @covers FormElement::getValidationMessages
+     * @covers SleepingOwl\Admin\Form\FormElement::getValidationRules
+     * @covers SleepingOwl\Admin\Form\FormElement::addValidationRule
+     * @covers SleepingOwl\Admin\Form\FormElement::addValidationMessage
+     * @covers SleepingOwl\Admin\Form\FormElement::getValidationMessages
      */
     public function test_adds_validation_rule_with_message()
     {
@@ -82,8 +69,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getValidationMessages
-     * @covers FormElement::addValidationMessage
+     * @covers SleepingOwl\Admin\Form\FormElement::getValidationMessages
+     * @covers SleepingOwl\Admin\Form\FormElement::addValidationMessage
      */
     public function test_adds_validation_message()
     {
@@ -107,8 +94,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getValidationMessages
-     * @covers FormElement::setValidationMessages
+     * @covers SleepingOwl\Admin\Form\FormElement::getValidationMessages
+     * @covers SleepingOwl\Admin\Form\FormElement::setValidationMessages
      */
     public function test_sets_validation_messages()
     {
@@ -133,8 +120,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getValidationRules
-     * @covers FormElement::setValidationRules
+     * @covers SleepingOwl\Admin\Form\FormElement::getValidationRules
+     * @covers SleepingOwl\Admin\Form\FormElement::setValidationRules
      */
     public function test_sets_validation_rules_as_array()
     {
@@ -156,8 +143,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getValidationRules
-     * @covers FormElement::setValidationRules
+     * @covers SleepingOwl\Admin\Form\FormElement::getValidationRules
+     * @covers SleepingOwl\Admin\Form\FormElement::setValidationRules
      */
     public function test_sets_validation_rules_as_arguments()
     {
@@ -171,7 +158,7 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::setView
+     * @covers SleepingOwl\Admin\Form\FormElement::setView
      */
     public function test_set_view()
     {
@@ -183,8 +170,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::getModel
-     * @covers FormElement::setModel
+     * @covers SleepingOwl\Admin\Form\FormElement::getModel
+     * @covers SleepingOwl\Admin\Form\FormElement::setModel
      */
     public function test_get_and_set_model()
     {
@@ -198,7 +185,7 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::toArray
+     * @covers SleepingOwl\Admin\Form\FormElement::toArray
      */
     public function test_is_arrayable()
     {
@@ -208,7 +195,7 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::render
+     * @covers SleepingOwl\Admin\Form\FormElement::render
      */
     public function test_render()
     {
@@ -221,7 +208,7 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::__toString
+     * @covers SleepingOwl\Admin\Form\FormElement::__toString
      */
     public function test_converts_into_string()
     {
@@ -234,8 +221,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::isReadonly
-     * @covers FormElement::setReadonly
+     * @covers SleepingOwl\Admin\Form\FormElement::isReadonly
+     * @covers SleepingOwl\Admin\Form\FormElement::setReadonly
      */
     public function test_readOnly()
     {
@@ -260,8 +247,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::isValueSkipped()
-     * @covers FormElement::setValueSkipped()
+     * @covers SleepingOwl\Admin\Form\FormElement::isValueSkipped()
+     * @covers SleepingOwl\Admin\Form\FormElement::setValueSkipped()
      */
     public function test_valueSkipped()
     {
@@ -286,8 +273,8 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers FormElement::setVisibilityCondition
-     * @covers FormElement::isVisible
+     * @covers SleepingOwl\Admin\Form\FormElement::setVisibilityCondition
+     * @covers SleepingOwl\Admin\Form\FormElement::isVisible
      */
     public function test_visibility()
     {

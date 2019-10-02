@@ -19,6 +19,11 @@ class Tree extends Extension implements Initializable, Renderable
     protected $controlActive = true;
 
     /**
+     * @var Collection
+     */
+    protected $columns;
+
+    /**
      * @var string|\Illuminate\View\View
      */
     protected $view = 'display.columns';
@@ -125,7 +130,7 @@ class Tree extends Extension implements Initializable, Renderable
     public function toArray()
     {
         return [
-            'columns'    => $this->allWithControl(),
+            'columns' => $this->allWithControl(),
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

@@ -15,9 +15,9 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @param string|null $label
-     *
-     * @return PHPUnit_Framework_MockObject_MockObject|TableColumn
+     * @param null $label
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getColumn($label = null)
     {
@@ -25,8 +25,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::__construct
-     * @covers TableColumn::getHeader
+     * @covers SleepingOwl\Admin\Display\TableColumn::__construct
+     * @covers SleepingOwl\Admin\Display\TableColumn::getHeader
      */
     public function test_constructor_without_label()
     {
@@ -41,32 +41,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::__construct
-     * @covers TableColumn::setLabel
-     */
-    public function test_constructor_with_label()
-    {
-        $this->app->instance(TableHeaderColumnInterface::class, $header = m::mock(TableHeaderColumnInterface::class));
-
-        $header->shouldReceive('setTitle')->once()->with('Title');
-        $this->getColumn('Title');
-    }
-
-    /**
-     * @covers TableColumn::initialize
-     */
-    public function test_initialize()
-    {
-        $column = $this->getColumn();
-
-        $this->packageInitialized();
-
-        $column->initialize();
-    }
-
-    /**
-     * @covers TableColumn::getWidth
-     * @covers TableColumn::setWidth
+     * @covers SleepingOwl\Admin\Display\TableColumn::getWidth
+     * @covers SleepingOwl\Admin\Display\TableColumn::setWidth
      */
     public function test_gets_and_sets_width()
     {
@@ -82,8 +58,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::getView
-     * @covers TableColumn::setView
+     * @covers SleepingOwl\Admin\Display\TableColumn::getView
+     * @covers SleepingOwl\Admin\Display\TableColumn::setView
      */
     public function test_gets_and_sets_view()
     {
@@ -94,8 +70,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::getAppends
-     * @covers TableColumn::append
+     * @covers SleepingOwl\Admin\Display\TableColumn::getAppends
+     * @covers SleepingOwl\Admin\Display\TableColumn::append
      */
     public function test_gets_and_sets_append()
     {
@@ -109,8 +85,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::getModel
-     * @covers TableColumn::setModel
+     * @covers SleepingOwl\Admin\Display\TableColumn::getModel
+     * @covers SleepingOwl\Admin\Display\TableColumn::setModel
      */
     public function test_gets_and_sets_model()
     {
@@ -124,8 +100,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::getModel
-     * @covers TableColumn::setModel
+     * @covers SleepingOwl\Admin\Display\TableColumn::getModel
+     * @covers SleepingOwl\Admin\Display\TableColumn::setModel
      */
     public function test_gets_and_sets_model_with_append()
     {
@@ -139,8 +115,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::setOrderable
-     * @covers TableColumn::isOrderable
+     * @covers SleepingOwl\Admin\Display\TableColumn::setOrderable
+     * @covers SleepingOwl\Admin\Display\TableColumn::isOrderable
      */
     public function test_setOrderable_closure()
     {
@@ -156,8 +132,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::setOrderable
-     * @covers TableColumn::isOrderable
+     * @covers SleepingOwl\Admin\Display\TableColumn::setOrderable
+     * @covers SleepingOwl\Admin\Display\TableColumn::isOrderable
      */
     public function test_setOrderable_string()
     {
@@ -172,8 +148,8 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::setOrderable
-     * @covers TableColumn::isOrderable
+     * @covers SleepingOwl\Admin\Display\TableColumn::setOrderable
+     * @covers SleepingOwl\Admin\Display\TableColumn::isOrderable
      */
     public function test_setOrderable_class()
     {
@@ -206,7 +182,7 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::orderBy
+     * @covers SleepingOwl\Admin\Display\TableColumn::orderBy
      */
     public function test_orderBy()
     {
@@ -224,7 +200,7 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @covers TableColumn::toArray
+     * @covers SleepingOwl\Admin\Display\TableColumn::toArray
      */
     public function test_toArray()
     {

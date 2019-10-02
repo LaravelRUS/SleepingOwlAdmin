@@ -2,9 +2,11 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Traits\PanelControl;
 use Illuminate\Pagination\LengthAwarePaginator;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
@@ -19,10 +21,12 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
  * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
  *
  * @method ColumnFilters getColumnFilters()
- * @method $this setColumnFilters(ColumnFilterInterface $filters = null, ...$filters)
+ * @method $this setColumnFilters(ColumnFilterInterface|ColumnFilterInterface[] $filters = null, ...$filters)
  */
 class DisplayTable extends Display
 {
+    use PanelControl;
+
     /**
      * @var string
      */
@@ -66,7 +70,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * Initialize display.
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -82,7 +86,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @return null|string
+     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     public function getNewEntryButtonText()
     {
@@ -127,7 +131,7 @@ class DisplayTable extends Display
 
     /**
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -139,7 +143,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param int    $perPage
+     * @param int $perPage
      * @param string $pageName
      *
      * @return $this
@@ -172,6 +176,7 @@ class DisplayTable extends Display
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {
@@ -185,8 +190,17 @@ class DisplayTable extends Display
 
         $params['extensions'] = $this->getExtensions()->renderable()->sortByOrder();
         $params['newEntryButtonText'] = $this->getNewEntryButtonText();
+        $params['panel_class'] = $this->getPanelClass();
 
         return $params;
+    }
+
+    /**
+     * $collection Collection|LengthAwarePaginator|Builder.
+     */
+    public function setCollection($collection)
+    {
+        $this->collection = $collection;
     }
 
     /**
@@ -196,7 +210,7 @@ class DisplayTable extends Display
     public function getCollection()
     {
         if (! $this->isInitialized()) {
-            throw new \Exception('Display is not initialized');
+            throw new Exception('Display is not initialized');
         }
 
         if (! is_null($this->collection)) {
@@ -215,7 +229,7 @@ class DisplayTable extends Display
     /**
      * @param \Illuminate\Database\Eloquent\Builder|Builder $query
      */
-    protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    protected function modifyQuery(Builder $query)
     {
         $this->extensions->modifyQuery($query);
     }

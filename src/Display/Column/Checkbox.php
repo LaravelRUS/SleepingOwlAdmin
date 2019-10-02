@@ -22,13 +22,13 @@ class Checkbox extends TableColumn
         parent::__construct($label);
         $this->setLabel(
             Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
-        ));
+            ));
 
         $this->setOrderable(false);
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getModelValue()
     {
@@ -41,7 +41,7 @@ class Checkbox extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'value' => $this->getModelValue(),
-        ];
+                'value' => $this->getModelValue(),
+            ];
     }
 }

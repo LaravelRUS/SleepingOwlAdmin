@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use Closure;
 use SleepingOwl\Admin\Traits\Assets;
 use Illuminate\Database\Eloquent\Builder;
 use KodiComponents\Support\HtmlAttributes;
@@ -16,6 +17,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 {
     use SqlQueryOperators, HtmlAttributes, Assets, \SleepingOwl\Admin\Traits\Renderable;
 
+    protected $view;
+
     /**
      * @var \Closure|null
      */
@@ -25,6 +28,11 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      * @var string|null
      */
     protected $columnName;
+
+    /**
+     * @var string|null
+     */
+    protected $columnRawName;
 
     public function __construct()
     {
@@ -60,6 +68,26 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @return null|string
+     */
+    public function getColumnRawName()
+    {
+        return $this->columnRawName;
+    }
+
+    /**
+     * @param null|string $name
+     *
+     * @return $this
+     */
+    public function setColumnRawName($name)
+    {
+        $this->columnRawName = $name;
+
+        return $this;
+    }
+
+    /**
      * @param mixed $value
      *
      * @return mixed
@@ -70,8 +98,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @deprecated
      * @return \Closure|null
+     * @deprecated
      */
     public function getCallback()
     {
@@ -80,10 +108,10 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @param \Closure $callback
-     * @deprecated
      * @return $this
+     * @deprecated
      */
-    public function setCallback(\Closure $callback)
+    public function setCallback(Closure $callback)
     {
         $this->callback = $callback;
 
@@ -126,11 +154,13 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             return;
         }
 
-        if (is_null($name = $this->getColumnName())) {
-            $name = $column->getName();
+        if (is_null($name = $this->getColumnRawName())) {
+            if (is_null($name = $this->getColumnName())) {
+                $name = $column->getName();
+            }
         }
 
-        if (strpos($name, '.') !== false) {
+        if (strpos($name, '.') !== false && is_null($this->getColumnRawName())) {
             $parts = explode('.', $name);
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
@@ -151,7 +181,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function toArray()
     {
         return [
-            'attributes'      => $this->htmlAttributesToString(),
+            'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
         ];
     }

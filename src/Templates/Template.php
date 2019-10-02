@@ -148,8 +148,8 @@ abstract class Template implements TemplateInterface
 
     /**
      * @param string|View $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      *
      * @return \Illuminate\Contracts\View\Factory|View
      */
@@ -191,9 +191,9 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Регистрация стандартны�
-     * глобальны�
-     * Javascript перменны�
+     * Регистрация стандартны�
+     * глобальны�
+     * Javascript перменны�
      * .
      */
     protected function setGlobalVariables()

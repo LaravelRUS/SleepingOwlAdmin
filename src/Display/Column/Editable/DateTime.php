@@ -16,6 +16,10 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     /**
      * @var string
      */
+    protected $defaultValue;
+    /**
+     * @var string
+     */
     protected $format = 'Y-m-d H:i:s';
     //    protected $format = 'YYYY-MM-DD';
 
@@ -55,17 +59,17 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         $value = $this->getModelValue();
 
         return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getFormatedDate($value),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
+                'id' => $this->getModel()->getKey(),
+                'value' => $this->getFormatedDate($value),
+                'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+                'url' => $this->getUrl(),
 
-                'format'          => $this->getJsPickerFormat(),
-                'viewformat'      => $this->getJsPickerFormat(),
-                'data-date-pickdate'   => 'true',
-                'data-date-picktime'   => 'false',
+                'format' => $this->getJsPickerFormat(),
+                'viewformat' => $this->getJsPickerFormat(),
+                'data-date-pickdate' => 'true',
+                'data-date-picktime' => 'false',
                 'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
-                'type'                 => $this->type,
+                'type' => $this->type,
             ];
     }
 
@@ -88,11 +92,11 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @return $this|NamedFormElement|mixed|null|string
+     * @return null
      */
     public function getValueFromModel()
     {
-        $value = parent::getValueFromModel();
+        $value = parent::getModelValue();
         if (! empty($value)) {
             return $this->parseValue($value);
         }
@@ -135,8 +139,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
 
     /**
      * @param Request $request
-     *
-     * @return void
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)
     {

@@ -15,7 +15,7 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     public function render($name = null)
     {
         if (is_null($name)) {
-            list($name, $params) = $this->currentRoute->get();
+            [$name, $params] = $this->currentRoute->get();
         } else {
             $params = array_slice(func_get_args(), 1);
         }

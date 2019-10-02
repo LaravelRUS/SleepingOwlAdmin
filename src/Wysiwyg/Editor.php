@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Wysiwyg;
 
-use Meta;
 use Illuminate\Config\Repository;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
@@ -40,10 +39,10 @@ final class Editor implements WysiwygEditorInterface
     private $package;
 
     /**
-     * @param string                      $id
-     * @param string|null                 $name
+     * @param string $id
+     * @param string|null $name
      * @param WysiwygFilterInterface|null $filter
-     * @param array                       $config
+     * @param array $config
      */
     public function __construct($id, $name = null, WysiwygFilterInterface $filter = null, array $config = [])
     {
@@ -133,7 +132,7 @@ final class Editor implements WysiwygEditorInterface
     public function toArray()
     {
         return [
-            'id'   => $this->getId(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
         ];
     }

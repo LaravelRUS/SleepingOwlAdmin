@@ -1,6 +1,53 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
- #coming soon....
+* [Feature] Добавлен новый элемент AdminColumnEditable::multidependselect() - он подобен элементу AdminFormElement::dependentselect но позволяет выбрать несколько опций.
+ 
+* [Add] Добавлена возможность передавать $payload в методы секции fireCreate() и fire Edit(), по аналогии с fireDisplay(). Это позволяет передавать дополнительные параметры в секцию для указанных методов.
+
+* [Add] Добавлен новый тип столбца `AdminColumn::boolean('active', 'Published'),` (алиас `text`) который просто рисует галочку при `true` и минус при `false`. C равнением по центру.
+  Замена коду:
+  ```
+  //было
+  AdminColumn::custom('Published', function ($instance) {
+    return $instance->active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-minus"></i>';})
+    ->setHtmlAttribute('class', 'text-center'),
+
+  //станет
+  AdminColumn::boolean('active', 'Published'),
+  ```
+
+ * [Feature] Добавлен ENV-редактор
+ 
+    Для тех кто уже с нами:
+
+     ```php
+     //  sleeping_owl.php
+
+     /*
+      |--------------------------------------------------------------------------
+      | Middleware to use in admin routes
+      |--------------------------------------------------------------------------
+      | Url for env editor
+      |
+      */
+      'env_editor_url' => 'env/editor',
+
+      /*
+       *
+       *
+       */
+      'env_editor_excluded_keys' => [
+          'APP_KEY', 'DB_*'
+      ],
+
+
+      'env_editor_middlewares' => [],
+
+      'env_editor_policy' => Policy::class,
+
+      'show_editor' => false,
+    ```
+
 
  * [Feature] Subdomain routes for admin
              Вы должны добавить в sleeping_owl.php ключ 'domain' => 'admin.example.com' где example.com и будет ваш домен.

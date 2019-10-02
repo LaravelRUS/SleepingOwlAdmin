@@ -11,7 +11,7 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @return TableHeaderColumn
+     * @return SleepingOwl\Admin\Display\TableHeaderColumn
      */
     protected function getHeader()
     {
@@ -19,7 +19,7 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @covers TableHeaderColumn::__construct
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::__construct
      */
     public function test_constructor()
     {
@@ -29,8 +29,8 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @covers TableHeaderColumn::getTitle
-     * @covers TableHeaderColumn::setTitle
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::getTitle
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::setTitle
      */
     public function test_gets_and_sets_title()
     {
@@ -43,8 +43,8 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @covers TableHeaderColumn::isOrderable
-     * @covers TableHeaderColumn::setOrderable
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::isOrderable
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::setOrderable
      */
     public function test_gets_and_sets_orderable()
     {
@@ -69,8 +69,8 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @covers TableHeaderColumn::getView
-     * @covers TableHeaderColumn::setView
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::getView
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::setView
      */
     public function test_gets_and_sets_view()
     {
@@ -83,7 +83,7 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @covers TableHeaderColumn::toArray
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::toArray
      */
     public function test_toArray()
     {
@@ -98,7 +98,7 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @covers TableHeaderColumn::toArray
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::toArray
      */
     public function test_render()
     {
@@ -114,7 +114,7 @@ class TableHeaderColumnTest extends TestCase
     }
 
     /**
-     * @covers TableHeaderColumn::toArray
+     * @covers SleepingOwl\Admin\Display\TableHeaderColumn::toArray
      */
     public function test_render_orderable()
     {

@@ -13,6 +13,12 @@ interface TableHeaderColumnInterface extends Renderable, Arrayable
     public function getTitle();
 
     /**
+     * @param $title
+     * @return $this
+     */
+    public function setTitle($title);
+
+    /**
      * @return bool
      */
     public function isOrderable();

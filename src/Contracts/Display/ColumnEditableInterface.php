@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts\Display;
 
+use Illuminate\Http\Request;
+
 interface ColumnEditableInterface extends ColumnInterface
 {
     /**
@@ -9,5 +11,5 @@ interface ColumnEditableInterface extends ColumnInterface
      *
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request);
+    public function save(Request $request);
 }

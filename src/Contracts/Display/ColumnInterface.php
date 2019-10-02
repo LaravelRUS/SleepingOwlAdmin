@@ -10,7 +10,7 @@ use SleepingOwl\Admin\Contracts\WithModelInterface;
 interface ColumnInterface extends Initializable, Renderable, Arrayable, WithModelInterface
 {
     /**
-     * @return int
+     * @return int|string
      */
     public function getWidth();
 
@@ -30,4 +30,14 @@ interface ColumnInterface extends Initializable, Renderable, Arrayable, WithMode
      * @return bool
      */
     public function isOrderable();
+
+    /**
+     * @return bool
+     */
+    public function isVisible();
+
+    /**
+     * @return bool
+     */
+    public function isSearchable();
 }

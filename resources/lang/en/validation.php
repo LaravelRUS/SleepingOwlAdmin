@@ -75,6 +75,7 @@ return [
     'url_stub'                => 'The :attribute format is invalid.',
     'url_stub_full'           => 'The :attribute format is invalid.',
     'not_image'               => 'File is not image',
+    'access_denied'           => 'Access denied.',
 
     /*
     |--------------------------------------------------------------------------

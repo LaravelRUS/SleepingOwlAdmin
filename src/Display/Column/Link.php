@@ -10,6 +10,11 @@ class Link extends Url
     protected $view = 'column.link';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * Check if instance editable.
      *
      * @return bool
@@ -25,8 +30,8 @@ class Link extends Url
     public function toArray()
     {
         return parent::toArray() + [
-            'link'           => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
-            'isEditable'     => $this->isEditable(),
-        ];
+                'link' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
+                'isEditable' => $this->isEditable(),
+            ];
     }
 }

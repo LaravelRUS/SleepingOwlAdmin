@@ -43,10 +43,10 @@ interface TemplateInterface extends Initializable, Arrayable
 
     /**
      * @param string|\Illuminate\View\View $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      *
-     * @return \BladeView|bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function view($view, array $data = [], $mergeData = []);
 
@@ -85,7 +85,7 @@ interface TemplateInterface extends Initializable, Arrayable
     public function renderNavigation();
 
     /**
-     * Получение относительного пути �
+     * Получение относительного пути �
      * ранения asset файлов.
      *
      * @return string

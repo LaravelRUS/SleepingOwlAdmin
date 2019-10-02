@@ -3,9 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Routing\Router;
+use SleepingOwl\Admin\Section;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Traits\OrderableModel;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class Order extends TableColumn implements WithRoutesInterface
@@ -21,6 +23,11 @@ class Order extends TableColumn implements WithRoutesInterface
     protected $view = 'column.order';
 
     /**
+     * @var null|int
+     */
+    protected $totalCountValue = null;
+
+    /**
      * Register routes.
      *
      * @param Router $router
@@ -29,21 +36,30 @@ class Order extends TableColumn implements WithRoutesInterface
     {
         $routeName = 'admin.display.column.move-up';
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/{adminModelId}/up', [
-                'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderUp',
-            ]);
+            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
+                function ($router) use ($routeName) {
+                    $router->post('{adminModel}/{adminModelId}/up', [
+                        'as' => $routeName,
+                        'uses' => 'DisplayColumnController@orderUp',
+                    ]);
+                });
         }
 
         $routeName = 'admin.display.column.move-down';
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/{adminModelId}/down', [
-                'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayColumnController@orderDown',
-            ]);
+            $router->group(['namespace' => 'SleepingOwl\Admin\Http\Controllers'],
+                function ($router) use ($routeName) {
+                    $router->post('{adminModel}/{adminModelId}/down', [
+                        'as' => $routeName,
+                        'uses' => 'DisplayColumnController@orderDown',
+                    ]);
+                });
         }
     }
 
+    /**
+     * Order constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -64,8 +80,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get order value from instance.
-     * @return int
+     * @return mixed
+     * @throws \Exception
      */
     protected function getOrderValue()
     {
@@ -73,17 +89,41 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get models total count.
      * @return int
+     * @throws \Exception
      */
     protected function totalCount()
     {
-        return $this->getModelConfiguration()->getRepository()->getQuery()->count();
+        if ($this->totalCountValue !== null) {
+            return $this->totalCountValue;
+        }
+
+        $request = \Request::capture();
+        $modelConfiguration = $this->getModelConfiguration();
+        $query = $modelConfiguration->getRepository()->getQuery();
+        if ($modelConfiguration instanceof Section) {
+            $onDisplay = $modelConfiguration->onDisplay();
+        } elseif ($modelConfiguration instanceof ModelConfiguration) {
+            $onDisplay = $modelConfiguration->getDisplay();
+            $onDisplay = call_user_func($onDisplay, ['payload' => \Input::get('payload')]);
+        } else {
+            /*
+             * @see https://sleepingowladmin.ru/docs/model_configuration
+             * @see https://sleepingowladmin.ru/docs/model_configuration_section
+             */
+            throw new \Exception('Unknown type of the Model Configuration. Use Section or AdminSection::registerModel()');
+        }
+        $onDisplay->getExtensions()->modifyQuery($query);
+        $onDisplay->applySearch($query, $request);
+        $onDisplay->applyOffset($query, $request);
+        $this->totalCountValue = $query->count();
+
+        return $this->totalCountValue;
     }
 
     /**
-     * Check if instance is movable up.
      * @return bool
+     * @throws \Exception
      */
     protected function movableUp()
     {
@@ -91,8 +131,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get instance move up url.
      * @return string
+     * @throws \Exception
      */
     protected function moveUpUrl()
     {
@@ -103,8 +143,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Check if instance is movable down.
      * @return bool
+     * @throws \Exception
      */
     protected function movableDown()
     {
@@ -112,8 +152,8 @@ class Order extends TableColumn implements WithRoutesInterface
     }
 
     /**
-     * Get instance move down url.
      * @return string
+     * @throws \Exception
      */
     protected function moveDownUrl()
     {
@@ -125,14 +165,15 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {
         return parent::toArray() + [
-            'movableUp' => $this->movableUp(),
-            'moveUpUrl' => $this->moveUpUrl(),
-            'movableDown' => $this->movableDown(),
-            'moveDownUrl' => $this->moveDownUrl(),
-        ];
+                'movableUp' => $this->movableUp(),
+                'moveUpUrl' => $this->moveUpUrl(),
+                'movableDown' => $this->movableDown(),
+                'moveDownUrl' => $this->moveDownUrl(),
+            ];
     }
 }

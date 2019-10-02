@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;
-use SleepingOwl\Admin\Navigation\Page;
+use Collective\Html\HtmlServiceProvider;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelCollection;
 use Illuminate\Foundation\ProviderRepository;
@@ -13,13 +13,20 @@ use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Config\Repository as ConfigRepository;
+use SleepingOwl\Admin\Providers\AdminServiceProvider;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Providers\AliasesServiceProvider;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
 use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
+/**
+ * Class Admin.
+ * @property-read \Illuminate\Foundation\Application $app
+ */
 class Admin implements AdminInterface
 {
     use ProvidesScriptVariables;
@@ -85,8 +92,8 @@ class Admin implements AdminInterface
     /**
      * @param string $class
      * @param Closure|null $callback
-     *
-     * @return $this
+     * @return $this|AdminInterface
+     * @throws Exceptions\RepositoryException
      */
     public function registerModel($class, Closure $callback = null)
     {
@@ -155,8 +162,9 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string|Model $class
-     * @return ModelConfigurationInterface
+     * @param string|object $class
+     * @return mixed|null|ModelConfigurationInterface
+     * @throws Exceptions\RepositoryException
      */
     public function getModel($class)
     {
@@ -214,10 +222,10 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
-     * @param int    $priority
-     *
-     * @return Page
+     * @param $class
+     * @param int $priority
+     * @return mixed
+     * @throws Exceptions\RepositoryException
      */
     public function addMenuPage($class = null, $priority = 100)
     {
@@ -225,18 +233,8 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @return Navigation
-     *
-     * @deprecated
-     */
-    public function getNavigation()
-    {
-        return $this->navigation();
-    }
-
-    /**
      * @param string|Renderable $content
-     * @param string|null       $title
+     * @param string|null $title
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
@@ -253,10 +251,10 @@ class Admin implements AdminInterface
     protected function registerBaseServiceProviders()
     {
         $providers = [
-            \SleepingOwl\Admin\Providers\AliasesServiceProvider::class,
-            \Collective\Html\HtmlServiceProvider::class,
-            \SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider::class,
-            \SleepingOwl\Admin\Providers\AdminServiceProvider::class,
+            AliasesServiceProvider::class,
+            HtmlServiceProvider::class,
+            BreadcrumbsServiceProvider::class,
+            AdminServiceProvider::class,
         ];
 
         /* Workaround to allow use ServiceProvider-based configurations in old fashion */
@@ -287,8 +285,8 @@ class Admin implements AdminInterface
             'sleeping_owl.meta' => ['assets.meta', 'SleepingOwl\Admin\Contracts\Template\MetaInterface', 'SleepingOwl\Admin\Templates\Meta'],
         ];
 
-        foreach ($aliases as $key => $aliases) {
-            foreach ($aliases as $alias) {
+        foreach ($aliases as $key => $aliasesItem) {
+            foreach ($aliasesItem as $alias) {
                 $this->app->alias($key, $alias);
             }
         }

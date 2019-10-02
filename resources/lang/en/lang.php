@@ -36,6 +36,13 @@ return [
             'subtitle' => 'Choose image to insert',
         ],
     ],
+    'env_editor' => [
+        'title' => 'Environment variables editor',
+        'key' => 'Key',
+        'new-entry' => 'New Entry',
+        'save' => 'Save',
+        'var' => 'Variable',
+    ],
     'table' => [
         'no-action' => 'No action',
         'make-action' => 'Submit',
@@ -125,5 +132,9 @@ return [
         'are_you_sure' => 'Are you sure?',
         'access_denied' => 'Access denied',
         'validation_error' => 'Validation error',
+    ],
+    'related' => [
+        'add' => 'Add',
+        'remove' => 'Remove',
     ],
 ];

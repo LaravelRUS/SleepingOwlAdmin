@@ -1,0 +1,1 @@
+<li><a href="{{ route('admin.env.editor') }}"><i class="fa fa-btn fa-gear"></i> ENV Editor</a></li>

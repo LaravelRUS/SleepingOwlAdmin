@@ -1,4 +1,6 @@
 Admin.Modules.register('display.datatables', () => {
+   localStorage.clear();
+
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
             dt.jqXHR.responseJSON.message || trans('lang.table.error')
@@ -6,7 +8,7 @@ Admin.Modules.register('display.datatables', () => {
     };
 
     $.fn.dataTable.ext.order['DateTime'] = function (settings, col) {
-        return this.column(col, {order: 'index'}).nodes().map((td, i) => {
+        return this.api().column(col, {order: 'index'}).nodes().map((td, i) => {
             return $(td).data('value');
         });
     }
@@ -82,7 +84,11 @@ Admin.Modules.register('display.datatables', () => {
             table.draw();
         });
 
+<<<<<<< HEAD
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
+=======
+        $("#filters-cancel").on('click', function () {
+>>>>>>> upstream/development
             let input = $(".display-filters td[data-index] input").val(null);
             input.trigger('change');
 
@@ -90,7 +96,11 @@ Admin.Modules.register('display.datatables', () => {
             selector.val(null);
             selector.trigger('change');
 
+<<<<<<< HEAD
+            table.draw();
+=======
             table.api().draw();
+>>>>>>> upstream/development
         });
 
         $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e){
@@ -140,8 +150,6 @@ window.checkDateRange = (fromValue, toValue, value) => {
 
     return value.isBetween(fromValue, toValue)
 }
-
-
 
 window.columnFilters = {
     daterange (dateField, table, column, index, serverSide) {

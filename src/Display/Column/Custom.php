@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use SleepingOwl\Admin\Display\TableColumn;
+use Exception;
 
-class Custom extends TableColumn
+class Custom extends NamedColumn
 {
     /**
      * Callback to render column contents.
@@ -32,6 +32,9 @@ class Custom extends TableColumn
     public function __construct($label = null, Closure $callback = null)
     {
         parent::__construct($label);
+        if (! is_null($label)) {
+            $this->setLabel($label);
+        }
         if (! is_null($callback)) {
             $this->setCallback($callback);
         }
@@ -67,7 +70,7 @@ class Custom extends TableColumn
     public function getModelValue()
     {
         if (! is_callable($callback = $this->getCallback())) {
-            throw new \Exception('Invalid custom column callback');
+            throw new Exception('Invalid custom column callback');
         }
 
         return call_user_func($callback, $this->getModel());
@@ -80,7 +83,7 @@ class Custom extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'value'  => $this->getModelValue(),
-        ];
+                'value' => $this->getModelValue(),
+            ];
     }
 }

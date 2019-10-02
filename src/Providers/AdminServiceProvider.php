@@ -12,6 +12,7 @@ use Illuminate\Foundation\Application;
 use SleepingOwl\Admin\Wysiwyg\Manager;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\Templates\Assets;
+use SleepingOwl\Admin\Widgets\EnvEditor;
 use Symfony\Component\Finder\SplFileInfo;
 use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Widgets\WidgetsRegistry;
@@ -34,6 +35,14 @@ class AdminServiceProvider extends ServiceProvider
      * @var string
      */
     protected $directory;
+
+    /**
+     * All global widgets.
+     * @var array
+     */
+    protected $widgets = [
+        EnvEditor::class,
+    ];
 
     public function register()
     {
@@ -119,6 +128,19 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->registerMessages();
         $this->registerBootstrap();
+        $this->registerWidgets();
+    }
+
+    /**
+     * Global register widgets.
+     */
+    protected function registerWidgets()
+    {
+        $widgetsRegistry = $this->app[WidgetsRegistryInterface::class];
+
+        foreach ($this->widgets as $widget) {
+            $widgetsRegistry->registerWidget($widget);
+        }
     }
 
     /**
@@ -127,8 +149,8 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerMessages()
     {
         $messageTypes = [
-            'error'   => ErrorMessages::class,
-            'info'    => InfoMessages::class,
+            'error' => ErrorMessages::class,
+            'info' => InfoMessages::class,
             'success' => SuccessMessages::class,
             'warning' => WarningMessages::class,
         ];
@@ -195,6 +217,7 @@ class AdminServiceProvider extends ServiceProvider
             ->files()
             ->name('/^.+\.php$/')
             ->notName('routes.php')
+            ->notName('*.blade.php')
             ->notName('navigation.php')
             ->in($directory)
             ->sort(function (SplFileInfo $a) {
@@ -250,11 +273,8 @@ class AdminServiceProvider extends ServiceProvider
         $domain = config('sleeping_owl.domain', false);
 
         $middlewares = collect($this->getConfig('middleware'));
-        $middlewares = $middlewares->filter(function ($item) {
-            return $item != 'web';
-        });
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $middlewares,
         ]);
 
@@ -264,12 +284,12 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app['router']->group($configGroup->toArray(), function (Router $route) {
             $route->get('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
+                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
 
             $route->post('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
+                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
         });
@@ -282,7 +302,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $domain = config('sleeping_owl.domain', false);
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
         ]);
 

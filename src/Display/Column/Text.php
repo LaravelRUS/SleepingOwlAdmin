@@ -10,13 +10,18 @@ class Text extends NamedColumn
     protected $view = 'column.text';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * @return array
      */
     public function toArray()
     {
         return parent::toArray() + [
-            'value'  => $this->getModelValue(),
-            'small' => $this->getModelSmallValue(),
-        ];
+                'value' => $this->getModelValue(),
+                'small' => $this->getModelSmallValue(),
+            ];
     }
 }

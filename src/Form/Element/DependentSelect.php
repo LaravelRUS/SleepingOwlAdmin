@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use AdminSection;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
@@ -17,7 +18,7 @@ class DependentSelect extends Select implements WithRoutesInterface
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/dependent-select/{field}/{id?}', [
                 'as' => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect',
+                'uses' => '\SleepingOwl\Admin\Http\Controllers\FormElementController@dependentSelect',
             ]);
         }
     }
@@ -44,10 +45,11 @@ class DependentSelect extends Select implements WithRoutesInterface
 
     /**
      * DependentSelect constructor.
-     *
-     * @param string $path
+     * @param $path
      * @param null $label
      * @param array $depends
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null, array $depends = [])
     {
@@ -82,7 +84,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function getDataUrl()
     {
         return $this->dataUrl ?: route('admin.form.element.dependent-select', [
-            'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
+            'adminModel' => AdminSection::getModel($this->model)->getAlias(),
             'field' => $this->getName(),
             'id' => $this->model->getKey(),
         ]);

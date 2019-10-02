@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Exceptions;
 
-class RepositoryException extends \Exception
+use Exception;
+
+class RepositoryException extends Exception
 {
 }

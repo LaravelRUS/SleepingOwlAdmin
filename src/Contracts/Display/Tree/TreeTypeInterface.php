@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts\Display\Tree;
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface TreeTypeInterface
 {
     /**
@@ -11,7 +13,7 @@ interface TreeTypeInterface
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection);
+    public function getTree(Collection $collection);
 
     /**
      * Reorder tree by $data value.

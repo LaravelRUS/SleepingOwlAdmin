@@ -4,11 +4,15 @@ namespace SleepingOwl\Admin\Configuration;
 
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
+/**
+ * Trait ProvidesScriptVariables.
+ * @property-read \Illuminate\Foundation\Application $app
+ */
 trait ProvidesScriptVariables
 {
     /**
-     * Получение массива глобальны�
-     * переменны�
+     * Получение массива глобальных
+     * переменных
      * для JavaScript.
      *
      * @return array
@@ -17,7 +21,7 @@ trait ProvidesScriptVariables
     {
         $lang = trans('sleeping_owl::lang');
         if ($lang == 'sleeping_owl::lang') {
-            $lang = trans('sleeping_owl::lang', [], 'messages', 'en');
+            $lang = trans('sleeping_owl::lang', [], 'en');
         }
 
         return [

@@ -2,13 +2,10 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Display\Column\Link;
-use SleepingOwl\Admin\Display\Column\Text;
-use SleepingOwl\Admin\Display\Column\Email;
 use SleepingOwl\Admin\Display\Column\Control;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
@@ -28,7 +25,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async';
         if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
         }
@@ -36,7 +33,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async.inlineEdit';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
@@ -62,15 +59,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @var
      */
     protected $displayLength = false;
-
-    /**
-     * @var array
-     */
-    protected $searchableColumns = [
-        Text::class,
-        Link::class,
-        Email::class,
-    ];
 
     /**
      * DisplayDatatablesAsync constructor.
@@ -225,10 +213,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Apply offset and limit to the query.
      *
-     * @param $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @param \Illuminate\Http\Request $request
      */
-    protected function applyOffset($query, \Illuminate\Http\Request $request)
+    public function applyOffset($query, \Illuminate\Http\Request $request)
     {
         $offset = $request->input('start', 0);
         $limit = $request->input('length', 10);
@@ -241,29 +229,12 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * Check if column is searchable.
-     *
-     * @param ColumnInterface $column
-     * @return bool
-     */
-    public function checkSearchableColumns(ColumnInterface $column)
-    {
-        foreach ($this->searchableColumns as $searchableColumn) {
-            if ($column instanceof $searchableColumn) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Apply search to the query.
      *
      * @param Builder $query
      * @param \Illuminate\Http\Request $request
      */
-    protected function applySearch(Builder $query, \Illuminate\Http\Request $request)
+    public function applySearch(Builder $query, \Illuminate\Http\Request $request)
     {
         $search = $request->input('search.value');
         if (empty($search)) {
@@ -273,8 +244,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $query->where(function (Builder $query) use ($search) {
             $columns = $this->getColumns()->all();
 
+            $_model = $query->getModel();
+
             foreach ($columns as $column) {
-                if ($this->checkSearchableColumns($column)) {
+                if ($column->isSearchable()) {
                     if ($column instanceof ColumnInterface) {
                         if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
                             if (method_exists($metaInstance, 'onSearch')) {
@@ -287,6 +260,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                             $callback($column, $query, $search);
                             continue;
                         }
+                    }
+
+                    if ($_model->getAttribute($column->getName())) {
+                        continue;
                     }
 
                     $query->orWhere($column->getName(), 'like', '%'.$search.'%');
@@ -339,8 +316,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @return Collection
-     * @throws \Exception
+     * @return void
      */
     public function getCollection()
     {
@@ -364,6 +340,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

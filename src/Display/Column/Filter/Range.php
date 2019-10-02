@@ -12,12 +12,12 @@ class Range extends BaseColumnFilter
     protected $view = 'column.filter.range';
 
     /**
-     * @var ColumnFilterInterface
+     * @var ColumnFilterInterface|BaseColumnFilter
      */
     protected $from;
 
     /**
-     * @var ColumnFilterInterface
+     * @var ColumnFilterInterface|BaseColumnFilter
      */
     protected $to;
 
@@ -39,7 +39,7 @@ class Range extends BaseColumnFilter
     }
 
     /**
-     * @return ColumnFilterInterface
+     * @return ColumnFilterInterface|BaseColumnFilter
      */
     public function getFrom()
     {
@@ -59,7 +59,7 @@ class Range extends BaseColumnFilter
     }
 
     /**
-     * @return ColumnFilterInterface
+     * @return ColumnFilterInterface|BaseColumnFilter
      */
     public function getTo()
     {
@@ -84,15 +84,15 @@ class Range extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-            'from' => $this->getFrom(),
-            'to'   => $this->getTo(),
-        ];
+                'from' => $this->getFrom(),
+                'to' => $this->getTo(),
+            ];
     }
 
     /**
-     * @param string $range
-     *
-     * @return string
+     * @param mixed $range
+     * @return array|mixed|null|void
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
     public function parseValue($range)
     {
@@ -100,9 +100,8 @@ class Range extends BaseColumnFilter
             return;
         }
 
-        list($from, $to) = explode('::', $range, 2);
-        $from = $this->from->parseValue($from);
-        $to = $this->to->parseValue($to);
+        $from = $this->from->parseValue(explode('::', $range, 2)[0]);
+        $to = $this->to->parseValue(explode('::', $range, 2)[1]);
 
         if (! empty($from) && ! empty($to)) {
             $this->setOperator('between');

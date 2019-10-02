@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Closure;
 use LogicException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 abstract class NamedFormElement extends FormElement
 {
     use HtmlAttributes;
+
     /**
      * @var string
      */
@@ -41,6 +43,16 @@ abstract class NamedFormElement extends FormElement
      * @var string
      */
     protected $helpText;
+
+    /**
+     * @var mixed
+     */
+    protected $exactValue;
+
+    /**
+     * @var bool
+     */
+    protected $exactValueSet = false;
 
     /**
      * @var mixed
@@ -358,7 +370,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromModel()
     {
-        if (! is_null($value = $this->getValueFromRequest(request()))) {
+        if (($value = $this->getValueFromRequest(request())) !== null) {
             return $value;
         }
 
@@ -366,7 +378,8 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
-        if (is_null($model) || ! $model->exists) {
+        if ($model === null || ! $model->exists) {
+            // First check for model existence must go here, before all checks are made
             return $value;
         }
 
@@ -381,9 +394,9 @@ abstract class NamedFormElement extends FormElement
 
             $cast = $casts->get($jsonParts->first(), false);
 
-            if ($cast == 'object') {
+            if ($cast === 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-            } elseif ($cast != 'array') {
+            } elseif ($cast !== 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
 
@@ -395,7 +408,6 @@ abstract class NamedFormElement extends FormElement
 
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
-
             if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
@@ -406,16 +418,21 @@ abstract class NamedFormElement extends FormElement
                 $model = $model->{$relation};
                 continue;
             }
-
             if ($count === 2) {
-                $attribute = $model->getAttribute($relation);
-
+                if (str_contains($relation, '->')) {
+                    $parts = explode('->', $relation);
+                    $relationField = array_shift($array);
+                    $jsonPath = implode('.', $parts);
+                    $attribute = data_get($model->{$relationField}, $jsonPath);
+                } else {
+                    $attribute = $model->getAttribute($relation);
+                }
                 if (! empty($attribute) || is_null($value)) {
                     return $attribute;
                 }
             }
 
-            if (is_null($this->getDefaultValue())) {
+            if ($this->getDefaultValue() === null) {
                 throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
             }
         }
@@ -430,32 +447,23 @@ abstract class NamedFormElement extends FormElement
      */
     public function save(\Illuminate\Http\Request $request)
     {
-        $this->setModelAttribute(
-            $this->getValueFromRequest(
-                $request
-            )
-        );
+        $this->setModelAttribute($this->getValueFromRequest($request));
     }
 
     /**
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      */
     public function setModelAttribute($value)
     {
-        $model = $this->getModelByPath(
-            $this->getPath()
-        );
+        $model = $this->getModelByPath($this->getPath());
 
         if ($this->isValueSkipped()) {
             return;
         }
 
-        $model->setAttribute(
-            $this->getModelAttributeKey(),
-            $this->prepareValue($value)
-        );
+        $model->setAttribute($this->getModelAttributeKey(), $this->prepareValue($value));
     }
 
     /**
@@ -502,8 +510,7 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model)
-                        .'. Probably some dot delimeted segment is not a supported relation type');
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
@@ -515,8 +522,7 @@ abstract class NamedFormElement extends FormElement
 
     protected function getForeignKeyNameFromRelation($relation)
     {
-        return method_exists($relation, 'getForeignKeyName')
-            ? $relation->getForeignKeyName()
+        return method_exists($relation, 'getForeignKeyName') ? $relation->getForeignKeyName()
             : $relation->getPlainForeignKey();
     }
 
@@ -529,7 +535,7 @@ abstract class NamedFormElement extends FormElement
      *
      * @return $this
      */
-    public function mutateValue(\Closure $mutator)
+    public function mutateValue(Closure $mutator)
     {
         $this->mutator = $mutator;
 
@@ -559,6 +565,27 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @return mixed
+     */
+    public function getExactValue()
+    {
+        return $this->exactValue;
+    }
+
+    /**
+     * @param mixed $exactValue
+     *
+     * @return $this
+     */
+    public function setExactValue($exactValue)
+    {
+        $this->exactValue = $exactValue;
+        $this->exactValueSet = true;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -570,11 +597,11 @@ abstract class NamedFormElement extends FormElement
 
         return array_merge(parent::toArray(), [
             'id' => $this->getName(),
-            'value' => $this->getValueFromModel(),
+            'value' => $this->exactValueSet ? $this->getExactValue() : $this->getValueFromModel(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
-            'attributes'=> $this->htmlAttributesToString(),
+            'attributes' => $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
         ]);

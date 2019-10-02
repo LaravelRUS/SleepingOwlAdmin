@@ -180,6 +180,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param Model $model
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getEditTitle()
@@ -383,16 +384,16 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param array|null $payload
-     * @return DisplayInterface|mixed
+     * @param mixed $payload
+     * @return DisplayInterface|mixed|void
      */
-    public function fireDisplay(array $payload = [])
+    public function fireDisplay($payload = [])
     {
         if (! is_callable($this->getDisplay())) {
             return;
         }
 
-        $display = $this->app->call($this->getDisplay(), $payload);
+        $display = $this->app->call($this->getDisplay(), ['payload' => $payload]);
 
         if ($display instanceof DisplayDatatablesAsync) {
             $display->setPayload($payload);
@@ -430,15 +431,17 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param mixed $payload
      * @return mixed|void
      */
-    public function fireCreate()
+    public function fireCreate($payload = [])
     {
         if (! is_callable($this->getCreate())) {
             return;
         }
 
-        $form = $this->app->call($this->getCreate());
+        $form = $this->app->call($this->getCreate(), ['payload' => $payload]);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -476,16 +479,19 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param int|string $id
-     *
+     * @param mixed $payload
      * @return mixed|void
      */
-    public function fireEdit($id)
+    public function fireEdit($id, $payload = [])
     {
         if (! is_callable($this->getEdit())) {
             return;
         }
 
-        $form = $this->app->call($this->getEdit(), ['id' => $id]);
+        $payload = array_merge(['id' => $id], ['payload' => $payload]);
+
+        $form = $this->app->call($this->getEdit(), $payload);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
