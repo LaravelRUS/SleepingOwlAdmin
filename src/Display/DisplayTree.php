@@ -200,7 +200,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return \Illuminate\Contracts\Translation\Translator
+     * @return string
      */
     public function getNewEntryButtonText()
     {

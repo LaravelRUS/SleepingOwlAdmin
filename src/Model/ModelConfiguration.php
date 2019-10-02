@@ -156,7 +156,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return \Illuminate\Contracts\Translation\Translator
+     * @return string
      */
     public function getCreateTitle()
     {
@@ -181,7 +181,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param Model $model
-     * @return \Illuminate\Contracts\Translation\Translator
+     * @return string
      */
     public function getEditTitle()
     {

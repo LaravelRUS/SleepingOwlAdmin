@@ -219,9 +219,6 @@ class Select extends EditableColumn implements ColumnEditableInterface
         if (strpos($this->getName(), '.') !== false) {
             if ($this->getRelationKey()) {
                 $this->setName($this->getRelationKey());
-            } else {
-                //@TODO Make Relation Resolver
-                $relationName = explode('.', $this->getName());
             }
         }
 

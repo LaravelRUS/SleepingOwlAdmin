@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Display\DisplayTabbed;
+use SleepingOwl\Admin\Display\DisplayTab;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

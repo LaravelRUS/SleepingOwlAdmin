@@ -356,7 +356,9 @@ class AdminController extends Controller
             $redirectUrl = $model->getEditUrl($newModel->{$primaryKey});
             $redirectPolicy = $model->getRedirect();
 
-            /* Make redirect when use in model config && Fix editable redirect */
+            /**
+             * @see Make redirect when use in model config && Fix editable redirect
+             */
             if ($redirectPolicy->get('create') == 'display' || ! $model->isEditable($newModel)) {
                 $redirectUrl = $model->getDisplayUrl();
             }
@@ -498,7 +500,9 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
         $column = null;
 
-        /* @var ColumnEditableInterface|null $column */
+        /**
+         *@var ColumnEditableInterface|null $column
+         */
         if (is_callable([$display, 'getColumns'])) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
                 return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
@@ -516,14 +520,18 @@ class AdminController extends Controller
                     if ($content instanceof FormElements) {
                         foreach ($content->getElements() as $element) {
 
-                            //Return data-table if inside FormElements
+                            /**
+                              * Return data-table if inside FormElements
+                              */
                             if ($element instanceof DisplayTable) {
                                 $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
                                     return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
                                 })->first();
                             }
 
-                            //Try to find inline Editable in columns
+                            /**
+                              * Try to find inline Editable in columns
+                              */
                             if ($element instanceof Column) {
                                 foreach ($element->getElements() as $columnElement) {
                                     if ($columnElement instanceof DisplayTable) {

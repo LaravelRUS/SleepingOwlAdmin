@@ -64,12 +64,11 @@ trait FormElements
      */
     public function getElement($path)
     {
-        $found = null;
-
+      dd(111);
         foreach ($this->getElements() as $element) {
             if ($element instanceof ElementsInterface) {
-                if (! is_null($found = $element->getElement($path))) {
-                    return $found;
+                if (! is_null($element->getElement($path))) {
+                    return $element->getElement($path);
                 }
             }
 
