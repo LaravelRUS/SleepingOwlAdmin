@@ -127,6 +127,17 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
+        $model = $this;
+        if (method_exists($model, 'getModelValue')) {
+            $item = $model->getModelValue();
+            if (! $item) {
+                $item = $model->getRepository()->find($id);
+                if (method_exists($model, 'setModelValue') && $item) {
+                    $model->setModelValue($item);
+                }
+            }
+        }
+
         $payload = array_merge(['id' => $id], ['payload' => $payload]);
 
         $form = $this->app->call([$this, 'onEdit'], $payload);
