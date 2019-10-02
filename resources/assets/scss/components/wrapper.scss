@@ -1,0 +1,12 @@
+.wrapper {
+  min-height: 100vh;
+
+  .content-wrapper {
+    min-height: calc(100vh - 57px);
+
+    .content.body {
+      overflow: hidden;
+      min-height: 80vh;
+    }
+  }
+}

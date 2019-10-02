@@ -1,1 +1,3 @@
-<input {!! $attributes !!} value="{{ $value }}" />
+@if ($visibled)
+  <input {!! $attributes !!} value="{{ $value }}" />
+@endif

@@ -2,21 +2,38 @@
 
 @section('content')
 	<div class="wrapper" id="vueApp">
-		<header class="main-header">
+		<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
 			@include(AdminTemplate::getViewPath('_partials.header'))
-		</header>
+		</nav>
 
-		<aside class="main-sidebar">
+		@php
+			if (Cookie::get('menu-state') == 'close') {
+				$menu_class = 'sidebar-collapse';
+			}	else {
+				$menu_class = 'sidebar-open';
+			}
+		@endphp
+
+		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			@include(AdminTemplate::getViewPath('_partials.navigation'))
 		</aside>
 
 		<div class="content-wrapper">
-			{!! $template->renderBreadcrumbs($breadcrumbKey) !!}
 
 			<div class="content-header">
-				<h1>
-					{{{ $title }}}
-				</h1>
+				<div class="container-fluid">
+        	<div class="row mb-2 align-items-center">
+          	<div class="col-sm-6">
+							<h1>
+								{!! $title !!}
+							</h1>
+						</div>
+
+						<div class="col-sm-6">
+							{!! $template->renderBreadcrumbs($breadcrumbKey) !!}
+          </div>
+					</div>
+				</div>
 			</div>
 
 			<div class="content body">

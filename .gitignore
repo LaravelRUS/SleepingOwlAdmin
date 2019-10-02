@@ -3,6 +3,10 @@
 composer.phar
 composer.lock
 .DS_Store
+.phpunit.result.cache
 /.idea
 yarn.lock
 package-lock.json
+/build/logs
+/public/default/js/admin-app.js
+/public/default/css/admin-app.css

@@ -21,8 +21,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
     /**
      * @var string
+     * @var bool
      */
     protected $small;
+    protected $smallString = false;
 
     /**
      * @var bool
@@ -73,7 +75,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     public function getSmall()
     {
-        return $this->small;
+        if ($this->smallString) {
+            return $this->small;
+        }
+
+        return $this->getValueFromObject($this->getModel(), $this->small);
     }
 
     /**
@@ -81,9 +87,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      *
      * @return $this
      */
-    public function setSmall($small)
+    public function setSmall($small, $smallString = false)
     {
         $this->small = $small;
+        $this->smallString = $smallString;
 
         return $this;
     }
@@ -97,17 +104,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getModelSmallValue()
-    {
-        return $this->getValueFromObject($this->getModel(), $this->getSmall());
-    }
-
-    /**
      * @param OrderByClauseInterface|bool $orderable
      * @return TableColumn
-     * @deprecated
      */
     public function setOrderable($orderable = true)
     {
@@ -128,8 +126,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'name' => $this->getName(),
-            ];
+            'name' => $this->getName(),
+            'small' => htmlspecialchars($this->getSmall()),
+        ];
     }
 
     /**

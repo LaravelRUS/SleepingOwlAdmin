@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
 use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 
 /**
@@ -91,7 +92,7 @@ class DisplayTable extends Display
     public function getNewEntryButtonText()
     {
         if (is_null($this->newEntryButtonText)) {
-            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+            $this->newEntryButtonText = trans('sleeping_owl::lang.button.new-entry');
         }
 
         return $this->newEntryButtonText;
@@ -232,5 +233,67 @@ class DisplayTable extends Display
     protected function modifyQuery(Builder $query)
     {
         $this->extensions->modifyQuery($query);
+    }
+
+    /**
+     * Apply offset and limit to the query.
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param \Illuminate\Http\Request $request
+     */
+    public function applyOffset($query, \Illuminate\Http\Request $request)
+    {
+        $offset = $request->input('start', 0);
+        $limit = $request->input('length', 10);
+
+        if ($limit == -1) {
+            return;
+        }
+
+        $query->offset((int) $offset)->limit((int) $limit);
+    }
+
+    /**
+     * Apply search to the query.
+     *
+     * @param Builder $query
+     * @param \Illuminate\Http\Request $request
+     */
+    public function applySearch(Builder $query, \Illuminate\Http\Request $request)
+    {
+        $search = $request->input('search.value');
+        if (empty($search)) {
+            return;
+        }
+
+        $query->where(function (Builder $query) use ($search) {
+            $columns = $this->getColumns()->all();
+
+            $_model = $query->getModel();
+
+            foreach ($columns as $column) {
+                if ($column->isSearchable()) {
+                    if ($column instanceof ColumnInterface) {
+                        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+                            if (method_exists($metaInstance, 'onSearch')) {
+                                $metaInstance->onSearch($column, $query, $search);
+                                continue;
+                            }
+                        }
+
+                        if (is_callable($callback = $column->getSearchCallback())) {
+                            $callback($column, $query, $search);
+                            continue;
+                        }
+                    }
+
+                    if ($_model->getAttribute($column->getName())) {
+                        continue;
+                    }
+
+                    $query->orWhere($column->getName(), 'like', '%'.$search.'%');
+                }
+            }
+        });
     }
 }

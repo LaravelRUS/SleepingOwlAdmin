@@ -13,6 +13,11 @@ class Checkbox extends TableColumn
     protected $view = 'column.checkbox';
 
     /**
+     * @var string
+     */
+    protected $width = '30px';
+
+    /**
      * Checkbox constructor.
      *
      * @param string|null $label
@@ -28,6 +33,11 @@ class Checkbox extends TableColumn
     }
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * @return mixed
      */
     public function getModelValue()
@@ -41,7 +51,7 @@ class Checkbox extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'value' => $this->getModelValue(),
-            ];
+            'value' => $this->getModelValue(),
+        ];
     }
 }

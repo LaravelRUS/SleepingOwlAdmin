@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Related;
 
 use Throwable;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Admin\Contracts\HasFakeModel;
 use Illuminate\Support\Collection;
@@ -43,6 +44,8 @@ abstract class Elements extends FormElements
      * @var string
      */
     protected $relationName;
+
+    protected $emptyRelation;
 
     /**
      * New relations counter.
@@ -92,6 +95,8 @@ abstract class Elements extends FormElements
     protected $groups;
 
     protected $queryCallbacks = [];
+
+    protected $transactionLevel;
 
     public function __construct(string $relationName, array $elements = [])
     {
@@ -445,7 +450,7 @@ abstract class Elements extends FormElements
 
         $jsonAttr = $model->{$jsonParts->first()};
 
-        return array_get($jsonAttr, $jsonParts->slice(1)->implode('.'));
+        return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
     }
 
     protected function formatElementName(string $name)
@@ -509,6 +514,7 @@ abstract class Elements extends FormElements
             try {
                 $model->setAttribute($attribute, $value);
             } catch (Throwable $exception) {
+                // Not add Attribute
             }
         }
 
@@ -642,7 +648,7 @@ abstract class Elements extends FormElements
     /**
      * @param string $groupLabel
      *
-     * @return Elements
+     * @return Elements|\Illuminate\Database\Eloquent\Model
      */
     public function setGroupLabel(string $groupLabel): self
     {
@@ -654,7 +660,7 @@ abstract class Elements extends FormElements
     /**
      * Checks if count of relations to be created exceeds limit.
      *
-     * @return int
+     * @return bool
      */
     public function exceedsLimit()
     {

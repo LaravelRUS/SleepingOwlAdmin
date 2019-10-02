@@ -46,13 +46,13 @@ interface ModelConfigurationInterface
     public function getIcon();
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getCreateTitle();
 
     /**
      * @param Model $model
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return \Illuminate\Contracts\Translation\Translator
      */
     public function getEditTitle();
 
@@ -266,4 +266,9 @@ interface ModelConfigurationInterface
      * @return null|string
      */
     public function getControllerClass();
+
+    /**
+     * @return \SleepingOwl\Admin\Navigation\Page
+     */
+    public function addToNavigation();
 }

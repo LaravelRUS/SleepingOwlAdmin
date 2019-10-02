@@ -1,0 +1,97 @@
+@mixin table-color($color, $text: $white) {
+  tbody {
+    background-color: $white;
+    border-bottom: 1px solid $color;
+
+    tr {
+      &:hover {
+        background-color: rgba($color, 0.3);
+      }
+    }
+  }
+
+}
+
+.table {
+  img {
+    object-fit: contain;
+  }
+
+  thead th {
+    vertical-align: middle;
+    word-break: inherit;
+    padding: 0.75rem 0.4rem;
+    text-align: center;
+    line-height: 1.2;
+    min-width: 2.5em;
+  }
+
+  tbody {
+    td,
+    th {
+      word-break: break-word;
+      padding: 0.4rem;
+      min-width: 2em;
+    }
+
+    tr {
+      transition: background-color $trans;
+
+      &:hover {
+        background-color: rgba($black, 0.1);
+      }
+    }
+  }
+
+  .clearfix {
+    display: block;
+    color: $gray-500;
+  }
+
+  .order-block {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+
+    > form:not(:last-child) {
+      margin-right: 0.5em;
+    }
+
+    .btn {
+      min-width: 2em;
+    }
+  }
+}
+
+.table.datatables,
+.table.table-striped {
+  tbody {
+    border-bottom: 1px solid $gray;
+  }
+
+  thead th {
+    line-height: 1.2;
+  }
+}
+
+.table {
+  &.table-primary {
+    @include table-color($primary);
+  }
+
+  &.table-success {
+    @include table-color($success);
+  }
+
+  &.table-danger {
+    @include table-color($danger);
+  }
+
+  &.table-warning {
+    @include table-color($warning);
+  }
+
+  &.table-info {
+    @include table-color($info);
+  }
+}

@@ -18,6 +18,11 @@ class Order extends TableColumn implements WithRoutesInterface
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * @var string
      */
     protected $view = 'column.order';
@@ -105,7 +110,7 @@ class Order extends TableColumn implements WithRoutesInterface
             $onDisplay = $modelConfiguration->onDisplay();
         } elseif ($modelConfiguration instanceof ModelConfiguration) {
             $onDisplay = $modelConfiguration->getDisplay();
-            $onDisplay = call_user_func($onDisplay, ['payload' => \Input::get('payload')]);
+            $onDisplay = call_user_func($onDisplay, ['payload' => $request->get('payload')]);
         } else {
             /*
              * @see https://sleepingowladmin.ru/docs/model_configuration

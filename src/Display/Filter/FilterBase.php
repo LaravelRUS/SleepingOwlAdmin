@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Filter;
 
 use Closure;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
 
 abstract class FilterBase implements FilterInterface
@@ -102,7 +103,7 @@ abstract class FilterBase implements FilterInterface
     public function getTitle()
     {
         if (is_null($this->title)) {
-            return studly_case($this->getAlias());
+            return Str::studly($this->getAlias());
         }
 
         if (is_callable($this->title)) {

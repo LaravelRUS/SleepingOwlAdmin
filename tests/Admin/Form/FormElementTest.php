@@ -5,13 +5,14 @@ use SleepingOwl\Admin\Form\FormElement;
 
 class FormElementTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
     /**
-     * @return FormElement|PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getElement()
     {
@@ -191,7 +192,11 @@ class FormElementTest extends TestCase
     {
         $array = $this->getElement()->toArray();
         $this->assertTrue(is_array($array));
-        $this->assertEquals(['value', 'readonly', 'model'], array_keys($array));
+        $test_array = ['value', 'readonly', 'visibled', 'model'];
+        $real_array = array_keys($array);
+        sort($test_array);
+        sort($real_array);
+        $this->assertEquals($test_array, $real_array);
     }
 
     /**
@@ -280,7 +285,7 @@ class FormElementTest extends TestCase
     {
         $element = $this->getElement();
         $model = m::mock(\Illuminate\Database\Eloquent\Model::class);
-        $model->shouldReceive('isAuthor')->andReturn(true)->once();
+        $model->shouldReceive('isAuthor')->andReturn(true);
         $element->setModel($model);
 
         $this->assertEquals(

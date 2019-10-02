@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
@@ -146,7 +148,7 @@ abstract class Display implements DisplayInterface
      */
     public function with($relations)
     {
-        $this->with = array_flatten(func_get_args());
+        $this->with = Arr::flatten(func_get_args());
 
         return $this;
     }
@@ -246,6 +248,9 @@ abstract class Display implements DisplayInterface
                     echo $html;
                     $view->getFactory()->yieldSection();
                 } else {
+                    /*
+                    * Need test for action (BUG)
+                    */
                     $view->getFactory()->flushSections();
                 }
             }
@@ -262,11 +267,11 @@ abstract class Display implements DisplayInterface
      */
     public function __call($name, $arguments)
     {
-        $method = snake_case(substr($name, 3));
+        $method = Str::snake(substr($name, 3));
 
-        if (starts_with($name, 'get') && $this->extensions->has($method)) {
+        if (Str::startsWith($name, 'get') && $this->extensions->has($method)) {
             return $this->extensions->get($method);
-        } elseif (starts_with($name, 'set') && $this->extensions->has($method)) {
+        } elseif (Str::startsWith($name, 'set') && $this->extensions->has($method)) {
             $extension = $this->extensions->get($method);
 
             if (method_exists($extension, 'set')) {

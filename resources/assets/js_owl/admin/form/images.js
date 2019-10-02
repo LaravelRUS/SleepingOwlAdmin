@@ -66,7 +66,6 @@ Vue.component('element-images', Vue.extend({
             });
         },
         image (uri) {
-            console.log(uri);
             return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
         },
         remove (image) {
@@ -89,9 +88,9 @@ Vue.component('element-images', Vue.extend({
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fa fa-upload';
+                return 'fas fa-images';
             }
-            return 'fa fa-spinner fa-spin'
+            return 'fas fa-spinner fa-spin'
         },
         has_values () {
             return this.vals.length > 0

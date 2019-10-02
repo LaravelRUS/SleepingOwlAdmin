@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Closure;
 use LogicException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
@@ -206,7 +207,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @return string
+     * @return string|Htmlable $helpText
      */
     public function getHelpText()
     {
@@ -419,7 +420,7 @@ abstract class NamedFormElement extends FormElement
                 continue;
             }
             if ($count === 2) {
-                if (str_contains($relation, '->')) {
+                if (Str::contains($relation, '->')) {
                     $parts = explode('->', $relation);
                     $relationField = array_shift($array);
                     $jsonPath = implode('.', $parts);
@@ -483,14 +484,18 @@ abstract class NamedFormElement extends FormElement
             $i++;
             $previousModel = $model;
 
-            /* @var Model $model */
+            /*
+              * @var Model $model
+              */
             foreach ($relations as $relation) {
                 $relatedModel = null;
                 if ($previousModel->getAttribute($relation) instanceof Model) {
                     $relatedModel = $previousModel->getAttribute($relation);
                 } elseif (method_exists($previousModel, $relation)) {
 
-                    /* @var Relation $relation */
+                    /**
+                     * @var Relation
+                     */
                     $relationObject = $previousModel->{$relation}();
 
                     switch (get_class($relationObject)) {

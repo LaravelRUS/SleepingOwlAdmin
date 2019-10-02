@@ -88,7 +88,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             $this->setBadge($badge);
         }
 
-        $this->setHtmlAttribute('role', 'presentation');
+        $this->setHtmlAttribute('data-toggle', 'tab');
+        $this->setHtmlAttribute('class', 'nav-item nav-link');
     }
 
     /**
@@ -463,6 +464,18 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
             return $content->isReadonly();
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibled()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->isVisibled();
         }
 
         return false;

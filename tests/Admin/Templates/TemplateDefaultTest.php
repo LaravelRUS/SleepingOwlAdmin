@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Templates\TemplateDefault;
 
 class TemplateDefaultTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -125,51 +125,4 @@ class TemplateDefaultTest extends TestCase
 
         $this->assertEquals($logo, $this->getTemplate()->getLogo());
     }
-
-    /**
-     * @covers SleepingOwl\Admin\Templates\TemplateDefault::getLogoMini
-     */
-    public function test_getLogoMini()
-    {
-        $this->getConfigMock()
-            ->shouldReceive('get')
-            ->with('sleeping_owl.logo_mini', null)
-            ->once()
-            ->andReturn($logo = '<img src="logo-mini.png" />');
-
-        $this->assertEquals($logo, $this->getTemplate()->getLogoMini());
-    }
-
-    /*
-     * @covers TemplateDefault::renderBreadcrumbs
-     */
-    //public function test_renderBreadcrumbs()
-    //{
-    //    $this->getConfigMock()
-    //        ->shouldReceive('get')
-    //        ->with('sleeping_owl.breadcrumbs', null)
-    //        ->once()
-    //        ->andReturn(true);
-    //
-    //    $this->getBreadcrumbsMock()
-    //        ->shouldReceive('renderIfExists')
-    //        ->with('test')
-    //        ->once()
-    //        ->andReturn($return = '<li />');
-    //
-    //    $this->assertEquals($return, $this->getTemplate()->renderBreadcrumbs('test'));
-    //
-    //    // -----------
-    //
-    //    $this->getConfigMock()
-    //        ->shouldReceive('get')
-    //        ->with('sleeping_owl.breadcrumbs', null)
-    //        ->once()
-    //        ->andReturn(false);
-    //
-    //    $this->getBreadcrumbsMock()
-    //        ->shouldNotReceive('renderIfExists');
-    //
-    //    $this->assertNull($this->getTemplate()->renderBreadcrumbs('test'));
-    //}
 }

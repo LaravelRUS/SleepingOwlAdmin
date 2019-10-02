@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Display\Column\Filter\Date;
 
 class DateTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }

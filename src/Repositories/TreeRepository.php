@@ -179,7 +179,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
             $type = KalnoyNestedsetType::class;
         } elseif (function_exists('trait_uses_recursive') && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
-        } elseif ($traits = class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+        } elseif (class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', class_uses($model))) {
             $type = KalnoyNestedsetType::class;
         }
 

@@ -257,6 +257,14 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @return bool
      */
+    public function isVisibled()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
     public function isValueSkipped()
     {
         return false;

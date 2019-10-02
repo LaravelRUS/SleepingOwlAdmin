@@ -24,13 +24,13 @@ use SleepingOwl\Admin\Navigation\Page;
 return [
     [
         'title' => 'Dashboard',
-        'icon'  => 'fa fa-dashboard',
+        'icon'  => 'fas fa-tachometer-alt',
         'url'   => route('admin.dashboard'),
     ],
 
     [
         'title' => 'Information',
-        'icon'  => 'fa fa-exclamation-circle',
+        'icon'  => 'fas fa-info-circle',
         'url'   => route('admin.information'),
     ],
 
@@ -45,7 +45,7 @@ return [
     //
     //        (new Page(\App\User::class))
     //            ->setPriority(100)
-    //            ->setIcon('fa fa-user')
+    //            ->setIcon('fas fa-users')
     //            ->setUrl('users')
     //            ->setAccessLogic(function (Page $page) {
     //                return auth()->user()->isSuperAdmin();

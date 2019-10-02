@@ -25,7 +25,7 @@ use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 /**
  * Class Admin.
- * @property-read \Illuminate\Foundation\Application $app
+ * @property \Illuminate\Foundation\Application $app
  */
 class Admin implements AdminInterface
 {

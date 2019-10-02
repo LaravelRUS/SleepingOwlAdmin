@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Database\Eloquent\Model;
@@ -103,9 +104,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     private $repository;
 
     /**
+     * @var Model|null
+     */
+    protected $model_value = null;
+
+    /**
      * ModelConfigurationManager constructor.
      * @param \Illuminate\Contracts\Foundation\Application $app
      * @param $class
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
@@ -136,6 +143,22 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * @return Model|null
+     */
+    public function getModelValue()
+    {
+        return $this->model_value;
+    }
+
+    /**
+     * @param Model $item
+     */
+    public function setModelValue($item)
+    {
+        $this->model_value = $item;
     }
 
     /**
@@ -188,7 +211,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return string
      */
     public function getCreateTitle()
     {
@@ -196,7 +219,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return string
      */
     public function getEditTitle()
     {
@@ -220,7 +243,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -230,7 +253,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -250,7 +273,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -300,7 +323,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param string $action
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      *
      * @return bool
      */
@@ -455,7 +478,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return string
      */
     public function getMessageOnCreate()
     {
@@ -463,7 +486,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return string
      */
     public function getMessageOnUpdate()
     {
@@ -471,7 +494,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return string
      */
     public function getMessageOnDelete()
     {
@@ -479,7 +502,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return string
      */
     public function getMessageOnRestore()
     {
@@ -487,7 +510,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return string
      */
     public function getMessageOnDestroy()
     {
@@ -651,6 +674,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     protected function getDefaultClassTitle()
     {
-        return snake_case(str_plural(class_basename($this->getClass())));
+        return Str::snake(Str::plural(class_basename($this->getClass())));
     }
 }

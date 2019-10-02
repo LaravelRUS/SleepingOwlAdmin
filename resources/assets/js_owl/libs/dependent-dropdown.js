@@ -7,6 +7,9 @@
  *
  * Licensed under the BSD 3-Clause
  * https://github.com/kartik-v/dependent-dropdown/blob/master/LICENSE.md
+ *
+ * Modified 2019.08.24 by @sngrl - for properly use with select-ajax:dependent
+ * For view modifications search "@sngrl" at this file
  */
 (function (factory) {
     "use strict";
@@ -95,6 +98,26 @@
             }
             $el.trigger('depdrop.init');
             $el.trigger('select2:select');
+
+            ///////////////////////////////////////////////////////////
+            // 2019.08.24
+            // @sngrl
+            ///////////////////////////////////////////////////////////
+            if ($el.hasClass('js-data-ajax')) {
+                var correct = true;
+                $.each(depends, function (index, element) {
+                    let $dep_el = $('#' + element);
+                    let type = $dep_el.attr('type');
+                    let value = (type === "checkbox" || type === "radio") ? $dep_el.prop('checked') : $dep_el.val();
+                    if (!value) {
+                        correct = false;
+                    }
+                });
+                if (correct) {
+                    $el.removeAttr('disabled');
+                }
+            }
+            ///////////////////////////////////////////////////////////
         },
         parseDisabled: function () {
             var self = this;
@@ -152,6 +175,24 @@
                     }
                 },
                 success: function (data) {
+                    ///////////////////////////////////////////////////////////
+                    // 2019.08.24
+                    // @sngrl
+                    ///////////////////////////////////////////////////////////
+                    if ($el.hasClass('js-data-ajax')) {
+                        let correct = true;
+                        $.each(vVal, function(index, value){
+                            if (!vVal[index]) {
+                                correct = false;
+                            }
+                        });
+                        $el.removeClass(vLoadCss).html('');
+                        if (correct) {
+                            $el.removeAttr('disabled');
+                        }
+                        return true;
+                    }
+                    ///////////////////////////////////////////////////////////
                     selected = isEmpty(data.selected) ? (self.initVal === false ? null : self.initVal) : data.selected;
                     if (isEmpty(data)) {
                         createOption($el, '', vNullMsg, '');

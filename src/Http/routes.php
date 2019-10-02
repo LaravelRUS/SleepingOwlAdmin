@@ -57,14 +57,21 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'uses' => 'AdminController@getWildcard',
     ]);
 
-    $router->group(['middleware' => config('sleeping_owl.env_editor_middlewares')], function (Router $router) {
-        $router->get(config('sleeping_owl.env_editor_url'), [
-            'as' => 'env.editor',
-            'uses' => 'AdminController@getEnvEditor',
-        ]);
-        $router->post(config('sleeping_owl.env_editor_url'), [
-            'as' => 'env.editor.post',
-            'uses' => 'AdminController@postEnvEditor',
-        ]);
-    });
+    $router->post('{adminModel}/deletedAll', [
+        'as' => 'deletedAll',
+        'uses' => 'AdminController@deletedAll',
+    ]);
+
+    if (config('sleeping_owl.enable_editor')) {
+        $router->group(['middleware' => config('sleeping_owl.env_editor_middlewares')], function (Router $router) {
+            $router->get(config('sleeping_owl.env_editor_url'), [
+                'as' => 'env.editor',
+                'uses' => 'AdminController@getEnvEditor',
+            ]);
+            $router->post(config('sleeping_owl.env_editor_url'), [
+                'as' => 'env.editor.post',
+                'uses' => 'AdminController@postEnvEditor',
+            ]);
+        });
+    }
 });

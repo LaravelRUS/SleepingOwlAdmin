@@ -1,0 +1,22 @@
+.btn {
+  &.btn-xs {
+    padding: 0.2rem 0.35rem;
+    font-size: 80%;
+  }
+}
+
+.table-control-btn {
+  text-align: right;
+}
+
+.btn-group-vertical {
+  .btn {
+    white-space: nowrap;
+  }
+}
+
+form {
+  .form-buttons {
+    padding-bottom: 2em;
+  }
+}

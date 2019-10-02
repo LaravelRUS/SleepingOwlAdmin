@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
@@ -70,7 +71,7 @@ class Select extends NamedFormElement
             );
         }
 
-        $options = array_except($this->options, $this->exclude);
+        $options = Arr::except($this->options, $this->exclude);
         if ($this->isSortable()) {
             asort($options, $this->getSortableFlags());
         }

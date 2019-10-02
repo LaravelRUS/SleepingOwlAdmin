@@ -1,3 +1,7 @@
+var isEmptyVal = function (value, trim) {
+    return value === null || value === undefined || value.length === 0 || (trim && $.trim(value) === '');
+};
+
 Admin.Modules.register('form.elements.selectajax', () => {
     $('.js-data-ajax').each((e, item) => {
         let options = {},
@@ -12,13 +16,30 @@ Admin.Modules.register('form.elements.selectajax', () => {
                 method: 'POST',
                 delay: 250,
                 data: function (params) {
-                    return {
+                    var _return = {
                         q: params.term, // search term
                         page: params.page,
                         model: $self.attr('model'),
                         field: $self.attr('field'),
                         search: $self.attr('search')
                     };
+                    let depends = $self.attr('data-depends');
+                    if (typeof depends !== "undefined" && depends !== '' && depends !== null && depends !== false && depends !== 0) {
+                        let vPar = JSON.parse(depends);
+                        if (!isEmptyVal(vPar)) {
+                            let params_num = [], params_key = {};
+                            for (i = 0; i < vPar.length; i++) {
+                                let key = vPar[i];
+                                let val = $('#' + key).val();
+                                params_num[i] = val;
+                                params_key[key] = val;
+                            }
+                            _return['depends'] = depends;
+                            _return['depdrop_parents'] = params_num;
+                            _return['depdrop_all_params'] = params_key;
+                        }
+                    }
+                    return _return;
                 },
                 processResults: function (data, params) {
                     params.page = params.page || 1;

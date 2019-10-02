@@ -54,6 +54,11 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return method_exists($this, 'onEdit') && parent::isEditable($model);
     }
 
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
     public function isDeletable(Model $model)
     {
         return method_exists($this, 'onDelete') && parent::isDeletable($model);
@@ -120,6 +125,17 @@ class SectionModelConfiguration extends ModelConfigurationManager
     {
         if (! method_exists($this, 'onEdit')) {
             return;
+        }
+
+        $model = $this;
+        if (method_exists($model, 'getModelValue')) {
+            $item = $model->getModelValue();
+            if (! $item) {
+                $item = $model->getRepository()->find($id);
+                if (method_exists($model, 'setModelValue') && $item) {
+                    $model->setModelValue($item);
+                }
+            }
         }
 
         $payload = array_merge(['id' => $id], ['payload' => $payload]);

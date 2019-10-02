@@ -11,7 +11,7 @@ class TemplateDefault extends Template
      */
     public function name()
     {
-        return 'AdminLTE 2';
+        return 'AdminLTE 3 (BS4)';
     }
 
     /**
@@ -21,7 +21,7 @@ class TemplateDefault extends Template
      */
     public function version()
     {
-        return '2.3.8';
+        return '3.0.0';
     }
 
     /**
@@ -31,7 +31,7 @@ class TemplateDefault extends Template
      */
     public function homepage()
     {
-        return 'https://almsaeedstudio.com/';
+        return 'https://adminlte.io/';
     }
 
     public function initialize()
@@ -72,6 +72,7 @@ class TemplateDefault extends Template
 
     /**
      * @return string
+     * @deprecated
      */
     public function getLogoMini()
     {

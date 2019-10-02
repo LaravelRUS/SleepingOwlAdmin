@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
 	{!! $template->renderMeta($title) !!}
 
@@ -11,10 +11,12 @@
 
 	@stack('scripts')
 </head>
-<body class="skin-blue sidebar-mini">
+<body class="hold-transition sidebar-mini {{ $menu_class }}">
 	@yield('content')
 
 	{!! $template->meta()->renderScripts(true) !!}
 	@stack('footer-scripts')
+
+	@include(AdminTemplate::getViewPath('helper.autoupdate'))
 </body>
 </html>

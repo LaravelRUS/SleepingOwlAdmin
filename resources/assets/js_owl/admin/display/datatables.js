@@ -1,5 +1,5 @@
 Admin.Modules.register('display.datatables', () => {
-   localStorage.clear();
+    localStorage.clear();
 
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
@@ -84,27 +84,18 @@ Admin.Modules.register('display.datatables', () => {
             table.draw();
         });
 
-<<<<<<< HEAD
+        //clear filter
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
-=======
-        $("#filters-cancel").on('click', function () {
->>>>>>> upstream/development
             let input = $(".display-filters td[data-index] input").val(null);
             input.trigger('change');
-
             let selector = $(".display-filters td[data-index] select");
             selector.val(null);
             selector.trigger('change');
-
-<<<<<<< HEAD
             table.draw();
-=======
-            table.api().draw();
->>>>>>> upstream/development
         });
 
-        $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e){
-            if(e.keyCode === 13){
+        $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e) {
+            if(e.keyCode === 13) {
                 table.draw();
             }
         });
@@ -152,22 +143,24 @@ window.checkDateRange = (fromValue, toValue, value) => {
 }
 
 window.columnFilters = {
+    //date ========================================
     daterange (dateField, table, column, index, serverSide) {
-        let $dateField = $(dateField);
-
+        console.log('daterange')
+        let $dateField = $(dateField)
         $dateField.on('apply.daterangepicker', function(e, date) {
             column.search($dateField.val());
         })
     },
+
+    //range ========================================
     range (container, table, column, index, serverSide) {
+        console.log('range')
         let $container = $(container),
             from = $('input:first', $container),
             to = $('input:last', $container),
             isDateRange = false;
-
         from.data('ajax-data-name', 'from');
         to.data('ajax-data-name', 'to');
-
         from
             .add(to)
             .on('keyup change', function () {
@@ -177,7 +170,6 @@ window.columnFilters = {
                     table.draw();
                 }
             });
-
         if (from.closest('.input-date').length > 0 && to.closest('.input-date').length > 0) {
             from.closest('.input-date')
                 .add(to.closest('.input-date'))
@@ -186,25 +178,19 @@ window.columnFilters = {
                         column.search(from.val() + '::' + to.val())
                     }
                 });
-
             isDateRange = true;
         }
-
         if (serverSide) {
             return;
         }
-
         $.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
             if (table.settings()[0].sTableId != settings.sTableId) {
                 return true;
             }
-
             let value = data[index];
-
             if (value && !_.isUndefined(value['@data-order'])) {
                 value = value['@data-order'];
             }
-
             if (isDateRange) {
                 return checkDateRange(
                     from.val().length > 0 && from.closest('.input-date').data('DateTimePicker').date(),
@@ -212,7 +198,6 @@ window.columnFilters = {
                     moment(value, from.data('date-format'))
                 )
             }
-
             return checkNumberRange(
                 parseInt(from.val()),
                 parseInt(to.val()),
@@ -220,19 +205,19 @@ window.columnFilters = {
             )
         });
     },
-    select (input, table, column, index, serverSide) {
-        let $input = $(input);
 
+    //select ========================================
+    select (input, table, column, index, serverSide) {
+        let $input = $(input)
+        console.log('select')
         $input.on('change', () => {
             let selected = [];
             $input.find(':selected').each((i, e) => {
                 let $option = $(e);
-
                 if ($option.val().length) {
                     selected.push($option.val());
                 }
             })
-
             if (serverSide) {
                 column.search(selected.join(':::'))
             } else {
@@ -240,9 +225,10 @@ window.columnFilters = {
             }
         });
     },
+
+    //text ========================================
     text (input, table, column, index, serverSide) {
         let $input = $(input)
-
         $input.on('keyup change', () => {
             column.search($input.val());
         })
