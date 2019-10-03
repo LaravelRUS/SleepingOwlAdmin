@@ -22,6 +22,11 @@ class EditableColumn extends NamedColumn
     protected $editableMode = 'popup';
 
     /**
+     * @var mixed
+     */
+    protected $text = null;
+
+    /**
      * Text constructor.
      *
      * @param             $name
@@ -36,6 +41,41 @@ class EditableColumn extends NamedColumn
         $this->setHtmlAttributes([
             'class' => 'inline-editable',
         ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTextValue()
+    {
+        if (is_callable($this->text)) {
+            return call_user_func($this->text, $this);
+        }
+
+        if (is_null($this->text)) {
+            return $this->getModelValue();
+        }
+
+        return $this->text;
+    }
+
+    /**
+     * @param mixed $text
+     * @return $this
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
     }
 
     /**
@@ -118,6 +158,7 @@ class EditableColumn extends NamedColumn
                 'url' => $this->getUrl(),
                 'title' => $this->getTitle(),
                 'mode' => $this->getEditableMode(),
+                'text' => $this->getTextValue()
             ];
     }
 }
