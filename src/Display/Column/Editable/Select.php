@@ -65,17 +65,17 @@ class Select extends EditableColumn implements ColumnEditableInterface
         }
     }
 
-    public function getTextValue()
+    public function getModifierValue()
     {
-        if (is_callable($this->text)) {
-            return call_user_func($this->text, $this);
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
         }
 
-        if (is_null($this->text)) {
+        if (is_null($this->modifier)) {
             return $this->getOptionName($this->getModelValue());
         }
 
-        return $this->text;
+        return $this->modifier;
     }
 
     /**
@@ -216,7 +216,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
         return array_merge(parent::toArray(), [
             'options' => $this->mutateOptions(),
             'optionName' => $this->getOptionName($this->getModelValue()),
-            'text' => $this->getTextValue()
+            'text' => $this->getModifierValue()
         ]);
     }
 
