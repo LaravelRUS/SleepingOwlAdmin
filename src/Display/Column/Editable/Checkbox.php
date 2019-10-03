@@ -108,7 +108,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
         return array_merge(parent::toArray(), [
             'checkedLabel' => $this->getCheckedLabel(),
             'uncheckedLabel' => $this->getUncheckedLabel(),
-            'text' => $this->getModifierValue()
+            'text' => $this->getModifierValue(),
         ]);
     }
 

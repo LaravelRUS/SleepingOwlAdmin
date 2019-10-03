@@ -216,7 +216,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
         return array_merge(parent::toArray(), [
             'options' => $this->mutateOptions(),
             'optionName' => $this->getOptionName($this->getModelValue()),
-            'text' => $this->getModifierValue()
+            'text' => $this->getModifierValue(),
         ]);
     }
 

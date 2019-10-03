@@ -158,7 +158,7 @@ class EditableColumn extends NamedColumn
                 'url' => $this->getUrl(),
                 'title' => $this->getTitle(),
                 'mode' => $this->getEditableMode(),
-                'text' => $this->getModifierValue()
+                'text' => $this->getModifierValue(),
             ];
     }
 }
