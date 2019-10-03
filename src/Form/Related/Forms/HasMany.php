@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -48,7 +49,7 @@ class HasMany extends Elements
 
             foreach ($elements as $element) {
                 $attribute = $element->getModelAttributeKey();
-                $value = $element->prepareValue(array_get($attributes, $attribute));
+                $value = $element->prepareValue(Arr::get($attributes, $attribute));
                 $related->setAttribute($attribute, $value);
                 $element->setModel($related);
             }

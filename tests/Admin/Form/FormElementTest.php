@@ -5,13 +5,14 @@ use SleepingOwl\Admin\Form\FormElement;
 
 class FormElementTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
     /**
-     * @return FormElement|PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getElement()
     {

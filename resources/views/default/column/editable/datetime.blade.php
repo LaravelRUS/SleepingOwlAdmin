@@ -7,7 +7,9 @@
     data-format = "{{ $format }}"
     data-viewformat = "{{ $viewformat }}"
     data-mode="{{ $mode }}"
+    data-combodate="{{ $combodateValue  }}"
     data-pk="{{ $id }}"
->{{ $value }}</a>
+    data-disabled="{{ !$isEditable }}"
+>{{ $text }}</a>
 
 {!! $append !!}

@@ -301,7 +301,6 @@ abstract class TableColumn implements ColumnInterface
     /**
      * @param OrderByClauseInterface|bool|string|\Closure $orderable
      * @return $this
-     * @deprecated
      */
     public function setOrderable($orderable)
     {

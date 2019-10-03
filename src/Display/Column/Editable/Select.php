@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
@@ -62,6 +63,19 @@ class Select extends EditableColumn implements ColumnEditableInterface
         } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
+    }
+
+    public function getModifierValue()
+    {
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
+        }
+
+        if (is_null($this->modifier)) {
+            return $this->getOptionName($this->getModelValue());
+        }
+
+        return $this->modifier;
     }
 
     /**
@@ -133,7 +147,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
             );
         }
 
-        $options = array_except($this->options, $this->exclude);
+        $options = Arr::except($this->options, $this->exclude);
         if ($this->isSortable()) {
             asort($options);
         }
@@ -199,10 +213,11 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-        return parent::toArray() + [
-                'options' => $this->mutateOptions(),
-                'optionName' => $this->getOptionName($this->getModelValue()),
-            ];
+        return array_merge(parent::toArray(), [
+            'options' => $this->mutateOptions(),
+            'optionName' => $this->getOptionName($this->getModelValue()),
+            'text' => $this->getModifierValue(),
+        ]);
     }
 
     /**

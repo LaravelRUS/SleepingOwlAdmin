@@ -1,6 +1,6 @@
-<div class="form-group form-element-file {{ $errors->has($name) ? 'has-error' : '' }}">
+<div class="form-group form-element-file{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
 	<label for="{{ $name }}" class="control-label">
-		{{ $label }}
+		{!! $label !!}
 
 		@if($required)
 			<span class="form-element-required">*</span>

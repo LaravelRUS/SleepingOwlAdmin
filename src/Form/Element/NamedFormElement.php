@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Element;
 use Closure;
 use LogicException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
@@ -28,6 +29,11 @@ abstract class NamedFormElement extends FormElement
      * @var string
      */
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $id;
 
     /**
      * @var string
@@ -81,6 +87,7 @@ abstract class NamedFormElement extends FormElement
 
         $parts = explode('.', $path);
         $this->setName($this->composeName($parts));
+        $this->setId($this->composeId($path));
         $this->setModelAttributeKey(end($parts));
 
         parent::__construct();
@@ -101,6 +108,20 @@ abstract class NamedFormElement extends FormElement
             $part = array_shift($parts);
             $name .= "[$part]";
         }
+
+        return $name;
+    }
+
+    /**
+     * Compose html id from array like this: 'first__second__third'.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    private function composeId(string $path)
+    {
+        $name = strtr($path, ['.' => '__', '[' => '__', ']' => '']);
 
         return $name;
     }
@@ -128,6 +149,14 @@ abstract class NamedFormElement extends FormElement
     /**
      * @return string
      */
+    public function getNameKey()
+    {
+        return strtr($this->getName(), ['[' => '.', ']' => '']);
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
@@ -141,6 +170,38 @@ abstract class NamedFormElement extends FormElement
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return $this
+     */
+    public function setComposeId($id)
+    {
+        $this->setId($this->composeId($id));
 
         return $this;
     }
@@ -419,7 +480,7 @@ abstract class NamedFormElement extends FormElement
                 continue;
             }
             if ($count === 2) {
-                if (str_contains($relation, '->')) {
+                if (Str::contains($relation, '->')) {
                     $parts = explode('->', $relation);
                     $relationField = array_shift($array);
                     $jsonPath = implode('.', $parts);
@@ -591,12 +652,12 @@ abstract class NamedFormElement extends FormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
         ]);
 
         return array_merge(parent::toArray(), [
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'value' => $this->exactValueSet ? $this->getExactValue() : $this->getValueFromModel(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
@@ -604,6 +665,8 @@ abstract class NamedFormElement extends FormElement
             'attributes' => $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
+            'class' => $this->getHtmlAttribute('class'),
+            'style' => $this->getHtmlAttribute('style'),
         ]);
     }
 }

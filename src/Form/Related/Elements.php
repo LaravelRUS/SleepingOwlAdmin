@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Related;
 
 use Throwable;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Admin\Contracts\HasFakeModel;
 use Illuminate\Support\Collection;
@@ -445,7 +446,7 @@ abstract class Elements extends FormElements
 
         $jsonAttr = $model->{$jsonParts->first()};
 
-        return array_get($jsonAttr, $jsonParts->slice(1)->implode('.'));
+        return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
     }
 
     protected function formatElementName(string $name)

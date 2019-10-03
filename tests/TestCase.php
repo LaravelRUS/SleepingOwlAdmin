@@ -97,11 +97,11 @@ class TestCase extends Orchestra\Testbench\TestCase
     }
 
     /**
-     * @return m\MockInterface|\DaveJamesMiller\Breadcrumbs\Manager
+     * @return m\MockInterface|\DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
      */
     public function getBreadcrumbsMock()
     {
-        return $this->app['breadcrumbs'] = m::mock(DaveJamesMiller\Breadcrumbs\Manager::class);
+        return $this->app['breadcrumbs'] = m::mock(DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::class);
     }
 
     /**

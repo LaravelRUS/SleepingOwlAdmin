@@ -98,14 +98,15 @@ class Order extends TableColumn implements WithRoutesInterface
             return $this->totalCountValue;
         }
 
-        $request = \Request::capture();
+        //$request = \Request::capture();
+        $request = \Illuminate\Http\Request::capture();
         $modelConfiguration = $this->getModelConfiguration();
         $query = $modelConfiguration->getRepository()->getQuery();
         if ($modelConfiguration instanceof Section) {
             $onDisplay = $modelConfiguration->onDisplay();
         } elseif ($modelConfiguration instanceof ModelConfiguration) {
             $onDisplay = $modelConfiguration->getDisplay();
-            $onDisplay = call_user_func($onDisplay, ['payload' => \Input::get('payload')]);
+            $onDisplay = call_user_func($onDisplay, ['payload' => $request->get('payload')]);
         } else {
             /*
              * @see https://sleepingowladmin.ru/docs/model_configuration

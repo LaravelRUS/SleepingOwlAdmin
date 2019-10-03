@@ -8,6 +8,7 @@
     data-pk="{{ $id }}"
     data-title="{{ $title }}"
     data-source="{{ json_encode($options) }}"
->{{ $optionName }}</a>
+    data-disabled="{{ !$isEditable }}"
+>{{ $text }}</a>
 
 {!! $append !!}

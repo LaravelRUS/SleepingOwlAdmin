@@ -6,6 +6,7 @@
     data-type="textarea"
     data-pk="{{ $id }}"
     data-mode="{{ $mode }}"
->{{ $value }}</a>
+    data-disabled="{{ !$isEditable }}"
+>{{ $text }}</a>
 
 {!! $append !!}

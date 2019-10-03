@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\RedirectResponse;
 use SleepingOwl\Admin\Form\FormElements;
-use DaveJamesMiller\Breadcrumbs\Generator;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Display\DisplayTable;
 use Illuminate\Contracts\Support\Renderable;
@@ -16,13 +16,14 @@ use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Model\ModelConfiguration;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class AdminController extends Controller
 {
     /**
-     * @var \DaveJamesMiller\Breadcrumbs\Manager
+     * @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
      */
     protected $breadcrumbs;
 
@@ -54,9 +55,11 @@ class AdminController extends Controller
     /**
      * AdminController constructor.
      *
-     * @param Request $request
+     * @param Request        $request
      * @param AdminInterface $admin
-     * @param Application $application
+     * @param Application    $application
+     *
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function __construct(Request $request, AdminInterface $admin, Application $application)
     {
@@ -71,7 +74,7 @@ class AdminController extends Controller
         $admin->navigation()->setCurrentUrl($request->getUri());
 
         if (! $this->breadcrumbs->exists('home')) {
-            $this->breadcrumbs->register('home', function (Generator $breadcrumbs) {
+            $this->breadcrumbs->register('home', function (BreadcrumbsGenerator $breadcrumbs) {
                 $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
             });
         }
@@ -276,7 +279,7 @@ class AdminController extends Controller
     /**
      * @param ModelConfigurationInterface $model
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
@@ -294,7 +297,7 @@ class AdminController extends Controller
     /**
      * @param ModelConfigurationInterface $model
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getCreate(ModelConfigurationInterface $model)
     {
@@ -387,7 +390,7 @@ class AdminController extends Controller
      * @param ModelConfigurationInterface $model
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getEdit(ModelConfigurationInterface $model, $id)
     {
@@ -395,6 +398,10 @@ class AdminController extends Controller
 
         if (is_null($item) || ! $model->isEditable($item)) {
             abort(404);
+        }
+
+        if (method_exists($model, 'setModelValue')) {
+            $model->setModelValue($item);
         }
 
         $edit = $model->fireEdit($id);
@@ -731,11 +738,11 @@ class AdminController extends Controller
      * @param $name
      * @param $url
      *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     protected function registerBreadcrumb($title, $parent, $name = 'render', $url = null)
     {
-        $this->breadcrumbs->register($name, function (Generator $breadcrumbs) use ($title, $parent, $url) {
+        $this->breadcrumbs->register($name, function (BreadcrumbsGenerator $breadcrumbs) use ($title, $parent, $url) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title, $url);
         });
@@ -745,7 +752,7 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
@@ -753,13 +760,13 @@ class AdminController extends Controller
 
         foreach ($this->breadCrumbsData as $breadcrumb) {
             if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
-                $this->breadcrumbs->register($breadcrumb['id'], function (Generator $breadcrumbs) use ($breadcrumb) {
+                $this->breadcrumbs->register($breadcrumb['id'], function (BreadcrumbsGenerator $breadcrumbs) use ($breadcrumb) {
                     $breadcrumbs->parent($breadcrumb['parent']);
                     $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
                 });
             }
         }
 
-        $this->parentBreadcrumb = data_get(array_last($this->breadCrumbsData), 'id', 'render');
+        $this->parentBreadcrumb = data_get(Arr::last($this->breadCrumbsData), 'id', 'render');
     }
 }
