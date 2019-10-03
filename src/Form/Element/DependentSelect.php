@@ -19,6 +19,9 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     protected $language;
 
+    /**
+     * @var bool
+     */
     protected $initializable = true;
 
     /**
