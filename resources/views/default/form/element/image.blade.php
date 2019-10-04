@@ -34,11 +34,11 @@
 
 				<div class="form-element-files clearfix" v-if="has_value" v-show="has_value" style="display:none;">
 					<div class="form-element-files__item">
-						<a :href="image" class="form-element-files__image" data-toggle="lightbox">
-							<img :src="image" />
+						<a :href="createdimage" class="form-element-files__image" data-toggle="lightbox">
+							<img :src="createdimage" />
 						</a>
 						<div class="form-element-files__info">
-							<a :href="image" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}">
+							<a :href="createdimage" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}">
 								<i class="fas fa-cloud-upload-alt"></i>
 							</a>
 							<button type="button" v-if="!readonly" @click.prevent="insert(val)" class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">

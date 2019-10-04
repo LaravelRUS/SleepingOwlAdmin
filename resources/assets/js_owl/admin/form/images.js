@@ -76,14 +76,14 @@ Vue.component('element-images', Vue.extend({
 
         insert (index) {
             let self = this;
-            let id = null;
+            let url = null;
             let link = null;
             if (typeof(index) !== 'undefined') {
-              id = self.vals[index];
-              link = this.image(id);
+              url = self.vals[index];
+              link = this.image(url);
             }
 
-            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, id, link).then(result => {
+            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, link).then(result => {
                 if(result.value){
                     if (typeof(index) !== 'undefined') {
                       self.$set(this.vals, [index], result.value)
