@@ -43,8 +43,8 @@ class UploadController extends Controller
         }
 
         /**
-          * @var File $element
-          */
+         * @var File
+         */
         if (is_null($element = $form->getElement($field))) {
             throw new NotFoundHttpException("Field [{$field}] not found");
         }
@@ -54,8 +54,8 @@ class UploadController extends Controller
         $labels = $element->getUploadValidationLabels();
 
         /**
-          * @var \Illuminate\Contracts\Validation\Validator $validator
-          */
+         * @var \Illuminate\Contracts\Validation\Validator
+         */
         $validator = Validator::make($request->all(), $rules, $messages, $labels);
 
         $element->customValidation($validator);
@@ -88,9 +88,9 @@ class UploadController extends Controller
     public function ckEditorStore(Request $request)
     {
         /**
-          * dropZone && CKEDITOR fileBrowser && CKEDITOR drag&drop
-          * @var UploadedFile $file
-          */
+         * dropZone && CKEDITOR fileBrowser && CKEDITOR drag&drop.
+         * @var UploadedFile
+         */
         $file = $request->image ? $request->image : $request->file;
         $file = $file ? $file : $request->upload;
         if (is_array($file)) {

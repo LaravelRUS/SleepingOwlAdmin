@@ -21,61 +21,61 @@ abstract class NamedFormElement extends FormElement
     use HtmlAttributes;
 
     /**
-      * @var string
-      */
+     * @var string
+     */
     protected $path;
 
     /**
-      * @var string
-      */
+     * @var string
+     */
     protected $name;
 
     /**
-      * @var string
-      */
+     * @var string
+     */
     protected $id;
 
     /**
-      * @var string
-      */
+     * @var string
+     */
     protected $modelAttributeKey;
 
     /**
-      * @var string
-      */
+     * @var string
+     */
     protected $label;
 
     /**
-      * @var string
-      */
+     * @var string
+     */
     protected $helpText;
 
     /**
-      * @var mixed
-      */
+     * @var mixed
+     */
     protected $exactValue;
 
     /**
-      * @var bool
-      */
+     * @var bool
+     */
     protected $exactValueSet = false;
 
     /**
-      * @var mixed
-      */
+     * @var mixed
+     */
     protected $defaultValue;
 
     /**
-      * @var \Closure
-      */
+     * @var \Closure
+     */
     protected $mutator;
 
     /**
-      * @param string $path
-      * @param string|null $label
-      *
-      * @throws FormElementException
-      */
+     * @param string $path
+     * @param string|null $label
+     *
+     * @throws FormElementException
+     */
     public function __construct($path, $label = null)
     {
         if (empty($path)) {
@@ -93,12 +93,12 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-      * Compose html name from array like this: 'first[second][third]'.
-      *
-      * @param array $parts
-      *
-      * @return string
-      */
+     * Compose html name from array like this: 'first[second][third]'.
+     *
+     * @param array $parts
+     *
+     * @return string
+     */
     private function composeName(array $parts)
     {
         $name = array_shift($parts);
@@ -112,25 +112,24 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-      * @return string
-      */
+     * @return string
+     */
     public function getPath()
     {
         return $this->path;
     }
 
     /**
-      * @param string $path
-      *
-      * @return $this
-      */
+     * @param string $path
+     *
+     * @return $this
+     */
     public function setPath($path)
     {
         $this->path = $path;
 
         return $this;
     }
-
 
     /**
      * @return string
@@ -141,18 +140,18 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-      * @return string
-      */
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
     /**
-      * @param string $name
-      *
-      * @return $this
-      */
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -169,8 +168,8 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-      * @return string
-      */
+     * @return string
+     */
     public function getLabel()
     {
         return $this->label;
@@ -402,13 +401,13 @@ abstract class NamedFormElement extends FormElement
         $value = $this->getDefaultValue();
 
         if ($model === null || ! $model->exists) {
-            /**
+            /*
               * First check for model existence must go here, before all checks are made
               */
             return $value;
         }
 
-        /**
+        /*
           * Implement json parsing
           */
         if (strpos($path, '->') !== false) {
@@ -508,7 +507,7 @@ abstract class NamedFormElement extends FormElement
             $i++;
             $previousModel = $model;
 
-            /**
+            /*
               * @var Model $model
               */
             foreach ($relations as $relation) {
