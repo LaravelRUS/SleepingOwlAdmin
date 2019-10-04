@@ -15,6 +15,7 @@ use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
  * @method Element\Image image($name, $label = null)
  * @method Element\Images images($name, $label = null)
  * @method Element\File file($name, $label = null)
+ * @method Element\Files files($name, $label = null)
  * @method Element\Time time($name, $label = null)
  * @method Element\Date date($name, $label = null)
  * @method Element\Timestamp timestamp($name, $label = null)
@@ -72,6 +73,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'image' => Element\Image::class,
             'images' => Element\Images::class,
             'file' => Element\File::class,
+            'files' => Element\Files::class,
             'radio' => Element\Radio::class,
             'wysiwyg' => Element\Wysiwyg::class,
             'upload' => Element\Upload::class,

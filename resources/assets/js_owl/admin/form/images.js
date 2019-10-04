@@ -1,3 +1,5 @@
+import draggable from 'vuedraggable'
+
 Vue.component('element-images', Vue.extend({
     props: {
         url: {
@@ -26,6 +28,9 @@ Vue.component('element-images', Vue.extend({
     mounted () {
         this.vals = this.values;
         this.initUpload();
+    },
+    components: {
+        draggable
     },
     methods: {
         initUpload () {
@@ -68,6 +73,29 @@ Vue.component('element-images', Vue.extend({
         image (uri) {
             return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
         },
+
+        insert (index) {
+            let self = this;
+            let id = null;
+            let link = null;
+            if (typeof(index) !== 'undefined') {
+              id = self.vals[index];
+              link = this.image(id);
+            }
+
+            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, id, link).then(result => {
+                if(result.value){
+                    if (typeof(index) !== 'undefined') {
+                      self.$set(this.vals, [index], result.value)
+                    } else {
+                      self.vals.push(result.value);
+                    }
+                } else {
+                    return false;
+                }
+            });
+        },
+
         remove (image) {
             let self = this;
 

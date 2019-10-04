@@ -10,6 +10,7 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
+    "@flowjs/flow.js": "^2.13.2",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "admin-lte": "^v3.0.0-rc.1",
     "axios": "^0.19.0",
@@ -24,6 +25,7 @@
     "fullcalendar": "^3.10.0",
     "i18n": "^0.8.3",
     "i18next": "^17.0.6",
+    "jquery": "^3.1.1",
     "jquery-form": "^4.2.2",
     "js-cookie": "^2.2.0",
     "laravel-mix": "^5.0.0",
@@ -37,11 +39,13 @@
     "postcss-loader": "^3.0.0",
     "progressbar.js": "^1.0.1",
     "select2": "^4.0.8",
+    "sortablejs": "^1.10.1",
     "sweetalert2": "^8.14.0",
     "tempusdominus-core": "^5.0.3",
     "vue": "^2.6.10",
     "vue-multiselect": "^2.1.6",
     "vue-resource": "^1.5.1",
+    "vuedraggable": "^2.23.2",
     "x-editable-bs4": "^1.5.4"
   },
   "devDependencies": {

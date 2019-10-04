@@ -609,42 +609,6 @@ class AdminController extends Controller
      * @param ModelConfigurationInterface $model
      * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function deletedAll(ModelConfigurationInterface $model, Request $request)
-    {
-        if (is_null($request->_id)) {
-            return redirect()->back();
-        }
-
-        $items = $request->_id;
-
-        foreach ($items as $id) {
-            $item = $model->getRepository()->find($id);
-
-            if (! $item) {
-                return response()->Json(['error' => 'Haven`t row']);
-            }
-
-            if (isset($item->deleted_at) && $item->deleted_at) {
-                $model->getRepository()->forceDelete($id);
-            } else {
-                $model->getRepository()->delete($id);
-            }
-        }
-
-        $response = redirect()
-        ->to($request
-        ->input('_redirectBack', $model->getDisplayUrl()));
-
-        return $response
-        ->with('success_message', $model->getMessageOnDelete());
-    }
-
-    /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     * @param int $id
      *
      * @return \Illuminate\Http\RedirectResponse
      *
@@ -812,5 +776,41 @@ class AdminController extends Controller
         }
 
         $this->parentBreadcrumb = data_get(Arr::last($this->breadCrumbsData), 'id', 'render');
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deletedAll(ModelConfigurationInterface $model, Request $request)
+    {
+        if (is_null($request->_id)) {
+            return redirect()->back();
+        }
+
+        $items = $request->_id;
+
+        foreach ($items as $id) {
+            $item = $model->getRepository()->find($id);
+
+            if (! $item) {
+                return response()->Json(['error' => 'Haven`t row']);
+            }
+
+            if (isset($item->deleted_at) && $item->deleted_at) {
+                $model->getRepository()->forceDelete($id);
+            } else {
+                $model->getRepository()->delete($id);
+            }
+        }
+
+        $response = redirect()
+        ->to($request
+        ->input('_redirectBack', $model->getDisplayUrl()));
+
+        return $response
+        ->with('success_message', $model->getMessageOnDelete());
     }
 }

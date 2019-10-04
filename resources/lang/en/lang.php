@@ -118,7 +118,9 @@ return [
 
     'file' => [
         'browse' => 'Select File',
+        'browseMultiple' => 'Select Files',
         'remove' => 'Remove File',
+        'insert_link' => 'Insert link',
     ],
 
     'button' => [
@@ -154,5 +156,10 @@ return [
 
     'related' => [
         'unique' => 'This relation not unique',
+    ],
+
+    'seo' => [
+        'title' => 'Title',
+        'description' => 'Description',
     ],
 ];

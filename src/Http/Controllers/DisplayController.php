@@ -40,14 +40,18 @@ class DisplayController extends Controller
                 if ($content instanceof FormElements) {
                     foreach ($content->getElements() as $element) {
 
-                        //Return data-table if inside FormElements
+                        /**
+                          * Return data-table if inside FormElements
+                          */
                         if ($element instanceof DisplayDatatablesAsync) {
                             if ($element->getName() == $name) {
                                 return $this->renderFindedTable($element, $application, $request);
                             }
                         }
 
-                        //Try to find data table in columns
+                        /**
+                          * Try to find data table in columns
+                          */
                         if ($element instanceof Column) {
                             foreach ($element->getElements() as $columnElement) {
                                 if ($columnElement instanceof DisplayDatatablesAsync) {
@@ -60,7 +64,9 @@ class DisplayController extends Controller
                     }
                 }
 
-                //Finded trully in content-tab
+                /**
+                  * Finded trully in content-tab
+                  */
                 if ($content instanceof DisplayDatatablesAsync) {
                     if ($content->getName() == $name) {
                         return $this->renderFindedTable($content, $application, $request);

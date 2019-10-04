@@ -42,7 +42,9 @@ class UploadController extends Controller
             $form = $model->fireCreate();
         }
 
-        /** @var File $element */
+        /**
+          * @var File $element
+          */
         if (is_null($element = $form->getElement($field))) {
             throw new NotFoundHttpException("Field [{$field}] not found");
         }
@@ -51,7 +53,9 @@ class UploadController extends Controller
         $messages = $element->getUploadValidationMessages();
         $labels = $element->getUploadValidationLabels();
 
-        /** @var \Illuminate\Contracts\Validation\Validator $validator */
+        /**
+          * @var \Illuminate\Contracts\Validation\Validator $validator
+          */
         $validator = Validator::make($request->all(), $rules, $messages, $labels);
 
         $element->customValidation($validator);
@@ -71,7 +75,9 @@ class UploadController extends Controller
 
         $result = $element->saveFile($file, $path, $filename, $settings);
 
-        /* When driver not file */
+        /*
+         * When driver not file
+         */
         return new JsonResponse($result);
     }
 
@@ -81,8 +87,10 @@ class UploadController extends Controller
      */
     public function ckEditorStore(Request $request)
     {
-        //dropZone && CKEDITOR fileBrowser && CKEDITOR drag&drop
-        /** @var UploadedFile $file */
+        /**
+          * dropZone && CKEDITOR fileBrowser && CKEDITOR drag&drop
+          * @var UploadedFile $file
+          */
         $file = $request->image ? $request->image : $request->file;
         $file = $file ? $file : $request->upload;
         if (is_array($file)) {

@@ -118,7 +118,9 @@ return [
 
     'file' => [
         'browse' => '选择文件',
+        'browseMultiple' => '选择文件',
         'remove' => '移除文件',
+        'insert_link' => '插入连结',
     ],
 
     'button' => [
@@ -154,5 +156,10 @@ return [
 
     'related' => [
         'unique' => '这种关系不是唯一的',
+    ],
+
+    'seo' => [
+        'title' => '标题',
+        'description' => '描述',
     ],
 ];

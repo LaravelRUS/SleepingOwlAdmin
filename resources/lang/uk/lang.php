@@ -118,7 +118,9 @@ return [
 
     'file' => [
         'browse' => 'Вибір файлу',
+        'browseMultiple' => 'Вибір файлів',
         'remove' => 'Видалити файл',
+        'insert_link' => 'Вставити лінк',
     ],
 
     'button' => [
@@ -154,5 +156,10 @@ return [
 
     'related' => [
         'unique' => 'Це відношення не є унікальним',
+    ],
+
+    'seo' => [
+        'title' => 'Заголовок',
+        'description' => 'Опис',
     ],
 ];

@@ -58,12 +58,22 @@ Vue.component('element-image', Vue.extend({
         },
         remove () {
             let self = this;
-
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
                 if(result.value)
                     self.val = '';
                 else
                     return false;
+            });
+        },
+        insert (image) {
+            let self = this;
+
+            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, self.val, self.val).then(result => {
+                if(result.value) {
+                    self.val = result.value;
+                } else {
+                    return false;
+                }
             });
         },
         closeAlert () {

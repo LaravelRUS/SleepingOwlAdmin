@@ -6,6 +6,10 @@
 //   xl: 1200px
 // ) !default;
 
+.hidden {
+  display: none;
+}
+
 @each $key, $value in $grid-breakpoints {
   @media (max-width: #{$value}) {
     .hidden-#{$key} {
