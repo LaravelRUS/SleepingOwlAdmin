@@ -14,7 +14,8 @@
   .column-filter {
     width: 100%;
 
-    .select2-container {
+    .select2-container,
+    .select2-hidden-accessible {
       width: 100%!important;
     }
 

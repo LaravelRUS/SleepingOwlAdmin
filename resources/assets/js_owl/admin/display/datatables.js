@@ -145,7 +145,6 @@ window.checkDateRange = (fromValue, toValue, value) => {
 window.columnFilters = {
     //date ========================================
     daterange (dateField, table, column, index, serverSide) {
-        console.log('daterange')
         let $dateField = $(dateField)
         $dateField.on('apply.daterangepicker', function(e, date) {
             column.search($dateField.val());
@@ -154,7 +153,6 @@ window.columnFilters = {
 
     //range ========================================
     range (container, table, column, index, serverSide) {
-        console.log('range')
         let $container = $(container),
             from = $('input:first', $container),
             to = $('input:last', $container),
@@ -209,7 +207,6 @@ window.columnFilters = {
     //select ========================================
     select (input, table, column, index, serverSide) {
         let $input = $(input)
-        console.log('select')
         $input.on('change', () => {
             let selected = [];
             $input.find(':selected').each((i, e) => {
