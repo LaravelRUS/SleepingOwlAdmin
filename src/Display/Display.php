@@ -247,6 +247,9 @@ abstract class Display implements DisplayInterface
 
         $blocks = $this->getExtensions()->placableBlocks();
 
+        // Flush all view yields before render new Section
+        $view->getFactory()->flushSections();
+
         foreach ($blocks as $block => $data) {
             foreach ($data as $html) {
                 if (! empty($html)) {
