@@ -71,6 +71,8 @@
 * [x] Добавить метод для `url` выбор иконки
 * [x] посмотреть `isVisible`, возможно убрать `setDisplayed` и заменить на `setVisible()`
 * [x] `AdminFormElement::daterange` выпилить
+* [x] select2 styles сделать под БС4
+* [x] `AdminFormElement::file` проверить на ошибку в Vue
 
 
 ### Что сделать
@@ -78,13 +80,12 @@
 * [ ] ПРнуть / потестить депендет аякс и селект2 из девки
 * [ ] `multiselect` поправить отображение required и внесение старых данных после ошибки
 * [ ] Допилить `->setFormat()` на даты (не работает)
-* [ ] `AdminFormElement::file` проверить на ошибку в Vue
 * [ ] Запомнить последний таб (localstorage или кука)
 * [ ] `AdminColumnEditable::date` поправить год
 * [ ] посмотреть `setVisible`, к табам
 * [ ] Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
 * [ ] `Admin.Modules.register('display.datatables', () => {localStorage.clear();}` - переработать
-* [ ] Сохранить->сохранить/закрыть не возврат, а `->getDisplayUrl()` (словить зависимость)
+* [ ] Сохранить->сохранить/закрыть выкидывает в корень, `->getDisplayUrl()` (словить зависимость)
 * [ ] Перепроверить stub
 * [ ] `->setText()` для чекбоксов и прочих от `TableColumn`
 
