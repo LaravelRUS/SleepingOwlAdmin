@@ -118,7 +118,9 @@ return [
 
     'file' => [
         'browse' => 'Выбор файла',
+        'browseMultiple' => 'Выбор файлов',
         'remove' => 'Удалить файл',
+        'insert_link' => 'Вставить ссылку',
     ],
 
     'button' => [
@@ -154,5 +156,10 @@ return [
 
     'related' => [
         'unique' => 'Данная связь уже существует',
+    ],
+
+    'seo' => [
+        'title' => 'Заголовок',
+        'description' => 'Описание',
     ],
 ];

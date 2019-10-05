@@ -93,6 +93,7 @@ require('./admin/form/dependent-select');
 require('./admin/form/deselect');
 require('./admin/display/env_editor');
 require('./admin/form/file');
+require('./admin/form/files');
 require('./admin/form/image');
 require('./admin/form/images');
 require('./admin/events');

@@ -87,7 +87,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function initialize()
     {
         if ($this->initialized) {
-            return;
+            return false;
         }
 
         $this->initialized = true;
@@ -139,9 +139,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
+     * @param FormButtonsInterface $buttons
+     *
      * @return $this
      */
-    public function setButtons($buttons)
+    public function setButtons(FormButtonsInterface $buttons)
     {
         $this->buttons = $buttons;
 

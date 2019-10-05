@@ -1,5 +1,16 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-10-04
+* [Fix] `AdminFormElement::image` add URL link
+* [Fix] `AdminFormElement::images` add URL link and sortable
+* [Fix] `AdminFormElement::file` fix error
+* [Add] `AdminFormElement::files`
+  - `->showTitle(bool)` show/hide title field
+  - `->showDescription(bool)` show/hide description field
+  - `->setTitleRequired(bool)` enable/disable required title
+  - `->setDescriptionRequired(bool)` enable/disable required description
+* [Feature] `Admin.Messages.prompt(title, message = null, inputPlaceholder = null, inputValue = null, imageUrl = null)`
+
 ## 2019-09-30
 * [Fix] `AdminColumn::wysiwyg` class
 * [Fix] `.dropdown` button style

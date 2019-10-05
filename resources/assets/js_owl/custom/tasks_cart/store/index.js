@@ -83,7 +83,7 @@ const mutations = {
                 }
 
             });
-            swal('Задача удалена!');
+            Swal.fire('Задача удалена!');
         }
     },
     [types.REMOVE_FROM_CART] (state, index) {

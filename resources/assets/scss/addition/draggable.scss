@@ -1,0 +1,10 @@
+.draggable {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.drag-cursor {
+  cursor: grab;
+}

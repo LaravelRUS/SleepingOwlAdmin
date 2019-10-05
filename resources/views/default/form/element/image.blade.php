@@ -22,24 +22,30 @@
 			inline-template
 		>
 			<div>
-				<div v-if="errors.length" class="alert alert-warning">
+				<div v-if="errors.length" class="alert alert-warning" v-show="errors.length" style="display:none;">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
 						<span aria-hidden="true">&times;</span>
 					</button>
 
-					<p v-for="error in errors"><i class="fas fa-image" aria-hidden="true"></i> @{{ error }}</p>
+					<p v-for="error in errors" v-show="errors">
+						<i class="fas fa-image" aria-hidden="true"></i> @{{ error }}
+					</p>
 				</div>
-				<div class="form-element-files clearfix" v-if="has_value">
+
+				<div class="form-element-files clearfix" v-if="has_value" v-show="has_value" style="display:none;">
 					<div class="form-element-files__item">
-						<a :href="image" class="form-element-files__image" data-toggle="lightbox">
-							<img :src="image" />
+						<a :href="createdimage" class="form-element-files__image" data-toggle="lightbox">
+							<img :src="createdimage" />
 						</a>
 						<div class="form-element-files__info">
-							<a :href="image" class="btn btn-default btn-xs pull-right" target="_blank">
+							<a :href="createdimage" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}">
 								<i class="fas fa-cloud-upload-alt"></i>
 							</a>
+							<button type="button" v-if="!readonly" @click.prevent="insert(val)" class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
+								<i class="fas fa-link"></i>
+							</button>
 
-							<button type="button" v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()">
+							<button type="button" v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()" title="{{ trans('sleeping_owl::lang.image.remove') }}">
 								<i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
 							</button>
 						</div>
@@ -47,9 +53,13 @@
 				</div>
 
 				<div v-if="!readonly">
-					<div class="btn btn-primary upload-button">
+					<div class="btn btn-primary upload-button btn-sm">
 						<i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browse') }}
 					</div>
+					<button type="button" @click.prevent="insert($event.target.value)" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
+						<i class="fas fa-link"></i>
+					</button>
+
 
 				</div>
 

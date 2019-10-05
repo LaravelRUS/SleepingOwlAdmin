@@ -15,6 +15,7 @@ use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
  * @method Element\Image image($name, $label = null)
  * @method Element\Images images($name, $label = null)
  * @method Element\File file($name, $label = null)
+ * @method Element\Files files($name, $label = null)
  * @method Element\Time time($name, $label = null)
  * @method Element\Date date($name, $label = null)
  * @method Element\Timestamp timestamp($name, $label = null)

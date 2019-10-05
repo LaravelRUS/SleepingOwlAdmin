@@ -24,7 +24,7 @@ $(function ()
     {
         var $item = $(item);
         var RenderFileTpl = $item.find('.RenderFile').first().html();
-        var $innerGroup = $item.find('.files-group');
+        var $innerGroup = $item.find('.files-group').not( ".dissortable" );
         var $input = $item.find('.fileValue');
 
         var flow = new Flow({
@@ -48,6 +48,8 @@ $(function ()
                 });
             });
             $input.val(JSON.stringify(values));
+
+            $('[data-toggle="tooltip"]').tooltip()
         };
 
         var baseName = function (str)
@@ -123,14 +125,38 @@ $(function ()
             updateValue();
         });
 
+        $item.on('click', '.fileLink', function (e)
+        {
+          e.preventDefault();
+          var url = $(this).attr('href');
+          Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, url).then(result => {
+              if(result.value) {
+                  var $thumbReload = $(this).parents('.thumbnail');
+                  $($thumbReload.find('[data-id=file]')).data('src', result.value);
+                  $($thumbReload.find('.file-image')).attr('href', result.value);
+                  $($thumbReload.find('.fileicon-inner')).css('background-image', 'url("'+result.value+'")');
+                  updateValue();
+              } else {
+                  return false;
+              }
+          });
+        });
+
         $item.on('click', '.fileRemove', function (e)
         {
             e.preventDefault();
-            $(this).closest('.fileThumbnail').remove();
-            updateValue();
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(result => {
+                if(result.value) {
+                    $(this).closest('.fileThumbnail').remove();
+                    updateValue();
+                }
+            });
+
         });
 
-        Sortable.create($innerGroup[0], { onUpdate: function () { updateValue(); } });
+        if ($innerGroup) {
+          Sortable.create($innerGroup[0], { onUpdate: function () { updateValue(); } });
+        }
         updateValue();
     });
 });

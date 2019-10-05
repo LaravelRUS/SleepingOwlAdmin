@@ -56,14 +56,33 @@ Vue.component('element-image', Vue.extend({
                 }
             });
         },
+        image (uri) {
+            return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
+        },
         remove () {
             let self = this;
-
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
                 if(result.value)
                     self.val = '';
                 else
                     return false;
+            });
+        },
+        insert (image) {
+            let self = this;
+            let url = null;
+            let link = null;
+            if (typeof(image) !== 'undefined') {
+              url = self.val;
+              link = this.image(url);
+            }
+
+            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, link).then(result => {
+                if(result.value) {
+                    self.val = result.value;
+                } else {
+                    return false;
+                }
             });
         },
         closeAlert () {
@@ -80,7 +99,7 @@ Vue.component('element-image', Vue.extend({
         has_value () {
             return this.val.length > 0
         },
-        image () {
+        createdimage () {
             return ((this.val.indexOf('http') === 0) ? this.val : Admin.Url.upload(this.val))
         },
     }

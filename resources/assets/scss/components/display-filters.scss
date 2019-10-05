@@ -11,12 +11,13 @@
     }
   }
 
+  .select2-container,
+  .column-filter.select2-hidden-accessible {
+    width: 100%!important;
+  }
+
   .column-filter {
     width: 100%;
-
-    .select2-container {
-      width: 100%!important;
-    }
 
     .form-group {
       width: 100%;

@@ -56,8 +56,9 @@ class Files extends Images
      */
     public function setTitleRequired($bool)
     {
-        $this->title_required = $bool;
-
+        if ($this->show_title) {
+            $this->title_required = $bool;
+        }
         return $this;
     }
 
@@ -68,8 +69,9 @@ class Files extends Images
      */
     public function setDescriptionRequired($bool)
     {
-        $this->description_required = $bool;
-
+        if ($this->show_description) {
+            $this->description_required = $bool;
+        }
         return $this;
     }
 
