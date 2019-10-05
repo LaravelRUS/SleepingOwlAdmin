@@ -49,6 +49,11 @@ class DisplayTable extends Display
     protected $pageName = 'page';
 
     /**
+     * @var bool|null
+     */
+    protected $creatable = null;
+
+    /**
      * @var Collection
      */
     protected $collection;
@@ -176,6 +181,26 @@ class DisplayTable extends Display
     }
 
     /**
+     * @return bool|null
+     */
+    public function getCreatable()
+    {
+        return $this->creatable;
+    }
+
+    /**
+     * @param bool|null $creatable
+     *
+     * @return $this
+     */
+    public function setCreatable($creatable)
+    {
+        $this->creatable = $creatable;
+
+        return $this;
+    }
+
+    /**
      * @return array
      * @throws \Exception
      */
@@ -185,7 +210,7 @@ class DisplayTable extends Display
 
         $params = parent::toArray();
 
-        $params['creatable'] = $model->isCreatable();
+        $params['creatable'] = $this->getCreatable() !== null ? $this->getCreatable() : $model->isCreatable();
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
 

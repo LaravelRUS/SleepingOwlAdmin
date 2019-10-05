@@ -88,6 +88,7 @@ Admin.Modules.register('display.datatables', () => {
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
             let input = $(".display-filters td[data-index] input").val(null);
             input.trigger('change');
+
             let selector = $(".display-filters td[data-index] select");
             selector.val(null);
             selector.trigger('change');
@@ -145,8 +146,8 @@ window.checkDateRange = (fromValue, toValue, value) => {
 window.columnFilters = {
     //date ========================================
     daterange (dateField, table, column, index, serverSide) {
-        console.log('daterange')
-        let $dateField = $(dateField)
+        let $dateField = $(dateField);
+
         $dateField.on('apply.daterangepicker', function(e, date) {
             column.search($dateField.val());
         })
@@ -208,8 +209,8 @@ window.columnFilters = {
 
     //select ========================================
     select (input, table, column, index, serverSide) {
-        let $input = $(input)
-        console.log('select')
+        let $input = $(input);
+
         $input.on('change', () => {
             let selected = [];
             $input.find(':selected').each((i, e) => {

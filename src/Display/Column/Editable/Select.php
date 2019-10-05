@@ -65,6 +65,19 @@ class Select extends EditableColumn implements ColumnEditableInterface
         }
     }
 
+    public function getModifierValue()
+    {
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
+        }
+
+        if (is_null($this->modifier)) {
+            return $this->getOptionName($this->getModelValue());
+        }
+
+        return $this->modifier;
+    }
+
     /**
      * @param $relationKey
      * @return $this
@@ -200,10 +213,11 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-        return parent::toArray() + [
-                'options' => $this->mutateOptions(),
-                'optionName' => $this->getOptionName($this->getModelValue()),
-            ];
+        return array_merge(parent::toArray(), [
+            'options' => $this->mutateOptions(),
+            'optionName' => $this->getOptionName($this->getModelValue()),
+            'text' => $this->getModifierValue(),
+        ]);
     }
 
     /**
@@ -219,6 +233,9 @@ class Select extends EditableColumn implements ColumnEditableInterface
         if (strpos($this->getName(), '.') !== false) {
             if ($this->getRelationKey()) {
                 $this->setName($this->getRelationKey());
+            } else {
+                //@TODO Make Relation Resolver
+                $relationName = explode('.', $this->getName());
             }
         }
 

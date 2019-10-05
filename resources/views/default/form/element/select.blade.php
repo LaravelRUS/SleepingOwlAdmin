@@ -9,7 +9,7 @@
     </label>
 
     <deselect :value="{{ (ctype_digit(strval($value)) ? $value : json_encode($value)) }}"
-      :id="'{{str_replace(['[', ']'], '', $name)}}'"
+      :id="'{{ $id }}'"
       :multiple="false"
       :options="{{json_encode($options)}}" inline-template>
 
@@ -35,7 +35,7 @@
         </multiselect>
 
         <input type="hidden"  {!! $attributes !!}
-          id="{{ str_replace(['[', ']'], '', $name) }}"
+          id="{{ $id }}"
           name="{{$name}}"
           v-model="preparedVal">
       </div>

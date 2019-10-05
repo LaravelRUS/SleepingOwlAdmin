@@ -187,7 +187,11 @@ class Columns extends Extension implements Initializable, Renderable
         $params['pagination'] = null;
 
         if ($params['collection'] instanceof Paginator) {
-            $params['pagination'] = $params['collection']->render();
+            if (class_exists('Illuminate\Pagination\BootstrapThreePresenter')) {
+                $params['pagination'] = (new \Illuminate\Pagination\BootstrapThreePresenter($params['collection']))->render();
+            } else {
+                $params['pagination'] = $params['collection']->render();
+            }
         }
 
         return app('sleeping_owl.template')->view($this->getView(), $params)->render();
@@ -198,7 +202,7 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $orders = \Request::input('order', []);
+        $orders = app('request')->get('order', []);
 
         $columns = $this->all();
 

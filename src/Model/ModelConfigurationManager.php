@@ -110,8 +110,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * ModelConfigurationManager constructor.
+     *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param $class
+     * @param                                              $class
+     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
@@ -211,7 +213,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getCreateTitle()
     {
@@ -219,7 +221,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
      */
     public function getEditTitle()
     {
@@ -243,7 +245,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return bool
      */
@@ -253,7 +255,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return bool
      */
@@ -273,7 +275,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return bool
      */
@@ -323,7 +325,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param string $action
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return bool
      */
@@ -478,7 +480,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnCreate()
     {
@@ -486,7 +488,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnUpdate()
     {
@@ -494,7 +496,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnDelete()
     {
@@ -502,7 +504,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnRestore()
     {
@@ -510,7 +512,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getMessageOnDestroy()
     {

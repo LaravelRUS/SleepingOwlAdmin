@@ -200,7 +200,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return string
+     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     public function getNewEntryButtonText()
     {
@@ -323,6 +323,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function toArray()
     {
         $model = $this->getModelConfiguration();
+        $this->setHtmlAttribute('class', 'dd nestable');
 
         return parent::toArray() + [
                 'items' => $this->getRepository()->getTree($this->getCollection()),

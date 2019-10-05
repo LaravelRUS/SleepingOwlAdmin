@@ -140,11 +140,9 @@ class ManyToMany extends Elements
                 $chunks[$chunksIterator] = [];
             }
 
-            /*
-              * If the same related key already exists in our chunk,
-              * we'll switch chunk to next and fill it with new attributes
-              * to prevent duplication of related ids in single array
-              */
+            // If the same related key already exists in our chunk, we'll switch chunk to next
+            // and fill it with new attributes to prevent duplication of related ids in single
+            // array
             if (array_key_exists($key = $pivot->getAttribute($relatedKey), $chunks[$chunksIterator])) {
                 $chunksIterator++;
             }

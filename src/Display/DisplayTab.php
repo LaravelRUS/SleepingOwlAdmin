@@ -62,6 +62,11 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $badge;
 
     /**
+     * @var bool
+     */
+    protected $external_form = false;
+
+    /**
      * @var string
      */
     protected $view = 'display.tab';
@@ -316,6 +321,26 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setExternalForm($bool)
+    {
+        $this->external_form = $bool;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getExternalForm()
+    {
+        return $this->external_form;
     }
 
     /**

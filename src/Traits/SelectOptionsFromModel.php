@@ -100,7 +100,7 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param string $display
+     * @param string|\Closure $display
      *
      * @return $this
      */

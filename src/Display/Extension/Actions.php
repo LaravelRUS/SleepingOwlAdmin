@@ -141,10 +141,20 @@ class Actions extends Extension implements Initializable, Placable
      */
     public function initialize()
     {
+        if ($this->all()->count() < 1) {
+            return;
+        }
+
         $this->all()->each(function (ActionInterface $action) {
             $action->initialize();
         });
 
         $this->setHtmlAttribute('data-type', 'display-actions');
+
+        if ($this->getPlacement() == 'panel.footer') {
+            $this->setHtmlAttribute('class', 'panel-footer');
+        } else {
+            $this->setHtmlAttribute('style', 'display:inline-flex');
+        }
     }
 }

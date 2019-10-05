@@ -99,6 +99,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @return \Closure|null
+     * @deprecated
      */
     public function getCallback()
     {
@@ -108,6 +109,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     /**
      * @param \Closure $callback
      * @return $this
+     * @deprecated
      */
     public function setCallback(Closure $callback)
     {

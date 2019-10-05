@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Form\Element\SelectAjax;
 use SleepingOwl\Admin\Form\Element\DependentSelect;
+use SleepingOwl\Admin\Form\Element\MultiSelectAjax;
 use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
@@ -37,6 +39,34 @@ class FormElementController extends Controller
         }
 
         return $model->fireCreate();
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     * @param null $id
+     * @param mixed $payload
+     * @return JsonResponse|mixed
+     */
+    public function getModelLogicPayload(ModelConfigurationInterface $model, $id = null, $payload = [])
+    {
+        if (! is_null($id)) {
+            $item = $model->getRepository()->find($id);
+            if (is_null($item) || ! $model->isEditable($item)) {
+                return new JsonResponse([
+                    'message' => trans('lang.message.access_denied'),
+                ], 403);
+            }
+
+            return $model->fireEdit($id, $payload);
+        }
+
+        if (! $model->isCreatable()) {
+            return new JsonResponse([
+                'message' => trans('lang.message.access_denied'),
+            ], 403);
+        }
+
+        return $model->fireCreate($payload);
     }
 
     /**
@@ -114,10 +144,12 @@ class FormElementController extends Controller
             return $form;
         }
 
-        // because field name in MultiDependentSelect ends with '[]'
+        // because field name in MultiSelectAjax ends with '[]'
         $fieldPrepared = str_replace('[]', '', $field);
+        // process fields with relations: user[role]
+        $fieldPrepared = strtr($fieldPrepared, ['[' => '.', ']' => '']);
 
-        /** @var DependentSelect|MultiDependentSelect $element */
+        /** @var SelectAjax|MultiSelectAjax $element */
         $element = $form->getElement($fieldPrepared);
 
         if (is_null($element)) {
@@ -126,21 +158,112 @@ class FormElementController extends Controller
             ], 404);
         }
 
-        $field = $request->field;
-        $model = new $request->model;
-
-        if ($request->q && is_object($model)) {
-            return new JsonResponse(
-                $model::where($request->search, 'like', "%{$request->q}%")
-                    ->get()
-                    ->map(function (Model $item) use ($field) {
-                        return [
-                            'tag_name' => $item->{$field},
-                            'id' => $item->id,
-                            'custom_name' => $item->custom_name,
-                        ];
-                    })
-            );
+        $params = $request->input('depdrop_all_params', []);
+        $temp = [];
+        foreach ($params as $key => $val) {
+            $key = strtr($key, ['[' => '.', ']' => '']);
+            $key = strtr($key, ['__' => '.']);
+            $temp[$key] = $val;
         }
+        $params = $temp;
+
+        $element->setAjaxParameters($params);
+
+        if (is_callable($closure = $element->getModelForOptionsCallback())) {
+            $model_classname = $closure($element);
+        } else {
+            $model_classname = $element->getModelForOptions();
+        }
+        if (is_object($model_classname)) {
+            $model_classname = get_class($model_classname);
+        }
+        if ($model_classname && class_exists($model_classname)) {
+            $model = new $model_classname;
+
+            $search = $element->getSearch();
+            if (is_callable($search)) {
+                $search = $search($element);
+            }
+            $display = $element->getDisplay();
+            $custom_name = $element->getCustomName();
+            $exclude = $element->getExclude();
+
+            if ($request->q && is_object($model)) {
+                $query = $model;
+
+                // search logic
+                $model_table = $model->getTable();
+                $q = $request->q;
+                if (is_array($search)) {
+                    $query = $query->where(function ($query) use ($model_table, $search, $q) {
+                        foreach ($search as $key => $val) {
+                            if (is_numeric($key)) {
+                                $srch = $val;
+                                $value = '%'.$q.'%';
+                            } else {
+                                $srch = $key;
+                                switch ($val) {
+                                    case 'equal':
+                                        $value = $q;
+                                        break;
+                                    case 'begins_with':
+                                        $value = $q.'%';
+                                        break;
+                                    case 'ends_with':
+                                        $value = '%'.$q;
+                                        break;
+                                    case 'contains':
+                                    default:
+                                        $value = '%'.$q.'%';
+                                        break;
+                                }
+                            }
+                            $query = $query->orWhere($model_table.'.'.$srch, 'LIKE', $value);
+                        }
+                    });
+                } else {
+                    $query = $query->where($model_table.'.'.$search, 'LIKE', "%{$request->q}%");
+                }
+
+                // exclude result elements by id
+                if (count($exclude)) {
+                    $query = $query->whereNotIn($model_table.'.'.$model->getKeyName(), $exclude);
+                }
+
+                // call the pre load options query preparer if has be set
+                if (is_callable($preparer = $element->getLoadOptionsQueryPreparer())) {
+                    $query = $preparer($element, $query);
+                }
+
+                return new JsonResponse(
+                    $query
+                        ->get()
+                        ->map(function (Model $item) use ($display, $element, $custom_name) {
+                            if (is_string($display)) {
+                                $value = $item->{$display};
+                            } elseif (is_callable($display)) {
+                                $value = $display($item, $element);
+                            } else {
+                                $value = null;
+                            }
+                            if (is_string($custom_name)) {
+                                $custom_name_value = $item->{$custom_name};
+                            } elseif (is_callable($custom_name)) {
+                                $custom_name_value = $custom_name($item, $element);
+                            } else {
+                                $custom_name_value = null;
+                            }
+
+                            return [
+                                'tag_name' => $value,
+                                'id' => $item->id,
+                                'custom_name' => $custom_name_value,
+                            ];
+                        })
+                );
+            }
+        }
+
+        return new JsonResponse([]);
     }
 }

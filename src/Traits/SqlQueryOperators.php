@@ -90,6 +90,7 @@ trait SqlQueryOperators
                 break;
             case 'whereIn':
             case 'whereNotIn':
+
                 $query->{$method}($column, (array) $value);
                 break;
         }

@@ -43,6 +43,11 @@ class Action extends NamedColumn implements ActionInterface
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $selected = false;
+
+    /**
      * Action constructor.
      *
      * @param \Closure|null|string $name
@@ -82,6 +87,26 @@ class Action extends NamedColumn implements ActionInterface
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSelected()
+    {
+        return $this->selected;
+    }
+
+    /**
+     * @param bool $selected
+     *
+     * @return $this
+     */
+    public function setSelected($selected)
+    {
+        $this->selected = $selected;
 
         return $this;
     }
@@ -196,6 +221,7 @@ class Action extends NamedColumn implements ActionInterface
                 'action' => $this->getAction(),
                 'method' => $this->getMethod(),
                 'title' => $this->getTitle(),
+                'selected' => $this->getSelected(),
             ];
     }
 }

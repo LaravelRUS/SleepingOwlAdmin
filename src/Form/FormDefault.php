@@ -305,6 +305,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      */
     public function setModel(Model $model)
     {
+        $this->model = $model;
+
+        return $this;
     }
 
     /**
@@ -328,18 +331,18 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
         if (! $this->validModelConfiguration($modelConfiguration)) {
-            return;
+            return false;
         }
 
         $model = $this->getModel();
         $loaded = $model->exists;
 
         if ($this->getModelConfiguration()->fireEvent($loaded ? 'updating' : 'creating', true, $model) === false) {
-            return;
+            return false;
         }
 
         if ($this->getModelConfiguration()->fireEvent('saving', true, $model) === false) {
-            return;
+            return false;
         }
 
         parent::save($request);

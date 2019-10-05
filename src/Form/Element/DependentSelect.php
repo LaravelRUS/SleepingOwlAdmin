@@ -10,6 +10,21 @@ use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 class DependentSelect extends Select implements WithRoutesInterface
 {
     /**
+     * @var mixed
+     */
+    protected $defaultValue = 0;
+
+    /**
+     * @var string|null
+     */
+    protected $language;
+
+    /**
+     * @var bool
+     */
+    protected $initializable = true;
+
+    /**
      * @param Router $router
      */
     public static function registerRoutes(Router $router)
@@ -56,7 +71,45 @@ class DependentSelect extends Select implements WithRoutesInterface
     {
         parent::__construct($path, $label, []);
 
+        $this->setLanguage(config('app.locale'));
         $this->setDataDepends($depends);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param $language
+     * @return $this
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInitializable()
+    {
+        return $this->initializable;
+    }
+
+    /**
+     * @param bool $initializable
+     */
+    public function setInitializable($initializable)
+    {
+        $this->initializable = $initializable;
+
+        return $this;
     }
 
     /**
@@ -141,11 +194,12 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
-            'size' => 2,
+            'id' => $this->getId(),
             'data-select-type' => 'single',
             'data-url' => $this->getDataUrl(),
             'data-depends' => $this->getDataDepends(),
+            'data-language' => $this->getLanguage(),
+            'data-initialize' => $this->isInitializable() ? 'true' : 'false',
             'class' => 'form-control input-select input-select-dependent',
         ]);
 
@@ -154,7 +208,7 @@ class DependentSelect extends Select implements WithRoutesInterface
         }
 
         return [
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),

@@ -36,7 +36,7 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'class' => 'form-control',
             'multiple',
         ]);
