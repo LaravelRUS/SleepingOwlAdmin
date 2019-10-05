@@ -59,6 +59,7 @@ class Files extends Images
         if ($this->show_title) {
             $this->title_required = $bool;
         }
+
         return $this;
     }
 
@@ -72,6 +73,7 @@ class Files extends Images
         if ($this->show_description) {
             $this->description_required = $bool;
         }
+
         return $this;
     }
 
