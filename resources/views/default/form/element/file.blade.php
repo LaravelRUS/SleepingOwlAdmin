@@ -51,7 +51,7 @@
 				</div>
 
 				<div v-if="!readonly">
-					<div class="btn btn-primary upload-button">
+					<div class="btn btn-primary upload-button btn-sm">
 						<i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.file.browse') }}
 					</div>
 				</div>

@@ -132,7 +132,7 @@
           @if (!$readonly)
             <div class="w-100 order-2">
               <hr/>
-              <div class="btn btn-primary fileBrowse">{{ trans('sleeping_owl::lang.file.browseMultiple') }}</div>
+              <div class="btn btn-primary fileBrowse btn-sm">{{ trans('sleeping_owl::lang.file.browseMultiple') }}</div>
             </div>
           @endif
       </div>

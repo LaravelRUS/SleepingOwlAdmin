@@ -63,10 +63,10 @@
 
 				<div v-if="!readonly">
 					<br/>
-					<div class="btn btn-primary upload-button">
+					<div class="btn btn-primary upload-button btn-sm">
 						<i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}
 					</div>
-					<button type="button" @click.prevent="insert()" class="btn btn-default" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
+					<button type="button" @click.prevent="insert()" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
 						<i class="fas fa-link"></i>
 					</button>
 				</div>
