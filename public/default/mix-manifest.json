@@ -1,6 +1,9 @@
 {
     "/js/admin-app.js": "/js/admin-app.js",
     "/css/admin-app.css": "/css/admin-app.css",
+    "/js/admin-app.js.map": "/js/admin-app.js.map",
     "/js/modules.js": "/js/modules.js",
-    "/js/vue.js": "/js/vue.js"
+    "/js/modules.js.map": "/js/modules.js.map",
+    "/js/vue.js": "/js/vue.js",
+    "/js/vue.js.map": "/js/vue.js.map"
 }
