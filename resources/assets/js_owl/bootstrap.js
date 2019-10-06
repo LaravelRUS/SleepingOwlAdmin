@@ -33,8 +33,6 @@ require('./libs/progressbar');
 
 require('./libs/vuejs');
 require('./libs/noty');
-
-require('./custom/vuex')
 /**
  * Best open source admin dashboard & control panel theme.
  * Built on top of Bootstrap 3, AdminLTE provides a range of
