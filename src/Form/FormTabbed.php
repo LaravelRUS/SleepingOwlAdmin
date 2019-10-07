@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use SleepingOwl\Admin\Traits\PanelControl;
+use SleepingOwl\Admin\Traits\CardControl;
 
 class FormTabbed extends FormDefault
 {
-    use PanelControl;
+    use CardControl;
 
     /**
      * @var string
@@ -22,7 +22,7 @@ class FormTabbed extends FormDefault
     {
         parent::__construct($elements);
 
-        $this->setPanelClass('panel-form-tabbed');
+        $this->setCardClass('card-form-tabbed');
     }
 
     /**
@@ -30,9 +30,9 @@ class FormTabbed extends FormDefault
      */
     public function initialize()
     {
-        $this->getButtons()->setHtmlAttribute('class', 'panel-footer');
+        $this->getButtons()->setHtmlAttribute('class', 'card-footer');
 
-        $this->setHtmlAttribute('class', 'panel panel-default '.$this->getPanelClass());
+        $this->setHtmlAttribute('class', 'card card-default '.$this->getCardClass());
 
         parent::initialize();
     }

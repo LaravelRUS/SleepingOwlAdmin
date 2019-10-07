@@ -7,10 +7,10 @@
 	<br />
 @endif
 
-@yield('before.panel')
+@yield('before.card')
 
-<div class="panel card panel-default {!! $panel_class !!}">
-	<div class="panel-heading card-header">
+<div class="card card-default {!! $panel_class !!}">
+	<div class="card-heading card-header">
 		@if ($creatable)
 			<a href="{{ url($createUrl) }}" class="btn btn-primary">
 				<i class="fas fa-plus"></i> {{ $newEntryButtonText }}
@@ -18,20 +18,20 @@
 		@endif
 
 		<div class="pull-right">
-			@yield('panel.heading.actions')
+			@yield('card.heading.actions')
 		</div>
 
-		@yield('panel.buttons')
+		@yield('card.buttons')
 
 	</div>
 
-	@yield('panel.heading')
+	@yield('card.heading')
 
 	@foreach($extensions as $ext)
 		{!! $ext->render() !!}
 	@endforeach
 
-	@yield('panel.footer')
+	@yield('card.footer')
 </div>
 
 @yield('after.panel')

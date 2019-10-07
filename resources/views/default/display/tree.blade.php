@@ -1,18 +1,18 @@
-@yield('before.panel')
+@yield('before.card')
 
-<div class="panel card panel-default {!! $panel_class !!}">
-    <div class="panel-heading card-header">
+<div class="card card-default {!! $panel_class !!}">
+    <div class="card-heading card-header">
         @if ($creatable)
             <a class="btn btn-primary" href="{{ $createUrl }}">
                 <i class="fas fa-plus"></i> {{ $newEntryButtonText }}
             </a>
         @endif
-        @yield('panel.buttons')
+        @yield('card.buttons')
         <div class="pull-right">
-            @yield('panel.heading.actions')
+            @yield('card.heading.actions')
         </div>
 
-        @yield('panel.heading')
+        @yield('card.heading')
     </div>
 
     <div class="card-body">
@@ -24,15 +24,15 @@
           class="btn btn-secondary btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
         </menu>
       @endif
-      <div class="panel-body card mt-3">
+      <div class="card-body card mt-3">
         <div class="dd nestable" {!! $attributes !!} data-url="{{ $url }}/reorder">
           <ol class="dd-list">
             @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
           </ol>
         </div>
       </div>
-      @yield('panel.footer')
+      @yield('card.footer')
     </div>
 
 </div>
-@yield('after.panel')
+@yield('after.card')

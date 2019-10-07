@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
  * @method Form\FormElements elements(array $elements = [])
  * @method Form\FormTabbed tabbed(array $elements = [])
  * @method Form\FormPanel panel(array $elements = [])
+ * @method Form\FormCard card(array $elements = [])
  */
 class FormFactory extends AliasBinder implements FormFactoryInterface
 {
@@ -29,6 +30,7 @@ class FormFactory extends AliasBinder implements FormFactoryInterface
             'elements' => Form\FormElements::class,
             'tabbed' => Form\FormTabbed::class,
             'panel' => Form\FormPanel::class,
+            'card' => Form\FormCard::class,
         ]);
     }
 }

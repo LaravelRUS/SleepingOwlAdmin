@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\PanelControl;
+use SleepingOwl\Admin\Traits\CardControl;
 use Illuminate\Pagination\LengthAwarePaginator;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
@@ -26,7 +27,7 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
  */
 class DisplayTable extends Display
 {
-    use PanelControl;
+    use CardControl, PanelControl;
 
     /**
      * @var string
