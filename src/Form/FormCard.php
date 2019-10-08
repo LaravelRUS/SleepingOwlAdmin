@@ -2,19 +2,19 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Form\Card\Body;
 use SleepingOwl\Admin\Form\Card\Footer;
 use SleepingOwl\Admin\Form\Card\Header;
 use SleepingOwl\Admin\Form\Element\Html;
 use SleepingOwl\Admin\Traits\CardControl;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormCard extends FormDefault
 {
     use CardControl;
 
     const POSITION_HEADER = 'header';
-    const POSITION_BODY   = 'body';
+    const POSITION_BODY = 'body';
     const POSITION_FOOTER = 'footer';
 
     //   const SEPARATOR = '<hr class="panel-wide" />';
@@ -44,7 +44,7 @@ class FormCard extends FormDefault
     {
         $this->getButtons()->setHtmlAttribute('class', 'card-footer');
 
-        $this->setHtmlAttribute('class', 'card ' . $this->getCardClass());
+        $this->setHtmlAttribute('class', 'card '.$this->getCardClass());
 
         parent::initialize();
     }
@@ -56,8 +56,7 @@ class FormCard extends FormDefault
      */
     public function setItems($items)
     {
-        if (!is_array($items))
-        {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 
@@ -73,11 +72,9 @@ class FormCard extends FormDefault
      */
     public function addItem($item)
     {
-        if ($part = $this->getElements()->last())
-        {
+        if ($part = $this->getElements()->last()) {
             $part->addElement($item);
-        } else
-        {
+        } else {
             $this->addBody($item);
         }
 
@@ -91,8 +88,7 @@ class FormCard extends FormDefault
      */
     public function addHeader($items)
     {
-        if (!is_array($items))
-        {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 
@@ -108,14 +104,12 @@ class FormCard extends FormDefault
      */
     public function addBody($items)
     {
-        if (!is_array($items))
-        {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 
         $class = $this->getElements()->last();
-        if (is_object($class) && get_class($class) === Body::class)
-        {
+        if (is_object($class) && get_class($class) === Body::class) {
             $this->addElement(new Html('<hr />'));
         }
 
@@ -131,8 +125,7 @@ class FormCard extends FormDefault
      */
     public function addFooter($items)
     {
-        if (!is_array($items))
-        {
+        if (! is_array($items)) {
             $items = func_get_args();
         }
 

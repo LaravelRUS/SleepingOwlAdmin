@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Form\FormPanel;
 use SleepingOwl\Admin\Form\FormCard;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
