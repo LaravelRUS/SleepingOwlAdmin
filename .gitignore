@@ -10,3 +10,4 @@ package-lock.json
 /build/logs
 /public/default/js/admin-app.js
 /public/default/css/admin-app.css
+/mix-manifest.json
