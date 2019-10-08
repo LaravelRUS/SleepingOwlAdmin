@@ -9,6 +9,7 @@ use SleepingOwl\Admin\Form;
  * @method Form\FormElements elements(array $elements = [])
  * @method Form\FormTabbed tabbed(array $elements = [])
  * @method Form\FormPanel panel(array $elements = [])
+ * @method Form\FormCard card(array $elements = [])
  */
 interface FormFactoryInterface
 {
