@@ -30,8 +30,7 @@ class Boolean extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'value' => $this->getModelValue(),
-                'small' => $this->getModelSmallValue(),
+                'value' => $this->getModelValue()
             ];
     }
 }
