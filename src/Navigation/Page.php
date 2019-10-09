@@ -33,6 +33,13 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
         }
     }
 
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
     /**
      * Set Alias Id.
      */

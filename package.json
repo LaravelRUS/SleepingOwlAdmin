@@ -12,7 +12,7 @@
   "dependencies": {
     "@flowjs/flow.js": "^2.13.2",
     "@fortawesome/fontawesome-free": "^5.11.2",
-    "admin-lte": "^v3.0.0-rc.1",
+    "admin-lte": "^v3.0.0-rc.4",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "bootstrap-datepicker": "^1.9.0",
