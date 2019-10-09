@@ -7,6 +7,6 @@
     data-pk="{{ $id }}"
     data-mode="{{ $mode }}"
     data-disabled="{{ !$isEditable }}"
->{{ $value }}</a>
+>{{ $text }}</a>
 
 {!! $append !!}
