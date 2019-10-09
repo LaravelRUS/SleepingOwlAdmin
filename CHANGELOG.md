@@ -1,5 +1,13 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-10-09
+* [Fix] Delete table-striped in default datatables
+* [Add] Add maximize button in wysiwyg
+* [Add] All form add class `.card`
+* [Fix] Filter and order button size in display
+* [Fix] Display width table 100% card
+
+
 ## 2019-10-04
 * [Fix] `AdminFormElement::image` add URL link
 * [Fix] `AdminFormElement::images` add URL link and sortable

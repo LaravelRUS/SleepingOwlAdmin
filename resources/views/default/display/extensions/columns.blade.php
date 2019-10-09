@@ -1,4 +1,4 @@
-<div class="panel-table card-body">
+<div class="panel-table card-body2 pl-0 pr-0">
 
 <table {!! $attributes !!}>
     <colgroup>

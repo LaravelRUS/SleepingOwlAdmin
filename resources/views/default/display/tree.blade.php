@@ -15,7 +15,7 @@
         @yield('card.heading')
     </div>
 
-    <div class="card-body">
+    <div class="card-body p-0 b-0">
       @if($max_depth > 1)
         <menu id="nestable-menu" class="no-gutters p-1">
           <button type="button" data-action="expand-all"
@@ -24,7 +24,7 @@
           class="btn btn-secondary btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
         </menu>
       @endif
-      <div class="card-body card mt-3">
+      <div class="card-body mt-3 p-0 b-0">
         <div class="dd nestable" {!! $attributes !!} data-url="{{ $url }}/reorder">
           <ol class="dd-list">
             @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])

@@ -1,12 +1,12 @@
 .dataTables_paginate {
   display: flex;
-  padding: 1em 0 0;
+  padding: 1em 1em 0;
   list-style: none;
   border-radius: 0.25rem;
 
   .pagination {
     flex-wrap: wrap;
-    // padding-left: 1em;
+    padding-left: 0;
 
     @media (max-width: 768px) {
       justify-content: center;
@@ -43,8 +43,7 @@
     }
 
     &.disabled a {
-      border-color: transparent;
-      color: $gray-500;
+      color: $gray-300;
       cursor: default;
       background-color: transparent;
       outline: none;

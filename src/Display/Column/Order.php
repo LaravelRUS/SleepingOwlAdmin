@@ -175,10 +175,10 @@ class Order extends TableColumn implements WithRoutesInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'movableUp' => $this->movableUp(),
-                'moveUpUrl' => $this->moveUpUrl(),
-                'movableDown' => $this->movableDown(),
-                'moveDownUrl' => $this->moveDownUrl(),
-            ];
+            'movableUp' => $this->movableUp(),
+            'moveUpUrl' => $this->moveUpUrl(),
+            'movableDown' => $this->movableDown(),
+            'moveDownUrl' => $this->moveDownUrl(),
+        ];
     }
 }

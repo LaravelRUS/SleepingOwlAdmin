@@ -2,7 +2,7 @@
 	@if ($movableUp)
 		<form action="{{ $moveUpUrl }}" method="POST">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-			<button class="btn btn-info btn-sm" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.moveUp') }}">
+			<button class="btn btn-info btn-xs" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.moveUp') }}">
 				&uarr;
 			</button>
 		</form>
@@ -10,7 +10,7 @@
 	@if ($movableDown)
 		<form action="{{ $moveDownUrl }}" method="POST">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-			<button class="btn btn-danger btn-sm" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.moveDown') }}">
+			<button class="btn btn-danger btn-xs" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.moveDown') }}">
 				&darr;
 			</button>
 		</form>

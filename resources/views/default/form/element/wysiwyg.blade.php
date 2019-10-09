@@ -18,10 +18,17 @@
       </h3>
 
       <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="maximize">
+          <i class="fas fa-expand"></i>
+        </button>
         @if ($collapsed)
-          <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+          <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse">
+            <i class="fas fa-plus"></i>
+          </button>
         @else
-          <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
         @endif
       </div>
       @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
