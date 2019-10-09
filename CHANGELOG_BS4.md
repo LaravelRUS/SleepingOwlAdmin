@@ -73,15 +73,17 @@
 * [x] `AdminFormElement::daterange` выпилить
 * [x] select2 styles сделать под БС4
 * [x] `AdminFormElement::file` проверить на ошибку в Vue
+* [x] медленное прорисовывание меню, поправить определение классов в хелпере меню
 
 
 ### Что сделать
-* [ ] медленное прорисовывание меню, поправить определение классов в хелпере меню
 * [ ] ПРнуть / потестить депендет аякс и селект2 из девки
+* [ ] Добавить для wysiwyg поля максимизизацию (есть пример в шаблоне)
 * [ ] `multiselect` поправить отображение required и внесение старых данных после ошибки
 * [ ] Допилить `->setFormat()` на даты (не работает)
 * [ ] Запомнить последний таб (localstorage или кука)
-* [ ] `AdminColumnEditable::date` поправить год
+* [ ] `AdminColumnEditable::date` поправить год или поменять на выбор с значком календаря
+* [ ] `AdminColumnEditable::datetime` сделать
 * [ ] посмотреть `setVisible`, к табам
 * [ ] Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
 * [ ] `Admin.Modules.register('display.datatables', () => {localStorage.clear();}` - переработать
@@ -118,7 +120,6 @@
 * [ ] `AdminColumn::textaddon` с методами
 * [ ] `AdminColumn::gravatar('email', 'Ava')` Граватарки
 * [ ] `setCollapsed(bool|Closure $collapses): static` для wysiwyg поля
-* [ ] `setDisplayed(bool|Closure $displayed): static` для всех полей
 * [ ] Автоапдейт для дататейблов как вкл/выкл
 * [ ] Остальные поля, которых нет и их методы
 * [ ] Третий параметр в обычных коламнах `AdminColumn::link('title', 'Title', 'created_at')` и во многих других полях или `->setSmall('Редактировать')` (или `->setSmall('created_at')`). Можно вернуть калбэк

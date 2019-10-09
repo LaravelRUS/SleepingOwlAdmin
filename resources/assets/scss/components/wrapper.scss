@@ -5,8 +5,9 @@
     min-height: calc(100vh - 57px);
 
     .content.body {
-      overflow: hidden;
-      min-height: 80vh;
+      overflow-x: hidden;
+      // min-height: 88vh;
+      padding-bottom: 1em;
     }
   }
 }
