@@ -9,6 +9,6 @@
     data-title="{{ $title }}"
     data-source="{{ json_encode($options) }}"
     data-disabled="{{ !$isEditable }}"
->{{ $optionName }}</a>
+>{{ $text }}</a>
 
 {!! $append !!}

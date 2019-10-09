@@ -11,9 +11,8 @@
        data-emptytext="{{ $uncheckedLabel }}"
        data-disabled="{{ !$isEditable }}"
     ></a>
-
 @else
-    @if($value) {{ $checkedLabel }} @else {{ $uncheckedLabel }} @endif
+    {{ $text }}
 @endif
 
 {!! $append !!}

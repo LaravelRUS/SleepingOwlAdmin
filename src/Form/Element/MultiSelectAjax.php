@@ -23,6 +23,11 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     protected $view = 'form.element.selectajax';
 
     /**
+     * @var string|null
+     */
+    protected $language;
+
+    /**
      * MultiSelectAjax constructor.
      * @param $path
      * @param null $label
@@ -53,6 +58,27 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
             return $query->whereIn($key, $this->getValueFromModel() ? $this->getValueFromModel() : []);
         };
+
+        $this->setLanguage(config('app.locale'));
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param $language
+     * @return $this
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
     }
 
     /**
@@ -115,6 +141,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
         if ($this->getDataDepends() != '[]') {
             $this->setHtmlAttributes([
+                'data-language' => $this->getLanguage(),
                 'data-depends' => $this->getDataDepends(),
                 'data-url' => $this->getSearchUrl(),
                 'class' => 'input-select input-select-dependent',
