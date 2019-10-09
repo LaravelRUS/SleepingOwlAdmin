@@ -13,6 +13,8 @@ use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
+    protected $rowClassCallback;
+
     /**
      * Register display routes.
      *
@@ -308,11 +310,34 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
                 $_row[] = (string) $column;
             }
+            if (is_callable($callback = $this->rowClassCallback)) {
+                $_row[] = (string) $callback($instance);
+            }
 
             $result['data'][] = $_row;
         }
 
         return $result;
+    }
+
+    /**
+     * @return \Closure|mixed
+     */
+    public function getRowClassCallback()
+    {
+        return $this->rowClassCallback;
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function setRowClassCallback($callback)
+    {
+        $this->rowClassCallback = $callback;
+
+        return $this;
     }
 
     /**
