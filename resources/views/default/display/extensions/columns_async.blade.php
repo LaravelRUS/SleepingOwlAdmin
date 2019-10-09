@@ -1,4 +1,4 @@
-<div class="panel-table card-body">
+<div class="panel-table card-body table-responsive p-0">
   <table {!! $attributes !!}>
     <colgroup>
       @foreach ($columns as $column)
