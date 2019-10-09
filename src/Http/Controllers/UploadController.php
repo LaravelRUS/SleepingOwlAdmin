@@ -42,7 +42,7 @@ class UploadController extends Controller
             $form = $model->fireCreate();
         }
 
-        /**
+        /*
          * @var File
          */
         if (is_null($element = $form->getElement($field))) {
