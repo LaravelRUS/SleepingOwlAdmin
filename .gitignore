@@ -3,3 +3,5 @@
 .phpunit.result.cache
 /.idea
 /build/logs
+/public/default/css/*.map
+/public/default/js/*.map
