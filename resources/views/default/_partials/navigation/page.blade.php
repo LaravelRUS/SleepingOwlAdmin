@@ -1,7 +1,7 @@
 @if($hasChild)
 <li class="nav-item has-treeview {!! ($isActive) ? 'menu-open' : '' !!}">
     <a href="#" class="nav-link" {!! $attributes !!}>
-        @include(AdminTemplate::getViewPath('_partials.navigation.icon'))
+        {!! $icon !!}
         <p>
           {!! $title !!}
           <span class="pull-right-container">
@@ -26,7 +26,7 @@
 @else
 <li class="nav-item">
     <a href="{{ $url }}" class="nav-link {!! ($isActive) ? 'active' : '' !!}" {!! $attributes !!}>
-        @include(AdminTemplate::getViewPath('_partials.navigation.icon'))
+        {!! $icon !!}
         <p>
           {!! $title !!}
           @if($badges->count() > 0)
