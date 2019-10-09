@@ -311,7 +311,11 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                 $_row[] = (string) $column;
             }
             if (is_callable($callback = $this->rowClassCallback)) {
-                $_row[] = (string) $callback($instance);
+                $class = $callback($instance);
+                if (is_array($class)) {
+                    $class = implode(' ', $class);
+                }
+                $_row[] = (string) $class;
             }
 
             $result['data'][] = $_row;
