@@ -1,6 +1,7 @@
 //Core
 @import "variables";
 @import "colors";
+@import "~bootstrap/scss/bootstrap";
 @import "adminLte";
 @import "font";
 
@@ -15,4 +16,3 @@
 
 //responsive-datatable-bs4
 @import "~datatables.net-responsive-bs4/css/responsive.bootstrap4.css";
-

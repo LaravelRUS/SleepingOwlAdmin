@@ -1,17 +1,12 @@
-// Bootstrap
-// ---------------------------------------------------
-@import '~bootstrap/scss/functions';
-@import '~admin-lte/build/scss/bootstrap-variables';
-@import '~bootstrap/scss/bootstrap';
-
-// Variables and Mixins
-// ---------------------------------------------------
 @import "~admin-lte/build/scss/variables";
+@import "~admin-lte/build/scss/bootstrap-variables";
 @import "~admin-lte/build/scss/mixins";
+
 
 // Core
 // ---------------------------------------------------
 @import "~admin-lte/build/scss/layout";
+
 
 // COMPONENTS
 // ---------------------------------------------------
@@ -37,7 +32,9 @@
 @import "~admin-lte/build/scss/users-list";
 @import "~admin-lte/build/scss/carousel";
 @import "~admin-lte/build/scss/social-widgets";
-@import '~admin-lte/build/scss/modals';
+
+
+
 
 // Miscellaneous
 // ---------------------------------------------------
@@ -45,4 +42,4 @@
 @import "~admin-lte/build/scss/print";
 @import "~admin-lte/build/scss/text";
 @import "~admin-lte/build/scss/elevation";
-@import "~admin-lte/build/scss/colors";
+// @import "~admin-lte/build/scss/dropdown";
