@@ -13,7 +13,7 @@ class Body extends FormElements implements PanelInterface
     /**
      * @var string
      */
-    protected $view = 'form.panel.element';
+    protected $view = 'form.card.element';
 
     /**
      * @var string
@@ -33,8 +33,8 @@ class Body extends FormElements implements PanelInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'elements' => $this->getElements()->onlyVisible(),
-                'attributes' => $this->htmlAttributesToString(),
-            ];
+            'elements' => $this->getElements()->onlyVisible(),
+            'attributes' => $this->htmlAttributesToString(),
+        ];
     }
 }

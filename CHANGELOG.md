@@ -2,10 +2,13 @@
 
 ## 2019-10-10
 * [Add] Add `.table-light` and `.table-gray`, fix styles `.table-secondary`
+* [Add] Add `.table-sm` for no padding top/bottom `td` & `th` in table
 * [Fix] Vue-multiselect class
 * [Fix] Placeholder color change to `#adb5bd` (sass - $gray-500)
-* [Fix] Small (about value) in display color change to `#ced4da` (sass - $gray-400)
+* [Fix] Small (about value) in display color change to `#6c757d` (sass - $gray-600)
 * [Change] Change yelds `panel.*` to `card.*` (`panel.*` will be deprecated in future versions)
+* [Change] `panel.*` is alias `card.*` in `AdminForm::panel()->`
+* [Fix] Fix yield position for filter and action
 
 
 ## 2019-10-09

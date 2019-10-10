@@ -32,8 +32,9 @@
     td,
     th {
       word-break: break-word;
-      padding: 0 0.4rem;
+      padding: 0.4rem;
       min-width: 2em;
+      vertical-align: middle;
     }
 
     tr {
@@ -61,6 +62,15 @@
 
     .btn {
       min-width: 2em;
+    }
+  }
+
+  &.table-sm {
+    tbody {
+      td,
+      th {
+        padding: 0 0.4rem;
+      }
     }
   }
 }

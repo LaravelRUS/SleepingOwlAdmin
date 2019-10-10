@@ -29,7 +29,7 @@ class FormFactory extends AliasBinder implements FormFactoryInterface
             'form' => Form\FormDefault::class,
             'elements' => Form\FormElements::class,
             'tabbed' => Form\FormTabbed::class,
-            'panel' => Form\FormPanel::class,
+            'panel' => Form\FormCard::class,
             'card' => Form\FormCard::class,
         ]);
     }

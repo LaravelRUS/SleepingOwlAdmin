@@ -4,24 +4,28 @@
 <div class="card card-default {!! $panel_class !!}">
     <div class="card-heading card-header">
         @if ($creatable)
-            <a class="btn btn-primary" href="{{ $createUrl }}">
+            <a class="btn btn-primary mt-2" href="{{ $createUrl }}">
                 <i class="fas fa-plus"></i> {{ $newEntryButtonText }}
             </a>
         @endif
-        @yield('card.buttons')
-        @yield('panel.buttons')
-        <div class="pull-right">
-            @yield('card.heading.actions')
-            @yield('panel.heading.actions')
-        </div>
 
-        @yield('card.heading')
-        @yield('panel.heading')
+        <div class="pull-right">
+    			@yield('card.heading.actions')
+    			@yield('panel.heading.actions')
+
+    			@yield('card.buttons')
+    			@yield('panel.buttons')
+    		</div>
+    </div>
+
+    <div class="card-heading card-header">
+      @yield('card.heading')
+      @yield('panel.heading')
     </div>
 
     <div class="card-body p-0 b-0">
       @if($max_depth > 1)
-        <menu id="nestable-menu" class="no-gutters p-1">
+        <menu id="nestable-menu" class="no-gutters p-3">
           <button type="button" data-action="expand-all"
           class="btn btn-primary btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
           <button type="button" data-action="collapse-all"
