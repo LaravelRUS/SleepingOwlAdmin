@@ -1,6 +1,5 @@
 @mixin table-color($color, $text: $white) {
   // border: 1px solid rgba($color, 0.3);
-
   tbody {
     background-color: $white;
     border-bottom: 1px solid $color;
@@ -22,17 +21,18 @@
   thead th {
     vertical-align: middle;
     word-break: inherit;
-    padding: 0.75rem 0.4rem;
+    padding: 1rem 0.4rem;
     text-align: center;
     line-height: 1.2;
     min-width: 2.5em;
+    font-size: 0.9rem;
   }
 
   tbody {
     td,
     th {
       word-break: break-word;
-      padding: 0.4rem;
+      padding: 0 0.4rem;
       min-width: 2em;
     }
 
@@ -47,7 +47,7 @@
 
   .clearfix {
     display: block;
-    color: $gray-500;
+    color: $gray-600;
   }
 
   .order-block {
@@ -81,6 +81,10 @@
     @include table-color($primary);
   }
 
+  &.table-secondary {
+    @include table-color($secondary);
+  }
+
   &.table-success {
     @include table-color($success);
   }
@@ -95,5 +99,21 @@
 
   &.table-info {
     @include table-color($info);
+  }
+
+  &.table-light {
+    @include table-color($gray-100);
+
+    thead {
+      background-color: $gray-200;
+    }
+  }
+
+  &.table-gray {
+    @include table-color($gray);
+
+    thead {
+      background-color: $gray;
+    }
   }
 }

@@ -2,6 +2,7 @@
 .dataTables_filter {
   display: flex;
   margin-bottom: 1em;
+  padding: 0 1.25rem;
   justify-content: flex-start;
 
   label > input {
@@ -12,7 +13,7 @@
 .dataTables_info {
   font-weight: 500;
   font-size: 85%;
-  padding-left: 1em;
+  padding-left: 1.25rem;
 }
 
 .dataTables_wrapper {

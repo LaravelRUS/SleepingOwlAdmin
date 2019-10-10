@@ -1,4 +1,5 @@
 @yield('before.card')
+@yield('before.panel')
 
 <div class="card card-default {!! $panel_class !!}">
     <div class="card-heading card-header">
@@ -8,11 +9,14 @@
             </a>
         @endif
         @yield('card.buttons')
+        @yield('panel.buttons')
         <div class="pull-right">
             @yield('card.heading.actions')
+            @yield('panel.heading.actions')
         </div>
 
         @yield('card.heading')
+        @yield('panel.heading')
     </div>
 
     <div class="card-body p-0 b-0">
@@ -32,7 +36,9 @@
         </div>
       </div>
       @yield('card.footer')
+      @yield('panel.footer')
     </div>
 
 </div>
 @yield('after.card')
+@yield('after.panel')

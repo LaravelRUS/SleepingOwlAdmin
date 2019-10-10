@@ -8,6 +8,7 @@
 @endif
 
 @yield('before.card')
+@yield('before.panel')
 
 <div class="card card-default {!! $panel_class !!}">
 	<div class="card-heading card-header">
@@ -19,19 +20,24 @@
 
 		<div class="pull-right">
 			@yield('card.heading.actions')
+			@yield('panel.heading.actions')
 		</div>
 
 		@yield('card.buttons')
+		@yield('panel.buttons')
 
 	</div>
 
 	@yield('card.heading')
+	@yield('panel.heading')
 
 	@foreach($extensions as $ext)
 		{!! $ext->render() !!}
 	@endforeach
 
 	@yield('card.footer')
+	@yield('panel.footer')
 </div>
 
+@yield('after.card')
 @yield('after.panel')

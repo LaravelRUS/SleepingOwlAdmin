@@ -9,7 +9,11 @@
   }
 
   .multiselect__select {
-    height: 34px;
+    height: 100%;
+
+    &::before {
+      top: 70%;
+    }
   }
   .multiselect__placeholder {
     margin-bottom: 0.3rem;

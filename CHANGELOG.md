@@ -1,5 +1,13 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-10-10
+* [Add] Add `.table-light` and `.table-gray`, fix styles `.table-secondary`
+* [Fix] Vue-multiselect class
+* [Fix] Placeholder color change to `#adb5bd` (sass - $gray-500)
+* [Fix] Small (about value) in display color change to `#ced4da` (sass - $gray-400)
+* [Change] Change yelds `panel.*` to `card.*` (`panel.*` will be deprecated in future versions)
+
+
 ## 2019-10-09
 * [Fix] Delete table-striped in default datatables
 * [Add] Add maximize button in wysiwyg
