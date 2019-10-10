@@ -14,7 +14,8 @@
 
   .select2-container,
   .column-filter.select2-hidden-accessible {
-    width: 100%!important;
+    /* Fix for horizontal scroll */
+    width: 99%!important;
   }
 
   .column-filter {

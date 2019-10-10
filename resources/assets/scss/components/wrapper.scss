@@ -3,10 +3,10 @@
 
   .content-wrapper {
     min-height: calc(100vh - 57px);
+    /* Fix for horizontal scroll */
+    max-width: 99.9%;
 
     .content.body {
-      // overflow-x: hidden;
-      // min-height: 88vh;
       padding-bottom: 1em;
     }
   }

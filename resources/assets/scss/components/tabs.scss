@@ -6,5 +6,6 @@
 }
 
 .tab-content {
-  // padding-top: 1em;
+  /* Fix for horizontal scroll */
+  max-width: 99.9%;
 }
