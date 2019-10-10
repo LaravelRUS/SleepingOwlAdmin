@@ -36,7 +36,7 @@
 				</div>
 			</div>
 
-			<div class="content body">
+			<div class="content body overflow-x">
 				@stack('content.top')
 
 				{!! $content !!}

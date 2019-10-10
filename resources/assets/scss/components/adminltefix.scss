@@ -2,6 +2,10 @@
   overflow-x: hidden;
 }
 
+.row {
+  max-width: 100%;
+}
+
 .sidebar-open {
   .main-sidebar {
     transition: 0.5s;
