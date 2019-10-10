@@ -1,6 +1,6 @@
 <related-group
     name="{{ $name }}"
-    :index="(typeof index === 'undefined') ? undefined : index"
+    :index="{{ isset($index) ? $index : 'undefined'}}"
     primary="{{ trim((string)$group->getPrimary()) }}"
     label="{{ $group->getLabel() }}"
     :removed="removed.indexOf('{{ (string)$group->getPrimary() }}') !== -1"

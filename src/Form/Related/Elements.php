@@ -317,7 +317,7 @@ abstract class Elements extends FormElements
             throw new ModelNotFoundException("Model {$this->getModel()} wasn't found for loading relation");
         }
 
-        $query = $this->getRelation();
+        $query = $this->getRelation()->getQuery();
         if (count($this->queryCallbacks) > 0) {
             foreach ($this->queryCallbacks as $callback) {
                 $callback($query);
