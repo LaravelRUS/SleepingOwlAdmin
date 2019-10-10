@@ -92,6 +92,7 @@ Admin.Modules.register('display.datatables', () => {
         });
 
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
+
             let input = $(".display-filters td[data-index] input").val(null);
             input.trigger('change');
 
@@ -100,7 +101,6 @@ Admin.Modules.register('display.datatables', () => {
             selector.trigger('change');
 
             table.draw();
-        });
 
         $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e){
             if(e.keyCode === 13){
