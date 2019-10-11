@@ -1,7 +1,7 @@
 <div class="sidebar">
     @stack('sidebar.top')
 
-    <a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="brand-link text-center">
+    <a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="brand-link">
         {!! AdminTemplate::getLogo() !!}
     </a>
 
