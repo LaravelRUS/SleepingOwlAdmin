@@ -321,8 +321,12 @@ abstract class Elements extends FormElements
             throw new ModelNotFoundException("Model {$this->getModel()} wasn't found for loading relation");
         }
 
-        $query = $this->getRelation()->getQuery();
+        $query = $this->getRelation();
         if (count($this->queryCallbacks) > 0) {
+
+            //get $query instance Illuminate\Database\Eloquent\Builder for HasMany
+            $query = $query->getQuery();
+
             foreach ($this->queryCallbacks as $callback) {
                 $callback($query);
             }
