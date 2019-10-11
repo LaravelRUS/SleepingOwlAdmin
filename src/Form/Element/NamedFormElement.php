@@ -362,6 +362,7 @@ abstract class NamedFormElement extends FormElement
             $rule = 'unique:'.$table.','.$this->getModelAttributeKey();
             if ($model->exists) {
                 $rule .= ','.$model->getKey();
+                $rule .= ','.$this->getModelAttributeKey();
             }
         }
         unset($rule);
