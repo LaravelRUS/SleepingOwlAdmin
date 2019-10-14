@@ -72,7 +72,7 @@ return [
         'infoFiltered' => '(відфільтровано з _MAX_ записів)',
         'infoThousands' => ',',
         'infoPostFix' => '',
-        'search' => 'Пошук: ',
+        'search' => 'Пошук ',
         'emptyTable' => 'Немає записів у таблиці',
 
         'paginate' => [

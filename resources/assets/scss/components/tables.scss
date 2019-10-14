@@ -22,10 +22,15 @@
     vertical-align: middle;
     word-break: inherit;
     padding: 1rem 0.4rem;
-    text-align: center;
     line-height: 1.2;
     min-width: 2.5em;
     font-size: 0.9rem;
+  }
+
+  &.th-center {
+    thead th {
+      text-align: center;
+    }
   }
 
   tbody {

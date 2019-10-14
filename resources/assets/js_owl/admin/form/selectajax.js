@@ -8,7 +8,7 @@ Admin.Modules.register('form.elements.selectajax', () => {
             $self = $(item);
 
         options = {
-            placeholder: "Search ...",
+            placeholder: trans('lang.table.search'),
             minimumInputLength: $self.data('min-symbols'),
             ajax: {
                 url: $self.attr('search_url'),

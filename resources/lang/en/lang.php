@@ -72,7 +72,7 @@ return [
         'infoFiltered' => '(filtered from _MAX_ total entries)',
         'infoThousands' => ',',
         'infoPostFix' => '',
-        'search' => 'Search: ',
+        'search' => 'Search ',
         'emptyTable' => 'No data available in table',
 
         'paginate' => [

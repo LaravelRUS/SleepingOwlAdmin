@@ -72,7 +72,7 @@ return [
         'infoFiltered' => '(共筛选出 _MAX_ 项)',
         'infoThousands' => ',',
         'infoPostFix' => '',
-        'search' => '查找: ',
+        'search' => '查找 ',
         'emptyTable' => '没有内容',
 
         'paginate' => [

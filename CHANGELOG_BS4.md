@@ -74,12 +74,13 @@
 * [x] select2 styles сделать под БС4
 * [x] `AdminFormElement::file` проверить на ошибку в Vue
 * [x] медленное прорисовывание меню, поправить определение классов в хелпере меню
+* [x] Добавить для wysiwyg поля максимизизацию (есть пример в шаблоне)
 
 
 ### Что сделать
+* [ ] Локализовать `AdminFormElement::selectajax` (частично)
 * [ ] Добавили кард, выпилить панель и для поддержки сделать алиасом (`'panel' => Form\FormCard::class,`)
 * [ ] ПРнуть / потестить депендет аякс и селект2 из девки
-* [ ] Добавить для wysiwyg поля максимизизацию (есть пример в шаблоне)
 * [ ] `multiselect` поправить отображение required и внесение старых данных после ошибки
 * [ ] Допилить `->setFormat()` на даты (не работает)
 * [ ] Запомнить последний таб (localstorage или кука)
@@ -113,24 +114,21 @@
 * [ ] `->setVisible(true)` для display
 * [ ] `->setVisible(true)` для форм
 * [ ] `->setVisibilityCondition()` deprecated
-* [ ] для респонсивности широких таблиц `->setHtmlAttribute('class', 'hidden-sm')`
+* [ ] для респонсивности широких таблиц `->setHtmlAttribute('class', 'hidden-sm')` (не работает в дататейблсах)
 * [ ] `AdminColumnEditable::textarea`
 * [ ] `AdminColumn::boolean`
 * [ ] `AdminColumn::timestamp`
 * [ ] `AdminColumn::url` со всеми методами
 * [ ] `AdminColumn::textaddon` с методами
 * [ ] `AdminColumn::gravatar('email', 'Ava')` Граватарки
-* [ ] `setCollapsed(bool|Closure $collapses): static` для wysiwyg поля
+* [ ] `setCollapsed(bool)` для wysiwyg поля
 * [ ] Автоапдейт для дататейблов как вкл/выкл
 * [ ] Остальные поля, которых нет и их методы
 * [ ] Третий параметр в обычных коламнах `AdminColumn::link('title', 'Title', 'created_at')` и во многих других полях или `->setSmall('Редактировать')` (или `->setSmall('created_at')`). Можно вернуть калбэк
 * [ ] Для табов появился класс `.last`. Добавление таба в конец списка и к правой стороне
-* [ ] Перепилить админку
 * [ ] Дописать, что при использовании поиска в дататейблсах на связи обязательно нужно калбеки на ордерабле(если есть), иначе поиск будет с ошибкой
 * [ ] `lists` цвета от цвета таблицы, смена цвета через атрибуты `->setHtmlAttribute('class', 'badge-list-warning')`
 * возвраты ошибок `error_message`, `success_message` и прочие
 * `AdminColumnFilter` как передавать отображать и фильтровать
-
-
-## Разобрался и дописать в доку
-- `->setModifier` для поля text
+* `->setModifier` для поля text
+* Классы хелперы для таблиц (`.th-center`, `.table-striped` и прочие)
