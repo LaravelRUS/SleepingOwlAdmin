@@ -103,7 +103,7 @@ class DummyClass extends Section
             AdminFormElement::text('name', 'Name')
               ->required(),
             AdminFormElement::html('<hr>'),
-            AdminFormElement::datatime('created_at')
+            AdminFormElement::datetime('created_at')
               ->setVisible(true)
               ->setReadonly(false),
             AdminFormElement::html('last AdminFormElement without comma')
