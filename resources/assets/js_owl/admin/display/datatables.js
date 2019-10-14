@@ -72,6 +72,13 @@ Admin.Modules.register('display.datatables', () => {
             Admin.Events.fire('datatables::draw', this)
         }
 
+        params.createdRow = function (row, data, dataIndex) {
+            let row_class = data[params.columns.length];
+            if (row_class) {
+                $(row).addClass(row_class);
+            }
+        }
+
         let table = $this.DataTable(params);
 
         iterateColumnFilters(id, function ($element, index, type) {
