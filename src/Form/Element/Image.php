@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Validator;
 
@@ -39,7 +41,7 @@ class Image extends File
     {
         $validator->after(function (Validator $validator) {
             /** @var \Illuminate\Http\UploadedFile $file */
-            $file = array_get($validator->attributes(), 'file');
+            $file = Arr::get($validator->attributes(), 'file');
 
             $size = getimagesize($file->getRealPath());
 
@@ -135,7 +137,7 @@ class Image extends File
      * @param \Illuminate\Http\Request $request
      * @return mixed
      */
-    public function afterSave(\Illuminate\Http\Request $request)
+    public function afterSave(Request $request)
     {
         $value = $request->input($this->getPath());
         $model = $this->getModel();

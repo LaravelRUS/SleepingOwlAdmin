@@ -149,8 +149,8 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerMessages()
     {
         $messageTypes = [
-            'error'   => ErrorMessages::class,
-            'info'    => InfoMessages::class,
+            'error' => ErrorMessages::class,
+            'info' => InfoMessages::class,
             'success' => SuccessMessages::class,
             'warning' => WarningMessages::class,
         ];
@@ -217,6 +217,7 @@ class AdminServiceProvider extends ServiceProvider
             ->files()
             ->name('/^.+\.php$/')
             ->notName('routes.php')
+            ->notName('*.blade.php')
             ->notName('navigation.php')
             ->in($directory)
             ->sort(function (SplFileInfo $a) {
@@ -273,7 +274,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $middlewares = collect($this->getConfig('middleware'));
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $middlewares,
         ]);
 
@@ -283,12 +284,12 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app['router']->group($configGroup->toArray(), function (Router $route) {
             $route->get('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
+                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
 
             $route->post('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
+                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
         });
@@ -301,7 +302,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $domain = config('sleeping_owl.domain', false);
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
         ]);
 

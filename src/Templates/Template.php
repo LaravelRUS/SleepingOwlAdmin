@@ -125,7 +125,7 @@ abstract class Template implements TemplateInterface
             return $this->getTitle();
         }
 
-        return $title."{$separator}".$this->getTitle();
+        return strip_tags($title)."{$separator}".$this->getTitle();
     }
 
     /**
@@ -148,8 +148,8 @@ abstract class Template implements TemplateInterface
 
     /**
      * @param string|View $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      *
      * @return \Illuminate\Contracts\View\Factory|View
      */
@@ -168,10 +168,15 @@ abstract class Template implements TemplateInterface
      * @param string $key
      *
      * @return string
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
      */
     public function renderBreadcrumbs($key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
+            config()->set('breadcrumbs.view', $this->getViewPath('_partials.breadcrumbs'));
+
             return $this->breadcrumbs()->renderIfExists($key);
         }
     }

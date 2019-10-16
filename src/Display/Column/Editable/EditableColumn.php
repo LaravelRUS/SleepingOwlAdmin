@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Http\Request;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class EditableColumn extends NamedColumn
@@ -23,6 +22,11 @@ class EditableColumn extends NamedColumn
     protected $editableMode = 'popup';
 
     /**
+     * @var mixed
+     */
+    protected $modifier = null;
+
+    /**
      * Text constructor.
      *
      * @param             $name
@@ -37,6 +41,41 @@ class EditableColumn extends NamedColumn
         $this->setHtmlAttributes([
             'class' => 'inline-editable',
         ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModifier()
+    {
+        return $this->modifier;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModifierValue()
+    {
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
+        }
+
+        if (is_null($this->modifier)) {
+            return $this->getModelValue();
+        }
+
+        return $this->modifier;
+    }
+
+    /**
+     * @param mixed $text
+     * @return $this
+     */
+    public function setModifier($modifier)
+    {
+        $this->modifier = $modifier;
+
+        return $this;
     }
 
     /**
@@ -113,12 +152,13 @@ class EditableColumn extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getModelValue(),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
-                'title'          => $this->getTitle(),
-                'mode'           => $this->getEditableMode(),
+                'id' => $this->getModel()->getKey(),
+                'value' => $this->getModelValue(),
+                'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+                'url' => $this->getUrl(),
+                'title' => $this->getTitle(),
+                'mode' => $this->getEditableMode(),
+                'text' => $this->getModifierValue(),
             ];
     }
 }

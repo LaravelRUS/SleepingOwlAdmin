@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsyncAlterPaginate;
 
 /**
  * @method DisplayDatatablesAsync datatables()
@@ -41,6 +42,7 @@ class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
             'table' => DisplayTable::class,
             'tree' => DisplayTree::class,
             'page' => Page::class,
+            'datatablesAsyncAlterPaginate' => DisplayDatatablesAsyncAlterPaginate::class,
         ]);
     }
 }

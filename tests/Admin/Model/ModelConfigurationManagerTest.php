@@ -72,7 +72,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.model.create', ['title' => $model->getTitle()], null)
             ->andReturn('string');
@@ -88,7 +88,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.model.edit', ['title' => $model->getTitle()], null)
             ->andReturn('string');
@@ -145,43 +145,9 @@ class ModelConfigurationManagerTest extends TestCase
         $this->assertFalse($return);
     }
 
-    public function test_registering_events()
-    {
-        $model = $this->getConfiguration();
-        $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
-
-        $events = ['creating', 'created', 'updating', 'updated', 'deleting', 'deleted', 'restoring', 'restored'];
-        $event->shouldReceive('listen')->times(count($events));
-
-        foreach ($events as $event) {
-            $model->{$event}('test');
-        }
-    }
-
-    /**
-     * @covers SleepingOwl\Admin\Model\ModelConfigurationManager::__call
-     */
-    public function test_registering_event()
-    {
-        $model = $this->getConfiguration();
-        $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
-
-        $callback = 'callback';
-
-        $event->shouldReceive('listen')->once()->withArgs([
-            'sleeping_owl.section.creating: ModelConfigurationManagerTestModel',
-            $callback,
-            140,
-        ]);
-
-        $model->creating($callback, 140);
-    }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function test_registering_wrong_event()
     {
+        $this->expectException(BadMethodCallException::class);
         $model = $this->getConfiguration();
         $model->setEventDispatcher($event = m::mock(\Illuminate\Contracts\Events\Dispatcher::class));
 
@@ -264,13 +230,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model',
-            [$model->getAlias(), 'test'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model', [$model->getAlias(), 'test'], true);
 
-        $this->assertEquals('http://site.com', $model->getDisplayUrl(['test']));
+        $this->assertEquals($val, $model->getDisplayUrl(['test']));
     }
 
     /**
@@ -280,13 +242,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.create',
-            [$model->getAlias(), 'test'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.create', [$model->getAlias(), 'test'], true);
 
-        $this->assertEquals('http://site.com', $model->getCreateUrl(['test']));
+        $this->assertEquals($val, $model->getCreateUrl(['test']));
     }
 
     /**
@@ -296,13 +254,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.store',
-            [$model->getAlias(), 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.store', [$model->getAlias(), 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getStoreUrl(['locale' => 'en']));
+        $this->assertEquals($val, $model->getStoreUrl(['locale' => 'en']));
     }
 
     /**
@@ -312,13 +266,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.edit',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.edit', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getEditUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getEditUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -328,13 +278,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.update',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.update', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getUpdateUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getUpdateUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -344,13 +290,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.delete',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.delete', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getDeleteUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getDeleteUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -360,13 +302,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.destroy',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.destroy', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getDestroyUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getDestroyUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -376,13 +314,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $this->getRouterMock()->shouldReceive('route')->once()->withArgs([
-            'admin.model.restore',
-            [$model->getAlias(), 1, 'locale' => 'en'],
-            true,
-        ])->andReturn('http://site.com');
+        $val = $this->app['url']->route('admin.model.restore', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals('http://site.com', $model->getRestoreUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getRestoreUrl(1, ['locale' => 'en']));
     }
 
     /**
@@ -393,7 +327,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.created', null, null)
             ->andReturn('string');
@@ -409,7 +343,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.updated', null, null)
             ->andReturn('string');
@@ -425,7 +359,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.deleted', null, null)
             ->andReturn('string');
@@ -441,7 +375,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.restored', null, null)
             ->andReturn('string');
@@ -457,7 +391,7 @@ class ModelConfigurationManagerTest extends TestCase
         $model = $this->getConfiguration();
 
         $this->getTranslatorMock()
-            ->shouldReceive('trans')
+            ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
             ->once()
             ->with('sleeping_owl::lang.message.destroyed', null, null)
             ->andReturn('string');

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 
@@ -64,19 +65,19 @@ trait SqlQueryOperators
     }
 
     /**
-     * @param Builder      $query
-     * @param string       $column
+     * @param Builder $query
+     * @param string $column
      * @param string|array $value
      */
     protected function buildQuery(Builder $query, $column, $value)
     {
         $params = $this->getOperatorParams();
         $method = $params['method'];
-        $value = array_get($params, 'value', $value);
+        $value = Arr::get($params, 'value', $value);
 
         switch ($method) {
             case 'where':
-                $value = str_replace('?', $value, array_get($params, 'mod', '?'));
+                $value = str_replace('?', $value, Arr::get($params, 'mod', '?'));
                 $query->{$method}($column, $params['op'], $value);
                 break;
             case 'whereNull':
@@ -90,7 +91,7 @@ trait SqlQueryOperators
             case 'whereIn':
             case 'whereNotIn':
 
-            $query->{$method}($column, (array) $value);
+                $query->{$method}($column, (array) $value);
                 break;
         }
     }
@@ -100,7 +101,7 @@ trait SqlQueryOperators
      */
     protected function getOperatorParams()
     {
-        return array_get($this->sqlOperators, $this->getOperator(), ['method' => 'where', 'op' => '=']);
+        return Arr::get($this->sqlOperators, $this->getOperator(), ['method' => 'where', 'op' => '=']);
     }
 
     /**

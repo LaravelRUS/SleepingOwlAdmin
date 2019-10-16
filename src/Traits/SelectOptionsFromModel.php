@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
@@ -99,7 +100,7 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param string $display
+     * @param string|\Closure $display
      *
      * @return $this
      */
@@ -261,13 +262,13 @@ trait SelectOptionsFromModel
             }, $options);
 
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, 1, 0);
+            $options = Arr::pluck($options, 1, 0);
         } elseif ($options instanceof Collection) {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options->all(), $this->getDisplay(), $key);
+            $options = Arr::pluck($options->all(), $this->getDisplay(), $key);
         } else {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, $this->getDisplay(), $key);
+            $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
 
         return $options;

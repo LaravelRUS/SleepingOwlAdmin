@@ -43,8 +43,8 @@ interface TemplateInterface extends Initializable, Arrayable
 
     /**
      * @param string|\Illuminate\View\View $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      *
      * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -58,7 +58,7 @@ interface TemplateInterface extends Initializable, Arrayable
     public function renderBreadcrumbs($key);
 
     /**
-     * @return \DaveJamesMiller\Breadcrumbs\Manager
+     * @return \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
      */
     public function breadcrumbs();
 

@@ -10,6 +10,7 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "dependencies": {
+    "@flowjs/flow.js": "^2.13.2",
     "admin-lte": "^2.4.3",
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
@@ -17,6 +18,7 @@
     "datatables.net": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
     "datatables.net-responsive": "^2.2.1",
+    "dependent-dropdown": "^1.4.9",
     "dropzone": "5.5.1",
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "font-awesome": "^4.6.3",
@@ -31,7 +33,7 @@
     "nestable": "^0.2.0",
     "noty": "^3.2.0-beta",
     "select2": "^4.0.3",
-    "sortablejs": "1.7.0",
+    "sortablejs": "^1.7.0",
     "style-loader": "^0.21.0",
     "sweetalert2": "^7.*.*",
     "vue": "^2.5.13",

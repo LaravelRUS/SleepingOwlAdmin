@@ -26,7 +26,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * Checkbox constructor.
      *
-     * @param string      $name
+     * @param string $name
      * @param string|null $checkedLabel
      * @param string|null $uncheckedLabel
      * @param string|null $columnLabel
@@ -37,6 +37,19 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
+    }
+
+    public function getModifierValue()
+    {
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
+        }
+
+        if (is_null($this->modifier)) {
+            return $this->getModelValue() ? $this->getCheckedLabel() : $this->getUncheckedLabel();
+        }
+
+        return $this->modifier;
     }
 
     /**
@@ -92,10 +105,11 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-        return parent::toArray() + [
-                'checkedLabel'   => $this->getCheckedLabel(),
-                'uncheckedLabel' => $this->getUncheckedLabel(),
-            ];
+        return array_merge(parent::toArray(), [
+            'checkedLabel' => $this->getCheckedLabel(),
+            'uncheckedLabel' => $this->getUncheckedLabel(),
+            'text' => $this->getModifierValue(),
+        ]);
     }
 
     /**

@@ -1,5 +1,5 @@
 Admin.Modules.register('display.datatables', () => {
-   localStorage.clear();
+    localStorage.clear();
 
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
@@ -41,11 +41,11 @@ Admin.Modules.register('display.datatables', () => {
             //<"H"lfr>t<"F"ip>
             params.sDom = '<"H"';
 
-            if(dtlength){
+            if (dtlength) {
                 params.sDom += 'l';
             }
 
-            if(search){
+            if (search) {
                 params.sDom += 'f';
             }
 
@@ -55,7 +55,7 @@ Admin.Modules.register('display.datatables', () => {
 
             params.ajax = {
                 url: url,
-                data (d) {
+                data(d) {
                     Admin.Events.fire('datatables::ajax::data', d)
 
                     iterateColumnFilters(id, function ($element, index, type) {
@@ -72,6 +72,13 @@ Admin.Modules.register('display.datatables', () => {
             Admin.Events.fire('datatables::draw', this)
         }
 
+        params.createdRow = function (row, data, dataIndex) {
+            let row_class = data[params.columns.length];
+            if (row_class) {
+                $(row).addClass(row_class);
+            }
+        }
+
         let table = $this.DataTable(params);
 
         iterateColumnFilters(id, function ($element, index, type) {
@@ -80,11 +87,12 @@ Admin.Modules.register('display.datatables', () => {
             }
         });
 
-        $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
+        $("[data-datatables-id=" + $this.data("id") + "] #filters-exec").on('click', function () {
             table.draw();
         });
 
-        $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
+        $("[data-datatables-id=" + $this.data("id") + "] #filters-cancel").on('click', function () {
+
             let input = $(".display-filters td[data-index] input").val(null);
             input.trigger('change');
 
@@ -93,150 +101,150 @@ Admin.Modules.register('display.datatables', () => {
             selector.trigger('change');
 
             table.draw();
-        });
 
-        $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e){
-            if(e.keyCode === 13){
-                table.draw();
-            }
-        });
-    })
-})
-
-window.checkNumberRange = (fromValue, toValue, value) => {
-    if(_.isNaN(fromValue) && _.isNaN(toValue)) {
-        return true;
-    }
-
-    if(_.isNaN(value)) {
-        return false;
-    }
-
-    if(_.isNaN(fromValue) && value <= toValue) {
-        return true;
-    }
-
-    if( _.isNaN(toValue) && value >= fromValue) {
-        return true;
-    }
-
-    return value >= fromValue && value <= toValue;
-}
-
-window.checkDateRange = (fromValue, toValue, value) => {
-    if(!_.isObject(fromValue) && !_.isObject(toValue)) {
-        return true;
-    }
-
-    if (!value.isValid()) {
-        return false;
-    }
-
-    if (!_.isObject(fromValue) && value.isSameOrBefore(toValue)) {
-        return true;
-    }
-
-    if(!_.isObject(toValue) && value.isSameOrAfter(fromValue)) {
-        return true;
-    }
-
-    return value.isBetween(fromValue, toValue)
-}
-
-window.columnFilters = {
-    daterange (dateField, table, column, index, serverSide) {
-        let $dateField = $(dateField);
-
-        $dateField.on('apply.daterangepicker', function(e, date) {
-            column.search($dateField.val());
-        })
-    },
-    range (container, table, column, index, serverSide) {
-        let $container = $(container),
-            from = $('input:first', $container),
-            to = $('input:last', $container),
-            isDateRange = false;
-
-        from.data('ajax-data-name', 'from');
-        to.data('ajax-data-name', 'to');
-
-        from
-            .add(to)
-            .on('keyup change', function () {
-                if (serverSide) {
-                    column.search(from.val() + '::' + to.val())
-                } else {
+            $("[data-datatables-id=" + $this.data("id") + "].display-filters td[data-index] input").on('keyup', function (e) {
+                if (e.keyCode === 13) {
                     table.draw();
                 }
             });
+        })
+    })
 
-        if (from.closest('.input-date').length > 0 && to.closest('.input-date').length > 0) {
-            from.closest('.input-date')
-                .add(to.closest('.input-date'))
-                .on('dp.change', function () {
+    window.checkNumberRange = (fromValue, toValue, value) => {
+        if (_.isNaN(fromValue) && _.isNaN(toValue)) {
+            return true;
+        }
+
+        if (_.isNaN(value)) {
+            return false;
+        }
+
+        if (_.isNaN(fromValue) && value <= toValue) {
+            return true;
+        }
+
+        if (_.isNaN(toValue) && value >= fromValue) {
+            return true;
+        }
+
+        return value >= fromValue && value <= toValue;
+    }
+
+    window.checkDateRange = (fromValue, toValue, value) => {
+        if (!_.isObject(fromValue) && !_.isObject(toValue)) {
+            return true;
+        }
+
+        if (!value.isValid()) {
+            return false;
+        }
+
+        if (!_.isObject(fromValue) && value.isSameOrBefore(toValue)) {
+            return true;
+        }
+
+        if (!_.isObject(toValue) && value.isSameOrAfter(fromValue)) {
+            return true;
+        }
+
+        return value.isBetween(fromValue, toValue)
+    }
+
+    window.columnFilters = {
+        daterange(dateField, table, column, index, serverSide) {
+            let $dateField = $(dateField);
+
+            $dateField.on('apply.daterangepicker', function (e, date) {
+                column.search($dateField.val());
+            })
+        },
+        range(container, table, column, index, serverSide) {
+            let $container = $(container),
+                from = $('input:first', $container),
+                to = $('input:last', $container),
+                isDateRange = false;
+
+            from.data('ajax-data-name', 'from');
+            to.data('ajax-data-name', 'to');
+
+            from
+                .add(to)
+                .on('keyup change', function () {
                     if (serverSide) {
                         column.search(from.val() + '::' + to.val())
+                    } else {
+                        table.draw();
                     }
                 });
 
-            isDateRange = true;
-        }
+            if (from.closest('.input-date').length > 0 && to.closest('.input-date').length > 0) {
+                from.closest('.input-date')
+                    .add(to.closest('.input-date'))
+                    .on('dp.change', function () {
+                        if (serverSide) {
+                            column.search(from.val() + '::' + to.val())
+                        }
+                    });
 
-        if (serverSide) {
-            return;
-        }
-
-        $.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
-            if (table.settings()[0].sTableId != settings.sTableId) {
-                return true;
+                isDateRange = true;
             }
-
-            let value = data[index];
-
-            if (value && !_.isUndefined(value['@data-order'])) {
-                value = value['@data-order'];
-            }
-
-            if (isDateRange) {
-                return checkDateRange(
-                    from.val().length > 0 && from.closest('.input-date').data('DateTimePicker').date(),
-                    to.val().length > 0 && to.closest('.input-date').data('DateTimePicker').date(),
-                    moment(value, from.data('date-format'))
-                )
-            }
-
-            return checkNumberRange(
-                parseInt(from.val()),
-                parseInt(to.val()),
-                parseInt(value)
-            )
-        });
-    },
-    select (input, table, column, index, serverSide) {
-        let $input = $(input);
-
-        $input.on('change', () => {
-            let selected = [];
-            $input.find(':selected').each((i, e) => {
-                let $option = $(e);
-
-                if ($option.val().length) {
-                    selected.push($option.val());
-                }
-            })
 
             if (serverSide) {
-                column.search(selected.join(':::'))
-            } else {
-                column.search(selected.join('|'), true, false, true)
+                return;
             }
-        });
-    },
-    text (input, table, column, index, serverSide) {
-        let $input = $(input)
 
-        $input.on('keyup change', () => {
-            column.search($input.val());
-        })
+            $.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
+                if (table.settings()[0].sTableId != settings.sTableId) {
+                    return true;
+                }
+
+                let value = data[index];
+
+                if (value && !_.isUndefined(value['@data-order'])) {
+                    value = value['@data-order'];
+                }
+
+                if (isDateRange) {
+                    return checkDateRange(
+                        from.val().length > 0 && from.closest('.input-date').data('DateTimePicker').date(),
+                        to.val().length > 0 && to.closest('.input-date').data('DateTimePicker').date(),
+                        moment(value, from.data('date-format'))
+                    )
+                }
+
+                return checkNumberRange(
+                    parseInt(from.val()),
+                    parseInt(to.val()),
+                    parseInt(value)
+                )
+            });
+        },
+        select(input, table, column, index, serverSide) {
+            let $input = $(input);
+
+            $input.on('change', () => {
+                let selected = [];
+                $input.find(':selected').each((i, e) => {
+                    let $option = $(e);
+
+                    if ($option.val().length) {
+                        selected.push($option.val());
+                    }
+                })
+
+                if (serverSide) {
+                    column.search(selected.join(':::'))
+                } else {
+                    column.search(selected.join('|'), true, false, true)
+                }
+            });
+        },
+        text(input, table, column, index, serverSide) {
+            let $input = $(input)
+
+            $input.on('keyup change', () => {
+                column.search($input.val());
+            })
+        }
     }
-}
+})

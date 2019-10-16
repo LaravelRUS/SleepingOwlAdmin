@@ -2,11 +2,28 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use AdminSection;
+use Illuminate\Support\Arr;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DependentSelect extends Select implements WithRoutesInterface
 {
+    /**
+     * @var mixed
+     */
+    protected $defaultValue = 0;
+
+    /**
+     * @var string|null
+     */
+    protected $language;
+
+    /**
+     * @var bool
+     */
+    protected $initializable = true;
+
     /**
      * @param Router $router
      */
@@ -47,12 +64,52 @@ class DependentSelect extends Select implements WithRoutesInterface
      * @param $path
      * @param null $label
      * @param array $depends
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null, array $depends = [])
     {
         parent::__construct($path, $label, []);
 
+        $this->setLanguage(config('app.locale'));
         $this->setDataDepends($depends);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param $language
+     * @return $this
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInitializable()
+    {
+        return $this->initializable;
+    }
+
+    /**
+     * @param bool $initializable
+     */
+    public function setInitializable($initializable)
+    {
+        $this->initializable = $initializable;
+
+        return $this;
     }
 
     /**
@@ -62,7 +119,7 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     public function hasDependKey($key)
     {
-        return array_has($this->params, $key);
+        return Arr::has($this->params, $key);
     }
 
     /**
@@ -72,7 +129,7 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     public function getDependValue($key)
     {
-        return array_get($this->params, $key, $this->getModel()->getAttribute($key));
+        return Arr::get($this->params, $key, $this->getModel()->getAttribute($key));
     }
 
     /**
@@ -81,7 +138,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function getDataUrl()
     {
         return $this->dataUrl ?: route('admin.form.element.dependent-select', [
-            'adminModel' => \AdminSection::getModel($this->model)->getAlias(),
+            'adminModel' => AdminSection::getModel($this->model)->getAlias(),
             'field' => $this->getName(),
             'id' => $this->model->getKey(),
         ]);
@@ -137,11 +194,12 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id' => $this->getName(),
-            'size' => 2,
+            'id' => $this->getId(),
             'data-select-type' => 'single',
             'data-url' => $this->getDataUrl(),
             'data-depends' => $this->getDataDepends(),
+            'data-language' => $this->getLanguage(),
+            'data-initialize' => $this->isInitializable() ? 'true' : 'false',
             'class' => 'form-control input-select input-select-dependent',
         ]);
 
@@ -150,7 +208,7 @@ class DependentSelect extends Select implements WithRoutesInterface
         }
 
         return [
-            'id' => $this->getName(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),

@@ -48,7 +48,7 @@ trait ManipulatesRequestRelations
      *
      * @param \Illuminate\Http\Request $request
      */
-    protected function makeCopyOfRelations(\Illuminate\Http\Request $request)
+    protected function makeCopyOfRelations(Request $request)
     {
         $newData = [];
         $data = $request->input($this->relationName, []);

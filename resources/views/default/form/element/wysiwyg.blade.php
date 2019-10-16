@@ -6,7 +6,7 @@
 
 <div class="form-group form-element-wysiwyg {{ $errors->has($name) ? 'has-error' : '' }}">
     <label for="{{ $name }}" class="control-label">
-        {{ $label }}
+        {!! $label !!}
 
         @if($required)
             <span class="form-element-required">*</span>

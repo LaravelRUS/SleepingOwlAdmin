@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -54,9 +55,11 @@ class AdminController extends Controller
     /**
      * AdminController constructor.
      *
-     * @param Request $request
+     * @param Request        $request
      * @param AdminInterface $admin
-     * @param Application $application
+     * @param Application    $application
+     *
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function __construct(Request $request, AdminInterface $admin, Application $application)
     {
@@ -81,9 +84,9 @@ class AdminController extends Controller
         if ($currentPage = $admin->navigation()->getCurrentPage()) {
             foreach ($currentPage->getPathArray() as $page) {
                 $this->breadCrumbsData[] = [
-                    'id'     => $page['id'],
-                    'title'  => $page['title'],
-                    'url'    => $page['url'],
+                    'id' => $page['id'],
+                    'title' => $page['title'],
+                    'url' => $page['url'],
                     'parent' => $this->parentBreadcrumb,
                 ];
 
@@ -142,8 +145,8 @@ class AdminController extends Controller
 
         $envContent = $envContent->map(function ($value, $key) {
             return (object) [
-                'value'     => $value,
-                'editable'  => $this->validatePolicy('edit', $key),
+                'value' => $value,
+                'editable' => $this->validatePolicy('edit', $key),
                 'deletable' => $this->validatePolicy('delete', $key),
             ];
         });
@@ -279,7 +282,7 @@ class AdminController extends Controller
     /**
      * @param ModelConfigurationInterface $model
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
@@ -297,7 +300,7 @@ class AdminController extends Controller
     /**
      * @param ModelConfigurationInterface $model
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getCreate(ModelConfigurationInterface $model)
     {
@@ -307,8 +310,8 @@ class AdminController extends Controller
 
         $create = $model->fireCreate();
 
-        $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
         $this->registerBreadcrumbs($model);
+        $this->registerBreadcrumb($model->getCreateTitle(), $this->parentBreadcrumb);
 
         return $this->render($model, $create, $model->getCreateTitle());
     }
@@ -336,7 +339,7 @@ class AdminController extends Controller
 
                 if ($createForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
@@ -345,7 +348,7 @@ class AdminController extends Controller
                     ->withErrors($exception->validator)
                     ->withInput()
                     ->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
@@ -366,7 +369,7 @@ class AdminController extends Controller
             $response = redirect()->to(
                 $redirectUrl
             )->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } elseif ($nextAction == 'save_and_create') {
@@ -376,7 +379,7 @@ class AdminController extends Controller
                 'url',
                 'next_action',
             ])))->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
@@ -390,7 +393,7 @@ class AdminController extends Controller
      * @param ModelConfigurationInterface $model
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getEdit(ModelConfigurationInterface $model, $id)
     {
@@ -400,11 +403,14 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
+        if (method_exists($model, 'setModelValue')) {
+            $model->setModelValue($item);
+        }
 
         $edit = $model->fireEdit($id);
 
         $this->registerBreadcrumbs($model);
+        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
 
         return $this->render($model, $edit, $model->getEditTitle());
     }
@@ -438,7 +444,7 @@ class AdminController extends Controller
 
                 if ($editForm->saveForm($request, $model) === false) {
                     return redirect()->back()->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
                 }
@@ -447,7 +453,7 @@ class AdminController extends Controller
                     ->withErrors($exception->validator)
                     ->withInput()
                     ->with([
-                        '_redirectBack'       => $backUrl,
+                        '_redirectBack' => $backUrl,
                         'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                     ]);
             }
@@ -457,7 +463,7 @@ class AdminController extends Controller
 
         if ($nextAction == 'save_and_continue') {
             $response = redirect()->back()->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
 
@@ -465,7 +471,7 @@ class AdminController extends Controller
                 $response = redirect()->to(
                     $model->getDisplayUrl()
                 )->with([
-                    '_redirectBack'       => $backUrl,
+                    '_redirectBack' => $backUrl,
                     'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
                 ]);
             }
@@ -476,7 +482,7 @@ class AdminController extends Controller
                 'url',
                 'next_action',
             ])))->with([
-                '_redirectBack'       => $backUrl,
+                '_redirectBack' => $backUrl,
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
@@ -732,25 +738,28 @@ class AdminController extends Controller
     /**
      * @param $title
      * @param $parent
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @param $name
+     * @param $url
+     *
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
-    protected function registerBreadcrumb($title, $parent)
+    protected function registerBreadcrumb($title, $parent, $name = 'render', $url = null)
     {
-        $this->breadcrumbs->register('render', function (BreadcrumbsGenerator $breadcrumbs) use ($title, $parent) {
+        $this->breadcrumbs->register($name, function (BreadcrumbsGenerator $breadcrumbs) use ($title, $parent, $url) {
             $breadcrumbs->parent($parent);
-            $breadcrumbs->push($title);
+            $breadcrumbs->push($title, $url);
         });
 
-        $this->parentBreadcrumb = 'render';
+        $this->parentBreadcrumb = $name;
     }
 
     /**
      * @param ModelConfigurationInterface $model
-     * @throws \DaveJamesMiller\Breadcrumbs\Exception
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
-        $this->breadCrumbsData = $this->breadCrumbsData + (array) $model->getBreadCrumbs();
+        $this->breadCrumbsData = array_merge($this->breadCrumbsData, $model->getBreadCrumbs());
 
         foreach ($this->breadCrumbsData as $breadcrumb) {
             if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
@@ -760,5 +769,7 @@ class AdminController extends Controller
                 });
             }
         }
+
+        $this->parentBreadcrumb = data_get(Arr::last($this->breadCrumbsData), 'id', 'render');
     }
 }

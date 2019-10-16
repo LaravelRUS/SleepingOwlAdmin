@@ -10,7 +10,7 @@ class Password extends NamedFormElement
 
         $this->setHtmlAttributes([
             'class' => 'form-control',
-            'type'  => 'password',
+            'type' => 'password',
         ]);
     }
 

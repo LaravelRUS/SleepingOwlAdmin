@@ -5,30 +5,18 @@ use SleepingOwl\Admin\Form\FormElement;
 
 class FormElementTest extends TestCase
 {
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
 
     /**
-     * @return FormElement|PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getElement()
     {
         return $this->getMockForAbstractClass(FormElement::class);
-    }
-
-    /**
-     * FormDefault::__construct
-     * FormDefault::getElements
-     * FormDefault::getButtons.
-     */
-    public function test_constructor()
-    {
-        PackageManager::shouldReceive('load')->once();
-        PackageManager::shouldReceive('add')->once();
-
-        $this->getElement();
     }
 
     /**

@@ -84,14 +84,14 @@ class Range extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-            'from' => $this->getFrom(),
-            'to'   => $this->getTo(),
-        ];
+                'from' => $this->getFrom(),
+                'to' => $this->getTo(),
+            ];
     }
 
     /**
      * @param mixed $range
-     * @return array|mixed|null
+     * @return array|mixed|null|void
      * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
     public function parseValue($range)
@@ -100,9 +100,8 @@ class Range extends BaseColumnFilter
             return;
         }
 
-        list($from, $to) = explode('::', $range, 2);
-        $from = $this->from->parseValue($from);
-        $to = $this->to->parseValue($to);
+        $from = $this->from->parseValue(explode('::', $range, 2)[0]);
+        $to = $this->to->parseValue(explode('::', $range, 2)[1]);
 
         if (! empty($from) && ! empty($to)) {
             $this->setOperator('between');

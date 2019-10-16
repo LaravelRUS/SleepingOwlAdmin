@@ -4,7 +4,7 @@ use Mockery as m;
 
 class ColumnCountTest extends TestCase
 {
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }

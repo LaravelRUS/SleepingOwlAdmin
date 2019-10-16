@@ -6,7 +6,7 @@ use SleepingOwl\Admin\Repositories\BaseRepository;
 
 class BaseRepositoryTest extends TestCase
 {
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -73,11 +73,9 @@ class BaseRepositoryTest extends TestCase
         $this->assertInstanceOf($class, $repository->getModel());
     }
 
-    /**
-     * @expectedException SleepingOwl\Admin\Exceptions\RepositoryException
-     */
     public function test_sets_class_exception()
     {
+        $this->expectException(SleepingOwl\Admin\Exceptions\RepositoryException::class);
         $repository = $this->getRepository();
         $repository->setClass('BaseRepositoryTestFakeModel');
     }

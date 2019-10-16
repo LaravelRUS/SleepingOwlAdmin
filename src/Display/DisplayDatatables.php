@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\Support\Str;
+
 class DisplayDatatables extends DisplayTable
 {
     const FILTER_POSITION_TOP = 0;
@@ -30,7 +32,7 @@ class DisplayDatatables extends DisplayTable
     {
         parent::initialize();
 
-        $id = str_random(10);
+        $id = Str::random(10);
 
         $this->setHtmlAttribute('class', 'datatables');
         $this->setHtmlAttribute('data-id', $id);
@@ -117,8 +119,8 @@ class DisplayDatatables extends DisplayTable
     }
 
     /**
-     * Get view render parameters.
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

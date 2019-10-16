@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Display\Column;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 
 /**
@@ -17,8 +18,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
  * @method Column\Image image($name, $label = null)
  * @method Column\Lists lists($name, $label = null)
  * @method Column\Order order()
- * @method Column\Text text($name, $label = null)
- * @method Column\Boolean text($name, $label = null)
+ * @method Column\Text|Column\Boolean text($name, $label = null)
  * @method Column\Link link($name, $label = null)
  * @method Column\RelatedLink relatedLink($name, $label = null)
  * @method Column\Email email($name, $label = null)
@@ -32,7 +32,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         parent::__construct($application);
 
@@ -45,6 +45,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
             'datetime' => Column\DateTime::class,
             'filter' => Column\Filter::class,
             'image' => Column\Image::class,
+            'gravatar' => Column\Gravatar::class,
             'lists' => Column\Lists::class,
             'order' => Column\Order::class,
             'text' => Column\Text::class,
