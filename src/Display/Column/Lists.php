@@ -20,8 +20,8 @@ class Lists extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'values' => $this->getModelValue(),
-            'append' => $this->getAppends(),
-        ];
+                'values' => $this->getModelValue(),
+                'append' => $this->getAppends(),
+            ];
     }
 }

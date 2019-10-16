@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DatePicker;
 
 class Date extends Text
@@ -132,10 +133,10 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-            'seconds'      => $this->hasSeconds(),
-            'pickerFormat' => $this->getJsPickerFormat(),
-            'width'        => $this->getWidth(),
-        ];
+                'seconds' => $this->hasSeconds(),
+                'pickerFormat' => $this->getJsPickerFormat(),
+                'width' => $this->getWidth(),
+            ];
     }
 
     /**
@@ -152,17 +153,17 @@ class Date extends Text
         try {
             $date = Carbon::parse($date);
         } catch (Exception $e) {
-            \Log::info('unable to parse date, re-trying with given format', [
+            Log::info('unable to parse date, re-trying with given format', [
                 'exception' => $e,
-                'date'      => $date,
+                'date' => $date,
             ]);
             try {
                 $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
             } catch (Exception $e) {
-                \Log::error('unable to parse date!', [
-                    'exception'     => $e,
-                    'pickerFormat'  => $this->getPickerFormat(),
-                    'date'          => $date,
+                Log::error('unable to parse date!', [
+                    'exception' => $e,
+                    'pickerFormat' => $this->getPickerFormat(),
+                    'date' => $date,
                 ]);
 
                 return;

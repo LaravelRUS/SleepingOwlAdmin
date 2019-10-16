@@ -15,7 +15,7 @@
 
 			<div class="content-header">
 				<h1>
-					{{{ $title }}}
+					{!! $title !!}
 				</h1>
 			</div>
 

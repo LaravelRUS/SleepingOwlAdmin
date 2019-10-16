@@ -9,7 +9,7 @@ class TableColumnTest extends TestCase
 {
     use \SleepingOwl\Tests\AssetsTesterTrait;
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -38,30 +38,6 @@ class TableColumnTest extends TestCase
 
         $column = $this->getColumn();
         $this->assertEquals($header, $column->getHeader());
-    }
-
-    /**
-     * @covers SleepingOwl\Admin\Display\TableColumn::__construct
-     * @covers SleepingOwl\Admin\Display\TableColumn::setLabel
-     */
-    public function test_constructor_with_label()
-    {
-        $this->app->instance(TableHeaderColumnInterface::class, $header = m::mock(TableHeaderColumnInterface::class));
-
-        $header->shouldReceive('setTitle')->once()->with('Title');
-        $this->getColumn('Title');
-    }
-
-    /**
-     * @covers SleepingOwl\Admin\Display\TableColumn::initialize
-     */
-    public function test_initialize()
-    {
-        $column = $this->getColumn();
-
-        $this->packageInitialized();
-
-        $column->initialize();
     }
 
     /**
@@ -187,20 +163,16 @@ class TableColumnTest extends TestCase
         $this->assertTrue($column->isOrderable());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function test_setOrderable_true()
     {
+        $this->expectException(InvalidArgumentException::class);
         $column = $this->getColumn();
         $column->setOrderable(true);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function test_setOrderable_wrong_class()
     {
+        $this->expectException(InvalidArgumentException::class);
         $column = $this->getColumn();
         $column->setOrderable(new TableColumnTestModel());
     }

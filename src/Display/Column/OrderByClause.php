@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use DB;
 use Illuminate\Support\Str;
 use Mockery\Matcher\Closure;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -210,18 +210,21 @@ class OrderByClause implements OrderByClauseInterface
      * @param Model $relationModel
      * @param Model $model
      * @param Builder $query
-     * @param $direction
      */
     protected function loadBelongsTo(
         Collection $relations,
         BelongsTo $relationClass,
         Model $relationModel,
         Model $model,
-        Builder $query,
-        $direction
+        Builder $query
     ) {
-        $foreignKey = $relationClass->getOwnerKeyName();
-        $ownerKey = $relationClass->getForeignKeyName();
+        if (version_compare(app()->version(), '5.8.0', 'gt')) {
+            $foreignKey = $relationClass->getOwnerKeyName();
+            $ownerKey = $relationClass->getForeignKeyName();
+        } else {
+            $foreignKey = $relationClass->getOwnerKey();
+            $ownerKey = $relationClass->getForeignKey();
+        }
 
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();

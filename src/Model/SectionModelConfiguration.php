@@ -12,6 +12,11 @@ class SectionModelConfiguration extends ModelConfigurationManager
 {
     protected $breadcrumbs = null;
 
+    /**
+     * @var mixed
+     */
+    protected $payload = [];
+
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
         parent::__construct($app, $class);
@@ -69,6 +74,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
+        $this->setPayload($payload);
+
         $display = $this->app->call([$this, 'onDisplay'], ['payload' => $payload]);
 
         if ($display instanceof DisplayDatatablesAsync) {
@@ -93,6 +100,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
             return;
         }
 
+        $this->setPayload($payload);
+
         $form = $this->app->call([$this, 'onCreate'], ['payload' => $payload]);
 
         if ($form instanceof DisplayInterface) {
@@ -111,7 +120,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param int   $id
+     * @param int $id
      * @param mixed $payload
      *
      * @return mixed|void
@@ -121,6 +130,19 @@ class SectionModelConfiguration extends ModelConfigurationManager
         if (! method_exists($this, 'onEdit')) {
             return;
         }
+
+        $model = $this;
+        if (method_exists($model, 'getModelValue')) {
+            $item = $model->getModelValue();
+            if (! $item) {
+                $item = $model->getRepository()->find($id);
+                if (method_exists($model, 'setModelValue') && $item) {
+                    $model->setModelValue($item);
+                }
+            }
+        }
+
+        $this->setPayload($payload);
 
         $payload = array_merge(['id' => $id], ['payload' => $payload]);
 
@@ -176,5 +198,25 @@ class SectionModelConfiguration extends ModelConfigurationManager
         if (method_exists($this, 'onRestore')) {
             return $this->app->call([$this, 'onRestore'], ['id' => $id]);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @param mixed $payload
+     *
+     * @return $this
+     */
+    public function setPayload($payload = [])
+    {
+        $this->payload = $payload;
+
+        return $this;
     }
 }

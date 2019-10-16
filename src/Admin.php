@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;
+use Collective\Html\HtmlServiceProvider;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Model\ModelCollection;
 use Illuminate\Foundation\ProviderRepository;
@@ -22,6 +23,10 @@ use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
+/**
+ * Class Admin.
+ * @property-read \Illuminate\Foundation\Application $app
+ */
 class Admin implements AdminInterface
 {
     use ProvidesScriptVariables;
@@ -229,7 +234,7 @@ class Admin implements AdminInterface
 
     /**
      * @param string|Renderable $content
-     * @param string|null       $title
+     * @param string|null $title
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
@@ -247,7 +252,7 @@ class Admin implements AdminInterface
     {
         $providers = [
             AliasesServiceProvider::class,
-            \Collective\Html\HtmlServiceProvider::class,
+            HtmlServiceProvider::class,
             BreadcrumbsServiceProvider::class,
             AdminServiceProvider::class,
         ];
@@ -280,8 +285,8 @@ class Admin implements AdminInterface
             'sleeping_owl.meta' => ['assets.meta', 'SleepingOwl\Admin\Contracts\Template\MetaInterface', 'SleepingOwl\Admin\Templates\Meta'],
         ];
 
-        foreach ($aliases as $key => $aliases) {
-            foreach ($aliases as $alias) {
+        foreach ($aliases as $key => $aliasesItem) {
+            foreach ($aliasesItem as $alias) {
                 $this->app->alias($key, $alias);
             }
         }

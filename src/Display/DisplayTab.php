@@ -62,6 +62,11 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $badge;
 
     /**
+     * @var bool
+     */
+    protected $external_form = false;
+
+    /**
      * @var string
      */
     protected $view = 'display.tab';
@@ -164,6 +169,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @return $this
+     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function addTabElement()
     {
@@ -313,6 +320,26 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setExternalForm($bool)
+    {
+        $this->external_form = $bool;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getExternalForm()
+    {
+        return $this->external_form;
     }
 
     /**
@@ -518,15 +545,16 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @return array
+     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
      */
     public function toArray()
     {
         return [
-            'label'  => $this->getLabel(),
+            'label' => $this->getLabel(),
             'active' => $this->isActive(),
-            'name'   => $this->getName(),
-            'icon'   => $this->getIcon(),
-            'badge'  => $this->getBadge(),
+            'name' => $this->getName(),
+            'icon' => $this->getIcon(),
+            'badge' => $this->getBadge(),
             'arrayAttributes' => $this->getHtmlAttributes(),
             'attributes' => $this->htmlAttributesToString(),
         ];

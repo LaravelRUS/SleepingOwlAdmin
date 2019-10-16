@@ -2,18 +2,19 @@
 
 namespace DummyNamespace;
 
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 /**
  * Class DummyClass
  *
  * @property DummyModel $model
  *
- * @see http://sleepingowladmin.ru/docs/model_configuration_section
+ * @see https://sleepingowladmin.ru/#/ru/model_configuration_section
  */
-class DummyClass extends Section
+class DummyClass extends Section implements Initializable
 {
     /**
      * @see http://sleepingowladmin.ru/docs/model_configuration#ограничение-прав-доступа
@@ -33,44 +34,57 @@ class DummyClass extends Section
     protected $alias;
 
     /**
-     * @return DisplayInterface
+     * Initialize class.
      */
-    public function onDisplay()
+    public function initialize()
     {
-        // remove if unused
+        $this->addToNavigation()->setPriority(100)->setIcon('fa fa-lightbulb-o');
     }
 
     /**
-     * @param int $id
+     * @param array $payload
+     *
+     * @return DisplayInterface
+     */
+    public function onDisplay($payload = [])
+    {
+        return AdminDisplay::datatablesAsync()
+            ->setHtmlAttribute('class', 'table-primary')
+            ->setColumns(
+                AdminColumn::text('id', '#')->setWidth('30px'),
+                AdminColumn::text('name', 'Name')
+            )
+            ->setOrder([1, 'ASC'])
+            ->paginate(20)
+        ;
+    }
+
+    /**
+     * @param int|null $id
+     * @param array $payload
      *
      * @return FormInterface
      */
-    public function onEdit($id)
+    public function onEdit($id = null, $payload = [])
     {
-        // remove if unused
+        return AdminForm::panel()->addBody([
+            AdminFormElement::text('name', 'Name')->required(),
+        ]);
     }
 
     /**
      * @return FormInterface
      */
-    public function onCreate()
+    public function onCreate($payload = [])
     {
-        return $this->onEdit(null);
+        return $this->onEdit(null, $payload);
     }
 
     /**
-     * @return void
+     * @return bool
      */
-    public function onDelete($id)
+    public function isDeletable(Model $model)
     {
-        // remove if unused
-    }
-
-    /**
-     * @return void
-     */
-    public function onRestore($id)
-    {
-        // remove if unused
+        return true;
     }
 }

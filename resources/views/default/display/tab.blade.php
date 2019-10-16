@@ -4,7 +4,7 @@
             {!! $icon !!}
         @endif
 
-        {{ $label }}
+        {!! $label !!}
         @if($badge)
             {!! $badge->render() !!}
         @endif

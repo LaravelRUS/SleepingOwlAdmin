@@ -1,8 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Aios.
- */
+
 namespace SleepingOwl\Admin\Traits;
 
 trait DateFormat

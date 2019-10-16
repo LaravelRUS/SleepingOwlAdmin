@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Form\Element\NamedFormElement;
 
 class NamedFormElementTest extends TestCase
 {
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -45,10 +45,10 @@ class NamedFormElementTest extends TestCase
 
     /**
      * @covers SleepingOwl\Admin\Form\Element\NamedFormElement::__construct
-     * @expectedException  \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function test_constructor_exception()
     {
+        $this->expectException(\SleepingOwl\Admin\Exceptions\Form\FormElementException::class);
         $this->getElement(null);
     }
 
@@ -304,41 +304,16 @@ class NamedFormElementTest extends TestCase
             'value'      => null,
             'readonly'   => false,
             'model'      => null,
-            'id'         => 'key2[subkey]',
+            'id'         => 'key2__subkey',
             'name'       => 'key2[subkey]',
             'path'       => 'key2.subkey',
             'label'      => 'Label',
             'helpText'   => null,
             'required'   => false,
-            'attributes' => ' id="key2[subkey]" name="key2[subkey]"',
+            'attributes' => ' id="key2__subkey" name="key2[subkey]"',
+            'class'      => null,
+            'style'      => null,
         ], $element->toArray());
-    }
-
-    public function test_save()
-    {
-        $request = $this->app['request'];
-
-        $session = $request->getSession();
-        $session->shouldReceive('getOldInput')->andReturn(null);
-
-        $request->offsetSet($key = 'key', $value = 'hello world');
-        $element = $this->getElement($key, 'Label');
-
-        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('setAttribute')->with('key', $value);
-
-        $element->save($request);
-    }
-
-    public function test_sets_model_attribute()
-    {
-        $element = $this->getElement('key', 'Label');
-        $value = 'value';
-
-        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('setAttribute')->with('key', $value);
-
-        $element->setModelAttribute($value);
     }
 
     /**
@@ -408,11 +383,9 @@ class NamedFormElementTest extends TestCase
         $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
     }
 
-    /**
-     * @expectedException LogicException
-     */
     public function test_get_model_by_path_exception()
     {
+        $this->expectException(LogicException::class);
         $element = $this->getElement('key', 'Label');
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));

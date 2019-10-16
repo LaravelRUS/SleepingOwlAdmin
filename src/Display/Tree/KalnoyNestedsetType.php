@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Tree;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @see https://github.com/lazychaser/laravel-nestedset.
@@ -16,7 +17,7 @@ class KalnoyNestedsetType extends NestedsetType
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+    public function getTree(Collection $collection)
     {
         return $collection->toTree();
     }
@@ -32,7 +33,7 @@ class KalnoyNestedsetType extends NestedsetType
     }
 
     /**
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */
@@ -42,7 +43,7 @@ class KalnoyNestedsetType extends NestedsetType
     }
 
     /**
-     * @param Model $model
+     * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */

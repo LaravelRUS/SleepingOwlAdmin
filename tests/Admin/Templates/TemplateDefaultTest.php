@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Templates\TemplateDefault;
 
 class TemplateDefaultTest extends TestCase
 {
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }

@@ -3,12 +3,14 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Model\SectionModelConfiguration;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 
@@ -105,7 +107,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return TabInterface[]|DisplayTabsCollection
+     * @return TabInterface[]|\SleepingOwl\Admin\Form\FormElementsCollection
      */
     public function getTabs()
     {
@@ -149,7 +151,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * @param string $label
      * @param bool|false $active
      *
-     * @return TabInterface
+     * @return DisplayTab
      */
     public function appendTab(Renderable $display, $label, $active = false)
     {
@@ -195,9 +197,23 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      */
     public function setId($id)
     {
-        $this->getTabs()->each(function (TabInterface $tab) use ($id) {
+        $model_class = get_class($this->getModel());
+        $this->getTabs()->each(function (TabInterface $tab) use ($id, $model_class) {
             if ($tab instanceof FormInterface) {
-                $tab->setId($id);
+                if (! $tab->getExternalForm()) {
+                    $tab_content = $tab->getContent();
+                    if ($tab_content instanceof FormInterface) {
+                        $tab_model = $tab->getModel();
+                        $set_id = $model_class == get_class($tab_model);
+                        $tab_model_section = \AdminSection::getModel($tab_model);
+                        if (is_object($tab_model_section) && $tab_model_section instanceof SectionModelConfiguration) {
+                            $set_id = $set_id && $tab->getContent()->getAction() == $tab_model_section->getUpdateUrl($id);
+                        }
+                        if ($set_id) {
+                            $tab->setId($id);
+                        }
+                    }
+                }
             }
         });
 
@@ -210,7 +226,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      *
      * @return void
      */
-    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function validateForm(Request $request, ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function ($tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');
@@ -227,7 +243,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      *
      * @return void
      */
-    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function saveForm(Request $request, ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function (TabInterface $tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');

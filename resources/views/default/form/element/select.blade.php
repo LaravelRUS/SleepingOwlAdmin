@@ -1,6 +1,6 @@
 <div class="form-group form-element-select {{ $errors->has($name) ? 'has-error' : '' }}">
     <label for="{{ $name }}" class="control-label">
-        {{ $label }}
+        {!! $label !!}
 
         @if($required)
             <span class="form-element-required">*</span>
@@ -8,9 +8,9 @@
     </label>
 
     <deselect :value="{{ (ctype_digit(strval($value)) ? $value : json_encode($value)) }}"
-              :id="'{{str_replace(['[', ']'], '', $name)}}'"
+              :id="'{{ $id }}'"
               :multiple="false"
-              :options="{{json_encode($options)}}" inline-template>
+              :options="{{ json_encode($options) }}" inline-template>
         <div>
             <multiselect @if($readonly)
                          :disabled="true"
@@ -26,15 +26,15 @@
                          @else
                          placeholder="{{ trans('sleeping_owl::lang.select.no_items') }}"
                          @endif
-                         :select-label="'{{trans('sleeping_owl::lang.select.init')}}'"
-                         :selected-label="'{{trans('sleeping_owl::lang.select.selected')}}'"
-                         :deselect-label="'{{trans('sleeping_owl::lang.select.deselect')}}'"
+                         :select-label="'{{ trans('sleeping_owl::lang.select.init') }}'"
+                         :selected-label="'{{ trans('sleeping_owl::lang.select.selected') }}'"
+                         :deselect-label="'{{ trans('sleeping_owl::lang.select.deselect') }}'"
             >
             </multiselect>
 
             <input type="hidden"  {!! $attributes !!}
-                   id="{{ str_replace(['[', ']'], '', $name) }}"
-                   name="{{$name}}"
+                   id="{{ $id }}"
+                   name="{{ $name }}"
                    v-model="preparedVal">
         </div>
     </deselect>

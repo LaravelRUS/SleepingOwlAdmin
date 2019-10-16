@@ -22,7 +22,7 @@
         </menu>
     @endif
     <div class="panel-body">
-        <div class="dd nestable" {!! $attributes !!} data-url="{{ $url }}/reorder">
+        <div {!! $attributes !!} data-url="{{ $url }}/reorder">
             <ol class="dd-list">
                 @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
             </ol>

@@ -1,2 +1,2 @@
-<input type="checkbox" class="adminCheckboxRow" name="_id[]" value="{{ $value }}"/>
+<input type="checkbox" class="adminCheckboxRow" name="_id[]" value="{{ $value }}" {!! $attributes !!}/>
 {!! $append !!}

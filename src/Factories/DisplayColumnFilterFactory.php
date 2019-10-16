@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Factories;
 
 use SleepingOwl\Admin\AliasBinder;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\Column\Filter\Date;
 use SleepingOwl\Admin\Display\Column\Filter\Text;
 use SleepingOwl\Admin\Display\Column\Filter\Range;
@@ -26,7 +27,7 @@ class DisplayColumnFilterFactory extends AliasBinder implements DisplayColumnFil
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         parent::__construct($application);
 
