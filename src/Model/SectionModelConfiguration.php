@@ -59,6 +59,11 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return method_exists($this, 'onEdit') && parent::isEditable($model);
     }
 
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
     public function isDeletable(Model $model)
     {
         return method_exists($this, 'onDelete') && parent::isDeletable($model);

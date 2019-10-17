@@ -1,8 +1,7 @@
 import Sortable from 'sortablejs';
 import Flow from '@flowjs/flow.js';
 
-$(function ()
-{
+$(function () {
     function renderTPL(template, data) {
         var out = '';
         if (template != '') {
@@ -20,11 +19,12 @@ $(function ()
         return out;
     }
 
-    $('.fileUploadMultiple').each(function (index, item)
-    {
+    $('.fileUploadMultiple').each(function (index, item) {
         var $item = $(item);
         var RenderFileTpl = $item.find('.RenderFile').first().html();
-        var $innerGroup = $item.find('.files-group');
+        // @sngrl merge: bs4 to dev
+        //var $innerGroup = $item.find('.files-group');
+        var $innerGroup = $item.find('.files-group').not(".dissortable");
         var $input = $item.find('.fileValue');
 
         var flow = new Flow({
@@ -36,8 +36,7 @@ $(function ()
             }
         });
 
-        var updateValue = function ()
-        {
+        var updateValue = function () {
             var values = [];
             $item.find('.thumbnail').each(function (index, thumb) {
                 var $thumb = $(thumb);
@@ -48,12 +47,13 @@ $(function ()
                 });
             });
             $input.val(JSON.stringify(values));
+
+            $('[data-toggle="tooltip"]').tooltip()
         };
 
-        var baseName = function (str)
-        {
+        var baseName = function (str) {
             var base = new String(str).substring(str.lastIndexOf('/') + 1);
-            if(base.lastIndexOf(".") != -1) {
+            if (base.lastIndexOf(".") != -1) {
                 base = base.substring(0, base.lastIndexOf("."));
             }
             return base;
@@ -86,7 +86,7 @@ $(function ()
 
         flow.assignBrowse($item.find('.fileBrowse'));
 
-        flow.on('filesSubmitted', function(file) {
+        flow.on('filesSubmitted', function (file) {
             flow.upload();
             updateValue();
         });
@@ -99,10 +99,10 @@ $(function ()
             updateValue();
         });
 
-        flow.on('fileSuccess', function(file,message){
+        flow.on('fileSuccess', function (file, message) {
             flow.removeFile(file);
             var result = $.parseJSON(message);
-            $innerGroup.append( urlItem(result.value, result.path) );
+            $innerGroup.append(urlItem(result.value, result.path));
 
             var buttons = document.querySelectorAll('.tit');
             for (var i = 0; i < buttons.length; i++) {
@@ -123,14 +123,33 @@ $(function ()
             updateValue();
         });
 
-        $item.on('click', '.fileRemove', function (e)
-        {
+        $item.on('click', '.fileLink', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, url).then(result => {
+                if (result.value) {
+                    var $thumbReload = $(this).parents('.thumbnail');
+                    $($thumbReload.find('[data-id=file]')).data('src', result.value);
+                    $($thumbReload.find('.file-image')).attr('href', result.value);
+                    $($thumbReload.find('.fileicon-inner')).css('background-image', 'url("' + result.value + '")');
+                    updateValue();
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        $item.on('click', '.fileRemove', function (e) {
             e.preventDefault();
             $(this).closest('.fileThumbnail').remove();
             updateValue();
         });
 
-        Sortable.create($innerGroup[0], { onUpdate: function () { updateValue(); } });
+        Sortable.create($innerGroup[0], {
+            onUpdate: function () {
+                updateValue();
+            }
+        });
         updateValue();
     });
 });

@@ -1,0 +1,127 @@
+/*!
+ * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
+ * Copyright 2018 Hovhannes Bantikyan.
+ * Licensed under MIT (https://github.com/bantikyan/icheck-bootstrap/blob/master/LICENSE)
+ */
+
+ .adminCheckboxAll {
+   width: 1.3rem;
+   height: 1.3rem;
+ }
+
+ [class*="icheck-"] {
+    min-height: 1rem;
+    margin-top: 4px;
+    padding-left: 0px;
+}
+
+.icheck-inline {
+    display: inline-block;
+}
+
+    .icheck-inline + .icheck-inline {
+        margin-left: .75rem;
+        margin-top: 6px;
+    }
+
+[class*="icheck-"] > label {
+    padding-left: 22px !important;
+    min-height: 1rem;
+    line-height: 1rem;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+[class*="icheck-"] > input:first-child {
+    position: absolute !important;
+    opacity: 0;
+    margin: 0;
+}
+
+[class*="icheck-"] > input:first-child:disabled {
+  cursor: default;
+}
+
+[class*="icheck-"] > input:first-child + label::before,
+[class*="icheck-"] > input:first-child + input[type="hidden"] + label::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid $gray-500;
+  background-color: $white;
+  border-radius: 0px;
+  margin-left: -22px;
+}
+
+[class*="icheck-"] > input:first-child:checked + label::after,
+[class*="icheck-"] > input:first-child:checked + input[type="hidden"] + label::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.6em;
+  height: 0.6em;
+  border: solid 2px $white;
+  border-left: none;
+  border-top: none;
+  transform: translate(0.35em, 0.2em) rotate(45deg);
+  -ms-transform: translate(0.35em, 0.2em) rotate(45deg);
+}
+
+[class*="icheck-"] > input[type="radio"]:first-child + label::before,
+[class*="icheck-"] > input[type="radio"]:first-child + input[type="hidden"] + label::before {
+    border-radius: 50%;
+}
+
+[class*="icheck-"] > input:first-child:not(:checked):not(:disabled):hover + label::before,
+[class*="icheck-"] > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
+    border-width: 2px;
+}
+
+[class*="icheck-"] > input:first-child:disabled + label,
+[class*="icheck-"] > input:first-child:disabled + input[type="hidden"] + label,
+[class*="icheck-"] > input:first-child:disabled + label::before,
+[class*="icheck-"] > input:first-child:disabled + input[type="hidden"] + label::before {
+    pointer-events: none;
+    cursor: default;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
+.icheck-default > input:first-child:not(:checked):not(:disabled):hover + label::before,
+.icheck-default > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
+    border-color: $gray-600;
+}
+
+.icheck-default > input:first-child:checked + label::before,
+.icheck-default > input:first-child:checked + input[type="hidden"] + label::before {
+    background-color: $gray-400;
+    border-color: $gray-600;
+}
+
+.icheck-default > input:first-child:checked + label::after,
+.icheck-default > input:first-child:checked + input[type="hidden"] + label::after {
+    border-bottom-color: $gray-700;
+    border-right-color: $gray-700;
+}
+
+@each $key, $value in $colors_palette {
+  .icheck-#{"" + $key} > input:first-child:not(:checked):not(:disabled):hover + label::before,
+  .icheck-#{"" + $key} > input:first-child:not(:checked):not(:disabled):hover + input[type="hidden"] + label::before {
+    border-color: #{$value};
+  }
+  .icheck-#{"" + $key} > input:first-child:checked + label::before,
+  .icheck-#{"" + $key} > input:first-child:checked + input[type="hidden"] + label::before {
+    background-color: #{$value};
+    border-color: darken($value, 10%);
+  }
+}

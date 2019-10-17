@@ -9,11 +9,11 @@ class Delete extends FormButton
 {
     protected $show = true;
     protected $name = 'delete';
-    protected $iconClass = 'fa-times';
+    protected $iconClass = 'fas fa-times';
 
     public function __construct()
     {
-        $this->setText(trans('sleeping_owl::lang.table.delete'));
+        $this->setText(trans('sleeping_owl::lang.button.delete'));
     }
 
     /**

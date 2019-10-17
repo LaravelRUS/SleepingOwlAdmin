@@ -1,17 +1,15 @@
 let mix = require('laravel-mix');
 
-mix.setPublicPath('./public/packages/sleepingowl/default/');
-mix
-  .less('resources/assets/less/common.less', 'css/admin-app.css')
+mix.setPublicPath('./public/default/');
+mix.sass('resources/assets/scss/app.scss',         'css/admin-app.css')
+    .js('resources/assets/js_owl/app.js',          'js/admin-app.js')
+    .js('resources/assets/js_owl/vue_init.js',     'js/vue.js')
+    .js('resources/assets/js_owl/modules_load.js', 'js/modules.js')
 
-mix.js('resources/assets/js_owl/app.js', 'js/admin-app.js');
-mix.js('resources/assets/js_owl/vue_init.js', 'js/vue.js');
-mix.js('resources/assets/js_owl/modules_load.js', 'js/modules.js')
-.options({
-    processCssUrls: true,
-    resourceRoot: '../',
-    imgLoaderOptions: {
-      enabled: false,
-    }
-});
-
+    .options({
+      processCssUrls: true,
+      resourceRoot: '../',
+      imgLoaderOptions: {
+        enabled: false,
+      },
+    });

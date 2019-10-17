@@ -70,9 +70,9 @@ Vue.component('element-file', Vue.extend({
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fa fa-upload';
+                return 'fas fa-file-upload';
             }
-            return 'fa fa-spinner fa-spin'
+            return 'fas fa-spinner fa-spin'
         },
         has_value () {
             return this.val.length > 0

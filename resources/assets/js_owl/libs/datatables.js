@@ -10,7 +10,7 @@
 //
 
 window.DataTable = require("datatables.net");
-require("datatables.net-responsive");
+// require("datatables.net-responsive");
 
 
 /**

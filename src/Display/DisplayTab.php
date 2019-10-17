@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Form\FormPanel;
+use SleepingOwl\Admin\Form\FormCard;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Navigation\Badge;
@@ -93,7 +93,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             $this->setBadge($badge);
         }
 
-        $this->setHtmlAttribute('role', 'presentation');
+        $this->setHtmlAttribute('data-toggle', 'tab');
+        $this->setHtmlAttribute('class', 'nav-item nav-link');
     }
 
     /**
@@ -184,7 +185,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
         if ($this->content instanceof FormElements) {
             foreach ($this->content->getElements() as $element) {
-                if ($element instanceof FormDefault && $element instanceof FormPanel) {
+                if ($element instanceof FormDefault && $element instanceof FormCard) {
                     $element->addElement(
                         new FormElements([
                             (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName()),
@@ -488,6 +489,18 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
             return $content->isReadonly();
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisibled()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->isVisibled();
         }
 
         return false;

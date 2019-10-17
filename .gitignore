@@ -1,10 +1,10 @@
-/vendor
 /node_modules
-composer.phar
-composer.lock
 .DS_Store
 .phpunit.result.cache
 /.idea
 yarn.lock
 package-lock.json
-public/packages/sleepingowl/*
+/build/logs
+/public/default/css/*.map
+/public/default/js/*.map
+/public/packages/sleepingowl/*

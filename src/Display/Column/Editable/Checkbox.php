@@ -24,6 +24,11 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     protected $uncheckedLabel;
 
     /**
+     * @var string
+     */
+    protected $width = '50px';
+
+    /**
      * Checkbox constructor.
      *
      * @param string $name

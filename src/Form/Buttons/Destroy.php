@@ -9,11 +9,11 @@ class Destroy extends FormButton
 {
     protected $show = true;
     protected $name = 'destroy';
-    protected $iconClass = 'fa-ban';
+    protected $iconClass = 'fas fa-ban';
 
     public function __construct()
     {
-        $this->setText(trans('sleeping_owl::lang.table.destroy'));
+        $this->setText(trans('sleeping_owl::lang.button.destroy'));
     }
 
     /**

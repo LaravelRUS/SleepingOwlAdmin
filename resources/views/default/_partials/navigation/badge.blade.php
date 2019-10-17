@@ -1,5 +1,5 @@
 @if ($value !== false)
 <small {!! $attributes !!}>
-    {{ $value }}
+  {{ $value }}
 </small>
 @endif

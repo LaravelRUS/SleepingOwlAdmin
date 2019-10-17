@@ -1,0 +1,21 @@
+.panel {
+  .panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    form {
+      display: inline-flex;
+    }
+
+    @media (max-width: 667px) {
+      flex-direction: column;
+    }
+
+    &.card-header {
+      &:after {
+        display: none;
+      }
+    }
+  }
+}

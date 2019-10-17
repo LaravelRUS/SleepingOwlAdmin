@@ -493,7 +493,8 @@ class ModelConfigurationTest extends TestCase
 
         $this->getTranslatorMock()
             ->shouldReceive(version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=') ? 'get' : 'trans')
-            ->once()->with('sleeping_owl::lang.message.deleted', null, null)
+            ->once()
+            ->with('sleeping_owl::lang.message.deleted', null, null)
             ->andReturn('string');
 
         $this->assertEquals('string', $model->getMessageOnDelete());

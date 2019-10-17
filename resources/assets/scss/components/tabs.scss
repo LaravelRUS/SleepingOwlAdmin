@@ -1,0 +1,11 @@
+.nav.nav-tabs {
+  .last {
+    order: 999;
+    margin-left: auto;
+  }
+}
+
+.tab-content {
+  /* Fix for horizontal scroll */
+  max-width: 99.9%;
+}

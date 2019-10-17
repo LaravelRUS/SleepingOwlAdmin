@@ -1,11 +1,14 @@
-@if($isEditable)
-<a href="{{ $link }}" {!! app('html')->attributes($linkAttributes) !!}>
+<div {!! $attributes !!}>
+  @if($isEditable)
+  <a href="{{ $link }}" {!! app('html')->attributes($linkAttributes) !!}>
     {!! $value !!}
-</a>
-@else
+  </a>
+  @else
     {!! $value !!}
-@endif
-{!! $append !!}
-@if($small)
-<small class="clearfix">{!! $small !!}</small>
-@endif
+  @endif
+  {!! $append !!}
+
+  @if($small)
+    <small class="clearfix">{!! $small !!}</small>
+  @endif
+</div>

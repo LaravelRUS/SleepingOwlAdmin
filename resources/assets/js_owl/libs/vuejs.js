@@ -6,7 +6,6 @@
  * @see https://vuejs.org/guide/
  */
 window.Vue = require('vue');
-
 /**
  * The plugin for Vue.js provides services for making web requests and handle
  * responses using a XMLHttpRequest or JSONP.

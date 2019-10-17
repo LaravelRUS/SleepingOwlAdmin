@@ -213,6 +213,7 @@ class DependentSelect extends Select implements WithRoutesInterface
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
+            'visibled' => $this->isVisible(),
             'options' => $this->getOptions(),
             'value' => $this->getValueFromModel(),
             'helpText' => $this->getHelpText(),
