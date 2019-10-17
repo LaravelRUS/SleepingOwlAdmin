@@ -263,8 +263,7 @@ class NamedFormElementTest extends TestCase
         $model->exists = true;
 
         $model->shouldReceive('getAttribute')
-            ->andReturn($subModel = m::mock(\Illuminate\Database\Eloquent\Model::class))
-        ;
+            ->andReturn($subModel = m::mock(\Illuminate\Database\Eloquent\Model::class));
 
         $this->assertEquals($subModel, $element->resolvePath());
 
@@ -380,8 +379,7 @@ class NamedFormElementTest extends TestCase
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
         $model->shouldReceive('getAttribute')
             ->with('key')
-            ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class))
-        ;
+            ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class));
 
         $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
     }
@@ -394,8 +392,7 @@ class NamedFormElementTest extends TestCase
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
         $model->shouldReceive('getAttribute')
             ->with('key')
-            ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class))
-        ;
+            ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class));
 
         $model1->shouldReceive('getAttribute')->with('key1');
 

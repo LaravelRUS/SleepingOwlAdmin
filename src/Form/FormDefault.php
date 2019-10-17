@@ -261,7 +261,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
                 $model = $model_configuration->getModelValue();
             }
 
-            /**
+            /*
              * Get Model from Repository
              */
             if (! $model && ! is_null($id)) {
