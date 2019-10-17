@@ -42,7 +42,6 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     public function renderArray($name, ...$params)
     {
         return $this->render($name, ...$params);
-        // return $this->view($this->generator->generate($this->callbacks, $name, $params));
     }
 
     /**

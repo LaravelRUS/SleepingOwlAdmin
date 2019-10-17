@@ -1,42 +1,45 @@
 @if($hasChild)
-<li {!! $attributes !!}>
-    <a href="#" >
+<li class="nav-item has-treeview {!! ($isActive) ? 'menu-open' : '' !!}">
+    <a href="#" class="nav-link" {!! $attributes !!}>
         {!! $icon !!}
-        <span>{!! $title !!}</span>
-        <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
+        <p>
+          {!! $title !!}
+          <span class="pull-right-container">
 
             @if($badges->count() > 0)
-            <span class="sidebar-page-badges">
-            @foreach($badges as $badge)
-                    {!! $badge->render() !!}
+              <span class="sidebar-page-badges">
+                @foreach($badges as $badge)
+                  {!! $badge->render() !!}
                 @endforeach
-            </span>
+              </span>
             @endif
-        </span>
+          </span>
+          <i class="fas fa-angle-right right"></i>
+        </p>
     </a>
-
-    <ul class="treeview-menu">
+    <ul class="nav nav-treeview">
         @foreach($pages as $page)
            {!! $page->render() !!}
         @endforeach
     </ul>
 </li>
 @else
-<li {!! $attributes !!}>
-    <a href="{{ $url }}">
+<li class="nav-item">
+    <a href="{{ $url }}" class="nav-link {!! ($isActive) ? 'active' : '' !!}" {!! $attributes !!}>
         {!! $icon !!}
-        <span>{!! $title !!}</span>
-
-        @if($badges->count() > 0)
-        <span class="pull-right-container">
-            <span class="sidebar-page-badges">
-            @foreach($badges as $badge)
-                {!! $badge->render() !!}
-            @endforeach
+        <p>
+          {!! $title !!}
+          @if($badges->count() > 0)
+            <span class="pull-right-container">
+              <span class="sidebar-page-badges">
+                @foreach($badges as $badge)
+                  {!! $badge->render() !!}
+                @endforeach
+              </span>
             </span>
-        </span>    
-        @endif
+          @endif
+        </p>
+
     </a>
 </li>
 @endif

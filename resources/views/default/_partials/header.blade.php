@@ -1,21 +1,35 @@
-<a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="logo">
-	<span class="logo-lg">{!! AdminTemplate::getLogo() !!}</span>
-	<span class="logo-mini">{!! AdminTemplate::getLogoMini() !!}</span>
-</a>
+<ul class="nav navbar-nav ">
+	<li class="nav-item">
+		<a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+	</li>
+	@stack('navbar.left')
 
-<nav class="navbar navbar-static-top" role="navigation">
-	<!-- Sidebar toggle button-->
-	<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-		<span class="sr-only">Toggle navigation</span>
-	</a>
-	@stack('navbar.left')	
-	<div class="navbar-custom-menu">	
-		<ul class="nav navbar-nav">
-			@stack('navbar')
-		</ul>
+	{{-- ======================= --}}
+	<li class="nav-item d-none d-sm-inline-block">
+		<a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="nav-link">
+			<i class="fas fa-home fa-lg" aria-hidden="true"></i>
+		</a>
+	</li>
+	<li class="nav-item d-none d-sm-inline-block">
+		<span class="nav-link">{!! $title !!}</span>
+	</li>
+	{{-- ======================= --}}
 
-		<ul class="nav navbar-nav navbar-right">
-			@stack('navbar.right')
-		</ul>
+	@stack('navbar')
+</ul>
+
+<!-- SEARCH FORM -->
+{{-- <form class="form-inline ml-3">
+	<div class="input-group input-group-sm">
+		<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+		<div class="input-group-append">
+			<button class="btn btn-navbar" type="submit">
+				<i class="fas fa-search"></i>
+			</button>
+		</div>
 	</div>
-</nav>
+</form> --}}
+
+<ul class="navbar-nav ml-auto">
+	@stack('navbar.right')
+</ul>

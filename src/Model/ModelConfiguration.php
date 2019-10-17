@@ -156,7 +156,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string
      */
     public function getCreateTitle()
     {
@@ -181,7 +181,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param Model $model
-     * @return string|\Symfony\Component\Translation\TranslatorInterface
+     * @return string
      */
     public function getEditTitle()
     {

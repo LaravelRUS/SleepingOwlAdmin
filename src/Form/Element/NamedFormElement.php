@@ -440,13 +440,15 @@ abstract class NamedFormElement extends FormElement
         $value = $this->getDefaultValue();
 
         if ($model === null || ! $model->exists) {
-            // First check for model existence must go here, before all checks are made
+            /*
+              * First check for model existence must go here, before all checks are made
+              */
             return $value;
         }
 
         /*
-         * Implement json parsing
-         */
+          * Implement json parsing
+          */
         if (strpos($path, '->') !== false) {
             $casts = collect($model->getCasts());
             $jsonParts = collect(explode('->', $path));

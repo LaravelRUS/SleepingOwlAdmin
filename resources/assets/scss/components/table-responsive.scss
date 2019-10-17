@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+  .panel-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    table {
+      min-width: 700px;
+    }
+  }
+
+  .panel-footer {
+    margin-top: 1em;
+  }
+}

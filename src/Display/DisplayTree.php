@@ -205,7 +205,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function getNewEntryButtonText()
     {
         if (is_null($this->newEntryButtonText)) {
-            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+            $this->newEntryButtonText = trans('sleeping_owl::lang.button.new-entry');
         }
 
         return $this->newEntryButtonText;

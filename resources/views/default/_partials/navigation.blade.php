@@ -1,14 +1,19 @@
-<section class="sidebar">
+<div class="sidebar">
+    @stack('sidebar.top')
 
-	@stack('sidebar.top')
+    <a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="brand-link">
+        {!! AdminTemplate::getLogo() !!}
+    </a>
 
-	<ul class="sidebar-menu" data-widget="tree">
-		@stack('sidebar.ul.top')
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            @stack('sidebar.ul.top')
 
-		{!! $template->renderNavigation() !!}
+            {!! $template->renderNavigation() !!}
 
-		@stack('sidebar.ul.bottom')
-	</ul>
+            @stack('sidebar.ul.bottom')
+        </ul>
+    </nav>
 
-	@stack('sidebar.bottom')
-</section>
+    @stack('sidebar.bottom')
+</div>

@@ -1,0 +1,16 @@
+@import "~x-editable-bs4/dist/jquery-editable/css/jquery-editable.css";
+
+.editable-buttons,
+.editable-input {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.3em 0;
+}
+
+.editable-input {
+  select {
+    padding: 0.2em 0.4em;
+    border-radius: 5px;
+  }
+}

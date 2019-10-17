@@ -46,7 +46,7 @@
                 <td class="row-link" style="vertical-align: inherit;">
                     <div class="pull-right">
                         <a title="delete" @click="removeEnv(key)" class="btn btn-xs btn-danger">
-                            <i class="fa fa-times"></i>
+                            <i class="fas fa-times"></i>
                         </a>
                     </div>
                 </td>
@@ -55,11 +55,11 @@
         </table>
         <div class="panel-footer">
             <a id="env_add_entry" @click="values.push({key:null, value:null})" class="btn btn-primary">
-                <i class="fa fa-plus"></i> {{trans('sleeping_owl::lang.env_editor.new-entry')}}
+                <i class="fas fa-plus"></i> {{trans('sleeping_owl::lang.button.new-entry')}}
             </a>
             <div class="pull-right">
                 <button class="btn btn-primary" type="submit">
-                    <i class="fa fa-check"></i> {{trans('sleeping_owl::lang.env_editor.save')}}
+                    <i class="fas fa-check"></i> {{trans('sleeping_owl::lang.button.save')}}
                 </button>
             </div>
         </div>

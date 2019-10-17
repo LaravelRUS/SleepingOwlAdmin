@@ -1,0 +1,23 @@
+@each $key, $value in $colors_palette {
+  .table-#{$key} {
+    .table-badge {
+      background-color: #{$value};
+      color: $white;
+    }
+  }
+  .badge-list-#{$key} {
+    .table-badge {
+      background-color: #{$value} !important;
+      color: $white;
+    }
+  }
+}
+
+.badge-list-warning,
+.badge-list-white,
+.table-warning,
+.table-white {
+  .table-badge {
+    color: $black;
+  }
+}

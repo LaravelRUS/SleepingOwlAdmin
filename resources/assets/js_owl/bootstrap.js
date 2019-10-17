@@ -10,27 +10,30 @@ window.Admin = new Admin(
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window.Admin.Events = require('./components/events');
+//
+require('./libs/select2');
+require('./libs/noty');
 
 require('./libs/jquery');
 require('./libs/jquery-form');
 require('./libs/moment');
-require('./libs/i18next');
 require('./libs/bootstrap');
-require('./libs/noty');
-require('./libs/select2');
+require('./libs/i18next');
+require('./libs/bootstrap-datepicker');
 require('./libs/datetimepicker');
-require('./libs/daterangepicker');
-require('./libs/xeditable');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
 require('./libs/datatables');
+require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
 require('./libs/dependent-dropdown');
+require('./libs/js-cookie');
+require('./libs/progressbar');
 require('@flowjs/flow.js');
 
 require('./libs/vuejs');
+require('./libs/noty');
 /**
  * Best open source admin dashboard & control panel theme.
  * Built on top of Bootstrap 3, AdminLTE provides a range of
@@ -39,6 +42,9 @@ require('./libs/vuejs');
  * @see https://almsaeedstudio.com/preview
  */
 require('admin-lte');
+
+
+window.Admin.Events = require('./components/events');
 
 window.Admin.Messages = require('./components/messages');
 window.Admin.Storage = require('./components/storage');
@@ -50,8 +56,10 @@ window.Admin.WYSIWYG = require('./components/wysiwyg');
  * Initialize Wysiwyg editors
  */
 require('./wysiwyg/ckeditor');
+require('./wysiwyg/ckeditor5');
 require('./wysiwyg/simplemde');
 require('./wysiwyg/tinymce');
+require('./wysiwyg/summernote');
 
 /**
  * Initialize App
@@ -73,9 +81,11 @@ require('./admin/display/columns/inline_edit');
 /**
  * Initialize form
  */
+ require('./admin/form/date');
+ require('./admin/form/datetime');
+
+//OLD need test
 require('./admin/form/buttons');
-require('./admin/form/datetime');
-require('./admin/form/daterange');
 require('./admin/form/select');
 require('./admin/form/selectajax');
 require('./admin/form/dependent-select');

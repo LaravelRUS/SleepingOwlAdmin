@@ -3,7 +3,7 @@
     <input type="hidden" name="_redirectBack" value="{{ $backUrl }}"/>
     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 
-    <div class="panel-heading nav-tabs-custom" role="tabpanel" style="padding-bottom: 0">
+    <div class="panel-heading nav-tabs-custom pb-0" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             @php($active = null)
             @foreach ($items as $label => $_tmp)

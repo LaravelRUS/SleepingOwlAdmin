@@ -64,8 +64,6 @@ trait FormElements
      */
     public function getElement($path)
     {
-        $found = null;
-
         foreach ($this->getElements() as $element) {
             if ($element instanceof ElementsInterface) {
                 if (! is_null($found = $element->getElement($path))) {

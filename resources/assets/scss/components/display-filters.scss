@@ -1,0 +1,36 @@
+.display-filters {
+  td {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    vertical-align: middle;
+    border-top: 0;
+  }
+
+  .input-group-text {
+    span {
+      line-height: 1.5;
+    }
+  }
+
+  .select2-container,
+  .column-filter.select2-hidden-accessible {
+    /* Fix for horizontal scroll */
+    width: 99%!important;
+  }
+
+  .column-filter {
+    width: 100%;
+
+    .form-group {
+      width: 100%;
+      input {
+        width: calc(100% - 2.5rem);
+
+      }
+    }
+  }
+
+  .btn-group {
+    float: right;
+  }
+}

@@ -47,9 +47,9 @@ class DateTime extends NamedColumn
         $value = $this->getModelValue();
 
         return parent::toArray() + [
-                'value' => $this->getFormatedDate($value),
-                'originalValue' => $value,
-            ];
+            'value' => $this->getFormatedDate($value),
+            'originalValue' => $value,
+        ];
     }
 
     /**
@@ -59,11 +59,7 @@ class DateTime extends NamedColumn
      */
     protected function getFormatedDate($date)
     {
-        if (! is_null($date)) {
-            if (! ($date instanceof Carbon)) {
-                $date = Carbon::parse($date);
-            }
-
+        if ($date instanceof Carbon) {
             $date = $date->timezone($this->getTimezone())->format($this->getFormat());
         }
 

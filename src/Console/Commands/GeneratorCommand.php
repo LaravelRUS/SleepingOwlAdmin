@@ -58,9 +58,9 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
 
             $generator = new Generator($this->config, $this->view, $this->getOutput(), $helpers);
             $content = $generator->generate($format);
-            $written = (int) $this->files->put($filename, $content);
+            $written = (bool) $this->files->put($filename, $content);
 
-            if ($written === false) {
+            if (! $written) {
                 $this->error("The helper file could not be created at $filename");
             } else {
                 $this->info("A new helper file was written to $filename");

@@ -30,7 +30,7 @@ abstract class Messages extends Widget
     }
 
     /**
-     * @return string|array
+     * @return string|array|\SleepingOwl\Admin\Templates\Template
      */
     public function template()
     {

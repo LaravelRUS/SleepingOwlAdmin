@@ -358,7 +358,9 @@ class AdminController extends Controller
             $redirectUrl = $model->getEditUrl($newModel->{$primaryKey});
             $redirectPolicy = $model->getRedirect();
 
-            /* Make redirect when use in model config && Fix editable redirect */
+            /*
+             * @see Make redirect when use in model config && Fix editable redirect
+             */
             if ($redirectPolicy->get('create') == 'display' || ! $model->isEditable($newModel)) {
                 $redirectUrl = $model->getDisplayUrl();
             }
@@ -504,7 +506,9 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
         $column = null;
 
-        /* @var ColumnEditableInterface|null $column */
+        /*
+          * @var ColumnEditableInterface|null $column
+          */
         if (is_callable([$display, 'getColumns'])) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
                 return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
@@ -522,14 +526,18 @@ class AdminController extends Controller
                     if ($content instanceof FormElements) {
                         foreach ($content->getElements() as $element) {
 
-                            //Return data-table if inside FormElements
+                            /*
+                              * Return data-table if inside FormElements
+                              */
                             if ($element instanceof DisplayTable) {
                                 $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
                                     return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
                                 })->first();
                             }
 
-                            //Try to find inline Editable in columns
+                            /*
+                              * Try to find inline Editable in columns
+                              */
                             if ($element instanceof Column) {
                                 foreach ($element->getElements() as $columnElement) {
                                     if ($columnElement instanceof DisplayTable) {
@@ -768,5 +776,41 @@ class AdminController extends Controller
         }
 
         $this->parentBreadcrumb = data_get(Arr::last($this->breadCrumbsData), 'id', 'render');
+    }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deletedAll(ModelConfigurationInterface $model, Request $request)
+    {
+        if (is_null($request->_id)) {
+            return redirect()->back();
+        }
+
+        $items = $request->_id;
+
+        foreach ($items as $id) {
+            $item = $model->getRepository()->find($id);
+
+            if (! $item) {
+                return response()->Json(['error' => 'Haven`t row']);
+            }
+
+            if (isset($item->deleted_at) && $item->deleted_at) {
+                $model->getRepository()->forceDelete($id);
+            } else {
+                $model->getRepository()->delete($id);
+            }
+        }
+
+        $response = redirect()
+        ->to($request
+        ->input('_redirectBack', $model->getDisplayUrl()));
+
+        return $response
+        ->with('success_message', $model->getMessageOnDelete());
     }
 }
