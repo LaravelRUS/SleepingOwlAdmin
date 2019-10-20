@@ -26,7 +26,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     /**
      * @var string
      */
-    protected $placement = 'panel.heading.actions';
+    protected $placement = 'card.heading.actions';
 
     public function __construct()
     {

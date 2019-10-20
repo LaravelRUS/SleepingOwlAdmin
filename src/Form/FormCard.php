@@ -17,7 +17,6 @@ class FormCard extends FormDefault
     const POSITION_BODY = 'body';
     const POSITION_FOOTER = 'footer';
 
-    //   const SEPARATOR = '<hr class="panel-wide" />';
     const SEPARATOR = '';
 
     /**

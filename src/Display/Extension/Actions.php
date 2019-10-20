@@ -25,7 +25,7 @@ class Actions extends Extension implements Initializable, Placable
     /**
      * @var string
      */
-    protected $placement = 'panel.buttons';
+    protected $placement = 'card.buttons';
 
     public function __construct()
     {
@@ -150,9 +150,12 @@ class Actions extends Extension implements Initializable, Placable
         });
 
         $this->setHtmlAttribute('data-type', 'display-actions');
-
-        if ($this->getPlacement() == 'panel.footer') {
-            $this->setHtmlAttribute('class', 'panel-footer');
+        
+        /**
+          * @deprecated panel.footer
+          */
+        if ($this->getPlacement() == 'card.footer' || $this->getPlacement() == 'panel.footer') {
+            $this->setHtmlAttribute('class', 'card-footer');
         } else {
             $this->setHtmlAttribute('style', 'display:inline-flex');
         }

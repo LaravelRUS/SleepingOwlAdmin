@@ -99,7 +99,7 @@ class DummyClass extends Section implements Initializable
                 ->setPlaceholder('All names')
             ,
         ]);
-        $display->getColumnFilters()->setPlacement('panel.heading');
+        $display->getColumnFilters()->setPlacement('card.heading');
 
         return $display;
     }
@@ -112,7 +112,7 @@ class DummyClass extends Section implements Initializable
      */
     public function onEdit($id = null, $payload = [])
     {
-        $form = AdminForm::panel()->addBody([
+        $form = AdminForm::card()->addBody([
             AdminFormElement::columns()->addColumn([
                 AdminFormElement::text('name', 'Name')
                     ->required()
