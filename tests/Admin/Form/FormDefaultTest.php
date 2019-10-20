@@ -29,8 +29,8 @@ class FormDefaultTest extends TestCase
 
         $form = $this->makeFormDefault([
             $this->makeMockForFormElement(FormElementInterface::class),
-            new \SleepingOwl\Admin\Form\Panel\Header([
-                new \SleepingOwl\Admin\Form\Panel\Footer([
+            new \SleepingOwl\Admin\Form\Card\Header([
+                new \SleepingOwl\Admin\Form\Card\Footer([
                     $this->makeMockForFormElement(FormElementInterface::class),
                 ]),
             ]),
@@ -59,8 +59,8 @@ class FormDefaultTest extends TestCase
     {
         $form = $this->makeFormDefault([
             $this->makeMockForFormElement(FormElementInterface::class),
-            new \SleepingOwl\Admin\Form\Panel\Header([
-                new \SleepingOwl\Admin\Form\Panel\Footer([
+            new \SleepingOwl\Admin\Form\Card\Header([
+                new \SleepingOwl\Admin\Form\Card\Footer([
                     $this->makeMockForFormElement(\SleepingOwl\Admin\Form\Element\Upload::class),
                 ]),
             ]),

@@ -72,7 +72,6 @@ class TemplateDefault extends Template
 
     /**
      * @return string
-     * @deprecated
      */
     public function getLogoMini()
     {
