@@ -5,6 +5,7 @@
 * [Fix] stub section generate
 * [Fix] Set default orderable & searchable in Display column
 * [Deleted] All `panel` views and classes
+* [Fix] Fix Attribute on `AdminColumnEditable` and remake datetime
 
 
 ## 2019-10-14
