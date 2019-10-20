@@ -24,6 +24,11 @@ class Filter extends NamedColumn
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * @var string
      */
     protected $view = 'column.filter';

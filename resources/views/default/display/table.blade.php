@@ -10,7 +10,7 @@
 @yield('before.card')
 @yield('before.panel')
 
-<div class="card card-default {!! $panel_class !!}">
+<div class="card card-default {!! $card_class !!}">
 	<div class="card-heading card-header">
 		@if ($creatable)
 			<a href="{{ url($createUrl) }}" class="btn btn-primary mt-2">

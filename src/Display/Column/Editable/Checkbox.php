@@ -14,6 +14,16 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.checkbox';
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * @var null|string
      */
     protected $checkedLabel;

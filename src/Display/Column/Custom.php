@@ -24,6 +24,11 @@ class Custom extends NamedColumn
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * Custom constructor.
      *
      * @param null|string $label

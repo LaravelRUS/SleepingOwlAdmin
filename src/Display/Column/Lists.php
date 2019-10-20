@@ -15,6 +15,11 @@ class Lists extends NamedColumn
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * @return array
      */
     public function toArray()

@@ -10,11 +10,6 @@ class Url extends NamedColumn
     protected $view = 'column.url';
 
     /**
-     * @var bool
-     */
-    protected $isSearchable = true;
-
-    /**
      * @var string|bool
      */
     protected $icon = 'fas fa-external-link-square-alt';
@@ -25,11 +20,6 @@ class Url extends NamedColumn
      */
     protected $text = '';
     protected $textString = false;
-
-    /**
-     * @var bool
-     */
-    protected $orderable = true;
 
     /**
      * @var array

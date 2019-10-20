@@ -15,11 +15,6 @@ class Text extends NamedColumn
     protected $modifier = null;
 
     /**
-     * @var bool
-     */
-    protected $isSearchable = true;
-
-    /**
      * @return \Closure|mixed
      */
     public function getModifier()

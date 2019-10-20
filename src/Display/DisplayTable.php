@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Traits\CardControl;
-use SleepingOwl\Admin\Traits\PanelControl;
 use Illuminate\Pagination\LengthAwarePaginator;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
@@ -27,7 +26,7 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
  */
 class DisplayTable extends Display
 {
-    use CardControl, PanelControl;
+    use CardControl;
 
     /**
      * @var string
@@ -217,7 +216,7 @@ class DisplayTable extends Display
 
         $params['extensions'] = $this->getExtensions()->renderable()->sortByOrder();
         $params['newEntryButtonText'] = $this->getNewEntryButtonText();
-        $params['panel_class'] = $this->getPanelClass();
+        $params['card_class'] = $this->getCardClass();
 
         return $params;
     }

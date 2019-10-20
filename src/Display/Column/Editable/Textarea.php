@@ -14,11 +14,6 @@ class Textarea extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.textarea';
 
     /**
-     * @var bool
-     */
-    protected $isSearchable = true;
-
-    /**
      * Text constructor.
      *
      * @param             $name

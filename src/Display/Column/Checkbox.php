@@ -27,15 +27,18 @@ class Checkbox extends TableColumn
         parent::__construct($label);
         $this->setLabel(
             Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
-            ));
-
-        $this->setOrderable(false);
+        ));
     }
 
     /**
      * @var bool
      */
-    protected $isSearchable = true;
+    protected $isSearchable = false;
+
+    /**
+     * @var bool
+     */
+    protected $orderable = true;
 
     /**
      * @return mixed

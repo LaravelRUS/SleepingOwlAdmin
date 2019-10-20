@@ -10,6 +10,11 @@ class TreeControl extends Control
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * Column view.
      * @var string
      */

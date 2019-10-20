@@ -45,6 +45,11 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @var bool
      */
+    protected $isSearchable = false;
+
+    /**
+     * @var bool
+     */
     protected $selected = false;
 
     /**

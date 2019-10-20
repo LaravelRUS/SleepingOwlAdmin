@@ -14,11 +14,6 @@ class Text extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.text';
 
     /**
-     * @var bool
-     */
-    protected $isSearchable = true;
-
-    /**
      * Text constructor.
      *
      * @param             $name

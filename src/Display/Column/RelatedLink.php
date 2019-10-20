@@ -19,11 +19,6 @@ class RelatedLink extends Link
     /**
      * @var bool
      */
-    protected $orderable = true;
-
-    /**
-     * @var bool
-     */
     protected $isSearchable = false;
 
     /**

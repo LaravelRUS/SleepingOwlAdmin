@@ -1,5 +1,12 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-10-20
+* [Add] Add `->setSmall` in `AdminColumn::custom`
+* [Fix] stub section generate
+* [Fix] Set default orderable & searchable in Display column
+* [Deleted] All `panel` views and classes
+
+
 ## 2019-10-14
 * [Add] Add class `.th-center` for table / datatables. Change text-align on left
 * [Fix] localized `AdminFormElement::selectajax` (partially)

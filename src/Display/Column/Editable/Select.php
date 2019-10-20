@@ -19,9 +19,20 @@ class Select extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.select';
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * @var null
      */
     protected $relationKey = null;
+
     /**
      * @var array
      */

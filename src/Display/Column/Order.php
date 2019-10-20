@@ -20,7 +20,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @var bool
      */
-    protected $isSearchable = true;
+    protected $isSearchable = false;
 
     /**
      * @var string

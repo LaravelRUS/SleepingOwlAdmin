@@ -32,6 +32,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $orderable = true;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = true;
+
+    /**
      * NamedColumn constructor.
      * @param $name
      * @param $label string

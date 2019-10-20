@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Traits\PanelControl;
+use SleepingOwl\Admin\Traits\CardControl;
 use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Tree\OrderTreeType;
@@ -23,7 +23,7 @@ use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
  */
 class DisplayTree extends Display implements WithRoutesInterface
 {
-    use PanelControl;
+    use CardControl;
 
     /**
      * @param Router $router
@@ -112,7 +112,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
         $this->treeType = $treeType;
 
-        $this->setPanelClass('panel-tree');
+        $this->setCardClass('card-tree');
 
         $this->extend('columns', new Columns());
     }
@@ -335,7 +335,7 @@ class DisplayTree extends Display implements WithRoutesInterface
                 'controls' => [$this->getColumns()->getControlColumn()],
                 'newEntryButtonText' => $this->getNewEntryButtonText(),
                 'max_depth' => $this->getMaxDepth(),
-                'panel_class' => $this->getPanelClass(),
+                'card_class' => $this->getCardClass(),
             ];
     }
 
