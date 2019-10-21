@@ -1,6 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
 ## 2019-10-21
+* [Add] Localisation validate from SO resources
+
+
+## 2019-10-21
 * [Fix] Navigation badges (pull-right)
 * [Add] Add in config `logo_mini`, `menu_top`
 * [Deleted] Title and house icon on top panel

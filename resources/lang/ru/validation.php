@@ -1,93 +1,193 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Validation Language Lines
+    | Языковые ресурсы для проверки значений
     |--------------------------------------------------------------------------
     |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
+    | Последующие языковые строки содержат сообщения по-умолчанию, используемые
+    | классом, проверяющим значения (валидатором). Некоторые из правил имеют
+    | несколько версий, например, size. Вы можете поменять их на любые
+    | другие, которые лучше подходят для вашего приложения.
     |
     */
 
-    'accepted'                => 'Значение не принято.',
-    'active_url'              => 'Адрес неверен.',
-    'after'                   => 'Дата должна быть после :date.',
-    'alpha'                   => 'Неверный формат.',
-    'alpha_dash'              => 'Неверный формат.',
-    'alpha_num'               => 'Неверный формат.',
-    'array'                   => 'Должно быть массивом.',
-    'before'                  => 'Дата должна быть до :date.',
-    'between'                 => [
-        'numeric' => 'Должно быть между :min и :max.',
-        'file'    => 'Размер файла должен быть от :min до :max килобайт.',
-        'string'  => 'Длина должна быть от :min до :max символов.',
-        'array'   => 'Должно быть от :min до :max элементов.',
+    'accepted'             => 'Вы должны принять :attribute.',
+    'active_url'           => 'Поле :attribute содержит недействительный URL.',
+    'after'                => 'В поле :attribute должна быть дата после :date.',
+    'after_or_equal'       => 'В поле :attribute должна быть дата после или равняться :date.',
+    'alpha'                => 'Поле :attribute может содержать только буквы.',
+    'alpha_dash'           => 'Поле :attribute может содержать только буквы, цифры, дефис и нижнее подчеркивание.',
+    'alpha_num'            => 'Поле :attribute может содержать только буквы и цифры.',
+    'array'                => 'Поле :attribute должно быть массивом.',
+    'before'               => 'В поле :attribute должна быть дата до :date.',
+    'before_or_equal'      => 'В поле :attribute должна быть дата до или равняться :date.',
+    'between'              => [
+        'numeric' => 'Поле :attribute должно быть между :min и :max.',
+        'file'    => 'Размер файла в поле :attribute должен быть между :min и :max Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute должно быть между :min и :max.',
+        'array'   => 'Количество элементов в поле :attribute должно быть между :min и :max.',
     ],
-    'confirmed'               => 'Подтверждение этого поля не совпадает.',
-    'date'                    => 'Неверная дата.',
-    'date_format'             => 'Неверный формат.',
-    'different'               => 'The :attribute and :other must be different.',
-    'digits'                  => 'The :attribute must be :digits digits.',
-    'digits_between'          => 'The :attribute must be between :min and :max digits.',
-    'email'                   => 'The :attribute must be a valid email address.',
-    'exists'                  => 'The selected :attribute is invalid.',
-    'image'                   => 'Должно быть выбрано изображение (jpeg, png, gif, bmp).',
-    'in'                      => 'The selected :attribute is invalid.',
-    'integer'                 => 'The :attribute must be an integer.',
-    'ip'                      => 'The :attribute must be a valid IP address.',
-    'max'                     => [
-        'numeric' => 'The :attribute may not be greater than :max.',
-        'file'    => 'The :attribute may not be greater than :max kilobytes.',
-        'string'  => 'The :attribute may not be greater than :max characters.',
-        'array'   => 'The :attribute may not have more than :max items.',
+    'boolean'              => 'Поле :attribute должно иметь значение логического типа.',
+    'confirmed'            => 'Поле :attribute не совпадает с подтверждением.',
+    'date'                 => 'Поле :attribute не является датой.',
+    'date_equals'          => 'Поле :attribute должно быть датой равной :date.',
+    'date_format'          => 'Поле :attribute не соответствует формату :format.',
+    'different'            => 'Поля :attribute и :other должны различаться.',
+    'digits'               => 'Длина цифрового поля :attribute должна быть :digits.',
+    'digits_between'       => 'Длина цифрового поля :attribute должна быть между :min и :max.',
+    'dimensions'           => 'Поле :attribute имеет недопустимые размеры изображения.',
+    'distinct'             => 'Поле :attribute содержит повторяющееся значение.',
+    'email'                => 'Поле :attribute должно быть действительным электронным адресом.',
+    'ends_with'            => 'Поле :attribute должно заканчиваться одним из следующих значений: :values',
+    'exists'               => 'Выбранное значение для :attribute некорректно.',
+    'file'                 => 'Поле :attribute должно быть файлом.',
+    'filled'               => 'Поле :attribute обязательно для заполнения.',
+    'gt'                   => [
+        'numeric' => 'Поле :attribute должно быть больше :value.',
+        'file'    => 'Размер файла в поле :attribute должен быть больше :value Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute должно быть больше :value.',
+        'array'   => 'Количество элементов в поле :attribute должно быть больше :value.',
     ],
-    'mimes'                   => 'The :attribute must be a file of type: :values.',
-    'min'                     => [
-        'numeric' => 'The :attribute must be at least :min.',
-        'file'    => 'The :attribute must be at least :min kilobytes.',
-        'string'  => 'The :attribute must be at least :min characters.',
-        'array'   => 'The :attribute must have at least :min items.',
+    'gte'                  => [
+        'numeric' => 'Поле :attribute должно быть больше или равно :value.',
+        'file'    => 'Размер файла в поле :attribute должен быть больше или равен :value Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute должно быть больше или равно :value.',
+        'array'   => 'Количество элементов в поле :attribute должно быть больше или равно :value.',
     ],
-    'not_in'                  => 'The selected :attribute is invalid.',
-    'not_php'                 => 'Неверный тип файла.',
-    'numeric'                 => 'The :attribute must be a number.',
-    'regex'                   => 'Неверный формат поля.',
-    'required'                => 'Необходимо заполнить это поле.',
-    'required_only_on_create' => 'Необходимо заполнить это поле.',
-    'required_if'             => 'The :attribute field is required when :other is :value.',
-    'required_with'           => 'The :attribute field is required when :values is present.',
-    'required_with_all'       => 'The :attribute field is required when :values is present.',
-    'required_without'        => 'The :attribute field is required when :values is not present.',
-    'required_without_all'    => 'The :attribute field is required when none of :values are present.',
-    'same'                    => 'The :attribute and :other must match.',
-    'size'                    => [
-        'numeric' => 'The :attribute must be :size.',
-        'file'    => 'The :attribute must be :size kilobytes.',
-        'string'  => 'The :attribute must be :size characters.',
-        'array'   => 'The :attribute must contain :size items.',
+    'image'                => 'Поле :attribute должно быть изображением.',
+    'in'                   => 'Выбранное значение для :attribute ошибочно.',
+    'in_array'             => 'Поле :attribute не существует в :other.',
+    'integer'              => 'Поле :attribute должно быть целым числом.',
+    'ip'                   => 'Поле :attribute должно быть действительным IP-адресом.',
+    'ipv4'                 => 'Поле :attribute должно быть действительным IPv4-адресом.',
+    'ipv6'                 => 'Поле :attribute должно быть действительным IPv6-адресом.',
+    'json'                 => 'Поле :attribute должно быть JSON строкой.',
+    'lt'                   => [
+        'numeric' => 'Поле :attribute должно быть меньше :value.',
+        'file'    => 'Размер файла в поле :attribute должен быть меньше :value Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute должно быть меньше :value.',
+        'array'   => 'Количество элементов в поле :attribute должно быть меньше :value.',
     ],
-    'unique'                  => 'Это поле должно быть уникальным. Подобная запись уже существует.',
-    'url'                     => 'The :attribute format is invalid.',
-    'url_stub'                => 'Неверный формат поля.',
-    'url_stub_full'           => 'Неверный формат поля.',
-    'not_image'               => 'Файл не является изображением',
-    'access_denied'           => 'Отказано в доступе.',
+    'lte'                  => [
+        'numeric' => 'Поле :attribute должно быть меньше или равно :value.',
+        'file'    => 'Размер файла в поле :attribute должен быть меньше или равен :value Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute должно быть меньше или равно :value.',
+        'array'   => 'Количество элементов в поле :attribute должно быть меньше или равно :value.',
+    ],
+    'max'                  => [
+        'numeric' => 'Поле :attribute не может быть более :max.',
+        'file'    => 'Размер файла в поле :attribute не может быть более :max Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute не может превышать :max.',
+        'array'   => 'Количество элементов в поле :attribute не может превышать :max.',
+    ],
+    'mimes'                => 'Поле :attribute должно быть файлом одного из следующих типов: :values.',
+    'mimetypes'            => 'Поле :attribute должно быть файлом одного из следующих типов: :values.',
+    'min'                  => [
+        'numeric' => 'Поле :attribute должно быть не менее :min.',
+        'file'    => 'Размер файла в поле :attribute должен быть не менее :min Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute должно быть не менее :min.',
+        'array'   => 'Количество элементов в поле :attribute должно быть не менее :min.',
+    ],
+    'not_in'               => 'Выбранное значение для :attribute ошибочно.',
+    'not_regex'            => 'Выбранный формат для :attribute ошибочный.',
+    'numeric'              => 'Поле :attribute должно быть числом.',
+    'present'              => 'Поле :attribute должно присутствовать.',
+    'regex'                => 'Поле :attribute имеет ошибочный формат.',
+    'required'             => 'Поле :attribute обязательно для заполнения.',
+    'required_if'          => 'Поле :attribute обязательно для заполнения, когда :other равно :value.',
+    'required_unless'      => 'Поле :attribute обязательно для заполнения, когда :other не равно :values.',
+    'required_with'        => 'Поле :attribute обязательно для заполнения, когда :values указано.',
+    'required_with_all'    => 'Поле :attribute обязательно для заполнения, когда :values указано.',
+    'required_without'     => 'Поле :attribute обязательно для заполнения, когда :values не указано.',
+    'required_without_all' => 'Поле :attribute обязательно для заполнения, когда ни одно из :values не указано.',
+    'same'                 => 'Значения полей :attribute и :other должны совпадать.',
+    'size'                 => [
+        'numeric' => 'Поле :attribute должно быть равным :size.',
+        'file'    => 'Размер файла в поле :attribute должен быть равен :size Килобайт(а).',
+        'string'  => 'Количество символов в поле :attribute должно быть равным :size.',
+        'array'   => 'Количество элементов в поле :attribute должно быть равным :size.',
+    ],
+    'starts_with'          => 'Поле :attribute должно начинаться из одного из следующих значений: :values',
+    'string'               => 'Поле :attribute должно быть строкой.',
+    'timezone'             => 'Поле :attribute должно быть действительным часовым поясом.',
+    'unique'               => 'Такое значение поля :attribute уже существует.',
+    'uploaded'             => 'Загрузка поля :attribute не удалась.',
+    'url'                  => 'Поле :attribute имеет ошибочный формат.',
+    'uuid'                 => 'Поле :attribute должно быть корректным UUID.',
 
     /*
     |--------------------------------------------------------------------------
-    | Custom Validation Attributes
+    | Собственные языковые ресурсы для проверки значений
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
+    | Здесь Вы можете указать собственные сообщения для атрибутов.
+    | Это позволяет легко указать свое сообщение для заданного правила атрибута.
+    |
+    | http://laravel.com/docs/validation#custom-error-messages
+    | Пример использования
+    |
+    |   'custom' => [
+    |       'email' => [
+    |           'required' => 'Нам необходимо знать Ваш электронный адрес!',
+    |       ],
+    |   ],
     |
     */
 
-    'attributes' => [],
+    'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
+    ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Собственные названия атрибутов
+    |--------------------------------------------------------------------------
+    |
+    | Последующие строки используются для подмены программных имен элементов
+    | пользовательского интерфейса на удобочитаемые. Например, вместо имени
+    | поля "email" в сообщениях будет выводиться "электронный адрес".
+    |
+    | Пример использования
+    |
+    |   'attributes' => [
+    |       'email' => 'электронный адрес',
+    |   ],
+    |
+    */
+
+    'attributes' => [
+        'name'                  => 'Имя',
+        'username'              => 'Никнейм',
+        'email'                 => 'E-Mail адрес',
+        'first_name'            => 'Имя',
+        'last_name'             => 'Фамилия',
+        'password'              => 'Пароль',
+        'password_confirmation' => 'Подтверждение пароля',
+        'city'                  => 'Город',
+        'country'               => 'Страна',
+        'address'               => 'Адрес',
+        'phone'                 => 'Телефон',
+        'mobile'                => 'Моб. номер',
+        'age'                   => 'Возраст',
+        'sex'                   => 'Пол',
+        'gender'                => 'Пол',
+        'day'                   => 'День',
+        'month'                 => 'Месяц',
+        'year'                  => 'Год',
+        'hour'                  => 'Час',
+        'minute'                => 'Минута',
+        'second'                => 'Секунда',
+        'title'                 => 'Наименование',
+        'content'               => 'Контент',
+        'description'           => 'Описание',
+        'excerpt'               => 'Выдержка',
+        'date'                  => 'Дата',
+        'time'                  => 'Время',
+        'available'             => 'Доступно',
+        'size'                  => 'Размер',
+    ],
 ];

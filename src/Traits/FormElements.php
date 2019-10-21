@@ -132,6 +132,11 @@ trait FormElements
      */
     public function getValidationMessages()
     {
+        $validation = trans('sleeping_owl::validation');
+        if ($validation) {
+            return $validation;
+        }
+
         return $this->getValidationMessagesForElements();
     }
 
