@@ -73,6 +73,14 @@ class TemplateDefault extends Template
     /**
      * @return string
      */
+    public function getMenuTop()
+    {
+        return config('sleeping_owl.menu_top');
+    }
+
+    /**
+     * @return string
+     */
     public function getLogoMini()
     {
         return config('sleeping_owl.logo_mini');
