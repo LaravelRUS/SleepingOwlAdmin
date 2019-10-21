@@ -1,6 +1,6 @@
 <div {!! $attributes !!}>
   <a href="#"
-      class="inline-editable"
+      class="dt-editable"
       data-inputclass="datatime-editable"
       data-name="{{ $name }}"
       data-value="{{ $value }}"

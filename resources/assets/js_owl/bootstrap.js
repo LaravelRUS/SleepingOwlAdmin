@@ -45,7 +45,6 @@ require('admin-lte');
 
 
 window.Admin.Events = require('./components/events');
-
 window.Admin.Messages = require('./components/messages');
 window.Admin.Storage = require('./components/storage');
 window.Admin.Asset = require('./components/asset');
@@ -83,17 +82,18 @@ require('./admin/display/columns/inline_edit');
  */
  require('./admin/form/date');
  require('./admin/form/datetime');
+ require('./admin/form/deselect');
+ require('./admin/form/file');
+ require('./admin/form/files');
+ require('./admin/form/image');
+ require('./admin/form/images');
+
 
 //OLD need test
 require('./admin/form/buttons');
 require('./admin/form/select');
 require('./admin/form/selectajax');
 require('./admin/form/dependent-select');
-require('./admin/form/deselect');
 require('./admin/display/env_editor');
-require('./admin/form/file');
-require('./admin/form/files');
-require('./admin/form/image');
-require('./admin/form/images');
 require('./admin/events');
 require('./admin/form/related');

@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Configuration;
 
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Traits\DatePicker;
 
 /**
  * Trait ProvidesScriptVariables.
@@ -10,6 +11,9 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
  */
 trait ProvidesScriptVariables
 {
+
+  use DatePicker;
+
     /**
      * Получение массива глобальных
      * переменных
@@ -33,6 +37,8 @@ trait ProvidesScriptVariables
             'wysiwyg' => $this->config['wysiwyg'],
             'template' => $this->app[TemplateInterface::class]->toArray(),
             'user_id' => auth()->id(),
+            'datetime_format' => $this->generatePickerFormat($this->config['datetimeFormat']),
+            'date_format' => $this->generatePickerFormat($this->config['dateFormat']),
         ];
     }
 }

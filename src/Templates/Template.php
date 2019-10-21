@@ -192,9 +192,9 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Регистрация стандартны�
-     * глобальны�
-     * Javascript перменны�
+     * Регистрация стандартных
+     * глобальных
+     * Javascript перменных
      * .
      */
     protected function setGlobalVariables()

@@ -2,6 +2,7 @@
 
 ## 2019-10-21
 * [Add] Localisation validate from SO resources
+* [Update] `AdminColumnEditable::datetime('date', 'Date')` add datepicker
 
 
 ## 2019-10-21

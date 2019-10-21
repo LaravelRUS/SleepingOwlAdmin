@@ -52,8 +52,8 @@ class TemplateDefault extends Template
     }
 
     /**
-     * Получение относительного пути �
-     * ранения asset файлов.
+     * Получение относительного пути
+     * расположения asset файлов.
      *
      * @return string
      */
