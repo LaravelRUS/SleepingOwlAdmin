@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Configuration;
 
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\DatePicker;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 /**
  * Trait ProvidesScriptVariables.
@@ -11,8 +11,7 @@ use SleepingOwl\Admin\Traits\DatePicker;
  */
 trait ProvidesScriptVariables
 {
-
-  use DatePicker;
+    use DatePicker;
 
     /**
      * Получение массива глобальных
