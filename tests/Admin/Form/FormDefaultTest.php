@@ -319,7 +319,7 @@ class FormDefaultTest extends TestCase
         $element->shouldReceive('initialize')->once();
         $element->shouldReceive('setModel');
         $element->shouldReceive('getValidationRules')->once()->andReturn(['element' => 'required']);
-        $element->shouldReceive('getValidationMessages')->once()->andReturn([]);
+        $element->shouldReceive('getValidationMessages')->andReturn([]);
         $element->shouldReceive('getValidationLabels')->once()->andReturn([
             'element' => 'Element label',
         ]);
