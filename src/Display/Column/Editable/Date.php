@@ -2,12 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use SleepingOwl\Admin\Display\Column\Editable\DateTime;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Date extends DateTime implements ColumnEditableInterface
 {
-
     /**
      * @var string
      */
@@ -39,5 +37,4 @@ class Date extends DateTime implements ColumnEditableInterface
     {
         return $this->pickerFormat ?: config('sleeping_owl.dateFormat');
     }
-
 }
