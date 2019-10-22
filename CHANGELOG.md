@@ -2,7 +2,9 @@
 
 ## 2019-10-21
 * [Add] Localisation validate from SO resources
-* [Update] `AdminColumnEditable::datetime('date', 'Date')` add datepicker
+* [Update] `AdminColumnEditable::datetime('updated_at', 'DateTime')` add datepicker
+* [Add] `AdminColumnEditable::date('date', 'Only Date')` add datepicker
+* [Fix] In `AdminColumn::images` fix `->setReadonly(true)` for dropzone
 
 
 ## 2019-10-21

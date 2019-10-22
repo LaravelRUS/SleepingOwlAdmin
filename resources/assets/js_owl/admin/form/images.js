@@ -27,7 +27,10 @@ Vue.component('element-images', Vue.extend({
     },
     mounted () {
         this.vals = this.values;
-        this.initUpload();
+        if (!this.readonly) {
+            this.initUpload();
+        }
+
     },
     components: {
         draggable

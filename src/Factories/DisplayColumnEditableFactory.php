@@ -7,6 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\Display\Column\Editable\Text;
 use SleepingOwl\Admin\Display\Column\Editable\Select;
 use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
+use SleepingOwl\Admin\Display\Column\Editable\Date;
 use SleepingOwl\Admin\Display\Column\Editable\DateTime;
 use SleepingOwl\Admin\Display\Column\Editable\Textarea;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
@@ -31,6 +32,7 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
             'textarea' => Textarea::class,
             'select' => Select::class,
             'datetime' => DateTime::class,
+            'date' => Date::class,
         ]);
     }
 }

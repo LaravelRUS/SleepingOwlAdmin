@@ -75,17 +75,17 @@
 * [x] `AdminFormElement::file` проверить на ошибку в Vue
 * [x] медленное прорисовывание меню, поправить определение классов в хелпере меню
 * [x] Добавить для wysiwyg поля максимизизацию (есть пример в шаблоне)
+* [x] Добавили кард, выпилить панель и для поддержки сделать алиасом (`'panel' => Form\FormCard::class,`)
+* [x] ПРнуть / потестить депендет аякс и селект2 из девки
+* [x] `AdminColumnEditable::date` поправить год или поменять на выбор с значком календаря
+* [x] `AdminColumnEditable::datetime` сделать
 
 
 ### Что сделать
 * [ ] Локализовать `AdminFormElement::selectajax` (частично)
-* [ ] Добавили кард, выпилить панель и для поддержки сделать алиасом (`'panel' => Form\FormCard::class,`)
-* [ ] ПРнуть / потестить депендет аякс и селект2 из девки
 * [ ] `multiselect` поправить отображение required и внесение старых данных после ошибки
 * [ ] Допилить `->setFormat()` на даты (не работает)
 * [ ] Запомнить последний таб (localstorage или кука)
-* [ ] `AdminColumnEditable::date` поправить год или поменять на выбор с значком календаря
-* [ ] `AdminColumnEditable::datetime` сделать
 * [ ] посмотреть `setVisible`, к табам
 * [ ] Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
 * [ ] `Admin.Modules.register('display.datatables', () => {localStorage.clear();}` - переработать
@@ -116,6 +116,8 @@
 * [ ] `->setVisibilityCondition()` deprecated
 * [ ] для респонсивности широких таблиц `->setHtmlAttribute('class', 'hidden-sm')` (не работает в дататейблсах)
 * [ ] `AdminColumnEditable::textarea`
+* [ ] `AdminColumnEditable::datetime`
+* [ ] `AdminColumnEditable::date`
 * [ ] `AdminColumn::boolean`
 * [ ] `AdminColumn::timestamp`
 * [ ] `AdminColumn::url` со всеми методами
@@ -124,7 +126,7 @@
 * [ ] `setCollapsed(bool)` для wysiwyg поля
 * [ ] Автоапдейт для дататейблов как вкл/выкл
 * [ ] Остальные поля, которых нет и их методы
-* [ ] Третий параметр в обычных коламнах `AdminColumn::link('title', 'Title', 'created_at')` и во многих других полях или `->setSmall('Редактировать')` (или `->setSmall('created_at')`). Можно вернуть калбэк
+* [ ] Третий параметр в обычных коламнах `AdminColumn::link('title', 'Title', 'created_at')` и во многих других полях или `->setSmall('Редактировать', true)` (или `->setSmall('created_at')`). Можно вернуть калбэк
 * [ ] Для табов появился класс `.last`. Добавление таба в конец списка и к правой стороне
 * [ ] Дописать, что при использовании поиска в дататейблсах на связи обязательно нужно калбеки на ордерабле(если есть), иначе поиск будет с ошибкой
 * [ ] `lists` цвета от цвета таблицы, смена цвета через атрибуты `->setHtmlAttribute('class', 'badge-list-warning')`
