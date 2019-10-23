@@ -201,7 +201,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function setCollapsed($collapsed = false)
     {
         if ($this->max_depth > 1) {
-          $this->collapsed = $collapsed;
+            $this->collapsed = $collapsed;
         }
 
         return $this;
