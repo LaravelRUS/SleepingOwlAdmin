@@ -1,5 +1,6 @@
 Admin.Modules.register('display.tree', () => {
     let $elem = $('.nestable'), maxDepth = $elem.data('max-depth');
+    let $collapsed = $elem.data('collapsed');
 
     $elem.nestable({
         maxDepth: maxDepth
@@ -16,6 +17,10 @@ Admin.Modules.register('display.tree', () => {
             }
         );
     })
+
+    if ($collapsed) {
+      $elem.nestable('collapseAll');
+    }
 
     $('#nestable-menu').on('click', function(e) {
         var target = $(e.target),

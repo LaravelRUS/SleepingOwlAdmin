@@ -62,6 +62,11 @@ class DisplayTree extends Display implements WithRoutesInterface
     protected $value = 'title';
 
     /**
+     * @var bool
+     */
+    protected $collapsed;
+
+    /**
      * @var string
      */
     protected $parentField = 'parent_id';
@@ -137,6 +142,7 @@ class DisplayTree extends Display implements WithRoutesInterface
         }
 
         $this->setHtmlAttribute('data-max-depth', $this->getMaxDepth());
+        $this->setHtmlAttribute('data-collapsed', $this->getCollapsed());
     }
 
     /**
@@ -175,6 +181,28 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCollapsed()
+    {
+        return $this->collapsed;
+    }
+
+    /**
+     * @param bool $collapsed
+     *
+     * @return $this
+     */
+    public function setCollapsed($collapsed = false)
+    {
+        if ($this->max_depth > 1) {
+          $this->collapsed = $collapsed;
+        }
 
         return $this;
     }
@@ -330,6 +358,7 @@ class DisplayTree extends Display implements WithRoutesInterface
                 'reorderable' => $this->isReorderable(),
                 'url' => $model->getDisplayUrl(),
                 'value' => $this->getValue(),
+                'collapsed' => $this->getCollapsed(),
                 'creatable' => $model->isCreatable(),
                 'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
                 'controls' => [$this->getColumns()->getControlColumn()],

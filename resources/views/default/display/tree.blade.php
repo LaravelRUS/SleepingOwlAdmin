@@ -34,7 +34,7 @@
         @endif
         <div class="card-body mt-3 p-0 b-0">
             <div class="dd nestable" {!! $attributes !!} data-url="{{ $url }}/reorder">
-                <ol class="dd-list">
+                <ol class="dd-list {{ $collapsed ? ' dd-collapsed' : '' }}">
                     @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
                 </ol>
             </div>
