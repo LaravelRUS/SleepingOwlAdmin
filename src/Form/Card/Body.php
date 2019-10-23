@@ -4,9 +4,9 @@ namespace SleepingOwl\Admin\Form\Card;
 
 use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Form\PanelInterface;
+use SleepingOwl\Admin\Contracts\Form\CardInterface;
 
-class Body extends FormElements implements PanelInterface
+class Body extends FormElements implements CardInterface
 {
     use HtmlAttributes;
 

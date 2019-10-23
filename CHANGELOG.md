@@ -5,6 +5,7 @@
 * [Fix] fix padding in wysiwyg view
 * [Fix] Fix Dependent nullable
 * [Fix] Fix Dependent localization
+* [Delete] Contracts\Form\PanelInterface (deprecated)
 
 
 ## 2019-10-21
