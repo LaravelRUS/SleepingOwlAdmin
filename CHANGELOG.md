@@ -6,6 +6,7 @@
 * [Fix] Fix Dependent nullable
 * [Fix] Fix Dependent localization
 * [Delete] Contracts\Form\PanelInterface (deprecated)
+* [Add] `AdminDisplay::tree()` add `->setCollapsed(true)`
 
 
 ## 2019-10-21
