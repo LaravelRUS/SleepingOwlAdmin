@@ -207,6 +207,12 @@ class DependentSelect extends Select implements WithRoutesInterface
             $this->setHtmlAttribute('disabled', 'disabled');
         }
 
+        $options = $this->getOptions();
+
+        if ($this->isNullable()) {
+            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
+        }
+
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
@@ -214,7 +220,7 @@ class DependentSelect extends Select implements WithRoutesInterface
             'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
             'visibled' => $this->isVisible(),
-            'options' => $this->getOptions(),
+            'options' => $options,
             'value' => $this->getValueFromModel(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
