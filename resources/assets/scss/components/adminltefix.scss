@@ -38,3 +38,7 @@
 .card-header {
   border-bottom: 0;
 }
+
+.card.maximized-card {
+  overflow-y: auto;
+}

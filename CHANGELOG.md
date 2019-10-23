@@ -1,7 +1,14 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-10-23
+* [Fix] fix maximized-card scroll
+* [Fix] fix padding in wysiwyg view
+* [Fix] Fix Dependent nullable
+* [Fix] Fix Dependent localization
+
+
 ## 2019-10-21
-* [Add] Localisation validate from SO resources
+* [Add] Localization validate from SO resources
 * [Update] `AdminColumnEditable::datetime('updated_at', 'DateTime')` add datepicker
 * [Add] `AdminColumnEditable::date('date', 'Only Date')` add datepicker
 * [Fix] In `AdminColumn::images` fix `->setReadonly(true)` for dropzone

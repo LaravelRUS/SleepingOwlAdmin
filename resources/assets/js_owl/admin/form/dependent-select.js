@@ -1,5 +1,9 @@
 Admin.Modules.register('form.elements.dependent-select', () => {
-    $('.input-select-dependent').depdrop()
+    $('.input-select-dependent').depdrop({
+      loadingText: trans('lang.table.loadingRecords'),
+      placeholder: trans('lang.select.nothing'),
+      emptyMsg: trans('lang.select.no_items')
+    })
 
     $('.input-select-dependent').on('depdrop:init depdrop:change', function (event) {
         const $el = $(event.currentTarget);
