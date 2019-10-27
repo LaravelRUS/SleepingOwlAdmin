@@ -127,18 +127,28 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      *
      * @return null|string
      */
-    protected function getFormatedDate($date)
-    {
-        if (! is_null($date)) {
-            if (! $date instanceof Carbon) {
-                $date = Carbon::parse($date);
-            }
+     protected function getFormatedDate($date)
+     {
+         if (!$date instanceof Carbon) {
+             try {
+                 $date = Carbon::parse($date);
+             } catch (\Exception $e) {
+                 Log::error('Unable to parse date!', [
+                     'format' => $this->getFormat(),
+                     'date' => $date,
+                     'exception' => $e,
+                 ]);
+                 $date = null;
+             }
+         }
 
-            $date = $date->timezone($this->getTimezone())->format($this->getFormat());
-        }
+         if (empty($date)) {
+             return;
+         }
 
-        return $date;
-    }
+         $date = $date->timezone($this->getTimezone())->format($this->getFormat());
+         return $date;
+     }
 
     /**
      * @return null

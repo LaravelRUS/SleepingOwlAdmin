@@ -162,30 +162,52 @@ class DateTime extends NamedFormElement
      * @param $value mixed
      * @return string|void
      */
-    protected function parseValue($value)
+    public function parseValue($date)
     {
-        try {
-            $time = Carbon::parse($value);
-        } catch (Exception $e) {
-            Log::info('unable to parse date, re-trying with given format', [
-                'exception' => $e,
-                'date' => $value,
-            ]);
+        if (!$date instanceof Carbon) {
             try {
-                $time = Carbon::createFromFormat($this->getPickerFormat(), $value);
-            } catch (Exception $e) {
-                Log::error('unable to parse date!', [
-                    'exception' => $e,
+                $date = Carbon::parse($date);
+            } catch (\Exception $e) {
+                Log::error('Unable to parse date!', [
                     'pickerFormat' => $this->getPickerFormat(),
-                    'date' => $value,
+                    'date' => $date,
+                    'exception' => $e,
                 ]);
-
-                return;
+                $date = null;
             }
         }
 
-        return $time->timezone($this->getTimezone())->format(
-            $this->getPickerFormat()
-        );
+        if (empty($date)) {
+            return;
+        }
+
+        $date = $date->timezone($this->getTimezone())->format($this->getPickerFormat());
+        return $date;
     }
+    // protected function parseValue($value)
+    // {
+    //     try {
+    //         $time = Carbon::parse($value);
+    //     } catch (Exception $e) {
+    //         Log::info('unable to parse date, re-trying with given format', [
+    //             'exception' => $e,
+    //             'date' => $value,
+    //         ]);
+    //         try {
+    //             $time = Carbon::createFromFormat($this->getPickerFormat(), $value);
+    //         } catch (Exception $e) {
+    //             Log::error('unable to parse date!', [
+    //                 'exception' => $e,
+    //                 'pickerFormat' => $this->getPickerFormat(),
+    //                 'date' => $value,
+    //             ]);
+    //
+    //             return;
+    //         }
+    //     }
+    //
+    //     return $time->timezone($this->getTimezone())->format(
+    //         $this->getPickerFormat()
+    //     );
+    // }
 }

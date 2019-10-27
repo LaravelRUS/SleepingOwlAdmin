@@ -59,11 +59,24 @@ class DateTime extends NamedColumn
      */
     protected function getFormatedDate($date)
     {
-        if (! $date instanceof Carbon) {
-            $date = Carbon::parse($date);
+        if (!$date instanceof Carbon) {
+            try {
+                $date = Carbon::parse($date);
+            } catch (\Exception $e) {
+                Log::error('Unable to parse date!', [
+                    'format' => $this->getFormat(),
+                    'date' => $date,
+                    'exception' => $e,
+                ]);
+                $date = null;
+            }
         }
-        $date = $date->timezone($this->getTimezone())->format($this->getFormat());
 
+        if (empty($date)) {
+            return;
+        }
+
+        $date = $date->timezone($this->getTimezone())->format($this->getFormat());
         return $date;
     }
 }

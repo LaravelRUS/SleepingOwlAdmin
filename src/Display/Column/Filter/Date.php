@@ -98,16 +98,24 @@ class Date extends Text
      */
     public function parseValue($date)
     {
+        if (!$date instanceof Carbon) {
+            try {
+                $date = Carbon::parse($date);
+            } catch (\Exception $e) {
+                Log::error('Unable to parse date!', [
+                    'pickerFormat' => $this->getPickerFormat(),
+                    'date' => $date,
+                    'exception' => $e,
+                ]);
+                $date = null;
+            }
+        }
+
         if (empty($date)) {
             return;
         }
 
-        if (! $date instanceof Carbon) {
-            $date = Carbon::parse($date);
-        }
-
-        $date = $date->timezone($this->getTimezone())->format($this->getFormat());
-
+        $date = $date->timezone($this->getTimezone())->format($this->getPickerFormat());
         return $date;
     }
 }

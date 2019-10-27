@@ -78,8 +78,8 @@ class DateTest extends TestCase
         return [
             'db_format' => ['2016-05-23', 'd.F.Y', 'd.m.Y', '23.05.2016'],
             'string_format' => ['today', 'd.F.Y', 'd.m.Y', date('d.m.Y')],
-            'invalid_date' => ['2016:01:01', 'd.m.Y', 'd.m.Y', null],
-            'picker_format' => ['2016.01.01', 'Y.m.d', 'Y-m-d', '2016-01-01'],
+            'invalid_date' => ['2016:01:01', 'd.F.Y', 'd.m.Y', null],
+            'picker_format' => ['2016:01:01', 'Y:m:d', 'Y-m-d', '2016-01-01'],
             'empty_date' => ['', 'Y:m:d', 'Y-m-d', null],
             'null_date' => [null, 'Y:m:d', 'Y-m-d', null],
         ];
