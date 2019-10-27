@@ -180,6 +180,7 @@ class DateTime extends NamedFormElement
                         'date' => $date,
                         'exception' => $e,
                     ]);
+
                     return;
                 }
             }
