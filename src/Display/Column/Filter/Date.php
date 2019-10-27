@@ -2,11 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Exception;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
-use SleepingOwl\Admin\Traits\DatePicker;
 use SleepingOwl\Admin\Traits\DateFormat;
+use SleepingOwl\Admin\Traits\DatePicker;
 
 class Date extends Text
 {
