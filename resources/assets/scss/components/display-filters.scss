@@ -34,3 +34,12 @@
     float: right;
   }
 }
+
+//fix filters width
+tfoot.display-filters {
+  .select2-container,
+  .column-filter.select2-hidden-accessible {
+    width: auto!important;
+    display: block;
+  }
+}

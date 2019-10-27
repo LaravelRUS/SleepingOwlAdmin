@@ -1,5 +1,10 @@
 Admin.Modules.register('display.datatables', () => {
-    localStorage.clear();
+    // localStorage.clear();
+
+    var d = $('.datatables').data('attributes')
+
+    console.log(d)
+    // data-attributes
 
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(

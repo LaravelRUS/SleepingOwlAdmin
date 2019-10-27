@@ -1,5 +1,5 @@
 @if ( ! is_null($value))
-	<a href="{{ $url }}" class="btn btn-xs btn btn-default pull-right">
-		<i class="{{ $icon }}" data-toggle="tooltip" title="{{ $title }}"></i>
+	<a href="{{ $url }}" class="btn btn-xs btn btn-default pull-right" data-toggle="tooltip" title="{{ $title }}">
+		<i class="{{ $icon }}"></i>
 	</a>
 @endif

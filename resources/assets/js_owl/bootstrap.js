@@ -76,6 +76,12 @@ require('./admin/display/columns/checkbox');
 require('./admin/display/columns/control');
 require('./admin/display/columns/tree_control');
 require('./admin/display/columns/inline_edit');
+require('./admin/tooltip');
+
+
+//localStorage
+require('./admin/localstorage/tabs');
+
 
 /**
  * Initialize form
@@ -95,5 +101,4 @@ require('./admin/form/select');
 require('./admin/form/selectajax');
 require('./admin/form/dependent-select');
 require('./admin/display/env_editor');
-require('./admin/events');
 require('./admin/form/related');

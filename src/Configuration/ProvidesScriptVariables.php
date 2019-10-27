@@ -26,7 +26,7 @@ trait ProvidesScriptVariables
         if ($lang == 'sleeping_owl::lang') {
             $lang = trans('sleeping_owl::lang', [], 'en');
         }
-
+        
         return [
             'debug' => config('app.debug'),
             'env' => $this->app->environment(),
@@ -38,6 +38,8 @@ trait ProvidesScriptVariables
             'user_id' => auth()->id(),
             'datetime_format' => $this->generatePickerFormat($this->config['datetimeFormat']),
             'date_format' => $this->generatePickerFormat($this->config['dateFormat']),
+            'state_tabs' => $this->config['state_tabs'],
+            'state_filters' => $this->config['state_filters'],
         ];
     }
 }

@@ -6,10 +6,11 @@ use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DatePicker;
+use SleepingOwl\Admin\Traits\DateFormat;
 
 class Date extends Text
 {
-    use DatePicker;
+    use DatePicker, DateFormat;
 
     /**
      * @var string
@@ -32,34 +33,14 @@ class Date extends Text
     protected $seconds = false;
 
     /**
-     * @var int
+     * @var string
      */
-    protected $width = 150;
+    protected $timezone;
 
     public function initialize()
     {
         parent::initialize();
         $this->setHtmlAttribute('data-type', 'date');
-    }
-
-    /**
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * @param string $format
-     *
-     * @return $this
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-
-        return $this;
     }
 
     /**
@@ -102,41 +83,14 @@ class Date extends Text
     }
 
     /**
-     * @return int
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * @param int $width
-     *
-     * @return $this
-     */
-    public function setWidth($width)
-    {
-        intval($width);
-
-        if ($width < 0) {
-            $width = 0;
-        }
-
-        $this->width = (int) $width;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function toArray()
     {
         return parent::toArray() + [
-                'seconds' => $this->hasSeconds(),
-                'pickerFormat' => $this->getJsPickerFormat(),
-                'width' => $this->getWidth(),
-            ];
+            'seconds' => $this->hasSeconds(),
+            'pickerFormat' => $this->getJsPickerFormat(),
+        ];
     }
 
     /**
@@ -150,26 +104,12 @@ class Date extends Text
             return;
         }
 
-        try {
+        if (! $date instanceof Carbon) {
             $date = Carbon::parse($date);
-        } catch (Exception $e) {
-            Log::info('unable to parse date, re-trying with given format', [
-                'exception' => $e,
-                'date' => $date,
-            ]);
-            try {
-                $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
-            } catch (Exception $e) {
-                Log::error('unable to parse date!', [
-                    'exception' => $e,
-                    'pickerFormat' => $this->getPickerFormat(),
-                    'date' => $date,
-                ]);
-
-                return;
-            }
         }
 
-        return $date->format($this->getFormat());
+        $date = $date->timezone($this->getTimezone())->format($this->getFormat());
+
+        return $date;
     }
 }

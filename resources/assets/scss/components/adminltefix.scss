@@ -42,3 +42,7 @@
 .card.maximized-card {
   overflow-y: auto;
 }
+
+.fade {
+  transition: opacity 0.2s;
+}

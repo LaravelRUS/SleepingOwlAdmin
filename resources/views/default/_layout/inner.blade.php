@@ -21,12 +21,6 @@
         <div class="content-wrapper">
 
             <div class="content-header">
-                {{-- @sngrl merge: bs4 to dev --}}
-                {{--
-                <h1>
-                    {!! $title !!}
-                </h1>
-                --}}
                 <div class="container-fluid">
                     <div class="row mb-2 align-items-center">
                         <div class="col-sm-12 col-md-6">

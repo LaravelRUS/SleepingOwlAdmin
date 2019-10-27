@@ -62,28 +62,6 @@ class DateTest extends TestCase
     }
 
     /**
-     * @dataProvider widthProvider
-     */
-    public function test_gets_or_sets_width($width, $expected)
-    {
-        $filter = $this->getFilter();
-
-        $filter->setWidth($width);
-        $this->assertEquals($expected, $filter->getWidth());
-    }
-
-    public function widthProvider()
-    {
-        return [
-            'integer' => [100, 100],
-            'string_int' => ['100', 100],
-            'string_int_with_text' => ['150px', 150],
-            'negative_number' => [-100, 0],
-            'zero' => [0, 0],
-        ];
-    }
-
-    /**
      * @dataProvider datesProvider
      */
     public function test_parse_value($date, $pickerFormat, $format, $expected)

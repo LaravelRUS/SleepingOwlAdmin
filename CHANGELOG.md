@@ -1,11 +1,22 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-10-27
+* [Fix] Fix table footer filter width (select2)
+* [Delete] Deleted `setWidth` in `Date` filter
+
+
+## 2019-10-24
+* [Add] Tabs state remember
+* [Add] Fade transition opasity (0.2s)
+* [Delete] Delete clear localStorage in datatables
+
+
 ## 2019-10-23
-* [Fix] fix maximized-card scroll
-* [Fix] fix padding in wysiwyg view
+* [Fix] Fix maximized-card scroll
+* [Fix] Fix padding in wysiwyg view
 * [Fix] Fix Dependent nullable
 * [Fix] Fix Dependent localization
-* [Delete] Contracts\Form\PanelInterface (deprecated)
+* [Delete] Delete `Contracts\Form\PanelInterface` (deprecated, have alias on `card`)
 * [Add] `AdminDisplay::tree()` add `->setCollapsed(true)`
 
 
