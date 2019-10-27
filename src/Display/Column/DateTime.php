@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display\Column;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\DateFormat;
+use Illuminate\Support\Facades\Log;
 
 class DateTime extends NamedColumn
 {
@@ -59,25 +60,27 @@ class DateTime extends NamedColumn
      */
     protected function getFormatedDate($date)
     {
-        if (! $date instanceof Carbon) {
-            try {
-                $date = Carbon::parse($date);
-            } catch (\Exception $e) {
-                Log::error('Unable to parse date!', [
-                    'format' => $this->getFormat(),
-                    'date' => $date,
-                    'exception' => $e,
-                ]);
-                $date = null;
-            }
-        }
-
         if (empty($date)) {
             return;
         }
 
-        $date = $date->timezone($this->getTimezone())->format($this->getFormat());
+        if (! $date instanceof Carbon) {
+            try {
+                $date = Carbon::parse($date);
+            } catch (\Exception $e) {
+                try {
+                    $date = Carbon::createFromFormat($this->getFormat(), $date);
+                } catch (\Exception $e) {
+                    Log::error('Unable to parse date!', [
+                        'format' => $this->getFormat(),
+                        'date' => $date,
+                        'exception' => $e,
+                    ]);
+                    return;
+                }
+            }
+        }
 
-        return $date;
+        return $date->timezone($this->getTimezone())->format($this->getFormat());
     }
 }

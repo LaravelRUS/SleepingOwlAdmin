@@ -8,6 +8,7 @@ use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\DateFormat;
 use SleepingOwl\Admin\Traits\DatePicker;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use Illuminate\Support\Facades\Log;
 
 class DateTime extends EditableColumn implements ColumnEditableInterface
 {
@@ -129,26 +130,28 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     protected function getFormatedDate($date)
     {
-        if (! $date instanceof Carbon) {
-            try {
-                $date = Carbon::parse($date);
-            } catch (\Exception $e) {
-                Log::error('Unable to parse date!', [
-                     'format' => $this->getFormat(),
-                     'date' => $date,
-                     'exception' => $e,
-                 ]);
-                $date = null;
-            }
-        }
-
         if (empty($date)) {
             return;
         }
 
-        $date = $date->timezone($this->getTimezone())->format($this->getFormat());
+        if (! $date instanceof Carbon) {
+            try {
+                $date = Carbon::parse($date);
+            } catch (\Exception $e) {
+                try {
+                    $date = Carbon::createFromFormat($this->getFormat(), $date);
+                } catch (\Exception $e) {
+                    Log::error('Unable to parse date!', [
+                        'format' => $this->getFormat(),
+                        'date' => $date,
+                        'exception' => $e,
+                    ]);
+                    return;
+                }
+            }
+        }
 
-        return $date;
+        return $date->timezone($this->getTimezone())->format($this->getFormat());
     }
 
     /**

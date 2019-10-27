@@ -164,26 +164,28 @@ class DateTime extends NamedFormElement
      */
     public function parseValue($date)
     {
-        if (! $date instanceof Carbon) {
-            try {
-                $date = Carbon::parse($date);
-            } catch (\Exception $e) {
-                Log::error('Unable to parse date!', [
-                    'pickerFormat' => $this->getPickerFormat(),
-                    'date' => $date,
-                    'exception' => $e,
-                ]);
-                $date = null;
-            }
-        }
-
         if (empty($date)) {
             return;
         }
 
-        $date = $date->timezone($this->getTimezone())->format($this->getPickerFormat());
+        if (! $date instanceof Carbon) {
+            try {
+                $date = Carbon::parse($date);
+            } catch (\Exception $e) {
+                try {
+                    $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
+                } catch (\Exception $e) {
+                    Log::error('Unable to parse date!', [
+                        'format' => $this->getPickerFormat(),
+                        'date' => $date,
+                        'exception' => $e,
+                    ]);
+                    return;
+                }
+            }
+        }
 
-        return $date;
+        return $date->timezone($this->getTimezone())->format($this->getPickerFormat());
     }
 
     // protected function parseValue($value)
