@@ -121,6 +121,6 @@ class Date extends Text
             }
         }
 
-        return $date->timezone($this->getTimezone())->format($this->getPickerFormat());
+        return $date->timezone($this->getTimezone())->format($this->getFormat());
     }
 }

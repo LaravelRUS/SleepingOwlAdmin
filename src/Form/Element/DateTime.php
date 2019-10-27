@@ -186,7 +186,7 @@ class DateTime extends NamedFormElement
             }
         }
 
-        return $date->timezone($this->getTimezone())->format($this->getPickerFormat());
+        return $date->timezone($this->getTimezone())->format($this->getFormat());
     }
 
     // protected function parseValue($value)
