@@ -26,7 +26,7 @@ trait ProvidesScriptVariables
         if ($lang == 'sleeping_owl::lang') {
             $lang = trans('sleeping_owl::lang', [], 'en');
         }
-        
+
         return [
             'debug' => config('app.debug'),
             'env' => $this->app->environment(),
