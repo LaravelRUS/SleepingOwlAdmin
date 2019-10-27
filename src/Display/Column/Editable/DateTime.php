@@ -4,11 +4,11 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\DateFormat;
 use SleepingOwl\Admin\Traits\DatePicker;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use Illuminate\Support\Facades\Log;
 
 class DateTime extends EditableColumn implements ColumnEditableInterface
 {
@@ -146,6 +146,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
                         'date' => $date,
                         'exception' => $e,
                     ]);
+
                     return;
                 }
             }

@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Traits\DateFormat;
-use Illuminate\Support\Facades\Log;
 
 class DateTime extends NamedColumn
 {
@@ -76,6 +76,7 @@ class DateTime extends NamedColumn
                         'date' => $date,
                         'exception' => $e,
                     ]);
+
                     return;
                 }
             }

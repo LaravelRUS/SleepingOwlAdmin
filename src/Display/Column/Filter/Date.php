@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DateFormat;
 use SleepingOwl\Admin\Traits\DatePicker;
-use Illuminate\Support\Facades\Log;
 
 class Date extends Text
 {
@@ -115,6 +115,7 @@ class Date extends Text
                         'date' => $date,
                         'exception' => $e,
                     ]);
+
                     return;
                 }
             }
