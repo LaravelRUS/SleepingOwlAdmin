@@ -3,6 +3,8 @@
 ## 2019-10-27
 * [Fix] Fix table footer filter width (select2)
 * [Delete] Deleted `setWidth` in `Date` filter
+* [Refactor] Refactor date & datetime field in Displays, Forms & Filters
+* [Fix] Fix datatables clear filters
 
 
 ## 2019-10-24

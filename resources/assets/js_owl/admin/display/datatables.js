@@ -1,10 +1,4 @@
 Admin.Modules.register('display.datatables', () => {
-    // localStorage.clear();
-
-    var d = $('.datatables').data('attributes')
-
-    console.log(d)
-    // data-attributes
 
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
@@ -58,6 +52,13 @@ Admin.Modules.register('display.datatables', () => {
 
             params.bStateSave = true;
 
+            params.stateSaveParams = function (settings, item) {
+                var columns = item.columns
+                $.each(columns, function(index, value){
+                  value.search.search = ''
+                })
+            }
+
             params.ajax = {
                 url: url,
                 data (d) {
@@ -98,7 +99,6 @@ Admin.Modules.register('display.datatables', () => {
 
         //clear filter
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
-
             let input = $(".display-filters td[data-index] input").val(null);
             input.trigger('change');
 
@@ -106,6 +106,7 @@ Admin.Modules.register('display.datatables', () => {
             selector.val(null);
             selector.trigger('change');
 
+            table.state.clear();
             table.draw();
         });
 
@@ -116,6 +117,7 @@ Admin.Modules.register('display.datatables', () => {
         });
     })
 })
+// ============= end module
 
 window.checkNumberRange = (fromValue, toValue, value) => {
     if(_.isNaN(fromValue) && _.isNaN(toValue)) {
