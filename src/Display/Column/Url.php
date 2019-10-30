@@ -100,6 +100,7 @@ class Url extends NamedColumn
         if ($this->isolated) {
             $model_value = htmlspecialchars($model_value);
         }
+
         return parent::toArray() + [
             'linkAttributes' => $this->getLinkAttributes(),
             'value' => $model_value,
