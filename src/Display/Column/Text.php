@@ -44,8 +44,12 @@ class Text extends NamedColumn
             $model_value = $modifier($model_value, $this->getModel());
         }
 
+        if ($this->isolated) {
+            $model_value = htmlspecialchars($model_value);
+        }
+
         return parent::toArray() + [
-            'value' => htmlspecialchars($model_value),
+            'value' => $model_value,
         ];
     }
 }

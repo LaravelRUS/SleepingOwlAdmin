@@ -18,7 +18,7 @@
         </ul>
     </div>
     <div class="panel-body">
-        <div class="tab-content">
+        <div class="tab-content tab-content">
             @foreach ($items as $label => $formItems)
                 <div role="tabpanel" class="tab-pane {!! ($active == $label) ? 'in active' : '' !!}"
                      id="{{ md5($label) }}">

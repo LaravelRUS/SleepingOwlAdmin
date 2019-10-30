@@ -96,9 +96,13 @@ class Url extends NamedColumn
      */
     public function toArray()
     {
+        $model_value = $this->getModelValue();
+        if ($this->isolated) {
+            $model_value = htmlspecialchars($model_value);
+        }
         return parent::toArray() + [
             'linkAttributes' => $this->getLinkAttributes(),
-            'value' => htmlspecialchars($this->getModelValue()),
+            'value' => $model_value,
             'icon' => $this->getIcon(),
             'text' => $this->getText(),
         ];

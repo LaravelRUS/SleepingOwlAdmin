@@ -4,6 +4,7 @@
 * [Add] Add button for clear filter and order in DataTable
 * [Add] Filters state remember
 * [Add] Datatables on/off state remember (in config)
+* [Add] Add `->setIsolated(false)` for display columns (disabled `htmlspecialchars`)
 
 
 ## 2019-10-27

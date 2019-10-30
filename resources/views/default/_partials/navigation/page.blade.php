@@ -13,7 +13,7 @@
             </span>
           @endif
         </span>
-        <i class="fas fa-angle-right right"></i>
+        <i class="fas fa-angle-left right"></i>
       </p>
     </a>
 

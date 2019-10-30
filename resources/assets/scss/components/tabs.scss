@@ -3,6 +3,11 @@
     order: 999;
     margin-left: auto;
   }
+
+  .nav-link.active,
+  .nav-item.show .nav-link  {
+    border-bottom-color: $gray-300;
+  }
 }
 
 .tab-content {

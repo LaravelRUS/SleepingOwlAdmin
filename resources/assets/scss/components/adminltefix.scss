@@ -6,6 +6,10 @@
   max-width: 100%;
 }
 
+.row-image {
+  text-align: center;
+}
+
 .sidebar-open {
   .main-sidebar {
     transition: 0.5s;
@@ -18,8 +22,13 @@
   }
 }
 
-.nav-sidebar .nav-link > p > .right:nth-child(2) {
-  right: 1rem;
+
+.nav-sidebar .nav-link {
+  padding: 0.5rem;
+
+  & > p > .right:nth-child(2) {
+    right: 0;
+  }
 }
 
 .brand-link {

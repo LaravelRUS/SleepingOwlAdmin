@@ -34,6 +34,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * @var bool
      */
+    protected $isolated = true;
+
+    /**
+     * @var bool
+     */
     protected $isSearchable = true;
 
     /**
@@ -124,15 +129,40 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
+     * @param bool $isolated
+     *
+     * @return $this
+     */
+    public function setIsolated($isolated)
+    {
+        $this->isolated = $isolated;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsolated()
+    {
+        return $this->isolated;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
      */
     public function toArray()
     {
+        $model_value_small = $this->getSmall();
+        if ($this->isolated) {
+            $model_value_small = htmlspecialchars($model_value_small);
+        }
+
         return parent::toArray() + [
             'name' => $this->getName(),
-            'small' => htmlspecialchars($this->getSmall()),
+            'small' => $model_value_small,
         ];
     }
 
