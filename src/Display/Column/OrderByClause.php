@@ -127,7 +127,6 @@ class OrderByClause implements OrderByClauseInterface
                         $relationModel = $relationClass->getRelated();
                     }
                     call_user_func([$this, $loadRelationMethod], $relations, $relationClass, $relationModel, $model, $query, $direction);
-
                 } else {
                     break;
                 }
@@ -277,7 +276,7 @@ class OrderByClause implements OrderByClauseInterface
         $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
         $morphType = $relationClass->getMorphType();
 
-        $foreignTablePrefix = 'morphTo' . mt_rand(99, 999);
+        $foreignTablePrefix = 'morphTo'.mt_rand(99, 999);
         $foreignTableField = $relations->last();
         $sortedColumnAlias = implode('__', [$foreignTablePrefix, $foreignTableField]);
         $this->sortedColumnAlias = $sortedColumnAlias;
@@ -288,8 +287,7 @@ class OrderByClause implements OrderByClauseInterface
             ->selectRaw($morphType)
             ->get()
             ->pluck($morphType)
-            ->toArray()
-        ;
+            ->toArray();
 
         // Make morph map
         $morphMap = Relation::$morphMap;
@@ -317,11 +315,10 @@ class OrderByClause implements OrderByClauseInterface
             $query->leftJoin(DB::raw('`'.$tableName.'` AS '.$tableAlias), function ($join) use ($tableAlias, $foreignKey, $ownerColumn, $ownerTable, $morphType, $existsMorphTypeAlias) {
                 $join
                     ->on(DB::raw($tableAlias.'.`'.$foreignKey.'`'), '=', $ownerColumn)
-                    ->where(DB::raw('`'.$ownerTable.'`.`'.$morphType.'`'), '=', DB::raw("'".$existsMorphTypeAlias."'"))
-                ;
+                    ->where(DB::raw('`'.$ownerTable.'`.`'.$morphType.'`'), '=', DB::raw("'".$existsMorphTypeAlias."'"));
             });
         }
-        $sortedColumnRaw = "(CASE `{$ownerTable}`.`{$morphType}` " . implode(' ', $sortedColumnRaw) . " END)";
+        $sortedColumnRaw = "(CASE `{$ownerTable}`.`{$morphType}` ".implode(' ', $sortedColumnRaw).' END)';
 
         // Add sorted field to result
         $query->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)]);
