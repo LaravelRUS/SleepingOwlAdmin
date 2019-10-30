@@ -31,13 +31,14 @@
                     </button>
                 @endif
             </div>
-            @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
         </div>
 
-        @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
         <div class="card-body pad pt-0">
             {!! Form::textarea($name, $value, $attributes) !!}
         </div>
+
+        @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
+        @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
     </div>
 @endif

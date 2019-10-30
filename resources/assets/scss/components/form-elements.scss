@@ -21,24 +21,8 @@ $errors-bg-color: $gray-100;
 $arrow-size: 6px;
 
 .form-element-errors {
-  border-radius: 4px;
   color: $danger;
   font-size: 13px;
-  padding: 10px 10px 10px 30px;
-  background: $white;
-  position: relative;
-  margin-top: $arrow-size + 5px;
-
-  &:after {
-    content: '';
-    position: absolute;
-    top: -$arrow-size;
-    width: 0;
-    height: 0;
-    border-left: $arrow-size solid transparent;
-    border-right: $arrow-size solid transparent;
-    border-bottom: $arrow-size solid $white;
-  }
 }
 
 .form-element-helptext {

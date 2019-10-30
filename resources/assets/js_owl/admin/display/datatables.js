@@ -97,6 +97,7 @@ Admin.Modules.register('display.datatables', () => {
 
         params.fnDrawCallback = function (oSettings) {
             Admin.Events.fire('datatables::draw', this)
+            jQuery('[data-toggle="tooltip"]').tooltip()
         }
 
         params.createdRow = function (row, data, dataIndex) {
@@ -119,28 +120,28 @@ Admin.Modules.register('display.datatables', () => {
             if (stateFilters) {
                 fillFilters(filters)
             }
-            table.draw();
+            table.draw()
         });
 
         //clear filter
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
-            let input = $(".display-filters td[data-index] input");
-            input.val(null);
-            input.trigger('change');
+            let input = $(".display-filters td[data-index] input")
+            input.val(null)
+            input.trigger('change')
 
-            let selector = $(".display-filters td[data-index] select");
-            selector.val(null);
-            selector.trigger('change');
+            let selector = $(".display-filters td[data-index] select")
+            selector.val(null)
+            selector.trigger('change')
 
             table.state.clear();
             var urlName = 'Filters_/' + Admin.Url.url_path
             localStorage.removeItem(urlName)
-            table.draw();
+            table.draw()
         });
 
         $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e) {
             if(e.keyCode === 13) {
-                table.draw();
+                table.draw()
             }
         });
     })

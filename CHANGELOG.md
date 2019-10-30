@@ -5,6 +5,10 @@
 * [Add] Filters state remember
 * [Add] Datatables on/off state remember (in config)
 * [Add] Add `->setIsolated(false)` for display columns (disabled `htmlspecialchars`)
+* [Fix] Fix WYSIWYG error text position
+* [Fix] Fix error text style
+* [Fix] Fix tooltip initialize (tabs and filters)
+* [Fix] Fix `AdminForm::form()` view, add empty class
 
 
 ## 2019-10-27

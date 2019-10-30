@@ -27,6 +27,7 @@ Admin.Modules.register('storage.tabbed', () => {
       if (stateTabs) {
         fillActiveTabs(url, tabbed)
       }
+      jQuery('[data-toggle="tooltip"]').tooltip()
     })
     .on('hidden.bs.tab', function (e) {
       let tab = $(e.target).attr('aria-controls')
@@ -72,6 +73,7 @@ Admin.Modules.register('storage.tabbed', () => {
     array = JSON.parse(activeTabs);
     jQuery.each(array, function(index, item){
       jQuery('[aria-controls=' + item + ']').tab('show')
+      jQuery('[data-toggle="tooltip"]').tooltip()
     })
   }
   // ==========================
