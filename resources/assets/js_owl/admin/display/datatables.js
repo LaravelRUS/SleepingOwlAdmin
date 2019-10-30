@@ -1,4 +1,19 @@
 Admin.Modules.register('display.datatables', () => {
+    const stateFilters = Admin.Config.get('state_filters')
+
+    if (stateFilters) {
+        var filters = $('.display-filters[data-display="DisplayDatatablesAsync"]')
+
+        if (filters.length > 0) {
+            urlName = getName()
+            //Check in localStorage
+            if (localStorage.getItem(urlName)) {
+                activeFilters = localStorage.getItem(urlName)
+                setActiveFilters(filters, activeFilters)
+            }
+        }
+    }
+
 
     $.fn.dataTable.ext.errMode = (dt) => {
         Admin.Messages.error(
@@ -50,13 +65,18 @@ Admin.Modules.register('display.datatables', () => {
 
             params.sDom += 'r>t<"F"ip>';
 
-            params.bStateSave = true;
+            if (Admin.Config.get('state_datatables')) {
+                params.bStateSave = true;
+            }
 
-            params.stateSaveParams = function (settings, item) {
-                var columns = item.columns
-                $.each(columns, function(index, value){
-                  value.search.search = ''
-                })
+            if (!Admin.Config.get('state_filters')) {
+                params.stateSaveParams = function (settings, item) {
+                    item.search.search = ''
+                    var columns = item.columns
+                    $.each(columns, function(index, value){
+                        value.search.search = ''
+                    })
+                }
             }
 
             params.ajax = {
@@ -64,6 +84,7 @@ Admin.Modules.register('display.datatables', () => {
                 data (d) {
                     Admin.Events.fire('datatables::ajax::data', d)
 
+                    // nit:Daan
                     iterateColumnFilters(id, function ($element, index, type) {
                         if (name = $element.data('ajax-data-name')) {
                             d.columns[index]['search'][name] = $element.val()
@@ -87,6 +108,7 @@ Admin.Modules.register('display.datatables', () => {
 
         let table = $this.DataTable(params);
 
+
         iterateColumnFilters(id, function ($element, index, type) {
             if (_.isFunction(window.columnFilters[type])) {
                 window.columnFilters[type]($element, table, table.column(index), index, params.serverSide);
@@ -94,12 +116,16 @@ Admin.Modules.register('display.datatables', () => {
         });
 
         $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
+            if (stateFilters) {
+                fillFilters(filters)
+            }
             table.draw();
         });
 
         //clear filter
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
-            let input = $(".display-filters td[data-index] input").val(null);
+            let input = $(".display-filters td[data-index] input");
+            input.val(null);
             input.trigger('change');
 
             let selector = $(".display-filters td[data-index] select");
@@ -107,6 +133,8 @@ Admin.Modules.register('display.datatables', () => {
             selector.trigger('change');
 
             table.state.clear();
+            var urlName = 'Filters_/' + Admin.Url.url_path
+            localStorage.removeItem(urlName)
             table.draw();
         });
 
@@ -116,6 +144,110 @@ Admin.Modules.register('display.datatables', () => {
             }
         });
     })
+
+
+    // ==========================
+    //Get localStorage name
+    function getName() {
+        var path = Admin.Url.url_path
+
+        //Simplify name for edit
+        var isEdit = path.search('edit') > 0;
+        if (isEdit) {
+            path = path.replace(/\d+\/edit$/, '') + 'edit'
+        }
+
+        var urlName = 'Filters_/' + path
+        return urlName
+    }
+
+    //Fill Filters array
+    function fillFilters(filters) {
+
+        var arr = {}
+        //each datatables
+        filters.each((index, item) => {
+            var f = {}
+            var columns = jQuery(item).find('[data-index]')
+
+            //each datatables.columns
+            columns.each((i, column) => {
+                var col = jQuery(column).find('.column-filter')
+
+                if (col.length > 0) {
+                    var type = col.data('type')
+
+                    if (type == "range") {
+                        var r = {}
+                        var range = jQuery(col).find('.form-control.column-filter')
+                        if (range.length > 0) {
+                            //each datatables.columns.range
+                            range.each((index, item) => {
+                                if (item.value) {
+                                    r[index] = item.value
+                                }
+                            })
+                        }
+                        if (!jQuery.isEmptyObject(r)) {
+                            var inner = {}
+                            inner['type'] = type
+                            inner['val'] = r
+                        }
+                    } else if (type == "control") {
+                        // no save
+                    } else {
+                        if (col.val()) {
+                            var inner = {}
+                            inner['type'] = type
+                            inner['val'] = col.val()
+                        }
+                    }
+                    if (!jQuery.isEmptyObject(inner)) {
+                        f[i] = inner
+                    }
+                }
+            })
+            if (!jQuery.isEmptyObject(f)) {
+                arr[index] = f
+            }
+        })
+
+        if (!jQuery.isEmptyObject(arr)) {
+            try {
+                localStorage.setItem(urlName, JSON.stringify(arr))
+            } catch (e) {
+                localStorage.clear()
+                localStorage.setItem(urlName, JSON.stringify(arr))
+            }
+        } else {
+          localStorage.removeItem(urlName)
+        }
+    }
+
+    //Set all filters
+    function setActiveFilters(filters, activeFilters) {
+        array = JSON.parse(activeFilters);
+
+        //Iterate array filter
+        jQuery.each(array, function(index, datatable) {
+            var datatables_id = jQuery(filters[index]).data('datatablesId')
+            jQuery.each(datatable, function(index, column) {
+                if (column.type == 'range') {
+                    jQuery.each(column.val, function(i, item) {
+                        var rangeFilter = jQuery('[data-datatables-id="'+ datatables_id +'"] [data-index="'+ index +'"] [data-type="range"] .column-filter')
+                        $(rangeFilter[i]).val(item).trigger('change')
+                    })
+                } else {
+                    var cfilter = jQuery('[data-datatables-id="'+ datatables_id +'"] [data-index="'+ index +'"] .column-filter')
+                    if (cfilter.length) {
+                        jQuery(cfilter).val(column.val).trigger('change')
+                    }
+                }
+            })
+        })
+    }
+    // ==========================
+
 })
 // ============= end module
 
@@ -198,6 +330,7 @@ window.columnFilters = {
         if (serverSide) {
             return;
         }
+
         $.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
             if (table.settings()[0].sTableId != settings.sTableId) {
                 return true;
@@ -243,6 +376,7 @@ window.columnFilters = {
     //text ========================================
     text (input, table, column, index, serverSide) {
         let $input = $(input)
+
         $input.on('keyup change', () => {
             column.search($input.val());
         })

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Configuration;
 
+use Illuminate\Support\Facades\Request;
 use SleepingOwl\Admin\Traits\DatePicker;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
@@ -32,14 +33,16 @@ trait ProvidesScriptVariables
             'env' => $this->app->environment(),
             'locale' => $this->app['translator']->getLocale(),
             'url' => $this->app['url']->to('/'),
-            'lang' => $lang,
+            'url_path' => Request::path(),
             'wysiwyg' => $this->config['wysiwyg'],
             'template' => $this->app[TemplateInterface::class]->toArray(),
             'user_id' => auth()->id(),
             'datetime_format' => $this->generatePickerFormat($this->config['datetimeFormat']),
             'date_format' => $this->generatePickerFormat($this->config['dateFormat']),
+            'state_datatables' => $this->config['state_datatables'],
             'state_tabs' => $this->config['state_tabs'],
             'state_filters' => $this->config['state_filters'],
+            'lang' => $lang,
         ];
     }
 }

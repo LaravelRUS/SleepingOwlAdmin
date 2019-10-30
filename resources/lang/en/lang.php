@@ -140,6 +140,7 @@ return [
         'download' => 'Download',
         'add' => 'Add',
         'remove' => 'Remove',
+        'clear' => 'Clear',
     ],
 
     'message' => [
