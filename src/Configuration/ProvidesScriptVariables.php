@@ -29,8 +29,8 @@ trait ProvidesScriptVariables
         }
 
         $state_filters = $this->config['state_filters'];
-        if (!$this->config['state_datatables']) {
-          $state_filters = false;
+        if (! $this->config['state_datatables']) {
+            $state_filters = false;
         }
 
         return [
