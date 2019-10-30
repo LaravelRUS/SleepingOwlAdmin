@@ -71,7 +71,7 @@ Admin.Modules.register('storage.tabbed', () => {
   function setActiveTabs(activeTabs) {
     array = JSON.parse(activeTabs);
     jQuery.each(array, function(index, item){
-      $('[aria-controls=' + item + ']').tab('show')
+      jQuery('[aria-controls=' + item + ']').tab('show')
     })
   }
   // ==========================

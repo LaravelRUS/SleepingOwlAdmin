@@ -140,6 +140,7 @@ return [
         'download' => '下载',
         'add' => '加',
         'remove' => '删除',
+        'clear' => '清',
     ],
 
     'message' => [

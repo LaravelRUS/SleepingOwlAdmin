@@ -1,5 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-10-30
+* [Add] Add button for clear filter and order in DataTable
+* [Add] Filters state remember
+* [Add] Datatables on/off state remember (in config)
+
+
 ## 2019-10-27
 * [Fix] Fix table footer filter width (select2)
 * [Delete] Deleted `setWidth` in `Date` filter
