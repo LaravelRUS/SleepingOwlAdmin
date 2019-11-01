@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
-use Illuminate\Support\Arr;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DependentSelect extends Select implements WithRoutesInterface

@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Contracts\Form\Element\Taggabled;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Form\Element\HasSyncCallback;
 use SleepingOwl\Admin\Contracts\Form\Element\MustDeleteRelatedItem;
+use SleepingOwl\Admin\Contracts\Form\Element\Taggabled;
 
 trait ElementSaveRelation
 {

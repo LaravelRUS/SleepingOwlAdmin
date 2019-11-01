@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Form;
 
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Form\Card\Body;
 use SleepingOwl\Admin\Form\Card\Footer;
 use SleepingOwl\Admin\Form\Card\Header;
 use SleepingOwl\Admin\Form\Element\Html;
 use SleepingOwl\Admin\Traits\CardControl;
-use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormCard extends FormDefault
 {

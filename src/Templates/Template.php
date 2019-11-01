@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\AdminInterface;
-use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 abstract class Template implements TemplateInterface
 {
