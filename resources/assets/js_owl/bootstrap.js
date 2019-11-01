@@ -19,7 +19,6 @@ require('./libs/jquery-form');
 require('./libs/moment');
 require('./libs/bootstrap');
 require('./libs/i18next');
-require('./libs/bootstrap-datepicker');
 require('./libs/datetimepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');

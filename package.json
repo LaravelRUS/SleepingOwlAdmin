@@ -15,7 +15,6 @@
     "admin-lte": "^v3.0.0-rc.1",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
-    "bootstrap-datepicker": "^1.9.0",
     "bootstrap4-datetimepicker": "^5.2.3",
     "datatables.net": "^1.10.19",
     "datatables.net-responsive": "^2.2.3",

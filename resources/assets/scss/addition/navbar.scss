@@ -1,4 +1,9 @@
 .navbar {
+
+  a[data-widget="pushmenu"] {
+    cursor: pointer;
+  }
+
   .navbar-nav {
     .dropdown-menu {
       @media (max-width: 768px) {

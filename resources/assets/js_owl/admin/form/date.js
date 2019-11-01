@@ -1,7 +1,6 @@
 Admin.Modules.register('form.elements.date', () => {
   $('.input-group.date').datetimepicker({
     locale: Admin.locale,
-    // debug:true,
     format: 'L', //date only
     icons: {
       time: "fas fa-clock",

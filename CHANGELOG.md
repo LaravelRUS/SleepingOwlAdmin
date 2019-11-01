@@ -1,5 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-11-01
+* [Add] Add `menu-state` in localStorage (dublicate)
+* [Hot fix] Fix datetime form format
+
+
 ## 2019-10-30
 * [Add] Add button for clear filter and order in DataTable
 * [Add] Filters state remember
@@ -20,7 +25,7 @@
 
 ## 2019-10-24
 * [Add] Tabs state remember
-* [Add] Fade transition opasity (0.2s)
+* [Add] Fade transition opacity (0.2s)
 * [Delete] Delete clear localStorage in datatables
 
 

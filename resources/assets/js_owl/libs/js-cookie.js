@@ -21,49 +21,53 @@ const ClassName = {
 }
 
 
-const sidebar = $('.sidebar-mini');
-const sizecolapsed = 1200;
+const sidebar = $('.sidebar-mini')
+const sizecolapsed = 1200
 var collapse = sidebar.hasClass('sidebar-collapse')
 
 function close() {
-  collapsed();
-  Cookies.set('menu-state', 'close');
+  collapsed()
+  localStorage.setItem('menu-state', 'close')
+  Cookies.set('menu-state', 'close')
 }
 
 function collapsed() {
-  sidebar.addClass('sidebar-collapse');
-  sidebar.removeClass('sidebar-open');
+  sidebar.addClass('sidebar-collapse')
+  sidebar.removeClass('sidebar-open')
 }
 
 function open() {
-  sidebar.removeClass('sidebar-collapse');
-  sidebar.addClass('sidebar-open');
-  Cookies.set('menu-state', 'open');
+  sidebar.removeClass('sidebar-collapse')
+  sidebar.addClass('sidebar-open')
+  localStorage.setItem('menu-state', 'open')
+  Cookies.set('menu-state', 'open')
 }
 
 function toggle() {
-  if (Cookies.get('menu-state') === 'open') {
-    Cookies.set('menu-state', 'close');
+  if (Cookies.get('menu-state') === 'open' || localStorage.getItem('menu-state') === 'open') {
+    localStorage.setItem('menu-state', 'close')
+    Cookies.set('menu-state', 'close')
   } else {
-    Cookies.set('menu-state', 'open');
+    localStorage.setItem('menu-state', 'open')
+    Cookies.set('menu-state', 'open')
   }
 }
 
 
 $(window).on('load', () => {
-  if (Cookies.get('menu-state') === 'open') {
-    open();
-  } else if (Cookies.get('menu-state') === 'close') {
-    close();
+  if (Cookies.get('menu-state') === 'open' || localStorage.getItem('menu-state') === 'open') {
+    open()
+  } else if (Cookies.get('menu-state') === 'close' || localStorage.getItem('menu-state') === 'close') {
+    close()
   } else {
-    open();
+    open()
   }
 
   if($(window).width() <= sizecolapsed) {
-    collapsed();
+    collapsed()
   }
 
   $('[data-widget="pushmenu"]').on('click', function() {
-    toggle();
-  });
-});
+    toggle()
+  })
+})
