@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\View\Factory;
-use SleepingOwl\Admin\Admin;
-use Illuminate\View\FileViewFinder;
-use Illuminate\View\Engines\PhpEngine;
 use Illuminate\View\Engines\EngineResolver;
+use Illuminate\View\Engines\PhpEngine;
+use Illuminate\View\Factory;
+use Illuminate\View\FileViewFinder;
+use SleepingOwl\Admin\Admin;
 
 class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 {

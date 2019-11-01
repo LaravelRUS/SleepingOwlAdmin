@@ -3,18 +3,18 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use LogicException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
-use KodiComponents\Support\HtmlAttributes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use KodiComponents\Support\HtmlAttributes;
+use LogicException;
 use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+use SleepingOwl\Admin\Form\FormElement;
 
 abstract class NamedFormElement extends FormElement
 {

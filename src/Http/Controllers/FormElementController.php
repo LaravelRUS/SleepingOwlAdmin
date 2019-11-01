@@ -2,15 +2,15 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\Element\SelectAjax;
-use SleepingOwl\Admin\Form\Element\DependentSelect;
-use SleepingOwl\Admin\Form\Element\MultiSelectAjax;
-use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Form\Element\DependentSelect;
+use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
+use SleepingOwl\Admin\Form\Element\MultiSelectAjax;
+use SleepingOwl\Admin\Form\Element\SelectAjax;
 
 class FormElementController extends Controller
 {

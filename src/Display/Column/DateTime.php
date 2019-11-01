@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DateFormat;
 
 class DateTime extends NamedColumn

@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin;
 
-use ReflectionClass;
 use BadMethodCallException;
-use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\Registrar;
+use ReflectionClass;
 use SleepingOwl\Admin\Contracts\AliasBinderInterface;
 
 class AliasBinder implements AliasBinderInterface

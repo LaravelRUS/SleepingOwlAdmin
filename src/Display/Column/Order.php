@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Routing\Router;
-use SleepingOwl\Admin\Section;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Display\TableColumn;
-use SleepingOwl\Admin\Traits\OrderableModel;
-use SleepingOwl\Admin\Model\ModelConfiguration;
+use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Display\TableColumn;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Section;
+use SleepingOwl\Admin\Traits\OrderableModel;
 
 class Order extends TableColumn implements WithRoutesInterface
 {

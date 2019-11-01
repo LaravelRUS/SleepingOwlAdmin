@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Contracts\Form;
 
-use Illuminate\Http\Request;
-use SleepingOwl\Admin\Contracts\Validable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Validable;
 use SleepingOwl\Admin\Contracts\WithModelInterface;
 
 interface FormElementInterface extends Renderable, Arrayable, Initializable, WithModelInterface, Validable

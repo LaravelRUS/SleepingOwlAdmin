@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
+use SleepingOwl\Admin\Exceptions\WysiwygException;
 
 class Wysiwyg extends NamedFormElement
 {

@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use Illuminate\Http\Request;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Http\Request;
+use SleepingOwl\Admin\Form\FormElement;
 
 class Custom extends FormElement
 {

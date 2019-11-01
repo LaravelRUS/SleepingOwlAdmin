@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Configuration;
 
 use Illuminate\Support\Facades\Request;
-use SleepingOwl\Admin\Traits\DatePicker;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Traits\DatePicker;
 
 /**
  * Trait ProvidesScriptVariables.

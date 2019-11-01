@@ -2,11 +2,10 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-use SleepingOwl\Admin\Traits\DatePicker;
 use SleepingOwl\Admin\Traits\DateFormat;
+use SleepingOwl\Admin\Traits\DatePicker;
 
 class DateTime extends NamedFormElement
 {
@@ -31,7 +30,6 @@ class DateTime extends NamedFormElement
      * @var string
      */
     protected $view = 'form.element.datetime';
-
 
     /**
      * @return $this|NamedFormElement|mixed|null|string
@@ -134,7 +132,7 @@ class DateTime extends NamedFormElement
                 $date = Carbon::parse($date);
             } catch (\Exception $e) {
                 try {
-                  $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
+                    $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
                 } catch (\Exception $e) {
                     Log::error('Unable to parse date!', [
                         'format' => $this->getPickerFormat(),
