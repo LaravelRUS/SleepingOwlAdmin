@@ -1,5 +1,9 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-11-06
+* [Fix] Fix `.row` width
+
+
 ## 2019-11-01
 * [Add] Add `menu-state` in localStorage (dublicate)
 * [Hot fix] Fix datetime form format
