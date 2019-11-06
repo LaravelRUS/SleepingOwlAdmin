@@ -7,6 +7,7 @@
       data-type="text"
       data-pk="{{ $id }}"
       data-mode="{{ $mode }}"
+      data-emptytext="{{ trans('sleeping_owl::lang.select.no_items') }}"
       data-disabled="{{ !$isEditable }}"
   >{{ $text }}</a>
 

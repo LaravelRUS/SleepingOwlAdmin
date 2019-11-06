@@ -1,5 +1,9 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+## 2019-11-07
+* [Fix] Fix `AdminColumnEditable` nullable value and localized empty data
+
+
 ## 2019-11-06
 * [Fix] Fix `.row` width
 * [Fix] Fix `.content.body` css display (fix h-scroll)

@@ -9,6 +9,7 @@
       data-pk="{{ $id }}"
       data-title="{{ $title }}"
       data-source="{{ json_encode($options) }}"
+      data-emptytext="{{ trans('sleeping_owl::lang.select.no_items') }}"
       data-disabled="{{ !$isEditable }}"
   >{{ $text }}</a>
 

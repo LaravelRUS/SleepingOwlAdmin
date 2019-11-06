@@ -1,8 +1,25 @@
 Admin.Modules.register('display.columns.inline-edit', () => {
-    $('.inline-editable').editable();
+    //AdminColumnEditable
+
+    $('.inline-editable').editable({
+      error: function(response, newValue) {
+        if(response.status === 500) {
+          return trans('lang.table.error');
+        } else {
+          return response.responseText;
+        }
+      }
+    });
 
     $('.dt-editable, .dat-editable').editable({
-      onblur:'ignore'
+      onblur:'ignore',
+      error: function(response, newValue) {
+        if(response.status === 500) {
+          return trans('lang.table.error');
+        } else {
+          return response.responseText;
+        }
+      }
     });
 
     $('.dt-editable').on('shown', function(e, editable) {

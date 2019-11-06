@@ -97,7 +97,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     public function getUncheckedLabel()
     {
         if (is_null($label = $this->uncheckedLabel)) {
-            $label = trans('sleeping_owl::lang.editable.checkbox.unchecked');
+            $label = "<i class='fas fa-minus'></i>";
         }
 
         return $label;
