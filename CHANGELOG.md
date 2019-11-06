@@ -2,6 +2,7 @@
 
 ## 2019-11-06
 * [Fix] Fix `.row` width
+* [Fix] Fix `.content.body` css display (fix h-scroll)
 
 
 ## 2019-11-01
