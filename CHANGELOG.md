@@ -3,6 +3,8 @@
 ## 2019-11-06
 * [Fix] Fix `.row` width
 * [Fix] Fix `.content.body` css display (fix h-scroll)
+* [Add] Add `->setImage('/images/avatar.jpg')` in `ControlLink` and `ControlButton`
+* [Add] Add class `.img-control` for image in control block (`->setHtmlAttribute('class', 'img-control')`)
 
 
 ## 2019-11-01

@@ -46,6 +46,11 @@ class ControlLink implements ControlButtonInterface
     /**
      * @var Closure|string
      */
+    protected $image;
+
+    /**
+     * @var Closure|string
+     */
     protected $title;
 
     /**
@@ -255,6 +260,26 @@ class ControlLink implements ControlButtonInterface
     /**
      * @return string
      */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Closure|string $image
+     *
+     * @return $this
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getIcon()
     {
         return $this->icon;
@@ -325,6 +350,7 @@ class ControlLink implements ControlButtonInterface
             'url' => $this->getUrl($this->getModel()),
             'position' => $this->getPosition(),
             'icon' => $this->getIcon(),
+            'image' => $this->getImage(),
             'hideText' => $this->hideText,
         ];
     }

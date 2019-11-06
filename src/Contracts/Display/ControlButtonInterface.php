@@ -28,6 +28,16 @@ interface ControlButtonInterface extends Renderable, Arrayable, WithModelInterfa
     public function getView();
 
     /**
+     * @return string
+     */
+    public function getImage();
+
+    /**
+     * @return string
+     */
+    public function getText();
+
+    /**
      * @return bool|mixed
      */
     public function isActive();
