@@ -52,6 +52,10 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
+
+        if ($checkedLabel) {
+            $this->setLabel($checkedLabel);
+        }
     }
 
     public function getModifierValue()
