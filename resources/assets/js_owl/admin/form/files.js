@@ -22,8 +22,7 @@ $(function () {
     $('.fileUploadMultiple').each(function (index, item) {
         var $item = $(item);
         var RenderFileTpl = $item.find('.RenderFile').first().html();
-        // @sngrl merge: bs4 to dev
-        //var $innerGroup = $item.find('.files-group');
+
         var $innerGroup = $item.find('.files-group').not(".dissortable");
         var $input = $item.find('.fileValue');
 

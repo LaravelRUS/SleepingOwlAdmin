@@ -19,6 +19,8 @@ require('./libs/jquery-form');
 require('./libs/moment');
 require('./libs/bootstrap');
 require('./libs/i18next');
+require('./libs/vuejs');
+
 require('./libs/datetimepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
@@ -30,9 +32,8 @@ require('./libs/dependent-dropdown');
 require('./libs/js-cookie');
 require('./libs/progressbar');
 require('@flowjs/flow.js');
-
-require('./libs/vuejs');
 require('./libs/noty');
+
 /**
  * Best open source admin dashboard & control panel theme.
  * Built on top of Bootstrap 3, AdminLTE provides a range of

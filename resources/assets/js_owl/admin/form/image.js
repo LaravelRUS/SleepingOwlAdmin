@@ -31,11 +31,14 @@ Vue.component('element-image', Vue.extend({
             let self = this,
                 container = $(self.$el.parentNode),
                 button = container.find('.upload-button');
-
             button.dropzone({
                 url: this.url,
                 method: 'POST',
                 uploadMultiple: false,
+                maxFilesize: Admin.Config.get('max_file_size'),
+                dictFileTooBig: trans('lang.ckeditor.upload.error.filesize_limit_m', {size: Admin.Config.get('max_file_size')}),
+                dictInvalidFileType: trans('lang.ckeditor.upload.error.wrong_extension', {file: self.name}),
+                dictResponseError: trans('lang.ckeditor.upload.error.common'),
                 previewsContainer: false,
                 acceptedFiles: 'image/*',
                 dictDefaultMessage: '',
@@ -47,6 +50,7 @@ Vue.component('element-image', Vue.extend({
                     self.val = response.value;
                 },
                 error (file, response) {
+                    Admin.Messages.error(response)
                     if(_.isArray(response.errors)) {
                         self.errors = response.errors;
                     }

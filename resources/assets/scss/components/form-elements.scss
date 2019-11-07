@@ -144,6 +144,13 @@ $arrow-size: 6px;
   display: block;
 }
 
+a.form-element-files__image {
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  display: flex;  
+}
+
 .form-element-files__info {
   padding: 10px 0.3rem;
   background: $gray-100;

@@ -3,6 +3,8 @@
 ## 2019-11-07
 * [Fix] Fix `AdminColumnEditable` nullable value and localized empty data
 * [Fix] Fix label in `AdminColumnEditable::checkbox`
+* [Add] MaxFileSize in form element `image`, `images`, `file`
+* [Fix] Fix image link style
 
 
 ## 2019-11-06

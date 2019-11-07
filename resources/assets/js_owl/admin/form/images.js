@@ -56,6 +56,10 @@ Vue.component('element-images', Vue.extend({
                 acceptedFiles: 'image/*',
                 clickable: button[0],
                 dictDefaultMessage: '',
+                maxFilesize: Admin.Config.get('max_file_size'),
+                dictFileTooBig: trans('lang.ckeditor.upload.error.filesize_limit_m', {size: Admin.Config.get('max_file_size')}),
+                dictInvalidFileType: trans('lang.ckeditor.upload.error.wrong_extension', {file: self.name}),
+                dictResponseError: trans('lang.ckeditor.upload.error.common'),
                 sending () {
                     self.uploading = true;
                     self.closeAlert();
@@ -64,6 +68,7 @@ Vue.component('element-images', Vue.extend({
                     self.vals.push(response.value);
                 },
                 error (file, response) {
+                    Admin.Messages.error(response)
                     if(_.isArray(response.errors)) {
                         self.errors = response.errors;
                     }
