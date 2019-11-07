@@ -10,6 +10,8 @@ return [
     | the validator class. Some of these rules have multiple versions such
     | as the size rules. Feel free to tweak each of these messages here.
     |
+    | @see https://github.com/caouecs/Laravel-lang master@4.0.6 2019-11-07
+    |
     */
 
     'accepted'             => 'The :attribute must be accepted.',
