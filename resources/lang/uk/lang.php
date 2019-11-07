@@ -38,6 +38,7 @@ return [
                 'common' => 'Виникла помилка при спробі завантажити файл.',
                 'wrong_extension' => 'Файл ":file" має не вірний тип.',
                 'filesize_limit' => 'Максимальний розмір файлу: :size кб.',
+                'filesize_limit_m' => 'Максимальний розмір файлу: :size Mb.',
                 'imagesize_max_limit' => 'Ширина x Висота = :width x :height \\n Максимальний розмір зображення повинен бути: :maxwidth x :maxheight',
                 'imagesize_min_limit' => 'Ширина x Висота = :width x :height \\n Мінімальний розмір зображення повинен бути: :minwidth x :minheight',
             ],

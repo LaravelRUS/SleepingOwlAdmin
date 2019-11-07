@@ -38,6 +38,7 @@ return [
                 'common' => 'Unable to upload the file.',
                 'wrong_extension' => 'File ":file" has wrong extension.',
                 'filesize_limit' => 'Maximum allowed file size is :size kb.',
+                'filesize_limit_m' => 'Maximum allowed file size is :size Mb.',
                 'imagesize_max_limit' => 'Width x Height = :width x :height \\n The maximum Width x Height must be: :maxwidth x :maxheight',
                 'imagesize_min_limit' => 'Width x Height = :width x :height \\n The minimum Width x Height must be: :minwidth x :minheight',
             ],

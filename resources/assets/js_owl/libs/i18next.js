@@ -20,6 +20,15 @@ i18next.init({
     }
 });
 
-window.trans = function (key) {
-    return i18next.t(key);
+// nit:Daan old trans function
+// window.trans = function (key) {
+//     return i18next.t(key);
+// }
+
+window.trans = function (key, args) {
+    let value = i18next.t(key)
+    _.eachRight(args, (paramVal, paramKey) => {
+        value = _.replace(value, `:${paramKey}`, paramVal)
+    })
+    return value
 }

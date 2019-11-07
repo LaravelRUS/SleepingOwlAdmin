@@ -38,6 +38,7 @@ return [
                 'common' => '无法上传。',
                 'wrong_extension' => '文件 ":file" 扩展名错误。',
                 'filesize_limit' => '超过文件最大限制 :size kb.',
+                'filesize_limit_m' => '超过文件最大限制 :size Mb.',
                 'imagesize_max_limit' => '宽 x 高 = :width x :height \\n 超过最大宽高比: :maxwidth x :maxheight',
                 'imagesize_min_limit' => '宽 x 高 = :width x :height \\n 最小宽高比: :minwidth x :minheight',
             ],

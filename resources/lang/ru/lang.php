@@ -38,6 +38,7 @@ return [
                 'common'              => 'Возникла ошибка при загрузке файла.',
                 'wrong_extension'     => 'Файл ":file" имеет неверный тип.',
                 'filesize_limit'      => 'Максимальный размер файла :size кб.',
+                'filesize_limit_m'      => 'Максимальный размер файла :size Mb.',
                 'imagesize_max_limit' => 'Ширина x Высота = :width x :height \\n Максимальный размер изображение должен быть: :maxwidth x :maxheight',
                 'imagesize_min_limit' => 'Ширина x Высота = :width x :height \\n Минимальный размер изображение должен быть: :minwidth x :minheight',
             ],
