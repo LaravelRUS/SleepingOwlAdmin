@@ -4,12 +4,10 @@ namespace SleepingOwl\Admin\Traits;
 
 trait MaxFileSizeTrait
 {
-
     /**
      * @var number
      */
     protected $maxFileSize;
-
 
     /**
      * @return number
@@ -23,21 +21,23 @@ trait MaxFileSizeTrait
                 $this->maxFileSize = 5;
             }
         }
+
         return $this->maxFileSize;
     }
 
     /**
-      * Конвертирование значения
-      * максимального размера загружаемого файла
-      */
-    function convertMB( $value ) {
-        if ( is_numeric( $value ) ) {
+     * Конвертирование значения
+     * максимального размера загружаемого файла.
+     */
+    public function convertMB($value)
+    {
+        if (is_numeric($value)) {
             return $value;
         } else {
             $value_length = strlen($value);
-            $qty = substr( $value, 0, $value_length - 1 );
-            $unit = strtolower( substr( $value, $value_length - 1 ) );
-            switch ( $unit ) {
+            $qty = substr($value, 0, $value_length - 1);
+            $unit = strtolower(substr($value, $value_length - 1));
+            switch ($unit) {
                 case 'k':
                 $qty /= 1024;
                 break;
@@ -48,6 +48,7 @@ trait MaxFileSizeTrait
                 $qty *= 1024;
                 break;
             }
+
             return $qty;
         }
     }
