@@ -120,9 +120,8 @@ class Admin implements AdminInterface
                 $model->initialize();
             } catch (\Exception $e) {
                 // nit: Daan need refactor send front msg (no session)
-                \MessagesStack::addError('Error initialize ' . $model->getClass());
+                \MessagesStack::addError('Error initialize '.$model->getClass());
             }
-
         }
 
         return $this;
