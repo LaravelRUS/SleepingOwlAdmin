@@ -6,4 +6,6 @@
 
         <i class="fas fa-check-circle fa-lg"></i> {!! $messages !!}
     </div>
+
+    {{ session()->forget('success_message') }}
 @endif

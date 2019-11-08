@@ -6,4 +6,6 @@
 
         <i class="fas fa-times fa-lg"></i> {!! $messages !!}
     </div>
+
+    {{ session()->forget('error_message') }}
 @endif

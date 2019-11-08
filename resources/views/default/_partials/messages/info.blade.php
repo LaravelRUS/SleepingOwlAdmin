@@ -6,4 +6,6 @@
 
         <i class="fas fa-info fa-lg"></i> {!! $messages !!}
     </div>
+
+    {{ session()->forget('info_message') }}
 @endif

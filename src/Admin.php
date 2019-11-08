@@ -116,7 +116,13 @@ class Admin implements AdminInterface
         $this->setModel($model->getClass(), $model);
 
         if ($model instanceof Initializable) {
-            $model->initialize();
+            try {
+                $model->initialize();
+            } catch (\Exception $e) {
+                // nit: Daan need refactor send front msg (no session)
+                \MessagesStack::addError('Error initialize ' . $model->getClass());
+            }
+
         }
 
         return $this;

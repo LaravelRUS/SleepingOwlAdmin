@@ -1,5 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
 
+
+## 2019-11-08
+* [Fix] Fix clear session in MessagesStack
+* [Doc] Need add to doc `\MessagesStack::addError('text')`
+
+
 ## 2019-11-07
 * [Fix] Fix `AdminColumnEditable` nullable value and localized empty data
 * [Fix] Fix label in `AdminColumnEditable::checkbox`
