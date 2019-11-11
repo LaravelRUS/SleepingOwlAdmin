@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\Form;
-use SleepingOwl\Admin\AliasBinder;
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
+use SleepingOwl\Admin\Form;
 
 /**
  * @method Form\FormDefault form(array $elements = [])

@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use KodiComponents\Support\Upload;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use KodiComponents\Support\Upload;
 
 class Files extends Images
 {
