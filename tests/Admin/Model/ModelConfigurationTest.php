@@ -1,9 +1,9 @@
 <?php
 
 use Mockery as m;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class ModelConfigurationTest extends TestCase
 {

@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Form\Columns;
 
 use Exception;
-use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
+use SleepingOwl\Admin\Form\FormElements;
 
 class Column extends FormElements implements ColumnInterface
 {

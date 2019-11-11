@@ -3,17 +3,17 @@
 namespace SleepingOwl\Admin\Form;
 
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\In;
-use SleepingOwl\Admin\Traits\Assets;
-use Illuminate\Validation\Rules\NotIn;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rules\Exists;
-use Illuminate\Validation\Rules\Unique;
-use SleepingOwl\Admin\Traits\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Dimensions;
+use Illuminate\Validation\Rules\Exists;
+use Illuminate\Validation\Rules\In;
+use Illuminate\Validation\Rules\NotIn;
+use Illuminate\Validation\Rules\Unique;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\Renderable;
 
 abstract class FormElement implements FormElementInterface
 {
