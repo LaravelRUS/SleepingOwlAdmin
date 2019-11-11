@@ -3,10 +3,10 @@
 namespace SleepingOwl\Admin\Form\Columns;
 
 use Exception;
-use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
+use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 
 class Columns extends FormElements implements ColumnInterface
 {

@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
-use SleepingOwl\Admin\Console\Generator;
 use Barryvdh\LaravelIdeHelper\Console\GeneratorCommand as IdeHelperGeneratorCommand;
+use SleepingOwl\Admin\Console\Generator;
 
 /**
  * A command to generate autocomplete information for your IDE.

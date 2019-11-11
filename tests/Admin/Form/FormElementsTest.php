@@ -1,12 +1,12 @@
 <?php
 
-use Mockery as m;
-use SleepingOwl\Admin\Form\FormElements;
-use SleepingOwl\Admin\Contracts\Validable;
 use Illuminate\Contracts\Support\Arrayable;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
+use Mockery as m;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
+use SleepingOwl\Admin\Form\FormElements;
 
 class FormElementsTest extends TestCase
 {

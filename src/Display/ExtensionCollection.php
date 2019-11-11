@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Display\Placable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\Initializable;
 
 class ExtensionCollection extends Collection
 {
