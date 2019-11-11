@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Http\Controllers\FormElementController;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use SleepingOwl\Admin\Http\Controllers\FormElementController;
 
 trait SelectAjaxFunctions
 {

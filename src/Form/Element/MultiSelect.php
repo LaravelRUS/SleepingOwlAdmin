@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use SleepingOwl\Admin\Traits\ElementTaggable;
-use SleepingOwl\Admin\Traits\ElementSaveRelation;
-use SleepingOwl\Admin\Traits\ElementSyncCallback;
-use SleepingOwl\Admin\Contracts\Form\Element\Taggable;
-use SleepingOwl\Admin\Traits\ElementDeleteRelatedItem;
 use SleepingOwl\Admin\Contracts\Form\Element\HasSyncCallback;
 use SleepingOwl\Admin\Contracts\Form\Element\MustDeleteRelatedItem;
+use SleepingOwl\Admin\Contracts\Form\Element\Taggable;
+use SleepingOwl\Admin\Traits\ElementDeleteRelatedItem;
+use SleepingOwl\Admin\Traits\ElementSaveRelation;
+use SleepingOwl\Admin\Traits\ElementSyncCallback;
+use SleepingOwl\Admin\Traits\ElementTaggable;
 
 class MultiSelect extends Select implements Taggable, HasSyncCallback, MustDeleteRelatedItem
 {

@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Console\Installation;
 
 use Illuminate\Config\Repository;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Console\Command as ConsoleCommand;
+use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Filesystem\Filesystem;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 abstract class Command extends ConsoleCommand

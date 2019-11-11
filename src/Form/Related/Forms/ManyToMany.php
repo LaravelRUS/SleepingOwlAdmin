@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
-use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\Columns\Column;
-use SleepingOwl\Admin\Form\Related\Select;
 use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Form\Related\Elements;
+use SleepingOwl\Admin\Form\Related\Select;
 
 class ManyToMany extends Elements
 {

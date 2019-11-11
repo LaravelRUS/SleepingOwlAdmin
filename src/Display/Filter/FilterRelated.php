@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Filter;
 
 use Exception;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class FilterRelated extends FilterField
 {

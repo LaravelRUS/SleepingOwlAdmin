@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Display\Column;
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
+use SleepingOwl\Admin\Display\Column;
 
 /**
  * @method Column\Action action($name, $title = null)
