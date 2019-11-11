@@ -113,7 +113,7 @@ trait SelectAjaxFunctions
         // get model, model configuration interface, model logic
         $model = $this->getModel();
         $section = \AdminSection::getModel($this->getModel());
-        $payload = $section->getPayload();
+        $payload = method_exists($section, 'getPayload') ? $section->getPayload() : [];
         $form_element_controller = new FormElementController();
         $form = $form_element_controller->getModelLogicPayload($section, $model->id, $payload);
 
