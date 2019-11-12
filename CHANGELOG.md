@@ -1,4 +1,8 @@
-<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-bs4</code> branch)</h2></p>
+<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
+
+
+## 2019-11-12
+* [Add] Add `->setSortable(true / false)` in `AdminColumn::lists(...)`
 
 
 ## 2019-11-08
