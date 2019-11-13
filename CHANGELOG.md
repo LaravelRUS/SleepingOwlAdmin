@@ -1,6 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2019-11-13
+* [Change] Change breadcrumbs position on col-12 and top page
+
+
 ## 2019-11-12
 * [Add] Add `->setSortable(true / false)` in `AdminColumn::lists(...)`
 
