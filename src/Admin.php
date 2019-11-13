@@ -22,6 +22,7 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Providers\AdminServiceProvider;
 use SleepingOwl\Admin\Providers\AliasesServiceProvider;
 use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Admin.
@@ -119,8 +120,7 @@ class Admin implements AdminInterface
             try {
                 $model->initialize();
             } catch (\Exception $e) {
-                // nit: Daan need refactor send front msg (no session)
-                \MessagesStack::addError('Error initialize '.$model->getClass());
+                Log::error($e->getMessage());
             }
         }
 
