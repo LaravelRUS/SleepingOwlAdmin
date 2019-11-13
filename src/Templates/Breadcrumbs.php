@@ -32,6 +32,7 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
         try {
             $render = $this->render($name);
         } catch (\Exception $e) {
+            $render = $this->render('home');
             Log::error($e->getMessage());
         }
 
