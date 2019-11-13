@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Templates;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
 use DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException;
 use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
+use Illuminate\Support\Facades\Log;
 
 class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
@@ -27,7 +28,14 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
             return '';
         }
 
-        return $this->render($name);
+        $render = '';
+        try {
+            $render = $this->render($name);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+
+        return $render;
     }
 
     /**

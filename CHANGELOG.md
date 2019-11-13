@@ -5,6 +5,7 @@
 * [Change] Change breadcrumbs position on col-12 and top page
 * [Fix] Fix badge bg-color
 * [Add] Add class for DisplayTabbed `AdminDisplay::tabbed()->setHtmlAttribute('class', 'foo')`
+* [Fix] Fix issue #1143
 
 
 ## 2019-11-12

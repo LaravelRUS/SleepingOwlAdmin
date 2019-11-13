@@ -58,9 +58,6 @@ abstract class Messages extends Widget
      */
     public function setMessageView($messageView)
     {
-        // if ($this->messageView) {
-        //   $this->messageView[] = $messageView;
-        // }
         $this->messageView = $messageView;
     }
 
