@@ -14,13 +14,14 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Model\SectionModelConfiguration;
 use SleepingOwl\Admin\Traits\FormElements;
 use SleepingOwl\Admin\Traits\VisibleCondition;
+use \SleepingOwl\Admin\Traits\Renderable as AdminRenderable;
 
 /**
  * @property TabInterface[]|DisplayTabsCollection $elements
  */
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-    use FormElements, VisibleCondition, \SleepingOwl\Admin\Traits\Renderable, HtmlAttributes;
+    use FormElements, VisibleCondition, AdminRenderable, HtmlAttributes;
 
     /**
      * @var string
