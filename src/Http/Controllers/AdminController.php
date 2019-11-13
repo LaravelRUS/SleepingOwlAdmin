@@ -750,7 +750,6 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumb($title, $parent, $name = 'render', $url = null)
     {
-
         $this->breadcrumbs->register($name, function (BreadcrumbsGenerator $breadcrumbs) use ($title, $parent, $url) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title, $url);
