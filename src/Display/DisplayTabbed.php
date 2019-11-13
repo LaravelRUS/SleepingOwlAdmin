@@ -13,8 +13,8 @@ use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Model\SectionModelConfiguration;
 use SleepingOwl\Admin\Traits\FormElements;
+use SleepingOwl\Admin\Traits\Renderable as AdminRenderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
-use \SleepingOwl\Admin\Traits\Renderable as AdminRenderable;
 
 /**
  * @property TabInterface[]|DisplayTabsCollection $elements
