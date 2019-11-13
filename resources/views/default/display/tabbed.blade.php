@@ -6,7 +6,7 @@
   </div>
 </nav>
 
-<div class="tab-content mt-3" id="nav-tabContent">
+<div class="tab-content mt-3 {!! $classAttributes !!}"  id="nav-tabContent">
 	@foreach ($tabs as $tab)
 	  <div class="tab-pane fade {!! ($tab->isActive()) ? 'show active' : '' !!}" id="nav-{{ $tab->getName() }}" role="tabpanel" aria-labelledby="nav-{{ $tab->getName() }}">
 			{!! $tab->addTabElement()->getContent()->render() !!}

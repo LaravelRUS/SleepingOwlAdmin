@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -19,7 +20,7 @@ use SleepingOwl\Admin\Traits\VisibleCondition;
  */
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-    use FormElements, VisibleCondition, \SleepingOwl\Admin\Traits\Renderable;
+    use FormElements, VisibleCondition, \SleepingOwl\Admin\Traits\Renderable, HtmlAttributes;
 
     /**
      * @var string
@@ -292,6 +293,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     {
         return [
             'tabs' => $this->getTabs()->onlyVisible(),
+            'classAttributes' => $this->getHtmlAttribute('class'),
         ];
     }
 
