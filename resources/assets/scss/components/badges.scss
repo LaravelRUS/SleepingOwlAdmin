@@ -1,3 +1,8 @@
+.table-badge {
+  background-color: $gray-600;
+  color: $white;
+}
+
 @each $key, $value in $colors_palette {
   .table-#{$key} {
     .table-badge {

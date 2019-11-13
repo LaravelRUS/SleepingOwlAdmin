@@ -3,6 +3,7 @@
 
 ## 2019-11-13
 * [Change] Change breadcrumbs position on col-12 and top page
+* [Fix] Fix badge bg-color
 
 
 ## 2019-11-12
