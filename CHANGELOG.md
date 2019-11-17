@@ -1,6 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2019-11-17
+* [Change] Changed filter behavior when `->setOperator('in')` you can filter multiple values separated by commas. Example: `18,20` in filter field
+
+
 ## 2019-11-13
 * [Change] Change breadcrumbs position on col-12 and top page
 * [Fix] Fix badge bg-color
