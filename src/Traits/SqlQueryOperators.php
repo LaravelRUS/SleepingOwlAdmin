@@ -86,14 +86,14 @@ trait SqlQueryOperators
                 break;
             case 'whereBetween':
             case 'whereNotBetween':
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $value = explode(',', $value);
                 }
                 $query->{$method}($column, $value);
                 break;
             case 'whereIn':
             case 'whereNotIn':
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $value = explode(',', $value);
                 }
                 $query->{$method}($column, $value);
