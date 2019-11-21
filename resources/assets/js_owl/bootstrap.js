@@ -36,10 +36,10 @@ require('./libs/noty');
 
 /**
  * Best open source admin dashboard & control panel theme.
- * Built on top of Bootstrap 3, AdminLTE provides a range of
+ * Built on top of Bootstrap 4, AdminLTE provides a range of
  * responsive, reusable, and commonly used components.
  *
- * @see https://almsaeedstudio.com/preview
+ * @see https://adminlte.io/themes/AdminLTE/
  */
 require('admin-lte');
 

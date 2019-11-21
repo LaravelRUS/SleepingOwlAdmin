@@ -29,11 +29,11 @@ module.exports = (function () {
          *
          * @param {String} title
          * @param {String} message
-         * @param {String} type Message type (error, success)
+         * @param {String} icon Message icon (error, success)
          * @returns {*}
          */
-        message(title, message, type) {
-            return Swal.fire(title, message, type || 'success')
+        message(title, message, icon) {
+            return Swal.fire(title, message, icon || 'success')
         },
 
         /**
@@ -48,7 +48,7 @@ module.exports = (function () {
             let settings = {
                 title: title,
                 text: message || '',
-                type: 'warning',
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3c8dbc',
                 cancelButtonColor: '#d33',

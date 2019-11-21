@@ -1,6 +1,21 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2019-11-21
+* [Update] NPM packages:
+  - admin-lte: v3.0.0-rc.1 -> 3.0.1 (! Released)
+  - datatables.net: 1.10.19 -> 1.10.20
+  - i18n: 0.8.3 -> 0.8.4
+  - i18next: 17.0.6 -> 17.3.1 -> 19.0.1 (! Major)
+  - node-sass: 4.12.0 -> 4.13.0
+  - progressbar.js: 1.0.1 -> 1.1.0 (!)
+  - select2: 4.0.8 -> 4.0.12
+  - sweetalert2: 8.14.0 -> 8.19.0 -> 9.3.16 (! Major)
+  - cross-env: 6.0.0 -> 6.0.3
+  - resolve-url-loader: 3.1.0 -> 3.1.1
+  - sass: 1.22.7 -> 1.23.7
+
+
 ## 2019-11-17
 * [Change] Changed filter behavior when `->setOperator('in')` you can filter multiple values separated by commas. Example: `18,20` in filter field
 

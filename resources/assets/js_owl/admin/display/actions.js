@@ -7,7 +7,7 @@ Admin.Modules.register('display.actions', () => {
         Swal.fire({
           title: trans('lang.table.no-action'),
           text: trans('lang.select.nothing'),
-          type: 'error',
+          icon: 'error',
           timer: 5000
         })
         return false;
@@ -25,7 +25,7 @@ Admin.Modules.register('display.actions', () => {
           Swal.fire({
             title: trans('lang.select.nothing'),
             text: trans('lang.select.no_items'),
-            type: 'error',
+            icon: 'error',
             timer: 5000
           })
 
@@ -63,7 +63,7 @@ Admin.Modules.register('display.actions', () => {
                     Swal.fire({
                       title: msg.text,
                       text: msg.message,
-                      type: msg.type,
+                      icon: msg.type,
                       timer: 5000
                     })
                 }

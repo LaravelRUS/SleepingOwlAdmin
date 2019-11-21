@@ -9,9 +9,18 @@ $gray-light: $gray-600 !default;
 @import "~bootstrap4-datetimepicker/src/sass/bootstrap-datetimepicker";
 
 
-.bootstrap-datetimepicker-widget .datepicker-years thead .picker-switch {
-  cursor: default;
-  pointer-events: none;
+.bootstrap-datetimepicker-widget {
+  .datepicker-years thead .picker-switch {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  table td.active {
+    &,
+    &:hover {
+      color: $white;
+    }
+  }
 }
 
 .datepicker-decades {
