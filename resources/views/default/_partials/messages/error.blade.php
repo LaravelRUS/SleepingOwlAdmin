@@ -1,5 +1,5 @@
 @if($messages)
-    <div class="alert alert-error alert-message text-white">
+    <div class="alert alert-error alert-danger alert-message text-white">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
