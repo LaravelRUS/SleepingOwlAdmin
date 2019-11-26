@@ -1,12 +1,8 @@
-//@import "~nestable2/jquery.nestable.css";
-
-
 .dd {
   position: relative;
   display: block;
   margin: 0;
   padding: 0;
-  //max-width: 600px;
   list-style: none;
   font-size: 13px;
   line-height: 20px; }
@@ -69,11 +65,9 @@
   position: absolute;
   width: 100%;
   text-align: center;
-  text-indent: 0; }
-.dd-item > button.dd-expand:before {
-  content: '+'; }
-.dd-item > button.dd-collapse:before {
-  content: '-'; }
+  text-indent: 0;
+}
+
 
 .dd-expand {
   display: none; }

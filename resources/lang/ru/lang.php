@@ -90,6 +90,7 @@ return [
 
     'tree' => [
         'expand'   => 'Развернуть все',
+        'reorderCompleted'   => 'Раздел перемещен',
         'collapse' => 'Свернуть все',
     ],
 
