@@ -204,7 +204,6 @@ class DisplayTree extends Display implements WithRoutesInterface
         return $this;
     }
 
-
     /**
      * @return string
      */
