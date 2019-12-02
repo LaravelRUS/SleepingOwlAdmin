@@ -1,6 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2019-12-02
+* [Delete] Delete `->setCollapsed( true/false )`, use `->setCollapsedLevel(0)`
+* [Add] Add `->setCollapsedLevel(3)`
+
+
 ## 2019-11-21
 * [Update] NPM packages:
   - admin-lte: v3.0.0-rc.1 -> 3.0.1 (! Released)

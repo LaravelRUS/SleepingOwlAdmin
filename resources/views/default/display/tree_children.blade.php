@@ -1,9 +1,6 @@
 @foreach ($children as $entry)
-    @php
-       // dd($entry, $collapsedLevel)
-    @endphp
 
-    <li class="dd-item dd3-item{{ $reorderable ? '' : ' dd3-not-reorderable' }}{{isset($entry->level) && $entry->level >= $collapsedLevel ? ' dd-collapsed' : '' }}"
+    <li class="dd-item dd3-item{{ $reorderable ? '' : ' dd3-not-reorderable' }}{{ (isset($entry->level) && $entry->level >= $collapsedLevel) || $collapsedLevel == 0 ? ' dd-collapsed' : '' }}"
         data-id="{{ $entry->id }}">
         @if ($reorderable)
             <div class="dd-handle dd3-handle" title="{{ $entry->{$value} }}"></div>
