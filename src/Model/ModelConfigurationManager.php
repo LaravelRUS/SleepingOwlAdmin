@@ -473,6 +473,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDestroyUrl($id, array $parameters = [])
     {
+        if(!$id){
+            return '#';
+        }
+        
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.destroy', $parameters);
