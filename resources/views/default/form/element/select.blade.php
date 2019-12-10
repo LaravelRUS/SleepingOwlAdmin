@@ -33,7 +33,12 @@
                     @endif
                     :select-label="'{{ trans('sleeping_owl::lang.select.init') }}'"
                     :selected-label="'{{ trans('sleeping_owl::lang.select.selected') }}'"
-                    :deselect-label="'{{ trans('sleeping_owl::lang.select.deselect') }}'"
+                    @if($required)
+                      :allow-empty="false"
+                      deselect-label=""
+                    @else
+                      :deselect-label="'{{ trans('sleeping_owl::lang.select.deselect') }}'"
+                    @endif
                 >
                 </multiselect>
 
