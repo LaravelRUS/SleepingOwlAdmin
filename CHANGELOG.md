@@ -1,6 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2019-12-10
+* [Fix] Fix multiselect required error message
+
+
 ## 2019-12-02
 * [Delete] Delete `->setCollapsed( true/false )`, use `->setCollapsedLevel(0)`
 * [Add] Add `->setCollapsedLevel(3)`
