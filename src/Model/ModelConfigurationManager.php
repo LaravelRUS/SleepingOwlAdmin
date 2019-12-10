@@ -422,10 +422,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getEditUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
-        
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.edit', $parameters);
@@ -439,10 +439,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getUpdateUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
-        
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.update', $parameters);
@@ -456,10 +456,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDeleteUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
-        
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.delete', $parameters);
@@ -473,10 +473,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDestroyUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
-        
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.destroy', $parameters);
@@ -490,10 +490,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getRestoreUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
-        
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.restore', $parameters);
