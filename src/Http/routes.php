@@ -27,27 +27,27 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'uses' => 'AdminController@postStore',
     ]);
 
-    $router->get('{adminModel}/{adminModelId}/edit', [
+    $router->get('{adminModel}/{adminModelId?}/edit', [
         'as' => 'model.edit',
         'uses' => 'AdminController@getEdit',
     ]);
 
-    $router->post('{adminModel}/{adminModelId}/edit', [
+    $router->post('{adminModel}/{adminModelId?}/edit', [
         'as' => 'model.update',
         'uses' => 'AdminController@postUpdate',
     ]);
 
-    $router->delete('{adminModel}/{adminModelId}/delete', [
+    $router->delete('{adminModel}/{adminModelId?}/delete', [
         'as' => 'model.delete',
         'uses' => 'AdminController@deleteDelete',
     ]);
 
-    $router->delete('{adminModel}/{adminModelId}/destroy', [
+    $router->delete('{adminModel}/{adminModelId?}/destroy', [
         'as' => 'model.destroy',
         'uses' => 'AdminController@deleteDestroy',
     ]);
 
-    $router->post('{adminModel}/{adminModelId}/restore', [
+    $router->post('{adminModel}/{adminModelId?}/restore', [
         'as' => 'model.restore',
         'uses' => 'AdminController@postRestore',
     ]);
