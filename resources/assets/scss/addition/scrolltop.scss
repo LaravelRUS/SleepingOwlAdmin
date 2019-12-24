@@ -1,0 +1,24 @@
+#scrolltotop {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 2.5rem;
+  padding: 1rem;
+  background-color: rgba($white, 0.8);
+  border-radius: 0.5rem;
+  color: $black;
+  transition: $trans;
+  opacity: 0;
+  visibility: hidden;
+  // display: none;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    // display: block;
+  }
+
+  &:hover {
+    background-color: rgba($gray-900, 0.8);
+    color: $white;
+  }
+}

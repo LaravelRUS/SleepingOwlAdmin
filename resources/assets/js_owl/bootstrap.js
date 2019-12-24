@@ -77,7 +77,7 @@ require('./admin/display/columns/control');
 require('./admin/display/columns/tree_control');
 require('./admin/display/columns/inline_edit');
 require('./admin/tooltip');
-
+require('./components/scrolltotop');
 
 //localStorage
 require('./admin/localstorage/tabs');

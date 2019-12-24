@@ -1,6 +1,13 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2019-12-24
+* [Add] Scroll to top buttom
+* [Fix] Fix badge white-space to inherit
+* [Fix] Fix scrollbar-size width from 0.5rem to 0.8rem
+* [Fix] Add table filter TD position relative
+
+
 ## 2019-12-10
 * [Fix] Fix multiselect required error message
 

@@ -13,6 +13,7 @@
 </head>
 <body class="hold-transition sidebar-mini {{ $menu_class }}">
 	@yield('content')
+	@include(AdminTemplate::getViewPath('helper.scrolltotop'))
 
 	{!! $template->meta()->renderScripts(true) !!}
 	@stack('footer-scripts')
