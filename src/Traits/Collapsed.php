@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Traits;
 
 trait Collapsed
 {
-
     /**
      * @return null|string
      */
@@ -17,7 +16,6 @@ trait Collapsed
         return $this->collapsed;
     }
 
-
     /**
      * @param null|bool $collapsed
      *
@@ -29,5 +27,4 @@ trait Collapsed
 
         return $this;
     }
-
 }
