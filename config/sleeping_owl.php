@@ -96,28 +96,28 @@ return [
      * Add your policy class here.
      * --------------------------------------------------------------------------
      */
-   'env_editor_policy' => '',
+    'env_editor_policy' => '',
 
     /*
      * --------------------------------------------------------------------------
      * DataTables state saving.
      * --------------------------------------------------------------------------
      */
-   'state_datatables' => true,
+    'state_datatables' => true,
 
     /*
      * --------------------------------------------------------------------------
      * Tabs state remember.
      * --------------------------------------------------------------------------
      */
-   'state_tabs' => false,
+    'state_tabs' => false,
 
     /*
      * --------------------------------------------------------------------------
      * Filters state remember in DataTables.
      * --------------------------------------------------------------------------
      */
-   'state_filters' => false,
+    'state_filters' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -225,11 +225,11 @@ return [
         * Need jQuery
         */
         'summernote' => [
-          'height' => 200,
-          'lang' => 'ru-RU',
-          'codemirror' => [
-            'theme' => 'monokai',
-          ],
+            'height' => 200,
+            'lang' => 'ru-RU',
+            'codemirror' => [
+                'theme' => 'monokai',
+            ],
         ],
 
         /*
@@ -237,23 +237,23 @@ return [
          */
         'ckeditor5' => [
 
-          'language' => config('app.locale'),
+            'language' => config('app.locale'),
 
-          'alignment' => [
-            'options' => [
-              'left', 'right',
+            'alignment' => [
+                'options' => [
+                    'left', 'right',
+                ],
             ],
-          ],
 
-          'toolbar' => [
-            'undo', 'redo', '|',
-            'heading', '|',
-            'bold', 'italic', 'blockQuote', '|',
-            'numberedList', 'bulletedList', '|',
-            'CKFinder', 'ImageUpload', 'imageTextAlternative', 'MediaEmbed', 'imageStyle:full', 'imageStyle:side', '|',
-            'link', 'bulletedList', 'numberedList', '|',
-            'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
-          ],
+            'toolbar' => [
+                'undo', 'redo', '|',
+                'heading', '|',
+                'bold', 'italic', 'blockQuote', '|',
+                'numberedList', 'bulletedList', '|',
+                'CKFinder', 'ImageUpload', 'imageTextAlternative', 'MediaEmbed', 'imageStyle:full', 'imageStyle:side', '|',
+                'link', 'bulletedList', 'numberedList', '|',
+                'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+            ],
 
             'uploadUrl'                 => '/storage/images_admin',
             'filebrowserUploadUrl'      => '/storage/images_admin',

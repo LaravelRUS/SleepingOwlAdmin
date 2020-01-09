@@ -98,10 +98,10 @@ class Number extends NamedFormElement
         ]);
 
         return parent::toArray() + [
-                'min' => $this->getMin(),
-                'max' => $this->getMax(),
-                'step' => $this->getStep(),
-            ];
+            'min' => $this->getMin(),
+            'max' => $this->getMax(),
+            'step' => $this->getStep(),
+        ];
     }
 
     /**

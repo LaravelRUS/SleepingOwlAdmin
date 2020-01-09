@@ -50,8 +50,8 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
         }
 
         return [
-                'taggable' => $this->isTaggable(),
-                'attributes' => $this->htmlAttributesToString(),
-            ] + parent::toArray();
+            'taggable' => $this->isTaggable(),
+            'attributes' => $this->htmlAttributesToString(),
+        ] + parent::toArray();
     }
 }

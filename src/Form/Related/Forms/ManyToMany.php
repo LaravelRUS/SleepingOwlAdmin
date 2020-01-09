@@ -44,9 +44,9 @@ class ManyToMany extends Elements
     public function getPrimaries(): array
     {
         return $this->primaries ?? [
-                $this->getEmptyRelation()->getForeignPivotKeyName(),
-                $this->getRelatedForeignKeyName(),
-            ];
+            $this->getEmptyRelation()->getForeignPivotKeyName(),
+            $this->getRelatedForeignKeyName(),
+        ];
     }
 
     /**
