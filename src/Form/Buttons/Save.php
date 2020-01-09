@@ -16,10 +16,10 @@ class Save extends FormButton
         $this->setText(trans('sleeping_owl::lang.button.save'));
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-                'type' => 'submit',
-                'name' => 'next_action',
-                'class' => 'btn btn-primary',
-            ]);
+            'type' => 'submit',
+            'name' => 'next_action',
+            'class' => 'btn btn-primary',
+        ]);
     }
 
     /**

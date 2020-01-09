@@ -94,8 +94,8 @@ class TextAddon extends NamedFormElement
         }
 
         return parent::toArray() + [
-                'placement' => $this->getPlacement(),
-                'addon' => $this->getAddon(),
-            ];
+            'placement' => $this->getPlacement(),
+            'addon' => $this->getAddon(),
+        ];
     }
 }

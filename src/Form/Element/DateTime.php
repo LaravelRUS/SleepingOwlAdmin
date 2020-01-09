@@ -92,10 +92,10 @@ class DateTime extends NamedFormElement
         ]);
 
         return parent::toArray() + [
-                'seconds' => $this->hasSeconds(),
-                'format' => $this->getFormat(),
-                'pickerFormat' => $this->getJsPickerFormat(),
-            ];
+            'seconds' => $this->hasSeconds(),
+            'format' => $this->getFormat(),
+            'pickerFormat' => $this->getJsPickerFormat(),
+        ];
     }
 
     /**

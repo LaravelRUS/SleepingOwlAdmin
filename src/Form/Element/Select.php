@@ -301,13 +301,13 @@ class Select extends NamedFormElement
         }
 
         $return = [
-                'attributes' => $this->htmlAttributesToString(),
-                'attributes_array' => $this->getHtmlAttributes(),
-            ] + parent::toArray() + [
-                'options' => $options,
-                'limit' => $this->getLimit(),
-                'nullable' => $this->isNullable(),
-            ];
+            'attributes' => $this->htmlAttributesToString(),
+            'attributes_array' => $this->getHtmlAttributes(),
+        ] + parent::toArray() + [
+            'options' => $options,
+            'limit' => $this->getLimit(),
+            'nullable' => $this->isNullable(),
+        ];
 
         return $return;
     }
