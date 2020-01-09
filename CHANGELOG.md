@@ -1,6 +1,21 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2020-01-09
+* [Fix] Scroll to top animate
+* [Update] NPM packages:
+  - @fortawesome/fontawesome-free: 5.11.2 -> 5.12.0
+  - axios: 0.19.0 -> 0.19.1
+  - bootstrap: 4.3.1 -> 4.4.1
+  - i18next: 19.0.1 -> 19.0.3
+  - laravel-mix: 5.0.0 -> 5.0.1
+  - sortablejs: 1.10.1 -> 1.10.2
+  - sweetalert2: 9.3.16 -> 9.5.4
+  - vue: 2.6.10 -> 2.6.11
+  - sass: 1.23.7 -> 1.24.3
+  - vue-template-compiler: 2.6.10 -> 2.6.11
+
+
 ## 2019-12-24
 * [Add] Scroll to top buttom
 * [Fix] Fix badge white-space to inherit
