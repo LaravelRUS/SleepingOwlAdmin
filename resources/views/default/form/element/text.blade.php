@@ -7,7 +7,7 @@
                 <span class="form-element-required">*</span>
             @endif
         </label>
-        <input {!! $attributes !!} value="{{$value}}"
+        <input v-pre {!! $attributes !!} value="{{$value}}"
                @if($readonly) readonly @endif
         >
 
