@@ -3,17 +3,17 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Traits\PanelControl;
-use Illuminate\Pagination\LengthAwarePaginator;
-use SleepingOwl\Admin\Display\Extension\Columns;
-use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
-use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Display\Extension\ColumnFilters;
+use SleepingOwl\Admin\Display\Extension\Columns;
+use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
+use SleepingOwl\Admin\Traits\PanelControl;
 
 /**
  * Class DisplayTable.
