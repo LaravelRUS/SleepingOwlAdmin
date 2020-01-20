@@ -1,1 +1,1 @@
-<input {!! $attributes !!} value="{{ $value }}" />
+<input v-pre {!! $attributes !!} value="{{ $value }}" />

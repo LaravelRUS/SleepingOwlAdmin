@@ -10,7 +10,7 @@
 		@if ($placement == 'before')
 			<span class="input-group-addon">{!! $addon !!}</span>
 		@endif
-		<input {!! $attributes !!} value="{{ $value }}">
+		<input v-pre {!! $attributes !!} value="{{ $value }}">
 		@if ($placement == 'after')
 			<span class="input-group-addon">{!! $addon !!}</span>
 		@endif

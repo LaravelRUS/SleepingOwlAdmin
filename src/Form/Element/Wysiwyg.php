@@ -171,7 +171,7 @@ class Wysiwyg extends NamedFormElement
      */
     public function toArray()
     {
-        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
+        return ['attributes' => array_merge($this->getHtmlAttributes(), ['v-pre'=> true])] + parent::toArray() + [
                 'parameters' => json_encode($this->getParameters()),
                 'editor' => $this->getEditor(),
             ];
