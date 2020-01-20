@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Exception;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DatePicker;
 
@@ -136,10 +136,10 @@ class DateTime extends NamedFormElement
         ]);
 
         return parent::toArray() + [
-                'seconds' => $this->hasSeconds(),
-                'format' => $this->getFormat(),
-                'pickerFormat' => $this->getJsPickerFormat(),
-            ];
+            'seconds' => $this->hasSeconds(),
+            'format' => $this->getFormat(),
+            'pickerFormat' => $this->getJsPickerFormat(),
+        ];
     }
 
     /**

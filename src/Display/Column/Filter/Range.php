@@ -84,9 +84,9 @@ class Range extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-                'from' => $this->getFrom(),
-                'to' => $this->getTo(),
-            ];
+            'from' => $this->getFrom(),
+            'to' => $this->getTo(),
+        ];
     }
 
     /**

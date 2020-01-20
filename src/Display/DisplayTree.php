@@ -3,17 +3,17 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Traits\PanelControl;
-use Illuminate\Database\Eloquent\Collection;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Tree\OrderTreeType;
 use SleepingOwl\Admin\Repositories\TreeRepository;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
+use SleepingOwl\Admin\Traits\PanelControl;
 
 /**
  * @method TreeRepositoryInterface getRepository()
@@ -326,17 +326,17 @@ class DisplayTree extends Display implements WithRoutesInterface
         $this->setHtmlAttribute('class', 'dd nestable');
 
         return parent::toArray() + [
-                'items' => $this->getRepository()->getTree($this->getCollection()),
-                'reorderable' => $this->isReorderable(),
-                'url' => $model->getDisplayUrl(),
-                'value' => $this->getValue(),
-                'creatable' => $model->isCreatable(),
-                'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
-                'controls' => [$this->getColumns()->getControlColumn()],
-                'newEntryButtonText' => $this->getNewEntryButtonText(),
-                'max_depth' => $this->getMaxDepth(),
-                'panel_class' => $this->getPanelClass(),
-            ];
+            'items' => $this->getRepository()->getTree($this->getCollection()),
+            'reorderable' => $this->isReorderable(),
+            'url' => $model->getDisplayUrl(),
+            'value' => $this->getValue(),
+            'creatable' => $model->isCreatable(),
+            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
+            'controls' => [$this->getColumns()->getControlColumn()],
+            'newEntryButtonText' => $this->getNewEntryButtonText(),
+            'max_depth' => $this->getMaxDepth(),
+            'panel_class' => $this->getPanelClass(),
+        ];
     }
 
     /**

@@ -203,9 +203,9 @@ class Select extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-                'options' => $this->getOptions(),
-                'default' => $this->getDefault(),
-            ];
+            'options' => $this->getOptions(),
+            'default' => $this->getDefault(),
+        ];
     }
 
     /**

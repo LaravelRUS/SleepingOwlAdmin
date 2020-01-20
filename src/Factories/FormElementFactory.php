@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Factories;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Related\Forms;
-use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 
 /**
  * @method Element\Text text($name, $label = null)
