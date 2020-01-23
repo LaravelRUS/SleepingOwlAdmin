@@ -1,5 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
+
+## 2020-01-23
+* [Fix] Fix `setReadonly` in `AdminFormElement::selectajax`
+
+
 ## 2020-01-20
 * [Fix] Fix issue #900 isolated Vue `{{}}`
 
