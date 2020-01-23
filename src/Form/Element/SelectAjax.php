@@ -132,6 +132,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             //'field' => $this->getDisplay(),
             //'search' => $this->getSearch(),
             'search_url' => $this->getSearchUrl(),
+            'disabled' => $this->readonly,
             'data-min-symbols' => $this->getMinSymbols(),
         ]);
 
