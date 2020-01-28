@@ -76,11 +76,8 @@ Admin.Modules.register('display.actions', () => {
             });
 
                 Admin.Events.fire("datatables::actions::submitted", self);
-                //Исправлено для версии sweetalert 7.0.0
-
-                // @sngrl merge: bs4 to dev
                 //reload datatables
-                //$('.datatables').DataTable().draw();
+                $('.datatables').DataTable().draw();
             }else
                 Admin.Events.fire("datatables::actions::cancel", self);
         });

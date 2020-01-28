@@ -1,6 +1,26 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
 
 
+## 2020-01-28
+* [Add] Updated datatebles reDraw after action
+* [Fix] Fix Vue isolation in display lists and columns
+* [Fix] Fix action selected error
+* [Fix] Fix nestable button width
+* [Update] NPM packages:
+  - @flowjs/flow.js: 2.13.2 -> 2.14.0
+  - axios: 0.19.1 -> 0.19.2
+  - admin-lte: 3.0.1 -> 3.0.2
+  - i18n: 0.8.4 -> 0.8.5
+  - i18next: 19.0.3 -> 19.1.0
+  - node-sass: 4.13.0 -> 4.13.1
+  - sweetalert2: 9.5.4 -> 9.7.0
+  - select2: 4.0.12 -> 4.0.13
+  - sass: 1.24.3 -> 1.25.0
+  - sass-loader: 8.0.0 -> 8.0.2
+  - cross-env: 6.0.3 -> 7.0.0
+
+
+
 ## 2020-01-23
 * [Fix] Fix `setReadonly` in `AdminFormElement::selectajax`
 
