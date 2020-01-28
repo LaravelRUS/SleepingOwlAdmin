@@ -30,7 +30,7 @@
                       }
                   @endphp
 
-                  <td>
+                  <td v-pre>
                       {!! $column->render() !!}
                   </td>
 
