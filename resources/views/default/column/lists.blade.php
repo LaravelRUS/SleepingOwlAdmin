@@ -1,6 +1,6 @@
 <div {!! $attributes !!}>
   @foreach ($values as $value)
-    <span class="badge table-badge">{{ $value }}</span>
+    <span class="badge table-badge" v-pre>{!! $value !!}</span>
   @endforeach
   {!! $append !!}
 
