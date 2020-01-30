@@ -3,7 +3,7 @@
     <li class="dd-item dd3-item{{ $reorderable ? '' : ' dd3-not-reorderable' }}{{ (isset($entry->level) && $entry->level >= $collapsedLevel) || $collapsedLevel == 0 ? ' dd-collapsed' : '' }}"
         data-id="{{ $entry->id }}">
         @if ($reorderable)
-            <div class="dd-handle dd3-handle" title="{{ $entry->{$value} }}"></div>
+            <div class="dd-handle dd3-handle" @if (!is_callable($value)) title="{{ $entry->{$value} }}" @endif></div>
         @endif
         <div class="dd3-content">
 
