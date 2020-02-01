@@ -149,6 +149,6 @@ class UploadController extends Controller
             return $file->getClientOriginalName();
         }
 
-        return md5(time() . $file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+        return md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
     }
 }
