@@ -103,7 +103,7 @@ class UploadController extends Controller
             $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $uploadFileName);
 
             $result['url'] = asset(
-                config('sleeping_owl.imagesUploadDirectory') . '/' . $uploadFileName
+                config('sleeping_owl.imagesUploadDirectory').'/'.$uploadFileName
             );
         }
 
@@ -119,7 +119,7 @@ class UploadController extends Controller
             $file->move(public_path(config('sleeping_owl.filesUploadDirectory')), $uploadFileName);
 
             $result['url'] = asset(
-                config('sleeping_owl.filesUploadDirectory') . '/' . $uploadFileName
+                config('sleeping_owl.filesUploadDirectory').'/'.$uploadFileName
             );
         }
 
@@ -149,6 +149,6 @@ class UploadController extends Controller
             return $file->getClientOriginalName();
         }
 
-        return md5(time() . $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+        return md5(time() . $file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
     }
 }
