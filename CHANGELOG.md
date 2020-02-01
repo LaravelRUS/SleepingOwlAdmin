@@ -6,6 +6,10 @@
     sleeping_owl.imagesAllowedExtensions :array - список допустимых расширений для загрузки картинок (только для wysiwyg поля)
     sleeping_owl.imagesUseOriginalName :bool - сохранять оригинальное имя файла или использовать хеш (только для wysiwyg поля)
 
+    Аналогично для загрузки файлов (не картинок)
+    sleeping_owl.filesAllowedExtensions :array - список допустимых расширений для загрузки файлов (только для wysiwyg поля)
+    sleeping_owl.filesUseOriginalName :bool - сохранять оригинальное имя файла или использовать хеш (только для wysiwyg поля)
+
 ## 2020-01-20
 * [Fix] Fix issue #900 isolated Vue `{{}}`
 
