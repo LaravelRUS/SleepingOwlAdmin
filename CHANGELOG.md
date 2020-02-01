@@ -1,6 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in <code class=" language-php">development</code> branch)</h2></p>
 
 
+## 2020-02-01
+* [Add] Новые настройки:
+    sleeping_owl.imagesAllowedExtensions :array - список допустимых расширений для загрузки картинок (только для wysiwyg поля)
+    sleeping_owl.imagesUseOriginalName :bool - сохранять оригинальное имя файла или использовать хеш (только для wysiwyg поля)
+
 ## 2020-01-20
 * [Fix] Fix issue #900 isolated Vue `{{}}`
 
