@@ -115,6 +115,22 @@ class UploadController extends Controller
             );
         }
 
+        $filesAllowedExtensions = collect(
+            config('sleeping_owl.filesAllowedExtensions', [])
+        );
+
+        if ($filesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {
+            $useOriginalName = config('sleeping_owl.filesUseOriginalName', false);
+            $uploadFileName = $this->getFileName($useOriginalName, $file);
+
+            // fixme: что-то делать с одинаковыми названиями - при хешировании проблемы не было
+            $file->move(public_path(config('sleeping_owl.filesUploadDirectory')), $uploadFileName);
+
+            $result['url'] = asset(
+                config('sleeping_owl.filesUploadDirectory') . '/' . $uploadFileName
+            );
+        }
+
         if ($result) {
             $result['uploaded'] = 1;
             $result['fileName'] = $uploadFileName;
