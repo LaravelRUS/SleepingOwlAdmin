@@ -99,16 +99,23 @@ class UploadController extends Controller
 
         $result = [];
 
-        $extensions = collect(['jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif']);
+        $imagesAllowedExtensions = collect(
+            config('sleeping_owl.imagesAllowedExtensions', ['jpe', 'jpeg', 'jpg', 'bmp', 'ico', 'gif'])
+        );
 
-        if ($extensions->search($file->getClientOriginalExtension())) {
-            $uploadFileName = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+        if ($imagesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {
+            $useOriginalName = config('sleeping_owl.imagesUseOriginalName', false);
+            $uploadFileName = $this->getFileName($useOriginalName, $file);
 
+            // fixme: что-то делать с одинаковыми названиями - при хешировании проблемы не было
             $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $uploadFileName);
 
             $result['url'] = asset(
-                config('sleeping_owl.imagesUploadDirectory').'/'.$uploadFileName
+                config('sleeping_owl.imagesUploadDirectory') . '/' . $uploadFileName
             );
+        }
+
+        if ($result) {
             $result['uploaded'] = 1;
             $result['fileName'] = $uploadFileName;
 
@@ -117,11 +124,23 @@ class UploadController extends Controller
                     ->view('helper.ckeditor.ckeditor_upload_file', compact('result'));
             }
 
-            if ($result) {
-                return response($result);
-            }
+            return response($result);
         }
 
         return response('Something wrong', 500);
+    }
+
+    /**
+     * @param bool $useOriginalName
+     * @param UploadedFile $file
+     * @return string
+     */
+    private function getFileName(bool $useOriginalName, UploadedFile $file): string
+    {
+        if ($useOriginalName) {
+            return $file->getClientOriginalName();
+        }
+
+        return md5(time() . $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
     }
 }
