@@ -60,8 +60,8 @@ class TestCase extends Orchestra\Testbench\TestCase
     public function getTranslatorMock()
     {
         /**
-          * @nit Daan mock Facade Lang
-        */
+         * @nit Daan mock Facade Lang
+         */
         if (version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=')) {
             return new Lang;
         }
