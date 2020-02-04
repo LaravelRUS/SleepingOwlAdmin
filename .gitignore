@@ -1,4 +1,6 @@
 /node_modules
+/vendor
+composer.lock
 .DS_Store
 .phpunit.result.cache
 /.idea
