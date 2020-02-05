@@ -65,7 +65,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         if (version_compare(\Illuminate\Support\Facades\App::version(), '6.0', '>=')) {
             return new Lang;
         }
-        
+
         return $this->app['translator'] = m::mock(\Illuminate\Translation\Translator::class);
     }
 
