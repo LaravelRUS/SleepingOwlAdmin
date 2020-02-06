@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Contracts\Form\Element\Taggable;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Form\Element\HasSyncCallback;
 use SleepingOwl\Admin\Contracts\Form\Element\MustDeleteRelatedItem;
+use SleepingOwl\Admin\Contracts\Form\Element\Taggabled;
 
 trait ElementSaveRelation
 {
@@ -88,7 +88,7 @@ trait ElementSaveRelation
         \Illuminate\Database\Eloquent\Relations\BelongsToMany $relation,
         array $values
     ) {
-        if ($this instanceof Taggable) {
+        if ($this instanceof Taggabled) {
             foreach ($values as $i => $value) {
                 if (! array_key_exists($value, $this->getOptions()) && $this->isTaggable()) {
                     $model = clone $this->getModelForOptions();
@@ -146,7 +146,7 @@ trait ElementSaveRelation
             $item = $model->find($value);
 
             if (is_null($item)) {
-                if (! ($this instanceof Taggable) && $this->isTaggable()) {
+                if (! ($this instanceof Taggabled) && $this->isTaggable()) {
                     continue;
                 }
 

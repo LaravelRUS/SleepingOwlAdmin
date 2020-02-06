@@ -3,7 +3,7 @@
     <input type="hidden" name="_redirectBack" value="{{ $backUrl }}"/>
     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 
-    <div class="panel-heading nav-tabs-custom" role="tabpanel" style="padding-bottom: 0">
+    <div class="panel-heading nav-tabs-custom pb-0" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             @php($active = null)
             @foreach ($items as $label => $_tmp)
@@ -18,7 +18,7 @@
         </ul>
     </div>
     <div class="panel-body">
-        <div class="tab-content">
+        <div class="tab-content tab-content">
             @foreach ($items as $label => $formItems)
                 <div role="tabpanel" class="tab-pane {!! ($active == $label) ? 'in active' : '' !!}"
                      id="{{ md5($label) }}">

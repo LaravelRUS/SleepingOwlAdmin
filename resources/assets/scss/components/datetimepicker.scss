@@ -1,0 +1,31 @@
+
+//fix def variable BS3
+$btn-primary-bg: $primary !default;
+$btn-primary-color: $primary !default;
+$gray-lighter: $gray-300 !default;
+$gray-light: $gray-600 !default;
+
+
+@import "~bootstrap4-datetimepicker/src/sass/bootstrap-datetimepicker";
+
+
+.bootstrap-datetimepicker-widget {
+  .datepicker-years thead .picker-switch {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  table td.active {
+    &,
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+.datepicker-decades {
+  .decade {
+    line-height: 1.2;
+    padding-top: 0.5em;
+  }
+}

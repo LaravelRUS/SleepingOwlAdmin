@@ -8,7 +8,7 @@ use SleepingOwl\Admin\Contracts\Widgets\WidgetInterface;
 abstract class Widget implements WidgetInterface
 {
     /**
-     * @var \Illuminate\View\View
+     * @var View
      */
     protected $view;
 

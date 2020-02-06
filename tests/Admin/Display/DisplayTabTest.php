@@ -1,13 +1,13 @@
 <?php
 
-use Mockery as m;
-use SleepingOwl\Admin\Display\DisplayTab;
-use SleepingOwl\Admin\Contracts\Validable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
+use Mockery as m;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
+use SleepingOwl\Admin\Display\DisplayTab;
 
 class DisplayTabTest extends TestCase
 {
@@ -134,7 +134,7 @@ class DisplayTabTest extends TestCase
         $tab = $this->getTab(null, null);
 
         $this->assertNull($tab->getIcon());
-        $this->assertEquals($tab, $tab->setIcon($icon = 'fa fa-test'));
+        $this->assertEquals($tab, $tab->setIcon($icon = 'fas fa-tachometer-alt'));
         $this->assertEquals($icon, $tab->getIcon());
     }
 

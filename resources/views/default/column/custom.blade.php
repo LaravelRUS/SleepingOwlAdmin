@@ -1,1 +1,8 @@
-<div {!! $attributes !!}>{!! $value !!} {!! $append !!}</div>
+<div {!! $attributes !!}>
+  {!! $value !!}
+  {!! $append !!}
+  
+  @if($small)
+    <small class="clearfix">{!! $small !!}</small>
+  @endif
+</div>

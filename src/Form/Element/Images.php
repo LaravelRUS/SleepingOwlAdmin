@@ -26,14 +26,15 @@ class Images extends Image
 
     /**
      * Store array of images as coma separator.
-     *
+     * @deprecated
      * @return $this
      */
     public function storeAsComaSeparatedValue()
     {
-        $this->mutateValue(function ($value) {
-            return implode(',', $value);
-        });
+        /* deprecated this logic */
+        // $this->mutateValue(function ($value) {
+        //     return implode(',', $value);
+        // });
 
         return $this;
     }

@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Form\FormDefault;
 
 class Checkbox extends EditableColumn implements ColumnEditableInterface
 {
@@ -12,6 +12,16 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
      * @var string
      */
     protected $view = 'column.editable.checkbox';
+
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
 
     /**
      * @var null|string
@@ -22,6 +32,11 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
      * @var null|string
      */
     protected $uncheckedLabel;
+
+    /**
+     * @var string
+     */
+    protected $width = '50px';
 
     /**
      * Checkbox constructor.
@@ -37,6 +52,10 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
+
+        if ($checkedLabel) {
+            $this->setLabel($checkedLabel);
+        }
     }
 
     public function getModifierValue()
@@ -82,7 +101,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     public function getUncheckedLabel()
     {
         if (is_null($label = $this->uncheckedLabel)) {
-            $label = trans('sleeping_owl::lang.editable.checkbox.unchecked');
+            $label = "<i class='fas fa-minus'></i>";
         }
 
         return $label;

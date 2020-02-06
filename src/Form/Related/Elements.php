@@ -2,24 +2,24 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-use Throwable;
-use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
 use Admin\Contracts\HasFakeModel;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElements;
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Form\Columns\Columns;
 use Illuminate\Database\ConnectionInterface;
-use SleepingOwl\Admin\Contracts\Initializable;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use SleepingOwl\Admin\Form\Element\NamedFormElement;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Form\Columns\Columns;
+use SleepingOwl\Admin\Form\Element\NamedFormElement;
+use SleepingOwl\Admin\Form\FormElements;
+use Throwable;
 
 abstract class Elements extends FormElements
 {
@@ -323,8 +323,10 @@ abstract class Elements extends FormElements
 
         $query = $this->getRelation();
         if (count($this->queryCallbacks) > 0) {
+
             //get $query instance Illuminate\Database\Eloquent\Builder for HasMany
             $query = $query->getQuery();
+
             foreach ($this->queryCallbacks as $callback) {
                 $callback($query);
             }
@@ -637,14 +639,14 @@ abstract class Elements extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-                'stub' => $this->stubElements,
-                'name' => $this->relationName,
-                'label' => $this->label,
-                'groups' => $this->groups,
-                'remove' => $this->toRemove,
-                'newEntitiesCount' => $this->new,
-                'limit' => $this->limit,
-            ];
+            'stub' => $this->stubElements,
+            'name' => $this->relationName,
+            'label' => $this->label,
+            'groups' => $this->groups,
+            'remove' => $this->toRemove,
+            'newEntitiesCount' => $this->new,
+            'limit' => $this->limit,
+        ];
     }
 
     /**

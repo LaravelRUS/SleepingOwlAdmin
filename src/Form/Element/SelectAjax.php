@@ -3,12 +3,12 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
-use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Traits\SelectAjaxFunctions;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Traits\SelectAjaxFunctions;
 
 class SelectAjax extends Select implements Initializable, WithRoutesInterface
 {
@@ -128,10 +128,12 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             'id' => $this->getId(),
             'class' => 'form-control js-data-ajax',
             'data-select-type' => 'single',
+            'data-language' => $this->getLanguage(),
             //'model' => get_class($this->getModelForOptions()),
             //'field' => $this->getDisplay(),
             //'search' => $this->getSearch(),
             'search_url' => $this->getSearchUrl(),
+            'disabled' => $this->readonly,
             'data-min-symbols' => $this->getMinSymbols(),
         ]);
 

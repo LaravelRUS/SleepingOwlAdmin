@@ -37,8 +37,10 @@ Vue.component('element-file', Vue.extend({
                 method: 'POST',
                 uploadMultiple: false,
                 previewsContainer: false,
-
                 dictDefaultMessage: '',
+                maxFilesize: Admin.Config.get('max_file_size'),
+                dictFileTooBig: trans('lang.ckeditor.upload.error.filesize_limit_m', {size: Admin.Config.get('max_file_size')}),
+                dictResponseError: trans('lang.ckeditor.upload.error.common'),
                 sending () {
                     self.uploading = true;
                     self.closeAlert()
@@ -47,6 +49,7 @@ Vue.component('element-file', Vue.extend({
                     self.val = response.value;
                 },
                 error (file, response) {
+                    Admin.Messages.error(response)
                     if(_.isArray(response.errors)) {
                         self.errors = response.errors;
                     }
@@ -70,9 +73,9 @@ Vue.component('element-file', Vue.extend({
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fa fa-upload';
+                return 'fas fa-file-upload';
             }
-            return 'fa fa-spinner fa-spin'
+            return 'fas fa-spinner fa-spin'
         },
         has_value () {
             return this.val.length > 0

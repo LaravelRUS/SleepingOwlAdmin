@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts\Form;
 
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Related\Forms;
 
 /**
@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Form\Related\Forms;
  * @method Element\Image image($name, $label = null)
  * @method Element\Images images($name, $label = null)
  * @method Element\File file($name, $label = null)
+ * @method Element\Files files($name, $label = null)
  * @method Element\Time time($name, $label = null)
  * @method Element\Date date($name, $label = null)
  * @method Element\Timestamp timestamp($name, $label = null)

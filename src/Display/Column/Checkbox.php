@@ -13,6 +13,11 @@ class Checkbox extends TableColumn
     protected $view = 'column.checkbox';
 
     /**
+     * @var string
+     */
+    protected $width = '30px';
+
+    /**
      * Checkbox constructor.
      *
      * @param string|null $label
@@ -22,10 +27,18 @@ class Checkbox extends TableColumn
         parent::__construct($label);
         $this->setLabel(
             Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
-            ));
-
-        $this->setOrderable(false);
+        ));
     }
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
+     * @var bool
+     */
+    protected $orderable = true;
 
     /**
      * @return mixed
@@ -41,7 +54,7 @@ class Checkbox extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'value' => $this->getModelValue(),
-            ];
+            'value' => $this->getModelValue(),
+        ];
     }
 }

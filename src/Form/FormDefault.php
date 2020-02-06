@@ -3,17 +3,17 @@
 namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Form\Element\Upload;
-use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Exceptions\Form\FormException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Validation\ValidationException;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Form\Element\Upload;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -87,7 +87,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function initialize()
     {
         if ($this->initialized) {
-            return;
+            return false;
         }
 
         $this->initialized = true;
@@ -251,16 +251,23 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     public function setId($id)
     {
         if (is_null($this->id)) {
-            // Get Model from ModelConfiguration
+            /**
+             * Get Model from ModelConfiguration.
+             */
             $model = null;
             $model_configuration = $this->getModelConfiguration();
+
             if (method_exists($model_configuration, 'getModelValue')) {
                 $model = $model_configuration->getModelValue();
             }
-            // Get Model from Repository
+
+            /*
+             * Get Model from Repository
+             */
             if (! $model && ! is_null($id)) {
                 $model = $this->getRepository()->find($id);
             }
+
             if ($model) {
                 $this->id = $id;
 

@@ -1,0 +1,13 @@
+pre {
+  display: block;
+  padding: 0.5em;
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: $dark;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: $gray-100;
+  border: 1px solid $gray-300;
+  border-radius: 4px;
+}

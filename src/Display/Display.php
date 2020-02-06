@@ -5,22 +5,22 @@ namespace SleepingOwl\Admin\Display;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use SleepingOwl\Admin\Traits\Assets;
-use SleepingOwl\Admin\Form\FormElements;
-use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Display\Extension\Apply;
-use SleepingOwl\Admin\Display\Extension\Links;
-use SleepingOwl\Admin\Display\Extension\Scopes;
-use SleepingOwl\Admin\Display\Extension\Actions;
-use SleepingOwl\Admin\Display\Extension\Filters;
-use SleepingOwl\Admin\Display\Extension\ActionsForm;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Display\Extension\Actions;
+use SleepingOwl\Admin\Display\Extension\ActionsForm;
+use SleepingOwl\Admin\Display\Extension\Apply;
+use SleepingOwl\Admin\Display\Extension\Filters;
+use SleepingOwl\Admin\Display\Extension\Links;
+use SleepingOwl\Admin\Display\Extension\Scopes;
+use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\Renderable;
 
 /**
  * Class Display.
@@ -257,6 +257,9 @@ abstract class Display implements DisplayInterface
                     echo $html;
                     $view->getFactory()->yieldSection();
                 } else {
+                    /*
+                    * Need test for action (BUG)
+                    */
                     //$view->getFactory()->flushSections();
                 }
             }

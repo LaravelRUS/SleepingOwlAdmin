@@ -35,4 +35,4 @@ install:
 cache:
   directories:
     - vendor
-    - $HOME/.composer/cache  
+    - $HOME/.composer/cache

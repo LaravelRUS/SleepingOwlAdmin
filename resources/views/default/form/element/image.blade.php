@@ -1,64 +1,75 @@
-<div class="form-group form-element-image{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
-	<label for="{{ $name }}" class="control-label">
-		{!! $label !!}
+@if ($visibled)
+    <div class="form-group form-element-image{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}">
+        <label for="{{ $name }}" class="control-label{{ $required ? ' required' : '' }}">
+            {!! $label !!}
 
-		@if($required)
-			<span class="form-element-required">*</span>
-		@endif
-	</label>
+            @if($required)
+                <span class="form-element-required">*</span>
+            @endif
+        </label>
 
-	@include(AdminTemplate::getViewPath('form.element.partials.helptext'))
+        @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-	<element-image
-			url="{{ route('admin.form.element.image', [
+        <element-image
+                url="{{ route('admin.form.element.image', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
 			]) }}"
-			value="{{ $value }}"
-			:readonly="{{ $readonly ? 'true' : 'false' }}"
-			name="{{ $name }}"
-			inline-template
-	>
-		<div>
-			<div v-if="errors.length" class="alert alert-warning">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
-					<span aria-hidden="true">&times;</span>
-				</button>
+                value="{{ $value }}"
+                :readonly="{{ $readonly ? 'true' : 'false' }}"
+                name="{{ $name }}"
+                inline-template
+        >
+            <div>
+                <div v-if="errors.length" class="alert alert-warning" v-show="errors.length" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-				<p v-for="error in errors"><i class="fa fa-hand-o-right" aria-hidden="true"></i> @{{ error }}</p>
-			</div>
-			<div class="form-element-files clearfix" v-if="has_value">
-				<div class="form-element-files__item">
-					<a :href="image" class="form-element-files__image" data-toggle="lightbox">
-						<img :src="image" />
-					</a>
-					<div class="form-element-files__info">
-						<a :href="image" class="btn btn-default btn-xs pull-right">
-							<i class="fa fa-cloud-download"></i>
-						</a>
+                    <p v-for="error in errors" v-show="errors">
+                        <i class="fas fa-image" aria-hidden="true"></i> @{{ error }}
+                    </p>
+                </div>
 
-						<button type="button" v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()">
-							<i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
-						</button>
-					</div>
-				</div>
-			</div>
+                <div class="form-element-files clearfix" v-if="has_value" v-show="has_value" style="display:none;">
+                    <div class="form-element-files__item">
+                        <a :href="createdimage" class="form-element-files__image" data-toggle="lightbox">
+                            <img :src="createdimage"/>
+                        </a>
+                        <div class="form-element-files__info">
+                            <a :href="createdimage" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </a>
+                            <button type="button" v-if="!readonly" @click.prevent="insert(val)" class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
+                                <i class="fas fa-link"></i>
+                            </button>
 
-			<div v-if="!readonly">
-				<div class="btn btn-primary upload-button">
-					<i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browse') }}
-				</div>
+                            <button type="button" v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()" title="{{ trans('sleeping_owl::lang.image.remove') }}">
+                                <i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-			</div>
+                <div v-if="!readonly">
+                    <div class="btn btn-primary upload-button btn-sm">
+                        <i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browse') }}
+                    </div>
+                    <button type="button" @click.prevent="insert($event.target.value)" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
+                        <i class="fas fa-link"></i>
+                    </button>
 
-			<input :name="name" type="hidden" :value="val">
-		</div>
-	</element-image>
+
+                </div>
+
+                <input :name="name" type="hidden" :value="val">
+            </div>
+        </element-image>
 
 
-	<div class="errors">
-		@include(AdminTemplate::getViewPath('form.element.partials.errors'))
-	</div>
-</div>
-
+        <div class="errors">
+            @include(AdminTemplate::getViewPath('form.element.partials.errors'))
+        </div>
+    </div>
+@endif

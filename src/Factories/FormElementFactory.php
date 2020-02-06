@@ -2,22 +2,22 @@
 
 namespace SleepingOwl\Admin\Factories;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Related\Forms;
-use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Contracts\Form\FormElementFactoryInterface;
 
 /**
  * @method Element\Text text($name, $label = null)
  * @method Element\Image image($name, $label = null)
  * @method Element\Images images($name, $label = null)
  * @method Element\File file($name, $label = null)
+ * @method Element\Files files($name, $label = null)
  * @method Element\Time time($name, $label = null)
  * @method Element\Date date($name, $label = null)
- * @method Element\DateRange daterange($name, $label = null)
  * @method Element\Timestamp timestamp($name, $label = null)
  * @method Element\TextAddon textaddon($name, $label = null)
  * @method Element\Password password($name, $label = null)
@@ -59,7 +59,6 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'time' => Element\Time::class,
             'date' => Element\Date::class,
             'datetime' => Element\DateTime::class,
-            'daterange' => Element\DateRange::class,
             'timestamp' => Element\Timestamp::class,
             'textaddon' => Element\TextAddon::class,
             'select' => Element\Select::class,

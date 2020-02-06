@@ -28,8 +28,8 @@
                 @click="addNewGroup"
                 class='grouped-elements__action pull-right related-action_add btn btn-success btn-sm'
             >
-                <i class='icon icon-plus'></i>
-                {{ trans('sleeping_owl::lang.related.add') }}
+                <i class='fas fa-plus'></i>
+                {{ trans('sleeping_owl::lang.button.add') }}
             </button>
 
         </div>

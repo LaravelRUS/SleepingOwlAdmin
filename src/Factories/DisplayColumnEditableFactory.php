@@ -2,14 +2,15 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\AliasBinder;
 use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Display\Column\Editable\Text;
-use SleepingOwl\Admin\Display\Column\Editable\Select;
-use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
-use SleepingOwl\Admin\Display\Column\Editable\DateTime;
-use SleepingOwl\Admin\Display\Column\Editable\Textarea;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
+use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
+use SleepingOwl\Admin\Display\Column\Editable\Date;
+use SleepingOwl\Admin\Display\Column\Editable\DateTime;
+use SleepingOwl\Admin\Display\Column\Editable\Select;
+use SleepingOwl\Admin\Display\Column\Editable\Text;
+use SleepingOwl\Admin\Display\Column\Editable\Textarea;
 
 /**
  * @method Checkbox checkbox($name)
@@ -31,6 +32,7 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
             'textarea' => Textarea::class,
             'select' => Select::class,
             'datetime' => DateTime::class,
+            'date' => Date::class,
         ]);
     }
 }

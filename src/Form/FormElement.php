@@ -3,27 +3,31 @@
 namespace SleepingOwl\Admin\Form;
 
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\In;
-use SleepingOwl\Admin\Traits\Assets;
-use Illuminate\Validation\Rules\NotIn;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rules\Exists;
-use Illuminate\Validation\Rules\Unique;
-use SleepingOwl\Admin\Traits\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Dimensions;
-use SleepingOwl\Admin\Traits\VisibleCondition;
+use Illuminate\Validation\Rules\Exists;
+use Illuminate\Validation\Rules\In;
+use Illuminate\Validation\Rules\NotIn;
+use Illuminate\Validation\Rules\Unique;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\Renderable;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets, VisibleCondition, Renderable;
+    use Assets, Renderable;
 
     /**
      * @var TemplateInterface
      */
     protected $template;
+
+    /**
+     * @var Renderable
+     */
+    protected $view;
 
     /**
      * @var Model
@@ -44,6 +48,11 @@ abstract class FormElement implements FormElementInterface
      * @var bool|callable
      */
     protected $readonly = false;
+
+    /**
+     * @var bool|callable
+     */
+    protected $visibled = true;
 
     /**
      * @var bool|callable
@@ -137,6 +146,7 @@ abstract class FormElement implements FormElementInterface
 
     /**
      * @param array|string $validationRules
+     * @param string|\Illuminate\Validation\Rule|\Illuminate\Contracts\Validation\Rule $rule
      *
      * @return $this
      */
@@ -182,7 +192,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return bool
+     * @return bool|callable
      */
     public function isReadonly()
     {
@@ -191,6 +201,18 @@ abstract class FormElement implements FormElementInterface
         }
 
         return (bool) $this->readonly;
+    }
+
+    /**
+     * @return bool|callable
+     */
+    public function isVisible()
+    {
+        if (is_callable($this->visibled)) {
+            return (bool) call_user_func($this->visibled, $this->getModel());
+        }
+
+        return (bool) $this->visibled;
     }
 
     /**
@@ -225,6 +247,31 @@ abstract class FormElement implements FormElementInterface
     public function setReadonly($readonly)
     {
         $this->readonly = $readonly;
+
+        return $this;
+    }
+
+    /**
+     * @param Closure|bool $visibled
+     *
+     * @return $this
+     */
+    public function setVisible($visibled)
+    {
+        $this->visibled = $visibled;
+
+        return $this;
+    }
+
+    /**
+     * @param \SleepingOwl\Admin\Form\FormElement $visibled
+     *
+     * @return $this
+     * @deprecated
+     */
+    public function setVisibilityCondition($visibled)
+    {
+        $this->visibled = $this->setVisible($visibled);
 
         return $this;
     }
@@ -275,6 +322,7 @@ abstract class FormElement implements FormElementInterface
         return [
             'value' => $this->getValue(),
             'readonly' => $this->isReadonly(),
+            'visibled' => $this->isVisible(),
             'model' => $this->getModel(),
         ];
     }

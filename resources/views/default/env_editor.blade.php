@@ -12,8 +12,8 @@
 <env_editor :data="{{ json_encode($data) }}" :error-text="'{{ trans('sleeping_owl::validation.access_denied') }}'" inline-template>
     {{ Form::open(['method' => 'POST', 'url' => route('admin.env.editor.post')]) }}
     <div class="links-row"></div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card card-default">
+        <div class="card-heading">
         </div>
         <table class="table table-striped" id="env_editor_table">
             <thead>
@@ -45,21 +45,21 @@
                 </td>
                 <td class="row-link" style="vertical-align: inherit;">
                     <div class="pull-right">
-                        <a title="delete" @click="removeEnv(key)" class="btn btn-xs btn-danger">
-                            <i class="fa fa-times"></i>
+                        <a title="delete" @click="removeEnv(key)" class="btn btn-xs btn-danger text-white">
+                            <i class="fas fa-times"></i>
                         </a>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
-        <div class="panel-footer">
-            <a id="env_add_entry" @click="values.push({key:null, value:null})" class="btn btn-primary">
-                <i class="fa fa-plus"></i> {{trans('sleeping_owl::lang.env_editor.new-entry')}}
+        <div class="card-footer">
+            <a id="env_add_entry" @click="values.push({key:null, value:null})" class="btn btn-primary text-white">
+                <i class="fas fa-plus"></i> {{trans('sleeping_owl::lang.button.new-entry')}}
             </a>
             <div class="pull-right">
                 <button class="btn btn-primary" type="submit">
-                    <i class="fa fa-check"></i> {{trans('sleeping_owl::lang.env_editor.save')}}
+                    <i class="fas fa-check"></i> {{trans('sleeping_owl::lang.button.save')}}
                 </button>
             </div>
         </div>

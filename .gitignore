@@ -1,9 +1,12 @@
-/vendor
 /node_modules
-composer.phar
+/vendor
 composer.lock
 .DS_Store
 .phpunit.result.cache
 /.idea
 yarn.lock
 package-lock.json
+/build/logs
+/public/default/css/*.map
+/public/default/js/*.map
+/public/packages/sleepingowl/*

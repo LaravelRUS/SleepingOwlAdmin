@@ -15,11 +15,6 @@ class Text extends NamedColumn
     protected $modifier = null;
 
     /**
-     * @var bool
-     */
-    protected $isSearchable = true;
-
-    /**
      * @return \Closure|mixed
      */
     public function getModifier()
@@ -49,9 +44,12 @@ class Text extends NamedColumn
             $model_value = $modifier($model_value, $this->getModel());
         }
 
+        if ($this->isolated) {
+            $model_value = htmlspecialchars($model_value);
+        }
+
         return parent::toArray() + [
-                'value' => $model_value,
-                'small' => $this->getModelSmallValue(),
-            ];
+            'value' => $model_value,
+        ];
     }
 }

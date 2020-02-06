@@ -12,7 +12,7 @@ class NamedFormElementTest extends TestCase
 
     /**
      * @param string $path
-     * @param null $label
+     * @param null   $label
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      * @throws ReflectionException
@@ -313,6 +313,7 @@ class NamedFormElementTest extends TestCase
             'attributes' => ' id="key2__subkey" name="key2[subkey]"',
             'class'      => null,
             'style'      => null,
+            'visibled'   => true,
         ], $element->toArray());
     }
 
@@ -400,7 +401,7 @@ class NamedFormElementTest extends TestCase
 
     /**
      * @param NamedFormElement $element
-     * @param $path
+     * @param                  $path
      *
      * @return mixed
      * @throws ReflectionException

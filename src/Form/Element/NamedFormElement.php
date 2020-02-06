@@ -3,18 +3,18 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use LogicException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
-use KodiComponents\Support\HtmlAttributes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use KodiComponents\Support\HtmlAttributes;
+use LogicException;
 use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+use SleepingOwl\Admin\Form\FormElement;
 
 abstract class NamedFormElement extends FormElement
 {
@@ -440,13 +440,15 @@ abstract class NamedFormElement extends FormElement
         $value = $this->getDefaultValue();
 
         if ($model === null || ! $model->exists) {
-            // First check for model existence must go here, before all checks are made
+            /*
+              * First check for model existence must go here, before all checks are made
+              */
             return $value;
         }
 
         /*
-         * Implement json parsing
-         */
+          * Implement json parsing
+          */
         if (strpos($path, '->') !== false) {
             $casts = collect($model->getCasts());
             $jsonParts = collect(explode('->', $path));

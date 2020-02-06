@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Select extends EditableColumn implements ColumnEditableInterface
 {
@@ -19,9 +19,20 @@ class Select extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.select';
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * @var null
      */
     protected $relationKey = null;
+
     /**
      * @var array
      */

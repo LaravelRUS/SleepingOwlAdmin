@@ -1,14 +1,15 @@
-<div role="tabpanel" class="nav-tabs-custom ">
-	<ul class="nav nav-tabs" role="tablist">
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+		@foreach ($tabs as $tab)
+			{!! $tab->render() !!}
+		@endforeach
+  </div>
+</nav>
+
+<div class="tab-content mt-3 {!! $classAttributes !!}"  id="nav-tabContent">
 	@foreach ($tabs as $tab)
-		{!! $tab->render() !!}
-	@endforeach
-	</ul>
-	<div class="tab-content">
-	@foreach ($tabs as $tab)
-		<div role="tabpanel" class="tab-pane {!! ($tab->isActive()) ? 'in active' : '' !!}" id="{{ $tab->getName() }}">
-			{!!  $tab->addTabElement()->getContent()->render() !!}
+	  <div class="tab-pane fade {!! ($tab->isActive()) ? 'show active' : '' !!}" id="nav-{{ $tab->getName() }}" role="tabpanel" aria-labelledby="nav-{{ $tab->getName() }}">
+			{!! $tab->addTabElement()->getContent()->render() !!}
 		</div>
 	@endforeach
-	</div>
 </div>

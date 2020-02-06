@@ -27,8 +27,8 @@
                     data-original-text='Удалить'
                     data-toggle='tooltip'
                     class='btn btn-warning pull-right btn-sm grouped-element__delete'>
-                <i class='icon icon-trash'></i>
-                {{ trans('sleeping_owl::lang.related.remove') }}
+                <i class='fas fa-trash'></i>
+                {{ trans('sleeping_owl::lang.button.remove') }}
             </button>
         </div>
         <hr>

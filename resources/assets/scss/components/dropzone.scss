@@ -1,0 +1,12 @@
+@import "~dropzone/dist/dropzone.css";
+
+.dropzone {
+  min-height: 50px !important;
+  border:     5px solid rgba(0, 0, 0, .1);
+  padding:    10px 0 10px 10px;
+}
+
+.dropzone.dz-drag-hover {
+  border-style: dashed;
+  background:   rgba(0, 0, 0, .1);
+}

@@ -2,16 +2,16 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\Form;
-use SleepingOwl\Admin\AliasBinder;
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Form\FormFactoryInterface;
+use SleepingOwl\Admin\Form;
 
 /**
  * @method Form\FormDefault form(array $elements = [])
  * @method Form\FormElements elements(array $elements = [])
  * @method Form\FormTabbed tabbed(array $elements = [])
- * @method Form\FormPanel panel(array $elements = [])
+ * @method Form\FormCard card(array $elements = [])
  */
 class FormFactory extends AliasBinder implements FormFactoryInterface
 {
@@ -28,7 +28,8 @@ class FormFactory extends AliasBinder implements FormFactoryInterface
             'form' => Form\FormDefault::class,
             'elements' => Form\FormElements::class,
             'tabbed' => Form\FormTabbed::class,
-            'panel' => Form\FormPanel::class,
+            'panel' => Form\FormCard::class,
+            'card' => Form\FormCard::class,
         ]);
     }
 }

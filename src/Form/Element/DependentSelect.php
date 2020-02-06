@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
-use Illuminate\Support\Arr;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
 class DependentSelect extends Select implements WithRoutesInterface
@@ -207,13 +207,20 @@ class DependentSelect extends Select implements WithRoutesInterface
             $this->setHtmlAttribute('disabled', 'disabled');
         }
 
+        $options = $this->getOptions();
+
+        if ($this->isNullable()) {
+            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
+        }
+
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
             'readonly' => $this->isReadonly(),
-            'options' => $this->getOptions(),
+            'visibled' => $this->isVisible(),
+            'options' => $options,
             'value' => $this->getValueFromModel(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),

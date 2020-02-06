@@ -3,23 +3,25 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Contracts\Display\TabInterface;
-use SleepingOwl\Admin\Model\SectionModelConfiguration;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Model\SectionModelConfiguration;
+use SleepingOwl\Admin\Traits\FormElements;
+use SleepingOwl\Admin\Traits\Renderable as AdminRenderable;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 /**
  * @property TabInterface[]|DisplayTabsCollection $elements
  */
 class DisplayTabbed implements DisplayInterface, FormInterface
 {
-    use FormElements, VisibleCondition, \SleepingOwl\Admin\Traits\Renderable;
+    use FormElements, VisibleCondition, AdminRenderable, HtmlAttributes;
 
     /**
      * @var string
@@ -272,6 +274,14 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @return bool
      */
+    public function isVisibled()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
     public function isValueSkipped()
     {
         return false;
@@ -284,6 +294,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     {
         return [
             'tabs' => $this->getTabs()->onlyVisible(),
+            'classAttributes' => $this->getHtmlAttribute('class'),
         ];
     }
 

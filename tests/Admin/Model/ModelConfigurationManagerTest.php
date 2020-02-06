@@ -1,7 +1,7 @@
 <?php
 
-use Mockery as m;
 use KodiComponents\Navigation\Contracts\PageInterface;
+use Mockery as m;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
 class ModelConfigurationManagerTest extends TestCase
@@ -57,10 +57,10 @@ class ModelConfigurationManagerTest extends TestCase
 
         $this->assertEquals(
             $model,
-            $model->setIcon('fa fa-test')
+            $model->setIcon('fas fa-tachometer-alt')
         );
 
-        $this->assertEquals('fa fa-test', $model->getIcon());
+        $this->assertEquals('fas fa-tachometer-alt', $model->getIcon());
     }
 
     /**
@@ -265,9 +265,9 @@ class ModelConfigurationManagerTest extends TestCase
     {
         $model = $this->getConfiguration();
 
-        $val = $this->app['url']->route('admin.model.edit', [$model->getAlias(), 1, 'locale' => 'en'], true);
+        $val = $this->app['url']->route('admin.model.delete', [$model->getAlias(), 1, 'locale' => 'en'], true);
 
-        $this->assertEquals($val, $model->getEditUrl(1, ['locale' => 'en']));
+        $this->assertEquals($val, $model->getDeleteUrl(1, ['locale' => 'en']));
     }
 
     /**

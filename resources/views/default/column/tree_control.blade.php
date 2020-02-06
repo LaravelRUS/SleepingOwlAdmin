@@ -1,3 +1,3 @@
 @foreach($buttons as $button)
-    {!! $button->render() !!}
+  {!! $button->render() !!}
 @endforeach

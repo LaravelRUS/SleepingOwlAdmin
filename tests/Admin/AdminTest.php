@@ -1,7 +1,7 @@
 <?php
 
-use Mockery as m;
 use KodiComponents\Navigation\Contracts\PageInterface;
+use Mockery as m;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 class AdminTest extends TestCase

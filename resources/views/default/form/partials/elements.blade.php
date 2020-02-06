@@ -1,9 +1,9 @@
 @if($items instanceof \SleepingOwl\Admin\Form\Element\Columns)
-    <div class="form-elements">
+    <div class="form-elements w-100">
         {!! $items->render() !!}
     </div>
 @else
-    <div class="form-elements">
+    <div class="form-elements w-100">
         @foreach ($items as $item)
             @if($item instanceof \Illuminate\Contracts\Support\Renderable)
                 @if(method_exists($item, 'getName'))

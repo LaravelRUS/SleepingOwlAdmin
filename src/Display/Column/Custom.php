@@ -24,6 +24,11 @@ class Custom extends NamedColumn
     protected $orderable = false;
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * Custom constructor.
      *
      * @param null|string $label
@@ -83,7 +88,7 @@ class Custom extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'value' => $this->getModelValue(),
-            ];
+            'value' => $this->getModelValue(),
+        ];
     }
 }

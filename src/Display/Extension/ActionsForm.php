@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Form\FormElement;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Form\FormElement;
 
 class ActionsForm extends Extension implements Initializable, Placable
 {
@@ -26,7 +26,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     /**
      * @var string
      */
-    protected $placement = 'panel.heading.actions';
+    protected $placement = 'card.heading.actions';
 
     public function __construct()
     {

@@ -3,15 +3,15 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
-use Illuminate\Support\Str;
-use SleepingOwl\Admin\Navigation;
-use SleepingOwl\Admin\Navigation\Page;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Navigation\Badge;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Navigation;
+use SleepingOwl\Admin\Navigation\Badge;
+use SleepingOwl\Admin\Navigation\Page;
 
 /**
  * @method bool creating(\Closure $callback)
@@ -422,6 +422,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getEditUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.edit', $parameters);
@@ -435,6 +439,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getUpdateUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.update', $parameters);
@@ -448,6 +456,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDeleteUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.delete', $parameters);
@@ -461,6 +473,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDestroyUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.destroy', $parameters);
@@ -474,6 +490,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getRestoreUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.restore', $parameters);

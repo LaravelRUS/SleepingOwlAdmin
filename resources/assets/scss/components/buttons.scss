@@ -1,0 +1,23 @@
+.btn {
+  &.btn-xs {
+    padding: 0.2rem 0.35rem;
+    font-size: 80%;
+  }
+}
+
+.table-control-btn {
+  text-align: right;
+}
+
+.btn-group-vertical {
+  .btn {
+    white-space: nowrap;
+  }
+}
+
+.img-control {
+  img {
+    max-width: 1.8rem;
+    max-height: 1.8rem;
+  }
+}

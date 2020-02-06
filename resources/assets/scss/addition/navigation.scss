@@ -1,0 +1,17 @@
+[class*='sidebar-dark-'] .nav-sidebar > .nav-item > .nav-treeview {
+  background-color: rgba($white, 0.03);
+  padding-left: 1rem;
+}
+
+.nav-sidebar {
+  &:hover {
+    overflow: hidden;
+  }
+
+  .nav-item {
+    i {
+      width: 1.3rem;
+      text-align: center;
+    }
+  }
+}

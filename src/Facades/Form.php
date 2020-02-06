@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Form\FormDefault form(array $elements = [])
  * @method static \SleepingOwl\Admin\Form\FormElements elements(array $elements = [])
  * @method static \SleepingOwl\Admin\Form\FormTabbed tabbed(array $elements = [])
- * @method static \SleepingOwl\Admin\Form\FormPanel panel(array $elements = [])
+ * @method static \SleepingOwl\Admin\Form\FormCard card(array $elements = [])
  */
 class Form extends Facade
 {
