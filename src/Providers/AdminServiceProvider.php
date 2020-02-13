@@ -89,7 +89,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('sleeping_owl.template', function (Application $app) {
             if (! class_exists($class = $this->getConfig('template'))) {
-                throw new TemplateException("Template class [{$class}] not found");
+                throw new TemplateException("Template class [{$class}] not found in config file");
             }
 
             return $app->make($class);
