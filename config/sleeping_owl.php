@@ -151,6 +151,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    |  Allowed Extensions for uploaded images - array
+    |--------------------------------------------------------------------------
+    */
+
+    'imagesAllowedExtensions' => [
+        'jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    |  Behavoir if file exists (default 'UPLOAD_HASH'). See in UploadController
+    |--------------------------------------------------------------------------
+    */
+
+    'imagesUploadFilenameBehavior' => 'UPLOAD_HASH',
+
+    /*
+    |--------------------------------------------------------------------------
     |  Directory for uploaded files (relative to `public` directory)
     |--------------------------------------------------------------------------
     */
