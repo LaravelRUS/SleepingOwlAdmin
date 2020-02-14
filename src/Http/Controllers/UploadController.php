@@ -124,6 +124,17 @@ class UploadController extends Controller
         }
 
 
+        $filesAllowedExtensions = collect(
+            config('sleeping_owl.filesAllowedExtensions', [])
+        );
+
+        if ($filesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {
+            $uploadDirectory = config('sleeping_owl.filesUploadDirectory');
+            $uploadFilenameBehavior = config('sleeping_owl.filesUploadFilenameBehavior', $this->uploadFilenameBehaviorDefault);
+            $result = $this->uploadFile($file, $uploadDirectory, $uploadFilenameBehavior);
+        }
+
+
         if ($result && $result['uploaded'] == 1) {
             if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
                 return app('sleeping_owl.template')
