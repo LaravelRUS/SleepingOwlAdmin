@@ -1,4 +1,4 @@
-<p align="center"><h2>[Unreleased] (Only in <code class=" language-php">dev-development</code> branch)</h2></p>
+<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
 
 
 ## 2020-01-28
@@ -18,7 +18,6 @@
   - sass: 1.24.3 -> 1.25.0
   - sass-loader: 8.0.0 -> 8.0.2
   - cross-env: 6.0.3 -> 7.0.0
-
 
 
 ## 2020-01-23
