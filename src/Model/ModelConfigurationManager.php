@@ -422,7 +422,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getEditUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
 
@@ -439,7 +439,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getUpdateUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
 
@@ -456,7 +456,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDeleteUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
 
@@ -473,7 +473,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDestroyUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
 
@@ -490,7 +490,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getRestoreUrl($id, array $parameters = [])
     {
-        if(!$id){
+        if (! $id) {
             return '#';
         }
 
