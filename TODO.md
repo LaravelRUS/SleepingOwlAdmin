@@ -1,34 +1,4 @@
-# Новый LTE с Bootstrap 4
-
-
-## Changelog
-Обновлены npm пакеты
-- Sweetalert2 8.14.0
-- Fontawesome 5.9.0
-- Admin-lte v3.0.0-beta.1
-- Bootstrap 4.3.1
-- Noty 3.2.0-beta
-- добавлен редактор Summernote
-- добавлен ckeditor5, (4.7 оставлен как локальный)
-- Добавлен плагин js-cookie
-
-
-## Переход
-* Взять ветку с новым дизайном `"laravelrus/sleepingowl": "dev-bs4"`
-* Нужно обновить ассеты `php artisan sleepingowl:update`
-* Проверить конфиг `App\config\sleeping_owl.php` и добавить новые пункты из `https://github.com/LaravelRUS/SleepingOwlAdmin/blob/bs4/config/sleeping_owl.php`
-* Чтоб меню постоянно не разворачивалось нужно добавить исключение куки `'menu-state'` в файл `app\Http\Middleware\EncryptCookies.php` вашего проекта
-
-
-### Обновление конфига
-- `logo` - только картинка (символ) как для мини-лого
-- `minilogo` - уже не используется (вместо полного названия используется `title`)
-
-
-### Что пока не поддерживается
-
-
-### Что поправлено
+# Сделано
 * [x] Классы для табов (ф-ционал нуждается в исправлении)
 * [x] Собраны старые и новые стили (SCSS), перерабатываются
 * [x] Собраны старые и новые скрипты, перерабатываются
@@ -79,35 +49,28 @@
 * [x] ПРнуть / потестить депендет аякс и селект2 из девки
 * [x] `AdminColumnEditable::date` поправить год или поменять на выбор с значком календаря
 * [x] `AdminColumnEditable::datetime` сделать
+* [x] Запомнить последний таб (localstorage или кука)
+* [x] `Admin.Modules.register('display.datatables', () => {localStorage.clear();}` - переработать
 
 
-### Что сделать
+## Планируется
 * [ ] Локализовать `AdminFormElement::selectajax` (частично)
-* [ ] `multiselect` поправить отображение required и внесение старых данных после ошибки
-* [ ] Допилить `->setFormat()` на даты (не работает)
-* [ ] Запомнить последний таб (localstorage или кука)
 * [ ] посмотреть `setVisible`, к табам
 * [ ] Вынести стилей и скрипты для персборки ассетов (сделано SCSS)
-* [ ] `Admin.Modules.register('display.datatables', () => {localStorage.clear();}` - переработать
 * [ ] Сохранить->сохранить/закрыть выкидывает в корень, `->getDisplayUrl()` (словить зависимость)
 * [ ] Перепроверить stub
 * [ ] `->setText()` для чекбоксов и прочих от `TableColumn`
+* [ ] DependentSelect переделать с select2 на Vue-Multiselect
 
 
-### Отменено
-* В навигацию перенести заголовок (щас Main Menu)
-* DependentSelect переделать бы с select2 на Vue-Multiselect
-
-### Что изменено / планируется
+### Не утверждено
 * [ ] Добавить методу Gravatar доп.поле для выбора аватарки кастомной
+* [ ] Добавить поле для работы с картами
 * [ ] Подгрузка дефаулт иконки, если соединения нет в гаватаре
-* Обновить CKeditor
+* [ ] Обновить и пересобрать CKeditor 5
 * `AdminColumnEditable::boolean` с обычным кликом, без попап
 * https://github.com/LaravelRUS/SleepingOwlAdmin/issues/200 скрытие/отображение по кнопке
 * https://github.com/LaravelRUS/SleepingOwlAdmin/issues/703 добавление динамических полей
-* https://github.com/LaravelRUS/SleepingOwlAdmin/issues/895 ошибка в табах
-* https://github.com/LaravelRUS/SleepingOwlAdmin/issues/993 (проверить)
-* https://github.com/LaravelRUS/SleepingOwlAdmin/issues/900
 
 
 ### В доку дописать
