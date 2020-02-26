@@ -1,6 +1,16 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
 
 
+## 2020-02-26
+* [Add] Add draggable(boolean) in `AdminFormElement::images`
+
+
+## 2020-02-15
+* [Update] NPM packages:
+  - @fortawesome/fontawesome-free: 5.12.0 -> 5.12.1
+  - sweetalert2: 9.7.0 -> 9.7.2
+
+
 ## 2020-01-28
 * [Add] Updated datatebles reDraw after action
 * [Fix] Fix Vue isolation in display lists and columns

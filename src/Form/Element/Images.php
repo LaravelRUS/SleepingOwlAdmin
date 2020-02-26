@@ -11,6 +11,29 @@ class Images extends Image
      */
     protected $view = 'form.element.images';
 
+    protected $draggable = true;
+
+
+    /**
+     * @return boolean
+     */
+    public function getDraggable()
+    {
+        return (bool) $this->draggable;
+    }
+
+    /**
+     * @param boolean $draggable
+     *
+     * @return $this
+     */
+    public function setDraggable($draggable)
+    {
+        $this->draggable = $draggable;
+
+        return $this;
+    }
+
     /**
      * Store array of images as json string.
      * @return $this
@@ -77,5 +100,18 @@ class Images extends Image
         $request->merge([$name => $value]);
 
         parent::save($request);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+
+        return array_merge(parent::toArray(), [
+            'draggable' => $this->getDraggable(),
+        ]);
+
+        return $return;
     }
 }

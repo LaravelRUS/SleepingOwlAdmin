@@ -18,6 +18,7 @@
 			]) }}"
                 :values="{{ json_encode($value) }}"
                 :readonly="{{ $readonly ? 'true' : 'false' }}"
+                :draggable="{{ $draggable ? 'true' : 'false' }}"
                 name="{{ $name }}"
                 inline-template
         >
@@ -32,8 +33,8 @@
                     </p>
                 </div>
 
-                <div data-disable="true" class="form-element-files dropzone clearfix{{ $readonly ? ' dropzone-disabled': '' }}">
-                    <draggable class="draggable" v-model="vals" :disabled="{{ $readonly ? 'true': 'false' }}">
+                <div data-disable="{{ !$readonly }}" class="form-element-files dropzone clearfix{{ $readonly ? ' dropzone-disabled': '' }}">
+                    <draggable class="draggable" v-model="vals" :disabled="{{ !$readonly && $draggable ? 'false': 'true' }}">
 
                         <div class="form-element-files__item" v-for="(uri, index) in vals">
                             <a :href="image(uri)" class="form-element-files__image" data-toggle="images">
@@ -41,7 +42,7 @@
                             </a>
 
                             <div class="form-element-files__info">
-                                <a class="btn btn-clear btn-sm pull-right drag-cursor" v-if="!readonly">
+                                <a class="btn btn-clear btn-sm pull-right drag-cursor" v-if="!readonly && draggable">
                                     <i class="fas fa-arrows-alt"></i>
                                 </a>
                                 <a :href="image(uri)" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}">
