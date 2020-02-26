@@ -3,3 +3,7 @@
     transition: transform $trans !important;
   }
 }
+
+.sidebar .nav-link p {
+  max-width: 170px;
+}
