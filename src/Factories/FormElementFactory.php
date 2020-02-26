@@ -12,6 +12,7 @@ use SleepingOwl\Admin\Form\Related\Forms;
 
 /**
  * @method Element\Text text($name, $label = null)
+ * @method Element\Trix text($name, $label = null)
  * @method Element\Image image($name, $label = null)
  * @method Element\Images images($name, $label = null)
  * @method Element\File file($name, $label = null)
@@ -56,6 +57,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'columns' => Columns\Columns::class,
             'column' => Columns\Column::class,
             'text' => Element\Text::class,
+            'trix' => Element\Trix::class,
             'time' => Element\Time::class,
             'date' => Element\Date::class,
             'datetime' => Element\DateTime::class,

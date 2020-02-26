@@ -13,6 +13,10 @@ Vue.component('element-images', Vue.extend({
             type: Boolean,
             default: false
         },
+        draggable: {
+            type: Boolean,
+            default: false
+        },
         name: {
             type: String,
             required: true
