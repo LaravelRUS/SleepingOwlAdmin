@@ -13,9 +13,8 @@ class Images extends Image
 
     protected $draggable = true;
 
-
     /**
-     * @return boolean
+     * @return bool
      */
     public function getDraggable()
     {
@@ -23,7 +22,7 @@ class Images extends Image
     }
 
     /**
-     * @param boolean $draggable
+     * @param bool $draggable
      *
      * @return $this
      */
@@ -107,7 +106,6 @@ class Images extends Image
      */
     public function toArray()
     {
-
         return array_merge(parent::toArray(), [
             'draggable' => $this->getDraggable(),
         ]);

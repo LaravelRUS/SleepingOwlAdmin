@@ -6,14 +6,12 @@ use SleepingOwl\Admin\Traits\Collapsed;
 
 class Trix extends NamedFormElement
 {
-
     use Collapsed;
 
     /**
      * @var bool|null
      */
     protected $collapsed;
-
 
     public function __construct($path, $label = null)
     {
@@ -29,7 +27,6 @@ class Trix extends NamedFormElement
      */
     protected $view = 'form.element.trix';
 
-
     /**
      * @return array
      */
@@ -39,5 +36,4 @@ class Trix extends NamedFormElement
             'collapsed' => $this->getCollapsed(),
         ];
     }
-
 }
