@@ -1,16 +1,21 @@
-.nav.nav-tabs {
-  .last {
-    order: 999;
-    margin-left: auto;
-  }
+//.nav.nav-tabs {
+//  .last {
+//    order: 999;
+//    margin-left: auto;
+//  }
+//
+//  .nav-link.active,
+//  .nav-item.show .nav-link  {
+//    border-bottom-color: $gray-300;
+//  }
+//}
+//
+//.tab-content {
+//  /* Fix for horizontal scroll */
+//  max-width: 99.9%;
+//}
 
-  .nav-link.active,
-  .nav-item.show .nav-link  {
-    border-bottom-color: $gray-300;
-  }
-}
 
-.tab-content {
-  /* Fix for horizontal scroll */
-  max-width: 99.9%;
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+  //border-top:3px solid blue;
 }

@@ -17,6 +17,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap4-datetimepicker": "^5.2.3",
     "datatables.net": "^1.10.20",
+    "datatables.net-bs4": "^1.10.20",
     "datatables.net-responsive": "^2.2.3",
     "dependent-dropdown": "^1.4.9",
     "dropzone": "5.5.1",

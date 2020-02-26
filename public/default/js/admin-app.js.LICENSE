@@ -135,6 +135,10 @@
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2016 Dmitry Semenov; */
 
+/*! DataTables Bootstrap 4 integration
+ * ©2011-2017 SpryMedia Ltd - datatables.net/license
+ */
+
 /*! DataTables 1.10.20
  * ©2008-2019 SpryMedia Ltd - datatables.net/license
  */
