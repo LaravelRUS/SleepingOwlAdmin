@@ -26,7 +26,6 @@ class UploadController extends Controller
     private $uploadFilenameBehaviorDefault = 'UPLOAD_HASH'; // По умолчанию
     private $uploadFilenameIncrementMax = 10; // Максимально число попыток для подбора инкремента. f_10.png не будет создан
 
-
     /**
      * @param Request $request
      * @param ModelConfigurationInterface $model
@@ -123,7 +122,6 @@ class UploadController extends Controller
             $result = $this->uploadFile($file, $uploadDirectory, $uploadFilenameBehavior);
         }
 
-
         $filesAllowedExtensions = collect(
             config('sleeping_owl.filesAllowedExtensions', [])
         );
@@ -133,7 +131,6 @@ class UploadController extends Controller
             $uploadFilenameBehavior = config('sleeping_owl.filesUploadFilenameBehavior', $this->uploadFilenameBehaviorDefault);
             $result = $this->uploadFile($file, $uploadDirectory, $uploadFilenameBehavior);
         }
-
 
         if ($result && $result['uploaded'] == 1) {
             if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
@@ -160,10 +157,10 @@ class UploadController extends Controller
      */
     private function uploadFile(UploadedFile $file, string $uploadDirectory, string $uploadFilenameBehavior): array
     {
-        $isFileExists = file_exists(public_path($uploadDirectory) . DIRECTORY_SEPARATOR . $file->getClientOriginalName());
+        $isFileExists = file_exists(public_path($uploadDirectory).DIRECTORY_SEPARATOR.$file->getClientOriginalName());
         $uploadFileName = $file->getClientOriginalName();
 
-        $filenameWithoutExtensions = substr($file->getClientOriginalName(), 0, strrpos($file->getClientOriginalName(), "."));
+        $filenameWithoutExtensions = substr($file->getClientOriginalName(), 0, strrpos($file->getClientOriginalName(), '.'));
 
         //Варианты
         switch ($uploadFilenameBehavior) {
@@ -177,28 +174,28 @@ class UploadController extends Controller
             case 'UPLOAD_ORIGINAL_ADD_HASH':
                 if ($isFileExists) {
                     $uploadFileName = $filenameWithoutExtensions
-                        . '_' . md5(time() . $filenameWithoutExtensions)
-                        . '.' . $file->getClientOriginalExtension();
+                        .'_'.md5(time().$filenameWithoutExtensions)
+                        .'.'.$file->getClientOriginalExtension();
                     $result['error']['message'] = "Файл с таким именем уже существовал. Загружаемый файл был переименован в '{$uploadFileName}'";
                 }
                 break;
             case 'UPLOAD_ORIGINAL_ADD_INCREMENT':
                 if ($isFileExists) {
                     $index = 1;
-                    $uploadFileName = $filenameWithoutExtensions . '_' . $index . '.' . $file->getClientOriginalExtension();
+                    $uploadFileName = $filenameWithoutExtensions.'_'.$index.'.'.$file->getClientOriginalExtension();
                     while (
-                        file_exists(public_path($uploadDirectory) . DIRECTORY_SEPARATOR . $uploadFileName)
+                        file_exists(public_path($uploadDirectory).DIRECTORY_SEPARATOR.$uploadFileName)
                         and
                         $index < $this->uploadFilenameIncrementMax
                     ) {
                         $index++;
-                        $uploadFileName = $filenameWithoutExtensions . '_' . $index . '.' . $file->getClientOriginalExtension();
+                        $uploadFileName = $filenameWithoutExtensions.'_'.$index.'.'.$file->getClientOriginalExtension();
                     }
                     $result['error']['message'] = "Файл с таким именем уже существовал. Загружаемый файл был переименован в '{$uploadFileName}'";
                     if ($index == $this->uploadFilenameIncrementMax) {
                         $uploadFileName = false;
                         $result['uploaded'] = 0;
-                        $result['error']['message'] = "Файл с таким именем уже существовал. Имя подобрать не удалось. Переименуйте файл и попробуйте еще раз";
+                        $result['error']['message'] = 'Файл с таким именем уже существовал. Имя подобрать не удалось. Переименуйте файл и попробуйте еще раз';
                     }
                 }
                 break;
@@ -209,7 +206,7 @@ class UploadController extends Controller
                 break;
             default:
                 //UPLOAD_HASH
-                $uploadFileName = md5(time() . $filenameWithoutExtensions) . '.' . $file->getClientOriginalExtension();
+                $uploadFileName = md5(time().$filenameWithoutExtensions).'.'.$file->getClientOriginalExtension();
                 $result['error']['message'] = "Файл был переименован в '{$uploadFileName}'";
                 break;
         }
@@ -218,7 +215,7 @@ class UploadController extends Controller
             $file->move(public_path($uploadDirectory), $uploadFileName);
 
             $result['uploaded'] = 1;
-            $result['url'] = asset($uploadDirectory . '/' . $uploadFileName);
+            $result['url'] = asset($uploadDirectory.'/'.$uploadFileName);
             $result['fileName'] = $uploadFileName;
         }
 
