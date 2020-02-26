@@ -8,7 +8,7 @@
         // })
 
         document.addEventListener("trix-initialize", function(event) {
-          console.log(11111123);
+          // console.log(11111123);
         })
       </script>
   @endpush

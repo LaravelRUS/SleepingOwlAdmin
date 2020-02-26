@@ -1,6 +1,6 @@
 <div class="card">
-    <div class="card-header d-flex p-0">
-        <nav>
+    <div class="card-header d-flex">
+        <nav class="w-100">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 @foreach ($tabs as $tab)
                     {!! $tab->render() !!}
