@@ -37,6 +37,8 @@ Vue.http.interceptors.push((request, next) => {
     });
 });
 
+Vue.config.ignoredElements = ['trix-editor', 'trix-toolbar'];
+
 Vue.use({
     install (Vue, options) {
         Vue.prototype.$trans = (key) => i18next.t(key)

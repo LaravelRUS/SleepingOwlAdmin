@@ -5,6 +5,7 @@
       height: 2em;
       border-radius: 50%;
       margin: 0 0.5em;
+      object-fit: cover;
     }
 
     .dropdown-menu {
@@ -24,10 +25,11 @@
 
         img {
           max-width: 10em;
+          object-fit: cover;
         }
       }
     }
-    
+
     a {
       transition: 0.5s;
 

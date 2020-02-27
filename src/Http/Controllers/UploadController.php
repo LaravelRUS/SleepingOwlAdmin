@@ -13,6 +13,19 @@ use Validator;
 
 class UploadController extends Controller
 {
+    private $uploadFilenameBehaviors = [
+        'UPLOAD_HASH', // Использовать Хеш файла
+
+        'UPLOAD_ORIGINAL_ALERT', // Если такой файл есть - сообщать об этом
+        'UPLOAD_ORIGINAL_ADD_HASH', // Если такой файл есть - добавляем хеш f.png -> f_jfhsjfy8s7df8a7.png
+        'UPLOAD_ORIGINAL_ADD_INCREMENT', // Если такой файл есть - инкрементировать имя, пока не найдется вариант f.png -> f_1.png ... f_10.png
+
+        'UPLOAD_ORIGINAL_REWRITE', // Если такой файл есть - просто перезаписываем.
+    ];
+
+    private $uploadFilenameBehaviorDefault = 'UPLOAD_HASH'; // По умолчанию
+    private $uploadFilenameIncrementMax = 10; // Максимально число попыток для подбора инкремента. f_10.png не будет создан
+
     /**
      * @param Request $request
      * @param ModelConfigurationInterface $model
@@ -99,29 +112,113 @@ class UploadController extends Controller
 
         $result = [];
 
-        $extensions = collect(['jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif']);
+        $imagesAllowedExtensions = collect(
+            config('sleeping_owl.imagesAllowedExtensions', ['jpe', 'jpeg', 'jpg', 'bmp', 'ico', 'gif'])
+        );
 
-        if ($extensions->search($file->getClientOriginalExtension())) {
-            $uploadFileName = md5(time().$file->getClientOriginalName()).'.'.$file->getClientOriginalExtension();
+        if ($imagesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {
+            $uploadDirectory = config('sleeping_owl.imagesUploadDirectory');
+            $uploadFilenameBehavior = config('sleeping_owl.imagesUploadFilenameBehavior', $this->uploadFilenameBehaviorDefault);
+            $result = $this->uploadFile($file, $uploadDirectory, $uploadFilenameBehavior);
+        }
 
-            $file->move(public_path(config('sleeping_owl.imagesUploadDirectory')), $uploadFileName);
+        $filesAllowedExtensions = collect(
+            config('sleeping_owl.filesAllowedExtensions', [])
+        );
 
-            $result['url'] = asset(
-                config('sleeping_owl.imagesUploadDirectory').'/'.$uploadFileName
-            );
-            $result['uploaded'] = 1;
-            $result['fileName'] = $uploadFileName;
+        if ($filesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {
+            $uploadDirectory = config('sleeping_owl.filesUploadDirectory');
+            $uploadFilenameBehavior = config('sleeping_owl.filesUploadFilenameBehavior', $this->uploadFilenameBehaviorDefault);
+            $result = $this->uploadFile($file, $uploadDirectory, $uploadFilenameBehavior);
+        }
 
+        if ($result && $result['uploaded'] == 1) {
             if ($request->CKEditorFuncNum && $request->CKEditor && $request->langCode) {
                 return app('sleeping_owl.template')
                     ->view('helper.ckeditor.ckeditor_upload_file', compact('result'));
             }
 
-            if ($result) {
-                return response($result);
-            }
+            return response($result);
+        }
+
+        if ($result && $result['uploaded'] == 0) {
+            return response($result, 500);
         }
 
         return response('Something wrong', 500);
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @param string $uploadDirectory
+     * @param string $uploadFilenameBehavior
+     *
+     * @return array
+     */
+    private function uploadFile(UploadedFile $file, string $uploadDirectory, string $uploadFilenameBehavior): array
+    {
+        $isFileExists = file_exists(public_path($uploadDirectory).DIRECTORY_SEPARATOR.$file->getClientOriginalName());
+        $uploadFileName = $file->getClientOriginalName();
+
+        $filenameWithoutExtensions = substr($file->getClientOriginalName(), 0, strrpos($file->getClientOriginalName(), '.'));
+
+        //Варианты
+        switch ($uploadFilenameBehavior) {
+            case 'UPLOAD_ORIGINAL_ALERT':
+                if ($isFileExists) {
+                    $result['uploaded'] = 0;
+                    $result['error']['message'] = 'Файл с таким именем уже существует. Измените имя файла и попробуйте еще раз';
+                    $uploadFileName = false;
+                }
+                break;
+            case 'UPLOAD_ORIGINAL_ADD_HASH':
+                if ($isFileExists) {
+                    $uploadFileName = $filenameWithoutExtensions
+                        .'_'.md5(time().$filenameWithoutExtensions)
+                        .'.'.$file->getClientOriginalExtension();
+                    $result['error']['message'] = "Файл с таким именем уже существовал. Загружаемый файл был переименован в '{$uploadFileName}'";
+                }
+                break;
+            case 'UPLOAD_ORIGINAL_ADD_INCREMENT':
+                if ($isFileExists) {
+                    $index = 1;
+                    $uploadFileName = $filenameWithoutExtensions.'_'.$index.'.'.$file->getClientOriginalExtension();
+                    while (
+                        file_exists(public_path($uploadDirectory).DIRECTORY_SEPARATOR.$uploadFileName)
+                        and
+                        $index < $this->uploadFilenameIncrementMax
+                    ) {
+                        $index++;
+                        $uploadFileName = $filenameWithoutExtensions.'_'.$index.'.'.$file->getClientOriginalExtension();
+                    }
+                    $result['error']['message'] = "Файл с таким именем уже существовал. Загружаемый файл был переименован в '{$uploadFileName}'";
+                    if ($index == $this->uploadFilenameIncrementMax) {
+                        $uploadFileName = false;
+                        $result['uploaded'] = 0;
+                        $result['error']['message'] = 'Файл с таким именем уже существовал. Имя подобрать не удалось. Переименуйте файл и попробуйте еще раз';
+                    }
+                }
+                break;
+            case 'UPLOAD_ORIGINAL_REWRITE':
+                if ($isFileExists) {
+                    $result['error']['message'] = 'Файл с таким именем уже существовал и был перезаписан';
+                }
+                break;
+            default:
+                //UPLOAD_HASH
+                $uploadFileName = md5(time().$filenameWithoutExtensions).'.'.$file->getClientOriginalExtension();
+                $result['error']['message'] = "Файл был переименован в '{$uploadFileName}'";
+                break;
+        }
+
+        if ($uploadFileName) {
+            $file->move(public_path($uploadDirectory), $uploadFileName);
+
+            $result['uploaded'] = 1;
+            $result['url'] = asset($uploadDirectory.'/'.$uploadFileName);
+            $result['fileName'] = $uploadFileName;
+        }
+
+        return $result;
     }
 }
