@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Traits\EditableReadonlyTrait;
 
 class EditableColumn extends NamedColumn
 {
-
     use EditableReadonlyTrait;
 
     /**
