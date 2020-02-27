@@ -9,13 +9,12 @@ trait EditableReadonlyTrait
      */
     protected $readonlyEditable = false;
 
-
     /**
      * @return mixed
      */
     public function getReadonly()
     {
-        return $this->getModelConfiguration()->isEditable($this->getModel()) && !$this->readonlyEditable;
+        return $this->getModelConfiguration()->isEditable($this->getModel()) && ! $this->readonlyEditable;
     }
 
     /**
