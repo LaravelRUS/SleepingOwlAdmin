@@ -13,7 +13,9 @@
          data-disabled="{{ !$isEditable }}"
       ></a>
   @else
-      {{ $text }}
+      <span v-pre>
+          {!! $text !!}
+      </span>
   @endif
 
   {!! $append !!}

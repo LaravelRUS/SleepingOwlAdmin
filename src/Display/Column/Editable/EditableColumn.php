@@ -3,9 +3,12 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use SleepingOwl\Admin\Display\Column\NamedColumn;
+use SleepingOwl\Admin\Traits\EditableReadonlyTrait;
 
 class EditableColumn extends NamedColumn
 {
+    use EditableReadonlyTrait;
+
     /**
      * @var string
      */
@@ -150,7 +153,7 @@ class EditableColumn extends NamedColumn
         return parent::toArray() + [
             'id' => $this->getModel()->getKey(),
             'value' => $this->getModelValue(),
-            'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+            'isEditable' => $this->getReadonly(),
             'url' => $this->getUrl(),
             'title' => $this->getTitle(),
             'mode' => $this->getEditableMode(),
