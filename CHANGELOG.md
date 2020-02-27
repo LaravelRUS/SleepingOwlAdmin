@@ -1,6 +1,12 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
 
 
+## 2020-02-27
+* [Fix] Fix collapset sidebar style
+* [Fix] Changed default font size to 14px -> 16px
+* [Fix] Fix style for Tabs
+
+
 ## 2020-02-26
 * [Add] Add draggable(boolean) in `AdminFormElement::images`
 
