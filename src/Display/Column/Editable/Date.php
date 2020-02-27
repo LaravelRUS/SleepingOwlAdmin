@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Date extends DateTime implements ColumnEditableInterface
-{
+{    
     /**
      * @var string
      */

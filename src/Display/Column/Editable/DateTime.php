@@ -108,7 +108,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         return array_merge(parent::toArray(), [
             'id' => $this->getModel()->getKey(),
             'value' => $this->getFormatedDate($value),
-            'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+            // 'isEditable' => $this->getModelConfiguration()->isEditable($this->getModel()),
+            'isEditable' => $this->getReadonly(),
             'url' => $this->getUrl(),
 
             'format' => $this->getJsPickerFormat(),
