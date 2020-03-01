@@ -20,6 +20,7 @@
                 @include(AdminTemplate::getViewPath('form.element.related.group'), [
                     'name' => $name,
                     'group' => new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all()),
+                    'index' => "totalGroupsCount"
                 ])
             </div>
             <button
