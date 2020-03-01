@@ -2,14 +2,14 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Display\Column\Control;
-use Illuminate\Contracts\Pagination\Paginator;
-use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Column\Control;
 
 class Columns extends Extension implements Initializable, Renderable
 {

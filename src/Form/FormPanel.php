@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use SleepingOwl\Admin\Form\Panel\Body;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Form\Element\Html;
+use SleepingOwl\Admin\Form\Panel\Body;
 use SleepingOwl\Admin\Form\Panel\Footer;
 use SleepingOwl\Admin\Form\Panel\Header;
 use SleepingOwl\Admin\Traits\PanelControl;
-use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 
 class FormPanel extends FormDefault
 {

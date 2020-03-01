@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\Renderable;
 
 class FormButton implements FormButtonsInterface, Initializable
 {

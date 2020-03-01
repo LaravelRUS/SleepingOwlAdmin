@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Console;
 
-use Illuminate\Support\Collection;
 use Barryvdh\LaravelIdeHelper\Alias;
 use Barryvdh\LaravelIdeHelper\Generator as IdeHelperGenerator;
+use Illuminate\Support\Collection;
 
 class Generator extends IdeHelperGenerator
 {

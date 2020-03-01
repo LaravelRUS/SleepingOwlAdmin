@@ -70,8 +70,8 @@ class Gravatar extends NamedColumn
         }
 
         return parent::toArray() + [
-                'value' => sprintf('https://www.gravatar.com/avatar/%s&size=%s&rating=%s', $value, $this->size,
-                    $this->rating),
-            ];
+            'value' => sprintf('https://www.gravatar.com/avatar/%s&size=%s&rating=%s', $value, $this->size,
+                $this->rating),
+        ];
     }
 }

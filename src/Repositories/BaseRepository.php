@@ -4,8 +4,8 @@ namespace SleepingOwl\Admin\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 
 class BaseRepository implements RepositoryInterface
 {

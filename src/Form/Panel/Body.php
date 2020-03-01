@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Form\Panel;
 
-use SleepingOwl\Admin\Form\FormElements;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\PanelInterface;
+use SleepingOwl\Admin\Form\FormElements;
 
 class Body extends FormElements implements PanelInterface
 {
@@ -33,8 +33,8 @@ class Body extends FormElements implements PanelInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'elements' => $this->getElements()->onlyVisible(),
-                'attributes' => $this->htmlAttributesToString(),
-            ];
+            'elements' => $this->getElements()->onlyVisible(),
+            'attributes' => $this->htmlAttributesToString(),
+        ];
     }
 }
