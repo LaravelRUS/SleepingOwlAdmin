@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts\Display;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Builder;
 
 interface DisplayExtensionInterface extends Arrayable
 {

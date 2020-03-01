@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 

@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use Exception;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DatePicker;
 
@@ -133,10 +133,10 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-                'seconds' => $this->hasSeconds(),
-                'pickerFormat' => $this->getJsPickerFormat(),
-                'width' => $this->getWidth(),
-            ];
+            'seconds' => $this->hasSeconds(),
+            'pickerFormat' => $this->getJsPickerFormat(),
+            'width' => $this->getWidth(),
+        ];
     }
 
     /**

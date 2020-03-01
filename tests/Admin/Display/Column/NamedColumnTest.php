@@ -1,7 +1,7 @@
 <?php
 
-use Mockery as m;
 use Illuminate\Database\Eloquent\Model;
+use Mockery as m;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class NamedColumnTest extends TestCase

@@ -50,7 +50,7 @@ class Textarea extends NamedFormElement
         ]);
 
         return parent::toArray() + [
-                'rows' => $this->getRows(),
-            ];
+            'rows' => $this->getRows(),
+        ];
     }
 }

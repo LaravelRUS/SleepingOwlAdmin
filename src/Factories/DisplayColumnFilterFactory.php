@@ -2,15 +2,15 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\AliasBinder;
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
+use SleepingOwl\Admin\Display\Column\Filter\Control;
 use SleepingOwl\Admin\Display\Column\Filter\Date;
-use SleepingOwl\Admin\Display\Column\Filter\Text;
+use SleepingOwl\Admin\Display\Column\Filter\DateRange;
 use SleepingOwl\Admin\Display\Column\Filter\Range;
 use SleepingOwl\Admin\Display\Column\Filter\Select;
-use SleepingOwl\Admin\Display\Column\Filter\Control;
-use SleepingOwl\Admin\Display\Column\Filter\DateRange;
-use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
+use SleepingOwl\Admin\Display\Column\Filter\Text;
 
 /**
  * @method Text text()

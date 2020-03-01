@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Console\GeneratorCommand as SectionGeneratorCommand;
+use Symfony\Component\Console\Input\InputArgument;
 
 class SectionMake extends SectionGeneratorCommand
 {

@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as SuportCollection;
 use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
+use SleepingOwl\Admin\Display\TableColumn;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
@@ -127,8 +127,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'name' => $this->getName(),
-            ];
+            'name' => $this->getName(),
+        ];
     }
 
     /**
