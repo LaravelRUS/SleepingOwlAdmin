@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Display\Filter;
 use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\DisplayFilterFactoryInterface;
+use SleepingOwl\Admin\Display\Filter;
 
 /**
  * @method Filter\FilterCustom custom($name, string|\Closure|null $title, \Closure $callback)

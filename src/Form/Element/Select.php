@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class Select extends NamedFormElement
@@ -301,13 +301,13 @@ class Select extends NamedFormElement
         }
 
         $return = [
-                'attributes' => $this->htmlAttributesToString(),
-                'attributes_array' => $this->getHtmlAttributes(),
-            ] + parent::toArray() + [
-                'options' => $options,
-                'limit' => $this->getLimit(),
-                'nullable' => $this->isNullable(),
-            ];
+            'attributes' => $this->htmlAttributesToString(),
+            'attributes_array' => $this->getHtmlAttributes(),
+        ] + parent::toArray() + [
+            'options' => $options,
+            'limit' => $this->getLimit(),
+            'nullable' => $this->isNullable(),
+        ];
 
         return $return;
     }
