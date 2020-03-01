@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Form\FormDefault;
 
 class Textarea extends EditableColumn implements ColumnEditableInterface
 {

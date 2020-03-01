@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 abstract class Extension implements DisplayExtensionInterface
 {

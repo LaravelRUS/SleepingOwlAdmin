@@ -1,9 +1,9 @@
 <?php
 
 use Mockery as m;
-use SleepingOwl\Admin\Display\TableColumn;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Display\TableColumn;
 
 class TableColumnTest extends TestCase
 {

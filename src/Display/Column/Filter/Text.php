@@ -79,7 +79,7 @@ class Text extends BaseColumnFilter
         }
 
         return parent::toArray() + [
-                'placeholder' => $this->getPlaceholder(),
-            ];
+            'placeholder' => $this->getPlaceholder(),
+        ];
     }
 }

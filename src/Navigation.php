@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
-use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
 {

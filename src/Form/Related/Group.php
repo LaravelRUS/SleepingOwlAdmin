@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Group extends Collection
 {

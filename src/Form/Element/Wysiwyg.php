@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
+use SleepingOwl\Admin\Exceptions\WysiwygException;
 
 class Wysiwyg extends NamedFormElement
 {
@@ -172,9 +172,9 @@ class Wysiwyg extends NamedFormElement
     public function toArray()
     {
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray() + [
-                'parameters' => json_encode($this->getParameters()),
-                'editor' => $this->getEditor(),
-            ];
+            'parameters' => json_encode($this->getParameters()),
+            'editor' => $this->getEditor(),
+        ];
     }
 
     /**
