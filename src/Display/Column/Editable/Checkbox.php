@@ -36,7 +36,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * @var string
      */
-    protected $width = '50px';
+    protected $width = '70px';
 
     /**
      * Checkbox constructor.

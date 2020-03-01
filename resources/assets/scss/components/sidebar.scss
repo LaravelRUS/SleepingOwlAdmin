@@ -13,6 +13,12 @@
   }
 }
 
-.sidebar-mini.sidebar-collapse .main-sidebar:hover .nav-sidebar .nav-link p {
-  width: 100%;
+.sidebar-mini.sidebar-collapse {
+  .main-sidebar:hover .nav-sidebar .nav-link p {
+    width: 100%;
+  }
+
+  .nav-sidebar>.nav-item>.nav-treeview {
+    padding-left: 0;
+  }
 }
