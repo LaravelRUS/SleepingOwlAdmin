@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts\Form;
 
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Columns;
 use SleepingOwl\Admin\Form\Element;
-use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Form\Related\Forms;
 
 /**

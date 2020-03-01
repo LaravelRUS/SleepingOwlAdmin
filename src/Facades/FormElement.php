@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Facades;
 
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Form\Element\Text text($name, $label = null)

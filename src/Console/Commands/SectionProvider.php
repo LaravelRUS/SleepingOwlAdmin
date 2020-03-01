@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Config\Repository;
+use Illuminate\Console\Command;
 use SleepingOwl\Admin\Console\Installation\CreateSectionServiceProvider;
 
 class SectionProvider extends Command
