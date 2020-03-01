@@ -3,11 +3,11 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Display\Element;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Traits\ElementViewTrait;
 use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Display\Element;
 use SleepingOwl\Admin\Traits\ElementPlacementTrait;
+use SleepingOwl\Admin\Traits\ElementViewTrait;
 
 class ColumnsTotal extends Extension implements Placable
 {

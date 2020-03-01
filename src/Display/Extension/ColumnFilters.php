@@ -4,11 +4,11 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Arr;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Display\Placable;
-use SleepingOwl\Admin\Display\Column\Filter\Control;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Column\Filter\Control;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {

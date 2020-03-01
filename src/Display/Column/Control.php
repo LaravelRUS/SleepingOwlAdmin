@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
+use SleepingOwl\Admin\Display\ControlButton;
 use SleepingOwl\Admin\Display\ControlLink;
 use SleepingOwl\Admin\Display\TableColumn;
-use SleepingOwl\Admin\Display\ControlButton;
-use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
 
 class Control extends TableColumn
 {
@@ -281,17 +281,17 @@ class Control extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'buttons' => $this->buttons
-                    ->each(function (ControlButtonInterface $button) {
-                        $button->setModel($this->getModel());
-                    })
-                    ->filter(function (ControlButtonInterface $button) {
-                        return $button->isActive();
-                    })
-                    ->sortBy(function (ControlButtonInterface $button) {
-                        return $button->getPosition();
-                    }),
-                'attributes' => $this->htmlAttributesToString(),
-            ];
+            'buttons' => $this->buttons
+                ->each(function (ControlButtonInterface $button) {
+                    $button->setModel($this->getModel());
+                })
+                ->filter(function (ControlButtonInterface $button) {
+                    return $button->isActive();
+                })
+                ->sortBy(function (ControlButtonInterface $button) {
+                    return $button->getPosition();
+                }),
+            'attributes' => $this->htmlAttributesToString(),
+        ];
     }
 }

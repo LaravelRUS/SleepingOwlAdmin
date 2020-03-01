@@ -3,16 +3,16 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Traits\FormElements;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Contracts\Display\TabInterface;
-use SleepingOwl\Admin\Model\SectionModelConfiguration;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Display\TabInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Model\SectionModelConfiguration;
+use SleepingOwl\Admin\Traits\FormElements;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 /**
  * @property TabInterface[]|DisplayTabsCollection $elements

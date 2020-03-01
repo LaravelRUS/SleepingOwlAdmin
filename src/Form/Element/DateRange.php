@@ -106,9 +106,9 @@ class DateRange extends Date
         ]);
 
         return parent::toArray() + [
-                'startDate' => $this->getDefaultFrom(),
-                'endDate' => $this->getDefaultTo(),
-            ];
+            'startDate' => $this->getDefaultFrom(),
+            'endDate' => $this->getDefaultTo(),
+        ];
     }
 
     /**

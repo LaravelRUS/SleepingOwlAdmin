@@ -2,13 +2,13 @@
 
 namespace SleepingOwl\Admin\Routing;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\Registrar as RegistrarContract;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Routing\ControllerDispatcher;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
-use Illuminate\Routing\ControllerDispatcher;
 use SleepingOwl\Admin\Model\ModelCollection;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Contracts\Routing\Registrar as RegistrarContract;
 
 class ModelRouter
 {

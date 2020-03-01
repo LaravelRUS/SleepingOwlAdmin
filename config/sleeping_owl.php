@@ -83,7 +83,7 @@ return [
      * Add your policy class here.
      * --------------------------------------------------------------------------
      */
-//    'env_editor_policy' => \Admin\Policies\EnvPolicy::class,
+    //    'env_editor_policy' => \Admin\Policies\EnvPolicy::class,
 
     /*
     |--------------------------------------------------------------------------
