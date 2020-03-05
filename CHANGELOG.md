@@ -1,6 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
 
 
+## 2020-03-06
+* [Fix] Fix sidebar ul->ul style
+* [Fix] Fix work with custom element hasMany, ManyToMany, BelongTo
+
+
 ## 2020-02-27
 * [Fix] Fix collapset sidebar style
 * [Fix] Fix editable column width `50px -> 70px`
