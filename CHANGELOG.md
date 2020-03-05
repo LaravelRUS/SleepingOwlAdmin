@@ -4,6 +4,7 @@
 ## 2020-03-06
 * [Fix] Fix sidebar ul->ul style
 * [Fix] Fix work with custom element hasMany, ManyToMany, BelongTo
+* [Revert] back class `.last` for tabs item
 
 
 ## 2020-02-27
