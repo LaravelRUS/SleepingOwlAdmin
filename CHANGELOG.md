@@ -6,6 +6,8 @@
 * [Fix] Fix work with custom element hasMany, ManyToMany, BelongTo
 * [Revert] back class `.last` for tabs item
 
+## 2020-03-01
+* [Fix] Fix saving group elements, add generation index for new group
 
 ## 2020-02-27
 * [Fix] Fix collapset sidebar style
