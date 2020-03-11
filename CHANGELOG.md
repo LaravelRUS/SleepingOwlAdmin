@@ -1,13 +1,20 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
 
 
+## 2020-03-11
+* [Fix] Fix locale multiselect
+* [Fix] Fix tooltip image and images and delete button text
+
+
 ## 2020-03-06
 * [Fix] Fix sidebar ul->ul style
 * [Fix] Fix work with custom element hasMany, ManyToMany, BelongTo
 * [Revert] back class `.last` for tabs item
 
+
 ## 2020-03-01
 * [Fix] Fix saving group elements, add generation index for new group
+
 
 ## 2020-02-27
 * [Fix] Fix collapset sidebar style

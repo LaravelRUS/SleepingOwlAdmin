@@ -45,15 +45,15 @@
                                 <a class="btn btn-clear btn-sm pull-right drag-cursor" v-if="!readonly && draggable">
                                     <i class="fas fa-arrows-alt"></i>
                                 </a>
-                                <a :href="image(uri)" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}">
+                                <a :href="image(uri)" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}" data-toggle="tooltip">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </a>
-                                <button type="button" v-if="!readonly" @click.prevent="insert(index)" class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
+                                <button type="button" v-if="!readonly" @click.prevent="insert(index)" class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.file.insert_link') }}" data-toggle="tooltip">
                                     <i class="fas fa-link"></i>
                                 </button>
 
-                                <button type="button" @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs" title="{{ trans('sleeping_owl::lang.image.remove') }}">
-                                    <i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
+                                <button type="button" @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs" title="{{ trans('sleeping_owl::lang.image.remove') }}" data-toggle="tooltip">
+                                    <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                     <div class="btn btn-primary upload-button btn-sm">
                         <i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}
                     </div>
-                    <button type="button" @click.prevent="insert()" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
+                    <button type="button" @click.prevent="insert()" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}" data-toggle="tooltip">
                         <i class="fas fa-link"></i>
                     </button>
                 </div>
