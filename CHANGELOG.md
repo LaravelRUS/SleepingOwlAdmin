@@ -1,10 +1,15 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
 
+## TODO
+* Helper for image/images to h/w = 100%
+
+
 
 ## 2020-03-11
 * [Fix] Fix locale multiselect
 * [Fix] Fix tooltip image and images and delete button text
 * [Fix] Fix image/images icons width fix
+* [Add] Add navigation title if len more then 15 char
 
 
 ## 2020-03-06
