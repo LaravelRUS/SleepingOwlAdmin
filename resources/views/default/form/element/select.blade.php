@@ -31,13 +31,13 @@
                     @else
                       placeholder="{{ trans('sleeping_owl::lang.select.no_items') }}"
                     @endif
-                    select-label="'{{ trans('sleeping_owl::lang.select.init') }}'"
-                    selected-label="'{{ trans('sleeping_owl::lang.select.selected') }}'"
+                    select-label="{{ trans('sleeping_owl::lang.select.init') }}"
+                    selected-label="{{ trans('sleeping_owl::lang.select.selected') }}"
                     @if($required)
                       :allow-empty="false"
                       deselect-label=""
                     @else
-                      deselect-label="'{{ trans('sleeping_owl::lang.select.deselect') }}'"
+                      deselect-label="{{ trans('sleeping_owl::lang.select.deselect') }}"
                     @endif
                 >
                 <span slot="noResult">{{ trans('sleeping_owl::lang.select.no_items') }}</span>
