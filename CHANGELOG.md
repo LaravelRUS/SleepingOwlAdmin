@@ -4,6 +4,7 @@
 ## 2020-03-11
 * [Fix] Fix locale multiselect
 * [Fix] Fix tooltip image and images and delete button text
+* [Fix] Fix image/images icons width fix
 
 
 ## 2020-03-06
