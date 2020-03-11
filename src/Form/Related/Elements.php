@@ -17,10 +17,10 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\Columns\Columns;
+use SleepingOwl\Admin\Form\Element\Custom;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\FormElements;
 use Throwable;
-use SleepingOwl\Admin\Form\Element\Custom;
 
 abstract class Elements extends FormElements
 {
@@ -425,7 +425,7 @@ abstract class Elements extends FormElements
         });
 
         foreach ($elements as $el) {
-            if ( $el instanceof Custom ) {
+            if ($el instanceof Custom) {
                 $el->setModel($model);
             }
             $group->push($el);
