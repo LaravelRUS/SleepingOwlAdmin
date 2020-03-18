@@ -5,6 +5,12 @@
 
 
 
+## 2020-03-18
+* [add] Add ENV editor setting `env_keys_readonly`
+* [add] Add ENV editor setting `env_can_delete`
+* [add] Add ENV editor setting `env_can_add`
+
+
 ## 2020-03-11
 * [Fix] Fix locale multiselect
 * [Fix] Fix tooltip image and images and delete button text

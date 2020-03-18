@@ -34,9 +34,13 @@
             <tbody>
             <tr v-for="(value, key) in values">
                 <td class="row-link">
+                    @if (config('sleeping_owl.env_keys_readonly'))
+                      <input type="text" :value="value.key" class="form-control-plaintext" disabled>
+                    @else
                     <input type="text" :name="'variables[' + value.key + '][key]'" v-model="value.key"
                            :value="value.key" :readonly="!value.editable"
                            class="form-control">
+                    @endif
                 </td>
                 <td class="row-datetime">
                     <input type="text" :name="'variables[' + value.key + '][value]'" v-model="value.value"
@@ -44,19 +48,23 @@
                            class="form-control">
                 </td>
                 <td class="row-link" style="vertical-align: inherit;">
-                    <div class="pull-right">
-                        <a title="delete" @click="removeEnv(key)" class="btn btn-xs btn-danger text-white">
-                            <i class="fas fa-times"></i>
-                        </a>
-                    </div>
+                    @if (config('sleeping_owl.env_can_delete'))
+                        <div class="pull-right">
+                            <a title="delete" @click="removeEnv(key)" class="btn btn-xs btn-danger text-white">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+                    @endif
                 </td>
             </tr>
             </tbody>
         </table>
         <div class="card-footer">
-            <a id="env_add_entry" @click="values.push({key:null, value:null})" class="btn btn-primary text-white">
-                <i class="fas fa-plus"></i> {{trans('sleeping_owl::lang.button.new-entry')}}
-            </a>
+            @if (!config('sleeping_owl.env_keys_readonly') && config('sleeping_owl.env_can_add'))
+                <a id="env_add_entry" @click="values.push({key:null, value:null})" class="btn btn-primary text-white">
+                  <i class="fas fa-plus"></i> {{trans('sleeping_owl::lang.button.new-entry')}}
+                </a>
+            @endif
             <div class="pull-right">
                 <button class="btn btn-primary" type="submit">
                     <i class="fas fa-check"></i> {{trans('sleeping_owl::lang.button.save')}}

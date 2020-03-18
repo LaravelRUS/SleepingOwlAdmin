@@ -224,7 +224,7 @@ class AdminController extends Controller
             $this->writeEnvData($key, $value);
         }
 
-        return redirect()->back()->with('success_message', trans('lang.message.updated'));
+        return redirect()->back()->with('success_message', trans('sleeping_owl::lang.message.updated'));
     }
 
     /**
