@@ -425,7 +425,6 @@ abstract class Elements extends FormElements
         });
 
         foreach ($elements as $el) {
-
             $group->push($el);
         }
 
