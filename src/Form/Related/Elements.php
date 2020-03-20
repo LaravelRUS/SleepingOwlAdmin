@@ -253,7 +253,7 @@ abstract class Elements extends FormElements
         if ($el instanceof FormElements) {
             $el->setElements($this->cloneElements($el)->all());
         } else {
-            if (! ($el instanceof \SleepingOwl\Admin\Form\Element\Custom)) {
+            if (! ($el instanceof Custom)) {
                 $el->setDefaultValue(null);
             }
             $el->setValueSkipped(true);
@@ -425,9 +425,7 @@ abstract class Elements extends FormElements
         });
 
         foreach ($elements as $el) {
-            if ($el instanceof Custom) {
-                $el->setModel($model);
-            }
+
             $group->push($el);
         }
 
