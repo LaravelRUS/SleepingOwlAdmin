@@ -1,7 +1,4 @@
-<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
-
-## TODO
-* Helper for image/images to h/w = 100%
+<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 
 ## 2020-03-24
