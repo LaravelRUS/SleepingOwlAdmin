@@ -4,6 +4,17 @@
 * Helper for image/images to h/w = 100%
 
 
+## 2020-03-24
+* [Update] NPM packages:
+  - @fortawesome/fontawesome-free: 5.12.1 -> 5.13.0
+  - cross-env: 7.0.0 -> 7.0.2
+  - dropzone: 5.5.1 -> 5.7.0
+  - i118n: 0.8.5 -> 0.8.6
+  - i118next: 19.3.2 -> 19.3.3
+  - laravel-mix: 5.0.1 -> 5.0.4
+  - sass: 1.26.1 -> 1.26.3
+  - sweetalert2: 9.7.2 -> 9.10.6
+
 
 ## 2020-03-18
 * [add] Add ENV editor setting `env_keys_readonly`
