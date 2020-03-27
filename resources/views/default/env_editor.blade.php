@@ -35,7 +35,9 @@
             <tr v-for="(value, key) in values">
                 <td class="row-link">
                     @if (config('sleeping_owl.env_keys_readonly'))
-                      <input type="text" :value="value.key" class="form-control-plaintext" disabled>
+                      <span>
+                        @{{value.key}}
+                      </span>
                     @else
                     <input type="text" :name="'variables[' + value.key + '][key]'" v-model="value.key"
                            :value="value.key" :readonly="!value.editable"
