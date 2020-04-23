@@ -13,7 +13,6 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
     ]);
 
     $router->post('{adminModel}', [
-        'as' => 'model',
         'uses' => 'AdminController@inlineEdit',
     ]);
 
