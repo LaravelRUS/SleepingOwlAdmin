@@ -289,7 +289,6 @@ class AdminServiceProvider extends ServiceProvider
             ]);
 
             $route->post('ckeditor/upload/image', [
-                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
         });
