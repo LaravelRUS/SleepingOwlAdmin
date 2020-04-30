@@ -1,6 +1,17 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 
+## 2020-04-30
+* [Update] NPM packages:
+  - admin-lte: 3.0.2 -> 3.0.4
+  - jquery: 3.1.1 -> 3.5.0
+  - i18next: 19.3.3 -> 19.4.4
+  - node-sass: 4.13.1 -> 4.14.0
+  - sweetalert2: 9.10.6 -> 9.10.12
+  - sass: 1.26.3 -> 1.26.5
+  - i18n: 0.8.6 -> 0.9.0
+
+
 ## 2020-03-24
 * [Update] NPM packages:
   - @fortawesome/fontawesome-free: 5.12.1 -> 5.13.0
