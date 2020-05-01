@@ -2,6 +2,15 @@
   i {
     transition: transform $trans !important;
   }
+
+  & > .nav-item {
+    max-width: 100%;
+
+    & > .nav-treeview {
+      padding-left: 0 !important;
+    }
+  }
+
 }
 
 .sidebar {
@@ -18,7 +27,7 @@
     width: 100%;
   }
 
-  .nav-sidebar>.nav-item>.nav-treeview {
-    padding-left: 0;
-  }
+  // .nav-sidebar > .nav-item > .nav-treeview {
+  //   padding-left: 0;
+  // }
 }

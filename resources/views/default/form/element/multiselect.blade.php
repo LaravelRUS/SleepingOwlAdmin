@@ -37,10 +37,11 @@
                     @endif
                     @tag="addTag"
                     :taggable="{{ $taggable ? 'true' : 'false'}}"
-                    :select-label="'{{ trans('sleeping_owl::lang.select.init') }}'"
-                    :selected-label="'{{ trans('sleeping_owl::lang.select.selected') }}'"
-                    :deselect-label="'{{ trans('sleeping_owl::lang.select.deselect') }}'"
+                    select-label="{{ trans('sleeping_owl::lang.select.init') }}"
+                    selected-label="{{ trans('sleeping_owl::lang.select.selected') }}"
+                    deselect-label="{{ trans('sleeping_owl::lang.select.deselect') }}"
                 >
+                <span slot="noResult">{{ trans('sleeping_owl::lang.select.no_items') }}</span>
                 </multiselect>
 
                 <select v-show="true == false"

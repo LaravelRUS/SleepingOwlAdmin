@@ -2,9 +2,9 @@
 
 ## Laravel Admin Panel SleepingOwl
 
-[![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=master)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
-[![StyleCI](https://styleci.io/repos/52141393/shield?branch=master)](https://styleci.io/repos/52141393)
-[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--6.15.1-brightgreen.svg)]()
+[![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
+[![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
+[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--7.5-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-7.1.3+-brightgreen.svg)]()
 
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowladmin.ru)
@@ -16,7 +16,7 @@
 
 SleepingOwl Admin is an administrative interface builder for Laravel. __Completely free__
 
-Support `Laravel > 5.5 - 5.8` (`PHP < 7.1.3`) and `Laravel 6.*` (`PHP > 7.2`).
+Support `Laravel > 5.5 - 5.8` (`PHP < 7.1.3`), `Laravel 6.*` (`PHP > 7.2`) and `Laravel 7.*` (`PHP > 7.2.5`).
 
 __Lumen is NOT supported(((__
 
@@ -33,14 +33,14 @@ __Lumen is NOT supported(((__
 
   1. Install SleepingOwl Admin
 
-  `composer require laravelrus/sleepingowl:6.*`
+  `composer require laravelrus/sleepingowl:7.*`
 
   __or__
 
   If you upgrade the old version change in `composer.json`
 
   ```
-  "laravelrus/sleepingowl": "^6.*"
+  "laravelrus/sleepingowl": "^7.*"
   ```
 
   after run `composer update laravelrus/sleepingowl`

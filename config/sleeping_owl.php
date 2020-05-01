@@ -88,8 +88,10 @@ return [
      * Enable and show link in navigation
      * 'show_editor' is @deprecated
      */
-    'show_editor' => false,
     'enable_editor' => false,
+    'env_keys_readonly' => false,
+    'env_can_delete' => true,
+    'env_can_add' => true,
 
     /*
      * --------------------------------------------------------------------------

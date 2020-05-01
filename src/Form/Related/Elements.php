@@ -17,6 +17,7 @@ use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\Columns\Columns;
+use SleepingOwl\Admin\Form\Element\Custom;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\FormElements;
 use Throwable;
@@ -252,7 +253,9 @@ abstract class Elements extends FormElements
         if ($el instanceof FormElements) {
             $el->setElements($this->cloneElements($el)->all());
         } else {
-            $el->setDefaultValue(null);
+            if (! ($el instanceof Custom)) {
+                $el->setDefaultValue(null);
+            }
             $el->setValueSkipped(true);
         }
 

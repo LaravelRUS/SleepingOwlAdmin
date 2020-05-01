@@ -25,11 +25,12 @@
             <div>
                 <div v-if="errors.length" class="alert alert-warning" v-show="errors.length" style="display:none;">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="closeAlert()">
-                        <span aria-hidden="true">&times;</span>
+                      <i class="fa-fw fas fa-times"></i>
+                        {{-- <span aria-hidden="true">&times;</span> --}}
                     </button>
 
                     <p v-for="error in errors">
-                        <i class="fas fa-images" aria-hidden="true"></i> @{{ error }}
+                        <i class="fa-fw fas fa-images" aria-hidden="true"></i> @{{ error }}
                     </p>
                 </div>
 
@@ -43,17 +44,17 @@
 
                             <div class="form-element-files__info">
                                 <a class="btn btn-clear btn-sm pull-right drag-cursor" v-if="!readonly && draggable">
-                                    <i class="fas fa-arrows-alt"></i>
+                                    <i class="fa-fw fas fa-arrows-alt"></i>
                                 </a>
-                                <a :href="image(uri)" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}">
-                                    <i class="fas fa-cloud-upload-alt"></i>
+                                <a :href="image(uri)" class="btn btn-default btn-sm pull-right" download target="_blank" title="{{ trans('sleeping_owl::lang.button.download') }}" data-toggle="tooltip">
+                                    <i class="fa-fw fas fa-cloud-upload-alt"></i>
                                 </a>
-                                <button type="button" v-if="!readonly" @click.prevent="insert(index)" class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
-                                    <i class="fas fa-link"></i>
+                                <button type="button" v-if="!readonly" @click.prevent="insert(index)" class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.file.insert_link') }}" data-toggle="tooltip">
+                                    <i class="fa-fw fas fa-link"></i>
                                 </button>
 
-                                <button type="button" @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs" title="{{ trans('sleeping_owl::lang.image.remove') }}">
-                                    <i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
+                                <button type="button" @click.prevent="remove(index)" v-if="!readonly" class="btn btn-danger btn-xs" title="{{ trans('sleeping_owl::lang.image.remove') }}" data-toggle="tooltip">
+                                    <i class="fa-fw fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
@@ -67,8 +68,8 @@
                     <div class="btn btn-primary upload-button btn-sm">
                         <i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}
                     </div>
-                    <button type="button" @click.prevent="insert()" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
-                        <i class="fas fa-link"></i>
+                    <button type="button" @click.prevent="insert()" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}" data-toggle="tooltip">
+                        <i class="fa-fw fas fa-link"></i>
                     </button>
                 </div>
 

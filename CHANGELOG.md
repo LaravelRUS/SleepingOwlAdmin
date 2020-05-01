@@ -1,4 +1,50 @@
-<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">6+</code> branch)</h2></p>
+<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
+
+
+## 2020-04-30
+* [Update] NPM packages:
+  - admin-lte: 3.0.2 -> 3.0.4
+  - jquery: 3.1.1 -> 3.5.0
+  - i18next: 19.3.3 -> 19.4.4
+  - node-sass: 4.13.1 -> 4.14.0
+  - sweetalert2: 9.10.6 -> 9.10.12
+  - sass: 1.26.3 -> 1.26.5
+  - i18n: 0.8.6 -> 0.9.0
+
+
+## 2020-03-24
+* [Update] NPM packages:
+  - @fortawesome/fontawesome-free: 5.12.1 -> 5.13.0
+  - cross-env: 7.0.0 -> 7.0.2
+  - dropzone: 5.5.1 -> 5.7.0
+  - i118n: 0.8.5 -> 0.8.6
+  - i118next: 19.3.2 -> 19.3.3
+  - laravel-mix: 5.0.1 -> 5.0.4
+  - sass: 1.26.1 -> 1.26.3
+  - sweetalert2: 9.7.2 -> 9.10.6
+
+
+## 2020-03-18
+* [add] Add ENV editor setting `env_keys_readonly`
+* [add] Add ENV editor setting `env_can_delete`
+* [add] Add ENV editor setting `env_can_add`
+
+
+## 2020-03-11
+* [Fix] Fix locale multiselect
+* [Fix] Fix tooltip image and images and delete button text
+* [Fix] Fix image/images icons width fix
+* [Add] Add navigation title if len more then 15 char
+
+
+## 2020-03-06
+* [Fix] Fix sidebar ul->ul style
+* [Fix] Fix work with custom element hasMany, ManyToMany, BelongTo
+* [Revert] back class `.last` for tabs item
+
+
+## 2020-03-01
+* [Fix] Fix saving group elements, add generation index for new group
 
 
 ## 2020-02-27
