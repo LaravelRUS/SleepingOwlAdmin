@@ -8,7 +8,7 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
     }
 
     $router->get('{adminModel}', [
-        'as' => 'model',
+        // 'as' => 'model',
         'uses' => 'AdminController@getDisplay',
     ]);
 
