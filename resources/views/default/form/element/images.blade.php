@@ -35,7 +35,7 @@
 						<img :src="image(uri)"/>
 					</a>
 					<div class="form-element-files__info">
-						<a :href="image(uri)" class="btn btn-default btn-xs pull-right">
+						<a :href="image(uri)" download target="_blank" class="btn btn-default btn-xs pull-right">
 							<i class="fa fa-cloud-download"></i>
 						</a>
 

@@ -28,8 +28,8 @@
                     <input type="text" class="tit{{ $show_title ? '' : ' hidden' }}" data-id="title" placeholder="Заголовок"{{ $title_required ? ' required' : '' }} />
                     <textarea class="desc{{ $show_description ? '' : ' hidden' }}" data-id="description" rows="5" placeholder="Описание"{{ $description_required ? ' required' : '' }}></textarea>
                     <div class="file-buttons">
-                        <a href="#" class="btn btn-danger btn-xs pull-left fileRemove"><i class="fa fa-close"></i> Удалить</a>
-                        <a href="[%=url%]" target="_blank" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                        <a href="#" class="btn btn-danger btn-xs pull-left fileRemove"><i class="fa fa-close"></i></a>
+                        <a href="[%=url%]" target="_blank" download class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -61,8 +61,8 @@
                         <input type="text" class="tit{{ $show_title ? '' : ' hidden' }}" data-id="title" placeholder="Заголовок" value="{{ @$item['title'] }}"{{ $title_required ? ' required' : '' }} />
                         <textarea class="desc{{ $show_description ? '' : ' hidden' }}" data-id="description" rows="5" placeholder="Описание"{{ $description_required ? ' required' : '' }}>{{ @$item['desc'] }}</textarea>
                         <div class="file-buttons">
-                            <a href="#" class="btn btn-danger btn-xs pull-left fileRemove"><i class="fa fa-close"></i> Удалить</a>
-                            <a href="{{ @asset($item['url']) }}" target="_blank" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                            <a href="#" class="btn btn-danger btn-xs pull-left fileRemove"><i class="fa fa-close"></i></a>
+                            <a href="{{ @asset($item['url']) }}" download target="_blank" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                             <div class="clearfix"></div>
                         </div>
                     </div>

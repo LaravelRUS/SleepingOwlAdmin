@@ -34,12 +34,12 @@
 						<img :src="image" />
 					</a>
 					<div class="form-element-files__info">
-						<a :href="image" class="btn btn-default btn-xs pull-right">
+						<a :href="image" download target="_blank" class="btn btn-default btn-xs pull-right">
 							<i class="fa fa-cloud-download"></i>
 						</a>
 
 						<button type="button" v-if="has_value && !readonly" class="btn btn-danger btn-xs" @click.prevent="remove()">
-							<i class="fa fa-times"></i> {{ trans('sleeping_owl::lang.image.remove') }}
+							<i class="fa fa-times"></i>
 						</button>
 					</div>
 				</div>
@@ -61,4 +61,3 @@
 		@include(AdminTemplate::getViewPath('form.element.partials.errors'))
 	</div>
 </div>
-

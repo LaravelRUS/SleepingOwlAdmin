@@ -59,8 +59,12 @@ Vue.component('element-file', Vue.extend({
         remove () {
             var self = this;
 
-            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.val = '';
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
+              console.log(result);
+                if(result.value)
+                    self.val = '';
+                else
+                    return false;
             });
         },
         closeAlert () {
