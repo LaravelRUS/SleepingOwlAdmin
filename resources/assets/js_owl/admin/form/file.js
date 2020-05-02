@@ -23,14 +23,14 @@ Vue.component('element-file', Vue.extend({
         }
     },
     mounted () {
-        this.val = this.value;
+        this.val = this.value
         this.initUpload()
     },
     methods: {
         initUpload () {
             let self = this,
                 container = $(self.$el.parentNode),
-                button = container.find('.upload-button');
+                button = container.find('.upload-button')
 
             button.dropzone({
                 url: this.url,
@@ -42,38 +42,42 @@ Vue.component('element-file', Vue.extend({
                 dictFileTooBig: trans('lang.ckeditor.upload.error.filesize_limit_m', {size: Admin.Config.get('max_file_size')}),
                 dictResponseError: trans('lang.ckeditor.upload.error.common'),
                 sending () {
-                    self.uploading = true;
+                    self.uploading = true
                     self.closeAlert()
                 },
                 success (file, response) {
-                    self.val = response.value;
+                    self.val = response.value
                 },
                 error (file, response) {
                     Admin.Messages.error(response)
                     if(_.isArray(response.errors)) {
-                        self.errors = response.errors;
+                        self.errors = response.errors
                     }
                 },
                 complete(){
-                    self.uploading = false;
+                    self.uploading = false
                 }
             });
         },
         remove () {
-            var self = this;
+            var self = this
+            console.log(self)
 
-            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(() => {
-                self.val = '';
-            });
+            Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
+                if(result.value)
+                    self.val = ''
+                else
+                    return false
+            })
         },
         closeAlert () {
-            this.errors = [];
+            this.errors = []
         }
     },
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fas fa-file-upload';
+                return 'fas fa-file-upload'
             }
             return 'fas fa-spinner fa-spin'
         },
