@@ -61,7 +61,6 @@ Vue.component('element-file', Vue.extend({
         },
         remove () {
             var self = this
-            console.log(self)
 
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
                 if(result.value)
