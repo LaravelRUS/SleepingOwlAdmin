@@ -23,14 +23,14 @@ Vue.component('element-file', Vue.extend({
         }
     },
     mounted () {
-        this.val = this.value;
+        this.val = this.value
         this.initUpload()
     },
     methods: {
         initUpload () {
             let self = this,
                 container = $(self.$el.parentNode),
-                button = container.find('.upload-button');
+                button = container.find('.upload-button')
 
             button.dropzone({
                 url: this.url,
@@ -40,41 +40,40 @@ Vue.component('element-file', Vue.extend({
 
                 dictDefaultMessage: '',
                 sending () {
-                    self.uploading = true;
+                    self.uploading = true
                     self.closeAlert()
                 },
                 success (file, response) {
-                    self.val = response.value;
+                    self.val = response.value
                 },
                 error (file, response) {
                     if(_.isArray(response.errors)) {
-                        self.errors = response.errors;
+                        self.errors = response.errors
                     }
                 },
                 complete(){
-                    self.uploading = false;
+                    self.uploading = false
                 }
             });
         },
         remove () {
-            var self = this;
+            var self = this
 
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
-              console.log(result);
                 if(result.value)
-                    self.val = '';
+                    self.val = ''
                 else
-                    return false;
+                    return false
             });
         },
         closeAlert () {
-            this.errors = [];
+            this.errors = []
         }
     },
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fa fa-upload';
+                return 'fa fa-upload'
             }
             return 'fa fa-spinner fa-spin'
         },
