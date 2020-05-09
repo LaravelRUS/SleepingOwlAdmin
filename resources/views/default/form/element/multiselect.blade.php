@@ -42,6 +42,7 @@
                     deselect-label="{{ trans('sleeping_owl::lang.select.deselect') }}"
                 >
                 <span slot="noResult">{{ trans('sleeping_owl::lang.select.no_items') }}</span>
+                <span slot="noOptions">{{ trans('sleeping_owl::lang.select.no_items') }}</span>
                 </multiselect>
 
                 <select v-show="true == false"
