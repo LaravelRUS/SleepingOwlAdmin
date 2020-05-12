@@ -1,1 +1,3 @@
-<input {!! $attributes !!} value="{{ $value }}" />
+@if ($visibled)
+  <input v-pre {!! $attributes !!} value="{{ $value }}" />
+@endif

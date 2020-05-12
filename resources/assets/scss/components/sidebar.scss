@@ -1,0 +1,33 @@
+.nav-sidebar {
+  i {
+    transition: transform $trans !important;
+  }
+
+  & > .nav-item {
+    max-width: 100%;
+
+    & > .nav-treeview {
+      padding-left: 0 !important;
+    }
+  }
+
+}
+
+.sidebar {
+  .nav-link p {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+}
+
+.sidebar-mini.sidebar-collapse {
+  .main-sidebar:hover .nav-sidebar .nav-link p {
+    width: 100%;
+  }
+
+  // .nav-sidebar > .nav-item > .nav-treeview {
+  //   padding-left: 0;
+  // }
+}

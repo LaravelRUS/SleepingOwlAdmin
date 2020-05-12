@@ -2,11 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class Select extends EditableColumn implements ColumnEditableInterface
 {
@@ -18,9 +19,20 @@ class Select extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.select';
 
     /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
      * @var null
      */
     protected $relationKey = null;
+
     /**
      * @var array
      */
@@ -62,6 +74,19 @@ class Select extends EditableColumn implements ColumnEditableInterface
         } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
+    }
+
+    public function getModifierValue()
+    {
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
+        }
+
+        if (is_null($this->modifier)) {
+            return $this->getOptionName($this->getModelValue());
+        }
+
+        return $this->modifier;
     }
 
     /**
@@ -133,7 +158,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
             );
         }
 
-        $options = array_except($this->options, $this->exclude);
+        $options = Arr::except($this->options, $this->exclude);
         if ($this->isSortable()) {
             asort($options);
         }
@@ -199,14 +224,17 @@ class Select extends EditableColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-        return parent::toArray() + [
-                'options'    => $this->mutateOptions(),
-                'optionName' => $this->getOptionName($this->getModelValue()),
-            ];
+        return array_merge(parent::toArray(), [
+            'options' => $this->mutateOptions(),
+            'optionName' => $this->getOptionName($this->getModelValue()),
+            'text' => $this->getModifierValue(),
+        ]);
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)

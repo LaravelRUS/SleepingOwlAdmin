@@ -10,6 +10,7 @@ export default class Admin {
         this.__url = new Url(
             this.Config.get('url'),
             this.Config.get('url_prefix', 'admin'),
+            this.Config.get('url_path', 'admin'),
             this.Config.get('template.asset_dir')
         )
     }

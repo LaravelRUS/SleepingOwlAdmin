@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Tree;
 
+use Illuminate\Database\Eloquent\Collection;
 use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
 
@@ -35,7 +36,7 @@ class OrderTreeType implements TreeTypeInterface
      *
      * @return mixed
      */
-    public function getTree(\Illuminate\Database\Eloquent\Collection $collection)
+    public function getTree(Collection $collection)
     {
         $collection = $collection->sortBy($this->repository->getOrderField());
 

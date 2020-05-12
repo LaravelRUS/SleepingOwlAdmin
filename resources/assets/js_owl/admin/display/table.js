@@ -1,12 +1,11 @@
 Admin.Modules.register('display.table', () => {
-
+    
     $('.display-filters[data-display="DisplayTable"]').each((i, el) => {
         let $self = $(el),
             $filtersRow = $self.find('tr').first(),
             tag = $self[0].tagName,
             $filters = $filtersRow.find('td'),
-            $button = $('<button class="btn btn-default">Filter</button>')
-
+            $button = $('<button class="btn btn-default">' + trans('lang.table.filters.control') + '</button>')
 
         $filtersRow.after(
             $(`<tr><td colspan="${$filters.length}" class="text-right"></td></tr>`).append($button)

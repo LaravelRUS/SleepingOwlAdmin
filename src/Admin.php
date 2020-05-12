@@ -3,25 +3,31 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Model\ModelCollection;
-use Illuminate\Foundation\ProviderRepository;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Model\ModelConfiguration;
-use Illuminate\Contracts\Foundation\Application;
+use Collective\Html\HtmlServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
-use SleepingOwl\Admin\Providers\AdminServiceProvider;
-use SleepingOwl\Admin\Contracts\Template\MetaInterface;
-use SleepingOwl\Admin\Http\Controllers\AdminController;
-use SleepingOwl\Admin\Providers\AliasesServiceProvider;
-use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\ProviderRepository;
+use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
+use SleepingOwl\Admin\Contracts\AdminInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Http\Controllers\AdminController;
+use SleepingOwl\Admin\Model\ModelCollection;
+use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Providers\AdminServiceProvider;
+use SleepingOwl\Admin\Providers\AliasesServiceProvider;
+use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
 
+/**
+ * Class Admin.
+ * @property \Illuminate\Foundation\Application $app
+ */
 class Admin implements AdminInterface
 {
     use ProvidesScriptVariables;
@@ -111,7 +117,11 @@ class Admin implements AdminInterface
         $this->setModel($model->getClass(), $model);
 
         if ($model instanceof Initializable) {
-            $model->initialize();
+            try {
+                $model->initialize();
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+            }
         }
 
         return $this;
@@ -229,7 +239,7 @@ class Admin implements AdminInterface
 
     /**
      * @param string|Renderable $content
-     * @param string|null       $title
+     * @param string|null $title
      *
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
@@ -247,7 +257,7 @@ class Admin implements AdminInterface
     {
         $providers = [
             AliasesServiceProvider::class,
-            \Collective\Html\HtmlServiceProvider::class,
+            HtmlServiceProvider::class,
             BreadcrumbsServiceProvider::class,
             AdminServiceProvider::class,
         ];
@@ -280,8 +290,8 @@ class Admin implements AdminInterface
             'sleeping_owl.meta' => ['assets.meta', 'SleepingOwl\Admin\Contracts\Template\MetaInterface', 'SleepingOwl\Admin\Templates\Meta'],
         ];
 
-        foreach ($aliases as $key => $aliases) {
-            foreach ($aliases as $alias) {
+        foreach ($aliases as $key => $aliasesItem) {
+            foreach ($aliasesItem as $alias) {
                 $this->app->alias($key, $alias);
             }
         }

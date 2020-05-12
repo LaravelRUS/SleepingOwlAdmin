@@ -3,14 +3,19 @@
 namespace SleepingOwl\Admin\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 
 class SectionModelConfiguration extends ModelConfigurationManager
 {
     protected $breadcrumbs = null;
+
+    /**
+     * @var mixed
+     */
+    protected $payload = [];
 
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
     {
@@ -54,21 +59,29 @@ class SectionModelConfiguration extends ModelConfigurationManager
         return method_exists($this, 'onEdit') && parent::isEditable($model);
     }
 
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
+     * @return bool
+     */
     public function isDeletable(Model $model)
     {
         return method_exists($this, 'onDelete') && parent::isDeletable($model);
     }
 
     /**
-     * @return DisplayInterface|mixed
+     * @param mixed $payload
+     * @return mixed|DisplayInterface|void
      */
-    public function fireDisplay(array $payload = [])
+    public function fireDisplay($payload = [])
     {
         if (! method_exists($this, 'onDisplay')) {
             return;
         }
 
-        $display = $this->app->call([$this, 'onDisplay'], $payload);
+        $this->setPayload($payload);
+
+        $display = $this->app->call([$this, 'onDisplay'], ['payload' => $payload]);
 
         if ($display instanceof DisplayDatatablesAsync) {
             $display->setPayload($payload);
@@ -83,15 +96,19 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param mixed $payload
      * @return mixed|void
      */
-    public function fireCreate()
+    public function fireCreate($payload = [])
     {
         if (! method_exists($this, 'onCreate')) {
             return;
         }
 
-        $form = $this->app->call([$this, 'onCreate']);
+        $this->setPayload($payload);
+
+        $form = $this->app->call([$this, 'onCreate'], ['payload' => $payload]);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -108,17 +125,34 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
+     * @param int $id
+     * @param mixed $payload
      *
      * @return mixed|void
      */
-    public function fireEdit($id)
+    public function fireEdit($id, $payload = [])
     {
         if (! method_exists($this, 'onEdit')) {
             return;
         }
 
-        $form = $this->app->call([$this, 'onEdit'], ['id' => $id]);
+        $model = $this;
+        if (method_exists($model, 'getModelValue')) {
+            $item = $model->getModelValue();
+            if (! $item) {
+                $item = $model->getRepository()->find($id);
+                if (method_exists($model, 'setModelValue') && $item) {
+                    $model->setModelValue($item);
+                }
+            }
+        }
+
+        $this->setPayload($payload);
+
+        $payload = array_merge(['id' => $id], ['payload' => $payload]);
+
+        $form = $this->app->call([$this, 'onEdit'], $payload);
+
         if ($form instanceof DisplayInterface) {
             $form->setModelClass($this->getClass());
         }
@@ -169,5 +203,25 @@ class SectionModelConfiguration extends ModelConfigurationManager
         if (method_exists($this, 'onRestore')) {
             return $this->app->call([$this, 'onRestore'], ['id' => $id]);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @param mixed $payload
+     *
+     * @return $this
+     */
+    public function setPayload($payload = [])
+    {
+        $this->payload = $payload;
+
+        return $this;
     }
 }

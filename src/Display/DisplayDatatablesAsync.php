@@ -2,17 +2,19 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Display\Column\Control;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use Illuminate\Support\Facades\Request;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Display\Column\Control;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
+    protected $rowClassCallback;
+
     /**
      * Register display routes.
      *
@@ -25,7 +27,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async';
         if (! $router->has($routeName)) {
             $router->get('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
         }
@@ -33,7 +35,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         $routeName = 'admin.display.async.inlineEdit';
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/async/{adminDisplayName?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
         }
@@ -213,10 +215,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Apply offset and limit to the query.
      *
-     * @param $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @param \Illuminate\Http\Request $request
      */
-    protected function applyOffset($query, \Illuminate\Http\Request $request)
+    public function applyOffset($query, \Illuminate\Http\Request $request)
     {
         $offset = $request->input('start', 0);
         $limit = $request->input('length', 10);
@@ -234,7 +236,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param Builder $query
      * @param \Illuminate\Http\Request $request
      */
-    protected function applySearch(Builder $query, \Illuminate\Http\Request $request)
+    public function applySearch(Builder $query, \Illuminate\Http\Request $request)
     {
         $search = $request->input('search.value');
         if (empty($search)) {
@@ -243,6 +245,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $query->where(function (Builder $query) use ($search) {
             $columns = $this->getColumns()->all();
+
+            $_model = $query->getModel();
 
             foreach ($columns as $column) {
                 if ($column->isSearchable()) {
@@ -258,6 +262,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
                             $callback($column, $query, $search);
                             continue;
                         }
+                    }
+
+                    if ($_model->getAttribute($column->getName())) {
+                        continue;
                     }
 
                     $query->orWhere($column->getName(), 'like', '%'.$search.'%');
@@ -302,11 +310,38 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
                 $_row[] = (string) $column;
             }
+            if (is_callable($callback = $this->rowClassCallback)) {
+                $class = $callback($instance);
+                if (is_array($class)) {
+                    $class = implode(' ', $class);
+                }
+                $_row[] = (string) $class;
+            }
 
             $result['data'][] = $_row;
         }
 
         return $result;
+    }
+
+    /**
+     * @return \Closure|mixed
+     */
+    public function getRowClassCallback()
+    {
+        return $this->rowClassCallback;
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function setRowClassCallback($callback)
+    {
+        $this->rowClassCallback = $callback;
+
+        return $this;
     }
 
     /**
@@ -334,6 +369,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function toArray()
     {

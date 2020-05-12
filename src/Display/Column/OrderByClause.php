@@ -2,14 +2,16 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Illuminate\Support\Str;
-use Mockery\Matcher\Closure;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Mockery\Matcher\Closure;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 class OrderByClause implements OrderByClauseInterface
@@ -18,6 +20,11 @@ class OrderByClause implements OrderByClauseInterface
      * @var string|\Closure
      */
     protected $name;
+
+    /**
+     * @var string|null
+     */
+    protected $sortedColumnAlias = null;
 
     /**
      * OrderByClause constructor.
@@ -97,22 +104,36 @@ class OrderByClause implements OrderByClauseInterface
      */
     protected function loadRelationOrder(Builder $query, $direction)
     {
+        /** @var Relation $relationClass */
         $relations = collect(explode('.', $this->name));
+        $loop = 0;
+        if ($relations->count() >= 2) {
+            $query->select($query->getModel()->getTable().'.*');
 
-        //Without Eager Load
-        //With Eager Load
-        if ($relations->count() == 2) {
-            $model = $query->getModel();
-            $relation = $relations->first();
+            do {
+                $model = ! $loop++ ? $query->getModel() : $relationClass->getModel();
+                $relation = $relations->shift();
 
-            if (method_exists($model, $relation)) {
+                if (method_exists($model, $relation)) {
+                    $relationClass = $model->{$relation}();
+                    $loadRelationMethod = implode('', ['load', class_basename(get_class($relationClass))]);
 
-                /** @var Relation $relationClass */
-                $relationClass = $model->{$relation}();
-                $relationModel = $relationClass->getRelated();
+                    if ($relationClass instanceof MorphTo) {
+                        /**
+                         * @see loadMorphTo
+                         */
+                        $relationModel = null;
+                    } else {
+                        $relationModel = $relationClass->getRelated();
+                    }
+                    call_user_func([$this, $loadRelationMethod], $relations, $relationClass, $relationModel, $model, $query, $direction);
+                } else {
+                    break;
+                }
+            } while (true);
 
-                call_user_func([$this, implode('', ['load', class_basename(get_class($relationClass))])],
-                    $relations, $relationClass, $relationModel, $model, $query, $direction);
+            if ($this->sortedColumnAlias) {
+                $query->orderBy(DB::raw($this->sortedColumnAlias), $direction);
             }
         }
     }
@@ -179,11 +200,14 @@ class OrderByClause implements OrderByClauseInterface
 
         $ownerColumn = $relationClass->getQualifiedForeignKeyName();
         $foreignColumn = $relationClass->getQualifiedParentKeyName();
-        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
+        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
+        $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
-            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-            ->orderBy($sortedColumn, $direction);
+        $this->sortedColumnAlias = $sortedColumnAlias;
+
+        $query
+            ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
+            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left');
     }
 
     /**
@@ -193,29 +217,110 @@ class OrderByClause implements OrderByClauseInterface
      * @param Model $relationModel
      * @param Model $model
      * @param Builder $query
-     * @param $direction
-     * @return array
      */
     protected function loadBelongsTo(
         Collection $relations,
         BelongsTo $relationClass,
         Model $relationModel,
         Model $model,
-        Builder $query,
-        $direction
+        Builder $query
     ) {
-        $foreignKey = $relationClass->getOwnerKey();
-        $ownerKey = $relationClass->getForeignKey();
+        if (version_compare(app()->version(), '5.8.0', 'gt')) {
+            $foreignKey = $relationClass->getOwnerKeyName();
+            $ownerKey = $relationClass->getForeignKeyName();
+        } else {
+            $foreignKey = $relationClass->getOwnerKey();
+            $ownerKey = $relationClass->getForeignKey();
+        }
 
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
 
         $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
         $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-        $sortedColumn = implode('.', [$foreignTable, $relations->last()]);
+        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
+        $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
-        $query->select([$ownerTable.'.*', $foreignTable.'.'.$relations->last()])
-            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left')
-            ->orderBy($sortedColumn, $direction);
+        $this->sortedColumnAlias = $sortedColumnAlias;
+
+        $query
+            ->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)])
+            ->join($foreignTable, $foreignColumn, '=', $ownerColumn, 'left');
+    }
+
+    /**
+     * Load keys for MorphTo.
+     * @param Collection $relations
+     * @param MorphTo $relationClass
+     * @param null $relationModel
+     * @param Model $model
+     * @param Builder $query
+     */
+    protected function loadMorphTo(
+        Collection $relations,
+        MorphTo $relationClass,
+        $relationModel,
+        Model $model,
+        Builder $query
+    ) {
+        if (version_compare(app()->version(), '5.8.0', 'gt')) {
+            $foreignKey = $relationClass->getOwnerKeyName();
+            $ownerKey = $relationClass->getForeignKeyName();
+        } else {
+            $foreignKey = $relationClass->getOwnerKey();
+            $ownerKey = $relationClass->getForeignKey();
+        }
+
+        $foreignKey = $foreignKey ?? 'id';
+        $ownerTable = $model->getTable();
+        $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
+        $morphType = $relationClass->getMorphType();
+
+        $foreignTablePrefix = 'morphTo'.mt_rand(99, 999);
+        $foreignTableField = $relations->last();
+        $sortedColumnAlias = implode('__', [$foreignTablePrefix, $foreignTableField]);
+        $this->sortedColumnAlias = $sortedColumnAlias;
+
+        // Get all exists morph types from table
+        $existsMorphTypes = (new $model())
+            ->distinct()
+            ->selectRaw($morphType)
+            ->get()
+            ->pluck($morphType)
+            ->toArray();
+
+        // Make morph map
+        $morphMap = Relation::$morphMap;
+        $existsMorphTypesTablesMap = [];
+        foreach ($existsMorphTypes as $existsMorphType) {
+            $existsMorphTypeAlias = $existsMorphType;
+            $relatedModelClassName = @$morphMap[$existsMorphType] ?: $existsMorphType;
+            $tableName = (new $relatedModelClassName())->getTable();
+            $existsMorphTypesTablesMap[] = [
+                'morph_type_alias' => $existsMorphTypeAlias,
+                'morph_type'       => $existsMorphType,
+                'table_name'       => $tableName,
+            ];
+        }
+
+        // Join all related tables from morph map & generate SQL CASE-WHEN-THEN-END statement
+        $sortedColumnRaw = [];
+        foreach ($existsMorphTypesTablesMap as $array) {
+            $existsMorphType = $array['morph_type'];
+            $existsMorphTypeAlias = $array['morph_type_alias'];
+            $tableName = $array['table_name'];
+            $tableAlias = $foreignTablePrefix.'_'.$tableName;
+            $sortedColumnRaw[] = "WHEN '$existsMorphType' THEN {$tableAlias}.`{$foreignTableField}`";
+
+            $query->leftJoin(DB::raw('`'.$tableName.'` AS '.$tableAlias), function ($join) use ($tableAlias, $foreignKey, $ownerColumn, $ownerTable, $morphType, $existsMorphTypeAlias) {
+                $join
+                    ->on(DB::raw($tableAlias.'.`'.$foreignKey.'`'), '=', $ownerColumn)
+                    ->where(DB::raw('`'.$ownerTable.'`.`'.$morphType.'`'), '=', DB::raw("'".$existsMorphTypeAlias."'"));
+            });
+        }
+        $sortedColumnRaw = "(CASE `{$ownerTable}`.`{$morphType}` ".implode(' ', $sortedColumnRaw).' END)';
+
+        // Add sorted field to result
+        $query->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)]);
     }
 }

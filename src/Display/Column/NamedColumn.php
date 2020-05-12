@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Display\TableColumn;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as SuportCollection;
 use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
+use SleepingOwl\Admin\Display\TableColumn;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
@@ -21,13 +21,25 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
     /**
      * @var string
+     * @var bool
      */
     protected $small;
+    protected $smallString = false;
 
     /**
      * @var bool
      */
     protected $orderable = true;
+
+    /**
+     * @var bool
+     */
+    protected $isolated = true;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = true;
 
     /**
      * NamedColumn constructor.
@@ -73,7 +85,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      */
     public function getSmall()
     {
-        return $this->small;
+        if ($this->smallString) {
+            return $this->small;
+        }
+
+        return $this->getValueFromObject($this->getModel(), $this->small);
     }
 
     /**
@@ -81,9 +97,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      *
      * @return $this
      */
-    public function setSmall($small)
+    public function setSmall($small, $smallString = false)
     {
         $this->small = $small;
+        $this->smallString = $smallString;
 
         return $this;
     }
@@ -97,16 +114,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getModelSmallValue()
-    {
-        return $this->getValueFromObject($this->getModel(), $this->getSmall());
-    }
-
-    /**
      * @param OrderByClauseInterface|bool $orderable
-     * @deprecated
      * @return TableColumn
      */
     public function setOrderable($orderable = true)
@@ -121,15 +129,41 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
+     * @param bool $isolated
+     *
+     * @return $this
+     */
+    public function setIsolated($isolated)
+    {
+        $this->isolated = $isolated;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsolated()
+    {
+        return $this->isolated;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
      */
     public function toArray()
     {
+        $model_value_small = $this->getSmall();
+        if ($this->isolated) {
+            $model_value_small = htmlspecialchars($model_value_small);
+        }
+
         return parent::toArray() + [
-                'name' => $this->getName(),
-            ];
+            'name' => $this->getName(),
+            'small' => $model_value_small,
+        ];
     }
 
     /**

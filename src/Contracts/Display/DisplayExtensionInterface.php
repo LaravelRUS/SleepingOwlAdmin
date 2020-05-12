@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Contracts\Display;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Builder;
 
 interface DisplayExtensionInterface extends Arrayable
 {
@@ -33,5 +34,5 @@ interface DisplayExtensionInterface extends Arrayable
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query);
+    public function modifyQuery(Builder $query);
 }

@@ -2,11 +2,12 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 
 trait SelectOptionsFromModel
 {
@@ -29,6 +30,7 @@ trait SelectOptionsFromModel
      * @var string|null
      */
     protected $usageKey = null;
+
     /**
      * @var array
      */
@@ -79,6 +81,7 @@ trait SelectOptionsFromModel
 
     /**
      * @param string $key
+     *
      * @return $this
      */
     public function setUsageKey($key)
@@ -97,7 +100,7 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param string $display
+     * @param string|\Closure $display
      *
      * @return $this
      */
@@ -121,6 +124,7 @@ trait SelectOptionsFromModel
      * <code>setFetchColumns(['title', 'position'])</code>.
      *
      * @param string|array $columns
+     *
      * @return $this
      */
     public function setFetchColumns($columns)
@@ -161,6 +165,7 @@ trait SelectOptionsFromModel
      * </code>
      *
      * @param callable $callback The Callback with $item and $options args.
+     *
      * @return $this
      */
     public function setLoadOptionsQueryPreparer($callback)
@@ -172,6 +177,7 @@ trait SelectOptionsFromModel
 
     /**
      * Get Callback for prepare load options Query.
+     *
      * @return callable
      */
     public function getLoadOptionsQueryPreparer()
@@ -230,16 +236,13 @@ trait SelectOptionsFromModel
         }
 
         if (count($this->getFetchColumns()) > 0) {
-            $options->select(
-                array_merge([$key], $this->getFetchColumns())
-            );
+            $options->select(array_merge([$key], $this->getFetchColumns()));
         }
 
         // call the pre load options query preparer if has be set
         if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
             $options = $preparer($this, $options);
         }
-
         $options = $options->get();
 
         //some fix for setUsage
@@ -259,13 +262,13 @@ trait SelectOptionsFromModel
             }, $options);
 
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, 1, 0);
+            $options = Arr::pluck($options, 1, 0);
         } elseif ($options instanceof Collection) {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options->all(), $this->getDisplay(), $key);
+            $options = Arr::pluck($options->all(), $this->getDisplay(), $key);
         } else {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, $this->getDisplay(), $key);
+            $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
 
         return $options;

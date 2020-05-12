@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Traits\Renderable;
 
 class TableHeaderColumn implements TableHeaderColumnInterface
 {
@@ -82,8 +82,8 @@ class TableHeaderColumn implements TableHeaderColumnInterface
         $this->setHtmlAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
 
         return [
-            'attributes'  => $this->htmlAttributesToString(),
-            'title'       => $this->getTitle(),
+            'attributes' => $this->htmlAttributesToString(),
+            'title' => $this->getTitle(),
             'isOrderable' => $this->isOrderable(),
         ];
     }

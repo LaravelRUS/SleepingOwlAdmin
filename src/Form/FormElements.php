@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 class FormElements extends FormElement implements ElementsInterface

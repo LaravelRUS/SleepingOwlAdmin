@@ -1,8 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Aios.
- */
+
 namespace SleepingOwl\Admin\Traits;
 
 trait DateFormat
@@ -20,18 +17,6 @@ trait DateFormat
     }
 
     /**
-     * @return string
-     */
-    public function getTimezone()
-    {
-        if (is_null($this->timezone)) {
-            $this->timezone = config('sleeping_owl.timezone');
-        }
-
-        return $this->timezone;
-    }
-
-    /**
      * @param string|null $format
      *
      * @return $this
@@ -41,6 +26,18 @@ trait DateFormat
         $this->format = $format;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        if (is_null($this->timezone)) {
+            $this->timezone = config('sleeping_owl.timezone');
+        }
+
+        return $this->timezone;
     }
 
     /**

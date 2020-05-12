@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Form\FormDefault;
 
 class Checkbox extends EditableColumn implements ColumnEditableInterface
 {
@@ -12,6 +12,16 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
      * @var string
      */
     protected $view = 'column.editable.checkbox';
+
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
 
     /**
      * @var null|string
@@ -24,9 +34,14 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     protected $uncheckedLabel;
 
     /**
+     * @var string
+     */
+    protected $width = '70px';
+
+    /**
      * Checkbox constructor.
      *
-     * @param string      $name
+     * @param string $name
      * @param string|null $checkedLabel
      * @param string|null $uncheckedLabel
      * @param string|null $columnLabel
@@ -37,6 +52,23 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
+
+        if ($checkedLabel) {
+            $this->setLabel($checkedLabel);
+        }
+    }
+
+    public function getModifierValue()
+    {
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
+        }
+
+        if (is_null($this->modifier)) {
+            return $this->getModelValue() ? $this->getCheckedLabel() : $this->getUncheckedLabel();
+        }
+
+        return $this->modifier;
     }
 
     /**
@@ -69,7 +101,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     public function getUncheckedLabel()
     {
         if (is_null($label = $this->uncheckedLabel)) {
-            $label = trans('sleeping_owl::lang.editable.checkbox.unchecked');
+            $label = "<i class='fas fa-minus'></i>";
         }
 
         return $label;
@@ -92,10 +124,11 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-        return parent::toArray() + [
-                'checkedLabel'   => $this->getCheckedLabel(),
-                'uncheckedLabel' => $this->getUncheckedLabel(),
-            ];
+        return array_merge(parent::toArray(), [
+            'checkedLabel' => $this->getCheckedLabel(),
+            'uncheckedLabel' => $this->getUncheckedLabel(),
+            'text' => $this->getModifierValue(),
+        ]);
     }
 
     /**

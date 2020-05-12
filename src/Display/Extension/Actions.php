@@ -4,9 +4,9 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\Initializable;
 
 class Actions extends Extension implements Initializable, Placable
 {
@@ -25,7 +25,7 @@ class Actions extends Extension implements Initializable, Placable
     /**
      * @var string
      */
-    protected $placement = 'panel.footer';
+    protected $placement = 'card.buttons';
 
     public function __construct()
     {
@@ -47,7 +47,7 @@ class Actions extends Extension implements Initializable, Placable
      *
      * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
-    public function set($actions)
+    public function set($actions = null)
     {
         if (! is_array($actions)) {
             $actions = func_get_args();
@@ -130,7 +130,7 @@ class Actions extends Extension implements Initializable, Placable
     public function toArray()
     {
         return [
-            'actions'  => $this->actions,
+            'actions' => $this->actions,
             'placement' => $this->getPlacement(),
             'attributes' => $this->htmlAttributesToString(),
         ];
@@ -151,8 +151,13 @@ class Actions extends Extension implements Initializable, Placable
 
         $this->setHtmlAttribute('data-type', 'display-actions');
 
-        if (! $this->hasHtmlAttribute('class')) {
-            $this->setHtmlAttribute('class', 'panel-footer');
+        /*
+          * @deprecated panel.footer
+          */
+        if ($this->getPlacement() == 'card.footer' || $this->getPlacement() == 'panel.footer') {
+            $this->setHtmlAttribute('class', 'card-footer');
+        } else {
+            $this->setHtmlAttribute('style', 'display:inline-flex');
         }
     }
 }

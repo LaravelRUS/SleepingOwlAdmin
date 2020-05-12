@@ -2,17 +2,17 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 use SleepingOwl\Admin\Display\DisplayTab;
+use SleepingOwl\Admin\Display\DisplayTabbed;
 use SleepingOwl\Admin\Display\DisplayTree;
 use SleepingOwl\Admin\Form\Columns\Column;
-use SleepingOwl\Admin\Display\DisplayTabbed;
-use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Form\FormElements;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DisplayController extends Controller
@@ -22,9 +22,8 @@ class DisplayController extends Controller
      * @param Request $request
      * @param Application $application
      * @param null $name
-     * @throws NotFoundHttpException
-     *
      * @return JsonResponse
+     * @throws NotFoundHttpException
      */
     public function async(ModelConfigurationInterface $model, Request $request, Application $application, $name = null)
     {
@@ -41,14 +40,18 @@ class DisplayController extends Controller
                 if ($content instanceof FormElements) {
                     foreach ($content->getElements() as $element) {
 
-                        //Return data-table if inside FormElements
+                        /*
+                          * Return data-table if inside FormElements
+                          */
                         if ($element instanceof DisplayDatatablesAsync) {
                             if ($element->getName() == $name) {
                                 return $this->renderFindedTable($element, $application, $request);
                             }
                         }
 
-                        //Try to find data table in columns
+                        /*
+                          * Try to find data table in columns
+                          */
                         if ($element instanceof Column) {
                             foreach ($element->getElements() as $columnElement) {
                                 if ($columnElement instanceof DisplayDatatablesAsync) {
@@ -61,7 +64,9 @@ class DisplayController extends Controller
                     }
                 }
 
-                //Finded trully in content-tab
+                /*
+                  * Finded trully in content-tab
+                  */
                 if ($content instanceof DisplayDatatablesAsync) {
                     if ($content->getName() == $name) {
                         return $this->renderFindedTable($content, $application, $request);

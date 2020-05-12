@@ -2,21 +2,24 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
-use LogicException;
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElement;
+use Closure;
 use Illuminate\Contracts\Support\Htmlable;
-use KodiComponents\Support\HtmlAttributes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use KodiComponents\Support\HtmlAttributes;
+use LogicException;
 use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+use SleepingOwl\Admin\Form\FormElement;
 
 abstract class NamedFormElement extends FormElement
 {
     use HtmlAttributes;
+
     /**
      * @var string
      */
@@ -26,6 +29,11 @@ abstract class NamedFormElement extends FormElement
      * @var string
      */
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $id;
 
     /**
      * @var string
@@ -41,6 +49,16 @@ abstract class NamedFormElement extends FormElement
      * @var string
      */
     protected $helpText;
+
+    /**
+     * @var mixed
+     */
+    protected $exactValue;
+
+    /**
+     * @var bool
+     */
+    protected $exactValueSet = false;
 
     /**
      * @var mixed
@@ -69,6 +87,7 @@ abstract class NamedFormElement extends FormElement
 
         $parts = explode('.', $path);
         $this->setName($this->composeName($parts));
+        $this->setId($this->composeId($path));
         $this->setModelAttributeKey(end($parts));
 
         parent::__construct();
@@ -89,6 +108,20 @@ abstract class NamedFormElement extends FormElement
             $part = array_shift($parts);
             $name .= "[$part]";
         }
+
+        return $name;
+    }
+
+    /**
+     * Compose html id from array like this: 'first__second__third'.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    private function composeId(string $path)
+    {
+        $name = strtr($path, ['.' => '__', '[' => '__', ']' => '']);
 
         return $name;
     }
@@ -116,6 +149,14 @@ abstract class NamedFormElement extends FormElement
     /**
      * @return string
      */
+    public function getNameKey()
+    {
+        return strtr($this->getName(), ['[' => '.', ']' => '']);
+    }
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
@@ -129,6 +170,38 @@ abstract class NamedFormElement extends FormElement
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return $this
+     */
+    public function setComposeId($id)
+    {
+        $this->setId($this->composeId($id));
 
         return $this;
     }
@@ -358,7 +431,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function getValueFromModel()
     {
-        if (! is_null($value = $this->getValueFromRequest(request()))) {
+        if (($value = $this->getValueFromRequest(request())) !== null) {
             return $value;
         }
 
@@ -366,9 +439,16 @@ abstract class NamedFormElement extends FormElement
         $path = $this->getPath();
         $value = $this->getDefaultValue();
 
+        if ($model === null || ! $model->exists) {
+            /*
+              * First check for model existence must go here, before all checks are made
+              */
+            return $value;
+        }
+
         /*
-         * Implement json parsing
-         */
+          * Implement json parsing
+          */
         if (strpos($path, '->') !== false) {
             $casts = collect($model->getCasts());
             $jsonParts = collect(explode('->', $path));
@@ -377,17 +457,13 @@ abstract class NamedFormElement extends FormElement
 
             $cast = $casts->get($jsonParts->first(), false);
 
-            if ($cast == 'object') {
+            if ($cast === 'object') {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-            } elseif ($cast != 'array') {
+            } elseif ($cast !== 'array') {
                 $jsonAttr = json_decode($jsonAttr);
             }
 
             return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
-        }
-
-        if (is_null($model) || ! $model->exists) {
-            return $value;
         }
 
         $relations = explode('.', $path);
@@ -395,7 +471,6 @@ abstract class NamedFormElement extends FormElement
 
         if ($count === 1) {
             $attribute = $model->getAttribute($this->getModelAttributeKey());
-
             if (! empty($attribute) || $attribute === 0 || is_null($value)) {
                 return $attribute;
             }
@@ -407,7 +482,7 @@ abstract class NamedFormElement extends FormElement
                 continue;
             }
             if ($count === 2) {
-                if (str_contains($relation, '->')) {
+                if (Str::contains($relation, '->')) {
                     $parts = explode('->', $relation);
                     $relationField = array_shift($array);
                     $jsonPath = implode('.', $parts);
@@ -420,7 +495,7 @@ abstract class NamedFormElement extends FormElement
                 }
             }
 
-            if (is_null($this->getDefaultValue())) {
+            if ($this->getDefaultValue() === null) {
                 throw new LogicException("Can not fetch value for field '{$path}'. Probably relation definition is incorrect");
             }
         }
@@ -435,11 +510,7 @@ abstract class NamedFormElement extends FormElement
      */
     public function save(\Illuminate\Http\Request $request)
     {
-        $this->setModelAttribute(
-            $this->getValueFromRequest(
-                $request
-            )
-        );
+        $this->setModelAttribute($this->getValueFromRequest($request));
     }
 
     /**
@@ -449,18 +520,13 @@ abstract class NamedFormElement extends FormElement
      */
     public function setModelAttribute($value)
     {
-        $model = $this->getModelByPath(
-            $this->getPath()
-        );
+        $model = $this->getModelByPath($this->getPath());
 
         if ($this->isValueSkipped()) {
             return;
         }
 
-        $model->setAttribute(
-            $this->getModelAttributeKey(),
-            $this->prepareValue($value)
-        );
+        $model->setAttribute($this->getModelAttributeKey(), $this->prepareValue($value));
     }
 
     /**
@@ -497,8 +563,7 @@ abstract class NamedFormElement extends FormElement
                         case HasOne::class:
                         case MorphOne::class:
                             $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject),
-                                $relationObject->getParentKey());
+                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
                             $model->setRelation($relation, $relatedModel);
                             break;
                     }
@@ -508,8 +573,7 @@ abstract class NamedFormElement extends FormElement
                 if ($i === $count) {
                     break;
                 } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model)
-                        .'. Probably some dot delimeted segment is not a supported relation type');
+                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
                 }
             }
 
@@ -521,8 +585,7 @@ abstract class NamedFormElement extends FormElement
 
     protected function getForeignKeyNameFromRelation($relation)
     {
-        return method_exists($relation, 'getForeignKeyName')
-            ? $relation->getForeignKeyName()
+        return method_exists($relation, 'getForeignKeyName') ? $relation->getForeignKeyName()
             : $relation->getPlainForeignKey();
     }
 
@@ -535,7 +598,7 @@ abstract class NamedFormElement extends FormElement
      *
      * @return $this
      */
-    public function mutateValue(\Closure $mutator)
+    public function mutateValue(Closure $mutator)
     {
         $this->mutator = $mutator;
 
@@ -565,24 +628,47 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
+     * @return mixed
+     */
+    public function getExactValue()
+    {
+        return $this->exactValue;
+    }
+
+    /**
+     * @param mixed $exactValue
+     *
+     * @return $this
+     */
+    public function setExactValue($exactValue)
+    {
+        $this->exactValue = $exactValue;
+        $this->exactValueSet = true;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'id'   => $this->getName(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
         ]);
 
         return array_merge(parent::toArray(), [
-            'id'         => $this->getName(),
-            'value'      => $this->getValueFromModel(),
-            'name'       => $this->getName(),
-            'path'       => $this->getPath(),
-            'label'      => $this->getLabel(),
+            'id' => $this->getId(),
+            'value' => $this->exactValueSet ? $this->getExactValue() : $this->getValueFromModel(),
+            'name' => $this->getName(),
+            'path' => $this->getPath(),
+            'label' => $this->getLabel(),
             'attributes' => $this->htmlAttributesToString(),
-            'helpText'   => $this->getHelpText(),
-            'required'   => in_array('required', $this->validationRules),
+            'helpText' => $this->getHelpText(),
+            'required' => in_array('required', $this->validationRules),
+            'class' => $this->getHtmlAttribute('class'),
+            'style' => $this->getHtmlAttribute('style'),
         ]);
     }
 }

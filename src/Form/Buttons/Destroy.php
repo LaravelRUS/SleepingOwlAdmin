@@ -9,11 +9,11 @@ class Destroy extends FormButton
 {
     protected $show = true;
     protected $name = 'destroy';
-    protected $iconClass = 'fa-ban';
+    protected $iconClass = 'fas fa-ban';
 
     public function __construct()
     {
-        $this->setText(trans('sleeping_owl::lang.table.destroy'));
+        $this->setText(trans('sleeping_owl::lang.button.destroy'));
     }
 
     /**
@@ -23,11 +23,11 @@ class Destroy extends FormButton
     {
         parent::initialize();
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'type'  => 'submit',
-            'name'  => 'next_action',
+            'type' => 'submit',
+            'name' => 'next_action',
             'class' => 'btn btn-danger',
-            'data-url'=>$this->getModelConfiguration()->getDestroyUrl($this->getModel()->getKey()),
-            'data-redirect'=>$this->getModelConfiguration()->getDisplayUrl(),
+            'data-url' => $this->getModelConfiguration()->getDestroyUrl($this->getModel()->getKey()),
+            'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
         ]);
     }
 

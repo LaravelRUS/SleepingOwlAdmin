@@ -1,14 +1,13 @@
 <?php
 
-
 namespace SleepingOwl\Admin\Form\Buttons;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Traits\Renderable;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\Renderable;
 
 class FormButton implements FormButtonsInterface, Initializable
 {
@@ -261,13 +260,13 @@ class FormButton implements FormButtonsInterface, Initializable
     public function toArray()
     {
         return [
-            'attributes'    => $this->htmlAttributesToString(),
+            'attributes' => $this->htmlAttributesToString(),
             'groupElements' => $this->getGroupElements(),
-            'text'          => $this->getText(),
-            'name'          => $this->getName(),
-            'show'          => $this->getShow(),
-            'iconClass'     => $this->getIconClass(),
-            'url'           => $this->getUrl(),
+            'text' => $this->getText(),
+            'name' => $this->getName(),
+            'show' => $this->getShow(),
+            'iconClass' => $this->getIconClass(),
+            'url' => $this->getUrl(),
         ];
     }
 

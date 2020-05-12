@@ -19,7 +19,7 @@ class RelatedLink extends Link
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected $isSearchable = false;
 
     /**
      * @param \Closure|null|string $name

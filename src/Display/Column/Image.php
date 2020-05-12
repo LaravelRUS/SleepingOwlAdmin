@@ -12,6 +12,21 @@ class Image extends NamedColumn
     /**
      * @var string
      */
+    protected $width = '80px';
+
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
+     * @var string
+     */
     protected $view = 'column.image';
 
     /**
@@ -45,8 +60,8 @@ class Image extends NamedColumn
         }
 
         return parent::toArray() + [
-            'value'  => $value,
-            'imageWidth'  => $this->getImageWidth(),
+            'value' => $value,
+            'imageWidth' => $this->getImageWidth(),
         ];
     }
 }

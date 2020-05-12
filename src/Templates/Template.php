@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\AdminInterface;
-use Illuminate\Contracts\Foundation\Application;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
 abstract class Template implements TemplateInterface
 {
@@ -125,7 +125,7 @@ abstract class Template implements TemplateInterface
             return $this->getTitle();
         }
 
-        return $title."{$separator}".$this->getTitle();
+        return strip_tags($title)."{$separator}".$this->getTitle();
     }
 
     /**
@@ -148,8 +148,8 @@ abstract class Template implements TemplateInterface
 
     /**
      * @param string|View $view
-     * @param array  $data
-     * @param array  $mergeData
+     * @param array $data
+     * @param array $mergeData
      *
      * @return \Illuminate\Contracts\View\Factory|View
      */
@@ -168,13 +168,14 @@ abstract class Template implements TemplateInterface
      * @param string $key
      *
      * @return string
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
      */
     public function renderBreadcrumbs($key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
-            $this->breadcrumbs()->setView(
-                $this->getViewPath('_partials.breadcrumbs')
-            );
+            config()->set('breadcrumbs.view', $this->getViewPath('_partials.breadcrumbs'));
 
             return $this->breadcrumbs()->renderIfExists($key);
         }
@@ -191,9 +192,9 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Регистрация стандартны�
-     * глобальны�
-     * Javascript перменны�
+     * Регистрация стандартных
+     * глобальных
+     * Javascript перменных
      * .
      */
     protected function setGlobalVariables()

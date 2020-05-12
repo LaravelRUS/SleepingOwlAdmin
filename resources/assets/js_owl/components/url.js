@@ -1,13 +1,15 @@
 module.exports = class Url {
-    
+
     /**
      * @param {String} url
      * @param {String} url_prefix
+     * @param {String} url_path
      * @param {String} asset_dir
      */
-    constructor(url, url_prefix, asset_dir) {
+    constructor(url, url_prefix, url_path, asset_dir) {
         this._url = url
         this._url_prefix = url_prefix
+        this._url_path = url_path
         this._asset_dir = asset_dir
     }
 
@@ -54,6 +56,19 @@ module.exports = class Url {
 
     set url_prefix(value) {
         throw new Error(`The url_prefix property cannot be written.`);
+    }
+
+    /**
+     * Получение значения url path админ панели
+     *
+     * @returns {String}
+     */
+    get url_path() {
+        return this._url_path
+    }
+
+    set url_path(value) {
+        throw new Error(`The url_path property cannot be written.`);
     }
 
     /**

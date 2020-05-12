@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Exceptions\Form;
 
-class FormException extends \Exception
+use Exception;
+
+class FormException extends Exception
 {
 }

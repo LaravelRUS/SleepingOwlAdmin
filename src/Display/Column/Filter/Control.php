@@ -27,7 +27,7 @@ class Control extends BaseColumnFilter
     {
         parent::initialize();
 
-        $this->setHtmlAttribute('class', 'btn btn-primary column-filter');
+        $this->setHtmlAttribute('class', 'btn btn-sm btn-primary column-filter');
         $this->setHtmlAttribute('data-type', 'control');
         $this->setHtmlAttribute('id', 'filters-exec');
     }

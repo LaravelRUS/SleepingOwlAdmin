@@ -2,19 +2,25 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
-use DB;
-use Illuminate\Http\Request;
 use Admin\Contracts\HasFakeModel;
-use Illuminate\Support\Collection;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormElements;
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Form\Columns\Columns;
+use SleepingOwl\Admin\Form\Element\Custom;
+use SleepingOwl\Admin\Form\Element\NamedFormElement;
+use SleepingOwl\Admin\Form\FormElements;
+use Throwable;
 
 abstract class Elements extends FormElements
 {
@@ -39,6 +45,8 @@ abstract class Elements extends FormElements
      * @var string
      */
     protected $relationName;
+
+    protected $emptyRelation;
 
     /**
      * New relations counter.
@@ -80,7 +88,7 @@ abstract class Elements extends FormElements
      */
     protected $toRemove;
 
-    protected $emptyRelation;
+    protected $unique;
 
     /**
      * @var
@@ -89,7 +97,9 @@ abstract class Elements extends FormElements
 
     protected $queryCallbacks = [];
 
-    public function __construct($relationName, array $elements = [])
+    protected $transactionLevel;
+
+    public function __construct(string $relationName, array $elements = [])
     {
         $this->toRemove = collect();
         $this->groups = collect();
@@ -105,35 +115,21 @@ abstract class Elements extends FormElements
      *
      * @return $this
      */
-    public function setLimit($limit)
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
 
         return $this;
     }
 
-    /**
-     * Adds query modifier callback for related values select. Here you may define your ordering, etc.
-     *
-     * @param callable $callback
-     *
-     * @return $this
-     */
-    public function modifyQuery(callable $callback)
+    public function modifyQuery(callable $callback): self
     {
         $this->queryCallbacks[] = $callback;
 
         return $this;
     }
 
-    /**
-     * Sets the label of related form.
-     *
-     * @param $label
-     *
-     * @return $this
-     */
-    public function setLabel($label)
+    public function setLabel(string $label): self
     {
         $this->label = $label;
 
@@ -174,15 +170,26 @@ abstract class Elements extends FormElements
      */
     public function initializeElements()
     {
-        $this->getElements()->each(function ($element) {
-            if ($element instanceof Initializable) {
-                $element->initialize();
-            }
-
-            if ($element instanceof HasFakeModel) {
-                $element->setFakeModel($this->getModel());
-            }
+        $this->getElements()->each(function ($el) {
+            $this->initializeElement($el);
         });
+    }
+
+    public function initializeElement($element)
+    {
+        if ($element instanceof Initializable) {
+            $element->initialize();
+        }
+
+        if ($element instanceof HasFakeModel) {
+            $element->setFakeModel($this->getModel());
+        }
+
+        if ($element instanceof ColumnInterface) {
+            $element->getElements()->each(function ($el) {
+                $this->initializeElement($el);
+            });
+        }
     }
 
     /**
@@ -209,12 +216,12 @@ abstract class Elements extends FormElements
         return implode('_', $primaries);
     }
 
-    protected function makeValidationAttribute($name)
+    protected function makeValidationAttribute(string $name): string
     {
         return $this->relationName.'.*.'.$name;
     }
 
-    protected function getNewElements()
+    protected function getNewElements(): Collection
     {
         return $this->cloneElements($this);
     }
@@ -233,7 +240,7 @@ abstract class Elements extends FormElements
     protected function emptyElement($element)
     {
         $el = clone $element;
-        if ($el instanceof \SleepingOwl\Admin\Form\Columns\Columns) {
+        if ($el instanceof Columns) {
             $col = new Columns();
             $columns = $el->getElements();
             $col->setElements((clone $columns)->map(function ($column) {
@@ -246,13 +253,21 @@ abstract class Elements extends FormElements
         if ($el instanceof FormElements) {
             $el->setElements($this->cloneElements($el)->all());
         } else {
-            $el->setDefaultValue(null);
+            if (! ($el instanceof Custom)) {
+                $el->setDefaultValue(null);
+            }
             $el->setValueSkipped(true);
         }
 
         return $el;
     }
 
+    /**
+     * @param Model $model
+     *
+     * @return FormElements|void
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
     public function setModel(Model $model)
     {
         parent::setModel($model);
@@ -268,6 +283,10 @@ abstract class Elements extends FormElements
         $this->instance = $instance;
     }
 
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \Illuminate\Database\Eloquent\RelationNotFoundException
+     */
     protected function checkRelationOfModel()
     {
         $model = $this->getModel();
@@ -277,8 +296,8 @@ abstract class Elements extends FormElements
         }
 
         $relation = $model->{$this->relationName}();
-        if (! ($relation instanceof BelongsToMany) && ! ($relation instanceof HasOneOrMany)) {
-            throw new \InvalidArgumentException("Relation {$this->relationName} of model {$class} must be instance of HasMany or BelongsToMany");
+        if (! ($relation instanceof BelongsToMany) && ! ($relation instanceof HasOneOrMany) && ! ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsTo)) {
+            throw new \InvalidArgumentException("Relation {$this->relationName} of model {$class} must be instance of HasMany, BelongsTo or BelongsToMany");
         }
     }
 
@@ -287,15 +306,18 @@ abstract class Elements extends FormElements
      *
      * @param string
      *
-     * @return $this
+     * @return Elements
      */
-    public function setRelationName($name)
+    public function setRelationName(string $name): self
     {
         $this->relationName = $name;
 
         return $this;
     }
 
+    /**
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
     protected function loadRelationValues()
     {
         if (! $this->instance) {
@@ -304,6 +326,10 @@ abstract class Elements extends FormElements
 
         $query = $this->getRelation();
         if (count($this->queryCallbacks) > 0) {
+
+            //get $query instance Illuminate\Database\Eloquent\Builder for HasMany
+            $query = $query->getQuery();
+
             foreach ($this->queryCallbacks as $callback) {
                 $callback($query);
             }
@@ -313,22 +339,25 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @param \Illuminate\Http\Request|null $request
-     *
      * @return array
      */
-    protected function getRequestData(Request $request = null)
+    protected function getRequestData(): array
     {
-        return $request ? $request->get($this->relationName, []) : old($this->relationName, []);
+        $request = request();
+
+        $old = $request->old($this->relationName, false);
+
+        return $old ?: $request->get($this->relationName, []);
     }
 
     protected function buildGroupsCollection()
     {
+        $old = false;
         $relatedValues = $this->relatedValues;
 
-        if (count($old = $this->getRequestData()) !== 0) {
-            $relatedValues = $this->getRelatedValuesFromRequestData($old);
+        if (count($data = $this->getRequestData()) !== 0) {
             $old = true;
+            $relatedValues = $this->getRelatedValuesFromRequestData($data);
         }
 
         foreach ($relatedValues as $key => $item) {
@@ -336,7 +365,7 @@ abstract class Elements extends FormElements
         }
     }
 
-    protected function getRelatedValuesFromRequestData(array $values)
+    protected function getRelatedValuesFromRequestData(array $values): Collection
     {
         $collection = collect();
         foreach ($values as $key => $attributes) {
@@ -349,7 +378,7 @@ abstract class Elements extends FormElements
             }
 
             if (strpos($key, static::NEW_ITEM) !== false) {
-                // If item is new wee need to implement counter of new items to prevent duplicates,
+                // If item is new, wee need to implement counter of new items to prevent duplicates,
                 // check limits and etc.
                 $this->new++;
             }
@@ -365,28 +394,24 @@ abstract class Elements extends FormElements
         return $collection;
     }
 
-    /**
-     * Creates new group of relation and returns it.
-     *
-     * @param array|Model $attributes Attributes of one group (relation)
-     * @param bool $old Is it old data from previous request after validation error or something like that
-     * @param null $key Key of attributes
-     *
-     * @return \SleepingOwl\Admin\Form\Related\Group
-     */
-    protected function createGroup($attributes, $old = false, $key = null)
+    protected function createGroup($attributes, $old = false, $key = null): Group
     {
-        $model = $attributes instanceof Model ? $attributes : $this->safeCreateModel($this->getModelClassForElements(), $attributes);
+        $model = $attributes instanceof Model ? $attributes
+            : $this->safeCreateModel($this->getModelClassForElements(), $attributes);
         $group = new Group($model);
 
         if ($this->groupLabel) {
             $group->setLabel($this->groupLabel);
         }
 
+        if ($key) {
+            $group->setPrimary($key);
+        }
+
         $this->forEachElement($elements = $this->getNewElements(), function (NamedFormElement $el) use ($model, $key, $old) {
             // Setting default value, name and model for element with name attribute
             $el->setDefaultValue($el->prepareValue($this->getElementValue($model, $el)));
-            $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?: $model->getKey(), $this->formatElementName($el->getName())));
+            $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?? $model->getKey(), $this->formatElementName($el->getName())));
             $el->setModel($model);
 
             if ($old && strpos($el->getPath(), '->') === false && ! ($el instanceof HasFakeModel)) {
@@ -410,7 +435,7 @@ abstract class Elements extends FormElements
      * Returns value from model for given element.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @param \SleepingOwl\Admin\Form\Element\NamedFormElement $el
+     * @param NamedFormElement $el
      *
      * @return mixed|null
      */
@@ -432,17 +457,10 @@ abstract class Elements extends FormElements
 
         $jsonAttr = $model->{$jsonParts->first()};
 
-        return array_get($jsonAttr, $jsonParts->slice(1)->implode('.'));
+        return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
     }
 
-    /**
-     * Replaces element name to key of entity.
-     *
-     * @param string $name
-     *
-     * @return null|string|string[]
-     */
-    protected function formatElementName($name)
+    protected function formatElementName(string $name)
     {
         return preg_replace("/{$this->relationName}\[[\w]+\]\[(.+?)\]/", '$1', $name);
     }
@@ -471,7 +489,7 @@ abstract class Elements extends FormElements
     {
         return $elements->reduce(function (Collection $initial, $element) {
             if ($element instanceof NamedFormElement) {
-                // Is it what we're loogin for? if so we'll push it to final collection
+                // Is it what we're looking for? if so we'll push it to final collection
                 $initial->push($element);
             } elseif ($element instanceof FormElements) {
                 // Go deeper and repeat everything again
@@ -482,29 +500,17 @@ abstract class Elements extends FormElements
         }, collect());
     }
 
-    /**
-     * Creates new model of given class and calls fill on it.
-     *
-     * @param $modelClass
-     * @param array $attributes
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    protected function safeCreateModel($modelClass, array $attributes = [])
+    protected function safeCreateModel(string $modelClass, array $attributes = []): Model
     {
         return $this->safeFillModel(new $modelClass, $attributes);
     }
 
     /**
-     * Fills given model with given attributes using setAttributes, not batch fill
-     * to prevent guard errors of model attributes.
-     *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param array $attributes
-     *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function safeFillModel(Model $model, array $attributes = [])
+    protected function safeFillModel(Model $model, array $attributes = []): Model
     {
         foreach ($attributes as $attribute => $value) {
             // Prevent numeric attribute name. If it is, so it's an error
@@ -514,8 +520,8 @@ abstract class Elements extends FormElements
 
             try {
                 $model->setAttribute($attribute, $value);
-            } catch (\Exception $exception) {
-                // Ignore attribute set exception
+            } catch (Throwable $exception) {
+                // Not add Attribute
             }
         }
 
@@ -529,15 +535,10 @@ abstract class Elements extends FormElements
      */
     protected function getEmptyRelation()
     {
-        return $this->emptyRelation ?: $this->emptyRelation = $this->getModel()->{$this->relationName}();
+        return $this->emptyRelation ?? $this->emptyRelation = $this->getModel()->{$this->relationName}();
     }
 
-    /**
-     * Returns relation of current instance.
-     *
-     * @return mixed
-     */
-    protected function getRelation()
+    protected function getRelation(): Relation
     {
         return $this->instance->{$this->relationName}();
     }
@@ -549,19 +550,19 @@ abstract class Elements extends FormElements
      */
     public function save(Request $request)
     {
-        $this->prepareRelatedValues($this->getRequestData($request));
+        $connection = app(ConnectionInterface::class);
+        $this->prepareRelatedValues($this->getRequestData());
 
-        $this->transactionLevel = DB::transactionLevel();
-        DB::beginTransaction();
+        $this->transactionLevel = $connection->transactionLevel();
+        $connection->beginTransaction();
         // Nothing to do here...
     }
 
     /**
      * @param array $rules
-     *
      * @return array
      */
-    public function getValidationRulesFromElements(array $rules = [])
+    public function getValidationRulesFromElements(array $rules = []): array
     {
         $this->flatNamedElements($this->getElements())->each(function ($element) use (&$rules) {
             $rules += $this->modifyValidationParameters($element->getValidationRules());
@@ -570,7 +571,11 @@ abstract class Elements extends FormElements
         return $rules;
     }
 
-    public function getValidationMessagesForElements(array $messages = [])
+    /**
+     * @param array $messages
+     * @return array
+     */
+    public function getValidationMessagesForElements(array $messages = []): array
     {
         $this->flatNamedElements($this->getElements())->each(function ($element) use (&$messages) {
             $messages += $this->modifyValidationParameters($element->getValidationMessages());
@@ -579,20 +584,25 @@ abstract class Elements extends FormElements
         return $messages;
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @throws \Throwable
+     */
     public function afterSave(Request $request)
     {
+        $connection = app(ConnectionInterface::class);
+
         try {
             // By this time getModel method will always return existed model object, not empty
             // so wee need to fresh it, because if it's new model creating relation will throw
             // exception 'call relation method on null'
             $this->setInstance($this->getModel());
             $this->proceedSave($request);
-            DB::commit();
+            $connection->commit();
 
             $this->prepareRequestToBeCopied($request);
-        } catch (\Throwable $exception) {
-            \Session::flash('success_message', 'Произошла ошибка сохранения');
-            DB::rollBack($this->transactionLevel);
+        } catch (Throwable $exception) {
+            $connection->rollBack($this->transactionLevel);
 
             throw $exception;
         }
@@ -603,20 +613,16 @@ abstract class Elements extends FormElements
      *
      * @return string
      */
-    protected function getModelClassForElements()
+    protected function getModelClassForElements(): string
     {
         return get_class($this->getModelForElements());
     }
 
     /**
-     * Modifies validation parameters appending asterisk (*) to every field. We need this stuff because we're creating
-     * grouped forms here, you know :).
-     *
      * @param array $parameters
-     *
      * @return array
      */
-    protected function modifyValidationParameters(array $parameters)
+    protected function modifyValidationParameters(array $parameters): array
     {
         $result = [];
         foreach ($parameters as $name => $parameter) {
@@ -636,22 +642,22 @@ abstract class Elements extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-                'stub'             => $this->stubElements,
-                'name'             => $this->relationName,
-                'label'            => $this->label,
-                'groups'           => $this->groups,
-                'remove'           => $this->toRemove,
-                'newEntitiesCount' => $this->new,
-                'limit'            => $this->limit,
-            ];
+            'stub' => $this->stubElements,
+            'name' => $this->relationName,
+            'label' => $this->label,
+            'groups' => $this->groups,
+            'remove' => $this->toRemove,
+            'newEntitiesCount' => $this->new,
+            'limit' => $this->limit,
+        ];
     }
 
     /**
      * @param string $groupLabel
      *
-     * @return $this
+     * @return Elements|\Illuminate\Database\Eloquent\Model
      */
-    public function setGroupLabel($groupLabel)
+    public function setGroupLabel(string $groupLabel): self
     {
         $this->groupLabel = $groupLabel;
 
@@ -659,9 +665,9 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * Checks if count of limit is exceeded.
+     * Checks if count of relations to be created exceeds limit.
      *
-     * @return int
+     * @return bool
      */
     public function exceedsLimit()
     {
@@ -677,11 +683,11 @@ abstract class Elements extends FormElements
      *
      * @param $key
      *
-     * @return Model
+     * @return $this
      */
     protected function addOrGetRelated($key)
     {
-        $related = $this->relatedValues->get($key) ?: $this->getFreshModelForElements();
+        $related = $this->relatedValues->get($key) ?? $this->getFreshModelForElements();
 
         if (! $related->exists && ! $this->exceedsLimit()) {
             $this->relatedValues->put($key, $related);
@@ -691,37 +697,30 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @return $this
+     * @return Elements
      */
-    public function disableCreation()
+    public function disableCreation(): self
     {
         $this->setLimit(0);
 
         return $this;
     }
 
-    /**
-     * Retrieves related values from given query.
-     *
-     * @param $query
-     *
-     * @return Collection
-     */
-    abstract protected function retrieveRelationValuesFromQuery($query);
+    abstract protected function retrieveRelationValuesFromQuery($query): Collection;
 
     /**
      * Returns model for each element in form.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract protected function getModelForElements();
+    abstract protected function getModelForElements(): Model;
 
     /**
      * Returns fresh instance of model for each element in form.
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract protected function getFreshModelForElements();
+    abstract protected function getFreshModelForElements(): Model;
 
     /**
      * Proceeds saving related values after all validations passes.

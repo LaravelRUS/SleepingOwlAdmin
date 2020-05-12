@@ -1,0 +1,59 @@
+@import "~select2/src/scss/core";
+@import "~select2/src/scss/multiple";
+@import "~select2/src/scss/dropdown";
+
+$s2_height: calc(1.5em + .75rem + 2px) !default;
+
+.select2-container {
+  max-width: 100%;
+
+  .select2-selection--single {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: $s2_height;
+    user-select: none;
+    -webkit-user-select: none;
+
+    .select2-selection__rendered {
+      display: block;
+      padding-left: 8px;
+      padding-right: 20px;
+      overflow: hidden;
+      white-space: normal;
+      height: $s2_height;
+    }
+
+    .select2-selection__clear {
+      position: relative;
+    }
+  }
+
+  &--default {
+    .select2-selection--single {
+      border-color: $gray-400;
+      border-radius: 0;
+
+      .select2-selection__rendered {
+        line-height: $s2_height;
+        color: #666;
+      }
+
+      .select2-selection__arrow {
+        height: $s2_height;
+      }
+    }
+  }
+}
+
+
+[dir="rtl"] {
+  .select2-container {
+    .select2-selection--single {
+      .select2-selection__rendered {
+        padding-right: 8px;
+        padding-left: 20px;
+      }
+    }
+  }
+}

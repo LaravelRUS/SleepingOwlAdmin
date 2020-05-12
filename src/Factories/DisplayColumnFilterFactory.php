@@ -2,14 +2,15 @@
 
 namespace SleepingOwl\Admin\Factories;
 
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
+use SleepingOwl\Admin\Display\Column\Filter\Control;
 use SleepingOwl\Admin\Display\Column\Filter\Date;
-use SleepingOwl\Admin\Display\Column\Filter\Text;
+use SleepingOwl\Admin\Display\Column\Filter\DateRange;
 use SleepingOwl\Admin\Display\Column\Filter\Range;
 use SleepingOwl\Admin\Display\Column\Filter\Select;
-use SleepingOwl\Admin\Display\Column\Filter\Control;
-use SleepingOwl\Admin\Display\Column\Filter\DateRange;
-use SleepingOwl\Admin\Contracts\Display\DisplayColumnFilterFactoryInterface;
+use SleepingOwl\Admin\Display\Column\Filter\Text;
 
 /**
  * @method Text text()
@@ -26,7 +27,7 @@ class DisplayColumnFilterFactory extends AliasBinder implements DisplayColumnFil
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         parent::__construct($application);
 

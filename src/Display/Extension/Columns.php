@@ -2,12 +2,14 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Support\Collection;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Display\Column\Control;
-use SleepingOwl\Admin\Contracts\Initializable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Column\Control;
 
 class Columns extends Extension implements Initializable, Renderable
 {
@@ -184,7 +186,7 @@ class Columns extends Extension implements Initializable, Renderable
         $params['collection'] = $this->getDisplay()->getCollection();
         $params['pagination'] = null;
 
-        if ($params['collection'] instanceof \Illuminate\Contracts\Pagination\Paginator) {
+        if ($params['collection'] instanceof Paginator) {
             if (class_exists('Illuminate\Pagination\BootstrapThreePresenter')) {
                 $params['pagination'] = (new \Illuminate\Pagination\BootstrapThreePresenter($params['collection']))->render();
             } else {
@@ -200,7 +202,7 @@ class Columns extends Extension implements Initializable, Renderable
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $orders = \Request::input('order', []);
+        $orders = app('request')->get('order', []);
 
         $columns = $this->all();
 
@@ -208,9 +210,11 @@ class Columns extends Extension implements Initializable, Renderable
             $orders = [$orders];
         }
 
+        $_model = $query->getModel();
+
         foreach ($orders as $order) {
-            $columnIndex = array_get($order, 'column');
-            $direction = array_get($order, 'dir', 'asc');
+            $columnIndex = Arr::get($order, 'column');
+            $direction = Arr::get($order, 'dir', 'asc');
 
             if (! $columnIndex && $columnIndex !== '0') {
                 continue;
@@ -232,6 +236,11 @@ class Columns extends Extension implements Initializable, Renderable
                         continue;
                     }
                 }
+
+                if ($_model->getAttribute($column->getName())) {
+                    continue;
+                }
+
                 $column->orderBy($query, $direction);
             }
         }

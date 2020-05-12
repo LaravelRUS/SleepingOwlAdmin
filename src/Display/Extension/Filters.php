@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Contracts\Initializable;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 
 class Filters extends Extension implements Initializable
 {
@@ -116,7 +116,7 @@ class Filters extends Extension implements Initializable
     {
         return [
             'filters' => $this->filters->toArray(),
-            'title'   => $this->getTitle(),
+            'title' => $this->getTitle(),
         ];
     }
 

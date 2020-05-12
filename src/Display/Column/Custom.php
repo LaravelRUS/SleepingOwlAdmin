@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Closure;
+use Exception;
 
 class Custom extends NamedColumn
 {
@@ -21,6 +22,11 @@ class Custom extends NamedColumn
      * @var bool
      */
     protected $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected $isSearchable = false;
 
     /**
      * Custom constructor.
@@ -69,7 +75,7 @@ class Custom extends NamedColumn
     public function getModelValue()
     {
         if (! is_callable($callback = $this->getCallback())) {
-            throw new \Exception('Invalid custom column callback');
+            throw new Exception('Invalid custom column callback');
         }
 
         return call_user_func($callback, $this->getModel());
@@ -82,7 +88,7 @@ class Custom extends NamedColumn
     public function toArray()
     {
         return parent::toArray() + [
-            'value'  => $this->getModelValue(),
+            'value' => $this->getModelValue(),
         ];
     }
 }

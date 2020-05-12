@@ -2,16 +2,17 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\AliasBinder;
-use SleepingOwl\Admin\Navigation\Page;
-use SleepingOwl\Admin\Display\DisplayTab;
-use SleepingOwl\Admin\Display\DisplayTree;
-use SleepingOwl\Admin\Display\DisplayTable;
-use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Display\DisplayTabbed;
 use Illuminate\Contracts\Foundation\Application;
-use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
+use Illuminate\Contracts\Support\Renderable;
+use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\DisplayFactoryInterface;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
+use SleepingOwl\Admin\Display\DisplayDatatablesAsyncAlterPaginate;
+use SleepingOwl\Admin\Display\DisplayTab;
+use SleepingOwl\Admin\Display\DisplayTabbed;
+use SleepingOwl\Admin\Display\DisplayTable;
+use SleepingOwl\Admin\Display\DisplayTree;
+use SleepingOwl\Admin\Navigation\Page;
 
 /**
  * @method DisplayDatatablesAsync datatables()
@@ -41,6 +42,7 @@ class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
             'table' => DisplayTable::class,
             'tree' => DisplayTree::class,
             'page' => Page::class,
+            'datatablesAsyncAlterPaginate' => DisplayDatatablesAsyncAlterPaginate::class,
         ]);
     }
 }

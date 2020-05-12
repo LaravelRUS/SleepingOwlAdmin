@@ -2,30 +2,30 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Form\FormPanel;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\FormDefault;
-use SleepingOwl\Admin\Navigation\Badge;
-use SleepingOwl\Admin\Form\FormElements;
-use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Form\Columns\Column;
-use SleepingOwl\Admin\Form\Element\Hidden;
-use SleepingOwl\Admin\Form\Columns\Columns;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Traits\VisibleCondition;
-use SleepingOwl\Admin\Form\FormElementsCollection;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
+use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
-use SleepingOwl\Admin\Traits\FormElementsRecursiveIterator;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Exceptions\Display\DisplayTabException;
+use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Form\Columns\Columns;
+use SleepingOwl\Admin\Form\Element\Hidden;
+use SleepingOwl\Admin\Form\FormCard;
+use SleepingOwl\Admin\Form\FormDefault;
+use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Form\FormElementsCollection;
+use SleepingOwl\Admin\Navigation\Badge;
+use SleepingOwl\Admin\Traits\FormElementsRecursiveIterator;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 {
@@ -62,6 +62,11 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $badge;
 
     /**
+     * @var bool
+     */
+    protected $external_form = false;
+
+    /**
      * @var string
      */
     protected $view = 'display.tab';
@@ -88,7 +93,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             $this->setBadge($badge);
         }
 
-        $this->setHtmlAttribute('role', 'presentation');
+        $this->setHtmlAttribute('data-toggle', 'tab');
+        $this->setHtmlAttribute('class', 'nav-item nav-link');
     }
 
     /**
@@ -164,6 +170,8 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @return $this
+     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function addTabElement()
     {
@@ -177,7 +185,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
         if ($this->content instanceof FormElements) {
             foreach ($this->content->getElements() as $element) {
-                if ($element instanceof FormDefault && $element instanceof FormPanel) {
+                if ($element instanceof FormDefault && $element instanceof FormCard) {
                     $element->addElement(
                         new FormElements([
                             (new Hidden('sleeping_owl_tab_id'))->setDefaultValue($this->getName()),
@@ -313,6 +321,26 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setExternalForm($bool)
+    {
+        $this->external_form = $bool;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getExternalForm()
+    {
+        return $this->external_form;
     }
 
     /**
@@ -469,6 +497,18 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return bool
      */
+    public function isVisibled()
+    {
+        if (($content = $this->getContent()) instanceof FormElementInterface) {
+            return $content->isVisibled();
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
     public function isValueSkipped()
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
@@ -518,15 +558,16 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @return array
+     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
      */
     public function toArray()
     {
         return [
-            'label'  => $this->getLabel(),
+            'label' => $this->getLabel(),
             'active' => $this->isActive(),
-            'name'   => $this->getName(),
-            'icon'   => $this->getIcon(),
-            'badge'  => $this->getBadge(),
+            'name' => $this->getName(),
+            'icon' => $this->getIcon(),
+            'badge' => $this->getBadge(),
             'arrayAttributes' => $this->getHtmlAttributes(),
             'attributes' => $this->htmlAttributesToString(),
         ];

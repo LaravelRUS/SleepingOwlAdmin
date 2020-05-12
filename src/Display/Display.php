@@ -2,26 +2,34 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Traits\Assets;
-use SleepingOwl\Admin\Traits\Renderable;
+use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Display\Extension\Apply;
-use SleepingOwl\Admin\Display\Extension\Links;
-use SleepingOwl\Admin\Display\Extension\Scopes;
-use SleepingOwl\Admin\Display\Extension\Actions;
-use SleepingOwl\Admin\Display\Extension\Filters;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Display\Extension\Actions;
+use SleepingOwl\Admin\Display\Extension\ActionsForm;
+use SleepingOwl\Admin\Display\Extension\Apply;
+use SleepingOwl\Admin\Display\Extension\Filters;
+use SleepingOwl\Admin\Display\Extension\Links;
+use SleepingOwl\Admin\Display\Extension\Scopes;
+use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\Renderable;
 
 /**
  * Class Display.
  *
  * @method Actions getActions()
- * @method $this setActions(ActionInterface $action, ...$actions)
+ * @method $this setActions(ActionInterface|array $action, ...$actions)
+ *
+ * @method ActionsForm getActionsForm()
+ * @method $this setActionsForm(ActionInterface|array|FormElements $action, ...$actions)
  *
  * @method Filters getFilters()
  * @method $this setFilters(FilterInterface $filter, ...$filters)
@@ -78,6 +86,7 @@ abstract class Display implements DisplayInterface
     {
         $this->extensions = new ExtensionCollection();
 
+        $this->extend('actions_form', new ActionsForm());
         $this->extend('actions', new Actions());
         $this->extend('filters', new Filters());
         $this->extend('apply', new Apply());
@@ -96,7 +105,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param string                    $name
+     * @param string $name
      * @param DisplayExtensionInterface $extension
      *
      * @return DisplayExtensionInterface
@@ -145,13 +154,13 @@ abstract class Display implements DisplayInterface
      */
     public function with($relations)
     {
-        $this->with = array_flatten(func_get_args());
+        $this->with = Arr::flatten(func_get_args());
 
         return $this;
     }
 
     /**
-     * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -238,6 +247,9 @@ abstract class Display implements DisplayInterface
 
         $blocks = $this->getExtensions()->placableBlocks();
 
+        // Flush all view yields before render new Section
+        $view->getFactory()->flushSections();
+
         foreach ($blocks as $block => $data) {
             foreach ($data as $html) {
                 if (! empty($html)) {
@@ -245,7 +257,10 @@ abstract class Display implements DisplayInterface
                     echo $html;
                     $view->getFactory()->yieldSection();
                 } else {
-                    $view->getFactory()->flushSections();
+                    /*
+                    * Need test for action (BUG)
+                    */
+                    //$view->getFactory()->flushSections();
                 }
             }
         }
@@ -255,17 +270,17 @@ abstract class Display implements DisplayInterface
 
     /**
      * @param string $name
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return DisplayExtensionInterface
      */
     public function __call($name, $arguments)
     {
-        $method = snake_case(substr($name, 3));
+        $method = Str::snake(substr($name, 3));
 
-        if (starts_with($name, 'get') && $this->extensions->has($method)) {
+        if (Str::startsWith($name, 'get') && $this->extensions->has($method)) {
             return $this->extensions->get($method);
-        } elseif (starts_with($name, 'set') && $this->extensions->has($method)) {
+        } elseif (Str::startsWith($name, 'set') && $this->extensions->has($method)) {
             $extension = $this->extensions->get($method);
 
             if (method_exists($extension, 'set')) {
@@ -292,7 +307,7 @@ abstract class Display implements DisplayInterface
     {
         $repository = app($this->repositoryClass);
         if (! ($repository instanceof RepositoryInterface)) {
-            throw new \Exception('Repository class must be instanced of [RepositoryInterface]');
+            throw new Exception('Repository class must be instanced of [RepositoryInterface]');
         }
 
         $repository->setClass($this->modelClass);

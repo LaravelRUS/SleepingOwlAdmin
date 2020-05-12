@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Exceptions\Form\Element;
 
-class SelectException extends \Exception
+use Exception;
+
+class SelectException extends Exception
 {
 }

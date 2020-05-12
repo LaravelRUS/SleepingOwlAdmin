@@ -3,12 +3,12 @@
 namespace SleepingOwl\Admin\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Display\Tree\BaumNodeType;
-use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
-use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
-use SleepingOwl\Admin\Exceptions\Display\DisplayTreeException;
 use SleepingOwl\Admin\Contracts\Display\Tree\TreeTypeInterface;
 use SleepingOwl\Admin\Contracts\Repositories\TreeRepositoryInterface;
+use SleepingOwl\Admin\Display\Tree\BaumNodeType;
+use SleepingOwl\Admin\Display\Tree\KalnoyNestedsetType;
+use SleepingOwl\Admin\Display\Tree\SimpleTreeType;
+use SleepingOwl\Admin\Exceptions\Display\DisplayTreeException;
 
 class TreeRepository extends BaseRepository implements TreeRepositoryInterface
 {
@@ -179,7 +179,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
             $type = KalnoyNestedsetType::class;
         } elseif (function_exists('trait_uses_recursive') && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
             $type = KalnoyNestedsetType::class;
-        } elseif ($traits = class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', $traits)) {
+        } elseif (class_uses($model) && in_array('Kalnoy\Nestedset\NodeTrait', class_uses($model))) {
             $type = KalnoyNestedsetType::class;
         }
 

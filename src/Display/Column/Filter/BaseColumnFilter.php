@@ -2,15 +2,16 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
-use SleepingOwl\Admin\Traits\Assets;
-use Illuminate\Database\Eloquent\Builder;
-use KodiComponents\Support\HtmlAttributes;
+use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Traits\SqlQueryOperators;
+use Illuminate\Database\Eloquent\Builder;
+use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Traits\Assets;
+use SleepingOwl\Admin\Traits\SqlQueryOperators;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
@@ -27,6 +28,11 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      * @var string|null
      */
     protected $columnName;
+
+    /**
+     * @var string|null
+     */
+    protected $columnRawName;
 
     public function __construct()
     {
@@ -62,6 +68,26 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
+     * @return null|string
+     */
+    public function getColumnRawName()
+    {
+        return $this->columnRawName;
+    }
+
+    /**
+     * @param null|string $name
+     *
+     * @return $this
+     */
+    public function setColumnRawName($name)
+    {
+        $this->columnRawName = $name;
+
+        return $this;
+    }
+
+    /**
      * @param mixed $value
      *
      * @return mixed
@@ -72,8 +98,8 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @deprecated
      * @return \Closure|null
+     * @deprecated
      */
     public function getCallback()
     {
@@ -82,10 +108,10 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @param \Closure $callback
-     * @deprecated
      * @return $this
+     * @deprecated
      */
-    public function setCallback(\Closure $callback)
+    public function setCallback(Closure $callback)
     {
         $this->callback = $callback;
 
@@ -128,18 +154,33 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             return;
         }
 
-        if (is_null($name = $this->getColumnName())) {
-            $name = $column->getName();
+        if (is_null($name = $this->getColumnRawName())) {
+            if (is_null($name = $this->getColumnName())) {
+                $name = $column->getName();
+            }
         }
 
-        if (strpos($name, '.') !== false) {
+        if (strpos($name, '.') !== false && is_null($this->getColumnRawName())) {
             $parts = explode('.', $name);
             $fieldName = array_pop($parts);
             $relationName = implode('.', $parts);
+            try {
+                $relation = $query->getModel()->{$relationName}();
+                $isMorphTo = $relation instanceof \Illuminate\Database\Eloquent\Relations\MorphTo;
+            } catch (\Exception $e) {
+                $isMorphTo = false;
+            }
 
-            $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {
-                $this->buildQuery($q, $fieldName, $queryString);
-            });
+            if ($isMorphTo) {
+                $query->whereHasMorph($relationName, '*', function ($q) use ($queryString, $fieldName) {
+                    $this->buildQuery($q, $fieldName, $queryString);
+                });
+            } else {
+                $query->whereHas($relationName, function ($q) use ($queryString, $fieldName) {
+                    $this->buildQuery($q, $fieldName, $queryString);
+                });
+            }
+            unset($relation);
         } else {
             $this->buildQuery($query, $name, $queryString);
         }
@@ -153,7 +194,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function toArray()
     {
         return [
-            'attributes'      => $this->htmlAttributesToString(),
+            'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
         ];
     }

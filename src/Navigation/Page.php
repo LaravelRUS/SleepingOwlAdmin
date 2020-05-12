@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
-use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 class Page extends \KodiComponents\Navigation\Page implements PageInterface
 {
@@ -29,7 +29,9 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
         $this->setModel($modelClass);
 
         if ($this->hasModel()) {
-            $this->setIcon($this->getModelConfiguration()->getIcon());
+            if ($this->getModelConfiguration()->getIcon()) {
+                $this->setIcon($this->getModelConfiguration()->getIcon());
+            }
         }
     }
 

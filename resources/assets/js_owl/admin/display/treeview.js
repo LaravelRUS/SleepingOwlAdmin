@@ -4,22 +4,28 @@ Admin.Modules.register('display.tree', () => {
     $elem.nestable({
         maxDepth: maxDepth
     }).on('change', (e) => {
-        let $object = $(e.target)
+        let $object = $(e.target);
 
         $.post(
             $object.data('url'),
             {
                 data: $object.nestable('serialize')
-            },
-            function() {
-                Admin.Events.fire('display.tree::changed')
             }
-        );
-    })
+        ).done( function() {
+
+            Admin.Events.fire('display.tree::changed');
+
+            new Noty({
+                type: 'success',
+                timeout:3000,
+                text: trans('lang.tree.reorderCompleted')
+            }).show();
+        });
+    });
 
     $('#nestable-menu').on('click', function(e) {
         var target = $(e.target),
-            action = target.data('action')
+            action = target.data('action');
 
         if (action === 'expand-all') {
             $('.nestable').nestable('expandAll')
@@ -29,4 +35,4 @@ Admin.Modules.register('display.tree', () => {
             $('.nestable').nestable('collapseAll')
         }
     })
-})
+});

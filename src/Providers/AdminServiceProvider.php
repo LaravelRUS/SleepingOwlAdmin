@@ -2,32 +2,32 @@
 
 namespace SleepingOwl\Admin\Providers;
 
-use Illuminate\Routing\Router;
-use SleepingOwl\Admin\Navigation;
-use SleepingOwl\Admin\AliasBinder;
-use Symfony\Component\Finder\Finder;
-use SleepingOwl\Admin\Templates\Meta;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
-use SleepingOwl\Admin\Wysiwyg\Manager;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use SleepingOwl\Admin\Templates\Assets;
-use SleepingOwl\Admin\Widgets\EnvEditor;
-use Symfony\Component\Finder\SplFileInfo;
-use SleepingOwl\Admin\Routing\ModelRouter;
-use SleepingOwl\Admin\Widgets\WidgetsRegistry;
-use SleepingOwl\Admin\Exceptions\TemplateException;
-use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
-use SleepingOwl\Admin\Widgets\Messages\MessageStack;
-use Illuminate\Contracts\View\Factory as ViewFactory;
-use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
-use SleepingOwl\Admin\Model\ModelConfigurationManager;
-use SleepingOwl\Admin\Widgets\Messages\SuccessMessages;
-use SleepingOwl\Admin\Widgets\Messages\WarningMessages;
+use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
-use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Exceptions\TemplateException;
+use SleepingOwl\Admin\Model\ModelConfigurationManager;
+use SleepingOwl\Admin\Navigation;
+use SleepingOwl\Admin\Routing\ModelRouter;
+use SleepingOwl\Admin\Templates\Assets;
+use SleepingOwl\Admin\Templates\Meta;
+use SleepingOwl\Admin\Widgets\EnvEditor;
+use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
+use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
+use SleepingOwl\Admin\Widgets\Messages\MessageStack;
+use SleepingOwl\Admin\Widgets\Messages\SuccessMessages;
+use SleepingOwl\Admin\Widgets\Messages\WarningMessages;
+use SleepingOwl\Admin\Widgets\WidgetsRegistry;
+use SleepingOwl\Admin\Wysiwyg\Manager;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -89,7 +89,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('sleeping_owl.template', function (Application $app) {
             if (! class_exists($class = $this->getConfig('template'))) {
-                throw new TemplateException("Template class [{$class}] not found");
+                throw new TemplateException("Template class [{$class}] not found in config file");
             }
 
             return $app->make($class);
@@ -149,8 +149,8 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerMessages()
     {
         $messageTypes = [
-            'error'   => ErrorMessages::class,
-            'info'    => InfoMessages::class,
+            'error' => ErrorMessages::class,
+            'info' => InfoMessages::class,
             'success' => SuccessMessages::class,
             'warning' => WarningMessages::class,
         ];
@@ -217,6 +217,7 @@ class AdminServiceProvider extends ServiceProvider
             ->files()
             ->name('/^.+\.php$/')
             ->notName('routes.php')
+            ->notName('*.blade.php')
             ->notName('navigation.php')
             ->in($directory)
             ->sort(function (SplFileInfo $a) {
@@ -273,7 +274,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $middlewares = collect($this->getConfig('middleware'));
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $middlewares,
         ]);
 
@@ -283,12 +284,11 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app['router']->group($configGroup->toArray(), function (Router $route) {
             $route->get('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
+                'as' => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
 
             $route->post('ckeditor/upload/image', [
-                'as'   => 'admin.ckeditor.upload',
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
             ]);
         });
@@ -301,7 +301,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $domain = config('sleeping_owl.domain', false);
         $configGroup = collect([
-            'prefix'     => $this->getConfig('url_prefix'),
+            'prefix' => $this->getConfig('url_prefix'),
             'middleware' => $this->getConfig('middleware'),
         ]);
 

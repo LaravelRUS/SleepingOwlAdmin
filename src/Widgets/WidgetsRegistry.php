@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Widgets;
 
-use Illuminate\View\View;
-use Illuminate\Support\Collection;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 
@@ -86,7 +86,7 @@ class WidgetsRegistry implements WidgetsRegistryInterface
     }
 
     /**
-     * @param  mixed $widget
+     * @param mixed $widget
      * @return mixed
      */
     public function makeWidget($widget)

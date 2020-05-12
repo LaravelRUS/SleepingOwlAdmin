@@ -2,12 +2,36 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
+
 class Images extends Image
 {
     /**
      * @var string
      */
     protected $view = 'form.element.images';
+
+    protected $draggable = true;
+
+    /**
+     * @return bool
+     */
+    public function getDraggable()
+    {
+        return (bool) $this->draggable;
+    }
+
+    /**
+     * @param bool $draggable
+     *
+     * @return $this
+     */
+    public function setDraggable($draggable)
+    {
+        $this->draggable = $draggable;
+
+        return $this;
+    }
 
     /**
      * Store array of images as json string.
@@ -24,14 +48,15 @@ class Images extends Image
 
     /**
      * Store array of images as coma separator.
-     *
+     * @deprecated
      * @return $this
      */
     public function storeAsComaSeparatedValue()
     {
-        $this->mutateValue(function ($value) {
-            return implode(',', $value);
-        });
+        /* deprecated this logic */
+        // $this->mutateValue(function ($value) {
+        //     return implode(',', $value);
+        // });
 
         return $this;
     }
@@ -46,8 +71,8 @@ class Images extends Image
         if (is_null($value)) {
             $images = [];
         } elseif (is_string($value)
-                   && (($images = json_decode($value)) === false
-                       || is_null($images))
+            && (($images = json_decode($value)) === false
+                || is_null($images))
         ) {
             $images = preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
         }
@@ -60,7 +85,7 @@ class Images extends Image
      *
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $name = $this->getName();
         $value = $request->input($name, '');
@@ -74,5 +99,17 @@ class Images extends Image
         $request->merge([$name => $value]);
 
         parent::save($request);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return array_merge(parent::toArray(), [
+            'draggable' => $this->getDraggable(),
+        ]);
+
+        return $return;
     }
 }

@@ -2,9 +2,10 @@
 
 namespace SleepingOwl\Admin\Factories;
 
-use SleepingOwl\Admin\Form;
+use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsFactoryInterface;
+use SleepingOwl\Admin\Form;
 
 /**
  * @method static Form\Buttons\Save save()
@@ -22,18 +23,18 @@ class FormButtonsFactory extends AliasBinder implements FormButtonsFactoryInterf
      *
      * @param \Illuminate\Contracts\Foundation\Application $application
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $application)
+    public function __construct(Application $application)
     {
         parent::__construct($application);
 
         $this->register([
-            'save'          => Form\Buttons\Save::class,
-            'saveAndClose'  => Form\Buttons\SaveAndClose::class,
+            'save' => Form\Buttons\Save::class,
+            'saveAndClose' => Form\Buttons\SaveAndClose::class,
             'saveAndCreate' => Form\Buttons\SaveAndCreate::class,
-            'restore'       => Form\Buttons\Restore::class,
-            'destroy'       => Form\Buttons\Destroy::class,
-            'delete'        => Form\Buttons\Delete::class,
-            'cancel'        => Form\Buttons\Cancel::class,
+            'restore' => Form\Buttons\Restore::class,
+            'destroy' => Form\Buttons\Destroy::class,
+            'delete' => Form\Buttons\Delete::class,
+            'cancel' => Form\Buttons\Cancel::class,
         ]);
     }
 }

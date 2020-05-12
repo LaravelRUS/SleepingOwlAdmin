@@ -1,3 +1,5 @@
+import draggable from 'vuedraggable'
+
 Vue.component('element-images', Vue.extend({
     props: {
         url: {
@@ -8,6 +10,10 @@ Vue.component('element-images', Vue.extend({
             default: () => []
         },
         readonly: {
+            type: Boolean,
+            default: false
+        },
+        draggable: {
             type: Boolean,
             default: false
         },
@@ -25,7 +31,13 @@ Vue.component('element-images', Vue.extend({
     },
     mounted () {
         this.vals = this.values;
-        this.initUpload();
+        if (!this.readonly) {
+            this.initUpload();
+        }
+
+    },
+    components: {
+        draggable
     },
     methods: {
         initUpload () {
@@ -48,6 +60,10 @@ Vue.component('element-images', Vue.extend({
                 acceptedFiles: 'image/*',
                 clickable: button[0],
                 dictDefaultMessage: '',
+                maxFilesize: Admin.Config.get('max_file_size'),
+                dictFileTooBig: trans('lang.ckeditor.upload.error.filesize_limit_m', {size: Admin.Config.get('max_file_size')}),
+                dictInvalidFileType: trans('lang.ckeditor.upload.error.wrong_extension', {file: self.name}),
+                dictResponseError: trans('lang.ckeditor.upload.error.common'),
                 sending () {
                     self.uploading = true;
                     self.closeAlert();
@@ -57,6 +73,9 @@ Vue.component('element-images', Vue.extend({
                 },
                 error (file, response) {
                     if(_.isArray(response.errors)) {
+                        if (response.errors[0]) {
+                            Admin.Messages.error(response.errors[0])
+                        }
                         self.errors = response.errors;
                     }
                 },
@@ -66,9 +85,31 @@ Vue.component('element-images', Vue.extend({
             });
         },
         image (uri) {
-            console.log(uri);
             return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
         },
+
+        insert (index) {
+            let self = this;
+            let url = null;
+            let link = null;
+            if (typeof(index) !== 'undefined') {
+              url = self.vals[index];
+              link = this.image(url);
+            }
+
+            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, link).then(result => {
+                if(result.value){
+                    if (typeof(index) !== 'undefined') {
+                      self.$set(this.vals, [index], result.value)
+                    } else {
+                      self.vals.push(result.value);
+                    }
+                } else {
+                    return false;
+                }
+            });
+        },
+
         remove (image) {
             let self = this;
 
@@ -89,9 +130,9 @@ Vue.component('element-images', Vue.extend({
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fa fa-upload';
+                return 'fas fa-images';
             }
-            return 'fa fa-spinner fa-spin'
+            return 'fas fa-spinner fa-spin'
         },
         has_values () {
             return this.vals.length > 0

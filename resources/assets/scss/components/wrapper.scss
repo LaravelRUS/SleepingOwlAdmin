@@ -1,0 +1,13 @@
+.wrapper {
+  min-height: 100vh;
+
+  .content-wrapper {
+    min-height: calc(100vh - 57px);
+    /* Fix for horizontal scroll */
+    max-width: 99.9%;
+
+    .content.body {
+      padding-bottom: 1em;
+    }
+  }
+}

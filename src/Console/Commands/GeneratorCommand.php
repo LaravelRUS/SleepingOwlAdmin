@@ -1,16 +1,9 @@
 <?php
-/**
- * Laravel IDE Helper Generator.
- *
- * @author    Barry vd. Heuvel <barryvdh@gmail.com>
- * @copyright 2014 Barry vd. Heuvel / Fruitcake Studio (http://www.fruitcakestudio.nl)
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
- * @link      https://github.com/barryvdh/laravel-ide-helper
- */
+
 namespace SleepingOwl\Admin\Console\Commands;
 
-use SleepingOwl\Admin\Console\Generator;
 use Barryvdh\LaravelIdeHelper\Console\GeneratorCommand as IdeHelperGeneratorCommand;
+use SleepingOwl\Admin\Console\Generator;
 
 /**
  * A command to generate autocomplete information for your IDE.
@@ -65,9 +58,9 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
 
             $generator = new Generator($this->config, $this->view, $this->getOutput(), $helpers);
             $content = $generator->generate($format);
-            $written = (int) $this->files->put($filename, $content);
+            $written = (bool) $this->files->put($filename, $content);
 
-            if ($written === false) {
+            if (! $written) {
                 $this->error("The helper file could not be created at $filename");
             } else {
                 $this->info("A new helper file was written to $filename");

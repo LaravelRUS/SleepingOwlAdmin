@@ -3,9 +3,10 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use SleepingOwl\Admin\Form\FormElement;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\Http\Request;
+use SleepingOwl\Admin\Form\FormElement;
 
 class Custom extends FormElement
 {
@@ -86,7 +87,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @return $this|Custom|mixed
+     * @return $this|self|mixed
      */
     public function render()
     {
@@ -98,7 +99,7 @@ class Custom extends FormElement
      *
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $callback = $this->getCallback();
 

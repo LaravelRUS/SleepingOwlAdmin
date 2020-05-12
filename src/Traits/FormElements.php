@@ -3,13 +3,13 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Contracts\Validable;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Form\FormElementsCollection;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
-use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
+use SleepingOwl\Admin\Form\Element\NamedFormElement;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 
 trait FormElements
 {
@@ -64,8 +64,6 @@ trait FormElements
      */
     public function getElement($path)
     {
-        $found = null;
-
         foreach ($this->getElements() as $element) {
             if ($element instanceof ElementsInterface) {
                 if (! is_null($found = $element->getElement($path))) {
@@ -134,6 +132,10 @@ trait FormElements
      */
     public function getValidationMessages()
     {
+        if (is_array(trans('sleeping_owl::validation'))) {
+            return trans('sleeping_owl::validation');
+        }
+
         return $this->getValidationMessagesForElements();
     }
 

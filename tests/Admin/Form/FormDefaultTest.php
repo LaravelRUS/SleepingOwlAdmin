@@ -1,11 +1,11 @@
 <?php
 
 use Mockery as m;
-use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Form\FormDefault;
 
 class FormDefaultTest extends TestCase
 {
@@ -29,8 +29,8 @@ class FormDefaultTest extends TestCase
 
         $form = $this->makeFormDefault([
             $this->makeMockForFormElement(FormElementInterface::class),
-            new \SleepingOwl\Admin\Form\Panel\Header([
-                new \SleepingOwl\Admin\Form\Panel\Footer([
+            new \SleepingOwl\Admin\Form\Card\Header([
+                new \SleepingOwl\Admin\Form\Card\Footer([
                     $this->makeMockForFormElement(FormElementInterface::class),
                 ]),
             ]),
@@ -59,8 +59,8 @@ class FormDefaultTest extends TestCase
     {
         $form = $this->makeFormDefault([
             $this->makeMockForFormElement(FormElementInterface::class),
-            new \SleepingOwl\Admin\Form\Panel\Header([
-                new \SleepingOwl\Admin\Form\Panel\Footer([
+            new \SleepingOwl\Admin\Form\Card\Header([
+                new \SleepingOwl\Admin\Form\Card\Footer([
                     $this->makeMockForFormElement(\SleepingOwl\Admin\Form\Element\Upload::class),
                 ]),
             ]),
@@ -265,7 +265,7 @@ class FormDefaultTest extends TestCase
         $element->shouldReceive('initialize')->once();
         $element->shouldReceive('setModel');
         $element->shouldReceive('isReadonly')->twice()->andReturn(false);
-        $element->shouldReceive('isVisible')->twice()->andReturn(true);
+        $element->shouldReceive('isVisible')->andReturn(true);
         $element->shouldReceive('save')->once()->with($request);
         $element->shouldReceive('afterSave')->once()->with($request);
 
@@ -293,11 +293,9 @@ class FormDefaultTest extends TestCase
         $this->validate($request);
     }
 
-    /**
-     * @expectedException \Illuminate\Validation\ValidationException
-     */
     public function test_validate_with_exception()
     {
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
         $this->validate($this->getRequest());
     }
 
@@ -321,7 +319,7 @@ class FormDefaultTest extends TestCase
         $element->shouldReceive('initialize')->once();
         $element->shouldReceive('setModel');
         $element->shouldReceive('getValidationRules')->once()->andReturn(['element' => 'required']);
-        $element->shouldReceive('getValidationMessages')->once()->andReturn([]);
+        $element->shouldReceive('getValidationMessages')->andReturn([]);
         $element->shouldReceive('getValidationLabels')->once()->andReturn([
             'element' => 'Element label',
         ]);

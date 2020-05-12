@@ -1,21 +1,21 @@
-<a href="{{ url(config('sleeping_owl.url_prefix')) }}" class="logo">
-	<span class="logo-lg">{!! AdminTemplate::getLogo() !!}</span>
-	<span class="logo-mini">{!! AdminTemplate::getLogoMini() !!}</span>
-</a>
+<ul class="nav navbar-nav ">
+	<li class="nav-item">
+		<a class="nav-link" data-widget="pushmenu"><i class="fas fa-bars"></i></a>
+	</li>
 
-<nav class="navbar navbar-static-top" role="navigation">
-	<!-- Sidebar toggle button-->
-	<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-		<span class="sr-only">Toggle navigation</span>
-	</a>
-	@stack('navbar.left')	
-	<div class="navbar-custom-menu">	
-		<ul class="nav navbar-nav">
-			@stack('navbar')
-		</ul>
+	@if (config('sleeping_owl.state_datatables') || config('sleeping_owl.state_tabs') || config('sleeping_owl.state_filters'))
+		<li class="nav-item">
+			<a class="nav-link" href="javascript:localStorage.clear()" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.clear') }} LocalStorage">
+				<i class="fas fa-eraser"></i>
+			</a>
+		</li>
+	@endif
 
-		<ul class="nav navbar-nav navbar-right">
-			@stack('navbar.right')
-		</ul>
-	</div>
-</nav>
+	@stack('navbar.left')
+
+	@stack('navbar')
+</ul>
+
+<ul class="navbar-nav ml-auto">
+	@stack('navbar.right')
+</ul>

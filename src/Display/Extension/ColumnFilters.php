@@ -2,12 +2,13 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Support\Arr;
 use KodiComponents\Support\HtmlAttributes;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Display\Placable;
-use SleepingOwl\Admin\Display\Column\Filter\Control;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Column\Filter\Control;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -117,8 +118,8 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @deprecated use getPlacement()
      * @return string
+     * @deprecated use getPlacement()
      */
     public function getPosition()
     {
@@ -126,10 +127,10 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @deprecated use setPlacement(string $placement)
      * @param string $position
      *
      * @return $this
+     * @deprecated use setPlacement(string $placement)
      */
     public function setPosition($position)
     {
@@ -188,7 +189,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {
-        $search = \Request::input('columns', []);
+        $search = app('request')->get('columns', []);
 
         $display = $this->getDisplay();
 
@@ -204,14 +205,14 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
         foreach ($search as $index => $columnData) {
             $column = $columns->get($index);
-            $columnFilter = array_get($this->all(), $index);
+            $columnFilter = Arr::get($this->all(), $index);
 
             if ($column && $column instanceof ColumnInterface && $columnFilter) {
                 $columnFilter->apply(
                     $column,
                     $query,
-                    array_get($columnData, 'search.value'),
-                    array_get($columnData, 'search')
+                    Arr::get($columnData, 'search.value'),
+                    Arr::get($columnData, 'search')
                 );
             }
         }

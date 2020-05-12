@@ -4,7 +4,7 @@ use Mockery as m;
 
 class ColumnCheckboxTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }

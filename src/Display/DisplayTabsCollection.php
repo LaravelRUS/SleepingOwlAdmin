@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 
 class DisplayTabsCollection extends FormElementsCollection
 {
@@ -17,7 +17,7 @@ class DisplayTabsCollection extends FormElementsCollection
             $element = $tab->getContent();
 
             if ($element instanceof FormElementInterface) {
-                return ! $element->isReadonly();
+                return ! $element->isReadonly() && $element->isVisible();
             }
 
             return true;

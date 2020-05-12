@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait OrderableModel.
@@ -87,8 +87,8 @@ trait OrderableModel
     protected function updateOrderFieldOnDelete()
     {
         static::orderModel()
-                ->where($this->getOrderField(), '>', $this->getOrderValue())
-                ->decrement($this->getOrderField());
+            ->where($this->getOrderField(), '>', $this->getOrderValue())
+            ->decrement($this->getOrderField());
     }
 
     /**
@@ -110,7 +110,15 @@ trait OrderableModel
      */
     public function scopeOrderModel($query)
     {
-        return $query;
+        $parentFields = $this->getParentFieldName();
+        if ($parentFields) {
+            $parentFields = (array) $parentFields;
+            foreach ($parentFields as $parentFieldName) {
+                $query->where($parentFieldName, $this->{$parentFieldName});
+            }
+        }
+
+        return $query->orderBy($this->getOrderField(), 'ASC');
     }
 
     /**
@@ -126,10 +134,21 @@ trait OrderableModel
 
     /**
      * Get order field name.
+     *
      * @return string
      */
     public function getOrderField()
     {
-        return 'order';
+        return $this->orderField ?: 'order';
+    }
+
+    /**
+     * Get parent order field name.
+     *
+     * @return string
+     */
+    public function getParentFieldName()
+    {
+        return $this->parentFieldName ?: null;
     }
 }

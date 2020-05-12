@@ -2,18 +2,18 @@
 
 namespace SleepingOwl\Admin\Form;
 
-use Illuminate\View\View;
 use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Form\Buttons\Save;
-use SleepingOwl\Admin\Traits\Renderable;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Form\Buttons\Cancel;
 use SleepingOwl\Admin\Form\Buttons\Delete;
 use SleepingOwl\Admin\Form\Buttons\FormButton;
+use SleepingOwl\Admin\Form\Buttons\Save;
 use SleepingOwl\Admin\Form\Buttons\SaveAndClose;
 use SleepingOwl\Admin\Form\Buttons\SaveAndCreate;
-use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
-use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Traits\Renderable;
 
 class FormButtons implements FormButtonsInterface
 {
@@ -75,17 +75,17 @@ class FormButtons implements FormButtonsInterface
     protected $showSaveAndCreateButton = true;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     protected $showDeleteButton = true;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     protected $showDestroyButton = true;
 
     /**
-     * @var bool|null
+     * @var bool
      */
     protected $showRestoreButton = true;
 
@@ -203,9 +203,9 @@ class FormButtons implements FormButtonsInterface
     protected function setButtonsOnConstruct()
     {
         $this->buttons = [
-            'save'   => (new Save())->setGroupElements([
+            'save' => (new Save())->setGroupElements([
                 'save_and_create' => new SaveAndCreate(),
-                'save_and_close'  => new SaveAndClose(),
+                'save_and_close' => new SaveAndClose(),
             ]),
             'delete' => new Delete(),
             'cancel' => new Cancel(),
@@ -221,21 +221,19 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return null|string|array
      */
     public function getCancelButtonText()
     {
         if (is_null($this->cancelButtonText)) {
-            $this->cancelButtonText = trans('sleeping_owl::lang.table.cancel');
+            $this->cancelButtonText = trans('sleeping_owl::lang.button.cancel');
         }
 
         return $this->cancelButtonText;
     }
 
     /**
-     * @param string $cancelButtonText
-     * @deprecated new version available
+     * @param null|string $cancelButtonText
      * @return $this
      */
     public function setCancelButtonText($cancelButtonText)
@@ -246,21 +244,19 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return string|array
+     * @return null|string|array
      */
     public function getSaveButtonText()
     {
         if (is_null($this->saveButtonText)) {
-            $this->saveButtonText = trans('sleeping_owl::lang.table.save');
+            $this->saveButtonText = trans('sleeping_owl::lang.button.save');
         }
 
         return $this->saveButtonText;
     }
 
     /**
-     * @param string $saveButtonText
-     * @deprecated
+     * @param null|string $saveButtonText
      * @return $this
      */
     public function setSaveButtonText($saveButtonText)
@@ -271,22 +267,19 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return string|array
+     * @return null|string|array
      */
     public function getSaveAndCloseButtonText()
     {
         if (is_null($this->saveAndCloseButtonText)) {
-            $this->saveAndCloseButtonText = trans('sleeping_owl::lang.table.save_and_close');
+            $this->saveAndCloseButtonText = trans('sleeping_owl::lang.button.save_and_close');
         }
 
         return $this->saveAndCloseButtonText;
     }
 
     /**
-     * @param string $saveAndCloseButtonText
-     *
-     * @deprecated new version available
+     * @param null|string $saveAndCloseButtonText
      * @return $this
      */
     public function setSaveAndCloseButtonText($saveAndCloseButtonText)
@@ -297,13 +290,12 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return string|array
+     * @return null|string|array
      */
     public function getSaveAndCreateButtonText()
     {
         if (is_null($this->saveAndCreateButtonText)) {
-            $this->saveAndCreateButtonText = trans('sleeping_owl::lang.table.save_and_create');
+            $this->saveAndCreateButtonText = trans('sleeping_owl::lang.button.save_and_create');
         }
 
         return $this->saveAndCreateButtonText;
@@ -311,8 +303,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @param null|string $saveAndCreateButtonText
-     *
-     * @deprecated new version available
      * @return $this
      */
     public function setSaveAndCreateButtonText($saveAndCreateButtonText)
@@ -323,13 +313,12 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return string|array
+     * @return null|string|array
      */
     public function getDeleteButtonText()
     {
         if (is_null($this->deleteButtonText)) {
-            $this->deleteButtonText = trans('sleeping_owl::lang.table.delete');
+            $this->deleteButtonText = trans('sleeping_owl::lang.button.delete');
         }
 
         return $this->deleteButtonText;
@@ -337,7 +326,6 @@ class FormButtons implements FormButtonsInterface
 
     /**
      * @param null|string $deleteButtonText
-     * @deprecated new version available
      * @return $this
      */
     public function setDeleteButtonText($deleteButtonText)
@@ -348,20 +336,18 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return null|string|array
      */
     public function getDestroyButtonText()
     {
         if (is_null($this->destroyButtonText)) {
-            $this->destroyButtonText = trans('sleeping_owl::lang.table.destroy');
+            $this->destroyButtonText = trans('sleeping_owl::lang.button.destroy');
         }
 
         return $this->destroyButtonText;
     }
 
     /**
-     * @deprecated new version available
      * @param null|string $destroyButtonText
      */
     public function setDestroyButtonText($destroyButtonText)
@@ -370,20 +356,18 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return string
+     * @return null|string|array
      */
     public function getRestoreButtonText()
     {
         if (is_null($this->restoreButtonText)) {
-            $this->restoreButtonText = trans('sleeping_owl::lang.table.restore');
+            $this->restoreButtonText = trans('sleeping_owl::lang.button.restore');
         }
 
         return $this->restoreButtonText;
     }
 
     /**
-     * @deprecated new version available
      * @param null|string $restoreButtonText
      */
     public function setRestoreButtonText($restoreButtonText)
@@ -392,7 +376,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return bool
      */
     public function isShowCancelButton()
@@ -401,7 +384,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return $this
      */
     public function hideCancelButton()
@@ -412,7 +394,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return bool
      */
     public function isShowSaveAndCloseButton()
@@ -421,7 +402,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return $this
      */
     public function hideSaveAndCloseButton()
@@ -432,7 +412,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return bool
      */
     public function isShowSaveAndCreateButton()
@@ -441,7 +420,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return $this
      */
     public function hideSaveAndCreateButton()
@@ -452,8 +430,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return bool|null
+     * @return bool
      */
     public function isShowDeleteButton()
     {
@@ -467,7 +444,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return $this
      */
     public function hideDeleteButton()
@@ -478,8 +454,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return bool|null
+     * @return bool
      */
     public function isShowDestroyButton()
     {
@@ -494,7 +469,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return $this
      */
     public function hideDestroyButton()
@@ -505,8 +479,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
-     * @return bool|null
+     * @return bool
      */
     public function isShowRestoreButton()
     {
@@ -521,7 +494,6 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @deprecated new version available
      * @return $this
      */
     public function hideRestoreButton()
@@ -537,27 +509,27 @@ class FormButtons implements FormButtonsInterface
     public function toArray()
     {
         return [
-            'attributes'              => $this->htmlAttributesToString(),
-            'backUrl'                 => $this->getModelConfiguration()->getCancelUrl(),
-            'editUrl'                 => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
-            'deleteUrl'               => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
-            'destroyUrl'              => $this->getModelConfiguration()->getDestroyUrl($this->getModel()->getKey()),
-            'restoreUrl'              => $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
-            'saveButtonText'          => $this->getSaveButtonText(),
-            'saveAndCloseButtonText'  => $this->getSaveAndCloseButtonText(),
+            'attributes' => $this->htmlAttributesToString(),
+            'backUrl' => $this->getModelConfiguration()->getCancelUrl(),
+            'editUrl' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
+            'deleteUrl' => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),
+            'destroyUrl' => $this->getModelConfiguration()->getDestroyUrl($this->getModel()->getKey()),
+            'restoreUrl' => $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
+            'saveButtonText' => $this->getSaveButtonText(),
+            'saveAndCloseButtonText' => $this->getSaveAndCloseButtonText(),
             'saveAndCreateButtonText' => $this->getSaveAndCreateButtonText(),
-            'cancelButtonText'        => $this->getCancelButtonText(),
-            'deleteButtonText'        => $this->getDeleteButtonText(),
-            'destroyButtonText'       => $this->getDestroyButtonText(),
-            'restoreButtonText'       => $this->getRestoreButtonText(),
-            'showCancelButton'        => $this->isShowCancelButton(),
-            'showSaveAndCloseButton'  => $this->isShowSaveAndCloseButton(),
+            'cancelButtonText' => $this->getCancelButtonText(),
+            'deleteButtonText' => $this->getDeleteButtonText(),
+            'destroyButtonText' => $this->getDestroyButtonText(),
+            'restoreButtonText' => $this->getRestoreButtonText(),
+            'showCancelButton' => $this->isShowCancelButton(),
+            'showSaveAndCloseButton' => $this->isShowSaveAndCloseButton(),
             'showSaveAndCreateButton' => $this->isShowSaveAndCreateButton(),
-            'showDeleteButton'        => $this->isShowDeleteButton(),
-            'showDestroyButton'       => $this->isShowDestroyButton(),
-            'showRestoreButton'       => $this->isShowRestoreButton(),
-            'buttons'                 => $this->getButtons(),
-            'placements'              => $this->getPlacements(),
+            'showDeleteButton' => $this->isShowDeleteButton(),
+            'showDestroyButton' => $this->isShowDestroyButton(),
+            'showRestoreButton' => $this->isShowRestoreButton(),
+            'buttons' => $this->getButtons(),
+            'placements' => $this->getPlacements(),
         ];
     }
 

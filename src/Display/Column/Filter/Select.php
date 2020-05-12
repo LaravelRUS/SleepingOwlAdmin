@@ -3,10 +3,11 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class Select extends BaseColumnFilter
 {
-    use \SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+    use SelectOptionsFromModel;
 
     /**
      * @var string
@@ -39,8 +40,15 @@ class Select extends BaseColumnFilter
     protected $sortable = true;
 
     /**
-     * @param array|Model|string|null $options
-     * @param string|null $title
+     * @var mixed
+     */
+    protected $defaultValue = null;
+
+    /**
+     * Select constructor.
+     * @param null $options
+     * @param null $title
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function __construct($options = null, $title = null)
     {
@@ -67,6 +75,9 @@ class Select extends BaseColumnFilter
         return $this;
     }
 
+    /**
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
+     */
     public function initialize()
     {
         parent::initialize();
@@ -106,10 +117,9 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param Model|string $model
-     *
-     * @deprecated use setModelForOptions
-     * @return $this
+     * @param $model
+     * @return \SleepingOwl\Admin\Display\Column\Filter\Select
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function setModel($model)
     {
@@ -148,6 +158,26 @@ class Select extends BaseColumnFilter
     }
 
     /**
+     * @return mixed
+     */
+    public function getDefault()
+    {
+        return $this->defaultValue;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function setDefault($value)
+    {
+        $this->defaultValue = $value;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getPlaceholder()
@@ -173,7 +203,8 @@ class Select extends BaseColumnFilter
     public function toArray()
     {
         return parent::toArray() + [
-            'options'     => $this->getOptions(),
+            'options' => $this->getOptions(),
+            'default' => $this->getDefault(),
         ];
     }
 

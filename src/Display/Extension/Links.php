@@ -17,7 +17,7 @@ class Links extends Extension implements Placable
     /**
      * @var string
      */
-    protected $placement = 'before.panel';
+    protected $placement = 'before.card';
 
     /**
      * @var array

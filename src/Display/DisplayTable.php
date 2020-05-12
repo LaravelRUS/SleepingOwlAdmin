@@ -2,15 +2,18 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use Request;
-use Illuminate\Support\Collection;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Request;
+use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Display\Extension\ColumnFilters;
 use SleepingOwl\Admin\Display\Extension\Columns;
 use SleepingOwl\Admin\Display\Extension\ColumnsTotal;
-use SleepingOwl\Admin\Display\Extension\ColumnFilters;
-use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
-use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Traits\CardControl;
 
 /**
  * Class DisplayTable.
@@ -19,10 +22,12 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
  * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
  *
  * @method ColumnFilters getColumnFilters()
- * @method $this setColumnFilters(ColumnFilterInterface $filters = null, ...$filters)
+ * @method $this setColumnFilters(ColumnFilterInterface|ColumnFilterInterface[] $filters = null, ...$filters)
  */
 class DisplayTable extends Display
 {
+    use CardControl;
+
     /**
      * @var string
      */
@@ -42,6 +47,11 @@ class DisplayTable extends Display
      * @var string
      */
     protected $pageName = 'page';
+
+    /**
+     * @var bool|null
+     */
+    protected $creatable = null;
 
     /**
      * @var Collection
@@ -66,7 +76,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * Initialize display.
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -78,7 +88,7 @@ class DisplayTable extends Display
             });
         }
 
-        $this->setHtmlAttribute('class', 'table table-striped');
+        $this->setHtmlAttribute('class', 'table');
     }
 
     /**
@@ -87,7 +97,7 @@ class DisplayTable extends Display
     public function getNewEntryButtonText()
     {
         if (is_null($this->newEntryButtonText)) {
-            $this->newEntryButtonText = trans('sleeping_owl::lang.table.new-entry');
+            $this->newEntryButtonText = trans('sleeping_owl::lang.button.new-entry');
         }
 
         return $this->newEntryButtonText;
@@ -127,7 +137,7 @@ class DisplayTable extends Display
 
     /**
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -139,7 +149,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param int    $perPage
+     * @param int $perPage
      * @param string $pageName
      *
      * @return $this
@@ -171,6 +181,26 @@ class DisplayTable extends Display
     }
 
     /**
+     * @return bool|null
+     */
+    public function getCreatable()
+    {
+        return $this->creatable;
+    }
+
+    /**
+     * @param bool|null $creatable
+     *
+     * @return $this
+     */
+    public function setCreatable($creatable)
+    {
+        $this->creatable = $creatable;
+
+        return $this;
+    }
+
+    /**
      * @return array
      * @throws \Exception
      */
@@ -180,12 +210,13 @@ class DisplayTable extends Display
 
         $params = parent::toArray();
 
-        $params['creatable'] = $model->isCreatable();
+        $params['creatable'] = $this->getCreatable() !== null ? $this->getCreatable() : $model->isCreatable();
         $params['createUrl'] = $model->getCreateUrl($this->getParameters() + Request::all());
         $params['collection'] = $this->getCollection();
 
         $params['extensions'] = $this->getExtensions()->renderable()->sortByOrder();
         $params['newEntryButtonText'] = $this->getNewEntryButtonText();
+        $params['card_class'] = $this->getCardClass();
 
         return $params;
     }
@@ -205,7 +236,7 @@ class DisplayTable extends Display
     public function getCollection()
     {
         if (! $this->isInitialized()) {
-            throw new \Exception('Display is not initialized');
+            throw new Exception('Display is not initialized');
         }
 
         if (! is_null($this->collection)) {
@@ -224,8 +255,70 @@ class DisplayTable extends Display
     /**
      * @param \Illuminate\Database\Eloquent\Builder|Builder $query
      */
-    protected function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    protected function modifyQuery(Builder $query)
     {
         $this->extensions->modifyQuery($query);
+    }
+
+    /**
+     * Apply offset and limit to the query.
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param \Illuminate\Http\Request $request
+     */
+    public function applyOffset($query, \Illuminate\Http\Request $request)
+    {
+        $offset = $request->input('start', 0);
+        $limit = $request->input('length', 10);
+
+        if ($limit == -1) {
+            return;
+        }
+
+        $query->offset((int) $offset)->limit((int) $limit);
+    }
+
+    /**
+     * Apply search to the query.
+     *
+     * @param Builder $query
+     * @param \Illuminate\Http\Request $request
+     */
+    public function applySearch(Builder $query, \Illuminate\Http\Request $request)
+    {
+        $search = $request->input('search.value');
+        if (empty($search)) {
+            return;
+        }
+
+        $query->where(function (Builder $query) use ($search) {
+            $columns = $this->getColumns()->all();
+
+            $_model = $query->getModel();
+
+            foreach ($columns as $column) {
+                if ($column->isSearchable()) {
+                    if ($column instanceof ColumnInterface) {
+                        if (($metaInstance = $column->getMetaData()) instanceof ColumnMetaInterface) {
+                            if (method_exists($metaInstance, 'onSearch')) {
+                                $metaInstance->onSearch($column, $query, $search);
+                                continue;
+                            }
+                        }
+
+                        if (is_callable($callback = $column->getSearchCallback())) {
+                            $callback($column, $query, $search);
+                            continue;
+                        }
+                    }
+
+                    if ($_model->getAttribute($column->getName())) {
+                        continue;
+                    }
+
+                    $query->orWhere($column->getName(), 'like', '%'.$search.'%');
+                }
+            }
+        });
     }
 }

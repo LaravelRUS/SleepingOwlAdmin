@@ -4,10 +4,11 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\DateFormat;
 use SleepingOwl\Admin\Traits\DatePicker;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 class DateTime extends EditableColumn implements ColumnEditableInterface
 {
@@ -17,13 +18,16 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      * @var string
      */
     protected $defaultValue;
+
     /**
      * @var string
      */
     protected $format = 'Y-m-d H:i:s';
-    //    protected $format = 'YYYY-MM-DD';
 
-    protected $type = 'combodate';
+    /**
+     * @var string
+     */
+    protected $type = 'text';
 
     /**
      * @var string
@@ -41,6 +45,11 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.datetime';
 
     /**
+     * @var string
+     */
+    protected $combodateValue = '{}';
+
+    /**
      * Text constructor.
      *
      * @param             $name
@@ -49,6 +58,44 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     public function __construct($name, $label = null)
     {
         parent::__construct($name, $label);
+
+        $this->setFormat(config('sleeping_owl.datetimeFormat'));
+        $this->setCombodateValue(['maxYear' => now()->addYears(100)->format('Y')]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCombodateValue()
+    {
+        return $this->combodateValue;
+    }
+
+    /**
+     * @param array $maxYear
+     * @return $this
+     */
+    public function setCombodateValue(array $value)
+    {
+        $this->combodateValue = json_encode($value);
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModifierValue()
+    {
+        if (is_callable($this->modifier)) {
+            return call_user_func($this->modifier, $this);
+        }
+
+        if (is_null($this->modifier)) {
+            return $this->getFormatedDate($this->getModelValue());
+        }
+
+        return $this->modifier;
     }
 
     /**
@@ -58,19 +105,22 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     {
         $value = $this->getModelValue();
 
-        return parent::toArray() + [
-                'id'             => $this->getModel()->getKey(),
-                'value'          => $this->getFormatedDate($value),
-                'isEditable'     => $this->getModelConfiguration()->isEditable($this->getModel()),
-                'url'            => $this->getUrl(),
+        return array_merge(parent::toArray(), [
+            'id' => $this->getModel()->getKey(),
+            'value' => $this->getFormatedDate($value),
+            'isEditable' => $this->getReadonly(),
+            'url' => $this->getUrl(),
 
-                'format'          => $this->getJsPickerFormat(),
-                'viewformat'      => $this->getJsPickerFormat(),
-                'data-date-pickdate'   => 'true',
-                'data-date-picktime'   => 'false',
-                'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
-                'type'                 => $this->type,
-            ];
+            'format' => $this->getJsPickerFormat(),
+            'viewformat' => $this->getJsPickerFormat(),
+            'data-date-pickdate' => 'true',
+            'data-date-picktime' => 'false',
+            'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
+            'type' => $this->type,
+
+            'text' => $this->getModifierValue(),
+            'combodateValue' => $this->getCombodateValue(),
+        ]);
     }
 
     /**
@@ -80,15 +130,29 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     protected function getFormatedDate($date)
     {
-        if (! is_null($date)) {
-            if (! $date instanceof Carbon) {
-                $date = Carbon::parse($date);
-            }
-
-            $date = $date->timezone($this->getTimezone())->format($this->getFormat());
+        if (empty($date)) {
+            return;
         }
 
-        return $date;
+        if (! $date instanceof Carbon) {
+            try {
+                $date = Carbon::parse($date);
+            } catch (\Exception $e) {
+                try {
+                    $date = Carbon::createFromFormat($this->getFormat(), $date);
+                } catch (\Exception $e) {
+                    Log::error('Unable to parse date!', [
+                        'format' => $this->getFormat(),
+                        'date' => $date,
+                        'exception' => $e,
+                    ]);
+
+                    return;
+                }
+            }
+        }
+
+        return $date->timezone($this->getTimezone())->format($this->getFormat());
     }
 
     /**
@@ -152,7 +216,15 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
 
         $model = $this->getModel();
 
-        $request->offsetSet($this->getName(), $request->input('value', null));
+        if ($request->input('value')) {
+            $value = Carbon::createFromFormat(
+              $this->format, $request->input('value'), $this->getTimezone()
+            );
+        } else {
+            $value = null;
+        }
+
+        $request->offsetSet($this->getName(), $value);
 
         $form->setModelClass(get_class($model));
         $form->initialize();

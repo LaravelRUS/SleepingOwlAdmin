@@ -3,14 +3,15 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
-use SleepingOwl\Admin\Navigation;
-use SleepingOwl\Admin\Navigation\Page;
-use Illuminate\Database\Eloquent\Model;
-use SleepingOwl\Admin\Navigation\Badge;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Navigation;
+use SleepingOwl\Admin\Navigation\Badge;
+use SleepingOwl\Admin\Navigation\Page;
 
 /**
  * @method bool creating(\Closure $callback)
@@ -37,7 +38,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
+     * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
      * @return void
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
@@ -103,9 +104,17 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     private $repository;
 
     /**
+     * @var Model|null
+     */
+    protected $model_value = null;
+
+    /**
      * ModelConfigurationManager constructor.
+     *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param $class
+     * @param                                              $class
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
@@ -136,6 +145,22 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * @return Model|null
+     */
+    public function getModelValue()
+    {
+        return $this->model_value;
+    }
+
+    /**
+     * @param Model $item
+     */
+    public function setModelValue($item)
+    {
+        $this->model_value = $item;
     }
 
     /**
@@ -268,10 +293,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @deprecated
      * @param int $id
      *
      * @return $this
+     * @deprecated
      */
     public function fireFullEdit($id)
     {
@@ -397,6 +422,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getEditUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.edit', $parameters);
@@ -410,6 +439,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getUpdateUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.update', $parameters);
@@ -423,6 +456,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDeleteUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.delete', $parameters);
@@ -436,6 +473,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getDestroyUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.destroy', $parameters);
@@ -449,6 +490,10 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function getRestoreUrl($id, array $parameters = [])
     {
+        if (! $id) {
+            return '#';
+        }
+
         array_unshift($parameters, $this->getAlias(), $id);
 
         return route('admin.model.restore', $parameters);
@@ -592,7 +637,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         // event set individually instead of catching event for all the models.
         $event = "sleeping_owl.section.{$event}: ".$this->getClass();
 
-        $method = $halt ? 'until' : 'fire';
+        // Laravel 5.8 and 5.4 support fire method
+        if (version_compare('5.8.0', $this->app->version(), '<=') ||
+            version_compare('5.5.0', $this->app->version(), '>')) {
+            $fireMethod = 'dispatch';
+        } else {
+            $fireMethod = 'fire';
+        }
+
+        $method = $halt ? 'until' : $fireMethod;
 
         array_unshift($payload, $this, $model);
 
@@ -643,6 +696,6 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     protected function getDefaultClassTitle()
     {
-        return snake_case(str_plural(class_basename($this->getClass())));
+        return Str::snake(Str::plural(class_basename($this->getClass())));
     }
 }

@@ -2,12 +2,12 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
-use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Display\Column\Control;
-use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Display\Column\Control;
 
 class Tree extends Extension implements Initializable, Renderable
 {
@@ -130,7 +130,7 @@ class Tree extends Extension implements Initializable, Renderable
     public function toArray()
     {
         return [
-            'columns'    => $this->allWithControl(),
+            'columns' => $this->allWithControl(),
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

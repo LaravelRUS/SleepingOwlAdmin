@@ -1,23 +1,24 @@
 <?php
 
-use Mockery as m;
 use Illuminate\Database\Eloquent\Model;
+use Mockery as m;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class NamedColumnTest extends TestCase
 {
     use \SleepingOwl\Tests\AssetsTesterTrait;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
     /**
      * @param string $name
-     * @param string|null $label
+     * @param string $label
      *
-     * @return PHPUnit_Framework_MockObject_MockObject|NamedColumn
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws ReflectionException
      */
     protected function getColumn($name = 'test_name', $label = 'Test Label')
     {
@@ -32,14 +33,6 @@ class NamedColumnTest extends TestCase
         $this->assertEquals('test_name', $column->getName());
         $this->assertEquals('row-'.strtolower(class_basename($column)), $column->getHtmlAttribute('class'));
         $this->assertTrue($column->isOrderable());
-    }
-
-    public function test_initialize()
-    {
-        $column = $this->getColumn();
-        $this->packageInitialized();
-
-        $column->initialize();
     }
 
     public function test_gets_or_sets_name()

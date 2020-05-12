@@ -1,0 +1,29 @@
+@import "~x-editable-bs4/dist/jquery-editable/css/jquery-editable.css";
+
+.editableform {
+  .control-group.form-group {
+    flex-direction: column;
+  }
+}
+
+.editable-error-block {
+  text-align: center;
+  line-height: 1.2;
+  color: $danger;
+  max-width: 200px;
+}
+
+.editable-buttons,
+.editable-input {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.3em 0;
+}
+
+.editable-input {
+  select {
+    padding: 0.2em 0.4em;
+    border-radius: 5px;
+  }
+}

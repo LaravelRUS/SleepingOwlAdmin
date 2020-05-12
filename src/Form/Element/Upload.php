@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 class Upload extends NamedFormElement
@@ -26,7 +27,7 @@ class Upload extends NamedFormElement
      *
      * @return UploadedFile|null
      */
-    public function getValueFromRequest(\Illuminate\Http\Request $request)
+    public function getValueFromRequest(Request $request)
     {
         return $request->file($this->getPath());
     }
@@ -36,7 +37,7 @@ class Upload extends NamedFormElement
      *
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $value = $this->getValueFromRequest($request);
 

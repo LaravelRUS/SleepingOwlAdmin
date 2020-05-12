@@ -1,0 +1,62 @@
+.navbar-nav {
+  .user-menu {
+    .user-image {
+      width: 2em;
+      height: 2em;
+      border-radius: 50%;
+      margin: 0 0.5em;
+      object-fit: cover;
+    }
+
+    .dropdown-menu {
+      overflow: hidden;
+      background-color: rgba($white, 0.8);
+      right: 0;
+      left: inherit;
+      text-align: center;
+      padding: 1em;
+      min-width: 15em;
+
+      .user-header {
+
+        p {
+          margin-top: 1em;
+        }
+
+        img {
+          max-width: 10em;
+          object-fit: cover;
+        }
+      }
+    }
+
+    a {
+      transition: 0.5s;
+
+      &:hover {
+        text-decoration: none;
+        color: $black;
+      }
+    }
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+  }
+
+  & > li {
+    display: flex;
+    align-items: center;
+
+    & > a {
+      padding: 0 0.5em;
+      transition: 0.5s;
+
+      &:hover {
+        text-decoration: none;
+        color: $black;
+      }
+    }
+  }
+}

@@ -3,37 +3,45 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use AdminSection;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\WithRoutesInterface;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Arr;
+use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Traits\SelectAjaxFunctions;
 
 class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesInterface
 {
-    protected $view = 'form.element.selectajax';
+    use SelectAjaxFunctions;
 
     protected static $route = 'multiselectajax';
+    protected $view = 'form.element.selectajax';
 
-    protected $search_url = null;
-
-    protected $min_symbols = 3;
-
-    protected $search = null;
+    /**
+     * @var string|null
+     */
+    protected $language;
 
     /**
      * MultiSelectAjax constructor.
-     * @param string $path
+     * @param $path
      * @param null $label
+     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null)
     {
         parent::__construct($path, $label);
 
+        /*
+        // This code add closure, that modify query so, that select will have only one value.
+        // This feature need for optimized selectajax initiation for also existing records.
+        // Make some changes for availability to use setLoadOptionsQueryPreparer() in Sections.
         $this->setLoadOptionsQueryPreparer(function ($item, Builder $query) {
             $repository = app(RepositoryInterface::class);
             $repository->setModel($this->getModelForOptions());
@@ -41,38 +49,64 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
             return $query->whereIn($key, $this->getValueFromModel() ? $this->getValueFromModel() : []);
         });
+        */
+
+        $this->default_query_preparer = function ($item, Builder $query) {
+            $repository = app(RepositoryInterface::class);
+            $repository->setModel($this->getModelForOptions());
+            $key = $repository->getModel()->getKeyName();
+
+            return $query->whereIn($key, $this->getValueFromModel() ? $this->getValueFromModel() : []);
+        };
+
+        $this->setLanguage(config('app.locale'));
     }
 
     /**
-     * @return null
+     * @return string|null
      */
-    public function getSearch()
+    public function getLanguage()
     {
-        if ($this->search) {
-            return $this->search;
-        }
-
-        return $this->getDisplay();
+        return $this->language;
     }
 
     /**
-     * @param $search
+     * @param $language
      * @return $this
      */
-    public function setSearch($search)
+    public function setLanguage($language)
     {
-        $this->search = $search;
+        $this->language = $language;
 
         return $this;
     }
 
     /**
-     * Get Field name for search url.
-     * @return mixed
+     * @param Router $router
      */
-    public function getFieldName()
+    public static function registerRoutes(Router $router)
     {
-        return str_replace('[]', '', $this->getName());
+        $routeName = 'admin.form.element.'.static::$route;
+
+        if (! $router->has($routeName)) {
+            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
+                'as' => $routeName,
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@multiselectSearch',
+            ]);
+        }
+    }
+
+    /**
+     * Getter of search url.
+     * @return string
+     */
+    public function getSearchUrl()
+    {
+        return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
+            'adminModel' => AdminSection::getModel($this->model)->getAlias(),
+            'field' => $this->getFieldName(),
+            'id' => $this->model->getKey(),
+        ]);
     }
 
     /**
@@ -88,79 +122,42 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * Getter of search url.
-     * @return string
-     */
-    public function getSearchUrl()
-    {
-        return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
-            'adminModel' => AdminSection::getModel($this->model)->getAlias(),
-            'field'      => $this->getFieldName(),
-            'id'         => $this->model->getKey(),
-        ]);
-    }
-
-    /**
-     * @param Router $router
-     */
-    public static function registerRoutes(Router $router)
-    {
-        $routeName = 'admin.form.element.'.static::$route;
-
-        if (! $router->has($routeName)) {
-            $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as'   => $routeName,
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\FormElementController@multiselectSearch',
-            ]);
-        }
-    }
-
-    /**
-     * Set min symbols to search.
-     * @param $symbols
-     * @return $this
-     */
-    public function setMinSymbols($symbols)
-    {
-        $this->min_symbols = $symbols;
-
-        return $this;
-    }
-
-    /**
-     * Get min symbols to search.
-     * @return int
-     */
-    public function getMinSymbols()
-    {
-        return $this->min_symbols;
-    }
-
-    /**
-     * @return array
-     */
-    public function mutateOptions()
-    {
-        return $this->getOptions();
-    }
-
-    /**
      * @return array
      */
     public function toArray()
     {
+        $this->setLoadOptionsQueryPreparer($this->default_query_preparer);
+
         $this->setHtmlAttributes([
-            'id'               => $this->getName(),
-            'class'            => 'form-control js-data-ajax',
+            'id' => $this->getId(),
+            'class' => 'form-control js-data-ajax',
             'multiple',
-            'field'            => $this->getDisplay(),
-            'search'           => $this->getSearch(),
-            'model'            => get_class($this->getModelForOptions()),
-            'search_url'       => $this->getSearchUrl(),
+            //'model' => get_class($this->getModelForOptions()),
+            //'field' => $this->getDisplay(),
+            //'search' => $this->getSearch(),
+            'search_url' => $this->getSearchUrl(),
             'data-min-symbols' => $this->getMinSymbols(),
         ]);
 
+        if ($this->getDataDepends() != '[]') {
+            $this->setHtmlAttributes([
+                'data-language' => $this->getLanguage(),
+                'data-depends' => $this->getDataDepends(),
+                'data-url' => $this->getSearchUrl(),
+                'class' => 'input-select input-select-dependent',
+            ]);
+        }
+
         return ['attributes' => $this->getHtmlAttributes()] + parent::toArray();
+    }
+
+    /**
+     * Get Field name for search url.
+     * @return mixed
+     */
+    public function getFieldName()
+    {
+        return str_replace('[]', '', $this->getName());
     }
 
     /**
@@ -214,13 +211,13 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             }, $options);
 
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, 1, 0);
+            $options = Arr::pluck($options, 1, 0);
         } elseif ($options instanceof Collection) {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options->all(), $this->getDisplay(), $key);
+            $options = Arr::pluck($options->all(), $this->getDisplay(), $key);
         } else {
             // take options as array with KEY => VALUE pair
-            $options = array_pluck($options, $this->getDisplay(), $key);
+            $options = Arr::pluck($options, $this->getDisplay(), $key);
         }
 
         return $options;

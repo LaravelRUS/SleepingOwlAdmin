@@ -1,17 +1,10 @@
 <?php
-/**
- * Laravel IDE Helper Generator.
- *
- * @author    Barry vd. Heuvel <barryvdh@gmail.com>
- * @copyright 2014 Barry vd. Heuvel / Fruitcake Studio (http://www.fruitcakestudio.nl)
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
- * @link      https://github.com/barryvdh/laravel-ide-helper
- */
+
 namespace SleepingOwl\Admin\Console;
 
-use Illuminate\Support\Collection;
 use Barryvdh\LaravelIdeHelper\Alias;
 use Barryvdh\LaravelIdeHelper\Generator as IdeHelperGenerator;
+use Illuminate\Support\Collection;
 
 class Generator extends IdeHelperGenerator
 {

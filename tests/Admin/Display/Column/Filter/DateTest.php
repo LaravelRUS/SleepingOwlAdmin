@@ -5,7 +5,7 @@ use SleepingOwl\Admin\Display\Column\Filter\Date;
 
 class DateTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -59,28 +59,6 @@ class DateTest extends TestCase
 
         $filter->setPickerFormat('d.m.Y');
         $this->assertEquals('d.m.Y', $filter->getPickerFormat());
-    }
-
-    /**
-     * @dataProvider widthProvider
-     */
-    public function test_gets_or_sets_width($width, $expected)
-    {
-        $filter = $this->getFilter();
-
-        $filter->setWidth($width);
-        $this->assertEquals($expected, $filter->getWidth());
-    }
-
-    public function widthProvider()
-    {
-        return [
-            'integer' => [100, 100],
-            'string_int' => ['100', 100],
-            'string_int_with_text' => ['150px', 150],
-            'negative_number' => [-100, 0],
-            'zero' => [0, 0],
-        ];
     }
 
     /**

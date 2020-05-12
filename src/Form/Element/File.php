@@ -3,8 +3,9 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Closure;
-use Illuminate\Routing\Router;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Arr;
 use KodiComponents\Support\Upload;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 
@@ -29,7 +30,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         if (! $router->has($routeName)) {
             $router->post('{adminModel}/'.static::$route.'/{field}/{id?}', [
-                'as'   => $routeName,
+                'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@fromField',
             ]);
         }
@@ -178,7 +179,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function getUploadSettings()
     {
         if (empty($this->uploadSettings) && in_array(Upload::class, class_uses($this->getModel()))) {
-            return (array) array_get($this->getModel()->getUploadSettings(), $this->getPath());
+            return (array) Arr::get($this->getModel()->getUploadSettings(), $this->getPath());
         }
 
         return $this->uploadSettings;
@@ -198,9 +199,8 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     /**
      * @param string $rule
-     * @param string|null $message
-     *
-     * @return $this
+     * @param null $message
+     * @return $this|\SleepingOwl\Admin\Form\Element\File|\SleepingOwl\Admin\Form\Element\NamedFormElement
      */
     public function addValidationRule($rule, $message = null)
     {
@@ -246,8 +246,8 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * Set save file callback.
      * @param \Closure $callable
+     * @return $this
      */
     public function setSaveCallback(\Closure $callable)
     {
@@ -311,5 +311,15 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function defaultUploadPath(UploadedFile $file)
     {
         return config('sleeping_owl.filesUploadDirectory', 'files/uploads');
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $return = parent::toArray();
+
+        return $return;
     }
 }

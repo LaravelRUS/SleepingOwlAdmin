@@ -2,10 +2,11 @@
 
 namespace SleepingOwl\Admin;
 
-use Route;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
 {
@@ -62,7 +63,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
 
                 if ($parameters->has('adminModel')) {
                     $routeUrl = route('admin.model', [
-                        'adminModel' => snake_case(class_basename($parameters->get('adminModel'))),
+                        'adminModel' => Str::snake(class_basename($parameters->get('adminModel'))),
                     ]);
 
                     $urlPath = parse_url($routeUrl, PHP_URL_PATH);

@@ -1,4 +1,3 @@
-
 Vue.component('env_editor', Vue.extend({
     props: {
         data: {

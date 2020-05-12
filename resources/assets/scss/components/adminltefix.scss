@@ -1,0 +1,54 @@
+.sidebar {
+  overflow-x: hidden;
+}
+
+.wrapper .content-wrapper .content.body {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid transparent;
+}
+
+.row-image {
+  text-align: center;
+}
+
+.sidebar-open {
+  .main-sidebar {
+    transition: 0.5s;
+  }
+}
+
+.sidebar-mini.sidebar-collapse .main-sidebar {
+  &:hover {
+    transition: $trans;
+  }
+}
+
+
+.nav-sidebar .nav-link {
+
+  & > p > .right:nth-child(2) {
+    right: 0;
+  }
+}
+
+.brand-link {
+  padding: 0.6em 0;
+}
+
+.nav-sidebar>.nav-item>.nav-treeview {
+  border-bottom: 1px solid $gray-600;
+  margin-bottom: 0.5rem;
+}
+
+.card-header {
+  border-bottom: 0;
+}
+
+.card.maximized-card {
+  overflow-y: auto;
+}
+
+.fade {
+  transition: opacity 0.2s;
+}

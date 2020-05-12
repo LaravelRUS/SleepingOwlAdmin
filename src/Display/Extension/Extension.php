@@ -2,8 +2,9 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use Illuminate\Database\Eloquent\Builder;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 abstract class Extension implements DisplayExtensionInterface
 {
@@ -40,7 +41,7 @@ abstract class Extension implements DisplayExtensionInterface
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    public function modifyQuery(Builder $query)
     {
         //Implement modifyQuery() method.
     }

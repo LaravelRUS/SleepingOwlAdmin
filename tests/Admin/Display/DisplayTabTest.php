@@ -1,18 +1,17 @@
 <?php
 
-use Mockery as m;
-use SleepingOwl\Admin\Display\DisplayTab;
-use SleepingOwl\Admin\Contracts\Validable;
 use Illuminate\Contracts\Support\Renderable;
-use SleepingOwl\Admin\Contracts\Initializable;
-use SleepingOwl\Admin\Contracts\Form\FormInterface;
-use SleepingOwl\Admin\Contracts\WithModelInterface;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
+use Mockery as m;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
+use SleepingOwl\Admin\Contracts\Form\FormInterface;
+use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\Validable;
+use SleepingOwl\Admin\Contracts\WithModelInterface;
+use SleepingOwl\Admin\Display\DisplayTab;
 
 class DisplayTabTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -118,11 +117,9 @@ class DisplayTabTest extends TestCase
         $this->assertEquals($name, $tab->getName());
     }
 
-    /**
-     * @expectedException \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
-     */
     public function test_gets_name_exception()
     {
+        $this->expectException(\SleepingOwl\Admin\Exceptions\Display\DisplayTabException::class);
         $tab = $this->getTab(null, null);
 
         $tab->getName();
@@ -137,7 +134,7 @@ class DisplayTabTest extends TestCase
         $tab = $this->getTab(null, null);
 
         $this->assertNull($tab->getIcon());
-        $this->assertEquals($tab, $tab->setIcon($icon = 'fa fa-test'));
+        $this->assertEquals($tab, $tab->setIcon($icon = 'fas fa-tachometer-alt'));
         $this->assertEquals($icon, $tab->getIcon());
     }
 
@@ -166,20 +163,6 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Display\DisplayTab::setModelClass
-     */
-    public function test_sets_model_class_with_display_content()
-    {
-        $renderable = m::mock(DisplayInterface::class);
-
-        $tab = new DisplayTab($renderable);
-
-        $renderable->shouldReceive('setModelClass')->once()->with($class = 'class');
-
-        $tab->setModelClass($class);
-    }
-
-    /**
      * @covers SleepingOwl\Admin\Display\DisplayTab::initialize
      */
     public function test_initialize()
@@ -190,17 +173,6 @@ class DisplayTabTest extends TestCase
         $content->shouldNotReceive('initialize');
 
         $this->assertEquals($tab, $tab->initialize());
-    }
-
-    public function test_initialize_with_initializable_content()
-    {
-        $renderable = m::mock(DisplayTabTestInitializable::class);
-
-        $tab = new DisplayTab($renderable);
-
-        $renderable->shouldReceive('initialize')->once();
-
-        $tab->initialize();
     }
 
     /**
@@ -217,19 +189,6 @@ class DisplayTabTest extends TestCase
 
         $this->assertEquals($tab, $tab->setAction('test'));
         $this->assertEquals($tab, $tab->setId('test'));
-    }
-
-    public function test_sets_action_and_id_with_form_content()
-    {
-        $renderable = m::mock(FormInterface::class);
-
-        $tab = new DisplayTab($renderable);
-
-        $renderable->shouldReceive('setAction')->once()->with($action = 'test');
-        $renderable->shouldReceive('setId')->once()->with($id = 1);
-
-        $tab->setAction($action);
-        $tab->setId($id);
     }
 
     /**
