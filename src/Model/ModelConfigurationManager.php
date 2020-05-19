@@ -109,6 +109,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected $model_value = null;
 
     /**
+     * @var string|null
+     */
+    protected $view;
+
+    /**
      * ModelConfigurationManager constructor.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
@@ -697,5 +702,56 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected function getDefaultClassTitle()
     {
         return Str::snake(Str::plural(class_basename($this->getClass())));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isViewable()
+    {
+        return ( $this->can('view', $this->getModel() ) and $this->view ) ? true : false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getViewPath()
+    {
+        return $this->view;
+    }
+
+    /**
+     * @param string
+     * @return $this
+     */
+    public function setViewPath($path)
+    {
+        $this->view = $path;
+        return $this;
+    }
+
+    /**
+     * @param string|int $id
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function getViewUrl($id, array $parameters = [])
+    {
+        if (! $id) {
+            return '#';
+        }
+
+        array_unshift($parameters, $this->getAlias(), $id);
+
+        return route('admin.model.view', $parameters);
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewTitle()
+    {
+        return trans('sleeping_owl::lang.model.view', ['title' => $this->getTitle()]);
     }
 }

@@ -18,6 +18,7 @@ return [
     'model' => [
         'create'  => 'Create record in section :title',
         'edit'    => 'Update record in section :title',
+        'view'    => 'View item in section :title',
     ],
 
     'links' => [

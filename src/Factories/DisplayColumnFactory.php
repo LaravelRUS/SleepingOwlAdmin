@@ -55,6 +55,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
             'email' => Column\Email::class,
             'treeControl' => Column\TreeControl::class,
             'url' => Column\Url::class,
+            'view' => Column\View::class,
         ]);
     }
 }
