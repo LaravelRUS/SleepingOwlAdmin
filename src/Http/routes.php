@@ -21,7 +21,6 @@ $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Control
         'uses' => 'AdminController@getView',
     ]);
 
-
     $router->get('{adminModel}/create', [
         'as' => 'model.create',
         'uses' => 'AdminController@getCreate',
