@@ -709,7 +709,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      */
     public function isViewable()
     {
-        return ($this->can('view', $this->getModel() ) and $this->view) ? true : false;
+        return ($this->can('view', $this->getModel()) and $this->view) ? true : false;
     }
 
     /**
