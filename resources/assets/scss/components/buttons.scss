@@ -7,6 +7,12 @@
 
 .table-control-btn {
   text-align: right;
+
+  & > a,
+  & > form {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+  }
 }
 
 .btn-group-vertical {
