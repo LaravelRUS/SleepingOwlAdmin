@@ -426,7 +426,7 @@ abstract class Elements extends FormElements
 
         foreach ($elements as $el) {
             //add custom element for in the viewport related elements
-            if ( $el instanceof Custom ) {
+            if ($el instanceof Custom) {
                 $el->setModel($model);
             }
             $group->push($el);
