@@ -44,7 +44,7 @@
 
                             <button type="button" v-if="has_value" class="btn btn-danger btn-xs"
                                     @click.prevent="remove()">
-                                <i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.file.remove') }}
+                                <i class="fas fa-times"></i>
                             </button>
                         </div>
                     </div>

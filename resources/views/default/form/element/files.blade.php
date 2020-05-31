@@ -48,7 +48,7 @@
 
                             <div class="file-buttons mt-1 text-left">
                                 <button class="btn btn-danger btn-delete btn-xs fileRemove">
-                                    <i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.file.remove') }}
+                                    <i class="fas fa-times"></i>
                                 </button>
                                 <a class="btn btn-clear btn-sm pull-right drag-cursor">
                                     <i class="fas fa-arrows-alt"></i>
@@ -109,7 +109,7 @@
                             <div class="file-buttons mt-1{{ $readonly ? ' text-right' : ' text-left' }}">
                                 @if (!$readonly)
                                     <button class="btn btn-danger btn-delete btn-xs fileRemove">
-                                        <i class="fas fa-times"></i> {{ trans('sleeping_owl::lang.file.remove') }}
+                                        <i class="fas fa-times"></i>
                                     </button>
                                     <a class="btn btn-clear btn-sm pull-right drag-cursor">
                                         <i class="fas fa-arrows-alt"></i>

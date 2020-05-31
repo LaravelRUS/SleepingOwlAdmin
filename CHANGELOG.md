@@ -1,6 +1,21 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 
+## 2020-05-24
+* [Update] NPM packages:
+  - admin-lte: 3.0.4 -> 3.0.5
+  - bootstrap: 4.4.1 -> 4.5.0
+  - jquery: 3.5.0 -> 3.5.1
+  - datatables.net: 1.10.20 -> 1.10.21
+  - datatables.net-bs4: 1.10.20 -> 1.10.21
+  - datatables.net-responsive: 2.2.3 -> 2.2.5
+  - fullcalendar: 3.10.0 -> 3.10.2
+  - i18n: 0.9.0 -> 0.9.1
+  - moment: 2.24.0 -> 2.26.0
+  - node-sass: 4.14.0 -> 4.14.1
+  - sweetalert2: 9.10.12 -> 9.13.1
+
+
 ## 2020-04-30
 * [Update] NPM packages:
   - admin-lte: 3.0.2 -> 3.0.4

@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
-[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--7.5-brightgreen.svg)]()
+[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--7.9.2-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-7.1.3+-brightgreen.svg)]()
 
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowladmin.ru)
@@ -21,7 +21,9 @@ Support `Laravel > 5.5 - 5.8` (`PHP < 7.1.3`), `Laravel 6.*` (`PHP > 7.2`) and `
 __Lumen is NOT supported(((__
 
 
-## Documentation new ver.6
+## Documentation new ver.7
+
+Powered by Laravel 5.5 - 7+. (latest tested version 7.9.2)
 
 * [Russian](http://sleepingowladmin.ru/#/ru/) (90% process)
 * [English](http://sleepingowladmin.ru/#/en/) (30% process)
@@ -29,7 +31,7 @@ __Lumen is NOT supported(((__
 * [Docs Github](https://github.com/SleepingOwlAdmin/docs/tree/new)
 
 
-## Install `ver 6.*` <small>(last Released)</small>
+## Install `ver 7.*` <small>(last Released)</small>
 
   1. Install SleepingOwl Admin
 
