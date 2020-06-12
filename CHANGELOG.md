@@ -1,8 +1,14 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 ## 2020-05-31
+* Rebuild visibled and add in onDisplay
+* Deleted deprecated in form element `->setVisibilityCondition(bool)`
+
+
+## 2020-05-31
 * [Fix] Fix related elements: return add custom element for in the viewport related elements
 * [Fix] Fix hasMany element error in output paths, output of fields: images, files, image, file
+
 
 ## 2020-05-24
 * [Update] NPM packages:

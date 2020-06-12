@@ -14,10 +14,11 @@ use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
+use SleepingOwl\Admin\Traits\Visibled;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets, Renderable;
+    use Assets, Renderable, Visibled;
 
     /**
      * @var TemplateInterface
@@ -48,11 +49,6 @@ abstract class FormElement implements FormElementInterface
      * @var bool|callable
      */
     protected $readonly = false;
-
-    /**
-     * @var bool|callable
-     */
-    protected $visibled = true;
 
     /**
      * @var bool|callable
@@ -204,18 +200,6 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return bool|callable
-     */
-    public function isVisible()
-    {
-        if (is_callable($this->visibled)) {
-            return (bool) call_user_func($this->visibled, $this->getModel());
-        }
-
-        return (bool) $this->visibled;
-    }
-
-    /**
      * @return bool
      */
     public function isValueSkipped()
@@ -247,31 +231,6 @@ abstract class FormElement implements FormElementInterface
     public function setReadonly($readonly)
     {
         $this->readonly = $readonly;
-
-        return $this;
-    }
-
-    /**
-     * @param Closure|bool $visibled
-     *
-     * @return $this
-     */
-    public function setVisible($visibled)
-    {
-        $this->visibled = $visibled;
-
-        return $this;
-    }
-
-    /**
-     * @param \SleepingOwl\Admin\Form\FormElement $visibled
-     *
-     * @return $this
-     * @deprecated
-     */
-    public function setVisibilityCondition($visibled)
-    {
-        $this->visibled = $this->setVisible($visibled);
 
         return $this;
     }
