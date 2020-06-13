@@ -211,6 +211,7 @@ class TableColumnTest extends TestCase
             'attributes' => ' class="test"',
             'model' => $model,
             'append' => $append,
+            'visibled' => true,
         ], $column->toArray());
     }
 
