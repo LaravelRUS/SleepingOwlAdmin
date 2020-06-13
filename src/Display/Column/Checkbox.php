@@ -3,11 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Form;
-use SleepingOwl\Admin\Display\TableColumn;
 
 class Checkbox extends NamedColumn
 {
-
     /**
      * @var string
      */
