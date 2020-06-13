@@ -13,9 +13,8 @@
 * add CSS in `.swal2-image` `max-height: 60vh`
 * Remove `setSmall`, `setIsolated` in Traits
 * Add `setSmall` & `setIsolated` in `AdminColumn::checkbox()`
-* Column element `->setVisibilityCondition(bool)` only table/datatable hard view (for dynamic use `setVisibled(bool)`)
-* Add `->setVisibled( bool || callable )`
-* Rename `isVisible` in onEdit to `setVisibled`
+* Add `->setVisibled( bool || callable )` for onDisplay
+* Add `->setVisible( bool || callable )` for onEdit
 
 ```php
 //table and datatables

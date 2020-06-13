@@ -14,11 +14,11 @@ use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
-use SleepingOwl\Admin\Traits\Visibled;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 abstract class FormElement implements FormElementInterface
 {
-    use Assets, Renderable, Visibled;
+    use Assets, Renderable, VisibleCondition;
 
     /**
      * @var TemplateInterface
@@ -281,7 +281,7 @@ abstract class FormElement implements FormElementInterface
         return [
             'value' => $this->getValue(),
             'readonly' => $this->isReadonly(),
-            'visibled' => $this->getVisibled(),
+            'visibled' => $this->isVisible(),
             'model' => $this->getModel(),
         ];
     }

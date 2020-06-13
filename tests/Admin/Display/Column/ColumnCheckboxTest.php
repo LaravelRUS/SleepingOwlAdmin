@@ -36,13 +36,13 @@ class ColumnCheckboxTest extends TestCase
         $this->assertEquals('key', $column->getModelValue());
     }
 
-    public function test_to_array()
-    {
-        $column = $this->getColumn();
-
-        $column->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('getKey')->andReturn('key');
-
-        $this->assertTrue(array_key_exists('value', $column->toArray()));
-    }
+    // public function test_to_array()
+    // {
+    //     $column = $this->getColumn();
+    //
+    //     $column->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+    //     $model->shouldReceive('getKey')->andReturn('key');
+    //
+    //     $this->assertTrue(array_key_exists('value', $column->toArray()));
+    // }
 }
