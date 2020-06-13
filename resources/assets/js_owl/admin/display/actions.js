@@ -34,18 +34,14 @@ Admin.Modules.register('display.actions', () => {
 
 
         Admin.Messages.confirm(trans('lang.table.action-confirm'), null, self).then(result => {
-            //Исправлено для версии sweetalert 7.0.0
             if (result.value) {
 
-                //let $checkboxes = $('.adminCheckboxRow').filter(':checked'),
-                //    $selectActions = $("#sleepingOwlActionsStore");
-
-                let $datatable_wrapper = $(self).parents('.panel').find('.dataTables_wrapper'),
+                let $datatable_wrapper = $(self).parents('.card').find('.dataTables_wrapper'),
                     $checkboxes = $datatable_wrapper.find('.adminCheckboxRow').filter(':checked'),
                     $selectActions = $(self).find(".sleepingOwlActionsStore");
 
-                //console.log($checkboxes);
-                //console.log($selectActions);
+                // console.log('check', $checkboxes);
+                // console.log($selectActions);
 
                 let data = $checkboxes.serialize();
 
