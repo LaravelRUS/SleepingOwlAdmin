@@ -1,8 +1,17 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
-## 2020-05-31
+## 2020-06-13
 * Rebuild visibled and add in onDisplay
 * Deleted deprecated in form element `->setVisibilityCondition(bool)`
+
+```php
+AdminColumn::checkbox()
+  ->setVisible(function($item){
+    return $item->id < 3;
+  }),
+
+AdminColumn::link('title', 'Title')->setVisible(false),
+```
 
 
 ## 2020-05-31

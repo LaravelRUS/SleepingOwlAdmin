@@ -15,10 +15,11 @@ use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Display\Column\OrderByClause;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
+use SleepingOwl\Admin\Traits\Visibled;
 
 abstract class TableColumn implements ColumnInterface
 {
-    use HtmlAttributes, Assets, Renderable;
+    use HtmlAttributes, Assets, Renderable, Visibled;
 
     /**
      * @var \Closure
@@ -71,11 +72,6 @@ abstract class TableColumn implements ColumnInterface
      * @var OrderByClauseInterface
      */
     protected $orderByClause;
-
-    /**
-     * @var bool
-     */
-    protected $visible = true;
 
     /**
      * @var bool
@@ -229,17 +225,6 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param bool $visible
-     * @return $this
-     */
-    public function setVisible($visible)
-    {
-        $this->visible = $visible;
-
-        return $this;
-    }
-
-    /**
      * @return ColumnInterface
      */
     public function getAppends()
@@ -336,15 +321,6 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * Check if column is visible.
-     * @return bool
-     */
-    public function isVisible()
-    {
-        return $this->visible;
-    }
-
-    /**
      * Check if column is Searchable.
      * @return bool
      */
@@ -381,6 +357,7 @@ abstract class TableColumn implements ColumnInterface
             'attributes' => $this->htmlAttributesToString(),
             'model' => $this->getModel(),
             'append' => $this->getAppends(),
+            'visibled' => $this->isVisible(),
         ];
     }
 

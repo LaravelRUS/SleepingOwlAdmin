@@ -1,8 +1,10 @@
 <div {!! $attributes !!}>
-  {{ $value }}
-  {!! $append !!}
+  @if ($visibled)
+    {{ $value }}
+    {!! $append !!}
 
-  @if($small)
-    <small class="clearfix">{!! $small !!}</small>
+    @if($small)
+      <small class="clearfix">{!! $small !!}</small>
+    @endif
   @endif
 </div>
