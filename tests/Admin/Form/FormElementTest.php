@@ -289,7 +289,7 @@ class FormElementTest extends TestCase
 
         $this->assertEquals(
             $element,
-            $element->isVisible(function ($model) {
+            $element->setVisible(function ($model) {
                 return $model->isAuthor();
             })
         );
