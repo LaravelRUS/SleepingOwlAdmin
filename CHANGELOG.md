@@ -1,15 +1,26 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 ## 2020-06-13
+* [Update] NPM packages:
+  - @flowjs/flow.js: 2.14.0 -> 2.14.0
+  - dropzone: 5.7.0 -> 5.7.1
+  - i18n: 0.9.1 -> 0.10.0
+  - i18next: 19.4.4 -> 19.4.5
+  - jquery-form: 4.2.2 -> 4.3.0
+  - sass: 1.26.5 -> 1.26.8
+  - sweetalert2: 9.13.1 -> 9.14.4
 * Rebuild visibled and add in onDisplay
+* add CSS in `.swal2-image` `max-height: 60vh`
 * Deleted deprecated in form element `->setVisibilityCondition(bool)`
 
 ```php
+//only table
 AdminColumn::checkbox()
   ->setVisible(function($item){
     return $item->id < 3;
   }),
 
+//table and datatables
 AdminColumn::link('title', 'Title')->setVisible(false),
 ```
 
