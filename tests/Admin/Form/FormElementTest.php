@@ -278,7 +278,6 @@ class FormElementTest extends TestCase
     }
 
     /**
-     * @covers SleepingOwl\Admin\Form\FormElement::setVisibilityCondition
      * @covers SleepingOwl\Admin\Form\FormElement::isVisible
      */
     public function test_visibility()
@@ -290,7 +289,7 @@ class FormElementTest extends TestCase
 
         $this->assertEquals(
             $element,
-            $element->setVisibilityCondition(function ($model) {
+            $element->isVisible(function ($model) {
                 return $model->isAuthor();
             })
         );
