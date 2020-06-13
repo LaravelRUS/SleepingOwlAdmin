@@ -281,7 +281,7 @@ abstract class FormElement implements FormElementInterface
         return [
             'value' => $this->getValue(),
             'readonly' => $this->isReadonly(),
-            'visibled' => $this->isVisible(),
+            'visibled' => $this->getVisibled(),
             'model' => $this->getModel(),
         ];
     }

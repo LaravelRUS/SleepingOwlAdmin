@@ -497,10 +497,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return bool
      */
-    public function isVisibled()
+    public function getVisibled()
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
-            return $content->isVisibled();
+            return $content->getVisibled();
         }
 
         return false;

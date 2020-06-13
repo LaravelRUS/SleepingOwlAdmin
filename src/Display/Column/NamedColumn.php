@@ -10,9 +10,13 @@ use Illuminate\Support\Collection as SuportCollection;
 use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Display\TableColumn;
+use SleepingOwl\Admin\Traits\SmallDisplay;
+use SleepingOwl\Admin\Traits\Visibled;
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
+    use SmallDisplay, Visibled;
+
     /**
      * Column field name.
      * @var string
@@ -20,21 +24,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     protected $name;
 
     /**
-     * @var string
-     * @var bool
-     */
-    protected $small;
-    protected $smallString = false;
-
-    /**
      * @var bool
      */
     protected $orderable = true;
-
-    /**
-     * @var bool
-     */
-    protected $isolated = true;
 
     /**
      * @var bool
@@ -81,31 +73,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @return string
-     */
-    public function getSmall()
-    {
-        if ($this->smallString) {
-            return $this->small;
-        }
-
-        return $this->getValueFromObject($this->getModel(), $this->small);
-    }
-
-    /**
-     * @param string $small
-     *
-     * @return $this
-     */
-    public function setSmall($small, $smallString = false)
-    {
-        $this->small = $small;
-        $this->smallString = $smallString;
-
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
     public function getModelValue()
@@ -129,26 +96,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param bool $isolated
-     *
-     * @return $this
-     */
-    public function setIsolated($isolated)
-    {
-        $this->isolated = $isolated;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIsolated()
-    {
-        return $this->isolated;
-    }
-
-    /**
      * Get the instance as an array.
      *
      * @return array
@@ -163,6 +110,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         return parent::toArray() + [
             'name' => $this->getName(),
             'small' => $model_value_small,
+            'visibled' => $this->getVisibled(),
         ];
     }
 

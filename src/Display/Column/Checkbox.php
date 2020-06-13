@@ -5,8 +5,9 @@ namespace SleepingOwl\Admin\Display\Column;
 use Form;
 use SleepingOwl\Admin\Display\TableColumn;
 
-class Checkbox extends TableColumn
+class Checkbox extends NamedColumn
 {
+
     /**
      * @var string
      */
@@ -38,7 +39,7 @@ class Checkbox extends TableColumn
     /**
      * @var bool
      */
-    protected $orderable = true;
+    protected $orderable = false;
 
     /**
      * @return mixed

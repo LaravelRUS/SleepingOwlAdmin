@@ -5,5 +5,9 @@
       {!! $append !!}
       <label for="check_{{ $value }}"></label>
     </div>
+
+    @if($small)
+      <small class="clearfix">{!! $small !!}</small>
+    @endif
   @endif
 </div>

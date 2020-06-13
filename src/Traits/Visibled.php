@@ -14,13 +14,13 @@ trait Visibled
     /**
      * @return bool|callable
      */
-    public function isVisible()
+    public function getVisibled()
     {
-        if (is_callable($this->visibled)) {
-            return (bool) call_user_func($this->visibled, $this->getModel());
+        if (is_bool($this->visibled)) {
+            return $this->visibled;
         }
 
-        return (bool) $this->visibled;
+        return (bool) $this->getValueFromObject($this->getModel(), $this->visibled);
     }
 
     /**
@@ -28,7 +28,7 @@ trait Visibled
      *
      * @return $this
      */
-    public function setVisible($visibled)
+    public function setVisibled($visibled)
     {
         $this->visibled = $visibled;
 

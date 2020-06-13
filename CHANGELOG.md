@@ -11,17 +11,21 @@
   - sweetalert2: 9.13.1 -> 9.14.4
 * Rebuild visibled and add in onDisplay
 * add CSS in `.swal2-image` `max-height: 60vh`
-* Deleted deprecated in form element `->setVisibilityCondition(bool)`
+* Remove `setSmall`, `setIsolated` in Traits
+* Add `setSmall` & `setIsolated` in `AdminColumn::checkbox()`
+* Column element `->setVisibilityCondition(bool)` only table/datatable hard view (for dynamic use `setVisibled(bool)`)
+* Add `->setVisibled( bool || callable )`
+* Rename `isVisible` in onEdit to `setVisibled`
 
 ```php
-//only table
+//table and datatables
 AdminColumn::checkbox()
-  ->setVisible(function($item){
+  ->setVisibled(function($item){
     return $item->id < 3;
   }),
 
-//table and datatables
-AdminColumn::link('title', 'Title')->setVisible(false),
+//or
+AdminColumn::link('title', 'Title')->setVisibled(false),
 ```
 
 

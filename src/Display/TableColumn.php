@@ -15,11 +15,11 @@ use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Display\Column\OrderByClause;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
-use SleepingOwl\Admin\Traits\Visibled;
+use SleepingOwl\Admin\Traits\VisibleCondition;
 
 abstract class TableColumn implements ColumnInterface
 {
-    use HtmlAttributes, Assets, Renderable, Visibled;
+    use HtmlAttributes, Assets, Renderable, VisibleCondition;
 
     /**
      * @var \Closure
@@ -357,7 +357,6 @@ abstract class TableColumn implements ColumnInterface
             'attributes' => $this->htmlAttributesToString(),
             'model' => $this->getModel(),
             'append' => $this->getAppends(),
-            'visibled' => $this->isVisible(),
         ];
     }
 

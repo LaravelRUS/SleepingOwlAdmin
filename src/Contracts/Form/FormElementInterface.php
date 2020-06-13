@@ -29,7 +29,7 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable, Wit
     /**
      * @return bool
      */
-    public function isVisible();
+    public function getVisibled();
 
     /**
      * @param \Illuminate\Http\Request $request
