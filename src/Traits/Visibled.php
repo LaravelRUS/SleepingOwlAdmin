@@ -7,20 +7,20 @@ use Closure;
 trait Visibled
 {
     /**
-     * @var bool|callable
+     * @var Closure|bool
      */
     protected $visibled = true;
 
     /**
-     * @return bool|callable
+     * @return Closure|bool
      */
     public function getVisibled()
     {
-        if (is_bool($this->visibled)) {
-            return $this->visibled;
+        if (is_callable($this->visibled)) {
+            return (bool) call_user_func($this->visibled, $this->getModel());
         }
 
-        return (bool) $this->getValueFromObject($this->getModel(), $this->visibled);
+        return (bool) $this->visibled;
     }
 
     /**

@@ -7,7 +7,7 @@ use Closure;
 trait VisibleCondition
 {
     /**
-     * @var Closure|null
+     * @var Closure|bool
      */
     protected $visibleCondition = true;
 
