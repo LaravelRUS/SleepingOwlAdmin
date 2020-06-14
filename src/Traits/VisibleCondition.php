@@ -16,7 +16,6 @@ trait VisibleCondition
      */
     public function isVisible()
     {
-
         if (is_callable($this->visibleCondition)) {
             return (bool) call_user_func($this->visibleCondition, $this->getModel());
         }
