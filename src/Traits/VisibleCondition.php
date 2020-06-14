@@ -16,19 +16,12 @@ trait VisibleCondition
      */
     public function isVisible()
     {
-        if (is_bool($this->visibleCondition)) {
-            return $this->visibleCondition;
-        }
-
-        if ($this->visibleCondition == null) {
-            return false;
-        }
 
         if (is_callable($this->visibleCondition)) {
             return (bool) call_user_func($this->visibleCondition, $this->getModel());
         }
 
-        return true;
+        return (bool) $this->visibleCondition;
     }
 
     /**
