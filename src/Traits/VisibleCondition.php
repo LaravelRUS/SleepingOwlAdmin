@@ -9,7 +9,7 @@ trait VisibleCondition
     /**
      * @var Closure|null
      */
-    protected $visibleCondition;
+    protected $visibleCondition = true;
 
     /**
      * @return bool
@@ -18,6 +18,10 @@ trait VisibleCondition
     {
         if (is_bool($this->visibleCondition)) {
             return $this->visibleCondition;
+        }
+
+        if ($this->visibleCondition == null) {
+            return false;
         }
 
         if (is_callable($this->visibleCondition)) {
