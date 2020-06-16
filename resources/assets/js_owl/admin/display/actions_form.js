@@ -8,7 +8,7 @@ Admin.Modules.register('display.actions_form', () => {
         var result_timeout = $(self).attr('data-result-timeout') || 5000;
 
         var run_action = function() {
-            let $datatable_wrapper = $(self).parents('.panel').find('.dataTables_wrapper'),
+            let $datatable_wrapper = $(self).parents('.card').find('.dataTables_wrapper'),
                 $checkboxes = $datatable_wrapper.find('.adminCheckboxRow').filter(':checked'),
                 data = $(self).serialize() + '&' + $checkboxes.serialize();
 
