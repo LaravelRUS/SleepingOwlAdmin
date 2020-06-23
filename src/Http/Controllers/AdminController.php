@@ -214,7 +214,6 @@ class AdminController extends Controller
             $requestContent->forget($key);
         }
 
-
         foreach ($removeContent as $key => $value) {
             if ($this->validatePolicy('delete', $key)) {
                 $this->writeEnvData($key);
@@ -264,7 +263,6 @@ class AdminController extends Controller
 
             return false;
         }
-
 
         if (is_null($new)) {
             $str = preg_replace("/$key=.*/m", "$key=$data", $str);
