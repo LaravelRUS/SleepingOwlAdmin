@@ -62,7 +62,7 @@
             </tbody>
         </table>
         <div class="card-footer">
-            @if (!config('sleeping_owl.env_keys_readonly') && config('sleeping_owl.env_can_add'))
+            @if (config('sleeping_owl.env_can_add'))
                 <a id="env_add_entry" @click="values.push({key:null, value:null})" class="btn btn-primary text-white">
                   <i class="fas fa-plus"></i> {{trans('sleeping_owl::lang.button.new-entry')}}
                 </a>

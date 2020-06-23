@@ -214,6 +214,7 @@ class AdminController extends Controller
             $requestContent->forget($key);
         }
 
+
         foreach ($removeContent as $key => $value) {
             if ($this->validatePolicy('delete', $key)) {
                 $this->writeEnvData($key);
@@ -255,13 +256,15 @@ class AdminController extends Controller
     {
         $envFile = app()->environmentFilePath();
         $str = file_get_contents($envFile);
-
+        //nit: daan issue#1188
+        dd($str, $key, $data, $new);
         if (is_null($data)) {
-            $str = preg_replace("/$key=.*/m", '', $str);
+            $str = preg_replace("/$key=.*/m", "$key=", $str);
             file_put_contents($envFile, $str);
 
             return false;
         }
+
 
         if (is_null($new)) {
             $str = preg_replace("/$key=.*/m", "$key=$data", $str);
