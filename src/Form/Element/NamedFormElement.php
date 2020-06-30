@@ -358,8 +358,9 @@ abstract class NamedFormElement extends FormElement
 
             $model = $this->resolvePath();
             $table = $model->getTable();
+            $connection = $model->getConnectionName();
 
-            $rule = 'unique:'.$table.','.$this->getModelAttributeKey();
+            $rule = 'unique:'.$connection.'.'.$table.','.$this->getModelAttributeKey();
             if ($model->exists) {
                 $rule .= ','.$model->getKey();
             }
