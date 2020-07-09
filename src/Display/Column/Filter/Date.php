@@ -19,12 +19,7 @@ class Date extends Text
     /**
      * @var string
      */
-    protected $format;
-
-    /**
-     * @var string
-     */
-    protected $searchFormat = 'Y-m-d';
+    protected $format = 'Y-m-d';
 
     /**
      * @var bool
