@@ -131,9 +131,10 @@ class NamedFormElementTest extends TestCase
         $element->setModel($model);
 
         $model->shouldReceive('getTable')->once()->andReturn('test_table');
+        $model->shouldReceive('getConnectionName')->once()->andReturn('connection');
 
         $element->unique();
-        $this->assertEquals(['key' => ['unique:test_table,key']], $element->getValidationRules());
+        $this->assertEquals(['key' => ['unique:connection.test_table,key']], $element->getValidationRules());
     }
 
     /**
