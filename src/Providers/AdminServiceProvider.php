@@ -78,7 +78,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('assets.packages', function ($app) {
             return new \KodiCMS\Assets\PackageManager();
         });
-        
+
         $this->app->singleton('assets', function ($app) {
             return new Assets($app['assets.packages']);
         });
