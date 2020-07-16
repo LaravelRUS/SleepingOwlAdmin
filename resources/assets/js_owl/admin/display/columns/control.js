@@ -6,7 +6,6 @@ Admin.Modules.register('display.columns.control', () => {
             let $form = $(this).closest('form');
 
             Admin.Messages.confirm(question, null, $(this)).then(result => {
-                //Исправлено для версии sweetalert 7.0.0
                 if (result.value) {
                 Admin.Events.fire("datatables::confirm::submitting", $form, selector);
                 $form.submit()

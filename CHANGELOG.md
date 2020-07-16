@@ -1,5 +1,23 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
+## 2020-07-16
+* [Update] NPM packages:
+  - @fortawesome/fontawesome-free: 5.13.0 -> 5.14.0
+  - i18next: 19.4.5 -> 19.6.2
+  - lodash: 4.17.15 -> 4.17.19
+  - moment: 2.26.0 -> 2.27.0
+  - sweetalert2: 9.14.4 -> 9.17.0
+  - vuedraggable: 2.23.2 -> 2.24.0
+  - sass: 1.26.8 -> 1.26.10
+  - sass-loader: 8.0.2 -> 9.0.2
+
+Deleted:
+  - fullcalendar
+  - font-awesome: 4.7.0
+
+* change Noty notification on Swal Toast in Tree and .env editor
+
+
 ## 2020-06-13
 * [Update] NPM packages:
   - @flowjs/flow.js: 2.14.0 -> 2.14.0

@@ -15,11 +15,28 @@ Admin.Modules.register('display.tree', () => {
 
             Admin.Events.fire('display.tree::changed');
 
-            new Noty({
-                type: 'success',
-                timeout:3000,
-                text: trans('lang.tree.reorderCompleted')
-            }).show();
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              onOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+            Toast.fire({
+              icon: 'success',
+              title: trans('lang.tree.reorderCompleted')
+            })
+
+            // new Noty({
+            //     type: 'success',
+            //     timeout:3000,
+            //     text: trans('lang.tree.reorderCompleted')
+            // }).show();
         });
     });
 
