@@ -294,9 +294,10 @@ window.checkDateRange = (fromValue, toValue, value) => {
 
 window.columnFilters = {
     //date ========================================
-    daterange (dateField, table, column, index, serverSide) {
+    date (dateField, table, column, index, serverSide) {
         let $dateField = $(dateField)
-        $dateField.on('apply.daterangepicker', function(e, date) {
+        $dateField.closest('.input-date')
+        .on('dp.change', function () {
             column.search($dateField.val());
         })
     },

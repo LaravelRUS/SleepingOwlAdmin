@@ -22,11 +22,6 @@ class Date extends Text
     protected $format = 'Y-m-d';
 
     /**
-     * @var bool
-     */
-    protected $seconds = false;
-
-    /**
      * @var string
      */
     protected $timezone;
@@ -35,37 +30,6 @@ class Date extends Text
     {
         parent::initialize();
         $this->setHtmlAttribute('data-type', 'date');
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasSeconds()
-    {
-        return $this->seconds;
-    }
-
-    /**
-     * @param bool $status
-     *
-     * @return $this
-     * @deprecated use showSeconds
-     */
-    public function setSeconds($status)
-    {
-        return $this->showSeconds($status);
-    }
-
-    /**
-     * @param bool $status
-     *
-     * @return $this
-     */
-    public function showSeconds($status = true)
-    {
-        $this->seconds = (bool) $status;
-
-        return $this;
     }
 
     /**
@@ -82,7 +46,6 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-            'seconds' => $this->hasSeconds(),
             'pickerFormat' => $this->getJsPickerFormat(),
         ];
     }
@@ -97,6 +60,9 @@ class Date extends Text
         if (empty($date)) {
             return;
         }
+
+        //contains in date
+        $this->setOperator('contains');
 
         if (! $date instanceof Carbon) {
             try {
