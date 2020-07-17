@@ -7,6 +7,20 @@
     border-top: 0;
   }
 
+  [data-type='range']:not(.inline) {
+    & > div:first-child {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  [data-type='range'].inline {
+    display: flex;
+    & > div:first-child {
+      margin-right: 0.5rem;
+    }
+  }
+
+
   .input-group {
     &.input-date.date {
       flex-wrap: nowrap;

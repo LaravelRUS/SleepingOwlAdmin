@@ -12,6 +12,11 @@ class Range extends BaseColumnFilter
     protected $view = 'column.filter.range';
 
     /**
+     * @var bool
+     */
+    protected $inline = false;
+
+    /**
      * @var ColumnFilterInterface|BaseColumnFilter
      */
     protected $from;
@@ -31,11 +36,27 @@ class Range extends BaseColumnFilter
         $this->setHtmlAttribute('data-type', 'range');
         $this->setHtmlAttribute('class', 'column-filter');
 
+        if ($this->inline) {
+            $this->setHtmlAttribute('class', 'inline');
+        }
+
         $this->getFrom()->initialize();
         $this->getTo()->initialize();
 
         $this->getFrom()->removeHtmlAttribute('data-type');
         $this->getTo()->removeHtmlAttribute('data-type');
+    }
+
+    /**
+     * @param $inline
+     *
+     * @return $this
+     */
+    public function setInline($inline)
+    {
+        $this->inline = $inline;
+
+        return $this;
     }
 
     /**
