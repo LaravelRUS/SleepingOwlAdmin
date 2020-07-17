@@ -6,15 +6,13 @@ use Exception;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Traits\Width;
 
 class Column extends FormElements implements ColumnInterface
 {
-    use HtmlAttributes;
+    use HtmlAttributes, Width;
 
-    /**
-     * @var int
-     */
-    protected $width;
+
 
     /**
      * @var int
@@ -34,26 +32,6 @@ class Column extends FormElements implements ColumnInterface
         parent::initialize();
 
         $this->setHtmlAttribute('class', $this->getClass());
-    }
-
-    /**
-     * @param int|array|string $width
-     *
-     * @return $this
-     */
-    public function setWidth($width)
-    {
-        $this->width = $width;
-
-        return $this;
-    }
-
-    /**
-     * @return int|array|string
-     */
-    public function getWidth()
-    {
-        return $this->width;
     }
 
     /**

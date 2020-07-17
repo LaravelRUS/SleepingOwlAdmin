@@ -1,1 +1,3 @@
-<input type="text" {!! $attributes !!}/>
+<div {!! $width !!}>
+  <input type="text" {!! $attributes !!}/>
+</div>

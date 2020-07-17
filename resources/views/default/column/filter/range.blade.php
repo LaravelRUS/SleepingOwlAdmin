@@ -1,4 +1,4 @@
-<div {!! $attributes !!}>
+<div {!! $attributes !!} {!! $width !!}>
 	{!! $from !!}
 	{!! $to !!}
 </div>

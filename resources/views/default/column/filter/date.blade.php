@@ -1,4 +1,4 @@
-<div class="input-group input-date date">
+<div class="input-group input-date date" {!! $width !!}>
     <input
         data-date-format="{{ $pickerFormat }}"
         class="form-control column-filter"
