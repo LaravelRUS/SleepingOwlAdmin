@@ -55,11 +55,13 @@ tfoot.display-filters {
 .display-filters-top {
   display: flex;
   width: 100%;
-  // justify-content: space-between;
+  flex-wrap: wrap;
 
   & > div {
     flex: 0 1 auto;
     padding-right: 1rem;
+    align-self: center;
+    margin-bottom: 0.5rem;
   }
 
   & > div:last-child {
