@@ -125,11 +125,11 @@ Admin.Modules.register('display.datatables', () => {
 
         //clear filter
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
-            let input = $(".display-filters td[data-index] input")
+            let input = $(".display-filters [data-index] input")
             input.val(null)
             input.trigger('change')
 
-            let selector = $(".display-filters td[data-index] select")
+            let selector = $(".display-filters [data-index] select")
             selector.val(null)
             selector.trigger('change')
 
@@ -139,7 +139,7 @@ Admin.Modules.register('display.datatables', () => {
             table.draw()
         });
 
-        $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e) {
+        $("[data-datatables-id="+$this.data("id")+"].display-filters [data-index] input").on('keyup', function(e) {
             if(e.keyCode === 13) {
                 table.draw()
             }

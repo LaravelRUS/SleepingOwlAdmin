@@ -238,6 +238,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     {
         if (! in_array($this->getPlacement(), ['table.footer', 'table.header']) && $this->view == 'display.extensions.columns_filters_table') {
             $this->view = 'display.extensions.columns_filters';
+            $this->setHtmlAttribute('class', 'display-filters-top');
             $this->setHtmlAttribute('class', 'table table-default');
         }
 
