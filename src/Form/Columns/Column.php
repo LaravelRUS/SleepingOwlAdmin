@@ -12,8 +12,6 @@ class Column extends FormElements implements ColumnInterface
 {
     use HtmlAttributes, Width;
 
-
-
     /**
      * @var int
      */
