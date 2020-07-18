@@ -256,7 +256,6 @@ class AdminController extends Controller
         $envFile = app()->environmentFilePath();
         $str = file_get_contents($envFile);
         //nit: daan issue#1188
-        dd($str, $key, $data, $new);
         if (is_null($data)) {
             $str = preg_replace("/$key=.*/m", "$key=", $str);
             file_put_contents($envFile, $str);
