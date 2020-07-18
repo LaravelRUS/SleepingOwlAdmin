@@ -76,6 +76,13 @@ tfoot.display-filters {
     padding-right: 1rem;
     align-self: center;
     margin-bottom: 0.5rem;
+
+    @media (max-width: 667px) {
+      & > div {
+        min-width: 1% !important;
+        max-width: 100% !important;
+      }
+    }
   }
 
   & > div:last-child {
