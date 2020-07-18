@@ -196,7 +196,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     {
         $width = '';
         if ($this->getWidth()) {
-            $width = 'style="min-width: ' . $this->getWidth() . '"';
+            $width = 'style="min-width: '.$this->getWidth().'"';
         }
 
         return [
