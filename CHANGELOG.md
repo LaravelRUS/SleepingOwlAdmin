@@ -1,5 +1,14 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
+
+## 2020-07-18
+* Fix `AdminColumnFilter::date()`
+* Return `setWidth` (css min-width) in filters
+* Add `->setInline(true)` in `AdminColumnFilter::range()`
+* Fix filters css (scss)
+* Rebase top filters from tables view on flex div (add flex wrap)
+
+
 ## 2020-07-16
 * [Update] NPM packages:
   - @fortawesome/fontawesome-free: 5.13.0 -> 5.14.0
