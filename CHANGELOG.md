@@ -1,5 +1,22 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
+## 2020-08-27
+* [Update] NPM packages:
+  - bootstrap: 4.5.0 -> 4.5.2
+  - sass-loader: 9.0.2 -> 10.0.1
+  - vue-template-compiler: 2.6.11 -> 2.6.12
+  - laravel-mix: 5.0.4 -> 5.0.5
+  - i18next: 19.6.2 -> 19.7.0
+  - dropzone: 5.7.1 -> 5.7.2
+  - lodash: 4.17.19 -> 4.17.20
+  - trix: 1.2.3 -> 1.2.4
+  - vuedraggable: 2.24.0 -> 2.24.1
+  - sweetalert2: 9.17.0 -> 9.17.1
+  - vue: 2.6.11 -> 2.6.12
+  - i18n: 0.10.0 -> 0.13.2
+  - axios: 0.19.2 -> 0.20.0
+
+
 
 ## 2020-07-18
 * Fix `AdminColumnFilter::date()`
