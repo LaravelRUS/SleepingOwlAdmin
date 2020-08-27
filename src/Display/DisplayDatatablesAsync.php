@@ -318,7 +318,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
                 $add_class = [];
                 $add_class['add_class'] = $class;
-                $_row[] = (Object) $add_class;
+                $_row[] = (object) $add_class;
             }
 
             $result['data'][] = $_row;
