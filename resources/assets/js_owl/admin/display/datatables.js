@@ -101,9 +101,9 @@ Admin.Modules.register('display.datatables', () => {
         }
 
         params.createdRow = function (row, data, dataIndex) {
-            let row_class = data[params.columns.length];
-            if (row_class) {
-                $(row).addClass(row_class);
+            let row_class = data[data.length - 1];
+            if (row_class && row_class.add_class) {
+                $(row).addClass(row_class.add_class);
             }
         }
 
@@ -114,6 +114,14 @@ Admin.Modules.register('display.datatables', () => {
             if (_.isFunction(window.columnFilters[type])) {
                 window.columnFilters[type]($element, table, table.column(index), index, params.serverSide);
             }
+        });
+
+        //add td highlight
+        $("tbody").on('mouseenter', 'td', function() {
+            var colIdx = table.cell(this).index().column;
+
+            $(table.cells().nodes()).removeClass('highlight');
+            $(table.column(colIdx).nodes()).addClass('highlight');
         });
 
         $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {

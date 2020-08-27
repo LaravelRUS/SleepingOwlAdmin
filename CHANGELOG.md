@@ -1,6 +1,8 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 ## 2020-08-27
+* [Add] Add td highlight in datatables
+* [Fix] Fix `setRowClassCallback()` and `disableControls()` in datatables on `fireDisplay()`
 * [Update] NPM packages:
   - bootstrap: 4.5.0 -> 4.5.2
   - sass-loader: 9.0.2 -> 10.0.1
