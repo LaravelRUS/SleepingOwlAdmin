@@ -1,24 +1,35 @@
-#scrolltotop {
+#scrolltotop, #scrolltobottom {
   position: fixed;
-  bottom: 1.5rem;
   right: 2.5rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   background-color: rgba($white, 0.8);
-  border-radius: 0.5rem;
   color: $black;
   transition: $trans;
-  opacity: 0;
-  visibility: hidden;
-  // display: none;
-
-  &.show {
-    opacity: 1;
-    visibility: visible;
-    // display: block;
-  }
 
   &:hover {
     background-color: rgba($gray-900, 0.8);
     color: $white;
+  }
+}
+
+#scrolltotop {
+  bottom: 3.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  opacity: 0;
+  visibility: hidden;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+#scrolltobottom {
+  bottom: 1rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+
+  &.hide {
+    opacity: 0;
+    visibility: hidden;
   }
 }

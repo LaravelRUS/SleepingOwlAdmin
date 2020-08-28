@@ -6,6 +6,7 @@
 * [Ver] Tested on Laravel 7.25
 * [Add] Add datatables_highlight in config file and add class `.lightcolumn` for custom table
 * [Add] Add class `.table-black` and `.table-red` (+highlight classes)
+* [Add] Add scroll-to-bottom button
 
 
 ## 2020-08-27
