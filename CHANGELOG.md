@@ -1,10 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 
-## 2020-08-28
+## [UNREALESED] 2020-08-28
 * [Add] Partially localized `select2` in `selectajax`
 * [Ver] Tested on Laravel 7.25
-* [Add] Add datatables_highlight in config file
+* [Add] Add datatables_highlight in config file and add class `.lightcolumn` for custom table
+* [Add] Add class `.table-black` and `.table-red` (+highlight classes)
 
 
 ## 2020-08-27
@@ -29,7 +30,7 @@
   - axios: 0.19.2 -> 0.20.0
 
 
-## 2020-07-18
+## [RELEASED 7.20] 2020-07-18
 * Fix `AdminColumnFilter::date()`
 * Return `setWidth` (css min-width) in filters
 * Add `->setInline(true)` in `AdminColumnFilter::range()`

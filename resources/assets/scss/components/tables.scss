@@ -9,12 +9,7 @@
         background-color: rgba($color, 0.3);
       }
     }
-
-    td.highlight {
-      background-color: rgba($color, 0.08) !important;
-    }
   }
-
 }
 
 .table {
@@ -52,10 +47,6 @@
       &:hover {
         background-color: rgba($black, 0.1);
       }
-    }
-
-    td.highlight {
-      background-color: rgba($black, 0.08) !important;
     }
   }
 
@@ -99,6 +90,28 @@
   }
 }
 
+.lightcolumn {
+  &.table {
+    td.highlight {
+      background-color: rgba($black, 0.08) !important;
+    }
+
+    @each $key, $value in $colors_palette {
+      &.table-#{"" + $key} {
+        td.highlight {
+          background-color: rgba($value, 0.08) !important;
+        }
+      }
+    }
+
+    &.table-white, &.table-gray {
+      td.highlight {
+        background-color: rgba($black, 0.08) !important;
+      }
+    }
+  }
+}
+
 .table {
   &.table-primary {
     @include table-color($primary);
@@ -122,6 +135,23 @@
 
   &.table-info {
     @include table-color($info);
+  }
+
+  &.table-red {
+    @include table-color($red);
+
+    thead {
+      background-color: $red;
+    }
+  }
+
+  &.table-black {
+    @include table-color($black);
+
+    thead {
+      background-color: $black;
+      color: $white;
+    }
   }
 
   &.table-light {
