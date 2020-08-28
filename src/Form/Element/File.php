@@ -8,9 +8,13 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use KodiComponents\Support\Upload;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Traits\FileSize;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
+
+    use FileSize;
+
     /**
      * @var string
      */
@@ -219,30 +223,6 @@ class File extends NamedFormElement implements WithRoutesInterface
         }
 
         return parent::addValidationRule($rule, $message);
-    }
-
-    /**
-     * @param int $size Max size in kilobytes
-     *
-     * @return $this
-     */
-    public function maxSize($size)
-    {
-        $this->addValidationRule('max:'.(int) $size);
-
-        return $this;
-    }
-
-    /**
-     * @param int $size Max size in kilobytes
-     *
-     * @return $this
-     */
-    public function minSize($size)
-    {
-        $this->addValidationRule('min:'.(int) $size);
-
-        return $this;
     }
 
     /**

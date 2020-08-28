@@ -122,6 +122,10 @@ $(function () {
             updateValue();
         });
 
+        flow.on('fileError', function(file, message){
+            Admin.Messages.error(trans('lang.ckeditor.upload.error.common'))
+        });
+
         $item.on('click', '.fileLink', function (e) {
             e.preventDefault();
             var url = $(this).attr('href');
@@ -144,7 +148,9 @@ $(function () {
             updateValue();
         });
 
+        // dragable
         Sortable.create($innerGroup[0], {
+            sort: $($innerGroup[0]).data('draggable'),
             onUpdate: function () {
                 updateValue();
             }

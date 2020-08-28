@@ -1,8 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 ## 2020-08-27
-* [Add] Add td highlight in datatables
+* [Add] Add column highlight in datatables
 * [Fix] Fix `setRowClassCallback()` and `disableControls()` in datatables on `fireDisplay()`
+* [Fix] Fix `setDraggable(bool)` in `AdminFormElement::files` and `AdminFormElement::images`
+* [Fix] Fix `maxSize()` and `minSize()` in AdminFormElement `file`, `files`, `image` and `images`
+* [Add] Add `maxSize()` cannot be larger than allowed in php
 * [Update] NPM packages:
   - bootstrap: 4.5.0 -> 4.5.2
   - sass-loader: 9.0.2 -> 10.0.1

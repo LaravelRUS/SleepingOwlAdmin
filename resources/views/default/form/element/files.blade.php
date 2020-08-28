@@ -1,6 +1,6 @@
 @if ($visibled)
     <div class="form-group form-element-file fileUploadMultiple{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}" {!! $style ? ' style="' . $style . '"' : '' !!}
-    data-target="{{ route('admin.form.element.file', [
+        data-target="{{ route('admin.form.element.file', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
@@ -50,9 +50,12 @@
                                 <button class="btn btn-danger btn-delete btn-xs fileRemove">
                                     <i class="fas fa-times"></i>
                                 </button>
+
+                                @if (isset($draggable) && $draggable)
                                 <a class="btn btn-clear btn-sm pull-right drag-cursor">
                                     <i class="fas fa-arrows-alt"></i>
                                 </a>
+                                @endif
                                 <a href="[%=url%]" download class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </a>
@@ -64,7 +67,8 @@
             </script>
         @endif
 
-        <div class="files-group dropzone {{ $files_group_class }}{{ $readonly ? ' dissortable' : '' }}">
+        <div class="files-group dropzone {{ $files_group_class }}{{ $readonly ? ' dissortable' : '' }}"
+        data-draggable="{{ $draggable }}">
             @foreach ($value ?? [] as $item)
                 <div class="fileThumbnail">
                     <div class="thumbnail">
@@ -111,16 +115,16 @@
                                     <button class="btn btn-danger btn-delete btn-xs fileRemove">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <a class="btn btn-clear btn-sm pull-right drag-cursor">
-                                        <i class="fas fa-arrows-alt"></i>
-                                    </a>
+
+                                    @if (isset($draggable) && $draggable)
+                                        <a class="btn btn-clear btn-sm pull-right drag-cursor">
+                                            <i class="fas fa-arrows-alt"></i>
+                                        </a>
+                                    @endif
                                 @endif
                                 <a href="{{ @asset($item['url']) }}" download class="btn btn-default btn-sm mr-1{{ $readonly ? '' : ' pull-right' }}" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </a>
-                                {{-- <a href="{{ @asset($item['url']) }}" class="btn btn-default btn-sm pull-right mr-1 fileLink" title="{{ trans('sleeping_owl::lang.file.insert_link') }}">
-                                  <i class="fas fa-link"></i>
-                                </a> --}}
                             </div>
                         </div>
                         <div class="file-clearfix"></div>

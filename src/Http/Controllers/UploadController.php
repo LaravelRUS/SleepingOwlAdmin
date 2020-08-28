@@ -40,7 +40,7 @@ class UploadController extends Controller
             $item = $model->getRepository()->find($id);
             if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
-                    'message' => trans('lang.message.access_denied'),
+                    'message' => trans('sleeping_owl::lang.message.access_denied'),
                 ], 403);
             }
 
@@ -48,7 +48,7 @@ class UploadController extends Controller
         } else {
             if (! $model->isCreatable()) {
                 return new JsonResponse([
-                    'message' => trans('lang.message.access_denied'),
+                    'message' => trans('sleeping_owl::lang.message.access_denied'),
                 ], 403);
             }
 
@@ -75,7 +75,7 @@ class UploadController extends Controller
 
         if ($validator->fails()) {
             return new JsonResponse([
-                'message' => trans('lang.message.validation_error'),
+                'message' => trans('sleeping_owl::lang.message.validation_error'),
                 'errors' => $validator->errors()->get('file'),
             ], 400);
         }

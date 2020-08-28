@@ -224,30 +224,6 @@ class Files extends Images
     }
 
     /**
-     * @param int $size Max size in kilobytes
-     *
-     * @return $this
-     */
-    public function maxSize($size)
-    {
-        $this->addValidationRule('max:'.(int) $size);
-
-        return $this;
-    }
-
-    /**
-     * @param int $size Max size in kilobytes
-     *
-     * @return $this
-     */
-    public function minSize($size)
-    {
-        $this->addValidationRule('min:'.(int) $size);
-
-        return $this;
-    }
-
-    /**
      * @param \Closure $callable
      * @return $this
      */

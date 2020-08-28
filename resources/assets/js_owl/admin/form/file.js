@@ -49,9 +49,11 @@ Vue.component('element-file', Vue.extend({
                     self.val = response.value
                 },
                 error (file, response) {
-                    Admin.Messages.error(response)
                     if(_.isArray(response.errors)) {
-                        self.errors = response.errors
+                        if (response.errors[0]) {
+                            Admin.Messages.error(response.message, response.errors[0])
+                        }
+                        self.errors = response.errors;
                     }
                 },
                 complete(){
