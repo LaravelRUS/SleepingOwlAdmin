@@ -1,5 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
+
+## 2020-08-28
+* [Add] Partially localized `select2` in `selectajax`
+* [Ver] Tested on Laravel 7.25 
+
+
 ## 2020-08-27
 * [Add] Add column highlight in datatables
 * [Fix] Fix `setRowClassCallback()` and `disableControls()` in datatables on `fireDisplay()`
@@ -20,7 +26,6 @@
   - vue: 2.6.11 -> 2.6.12
   - i18n: 0.10.0 -> 0.13.2
   - axios: 0.19.2 -> 0.20.0
-
 
 
 ## 2020-07-18
