@@ -2,11 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use SleepingOwl\Admin\Traits\MaxFileSizeTrait;
-
 trait FileSize
 {
-
     use MaxFileSizeTrait;
 
     /**
@@ -20,10 +17,10 @@ trait FileSize
     protected $max;
 
     /**
-    * @param int $size Max size in kilobytes
-    *
-    * @return $this
-    */
+     * @param int $size Max size in kilobytes
+     *
+     * @return $this
+     */
     public function maxSize($size)
     {
         if ((int) $size > (int) $this->getMaxFileSize()) {
@@ -36,10 +33,10 @@ trait FileSize
     }
 
     /**
-    * @param int $size Max size in kilobytes
-    *
-    * @return $this
-    */
+     * @param int $size Max size in kilobytes
+     *
+     * @return $this
+     */
     public function minSize($size)
     {
         $this->addValidationRule('min:'.(int) $size);

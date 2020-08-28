@@ -12,7 +12,6 @@ use SleepingOwl\Admin\Traits\FileSize;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
-
     use FileSize;
 
     /**
