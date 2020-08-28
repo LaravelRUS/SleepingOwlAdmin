@@ -49,6 +49,7 @@ trait ProvidesScriptVariables
             'datetime_format' => $this->generatePickerFormat($this->config['datetimeFormat']),
             'date_format' => $this->generatePickerFormat($this->config['dateFormat']),
             'state_datatables' => $this->config['state_datatables'],
+            'datatables_highlight' => $this->config['datatables_highlight'],
             'state_tabs' => $this->config['state_tabs'],
             'state_filters' => $state_filters,
             'lang' => $lang,

@@ -3,7 +3,8 @@
 
 ## 2020-08-28
 * [Add] Partially localized `select2` in `selectajax`
-* [Ver] Tested on Laravel 7.25 
+* [Ver] Tested on Laravel 7.25
+* [Add] Add datatables_highlight in config file
 
 
 ## 2020-08-27

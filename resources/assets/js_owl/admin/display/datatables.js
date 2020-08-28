@@ -116,13 +116,15 @@ Admin.Modules.register('display.datatables', () => {
             }
         });
 
-        //add td highlight
-        $("tbody").on('mouseenter', 'td', function() {
+        //add td highlight in config
+        if (Admin.Config.get('datatables_highlight')) {
+          $("tbody").on('mouseenter', 'td', function() {
             var colIdx = table.cell(this).index().column;
 
             $(table.cells().nodes()).removeClass('highlight');
             $(table.column(colIdx).nodes()).addClass('highlight');
-        });
+          });
+        }
 
         $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
             if (stateFilters) {
