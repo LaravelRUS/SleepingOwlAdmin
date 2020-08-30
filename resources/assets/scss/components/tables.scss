@@ -160,6 +160,12 @@
     thead {
       background-color: $gray-200;
     }
+
+    tbody {
+      tr:hover {
+        background-color: rgba($gray-600, 0.3);
+      }
+    }
   }
 
   &.table-gray {

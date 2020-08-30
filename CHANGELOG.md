@@ -1,7 +1,12 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 
-## [UNREALESED] 2020-08-28
+## [UNREALESED] 2020-08-31
+* [Fix] datatables highlight tabs column
+* [Fix] Fix table-light row hover style
+
+
+## 2020-08-28
 * [Add] Partially localized `select2` in `selectajax`
 * [Ver] Tested on Laravel 7.25
 * [Add] Add datatables_highlight in config file and add class `.lightcolumn` for custom table
