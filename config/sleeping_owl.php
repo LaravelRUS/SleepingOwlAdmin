@@ -314,7 +314,7 @@ return [
     | Highlight DataTables column on mouseover
     |
     */
-    'datatables_highlight' => true,
+    'datatables_highlight' => false,
 
     /*
     |--------------------------------------------------------------------------

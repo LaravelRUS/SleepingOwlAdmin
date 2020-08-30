@@ -118,7 +118,7 @@ Admin.Modules.register('display.datatables', () => {
 
         //add td highlight in config
         if (Admin.Config.get('datatables_highlight')) {
-          $("tbody").on('mouseenter', 'td', function() {
+          $("[data-id="+$this.data("id")+"].lightcolumn tbody").on('mouseenter', 'td', function() {
             var colIdx = table.cell(this).index().column;
 
             $(table.cells().nodes()).removeClass('highlight');
