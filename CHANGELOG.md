@@ -1,7 +1,7 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
 
 
-## [UNREALESED] 2020-09-02
+## [RELEASED 7.27] 2020-09-02
 * [Fix] datatables highlight tabs column in empty table
 
 
