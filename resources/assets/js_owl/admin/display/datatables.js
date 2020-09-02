@@ -98,6 +98,18 @@ Admin.Modules.register('display.datatables', () => {
         params.fnDrawCallback = function (oSettings) {
             Admin.Events.fire('datatables::draw', this)
             jQuery('[data-toggle="tooltip"]').tooltip()
+
+            //add td highlight in config
+            if (Admin.Config.get('datatables_highlight')) {
+              jQuery("[data-id="+this.data("id")+"].lightcolumn tbody").on('mouseenter', 'td', function() {
+                  if (table.data().any()) {
+                      var colIdx = table.cell(this).index().column;
+
+                      jQuery(table.cells().nodes()).removeClass('highlight');
+                      jQuery(table.column(colIdx).nodes()).addClass('highlight');
+                  }
+              })
+            }
         }
 
         params.createdRow = function (row, data, dataIndex) {
@@ -116,15 +128,7 @@ Admin.Modules.register('display.datatables', () => {
             }
         });
 
-        //add td highlight in config
-        if (Admin.Config.get('datatables_highlight')) {
-          $("[data-id="+$this.data("id")+"].lightcolumn tbody").on('mouseenter', 'td', function() {
-            var colIdx = table.cell(this).index().column;
 
-            $(table.cells().nodes()).removeClass('highlight');
-            $(table.column(colIdx).nodes()).addClass('highlight');
-          });
-        }
 
         $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
             if (stateFilters) {
@@ -153,7 +157,8 @@ Admin.Modules.register('display.datatables', () => {
             if(e.keyCode === 13) {
                 table.draw()
             }
-        });
+        })
+
     })
 
 
