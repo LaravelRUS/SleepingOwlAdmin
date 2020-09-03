@@ -7,14 +7,13 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Form\Element\Text text($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\Trix text($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\Trix trix($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Image image($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Images images($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\File file($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Files files($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Time time($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\Date date($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\DateRange daterange($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\Date date($name, $label = null) 
  * @method static \SleepingOwl\Admin\Form\Element\Timestamp timestamp($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\TextAddon textaddon($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Password password($name, $label = null)
