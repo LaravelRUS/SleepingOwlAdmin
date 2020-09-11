@@ -10,6 +10,8 @@ use SleepingOwl\Admin\Display\Column\Editable\Date;
 use SleepingOwl\Admin\Display\Column\Editable\DateTime;
 use SleepingOwl\Admin\Display\Column\Editable\Select;
 use SleepingOwl\Admin\Display\Column\Editable\Text;
+use SleepingOwl\Admin\Display\Column\Editable\Number;
+use SleepingOwl\Admin\Display\Column\Editable\Range;
 use SleepingOwl\Admin\Display\Column\Editable\Textarea;
 
 /**
@@ -29,6 +31,8 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
         $this->register([
             'checkbox' => Checkbox::class,
             'text' => Text::class,
+            'number' => Number::class,
+            'range' => Range::class,
             'textarea' => Textarea::class,
             'select' => Select::class,
             'datetime' => DateTime::class,

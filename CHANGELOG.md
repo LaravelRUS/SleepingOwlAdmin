@@ -1,8 +1,26 @@
-<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
+<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
 
-## [RELEASED 7.27] 2020-09-02
-* [Fix] datatables highlight tabs column in empty table
+## [UNRELEASED] 2020-09-11
+* [Fix] Fix issue #1222
+* [Add] `AdminColumnEditable::number('count','Count')`
+* [Add] `AdminColumnEditable::range('range','Power')`
+
+```php
+AdminColumnEditable::number('count', 'Count')
+  ->setMin(-25) //not required
+  ->setMax(30) //not required
+  ->setStep(5) //not required
+
+AdminColumnEditable::range('range', 'Power')
+  ->setMin(-25) //not required
+  ->setMax(30) //not required
+  ->setStep(5) //not required
+```
+
+
+## [RELEASED 8.0] 2020-09-10
+* [Support] Support Laravel 8
 
 
 ## 2020-08-31
