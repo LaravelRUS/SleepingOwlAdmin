@@ -26,8 +26,9 @@ $arrow-size: 6px;
 }
 
 .form-element-helptext {
-  color: $gray-400;
+  color: $gray-600;
   font-style: italic;
+  padding: 0 1.25rem 0.5rem;
 }
 
 .form-element-required {
@@ -123,8 +124,10 @@ $arrow-size: 6px;
 }
 
 .form-element-files__item {
-  max-width: 260px;
-  width: 100%;
+  max-width: 100%;
+  min-width: 260px;
+  // max-width: 260px;
+  // width: 100%;
   border: 1px solid $gray-300;
   margin-bottom: 10px;
   margin-right: 10px;
@@ -148,7 +151,7 @@ a.form-element-files__image {
   align-items: center;
   width: 100%;
   justify-content: center;
-  display: flex;  
+  display: flex;
 }
 
 .form-element-files__info {
