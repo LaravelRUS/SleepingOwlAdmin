@@ -8,10 +8,10 @@ use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
 use SleepingOwl\Admin\Display\Column\Editable\Date;
 use SleepingOwl\Admin\Display\Column\Editable\DateTime;
-use SleepingOwl\Admin\Display\Column\Editable\Select;
-use SleepingOwl\Admin\Display\Column\Editable\Text;
 use SleepingOwl\Admin\Display\Column\Editable\Number;
 use SleepingOwl\Admin\Display\Column\Editable\Range;
+use SleepingOwl\Admin\Display\Column\Editable\Select;
+use SleepingOwl\Admin\Display\Column\Editable\Text;
 use SleepingOwl\Admin\Display\Column\Editable\Textarea;
 
 /**

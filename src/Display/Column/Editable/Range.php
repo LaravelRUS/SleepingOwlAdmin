@@ -2,9 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Form\FormDefault;
 
 class Range extends Number implements ColumnEditableInterface
 {
@@ -14,18 +12,17 @@ class Range extends Number implements ColumnEditableInterface
     protected $view = 'column.editable.range';
 
     /**
-     * @var integer
+     * @var int
      */
     protected $min = 0;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $max = 100;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $step = 1;
-
 }

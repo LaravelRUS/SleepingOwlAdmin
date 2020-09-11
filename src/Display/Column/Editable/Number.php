@@ -14,17 +14,17 @@ class Number extends EditableColumn implements ColumnEditableInterface
     protected $view = 'column.editable.number';
 
     /**
-     * @var integer
+     * @var int
      */
     protected $min;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $max;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $step;
 
@@ -40,7 +40,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param integer $min
+     * @param int $min
      *
      * @return $this
      */
@@ -52,7 +52,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param integer $max
+     * @param int $max
      *
      * @return $this
      */
@@ -64,7 +64,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param integer $step
+     * @param int $step
      *
      * @return $this
      */
