@@ -52,7 +52,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     {
         $resolver = new EngineResolver();
         $resolver->register('php', function () {
-            return new PhpEngine();
+            return new PhpEngine($this->app['files']);
         });
         $finder = new FileViewFinder($this->app['files'], [__DIR__.'/../../resources/views']);
         $factory = new Factory($resolver, $finder, $this->app['events']);
