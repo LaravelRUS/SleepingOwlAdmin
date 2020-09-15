@@ -4,7 +4,7 @@
 ## [RELEASED 8.2] 2020-09-15
 * [Fix] Fix ArgumentCountError on update
 * [Fix] Fix image/s, file/s css
-
+* [Fix] Fix in related elements don't initialize Columns element
 
 ## 2020-09-11
 * [Fix] Fix issue #1222

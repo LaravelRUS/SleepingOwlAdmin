@@ -177,6 +177,11 @@ abstract class Elements extends FormElements
 
     public function initializeElement($element)
     {
+        //ignore second initialize
+        if ($element instanceof ColumnInterface) {
+            return;
+        }
+
         if ($element instanceof Initializable) {
             $element->initialize();
         }
@@ -185,11 +190,6 @@ abstract class Elements extends FormElements
             $element->setFakeModel($this->getModel());
         }
 
-        if ($element instanceof ColumnInterface) {
-            $element->getElements()->each(function ($el) {
-                $this->initializeElement($el);
-            });
-        }
     }
 
     /**
@@ -240,6 +240,7 @@ abstract class Elements extends FormElements
     protected function emptyElement($element)
     {
         $el = clone $element;
+
         if ($el instanceof Columns) {
             $col = new Columns();
             $columns = $el->getElements();
@@ -247,7 +248,10 @@ abstract class Elements extends FormElements
                 return $this->emptyElement($column);
             })->all());
 
-            return $col;
+        $col->initialize();
+
+        return $col;
+
         }
 
         if ($el instanceof FormElements) {
