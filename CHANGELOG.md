@@ -1,7 +1,12 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
 
-## [UNRELEASED] 2020-09-11
+## [RELEASED 8.2] 2020-09-15
+* [Fix] Fix ArgumentCountError on update
+* [Fix] Fix image/s, file/s css
+
+
+## 2020-09-11
 * [Fix] Fix issue #1222
 * [Add] `AdminColumnEditable::number('count','Count')`
 * [Add] `AdminColumnEditable::range('range','Power')`
