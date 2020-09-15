@@ -189,7 +189,6 @@ abstract class Elements extends FormElements
         if ($element instanceof HasFakeModel) {
             $element->setFakeModel($this->getModel());
         }
-
     }
 
     /**
@@ -248,10 +247,9 @@ abstract class Elements extends FormElements
                 return $this->emptyElement($column);
             })->all());
 
-        $col->initialize();
+            $col->initialize();
 
-        return $col;
-
+            return $col;
         }
 
         if ($el instanceof FormElements) {
