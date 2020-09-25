@@ -143,7 +143,7 @@ abstract class Elements extends FormElements
 
         $this->stubElements = $this->getNewElements();
         $this->forEachElement($this->stubElements, function ($element) {
-            $element->setDefaultValue(null);
+            //$element->setDefaultValue(null);
             if (! $element instanceof HasFakeModel) {
                 $element->setPath('');
             }
@@ -256,7 +256,7 @@ abstract class Elements extends FormElements
             $el->setElements($this->cloneElements($el)->all());
         } else {
             if (! ($el instanceof Custom)) {
-                $el->setDefaultValue(null);
+                //$el->setDefaultValue(null);
             }
             $el->setValueSkipped(true);
         }
