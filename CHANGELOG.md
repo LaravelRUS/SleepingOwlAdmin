@@ -1,5 +1,8 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2020-09-28
+* [Fix] Fix in related elements dublicate 'id' in elements
+
 ## [RELEASED 8.2] 2020-09-25
 * [Fix] Fix in related elements don't set method setDefaultValue()
 

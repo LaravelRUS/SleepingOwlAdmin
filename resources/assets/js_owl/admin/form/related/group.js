@@ -35,6 +35,14 @@ Vue.component('related-group', {
     },
 
     mounted() {
+
+        each(this.$el.querySelectorAll('input, select'), (el) => {
+            const id = el.getAttribute('id');
+            if (id) {
+                el.setAttribute('id', `${id}_${this.index}`);
+            }
+        });
+
         if (!this.primary) {
             each(this.$el.querySelectorAll('input, select'), (el) => {
                 const name = el.getAttribute('name');
