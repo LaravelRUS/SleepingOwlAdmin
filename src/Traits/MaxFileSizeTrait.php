@@ -10,13 +10,15 @@ trait MaxFileSizeTrait
     protected $maxFileSize;
 
     /**
-     * @return number
+     * Возвращает максимальный размер загружаемого файла из конфигурации php.ini
+     *
+     * @return number Максимальный размер загружаемого файла в килобайтах
      */
     public function getMaxFileSize()
     {
         if (! $this->maxFileSize) {
             try {
-                $this->maxFileSize = $this->convertMB(ini_get('upload_max_filesize'));
+                $this->maxFileSize = $this->convertKB(ini_get('upload_max_filesize'));
             } catch (\Exception $e) {
                 $this->maxFileSize = 5;
             }
@@ -26,10 +28,13 @@ trait MaxFileSizeTrait
     }
 
     /**
-     * Конвертирование значения
-     * максимального размера загружаемого файла.
+     * Конвертация значения размера загружаемого файла.
+     *
+     * @param string $value
+     *
+     * @return number Размер файла в килобайтах
      */
-    public function convertMB($value)
+    public function convertKB($value)
     {
         if (is_numeric($value)) {
             return $value;
@@ -39,14 +44,14 @@ trait MaxFileSizeTrait
             $unit = strtolower(substr($value, $value_length - 1));
             switch ($unit) {
                 case 'k':
-                $qty /= 1024;
-                break;
+                    $qty = $qty;
+                    break;
                 case 'm':
-                $qty = $qty;
-                break;
+                    $qty *= 1024;
+                    break;
                 case 'g':
-                $qty *= 1024;
-                break;
+                    $qty *= 1048576;
+                    break;
             }
 
             return $qty;
