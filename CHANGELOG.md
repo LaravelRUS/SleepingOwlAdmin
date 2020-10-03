@@ -1,5 +1,8 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2020-10-03
+* [Fix] maxSize and minSize in image/images/file/files (was Mb, now in kB)
+
 ## 2020-09-28
 * [Fix] Fix in related elements dublicate 'id' in elements
 
