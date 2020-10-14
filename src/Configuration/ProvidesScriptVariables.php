@@ -42,6 +42,7 @@ trait ProvidesScriptVariables
             'locale' => $this->app['translator']->getLocale(),
             'url' => $this->app['url']->to('/'),
             'url_path' => Request::path(),
+            'url_prefix' => $this->config['url_prefix'],
             'wysiwyg' => $this->config['wysiwyg'],
             'template' => $this->app[TemplateInterface::class]->toArray(),
             'user_id' => auth()->id(),
