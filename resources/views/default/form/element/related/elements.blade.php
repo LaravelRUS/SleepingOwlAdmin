@@ -8,6 +8,11 @@
 >
     <div {!! $attributes !!}>
         <h4 v-if="label">@{{ label }}</h4>
+        @if (isset($helpText) && $helpText)
+            <div class="mb-2">
+                @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
+            </div>
+        @endif
         <div class='grouped-elements clearfix'>
             @foreach($groups as $key => $group)
                 @include(AdminTemplate::getViewPath('form.element.related.group'), [

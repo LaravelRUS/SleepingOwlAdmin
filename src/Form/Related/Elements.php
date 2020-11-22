@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Related;
 
 use Admin\Contracts\HasFakeModel;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -98,6 +99,11 @@ abstract class Elements extends FormElements
     protected $queryCallbacks = [];
 
     protected $transactionLevel;
+
+    /**
+     * @var string
+     */
+    protected $helpText;
 
     public function __construct(string $relationName, array $elements = [])
     {
@@ -660,6 +666,7 @@ abstract class Elements extends FormElements
             'newEntitiesCount' => $this->new,
             'limit' => $this->limit,
             'attributes' => $this->htmlAttributesToString(),
+            'helpText' => $this->getHelpText(),
         ];
     }
 
@@ -713,6 +720,30 @@ abstract class Elements extends FormElements
     public function disableCreation(): self
     {
         $this->setLimit(0);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelpText()
+    {
+        if ($this->helpText instanceof Htmlable) {
+            return $this->helpText->toHtml();
+        }
+
+        return $this->helpText;
+    }
+
+    /**
+     * @param string|Htmlable $helpText
+     *
+     * @return $this
+     */
+    public function setHelpText($helpText)
+    {
+        $this->helpText = $helpText;
 
         return $this;
     }
