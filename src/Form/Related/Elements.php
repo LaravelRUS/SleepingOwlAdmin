@@ -247,6 +247,7 @@ abstract class Elements extends FormElements
                 return $this->emptyElement($column);
             })->all());
 
+            $col->setHtmlAttributes($el->getHtmlAttributes());
             $col->initialize();
 
             return $col;
