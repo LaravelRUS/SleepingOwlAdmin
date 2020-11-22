@@ -234,7 +234,7 @@ abstract class Elements extends FormElements
     protected function cloneElements(FormElements $element)
     {
         $elements = clone $element->getElements()->map(function ($element) {
-            return clone $element;
+            return is_object($element) ? clone $element : $element;
         });
 
         return $elements->map(function ($element) {
@@ -244,7 +244,7 @@ abstract class Elements extends FormElements
 
     protected function emptyElement($element)
     {
-        $el = clone $element;
+        $el = is_object($element) ? clone $element : $element;
 
         if ($el instanceof Columns) {
             $col = new Columns();
@@ -268,7 +268,9 @@ abstract class Elements extends FormElements
             if (! ($el instanceof Custom)) {
                 //$el->setDefaultValue(null);
             }
-            $el->setValueSkipped(true);
+            if (is_object($el)) {
+                $el->setValueSkipped(true);
+            }
         }
 
         return $el;
