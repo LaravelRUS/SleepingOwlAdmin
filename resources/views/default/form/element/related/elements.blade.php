@@ -6,7 +6,7 @@
     :initial-groups-count="{{ (int)$groups->count() }}"
     :removed="{{ $remove->toJson() }}"
 >
-    <div>
+    <div {!! $attributes !!}>
         <h4 v-if="label">@{{ label }}</h4>
         <div class='grouped-elements clearfix'>
             @foreach($groups as $key => $group)

@@ -656,6 +656,7 @@ abstract class Elements extends FormElements
             'remove' => $this->toRemove,
             'newEntitiesCount' => $this->new,
             'limit' => $this->limit,
+            'attributes' => $this->htmlAttributesToString(),
         ];
     }
 
