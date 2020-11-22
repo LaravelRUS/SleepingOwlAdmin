@@ -243,9 +243,12 @@ abstract class Elements extends FormElements
         if ($el instanceof Columns) {
             $col = new Columns();
             $columns = $el->getElements();
-            $col->setElements((clone $columns)->map(function ($column) {
+            $columns = (clone $columns)->map(function ($column) {
                 return $this->emptyElement($column);
-            })->all());
+            });
+            foreach ($columns as $column) {
+                $col->addColumn($column, $column->getWidth());
+            }
 
             $col->setHtmlAttributes($el->getHtmlAttributes());
             $col->initialize();
