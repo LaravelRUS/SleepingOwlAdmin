@@ -345,8 +345,7 @@ class HasManyLocal extends FormElements
     {
         $model = $attributes instanceof Model
             ? $attributes
-            : $this->safeCreateModel($this->getModelClassForElements(), $attributes)
-        ;
+            : $this->safeCreateModel($this->getModelClassForElements(), $attributes);
         $group = new Group($model);
 
         if ($this->groupLabel) {
@@ -507,7 +506,7 @@ class HasManyLocal extends FormElements
      */
     public function afterSave(Request $request)
     {
-        ##
+        //
     }
 
     /**
@@ -533,7 +532,7 @@ class HasManyLocal extends FormElements
         if (is_array($value)) {
             return $value;
         } elseif (is_string($value)) {
-            return @(array)json_decode($value, true);
+            return @(array) json_decode($value, true);
         } elseif ($value instanceof Collection) {
             return $value->toArray();
         } else {
@@ -609,16 +608,16 @@ class HasManyLocal extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-                'stub' => $this->stubElements,
-                'name' => $this->fieldName,
-                'label' => $this->label,
-                'groups' => $this->groups,
-                'remove' => $this->toRemove,
-                'newEntitiesCount' => $this->new,
-                'limit' => $this->limit,
-                'attributes' => $this->htmlAttributesToString(),
-                'helpText' => $this->getHelpText(),
-            ];
+            'stub' => $this->stubElements,
+            'name' => $this->fieldName,
+            'label' => $this->label,
+            'groups' => $this->groups,
+            'remove' => $this->toRemove,
+            'newEntitiesCount' => $this->new,
+            'limit' => $this->limit,
+            'attributes' => $this->htmlAttributesToString(),
+            'helpText' => $this->getHelpText(),
+        ];
     }
 
     /**
