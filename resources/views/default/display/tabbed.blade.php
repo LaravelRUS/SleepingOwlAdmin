@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card card-tabbed">
     <div class="card-header d-flex">
         <nav class="w-100">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
