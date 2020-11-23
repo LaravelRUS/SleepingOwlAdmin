@@ -86,6 +86,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
             'selectajax' => Element\SelectAjax::class,
             'multiselectajax' => Element\MultiSelectAjax::class,
             'hasMany' => Forms\HasMany::class,
+            'hasManyLocal' => Forms\HasManyLocal::class,
             'manyToMany' => Forms\ManyToMany::class,
             'belongsTo' => Forms\BelongsTo::class,
         ]);
