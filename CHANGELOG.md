@@ -1,5 +1,8 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2020-11-23
+* [Add] new component hasManyLocal: analog for hasMany, but store data in local longText field of the model as json-string (by default). Need for testing!
+
 ## 2020-10-03
 * [Fix] maxSize and minSize in image/images/file/files (was Mb, now in kB)
 
