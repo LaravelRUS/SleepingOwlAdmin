@@ -31,7 +31,6 @@ class Image extends File
      */
     protected $afterSaveCallback;
 
-
     /**
      * @var string
      */
