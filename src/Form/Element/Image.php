@@ -31,7 +31,6 @@ class Image extends File
      */
     protected $afterSaveCallback;
 
-
     /**
      * @var string
      */
@@ -50,7 +49,7 @@ class Image extends File
      */
     public function __construct($path, $label = null)
     {
-        $this->setAllowSvg((bool)config('sleeping_owl.imagesAllowSvg'));
+        $this->setAllowSvg((bool) config('sleeping_owl.imagesAllowSvg'));
 
         parent::__construct($path, $label);
     }
