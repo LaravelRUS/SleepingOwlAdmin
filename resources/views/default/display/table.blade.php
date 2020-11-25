@@ -25,10 +25,10 @@
 			@yield('card.buttons')
 			@yield('panel.buttons')
 		</div>
+        
+	    @yield('card.heading')
+    	@yield('panel.heading')
 	</div>
-
-	@yield('card.heading')
-	@yield('panel.heading')
 
 	@foreach($extensions as $ext)
 		{!! $ext->render() !!}
