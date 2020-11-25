@@ -278,6 +278,12 @@ return [
 
         /*
          * See https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html
+         *
+         * For using CKFinder with CKEditor 5 you must load additional js-file, see /app/Admin/bootstrap.php
+         * See https://ckeditor.com/docs/ckeditor5/latest/features/image-upload/ckfinder.html#configuring-the-full-integration
+         *
+         * Be careful: CKEditor 5 haven't html source code button feature!
+         * See https://github.com/ckeditor/ckeditor5/issues/592
          */
         'ckeditor5' => [
 
@@ -292,10 +298,8 @@ return [
             'toolbar' => [
                 'undo', 'redo', '|',
                 'heading', '|',
-                'bold', 'italic', 'blockQuote', '|',
-                'numberedList', 'bulletedList', '|',
+                'bold', 'italic', 'blockQuote', 'link', 'bulletedList', 'numberedList', '|',
                 'CKFinder', 'ImageUpload', 'imageTextAlternative', 'MediaEmbed', 'imageStyle:full', 'imageStyle:side', '|',
-                'link', 'bulletedList', 'numberedList', '|',
                 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
             ],
 
