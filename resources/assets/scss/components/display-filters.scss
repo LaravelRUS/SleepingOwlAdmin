@@ -93,3 +93,24 @@ tfoot.display-filters {
   }
 
 }
+
+/*datatables card-heading correct styles: for create button, actions & column filters*/
+.display-filters.display-filters-top {
+    margin-bottom: 0;
+}
+
+.display-filters.display-filters-top>div {
+    margin-bottom: 0;
+}
+
+.btn-create + .block-actions + .display-filters.display-filters-top {
+    margin-top: 0.75rem;
+}
+
+.card-heading .block-actions #action_form {
+    padding: 0;
+}
+
+.card-heading .block-actions:not(:last-child) {
+    margin-bottom: 0.75rem;
+}

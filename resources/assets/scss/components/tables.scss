@@ -4,11 +4,11 @@
     background-color: $white;
     border-bottom: 1px solid $color;
 
-    tr {
-      &:hover {
-        background-color: rgba($color, 0.3);
-      }
-    }
+    //tr {
+    //  &:hover {
+    //    background-color: rgba($color, 0.3);
+    //  }
+    //}
   }
 }
 
@@ -41,13 +41,13 @@
       vertical-align: middle;
     }
 
-    tr {
-      transition: background-color $trans;
+    //tr {
+    //  transition: background-color $trans;
 
-      &:hover {
-        background-color: rgba($black, 0.1);
-      }
-    }
+      //&:hover {
+      //  background-color: rgba($black, 0.1);
+      //}
+    //}
   }
 
   .clearfix {
@@ -161,11 +161,11 @@
       background-color: $gray-200;
     }
 
-    tbody {
-      tr:hover {
-        background-color: rgba($gray-600, 0.3);
-      }
-    }
+    //tbody {
+      //tr:hover {
+      //  background-color: rgba($gray-600, 0.3);
+      //}
+    //}
   }
 
   &.table-gray {
