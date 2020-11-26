@@ -297,8 +297,8 @@ return [
                  * Use Custom build with most-used additional plugins
                  * See https://ckeditor.com/ckeditor-5/online-builder/
                  */
-                // 'editor' => asset('/packages/sleepingowl/ckeditor5/ckeditor.js'),
-                // 'translation' => asset('/packages/sleepingowl/ckeditor5/translations/' . config('app.locale') . '.js'),
+                // 'editor' => '/packages/sleepingowl/ckeditor5/ckeditor.js',
+                // 'translation' => '/packages/sleepingowl/ckeditor5/translations/' . config('app.locale') . '.js',
             ],
 
             'language' => config('app.locale'),
