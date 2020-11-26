@@ -8,4 +8,4 @@
 // Meta::addJs('admin-app-addon', asset('js/admin-app-scripts.js'), ['admin-default']);
 
 // Uncomment the line below for using CKFinder in CKEditor 5
-// Meta::addJs('ckfinder', 'https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js', ['admin-default']);
+// Meta::addJs('ckfinder5', 'https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js', ['admin-default']);

@@ -286,6 +286,20 @@ return [
          * See https://github.com/ckeditor/ckeditor5/issues/592
          */
         'ckeditor5' => [
+            'files' => [
+                /*
+                 * Use Classic build from CDN
+                 * See https://ckeditor.com/ckeditor-5/download/
+                 */
+                'editor' => '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js',
+                'translation' => '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/translations/'.config('app.locale').'.js',
+                /*
+                 * Use Custom build with most-used additional plugins
+                 * See https://ckeditor.com/ckeditor-5/online-builder/
+                 */
+                // 'editor' => asset('/packages/sleepingowl/ckeditor5/ckeditor.js'),
+                // 'translation' => asset('/packages/sleepingowl/ckeditor5/translations/' . config('app.locale') . '.js'),
+            ],
 
             'language' => config('app.locale'),
 

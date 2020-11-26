@@ -1,7 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2020-11-27
+* [Add] Allow to change CKEditor 5 build require urls, see config('sleeping_owl.wysiwyg.ckeditor5.files'), bootstrap.php for CKFinder. Updating used CKEditor 5 CDN version (12.3.1 > 23.1.0)
+
 ## 2020-11-23
-* [Add] new component hasManyLocal: analog for hasMany, but store data in local longText field of the model as json-string (by default). Need for testing!
+* [Add] New component hasManyLocal: analog for hasMany, but store data in local longText field of the model as json-string (by default). Need for testing!
 
 ## 2020-10-03
 * [Fix] maxSize and minSize in image/images/file/files (was Mb, now in kB)

@@ -10,8 +10,8 @@ $this->app['sleeping_owl.wysiwyg']->register('ckeditor')
     ->js(null, '/packages/sleepingowl/ckeditor/ckeditor.js', null, true);
 
 $this->app['sleeping_owl.wysiwyg']->register('ckeditor5')
-    ->js(null, '//cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js', null, true)
-    ->js('translate', '//cdn.ckeditor.com/ckeditor5/12.3.1/classic/translations/'.config('app.locale').'.js', null, true);
+    ->js(null, config('sleeping_owl.wysiwyg.ckeditor5.files.editor', '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js'), null, true)
+    ->js('translate', config('sleeping_owl.wysiwyg.ckeditor5.files.translation', '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/translations/'.config('app.locale').'.js'), null, true);
 
 $this->app['sleeping_owl.wysiwyg']->register('tinymce')
     ->js(null, '//cdn.tinymce.com/4/tinymce.min.js', null, true);
