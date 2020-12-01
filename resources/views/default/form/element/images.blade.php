@@ -63,8 +63,7 @@
 
                 </div>
 
-                <div v-if="!readonly">
-                    <br/>
+                <div class="form-element-button-add w-100 order-2 mt-2" v-if="!readonly">
                     <div class="btn btn-primary upload-button btn-sm">
                         <i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}
                     </div>
