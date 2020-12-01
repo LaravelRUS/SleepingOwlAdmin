@@ -8,11 +8,13 @@
             @endif
         </label>
 
-        <deselect :value="{{ json_encode($value) }}"
+        <deselect
+            :value="{{ json_encode($value) }}"
             :id="'{{ $id }}'"
             :multiple="true"
             :options="{{ json_encode($options) }}"
-            inline-template>
+            inline-template
+        >
             <div>
                 <multiselect
                     @if($readonly)

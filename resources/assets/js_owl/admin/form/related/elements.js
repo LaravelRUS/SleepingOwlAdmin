@@ -58,6 +58,7 @@ Vue.component('related-elements', {
     methods: {
         initAdminEvents() {
             this.$nextTick(() => {
+                Admin.Modules.call('form.elements.date');
                 Admin.Modules.call('form.elements.datetime');
                 Admin.Modules.call('form.elements.dependent-select');
                 Admin.Modules.call('form.elements.select');

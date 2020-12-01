@@ -14,6 +14,7 @@ use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Form\Element\Custom;
+use SleepingOwl\Admin\Form\Element\Image;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\Element\Textarea;
 use SleepingOwl\Admin\Form\FormElements;
@@ -149,7 +150,7 @@ class HasManyLocal extends FormElements
         $this->forEachElement($this->stubElements, function ($element) {
             //$element->setDefaultValue(null);
             if (! $element instanceof HasFakeModel) {
-                if (! $element instanceof Textarea) {
+                if (! $element instanceof Image && ! $element instanceof Textarea) {
                     $element->setPath('');
                 }
             }
@@ -421,7 +422,11 @@ class HasManyLocal extends FormElements
      */
     protected function formatElementName(string $name)
     {
-        return preg_replace("/{$this->fieldName}\[[\w]+\]\[(.+?)\]/", '$1', $name);
+        $return = $name;
+        $return = preg_replace("/{$this->fieldName}\[[\w]+\]\[(.+?)\]/", '$1', $return);
+        $return = preg_replace('~\[]$~', '', $return);
+
+        return $return;
     }
 
     /**
