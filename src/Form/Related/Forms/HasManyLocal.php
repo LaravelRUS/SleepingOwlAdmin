@@ -15,6 +15,7 @@ use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Form\Element\Custom;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
+use SleepingOwl\Admin\Form\Element\Textarea;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Form\Related\Group;
 use SleepingOwl\Admin\Form\Related\HasUniqueValidation;
@@ -148,7 +149,9 @@ class HasManyLocal extends FormElements
         $this->forEachElement($this->stubElements, function ($element) {
             //$element->setDefaultValue(null);
             if (! $element instanceof HasFakeModel) {
-                $element->setPath('');
+                if (! $element instanceof Textarea) {
+                    $element->setPath('');
+                }
             }
         });
     }

@@ -11,8 +11,8 @@
         @foreach ($options as $option)
             <div class="radio">
                 <label>
-                    <input {!! ($value == $option['id']) ? 'checked' : '' !!}
-                           {!! $htmlStringAttributes !!}
+                    <input {!! ($value == $option['id']) ? 'checked ' : '' !!}{!! $htmlStringAttributes !!}
+                           name="{{ $name }}"
                            value="{{ $option['id'] }}"
                     />
                     {!! $option['text'] !!}

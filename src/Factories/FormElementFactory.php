@@ -36,7 +36,7 @@ use SleepingOwl\Admin\Form\Related\Forms;
  * @method Element\Checkbox checkbox($name, $label = null)
  * @method Element\CKEditor ckeditor($name, $label = null)
  * @method Element\Textarea textarea($name, $label = null)
- * @method Element\Radio radio($name, $label = null)
+ * @method Element\Radio radio($name, $label = null, array $options = [])
  * @method Element\Wysiwyg wysiwyg($name, $label = null, $editor = null)
  * @method Element\Upload upload($name, $label = null)
  * @method Element\Number number($name, $label = null)
