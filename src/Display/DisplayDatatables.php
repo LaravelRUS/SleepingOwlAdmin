@@ -41,6 +41,7 @@ class DisplayDatatables extends DisplayTable
         $this->setHtmlAttribute('data-order', json_encode($this->getOrder()));
 
         $attributes = $this->getDatatableAttributes();
+
         $attributes['pageLength'] = $this->paginate;
 
         $attributes['language'] = trans('sleeping_owl::lang.table');
@@ -49,7 +50,8 @@ class DisplayDatatables extends DisplayTable
             $attributes['columns'][] = [
                 'orderable' => $column->isOrderable(),
                 'visible' => $column->isVisible(),
-                'orderDataType' => class_basename($column),
+                'width' => $column->getWidth(),
+                'orderDataType' => class_basename($column)
             ];
         }
 

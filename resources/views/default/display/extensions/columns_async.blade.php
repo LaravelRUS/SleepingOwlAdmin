@@ -3,7 +3,8 @@
   <table {!! $attributes !!}>
     <colgroup>
       @foreach ($columns as $column)
-        <col width="{!! $column->getWidth() !!}" />
+        @continue(!$column->isVisible())
+        <col width="{!! $column->getWidth() !!}"/>
       @endforeach
     </colgroup>
 
