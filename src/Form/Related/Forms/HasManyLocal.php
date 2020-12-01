@@ -534,6 +534,8 @@ class HasManyLocal extends FormElements
             return @(array) json_decode($value, true);
         } elseif ($value instanceof Collection) {
             return $value->toArray();
+        } elseif ($value === null || $value === false) {
+            return [];
         } else {
             throw new Exception('Model field must return array, json-string or instance of Collection');
         }
