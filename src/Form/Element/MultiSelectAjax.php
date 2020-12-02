@@ -112,7 +112,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
-            'field' => $this->getPath() ?: $this->getName(),
+            'field' => $this->getPath() ?: $this->getFieldName(),
             'id' => $this->model->getKey(),
         ]);
     }

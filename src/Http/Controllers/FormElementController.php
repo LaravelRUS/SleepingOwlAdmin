@@ -147,10 +147,10 @@ class FormElementController extends Controller
         // because field name in MultiSelectAjax ends with '[]'
         $fieldPrepared = str_replace('[]', '', $field);
         // process fields with relations: user[role]
-        $fieldPrepared = strtr($fieldPrepared, ['[' => '.', ']' => '']);
+        $fieldPreparedRel = strtr($fieldPrepared, ['[' => '.', ']' => '']);
 
         /** @var SelectAjax|MultiSelectAjax $element */
-        $element = $form->getElement($fieldPrepared);
+        $element = $form->getElement($fieldPreparedRel) ?: $form->getElement($fieldPrepared);
 
         if (is_null($element)) {
             return new JsonResponse([
