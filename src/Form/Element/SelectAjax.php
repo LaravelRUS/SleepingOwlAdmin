@@ -47,12 +47,20 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
         });
         */
 
-        $this->default_query_preparer = function ($item, Builder $query) {
+        $this->default_query_preparer = function (self $item, Builder $query) {
             $repository = app(RepositoryInterface::class);
             $repository->setModel($this->getModelForOptions());
             $key = $repository->getModel()->getKeyName();
 
-            return $query->where([$key => $this->getValueFromModel()]);
+            if (null != ($value_from_model = $this->getValueFromModel())) {
+                return $query->where([$key => $value_from_model]);
+            } elseif (null != ($value = $item->getValue())) {
+                return $query->where([$key => $value]);
+            } elseif (null != ($default_value = $item->getDefaultValue())) {
+                return $query->where([$key => $default_value]);
+            }
+
+            return $query->where([$key => null]);
         };
 
         $this->setLanguage(config('app.locale'));
@@ -100,7 +108,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
-            'field' => $this->getName(),
+            'field' => $this->getPath() ?: $this->getName(),
             'id' => $this->model->getKey(),
         ]);
     }

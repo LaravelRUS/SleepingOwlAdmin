@@ -179,9 +179,13 @@ class Wysiwyg extends NamedFormElement
      */
     public function toArray()
     {
-        return [
-            'attributes' => array_merge($this->getHtmlAttributes(), ['v-pre'=> true]),
-        ] + parent::toArray() + [
+        $this->setHtmlAttributes([
+            'v-pre'=> true,
+            'data-wysiwyg-editor' => $this->getEditor(),
+            'data-wysiwyg-parameters' => json_encode($this->getParameters()),
+        ]);
+
+        return parent::toArray() + [
             'parameters' => json_encode($this->getParameters()),
             'editor' => $this->getEditor(),
             'collapsed' => $this->getCollapsed(),
@@ -192,6 +196,7 @@ class Wysiwyg extends NamedFormElement
      * @param mixed $value
      *
      * @return void
+     * @throws WysiwygException
      */
     public function setModelAttribute($value)
     {
@@ -210,9 +215,20 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
+     * @return $this
+     */
+    public function withoutCard()
+    {
+        $this->setViewMode('without_card');
+
+        return $this;
+    }
+
+    /**
      * @param string $value
      *
      * @return string
+     * @throws WysiwygException
      */
     protected function filterValue($value)
     {

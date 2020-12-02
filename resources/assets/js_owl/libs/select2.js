@@ -5,4 +5,4 @@
  *
  * @see https://select2.github.io/
  */
-require('select2/dist/js/select2');
+require('select2/dist/js/select2.full');

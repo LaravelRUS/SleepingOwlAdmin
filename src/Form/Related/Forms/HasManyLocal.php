@@ -363,6 +363,7 @@ class HasManyLocal extends FormElements
             // Setting default value, name and model for element with name attribute
             $el->setDefaultValue($el->prepareValue($this->getElementValue($model, $el)));
             $el->setName(sprintf('%s[%s][%s]', $this->fieldName, $key ?? $model->getKey(), $this->formatElementName($el->getName())));
+            $el->setComposeId($el->getName());
             $el->setModel($model);
 
             if ($old && strpos($el->getPath(), '->') === false && ! ($el instanceof HasFakeModel)) {

@@ -1,5 +1,11 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2020-12-02
+* [Add] hasManyLocal component improvements: allow to use more and more elements, but not this yet: image(s)/file(s)/upload/(multi)dependentselect.
+* [Fix] Redesign wysiwyg init scheme: implemented centralized init all of wysiwygs on the page (see: Admin.Modules.register('form.elements.wysiwyg')) instead of inline script initialization for each visual editor in template file.
+* [Add] New method for all form elements: `->setViewMode(<view_postfix>)`. How to use: for example, you can call this: `AdminFormElement::wysiwyg('wysiwyg', 'Editor')->setViewMode('without_card)` - it's the same that `AdminFormElement::wysiwyg('wysiwyg', 'Editor')->setView('form.element.wysiwyg_without_card)`. In simple words: this method provided ability to add postfix for used view filename, that allows you to use predefined views for some elements with various functional.
+* [Add] In reference for previous item: new method for wysiwyg form control: `AdminFormElement::wysiwyg('wysiwyg', 'wysiwyg')->withoutCard()` allows to you use wysiwyg form control without card wrapper.
+
 ## 2020-11-27
 * [Add] Allow to change CKEditor 5 build require urls, see config('sleeping_owl.wysiwyg.ckeditor5.files'), bootstrap.php for CKFinder. Updating used CKEditor 5 CDN version (12.3.1 > 23.1.0)
 

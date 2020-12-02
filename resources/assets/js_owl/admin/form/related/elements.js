@@ -63,6 +63,7 @@ Vue.component('related-elements', {
                 Admin.Modules.call('form.elements.dependent-select');
                 Admin.Modules.call('form.elements.select');
                 Admin.Modules.call('form.elements.selectajax');
+                Admin.Modules.call('form.elements.wysiwyg');
             });
         },
 

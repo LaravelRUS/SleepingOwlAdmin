@@ -65,7 +65,8 @@ module.exports = (function() {
                 try {
                     module.callback();
                 } catch (e) {
-                    Admin.log(`Error with loading module ${name}`, 'Modules');
+                    Admin.log(`Error with loading module ${name}:`, 'Modules');
+                    console.log(module);
                 }
             })
         }

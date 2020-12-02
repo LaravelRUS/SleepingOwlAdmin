@@ -78,6 +78,7 @@ module.exports = (function() {
                     Admin.Events.fire('wysiwyg:switchOn', editors[textareaId])
                 } catch (e) {
                     Admin.log(e)
+                    console.log('textareaId = ' + textareaId);
                 }
             }
         },

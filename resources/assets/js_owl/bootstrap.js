@@ -102,6 +102,7 @@ require('./admin/localstorage/tabs');
 require('./admin/form/buttons');
 require('./admin/form/select');
 require('./admin/form/selectajax');
+require('./admin/form/wysiwyg');
 require('./admin/form/dependent-select');
 require('./admin/display/env_editor');
 require('./admin/form/related');

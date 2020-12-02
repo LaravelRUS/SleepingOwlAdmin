@@ -51,12 +51,20 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
         });
         */
 
-        $this->default_query_preparer = function ($item, Builder $query) {
+        $this->default_query_preparer = function (self $item, Builder $query) {
             $repository = app(RepositoryInterface::class);
             $repository->setModel($this->getModelForOptions());
             $key = $repository->getModel()->getKeyName();
 
-            return $query->whereIn($key, $this->getValueFromModel() ? $this->getValueFromModel() : []);
+            if (null != ($value_from_model = $this->getValueFromModel()) && is_array($value_from_model) && count($value_from_model)) {
+                return $query->whereIn($key, $value_from_model);
+            } elseif (null != ($value = $item->getValue()) && is_array($value) && count($value)) {
+                return $query->whereIn($key, $value);
+            } elseif (null != ($default_value = $item->getDefaultValue()) && is_array($default_value) && count($default_value)) {
+                return $query->whereIn($key, $default_value);
+            }
+
+            return $query->whereIn($key, []);
         };
 
         $this->setLanguage(config('app.locale'));
@@ -104,7 +112,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
-            'field' => $this->getFieldName(),
+            'field' => $this->getPath() ?: $this->getName(),
             'id' => $this->model->getKey(),
         ]);
     }

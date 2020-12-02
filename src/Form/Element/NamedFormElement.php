@@ -424,7 +424,8 @@ abstract class NamedFormElement extends FormElement
             return $value;
         }
 
-        return $request->input($this->getPath());
+        // return $request->input($this->getPath());
+        return $request->input($this->getNameKey()) ?: $request->input($this->getPath());
     }
 
     /**
@@ -666,6 +667,7 @@ abstract class NamedFormElement extends FormElement
             'path' => $this->getPath(),
             'label' => $this->getLabel(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
             'class' => $this->getHtmlAttribute('class'),
