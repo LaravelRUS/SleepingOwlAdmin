@@ -188,7 +188,7 @@ class HasManyLocal extends FormElements
                 ];
                 foreach ($disabledElements as $elementClass => $elementName) {
                     if ($element instanceof $elementClass) {
-                        throw new FormElementException('Form element [' . $elementName . '] is not implemented to use inside hasManyLocal yet, sorry');
+                        throw new FormElementException('Form element ['.$elementName.'] is not implemented to use inside hasManyLocal yet, sorry');
                     }
                 }
             }
@@ -734,16 +734,16 @@ class HasManyLocal extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-                'stub' => $this->stubElements,
-                'name' => $this->fieldName,
-                'label' => $this->label,
-                'groups' => $this->groups,
-                'remove' => $this->toRemove,
-                'newEntitiesCount' => $this->new,
-                'limit' => $this->limit,
-                'attributes' => $this->htmlAttributesToString(),
-                'helpText' => $this->getHelpText(),
-            ];
+            'stub' => $this->stubElements,
+            'name' => $this->fieldName,
+            'label' => $this->label,
+            'groups' => $this->groups,
+            'remove' => $this->toRemove,
+            'newEntitiesCount' => $this->new,
+            'limit' => $this->limit,
+            'attributes' => $this->htmlAttributesToString(),
+            'helpText' => $this->getHelpText(),
+        ];
     }
 
     /**
