@@ -296,8 +296,19 @@ class Files extends Images
      */
     public function getValueFromModel()
     {
-        $value = $this->model->{$this->name};
-        $return = isset($value) && mb_strlen($value) >= 5 ? json_decode($value, true) : [];
+        // $value = $this->model->{$this->name};
+        $value = parent::getValueFromModel();
+        if (is_array($value)) {
+            // Some hooks)
+            if (count($value) && @$value[0] && is_object($value[0])) {
+                $value = json_decode(json_encode($value), true);
+            }
+            $return = $value;
+        } elseif (is_string($value) && is_array($json_decoded = json_decode($value, true))) {
+            $return = $json_decoded;
+        } else {
+            $return = [];
+        }
 
         return $return;
     }
@@ -343,7 +354,6 @@ class Files extends Images
      */
     public function save(Request $request)
     {
-        $name = $this->getName();
         $value = Arr::get($request->all(), $this->getNameKey());
 
         if (is_array($value_array = json_decode($value, true)) && count($value_array)) {
@@ -375,11 +385,14 @@ class Files extends Images
             $value = json_encode($value_array);
         }
 
-        $request->merge([$name => $value]);
+        /*
+        $temp_merge_array = Arr::add($request->all(), $this->getNameKey(), $value);
+        dd($request->all(), $this->getNameKey(), $value, $temp_merge_array);
+        $request->merge($temp_merge_array);
+        dd($request->all());
+        */
 
-        $this->setModelAttribute(
-            $this->getValueFromRequest($request)
-        );
+        $this->setModelAttribute($value);
     }
 
     /**

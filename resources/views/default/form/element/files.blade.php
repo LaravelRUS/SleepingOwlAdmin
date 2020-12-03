@@ -15,6 +15,8 @@
             @endif
         </label>
 
+        @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
+
         @if (!$readonly)
             <script type="text/html" class="RenderFile">
                 <div class="fileThumbnail">
@@ -48,16 +50,16 @@
 
                             <div class="file-buttons mt-1 text-left">
                                 <button class="btn btn-danger btn-delete btn-xs fileRemove">
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-fw fa-times"></i>
                                 </button>
 
                                 @if (isset($draggable) && $draggable)
                                 <a class="btn btn-clear btn-sm pull-right drag-cursor">
-                                    <i class="fas fa-arrows-alt"></i>
+                                    <i class="fas fa-fw fa-arrows-alt"></i>
                                 </a>
                                 @endif
                                 <a href="[%=url%]" download class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
-                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <i class="fas fa-fw fa-cloud-upload-alt"></i>
                                 </a>
                             </div>
                         </div>
@@ -113,17 +115,17 @@
                             <div class="file-buttons mt-1{{ $readonly ? ' text-right' : ' text-left' }}">
                                 @if (!$readonly)
                                     <button class="btn btn-danger btn-delete btn-xs fileRemove">
-                                        <i class="fas fa-times"></i>
+                                        <i class="fas fa-fw fa-times"></i>
                                     </button>
 
                                     @if (isset($draggable) && $draggable)
                                         <a class="btn btn-clear btn-sm pull-right drag-cursor">
-                                            <i class="fas fa-arrows-alt"></i>
+                                            <i class="fas fa-fw fa-arrows-alt"></i>
                                         </a>
                                     @endif
                                 @endif
                                 <a href="{{ @asset($item['url']) }}" download class="btn btn-default btn-sm mr-1{{ $readonly ? '' : ' pull-right' }}" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
-                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <i class="fas fa-fw fa-cloud-upload-alt"></i>
                                 </a>
                             </div>
                         </div>

@@ -18,8 +18,8 @@ class Upload extends NamedFormElement
     public function toArray()
     {
         return [
-            'value' => $this->getModel()->getAttribute($this->getModelAttributeKey()),
-        ] + parent::toArray();
+                'value' => $this->getModel()->getAttribute($this->getModelAttributeKey()),
+            ] + parent::toArray();
     }
 
     /**
@@ -29,7 +29,7 @@ class Upload extends NamedFormElement
      */
     public function getValueFromRequest(Request $request)
     {
-        return $request->file($this->getPath());
+        return $request->file($this->getNameKey() ?: $this->getPath());
     }
 
     /**

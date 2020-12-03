@@ -12,9 +12,14 @@ use Illuminate\Support\Collection;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Form\Element\Custom;
+use SleepingOwl\Admin\Form\Element\DependentSelect;
+use SleepingOwl\Admin\Form\Element\File;
+use SleepingOwl\Admin\Form\Element\Files;
 use SleepingOwl\Admin\Form\Element\Image;
+use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\Element\Textarea;
 use SleepingOwl\Admin\Form\FormElements;
@@ -104,10 +109,31 @@ class HasManyLocal extends FormElements
     protected $saveCallback = null;
 
     /**
+     * @var null|callable
+     */
+    protected $loadCallback = null;
+
+    /**
      * @var int
      */
     protected $jsonOptions = 0;
 
+    /**
+     * @var bool
+     */
+    // protected $needToSetValueSkipped = false;
+
+    /**
+     * @var callable|null|false
+     */
+    // protected $emptyElementCallback;
+
+    /**
+     * HasManyLocal constructor.
+     *
+     * @param string $fieldName
+     * @param array  $elements
+     */
     public function __construct(string $fieldName, array $elements = [])
     {
         $this->toRemove = collect();
@@ -150,8 +176,20 @@ class HasManyLocal extends FormElements
         $this->forEachElement($this->stubElements, function ($element) {
             //$element->setDefaultValue(null);
             if (! $element instanceof HasFakeModel) {
-                if (! $element instanceof Image && ! $element instanceof Textarea) {
+                if (! $element instanceof Image && ! $element instanceof Textarea && ! $element instanceof File) {
                     $element->setPath('');
+                }
+
+                // Disabled elements for using inside hasManyLocal
+                $disabledElements = [
+                    Files::class => 'files',
+                    DependentSelect::class => 'dependentselect',
+                    MultiDependentSelect::class => 'multidependentselect',
+                ];
+                foreach ($disabledElements as $elementClass => $elementName) {
+                    if ($element instanceof $elementClass) {
+                        throw new FormElementException('Form element [' . $elementName . '] is not implemented to use inside hasManyLocal yet, sorry');
+                    }
                 }
             }
         });
@@ -231,10 +269,17 @@ class HasManyLocal extends FormElements
             if (! ($el instanceof Custom)) {
                 //$el->setDefaultValue(null);
             }
-            if (is_object($el)) {
-                $el->setValueSkipped(true);
-            }
+
+            // Save process: v2
+            // if (is_object($el) && $this->needToSetValueSkipped()) {
+            //     $el->setValueSkipped(true);
+            // }
         }
+
+        // Save process: v2
+        // if (is_callable($this->emptyElementCallback)) {
+        //     call_user_func($this->emptyElementCallback, $el);
+        // }
 
         return $el;
     }
@@ -292,14 +337,26 @@ class HasManyLocal extends FormElements
      */
     protected function getRequestData(): array
     {
+        /*
+        // v1
         $request = request();
 
         $old = $request->old($this->fieldName, false);
 
         return $old ?: $request->get($this->fieldName, []);
+        */
+
+        // v2 - allow to use hasManyLocal for elements inside array, for example:
+        // AdminFormElement::hasManyLocal('foo[bar]', [])
+        $request = request();
+        $fieldName = strtr($this->fieldName, ['[' => '.', ']' => '']);
+        $old = Arr::get($request->old(), $fieldName);
+        $new = Arr::get($request->all(), $fieldName);
+
+        return $old ?: $new ?: [];
     }
 
-    protected function buildGroupsCollection()
+    protected function buildGroupsCollection($plus_one = true)
     {
         $old = false;
         $relatedValues = $this->fieldValues;
@@ -311,7 +368,10 @@ class HasManyLocal extends FormElements
 
         foreach ($relatedValues as $key => $item) {
             // +1 is very important for correct frontend logic work
-            $this->groups->push($this->createGroup($item, $old, $key + 1));
+            if (is_numeric($key) && $plus_one) {
+                $key += 1;
+            }
+            $this->groups->push($this->createGroup($item, $old, $key));
         }
     }
 
@@ -346,6 +406,9 @@ class HasManyLocal extends FormElements
 
     protected function createGroup($attributes, $old = false, $key = null): Group
     {
+        if (is_string($attributes)) {
+            $attributes = is_callable($this->getLoadCallback()) ? $this->getLoadCallback()($attributes) : json_decode($attributes, true);
+        }
         $model = $attributes instanceof Model
             ? $attributes
             : $this->safeCreateModel($this->getModelClassForElements(), $attributes);
@@ -506,7 +569,7 @@ class HasManyLocal extends FormElements
      */
     public function save(Request $request)
     {
-        $this->setFieldValues();
+        $this->setFieldValues($request);
     }
 
     /**
@@ -518,10 +581,63 @@ class HasManyLocal extends FormElements
     }
 
     /**
+     * @param Request $request
+     *
      * @return void
      */
-    protected function setFieldValues()
+    protected function setFieldValues(Request $request)
     {
+        /*
+         * TODO: Need to bring to mind save process
+         */
+        /*
+        // Save process: v2 - call ->save($request) method for each form element inside each of hasManyLocal group with data from Request
+        $model = $this->getModel();
+
+        // Get default field values (not from Request!) & build hasManyLocal group stubs (blocks with data)
+        $this->fieldValues = collect($this->fieldValues);
+        $this->setNeedToSetValueSkipped(false);
+        $this->setEmptyElementCallback(function ($el) {
+            if ($el instanceof NamedFormElement) {
+                $el->setModelAttributeKey($this->fieldName . '[' . count($this->groups) . '][' . $el->getModelAttributeKey() . ']');
+            }
+            return $el;
+        });
+        $this->buildGroupsCollection(false);
+        $this->setEmptyElementCallback(null);
+        $this->setNeedToSetValueSkipped(true);
+
+        // First we need to remove entities if it's required
+        if (! $this->toRemove->isEmpty()) {
+            $value = @(array)json_decode($model->{$this->getFieldName()}, true);
+            foreach ($this->toRemove as $key) {
+                unset($value[$key - 1]);
+            }
+            $model->{$this->getFieldName()} = json_encode($value, $this->getJsonOptions());
+        }
+
+        // Then - process all other items
+        // Process each group...
+        $g = 0;
+        foreach ($this->groups as $group) {
+            // Process each form elements in group...
+            foreach ($group->all() as $group_element) {
+                // Need to setup only "real" form elements with data (text, select, textarea, etc.),
+                // not "arrangement" elements (columns, tabs, etc.)
+                if ($group_element instanceof NamedFormElement) {
+                    // Make some hooks with form element
+                    $group_element->setModel($this->getModel());
+                    #$group_element->setModelAttributeKey($this->fieldName . '[' . $g . '][' . $group_element->getModelAttributeKey() . ']');
+                    #$group_element->setValueSkipped(false);
+                }
+                // Call ->save($request) method
+                $group_element->save($request);
+            }
+            ++$g;
+        }
+        */
+
+        // Save process: v1 - directly set JSON'ed value (plain text from Request) to model attribute
         $values = $this->getRequestData();
         unset($values['remove']);
         $result_value = array_values($values);
@@ -618,16 +734,16 @@ class HasManyLocal extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-            'stub' => $this->stubElements,
-            'name' => $this->fieldName,
-            'label' => $this->label,
-            'groups' => $this->groups,
-            'remove' => $this->toRemove,
-            'newEntitiesCount' => $this->new,
-            'limit' => $this->limit,
-            'attributes' => $this->htmlAttributesToString(),
-            'helpText' => $this->getHelpText(),
-        ];
+                'stub' => $this->stubElements,
+                'name' => $this->fieldName,
+                'label' => $this->label,
+                'groups' => $this->groups,
+                'remove' => $this->toRemove,
+                'newEntitiesCount' => $this->new,
+                'limit' => $this->limit,
+                'attributes' => $this->htmlAttributesToString(),
+                'helpText' => $this->getHelpText(),
+            ];
     }
 
     /**
@@ -715,4 +831,52 @@ class HasManyLocal extends FormElements
 
         return $this;
     }
+
+    /**
+     * @return callable|null
+     */
+    public function getLoadCallback(): ?callable
+    {
+        return $this->loadCallback;
+    }
+
+    /**
+     * @param callable|null $loadCallback
+     */
+    public function setLoadCallback(?callable $loadCallback): void
+    {
+        $this->loadCallback = $loadCallback;
+    }
+
+    /**
+     * @return bool
+     */
+    // public function needToSetValueSkipped(): bool
+    // {
+    //     return $this->needToSetValueSkipped;
+    // }
+
+    /**
+     * @param bool $needToSetValueSkipped
+     */
+    // public function setNeedToSetValueSkipped(bool $needToSetValueSkipped): void
+    // {
+    //     $this->needToSetValueSkipped = $needToSetValueSkipped;
+    // }
+
+    /**
+     * @return callable|false|null
+     */
+    // public function getEmptyElementCallback()
+    // {
+    //     return $this->emptyElementCallback;
+    // }
+
+    /**
+     * @param callable|false|null $emptyElementCallback
+     */
+    // public function setEmptyElementCallback($emptyElementCallback): void
+    // {
+    //     $this->emptyElementCallback = $emptyElementCallback;
+    // }
 }
