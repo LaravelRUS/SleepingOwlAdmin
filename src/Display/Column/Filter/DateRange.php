@@ -33,7 +33,11 @@ class DateRange extends Date
      */
     public function parseValue($date)
     {
-        $dates = explode('::', $date, 2);
+        if ($date === null) {
+            return ['0000-00-00', '9999-12-31'];
+        }
+
+        $dates = explode(' - ', $date, 2);
 
         foreach ($dates as $i => $data) {
             $dates[$i] = parent::parseValue($data);

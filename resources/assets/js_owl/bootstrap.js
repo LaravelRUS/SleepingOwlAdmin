@@ -24,6 +24,7 @@ require('./libs/i18next');
 require('./libs/vuejs');
 
 require('./libs/datetimepicker');
+require('./libs/daterangepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
 require('./libs/datatables');
@@ -90,6 +91,7 @@ require('./admin/localstorage/tabs');
  */
  require('./admin/form/date');
  require('./admin/form/datetime');
+ require('./admin/form/daterange');
  require('./admin/form/deselect');
  require('./admin/form/file');
  require('./admin/form/files');

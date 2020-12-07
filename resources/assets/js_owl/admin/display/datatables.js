@@ -397,5 +397,14 @@ window.columnFilters = {
         $input.on('keyup change', () => {
             column.search($input.val());
         })
+    },
+
+    //text ========================================
+    daterange (input, table, column, index, serverSide) {
+        let $input = $(input)
+
+        $input.on('keyup change', () => {
+            column.search($input.val());
+        })
     }
 }

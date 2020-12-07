@@ -5,9 +5,12 @@
 		type="text"
 		{!! $attributes !!} />
 
+	{{-- Trying to save table filter column width space --}}
+	{{--
 	<div class="input-group-prepend input-group-addon">
 		<div class="input-group-text">
 			<span class="far fa-calendar-alt"></span>
 		</div>
 	</div>
+	--}}
 </div>

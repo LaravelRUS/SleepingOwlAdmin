@@ -133,12 +133,15 @@ class HasManyLocal extends FormElements
      *
      * @param string $fieldName
      * @param array  $elements
+     * @param string $label
      */
-    public function __construct(string $fieldName, array $elements = [])
+    public function __construct(string $fieldName, array $elements = [], $label = '')
     {
         $this->toRemove = collect();
         $this->groups = collect();
         $this->fieldValues = collect();
+        $this->setLabel($label);
+
         parent::__construct($elements);
 
         $this->setFieldName($fieldName);
@@ -188,7 +191,7 @@ class HasManyLocal extends FormElements
                 ];
                 foreach ($disabledElements as $elementClass => $elementName) {
                     if ($element instanceof $elementClass) {
-                        throw new FormElementException('Form element [' . $elementName . '] is not implemented to use inside hasManyLocal yet, sorry');
+                        throw new FormElementException('Form element ['.$elementName.'] is not implemented to use inside hasManyLocal yet, sorry');
                     }
                 }
             }
