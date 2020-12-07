@@ -33,12 +33,13 @@ trait Renderable
      */
     public function getView()
     {
-        $view_postfix = $this->getViewMode() ? '_'.$this->getViewMode() : '';
         if (empty($this->viewPath) && property_exists($this, 'view')) {
-            return $this->view.$view_postfix;
+            $view_postfix = $this->getViewMode() ? '_'.$this->getViewMode() : '';
+
+            return is_string($this->view) && $view_postfix ? $this->view.$view_postfix : $this->view;
         }
 
-        return $this->viewPath.$view_postfix;
+        return $this->viewPath;
     }
 
     /**

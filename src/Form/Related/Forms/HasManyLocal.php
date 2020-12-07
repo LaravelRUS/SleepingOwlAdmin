@@ -737,16 +737,16 @@ class HasManyLocal extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-                'stub' => $this->stubElements,
-                'name' => $this->fieldName,
-                'label' => $this->label,
-                'groups' => $this->groups,
-                'remove' => $this->toRemove,
-                'newEntitiesCount' => $this->new,
-                'limit' => $this->limit,
-                'attributes' => $this->htmlAttributesToString(),
-                'helpText' => $this->getHelpText(),
-            ];
+            'stub' => $this->stubElements,
+            'name' => $this->fieldName,
+            'label' => $this->label,
+            'groups' => $this->groups,
+            'remove' => $this->toRemove,
+            'newEntitiesCount' => $this->new,
+            'limit' => $this->limit,
+            'attributes' => $this->htmlAttributesToString(),
+            'helpText' => $this->getHelpText(),
+        ];
     }
 
     /**
