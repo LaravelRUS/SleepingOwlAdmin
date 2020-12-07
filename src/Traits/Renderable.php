@@ -35,9 +35,10 @@ trait Renderable
     {
         if (empty($this->viewPath) && property_exists($this, 'view')) {
             $view_postfix = $this->getViewMode() ? '_'.$this->getViewMode() : '';
-            return is_string($this->view) && $view_postfix ? $this->view . $view_postfix : $this->view;
+
+            return is_string($this->view) && $view_postfix ? $this->view.$view_postfix : $this->view;
         }
-        
+
         return $this->viewPath;
     }
 
