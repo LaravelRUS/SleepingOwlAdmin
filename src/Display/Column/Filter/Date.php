@@ -46,8 +46,8 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-                'pickerFormat' => $this->getJsPickerFormat(),
-            ];
+            'pickerFormat' => $this->getJsPickerFormat(),
+        ];
     }
 
     /**
