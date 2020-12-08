@@ -46,16 +46,19 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-            'pickerFormat' => $this->getJsPickerFormat(),
-        ];
+                'pickerFormat' => $this->getJsPickerFormat(),
+            ];
     }
 
     /**
      * @param string $date
      *
+     * @param bool   $add_day
+     *
      * @return string
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
-    public function parseValue($date)
+    public function parseValue($date, $add_day = false)
     {
         if (empty($date)) {
             return;
@@ -80,6 +83,10 @@ class Date extends Text
                     return;
                 }
             }
+        }
+
+        if ($add_day) {
+            $date = $date->addDay();
         }
 
         return $date->timezone($this->getTimezone())->format($this->getFormat());

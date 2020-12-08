@@ -10,6 +10,11 @@ class DateRange extends Date
     protected $view = 'column.filter.daterange';
 
     /**
+     * @var string
+     */
+    protected $mode = 'date';
+
+    /**
      * Initialize column filter.
      */
     public function initialize()
@@ -29,9 +34,12 @@ class DateRange extends Date
 
     /**
      * @param string $date
+     * @param bool   $add_day
+     *
      * @return array|string
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
-    public function parseValue($date)
+    public function parseValue($date, $add_day = false)
     {
         if ($date === null) {
             return ['0000-00-00', '9999-12-31'];
@@ -40,9 +48,38 @@ class DateRange extends Date
         $dates = explode(' - ', $date, 2);
 
         foreach ($dates as $i => $data) {
-            $dates[$i] = parent::parseValue($data);
+            $add_day = $i == 1 && $this->getMode() == 'datetime';
+            $dates[$i] = parent::parseValue($data, $add_day);
         }
 
         return $dates;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMode()
+    {
+        return $this->mode;
+    }
+
+    /**
+     * @return $this
+     */
+    public function forDate()
+    {
+        $this->mode = 'date';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function forDateTime()
+    {
+        $this->mode = 'datetime';
+
+        return $this;
     }
 }
