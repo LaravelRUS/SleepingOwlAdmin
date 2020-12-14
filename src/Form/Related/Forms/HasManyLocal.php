@@ -659,7 +659,7 @@ class HasManyLocal extends FormElements
         } elseif ($this->getSaveMode() == 'json') {
             $result_value = json_encode($result_value, $this->getJsonOptions());
         } else {
-            throw new Exception('Unknown save mode: ' . $this->getSaveMode());
+            throw new Exception('Unknown save mode: '.$this->getSaveMode());
         }
 
         $this->getModel()->setAttribute($this->getFieldName(), $result_value);
@@ -753,16 +753,16 @@ class HasManyLocal extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-                'stub' => $this->stubElements,
-                'name' => $this->fieldName,
-                'label' => $this->label,
-                'groups' => $this->groups,
-                'remove' => $this->toRemove,
-                'newEntitiesCount' => $this->new,
-                'limit' => $this->limit,
-                'attributes' => $this->htmlAttributesToString(),
-                'helpText' => $this->getHelpText(),
-            ];
+            'stub' => $this->stubElements,
+            'name' => $this->fieldName,
+            'label' => $this->label,
+            'groups' => $this->groups,
+            'remove' => $this->toRemove,
+            'newEntitiesCount' => $this->new,
+            'limit' => $this->limit,
+            'attributes' => $this->htmlAttributesToString(),
+            'helpText' => $this->getHelpText(),
+        ];
     }
 
     /**
