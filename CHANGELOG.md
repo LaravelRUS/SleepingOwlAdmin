@@ -1,7 +1,7 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
 ## 2020-12-14
-* [Add] Availability to return file title and description in files.
+* [Add] Availability to return file title and description in files. Variables are: `title` and `desc` 
 * [Fix] Error messages in files/image
 
 ## 2020-12-02
