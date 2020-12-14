@@ -1,5 +1,9 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2020-12-14
+* [Add] Availability to return file title and description in files.
+* [Fix] Error messages in files/image
+
 ## 2020-12-02
 * [Add] hasManyLocal component improvements: allow to use more and more elements, but not this yet: image(s)/file(s)/upload/(multi)dependentselect.
 * [Fix] Redesign wysiwyg init scheme: implemented centralized init all of wysiwygs on the page (see: Admin.Modules.register('form.elements.wysiwyg')) instead of inline script initialization for each visual editor in template file.
