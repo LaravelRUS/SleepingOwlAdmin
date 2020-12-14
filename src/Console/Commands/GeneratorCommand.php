@@ -32,7 +32,9 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
             );
         } else {
             $filename = (string) $this->argument('filename');
-            $format = (string) $this->option('format');
+            // Format option was removed from Laravel IDE Helper
+            // @see https://github.com/barryvdh/laravel-ide-helper/commit/ae5d7708b7503a6adc00389688bde3f92976dc93
+            $format = 'php'; // (string) $this->option('format');
 
             // Strip the php extension
             if (substr($filename, -4, 4) == '.php') {
