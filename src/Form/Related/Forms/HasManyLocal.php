@@ -119,6 +119,11 @@ class HasManyLocal extends FormElements
     protected $jsonOptions = 0;
 
     /**
+     * @var string
+     */
+    protected $saveMode = 'json';
+
+    /**
      * @var bool
      */
     // protected $needToSetValueSkipped = false;
@@ -587,6 +592,7 @@ class HasManyLocal extends FormElements
      * @param Request $request
      *
      * @return void
+     * @throws Exception
      */
     protected function setFieldValues(Request $request)
     {
@@ -645,7 +651,17 @@ class HasManyLocal extends FormElements
         unset($values['remove']);
         $result_value = array_values($values);
         $save_callback = $this->getSaveCallback();
-        $result_value = is_callable($save_callback) ? $save_callback($result_value) : json_encode($result_value, $this->getJsonOptions());
+
+        if (is_callable($save_callback)) {
+            $result_value = $save_callback($result_value);
+        } elseif ($this->getSaveMode() == 'array') {
+            // to do nothing
+        } elseif ($this->getSaveMode() == 'json') {
+            $result_value = json_encode($result_value, $this->getJsonOptions());
+        } else {
+            throw new Exception('Unknown save mode: ' . $this->getSaveMode());
+        }
+
         $this->getModel()->setAttribute($this->getFieldName(), $result_value);
     }
 
@@ -737,16 +753,16 @@ class HasManyLocal extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-            'stub' => $this->stubElements,
-            'name' => $this->fieldName,
-            'label' => $this->label,
-            'groups' => $this->groups,
-            'remove' => $this->toRemove,
-            'newEntitiesCount' => $this->new,
-            'limit' => $this->limit,
-            'attributes' => $this->htmlAttributesToString(),
-            'helpText' => $this->getHelpText(),
-        ];
+                'stub' => $this->stubElements,
+                'name' => $this->fieldName,
+                'label' => $this->label,
+                'groups' => $this->groups,
+                'remove' => $this->toRemove,
+                'newEntitiesCount' => $this->new,
+                'limit' => $this->limit,
+                'attributes' => $this->htmlAttributesToString(),
+                'helpText' => $this->getHelpText(),
+            ];
     }
 
     /**
@@ -849,6 +865,46 @@ class HasManyLocal extends FormElements
     public function setLoadCallback(?callable $loadCallback): void
     {
         $this->loadCallback = $loadCallback;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSaveMode(): string
+    {
+        return $this->saveMode;
+    }
+
+    /**
+     * @param string $saveMode
+     *
+     * @return HasManyLocal
+     */
+    public function setSaveMode(string $saveMode): self
+    {
+        $this->saveMode = $saveMode;
+
+        return $this;
+    }
+
+    /**
+     * @return HasManyLocal
+     */
+    public function saveAsArray(): self
+    {
+        $this->saveMode = 'array';
+
+        return $this;
+    }
+
+    /**
+     * @return HasManyLocal
+     */
+    public function saveAsJson(): self
+    {
+        $this->saveMode = 'json';
+
+        return $this;
     }
 
     /**
