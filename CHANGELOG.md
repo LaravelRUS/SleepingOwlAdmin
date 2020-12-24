@@ -1,6 +1,7 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
 ## 2020-12-24
+* [Fix] Fix filters margin.
 * [Fix] Fix collapsed menu title.
 * [Add] Add lazyLoad in table/datatables column image (enable/disable in config or `->setLazyLoad(true)`)
 * [Add] Add lazyLoad default image (use url or `data:image/gif;base64,...`)
