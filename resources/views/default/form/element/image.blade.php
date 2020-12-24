@@ -17,6 +17,7 @@
 				'id' => $model->getKey()
 			]) }}"
                 value="{{ $value }}"
+                asset_prefix="{{ $asset_prefix }}"
                 :readonly="{{ $readonly ? 'true' : 'false' }}"
                 name="{{ $name }}"
                 inline-template

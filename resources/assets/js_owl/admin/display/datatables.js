@@ -98,6 +98,8 @@ Admin.Modules.register('display.datatables', () => {
         params.fnDrawCallback = function (oSettings) {
             Admin.Events.fire('datatables::draw', this)
             jQuery('[data-toggle="tooltip"]').tooltip()
+            //use LazyLoad
+            lazyload()
 
             //add td highlight in config
             if (Admin.Config.get('datatables_highlight')) {
