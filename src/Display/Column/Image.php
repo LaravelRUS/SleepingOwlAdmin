@@ -103,7 +103,7 @@ class Image extends NamedColumn
         $value = $this->getModelValue();
 
         if ($this->asset && $value) {
-            $value = $this->asset . $value;
+            $value = $this->asset.$value;
         }
 
         if (! empty($value) && (strpos($value, '://') === false)) {

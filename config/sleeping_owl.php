@@ -161,8 +161,6 @@ return [
     'imageLazyLoad' => false,
     'imageLazyLoadFile' => 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
 
-
-
     /*
     |--------------------------------------------------------------------------
     |  Allowed Extensions for uploaded images - array
