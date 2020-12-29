@@ -75,6 +75,11 @@ class File extends NamedFormElement implements WithRoutesInterface
     protected $view = 'form.element.file';
 
     /**
+     * @var string
+     */
+    protected $asset = '';
+
+    /**
      * @return array
      */
     public function getUploadValidationMessages()
@@ -236,6 +241,18 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
+     * @param string $asset
+     *
+     * @return $this
+     */
+    public function setAssetPrefix($asset)
+    {
+        $this->asset = $asset;
+
+        return $this;
+    }
+
+    /**
      * Return save callback.
      * @return \Closure
      */
@@ -298,6 +315,10 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function toArray()
     {
         $return = parent::toArray();
+
+        $return = array_merge($return, [
+            'asset_prefix' => $this->asset,
+        ]);
 
         return $return;
     }

@@ -33,7 +33,8 @@ function close() {
 
 function collapsed() {
   sidebar.addClass('sidebar-collapse')
-  sidebar.removeClass('sidebar-open')
+  sidebar.addClass('sidebar-open')
+  // sidebar.removeClass('sidebar-open')
 }
 
 function open() {

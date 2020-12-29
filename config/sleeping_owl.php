@@ -153,6 +153,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    |  Use LazyLoad for AdminColumn::image in tables
+    |  in `imageLazyLoadFile` insert path to file or `data:image/gif;base64,...`
+    |--------------------------------------------------------------------------
+    */
+
+    'imageLazyLoad' => false,
+    'imageLazyLoadFile' => 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+
+    /*
+    |--------------------------------------------------------------------------
     |  Allowed Extensions for uploaded images - array
     |--------------------------------------------------------------------------
     */
