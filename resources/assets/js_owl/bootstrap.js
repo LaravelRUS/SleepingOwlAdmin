@@ -36,6 +36,7 @@ require('./libs/js-cookie');
 require('./libs/progressbar');
 require('@flowjs/flow.js');
 require('./libs/noty');
+require('./libs/lazyload');
 
 /**
  * Best open source admin dashboard & control panel theme.
@@ -71,6 +72,7 @@ require('./wysiwyg/summernote');
  * Initialize display
  */
 require('./admin/display/datatables');
+require('./admin/display/table');
 
 require('./admin/display/actions');
 require('./admin/display/actions_form');

@@ -13,6 +13,9 @@ Vue.component('element-image', Vue.extend({
         name: {
             type: String,
             required: true
+        },
+        asset_prefix: {
+            type: String
         }
     },
     data () {
@@ -20,11 +23,13 @@ Vue.component('element-image', Vue.extend({
             errors: [],
             uploading: false,
             val: '',
+            prefix: '',
         }
     },
     mounted () {
-        this.val = this.value;
+        this.val = this.value
         this.initUpload()
+        this.prefix = this.asset_prefix
     },
     methods: {
         initUpload () {
@@ -106,6 +111,9 @@ Vue.component('element-image', Vue.extend({
             return this.val.length > 0
         },
         createdimage () {
+            if (this.prefix && this.val.indexOf('http') !== 0) {
+                return this.prefix + this.val
+            }
             return ((this.val.indexOf('http') === 0) ? this.val : Admin.Url.upload(this.val))
         },
     }

@@ -1,0 +1,3 @@
+
+require('lazyload');
+lazyload();

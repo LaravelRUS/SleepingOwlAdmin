@@ -1,8 +1,18 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2020-12-24
+* [Fix] Fix filters margin.
+* [Fix] Fix collapsed menu title.
+* [Add] Add lazyLoad in table/datatables column image (enable/disable in config or `->setLazyLoad(true)`)
+* [Add] Add lazyLoad default image (use url or `data:image/gif;base64,...`)
+* [Add] Add `AdminColumn::image('image', 'Pic')->setAssetPrefix('custom_prefix')` in display (not check on `images`, `file`, `files`)
+* [Add] Add `AdminFormElement::image('image', 'Pic')->setAssetPrefix('custom_prefix')` in edit (not check on `images`, `file`, `files`)
+
+
 ## 2020-12-14
 * [Add] Availability to return file title and description in files. Variables are: `title` and `desc` 
 * [Fix] Error messages in files/image
+
 
 ## 2020-12-02
 * [Add] hasManyLocal component improvements: allow to use more and more elements, but not this yet: image(s)/file(s)/upload/(multi)dependentselect.
@@ -10,30 +20,38 @@
 * [Add] New method for all form elements: `->setViewMode(<view_postfix>)`. How to use: for example, you can call this: `AdminFormElement::wysiwyg('wysiwyg', 'Editor')->setViewMode('without_card)` - it's the same that `AdminFormElement::wysiwyg('wysiwyg', 'Editor')->setView('form.element.wysiwyg_without_card)`. In simple words: this method provided ability to add postfix for used view filename, that allows you to use predefined views for some elements with various functional.
 * [Add] In reference for previous item: new method for wysiwyg form control: `AdminFormElement::wysiwyg('wysiwyg', 'wysiwyg')->withoutCard()` allows to you use wysiwyg form control without card wrapper.
 
+
 ## 2020-11-27
 * [Add] Allow to change CKEditor 5 build require urls, see config('sleeping_owl.wysiwyg.ckeditor5.files'), bootstrap.php for CKFinder. Updating used CKEditor 5 CDN version (12.3.1 > 23.1.0)
+
 
 ## 2020-11-23
 * [Add] New component hasManyLocal: analog for hasMany, but store data in local longText field of the model as json-string (by default). Need for testing!
 
+
 ## 2020-10-03
 * [Fix] maxSize and minSize in image/images/file/files (was Mb, now in kB)
+
 
 ## 2020-09-28
 * [Fix] Fix in related elements dublicate 'id' in elements
 
+
 ## [RELEASED 8.2] 2020-09-25
 * [Fix] Fix in related elements don't set method setDefaultValue()
+
 
 ## [RELEASED 8.2] 2020-09-15
 * [Fix] Fix ArgumentCountError on update
 * [Fix] Fix image/s, file/s css
 * [Fix] Fix in related elements don't initialize Columns element
 
+
 ## 2020-09-11
 * [Fix] Fix issue #1222
 * [Add] `AdminColumnEditable::number('count','Count')`
 * [Add] `AdminColumnEditable::range('range','Power')`
+
 
 ```php
 AdminColumnEditable::number('count', 'Count')
