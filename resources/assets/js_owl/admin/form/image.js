@@ -57,7 +57,7 @@ Vue.component('element-image', Vue.extend({
                 error (file, response) {
                     if(_.isArray(response.errors)) {
                         if (response.errors[0]) {
-                            Admin.Messages.error(response.errors[0])
+                            Admin.Messages.error(response.message, response.errors[0])
                         }
                         self.errors = response.errors;
                     }
