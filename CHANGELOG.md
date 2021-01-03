@@ -2,6 +2,7 @@
 
 ## 2021-01-03
 * [Fix] Fix display column `count` searchable and orderable.
+* [Fix] Fix style and class in filters `date` and `daterange`.
 
 
 ## 2020-12-24
