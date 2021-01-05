@@ -13,7 +13,7 @@
     "@flowjs/flow.js": "^2.14.1",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "admin-lte": "^3.0.5",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "bootstrap4-datetimepicker": "^5.2.3",
     "datatables.net": "^1.10.21",
