@@ -494,11 +494,11 @@ class HasManyLocal extends FormElements
      */
     protected function formatElementName(string $name)
     {
-        $return = $name;
-        $return = preg_replace("/{$this->fieldName}\[[\w]+\]\[(.+?)\]/", '$1', $return);
-        $return = preg_replace('~\[]$~', '', $return);
-
-        return $return;
+        return preg_replace(
+            '~\[]$~',
+            '',
+            preg_replace("/{$this->fieldName}\[[\w]+\]\[(.+?)\]/", '$1', $name)
+        );
     }
 
     /**
