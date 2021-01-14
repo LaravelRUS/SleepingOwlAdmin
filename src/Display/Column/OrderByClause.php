@@ -331,7 +331,7 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * returns table quotes for current database driver
+     * returns table quotes for current database driver.
      * @param Builder $query
      * @return string quote for current driver
      */
