@@ -331,10 +331,10 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-    * returns table quotes for current database driver
-    * @param Builder $query
-    * @return string quote for current driver
-    */
+     * returns table quotes for current database driver
+     * @param Builder $query
+     * @return string quote for current driver
+     */
     protected function getCurrentDatabaseQuote(Builder $query)
     {
         $driver = $query->getConnection()->getConfig()['driver'];
