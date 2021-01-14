@@ -78,7 +78,7 @@ class Files extends Images
     }
 
     /**
-     * Добавляет <input type="text"> в карточку файла
+     * Добавляет <input type="text"> в карточку файла.
      * @param $name - название поля из модели
      * @param null $placeholder
      * @param null $label
@@ -88,8 +88,12 @@ class Files extends Images
     {
         $res = ['name' => $name];
 
-        if ($placeholder) $res = array_merge(['placeholder' => $placeholder], $res);
-        if ($label) $res = array_merge(['label' => $label], $res);
+        if ($placeholder) {
+            $res = array_merge(['placeholder' => $placeholder], $res);
+        }
+        if ($label) {
+            $res = array_merge(['label' => $label], $res);
+        }
 
         array_push($this->text_fields, $res);
 
@@ -97,16 +101,16 @@ class Files extends Images
     }
 
     /**
-     * Установка обязательности заполнения текстогово поля
+     * Установка обязательности заполнения текстогово поля.
      * @param $bool
      * @return $this
      */
     public function setTextRequired($bool)
     {
-        end( $this->text_fields);
+        end($this->text_fields);
         $last = key($this->text_fields);
         $this->text_fields[$last] = array_merge($this->text_fields[$last], [
-            'required' => $bool
+            'required' => $bool,
         ]);
         reset($this->text_fields);
 
@@ -114,7 +118,7 @@ class Files extends Images
     }
 
     /**
-     * Добавляет <input type="checkbox"> в карточку файла
+     * Добавляет <input type="checkbox"> в карточку файла.
      * @param $name - название поля из модели
      * @param null $label
      * @return $this
