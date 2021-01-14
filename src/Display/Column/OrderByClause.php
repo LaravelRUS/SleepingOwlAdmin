@@ -198,7 +198,6 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
-
         $quote = $this->getCurrentDatabaseQuote($query);
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
@@ -330,7 +329,7 @@ class OrderByClause implements OrderByClauseInterface
         // Add sorted field to result
         $query->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)]);
     }
-    
+
     /**
     * returns table quotes for current database driver
     * @param Builder $query
