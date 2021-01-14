@@ -19,3 +19,4 @@ mix
         enabled: false,
       },
     });
+mix.version();

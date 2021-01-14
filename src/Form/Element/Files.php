@@ -25,6 +25,10 @@ class Files extends Images
 
     protected $description_required = false;
 
+    protected $text_fields = [];
+
+    protected $checkboxes = [];
+
     /**
      * @param bool $bool
      *
@@ -69,6 +73,59 @@ class Files extends Images
     public function setDescriptionRequired($bool)
     {
         $this->description_required = $bool;
+
+        return $this;
+    }
+
+    /**
+     * Добавляет <input type="text"> в карточку файла
+     * @param $name - название поля из модели
+     * @param null $placeholder
+     * @param null $label
+     * @return $this
+     */
+    public function addTextField($name, $placeholder = null, $label = null)
+    {
+        $res = ['name' => $name];
+
+        if ($placeholder) $res = array_merge(['placeholder' => $placeholder], $res);
+        if ($label) $res = array_merge(['label' => $label], $res);
+
+        array_push($this->text_fields, $res);
+
+        return $this;
+    }
+
+    /**
+     * Установка обязательности заполнения текстогово поля
+     * @param $bool
+     * @return $this
+     */
+    public function setTextRequired($bool)
+    {
+        end( $this->text_fields);
+        $last = key($this->text_fields);
+        $this->text_fields[$last] = array_merge($this->text_fields[$last], [
+            'required' => $bool
+        ]);
+        reset($this->text_fields);
+
+        return $this;
+    }
+
+    /**
+     * Добавляет <input type="checkbox"> в карточку файла
+     * @param $name - название поля из модели
+     * @param null $label
+     * @return $this
+     */
+    public function addCheckboxField($name, $label = null)
+    {
+        $res = ['name' => $name];
+
+        if ($label) $res = array_merge(['label' => $label], $res);
+
+        array_push($this->checkboxes, $res);
 
         return $this;
     }
@@ -408,6 +465,8 @@ class Files extends Images
             'show_description' => $this->show_description,
             'title_required' => $this->title_required,
             'description_required' => $this->description_required,
+            'text_fields' => $this->text_fields,
+            'checkboxes' => $this->checkboxes,
         ]);
 
         return $return;

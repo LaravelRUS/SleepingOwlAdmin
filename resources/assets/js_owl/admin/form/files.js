@@ -39,15 +39,26 @@ $(function () {
             var values = [];
             $item.find('.thumbnail').each(function (index, thumb) {
                 var $thumb = $(thumb);
-                values.push({
+                var res = {
                     url: $($thumb.find('[data-id=file]')[0]).data('src'),
                     title: $($thumb.find('[data-id=title]')[0]).val(),
                     desc: $($thumb.find('[data-id=description]')[0]).val()
+                };
+
+                $thumb.find('.text-field').each(function(ind, elem){
+                    var $elem = $(elem);
+                    res[$elem.attr('data-id')] = $elem.val();
                 });
+
+                $thumb.find('.checkbox-toggle').each(function(ind, elem){
+                    var $elem = $(elem);
+                    res[$elem.attr('data-id')] = $elem.attr('data-value');
+                });
+                values.push(res);
             });
             $input.val(JSON.stringify(values));
 
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
         };
 
         var baseName = function (str) {
@@ -98,13 +109,14 @@ $(function () {
             updateValue();
         });
 
-        flow.on('fileSuccess', function (file, message) {
-            flow.removeFile(file);
-            var result = $.parseJSON(message);
-            $innerGroup.append(urlItem(result.value, result.path));
+        var updateValuesAndAddListener = function(result) {
+            Object.keys(result).forEach(function(key){
+                if ($.inArray(key, ['value', 'path']) < 0) {
+                    $('.form-control[data-id="'+key+'"]').last().val(result[key]);
+                }
+            });
 
             var buttons = document.querySelectorAll('.tit');
-
             $(buttons[(buttons.length-1)]).val(result.title);
             for (var i = 0; i < buttons.length; i++) {
                 var self = buttons[i];
@@ -121,7 +133,13 @@ $(function () {
                     updateValue();
                 }, false);
             }
+        };
 
+        flow.on('fileSuccess', function (file, message) {
+            flow.removeFile(file);
+            var result = $.parseJSON(message);
+            $innerGroup.append(urlItem(result.value, result.path));
+            updateValuesAndAddListener(result);
             updateValue();
         });
 
@@ -155,6 +173,34 @@ $(function () {
             $(this).closest('.fileThumbnail').remove();
             updateValue();
         });
+
+        $item.on('submit', '.fileRemove', function (e) {
+            e.preventDefault();
+        });
+
+        $item.on('click', '.checkbox-toggle', function(e) {
+            e.preventDefault();
+            $(this).find('.fas').toggleClass('hidden');
+            if (parseInt($(this).attr('data-value')) === 1) {
+                $(this).attr('data-value', 0);
+                $(this).removeClass('btn-primary').addClass('btn-danger');
+            } else {
+                $(this).attr('data-value', 1);
+                $(this).removeClass('btn-danger').addClass('btn-primary');
+            }
+            updateValue();
+        })
+
+        $item.on('change', '.text-field', function(e) {
+            updateValue();
+        });
+
+        $item.on('keypress', 'input[type="text"]', function(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code === 13) {
+                e.preventDefault();
+            }
+        })
 
         // dragable
         Sortable.create($innerGroup[0], {
