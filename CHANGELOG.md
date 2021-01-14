@@ -1,5 +1,12 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+
+## 2021-01-14
+* [Add] `AdminFormElement::files('relation')->addTextField('field', 'placeholder', 'label')->setTextRequired((bool))->addCheckboxField('field', 'label')`.
+ `addTextField` - добавляет новое текстовое поле, `placeholder` & `label` могут быть не указаны.
+`setTextRequired` - установка обязанности заполнения последнего добавленого через `addTextField` поля. `addCheckboxField` добавляет чекбокс для карточки файлса
+
+
 ## 2021-01-03
 * [Fix] Fix display column `count` searchable and orderable.
 * [Fix] Fix style and class in filters `date` and `daterange`.
