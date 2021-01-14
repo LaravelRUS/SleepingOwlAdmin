@@ -23,7 +23,7 @@ class OrderByClause implements OrderByClauseInterface
 
     protected $mysqlQuote = '`';
     protected $postgresqlQuote = '"';
-    
+
     /**
      * @var string|null
      */
@@ -198,6 +198,7 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
+
         $quote = $this->getCurrentDatabaseQuote($query);
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
@@ -236,7 +237,7 @@ class OrderByClause implements OrderByClauseInterface
             $foreignKey = $relationClass->getOwnerKey();
             $ownerKey = $relationClass->getForeignKey();
         }
-        
+
         $quote = $this->getCurrentDatabaseQuote($query);
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
@@ -275,7 +276,7 @@ class OrderByClause implements OrderByClauseInterface
             $foreignKey = $relationClass->getOwnerKey();
             $ownerKey = $relationClass->getForeignKey();
         }
-        
+
         $quote = $this->getCurrentDatabaseQuote($query);
         $foreignKey = $foreignKey ?? 'id';
         $ownerTable = $model->getTable();
@@ -324,7 +325,7 @@ class OrderByClause implements OrderByClauseInterface
                     ->where(DB::raw($quote.$ownerTable.$quote.'.'.$morphType.$quote), '=', DB::raw("'".$existsMorphTypeAlias."'"));
             });
         }
-        $sortedColumnRaw = "(CASE ".$quote."{$ownerTable}".$quote.".".$quote."{$morphType}".$quote." ".implode(' ', $sortedColumnRaw).' END)';
+        $sortedColumnRaw = '(CASE '.$quote."{$ownerTable}".$quote.'.'.$quote."{$morphType}".$quote.' '.implode(' ', $sortedColumnRaw).' END)';
 
         // Add sorted field to result
         $query->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)]);
@@ -333,14 +334,16 @@ class OrderByClause implements OrderByClauseInterface
     /**
     * returns table quotes for current database driver
     * @param Builder $query
+    * @return string quote for current driver
     */
-    protected function getCurrentDatabaseQuote(Builder $query) {
+    protected function getCurrentDatabaseQuote(Builder $query)
+    {
         $driver = $query->getConnection()->getConfig()['driver'];
-        
+
         if ($driver === 'pgsql') {
             return $this->postgresqlQuote;
         }
-        
+
         return $this->mysqlQuote;
     }
 }
