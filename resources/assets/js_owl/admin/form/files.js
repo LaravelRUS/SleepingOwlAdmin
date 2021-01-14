@@ -104,6 +104,8 @@ $(function () {
             $innerGroup.append(urlItem(result.value, result.path));
 
             var buttons = document.querySelectorAll('.tit');
+
+            $(buttons[(buttons.length-1)]).val(result.title);
             for (var i = 0; i < buttons.length; i++) {
                 var self = buttons[i];
                 self.addEventListener('change', function (event) {
@@ -112,6 +114,7 @@ $(function () {
             }
 
             buttons = document.querySelectorAll('.desc');
+            $(buttons[(buttons.length-1)]).val(result.desc);
             for (i = 0; i < buttons.length; i++) {
                 self = buttons[i];
                 self.addEventListener('change', function (event) {
@@ -120,6 +123,15 @@ $(function () {
             }
 
             updateValue();
+        });
+
+        flow.on('fileError', function(file, message){
+            var response = $.parseJSON(message);
+            if (response.errors[0]) {
+                Admin.Messages.error(response.message, response.errors[0])
+            } else {
+                Admin.Messages.error(trans('lang.ckeditor.upload.error.common'))
+            }
         });
 
         $item.on('click', '.fileLink', function (e) {
@@ -144,7 +156,9 @@ $(function () {
             updateValue();
         });
 
+        // dragable
         Sortable.create($innerGroup[0], {
+            sort: $($innerGroup[0]).data('draggable'),
             onUpdate: function () {
                 updateValue();
             }

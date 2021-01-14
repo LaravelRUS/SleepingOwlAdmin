@@ -45,7 +45,8 @@
 
       .fileicon-inner {
         text-align: center;
-        background-size: cover;
+        background-size: contain;
+        background-repeat: no-repeat;
         background-position: 50% 50%;
         vertical-align: middle;
         height: 12rem;

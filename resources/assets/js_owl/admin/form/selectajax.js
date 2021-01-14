@@ -4,6 +4,16 @@ var isEmptyVal = function (value, trim) {
 
 Admin.Modules.register('form.elements.selectajax', () => {
     $('.js-data-ajax').each((e, item) => {
+
+        if (jQuery().select2) {
+            $.extend($.fn.select2.defaults.defaults.language, {
+                noResults: function() {return trans('lang.table.infoEmpty')},
+                errorLoading: function() {return trans('lang.message.something_went_wrong')},
+                searching: function() {return trans('lang.table.loadingRecords')},
+                inputTooShort: function() {return trans('lang.select.short', {min: $self.data('min-symbols')})}
+            });
+        }
+
         let options = {},
             $self = $(item);
 

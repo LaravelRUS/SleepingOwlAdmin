@@ -24,6 +24,7 @@ require('./libs/i18next');
 require('./libs/vuejs');
 
 require('./libs/datetimepicker');
+require('./libs/daterangepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
 require('./libs/datatables');
@@ -35,6 +36,7 @@ require('./libs/js-cookie');
 require('./libs/progressbar');
 require('@flowjs/flow.js');
 require('./libs/noty');
+require('./libs/lazyload');
 
 /**
  * Best open source admin dashboard & control panel theme.
@@ -70,6 +72,7 @@ require('./wysiwyg/summernote');
  * Initialize display
  */
 require('./admin/display/datatables');
+require('./admin/display/table');
 
 require('./admin/display/actions');
 require('./admin/display/actions_form');
@@ -90,6 +93,7 @@ require('./admin/localstorage/tabs');
  */
  require('./admin/form/date');
  require('./admin/form/datetime');
+ require('./admin/form/daterange');
  require('./admin/form/deselect');
  require('./admin/form/file');
  require('./admin/form/files');
@@ -102,6 +106,7 @@ require('./admin/localstorage/tabs');
 require('./admin/form/buttons');
 require('./admin/form/select');
 require('./admin/form/selectajax');
+require('./admin/form/wysiwyg');
 require('./admin/form/dependent-select');
 require('./admin/display/env_editor');
 require('./admin/form/related');

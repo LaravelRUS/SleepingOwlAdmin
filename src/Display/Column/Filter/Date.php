@@ -19,17 +19,7 @@ class Date extends Text
     /**
      * @var string
      */
-    protected $format;
-
-    /**
-     * @var string
-     */
-    protected $searchFormat = 'Y-m-d';
-
-    /**
-     * @var bool
-     */
-    protected $seconds = false;
+    protected $format = 'Y-m-d';
 
     /**
      * @var string
@@ -40,37 +30,6 @@ class Date extends Text
     {
         parent::initialize();
         $this->setHtmlAttribute('data-type', 'date');
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasSeconds()
-    {
-        return $this->seconds;
-    }
-
-    /**
-     * @param bool $status
-     *
-     * @return $this
-     * @deprecated use showSeconds
-     */
-    public function setSeconds($status)
-    {
-        return $this->showSeconds($status);
-    }
-
-    /**
-     * @param bool $status
-     *
-     * @return $this
-     */
-    public function showSeconds($status = true)
-    {
-        $this->seconds = (bool) $status;
-
-        return $this;
     }
 
     /**
@@ -87,7 +46,6 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-            'seconds' => $this->hasSeconds(),
             'pickerFormat' => $this->getJsPickerFormat(),
         ];
     }
@@ -95,13 +53,19 @@ class Date extends Text
     /**
      * @param string $date
      *
+     * @param bool   $add_day
+     *
      * @return string
+     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
-    public function parseValue($date)
+    public function parseValue($date, $add_day = false)
     {
         if (empty($date)) {
             return;
         }
+
+        //contains in date
+        $this->setOperator('contains');
 
         if (! $date instanceof Carbon) {
             try {
@@ -119,6 +83,10 @@ class Date extends Text
                     return;
                 }
             }
+        }
+
+        if ($add_day) {
+            $date = $date->addDay();
         }
 
         return $date->timezone($this->getTimezone())->format($this->getFormat());

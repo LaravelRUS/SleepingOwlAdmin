@@ -13,25 +13,22 @@
 <div class="card card-default {!! $card_class !!}">
 	<div class="card-heading card-header">
 		@if ($creatable)
-			<a href="{{ url($createUrl) }}" class="btn btn-primary mt-2">
+			<a href="{{ url($createUrl) }}" class="btn btn-primary btn-create">
 				<i class="fas fa-plus"></i> {{ $newEntryButtonText }}
 			</a>
 		@endif
 
-		<div class="pull-right">
+		<div class="pull-right block-actions">
 			@yield('card.heading.actions')
 			@yield('panel.heading.actions')
 
 			@yield('card.buttons')
 			@yield('panel.buttons')
 		</div>
+        
+	    @yield('card.heading')
+    	@yield('panel.heading')
 	</div>
-
-	<div class="card-heading card-header">
-		@yield('card.heading')
-		@yield('panel.heading')
-	</div>
-
 
 	@foreach($extensions as $ext)
 		{!! $ext->render() !!}

@@ -108,6 +108,7 @@ return [
         'init'        => 'Select',
         'limit'       => 'and ${count} more',
         'deselect'    => 'Deselect',
+        'short'       => 'Enter min :min characters',
     ],
 
     'image' => [

@@ -8,6 +8,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayColumnFactoryInterface;
 use SleepingOwl\Admin\Display\Column;
 
 /**
+ * @method Column\Index index($title = null)
  * @method Column\Action action($name, $title = null)
  * @method Column\Checkbox checkbox($label = null)
  * @method Column\Control control($label = null)
@@ -37,6 +38,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
         parent::__construct($application);
 
         $this->register([
+            'index' => Column\Index::class,
             'action' => Column\Action::class,
             'checkbox' => Column\Checkbox::class,
             'control' => Column\Control::class,

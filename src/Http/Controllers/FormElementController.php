@@ -25,7 +25,7 @@ class FormElementController extends Controller
             $item = $model->getRepository()->find($id);
             if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
-                    'message' => trans('lang.message.access_denied'),
+                    'message' => trans('sleeping_owl::lang.message.access_denied'),
                 ], 403);
             }
 
@@ -34,7 +34,7 @@ class FormElementController extends Controller
 
         if (! $model->isCreatable()) {
             return new JsonResponse([
-                'message' => trans('lang.message.access_denied'),
+                'message' => trans('sleeping_owl::lang.message.access_denied'),
             ], 403);
         }
 
@@ -53,7 +53,7 @@ class FormElementController extends Controller
             $item = $model->getRepository()->find($id);
             if (is_null($item) || ! $model->isEditable($item)) {
                 return new JsonResponse([
-                    'message' => trans('lang.message.access_denied'),
+                    'message' => trans('sleeping_owl::lang.message.access_denied'),
                 ], 403);
             }
 
@@ -62,7 +62,7 @@ class FormElementController extends Controller
 
         if (! $model->isCreatable()) {
             return new JsonResponse([
-                'message' => trans('lang.message.access_denied'),
+                'message' => trans('sleeping_owl::lang.message.access_denied'),
             ], 403);
         }
 
@@ -147,10 +147,10 @@ class FormElementController extends Controller
         // because field name in MultiSelectAjax ends with '[]'
         $fieldPrepared = str_replace('[]', '', $field);
         // process fields with relations: user[role]
-        $fieldPrepared = strtr($fieldPrepared, ['[' => '.', ']' => '']);
+        $fieldPreparedRel = strtr($fieldPrepared, ['[' => '.', ']' => '']);
 
         /** @var SelectAjax|MultiSelectAjax $element */
-        $element = $form->getElement($fieldPrepared);
+        $element = $form->getElement($fieldPreparedRel) ?: $form->getElement($fieldPrepared);
 
         if (is_null($element)) {
             return new JsonResponse([
@@ -256,7 +256,7 @@ class FormElementController extends Controller
 
                             return [
                                 'tag_name' => $value,
-                                'id' => $item->id,
+                                'id' => $item->{$item->getKeyName()},
                                 'custom_name' => $custom_name_value,
                             ];
                         })

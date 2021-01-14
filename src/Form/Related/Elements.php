@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Related;
 
 use Admin\Contracts\HasFakeModel;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -99,6 +100,11 @@ abstract class Elements extends FormElements
 
     protected $transactionLevel;
 
+    /**
+     * @var string
+     */
+    protected $helpText;
+
     public function __construct(string $relationName, array $elements = [])
     {
         $this->toRemove = collect();
@@ -143,7 +149,7 @@ abstract class Elements extends FormElements
 
         $this->stubElements = $this->getNewElements();
         $this->forEachElement($this->stubElements, function ($element) {
-            $element->setDefaultValue(null);
+            //$element->setDefaultValue(null);
             if (! $element instanceof HasFakeModel) {
                 $element->setPath('');
             }
@@ -177,18 +183,17 @@ abstract class Elements extends FormElements
 
     public function initializeElement($element)
     {
+        //ignore second initialize
+        if ($element instanceof ColumnInterface) {
+            return;
+        }
+
         if ($element instanceof Initializable) {
             $element->initialize();
         }
 
         if ($element instanceof HasFakeModel) {
             $element->setFakeModel($this->getModel());
-        }
-
-        if ($element instanceof ColumnInterface) {
-            $element->getElements()->each(function ($el) {
-                $this->initializeElement($el);
-            });
         }
     }
 
@@ -229,7 +234,7 @@ abstract class Elements extends FormElements
     protected function cloneElements(FormElements $element)
     {
         $elements = clone $element->getElements()->map(function ($element) {
-            return clone $element;
+            return is_object($element) ? clone $element : $element;
         });
 
         return $elements->map(function ($element) {
@@ -239,13 +244,20 @@ abstract class Elements extends FormElements
 
     protected function emptyElement($element)
     {
-        $el = clone $element;
+        $el = is_object($element) ? clone $element : $element;
+
         if ($el instanceof Columns) {
             $col = new Columns();
             $columns = $el->getElements();
-            $col->setElements((clone $columns)->map(function ($column) {
+            $columns = (clone $columns)->map(function ($column) {
                 return $this->emptyElement($column);
-            })->all());
+            });
+            foreach ($columns as $column) {
+                $col->addColumn($column, $column->getWidth());
+            }
+
+            $col->setHtmlAttributes($el->getHtmlAttributes());
+            $col->initialize();
 
             return $col;
         }
@@ -254,9 +266,11 @@ abstract class Elements extends FormElements
             $el->setElements($this->cloneElements($el)->all());
         } else {
             if (! ($el instanceof Custom)) {
-                $el->setDefaultValue(null);
+                //$el->setDefaultValue(null);
             }
-            $el->setValueSkipped(true);
+            if (is_object($el)) {
+                $el->setValueSkipped(true);
+            }
         }
 
         return $el;
@@ -653,6 +667,8 @@ abstract class Elements extends FormElements
             'remove' => $this->toRemove,
             'newEntitiesCount' => $this->new,
             'limit' => $this->limit,
+            'attributes' => $this->htmlAttributesToString(),
+            'helpText' => $this->getHelpText(),
         ];
     }
 
@@ -706,6 +722,30 @@ abstract class Elements extends FormElements
     public function disableCreation(): self
     {
         $this->setLimit(0);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelpText()
+    {
+        if ($this->helpText instanceof Htmlable) {
+            return $this->helpText->toHtml();
+        }
+
+        return $this->helpText;
+    }
+
+    /**
+     * @param string|Htmlable $helpText
+     *
+     * @return $this
+     */
+    public function setHelpText($helpText)
+    {
+        $this->helpText = $helpText;
 
         return $this;
     }

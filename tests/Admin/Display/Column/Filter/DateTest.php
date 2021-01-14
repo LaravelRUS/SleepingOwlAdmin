@@ -35,18 +35,6 @@ class DateTest extends TestCase
         $this->assertEquals('d.f.Y', $filter->getFormat());
     }
 
-    public function test_sets_or_gets_seconds()
-    {
-        $filter = $this->getFilter();
-        $this->assertFalse($filter->hasSeconds());
-
-        $filter->showSeconds();
-        $this->assertTrue($filter->hasSeconds());
-
-        $filter->showSeconds(false);
-        $this->assertFalse($filter->hasSeconds());
-    }
-
     public function test_gets_or_sets_picker_format()
     {
         $filter = $this->getFilter();

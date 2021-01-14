@@ -79,11 +79,13 @@ class AdminServiceProvider extends ServiceProvider
             return new \KodiCMS\Assets\PackageManager();
         });
 
+        $this->app->singleton('assets', function ($app) {
+            return new Assets($app['assets.packages']);
+        });
+
         $this->app->singleton('sleeping_owl.meta', function ($app) {
             return new Meta(
-                new Assets(
-                    $app['assets.packages']
-                )
+                $app['assets']
             );
         });
 

@@ -12,6 +12,11 @@ trait Renderable
     protected $viewPath;
 
     /**
+     * @var string
+     */
+    protected $viewPathPostfix = '';
+
+    /**
      * @param string|View $view
      *
      * @return $this
@@ -29,7 +34,9 @@ trait Renderable
     public function getView()
     {
         if (empty($this->viewPath) && property_exists($this, 'view')) {
-            return $this->view;
+            $view_postfix = $this->getViewMode() ? '_'.$this->getViewMode() : '';
+
+            return is_string($this->view) && $view_postfix ? $this->view.$view_postfix : $this->view;
         }
 
         return $this->viewPath;
@@ -52,5 +59,35 @@ trait Renderable
             $this->getView(),
             $this->toArray()
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewMode(): string
+    {
+        return $this->viewPathPostfix;
+    }
+
+    /**
+     * @param string $viewPathPostfix
+     *
+     * @return Renderable
+     */
+    public function setViewMode(string $viewPathPostfix): self
+    {
+        $this->viewPathPostfix = $viewPathPostfix;
+
+        return $this;
+    }
+
+    /**
+     * @return Renderable
+     */
+    public function defaultViewMode(): self
+    {
+        $this->viewPathPostfix = '';
+
+        return $this;
     }
 }

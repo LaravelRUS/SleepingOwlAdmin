@@ -35,11 +35,23 @@ Vue.component('related-group', {
     },
 
     mounted() {
+
+        each(this.$el.querySelectorAll('input, select, textarea'), (el) => {
+            const id = el.getAttribute('id');
+            if (id) {
+                el.setAttribute('id', `${id}_${this.index}`);
+            }
+        });
+
         if (!this.primary) {
-            each(this.$el.querySelectorAll('input, select'), (el) => {
+            each(this.$el.querySelectorAll('input, select, textarea'), (el) => {
                 const name = el.getAttribute('name');
                 if (name) {
-                    el.setAttribute('name', `${this.name}[new_${this.index}][${name}]`);
+                    let name_correct = name;
+                    if (/\[]$/.test(name)) {
+                        name_correct = name_correct.replace('[]', '') + '][';
+                    }
+                    el.setAttribute('name', `${this.name}[new_${this.index}][${name_correct}]`);
                 }
             });
         }

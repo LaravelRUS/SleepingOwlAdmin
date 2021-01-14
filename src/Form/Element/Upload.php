@@ -29,7 +29,7 @@ class Upload extends NamedFormElement
      */
     public function getValueFromRequest(Request $request)
     {
-        return $request->file($this->getPath());
+        return $request->file($this->getNameKey() ?: $this->getPath());
     }
 
     /**

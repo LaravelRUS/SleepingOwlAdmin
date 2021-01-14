@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Validator;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 
 class Image extends File
 {
@@ -29,10 +30,29 @@ class Image extends File
      * @var
      */
     protected $afterSaveCallback;
+
     /**
      * @var string
      */
     protected $view = 'form.element.image';
+
+    /**
+     * @var bool
+     */
+    protected $allowSvg;
+
+    /**
+     * @param string $path
+     * @param string|null $label
+     *
+     * @throws FormElementException
+     */
+    public function __construct($path, $label = null)
+    {
+        $this->setAllowSvg((bool) config('sleeping_owl.imagesAllowSvg'));
+
+        parent::__construct($path, $label);
+    }
 
     /**
      * @param Validator $validator
@@ -45,8 +65,28 @@ class Image extends File
 
             $size = getimagesize($file->getRealPath());
 
-            if (! $size && $file->getMimeType() !== 'image/svg+xml') {
-                $validator->errors()->add('file', trans('sleeping_owl::validation.not_image'));
+            if (! $size) {
+                if (! $this->isAllowSvg()) {
+                    if ($file->getMimeType() !== 'image/svg+xml') {
+                        // Find localized error message in SleepingOwl translation file
+                        $bad_image_validation_key = 'sleeping_owl::validation.not_image';
+                        $bad_image_validation_text = trans($bad_image_validation_key);
+                        if ($bad_image_validation_text != $bad_image_validation_key) {
+                            $error_message = $bad_image_validation_text;
+                        } else {
+                            // Find localized error message in local project translation file
+                            $bad_image_validation_key = 'validation.not_image';
+                            $bad_image_validation_text = trans($bad_image_validation_key);
+                            if ($bad_image_validation_text != $bad_image_validation_key) {
+                                $error_message = $bad_image_validation_text;
+                            } else {
+                                // Default error message on english
+                                $error_message = 'The uploaded file is not an image';
+                            }
+                        }
+                        $validator->errors()->add('file', $error_message);
+                    }
+                }
             }
         });
     }
@@ -135,7 +175,7 @@ class Image extends File
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @return mixed
+     * @return mixed|void
      */
     public function afterSave(Request $request)
     {
@@ -145,5 +185,25 @@ class Image extends File
         if (is_callable($callback = $this->getAfterSaveCallback())) {
             return $callback($value, $model);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAllowSvg(): bool
+    {
+        return $this->allowSvg;
+    }
+
+    /**
+     * @param bool $allowSvg
+     *
+     * @return Image
+     */
+    public function setAllowSvg(bool $allowSvg): self
+    {
+        $this->allowSvg = $allowSvg;
+
+        return $this;
     }
 }

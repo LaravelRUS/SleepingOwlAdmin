@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
-[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--7.17.2-brightgreen.svg)]()
+[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--8.2-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-7.1.3+-brightgreen.svg)]()
 
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowladmin.ru)
@@ -16,14 +16,14 @@
 
 SleepingOwl Admin is an administrative interface builder for Laravel. __Completely free__
 
-Support `Laravel > 5.5 - 5.8` (`PHP < 7.1.3`), `Laravel 6.*` (`PHP > 7.2`) and `Laravel 7.*` (`PHP > 7.2.5`).
+Support `Laravel > 5.5 - 5.8` (`PHP < 7.1.3`), `Laravel 6.*` (`PHP > 7.2`), `Laravel 7.*` (`PHP > 7.2.5`) and `Laravel 8.*` (`PHP > 7.3`)
 
 __Lumen is NOT supported(((__
 
 
-## Documentation new ver.7
+## Documentation new ver.8
 
-Powered by Laravel 5.5 - 7+. (latest tested version 7.17.2)
+Powered by Laravel 5.5 - 8+. (latest tested version 8.2.0)
 
 * [Russian](http://sleepingowladmin.ru/#/ru/) (90% process)
 * [English](http://sleepingowladmin.ru/#/en/) (30% process)
@@ -31,7 +31,14 @@ Powered by Laravel 5.5 - 7+. (latest tested version 7.17.2)
 * [Docs Github](https://github.com/SleepingOwlAdmin/docs/tree/new)
 
 
-## Install `ver 7.*` <small>(last Released)</small>
+## Install `ver 8.*` <small>(last Released)</small>
+
+  Install SleepingOwl Admin
+
+  `composer require laravelrus/sleepingowl:8.*`
+
+
+## Install `ver 7.*`
 
   1. Install SleepingOwl Admin
 

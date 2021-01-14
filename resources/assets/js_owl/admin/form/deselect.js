@@ -21,7 +21,7 @@ Vue.component('deselect', Vue.extend({
         this.val = _.first(this.options.filter(a => a.id === this.value));
         //this.value значение поля multiselect, когда модель созадаётся this.value будет null, поэтому делаем проверку
         if (this.multiple && this.value) {
-            this.val = this.options.filter(a => this.value.indexOf(a.id) !== -1)
+            this.val = this.options.filter(a => this.value.indexOf(a.id) !== -1 || this.value.indexOf(a.id.toString()) !== -1)
         }
     },
     computed: {

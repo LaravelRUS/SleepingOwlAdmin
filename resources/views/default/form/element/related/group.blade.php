@@ -20,7 +20,7 @@
                 @endif
             @endforeach
         </div>
-        <div class='form-group clearfix'>
+        <div class='grouped-element__footer form-group clearfix'>
             <button type='button'
                     v-if="canRemove"
                     @click="handleRemove"
@@ -31,6 +31,6 @@
                 {{ trans('sleeping_owl::lang.button.remove') }}
             </button>
         </div>
-        <hr>
+        <hr class="grouped-element__hr" />
     </div>
 </related-group>

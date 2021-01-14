@@ -7,8 +7,6 @@
 
 import i18next from 'i18next';
 
-// window.i18next = require('i18next');
-
 i18next.init({
     lng: Admin.locale,
     resources: {
@@ -19,11 +17,6 @@ i18next.init({
         }
     }
 });
-
-// nit:Daan old trans function
-// window.trans = function (key) {
-//     return i18next.t(key);
-// }
 
 window.trans = function (key, args) {
     let value = i18next.t(key)

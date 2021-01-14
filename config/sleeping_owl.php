@@ -153,6 +153,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    |  Use LazyLoad for AdminColumn::image in tables
+    |  in `imageLazyLoadFile` insert path to file or `data:image/gif;base64,...`
+    |--------------------------------------------------------------------------
+    */
+
+    'imageLazyLoad' => false,
+    'imageLazyLoadFile' => 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+
+    /*
+    |--------------------------------------------------------------------------
     |  Allowed Extensions for uploaded images - array
     |--------------------------------------------------------------------------
     */
@@ -160,6 +170,14 @@ return [
     'imagesAllowedExtensions' => [
         'jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    |  Allow to upload svg-files without required xml-header as image - boolean
+    |--------------------------------------------------------------------------
+    */
+
+    'imagesAllowSvg' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -270,8 +288,28 @@ return [
 
         /*
          * See https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html
+         *
+         * For using CKFinder with CKEditor 5 you must load additional js-file, see /app/Admin/bootstrap.php
+         * See https://ckeditor.com/docs/ckeditor5/latest/features/image-upload/ckfinder.html#configuring-the-full-integration
+         *
+         * Be careful: CKEditor 5 haven't html source code button feature!
+         * See https://github.com/ckeditor/ckeditor5/issues/592
          */
         'ckeditor5' => [
+            'files' => [
+                /*
+                 * Use Classic build from CDN
+                 * See https://ckeditor.com/ckeditor-5/download/
+                 */
+                'editor' => '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js',
+                'translation' => '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/translations/'.config('app.locale').'.js',
+                /*
+                 * Use Custom build with most-used additional plugins
+                 * See https://ckeditor.com/ckeditor-5/online-builder/
+                 */
+                // 'editor' => '/packages/sleepingowl/ckeditor5/ckeditor.js',
+                // 'translation' => '/packages/sleepingowl/ckeditor5/translations/' . config('app.locale') . '.js',
+            ],
 
             'language' => config('app.locale'),
 
@@ -284,10 +322,8 @@ return [
             'toolbar' => [
                 'undo', 'redo', '|',
                 'heading', '|',
-                'bold', 'italic', 'blockQuote', '|',
-                'numberedList', 'bulletedList', '|',
+                'bold', 'italic', 'blockQuote', 'link', 'bulletedList', 'numberedList', '|',
                 'CKFinder', 'ImageUpload', 'imageTextAlternative', 'MediaEmbed', 'imageStyle:full', 'imageStyle:side', '|',
-                'link', 'bulletedList', 'numberedList', '|',
                 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
             ],
 
@@ -305,6 +341,16 @@ return [
     |
     */
     'datatables'  => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | DataTables column highlight
+    |--------------------------------------------------------------------------
+    |
+    | Highlight DataTables column on mouseover
+    |
+    */
+    'datatables_highlight' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -332,12 +378,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Add scroll to top button
+    | Add scrolls button
     |--------------------------------------------------------------------------
     |
     */
 
     'scroll_to_top' => true,
+    'scroll_to_bottom' => true,
 
     /*
     |--------------------------------------------------------------------------

@@ -15,7 +15,6 @@ class Radio extends Select
 
         $this->setHtmlAttributes([
             'type' => 'radio',
-            'name' => $this->getName(),
         ]);
     }
 

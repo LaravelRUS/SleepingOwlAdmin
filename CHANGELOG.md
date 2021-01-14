@@ -1,4 +1,140 @@
-<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">7+</code> branch)</h2></p>
+<p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
+
+## 2021-01-03
+* [Fix] Fix display column `count` searchable and orderable.
+* [Fix] Fix style and class in filters `date` and `daterange`.
+
+
+## 2020-12-24
+* [Fix] Fix filters margin.
+* [Fix] Fix collapsed menu title.
+* [Add] Add lazyLoad in table/datatables column image (enable/disable in config or `->setLazyLoad(true)`)
+* [Add] Add lazyLoad default image (use url or `data:image/gif;base64,...`)
+* [Add] Add `AdminColumn::image('image', 'Pic')->setAssetPrefix('custom_prefix')` in display (not check on `images`, `file`, `files`)
+* [Add] Add `AdminFormElement::image('image', 'Pic')->setAssetPrefix('custom_prefix')` in edit (not check on `images`, `file`, `files`)
+
+
+## 2020-12-14
+* [Add] Availability to return file title and description in files. Variables are: `title` and `desc`
+* [Fix] Error messages in files/image
+
+
+## 2020-12-02
+* [Add] hasManyLocal component improvements: allow to use more and more elements, but not this yet: image(s)/file(s)/upload/(multi)dependentselect.
+* [Fix] Redesign wysiwyg init scheme: implemented centralized init all of wysiwygs on the page (see: Admin.Modules.register('form.elements.wysiwyg')) instead of inline script initialization for each visual editor in template file.
+* [Add] New method for all form elements: `->setViewMode(<view_postfix>)`. How to use: for example, you can call this: `AdminFormElement::wysiwyg('wysiwyg', 'Editor')->setViewMode('without_card)` - it's the same that `AdminFormElement::wysiwyg('wysiwyg', 'Editor')->setView('form.element.wysiwyg_without_card)`. In simple words: this method provided ability to add postfix for used view filename, that allows you to use predefined views for some elements with various functional.
+* [Add] In reference for previous item: new method for wysiwyg form control: `AdminFormElement::wysiwyg('wysiwyg', 'wysiwyg')->withoutCard()` allows to you use wysiwyg form control without card wrapper.
+
+
+## 2020-11-27
+* [Add] Allow to change CKEditor 5 build require urls, see config('sleeping_owl.wysiwyg.ckeditor5.files'), bootstrap.php for CKFinder. Updating used CKEditor 5 CDN version (12.3.1 > 23.1.0)
+
+
+## 2020-11-23
+* [Add] New component hasManyLocal: analog for hasMany, but store data in local longText field of the model as json-string (by default). Need for testing!
+
+
+## 2020-10-03
+* [Fix] maxSize and minSize in image/images/file/files (was Mb, now in kB)
+
+
+## 2020-09-28
+* [Fix] Fix in related elements dublicate 'id' in elements
+
+
+## [RELEASED 8.2] 2020-09-25
+* [Fix] Fix in related elements don't set method setDefaultValue()
+
+
+## [RELEASED 8.2] 2020-09-15
+* [Fix] Fix ArgumentCountError on update
+* [Fix] Fix image/s, file/s css
+* [Fix] Fix in related elements don't initialize Columns element
+
+
+## 2020-09-11
+* [Fix] Fix issue #1222
+* [Add] `AdminColumnEditable::number('count','Count')`
+* [Add] `AdminColumnEditable::range('range','Power')`
+
+
+```php
+AdminColumnEditable::number('count', 'Count')
+  ->setMin(-25) //not required
+  ->setMax(30) //not required
+  ->setStep(5) //not required
+
+AdminColumnEditable::range('range', 'Power')
+  ->setMin(-25) //not required
+  ->setMax(30) //not required
+  ->setStep(5) //not required
+```
+
+
+## [RELEASED 8.0] 2020-09-10
+* [Support] Support Laravel 8
+
+
+## 2020-08-31
+* [Fix] datatables highlight tabs column
+* [Fix] Fix table-light row hover style
+
+
+## 2020-08-28
+* [Add] Partially localized `select2` in `selectajax`
+* [Ver] Tested on Laravel 7.25
+* [Add] Add datatables_highlight in config file and add class `.lightcolumn` for custom table
+* [Add] Add class `.table-black` and `.table-red` (+highlight classes)
+* [Add] Add scroll-to-bottom button
+
+
+## 2020-08-27
+* [Add] Add column highlight in datatables
+* [Fix] Fix `setRowClassCallback()` and `disableControls()` in datatables on `fireDisplay()`
+* [Fix] Fix `setDraggable(bool)` in `AdminFormElement::files` and `AdminFormElement::images`
+* [Fix] Fix `maxSize()` and `minSize()` in AdminFormElement `file`, `files`, `image` and `images`
+* [Add] Add `maxSize()` cannot be larger than allowed in php
+* [Update] NPM packages:
+  - bootstrap: 4.5.0 -> 4.5.2
+  - sass-loader: 9.0.2 -> 10.0.1
+  - vue-template-compiler: 2.6.11 -> 2.6.12
+  - laravel-mix: 5.0.4 -> 5.0.5
+  - i18next: 19.6.2 -> 19.7.0
+  - dropzone: 5.7.1 -> 5.7.2
+  - lodash: 4.17.19 -> 4.17.20
+  - trix: 1.2.3 -> 1.2.4
+  - vuedraggable: 2.24.0 -> 2.24.1
+  - sweetalert2: 9.17.0 -> 9.17.1
+  - vue: 2.6.11 -> 2.6.12
+  - i18n: 0.10.0 -> 0.13.2
+  - axios: 0.19.2 -> 0.20.0
+
+
+## [RELEASED 7.20] 2020-07-18
+* Fix `AdminColumnFilter::date()`
+* Return `setWidth` (css min-width) in filters
+* Add `->setInline(true)` in `AdminColumnFilter::range()`
+* Fix filters css (scss)
+* Rebase top filters from tables view on flex div (add flex wrap)
+
+
+## 2020-07-16
+* [Update] NPM packages:
+  - @fortawesome/fontawesome-free: 5.13.0 -> 5.14.0
+  - i18next: 19.4.5 -> 19.6.2
+  - lodash: 4.17.15 -> 4.17.19
+  - moment: 2.26.0 -> 2.27.0
+  - sweetalert2: 9.14.4 -> 9.17.0
+  - vuedraggable: 2.23.2 -> 2.24.0
+  - sass: 1.26.8 -> 1.26.10
+  - sass-loader: 8.0.2 -> 9.0.2
+
+Deleted:
+  - fullcalendar
+  - font-awesome: 4.7.0
+
+* change Noty notification on Swal Toast in Tree and .env editor
+
 
 ## 2020-06-13
 * [Update] NPM packages:

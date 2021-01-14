@@ -8,9 +8,12 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use KodiComponents\Support\Upload;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Traits\FileSize;
 
 class File extends NamedFormElement implements WithRoutesInterface
 {
+    use FileSize;
+
     /**
      * @var string
      */
@@ -70,6 +73,11 @@ class File extends NamedFormElement implements WithRoutesInterface
      * @var string
      */
     protected $view = 'form.element.file';
+
+    /**
+     * @var string
+     */
+    protected $asset = '';
 
     /**
      * @return array
@@ -222,36 +230,24 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param int $size Max size in kilobytes
-     *
-     * @return $this
-     */
-    public function maxSize($size)
-    {
-        $this->addValidationRule('max:'.(int) $size);
-
-        return $this;
-    }
-
-    /**
-     * @param int $size Max size in kilobytes
-     *
-     * @return $this
-     */
-    public function minSize($size)
-    {
-        $this->addValidationRule('min:'.(int) $size);
-
-        return $this;
-    }
-
-    /**
      * @param \Closure $callable
      * @return $this
      */
     public function setSaveCallback(\Closure $callable)
     {
         $this->saveCallback = $callable;
+
+        return $this;
+    }
+
+    /**
+     * @param string $asset
+     *
+     * @return $this
+     */
+    public function setAssetPrefix($asset)
+    {
+        $this->asset = $asset;
 
         return $this;
     }
@@ -319,6 +315,10 @@ class File extends NamedFormElement implements WithRoutesInterface
     public function toArray()
     {
         $return = parent::toArray();
+
+        $return = array_merge($return, [
+            'asset_prefix' => $this->asset,
+        ]);
 
         return $return;
     }

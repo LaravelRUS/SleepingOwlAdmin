@@ -12,6 +12,16 @@ class Count extends NamedColumn
     protected $view = 'column.count';
 
     /**
+     * @var bool
+     */
+    protected $isSearchable = false;
+
+    /**
+     * @var bool
+     */
+    protected $orderable = false;
+
+    /**
      * @return int
      */
     public function getModelValue()

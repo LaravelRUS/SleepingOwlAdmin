@@ -7,32 +7,53 @@
     border-top: 0;
   }
 
+  [data-type='range']:not(.inline) {
+    & > div:first-child {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  [data-type='range'].inline {
+    display: flex;
+    & > div:first-child {
+      margin-right: 0.5rem;
+    }
+  }
+
+
+  .input-group {
+    &.input-date.date {
+      flex-wrap: nowrap;
+      // max-width: 10rem;
+    }
+  }
+
   .input-group-text {
     span {
       line-height: 1.5;
     }
   }
 
-  .select2-container,
-  .column-filter.select2-hidden-accessible {
-    /* Fix for horizontal scroll */
-    width: 99%!important;
-  }
+  // .select2-container,
+  // .column-filter.select2-hidden-accessible {
+  //   /* Fix for horizontal scroll */
+  //   width: 99%!important;
+  // }
 
-  .column-filter {
-    width: 100%;
-
-    .form-group {
-      width: 100%;
-      input {
-        width: calc(100% - 2.5rem);
-
-      }
-    }
-  }
+  // .column-filter {
+  //   width: 100%;
+  //
+  //   .form-group {
+  //     width: 100%;
+  //     input {
+  //       width: calc(100% - 2.5rem);
+  //
+  //     }
+  //   }
+  // }
 
   .btn-group {
-    float: right;
+    // float: right;
   }
 }
 
@@ -43,4 +64,53 @@ tfoot.display-filters {
     width: auto!important;
     display: block;
   }
+}
+
+.display-filters-top {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+
+  & > div {
+    flex: 0 1 auto;
+    padding-right: 1rem;
+    align-self: center;
+    margin-bottom: 0.5rem;
+
+    @media (max-width: 667px) {
+      & > div {
+        min-width: 1% !important;
+        max-width: 100% !important;
+      }
+    }
+  }
+
+  & > div:last-child {
+    flex: 1 1 8rem;
+    padding-right: 0;
+    justify-content: right;
+    text-align: right;
+  }
+
+}
+
+/*datatables card-heading correct styles: for create button, actions & column filters*/
+.display-filters.display-filters-top {
+    margin-bottom: 0;
+}
+
+.display-filters.display-filters-top>div {
+    margin-bottom: 0;
+}
+
+.btn-create + .block-actions + .display-filters.display-filters-top {
+    margin-top: 0.75rem;
+}
+
+.card-heading .block-actions #action_form {
+    padding: 0;
+}
+
+.card-heading .block-actions:not(:last-child) {
+    margin-bottom: 0.75rem;
 }

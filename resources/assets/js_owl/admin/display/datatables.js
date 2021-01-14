@@ -98,12 +98,26 @@ Admin.Modules.register('display.datatables', () => {
         params.fnDrawCallback = function (oSettings) {
             Admin.Events.fire('datatables::draw', this)
             jQuery('[data-toggle="tooltip"]').tooltip()
+            //use LazyLoad
+            lazyload()
+
+            //add td highlight in config
+            if (Admin.Config.get('datatables_highlight')) {
+              jQuery("[data-id="+this.data("id")+"].lightcolumn tbody").on('mouseenter', 'td', function() {
+                  if (table.data().any()) {
+                      var colIdx = table.cell(this).index().column;
+
+                      jQuery(table.cells().nodes()).removeClass('highlight');
+                      jQuery(table.column(colIdx).nodes()).addClass('highlight');
+                  }
+              })
+            }
         }
 
         params.createdRow = function (row, data, dataIndex) {
-            let row_class = data[params.columns.length];
-            if (row_class) {
-                $(row).addClass(row_class);
+            let row_class = data[data.length - 1];
+            if (row_class && row_class.add_class) {
+                $(row).addClass(row_class.add_class);
             }
         }
 
@@ -116,6 +130,8 @@ Admin.Modules.register('display.datatables', () => {
             }
         });
 
+
+
         $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
             if (stateFilters) {
                 fillFilters(filters)
@@ -125,11 +141,11 @@ Admin.Modules.register('display.datatables', () => {
 
         //clear filter
         $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
-            let input = $(".display-filters td[data-index] input")
+            let input = $(".display-filters [data-index] input")
             input.val(null)
             input.trigger('change')
 
-            let selector = $(".display-filters td[data-index] select")
+            let selector = $(".display-filters [data-index] select")
             selector.val(null)
             selector.trigger('change')
 
@@ -139,11 +155,12 @@ Admin.Modules.register('display.datatables', () => {
             table.draw()
         });
 
-        $("[data-datatables-id="+$this.data("id")+"].display-filters td[data-index] input").on('keyup', function(e) {
+        $("[data-datatables-id="+$this.data("id")+"].display-filters [data-index] input").on('keyup', function(e) {
             if(e.keyCode === 13) {
                 table.draw()
             }
-        });
+        })
+
     })
 
 
@@ -294,9 +311,10 @@ window.checkDateRange = (fromValue, toValue, value) => {
 
 window.columnFilters = {
     //date ========================================
-    daterange (dateField, table, column, index, serverSide) {
+    date (dateField, table, column, index, serverSide) {
         let $dateField = $(dateField)
-        $dateField.on('apply.daterangepicker', function(e, date) {
+        $dateField.closest('.input-date')
+        .on('dp.change', function () {
             column.search($dateField.val());
         })
     },
@@ -376,6 +394,15 @@ window.columnFilters = {
 
     //text ========================================
     text (input, table, column, index, serverSide) {
+        let $input = $(input)
+
+        $input.on('keyup change', () => {
+            column.search($input.val());
+        })
+    },
+
+    //text ========================================
+    daterange (input, table, column, index, serverSide) {
         let $input = $(input)
 
         $input.on('keyup change', () => {

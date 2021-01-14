@@ -11,59 +11,61 @@ namespace  {
     exit("This file should not be included, only analyzed by your IDE");
 }
 
-<?php foreach ($namespaces_by_extends_ns as $namespace => $aliases): ?>
-<?php if ($namespace == '\Illuminate\Database\Eloquent'): continue; endif; ?>
+<?php foreach ($namespaces_by_extends_ns as $namespace => $aliases) { ?>
+<?php if ($namespace == '\Illuminate\Database\Eloquent') {
+    continue;
+} ?>
 namespace <?= $namespace == '__root' ? '' : trim($namespace, '\\') ?> { 
-<?php foreach ($aliases as $alias): ?>
+<?php foreach ($aliases as $alias) { ?>
 
     <?= $alias->getClassType() ?> <?= $alias->getExtendsClass() ?> {
-        <?php foreach ($alias->getMethods() as $method): ?>
+        <?php foreach ($alias->getMethods() as $method) { ?>
 
         <?= trim($method->getDocComment('        ')) ?> 
         public static function <?= $method->getName() ?>(<?= $method->getParamsWithDefault() ?>)
-        {<?php if ($method->getDeclaringClass() !== $method->getRoot()): ?>
+        {<?php if ($method->getDeclaringClass() !== $method->getRoot()) { ?>
 
             //Method inherited from <?= $method->getDeclaringClass() ?>
-            <?php endif; ?>
+            <?php } ?>
 
             <?= $method->shouldReturn() ? 'return ' : '' ?><?= $method->getRoot() ?>::<?= $method->getName() ?>(<?= $method->getParams() ?>);
         }
-        <?php endforeach; ?> 
+        <?php } ?> 
     }
-<?php endforeach; ?> 
+<?php } ?> 
 }
 
-<?php endforeach; ?>
+<?php } ?>
 
-<?php foreach ($namespaces_by_alias_ns as $namespace => $aliases): ?>
+<?php foreach ($namespaces_by_alias_ns as $namespace => $aliases) { ?>
 namespace <?= $namespace == '__root' ? '' : trim($namespace, '\\') ?> { 
-<?php foreach ($aliases as $alias): ?>
+<?php foreach ($aliases as $alias) { ?>
 
-    <?= $alias->getClassType() ?> <?= $alias->getShortName() ?> extends <?= $alias->getExtends() ?> {<?php if ($alias->getExtendsNamespace() == '\Illuminate\Database\Eloquent'): ?>
-        <?php foreach ($alias->getMethods() as $method): ?> 
+    <?= $alias->getClassType() ?> <?= $alias->getShortName() ?> extends <?= $alias->getExtends() ?> {<?php if ($alias->getExtendsNamespace() == '\Illuminate\Database\Eloquent') { ?>
+        <?php foreach ($alias->getMethods() as $method) { ?> 
             <?= trim($method->getDocComment('            ')) ?> 
             public static function <?= $method->getName() ?>(<?= $method->getParamsWithDefault() ?>)
-            {<?php if ($method->getDeclaringClass() !== $method->getRoot()): ?>
+            {<?php if ($method->getDeclaringClass() !== $method->getRoot()) { ?>
     
                 //Method inherited from <?= $method->getDeclaringClass() ?>
-                <?php endif; ?>
+                <?php } ?>
     
                 <?= $method->shouldReturn() ? 'return ' : '' ?><?= $method->getRoot() ?>::<?= $method->getName() ?>(<?= $method->getParams() ?>);
             }
-        <?php endforeach; ?>
-<?php endif; ?>}
-<?php endforeach; ?> 
+        <?php } ?>
+<?php } ?>}
+<?php } ?> 
 }
 
-<?php endforeach; ?>
+<?php } ?>
 
-<?php if ($helpers): ?>
+<?php if ($helpers) { ?>
 namespace {
 <?= $helpers ?> 
 }
-<?php endif; ?>
+<?php } ?>
 
-<?php if ($include_fluent): ?>
+<?php if ($include_fluent) { ?>
 namespace Illuminate\Support {
     /**
      * Methods commonly used in migrations
@@ -87,4 +89,4 @@ namespace Illuminate\Support {
      */
     class Fluent {}
 }
-<?php endif ?>
+<?php } ?>
