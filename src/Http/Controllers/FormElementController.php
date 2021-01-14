@@ -256,7 +256,7 @@ class FormElementController extends Controller
 
                             return [
                                 'tag_name' => $value,
-                                'id' => $item->id,
+                                'id' => $item->{$item->getKeyName()},
                                 'custom_name' => $custom_name_value,
                             ];
                         })

@@ -1,5 +1,10 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2021-01-03
+* [Fix] Fix display column `count` searchable and orderable.
+* [Fix] Fix style and class in filters `date` and `daterange`.
+
+
 ## 2020-12-24
 * [Fix] Fix filters margin.
 * [Fix] Fix collapsed menu title.
@@ -10,7 +15,7 @@
 
 
 ## 2020-12-14
-* [Add] Availability to return file title and description in files. Variables are: `title` and `desc` 
+* [Add] Availability to return file title and description in files. Variables are: `title` and `desc`
 * [Fix] Error messages in files/image
 
 
