@@ -21,6 +21,9 @@ class OrderByClause implements OrderByClauseInterface
      */
     protected $name;
 
+    protected $mysqlQuote = '`';
+    protected $postgresqlQuote = '"';
+    
     /**
      * @var string|null
      */
@@ -195,12 +198,13 @@ class OrderByClause implements OrderByClauseInterface
         Builder $query,
         $direction
     ) {
+        $quote = $this->getCurrentDatabaseQuote($query);
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
 
         $ownerColumn = $relationClass->getQualifiedForeignKeyName();
         $foreignColumn = $relationClass->getQualifiedParentKeyName();
-        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
+        $sortedColumnRaw = $quote.$foreignTable.$quote.'.'.$quote.$relations->last().$quote;
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
         $this->sortedColumnAlias = $sortedColumnAlias;
@@ -232,13 +236,14 @@ class OrderByClause implements OrderByClauseInterface
             $foreignKey = $relationClass->getOwnerKey();
             $ownerKey = $relationClass->getForeignKey();
         }
-
+        
+        $quote = $this->getCurrentDatabaseQuote($query);
         $ownerTable = $model->getTable();
         $foreignTable = $relationModel->getTable();
 
         $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
         $foreignColumn = implode('.', [$foreignTable, $foreignKey]);
-        $sortedColumnRaw = '`'.$foreignTable.'`.`'.$relations->last().'`';
+        $sortedColumnRaw = $quote.$foreignTable.$quote.'.'.$quote.$relations->last().$quote;
         $sortedColumnAlias = implode('__', [$foreignTable, $relations->last()]);
 
         $this->sortedColumnAlias = $sortedColumnAlias;
@@ -270,7 +275,8 @@ class OrderByClause implements OrderByClauseInterface
             $foreignKey = $relationClass->getOwnerKey();
             $ownerKey = $relationClass->getForeignKey();
         }
-
+        
+        $quote = $this->getCurrentDatabaseQuote($query);
         $foreignKey = $foreignKey ?? 'id';
         $ownerTable = $model->getTable();
         $ownerColumn = implode('.', [$ownerTable, $ownerKey]);
@@ -310,17 +316,31 @@ class OrderByClause implements OrderByClauseInterface
             $existsMorphTypeAlias = $array['morph_type_alias'];
             $tableName = $array['table_name'];
             $tableAlias = $foreignTablePrefix.'_'.$tableName;
-            $sortedColumnRaw[] = "WHEN '$existsMorphType' THEN {$tableAlias}.`{$foreignTableField}`";
+            $sortedColumnRaw[] = "WHEN '$existsMorphType' THEN {$tableAlias}.".$quote."{$foreignTableField}".$quote;
 
-            $query->leftJoin(DB::raw('`'.$tableName.'` AS '.$tableAlias), function ($join) use ($tableAlias, $foreignKey, $ownerColumn, $ownerTable, $morphType, $existsMorphTypeAlias) {
+            $query->leftJoin(DB::raw($quote.$tableName.$quote.' AS '.$tableAlias), function ($join) use ($tableAlias, $foreignKey, $ownerColumn, $ownerTable, $morphType, $existsMorphTypeAlias) {
                 $join
-                    ->on(DB::raw($tableAlias.'.`'.$foreignKey.'`'), '=', $ownerColumn)
-                    ->where(DB::raw('`'.$ownerTable.'`.`'.$morphType.'`'), '=', DB::raw("'".$existsMorphTypeAlias."'"));
+                    ->on(DB::raw($tableAlias.'.'.$quote.$foreignKey.$quote), '=', $ownerColumn)
+                    ->where(DB::raw($quote.$ownerTable.$quote.'.'.$morphType.$quote), '=', DB::raw("'".$existsMorphTypeAlias."'"));
             });
         }
-        $sortedColumnRaw = "(CASE `{$ownerTable}`.`{$morphType}` ".implode(' ', $sortedColumnRaw).' END)';
+        $sortedColumnRaw = "(CASE ".$quote."{$ownerTable}".$quote.".".$quote."{$morphType}".$quote." ".implode(' ', $sortedColumnRaw).' END)';
 
         // Add sorted field to result
         $query->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)]);
+    }
+    
+    /**
+    * returns table quotes for current database driver
+    * @param Builder $query
+    */
+    protected function getCurrentDatabaseQuote(Builder $query) {
+        $driver = $query->getConnection()->getConfig()['driver'];
+        
+        if ($driver === 'pgsql') {
+            return $this->postgresqlQuote;
+        }
+        
+        return $this->mysqlQuote;
     }
 }
