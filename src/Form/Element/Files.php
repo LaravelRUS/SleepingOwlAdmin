@@ -127,7 +127,9 @@ class Files extends Images
     {
         $res = ['name' => $name];
 
-        if ($label) $res = array_merge(['label' => $label], $res);
+        if ($label) {
+            $res = array_merge(['label' => $label], $res);
+        }
 
         array_push($this->checkboxes, $res);
 
