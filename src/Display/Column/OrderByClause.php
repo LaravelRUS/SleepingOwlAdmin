@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use Mockery\Matcher\Closure;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
-class OrderByClausePostgresql implements OrderByClauseInterface
+class OrderByClause implements OrderByClauseInterface
 {
     /**
      * @var string|\Closure
