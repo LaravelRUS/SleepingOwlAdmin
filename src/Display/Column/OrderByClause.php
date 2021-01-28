@@ -320,7 +320,7 @@ class OrderByClause implements OrderByClauseInterface
                     ->where(DB::raw($join->getConnection()->getQueryGrammar()->wrapTable($ownerTable).'.'.$join->getConnection()->getQueryGrammar()->wrap($morphType)), '=', DB::raw($join->getConnection()->getQueryGrammar()->wrap($existsMorphTypeAlias)));
             });
         }
-        $sortedColumnRaw = '(CASE'.$query->getConnection()->getQueryGrammar()->wrapTable($ownerTable).'.'.$query->getConnection()->getQueryGrammar()->wrap($morphType).' '.implode(' ', $sortedColumnRaw).' END)';
+        $sortedColumnRaw = '(CASE '.$query->getConnection()->getQueryGrammar()->wrapTable($ownerTable).'.'.$query->getConnection()->getQueryGrammar()->wrap($morphType).' '.implode(' ', $sortedColumnRaw).' END)';
 
         // Add sorted field to result
         $query->addSelect([DB::raw($sortedColumnRaw.' AS '.$sortedColumnAlias)]);
