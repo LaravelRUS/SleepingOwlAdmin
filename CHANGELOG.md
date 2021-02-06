@@ -2,6 +2,8 @@
 
 ## 2021-02-06
 * [Fix] Fix `AdminFormElement::image('image', 'Image')->setAssetPrefix($string)` in form.
+* [Update] NPM packages:
+  - axios: 0.20.0 -> 0.21.1
 
 ## 2021-01-03
 * [Fix] Fix display column `count` searchable and orderable.
