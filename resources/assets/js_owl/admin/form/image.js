@@ -22,6 +22,7 @@ Vue.component('element-image', Vue.extend({
         return {
             errors: [],
             uploading: false,
+            uploadingImage: false,
             val: '',
             prefix: '',
         }
@@ -48,62 +49,64 @@ Vue.component('element-image', Vue.extend({
                 acceptedFiles: 'image/*',
                 dictDefaultMessage: '',
                 sending () {
-                    self.uploading = true;
+                    self.uploading = true
                     self.closeAlert()
+                    self.uploadingImage = false
                 },
                 success (file, response) {
-                    self.val = response.value;
+                    self.val = response.value
                 },
                 error (file, response) {
                     if(_.isArray(response.errors)) {
                         if (response.errors[0]) {
                             Admin.Messages.error(response.message, response.errors[0])
                         }
-                        self.errors = response.errors;
+                        self.errors = response.errors
                     }
                 },
                 complete(){
-                    self.uploading = false;
+                    self.uploading = false
+                    self.uploadingImage = true
                 }
             });
         },
         image (uri) {
-            return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
+            return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri))
         },
         remove () {
-            let self = this;
+            let self = this
             Admin.Messages.confirm(trans('lang.message.are_you_sure')).then((result) => {
                 if(result.value)
-                    self.val = '';
+                    self.val = ''
                 else
-                    return false;
+                    return false
             });
         },
         insert (image) {
-            let self = this;
-            let url = null;
-            let link = null;
+            let self = this
+            let url = null
+            let link = null
             if (typeof(image) !== 'undefined') {
-              url = self.val;
-              link = this.image(url);
+              url = self.val
+              link = this.image(url)
             }
 
             Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, link).then(result => {
                 if(result.value) {
-                    self.val = result.value;
+                    self.val = result.value
                 } else {
-                    return false;
+                    return false
                 }
             });
         },
         closeAlert () {
-            this.errors = [];
+            this.errors = []
         }
     },
     computed: {
         uploadClass() {
             if (!this.uploading) {
-                return 'fas fa-image';
+                return 'fas fa-image'
             }
             return 'fas fa-spinner fa-spin'
         },
@@ -111,7 +114,7 @@ Vue.component('element-image', Vue.extend({
             return this.val.length > 0
         },
         createdimage () {
-            if (this.prefix && this.val.indexOf('http') !== 0) {
+            if (this.prefix && this.val.indexOf('http') !== 0 && !this.uploadingImage) {
                 return this.prefix + this.val
             }
             return ((this.val.indexOf('http') === 0) ? this.val : Admin.Url.upload(this.val))

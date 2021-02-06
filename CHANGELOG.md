@@ -1,5 +1,8 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2021-02-06
+* [Fix] Fix `AdminFormElement::image('image', 'Image')->setAssetPrefix($string)` in form.
+
 ## 2021-01-03
 * [Fix] Fix display column `count` searchable and orderable.
 * [Fix] Fix style and class in filters `date` and `daterange`.
