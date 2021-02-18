@@ -224,7 +224,10 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
             $value = null;
         }
 
-        $request->offsetSet($this->getName(), $value);
+        $array = array();
+        array_set($array, $this->getName(), $value);
+
+        $request->merge($array);
 
         $form->setModelClass(get_class($model));
         $form->initialize();

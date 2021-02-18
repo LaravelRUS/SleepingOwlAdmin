@@ -1,4 +1,6 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
+## 2021-02-06
+* [Fix] Fixed editable columns (checkbox, datetime, number, select, text & textarea) saving on relations.
 
 ## 2021-02-06
 * [Fix] Fix `AdminFormElement::image('image', 'Image')->setAssetPrefix($string)` in form.
@@ -67,12 +69,12 @@
 AdminColumnEditable::number('count', 'Count')
   ->setMin(-25) //not required
   ->setMax(30) //not required
-  ->setStep(5) //not required
+  ->setStep(5); //not required
 
 AdminColumnEditable::range('range', 'Power')
   ->setMin(-25) //not required
   ->setMax(30) //not required
-  ->setStep(5) //not required
+  ->setStep(5); //not required
 ```
 
 
@@ -162,10 +164,10 @@ Deleted:
 AdminColumn::checkbox()
   ->setVisibled(function($item){
     return $item->id < 3;
-  }),
+  });
 
 //or
-AdminColumn::link('title', 'Title')->setVisibled(false),
+AdminColumn::link('title', 'Title')->setVisibled(false);
 ```
 
 
