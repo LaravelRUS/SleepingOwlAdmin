@@ -104,7 +104,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
      * @return null
      */
     public function getRelationKey()
-    { 
+    {
         return $this->relationKey;
     }
 
@@ -256,7 +256,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
             ),
         ]);
 
-        $array = array();
+        $array = [];
         array_set($array, $this->getName(), $request->input('value', $this->getDefaultValue()));
 
         $request->merge($array);

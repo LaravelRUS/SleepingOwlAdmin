@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Form\FormDefault; 
+use SleepingOwl\Admin\Form\FormDefault;
 
 class Number extends EditableColumn implements ColumnEditableInterface
 {
@@ -104,8 +104,8 @@ class Number extends EditableColumn implements ColumnEditableInterface
 
         $model = $this->getModel();
 
-        $array = array();
-        array_set($array, $this->getName(),  $request->input('value', null));
+        $array = [];
+        array_set($array, $this->getName(), $request->input('value', null));
 
         $request->merge($array);
 

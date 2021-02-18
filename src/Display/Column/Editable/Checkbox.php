@@ -7,7 +7,7 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 
 class Checkbox extends EditableColumn implements ColumnEditableInterface
-{ 
+{
     /**
      * @var string
      */
@@ -146,7 +146,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
 
         $model = $this->getModel();
 
-        $array = array();
+        $array = [];
         array_set($array, $this->getName(), $request->input('value', null));
 
         $request->merge($array);

@@ -35,12 +35,12 @@ class Text extends EditableColumn implements ColumnEditableInterface
     {
         $form = new FormDefault([
             new \SleepingOwl\Admin\Form\Element\Text(
-                $this->getName() 
+                $this->getName()
             ),
         ]);
 
         $model = $this->getModel();
-        $array = array();
+        $array = [];
         array_set($array, $this->getName(), $request->input('value', null));
 
         $request->merge($array);
