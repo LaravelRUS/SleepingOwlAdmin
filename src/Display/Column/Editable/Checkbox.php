@@ -7,7 +7,7 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 
 class Checkbox extends EditableColumn implements ColumnEditableInterface
-{
+{ 
     /**
      * @var string
      */

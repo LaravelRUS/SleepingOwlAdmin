@@ -104,7 +104,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
      * @return null
      */
     public function getRelationKey()
-    {
+    { 
         return $this->relationKey;
     }
 

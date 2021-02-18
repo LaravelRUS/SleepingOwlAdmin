@@ -35,7 +35,7 @@ class Textarea extends EditableColumn implements ColumnEditableInterface
     {
         $form = new FormDefault([
             new \SleepingOwl\Admin\Form\Element\Textarea(
-                $this->getName()
+                $this->getName() 
             ),
         ]);
 
@@ -45,10 +45,10 @@ class Textarea extends EditableColumn implements ColumnEditableInterface
         array_set($array, $this->getName(), $request->input('value', null));
 
         $request->merge($array);
-
         $form->setModelClass(get_class($model));
         $form->initialize();
         $form->setId($model->getKey());
+
         $form->saveForm($request);
     }
 }

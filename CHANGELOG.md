@@ -165,7 +165,7 @@ AdminColumn::checkbox()
   ->setVisibled(function($item){
     return $item->id < 3;
   });
-
+ 
 //or
 AdminColumn::link('title', 'Title')->setVisibled(false);
 ```
