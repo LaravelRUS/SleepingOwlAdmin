@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Form\Related;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\Element\File;
-å
+
 class Group extends Collection
 {
     /**
