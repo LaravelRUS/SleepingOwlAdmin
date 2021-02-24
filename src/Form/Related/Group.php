@@ -4,7 +4,8 @@ namespace SleepingOwl\Admin\Form\Related;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-
+use SleepingOwl\Admin\Form\Element\File;
+å
 class Group extends Collection
 {
     /**
@@ -22,7 +23,7 @@ class Group extends Collection
     public function __construct(Model $model = null, $items = [])
     {
         $this->model = $model;
-        $this->setIfNeedPathFieldImage($items);
+    $this->setIfNeedPathFieldImage($items);
         parent::__construct($items);
     }
 
