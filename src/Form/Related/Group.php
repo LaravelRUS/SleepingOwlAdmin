@@ -84,12 +84,12 @@ class Group extends Collection
     }
 
     //Функция устанавливает url для элеметов Image, Images, File, Files, если не может определить название field при динамическом добавлении группы полей
-    public function setIfNeedPathFieldImage($items){
-        
-        if(is_null($this->model)){
+    public function setIfNeedPathFieldImage($items)
+    {
+        if (is_null($this->model)) {
             foreach ($items as $item) {
-               if($item instanceof File){
-                    if(!$item->getPath()){
+                if ($item instanceof File) {
+                    if (! $item->getPath()) {
                         $item->setPath($item->getName());
                     }
                 }
