@@ -239,12 +239,12 @@ Admin.Modules.register('display.datatables', () => {
             selector.trigger('change');
 
             table.draw();
+        });
 
-            $("[data-datatables-id=" + $this.data("id") + "].display-filters td[data-index] input").on('keyup', function (e) {
-                if (e.keyCode === 13) {
-                    table.draw();
-                }
-            });
-        })
+        $("[data-datatables-id=" + $this.data("id") + "].display-filters td[data-index] input").on('keyup', function (e) {
+            if (e.keyCode === 13) {
+                table.draw();
+            }
+        });
     })
 });
