@@ -25,91 +25,6 @@ Admin.Modules.register('display.datatables', () => {
         });
     }
 
-    $('.datatables').each((i, item) => {
-        let $this = $(item),
-            id = $this.data('id'),
-            params = $this.data('attributes') || {},
-            url = $this.data('url'),
-            payload = $this.data('payload'),
-            search = $this.data('display-search') || false,
-            dtlength = $this.data('display-dtlength') || false;
-
-        if (url && url.length > 0) {
-            params.serverSide = true;
-            params.processing = true;
-
-            //<"H"lfr>t<"F"ip>
-            params.sDom = '<"H"';
-
-            if (dtlength) {
-                params.sDom += 'l';
-            }
-
-            if (search) {
-                params.sDom += 'f';
-            }
-
-            params.sDom += 'r>t<"F"ip>';
-
-            params.bStateSave = true;
-
-            params.ajax = {
-                url: url,
-                data(d) {
-                    Admin.Events.fire('datatables::ajax::data', d)
-
-                    iterateColumnFilters(id, function ($element, index, type) {
-                        if (name = $element.data('ajax-data-name')) {
-                            d.columns[index]['search'][name] = $element.val()
-                        }
-                    });
-                    d.payload = payload;
-                }
-            };
-        }
-
-        params.fnDrawCallback = function (oSettings) {
-            Admin.Events.fire('datatables::draw', this)
-        }
-
-        params.createdRow = function (row, data, dataIndex) {
-            let row_class = data[params.columns.length];
-            if (row_class) {
-                $(row).addClass(row_class);
-            }
-        }
-
-        let table = $this.DataTable(params);
-
-        iterateColumnFilters(id, function ($element, index, type) {
-            if (_.isFunction(window.columnFilters[type])) {
-                window.columnFilters[type]($element, table, table.column(index), index, params.serverSide);
-            }
-        });
-
-        $("[data-datatables-id=" + $this.data("id") + "] #filters-exec").on('click', function () {
-            table.draw();
-        });
-
-        $("[data-datatables-id=" + $this.data("id") + "] #filters-cancel").on('click', function () {
-
-            let input = $(".display-filters td[data-index] input").val(null);
-            input.trigger('change');
-
-            let selector = $(".display-filters td[data-index] select");
-            selector.val(null);
-            selector.trigger('change');
-
-            table.draw();
-
-            $("[data-datatables-id=" + $this.data("id") + "].display-filters td[data-index] input").on('keyup', function (e) {
-                if (e.keyCode === 13) {
-                    table.draw();
-                }
-            });
-        })
-    })
-
     window.checkNumberRange = (fromValue, toValue, value) => {
         if (_.isNaN(fromValue) && _.isNaN(toValue)) {
             return true;
@@ -247,4 +162,89 @@ Admin.Modules.register('display.datatables', () => {
             })
         }
     }
+
+    $('.datatables').each((i, item) => {
+        let $this = $(item),
+            id = $this.data('id'),
+            params = $this.data('attributes') || {},
+            url = $this.data('url'),
+            payload = $this.data('payload'),
+            search = $this.data('display-search') || false,
+            dtlength = $this.data('display-dtlength') || false;
+
+        if (url && url.length > 0) {
+            params.serverSide = true;
+            params.processing = true;
+
+            //<"H"lfr>t<"F"ip>
+            params.sDom = '<"H"';
+
+            if (dtlength) {
+                params.sDom += 'l';
+            }
+
+            if (search) {
+                params.sDom += 'f';
+            }
+
+            params.sDom += 'r>t<"F"ip>';
+
+            params.bStateSave = true;
+
+            params.ajax = {
+                url: url,
+                data(d) {
+                    Admin.Events.fire('datatables::ajax::data', d)
+
+                    iterateColumnFilters(id, function ($element, index, type) {
+                        if (name = $element.data('ajax-data-name')) {
+                            d.columns[index]['search'][name] = $element.val()
+                        }
+                    });
+                    d.payload = payload;
+                }
+            };
+        }
+
+        params.fnDrawCallback = function (oSettings) {
+            Admin.Events.fire('datatables::draw', this)
+        }
+
+        params.createdRow = function (row, data, dataIndex) {
+            let row_class = data[params.columns.length];
+            if (row_class) {
+                $(row).addClass(row_class);
+            }
+        }
+
+        let table = $this.DataTable(params);
+
+        iterateColumnFilters(id, function ($element, index, type) {
+            if (_.isFunction(window.columnFilters[type])) {
+                window.columnFilters[type]($element, table, table.column(index), index, params.serverSide);
+            }
+        });
+
+        $("[data-datatables-id=" + $this.data("id") + "] #filters-exec").on('click', function () {
+            table.draw();
+        });
+
+        $("[data-datatables-id=" + $this.data("id") + "] #filters-cancel").on('click', function () {
+
+            let input = $(".display-filters td[data-index] input").val(null);
+            input.trigger('change');
+
+            let selector = $(".display-filters td[data-index] select");
+            selector.val(null);
+            selector.trigger('change');
+
+            table.draw();
+
+            $("[data-datatables-id=" + $this.data("id") + "].display-filters td[data-index] input").on('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    table.draw();
+                }
+            });
+        })
+    })
 });
