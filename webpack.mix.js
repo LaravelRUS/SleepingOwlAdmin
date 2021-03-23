@@ -15,3 +15,4 @@ mix.js('resources/assets/js_owl/modules_load.js', 'js/modules.js')
         }
     });
 
+mix.version();

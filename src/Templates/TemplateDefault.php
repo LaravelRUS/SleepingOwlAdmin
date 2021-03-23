@@ -37,10 +37,14 @@ class TemplateDefault extends Template
     public function initialize()
     {
         $this->meta()
-            ->addJs('admin-default', $this->assetPath('js/admin-app.js'))
-            ->addJs('admin-vue-init', $this->assetPath('js/vue.js'))
-            ->addJs('admin-modules-load', $this->assetPath('js/modules.js'))
-            ->addCss('admin-default', $this->assetPath('css/admin-app.css'));
+            //->addJs('admin-default', $this->assetPath('js/admin-app.js'))
+            //->addJs('admin-vue-init', $this->assetPath('js/vue.js'))
+            //->addJs('admin-modules-load', $this->assetPath('js/modules.js'))
+            //->addCss('admin-default', $this->assetPath('css/admin-app.css'));
+            ->addJs('admin-default', mix('/js/admin-app.js', $this->assetDir()))
+            ->addJs('admin-vue-init', mix('/js/vue.js', $this->assetDir()))
+            ->addJs('admin-modules-load', mix('/js/modules.js', $this->assetDir()))
+            ->addCss('admin-default', mix('/css/admin-app.css', $this->assetDir()));
     }
 
     /**
