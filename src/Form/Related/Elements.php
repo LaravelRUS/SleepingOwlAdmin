@@ -637,14 +637,14 @@ abstract class Elements extends FormElements
         $this->buildGroupsCollection();
 
         return parent::toArray() + [
-                'stub' => $this->stubElements,
-                'name' => $this->relationName,
-                'label' => $this->label,
-                'groups' => $this->groups,
-                'remove' => $this->toRemove,
-                'newEntitiesCount' => $this->new,
-                'limit' => $this->limit,
-            ];
+            'stub' => $this->stubElements,
+            'name' => $this->relationName,
+            'label' => $this->label,
+            'groups' => $this->groups,
+            'remove' => $this->toRemove,
+            'newEntitiesCount' => $this->new,
+            'limit' => $this->limit,
+        ];
     }
 
     /**

@@ -281,17 +281,17 @@ class Control extends TableColumn
     public function toArray()
     {
         return parent::toArray() + [
-                'buttons' => $this->buttons
-                    ->each(function (ControlButtonInterface $button) {
-                        $button->setModel($this->getModel());
-                    })
-                    ->filter(function (ControlButtonInterface $button) {
-                        return $button->isActive();
-                    })
-                    ->sortBy(function (ControlButtonInterface $button) {
-                        return $button->getPosition();
-                    }),
-                'attributes' => $this->htmlAttributesToString(),
-            ];
+            'buttons' => $this->buttons
+                ->each(function (ControlButtonInterface $button) {
+                    $button->setModel($this->getModel());
+                })
+                ->filter(function (ControlButtonInterface $button) {
+                    return $button->isActive();
+                })
+                ->sortBy(function (ControlButtonInterface $button) {
+                    return $button->getPosition();
+                }),
+            'attributes' => $this->htmlAttributesToString(),
+        ];
     }
 }

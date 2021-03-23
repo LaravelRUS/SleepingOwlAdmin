@@ -109,9 +109,9 @@ class Columns extends FormElements implements ColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'columns' => $this->getElements()->onlyVisible(),
-                'attributes' => $this->htmlAttributesToString(),
-            ];
+            'columns' => $this->getElements()->onlyVisible(),
+            'attributes' => $this->htmlAttributesToString(),
+        ];
     }
 
     /**
