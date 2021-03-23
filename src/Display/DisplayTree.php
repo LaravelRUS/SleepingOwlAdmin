@@ -326,17 +326,17 @@ class DisplayTree extends Display implements WithRoutesInterface
         $this->setHtmlAttribute('class', 'dd nestable');
 
         return parent::toArray() + [
-                'items' => $this->getRepository()->getTree($this->getCollection()),
-                'reorderable' => $this->isReorderable(),
-                'url' => $model->getDisplayUrl(),
-                'value' => $this->getValue(),
-                'creatable' => $model->isCreatable(),
-                'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
-                'controls' => [$this->getColumns()->getControlColumn()],
-                'newEntryButtonText' => $this->getNewEntryButtonText(),
-                'max_depth' => $this->getMaxDepth(),
-                'panel_class' => $this->getPanelClass(),
-            ];
+            'items' => $this->getRepository()->getTree($this->getCollection()),
+            'reorderable' => $this->isReorderable(),
+            'url' => $model->getDisplayUrl(),
+            'value' => $this->getValue(),
+            'creatable' => $model->isCreatable(),
+            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
+            'controls' => [$this->getColumns()->getControlColumn()],
+            'newEntryButtonText' => $this->getNewEntryButtonText(),
+            'max_depth' => $this->getMaxDepth(),
+            'panel_class' => $this->getPanelClass(),
+        ];
     }
 
     /**

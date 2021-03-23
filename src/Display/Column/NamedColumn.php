@@ -127,8 +127,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'name' => $this->getName(),
-            ];
+            'name' => $this->getName(),
+        ];
     }
 
     /**

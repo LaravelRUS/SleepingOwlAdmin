@@ -217,11 +217,11 @@ class Action extends NamedColumn implements ActionInterface
     public function toArray()
     {
         return parent::toArray() + [
-                'icon' => $this->getIcon(),
-                'action' => $this->getAction(),
-                'method' => $this->getMethod(),
-                'title' => $this->getTitle(),
-                'selected' => $this->getSelected(),
-            ];
+            'icon' => $this->getIcon(),
+            'action' => $this->getAction(),
+            'method' => $this->getMethod(),
+            'title' => $this->getTitle(),
+            'selected' => $this->getSelected(),
+        ];
     }
 }

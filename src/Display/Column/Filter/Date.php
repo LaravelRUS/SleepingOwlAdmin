@@ -133,10 +133,10 @@ class Date extends Text
     public function toArray()
     {
         return parent::toArray() + [
-                'seconds' => $this->hasSeconds(),
-                'pickerFormat' => $this->getJsPickerFormat(),
-                'width' => $this->getWidth(),
-            ];
+            'seconds' => $this->hasSeconds(),
+            'pickerFormat' => $this->getJsPickerFormat(),
+            'width' => $this->getWidth(),
+        ];
     }
 
     /**
