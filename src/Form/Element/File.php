@@ -316,10 +316,8 @@ class File extends NamedFormElement implements WithRoutesInterface
     {
         $return = parent::toArray();
 
-        $return = array_merge($return, [
+        return array_merge($return, [
             'asset_prefix' => $this->asset,
         ]);
-
-        return $return;
     }
 }

@@ -103,11 +103,9 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      */
     public function toArray()
     {
-        $value = $this->getModelValue();
-
         return array_merge(parent::toArray(), [
             'id' => $this->getModel()->getKey(),
-            'value' => $this->getFormatedDate($value),
+            'value' => $this->getFormatedDate($this->getModelValue()),
             'isEditable' => $this->getReadonly(),
             'url' => $this->getUrl(),
 

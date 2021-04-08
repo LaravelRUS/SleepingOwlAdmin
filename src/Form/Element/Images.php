@@ -109,7 +109,5 @@ class Images extends Image
         return array_merge(parent::toArray(), [
             'draggable' => $this->getDraggable(),
         ]);
-
-        return $return;
     }
 }
