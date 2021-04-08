@@ -256,7 +256,10 @@ class Select extends EditableColumn implements ColumnEditableInterface
             ),
         ]);
 
-        $request->offsetSet($this->getName(), $request->input('value', $this->getDefaultValue()));
+        $array = [];
+        array_set($array, $this->getName(), $request->input('value', $this->getDefaultValue()));
+
+        $request->merge($array);
 
         $form->setModelClass(get_class($model));
         $form->initialize();

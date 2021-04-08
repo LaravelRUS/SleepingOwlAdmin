@@ -40,8 +40,10 @@ class Text extends EditableColumn implements ColumnEditableInterface
         ]);
 
         $model = $this->getModel();
+        $array = [];
+        array_set($array, $this->getName(), $request->input('value', null));
 
-        $request->offsetSet($this->getName(), $request->input('value', null));
+        $request->merge($array);
 
         $form->setModelClass(get_class($model));
         $form->initialize();
