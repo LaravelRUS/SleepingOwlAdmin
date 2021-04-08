@@ -3,9 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
-use Illuminate\Support\Arr;
 
 class Text extends EditableColumn implements ColumnEditableInterface
 {
