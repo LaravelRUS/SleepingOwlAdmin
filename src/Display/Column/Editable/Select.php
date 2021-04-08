@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
