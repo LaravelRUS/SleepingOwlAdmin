@@ -223,7 +223,7 @@ class AdminServiceProvider extends ServiceProvider
             ->notName('navigation.php')
             ->in($directory)
             ->sort(function (SplFileInfo $a) {
-                return $a->getFilename() != 'bootstrap.php';
+                return $a->getFilename() === 'bootstrap.php' ? -1 : 1;
             });
 
         foreach ($files as $file) {
