@@ -15,7 +15,7 @@ use SleepingOwl\Admin\Display\Column\Editable\Text;
 use SleepingOwl\Admin\Display\Column\Editable\Textarea;
 
 /**
- * @method Checkbox checkbox($name)
+ * @method Checkbox checkbox($name, $checkedLabel = null, $uncheckedLabel = null, $columnLabel = null)
  */
 class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnEditableFactoryInterface
 {
