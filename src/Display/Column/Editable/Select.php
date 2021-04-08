@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+use Illuminate\Support\Arr;
 
 class Select extends EditableColumn implements ColumnEditableInterface
 {
@@ -257,7 +258,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
         ]);
 
         $array = [];
-        array_set($array, $this->getName(), $request->input('value', $this->getDefaultValue()));
+        Arr::set($array, $this->getName(), $request->input('value', $this->getDefaultValue()));
 
         $request->merge($array);
 

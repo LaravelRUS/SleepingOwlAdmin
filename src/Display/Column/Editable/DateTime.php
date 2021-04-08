@@ -9,6 +9,7 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\DateFormat;
 use SleepingOwl\Admin\Traits\DatePicker;
+use Illuminate\Support\Arr;
 
 class DateTime extends EditableColumn implements ColumnEditableInterface
 {
@@ -223,7 +224,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         }
 
         $array = [];
-        array_set($array, $this->getName(), $value);
+        Arr::set($array, $this->getName(), $value);
 
         $request->merge($array);
 
