@@ -483,7 +483,7 @@ abstract class NamedFormElement extends FormElement
                 $model = $model->{$relation};
                 continue;
             }
-            if ($count === 2) {
+            if ($count >= 2) {
                 if (Str::contains($relation, '->')) {
                     $parts = explode('->', $relation);
                     $relationField = array_shift($array);
