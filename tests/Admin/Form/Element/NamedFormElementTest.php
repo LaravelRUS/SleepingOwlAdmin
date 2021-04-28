@@ -302,19 +302,20 @@ class NamedFormElementTest extends TestCase
         $session->shouldReceive('getOldInput')->andReturn(null);
 
         $this->assertEquals([
-            'value'      => null,
-            'readonly'   => false,
-            'model'      => null,
-            'id'         => 'key2__subkey',
-            'name'       => 'key2[subkey]',
-            'path'       => 'key2.subkey',
-            'label'      => 'Label',
-            'helpText'   => null,
-            'required'   => false,
-            'attributes' => ' id="key2__subkey" name="key2[subkey]"',
-            'class'      => null,
-            'style'      => null,
-            'visibled'   => true,
+            'value'           => null,
+            'readonly'        => false,
+            'model'           => null,
+            'id'              => 'key2__subkey',
+            'name'            => 'key2[subkey]',
+            'path'            => 'key2.subkey',
+            'label'           => 'Label',
+            'helpText'        => null,
+            'required'        => false,
+            'attributes'      => ' id="key2__subkey" name="key2[subkey]"',
+            'class'           => null,
+            'style'           => null,
+            'visibled'        => true,
+            'attributesArray' => ['id' => 'key2__subkey', 'name' => 'key2[subkey]'],
         ], $element->toArray());
     }
 
