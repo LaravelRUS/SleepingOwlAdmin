@@ -352,17 +352,14 @@ abstract class NamedFormElement extends FormElement
         $rules = parent::getValidationRules();
 
         foreach ($rules as &$rule) {
-            if ($rule !== '_unique') {
-                continue;
-            }
+            if ($rule === '_unique') {
+                $model = $this->resolvePath();
 
-            $model = $this->resolvePath();
-            $table = $model->getTable();
-            $connection = $model->getConnectionName();
-
-            $rule = 'unique:'.$connection.'.'.$table.','.$this->getModelAttributeKey();
-            if ($model->exists) {
-                $rule .= ','.$model->getKey();
+                $rule = 'unique:'
+                    .$model->getConnectionName().'.'.$model->getTable().','
+                    .$this->getModelAttributeKey().','
+                    .($model->exists ? $model->getKey() : 'null').',' // null is for just created model.
+                    .$model->getKeyName(); // Important to pass it for cases, when model's primary key name differs from 'id'.
             }
         }
         unset($rule);
