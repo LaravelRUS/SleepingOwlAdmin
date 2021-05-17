@@ -76,12 +76,18 @@
     margin: 5px auto;
     padding: 2px 5px;
 }
+.fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .tit.hidden {
+    display: none;
+}
 .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc {
     display: block;
     width: 100%;
     margin: 5px auto;
     resize: none;
     padding: 2px 5px;
+}
+.fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc.hidden {
+    display: none;
 }
 .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .file-buttons {
     margin: 10px 0 0;
