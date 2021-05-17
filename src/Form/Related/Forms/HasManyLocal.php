@@ -289,6 +289,17 @@ class HasManyLocal extends FormElements
         //     call_user_func($this->emptyElementCallback, $el);
         // }
 
+        /**
+         * Write this in your Section if you want to provide model instance directly
+         * or use uploadable (like image) fields inside your hasManyLocal element:
+         *      ->setInstance($model)
+         *
+         * You can get model instance inside onEdit() via $this->getModelValue()
+         */
+        if ($this->getInstance()) {
+            $el->setModel($this->getInstance());
+        }
+
         return $el;
     }
 
@@ -308,9 +319,24 @@ class HasManyLocal extends FormElements
         }
     }
 
+    /**
+     * @return Model
+     */
+    public function getInstance()
+    {
+        return $this->instance;
+    }
+
+    /**
+     * @param $instance
+     *
+     * @return $this
+     */
     public function setInstance($instance)
     {
         $this->instance = $instance;
+
+        return $this;
     }
 
     /**
