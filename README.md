@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin.svg?branch=development)](https://travis-ci.org/LaravelRUS/SleepingOwlAdmin)
 [![StyleCI](https://styleci.io/repos/52141393/shield?branch=development)](https://styleci.io/repos/52141393)
-[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--8.2-brightgreen.svg)]()
+[![Laravel Support](https://img.shields.io/badge/Laravel-5.5--8.44-brightgreen.svg)]()
 [![PHP Support](https://img.shields.io/badge/PHP-7.1.3+-brightgreen.svg)]()
 
 [![Official Site](https://img.shields.io/badge/official-site-blue.svg)](https://sleepingowladmin.ru)
@@ -23,7 +23,7 @@ __Lumen is NOT supported(((__
 
 ## Documentation new ver.8
 
-Powered by Laravel 5.5 - 8+. (latest tested version 8.2.0)
+Powered by Laravel 5.5 - 8+. (latest tested version 8.44.0)
 
 * [Russian](http://sleepingowladmin.ru/#/ru/) (90% process)
 * [English](http://sleepingowladmin.ru/#/en/) (30% process)

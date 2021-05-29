@@ -13,7 +13,7 @@
 <div class="card card-default {!! $card_class !!}">
 	<div class="card-heading card-header">
 		@if ($creatable)
-			<a href="{{ url($createUrl) }}" class="btn btn-primary btn-create">
+			<a href="{{ url($createUrl) }}" class="btn btn-primary btn-create mb-3">
 				<i class="fas fa-plus"></i> {{ $newEntryButtonText }}
 			</a>
 		@endif
@@ -25,7 +25,7 @@
 			@yield('card.buttons')
 			@yield('panel.buttons')
 		</div>
-        
+
 	    @yield('card.heading')
     	@yield('panel.heading')
 	</div>

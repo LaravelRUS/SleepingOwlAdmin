@@ -1,4 +1,9 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
+
+
+## 2021-05-30
+* [Fix] Fixed setReadonly callback in editable columns and add policy on editable columns
+
 ## 2021-02-06
 * [Fix] Fixed editable columns (checkbox, datetime, number, select, text & textarea) saving on relations.
 
@@ -168,7 +173,7 @@ AdminColumn::checkbox()
   ->setVisibled(function($item){
     return $item->id < 3;
   });
- 
+
 //or
 AdminColumn::link('title', 'Title')->setVisibled(false);
 ```

@@ -2,12 +2,15 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
+use Closure;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
-use SleepingOwl\Admin\Traits\EditableReadonlyTrait;
 
 class EditableColumn extends NamedColumn
 {
-    use EditableReadonlyTrait;
+    /**
+     * @var bool
+     */
+    protected $readonlyEditable = false;
 
     /**
      * @var string
@@ -146,14 +149,43 @@ class EditableColumn extends NamedColumn
     }
 
     /**
+     * @return bool|callable
+     */
+    public function isReadonly()
+    {
+        if ($this->getModelConfiguration()->isEditable($this->getModel())) {
+            if (is_callable($this->readonlyEditable)) {
+                return (bool) call_user_func($this->readonlyEditable, $this->getModel());
+            }
+        } else {
+            return false;
+        }
+
+        return (bool) $this->readonlyEditable;
+    }
+
+    /**
+     * @param Closure|bool $readonlyEditable
+     *
+     * @return $this
+     */
+    public function setReadonly($readonlyEditable)
+    {
+        $this->readonlyEditable = $readonlyEditable;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
+
         return parent::toArray() + [
             'id' => $this->getModel()->getKey(),
             'value' => $this->getModelValue(),
-            'isEditable' => $this->getReadonly(),
+            'isEditable' => $this->isReadonly(),
             'url' => $this->getUrl(),
             'title' => $this->getTitle(),
             'mode' => $this->getEditableMode(),

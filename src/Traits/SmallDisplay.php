@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Closure;
+
 trait SmallDisplay
 {
     /**
@@ -29,7 +31,7 @@ trait SmallDisplay
     }
 
     /**
-     * @param string $small
+     * @param string|Closure $small
      *
      * @return $this
      */

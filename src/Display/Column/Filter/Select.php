@@ -46,8 +46,8 @@ class Select extends BaseColumnFilter
 
     /**
      * Select constructor.
-     * @param null $options
-     * @param null $title
+     * @param null|array|Model $options
+     * @param null|string $title
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function __construct($options = null, $title = null)

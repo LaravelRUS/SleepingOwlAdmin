@@ -12,4 +12,10 @@ interface ColumnEditableInterface extends ColumnInterface
      * @return void
      */
     public function save(Request $request);
+
+    /**
+     * @param Closure|bool $readonlyEditable
+     * @return void
+     */
+    public function setReadonly($readonlyEditable);
 }

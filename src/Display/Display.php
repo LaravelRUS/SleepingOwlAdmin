@@ -148,7 +148,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param array|string[] ...$relations
+     * @param array|string|string[] ...$relations
      *
      * @return $this
      */

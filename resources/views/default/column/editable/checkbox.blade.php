@@ -1,4 +1,5 @@
 <div {!! $attributes !!}>
+
   @if ($visibled)
     @if($isEditable)
         <a href="#"

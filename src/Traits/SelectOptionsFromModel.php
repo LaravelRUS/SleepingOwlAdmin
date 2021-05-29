@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Support\Arr;
@@ -37,7 +38,7 @@ trait SelectOptionsFromModel
     protected $fetchColumns = [];
 
     /**
-     * @var \Closure|object callable
+     * @var Closure|object callable
      */
     protected $loadOptionsQueryPreparer;
 
@@ -100,7 +101,7 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param string|\Closure $display
+     * @param string|Closure $display
      *
      * @return $this
      */

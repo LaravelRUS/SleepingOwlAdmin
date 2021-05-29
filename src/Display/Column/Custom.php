@@ -32,9 +32,10 @@ class Custom extends NamedColumn
      * Custom constructor.
      *
      * @param null|string $label
+     * @param null|string $small
      * @param Closure $callback
      */
-    public function __construct($label = null, Closure $callback = null)
+    public function __construct($label = null, Closure $callback = null, $small = null)
     {
         parent::__construct($label);
         if (! is_null($label)) {
@@ -42,6 +43,9 @@ class Custom extends NamedColumn
         }
         if (! is_null($callback)) {
             $this->setCallback($callback);
+        }
+        if (! is_null($small)) {
+            $this->setSmall($small);
         }
     }
 
