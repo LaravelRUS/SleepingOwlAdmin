@@ -181,7 +181,6 @@ class EditableColumn extends NamedColumn
      */
     public function toArray()
     {
-
         return parent::toArray() + [
             'id' => $this->getModel()->getKey(),
             'value' => $this->getModelValue(),
