@@ -3,11 +3,9 @@
 namespace SleepingOwl\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Collection;
 
 /**
- * Class Navigation
- * @package SleepingOwl\Admin\Facades
+ * Class Navigation.
  * @method static \SleepingOwl\Admin\Navigation setFromArray(array $navigation)
  */
 class Navigation extends Facade
