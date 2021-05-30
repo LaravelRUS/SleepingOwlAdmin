@@ -32,7 +32,7 @@ trait SmallDisplay
 
     /**
      * @param string|Closure $small
-     * @param boolean $asString
+     * @param bool $asString
      *
      * @return $this
      */

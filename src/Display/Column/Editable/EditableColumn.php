@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class EditableColumn extends NamedColumn
 {
-
     /**
      * @var bool
      */
@@ -184,7 +183,6 @@ class EditableColumn extends NamedColumn
      */
     public function toArray()
     {
-
         return parent::toArray() + [
             'id' => $this->getModel()->getKey(),
             'value' => $this->getModelValue(),
