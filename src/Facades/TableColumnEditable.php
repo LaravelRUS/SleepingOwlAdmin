@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static \SleepingOwl\Admin\Display\Column\Editable\Select select($name, $label = null, $options = [], $small = null)
  * @method static \SleepingOwl\Admin\Display\Column\Editable\Text text($name, $label = null, $small = null)
  * @method static \SleepingOwl\Admin\Display\Column\Editable\Textarea textarea($name, $label = null, $small = null)
- *
-
  */
 class TableColumnEditable extends Facade
 {
