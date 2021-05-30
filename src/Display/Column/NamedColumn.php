@@ -11,10 +11,8 @@ use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 
-
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
-
     /**
      * Column field name.
      * @var string
