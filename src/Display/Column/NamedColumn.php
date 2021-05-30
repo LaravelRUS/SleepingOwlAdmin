@@ -10,12 +10,10 @@ use Illuminate\Support\Collection as SuportCollection;
 use SleepingOwl\Admin\Contracts\Display\NamedColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Display\TableColumn;
-use SleepingOwl\Admin\Traits\SmallDisplay;
-use SleepingOwl\Admin\Traits\Visibled;
+
 
 abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
-    use SmallDisplay, Visibled;
 
     /**
      * Column field name.
@@ -43,7 +41,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     {
         parent::__construct($label);
         $this->setName($name);
-        $this->setSmall($small);
+
+        if ($small) {
+            $this->setSmall($small);
+        }
 
         $this->setHtmlAttribute('class', 'row-'.strtolower(class_basename(get_called_class())));
 
