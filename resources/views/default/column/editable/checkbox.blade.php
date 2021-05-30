@@ -1,7 +1,7 @@
 <div {!! $attributes !!}>
 
   @if ($visibled)
-    @if($isEditable)
+    @if(!$isReadonly)
         <a href="#"
            class="inline-editable"
            data-mode="{{ $mode }}"
@@ -12,7 +12,7 @@
            data-pk="{{ $id }}"
            data-source="{ 1 : '{{ $checkedLabel }}' }"
            data-emptytext="{{ $uncheckedLabel }}"
-           data-disabled="{{ !$isEditable }}"
+           {{ $isReadonly ? 'data-disabled' : '' }}
         ></a>
     @else
         <span v-pre>

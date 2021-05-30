@@ -1,6 +1,6 @@
 <div {!! $attributes !!}>
   @if ($visibled)
-    @if($isEditable)
+    @if(!$isReadonly)
       <a href="#"
           class="dat-editable"
           data-inputclass="date-editable"
@@ -14,7 +14,7 @@
           data-combodate="{{ $combodateValue  }}"
           data-pk="{{ $id }}"
           data-emptytext="{{ trans('sleeping_owl::lang.select.no_items') }}"
-          data-disabled="{{ !$isEditable }}"
+          {{ $isReadonly ? 'data-disabled' : '' }}
       >{{ $text }}</a>
     @else
         {!! $text !!}

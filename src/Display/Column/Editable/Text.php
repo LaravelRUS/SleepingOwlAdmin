@@ -20,9 +20,9 @@ class Text extends EditableColumn implements ColumnEditableInterface
      * @param             $name
      * @param             $label
      */
-    public function __construct($name, $label = null)
+    public function __construct($name, $label = null, $small = null)
     {
-        parent::__construct($name, $label);
+        parent::__construct($name, $label, $small);
     }
 
     /**

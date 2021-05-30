@@ -56,9 +56,9 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
      * @param             $name
      * @param             $label
      */
-    public function __construct($name, $label = null)
+    public function __construct($name, $label = null, $small = null)
     {
-        parent::__construct($name, $label);
+        parent::__construct($name, $label, $small);
 
         $this->setFormat(config('sleeping_owl.datetimeFormat'));
         $this->setCombodateValue(['maxYear' => now()->addYears(100)->format('Y')]);
@@ -107,7 +107,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
         return array_merge(parent::toArray(), [
             'id' => $this->getModel()->getKey(),
             'value' => $this->getFormatedDate($this->getModelValue()),
-            'isEditable' => $this->getReadonly(),
+            'isReadonly' => $this->isReadonly(),
             'url' => $this->getUrl(),
 
             'format' => $this->getJsPickerFormat(),

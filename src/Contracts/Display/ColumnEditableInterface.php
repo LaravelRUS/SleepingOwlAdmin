@@ -18,4 +18,10 @@ interface ColumnEditableInterface extends ColumnInterface
      * @return void
      */
     public function setReadonly($readonlyEditable);
+
+    /**
+     * @param Closure|bool $setIsolated
+     * @return void
+     */
+    public function setIsolated($setIsolated);
 }

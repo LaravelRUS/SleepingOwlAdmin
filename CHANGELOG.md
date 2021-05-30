@@ -3,6 +3,7 @@
 
 ## 2021-05-30
 * [Fix] Fixed setReadonly callback in editable columns and add policy on editable columns
+* [HotFix] Fix editable facades and callback logic
 
 ## 2021-02-06
 * [Fix] Fixed editable columns (checkbox, datetime, number, select, text & textarea) saving on relations.

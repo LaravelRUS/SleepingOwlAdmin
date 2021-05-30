@@ -32,25 +32,26 @@ trait SmallDisplay
 
     /**
      * @param string|Closure $small
+     * @param boolean $asString
      *
      * @return $this
      */
-    public function setSmall($small, $smallString = false)
+    public function setSmall($small, $asString = false)
     {
         $this->small = $small;
-        $this->smallString = $smallString;
+        $this->smallString = $asString;
 
         return $this;
     }
 
     /**
-     * @param bool $isolated
+     * @param bool $isolatedHTML
      *
      * @return $this
      */
-    public function setIsolated($isolated)
+    public function setIsolated($isolatedHTML)
     {
-        $this->isolated = $isolated;
+        $this->isolated = $isolatedHTML;
 
         return $this;
     }

@@ -65,9 +65,9 @@ class Select extends EditableColumn implements ColumnEditableInterface
      * @param array $options
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
-    public function __construct($name, $label = null, $options = [])
+    public function __construct($name, $label = null, $options = [], $small = null)
     {
-        parent::__construct($name, $label);
+        parent::__construct($name, $label, $small);
 
         if (is_array($options)) {
             $this->setOptions($options);

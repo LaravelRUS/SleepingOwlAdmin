@@ -1,6 +1,6 @@
 <div {!! $attributes !!}>
   @if ($visibled)
-    @if($isEditable)
+    @if(!$isReadonly)
       <a href="#"
           class="inline-editable"
           data-name="{{ $name }}"
@@ -20,7 +20,7 @@
           data-pk="{{ $id }}"
           data-mode="{{ $mode }}"
           data-emptytext="{{ trans('sleeping_owl::lang.select.no_items') }}"
-          data-disabled="{{ !$isEditable }}"
+          {{ $isReadonly ? 'data-disabled' : '' }}
       >{{ $text }}</a>
     @else
         {!! $text !!}

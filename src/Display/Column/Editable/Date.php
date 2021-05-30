@@ -22,9 +22,9 @@ class Date extends DateTime implements ColumnEditableInterface
      * @param             $name
      * @param             $label
      */
-    public function __construct($name, $label = null)
+    public function __construct($name, $label = null, $small = null)
     {
-        parent::__construct($name, $label);
+        parent::__construct($name, $label, $small);
 
         $this->setFormat(config('sleeping_owl.dateFormat'));
         $this->setCombodateValue(['maxYear' => now()->addYears(100)->format('Y')]);

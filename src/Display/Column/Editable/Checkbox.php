@@ -47,9 +47,9 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
      * @param string|null $uncheckedLabel
      * @param string|null $columnLabel
      */
-    public function __construct($name, $checkedLabel = null, $uncheckedLabel = null, $columnLabel = null)
+    public function __construct($name, $columnLabel = null, $small = null, $uncheckedLabel = null, $checkedLabel = null)
     {
-        parent::__construct($name, $columnLabel);
+        parent::__construct($name, $columnLabel, $small);
 
         $this->checkedLabel = $checkedLabel;
         $this->uncheckedLabel = $uncheckedLabel;
