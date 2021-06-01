@@ -298,33 +298,77 @@ return [
         'ckeditor5' => [
             'files' => [
                 /*
-                 * Use Classic build from CDN
+                 * Use Classic build from CDN - provides a limited number of components and capabilities
                  * See https://ckeditor.com/ckeditor-5/download/
                  */
-                'editor' => '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js',
-                'translation' => '//cdn.ckeditor.com/ckeditor5/23.1.0/classic/translations/'.config('app.locale').'.js',
+                //'editor' => '//cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js',
+                //'translation' => '//cdn.ckeditor.com/ckeditor5/27.1.0/classic/translations/'.config('app.locale').'.js',
                 /*
                  * Use Custom build with most-used additional plugins
                  * See https://ckeditor.com/ckeditor-5/online-builder/
                  */
-                // 'editor' => '/packages/sleepingowl/ckeditor5/ckeditor.js',
-                // 'translation' => '/packages/sleepingowl/ckeditor5/translations/' . config('app.locale') . '.js',
+                 'editor' => '/packages/sleepingowl/ckeditor5/build/ckeditor.js',
+                 'translation' => '/packages/sleepingowl/ckeditor5/build/translations/' . config('app.locale') . '.js',
             ],
 
             'language' => config('app.locale'),
 
-            'alignment' => [
+            // Text alignment options
+            'alignment'     => [
                 'options' => [
-                    'left', 'right',
+                    'left', 'center', 'right', /*'justify',*/
                 ],
             ],
 
-            'toolbar' => [
+            // Uncomment some plugins if you need to enable them
+            'removePlugins' => [
+                // See https://ckeditor.com/docs/ckeditor5/latest/api/module_heading_title-Title.html
+                'Title',
+                // See https://ckeditor.com/docs/ckeditor5/latest/features/lists/lists.html#list-styles
+                'ListStyle',
+            ],
+
+            // Toolbar components
+            'toolbar'       => [
+                // Active toolbar components
                 'undo', 'redo', '|',
                 'heading', '|',
-                'bold', 'italic', 'blockQuote', 'link', 'bulletedList', 'numberedList', '|',
-                'CKFinder', 'ImageUpload', 'imageTextAlternative', 'MediaEmbed', 'imageStyle:full', 'imageStyle:side', '|',
-                'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+                'bold', 'italic', 'alignment', 'fontColor', 'blockQuote', 'link', 'bulletedList', 'numberedList', 'removeFormat', '|',
+                'insertImage', 'mediaEmbed', 'insertTable', '|',
+
+                // All available toolbar components:
+                /*
+                'heading',
+                'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript',
+                'alignment', 'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', 'highlight',
+                'link', 'bulletedList', 'numberedList', 'outdent', 'indent',
+                'imageUpload', 'imageInsert', 'mediaEmbed', 'insertTable', 'blockQuote', 'htmlEmbed',
+                'textPartLanguage', 'codeBlock', 'code', 'pageBreak', 'horizontalLine', 'specialCharacters',
+                'undo', 'redo', 'removeFormat', '|',
+                */
+            ],
+
+            // Images options
+            'image'         => [
+                'styles'  => [
+                    'alignLeft', 'alignCenter', 'alignRight', 'full', 'side',
+                ],
+                'toolbar' => [
+                    'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight', '|',
+                    'imageTextAlternative', '|', 'link',
+                ],
+            ],
+
+            // Tables options
+            'table'         => [
+                'contentToolbar' => [
+                    'tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties',
+                ],
+            ],
+
+            // Media embed options
+            'mediaEmbed'    => [
+                'toolbar' => ['mediaEmbed'],
             ],
 
             'uploadUrl'                 => '/storage/images_admin',
