@@ -326,6 +326,8 @@ return [
                 'Title',
                 // See https://ckeditor.com/docs/ckeditor5/latest/features/lists/lists.html#list-styles
                 'ListStyle',
+                // See https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html
+                'Markdown',
             ],
 
             // Toolbar components
