@@ -395,6 +395,19 @@ class Files extends Images
     }
 
     /**
+     * Some stupid, but work
+     * @return $this
+     */
+    public function storeAsArray()
+    {
+        $this->mutateValue(function ($value) {
+            return json_decode($value, true);
+        });
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
