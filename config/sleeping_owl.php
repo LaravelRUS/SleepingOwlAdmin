@@ -37,7 +37,7 @@ return [
     |--------------------------------------------------------------------------
     | See https://adminlte.io/themes/v3/# - right top corner "Customize AdminLTE"
     */
-    'body_default_class' => 'hold-transition sidebar-mini sidebar-collapse text-sm',
+    'body_default_class' => 'hold-transition sidebar-mini sidebar-collapse',
 
     /*
     |--------------------------------------------------------------------------
