@@ -1,6 +1,7 @@
 {
     "/js/admin-app.js": "/js/admin-app.js",
-    "/css/admin-app.css": "/css/admin-app.css",
+    "/js/vue.js": "/js/vue.js",
     "/js/modules.js": "/js/modules.js",
-    "/js/vue.js": "/js/vue.js"
+    "/css/admin-app.css": "/css/admin-app.css",
+    "/public/packages/sleepingowl/default/mix-manifest.json": "/public/packages/sleepingowl/default/mix-manifest.json"
 }

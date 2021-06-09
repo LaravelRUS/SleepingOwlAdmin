@@ -4,9 +4,12 @@
  *
  * @see http://www.dropzonejs.com/
  */
-window.Dropzone = require('dropzone');
+import Dropzone from "dropzone/src/dropzone.js";
+
+window.Dropzone = Dropzone
+
 Dropzone.autoDiscover = false;
 
-Dropzone.prototype.defaultOptions.headers = {
+Dropzone.options.headers = {
     'X-CSRF-TOKEN': Admin.token
 }
