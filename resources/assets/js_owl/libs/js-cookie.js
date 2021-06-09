@@ -19,27 +19,26 @@ window.Cookies = require('js-cookie')
 //     SIDEBAR_MINI: 'sidebar-mini'
 // }
 
-const sidebar = $('body')
+const $sidebar = $('body')
 
 const sizeColapsed = 1200
 
-if ( Cookies.get('sidebar-state') && ! sidebar.hasClass(Cookies.get('sidebar-state'))) {
-    $('[data-widget="pushmenu"]').PushMenu('toggle')
-}
-else if(localStorage.getItem('sidebar-state') && !sidebar.hasClass(localStorage.getItem('sidebar-state')) ) {
-    $('[data-widget="pushmenu"]').PushMenu('toggle')
-}
+$(document).ready(function () {
+    if (localStorage.getItem('sidebar-state') && !$sidebar.hasClass(localStorage.getItem('sidebar-state'))) {
+        $('[data-widget="pushmenu"]').PushMenu('toggle')
+    }
 
-$(document).on('collapsed.lte.pushmenu', ()=>{
-    localStorage.setItem('sidebar-state', 'sidebar-collapse');
-    Cookies.set('sidebar-state', 'sidebar-collapse');
-})
+    if ($(window).width() <= sizeColapsed && $sidebar.hasClass('sidebar-open')) {
+        $('[data-widget="pushmenu"]').PushMenu('toggle')
+    }
 
-$(document).on('shown.lte.pushmenu', ()=>{
-    localStorage.setItem('sidebar-state', 'sidebar-open');
-    Cookies.set('sidebar-state', 'sidebar-open');
-})
+    $(document).on('collapsed.lte.pushmenu', () => {
+        localStorage.setItem('sidebar-state', 'sidebar-collapse');
+        Cookies.set('sidebar-state', 'sidebar-collapse');
+    })
 
-if($(window).width() <= sizeColapsed && sidebar.hasClass('sidebar-open')) {
-    $('[data-widget="pushmenu"]').PushMenu('toggle')
-}
+    $(document).on('shown.lte.pushmenu', () => {
+        localStorage.setItem('sidebar-state', 'sidebar-open');
+        Cookies.set('sidebar-state', 'sidebar-open');
+    })
+});
