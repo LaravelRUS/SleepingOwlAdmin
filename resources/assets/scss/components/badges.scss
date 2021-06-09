@@ -8,13 +8,13 @@
 }
 
 @each $key, $value in $colors_palette {
-  .table-#{$key} {
+  .table-#{""+$key} {
     .table-badge {
       background-color: #{$value};
       color: $white;
     }
   }
-  .badge-list-#{$key} {
+  .badge-list-#{""+$key} {
     .table-badge {
       background-color: #{$value} !important;
       color: $white;

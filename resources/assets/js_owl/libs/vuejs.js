@@ -5,7 +5,9 @@
  *
  * @see https://vuejs.org/guide/
  */
-window.Vue = require('vue');
+import Vue from 'vue/dist/vue'
+
+window.Vue = Vue
 /**
  * The plugin for Vue.js provides services for making web requests and handle
  * responses using a XMLHttpRequest or JSONP.
