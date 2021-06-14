@@ -395,7 +395,7 @@ class Files extends Images
     }
 
     /**
-     * Some stupid, but work
+     * Some stupid, but work.
      * @return $this
      */
     public function storeAsArray()

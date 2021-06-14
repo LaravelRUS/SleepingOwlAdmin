@@ -28,6 +28,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Sidebar default condition class "sidebar-collapse", "sidebar-open"
+    |--------------------------------------------------------------------------
+    | Sidebar mini show  'sidebar-mini' - 1024px , "sidebar-mini-md" - 768px,
+    | "sidebar-mini-xs" - always
+    |--------------------------------------------------------------------------
+    | Font sizes "text-sm"
+    |--------------------------------------------------------------------------
+    | See https://adminlte.io/themes/v3/# - right top corner "Customize AdminLTE"
+    */
+    'body_default_class' => 'hold-transition sidebar-mini sidebar-collapse',
+
+    /*
+    |--------------------------------------------------------------------------
     | Admin Logo
     |--------------------------------------------------------------------------
     |

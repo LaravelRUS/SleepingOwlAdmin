@@ -11,7 +11,7 @@
 
 	@stack('scripts')
 </head>
-<body class="hold-transition sidebar-mini {{ $menu_class }}">
+<body class="{{ config('sleeping_owl.body_default_class') }} ">
 	@yield('content')
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))
 

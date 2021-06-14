@@ -6,14 +6,6 @@
             @include(AdminTemplate::getViewPath('_partials.header'))
         </nav>
 
-        @php
-            if (Cookie::get('menu-state') == 'close') {
-                $menu_class = 'sidebar-collapse';
-            }	else {
-                $menu_class = 'sidebar-open';
-            }
-        @endphp
-
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             @include(AdminTemplate::getViewPath('_partials.navigation'))
         </aside>
