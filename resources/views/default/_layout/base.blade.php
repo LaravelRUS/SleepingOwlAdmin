@@ -11,7 +11,7 @@
 
 	@stack('scripts')
 </head>
-<body class="{{ config('sleeping_owl.body_default_class') }} ">
+<body class="{{ config('sleeping_owl.body_default_class', 'sidebar-mini sidebar-open') . (@$_COOKIE['menu-state'] == 'close' ? ' sidebar-collapse' : '') }}">
 	@yield('content')
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))
 
