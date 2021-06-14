@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Exception;
+
 class TemplateDefault extends Template
 {
     /**
@@ -36,15 +38,22 @@ class TemplateDefault extends Template
 
     public function initialize()
     {
-        $this->meta()
-            //->addJs('admin-default', $this->assetPath('js/admin-app.js'))
-            //->addJs('admin-vue-init', $this->assetPath('js/vue.js'))
-            //->addJs('admin-modules-load', $this->assetPath('js/modules.js'))
-            //->addCss('admin-default', $this->assetPath('css/admin-app.css'));
-            ->addJs('admin-default', mix('/js/admin-app.js', $this->assetDir()))
-            ->addJs('admin-vue-init', mix('/js/vue.js', $this->assetDir()))
-            ->addJs('admin-modules-load', mix('/js/modules.js', $this->assetDir()))
-            ->addCss('admin-default', mix('/css/admin-app.css', $this->assetDir()));
+        try {
+            // New version - with versioning tags. Travis was crashed with error:
+            // Exception: The Mix manifest does not exist.
+            $this->meta()
+                ->addJs('admin-default', mix('/js/admin-app.js', $this->assetDir()))
+                ->addJs('admin-vue-init', mix('/js/vue.js', $this->assetDir()))
+                ->addJs('admin-modules-load', mix('/js/modules.js', $this->assetDir()))
+                ->addCss('admin-default', mix('/css/admin-app.css', $this->assetDir()));
+        } catch (Exception $e) {
+            // Old version - without versioning tags
+            $this->meta()
+                ->addJs('admin-default', $this->assetPath('js/admin-app.js'))
+                ->addJs('admin-vue-init', $this->assetPath('js/vue.js'))
+                ->addJs('admin-modules-load', $this->assetPath('js/modules.js'))
+                ->addCss('admin-default', $this->assetPath('css/admin-app.css'));
+        }
     }
 
     /**
