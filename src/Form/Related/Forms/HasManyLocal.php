@@ -930,7 +930,7 @@ class HasManyLocal extends FormElements
     }
 
     /**
-     * Use storeAsArray() method
+     * Use storeAsArray() method.
      *
      * @return HasManyLocal
      * @deprecated
@@ -949,8 +949,9 @@ class HasManyLocal extends FormElements
 
         return $this;
     }
+
     /**
-     * Use storeAsJson() method
+     * Use storeAsJson() method.
      *
      * @return HasManyLocal
      * @deprecated
