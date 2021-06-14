@@ -604,6 +604,8 @@ class HasManyLocal extends FormElements
      * Saves request.
      *
      * @param \Illuminate\Http\Request $request
+     *
+     * @throws Exception
      */
     public function save(Request $request)
     {
@@ -920,21 +922,42 @@ class HasManyLocal extends FormElements
     /**
      * @return HasManyLocal
      */
-    public function saveAsArray(): self
+    public function storeAsArray(): self
     {
-        $this->saveMode = 'array';
+        $this->setSaveMode('array');
 
         return $this;
     }
 
     /**
+     * Use storeAsArray() method
+     *
      * @return HasManyLocal
+     * @deprecated
+     */
+    public function saveAsArray(): self
+    {
+        return $this->storeAsArray();
+    }
+
+    /**
+     * @return HasManyLocal
+     */
+    public function storeAsJson(): self
+    {
+        $this->setSaveMode('json');
+
+        return $this;
+    }
+    /**
+     * Use storeAsJson() method
+     *
+     * @return HasManyLocal
+     * @deprecated
      */
     public function saveAsJson(): self
     {
-        $this->saveMode = 'json';
-
-        return $this;
+        return $this->storeAsJson();
     }
 
     /**
