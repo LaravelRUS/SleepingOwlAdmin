@@ -7,11 +7,6 @@ mix
     .js('resources/assets/js_owl/app.js', 'js/admin-app.js')
     .js('resources/assets/js_owl/vue_init.js', 'js/vue.js')
     .js('resources/assets/js_owl/modules_load.js', 'js/modules.js')
-
-    /* copy() and version() was conflicted */
-    // .copy('public/default', '../../../public/packages/sleepingowl/default')
-    .version()
-
     .options({
         processCssUrls: true,
         resourceRoot: '../',
@@ -19,4 +14,9 @@ mix
             enabled: false,
         },
     })
-;
+
+if (process.argv.includes('--production')) {
+    mix.version()
+} else {
+    mix.copy('public/default', '../../../public/packages/sleepingowl/default')
+}
