@@ -15,7 +15,7 @@ mix
         },
     })
 
-if (process.argv.includes('--production')) {
+if (mix.inProduction()) {
     mix.version()
 } else {
     mix.copy('public/default', '../../../public/packages/sleepingowl/default')

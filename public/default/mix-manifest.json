@@ -1,7 +1,6 @@
 {
-    "/js/admin-app.js": "/js/admin-app.js",
-    "/js/vue.js": "/js/vue.js",
-    "/js/modules.js": "/js/modules.js",
-    "/css/admin-app.css": "/css/admin-app.css",
-    "/public/packages/sleepingowl/default/mix-manifest.json": "/public/packages/sleepingowl/default/mix-manifest.json"
+    "/js/admin-app.js": "/js/admin-app.js?id=5bc87e8ead10522c83e7",
+    "/js/vue.js": "/js/vue.js?id=9bb992fbe6699a79f18b",
+    "/js/modules.js": "/js/modules.js?id=a9070f80a8fed47cdfad",
+    "/css/admin-app.css": "/css/admin-app.css?id=06c5c6195f09d6fda6d3"
 }
