@@ -134,6 +134,11 @@ class HasManyLocal extends FormElements
     // protected $emptyElementCallback;
 
     /**
+     * @var bool
+     */
+    protected $draggable = true;
+
+    /**
      * HasManyLocal constructor.
      *
      * @param string $fieldName
@@ -794,6 +799,7 @@ class HasManyLocal extends FormElements
             'limit' => $this->limit,
             'attributes' => $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
+            'draggable' => $this->getDraggable(),
         ];
     }
 
@@ -959,6 +965,27 @@ class HasManyLocal extends FormElements
     public function saveAsJson(): self
     {
         return $this->storeAsJson();
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function getDraggable()
+    {
+        return (bool) $this->draggable;
+    }
+
+    /**
+     * @param bool $draggable
+     *
+     * @return $this
+     */
+    public function setDraggable($draggable)
+    {
+        $this->draggable = $draggable;
+
+        return $this;
     }
 
     /**

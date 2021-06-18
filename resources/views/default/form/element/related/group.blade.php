@@ -21,6 +21,11 @@
             @endforeach
         </div>
         <div class='grouped-element__footer form-group clearfix'>
+            @if (isset($draggable) && $draggable)
+                <a class="btn btn-clear btn-sm pull-left mr-1 drag-cursor drag-handle">
+                    <i class="fas fa-fw fa-arrows-alt"></i>
+                </a>
+            @endif
             <button type='button'
                     v-if="canRemove"
                     @click="handleRemove"

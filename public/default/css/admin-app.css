@@ -33408,7 +33408,7 @@ a.form-element-files__image {
 }
 
 .drag-cursor {
-  cursor: grab;
+  cursor: grab !important;
 }
 
 [class*=sidebar-dark-] .nav-sidebar > .nav-item > .nav-treeview {

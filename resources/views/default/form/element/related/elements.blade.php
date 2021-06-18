@@ -14,13 +14,16 @@
             </div>
         @endif
         <div class='grouped-elements clearfix'>
-            @foreach($groups as $key => $group)
-                @include(AdminTemplate::getViewPath('form.element.related.group'), [
-                    'name' => $name,
-                    'group' => $group,
-                    'index' => $key,
-                ])
-            @endforeach
+            <draggable class="related-elements__draggable" :disabled="{{ isset($draggable) && $draggable ? 'false': 'true' }}" handle=".drag-handle">
+                @foreach($groups as $key => $group)
+                    @include(AdminTemplate::getViewPath('form.element.related.group'), [
+                        'name' => $name,
+                        'group' => $group,
+                        'index' => $key,
+                        'draggable' => isset($draggable) ? $draggable : false,
+                    ])
+                @endforeach
+            </draggable>
             <div v-for="index in newGroups">
                 @include(AdminTemplate::getViewPath('form.element.related.group'), [
                     'name' => $name,
@@ -29,10 +32,10 @@
                 ])
             </div>
             <button
-                v-if="canAddMore"
-                type='button'
-                @click="addNewGroup"
-                class='grouped-elements__action pull-right related-action_add btn btn-success btn-sm'
+                    v-if="canAddMore"
+                    type='button'
+                    @click="addNewGroup"
+                    class='grouped-elements__action pull-right related-action_add btn btn-success btn-sm'
             >
                 <i class='fas fa-plus'></i>
                 {{ trans('sleeping_owl::lang.button.add') }}
