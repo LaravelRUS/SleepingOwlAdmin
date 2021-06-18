@@ -967,7 +967,6 @@ class HasManyLocal extends FormElements
         return $this->storeAsJson();
     }
 
-
     /**
      * @return bool
      */
