@@ -88,7 +88,7 @@ class DisplayController extends Controller
      */
     public function treeReorder(ModelConfigurationInterface $model, Request $request)
     {
-        $display = $model->fireDisplay();
+        $display = $model->fireDisplay($request->input('parameters') ?: []);
 
         if ($display instanceof DisplayTabbed) {
             $display->getTabs()->each(function (DisplayTab $tab) use ($request) {

@@ -33,7 +33,7 @@
             </menu>
         @endif
         <div class="card-body mt-3 p-0 b-0">
-            <div class="dd nestable pb-3" {!! $attributes !!} data-url="{{ $url }}/reorder">
+            <div class="dd nestable pb-3" {!! $attributes !!} data-url="{{ $url }}/reorder" data-parameters="{{ json_encode($parameters) }}">
                 <ol class="dd-list">
                     @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
                 </ol>

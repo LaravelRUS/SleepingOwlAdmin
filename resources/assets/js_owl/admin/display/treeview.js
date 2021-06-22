@@ -9,7 +9,8 @@ Admin.Modules.register('display.tree', () => {
         $.post(
             $object.data('url'),
             {
-                data: $object.nestable('serialize')
+                data: $object.nestable('serialize'),
+                parameters: $elem.data('parameters')
             }
         ).done( function() {
 

@@ -349,6 +349,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     {
         $model = $this->getModelConfiguration();
         $this->setHtmlAttribute('class', 'dd nestable');
+        $parameters = $this->getParameters() + Request::all();
 
         return parent::toArray() + [
             'items' => $this->getRepository()->getTree($this->getCollection()),
@@ -357,11 +358,12 @@ class DisplayTree extends Display implements WithRoutesInterface
             'value' => $this->getValue(),
             'collapsedLevel' => $this->getCollapsedLevel(),
             'creatable' => $model->isCreatable(),
-            'createUrl' => $model->getCreateUrl($this->getParameters() + Request::all()),
+            'createUrl' => $model->getCreateUrl($parameters),
             'controls' => [$this->getColumns()->getControlColumn()],
             'newEntryButtonText' => $this->getNewEntryButtonText(),
             'max_depth' => $this->getMaxDepth(),
             'card_class' => $this->getCardClass(),
+            'parameters' => $parameters,
         ];
     }
 
