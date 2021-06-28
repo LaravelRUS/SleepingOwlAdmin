@@ -99,6 +99,16 @@
     clear: both;
 }
 
+.fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-original_name {
+    display: block;
+    color: #aaa;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    text-align: center;
+}
+
 /* VERTICAL */
 
 .fileUploadMultiple .files-group-vertical .fileThumbnail {
@@ -127,4 +137,13 @@
     left: 0;
     right: 0;
     padding: 0 7px 7px 10px;
+}
+
+.fileUploadMultiple .files-group-vertical .fileThumbnail .thumbnail .file-original_name {
+    position: absolute;
+    right: 7px;
+    bottom: 5px;
+    left: initial;
+    width: calc(70% - 15px);
+    text-align: right;
 }

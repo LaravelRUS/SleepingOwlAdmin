@@ -1133,6 +1133,16 @@ a.editable-click.editable-disabled:hover {
     clear: both;
 }
 
+.fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-original_name {
+    display: block;
+    color: #aaa;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    text-align: center;
+}
+
 /* VERTICAL */
 
 .fileUploadMultiple .files-group-vertical .fileThumbnail {
@@ -1161,6 +1171,15 @@ a.editable-click.editable-disabled:hover {
     left: 0;
     right: 0;
     padding: 0 7px 7px 10px;
+}
+
+.fileUploadMultiple .files-group-vertical .fileThumbnail .thumbnail .file-original_name {
+    position: absolute;
+    right: 7px;
+    bottom: 5px;
+    left: initial;
+    width: calc(70% - 15px);
+    text-align: right;
 }
 /*!
  * Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com
@@ -33344,7 +33363,6 @@ a.form-element-files__image {
 }
 .files-group .fileThumbnail {
   width: 25%;
-  cursor: grab;
   padding: 0.3rem;
   position: relative;
   min-width: 260px;

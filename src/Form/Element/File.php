@@ -279,7 +279,7 @@ class File extends NamedFormElement implements WithRoutesInterface
         //S3 Implement
         $value = $path.'/'.$filename;
 
-        return ['path' => asset($value), 'value' => $value];
+        return ['path' => asset($value), 'value' => $value, 'original_name' => $file->getClientOriginalName()];
     }
 
     /**

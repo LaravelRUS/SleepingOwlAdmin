@@ -157,7 +157,7 @@ class Image extends File
 
             $image->save($value);
 
-            return ['path' => asset($value), 'value' => $value];
+            return ['path' => asset($value), 'value' => $value, 'original_name' => $file->getClientOriginalName()];
         }
 
         return parent::saveFile($file, $path, $filename, $settings);

@@ -1,6 +1,6 @@
 @if ($visibled)
     <div class="form-group form-element-file fileUploadMultiple{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}" {!! $style ? ' style="' . $style . '"' : '' !!}
-        data-target="{{ route('admin.form.element.file', [
+    data-target="{{ route('admin.form.element.file', [
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
@@ -48,18 +48,24 @@
                                       placeholder="{{ trans('sleeping_owl::lang.seo.description') }}"{{ $description_required ? ' required' : '' }}
                             ></textarea>
 
+                            <input type="hidden"
+                                   name="original_name"
+                                   class="orig"
+                                   data-id="original_name"
+                                   value="[%=orig%]" />
+
                             <div class="file-buttons mt-1 text-left">
-                                <button class="btn btn-danger btn-delete btn-xs fileRemove">
+                                <button class="btn btn-danger btn-delete btn-xs fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                     <i class="fas fa-fw fa-times"></i>
                                 </button>
 
                                 @if (isset($draggable) && $draggable)
-                                <a class="btn btn-clear btn-sm pull-right drag-cursor">
-                                    <i class="fas fa-fw fa-arrows-alt"></i>
-                                </a>
+                                    <a class="btn btn-clear btn-sm pull-right drag-cursor">
+                                        <i class="fas fa-fw fa-arrows-alt"></i>
+                                    </a>
                                 @endif
                                 <a href="[%=url%]" download class="btn btn-default btn-sm pull-right mr-1" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
-                                    <i class="fas fa-fw fa-cloud-upload-alt"></i>
+                                    <i class="fas fa-fw fa-cloud-download-alt"></i>
                                 </a>
                             </div>
                         </div>
@@ -70,7 +76,7 @@
         @endif
 
         <div class="files-group dropzone {{ $files_group_class }}{{ $readonly ? ' dissortable' : '' }}"
-        data-draggable="{{ $draggable }}">
+             data-draggable="{{ $draggable }}">
             @foreach ($value ?? [] as $item)
                 <div class="fileThumbnail">
                     <div class="thumbnail">
@@ -112,22 +118,31 @@
                                     placeholder="{{ trans('sleeping_owl::lang.seo.description') }}{{ $description_required ? ' *' : '' }}"
                                     {{ $description_required ? ' required' : '' }}>{{ @$item['desc'] }}</textarea>
 
+                            <input type="hidden"
+                                   name="original_name"
+                                   class="orig"
+                                   data-id="original_name"
+                                   value="{{ @$item['orig'] }}" />
+
                             <div class="file-buttons mt-1{{ $readonly ? ' text-right' : ' text-left' }}">
                                 @if (!$readonly)
-                                    <button class="btn btn-danger btn-delete btn-xs fileRemove">
+                                    <button class="btn btn-danger btn-delete btn-xs fileRemove" title="{{ trans('sleeping_owl::lang.button.remove') }}">
                                         <i class="fas fa-fw fa-times"></i>
                                     </button>
 
                                     @if (isset($draggable) && $draggable)
-                                        <a class="btn btn-clear btn-sm pull-right drag-cursor">
+                                        <a class="btn btn-clear btn-sm pull-right drag-cursor drag-handle">
                                             <i class="fas fa-fw fa-arrows-alt"></i>
                                         </a>
                                     @endif
                                 @endif
                                 <a href="{{ @asset($item['url']) }}" download class="btn btn-default btn-sm mr-1{{ $readonly ? '' : ' pull-right' }}" title="{{ trans('sleeping_owl::lang.button.download') }}" target="_blank">
-                                    <i class="fas fa-fw fa-cloud-upload-alt"></i>
+                                    <i class="fas fa-fw fa-cloud-download-alt"></i>
                                 </a>
                             </div>
+                        </div>
+                        <div class="file-original_name">
+                            {!! @$item['orig'] !!}
                         </div>
                         <div class="file-clearfix"></div>
                     </div>

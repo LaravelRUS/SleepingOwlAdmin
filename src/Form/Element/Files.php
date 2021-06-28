@@ -25,6 +25,8 @@ class Files extends Images
 
     protected $description_required = false;
 
+    protected $show_original_name = false;
+
     /**
      * @param bool $bool
      *
@@ -45,6 +47,18 @@ class Files extends Images
     public function showDescription($bool)
     {
         $this->show_description = $bool;
+
+        return $this;
+    }
+
+    /**
+     * @param $bool
+     *
+     * @return $this
+     */
+    public function showOriginalName($bool)
+    {
+        $this->show_original_name = $bool;
 
         return $this;
     }
@@ -261,7 +275,7 @@ class Files extends Images
         //S3 Implement
         $value = $path.'/'.$filename;
 
-        return ['path' => asset($value), 'value' => $value];
+        return ['path' => asset($value), 'value' => $value, 'original_name' => $file->getClientOriginalName()];
     }
 
     /**
@@ -418,6 +432,7 @@ class Files extends Images
             'show_description' => $this->show_description,
             'title_required' => $this->title_required,
             'description_required' => $this->description_required,
+            'show_original_name' => $this->show_original_name,
         ]);
     }
 }

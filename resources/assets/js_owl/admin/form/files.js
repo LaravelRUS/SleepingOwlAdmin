@@ -159,6 +159,7 @@ $(function () {
         // dragable
         Sortable.create($innerGroup[0], {
             sort: $($innerGroup[0]).data('draggable'),
+            handle: '.drag-handle',
             onUpdate: function () {
                 updateValue();
             }
