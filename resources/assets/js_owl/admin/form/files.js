@@ -58,7 +58,10 @@ $(function () {
             return base;
         };
 
-        var urlItem = function (src, url) {
+        var urlItem = function (result) {
+            var src = result.value;
+            var url = result.path;
+            var orig = result.original_name;
             var images_extensions = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'tiff', 'webp'];
             var ext = src.split('.').pop();
             var img = null;
@@ -79,7 +82,8 @@ $(function () {
                 ext: ext,
                 mime: mime,
                 lightbox_style: lightbox_style,
-                num: (new Date).getTime()
+                num: (new Date).getTime(),
+                orig: orig
             });
         };
 
@@ -101,7 +105,7 @@ $(function () {
         flow.on('fileSuccess', function (file, message) {
             flow.removeFile(file);
             var result = $.parseJSON(message);
-            $innerGroup.append(urlItem(result.value, result.path));
+            $innerGroup.append(urlItem(result));
 
             var buttons = document.querySelectorAll('.tit');
 
