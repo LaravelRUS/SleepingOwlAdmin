@@ -42,7 +42,8 @@ $(function () {
                 values.push({
                     url: $($thumb.find('[data-id=file]')[0]).data('src'),
                     title: $($thumb.find('[data-id=title]')[0]).val(),
-                    desc: $($thumb.find('[data-id=description]')[0]).val()
+                    desc: $($thumb.find('[data-id=description]')[0]).val(),
+                    orig: $($thumb.find('[data-id=original_name]')[0]).val()
                 });
             });
             $input.val(JSON.stringify(values));
