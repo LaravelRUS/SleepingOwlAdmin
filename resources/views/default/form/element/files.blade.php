@@ -60,7 +60,7 @@
                                 </button>
 
                                 @if (isset($draggable) && $draggable)
-                                    <a class="btn btn-clear btn-sm pull-right drag-cursor">
+                                    <a class="btn btn-clear btn-sm pull-right drag-cursor drag-handle">
                                         <i class="fas fa-fw fa-arrows-alt"></i>
                                     </a>
                                 @endif
