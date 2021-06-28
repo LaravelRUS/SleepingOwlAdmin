@@ -69,6 +69,11 @@
                                 </a>
                             </div>
                         </div>
+                        @if ($show_original_name)
+                            <div class="file-original_name">
+                                [%=orig%]
+                            </div>
+                        @endif
                         <div class="file-clearfix"></div>
                     </div>
                 </div>
@@ -141,9 +146,11 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="file-original_name">
-                            {!! @$item['orig'] !!}
-                        </div>
+                        @if ($show_original_name)
+                            <div class="file-original_name">
+                                {!! @$item['orig'] !!}
+                            </div>
+                        @endif
                         <div class="file-clearfix"></div>
                     </div>
                 </div>
