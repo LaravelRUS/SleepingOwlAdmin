@@ -167,6 +167,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             $relationName = implode('.', $parts);
             try {
                 $relation = $query->getModel()->{$relationName}();
+                $fieldName = $relation->getModel()->getTable() . '.' . $fieldName;
                 $isMorphTo = $relation instanceof \Illuminate\Database\Eloquent\Relations\MorphTo;
             } catch (\Exception $e) {
                 $isMorphTo = false;
