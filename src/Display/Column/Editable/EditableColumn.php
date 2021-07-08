@@ -110,7 +110,12 @@ class EditableColumn extends NamedColumn
     public function getUrl()
     {
         if (! $this->url) {
-            return request()->url();
+            $return = request()->url();
+            if (request()->getScheme() != rtrim(\URL::formatScheme(), ':/')) {
+                $return = preg_replace('~^[^:]+://~isu', \URL::formatScheme(), $return);
+            }
+
+            return $return;
         }
 
         return $this->url;
