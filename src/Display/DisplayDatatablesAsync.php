@@ -90,7 +90,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         array_unshift($attributes, $this->getModelConfiguration()->getAlias());
 
         $this->setHtmlAttribute('style', 'width:100%');
-        $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes));
+        $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes, false));
         $this->setHtmlAttribute('data-payload', json_encode($this->payload));
 
         if ($this->getDisplaySearch()) {
