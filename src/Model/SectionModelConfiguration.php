@@ -221,7 +221,6 @@ class SectionModelConfiguration extends ModelConfigurationManager
     public function setPayload($payload = [])
     {
         $this->payload = $payload;
-
         return $this;
     }
 }

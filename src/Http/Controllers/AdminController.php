@@ -815,4 +815,26 @@ class AdminController extends Controller
         return $response
         ->with('success_message', $model->getMessageOnDelete());
     }
+
+    /**
+     * @param ModelConfigurationInterface $model
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
+     */
+    public function getView(ModelConfigurationInterface $model, $id)
+    {
+        $item = $model->getRepository()->find($id);
+
+        if (is_null($item) || ! $model->isViewable()) {
+            abort(404);
+        }
+
+        $content = view($model->getViewPath(), ['model' => $item]);
+
+        $this->registerBreadcrumbs($model);
+        $this->registerBreadcrumb($model->getViewTitle(), $this->parentBreadcrumb);
+
+        return $this->renderContent($content, $model->getViewTitle());
+    }
 }
