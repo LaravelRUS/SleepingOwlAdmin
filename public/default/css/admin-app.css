@@ -1032,6 +1032,16 @@ a.editable-click.editable-disabled:hover {
   }
 }
 
+.form-element-files-wrapper .control-label.form-element-files-control-label {
+    display: block;
+}
+
+.form-element-files-wrapper .control-label.form-element-files-control-label + .form-element-helptext {
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: -0.3rem;
+}
+
 .fileUploadMultiple {
     display: -webkit-flex;
     display: -ms-flexbox;
