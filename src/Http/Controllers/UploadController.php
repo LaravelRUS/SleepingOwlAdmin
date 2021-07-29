@@ -113,7 +113,7 @@ class UploadController extends Controller
         $result = [];
 
         $imagesAllowedExtensions = collect(
-            config('sleeping_owl.imagesAllowedExtensions', ['jpe', 'jpeg', 'jpg', 'bmp', 'ico', 'gif'])
+            config('sleeping_owl.imagesAllowedExtensions', ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'])
         );
 
         if ($imagesAllowedExtensions->search($file->getClientOriginalExtension()) !== false) {

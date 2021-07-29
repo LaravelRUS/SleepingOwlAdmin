@@ -7,6 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Validator;
 use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+use SleepingOwl\Admin\Rules\ImageExtended;
 
 class Image extends File
 {
@@ -23,7 +24,7 @@ class Image extends File
     /**
      * @var array
      */
-    protected $uploadValidationRules = ['required', 'image'];
+    protected $uploadValidationRules;
 
     /**
      * After save callback.
@@ -49,6 +50,8 @@ class Image extends File
      */
     public function __construct($path, $label = null)
     {
+        $this->uploadValidationRules = ['required', new ImageExtended()];
+
         $this->setAllowSvg((bool) config('sleeping_owl.imagesAllowSvg'));
 
         parent::__construct($path, $label);

@@ -181,7 +181,8 @@ return [
     */
 
     'imagesAllowedExtensions' => [
-        'jpe', 'jpeg', 'jpg', 'png', 'bmp', 'ico', 'gif',
+        'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp',
+        'ico', 'jpe',
     ],
 
     /*
