@@ -384,12 +384,20 @@ return [
 
             // Media embed options
             'mediaEmbed'    => [
-                'toolbar'        => ['mediaEmbed'],
+                'toolbar'         => ['mediaEmbed'],
                 /**
                  * @see https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#including-previews-in-data
                  * @see https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#displaying-embedded-media-on-your-website
                  */
-                'previewsInData' => true,
+                'previewsInData'  => true,
+                /**
+                 * The names of providers with rendering functions (previews): dailymotion, spotify, youtube, vimeo
+                 * @see https://ckeditor.com/docs/ckeditor5/latest/api/module_media-embed_mediaembed-MediaEmbedConfig.html#member-providers
+                 *
+                 * So, we need to remove providers without rendering function
+                 * @see https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#removing-media-providers
+                 */
+                'removeProviders' => ['instagram', 'twitter', 'googleMaps', 'flickr', 'facebook'],
             ],
 
             'uploadUrl'            => '/storage/images_admin',
