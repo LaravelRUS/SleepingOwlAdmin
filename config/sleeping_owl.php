@@ -10,21 +10,21 @@ return [
     |
     */
 
-    'title' => 'Sleeping Owl',
+    'title'              => 'Sleeping Owl',
 
     /*
     |--------------------------------------------------------------------------
     | Admin Mini logo
     |--------------------------------------------------------------------------
     */
-    'logo_mini' => 'SO',
+    'logo_mini'          => 'SO',
 
     /*
     |--------------------------------------------------------------------------
     | Admin Text on sidebar top menu
     |--------------------------------------------------------------------------
     */
-    'menu_top' => 'Main menu',
+    'menu_top'           => 'Main menu',
 
     /*
     |--------------------------------------------------------------------------
@@ -61,7 +61,7 @@ return [
     /*
      * Subdomain & Domain support routes
      */
-    'domain' => false,
+    'domain'     => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -74,7 +74,7 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware'               => ['web'],
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +83,7 @@ return [
     | Url for env editor
     |
     */
-    'env_editor_url' => 'env/editor',
+    'env_editor_url'           => 'env/editor',
 
     /*
      * Excluded keys
@@ -95,44 +95,44 @@ return [
     /*
      * Env editor middlewares
      */
-    'env_editor_middlewares' => [],
+    'env_editor_middlewares'   => [],
 
     /*
      * Enable and show link in navigation
      * 'show_editor' is @deprecated
      */
-    'enable_editor' => false,
-    'env_keys_readonly' => false,
-    'env_can_delete' => true,
-    'env_can_add' => true,
+    'enable_editor'            => false,
+    'env_keys_readonly'        => false,
+    'env_can_delete'           => true,
+    'env_can_add'              => true,
 
     /*
      * --------------------------------------------------------------------------
      * Add your policy class here.
      * --------------------------------------------------------------------------
      */
-    'env_editor_policy' => '',
+    'env_editor_policy'        => '',
 
     /*
      * --------------------------------------------------------------------------
      * DataTables state saving.
      * --------------------------------------------------------------------------
      */
-    'state_datatables' => true,
+    'state_datatables'         => true,
 
     /*
      * --------------------------------------------------------------------------
      * Tabs state remember.
      * --------------------------------------------------------------------------
      */
-    'state_tabs' => false,
+    'state_tabs'               => false,
 
     /*
      * --------------------------------------------------------------------------
      * Filters state remember in DataTables.
      * --------------------------------------------------------------------------
      */
-    'state_filters' => false,
+    'state_filters'            => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -171,7 +171,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'imageLazyLoad' => false,
+    'imageLazyLoad'     => false,
     'imageLazyLoadFile' => 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
 
     /*
@@ -253,17 +253,17 @@ return [
     |
     */
 
-    'wysiwyg'     => [
-        'default'   => 'ckeditor',
+    'wysiwyg'                => [
+        'default'    => 'ckeditor',
 
         /*
          * See http://docs.ckeditor.com/#!/api/CKEDITOR.config
          */
-        'ckeditor'  => [
+        'ckeditor'   => [
             'defaultLanguage' => config('app.locale'),
-            'height'       => 200,
-            'allowedContent' => true,
-            'extraPlugins' => 'uploadimage,image2,justify,youtube,uploadfile',
+            'height'          => 200,
+            'allowedContent'  => true,
+            'extraPlugins'    => 'uploadimage,image2,justify,youtube,uploadfile',
             /*
              * WARNING!!!! CKEDITOR on D & D and UploadImageDialog
              * BY DEFAULT IMAGES WILL STORE TO imagesUploadDirectory = /images/uploads
@@ -276,14 +276,14 @@ return [
         /*
          * See https://www.tinymce.com/docs/
          */
-        'tinymce'   => [
+        'tinymce'    => [
             'height' => 200,
         ],
 
         /*
          * See https://github.com/NextStepWebs/simplemde-markdown-editor
          */
-        'simplemde' => [
+        'simplemde'  => [
             'hideIcons' => ['side-by-side', 'fullscreen'],
         ],
 
@@ -293,8 +293,8 @@ return [
         * Need jQuery
         */
         'summernote' => [
-            'height' => 200,
-            'lang' => 'ru-RU',
+            'height'     => 200,
+            'lang'       => 'ru-RU',
             'codemirror' => [
                 'theme' => 'monokai',
             ],
@@ -309,7 +309,7 @@ return [
          * Be careful: CKEditor 5 haven't html source code button feature!
          * See https://github.com/ckeditor/ckeditor5/issues/592
          */
-        'ckeditor5' => [
+        'ckeditor5'  => [
             'files' => [
                 /*
                  * Use Classic build from CDN - provides a limited number of components and capabilities
@@ -321,11 +321,11 @@ return [
                  * Use Custom build with most-used additional plugins
                  * See https://ckeditor.com/ckeditor-5/online-builder/
                  */
-                'editor' => '/packages/sleepingowl/ckeditor5/build/ckeditor.js',
-                'translation' => '/packages/sleepingowl/ckeditor5/build/translations/'.config('app.locale').'.js',
+                'editor'      => '/packages/sleepingowl/ckeditor5/build/ckeditor.js',
+                'translation' => '/packages/sleepingowl/ckeditor5/build/translations/' . config('app.locale') . '.js',
             ],
 
-            'language' => config('app.locale'),
+            'language'      => config('app.locale'),
 
             // Text alignment options
             'alignment'     => [
@@ -384,11 +384,16 @@ return [
 
             // Media embed options
             'mediaEmbed'    => [
-                'toolbar' => ['mediaEmbed'],
+                'toolbar'        => ['mediaEmbed'],
+                /**
+                 * @see https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#including-previews-in-data
+                 * @see https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#displaying-embedded-media-on-your-website
+                 */
+                'previewsInData' => true,
             ],
 
-            'uploadUrl'                 => '/storage/images_admin',
-            'filebrowserUploadUrl'      => '/storage/images_admin',
+            'uploadUrl'            => '/storage/images_admin',
+            'filebrowserUploadUrl' => '/storage/images_admin',
         ],
     ],
 
@@ -400,7 +405,7 @@ return [
     | Select default settings for datatable
     |
     */
-    'datatables'  => [],
+    'datatables'             => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -410,7 +415,7 @@ return [
     | Highlight DataTables column on mouseover
     |
     */
-    'datatables_highlight' => false,
+    'datatables_highlight'   => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -418,7 +423,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'breadcrumbs' => true,
+    'breadcrumbs'            => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -431,10 +436,10 @@ return [
     | dt_autoupdate_color - color ProgressBar (can be null)
     |
     */
-    'dt_autoupdate' => false,
+    'dt_autoupdate'          => false,
     'dt_autoupdate_interval' => 5, //minutes
-    'dt_autoupdate_class' => '',
-    'dt_autoupdate_color' => '#dc3545',
+    'dt_autoupdate_class'    => '',
+    'dt_autoupdate_color'    => '#dc3545',
 
     /*
     |--------------------------------------------------------------------------
@@ -443,7 +448,7 @@ return [
     |
     */
 
-    'scroll_to_top' => true,
+    'scroll_to_top'    => true,
     'scroll_to_bottom' => true,
 
     /*
