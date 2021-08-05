@@ -160,7 +160,10 @@
 
             @if (!$readonly)
                 <div class="form-element-button-add w-100 order-2 mt-2">
-                    <div class="btn btn-primary fileBrowse btn-sm">{{ trans('sleeping_owl::lang.file.browseMultiple') }}</div>
+                    <div class="btn btn-primary fileBrowse btn-sm">
+                        <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+                        {{ trans('sleeping_owl::lang.file.browseMultiple') }}
+                    </div>
                 </div>
             @endif
 

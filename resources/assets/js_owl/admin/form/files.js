@@ -26,6 +26,9 @@ $(function () {
         var $innerGroup = $item.find('.files-group').not(".dissortable");
         var $input = $item.find('.fileValue');
 
+        var $fileBrowse = $item.find('.fileBrowse');
+        var $ajaxLoader = $fileBrowse.find('.fa-spin');
+
         var flow = new Flow({
             target: $item.data('target'),
             testChunks: false,
@@ -88,9 +91,12 @@ $(function () {
             });
         };
 
-        flow.assignBrowse($item.find('.fileBrowse'));
+        flow.assignBrowse($fileBrowse);
+        flow.assignDrop($fileBrowse);
 
         flow.on('filesSubmitted', function (file) {
+            // console.log('filesSubmitted');
+            $ajaxLoader.css('display', 'inline-block');
             flow.upload();
             updateValue();
         });
@@ -104,13 +110,24 @@ $(function () {
         });
 
         flow.on('fileSuccess', function (file, message) {
+            // console.log('fileSuccess');
             flow.removeFile(file);
-            var result = $.parseJSON(message);
-            $innerGroup.append(urlItem(result));
+            if (!flow.files.length) {
+                $ajaxLoader.css('display', 'none');
+            }
+
+            try {
+                var response = $.parseJSON(message);
+            } catch(e) {
+                Admin.Messages.error(trans('lang.ckeditor.upload.error.common'))
+                return false;
+            }
+
+            $innerGroup.append(urlItem(response));
 
             var buttons = document.querySelectorAll('.tit');
 
-            $(buttons[(buttons.length-1)]).val(result.title);
+            $(buttons[(buttons.length-1)]).val(response.title);
             for (var i = 0; i < buttons.length; i++) {
                 var self = buttons[i];
                 self.addEventListener('change', function (event) {
@@ -119,7 +136,7 @@ $(function () {
             }
 
             buttons = document.querySelectorAll('.desc');
-            $(buttons[(buttons.length-1)]).val(result.desc);
+            $(buttons[(buttons.length-1)]).val(response.desc);
             for (i = 0; i < buttons.length; i++) {
                 self = buttons[i];
                 self.addEventListener('change', function (event) {
@@ -130,13 +147,34 @@ $(function () {
             updateValue();
         });
 
-        flow.on('fileError', function(file, message){
-            var response = $.parseJSON(message);
+        flow.on('fileError', function(file, message, chunk){
+            // console.log('fileError');
+            flow.removeFile(file);
+            if (!flow.files.length) {
+                $ajaxLoader.css('display', 'none');
+            }
+            /*
+             * 200 - all is ok
+             * 400 - as well as validation
+             * 419 - bad csrf token
+             * 500 - server side error
+             */
+            let xhrStatus = chunk.xhr.status;
+            // console.log(file, message, chunk, xhrStatus, flow.files);
+            try {
+                var response = $.parseJSON(message);
+            } catch(e) {
+                Admin.Messages.error(trans('lang.ckeditor.upload.error.common'))
+                return false;
+            }
             if (response.errors[0]) {
                 Admin.Messages.error(response.message, response.errors[0])
             } else {
                 Admin.Messages.error(trans('lang.ckeditor.upload.error.common'))
+                return false;
             }
+
+            return true;
         });
 
         $item.on('click', '.fileLink', function (e) {

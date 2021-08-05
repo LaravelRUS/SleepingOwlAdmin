@@ -27,6 +27,21 @@ class Files extends Images
 
     protected $show_original_name = false;
 
+    public function __construct($path, $label = null)
+    {
+        parent::__construct($path, $label);
+
+        /**
+         * Because of Files extends Images, and Images extends Image, we need
+         * to redefine upload validation rules at __constructor(), because of
+         * Image use custom validation rule - ImageExtended(), which can not
+         * be defined via class attribute on definition.
+         *
+         * @see \SleepingOwl\Admin\Form\Element\Image::__construct
+         */
+        $this->uploadValidationRules = ['required'];
+    }
+
     /**
      * @param bool $bool
      *
