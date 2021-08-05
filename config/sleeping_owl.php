@@ -322,7 +322,7 @@ return [
                  * See https://ckeditor.com/ckeditor-5/online-builder/
                  */
                 'editor'      => '/packages/sleepingowl/ckeditor5/build/ckeditor.js',
-                'translation' => '/packages/sleepingowl/ckeditor5/build/translations/' . config('app.locale') . '.js',
+                'translation' => '/packages/sleepingowl/ckeditor5/build/translations/'.config('app.locale').'.js',
             ],
 
             'language'      => config('app.locale'),
