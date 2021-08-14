@@ -11,7 +11,7 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 //
-window.Trix = require('trix');
+// window.Trix = require('trix');
 
 require('./libs/select2');
 require('./libs/noty');

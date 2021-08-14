@@ -9,6 +9,7 @@
     "production": "mix --production",
     "prod": "mix --production"
   },
+  
   "dependencies": {
     "@flowjs/flow.js": "^2.14.1",
     "@fortawesome/fontawesome-free": "^5.14.0",
