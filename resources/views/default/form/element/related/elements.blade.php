@@ -6,42 +6,37 @@
     :initial-groups-count="{{ (int)$groups->count() }}"
     :removed="{{ $remove->toJson() }}"
 >
-    <div {!! $attributes !!}>
-        <h4 v-if="label">@{{ label }}</h4>
+
+  <div class="card card-outline card-info {{ $collapsed ? 'collapsed-card':'' }} {{ $errors->has($name) ? 'has-error' : '' }}">
+      <div class="card-header">
+        <h4 class="card-title form-group" v-if="label">@{{ label }}</h4>
         @if (isset($helpText) && $helpText)
             <div class="mb-2">
                 @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
             </div>
         @endif
-        <div class='grouped-elements clearfix'>
-            <draggable class="related-elements__draggable" :disabled="{{ isset($draggable) && $draggable ? 'false': 'true' }}" handle=".drag-handle">
-                @foreach($groups as $key => $group)
-                    @include(AdminTemplate::getViewPath('form.element.related.group'), [
-                        'name' => $name,
-                        'group' => $group,
-                        'index' => $key,
-                        'draggable' => isset($draggable) ? $draggable : false,
-                    ])
-                @endforeach
-            </draggable>
-            <div v-for="index in newGroups">
-                @include(AdminTemplate::getViewPath('form.element.related.group'), [
-                    'name' => $name,
-                    'group' => new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all()),
-                    'index' => "totalGroupsCount",
-                ])
-            </div>
-            <button
-                    v-if="canAddMore"
-                    type='button'
-                    @click="addNewGroup"
-                    class='grouped-elements__action pull-right related-action_add btn btn-success btn-sm'
-            >
-                <i class='fas fa-plus'></i>
-                {{ trans('sleeping_owl::lang.button.add') }}
-            </button>
 
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="maximize">
+            <i class="fas fa-expand"></i>
+          </button>
+          @if ($collapsed)
+            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse">
+              <i class="fas fa-plus"></i>
+            </button>
+          @else
+            <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+          @endif
         </div>
-        <input v-for="id in removedExistingGroups" type='hidden' :name="`${name}[remove][]`" :value='id'>
-    </div>
+      </div>
+
+      <div class="card-body pad pt-0">
+        <div {!! $attributes !!}>
+          @include(AdminTemplate::getViewPath('form.element.related.inner_element'))
+        </div>
+      </div>
+  </div>
+
 </related-elements>

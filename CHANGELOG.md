@@ -1,6 +1,12 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
 
+## 2021-08-21
+* [Add] Add `->setCard()` for `AdminFormElement::hasMany` (and other and other extendions)
+* [Add] Add `->setMaxHeight('20rem')` for `AdminFormElement::hasMany` (etc.)
+* [Add] Add `->setCollapsed(true)` for `AdminFormElement::hasMany` (etc.) if used `->setCard()`
+* [Fix] Fix and enable `->setReadonly(true)` for `AdminFormElement::hasMany` (etc.) (!!! only disabled button add and remove relation, NOT add readonly in children elements)
+
 ## 2021-05-30
 * [Fix] Fixed setReadonly callback in editable columns and add policy on editable columns
 * [HotFix] Fix editable facades and callback logic

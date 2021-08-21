@@ -21,17 +21,46 @@ use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Form\Element\Custom;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Traits\Collapsed;
 use Throwable;
 
 abstract class Elements extends FormElements
 {
     use HtmlAttributes, HasUniqueValidation, ManipulatesRequestRelations;
+    use Collapsed;
 
-    protected $view = 'form.element.related.elements';
+    protected $view = 'form.element.related.elements_without_card';
 
     const NEW_ITEM = 'new';
 
     const REMOVE = 'remove';
+
+    /**
+     * @return $this
+     */
+    public function setCard(): self
+    {
+        $this->view = 'form.element.related.elements';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setMaxHeight($maxHeight): self
+    {
+        $this->setHtmlAttributes([
+            'style' => 'overflow-y:auto;max-height:'. $maxHeight,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @var bool|null
+     */
+    protected $collapsed;
 
     /**
      * How many items can be created.
@@ -669,6 +698,7 @@ abstract class Elements extends FormElements
             'limit' => $this->limit,
             'attributes' => $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
+            'collapsed' => $this->getCollapsed(),
         ];
     }
 

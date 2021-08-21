@@ -26,16 +26,45 @@ use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Form\Related\Group;
 use SleepingOwl\Admin\Form\Related\HasUniqueValidation;
 use SleepingOwl\Admin\Form\Related\ManipulatesRequestRelations;
+use SleepingOwl\Admin\Traits\Collapsed;
 
 class HasManyLocal extends FormElements
 {
     use HtmlAttributes, HasUniqueValidation, ManipulatesRequestRelations;
+    use Collapsed;
 
-    protected $view = 'form.element.related.elements';
+    protected $view = 'form.element.related.elements_without_card';
 
     const NEW_ITEM = 'new';
 
     const REMOVE = 'remove';
+
+    /**
+     * @return $this
+     */
+    public function setCard(): self
+    {
+        $this->view = 'form.element.related.elements';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setMaxHeight($maxHeight): self
+    {
+        $this->setHtmlAttributes([
+            'style' => 'overflow-y:auto;max-height:'. $maxHeight,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @var bool|null
+     */
+    protected $collapsed;
 
     /**
      * How many items can be created.
@@ -800,6 +829,7 @@ class HasManyLocal extends FormElements
             'attributes' => $this->htmlAttributesToString(),
             'helpText' => $this->getHelpText(),
             'draggable' => $this->getDraggable(),
+            'collapsed' => $this->getCollapsed(),
         ];
     }
 
