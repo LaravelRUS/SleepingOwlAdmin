@@ -55,7 +55,7 @@ class HasManyLocal extends FormElements
     public function setMaxHeight($maxHeight): self
     {
         $this->setHtmlAttributes([
-            'style' => 'overflow-y:auto;max-height:'. $maxHeight,
+            'style' => 'overflow-y:auto;max-height:'.$maxHeight,
         ]);
 
         return $this;
