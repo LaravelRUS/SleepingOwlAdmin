@@ -55,6 +55,10 @@ class Wysiwyg extends NamedFormElement
             $editor = app('sleeping_owl.wysiwyg')->getDefaultEditorId();
         }
 
+        if (!config('sleeping_owl.useWysiwygCard')) {
+          $this->withoutCard();
+        }
+
         $this->setEditor($editor);
     }
 

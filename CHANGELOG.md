@@ -2,6 +2,9 @@
 
 
 ## 2021-08-21
+* [Config] Add in config `useWysiwygCard` for default views (with card or without) wysiwyg columns
+* [Config] Add in config `useRelationCard` for default views (with card or without) `hasMany`, `belongsTo` and `manyToMany` columns
+* [Config] Add in config `useHasManyLocalCard` for default views (with card or without) `hasManyLocal` columns
 * [Add] Add `->setCard()` for `AdminFormElement::hasMany` (and other extendions)
 * [Add] Add `->setMaxHeight('20rem')` for `AdminFormElement::hasMany` (etc.)
 * [Add] Add `->setCollapsed(true)` for `AdminFormElement::hasMany` (etc.) if used `->setCard()`

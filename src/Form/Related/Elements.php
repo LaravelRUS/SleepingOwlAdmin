@@ -139,6 +139,11 @@ abstract class Elements extends FormElements
         $this->toRemove = collect();
         $this->groups = collect();
         $this->relatedValues = collect();
+
+        if (config('sleeping_owl.useRelationCard')) {
+          $this->setCard();
+        }
+
         parent::__construct($elements);
 
         $this->setRelationName($relationName);
