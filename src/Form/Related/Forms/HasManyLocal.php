@@ -182,7 +182,7 @@ class HasManyLocal extends FormElements
         $this->setLabel($label);
 
         if (config('sleeping_owl.useHasManyLocalCard')) {
-          $this->setCard();
+            $this->setCard();
         }
 
         parent::__construct($elements);

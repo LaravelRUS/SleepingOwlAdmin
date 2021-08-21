@@ -141,7 +141,7 @@ abstract class Elements extends FormElements
         $this->relatedValues = collect();
 
         if (config('sleeping_owl.useRelationCard')) {
-          $this->setCard();
+            $this->setCard();
         }
 
         parent::__construct($elements);
