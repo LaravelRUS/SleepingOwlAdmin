@@ -85,29 +85,93 @@ Vue.component('element-images', Vue.extend({
             });
         },
         image (uri) {
-            return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri));
+            return ((uri.indexOf('http') === 0 || uri.indexOf('blob:') === 0) ? uri : Admin.Url.upload(uri));
         },
 
         insert (index) {
             let self = this;
             let url = null;
             let link = null;
+
             if (typeof(index) !== 'undefined') {
               url = self.vals[index];
               link = this.image(url);
             }
 
-            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, link).then(result => {
-                if(result.value){
-                    if (typeof(index) !== 'undefined') {
-                      self.$set(this.vals, [index], result.value)
-                    } else {
-                      self.vals.push(result.value);
-                    }
+            Admin.Messages.cliptobuffer(trans('lang.file.insert_link'), null, null, url, link).then(result => {
+              if(result && result.value) {
+                if (typeof(index) !== 'undefined') {
+                  self.$set(this.vals, [index], result.value)
                 } else {
-                    return false;
+                  if (result.value.indexOf('blob:') === 0) {
+                    this.uploadImage()
+                  } else {
+                    var input = document.getElementById('image-paste-in-buffer')
+                    if (input) {
+                      input.remove()
+                    }
+                    self.vals.push(result.value);
+                  }
                 }
+              } else {
+                return false;
+              }
             });
+        },
+
+        uploadImage() {
+          let self = this
+          var input = document.getElementById('image-paste-in-buffer')
+
+          const dataURLtoFile = (dataurl, filename) => {
+            const arr = dataurl.split(',')
+            const mime = arr[0].match(/:(.*?);/)[1]
+            const bstr = atob(arr[1])
+            let n = bstr.length
+            const u8arr = new Uint8Array(n)
+            while (n) {
+              u8arr[n - 1] = bstr.charCodeAt(n - 1)
+              n -= 1 // to make eslint happy
+            }
+            return new File([u8arr], Date.now(), { type: mime })
+          }
+
+          const url = input.src
+          const ext = input.dataset.ext ? input.dataset.ext : 'jpg'
+          const file = dataURLtoFile(url)
+
+          const formData = new FormData()
+          formData.append('file', file, Date.now() + '.' + ext)
+
+          let config = {
+            header : {
+              'Content-Type' : 'multipart/form-data',
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          }
+
+          axios.post(this.url, formData, config).then(response => {
+            if (response.data.path) {
+              self.vals.push(response.data.path)
+            }
+          })
+          .catch(error => {
+            if (error.response.data.errors) {
+              Admin.Messages.error(error.response.data.message, error.response.data.errors[0])
+            } else {
+              Admin.Messages.error(error.response.statusText + ' (' + error.response.status + ')', error.response.data.message)
+            }
+          })
+
+          input = document.getElementById('image-paste-in-buffer')
+          if (input) {
+            if (input.name) {
+              window.URL.revokeObjectURL(input.name)
+            }
+            input.remove()
+          }
+
+          return true
         },
 
         remove (image) {
@@ -118,7 +182,7 @@ Vue.component('element-images', Vue.extend({
                     self.vals = _.filter(self.vals, function (img, key) {
                         return image !== key
                     });
-                }else{
+                } else {
                     return false;
                 }
             });

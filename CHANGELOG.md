@@ -1,6 +1,9 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
 
+## 2021-08-25
+* [Add] Add pasting from buffer in `AdminFormElement::image` and `AdminFormElement::images` (use blob and autoupload)
+
 ## 2021-08-21
 * [Config] Add in config `useWysiwygCard` for default views (with card or without) wysiwyg columns
 * [Config] Add in config `useRelationCard` for default views (with card or without) `hasMany`, `belongsTo` and `manyToMany` columns

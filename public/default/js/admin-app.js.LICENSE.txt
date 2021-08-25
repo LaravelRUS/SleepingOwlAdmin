@@ -27,14 +27,6 @@
  */
 
 /*!
- * JavaScript Cookie v2.2.1
- * https://github.com/js-cookie/js-cookie
- *
- * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
- * Released under the MIT license
- */
-
-/*!
  * Lazy Load - JavaScript plugin for lazy loading images
  *
  * Copyright (c) 2007-2019 Mika Tuupola

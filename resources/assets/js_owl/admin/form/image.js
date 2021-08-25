@@ -71,7 +71,7 @@ Vue.component('element-image', Vue.extend({
             });
         },
         image (uri) {
-            return ((uri.indexOf('http') === 0) ? uri : Admin.Url.upload(uri))
+            return ((uri.indexOf('http') === 0 || uri.indexOf('blob:') === 0) ? uri : Admin.Url.upload(uri))
         },
         remove () {
             let self = this
@@ -82,6 +82,60 @@ Vue.component('element-image', Vue.extend({
                     return false
             });
         },
+        uploadImage() {
+          let self = this
+          var input = document.getElementById('image-paste-in-buffer')
+
+          const dataURLtoFile = (dataurl, filename) => {
+            const arr = dataurl.split(',')
+            const mime = arr[0].match(/:(.*?);/)[1]
+            const bstr = atob(arr[1])
+            let n = bstr.length
+            const u8arr = new Uint8Array(n)
+            while (n) {
+              u8arr[n - 1] = bstr.charCodeAt(n - 1)
+              n -= 1 // to make eslint happy
+            }
+            return new File([u8arr], Date.now(), { type: mime })
+          }
+
+          const url = input.src
+          const ext = input.dataset.ext ? input.dataset.ext : 'jpg'
+          const file = dataURLtoFile(url)
+
+          const formData = new FormData()
+          formData.append('file', file, Date.now() + '.' + ext)
+
+          let config = {
+            header : {
+              'Content-Type' : 'multipart/form-data',
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          }
+
+          axios.post(this.url, formData, config).then(response => {
+            if (response.data.path) {
+              self.val = response.data.path
+            }
+          })
+          .catch(error => {
+            if (error.response.data.errors) {
+              Admin.Messages.error(error.response.data.message, error.response.data.errors[0])
+            } else {
+              Admin.Messages.error(error.response.statusText + ' (' + error.response.status + ')', error.response.data.message)
+            }
+          })
+
+          input = document.getElementById('image-paste-in-buffer')
+          if (input) {
+            if (input.name) {
+              window.URL.revokeObjectURL(input.name)
+            }
+            input.remove()
+          }
+
+          return true
+        },
         insert (image) {
             let self = this
             let url = null
@@ -91,12 +145,20 @@ Vue.component('element-image', Vue.extend({
               link = this.image(url)
             }
 
-            Admin.Messages.prompt(trans('lang.file.insert_link'), null, null, url, link).then(result => {
-                if(result.value) {
-                    self.val = result.value
+            Admin.Messages.cliptobuffer(trans('lang.file.insert_link'), null, null, url, link).then(result => {
+              if(result && result.value) {
+                if (result.value.indexOf('blob:') === 0) {
+                  this.uploadImage()
                 } else {
-                    return false
+                  var input = document.getElementById('image-paste-in-buffer')
+                  if (input) {
+                    input.remove()
+                  }
+                  self.val = result.value
                 }
+              } else {
+                return false;
+              }
             });
         },
         closeAlert () {
@@ -114,10 +176,10 @@ Vue.component('element-image', Vue.extend({
             return this.val.length > 0
         },
         createdimage () {
-            if (this.prefix && this.val.indexOf('http') !== 0 && !this.uploadingImage) {
+            if (this.prefix && (this.val.indexOf('http') !== 0 || this.val.indexOf('blob:') === 0) && !this.uploadingImage) {
                 return this.prefix + this.val
             }
-            return ((this.val.indexOf('http') === 0) ? this.val : Admin.Url.upload(this.val))
+            return ((this.val.indexOf('http') === 0 || this.val.indexOf('blob:') === 0) ? this.val : Admin.Url.upload(this.val))
         },
     }
 }));
