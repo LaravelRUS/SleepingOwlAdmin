@@ -3,6 +3,7 @@
 
 ## 2021-08-25
 * [Add] Add pasting from buffer in `AdminFormElement::image` and `AdminFormElement::images` (use blob and autoupload)
+* [Add] Add `->setDeletable(bool||callable)` for `hasMany`, `belongsTo` and `manyToMany` (default `true`). PS: Callable only parent model
 
 ## 2021-08-21
 * [Config] Add in config `useWysiwygCard` for default views (with card or without) wysiwyg columns
