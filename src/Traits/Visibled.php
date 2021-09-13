@@ -24,8 +24,7 @@ trait Visibled
     }
 
     /**
-     * @param Closure|bool $visibled
-     *
+     * @param  Closure|bool  $visibled
      * @return $this
      */
     public function setVisibled($visibled)

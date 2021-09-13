@@ -26,6 +26,7 @@ use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
 
 /**
  * Class Admin.
+ *
  * @property \Illuminate\Foundation\Application $app
  */
 class Admin implements AdminInterface
@@ -60,7 +61,7 @@ class Admin implements AdminInterface
     /**
      * Admin constructor.
      *
-     * @param Application $application
+     * @param  Application  $application
      */
     public function __construct(Application $application)
     {
@@ -75,7 +76,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param TemplateInterface $template
+     * @param  TemplateInterface  $template
      */
     public function setTemplate(TemplateInterface $template)
     {
@@ -91,9 +92,10 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
-     * @param Closure|null $callback
+     * @param  string  $class
+     * @param  Closure|null  $callback
      * @return $this|AdminInterface
+     *
      * @throws Exceptions\RepositoryException
      */
     public function registerModel($class, Closure $callback = null)
@@ -108,8 +110,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     *
+     * @param  ModelConfigurationInterface  $model
      * @return $this
      */
     public function register(ModelConfigurationInterface $model)
@@ -128,8 +129,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param array $sections
-     *
+     * @param  array  $sections
      * @return $this
      */
     public function registerSections(array $sections)
@@ -154,9 +154,8 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
-     * @param ModelConfigurationInterface $model
-     *
+     * @param  string  $class
+     * @param  ModelConfigurationInterface  $model
      * @return $this
      */
     public function setModel($class, ModelConfigurationInterface $model)
@@ -167,8 +166,9 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string|object $class
+     * @param  string|object  $class
      * @return mixed|null|ModelConfigurationInterface
+     *
      * @throws Exceptions\RepositoryException
      */
     public function getModel($class)
@@ -193,8 +193,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return bool
      */
     public function hasModel($class)
@@ -228,8 +227,9 @@ class Admin implements AdminInterface
 
     /**
      * @param $class
-     * @param int $priority
+     * @param  int  $priority
      * @return mixed
+     *
      * @throws Exceptions\RepositoryException
      */
     public function addMenuPage($class = null, $priority = 100)
@@ -238,9 +238,8 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string|Renderable $content
-     * @param string|null $title
-     *
+     * @param  string|Renderable  $content
+     * @param  string|null  $title
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function view($content, $title = null)

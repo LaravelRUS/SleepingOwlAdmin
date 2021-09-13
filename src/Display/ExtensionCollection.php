@@ -73,7 +73,7 @@ class ExtensionCollection extends Collection
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return $this
      */
     public function modifyQuery(Builder $query)

@@ -23,8 +23,7 @@ class Upload extends NamedFormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return UploadedFile|null
      */
     public function getValueFromRequest(Request $request)
@@ -33,8 +32,7 @@ class Upload extends NamedFormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function save(Request $request)

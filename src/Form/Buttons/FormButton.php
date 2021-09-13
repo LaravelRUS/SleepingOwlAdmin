@@ -91,8 +91,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param ModelConfigurationInterface $modelConfiguration
-     *
+     * @param  ModelConfigurationInterface  $modelConfiguration
      * @return $this
      */
     public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration)
@@ -211,7 +210,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param array $elements
+     * @param  array  $elements
      * @return $this
      */
     public function setGroupElements(array $elements)
@@ -242,7 +241,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)

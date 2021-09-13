@@ -14,8 +14,8 @@ class Html extends Custom
     protected $view = 'form.element.html';
 
     /**
-     * @param string|Closure|Htmlable|ViewContract $html
-     * @param Closure $callback
+     * @param  string|Closure|Htmlable|ViewContract  $html
+     * @param  Closure  $callback
      */
     public function __construct($html, Closure $callback = null)
     {

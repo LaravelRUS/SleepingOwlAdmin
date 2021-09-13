@@ -9,6 +9,7 @@ use SleepingOwl\Admin\Traits\MaxFileSizeTrait;
 
 /**
  * Trait ProvidesScriptVariables.
+ *
  * @property-read \Illuminate\Foundation\Application $app
  */
 trait ProvidesScriptVariables

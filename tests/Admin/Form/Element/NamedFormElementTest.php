@@ -11,10 +11,10 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @param string $path
-     * @param null   $label
-     *
+     * @param  string  $path
+     * @param  null  $label
      * @return \PHPUnit\Framework\MockObject\MockObject
+     *
      * @throws ReflectionException
      */
     protected function getElement($path = 'path', $label = null)
@@ -403,10 +403,10 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @param NamedFormElement $element
-     * @param                  $path
-     *
+     * @param  NamedFormElement  $element
+     * @param  $path
      * @return mixed
+     *
      * @throws ReflectionException
      */
     protected function callMethodByPath(NamedFormElement $element, $path)

@@ -17,6 +17,7 @@ class InstallCommand extends Installation\Command
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Install the SleepingOwl Admin package';

@@ -38,8 +38,7 @@ class Text extends BaseColumnFilter
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return $this
      */
     public function setDefault($value)
@@ -58,8 +57,7 @@ class Text extends BaseColumnFilter
     }
 
     /**
-     * @param string $placeholder
-     *
+     * @param  string  $placeholder
      * @return $this
      */
     public function setPlaceholder($placeholder)

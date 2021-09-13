@@ -33,10 +33,10 @@ class DateRange extends Date
     }
 
     /**
-     * @param string $date
-     * @param bool   $add_day
-     *
+     * @param  string  $date
+     * @param  bool  $add_day
      * @return array|string
+     *
      * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
     public function parseValue($date, $add_day = false)

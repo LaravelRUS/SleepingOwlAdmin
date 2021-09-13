@@ -35,8 +35,7 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param array $linkAttributes
-     *
+     * @param  array  $linkAttributes
      * @return $this
      */
     public function setLinkAttributes(array $linkAttributes)
@@ -59,8 +58,7 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param string|bool $icon
-     *
+     * @param  string|bool  $icon
      * @return $this
      */
     public function setText($text, $textString = false)
@@ -80,8 +78,7 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param string|bool $icon
-     *
+     * @param  string|bool  $icon
      * @return $this
      */
     public function setIcon($icon)

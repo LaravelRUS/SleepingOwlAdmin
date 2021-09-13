@@ -35,7 +35,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * Register routes.
      *
-     * @param Router $router
+     * @param  Router  $router
      */
     public static function registerRoutes(Router $router)
     {
@@ -73,6 +73,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return Model $model
+     *
      * @throws \Exception
      */
     public function getModel()
@@ -86,6 +87,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return mixed
+     *
      * @throws \Exception
      */
     protected function getOrderValue()
@@ -95,6 +97,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return int
+     *
      * @throws \Exception
      */
     protected function totalCount()
@@ -129,6 +132,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return bool
+     *
      * @throws \Exception
      */
     protected function movableUp()
@@ -138,6 +142,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return string
+     *
      * @throws \Exception
      */
     protected function moveUpUrl()
@@ -150,6 +155,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return bool
+     *
      * @throws \Exception
      */
     protected function movableDown()
@@ -159,6 +165,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return string
+     *
      * @throws \Exception
      */
     protected function moveDownUrl()
@@ -171,6 +178,7 @@ class Order extends TableColumn implements WithRoutesInterface
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     public function toArray()

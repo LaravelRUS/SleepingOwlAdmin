@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 class FilterScope extends FilterBase
 {
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     public function apply(Builder $query)
     {

@@ -17,8 +17,7 @@ trait Renderable
     protected $viewPathPostfix = '';
 
     /**
-     * @param string|View $view
-     *
+     * @param  string|View  $view
      * @return $this
      */
     public function setView($view)
@@ -70,8 +69,7 @@ trait Renderable
     }
 
     /**
-     * @param string $viewPathPostfix
-     *
+     * @param  string  $viewPathPostfix
      * @return Renderable
      */
     public function setViewMode(string $viewPathPostfix): self

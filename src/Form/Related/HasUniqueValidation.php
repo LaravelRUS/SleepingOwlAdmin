@@ -11,9 +11,8 @@ trait HasUniqueValidation
     /**
      * Columns, that should be unique.
      *
-     * @param array $columns
-     * @param string|null $message
-     *
+     * @param  array  $columns
+     * @param  string|null  $message
      * @return static
      */
     public function unique(array $columns, string $message = null)

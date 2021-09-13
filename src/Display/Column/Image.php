@@ -48,8 +48,7 @@ class Image extends NamedColumn
     }
 
     /**
-     * @param string $width
-     *
+     * @param  string  $width
      * @return $this
      */
     public function setImageWidth($width)
@@ -60,8 +59,7 @@ class Image extends NamedColumn
     }
 
     /**
-     * @param string $asset
-     *
+     * @param  string  $asset
      * @return $this
      */
     public function setAssetPrefix($asset)
@@ -84,8 +82,7 @@ class Image extends NamedColumn
     }
 
     /**
-     * @param bool $lazy
-     *
+     * @param  bool  $lazy
      * @return $this
      */
     public function setLazyLoad($lazy)

@@ -33,8 +33,7 @@ interface WysiwygEditorInterface extends Arrayable
     public function isUsed();
 
     /**
-     * @param string $text
-     *
+     * @param  string  $text
      * @return string
      */
     public function applyFilter($text);

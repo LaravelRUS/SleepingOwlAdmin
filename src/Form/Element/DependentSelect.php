@@ -25,7 +25,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     protected $initializable = true;
 
     /**
-     * @param Router $router
+     * @param  Router  $router
      */
     public static function registerRoutes(Router $router)
     {
@@ -61,9 +61,11 @@ class DependentSelect extends Select implements WithRoutesInterface
 
     /**
      * DependentSelect constructor.
+     *
      * @param $path
-     * @param null $label
-     * @param array $depends
+     * @param  null  $label
+     * @param  array  $depends
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
@@ -103,7 +105,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
-     * @param bool $initializable
+     * @param  bool  $initializable
      */
     public function setInitializable($initializable)
     {
@@ -113,8 +115,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function hasDependKey($key)
@@ -123,8 +124,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function getDependValue($key)
@@ -145,8 +145,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
-     * @param string $dataUrl
-     *
+     * @param  string  $dataUrl
      * @return $this
      */
     public function setDataUrl($dataUrl)
@@ -165,8 +164,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
-     * @param array|string $depends
-     *
+     * @param  array|string  $depends
      * @return $this
      */
     public function setDataDepends($depends)
@@ -177,8 +175,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
-     * @param array $params
-     *
+     * @param  array  $params
      * @return $this
      */
     public function setAjaxParameters(array $params)

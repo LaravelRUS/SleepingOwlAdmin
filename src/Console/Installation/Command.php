@@ -25,7 +25,7 @@ abstract class Command extends ConsoleCommand
     /**
      * Execute the console command.
      *
-     * @param Filesystem $files
+     * @param  Filesystem  $files
      */
     public function fire(Filesystem $files)
     {
@@ -51,7 +51,7 @@ abstract class Command extends ConsoleCommand
     /**
      * Execute the console command.
      *
-     * @param Filesystem $files
+     * @param  Filesystem  $files
      */
     public function handle(Filesystem $files)
     {

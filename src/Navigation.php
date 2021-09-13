@@ -15,6 +15,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
 
     /**
      * Overload current page.
+     *
      * @return \KodiComponents\Navigation\Contracts\PageInterface|null
      */
     public function getCurrentPage()
@@ -27,7 +28,8 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
 
     /**
      * Set Alias Id to Page.
-     * @param Collection $pages
+     *
+     * @param  Collection  $pages
      */
     public function setAliasesId(Collection $pages)
     {
@@ -41,8 +43,8 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     }
 
     /**
-     * @param string $url
-     * @param array $foundPages
+     * @param  string  $url
+     * @param  array  $foundPages
      */
     protected function findActive($url, array &$foundPages)
     {
@@ -50,7 +52,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     }
 
     /**
-     * @param Collection $pages
+     * @param  Collection  $pages
      * @param $url
      */
     protected function findPageByAliasId(Collection $pages, $url)

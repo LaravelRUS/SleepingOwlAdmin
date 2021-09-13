@@ -57,8 +57,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param null|string $name
-     *
+     * @param  null|string  $name
      * @return $this
      */
     public function setColumnName($name)
@@ -77,8 +76,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param null|string $name
-     *
+     * @param  null|string  $name
      * @return $this
      */
     public function setColumnRawName($name)
@@ -89,8 +87,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     public function parseValue($value)
@@ -100,6 +97,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 
     /**
      * @return \Closure|null
+     *
      * @deprecated
      */
     public function getCallback()
@@ -108,8 +106,9 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param \Closure $callback
+     * @param  \Closure  $callback
      * @return $this
+     *
      * @deprecated
      */
     public function setCallback(Closure $callback)
@@ -120,11 +119,10 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param ColumnInterface $column
-     * @param Builder $query
-     * @param string $queryString
-     * @param array|string $queryParams
-     *
+     * @param  ColumnInterface  $column
+     * @param  Builder  $query
+     * @param  string  $queryString
+     * @param  array|string  $queryParams
      * @return void
      */
     public function apply(ColumnInterface $column, Builder $query, $queryString, $queryParams)

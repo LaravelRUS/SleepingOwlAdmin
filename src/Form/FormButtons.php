@@ -233,7 +233,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param null|string $cancelButtonText
+     * @param  null|string  $cancelButtonText
      * @return $this
      */
     public function setCancelButtonText($cancelButtonText)
@@ -256,7 +256,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param null|string $saveButtonText
+     * @param  null|string  $saveButtonText
      * @return $this
      */
     public function setSaveButtonText($saveButtonText)
@@ -279,7 +279,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param null|string $saveAndCloseButtonText
+     * @param  null|string  $saveAndCloseButtonText
      * @return $this
      */
     public function setSaveAndCloseButtonText($saveAndCloseButtonText)
@@ -302,7 +302,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param null|string $saveAndCreateButtonText
+     * @param  null|string  $saveAndCreateButtonText
      * @return $this
      */
     public function setSaveAndCreateButtonText($saveAndCreateButtonText)
@@ -325,7 +325,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param null|string $deleteButtonText
+     * @param  null|string  $deleteButtonText
      * @return $this
      */
     public function setDeleteButtonText($deleteButtonText)
@@ -348,7 +348,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param null|string $destroyButtonText
+     * @param  null|string  $destroyButtonText
      */
     public function setDestroyButtonText($destroyButtonText)
     {
@@ -368,7 +368,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param null|string $restoreButtonText
+     * @param  null|string  $restoreButtonText
      */
     public function setRestoreButtonText($restoreButtonText)
     {
@@ -534,8 +534,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param ModelConfigurationInterface $modelConfiguration
-     *
+     * @param  ModelConfigurationInterface  $modelConfiguration
      * @return $this
      */
     public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration)
@@ -562,8 +561,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)

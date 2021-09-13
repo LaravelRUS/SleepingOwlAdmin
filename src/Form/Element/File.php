@@ -25,7 +25,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     protected $saveCallback;
 
     /**
-     * @param Router $router
+     * @param  Router  $router
      */
     public static function registerRoutes(Router $router)
     {
@@ -102,7 +102,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     /**
      * @param $driver
-     * @param array $driverOptions
+     * @param  array  $driverOptions
      * @return $this
      */
     public function setDriver($driver, $driverOptions = [])
@@ -130,8 +130,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return mixed
      */
     public function getUploadPath(UploadedFile $file)
@@ -144,8 +143,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param Closure $uploadPath
-     *
+     * @param  Closure  $uploadPath
      * @return $this
      */
     public function setUploadPath(Closure $uploadPath)
@@ -156,8 +154,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     public function getUploadFileName(UploadedFile $file)
@@ -170,8 +167,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param Closure $uploadFileName
-     *
+     * @param  Closure  $uploadFileName
      * @return $this
      */
     public function setUploadFileName(Closure $uploadFileName)
@@ -194,8 +190,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param array $imageSettings
-     *
+     * @param  array  $imageSettings
      * @return $this
      */
     public function setUploadSettings(array $imageSettings)
@@ -206,8 +201,8 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param string $rule
-     * @param null $message
+     * @param  string  $rule
+     * @param  null  $message
      * @return $this|\SleepingOwl\Admin\Form\Element\File|\SleepingOwl\Admin\Form\Element\NamedFormElement
      */
     public function addValidationRule($rule, $message = null)
@@ -230,7 +225,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param \Closure $callable
+     * @param  \Closure  $callable
      * @return $this
      */
     public function setSaveCallback(\Closure $callable)
@@ -241,8 +236,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param string $asset
-     *
+     * @param  string  $asset
      * @return $this
      */
     public function setAssetPrefix($asset)
@@ -254,6 +248,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
     /**
      * Return save callback.
+     *
      * @return \Closure
      */
     public function getSaveCallback()
@@ -262,10 +257,10 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $path
-     * @param string $filename
-     * @param array $settings
+     * @param  UploadedFile  $file
+     * @param  string  $path
+     * @param  string  $filename
+     * @param  array  $settings
      * @return \Closure|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
@@ -283,15 +278,14 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param \Illuminate\Validation\Validator $validator
+     * @param  \Illuminate\Validation\Validator  $validator
      */
     public function customValidation(\Illuminate\Validation\Validator $validator)
     {
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     public function defaultUploadFilename(UploadedFile $file)
@@ -300,8 +294,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     public function defaultUploadPath(UploadedFile $file)

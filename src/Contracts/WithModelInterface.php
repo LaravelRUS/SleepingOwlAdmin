@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 interface WithModelInterface
 {
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model);

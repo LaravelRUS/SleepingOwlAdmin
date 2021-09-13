@@ -35,24 +35,21 @@ interface TemplateInterface extends Initializable, Arrayable
     public function getViewNamespace();
 
     /**
-     * @param string $view
-     *
+     * @param  string  $view
      * @return string
      */
     public function getViewPath($view);
 
     /**
-     * @param string|\Illuminate\View\View $view
-     * @param array $data
-     * @param array $mergeData
-     *
+     * @param  string|\Illuminate\View\View  $view
+     * @param  array  $data
+     * @param  array  $mergeData
      * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function view($view, array $data = [], $mergeData = []);
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return string
      */
     public function renderBreadcrumbs($key);
@@ -68,8 +65,7 @@ interface TemplateInterface extends Initializable, Arrayable
     public function meta();
 
     /**
-     * @param string $title
-     *
+     * @param  string  $title
      * @return string
      */
     public function renderMeta($title);
@@ -95,8 +91,7 @@ interface TemplateInterface extends Initializable, Arrayable
     /**
      * Генерация относительно пути до asset файлов для текущей темы.
      *
-     * @param string $path относительный путь до файла, например `js/app.js`
-     *
+     * @param  string  $path  относительный путь до файла, например `js/app.js`
      * @return string
      */
     public function assetPath($path = null);

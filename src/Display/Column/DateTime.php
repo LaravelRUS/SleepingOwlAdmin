@@ -12,12 +12,14 @@ class DateTime extends NamedColumn
     use DateFormat;
     /**
      * Datetime format.
+     *
      * @var string
      */
     protected $format;
 
     /**
      * Datetime timezone.
+     *
      * @var string
      */
     protected $timezone;
@@ -28,8 +30,7 @@ class DateTime extends NamedColumn
     protected $view = 'column.datetime';
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)
@@ -54,8 +55,7 @@ class DateTime extends NamedColumn
     }
 
     /**
-     * @param string $date
-     *
+     * @param  string  $date
      * @return null|string
      */
     protected function getFormatedDate($date)

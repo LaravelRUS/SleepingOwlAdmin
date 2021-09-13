@@ -6,6 +6,7 @@ interface Validable
 {
     /**
      * Get form item validation rules.
+     *
      * @return array
      */
     public function getValidationRules();

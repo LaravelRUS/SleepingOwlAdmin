@@ -12,7 +12,7 @@ interface HasSyncCallback
     public function getSyncCallback();
 
     /**
-     * @param \Closure $callable
+     * @param  \Closure  $callable
      * @return $this
      */
     public function setSyncCallback(Closure $callable);
