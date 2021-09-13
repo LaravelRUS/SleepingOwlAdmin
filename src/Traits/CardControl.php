@@ -18,8 +18,7 @@ trait CardControl
     }
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
      */
     public function setCardClass($class)

@@ -26,8 +26,7 @@ trait ManipulatesRequestRelations
     /**
      * Removes relation from request when it's in save_and_create mode.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Request
      */
     protected function prepareRequestToBeCopied(Request $request)
@@ -46,7 +45,7 @@ trait ManipulatesRequestRelations
     /**
      * Creates a copy of form relations.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      */
     protected function makeCopyOfRelations(Request $request)
     {

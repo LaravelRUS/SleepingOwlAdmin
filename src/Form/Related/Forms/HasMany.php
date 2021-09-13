@@ -21,7 +21,7 @@ class HasMany extends Elements
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed|void
      */
     protected function proceedSave(Request $request)
@@ -38,7 +38,7 @@ class HasMany extends Elements
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      * @return mixed|void
      */
     protected function prepareRelatedValues(array $data)

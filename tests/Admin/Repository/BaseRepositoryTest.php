@@ -12,8 +12,9 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @param string $model
+     * @param  string  $model
      * @return BaseRepository
+     *
      * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function getRepository($model = BaseRepositoryTestModel::class)
@@ -29,8 +30,9 @@ class BaseRepositoryTest extends TestCase
     }
 
     /**
-     * @param string $model
+     * @param  string  $model
      * @return BaseRepository
+     *
      * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
      */
     public function getRepositoryWithBuilder($model = BaseRepositoryTestModel::class)

@@ -9,18 +9,20 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
 {
     /**
      * Menu item related model class.
+     *
      * @var string
      */
     protected $model;
 
     /**
      * Menu item by url id.
+     *
      * @var string
      */
     protected $aliasId;
 
     /**
-     * @param string|null $modelClass
+     * @param  string|null  $modelClass
      */
     public function __construct($modelClass = null)
     {
@@ -127,8 +129,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @param string|null $view
-     *
+     * @param  string|null  $view
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render($view = null)
@@ -147,8 +148,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @param string $model
-     *
+     * @param  string  $model
      * @return $this
      */
     protected function setModel($model)

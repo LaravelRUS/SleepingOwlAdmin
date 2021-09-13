@@ -19,8 +19,8 @@ class Date extends DateTime implements ColumnEditableInterface
     /**
      * Text constructor.
      *
-     * @param             $name
-     * @param             $label
+     * @param  $name
+     * @param  $label
      */
     public function __construct($name, $label = null, $small = null)
     {

@@ -17,9 +17,8 @@ class DisplayTabTest extends TestCase
     }
 
     /**
-     * @param string $label
-     * @param string $icon
-     *
+     * @param  string  $label
+     * @param  string  $icon
      * @return SleepingOwl\Admin\Display\DisplayTab
      */
     public function getTab($label = 'Test Label', $icon = 'Test icon')

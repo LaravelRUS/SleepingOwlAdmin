@@ -30,8 +30,7 @@ trait DatePicker
     }
 
     /**
-     * @param string $pickerFormat
-     *
+     * @param  string  $pickerFormat
      * @return $this
      */
     public function setPickerFormat($pickerFormat)
@@ -42,8 +41,7 @@ trait DatePicker
     }
 
     /**
-     * @param string $format
-     *
+     * @param  string  $format
      * @return string
      */
     protected function generatePickerFormat($format)

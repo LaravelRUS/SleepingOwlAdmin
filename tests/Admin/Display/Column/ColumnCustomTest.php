@@ -10,8 +10,7 @@ class ColumnCustomTest extends TestCase
     }
 
     /**
-     * @param string|null $label
-     *
+     * @param  string|null  $label
      * @return \SleepingOwl\Admin\Display\Column\Custom
      */
     protected function getColumn($label = null)

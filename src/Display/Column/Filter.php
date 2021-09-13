@@ -8,12 +8,14 @@ class Filter extends NamedColumn
 {
     /**
      * Filter related model.
+     *
      * @var Model
      */
     protected $relatedModel = null;
 
     /**
      * Field to get filter value from.
+     *
      * @var string
      */
     protected $field = null;
@@ -46,8 +48,7 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @param string|Model $relatedModel
-     *
+     * @param  string|Model  $relatedModel
      * @return $this
      */
     public function setRelatedModel($relatedModel)
@@ -70,8 +71,7 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @param string $field
-     *
+     * @param  string  $field
      * @return $this
      */
     public function setField($field)
@@ -83,6 +83,7 @@ class Filter extends NamedColumn
 
     /**
      * Get filter url.
+     *
      * @return string
      */
     public function getUrl()
@@ -103,6 +104,7 @@ class Filter extends NamedColumn
 
     /**
      * Check if filter applies to the current model.
+     *
      * @return bool
      */
     protected function isSelf()

@@ -32,8 +32,8 @@ class Number extends EditableColumn implements ColumnEditableInterface
     /**
      * Number constructor.
      *
-     * @param             $name
-     * @param             $label
+     * @param  $name
+     * @param  $label
      */
     public function __construct($name, $label = null, $small = null)
     {
@@ -41,8 +41,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param int $min
-     *
+     * @param  int  $min
      * @return $this
      */
     public function setMin($min)
@@ -53,8 +52,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param int $max
-     *
+     * @param  int  $max
      * @return $this
      */
     public function setMax($max)
@@ -65,8 +63,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param int $step
-     *
+     * @param  int  $step
      * @return $this
      */
     public function setStep($step)
@@ -89,9 +86,9 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return void
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */

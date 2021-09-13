@@ -53,9 +53,11 @@ class Select extends NamedFormElement
 
     /**
      * Select constructor.
+     *
      * @param $path
-     * @param null $label
-     * @param array $options
+     * @param  null  $label
+     * @param  array  $options
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
@@ -105,7 +107,6 @@ class Select extends NamedFormElement
 
     /**
      * @param array
-     *
      * @return $this
      */
     public function setOptions(array $options)
@@ -116,8 +117,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param array $values
-     *
+     * @param  array  $values
      * @return $this
      */
     public function setEnum(array $values)
@@ -146,9 +146,8 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param bool $sortable
-     *
-     * @param null $sortable_flags
+     * @param  bool  $sortable
+     * @param  null  $sortable_flags
      * @return $this
      */
     public function setSortable($sortable, $sortable_flags = null)
@@ -203,8 +202,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param bool $mode
-     *
+     * @param  bool  $mode
      * @return $this
      */
     public function setSelect2($mode)
@@ -239,8 +237,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param array $keys
-     *
+     * @param  array  $keys
      * @return $this
      */
     public function setExclude($keys)
@@ -249,8 +246,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param array $keys
-     *
+     * @param  array  $keys
      * @return $this
      */
     public function exclude($keys)
@@ -311,8 +307,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     public function prepareValue($value)

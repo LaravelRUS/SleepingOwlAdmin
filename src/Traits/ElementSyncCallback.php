@@ -18,7 +18,7 @@ trait ElementSyncCallback
     }
 
     /**
-     * @param \Closure $callable
+     * @param  \Closure  $callable
      * @return $this
      */
     public function setSyncCallback(\Closure $callable)

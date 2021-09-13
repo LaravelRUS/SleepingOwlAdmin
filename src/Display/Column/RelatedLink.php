@@ -22,8 +22,8 @@ class RelatedLink extends Link
     protected $isSearchable = false;
 
     /**
-     * @param \Closure|null|string $name
-     * @param null|string $label
+     * @param  \Closure|null|string  $name
+     * @param  null|string  $label
      */
     public function __construct($name, $label = null, $small = null)
     {
@@ -32,8 +32,7 @@ class RelatedLink extends Link
     }
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return Link
      */
     public function setModel(Model $model)

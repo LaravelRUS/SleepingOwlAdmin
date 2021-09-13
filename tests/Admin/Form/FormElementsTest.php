@@ -16,8 +16,7 @@ class FormElementsTest extends TestCase
     }
 
     /**
-     * @param array $elements
-     *
+     * @param  array  $elements
      * @return FormElements
      */
     public function getElement(array $elements = [])

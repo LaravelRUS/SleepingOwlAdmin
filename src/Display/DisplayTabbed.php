@@ -31,7 +31,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * DisplayTabbed constructor.
      *
-     * @param Closure|TabInterface[] $tabs
+     * @param  Closure|TabInterface[]  $tabs
      */
     public function __construct($tabs = null)
     {
@@ -93,8 +93,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
      */
     public function setModelClass($class)
@@ -117,8 +116,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param Closure|TabInterface[] $tabs
-     *
+     * @param  Closure|TabInterface[]  $tabs
      * @return $this
      */
     public function setTabs($tabs)
@@ -131,8 +129,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param array $elements
-     *
+     * @param  array  $elements
      * @return $this
      */
     public function setElements(array $elements)
@@ -149,10 +146,9 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param Renderable $display
-     * @param string $label
-     * @param bool|false $active
-     *
+     * @param  Renderable  $display
+     * @param  string  $label
+     * @param  bool|false  $active
      * @return DisplayTab
      */
     public function appendTab(Renderable $display, $label, $active = false)
@@ -165,8 +161,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param TabInterface $element
-     *
+     * @param  TabInterface  $element
      * @return $this
      */
     public function addElement(TabInterface $element)
@@ -177,8 +172,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $action
-     *
+     * @param  string  $action
      * @return $this
      */
     public function setAction($action)
@@ -193,8 +187,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param int $id
-     *
+     * @param  int  $id
      * @return $this
      */
     public function setId($id)
@@ -223,9 +216,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param ModelConfigurationInterface $model
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  ModelConfigurationInterface  $model
      * @return void
      */
     public function validateForm(Request $request, ModelConfigurationInterface $model = null)
@@ -240,9 +232,8 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param ModelConfigurationInterface $model
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  ModelConfigurationInterface  $model
      * @return void
      */
     public function saveForm(Request $request, ModelConfigurationInterface $model = null)
@@ -302,7 +293,6 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * Using in trait FormElements;.
      *
      * @param $object
-     *
      * @return mixed
      */
     protected function getElementContainer($object)

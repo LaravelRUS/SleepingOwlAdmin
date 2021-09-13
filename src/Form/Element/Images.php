@@ -22,8 +22,7 @@ class Images extends Image
     }
 
     /**
-     * @param bool $draggable
-     *
+     * @param  bool  $draggable
      * @return $this
      */
     public function setDraggable($draggable)
@@ -35,6 +34,7 @@ class Images extends Image
 
     /**
      * Store array of images as json string.
+     *
      * @return $this
      */
     public function storeAsJson()
@@ -48,7 +48,9 @@ class Images extends Image
 
     /**
      * Store array of images as coma separator.
+     *
      * @deprecated
+     *
      * @return $this
      */
     public function storeAsComaSeparatedValue()
@@ -81,8 +83,7 @@ class Images extends Image
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function save(Request $request)

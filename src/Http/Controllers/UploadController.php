@@ -27,11 +27,10 @@ class UploadController extends Controller
     private $uploadFilenameIncrementMax = 10; // Максимально число попыток для подбора инкремента. f_10.png не будет создан
 
     /**
-     * @param Request $request
-     * @param ModelConfigurationInterface $model
-     * @param string $field
-     * @param int|null $id
-     *
+     * @param  Request  $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  string  $field
+     * @param  int|null  $id
      * @return JsonResponse
      */
     public function fromField(Request $request, ModelConfigurationInterface $model, $field, $id = null)
@@ -95,13 +94,14 @@ class UploadController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\Response
      */
     public function ckEditorStore(Request $request)
     {
         /**
          * dropZone && CKEDITOR fileBrowser && CKEDITOR drag&drop.
+         *
          * @var UploadedFile
          */
         $file = $request->image ? $request->image : $request->file;
@@ -149,10 +149,9 @@ class UploadController extends Controller
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $uploadDirectory
-     * @param string $uploadFilenameBehavior
-     *
+     * @param  UploadedFile  $file
+     * @param  string  $uploadDirectory
+     * @param  string  $uploadFilenameBehavior
      * @return array
      */
     private function uploadFile(UploadedFile $file, string $uploadDirectory, string $uploadFilenameBehavior): array

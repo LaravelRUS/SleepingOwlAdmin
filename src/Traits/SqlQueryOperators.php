@@ -48,9 +48,9 @@ trait SqlQueryOperators
     }
 
     /**
-     * @param string $operator
-     *
+     * @param  string  $operator
      * @return $this
+     *
      * @throws FilterOperatorException
      */
     public function setOperator($operator)
@@ -65,9 +65,9 @@ trait SqlQueryOperators
     }
 
     /**
-     * @param Builder $query
-     * @param string $column
-     * @param string|array $value
+     * @param  Builder  $query
+     * @param  string  $column
+     * @param  string|array  $value
      */
     protected function buildQuery(Builder $query, $column, $value)
     {
@@ -110,8 +110,7 @@ trait SqlQueryOperators
     }
 
     /**
-     * @param string|array $value
-     *
+     * @param  string|array  $value
      * @return string|array
      */
     protected function prepareValue($value)

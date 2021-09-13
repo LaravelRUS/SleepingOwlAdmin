@@ -23,7 +23,7 @@ abstract class NestedsetType implements TreeTypeInterface
     }
 
     /**
-     * @param TreeRepositoryInterface $repository
+     * @param  TreeRepositoryInterface  $repository
      */
     public function __construct(TreeRepositoryInterface $repository)
     {
@@ -46,8 +46,7 @@ abstract class NestedsetType implements TreeTypeInterface
     /**
      * Получение ключа поля LeftColumn.
      *
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return mixed
      */
     abstract public function getLeftColumn(Model $model);
@@ -55,8 +54,7 @@ abstract class NestedsetType implements TreeTypeInterface
     /**
      * Получение ключа поля RightColumn.
      *
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return mixed
      */
     abstract public function getRightColumn(Model $model);
@@ -64,8 +62,7 @@ abstract class NestedsetType implements TreeTypeInterface
     /**
      * Получение ключа поля Parent Column.
      *
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return mixed
      */
     abstract public function getParentColumn(Model $model);
@@ -76,7 +73,6 @@ abstract class NestedsetType implements TreeTypeInterface
      * @param $root
      * @param $parentId
      * @param $left
-     *
      * @return mixed
      */
     protected function recursiveReorder($root, $parentId, $left)

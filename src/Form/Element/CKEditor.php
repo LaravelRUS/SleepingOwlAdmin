@@ -6,8 +6,10 @@ class CKEditor extends Wysiwyg
 {
     /**
      * CKEditor constructor.
+     *
      * @param $path
-     * @param null $label
+     * @param  null  $label
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null)

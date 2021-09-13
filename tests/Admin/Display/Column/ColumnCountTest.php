@@ -10,9 +10,8 @@ class ColumnCountTest extends TestCase
     }
 
     /**
-     * @param string $name
-     * @param string|null $label
-     *
+     * @param  string  $name
+     * @param  string|null  $label
      * @return \SleepingOwl\Admin\Display\Column\Count
      */
     protected function getColumn($name = 'test_name', $label = null)
