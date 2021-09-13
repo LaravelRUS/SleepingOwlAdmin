@@ -493,11 +493,9 @@ class AdminController extends Controller
 
     /**
      * @param ModelConfigurationInterface $model
-     * @param Request $request
+     * @param Request                     $request
      *
-     * @return bool
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
@@ -506,12 +504,14 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
         $column = null;
 
-        /*
-          * @var ColumnEditableInterface|null $column
-          */
+        /**
+         * @var ColumnEditableInterface|null $column
+         */
         if (is_callable([$display, 'getColumns'])) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
-                return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                return ($column instanceof ColumnEditableInterface)
+                    && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                    && $field == $column->getName();
             })->first();
         } else {
             if ($display instanceof DisplayTabbed) {
@@ -520,31 +520,37 @@ class AdminController extends Controller
 
                     if ($content instanceof DisplayTable) {
                         $column = $content->getColumns()->all()->filter(function ($column) use ($field) {
-                            return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                            return ($column instanceof ColumnEditableInterface)
+                                && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                                && $field == $column->getName();
                         })->first();
                     }
+
                     if ($content instanceof FormElements) {
                         foreach ($content->getElements() as $element) {
-
                             /*
-                              * Return data-table if inside FormElements
-                              */
+                             * Return data-table if inside FormElements
+                             */
                             if ($element instanceof DisplayTable) {
                                 $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
-                                    return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                                    return ($column instanceof ColumnEditableInterface)
+                                        && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                                        && $field == $column->getName();
                                 })->first();
                             }
 
                             /*
-                              * Try to find inline Editable in columns
-                              */
+                             * Try to find inline Editable in columns
+                             */
                             if ($element instanceof Column) {
                                 foreach ($element->getElements() as $columnElement) {
                                     if ($columnElement instanceof DisplayTable) {
                                         $column = $columnElement->getColumns()->all()->filter(function ($column) use (
                                             $field
                                         ) {
-                                            return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                                            return ($column instanceof ColumnEditableInterface)
+                                                && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                                                && $field == $column->getName();
                                         })->first();
                                     }
                                 }
@@ -569,12 +575,22 @@ class AdminController extends Controller
         $column->setModel($item);
 
         if ($model->fireEvent('updating', true, $item, $request) === false) {
-            return;
+            return response([
+                'result' => false,
+                'reason' => 'Can not fire event: updating',
+            ]);
         }
 
-        $column->save($request, $model);
+        $column->save($request);
 
         $model->fireEvent('updated', false, $item, $request);
+
+        return response([
+            'result' => true,
+            'name'   => $field,
+            'value'  => $item->{$field},
+            'pk'     => $id,
+        ]);
     }
 
     /**
