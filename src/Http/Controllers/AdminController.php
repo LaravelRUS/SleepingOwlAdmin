@@ -496,7 +496,6 @@ class AdminController extends Controller
     /**
      * @param  ModelConfigurationInterface  $model
      * @param  Request  $request
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
