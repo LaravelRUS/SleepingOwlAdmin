@@ -18,7 +18,7 @@
           @endif
           data-pk="{{ $id }}"
           data-mode="{{ $mode }}"
-          data-emptytext="{{ trans('sleeping_owl::lang.select.no_items') }}"
+          data-emptytext="{{ trans('sleeping_owl::lang.select.empty') }}"
           {{ $isReadonly ? 'data-disabled' : '' }}
       >{{ $text }}</a>
     @else

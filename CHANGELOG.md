@@ -1,5 +1,7 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2021-09-14
+* [Fix] Add `->setDeletable(bool||callable)` for `hasManyLocal`
 
 ## 2021-08-25
 * [Add] Add pasting from buffer in `AdminFormElement::image` and `AdminFormElement::images` (use blob and autoupload)

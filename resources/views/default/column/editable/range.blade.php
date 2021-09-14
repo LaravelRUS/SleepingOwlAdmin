@@ -19,7 +19,7 @@
           data-tpl="<input type='range'><output class='d-block form-group mt-3'></output>"
           data-pk="{{ $id }}"
           data-mode="{{ $mode }}"
-          data-emptytext="{{ trans('sleeping_owl::lang.select.no_items') }}"
+          data-emptytext="{{ trans('sleeping_owl::lang.select.empty') }}"
           {{ $isReadonly ? 'data-disabled' : '' }}
       >{{ $text }}</a>
     @else
