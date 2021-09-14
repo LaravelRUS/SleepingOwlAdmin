@@ -17,8 +17,7 @@ trait FileSize
     protected $max;
 
     /**
-     * @param int $size Max size in kilobytes
-     *
+     * @param  int  $size  Max size in kilobytes
      * @return $this
      */
     public function maxSize($size)
@@ -33,8 +32,7 @@ trait FileSize
     }
 
     /**
-     * @param int $size Max size in kilobytes
-     *
+     * @param  int  $size  Max size in kilobytes
      * @return $this
      */
     public function minSize($size)

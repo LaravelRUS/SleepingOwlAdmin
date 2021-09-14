@@ -23,7 +23,7 @@ class Columns extends FormElements implements ColumnInterface
     protected $view = 'form.element.columns';
 
     /**
-     * @param array $elements
+     * @param  array  $elements
      */
     public function __construct(array $elements = [])
     {
@@ -32,8 +32,9 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param array $columns
+     * @param  array  $columns
      * @return $this|\SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface|\SleepingOwl\Admin\Form\FormElements
+     *
      * @throws \Exception
      */
     public function setElements(array $columns)
@@ -47,8 +48,9 @@ class Columns extends FormElements implements ColumnInterface
 
     /**
      * @param $column
-     * @param null $width
+     * @param  null  $width
      * @return \SleepingOwl\Admin\Form\Columns\Columns
+     *
      * @throws \Exception
      */
     public function addColumn($column, $width = null)
@@ -57,10 +59,10 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param \SleepingOwl\Admin\Contracts\Form\FormElementInterface[]|\Closure|ColumnInterface $element
-     * @param int|null $width
-     *
+     * @param  \SleepingOwl\Admin\Contracts\Form\FormElementInterface[]|\Closure|ColumnInterface  $element
+     * @param  int|null  $width
      * @return $this
+     *
      * @throws \Exception
      */
     public function addElement($element, $width = null)
@@ -129,7 +131,7 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param string $size
+     * @param  string  $size
      * @return \SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface|void
      */
     public function setSize($size)

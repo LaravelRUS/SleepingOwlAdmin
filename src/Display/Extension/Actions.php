@@ -43,8 +43,7 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param ActionInterface $actions
-     *
+     * @param  ActionInterface  $actions
      * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
     public function set($actions = null)
@@ -71,8 +70,7 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param ActionInterface $action
-     *
+     * @param  ActionInterface  $action
      * @return $this
      */
     public function push(ActionInterface $action)
@@ -91,8 +89,7 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string|\Illuminate\View\View $view
-     *
+     * @param  string|\Illuminate\View\View  $view
      * @return $this
      */
     public function setView($view)
@@ -111,8 +108,7 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string $placement
-     *
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement($placement)

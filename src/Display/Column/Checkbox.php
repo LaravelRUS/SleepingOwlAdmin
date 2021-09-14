@@ -19,7 +19,7 @@ class Checkbox extends NamedColumn
     /**
      * Checkbox constructor.
      *
-     * @param string|null $label
+     * @param  string|null  $label
      */
     public function __construct($label = null)
     {

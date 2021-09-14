@@ -10,8 +10,7 @@ trait Width
     protected $width;
 
     /**
-     * @param int|array|string $width
-     *
+     * @param  int|array|string  $width
      * @return $this
      */
     public function setWidth($width)

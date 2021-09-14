@@ -57,8 +57,8 @@ trait SelectOptionsFromModel
 
     /**
      * @param @param string|Model $modelForOptions
-     *
      * @return $this
+     *
      * @throws SelectException
      */
     public function setModelForOptions($modelForOptions, $display = null)
@@ -81,8 +81,7 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return $this
      */
     public function setUsageKey($key)
@@ -101,8 +100,7 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param string|Closure $display
-     *
+     * @param  string|Closure  $display
      * @return $this
      */
     public function setDisplay($display)
@@ -124,8 +122,7 @@ trait SelectOptionsFromModel
      * <code>setFetchColumns('title', 'position')</code> or
      * <code>setFetchColumns(['title', 'position'])</code>.
      *
-     * @param string|array $columns
-     *
+     * @param  string|array  $columns
      * @return $this
      */
     public function setFetchColumns($columns)
@@ -165,8 +162,7 @@ trait SelectOptionsFromModel
      * ?>
      * </code>
      *
-     * @param callable $callback The Callback with $item and $options args.
-     *
+     * @param  callable  $callback  The Callback with $item and $options args.
      * @return $this
      */
     public function setLoadOptionsQueryPreparer($callback)
@@ -187,8 +183,7 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param null|string $foreignKey
-     *
+     * @param  null|string  $foreignKey
      * @return $this
      */
     public function setForeignKey($foreignKey)

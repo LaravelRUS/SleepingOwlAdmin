@@ -42,9 +42,11 @@ class Wysiwyg extends NamedFormElement
 
     /**
      * Wysiwyg constructor.
+     *
      * @param $path
-     * @param null $label
-     * @param null $editor
+     * @param  null  $label
+     * @param  null  $editor
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($path, $label = null, $editor = null)
@@ -131,8 +133,7 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @param null|string $editor
-     *
+     * @param  null|string  $editor
      * @return $this
      */
     public function setEditor($editor)
@@ -143,8 +144,7 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @param int|null $height
-     *
+     * @param  int|null  $height
      * @return $this
      */
     public function setHeight($height)
@@ -163,8 +163,7 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @param array $parameters
-     *
+     * @param  array  $parameters
      * @return $this
      */
     public function setParameters(array $parameters)
@@ -175,8 +174,7 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @param string $field
-     *
+     * @param  string  $field
      * @return $this
      */
     public function setFilteredValueToField($field)
@@ -205,9 +203,9 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
+     *
      * @throws WysiwygException
      */
     public function setModelAttribute($value)
@@ -237,9 +235,9 @@ class Wysiwyg extends NamedFormElement
     }
 
     /**
-     * @param string $value
-     *
+     * @param  string  $value
      * @return string
+     *
      * @throws WysiwygException
      */
     protected function filterValue($value)

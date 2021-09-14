@@ -55,9 +55,9 @@ class AdminController extends Controller
     /**
      * AdminController constructor.
      *
-     * @param Request        $request
-     * @param AdminInterface $admin
-     * @param Application    $application
+     * @param  Request  $request
+     * @param  AdminInterface  $admin
+     * @param  Application  $application
      *
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
@@ -104,7 +104,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @param string $parentBreadcrumb
+     * @param  string  $parentBreadcrumb
      */
     public function setParentBreadcrumb($parentBreadcrumb)
     {
@@ -132,6 +132,7 @@ class AdminController extends Controller
 
         /**
          * Use filter masks.
+         *
          * @param $key
          * @return bool
          */
@@ -181,7 +182,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postEnvEditor(Request $request)
@@ -247,8 +248,8 @@ class AdminController extends Controller
 
     /**
      * @param $key
-     * @param null $data
-     * @param bool $new
+     * @param  null  $data
+     * @param  bool  $new
      * @return bool
      */
     public function writeEnvData($key, $data = null, $new = null)
@@ -277,8 +278,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
+     * @param  ModelConfigurationInterface  $model
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getDisplay(ModelConfigurationInterface $model)
@@ -295,8 +297,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
+     * @param  ModelConfigurationInterface  $model
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getCreate(ModelConfigurationInterface $model)
@@ -314,9 +317,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     *
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postStore(ModelConfigurationInterface $model, Request $request)
@@ -389,9 +391,10 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
+     * @param  ModelConfigurationInterface  $model
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getEdit(ModelConfigurationInterface $model, $id)
@@ -415,10 +418,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     * @param int $id
-     *
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -492,12 +494,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     *
-     * @return bool
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
+     * @return Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
@@ -506,12 +505,14 @@ class AdminController extends Controller
         $display = $model->fireDisplay();
         $column = null;
 
-        /*
-          * @var ColumnEditableInterface|null $column
-          */
+        /**
+         * @var ColumnEditableInterface|null $column
+         */
         if (is_callable([$display, 'getColumns'])) {
             $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
-                return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                return ($column instanceof ColumnEditableInterface)
+                    && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                    && $field == $column->getName();
             })->first();
         } else {
             if ($display instanceof DisplayTabbed) {
@@ -520,31 +521,37 @@ class AdminController extends Controller
 
                     if ($content instanceof DisplayTable) {
                         $column = $content->getColumns()->all()->filter(function ($column) use ($field) {
-                            return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                            return ($column instanceof ColumnEditableInterface)
+                                && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                                && $field == $column->getName();
                         })->first();
                     }
+
                     if ($content instanceof FormElements) {
                         foreach ($content->getElements() as $element) {
-
                             /*
-                              * Return data-table if inside FormElements
-                              */
+                             * Return data-table if inside FormElements
+                             */
                             if ($element instanceof DisplayTable) {
                                 $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
-                                    return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                                    return ($column instanceof ColumnEditableInterface)
+                                        && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                                        && $field == $column->getName();
                                 })->first();
                             }
 
                             /*
-                              * Try to find inline Editable in columns
-                              */
+                             * Try to find inline Editable in columns
+                             */
                             if ($element instanceof Column) {
                                 foreach ($element->getElements() as $columnElement) {
                                     if ($columnElement instanceof DisplayTable) {
                                         $column = $columnElement->getColumns()->all()->filter(function ($column) use (
                                             $field
                                         ) {
-                                            return ($column instanceof ColumnEditableInterface) && $field == $column->getName();
+                                            return ($column instanceof ColumnEditableInterface)
+                                                && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
+                                                && $field == $column->getName();
                                         })->first();
                                     }
                                 }
@@ -569,18 +576,28 @@ class AdminController extends Controller
         $column->setModel($item);
 
         if ($model->fireEvent('updating', true, $item, $request) === false) {
-            return;
+            return response([
+                'result' => false,
+                'reason' => 'Can not fire event: updating',
+            ]);
         }
 
-        $column->save($request, $model);
+        $column->save($request);
 
         $model->fireEvent('updated', false, $item, $request);
+
+        return response([
+            'result' => true,
+            'name'   => $field,
+            'value'  => $item->{$field},
+            'pk'     => $id,
+        ]);
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     * @param int $id
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteDelete(ModelConfigurationInterface $model, Request $request, $id)
@@ -606,10 +623,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     * @param int $id
-     *
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -641,10 +657,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface|ModelConfiguration $model
-     * @param Request $request
-     * @param int $id
-     *
+     * @param  ModelConfigurationInterface|ModelConfiguration  $model
+     * @param  Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -676,10 +691,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Renderable|RedirectResponse|string $content
-     * @param string|null $title
-     *
+     * @param  ModelConfigurationInterface  $model
+     * @param  Renderable|RedirectResponse|string  $content
+     * @param  string|null  $title
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function render(ModelConfigurationInterface $model, $content, $title = null)
@@ -703,9 +717,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @param Renderable|string $content
-     * @param string|null $title
-     *
+     * @param  Renderable|string  $content
+     * @param  string|null  $title
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function renderContent($content, $title = null)
@@ -721,8 +734,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return null|string
      */
     protected function getBackUrl(Request $request)
@@ -759,7 +771,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
+     * @param  ModelConfigurationInterface  $model
+     *
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
@@ -781,9 +794,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     * @param int $id
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deletedAll(ModelConfigurationInterface $model, Request $request)

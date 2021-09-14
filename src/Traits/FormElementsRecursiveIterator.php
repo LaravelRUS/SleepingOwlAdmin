@@ -7,8 +7,7 @@ use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 trait FormElementsRecursiveIterator
 {
     /**
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return bool|void
      */
     public function recursiveIterateElements(\Closure $callback)

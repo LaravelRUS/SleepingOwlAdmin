@@ -16,7 +16,7 @@ class FormElements extends FormElement implements ElementsInterface
     protected $view = 'form.element.formelements';
 
     /**
-     * @param array $elements
+     * @param  array  $elements
      */
     public function __construct(array $elements = [])
     {
@@ -32,8 +32,7 @@ class FormElements extends FormElement implements ElementsInterface
     }
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)
@@ -54,8 +53,7 @@ class FormElements extends FormElement implements ElementsInterface
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return void
      */
     public function save(Request $request)
@@ -66,8 +64,7 @@ class FormElements extends FormElement implements ElementsInterface
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return void
      */
     public function afterSave(Request $request)

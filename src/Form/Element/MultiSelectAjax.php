@@ -29,8 +29,10 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
     /**
      * MultiSelectAjax constructor.
+     *
      * @param $path
-     * @param null $label
+     * @param  null  $label
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
@@ -90,7 +92,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * @param Router $router
+     * @param  Router  $router
      */
     public static function registerRoutes(Router $router)
     {
@@ -106,6 +108,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
     /**
      * Getter of search url.
+     *
      * @return string
      */
     public function getSearchUrl()
@@ -119,6 +122,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
     /**
      * Search url for ajax.
+     *
      * @param $url
      * @return $this
      */
@@ -161,6 +165,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
     /**
      * Get Field name for search url.
+     *
      * @return mixed
      */
     public function getFieldName()
@@ -232,8 +237,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return void
      */
     public function afterSave(Request $request)

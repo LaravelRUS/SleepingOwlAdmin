@@ -15,8 +15,9 @@ class TableColumnTest extends TestCase
     }
 
     /**
-     * @param null $label
+     * @param  null  $label
      * @return \PHPUnit\Framework\MockObject\MockObject
+     *
      * @throws ReflectionException
      */
     protected function getColumn($label = null)

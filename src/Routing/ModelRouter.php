@@ -23,8 +23,8 @@ class ModelRouter
     protected $app;
 
     /**
-     * @param Application $application
-     * @param RegistrarContract $router
+     * @param  Application  $application
+     * @param  RegistrarContract  $router
      */
     public function __construct(Application $application, RegistrarContract $router)
     {
@@ -33,7 +33,7 @@ class ModelRouter
     }
 
     /**
-     * @param ModelCollection $models
+     * @param  ModelCollection  $models
      */
     public function register(ModelCollection $models)
     {
@@ -46,7 +46,7 @@ class ModelRouter
     }
 
     /**
-     * @param Collection $aliases
+     * @param  Collection  $aliases
      */
     protected function registerModelPatterns(Collection $aliases)
     {
@@ -55,7 +55,7 @@ class ModelRouter
     }
 
     /**
-     * @param Collection $aliases
+     * @param  Collection  $aliases
      */
     protected function registerModelBindings(Collection $aliases)
     {
@@ -79,9 +79,9 @@ class ModelRouter
     }
 
     /**
-     * @param Route $route
-     * @param string $controller
-     * @param string $action
+     * @param  Route  $route
+     * @param  string  $controller
+     * @param  string  $action
      */
     protected function runCustomController(Route $route, $controller, $action)
     {

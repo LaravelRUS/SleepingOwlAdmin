@@ -13,8 +13,7 @@ trait ElementViewTrait
     }
 
     /**
-     * @param string|\Illuminate\View\View $view
-     *
+     * @param  string|\Illuminate\View\View  $view
      * @return $this
      */
     public function setView($view)

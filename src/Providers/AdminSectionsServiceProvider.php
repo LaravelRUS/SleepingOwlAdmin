@@ -9,12 +9,12 @@ use SleepingOwl\Admin\Admin;
 class AdminSectionsServiceProvider extends ServiceProvider
 {
     /**
-     * @var array  Associative array in form of: Model::class => Section::class
+     * @var array Associative array in form of: Model::class => Section::class
      */
     protected $sections = [];
 
     /**
-     * @var array  Associative array in form of: Section::class => Policy::class
+     * @var array Associative array in form of: Section::class => Policy::class
      */
     protected $policies = [];
 
@@ -27,7 +27,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param Admin $admin
+     * @param  Admin  $admin
      */
     public function boot(Admin $admin)
     {
@@ -44,8 +44,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param string|null $namespace
-     *
+     * @param  string|null  $namespace
      * @return array
      */
     public function policies($namespace = null)
@@ -70,7 +69,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param string|null $namespace
+     * @param  string|null  $namespace
      */
     public function registerPolicies($namespace = null)
     {

@@ -18,7 +18,7 @@ class FormFactory extends AliasBinder implements FormFactoryInterface
     /**
      * FormFactory constructor.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $application
+     * @param  \Illuminate\Contracts\Foundation\Application  $application
      */
     public function __construct(Application $application)
     {

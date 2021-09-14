@@ -35,8 +35,8 @@ class EditableColumn extends NamedColumn
     /**
      * Text constructor.
      *
-     * @param             $name
-     * @param             $label
+     * @param  $name
+     * @param  $label
      */
     public function __construct($name, $label = null, $small = null)
     {
@@ -70,7 +70,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param mixed $text
+     * @param  mixed  $text
      * @return $this
      */
     public function setModifier($modifier)
@@ -93,8 +93,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param bool $sortable
-     *
+     * @param  bool  $sortable
      * @return $this
      */
     public function setTitle($title)
@@ -172,8 +171,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param Closure|bool $readonlyEditable
-     *
+     * @param  Closure|bool  $readonlyEditable
      * @return $this
      */
     public function setReadonly($readonlyEditable)

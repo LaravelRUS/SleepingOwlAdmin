@@ -20,7 +20,6 @@ use SleepingOwl\Admin\Traits\CardControl;
  *
  * @method Columns getColumns()
  * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
- *
  * @method ColumnFilters getColumnFilters()
  * @method $this setColumnFilters(ColumnFilterInterface|ColumnFilterInterface[] $filters = null, ...$filters)
  */
@@ -104,8 +103,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param string $newEntryButtonText
-     *
+     * @param  string  $newEntryButtonText
      * @return $this
      */
     public function setNewEntryButtonText($newEntryButtonText)
@@ -124,8 +122,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param array $parameters
-     *
+     * @param  array  $parameters
      * @return $this
      */
     public function setParameters($parameters)
@@ -136,9 +133,8 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function setParameter($key, $value)
@@ -149,9 +145,8 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param int $perPage
-     * @param string $pageName
-     *
+     * @param  int  $perPage
+     * @param  string  $pageName
      * @return $this
      */
     public function paginate($perPage = 25, $pageName = 'page')
@@ -189,8 +184,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param bool|null $creatable
-     *
+     * @param  bool|null  $creatable
      * @return $this
      */
     public function setCreatable($creatable)
@@ -202,6 +196,7 @@ class DisplayTable extends Display
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     public function toArray()
@@ -231,6 +226,7 @@ class DisplayTable extends Display
 
     /**
      * @return Collection|LengthAwarePaginator|Builder
+     *
      * @throws \Exception
      */
     public function getCollection()
@@ -253,7 +249,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder|Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder|Builder  $query
      */
     protected function modifyQuery(Builder $query)
     {
@@ -263,8 +259,8 @@ class DisplayTable extends Display
     /**
      * Apply offset and limit to the query.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Http\Request  $request
      */
     public function applyOffset($query, \Illuminate\Http\Request $request)
     {
@@ -281,8 +277,8 @@ class DisplayTable extends Display
     /**
      * Apply search to the query.
      *
-     * @param Builder $query
-     * @param \Illuminate\Http\Request $request
+     * @param  Builder  $query
+     * @param  \Illuminate\Http\Request  $request
      */
     public function applySearch(Builder $query, \Illuminate\Http\Request $request)
     {

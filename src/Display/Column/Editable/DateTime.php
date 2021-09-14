@@ -53,8 +53,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     /**
      * Text constructor.
      *
-     * @param             $name
-     * @param             $label
+     * @param  $name
+     * @param  $label
      */
     public function __construct($name, $label = null, $small = null)
     {
@@ -73,7 +73,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param array $maxYear
+     * @param  array  $maxYear
      * @return $this
      */
     public function setCombodateValue(array $value)
@@ -123,8 +123,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param string $date
-     *
+     * @param  string  $date
      * @return null|string
      */
     protected function getFormatedDate($date)
@@ -174,8 +173,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param bool $seconds
-     *
+     * @param  bool  $seconds
      * @return $this
      */
     public function setSeconds($seconds)
@@ -186,8 +184,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function setModelAttribute($value)
@@ -201,7 +198,8 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */

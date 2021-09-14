@@ -26,8 +26,10 @@ class ManyToMany extends Elements
 
     /**
      * ManyToMany constructor.
+     *
      * @param $relationName
-     * @param array $elements
+     * @param  array  $elements
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
@@ -52,7 +54,7 @@ class ManyToMany extends Elements
     /**
      * Sets primaries of relation.
      *
-     * @param array $primaries
+     * @param  array  $primaries
      */
     public function setPrimaries(array $primaries)
     {
@@ -116,7 +118,6 @@ class ManyToMany extends Elements
 
     /**
      * @param $item
-     *
      * @return string
      */
     protected function getKeyFromItem($item): string
@@ -125,8 +126,7 @@ class ManyToMany extends Elements
     }
 
     /**
-     * @param \Illuminate\Support\Collection $values
-     *
+     * @param  \Illuminate\Support\Collection  $values
      * @return Collection
      */
     protected function buildRelatedMap(Collection $values): Collection
@@ -165,7 +165,7 @@ class ManyToMany extends Elements
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed|void
      */
     protected function proceedSave(Request $request)
@@ -215,7 +215,7 @@ class ManyToMany extends Elements
      * Wraps first element into given columns. It's useful when you have Columns in your form and want the related
      * element to be inside this columns.
      *
-     * @param \SleepingOwl\Admin\Form\Columns\Columns $columns
+     * @param  \SleepingOwl\Admin\Form\Columns\Columns  $columns
      */
     public function wrapRelatedInto(Columns $columns)
     {
@@ -249,8 +249,7 @@ class ManyToMany extends Elements
     }
 
     /**
-     * @param string $value
-     *
+     * @param  string  $value
      * @return $this
      */
     public function setRelatedElementDisplayName($value)

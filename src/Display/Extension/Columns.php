@@ -48,8 +48,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param ColumnInterface $controlColumn
-     *
+     * @param  ColumnInterface  $controlColumn
      * @return $this
      */
     public function setControlColumn(ColumnInterface $controlColumn)
@@ -113,7 +112,6 @@ class Columns extends Extension implements Initializable, Renderable
 
     /**
      * @param $columns
-     *
      * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
     public function set($columns)
@@ -130,8 +128,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param ColumnInterface $column
-     *
+     * @param  ColumnInterface  $column
      * @return $this
      */
     public function push(ColumnInterface $column)
@@ -198,7 +195,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {

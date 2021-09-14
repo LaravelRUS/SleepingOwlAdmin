@@ -29,8 +29,7 @@ interface WidgetInterface extends Arrayable, Htmlable
     public function block();
 
     /**
-     * @param View $view
-     *
+     * @param  View  $view
      * @return void
      */
     public function setInjectableView(View $view);

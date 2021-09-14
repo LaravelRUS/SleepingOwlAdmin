@@ -18,8 +18,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application $app
-     *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -42,8 +41,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     }
 
     /**
-     * @param string $url
-     *
+     * @param  string  $url
      * @return \Illuminate\Http\Request
      */
     public function getRequest($url = 'http://www.foo.com/hello/world')

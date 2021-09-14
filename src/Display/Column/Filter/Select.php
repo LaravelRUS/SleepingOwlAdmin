@@ -46,8 +46,10 @@ class Select extends BaseColumnFilter
 
     /**
      * Select constructor.
-     * @param null|array|Model $options
-     * @param null|string $title
+     *
+     * @param  null|array|Model  $options
+     * @param  null|string  $title
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function __construct($options = null, $title = null)
@@ -97,8 +99,7 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param bool $sortable
-     *
+     * @param  bool  $sortable
      * @return $this
      */
     public function setSortable($sortable)
@@ -119,6 +120,7 @@ class Select extends BaseColumnFilter
     /**
      * @param $model
      * @return \SleepingOwl\Admin\Display\Column\Filter\Select
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      */
     public function setModel($model)
@@ -146,8 +148,7 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function setOptions(array $options)
@@ -166,8 +167,7 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return $this
      */
     public function setDefault($value)
@@ -186,8 +186,7 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param string $placeholder
-     *
+     * @param  string  $placeholder
      * @return $this
      */
     public function setPlaceholder($placeholder)
@@ -209,8 +208,7 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param mixed $selected
-     *
+     * @param  mixed  $selected
      * @return array
      */
     public function parseValue($selected)

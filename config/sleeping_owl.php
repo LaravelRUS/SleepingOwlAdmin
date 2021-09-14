@@ -405,6 +405,7 @@ return [
                 'previewsInData'  => true,
                 /**
                  * The names of providers with rendering functions (previews): dailymotion, spotify, youtube, vimeo.
+                 *
                  * @see https://ckeditor.com/docs/ckeditor5/latest/api/module_media-embed_mediaembed-MediaEmbedConfig.html#member-providers
                  *
                  * So, we need to remove providers without rendering function

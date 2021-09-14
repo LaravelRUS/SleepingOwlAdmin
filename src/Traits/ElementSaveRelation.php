@@ -35,8 +35,7 @@ trait ElementSaveRelation
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function save(\Illuminate\Http\Request $request)
@@ -47,8 +46,7 @@ trait ElementSaveRelation
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function afterSave(\Illuminate\Http\Request $request)
@@ -79,9 +77,8 @@ trait ElementSaveRelation
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Relations\BelongsToMany $relation
-     * @param array $values
-     *
+     * @param  \Illuminate\Database\Eloquent\Relations\BelongsToMany  $relation
+     * @param  array  $values
      * @return void
      */
     protected function syncBelongsToManyRelation(
@@ -111,8 +108,8 @@ trait ElementSaveRelation
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
-     * @param array $values
+     * @param  \Illuminate\Database\Eloquent\Relations\HasMany  $relation
+     * @param  array  $values
      */
     protected function deleteOldItemsFromHasManyRelation(
         \Illuminate\Database\Eloquent\Relations\HasMany $relation,
@@ -133,8 +130,8 @@ trait ElementSaveRelation
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Relations\HasMany $relation
-     * @param array $values
+     * @param  \Illuminate\Database\Eloquent\Relations\HasMany  $relation
+     * @param  array  $values
      */
     protected function attachItemsToHasManyRelation(
         \Illuminate\Database\Eloquent\Relations\HasMany $relation,

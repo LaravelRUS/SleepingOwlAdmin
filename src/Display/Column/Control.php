@@ -49,7 +49,7 @@ class Control extends TableColumn
     /**
      * Control constructor.
      *
-     * @param string|null $label
+     * @param  string|null  $label
      */
     public function __construct($label = null)
     {
@@ -110,8 +110,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param ControlButtonInterface $button
-     *
+     * @param  ControlButtonInterface  $button
      * @return $this
      */
     public function addButton(ControlButtonInterface $button)
@@ -122,8 +121,9 @@ class Control extends TableColumn
     }
 
     /**
-     * @param array $buttons
+     * @param  array  $buttons
      * @return $this
+     *
      * @internal param ControlButtonInterface $button
      */
     public function addButtons(array $buttons)
@@ -138,7 +138,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param bool $editable
+     * @param  bool  $editable
      * @return $this
      */
     public function setEditable($editable)
@@ -149,7 +149,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param bool $deletable
+     * @param  bool  $deletable
      * @return $this
      */
     public function setDeletable($deletable)
@@ -160,7 +160,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param bool $destroyable
+     * @param  bool  $destroyable
      * @return $this
      */
     public function setDestroyable($destroyable)
@@ -171,7 +171,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param bool $restorable
+     * @param  bool  $restorable
      * @return $this
      */
     public function setRestorable($restorable)
@@ -262,8 +262,7 @@ class Control extends TableColumn
     }
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)

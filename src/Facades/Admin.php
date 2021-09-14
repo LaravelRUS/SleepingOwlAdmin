@@ -8,6 +8,7 @@ use SleepingOwl\Admin\Section;
 
 /**
  * @see \SleepingOwl\Admin\Admin
+ *
  * @method static Section getModel(string|object $class)
  * @method static Section view(string|Renderable $content, null|string $title)
  */

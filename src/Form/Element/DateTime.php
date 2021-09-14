@@ -51,8 +51,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param bool $seconds
-     *
+     * @param  bool  $seconds
      * @return $this
      */
     public function setSeconds($seconds)
@@ -63,8 +62,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function setModelAttribute($value)

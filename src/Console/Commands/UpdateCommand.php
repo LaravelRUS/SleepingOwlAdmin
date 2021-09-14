@@ -16,6 +16,7 @@ class UpdateCommand extends Installation\Command
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Update the SleepingOwl Admin package';
@@ -23,7 +24,7 @@ class UpdateCommand extends Installation\Command
     /**
      * Execute the console command.
      *
-     * @param Filesystem $files
+     * @param  Filesystem  $files
      */
     public function fire(Filesystem $files)
     {
@@ -31,7 +32,7 @@ class UpdateCommand extends Installation\Command
     }
 
     /**
-     * @param Filesystem $files
+     * @param  Filesystem  $files
      */
     public function handle(Filesystem $files)
     {

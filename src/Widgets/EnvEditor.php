@@ -16,6 +16,7 @@ class EnvEditor extends Widget
 
     /**
      * @return string
+     *
      * @throws \Throwable
      */
     public function toHtml()
