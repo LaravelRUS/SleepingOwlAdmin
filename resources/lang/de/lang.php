@@ -106,6 +106,7 @@ return [
         'placeholder' => 'Aus der Liste auswählen',
         'no_items'    => 'Keine Einträge',
         'init'        => 'Auswählen',
+        'empty'       => 'leer',
         'limit'       => 'und ${count} mehr',
         'deselect'    => 'Abwählen',
         'short'       => 'Mindestens :min Zeichen eingeben',
