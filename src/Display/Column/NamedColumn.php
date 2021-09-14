@@ -97,7 +97,6 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
     /**
      * @param $class
-     *
      * @return $this
      */
     public function setClass($class)
