@@ -96,6 +96,28 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
+     * @param $class
+     *
+     * @return $this
+     */
+    public function setClass($class)
+    {
+        $this->setHtmlAttribute('class', $class);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function nowrap()
+    {
+        $this->setClass('text-nowrap');
+
+        return $this;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
