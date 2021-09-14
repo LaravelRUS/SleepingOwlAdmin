@@ -40,6 +40,35 @@ class HasManyLocal extends FormElements
     const REMOVE = 'remove';
 
     /**
+     * @var bool|callable
+     */
+    protected $deletable = true;
+
+    /**
+     * @return bool|callable
+     */
+    public function isDeletable()
+    {
+        if (is_callable($this->deletable)) {
+            return (bool) call_user_func($this->deletable, $this->getModel());
+        }
+
+        return (bool) $this->deletable;
+    }
+
+    /**
+     * @param Closure|bool $readonly
+     *
+     * @return $this
+     */
+    public function setDeletable($deletable)
+    {
+        $this->deletable = $deletable;
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function setCard(): self
@@ -834,6 +863,7 @@ class HasManyLocal extends FormElements
             'helpText' => $this->getHelpText(),
             'draggable' => $this->getDraggable(),
             'collapsed' => $this->getCollapsed(),
+            'deletable' => $this->isDeletable(),
         ];
     }
 
