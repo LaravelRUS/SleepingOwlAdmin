@@ -2,6 +2,13 @@ Admin.Modules.register('display.columns.inline-edit', () => {
     //AdminColumnEditable
 
     $('.inline-editable').editable({
+      success: function(response, newValue) {
+        if(response.status !== 'true' && response.status !== true) {
+          return response.reason || trans('lang.table.error');
+        } else if (response.newValue !== undefined) {
+          return {newValue: response.newValue};
+        }
+      },
       error: function(response, newValue) {
         if(response.status === 500) {
           return trans('lang.table.error');

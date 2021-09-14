@@ -496,7 +496,8 @@ class AdminController extends Controller
     /**
      * @param  ModelConfigurationInterface  $model
      * @param  Request  $request
-     * @return Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
@@ -576,8 +577,8 @@ class AdminController extends Controller
         $column->setModel($item);
 
         if ($model->fireEvent('updating', true, $item, $request) === false) {
-            return response([
-                'result' => false,
+            return response()->json([
+                'status' => false,
                 'reason' => 'Can not fire event: updating',
             ]);
         }
@@ -586,11 +587,11 @@ class AdminController extends Controller
 
         $model->fireEvent('updated', false, $item, $request);
 
-        return response([
-            'result' => true,
-            'name'   => $field,
-            'value'  => $item->{$field},
-            'pk'     => $id,
+        return response()->json([
+            'status'   => true,
+            'name'     => $field,
+            'newValue' => $repository->find($id)->{$field},
+            'pk'       => $id,
         ]);
     }
 
