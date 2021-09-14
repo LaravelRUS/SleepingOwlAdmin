@@ -2,6 +2,9 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
 	{!! $template->renderMeta($title) !!}
+	@if(null !== ($favicon = config('sleeping_owl.favicon')))
+		<link rel="icon" href="{{ $favicon }}">
+	@endif
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
