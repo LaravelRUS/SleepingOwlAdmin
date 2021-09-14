@@ -57,8 +57,7 @@ class HasManyLocal extends FormElements
     }
 
     /**
-     * @param Closure|bool $readonly
-     *
+     * @param  Closure|bool  $readonly
      * @return $this
      */
     public function setDeletable($deletable)
