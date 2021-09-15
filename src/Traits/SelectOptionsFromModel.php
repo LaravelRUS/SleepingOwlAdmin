@@ -62,11 +62,11 @@ trait SelectOptionsFromModel
     }
 
     /**
-     * @param string|Model $modelForOptions
-     * @param null         $display
-     * @param null|bool    $cacheOptions
-     *
+     * @param  string|Model  $modelForOptions
+     * @param  null  $display
+     * @param  null|bool  $cacheOptions
      * @return $this
+     *
      * @throws SelectException
      */
     public function setModelForOptions($modelForOptions, $display = null, $cacheOptions = null)
@@ -252,16 +252,16 @@ trait SelectOptionsFromModel
             $options = $preparer($this, $options);
         }
 
-        if (!$this->cacheOptions) {
+        if (! $this->cacheOptions) {
             // Do not use cache for current request
             $options_list = $options->get();
         } else {
             // Use cache for current request
             $sql_query = $options->toSql();
             foreach ($options->getBindings() as $binding) {
-                $sql_query = preg_replace("#\?#", "'" . $binding . "'", $sql_query, 1);
+                $sql_query = preg_replace("#\?#", "'".$binding."'", $sql_query, 1);
             }
-            $cache_key = '__temp.cacheOptions.' . md5($sql_query);
+            $cache_key = '__temp.cacheOptions.'.md5($sql_query);
             if (Config::has($cache_key)) {
                 // Get options from cache
                 $options_list = Config::get($cache_key);
