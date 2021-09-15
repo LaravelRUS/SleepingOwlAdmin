@@ -823,8 +823,7 @@ class AdminController extends Controller
 
         $response = redirect()
             ->to($request
-            ->input('_redirectBack', $model->getDisplayUrl()))
-        ;
+            ->input('_redirectBack', $model->getDisplayUrl()));
 
         return $response
             ->with('success_message', $model->getMessageOnDelete());
