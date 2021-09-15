@@ -30,7 +30,8 @@ class Checklist extends Select implements ColumnEditableInterface
         }
 
         /**
-         * It's useless to modify output here, because of it's will be changed by js-script on the frontend after updating
+         * It's useless to modify output here, because of it's will be changed by js-script on the frontend after updating.
+         *
          * @see https://vitalets.github.io/x-editable/docs.html#editable - option "display"
          */
         /*
@@ -59,7 +60,8 @@ class Checklist extends Select implements ColumnEditableInterface
         if ($return instanceof \Illuminate\Database\Eloquent\Collection) {
             if ($return->count()) {
                 /**
-                 * Primary key of the Eloquent model always must be a simple, not composite: string, but not array
+                 * Primary key of the Eloquent model always must be a simple, not composite: string, but not array.
+                 *
                  * @see https://github.com/laravel/framework/issues/5517#issuecomment-170035596
                  */
                 try {
@@ -68,7 +70,7 @@ class Checklist extends Select implements ColumnEditableInterface
                     $key_name = 'id';
                 }
                 /**
-                 * Let's try not to break the whole application
+                 * Let's try not to break the whole application.
                  */
                 try {
                     $return = $return->pluck($key_name)->toArray();
@@ -90,9 +92,9 @@ class Checklist extends Select implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return string|void
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
@@ -106,7 +108,7 @@ class Checklist extends Select implements ColumnEditableInterface
         $element = new \SleepingOwl\Admin\Form\Element\MultiSelect($this->getName());
 
         /**
-         * Detect relation
+         * Detect relation.
          */
         if ($this->getModelForOptions()) {
             $element->setModelForOptions($this->getModelForOptions());
@@ -118,7 +120,7 @@ class Checklist extends Select implements ColumnEditableInterface
                 if ($modelClassName instanceof Model) {
                     $modelClassName = get_class($modelClassName);
                 }
-                if (!is_string($modelClassName)) {
+                if (! is_string($modelClassName)) {
                     throw new Exception('For properly relation saving you must provide Model class name (string) or Model instance');
                 }
                 $element->setModelForOptions($modelClassName);
@@ -154,8 +156,7 @@ class Checklist extends Select implements ColumnEditableInterface
     }
 
     /**
-     * @param boolean|Model|callable|null $forceSaveRelation
-     *
+     * @param  bool|Model|callable|null  $forceSaveRelation
      * @return Checklist
      */
     public function setForceSaveRelation($forceSaveRelation = true)
