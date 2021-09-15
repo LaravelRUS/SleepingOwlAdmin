@@ -6,6 +6,7 @@ use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
+use SleepingOwl\Admin\Display\Column\Editable\Checklist;
 use SleepingOwl\Admin\Display\Column\Editable\Date;
 use SleepingOwl\Admin\Display\Column\Editable\DateTime;
 use SleepingOwl\Admin\Display\Column\Editable\Number;
@@ -30,13 +31,14 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
 
         $this->register([
             'checkbox' => Checkbox::class,
-            'text' => Text::class,
+            'checklist' => Checklist::class,
+            'date' => Date::class,
+            'datetime' => DateTime::class,
             'number' => Number::class,
             'range' => Range::class,
-            'textarea' => Textarea::class,
             'select' => Select::class,
-            'datetime' => DateTime::class,
-            'date' => Date::class,
+            'text' => Text::class,
+            'textarea' => Textarea::class,
         ]);
     }
 }

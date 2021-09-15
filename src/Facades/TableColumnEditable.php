@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Display\Column\Editable\Checkbox checkbox($name, $columnLabel = null, $small = null, $uncheckedLabel = null, $checkedLabel = null)
+ * @method static \SleepingOwl\Admin\Display\Column\Editable\Checklist checklist($name, $label = null, $options = [], $small = null)
  * @method static \SleepingOwl\Admin\Display\Column\Editable\Date date($name, $label = null, $small = null)
  * @method static \SleepingOwl\Admin\Display\Column\Editable\Datetime datetime($name, $label = null, $small = null)
  * @method static \SleepingOwl\Admin\Display\Column\Editable\Number number($name, $label = null, $small = null)

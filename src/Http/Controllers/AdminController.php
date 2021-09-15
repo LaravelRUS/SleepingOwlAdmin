@@ -582,14 +582,14 @@ class AdminController extends Controller
             ]);
         }
 
-        $column->save($request);
+        $newValue = $column->save($request);
 
         $model->fireEvent('updated', false, $item, $request);
 
         return response()->json([
             'status'   => true,
             'name'     => $field,
-            'newValue' => $repository->find($id)->{$field},
+            'newValue' => $newValue !== null ? $newValue : $repository->find($id)->{$field},
             'pk'       => $id,
         ]);
     }
@@ -822,10 +822,11 @@ class AdminController extends Controller
         }
 
         $response = redirect()
-        ->to($request
-        ->input('_redirectBack', $model->getDisplayUrl()));
+            ->to($request
+            ->input('_redirectBack', $model->getDisplayUrl()))
+        ;
 
         return $response
-        ->with('success_message', $model->getMessageOnDelete());
+            ->with('success_message', $model->getMessageOnDelete());
     }
 }
