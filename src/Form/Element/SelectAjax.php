@@ -130,7 +130,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     }
 
     /**
-     * Set select can be reseted
+     * Set select can be reseted.
      *
      * @return $this
      */
