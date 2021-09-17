@@ -128,6 +128,18 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
 
         return $this;
     }
+    
+    /**
+    * Set select can be reseted
+    *
+    * @return $this
+    */
+    public function allowClear()
+    {
+        $this->setHtmlAttribute('data-allow-clear', 'true');
+        
+        return $this;
+    }
 
     /**
      * @return array
