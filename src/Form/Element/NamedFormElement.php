@@ -443,9 +443,9 @@ abstract class NamedFormElement extends FormElement
 
             $cast = $casts->get($jsonParts->first(), false);
 
-            if (is_object($jsonAttr)){
+            if (is_object($jsonAttr)) {
                 $jsonAttr = json_decode(json_encode($jsonAttr), true);
-            } elseif (is_string($jsonAttr)){
+            } elseif (is_string($jsonAttr)) {
                 $jsonAttr = json_decode($jsonAttr, true);
             }
 
