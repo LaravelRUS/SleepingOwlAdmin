@@ -124,7 +124,6 @@ abstract class Display implements DisplayInterface
 
     /**
      * @param $key
-     *
      * @return DisplayExtensionInterface|null
      */
     public function getExtension($key)
