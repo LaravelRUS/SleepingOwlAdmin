@@ -1,5 +1,11 @@
 <div class="links-row" {!! $attributes !!}>
     @foreach($links as $link)
-        <a  {!! $link->attributes() !!} href="{!! $link->getUrl() !!}">{!! $link->getTitle() !!}</a>
+        @if ($link instanceof \SleepingOwl\Admin\Display\Link)
+            <a {!! $link->attributes() !!} href="{!! $link->getUrl() !!}">{!! $link->getTitle() !!}</a>
+        @elseif ($link instanceof \Illuminate\Contracts\Support\Renderable)
+            {!! $link->render() !!}
+        @elseif (is_string($link))
+            {!! $link !!}
+        @endif
     @endforeach
 </div>

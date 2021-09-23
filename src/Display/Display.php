@@ -123,6 +123,16 @@ abstract class Display implements DisplayInterface
     }
 
     /**
+     * @param $key
+     *
+     * @return DisplayExtensionInterface|null
+     */
+    public function getExtension($key)
+    {
+        return @$this->extensions[$key] ?: null;
+    }
+
+    /**
      * @return RepositoryInterface
      */
     public function getRepository()
