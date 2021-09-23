@@ -25,8 +25,7 @@ class Links extends Extension implements Placable
     protected $links = [];
 
     /**
-     * @param array $links
-     *
+     * @param  array  $links
      * @return Links
      */
     public function set($links)
@@ -46,7 +45,6 @@ class Links extends Extension implements Placable
 
     /**
      * @param $view
-     *
      * @return $this
      */
     public function setView($view)
@@ -66,7 +64,6 @@ class Links extends Extension implements Placable
 
     /**
      * @param $placement
-     *
      * @return $this
      */
     public function setPlacement($placement)
@@ -85,8 +82,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param array $links
-     *
+     * @param  array  $links
      * @return $this
      */
     public function setLinks(array $links)
@@ -97,9 +93,8 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param      $link
-     * @param null $key
-     *
+     * @param  $link
+     * @param  null  $key
      * @return $this
      */
     public function add($link, $key = null)
@@ -115,7 +110,6 @@ class Links extends Extension implements Placable
 
     /**
      * @param $key
-     *
      * @return mixed|null
      */
     public function get($key)
@@ -125,7 +119,6 @@ class Links extends Extension implements Placable
 
     /**
      * @param $key
-     *
      * @return $this
      */
     public function remove($key)
