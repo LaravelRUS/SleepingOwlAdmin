@@ -202,9 +202,8 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param bool  $mode
-     * @param array $select2_options See: https://select2.org/configuration/options-api
-     *
+     * @param  bool  $mode
+     * @param  array  $select2_options  See: https://select2.org/configuration/options-api
      * @return $this
      */
     public function setSelect2($mode, array $select2_options = [])
@@ -232,9 +231,8 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param string|array                $key
-     * @param string|boolean|integer|null $value
-     *
+     * @param  string|array  $key
+     * @param  string|bool|int|null  $value
      * @return Select
      */
     public function setSelect2Options($key, $value = null)
@@ -244,7 +242,9 @@ class Select extends NamedFormElement
                 $this->setSelect2Options($k, $v);
             }
         } else {
-            $key = 'data-' . preg_replace_callback('~[A-Z]~su', function ($matches) { return '-' . mb_strtolower($matches[0]); }, $key);
+            $key = 'data-'.preg_replace_callback('~[A-Z]~su', function ($matches) {
+                return '-'.mb_strtolower($matches[0]);
+            }, $key);
             if (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             } elseif ($value === null) {
