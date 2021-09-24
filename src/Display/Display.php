@@ -132,6 +132,14 @@ abstract class Display implements DisplayInterface
     }
 
     /**
+     * @return DisplayExtensionInterface|Links|null
+     */
+    public function getLinks()
+    {
+        return $this->getExtension('links');
+    }
+
+    /**
      * @return RepositoryInterface
      */
     public function getRepository()
