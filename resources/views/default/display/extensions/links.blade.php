@@ -1,4 +1,4 @@
-<div class="links-row" {!! $attributes !!}>
+<div {!! $attributes !!}>
     @foreach($links as $link)
         @if ($link instanceof \SleepingOwl\Admin\Display\Link)
             <a {!! $link->attributes() !!} href="{!! $link->getUrl() !!}">{!! $link->getTitle() !!}</a>

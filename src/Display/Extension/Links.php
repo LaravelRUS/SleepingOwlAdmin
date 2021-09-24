@@ -24,6 +24,11 @@ class Links extends Extension implements Placable
      */
     protected $links = [];
 
+    public function __construct()
+    {
+        $this->setHtmlAttribute('class', 'links-row');
+    }
+
     /**
      * @param  array  $links
      * @return Links
