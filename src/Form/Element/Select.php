@@ -202,10 +202,12 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param  bool  $mode
+     * @param bool  $mode
+     * @param array $select2_options See: https://select2.org/configuration/options-api
+     *
      * @return $this
      */
-    public function setSelect2($mode)
+    public function setSelect2($mode, array $select2_options = [])
     {
         $this->select2_mode = $mode;
 
@@ -215,6 +217,7 @@ class Select extends NamedFormElement
         if ($this->select2_mode) {
             $this->setView($this->view_select2);
             $this->setHtmlAttribute('class', $class);
+            $this->setSelect2Options($select2_options);
         } else {
             $attrs = $this->getHtmlAttribute('class');
             $pattern = "~(?:^{$class_escaped}$|^{$class_escaped}\s|s\{$class_escaped}$|\s{$class_escaped}\s)~s";
@@ -224,6 +227,41 @@ class Select extends NamedFormElement
             $this->removeHtmlAttribute('class');
             $this->setHtmlAttribute('class', $replace);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param string|array                $key
+     * @param string|boolean|integer|null $value
+     *
+     * @return Select
+     */
+    public function setSelect2Options($key, $value = null)
+    {
+        if (is_array($key)) {
+            foreach ($key as $k => $v) {
+                $this->setSelect2Options($k, $v);
+            }
+        } else {
+            $key = 'data-' . preg_replace_callback('~[A-Z]~su', function ($matches) { return '-' . mb_strtolower($matches[0]); }, $key);
+            if (is_bool($value)) {
+                $value = $value ? 'true' : 'false';
+            } elseif ($value === null) {
+                $value = 'null';
+            }
+            $this->setHtmlAttribute($key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function disableSelect2EscapeMarkup()
+    {
+        $this->setHtmlAttribute('data-select2-allow-html', 'true');
 
         return $this;
     }
