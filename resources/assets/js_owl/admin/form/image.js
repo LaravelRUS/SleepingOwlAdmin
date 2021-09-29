@@ -10,6 +10,10 @@ Vue.component('element-image', Vue.extend({
             type: Boolean,
             default: false
         },
+        onlylink: {
+            type: Boolean,
+            default: false
+        },
         name: {
             type: String,
             required: true
@@ -37,6 +41,11 @@ Vue.component('element-image', Vue.extend({
             let self = this,
                 container = $(self.$el.parentNode),
                 button = container.find('.upload-button');
+
+            if (self.onlylink) {
+                return false
+            }
+
             button.dropzone({
                 url: this.url,
                 method: 'POST',
@@ -82,6 +91,7 @@ Vue.component('element-image', Vue.extend({
                     return false
             });
         },
+
         uploadImage() {
           let self = this
           var input = document.getElementById('image-paste-in-buffer')
@@ -136,6 +146,7 @@ Vue.component('element-image', Vue.extend({
 
           return true
         },
+
         insert (image) {
             let self = this
             let url = null
@@ -147,6 +158,9 @@ Vue.component('element-image', Vue.extend({
 
             Admin.Messages.cliptobuffer(trans('lang.file.insert_link'), null, null, url, link).then(result => {
               if(result && result.value) {
+                if (self.onlylink && result.value.indexOf('blob:') === 0) {
+                  return false
+                }
                 if (result.value.indexOf('blob:') === 0) {
                   this.uploadImage()
                 } else {

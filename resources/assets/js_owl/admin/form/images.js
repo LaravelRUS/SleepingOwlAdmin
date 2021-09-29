@@ -13,6 +13,10 @@ Vue.component('element-images', Vue.extend({
             type: Boolean,
             default: false
         },
+        onlylink: {
+            type: Boolean,
+            default: false
+        },
         draggable: {
             type: Boolean,
             default: false
@@ -44,6 +48,10 @@ Vue.component('element-images', Vue.extend({
             let self = this,
                 container = $(self.$el.parentNode),
                 button = container.find('.upload-button');
+
+            if (self.onlylink) {
+                return false
+            }
 
             container.magnificPopup({
                 delegate: '[data-toggle="images"]',
@@ -103,6 +111,9 @@ Vue.component('element-images', Vue.extend({
                 if (typeof(index) !== 'undefined') {
                   self.$set(this.vals, [index], result.value)
                 } else {
+                  if (self.onlylink && result.value.indexOf('blob:') === 0) {
+                    return false
+                  }
                   if (result.value.indexOf('blob:') === 0) {
                     this.uploadImage()
                   } else {

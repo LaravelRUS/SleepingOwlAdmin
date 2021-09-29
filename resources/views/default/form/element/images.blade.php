@@ -18,6 +18,7 @@
 			]) }}"
                 :values="{{ json_encode($value) }}"
                 :readonly="{{ $readonly ? 'true' : 'false' }}"
+                :onlylink="{{ $paste_only_link ? 'true' : 'false' }}"
                 :draggable="{{ $draggable ? 'true' : 'false' }}"
                 name="{{ $name }}"
                 inline-template
@@ -64,7 +65,7 @@
                 </div>
 
                 <div class="form-element-button-add w-100 order-2 mt-2" v-if="!readonly">
-                    <div class="btn btn-primary upload-button btn-sm">
+                    <div class="btn btn-primary upload-button btn-sm" v-if="!onlylink">
                         <i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browseMultiple') }}
                     </div>
                     <button type="button" @click.prevent="insert()" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}" data-toggle="tooltip">

@@ -25,6 +25,38 @@ class File extends NamedFormElement implements WithRoutesInterface
     protected $saveCallback;
 
     /**
+     * @var bool
+     */
+    protected $addOnlyLink = false;
+
+    /**
+     * Set.
+     *
+     * @param  Closure|bool  $onlyLink
+     * @return $this
+     */
+    public function setOnlyLink($onlyLink)
+    {
+        $this->addOnlyLink = $onlyLink;
+
+        return $this;
+    }
+
+    /**
+     * Return save callback.
+     *
+     * @return bool|callable
+     */
+    public function getOnlyLink()
+    {
+        if (is_callable($this->addOnlyLink)) {
+            return (bool) call_user_func($this->addOnlyLink, $this->getModel());
+        }
+
+        return (bool) $this->addOnlyLink;
+    }
+
+    /**
      * @param  Router  $router
      */
     public static function registerRoutes(Router $router)
@@ -311,6 +343,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         return array_merge($return, [
             'asset_prefix' => $this->asset,
+            'paste_only_link' => $this->getOnlyLink(),
         ]);
     }
 }

@@ -1,6 +1,9 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
 ## 2021-09-14
+* [Add] Add `->setOnlyLink(bool||callable)` for `AdminFormElement::image` and `AdminFormElement::images`. If the value is true - it is forbidden to load images or insert from blobs. Allows only to insert a link to an image 
+
+## 2021-09-14
 * [Fix] Add `->setDeletable(bool||callable)` for `hasManyLocal`
 
 ## 2021-08-25

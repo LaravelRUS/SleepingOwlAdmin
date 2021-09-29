@@ -19,6 +19,7 @@
                 value="{{ $value }}"
                 asset_prefix="{{ $asset_prefix }}"
                 :readonly="{{ $readonly ? 'true' : 'false' }}"
+                :onlylink="{{ $paste_only_link ? 'true' : 'false' }}"
                 name="{{ $name }}"
                 inline-template
         >
@@ -54,7 +55,7 @@
                 </div>
 
                 <div v-if="!readonly">
-                    <div class="btn btn-primary upload-button btn-sm">
+                    <div class="btn btn-primary upload-button btn-sm" v-if="!onlylink">
                         <i :class="uploadClass"></i> {{ trans('sleeping_owl::lang.image.browse') }}
                     </div>
                     <button type="button" @click.prevent="insert($event.target.value)" class="btn btn-default btn-sm" title="{{ trans('sleeping_owl::lang.file.insert_link') }}" data-toggle="tooltip">
