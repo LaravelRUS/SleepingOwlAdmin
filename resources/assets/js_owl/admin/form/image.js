@@ -158,13 +158,16 @@ Vue.component('element-image', Vue.extend({
 
             Admin.Messages.cliptobuffer(trans('lang.file.insert_link'), null, null, url, link).then(result => {
               if(result && result.value) {
+                var input = document.getElementById('image-paste-in-buffer')
                 if (self.onlylink && result.value.indexOf('blob:') === 0) {
+                  if (input) {
+                    input.remove()
+                  }
                   return false
                 }
                 if (result.value.indexOf('blob:') === 0) {
                   this.uploadImage()
                 } else {
-                  var input = document.getElementById('image-paste-in-buffer')
                   if (input) {
                     input.remove()
                   }

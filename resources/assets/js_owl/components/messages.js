@@ -107,8 +107,8 @@ module.exports = (function () {
 
                   //create hidden input
                   var input = document.createElement('img')
-                  // input.setAttribute('style', 'display:none')
                   input.setAttribute('id', 'image-paste-in-buffer')
+                  input.classList.add('hidden')
                   document.getElementById('vueApp').appendChild(input)
 
                   field.onpaste = function (event) {
