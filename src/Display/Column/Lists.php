@@ -37,7 +37,7 @@ class Lists extends NamedColumn
      */
     public function setMaxLists($maxListsItem)
     {
-        $this->maxLists = (bool) $maxListsItem;
+        $this->maxLists = (int) $maxListsItem;
 
         return $this;
     }
