@@ -27,8 +27,8 @@ class Lists extends NamedColumn
     protected $sortable = false;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     protected $maxLists = 0;
 
     /**
