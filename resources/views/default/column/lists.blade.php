@@ -12,7 +12,7 @@
         @endphp
         <span class="badge table-badge" v-pre>{!! $value !!}</span>
       @endforeach
-        <span class="badge bg-white text-muted">{{ trans('sleeping_owl::lang.select.more', ['count' => $more]) }}</span>
+        <span class="badge bg-white text-secondary">{{ trans('sleeping_owl::lang.select.more', ['count' => $more]) }}</span>
 
     @else
       @foreach ($values as $value)
