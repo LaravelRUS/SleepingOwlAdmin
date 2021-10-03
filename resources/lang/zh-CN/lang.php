@@ -108,6 +108,7 @@ return [
         'init'        => '选',
         'empty'       => '空的',
         'limit'       => '还有 ${count} 以上',
+        'more'       => '还有 :count 以上',
         'deselect'    => '取消',
         'short'       => '输入最小值 :min 人物',
     ],

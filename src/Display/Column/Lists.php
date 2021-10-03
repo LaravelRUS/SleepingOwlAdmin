@@ -27,6 +27,30 @@ class Lists extends NamedColumn
     protected $sortable = false;
 
     /**
+    * @var int
+    */
+    protected $maxLists = 0;
+
+    /**
+     * @param  int  $maxListsItem
+     * @return $this
+     */
+    public function setMaxLists($maxListsItem)
+    {
+        $this->maxLists = (bool) $maxListsItem;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxLists()
+    {
+        return $this->maxLists;
+    }
+
+    /**
      * @param  bool  $sortable
      * @return $this
      */
@@ -71,6 +95,7 @@ class Lists extends NamedColumn
         return parent::toArray() + [
             'values' => $this->getModelValue(),
             'append' => $this->getAppends(),
+            'maxLists' => (int) $this->getMaxLists(),
         ];
     }
 }

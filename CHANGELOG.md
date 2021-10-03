@@ -1,5 +1,8 @@
 <p align="center"><h2>[Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)</h2></p>
 
+## 2021-10-03
+* [Add] Add `->setMaxLists(int)` for `AdminColumn::lists`
+
 ## 2021-09-29
 * [Add] Add `->setOnlyLink(bool||callable)` for `AdminFormElement::image` and `AdminFormElement::images`. If the value is true - it is forbidden to load images or insert from blobs. Allows only to insert a link to an image
 

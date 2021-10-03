@@ -108,6 +108,7 @@ return [
         'init'        => 'Select',
         'empty'       => 'empty',
         'limit'       => 'and ${count} more',
+        'more'       => 'and :count more',
         'deselect'    => 'Deselect',
         'short'       => 'Enter min :min characters',
     ],
