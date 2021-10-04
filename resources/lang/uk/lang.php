@@ -90,6 +90,7 @@ return [
 
     'tree' => [
         'expand' => 'Розгорнути все',
+        'reorderCompleted'   => 'Розділ переміщений',
         'collapse' => 'Згорнути все',
     ],
 
@@ -105,8 +106,8 @@ return [
         'selected' => 'вибрано',
         'placeholder' => 'Виберіть зі списку',
         'no_items'    => 'Нема шо вибрати',
-        'init'        => 'Вибрати',
         'empty'       => 'порожньо',
+        'init'        => 'Вибрати',
         'limit'       => 'і ще ${count}',
         'more'       => 'і ще :count',
         'deselect'    => 'Скинути',
