@@ -411,8 +411,8 @@ class NamedFormElementTest extends TestCase
 
         $this->assertNull($this->callMethodByPath($element, 'key.key1'));
 
-
         // -------------
+
         $this->expectException(LogicException::class);
         $element = $this->getElement('key', 'Label');
 

@@ -396,7 +396,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             if ($model->{$name}() instanceof HasOneOrMany && ! is_null($relation)) {
                 if (is_array($relation) || $relation instanceof \Traversable) {
                     $childModels = $model->{$name}()->saveMany($relation);
-                    foreach ($childModels as $childModel){
+                    foreach ($childModels as $childModel) {
                         $this->saveWithRelations($childModel);
                     }
                 } else {
