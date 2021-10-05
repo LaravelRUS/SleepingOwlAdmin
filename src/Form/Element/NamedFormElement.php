@@ -522,48 +522,40 @@ abstract class NamedFormElement extends FormElement
         $model = $this->getModel();
 
         $relations = explode('.', $path);
-        $count = count($relations);
-        $i = 1;
+        $fieldName = array_pop($relations);
 
-        if ($count > 1) {
-            $i++;
-            $previousModel = $model;
+        $previousModel = $model;
 
-            /* @var Model $model */
-            foreach ($relations as $relation) {
-                $relatedModel = null;
-                if ($previousModel->getAttribute($relation) instanceof Model) {
-                    $relatedModel = $previousModel->getAttribute($relation);
-                } elseif (method_exists($previousModel, $relation)) {
+        /* @var Model $model */
+        foreach ($relations as $relation) {
+            $relatedModel = null;
+            if ($previousModel->getAttribute($relation) instanceof Model) {
+                $relatedModel = $previousModel->getAttribute($relation);
+            } elseif (method_exists($previousModel, $relation)) {
 
-                    /* @var Relation $relation */
-                    $relationObject = $previousModel->{$relation}();
+                /* @var Relation $relation */
+                $relationObject = $previousModel->{$relation}();
 
-                    switch (get_class($relationObject)) {
-                        case BelongsTo::class:
-                            $relationObject->associate($relatedModel = $relationObject->getRelated());
-                            break;
-                        case HasOne::class:
-                        case MorphOne::class:
-                            $relatedModel = $relationObject->getRelated()->newInstance();
-                            $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
-                            $model->setRelation($relation, $relatedModel);
-                            break;
-                    }
-                }
-
-                $previousModel = $relatedModel;
-                if ($i === $count) {
-                    break;
-                } elseif (is_null($relatedModel)) {
-                    throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
+                switch (get_class($relationObject)) {
+                    case BelongsTo::class:
+                        $relationObject->associate($relatedModel = $relationObject->getRelated());
+                        break;
+                    case HasOne::class:
+                    case MorphOne::class:
+                        $relatedModel = $relationObject->getRelated()->newInstance();
+                        $relatedModel->setAttribute($this->getForeignKeyNameFromRelation($relationObject), $relationObject->getParentKey());
+                        $model->setRelation($relation, $relatedModel);
+                        break;
                 }
             }
 
-            $model = $previousModel;
+            $previousModel = $relatedModel;
+            if (is_null($relatedModel)) {
+                throw new LogicException("Field [{$path}] can't be mapped to relations of model ".get_class($model).'. Probably some dot delimeted segment is not a supported relation type');
+            }
         }
 
-        return $model;
+        return $previousModel;
     }
 
     protected function getForeignKeyNameFromRelation($relation)
