@@ -117,7 +117,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
             'field' => $this->getPath() ?: $this->getFieldName(),
             'id' => $this->model->getKey(),
-        ]);
+        ], false);
     }
 
     /**

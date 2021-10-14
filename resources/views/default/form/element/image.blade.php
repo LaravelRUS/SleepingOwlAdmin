@@ -15,7 +15,7 @@
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
-			]) }}"
+			], false) }}"
                 value="{{ $value }}"
                 asset_prefix="{{ $asset_prefix }}"
                 :readonly="{{ $readonly ? 'true' : 'false' }}"

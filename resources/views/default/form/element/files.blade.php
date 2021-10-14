@@ -15,7 +15,7 @@
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
-			])  }}"
+			], false)  }}"
              data-token="{{ csrf_token() }}">
 
             @if (!$readonly)

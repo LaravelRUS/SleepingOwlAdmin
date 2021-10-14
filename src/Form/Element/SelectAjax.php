@@ -113,7 +113,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
             'field' => $this->getPath() ?: $this->getName(),
             'id' => $this->model->getKey(),
-        ]);
+        ], false);
     }
 
     /**

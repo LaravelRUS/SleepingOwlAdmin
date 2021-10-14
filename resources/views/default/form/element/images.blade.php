@@ -15,7 +15,7 @@
 				'adminModel' => AdminSection::getModel($model)->getAlias(),
 				'field' => $path,
 				'id' => $model->getKey()
-			]) }}"
+			], false) }}"
                 :values="{{ json_encode($value) }}"
                 :readonly="{{ $readonly ? 'true' : 'false' }}"
                 :onlylink="{{ $paste_only_link ? 'true' : 'false' }}"

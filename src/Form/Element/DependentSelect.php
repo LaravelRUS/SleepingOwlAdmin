@@ -141,7 +141,7 @@ class DependentSelect extends Select implements WithRoutesInterface
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
             'field' => $this->getName(),
             'id' => $this->model->getKey(),
-        ]);
+        ], false);
     }
 
     /**
