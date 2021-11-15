@@ -22,6 +22,13 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     protected $aliasId;
 
     /**
+     * Menu item target attribute.
+     *
+     * @var string
+     */
+    protected $target;
+
+    /**
      * @param  string|null  $modelClass
      */
     public function __construct($modelClass = null)
@@ -101,6 +108,24 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
+     * Set Target
+     *
+     * @param $target
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
      * @return string
      */
     public function getUrl()
@@ -136,6 +161,10 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     {
         if ($this->hasChild() && ! $this->hasClassProperty($class = config('navigation.class.has_child', 'treeview'))) {
             $this->setHtmlAttribute('class', $class);
+        }
+
+        if ($this->getTarget()) {
+            $this->setHtmlAttribute('target', $this->getTarget());
         }
 
         $data = $this->toArray();
