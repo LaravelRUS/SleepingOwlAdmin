@@ -108,7 +108,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * Set Target
+     * Set Target.
      *
      * @param $target
      */
