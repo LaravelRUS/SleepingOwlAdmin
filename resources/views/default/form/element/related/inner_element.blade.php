@@ -9,14 +9,16 @@
                   'draggable' => isset($draggable) ? $draggable : false,
               ])
           @endforeach
+          
+          <template v-for="index in newGroups">
+              @include(AdminTemplate::getViewPath('form.element.related.group'), [
+                  'name' => $name,
+                  'group' => new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all()),
+                  'index' => "totalGroupsCount",
+              ])
+          </template>
       </draggable>
-      <div v-for="index in newGroups">
-          @include(AdminTemplate::getViewPath('form.element.related.group'), [
-              'name' => $name,
-              'group' => new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all()),
-              'index' => "totalGroupsCount",
-          ])
-      </div>
+
 
       @if (!$readonly)
         <div class="d-block clearfix">
