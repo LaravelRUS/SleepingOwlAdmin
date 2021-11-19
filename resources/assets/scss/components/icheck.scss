@@ -46,6 +46,7 @@
   cursor: default;
 }
 
+
 [class*="icheck-"] > input:first-child + label::before,
 [class*="icheck-"] > input:first-child + input[type="hidden"] + label::before {
   content: "";
@@ -73,6 +74,17 @@
   border-top: none;
   transform: translate(0.35em, 0.2em) rotate(45deg);
   -ms-transform: translate(0.35em, 0.2em) rotate(45deg);
+}
+
+[class*="icheck-"] > input:indeterminate + label::after {
+    transform: none;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0.7em;
+    left: 0.23em;
+    width: 1em;
+    border: 1px solid gray;
 }
 
 [class*="icheck-"] > input[type="radio"]:first-child + label::before,

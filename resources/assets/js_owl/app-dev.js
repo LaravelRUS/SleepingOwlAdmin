@@ -8,6 +8,6 @@
 // import Vue from 'vue/dist/vue'            //dev
 // import Vue from 'vue/dist/vue.common.js'  //prod
 
-require('./libs/vue-prod')
+require('./libs/vue-dev')
 
 require('./bootstrap');

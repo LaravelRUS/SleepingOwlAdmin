@@ -7,18 +7,6 @@
  */
 
 
-
-// Select build
-// import Vue from 'vue/dist/vue'            //dev
-// import Vue from 'vue/dist/vue.common.js'  //prod
-
-if (process.env.NODE_ENV === 'production') {
-  require('./vue-prod')
-} else {
-  require('./vue-dev')
-}
-
-
 /**
  * The plugin for Vue.js provides services for making web requests and handle
  * responses using a XMLHttpRequest or JSONP.
