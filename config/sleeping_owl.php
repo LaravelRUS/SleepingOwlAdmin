@@ -84,7 +84,6 @@ return [
 
     'favicon' => '/packages/sleepingowl/default/images/favicon.ico',
 
-
     /*
     |--------------------------------------------------------------------------
     | Load dev Vue js
@@ -92,7 +91,6 @@ return [
     */
 
     'dev_assets' => env('ADMIN_DEV_ASSETS', false),
-
 
     /*
     |--------------------------------------------------------------------------
