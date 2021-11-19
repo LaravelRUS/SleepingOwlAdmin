@@ -16,7 +16,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "bootstrap4-datetimepicker": "^5.2.3",
-    "datatables.net": "^1.10.21",
+    "datatables.net": "^1.11.3",
     "datatables.net-bs4": "^1.10.21",
     "datatables.net-responsive": "^2.2.5",
     "dependent-dropdown": "^1.4.9",
