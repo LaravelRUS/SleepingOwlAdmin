@@ -51,7 +51,6 @@ class TemplateDefault extends Template
                 ->addJs('admin-vue-init', mix('/js/vue.js', $this->assetDir()))
                 ->addJs('admin-modules-load', mix('/js/modules.js', $this->assetDir()))
                 ->addCss('admin-default', mix('/css/admin-app.css', $this->assetDir()));
-
         } catch (Exception $e) {
             // Old version - without versioning tags
 
