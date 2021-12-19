@@ -1,1 +1,6 @@
 @import "~magnific-popup/src/css/main";
+
+ //Fix SVG images
+.mfp-figure figure {
+    min-width: 5rem;
+}
