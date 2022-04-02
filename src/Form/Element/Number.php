@@ -108,7 +108,7 @@ class Number extends NamedFormElement
     public function prepareValue($value)
     {
         if ($value == '') {
-            return;
+            return $this->getDefaultValue();
         }
 
         return parent::prepareValue(
