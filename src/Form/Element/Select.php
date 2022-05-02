@@ -81,6 +81,10 @@ class Select extends NamedFormElement
             $this->setOptions(
                 $this->loadOptions()
             );
+        } else {
+            if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
+                $this->setOptions($preparer($this, $this->options));
+            }
         }
 
         $options = Arr::except($this->options, $this->exclude);
