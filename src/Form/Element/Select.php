@@ -354,8 +354,8 @@ class Select extends NamedFormElement
      */
     public function prepareValue($value)
     {
-        if ($this->isNullable() && $value == '') {
-            return;
+        if ($value == '') {
+            return $this->getDefaultValue();
         }
 
         return parent::prepareValue($value);
