@@ -30,6 +30,9 @@
                     @if($limit)
                      :limit="{!! $limit !!}"
                     @endif
+                    @if($max)
+                     :max="{!! $max !!}"
+                    @endif
                     :searchable="true"
                     :options="options"
                     @if(count($options))
