@@ -18,6 +18,11 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
         ElementDeleteRelatedItem;
 
     /**
+     * @var int
+     */
+    protected $max;
+
+    /**
      * @var string
      */
     protected $view = 'form.element.multiselect';
@@ -28,6 +33,25 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
     public function getName()
     {
         return parent::getName().'[]';
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMax()
+    {
+        return $this->max;
+    }
+
+    /**
+     * @param  int  $max
+     * @return $this
+     */
+    public function setMax(int $max)
+    {
+        $this->max = $max;
+
+        return $this;
     }
 
     /**
@@ -50,6 +74,7 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
         }
 
         return [
+            'max' => $this->getMax(),
             'taggable' => $this->isTaggable(),
             'attributes' => $this->htmlAttributesToString(),
         ] + parent::toArray();
