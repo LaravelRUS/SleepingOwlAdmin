@@ -45,7 +45,6 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
 
     /**
      * @param int $max
-     *
      * @return $this
      */
     public function setMax(int $max)
