@@ -96,9 +96,9 @@ class Select extends NamedFormElement
         }
 
         $this->setOptions($options);
+        
         return $options;
     }
-
 
     /**
      * @return array
