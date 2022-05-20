@@ -77,7 +77,7 @@ class Select extends NamedFormElement
      */
     public function getOptions()
     {
-        if (!empty($this->options)) {
+        if (! empty($this->options)) {
             return $this->options;
         }
         if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
