@@ -77,6 +77,9 @@ class Select extends NamedFormElement
      */
     public function getOptions()
     {
+        if (!empty($this->options)) {
+            return $this->options;
+        }
         if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
             $this->setOptions(
                 $this->loadOptions()
@@ -92,8 +95,10 @@ class Select extends NamedFormElement
             asort($options, $this->getSortableFlags());
         }
 
+        $this->setOptions($options);
         return $options;
     }
+
 
     /**
      * @return array
