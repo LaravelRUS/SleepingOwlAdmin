@@ -1,5 +1,11 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-05-30
+* [Update] NPM packages:
+    - fortawesome/fontawesome-free: 5.15.4 -> 6.1.1
+    - axios: 0.21.1 -> 0.21.4
+    - dropzone: 5.7.2 -> 5.9.3 (NOT UPDATED)
+
 ## 2021-11-15
 * [Add] Add class for `icheck indeterminate`
 * [Rebuild] Rebuild assets and add use `dev_assets` in config (use `ADMIN_DEV_ASSETS=true` in `.env`)

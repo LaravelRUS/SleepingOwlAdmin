@@ -51,7 +51,7 @@
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    background-size: cover;
+    background-size: contain;
     background-position: 50% 50%;
 }
 .fileUploadMultiple .files-group .fileThumbnail .thumbnail .fileicon .fileicon-inner .file-extension,
