@@ -374,10 +374,7 @@ class NamedFormElementTest extends TestCase
 
         $this->assertEquals($model, $this->callMethodByPath($element, 'key'));
 
-        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
-        $model->shouldReceive('getAttribute')->with('key')->andReturn('test');
-
-        $this->assertNull($this->callMethodByPath($element, 'key.key1'));
+        // -------------
 
         $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
         $model->shouldReceive('getAttribute')
@@ -385,10 +382,37 @@ class NamedFormElementTest extends TestCase
             ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class));
 
         $this->assertEquals($model1, $this->callMethodByPath($element, 'key.key1'));
+
+        // -------------
+
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')
+            ->with('firstRelation')
+            ->andReturn($model1 = m::mock(\Illuminate\Database\Eloquent\Model::class));
+
+        $model1->shouldReceive('getAttribute')
+            ->with('secondRelation')
+            ->andReturn($model2 = m::mock(\Illuminate\Database\Eloquent\Model::class));
+
+        $model2->shouldReceive('getAttribute')
+            ->with('key1');
+        $this->assertEquals($model2, $this->callMethodByPath($element, 'firstRelation.secondRelation.key1'));
     }
 
     public function test_get_model_by_path_exception()
     {
+        $element = $this->getElement('key', 'Label');
+
+        // -------------
+
+        $this->expectException(LogicException::class);
+        $element->setModel($model = m::mock(\Illuminate\Database\Eloquent\Model::class));
+        $model->shouldReceive('getAttribute')->with('key')->andReturn('test');
+
+        $this->assertNull($this->callMethodByPath($element, 'key.key1'));
+
+        // -------------
+
         $this->expectException(LogicException::class);
         $element = $this->getElement('key', 'Label');
 

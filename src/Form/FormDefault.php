@@ -354,11 +354,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         }
 
         parent::save($request);
-        $this->saveBelongsToRelations($model);
 
-        $model->save();
-
-        $this->saveHasOneRelations($model);
+        $this->saveWithRelations($model);
 
         parent::afterSave($request);
 
@@ -366,6 +363,13 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         $this->getModelConfiguration()->fireEvent('saved', false, $model);
 
         return true;
+    }
+
+    protected function saveWithRelations(Model $model)
+    {
+        $this->saveBelongsToRelations($model);
+        $model->save();
+        $this->saveHasOneRelations($model);
     }
 
     /**
@@ -376,7 +380,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     {
         foreach ($model->getRelations() as $name => $relation) {
             if ($model->{$name}() instanceof BelongsTo && ! is_null($relation)) {
-                $relation->save();
+                $this->saveWithRelations($relation);
                 $model->{$name}()->associate($relation);
             }
         }
@@ -391,9 +395,13 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         foreach ($model->getRelations() as $name => $relation) {
             if ($model->{$name}() instanceof HasOneOrMany && ! is_null($relation)) {
                 if (is_array($relation) || $relation instanceof \Traversable) {
-                    $model->{$name}()->saveMany($relation);
+                    $childModels = $model->{$name}()->saveMany($relation);
+                    foreach ($childModels as $childModel) {
+                        $this->saveWithRelations($childModel);
+                    }
                 } else {
-                    $model->{$name}()->save($relation);
+                    $childModel = $model->{$name}()->save($relation);
+                    $this->saveWithRelations($childModel);
                 }
             }
         }
