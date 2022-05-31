@@ -1,1 +1,6 @@
 @import "~daterangepicker/daterangepicker.css";
+
+
+.bootstrap-datetimepicker-widget table td span.active {
+    color: $white;
+}
