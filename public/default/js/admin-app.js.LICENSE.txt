@@ -103,8 +103,8 @@
  * http://jquery.org/license
  */
 
-/*! DataTables 1.10.25
- * ©2008-2021 SpryMedia Ltd - datatables.net/license
+/*! DataTables 1.12.1
+ * ©2008-2022 SpryMedia Ltd - datatables.net/license
  */
 
 /*! For license information please see shifty.js.LICENSE.txt */
@@ -113,7 +113,7 @@
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2016 Dmitry Semenov; */
 
-/*! X-editable - v1.5.3 
+/*! X-editable - v1.5.3
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2018 Vitaliy Potapov; Licensed MIT */

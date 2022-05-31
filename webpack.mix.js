@@ -3,7 +3,11 @@ let mix = require('laravel-mix');
 mix.setPublicPath('./public/default/');
 
 
-mix.sass('resources/assets/scss/app.scss', 'css/admin-app.css')
+mix.sass('resources/assets/scss/app.scss', 'css/admin-app.css', {
+        sassOptions: {
+            quietDeps: true,
+        },
+    })
   .js('resources/assets/js_owl/vue_init.js', 'js/vue.js')
   .js('resources/assets/js_owl/app.js', 'js/admin-app.js')
   .js('resources/assets/js_owl/app-dev.js', 'js/admin-app-dev.js')

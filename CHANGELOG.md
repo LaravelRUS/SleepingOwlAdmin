@@ -5,6 +5,21 @@
     - fortawesome/fontawesome-free: 5.15.4 -> 6.1.1
     - axios: 0.21.1 -> 0.21.4
     - dropzone: 5.7.2 -> 5.9.3 (NOT UPDATED)
+    - node-sass: 6.0.0 -> 6.0.1
+    - datatables.net-bs4: 1.10.25 -> 1.12.1
+    - datatables.net: 1.10.25 -> 1.12.1
+    - datatables.net-responsive: 2.2.9 -> 2.3.0
+    - i18n: 0.13.3 -> 0.13.4
+    - i18next: 20.6.1 -> 20.4.1
+    - js-cookie: 3.0.0 -> 3.0.1
+    - laravel-mix: 6.0.19 -> 6.0.43
+    - moment: 2.29.1 -> 2.29.3
+    - postcss-loader: 6.1.1 -> 6.2.1
+    - sass: 1.38.0 -> 1.38.2
+    - sass-loader: 12.1.0 -> 12.6.0
+    - sweetalert2: 11.1.4 -> 11.4.17
+    - x-editable-bs4: 1.5.4 -> 1.5.5
+    - tempusdominus-core: 5.19.0 -> 5.19.3
 
 ## 2021-11-15
 * [Add] Add class for `icheck indeterminate`
