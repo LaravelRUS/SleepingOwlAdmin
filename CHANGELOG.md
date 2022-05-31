@@ -17,7 +17,7 @@
     - postcss-loader: 6.1.1 -> 7.0.0
     - sass: 1.38.0 -> 1.52.1
     - sass-loader: 12.1.0 -> 13.0.0
-    - sweetalert2: 11.1.4 -> 11.4.17
+    - sweetalert2: 11.1.4 -> 11.4.17 (revert to 11.4.9)
     - x-editable-bs4: 1.5.4 -> 1.5.5
     - tempusdominus-core: 5.19.0 -> 5.19.3
     - admin-lte: 3.1.0 -> 3.2.0
