@@ -11,6 +11,14 @@
                @if($readonly) readonly @endif
         >
 
+        @if(isset($datalistOptions) && $datalistOptions && is_array($datalistOptions))
+            <datalist id="{{ $id }}Datalist">
+                @foreach($datalistOptions as $item)
+                    <option value="{{ $item }}"></option>
+                @endforeach
+            </datalist>
+        @endif
+
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
         @include(AdminTemplate::getViewPath('form.element.partials.errors'))
     </div>

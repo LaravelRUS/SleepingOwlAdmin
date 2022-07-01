@@ -1,5 +1,8 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-07-01
+* Add `setOptions(['Foo', 'Bar', 'Baz', 'Foobar'])` in `AdminFormElement::text` for DataList text
+
 ## 2022-05-30(31)
 * [Update] NPM packages:
     - fortawesome/fontawesome-free: 5.15.4 -> 6.1.1
