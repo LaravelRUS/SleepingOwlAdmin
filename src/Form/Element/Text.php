@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form\Element;
 
 class Text extends NamedFormElement
 {
-
     /**
      * @var string
      */
@@ -30,7 +29,6 @@ class Text extends NamedFormElement
         ]);
     }
 
-
     /**
      * @param array
      * @return $this
@@ -42,7 +40,6 @@ class Text extends NamedFormElement
 
         return $this;
     }
-
 
     /**
      * @return array
@@ -56,14 +53,10 @@ class Text extends NamedFormElement
 
             return
                 parent::toArray() + [
-                    'datalistOptions' => $this->options
+                    'datalistOptions' => $this->options,
                 ];
         }
 
         return parent::toArray();
     }
-
-
-
-
 }
