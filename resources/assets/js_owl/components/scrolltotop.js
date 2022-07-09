@@ -1,3 +1,5 @@
+// For all template (and old 'default')
+
 module.exports = (function () {
 
   const scrollTop = document.getElementById('scrolltotop');

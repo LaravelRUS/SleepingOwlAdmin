@@ -1,5 +1,9 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-07-09
+- Переработан дизайн и подпилен для фреймворков Bootstrap5 и Tailwind
+- Новые дизайны можно стилизовать основными цветами не пересобирая ассеты (пункт в конфиге)
+
 ## 2022-07-01
 * Add `setOptions(['Foo', 'Bar', 'Baz', 'Foobar'])` in `AdminFormElement::text` for DataList text
 

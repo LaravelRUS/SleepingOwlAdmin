@@ -1,0 +1,69 @@
+// For all template (except for the old 'default')
+
+#adminSidebar .navbar-toggle,
+#adminNavbar .navbar-toggle {
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 0.06rem solid transparent;
+    border-radius: 0.5rem;
+    transition: .15s ease-in-out;
+    color: var(--adm-muted);
+    margin-right: 0.5rem;
+
+    &:hover,
+    &:focus {
+        border-color: var(--adm-muted);
+    }
+
+    @media (max-width: 576px) {
+        color: var(--adm-light);
+    }
+}
+
+#adminNavbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1.5rem;
+    min-height: 3rem;
+    align-items: center;
+    flex-direction: row;
+    border-bottom: 1px solid var(--adm-muted);
+    background-color: var(--adm-light);
+
+    .sidebar-control {
+        display: flex;
+
+        #navbar-toggle-mobile,
+        .main-logo {
+            display: none;
+            margin-right: 0.5rem;
+        }
+    }
+
+
+    //Media
+    @media (max-width: 576px) {
+        background-color: var(--adm-sidebar);
+        color: var(--adm-light);
+        padding: 0.5rem;
+
+        .sidebar-control {
+            align-items: center;
+
+            #navbar-toggle {
+                display: none;
+            }
+
+            #navbar-toggle-mobile,
+            .main-logo {
+                display: inherit;
+            }
+        }
+    }
+}
+
+
+
+

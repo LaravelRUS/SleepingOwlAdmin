@@ -1,0 +1,22 @@
+// For all template (except for the old 'default')
+
+body {
+    margin: 0;
+
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+        min-height: 100vh;
+
+        @media (max-width: 576px) {
+            flex-direction: column;
+        }
+    }
+
+    main {
+        background-color: var(--adm-bg-content);
+        flex-grow: 1;
+        width: 100%;
+        overflow: hidden;
+    }
+}

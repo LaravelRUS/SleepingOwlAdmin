@@ -220,6 +220,16 @@ abstract class Template implements TemplateInterface
     }
 
     /**
+     * Получение пути расположения asset файлов.
+     *
+     * @return string
+     */
+    public function mainAsset()
+    {
+        return 'packages/sleepingowl';
+    }
+
+    /**
      * Render func.
      *
      * @return array

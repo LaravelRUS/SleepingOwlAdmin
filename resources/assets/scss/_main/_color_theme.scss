@@ -1,0 +1,88 @@
+// For all template (except for the old 'default')
+
+/**
+  | В этом файле мы переназначаем стили для основных элементов на переменные.
+  |
+  | Сами меременные мы помещаем в шаблон из конфиг файла, для быстрой замены цвета.
+  | Так же это можно менять и скриптом уже на фронте
+ */
+
+
+:root {
+    //--adm-sidebar: red;
+    --adm-sidebar: #1f2937;
+    --adm-muted: #ccc;
+    --adm-bg-content: #f4f6f9;
+
+    //main colors
+    --adm-primary: #3c8dbc;
+    --adm-primary-darken: #2d6d92;
+    --adm-secondary: #6c757d;
+    --adm-secondary-darken: #4d545b;
+    --adm-success: #28a745;
+    --adm-success-darken: #1d8234;
+    --adm-info: #17a2b8;
+    --adm-info-darken: #107d8e;
+    --adm-warning: #ffc107;
+    --adm-warning-darken: #d6a206;
+    --adm-danger: #d73925;
+    --adm-danger-darken: #ad2d1c;
+    --adm-light: #f8f9fa;
+    --adm-light-darken: #dfe1e2;
+    --adm-dark: #343a40;
+    --adm-dark-darken: #131517;
+}
+
+/**
+  | Массив цветов для перебора
+ */
+$theme-admin-colors: (
+    "primary",
+    "secondary",
+    "success",
+    "info",
+    "warning",
+    "danger",
+    "light",
+    "dark"
+) !default;
+
+
+@each $color in $theme-admin-colors {
+
+    // BTN
+    .btn-#{$color} {
+        background-color: var(--adm-#{$color});
+        border-color: var(--adm-#{$color});
+
+        &:hover,
+        &:focus {
+            background-color: var(--adm-#{$color}-darken);
+            border-color: var(--adm-#{$color}-darken);
+        }
+    }
+
+    // Background
+    .bg-#{$color},
+    .badge-#{$color} {
+        background-color: var(--adm-#{$color}) !important;
+    }
+
+    // Text
+    .text-#{$color} {
+        color: var(--adm-#{$color}) !important;
+    }
+}
+
+.text-white {
+    color: var(--adm-light) !important;
+}
+
+a {
+    color: var(--adm-primary);
+
+    &:hover,
+    &:focus {
+        color: var(--adm-primary-darken);
+    }
+}

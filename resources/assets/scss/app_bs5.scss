@@ -1,0 +1,28 @@
+// main
+@import "variables";
+
+@import "font";
+
+@import '_main/color_theme';
+
+// Main
+@import "addition/scrolltop";
+@import '_main/body';
+@import '_main/navbar';
+@import '_main/sidebar';
+@import '_main/logo';
+//@import 'components/scrollbar'; // упраздняем
+@import '_main/badges';
+
+
+// For All templates
+@import '_main/sweetalert2';
+@import '_main/datatables';
+
+
+
+// Template
+@import 'bs5/_fix';
+
+//fontawesome 6
+@import "~@fortawesome/fontawesome-free/css/all.min.css";

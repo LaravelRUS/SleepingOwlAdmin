@@ -1,3 +1,5 @@
+// For all template (and old 'default')
+
 module.exports = (function () {
 
     return {
@@ -57,10 +59,40 @@ module.exports = (function () {
             };
 
 
-
             Admin.Events.fire("datatables::confirm::init", settings, id);
 
             return Swal.fire(settings)
+        },
+
+        /**
+         * Confirmation message
+         *
+         * @param {String} title
+         * @param {String} message
+         * @param {String} icon
+         * @param {String} position
+         * @param {String} customClass
+         * @param {Boolean} timerEnable
+         * @param {Int} timerDelay
+         */
+        toast(title, message, icon, position, customClass, timerEnable, timerDelay) {
+            return Swal.fire({
+                icon: icon || '',
+                toast: true,
+                title: title,
+                text: message || '',
+                position: position || 'top-end',
+                showConfirmButton: false,
+                timerProgressBar: timerEnable || false,
+                timer: timerDelay || 3000,
+                customClass: {
+                    popup: customClass || ''
+                },
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
         },
 
         /**

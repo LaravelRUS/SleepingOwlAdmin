@@ -1,0 +1,11 @@
+// For all template (except for the old 'default')
+
+.datatables {
+
+    .row-link {
+        .clearfix {
+            display: block;
+            color: var(--adm-muted);
+        }
+    }
+}

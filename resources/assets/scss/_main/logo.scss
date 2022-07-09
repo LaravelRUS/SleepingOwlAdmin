@@ -1,0 +1,29 @@
+// For all template (except for the old 'default')
+
+.admin-sidebar {
+    .nav_logo {
+        text-decoration: none;
+    }
+
+    .logo-mini {
+        display: none;
+    }
+
+    &.collapsed {
+        .logo-full {
+            display: none;
+        }
+        .logo-mini {
+            display: inherit;
+        }
+
+        &:hover {
+            .logo-full {
+                display: inherit;
+            }
+            .logo-mini {
+                display: none;
+            }
+        }
+    }
+}
