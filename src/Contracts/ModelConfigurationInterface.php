@@ -253,4 +253,25 @@ interface ModelConfigurationInterface
      * @return \SleepingOwl\Admin\Navigation\Page
      */
     public function addToNavigation();
+
+    /**
+     * @return string
+     */
+    public function getViewPath();
+
+    /**
+     * @param string
+     * @return string
+     */
+    public function setViewPath($path);
+
+    /**
+     * @return bool
+     */
+    public function isViewable();
+
+    /**
+     * @return string
+     */
+    public function getViewTitle();
 }
