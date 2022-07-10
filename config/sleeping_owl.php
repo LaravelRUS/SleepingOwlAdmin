@@ -258,28 +258,21 @@ return [
         'jquery' => false,
         'jqueryPath' => '//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js',
 
+        // Add your colours in HEX format
         'colors' => [
             'sidebar' => '#1f2937',
             'muted' => '#ccc',
-            'bg-content' => '',
+            'bg-content' => '#f4f6f9',
 
             // Replace main colors for class '.text-primary', '.bg-primary' and etc.
             'primary' => '#3c8dbc',
-            'primary-darken' => '#2d6d92',
             'secondary' => '#6c757d',
-            'secondary-darken' => '#4d545b',
             'success' => '#28a745',
-            'success-darken' => '#1d8234',
             'info' => '#17a2b8',
-            'info-darken' => '#107d8e',
             'warning' => '#ffc107',
-            'warning-darken' => '#d6a206',
             'danger' => '#d73925',
-            'danger-darken' => '#ad2d1c',
             'light' => 'white',
-            'light-darken' => '#dfe1e2',
             'dark' => '#343a40',
-            'dark-darken' => '#131517',
         ],
     ],
 

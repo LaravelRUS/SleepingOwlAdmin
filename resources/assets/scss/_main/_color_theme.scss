@@ -3,34 +3,65 @@
 /**
   | В этом файле мы переназначаем стили для основных элементов на переменные.
   |
-  | Сами меременные мы помещаем в шаблон из конфиг файла, для быстрой замены цвета.
+  | Сами переменные мы помещаем в шаблон из конфиг файла, для быстрой замены цвета.
   | Так же это можно менять и скриптом уже на фронте
  */
 
+$primary: #3c8dbc;
+$secondary: #6c757d;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #d73925;
+$light: #f8f9fa;
+$dark: #343a40;
 
 :root {
-    //--adm-sidebar: red;
     --adm-sidebar: #1f2937;
     --adm-muted: #ccc;
     --adm-bg-content: #f4f6f9;
 
     //main colors
-    --adm-primary: #3c8dbc;
-    --adm-primary-darken: #2d6d92;
-    --adm-secondary: #6c757d;
-    --adm-secondary-darken: #4d545b;
-    --adm-success: #28a745;
-    --adm-success-darken: #1d8234;
-    --adm-info: #17a2b8;
-    --adm-info-darken: #107d8e;
-    --adm-warning: #ffc107;
-    --adm-warning-darken: #d6a206;
-    --adm-danger: #d73925;
-    --adm-danger-darken: #ad2d1c;
-    --adm-light: #f8f9fa;
-    --adm-light-darken: #dfe1e2;
-    --adm-dark: #343a40;
-    --adm-dark-darken: #131517;
+    --adm-primary: #{$primary};
+    --adm-primary-darken: #{darken($primary, 10%)};
+    --adm-primary-lighten: #{lighten($primary, 10%)};
+
+    --adm-secondary: #{$secondary};
+    --adm-secondary-darken: #{darken($secondary, 10%)};
+    --adm-secondary-lighten: #{lighten($secondary, 10%)};
+
+    --adm-success: #{$success};
+    --adm-success-darken: #{darken($success, 10%)};
+    --adm-success-lighten: #{lighten($success, 10%)};
+
+    --adm-info: #{$info};
+    --adm-info-darken: #{darken($info, 10%)};
+    --adm-info-lighten: #{lighten($info, 10%)};
+
+    --adm-warning: #{$warning};
+    --adm-warning-darken: #{darken($warning, 10%)};
+    --adm-warning-lighten: #{lighten($warning, 10%)};
+
+    --adm-danger: #{$danger};
+    --adm-danger-darken: #{darken($danger, 10%)};
+    --adm-danger-lighten: #{lighten($danger, 10%)};
+
+    --adm-light: #{$light};
+    --adm-light-darken: #{darken($light, 10%)};
+    --adm-light-lighten: #{lighten($light, 10%)};
+
+    --adm-dark: #{$dark};
+    --adm-dark-darken: #{darken($dark, 10%)};
+    --adm-dark-lighten: #{lighten($dark, 10%)};
+}
+
+a {
+    color: var(--adm-primary);
+
+    &:hover,
+    &:focus {
+        color: var(--adm-primary-darken);
+    }
 }
 
 /**
@@ -52,7 +83,7 @@ $theme-admin-colors: (
 
     // BTN
     .btn-#{$color} {
-        background-color: var(--adm-#{$color});
+        background-color:var(--adm-#{$color});
         border-color: var(--adm-#{$color});
 
         &:hover,
@@ -74,15 +105,8 @@ $theme-admin-colors: (
     }
 }
 
+
+// Other
 .text-white {
     color: var(--adm-light) !important;
-}
-
-a {
-    color: var(--adm-primary);
-
-    &:hover,
-    &:focus {
-        color: var(--adm-primary-darken);
-    }
 }

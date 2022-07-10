@@ -1,8 +1,9 @@
 // For all template (except for the old 'default')
 
+table.table,
 .datatables {
 
-    .row-link {
+    td > div {
         .clearfix {
             display: block;
             color: var(--adm-muted);
