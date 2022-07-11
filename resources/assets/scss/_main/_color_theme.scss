@@ -15,16 +15,17 @@ $warning: #ffc107;
 $danger: #d73925;
 $light: #f8f9fa;
 $dark: #343a40;
+$colorTransition: 0.5s;
 
 :root {
     --adm-sidebar: #1f2937;
-    --adm-muted: #ccc;
+    --adm-muted: #888;
     --adm-bg-content: #f4f6f9;
 
     //main colors
     --adm-primary: #{$primary};
     --adm-primary-darken: #{darken($primary, 10%)};
-    --adm-primary-lighten: #{lighten($primary, 10%)};
+    --adm-primary-lighten: #{lighten($primary, 20%)};
 
     --adm-secondary: #{$secondary};
     --adm-secondary-darken: #{darken($secondary, 10%)};
@@ -85,9 +86,13 @@ $theme-admin-colors: (
     .btn-#{$color} {
         background-color:var(--adm-#{$color});
         border-color: var(--adm-#{$color});
+        color: var(--adm-light);
+        transition-duration: $colorTransition;
+        transition-property: background-color, color, border-color;
 
         &:hover,
         &:focus {
+            color: var(--adm-light);
             background-color: var(--adm-#{$color}-darken);
             border-color: var(--adm-#{$color}-darken);
         }

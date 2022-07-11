@@ -8,11 +8,15 @@
 // Main
 @import "addition/scrolltop";
 @import '_main/body';
+@import '_main/selection';
 @import '_main/navbar';
 @import '_main/sidebar';
 @import '_main/logo';
-//@import 'components/scrollbar'; // упраздняем
+
+
 @import '_main/badges';
+@import '_main/button';
+@import '_main/tables';
 
 
 // For All templates
@@ -26,3 +30,7 @@
 
 //fontawesome 6
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+
+// DELETED
+//@import 'components/scrollbar'; // лишний уже

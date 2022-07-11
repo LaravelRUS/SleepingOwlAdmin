@@ -1,0 +1,17 @@
+$selection-color: var(--adm-light);
+$selection-bg: var(--adm-primary);
+
+::selection {
+    color: $selection-color;
+    background-color: $selection-bg;
+}
+
+::-moz-selection {
+    color: $selection-color;
+    background-color: $selection-bg;
+}
+
+::-webkit-selection {
+    color: $selection-color;
+    background-color: $selection-bg;
+}

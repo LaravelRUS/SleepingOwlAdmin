@@ -4,3 +4,15 @@
 //.tab-pane {
 //    width: 100%;
 //}
+
+
+// Table background-color
+.table>:not(caption)>*>* {
+    background-color: transparent;
+}
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: transparent;
+}
+.table-hover > tbody > tr:hover > * {
+    --bs-table-accent-bg: transparent;
+}

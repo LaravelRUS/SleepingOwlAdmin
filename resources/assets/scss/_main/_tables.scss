@@ -1,0 +1,63 @@
+:root {
+    --admin-table-bg: var(--adm-light);
+    --admin-table-head-bg: var(--adm-light);
+    --admin-table-hover: var(--adm-light-darken);
+}
+
+@each $color in $theme-admin-colors {
+    .table {
+        &.table-#{$color} {
+            --admin-table-head-bg: var(--adm-#{$color}-lighten);
+
+            &>:not(:first-child) {
+                border-color: var(--adm-#{$color});
+            }
+
+            &.table-hover > tbody > tr:hover {
+                background-color: var(--adm-#{$color}-lighten);
+            }
+        }
+
+        &.table-striped > tbody > tr:nth-of-type(odd) {
+            background-color: rgba(0,0,0,.05);
+        }
+
+        //colored cells
+        .table-#{$color} {
+            background-color: var(--adm-#{$color}-lighten) !important;
+            border-color: inherit !important;
+        }
+
+    }
+}
+
+.table {
+    width: 100%;
+    border-spacing: 0;
+
+    a {
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &.th-center {
+        thead th {
+            text-align: center;
+        }
+    }
+
+    thead {
+        border-top-width: 1px !important;
+        background-color: var(--admin-table-head-bg) !important;
+        text-align: left;
+
+        th {
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+    }
+}
+

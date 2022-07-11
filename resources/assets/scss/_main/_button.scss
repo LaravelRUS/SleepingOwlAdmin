@@ -1,0 +1,18 @@
+
+
+// Reset
+button,
+.btn {
+    border: 0;
+    cursor: pointer;
+    padding: 0.5em;
+    text-decoration: none;
+    display: inline-block;
+
+    &[disabled=disabled],
+    &:disabled,
+    &.disabled {
+        pointer-events: none;
+        opacity: .65;
+    }
+}

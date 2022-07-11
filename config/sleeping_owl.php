@@ -258,10 +258,10 @@ return [
         'jquery' => false,
         'jqueryPath' => '//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js',
 
-        // Add your colours in HEX format
+        // Add your colours ONLY in HEX format
         'colors' => [
             'sidebar' => '#1f2937',
-            'muted' => '#ccc',
+            'muted' => '#888',
             'bg-content' => '#f4f6f9',
 
             // Replace main colors for class '.text-primary', '.bg-primary' and etc.
@@ -271,7 +271,7 @@ return [
             'info' => '#17a2b8',
             'warning' => '#ffc107',
             'danger' => '#d73925',
-            'light' => 'white',
+            'light' => '#f8f9fa',
             'dark' => '#343a40',
         ],
     ],
