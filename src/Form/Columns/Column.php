@@ -41,7 +41,7 @@ class Column extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param string $size
+     * @param  string  $size
      * @return ColumnInterface
      */
     public function setSize(string $size): ColumnInterface

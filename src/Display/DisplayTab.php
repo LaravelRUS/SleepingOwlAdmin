@@ -75,9 +75,9 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
 
     /**
      * @param  Renderable  $content
-     * @param string|null $label
-     * @param string|null $icon
-     * @param Closure|string|Badge|null $badge
+     * @param  string|null  $label
+     * @param  string|null  $icon
+     * @param  Closure|string|Badge|null  $badge
      */
     public function __construct(Renderable $content, string $label = null, string $icon = null, Closure|Badge|string $badge = null)
     {
@@ -100,7 +100,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param Closure|string|Badge|null $badge
+     * @param  Closure|string|Badge|null  $badge
      * @return $this
      */
     public function setBadge(Closure|Badge|string|null $badge): DisplayTab
@@ -135,7 +135,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $label
+     * @param  string  $label
      * @return $this
      */
     public function setLabel(string $label): DisplayTab
@@ -154,7 +154,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param bool $active
+     * @param  bool  $active
      * @return $this
      */
     public function setActive(bool $active = true)
@@ -263,7 +263,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $icon
+     * @param  string  $icon
      * @return $this
      */
     public function setIcon(string $icon)
@@ -282,7 +282,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $class
+     * @param  string  $class
      * @return $this
      */
     public function setModelClass(string $class): DisplayTab
@@ -309,7 +309,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $action
+     * @param  string  $action
      * @return $this
      */
     public function setAction(string $action)
@@ -341,7 +341,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return $this
      */
     public function setId(int $id)
@@ -512,7 +512,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $path
+     * @param  string  $path
      * @return FormElementInterface|null
      */
     public function getElement(string $path): FormElementInterface|null

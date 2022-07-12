@@ -16,7 +16,7 @@ interface RepositoryInterface extends WithModelInterface
     public function getClass(): string;
 
     /**
-     * @param string $class
+     * @param  string  $class
      * @return $this
      *
      * @throws RepositoryException
@@ -29,7 +29,7 @@ interface RepositoryInterface extends WithModelInterface
     public function getWith(): array;
 
     /**
-     * @param string[] $with
+     * @param  string[]  $with
      * @return $this
      */
     public function with(array $with): RepositoryInterface;
@@ -44,7 +44,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Find model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      * @return Model|null
      */
     public function find(int $id): ?Model;
@@ -52,7 +52,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Find model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      * @return Model|null
      */
     public function findOnlyTrashed(int $id): ?Model;
@@ -68,7 +68,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Delete model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function delete(int $id);
@@ -76,7 +76,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Permanently delete model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function forceDelete(int $id);
@@ -84,7 +84,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Restore model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function restore(int $id);

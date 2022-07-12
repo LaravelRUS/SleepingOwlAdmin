@@ -53,9 +53,9 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
+     * @param  string  $editorId
      * @param  WysiwygFilterInterface|null  $filter
-     * @param string|null $name
+     * @param  string|null  $name
      * @return WysiwygEditorInterface
      */
     public function register(string $editorId, WysiwygFilterInterface $filter = null, string $name = null): WysiwygEditorInterface
@@ -76,7 +76,7 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
+     * @param  string  $editorId
      * @return WysiwygEditorInterface|null
      */
     public function getEditor(string $editorId): WysiwygEditorInterface
@@ -92,13 +92,12 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
+     * @param  string  $editorId
      * @return false
      */
     public function loadEditor(string $editorId): bool
     {
         if (! is_null($editor = $this->getEditor($editorId))) {
-
             if ($editor->isUsed()) {
                 return true;
             }
@@ -110,8 +109,8 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
-     * @param string $text
+     * @param  string  $editorId
+     * @param  string  $text
      * @return string string
      *
      * @throws WysiwygException

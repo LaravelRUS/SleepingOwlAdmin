@@ -14,9 +14,9 @@ trait Assets
     protected $package;
 
     /**
-     * @param string|null $handle
-     * @param string $script
-     * @param array $dependency
+     * @param  string|null  $handle
+     * @param  string  $script
+     * @param  array  $dependency
      * @return $this
      */
     public function addScript(?string $handle, string $script, array $dependency = []): Assets
@@ -31,9 +31,9 @@ trait Assets
     }
 
     /**
-     * @param string|null $handle
-     * @param string $style
-     * @param array $attributes
+     * @param  string|null  $handle
+     * @param  string  $style
+     * @param  array  $attributes
      * @return $this
      */
     public function addStyle(?string $handle, string $style, array $attributes = []): Assets

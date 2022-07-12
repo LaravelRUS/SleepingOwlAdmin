@@ -17,7 +17,7 @@ interface TreeTypeInterface
     /**
      * Reorder tree by $data value.
      *
-     * @param array $data
+     * @param  array  $data
      */
     public function reorder(array $data);
 

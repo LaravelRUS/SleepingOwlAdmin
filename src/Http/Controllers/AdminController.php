@@ -2,9 +2,7 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
-
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
@@ -59,10 +57,9 @@ class AdminController extends Controller
     /**
      * AdminController constructor.
      *
-     * @param Request $request
-     * @param AdminInterface $admin
-     * @param Application $application
-     *
+     * @param  Request  $request
+     * @param  AdminInterface  $admin
+     * @param  Application  $application
      */
     public function __construct(Request $request, AdminInterface $admin, Application $application)
     {
@@ -281,9 +278,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
+     * @param  ModelConfigurationInterface  $model
      * @return Factory|View
-     *
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
@@ -753,7 +749,7 @@ class AdminController extends Controller
     /**
      * @param $title
      * @param $parent
-     * @param string $name
+     * @param  string  $name
      * @param $url
      */
     protected function registerBreadcrumb($title, $parent, string $name = 'render', $url = null)
@@ -768,7 +764,6 @@ class AdminController extends Controller
 
     /**
      * @param  ModelConfigurationInterface  $model
-     *
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {

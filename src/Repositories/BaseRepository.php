@@ -41,7 +41,7 @@ class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * @param string $class
+     * @param  string  $class
      * @return self
      *
      * @throws RepositoryException
@@ -63,7 +63,6 @@ class BaseRepository implements RepositoryInterface
      * @return Model
      */
     public function getModel(): Model
-
     {
         return $this->model;
     }
@@ -89,7 +88,7 @@ class BaseRepository implements RepositoryInterface
     }
 
     /**
-     * @param string[] $with
+     * @param  string[]  $with
      * @return $this
      */
     public function with(array $with): self
@@ -120,7 +119,7 @@ class BaseRepository implements RepositoryInterface
     /**
      * Find model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      * @return Model
      * @TODO $id не всегда только инт
      */
@@ -137,7 +136,7 @@ class BaseRepository implements RepositoryInterface
     /**
      * Find model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      * @return Model
      */
     public function findOnlyTrashed(int $id): Model
@@ -164,7 +163,7 @@ class BaseRepository implements RepositoryInterface
     /**
      * Delete model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      */
     public function delete(int $id)
     {
@@ -174,7 +173,7 @@ class BaseRepository implements RepositoryInterface
     /**
      * Permanently delete model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      */
     public function forceDelete(int $id)
     {
@@ -184,7 +183,7 @@ class BaseRepository implements RepositoryInterface
     /**
      * Restore model instance by id.
      *
-     * @param int $id
+     * @param  int  $id
      */
     public function restore(int $id)
     {

@@ -17,7 +17,7 @@ trait Collapsed
     }
 
     /**
-     * @param bool|null $collapsed
+     * @param  bool|null  $collapsed
      * @return $this
      */
     public function setCollapsed(?bool $collapsed): self

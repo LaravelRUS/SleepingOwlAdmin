@@ -24,7 +24,7 @@ trait VisibleCondition
     }
 
     /**
-     * @param bool|Closure $visibleCondition
+     * @param  bool|Closure  $visibleCondition
      * @return $this
      */
     public function setVisible(bool|Closure $visibleCondition): VisibleCondition

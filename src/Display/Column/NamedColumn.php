@@ -62,7 +62,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param string|null $name
+     * @param  string|null  $name
      * @return $this
      */
     public function setName(?string $name): NamedColumn
@@ -138,8 +138,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * Get column value from instance.
      *
-     * @param Collection|Model|Closure $instance
-     * @param string|null|Closure $name
+     * @param  Collection|Model|Closure  $instance
+     * @param  string|null|Closure  $name
      * @return mixed
      */
     protected function getValueFromObject($instance, null|string|Closure $name): mixed

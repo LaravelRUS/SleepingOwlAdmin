@@ -132,7 +132,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param ColumnInterface|null $column
+     * @param  ColumnInterface|null  $column
      * @return $this
      */
     public function push(?ColumnInterface $column): self
@@ -199,7 +199,8 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

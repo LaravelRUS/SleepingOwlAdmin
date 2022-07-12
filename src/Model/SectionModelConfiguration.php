@@ -51,7 +51,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isEditable(Model $model): bool
@@ -60,7 +60,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isDeletable(Model $model): bool
@@ -168,7 +168,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return SectionModelConfiguration
      */
     public function fireFullEdit(int $id): self

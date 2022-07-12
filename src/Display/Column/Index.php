@@ -29,7 +29,7 @@ class Index extends NamedColumn
     /**
      * Custom constructor.
      *
-     * @param null|string $label
+     * @param  null|string  $label
      */
     public function __construct($label = null)
     {

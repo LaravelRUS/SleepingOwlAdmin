@@ -18,5 +18,4 @@ class TreeControl extends Control
      * @var bool
      */
     protected bool $isSearchable = false;
-
 }

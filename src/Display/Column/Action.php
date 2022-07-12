@@ -87,7 +87,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return $this
      */
     public function setTitle(string $title): Action
@@ -106,7 +106,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param bool $selected
+     * @param  bool  $selected
      * @return $this
      */
     public function setSelected(bool $selected): Action
@@ -125,7 +125,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string $action
+     * @param  string  $action
      * @return $this
      */
     public function setAction(string $action): Action
@@ -144,7 +144,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string $method
+     * @param  string  $method
      * @return $this
      */
     public function setMethod(string $method): Action
@@ -203,7 +203,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string|null $icon
+     * @param  string|null  $icon
      * @return $this
      */
     public function setIcon(?string $icon): self

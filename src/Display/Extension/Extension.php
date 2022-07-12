@@ -38,7 +38,7 @@ abstract class Extension implements DisplayExtensionInterface
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     public function modifyQuery(Builder $query)
     {
@@ -54,7 +54,7 @@ abstract class Extension implements DisplayExtensionInterface
     }
 
     /**
-     * @param int $order
+     * @param  int  $order
      * @return $this
      */
     public function setOrder(int $order): self

@@ -123,7 +123,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param array $parameters
+     * @param  array  $parameters
      * @return $this
      */
     public function setParameters(array $parameters): self
@@ -134,11 +134,11 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param string $key
+     * @param  string  $key
      * @param  mixed  $value
      * @return $this
      */
-    public function setParameter(string $key, mixed $value):self
+    public function setParameter(string $key, mixed $value): self
     {
         $this->parameters[$key] = $value;
 
@@ -146,8 +146,8 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param int $perPage
-     * @param string $pageName
+     * @param  int  $perPage
+     * @param  string  $pageName
      * @return $this
      */
     public function paginate(int $perPage = 25, string $pageName = 'page'): self
@@ -250,7 +250,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     protected function modifyQuery(Builder $query)
     {

@@ -13,7 +13,7 @@ interface WidgetsRegistryInterface
     public function registerWidget($widget): WidgetsRegistryInterface;
 
     /**
-     * @param Factory $factory
+     * @param  Factory  $factory
      * @return void
      */
     public function placeWidgets(Factory $factory);

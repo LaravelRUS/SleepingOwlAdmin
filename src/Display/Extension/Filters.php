@@ -84,7 +84,7 @@ class Filters extends Extension implements Initializable
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return $this
      */
     public function setTitle(string $title): Filters

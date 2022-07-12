@@ -86,7 +86,7 @@ abstract class TableColumn implements ColumnInterface
     /**
      * TableColumn constructor.
      *
-     * @param string|null $label
+     * @param  string|null  $label
      */
     public function __construct(string $label = null)
     {
@@ -101,6 +101,7 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * Initialize column.
+     *
      * @throws PackageException
      */
     public function initialize()
@@ -121,6 +122,7 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * @return mixed
+     *
      * @throws BindingResolutionException
      */
     public function getMetaData(): mixed
@@ -204,7 +206,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param int|string $width
+     * @param  int|string  $width
      * @return $this
      */
     public function setWidth(int|string $width): TableColumn
@@ -257,7 +259,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param Model|null $model
+     * @param  Model|null  $model
      * @return $this
      */
     public function setModel(?Model $model): self
@@ -275,7 +277,7 @@ abstract class TableColumn implements ColumnInterface
     /**
      * Set column header label.
      *
-     * @param string $title
+     * @param  string  $title
      * @return $this
      */
     public function setLabel(string $title): self
@@ -286,7 +288,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param  OrderByClauseInterface|bool|string|Closure $clause
+     * @param  OrderByClauseInterface|bool|string|Closure  $clause
      * @return $this
      */
     public function setOrderable($orderable): self
@@ -335,10 +337,11 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * @param  Builder  $query
-     * @param string $direction
+     * @param  string  $direction
      * @return $this
      *
      * @TODO Почему депрекейтед?
+     *
      * @deprecated
      */
     public function orderBy(Builder $query, $direction)

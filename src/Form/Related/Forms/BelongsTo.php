@@ -16,7 +16,7 @@ class BelongsTo extends Elements
     protected ?int $limit = 1;
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return mixed|void
      */
     protected function proceedSave(Request $request)

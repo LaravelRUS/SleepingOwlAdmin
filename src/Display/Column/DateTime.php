@@ -31,7 +31,7 @@ class DateTime extends NamedColumn
     protected string $view = 'column.datetime';
 
     /**
-     * @param Model|null $model
+     * @param  Model|null  $model
      * @return $this
      */
     public function setModel(?Model $model): DateTime
@@ -56,7 +56,7 @@ class DateTime extends NamedColumn
     }
 
     /**
-     * @param string $date
+     * @param  string  $date
      * @return null|string|void
      */
     protected function getFormatedDate(string $date)

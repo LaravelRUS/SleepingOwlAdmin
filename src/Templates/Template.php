@@ -100,7 +100,7 @@ abstract class Template implements TemplateInterface
     /**
      * Генерация относительно пути до asset файлов для текущей темы.
      *
-     * @param string|null $path  относительный путь до файла, например `js/app.js`
+     * @param  string|null  $path  относительный путь до файла, например `js/app.js`
      * @return string
      */
     public function assetPath(string $path = null): string
@@ -117,8 +117,8 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $title
-     * @param string $separator
+     * @param  string  $title
+     * @param  string  $separator
      * @return string
      */
     public function makeTitle(string $title, string $separator = ' | ')
@@ -131,7 +131,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $view
+     * @param  string  $view
      * @return string
      */
     public function getViewPath(string $view): string
@@ -150,7 +150,7 @@ abstract class Template implements TemplateInterface
     /**
      * @param  string|View  $view
      * @param  array  $data
-     * @param array $mergeData
+     * @param  array  $mergeData
      * @return Factory|View
      */
     public function view($view, array $data = [], array $mergeData = [])
@@ -165,7 +165,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $key
+     * @param  string  $key
      * @return string
      *
      * @throws InvalidBreadcrumbException
@@ -207,7 +207,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return string
      */
     public function renderMeta(string $title): string

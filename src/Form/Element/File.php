@@ -257,7 +257,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param Closure $callable
+     * @param  Closure  $callable
      * @return $this
      */
     public function setSaveCallback(Closure $callable)

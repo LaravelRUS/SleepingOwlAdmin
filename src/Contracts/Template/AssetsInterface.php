@@ -9,7 +9,7 @@ interface AssetsInterface extends KodiAssetsInterface
     /**
      * Добавление глобальной переменной.
      *
-     * @param string $key
+     * @param  string  $key
      * @param  mixed  $value
      * @return self
      */
