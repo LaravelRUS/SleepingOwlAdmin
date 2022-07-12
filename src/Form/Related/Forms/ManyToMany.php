@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Form\Columns\Columns;
 use SleepingOwl\Admin\Form\Related\Elements;
@@ -28,10 +29,8 @@ class ManyToMany extends Elements
      * ManyToMany constructor.
      *
      * @param $relationName
-     * @param  array  $elements
+     * @param array $elements
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function __construct($relationName, array $elements = [])
     {

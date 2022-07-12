@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\Form\Related\Forms;
 
-use Admin\Contracts\HasFakeModel;
 use Exception;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -33,7 +33,7 @@ class HasManyLocal extends FormElements
     use HtmlAttributes, HasUniqueValidation, ManipulatesRequestRelations;
     use Collapsed;
 
-    protected $view = 'form.element.related.elements_without_card';
+    protected string $view = 'form.element.related.elements_without_card';
 
     const NEW_ITEM = 'new';
 
@@ -123,12 +123,12 @@ class HasManyLocal extends FormElements
     /**
      * Loaded related values.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $fieldValues;
 
     /**
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     protected $instance;
 
@@ -137,7 +137,7 @@ class HasManyLocal extends FormElements
     /**
      * Elements that are about to be removed.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $toRemove;
 
@@ -371,9 +371,9 @@ class HasManyLocal extends FormElements
      * @param  Model  $model
      * @return FormElements|void
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws ModelNotFoundException|Exception
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): FormElements
     {
         parent::setModel($model);
 
@@ -553,7 +553,7 @@ class HasManyLocal extends FormElements
     /**
      * Returns value from model for given element.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @param  NamedFormElement  $el
      * @return mixed|null
      */
@@ -594,7 +594,7 @@ class HasManyLocal extends FormElements
     /**
      * Applies given callback to every element of form.
      *
-     * @param  \Illuminate\Support\Collection  $elements
+     * @param Collection $elements
      * @param $callback
      */
     protected function forEachElement(Collection $elements, $callback)
@@ -607,7 +607,7 @@ class HasManyLocal extends FormElements
     /**
      * Returns flat collection of elements in form ignoring everything but NamedFormElement. Works recursive.
      *
-     * @param  \Illuminate\Support\Collection  $elements
+     * @param Collection $elements
      * @return mixed
      */
     protected function flatNamedElements(Collection $elements)
@@ -636,9 +636,9 @@ class HasManyLocal extends FormElements
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @param  array  $attributes
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     protected function safeFillModel(Model $model, array $attributes = []): Model
     {
@@ -813,7 +813,7 @@ class HasManyLocal extends FormElements
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     protected function getModelForElements(): Model
     {
@@ -839,7 +839,7 @@ class HasManyLocal extends FormElements
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->buildGroupsCollection();
 

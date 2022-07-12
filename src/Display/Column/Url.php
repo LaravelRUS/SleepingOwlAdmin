@@ -91,7 +91,7 @@ class Url extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $model_value = $this->getModelValue();
         if ($this->isolated) {

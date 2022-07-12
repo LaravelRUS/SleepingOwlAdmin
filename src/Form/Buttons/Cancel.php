@@ -7,9 +7,15 @@ namespace SleepingOwl\Admin\Form\Buttons;
  */
 class Cancel extends FormButton
 {
+
     protected $show = true;
+
     protected $name = 'cancel';
-    protected $iconClass = 'fas fa-ban';
+
+    /**
+     * @var string|null
+     */
+    protected ?string $iconClass = 'fas fa-ban';
 
     public function __construct()
     {

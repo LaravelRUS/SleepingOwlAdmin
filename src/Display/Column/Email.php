@@ -12,7 +12,7 @@ class Email extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'value' => $this->getModelValue(),

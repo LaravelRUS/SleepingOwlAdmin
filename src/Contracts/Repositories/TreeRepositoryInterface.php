@@ -9,7 +9,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
     /**
      * Get tree structure.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection  $collection
+     * @param Collection $collection
      * @return mixed
      */
     public function getTree(Collection $collection);
@@ -19,39 +19,39 @@ interface TreeRepositoryInterface extends RepositoryInterface
      *
      * @return string
      */
-    public function getParentField();
+    public function getParentField(): string;
 
     /**
-     * @param  string  $parentField
+     * @param string $parentField
      * @return $this
      */
-    public function setParentField($parentField);
+    public function setParentField(string $parentField): TreeRepositoryInterface;
 
     /**
      * Get order field name.
      *
      * @return string
      */
-    public function getOrderField();
+    public function getOrderField(): string;
 
     /**
-     * @param  string  $orderField
+     * @param string $orderField
      * @return $this
      */
-    public function setOrderField($orderField);
+    public function setOrderField(string $orderField): TreeRepositoryInterface;
 
     /**
      * Get or set parent field name.
      *
      * @return string
      */
-    public function getRootParentId();
+    public function getRootParentId(): string;
 
     /**
-     * @param  string  $rootParentId
+     * @param string $rootParentId
      * @return $this
      */
-    public function setRootParentId($rootParentId);
+    public function setRootParentId(string $rootParentId): TreeRepositoryInterface;
 
     /**
      * Reorder tree by $data value.

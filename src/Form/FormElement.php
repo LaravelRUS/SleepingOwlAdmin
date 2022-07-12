@@ -23,17 +23,17 @@ abstract class FormElement implements FormElementInterface
     /**
      * @var TemplateInterface
      */
-    protected $template;
+    protected TemplateInterface $template;
 
     /**
      * @var Renderable
      */
-    protected $view;
+    protected string $view;
 
     /**
      * @var Model
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * @var array
@@ -73,7 +73,7 @@ abstract class FormElement implements FormElementInterface
     /**
      * @return array
      */
-    public function getValidationMessages()
+    public function getValidationMessages(): array
     {
         return $this->validationMessages;
     }
@@ -108,7 +108,7 @@ abstract class FormElement implements FormElementInterface
     /**
      * @return array
      */
-    public function getValidationLabels()
+    public function getValidationLabels(): array
     {
         return [];
     }
@@ -116,7 +116,7 @@ abstract class FormElement implements FormElementInterface
     /**
      * @return array
      */
-    public function getValidationRules()
+    public function getValidationRules(): array
     {
         return $this->validationRules;
     }
@@ -166,7 +166,7 @@ abstract class FormElement implements FormElementInterface
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -175,7 +175,7 @@ abstract class FormElement implements FormElementInterface
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): FormElement
     {
         $this->model = $model;
 
@@ -183,21 +183,21 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return bool|callable
+     * @return bool
      */
-    public function isReadonly()
+    public function isReadonly(): bool
     {
         if (is_callable($this->readonly)) {
             return (bool) call_user_func($this->readonly, $this->getModel());
         }
 
-        return (bool) $this->readonly;
+        return $this->readonly;
     }
 
     /**
      * @return bool
      */
-    public function isValueSkipped()
+    public function isValueSkipped(): bool
     {
         if (is_callable($this->valueSkipped)) {
             return (bool) call_user_func($this->valueSkipped, $this->getModel());

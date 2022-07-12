@@ -5,15 +5,15 @@ namespace SleepingOwl\Admin\Traits;
 trait Width
 {
     /**
-     * @var int|array|string
+     * @var null|string
      */
-    protected $width;
+    protected ?string $width = null;
 
     /**
-     * @param  int|array|string  $width
+     * @param array|int|string $width
      * @return $this
      */
-    public function setWidth($width)
+    public function setWidth(array|int|string $width): self
     {
         $this->width = $width;
 
@@ -21,9 +21,9 @@ trait Width
     }
 
     /**
-     * @return int|array|string
+     * @return null|string
      */
-    public function getWidth()
+    public function getWidth(): ?string
     {
         return $this->width;
     }

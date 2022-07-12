@@ -11,6 +11,7 @@ use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Model\SectionModelConfiguration;
 use SleepingOwl\Admin\Traits\FormElements;
 use SleepingOwl\Admin\Traits\Renderable as AdminRenderable;
@@ -26,14 +27,14 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @var string
      */
-    protected $view = 'display.tabbed';
+    protected string $view = 'display.tabbed';
 
     /**
      * DisplayTabbed constructor.
      *
-     * @param  Closure|TabInterface[]  $tabs
+     * @param Closure|TabInterface[]|null $tabs
      */
-    public function __construct($tabs = null)
+    public function __construct(array|Closure $tabs = null)
     {
         $this->elements = new DisplayTabsCollection();
 
@@ -83,7 +84,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @return Model $model|null
      */
-    public function getModel()
+    public function getModel(): Model
     {
         foreach ($this->getTabs() as $tab) {
             if ($tab->getContent() instanceof FormInterface) {
@@ -93,10 +94,10 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param  string  $class
+     * @param string $class
      * @return $this
      */
-    public function setModelClass($class)
+    public function setModelClass(string $class): DisplayTabbed
     {
         $this->getTabs()->each(function (TabInterface $tab) use ($class) {
             if ($tab instanceof DisplayInterface) {
@@ -108,7 +109,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return TabInterface[]|\SleepingOwl\Admin\Form\FormElementsCollection
+     * @return TabInterface[]|FormElementsCollection
      */
     public function getTabs()
     {
@@ -116,10 +117,10 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param  Closure|TabInterface[]  $tabs
+     * @param Closure|TabInterface[] $tabs
      * @return $this
      */
-    public function setTabs($tabs)
+    public function setTabs(array|Closure $tabs): DisplayTabbed|static
     {
         if (is_callable($tabs)) {
             $tabs = call_user_func($tabs, $this);
@@ -132,7 +133,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * @param  array  $elements
      * @return $this
      */
-    public function setElements(array $elements)
+    public function setElements(array $elements): DisplayTabbed
     {
         foreach ($elements as $label => $tab) {
             if ($tab instanceof TabInterface) {
@@ -172,10 +173,10 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param  string  $action
+     * @param string $action
      * @return $this
      */
-    public function setAction($action)
+    public function setAction(string $action)
     {
         $this->getTabs()->each(function (TabInterface $tab) use ($action) {
             if ($tab instanceof FormInterface) {
@@ -187,10 +188,10 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $model_class = get_class($this->getModel());
         $this->getTabs()->each(function (TabInterface $tab) use ($id, $model_class) {
@@ -257,7 +258,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @return bool
      */
-    public function isReadonly()
+    public function isReadonly(): bool
     {
         return false;
     }
@@ -265,7 +266,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @return bool
      */
-    public function getVisibled()
+    public function getVisibled(): bool
     {
         return true;
     }
@@ -273,7 +274,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @return bool
      */
-    public function isValueSkipped()
+    public function isValueSkipped(): bool
     {
         return false;
     }
@@ -281,7 +282,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'tabs' => $this->getTabs()->onlyVisible(),

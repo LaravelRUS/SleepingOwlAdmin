@@ -9,7 +9,7 @@ class Images extends Image
     /**
      * @var string
      */
-    protected $view = 'form.element.images';
+    protected string $view = 'form.element.images';
 
     protected $draggable = true;
 

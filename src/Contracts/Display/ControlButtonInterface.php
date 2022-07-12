@@ -13,7 +13,7 @@ interface ControlButtonInterface extends Renderable, Arrayable, WithModelInterfa
     /**
      * @return int
      */
-    public function getPosition();
+    public function getPosition(): int;
 
     /**
      * @param  Model  $model
@@ -27,17 +27,17 @@ interface ControlButtonInterface extends Renderable, Arrayable, WithModelInterfa
     public function getView();
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getImage();
+    public function getImage(): ?string;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getText();
+    public function getText(): ?string;
 
     /**
-     * @return bool|mixed
+     * @return bool
      */
-    public function isActive();
+    public function isActive(): bool;
 }

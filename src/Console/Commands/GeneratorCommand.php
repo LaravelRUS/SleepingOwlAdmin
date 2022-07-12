@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Console\Commands;
 
 use Barryvdh\LaravelIdeHelper\Console\GeneratorCommand as IdeHelperGeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use SleepingOwl\Admin\Console\Generator;
 
 /**
@@ -20,7 +21,7 @@ class GeneratorCommand extends IdeHelperGeneratorCommand
     protected $name = 'sleepingowl:ide:generate';
 
     /**
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function handle()
     {

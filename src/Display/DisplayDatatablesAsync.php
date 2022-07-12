@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Closure;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
@@ -10,6 +12,7 @@ use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\Column\Control;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -20,7 +23,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      *
      * @param  Router  $router
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public static function registerRoutes(Router $router)
     {
@@ -324,7 +327,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @return \Closure|mixed
+     * @return Closure|mixed
      */
     public function getRowClassCallback()
     {
@@ -332,7 +335,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param  \Closure  $callback
+     * @param  Closure  $callback
      * @return $this
      */
     public function setRowClassCallback($callback)
@@ -368,9 +371,9 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         $params = parent::toArray();
         $params['payload'] = $this->payload;

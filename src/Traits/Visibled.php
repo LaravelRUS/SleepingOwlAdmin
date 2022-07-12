@@ -9,7 +9,7 @@ trait Visibled
     /**
      * @var Closure|bool
      */
-    protected $visibled = true;
+    protected Closure|bool $visibled = true;
 
     /**
      * @return Closure|bool
@@ -27,7 +27,7 @@ trait Visibled
      * @param  Closure|bool  $visibled
      * @return $this
      */
-    public function setVisibled($visibled)
+    public function setVisibled($visibled): self
     {
         $this->visibled = $visibled;
 

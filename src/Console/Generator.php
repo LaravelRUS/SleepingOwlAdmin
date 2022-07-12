@@ -13,7 +13,7 @@ class Generator extends IdeHelperGenerator
      *
      * @return Collection
      */
-    protected function getAliasesByExtendsNamespace()
+    protected function getAliasesByExtendsNamespace(): Collection
     {
         $aliases = $this->getValidAliases();
 

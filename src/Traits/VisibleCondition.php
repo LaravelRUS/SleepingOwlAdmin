@@ -9,12 +9,12 @@ trait VisibleCondition
     /**
      * @var Closure|bool
      */
-    protected $visibleCondition = true;
+    protected Closure|bool $visibleCondition = true;
 
     /**
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         if (is_callable($this->visibleCondition)) {
             return (bool) call_user_func($this->visibleCondition, $this->getModel());
@@ -24,10 +24,10 @@ trait VisibleCondition
     }
 
     /**
-     * @param  Closure|bool  $visibleCondition
+     * @param bool|Closure $visibleCondition
      * @return $this
      */
-    public function setVisible($visibleCondition)
+    public function setVisible(bool|Closure $visibleCondition): VisibleCondition
     {
         $this->visibleCondition = $visibleCondition;
 
@@ -38,7 +38,7 @@ trait VisibleCondition
      * @param  Closure  $condition
      * @return $this
      */
-    public function setVisibilityCondition(Closure $condition)
+    public function setVisibilityCondition(Closure $condition): VisibleCondition
     {
         $this->visibleCondition = $condition;
 

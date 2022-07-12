@@ -5,9 +5,9 @@ namespace SleepingOwl\Admin\Traits;
 trait Collapsed
 {
     /**
-     * @return null|string
+     * @return null|bool
      */
-    public function getCollapsed()
+    public function getCollapsed(): ?bool
     {
         if (is_null($this->collapsed)) {
             $this->collapsed = false;
@@ -17,10 +17,10 @@ trait Collapsed
     }
 
     /**
-     * @param  null|bool  $collapsed
+     * @param bool|null $collapsed
      * @return $this
      */
-    public function setCollapsed($collapsed)
+    public function setCollapsed(?bool $collapsed): Collapsed
     {
         $this->collapsed = $collapsed;
 

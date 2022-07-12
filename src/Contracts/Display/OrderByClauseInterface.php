@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts\Display;
 
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 
 interface OrderByClauseInterface
@@ -13,7 +14,7 @@ interface OrderByClauseInterface
 
     /**
      * @param  Builder  $query
-     * @param  string  $direction
+     * @param string $direction
      */
     public function modifyQuery(Builder $query, $direction = 'asc');
 }

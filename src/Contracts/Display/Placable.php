@@ -3,16 +3,17 @@
 namespace SleepingOwl\Admin\Contracts\Display;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\View\View;
 
 interface Placable extends Arrayable
 {
     /**
-     * @return string|\Illuminate\View\View
+     * @return string|View
      */
     public function getView();
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlacement();
+    public function getPlacement(): ?string;
 }

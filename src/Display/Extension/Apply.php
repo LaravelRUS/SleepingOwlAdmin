@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class Apply extends Extension
 {
@@ -21,10 +22,10 @@ class Apply extends Extension
     }
 
     /**
-     * @param  Closure  $applies
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @param Closure $applies
+     * @return DisplayInterface
      */
-    public function set($applies)
+    public function set(Closure $applies): DisplayInterface
     {
         if (! is_array($applies)) {
             $applies = func_get_args();

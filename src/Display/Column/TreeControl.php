@@ -12,12 +12,12 @@ class TreeControl extends Control
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * Column view.
      *
      * @var string
      */
-    protected $view = 'column.tree_control';
+    protected string $view = 'column.tree_control';
 }

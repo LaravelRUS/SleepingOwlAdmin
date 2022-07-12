@@ -34,7 +34,7 @@ class SectionMake extends SectionGeneratorCommand
      * @param  string  $rawName
      * @return bool
      */
-    protected function alreadyExists($rawName)
+    protected function alreadyExists($rawName): bool
     {
         return class_exists($rawName);
     }
@@ -44,7 +44,7 @@ class SectionMake extends SectionGeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/section.stub';
     }
@@ -55,7 +55,7 @@ class SectionMake extends SectionGeneratorCommand
      * @param  string  $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace;
     }
@@ -67,7 +67,7 @@ class SectionMake extends SectionGeneratorCommand
      * @param  string  $name
      * @return string
      */
-    protected function replaceClass($stub, $name)
+    protected function replaceClass($stub, $name): string
     {
         $stub = parent::replaceClass($stub, $name);
 
@@ -79,7 +79,7 @@ class SectionMake extends SectionGeneratorCommand
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         $arguments = parent::getArguments();
         $arguments[] = ['model', InputArgument::REQUIRED, 'The name of the model class'];

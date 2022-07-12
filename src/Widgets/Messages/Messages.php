@@ -10,12 +10,12 @@ abstract class Messages extends Widget
     /**
      * @var string
      */
-    protected static $sessionName;
+    protected static string $sessionName;
 
     /**
      * @var string
      */
-    protected $messageView;
+    protected string $messageView;
 
     /**
      * Get content as a string of HTML.
@@ -40,7 +40,7 @@ abstract class Messages extends Widget
     /**
      * @return string
      */
-    public function block()
+    public function block(): string
     {
         return 'content.top';
     }

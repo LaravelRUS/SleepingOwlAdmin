@@ -9,7 +9,7 @@ class Destroy extends FormButton
 {
     protected $show = true;
     protected $name = 'destroy';
-    protected $iconClass = 'fas fa-ban';
+    protected ?string $iconClass = 'fas fa-ban';
 
     public function __construct()
     {

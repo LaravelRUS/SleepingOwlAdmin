@@ -7,14 +7,14 @@ use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 class Date extends DateTime implements ColumnEditableInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $format = 'Y-m-d';
+    protected ?string $format = 'Y-m-d';
 
     /**
      * @var string
      */
-    protected $view = 'column.editable.date';
+    protected string $view = 'column.editable.date';
 
     /**
      * Text constructor.

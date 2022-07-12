@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Display\Element;
@@ -14,7 +15,7 @@ class ColumnsTotal extends Extension implements Placable
     use HtmlAttributes, ElementPlacementTrait, ElementViewTrait;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.extensions.columns_total';
 
@@ -38,7 +39,15 @@ class ColumnsTotal extends Extension implements Placable
         $this->elements = new Collection();
     }
 
-    public function set(array $elements, $columnsNumber = 0)
+    /**
+     * @return null|string
+     */
+    public function getPlacement(): ?string
+    {
+        return $this->placement;
+    }
+
+    public function set(array $elements, $columnsNumber = 0): ColumnsTotal
     {
         array_map(function ($element) {
             if (! is_object($element)) {
@@ -52,7 +61,7 @@ class ColumnsTotal extends Extension implements Placable
         return $this;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         $this->setHtmlAttribute('class', 'table-hover');
 

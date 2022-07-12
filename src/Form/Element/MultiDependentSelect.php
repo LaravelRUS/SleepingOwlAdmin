@@ -17,7 +17,7 @@ class MultiDependentSelect extends DependentSelect implements HasSyncCallback, M
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return parent::getName().'[]';
     }
@@ -25,7 +25,7 @@ class MultiDependentSelect extends DependentSelect implements HasSyncCallback, M
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setHtmlAttributes([
             'multiple',

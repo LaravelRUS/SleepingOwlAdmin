@@ -7,7 +7,7 @@ class Checkbox extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.checkbox';
+    protected string $view = 'form.element.checkbox';
 
     /**
      * @param  mixed  $value

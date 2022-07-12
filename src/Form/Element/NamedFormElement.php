@@ -23,7 +23,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * @var string
      */
-    protected $path;
+    protected string $path;
 
     /**
      * @var string
@@ -309,7 +309,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * @return array
      */
-    public function getValidationMessages()
+    public function getValidationMessages(): array
     {
         $messages = parent::getValidationMessages();
 
@@ -324,7 +324,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * @return array
      */
-    public function getValidationLabels()
+    public function getValidationLabels(): array
     {
         return [$this->getPath() => $this->getLabel()];
     }
@@ -335,7 +335,7 @@ abstract class NamedFormElement extends FormElement
      *
      * @return array
      */
-    public function getValidationRules()
+    public function getValidationRules(): array
     {
         $rules = parent::getValidationRules();
 

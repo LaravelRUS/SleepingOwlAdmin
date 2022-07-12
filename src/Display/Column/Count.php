@@ -9,22 +9,22 @@ class Count extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.count';
+    protected string $view = 'column.count';
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @return int
      */
-    public function getModelValue()
+    public function getModelValue(): int
     {
         $value = parent::getModelValue();
 
@@ -38,7 +38,7 @@ class Count extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'value' => $this->getModelValue(),

@@ -1,4 +1,6 @@
-<div class="panel-table card-body pt-0 pl-0 pr-0">
+{{-- Only datatables --}}
+
+<div class="panel-table card-body pt-0 px-0">
 
     <table {!! $attributes !!}>
         <colgroup>

@@ -12,7 +12,7 @@ class Image extends NamedColumn
     /**
      * @var string
      */
-    protected $width = '80px';
+    protected ?string $width = '80px';
 
     /**
      * @var string
@@ -27,12 +27,12 @@ class Image extends NamedColumn
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var string
@@ -95,7 +95,7 @@ class Image extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $value = $this->getModelValue();
 

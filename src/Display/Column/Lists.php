@@ -14,12 +14,12 @@ class Lists extends NamedColumn
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var bool
@@ -90,7 +90,7 @@ class Lists extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'values' => $this->getModelValue(),

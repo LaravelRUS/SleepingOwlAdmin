@@ -7,18 +7,18 @@ use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 interface ColumnInterface extends ElementsInterface
 {
     /**
-     * @return int
+     * @return string|null
      */
-    public function getWidth();
+    public function getWidth(): ?string;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSize();
+    public function getSize(): ?string;
 
     /**
-     * @param  string  $size
+     * @param string $size
      * @return $this
      */
-    public function setSize($size);
+    public function setSize(string $size): ColumnInterface;
 }

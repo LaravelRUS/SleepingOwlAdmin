@@ -10,5 +10,5 @@ interface BadgeInterface extends Renderable, Arrayable
     /**
      * @return string
      */
-    public function getValue();
+    public function getValue(): string;
 }

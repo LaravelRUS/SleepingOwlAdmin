@@ -10,12 +10,12 @@ class Upload extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.upload';
+    protected string $view = 'form.element.upload';
 
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'value' => $this->getModel()->getAttribute($this->getModelAttributeKey()),

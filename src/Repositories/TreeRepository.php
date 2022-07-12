@@ -63,10 +63,10 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param  string  $class
+     * @param string $class
      * @return $this
      */
-    public function setClass($class)
+    public function setClass(string $class)
     {
         parent::setClass($class);
 
@@ -99,10 +99,10 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param  string  $parentField
+     * @param string $parentField
      * @return $this
      */
-    public function setParentField($parentField)
+    public function setParentField(string $parentField)
     {
         $this->parentField = $parentField;
 
@@ -120,10 +120,10 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param  string  $orderField
+     * @param string $orderField
      * @return $this
      */
-    public function setOrderField($orderField)
+    public function setOrderField(string $orderField)
     {
         $this->orderField = $orderField;
 
@@ -141,10 +141,10 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param  string  $rootParentId
+     * @param string $rootParentId
      * @return $this
      */
-    public function setRootParentId($rootParentId)
+    public function setRootParentId(string $rootParentId)
     {
         $this->rootParentId = $rootParentId;
 

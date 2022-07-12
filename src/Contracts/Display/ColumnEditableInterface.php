@@ -2,25 +2,26 @@
 
 namespace SleepingOwl\Admin\Contracts\Display;
 
+use Closure;
 use Illuminate\Http\Request;
 
 interface ColumnEditableInterface extends ColumnInterface
 {
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
     public function save(Request $request);
 
     /**
-     * @param  Closure|bool  $readonlyEditable
-     * @return void
+     * @param bool|Closure $readonlyEditable
+     * @return $this
      */
-    public function setReadonly($readonlyEditable);
+    public function setReadonly(bool|Closure $readonlyEditable);
 
     /**
-     * @param  Closure|bool  $setIsolated
-     * @return void
+     * @param bool $setIsolated
+     * @return $this
      */
-    public function setIsolated($setIsolated);
+    public function setIsolated(bool $setIsolated);
 }

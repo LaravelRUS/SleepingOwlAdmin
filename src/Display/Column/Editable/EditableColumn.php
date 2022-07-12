@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Closure;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class EditableColumn extends NamedColumn
@@ -10,7 +11,7 @@ class EditableColumn extends NamedColumn
     /**
      * @var bool
      */
-    protected $readonlyEditable = false;
+    protected bool $readonlyEditable = false;
 
     /**
      * @var string
@@ -171,10 +172,10 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param  Closure|bool  $readonlyEditable
-     * @return $this
+     * @param bool|Closure $readonlyEditable
+     * @return ColumnEditableInterface
      */
-    public function setReadonly($readonlyEditable)
+    public function setReadonly(bool|Closure $readonlyEditable): ColumnEditableInterface
     {
         $this->readonlyEditable = $readonlyEditable;
 
@@ -184,7 +185,7 @@ class EditableColumn extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'id' => $this->getModel()->getKey(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Contracts;
+namespace SleepingOwl\Admin\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,15 +9,15 @@ interface HasFakeModel
     /**
      * Sets fake model property.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return \Admin\Contracts\HasFakeModel
+     * @param  Model  $model
+     * @return HasFakeModel
      */
-    public function setFakeModel(Model $model);
+    public function setFakeModel(Model $model): HasFakeModel;
 
     /**
      * Retrieves fake model property.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
-    public function getFakeModel();
+    public function getFakeModel(): Model;
 }

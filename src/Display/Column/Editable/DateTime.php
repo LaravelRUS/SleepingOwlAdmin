@@ -18,12 +18,12 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     /**
      * @var string
      */
-    protected $defaultValue;
+    protected string $defaultValue;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $format = 'Y-m-d H:i:s';
+    protected ?string $format = 'Y-m-d H:i:s';
 
     /**
      * @var string
@@ -33,22 +33,22 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     /**
      * @var string
      */
-    protected $timezone;
+    protected string $timezone;
 
     /**
      * @var bool
      */
-    protected $seconds = false;
+    protected bool $seconds = false;
 
     /**
      * @var string
      */
-    protected $view = 'column.editable.datetime';
+    protected string $view = 'column.editable.datetime';
 
     /**
      * @var string
      */
-    protected $combodateValue = '{}';
+    protected string $combodateValue = '{}';
 
     /**
      * Text constructor.
@@ -73,10 +73,10 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param  array  $maxYear
+     * @param array $value
      * @return $this
      */
-    public function setCombodateValue(array $value)
+    public function setCombodateValue(array $value): DateTime
     {
         $this->combodateValue = json_encode($value);
 
@@ -102,7 +102,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return array_merge(parent::toArray(), [
             'id' => $this->getModel()->getKey(),

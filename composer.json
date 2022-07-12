@@ -1,7 +1,7 @@
 {
     "name": "laravelrus/sleepingowl",
     "description": "Administrative interface builder for Laravel.",
-    "homepage": "http://sleepingowladmin.ru",
+    "homepage": "https://sleepingowladmin.ru",
     "keywords": [
         "laravel",
         "admin",
@@ -37,7 +37,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1.3",
+        "php": ">=8.0",
         "ext-json": "*",
         "laravel/framework": ">=5.5",
         "kodicomponents/support": "0.*",
@@ -46,8 +46,8 @@
         "laravelcollective/html": ">=5.5",
         "kodicms/laravel-assets": "0.*",
         "erusev/parsedown": "1.*",
-        "davejamesmiller/laravel-breadcrumbs": ">=4.0",
-        "barryvdh/laravel-ide-helper": ">=2.4"
+        "barryvdh/laravel-ide-helper": ">=2.4",
+        "diglactic/laravel-breadcrumbs": "^7.2"
     },
     "require-dev": {
         "phpunit/phpunit": ">=7.0",

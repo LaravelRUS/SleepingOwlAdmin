@@ -7,12 +7,12 @@ class Textarea extends NamedFormElement
     /**
      * @var int
      */
-    protected $rows = 10;
+    protected int $rows = 10;
 
     /**
      * @var string
      */
-    protected $view = 'form.element.textarea';
+    protected string $view = 'form.element.textarea';
 
     /**
      * @return int
@@ -23,12 +23,11 @@ class Textarea extends NamedFormElement
     }
 
     /**
-     * @param  int  $rows
+     * @param int $rows
      * @return $this
      */
-    public function setRows($rows)
+    public function setRows(int $rows)
     {
-        intval($rows);
         if ($rows < 1) {
             $rows = 1;
         }
@@ -41,7 +40,7 @@ class Textarea extends NamedFormElement
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setHtmlAttributes([
             'class' => 'form-control',

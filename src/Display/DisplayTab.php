@@ -2,8 +2,10 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
@@ -34,12 +36,12 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @var string
      */
-    protected $label;
+    protected string $label;
 
     /**
      * @var bool
      */
-    protected $active = false;
+    protected bool $active = false;
 
     /**
      * @var string
@@ -49,7 +51,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @var string
      */
-    protected $icon;
+    protected string $icon;
 
     /**
      * @var Renderable
@@ -57,27 +59,27 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected $content;
 
     /**
-     * @var
+     * @var string|Closure|Badge|null
      */
-    protected $badge;
+    protected Badge|string|Closure|null $badge;
 
     /**
      * @var bool
      */
-    protected $external_form = false;
+    protected bool $external_form = false;
 
     /**
      * @var string
      */
-    protected $view = 'display.tab';
+    protected string $view = 'display.tab';
 
     /**
      * @param  Renderable  $content
-     * @param  string|null  $label
-     * @param  string|null  $icon
-     * @param  Badge|string|\Closure|null  $badge
+     * @param string|null $label
+     * @param string|null $icon
+     * @param Closure|string|Badge|null $badge
      */
-    public function __construct(Renderable $content, $label = null, $icon = null, $badge = null)
+    public function __construct(Renderable $content, string $label = null, string $icon = null, Closure|Badge|string $badge = null)
     {
         $this->content = $content;
 
@@ -98,10 +100,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param  Badge|string|\Closure|null  $badge
+     * @param Closure|string|Badge|null $badge
      * @return $this
      */
-    public function setBadge($badge)
+    public function setBadge(Closure|Badge|string|null $badge): DisplayTab
     {
         $badgeData = null;
 
@@ -117,9 +119,9 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @return mixed
+     * @return string|Closure|Badge|null
      */
-    public function getBadge()
+    public function getBadge(): string|Closure|null|Badge
     {
         return $this->badge;
     }
@@ -127,16 +129,16 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
 
     /**
-     * @param  string  $label
+     * @param string $label
      * @return $this
      */
-    public function setLabel($label)
+    public function setLabel(string $label): DisplayTab
     {
         $this->label = $label;
 
@@ -146,16 +148,16 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->active;
     }
 
     /**
-     * @param  bool  $active
+     * @param bool $active
      * @return $this
      */
-    public function setActive($active = true)
+    public function setActive(bool $active = true)
     {
         $this->active = (bool) $active;
 
@@ -169,7 +171,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return $this
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
+     * @throws DisplayTabException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
     public function addTabElement()
@@ -230,7 +232,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      *
      * @throws DisplayTabException
      */
-    public function getName()
+    public function getName(): string
     {
         if (is_null($this->name) && is_null($this->getLabel())) {
             throw new DisplayTabException('You should set name or label');
@@ -255,7 +257,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return string
      */
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }
@@ -274,16 +276,16 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return Renderable
      */
-    public function getContent()
+    public function getContent(): Renderable
     {
         return $this->content;
     }
 
     /**
-     * @param  string  $class
+     * @param string $class
      * @return $this
      */
-    public function setModelClass($class)
+    public function setModelClass(string $class): DisplayTab
     {
         if (($content = $this->getContent()) instanceof DisplayInterface) {
             $content->setModelClass($class);
@@ -307,10 +309,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param  string  $action
+     * @param string $action
      * @return $this
      */
-    public function setAction($action)
+    public function setAction(string $action)
     {
         if (($content = $this->getContent()) instanceof FormInterface) {
             $content->setAction($action);
@@ -339,10 +341,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         if (($content = $this->getContent()) instanceof FormInterface) {
             $content->setId($id);
@@ -352,12 +354,12 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  ModelConfigurationInterface  $model
      *
      * @throws ValidationException
      */
-    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function validateForm(Request $request, ModelConfigurationInterface $model = null)
     {
         if (($content = $this->getContent()) instanceof FormInterface) {
             $content->validateForm($request, $model);
@@ -367,11 +369,11 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * Save model.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  ModelConfigurationInterface  $model
      * @return void
      */
-    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function saveForm(Request $request, ModelConfigurationInterface $model = null)
     {
         if (($content = $this->getContent()) instanceof FormInterface) {
             $content->saveForm($request, $model);
@@ -384,7 +386,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): DisplayTab
     {
         if (($content = $this->getContent()) instanceof WithModelInterface) {
             $content->setModel($model);
@@ -396,7 +398,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return Model $model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         if (($content = $this->getContent()) instanceof WithModelInterface) {
             return $content->getModel();
@@ -408,7 +410,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      *
      * @return array
      */
-    public function getValidationRules()
+    public function getValidationRules(): array
     {
         if (($content = $this->getContent()) instanceof Validable) {
             return $content->getValidationRules();
@@ -420,7 +422,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return array
      */
-    public function getValidationMessages()
+    public function getValidationMessages(): array
     {
         if (($content = $this->getContent()) instanceof Validable) {
             return $content->getValidationMessages();
@@ -432,7 +434,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return array
      */
-    public function getValidationLabels()
+    public function getValidationLabels(): array
     {
         if (($content = $this->getContent()) instanceof Validable) {
             return $content->getValidationLabels();
@@ -442,10 +444,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
             $content->save($request);
@@ -453,10 +455,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function afterSave(\Illuminate\Http\Request $request)
+    public function afterSave(Request $request)
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
             $content->afterSave($request);
@@ -476,7 +478,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return bool
      */
-    public function isReadonly()
+    public function isReadonly(): bool
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
             return $content->isReadonly();
@@ -500,7 +502,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return bool
      */
-    public function isValueSkipped()
+    public function isValueSkipped(): bool
     {
         if (($content = $this->getContent()) instanceof FormElementInterface) {
             return $content->isValueSkipped();
@@ -510,10 +512,10 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @param  string  $path
+     * @param string $path
      * @return FormElementInterface|null
      */
-    public function getElement($path)
+    public function getElement(string $path): FormElementInterface|null
     {
         if (($content = $this->getContent()) instanceof ElementsInterface) {
             return $content->getElement($path);
@@ -523,7 +525,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return FormElementsCollection
      */
-    public function getElements()
+    public function getElements(): FormElementsCollection
     {
         if (($content = $this->getContent()) instanceof ElementsInterface) {
             return $content->getElements();
@@ -536,7 +538,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      * @param  array  $elements
      * @return $this
      */
-    public function setElements(array $elements)
+    public function setElements(array $elements): DisplayTab
     {
         if (($content = $this->getContent()) instanceof ElementsInterface) {
             $content->setElements($elements);
@@ -548,9 +550,9 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @return array
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Display\DisplayTabException
+     * @throws DisplayTabException
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'label' => $this->getLabel(),

@@ -9,7 +9,7 @@ class Save extends FormButton
 {
     protected $show = true;
     protected $name = 'save_and_continue';
-    protected $iconClass = 'fas fa-save';
+    protected ?string $iconClass = 'fas fa-save';
 
     public function __construct()
     {

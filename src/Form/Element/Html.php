@@ -11,7 +11,7 @@ class Html extends Custom
     /**
      * @var string
      */
-    protected $view = 'form.element.html';
+    protected string $view = 'form.element.html';
 
     /**
      * @param  string|Closure|Htmlable|ViewContract  $html

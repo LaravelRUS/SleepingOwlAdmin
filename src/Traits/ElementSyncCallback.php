@@ -2,26 +2,29 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Closure;
+use SleepingOwl\Admin\Contracts\Form\Element\HasSyncCallback;
+
 trait ElementSyncCallback
 {
     /**
-     * @var \Closure
+     * @var Closure
      */
-    protected $syncCallback;
+    protected Closure $syncCallback;
 
     /**
-     * @return \Closure
+     * @return Closure
      */
-    public function getSyncCallback()
+    public function getSyncCallback(): Closure
     {
         return $this->syncCallback;
     }
 
     /**
-     * @param  \Closure  $callable
-     * @return $this
+     * @param  Closure  $callable
+     * @return HasSyncCallback
      */
-    public function setSyncCallback(\Closure $callable)
+    public function setSyncCallback(Closure $callable): HasSyncCallback
     {
         $this->syncCallback = $callable;
 

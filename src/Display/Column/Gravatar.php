@@ -15,17 +15,17 @@ class Gravatar extends NamedColumn
     /**
      * @var string
      */
-    protected $width = '50px';
+    protected ?string $width = '50px';
 
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var string
@@ -73,7 +73,7 @@ class Gravatar extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $value = $this->getModelValue();
         if (! empty($value)) {

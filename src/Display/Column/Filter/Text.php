@@ -7,7 +7,7 @@ class Text extends BaseColumnFilter
     /**
      * @var string
      */
-    protected $view = 'column.filter.text';
+    protected string $view = 'column.filter.text';
 
     /**
      * @var string

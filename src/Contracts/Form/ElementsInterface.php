@@ -7,19 +7,19 @@ use Illuminate\Support\Collection;
 interface ElementsInterface extends FormElementInterface
 {
     /**
-     * @param  string  $path
+     * @param string $path
      * @return FormElementInterface|null
      */
-    public function getElement($path);
+    public function getElement(string $path): ?FormElementInterface;
 
     /**
      * @return Collection
      */
-    public function getElements();
+    public function getElements(): Collection;
 
     /**
      * @param  array  $elements
      * @return $this
      */
-    public function setElements(array $elements);
+    public function setElements(array $elements): ElementsInterface;
 }

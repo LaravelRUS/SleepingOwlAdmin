@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
 trait Renderable
@@ -9,18 +10,18 @@ trait Renderable
     /**
      * @var string
      */
-    protected $viewPath;
+    protected string $viewPath;
 
     /**
      * @var string
      */
-    protected $viewPathPostfix = '';
+    protected string $viewPathPostfix = '';
 
     /**
-     * @param  string|View  $view
+     * @param string|View $view
      * @return $this
      */
-    public function setView($view)
+    public function setView(string|View $view): self
     {
         $this->viewPath = $view;
 
@@ -30,7 +31,7 @@ trait Renderable
     /**
      * @return View|string
      */
-    public function getView()
+    public function getView(): string|View
     {
         if (empty($this->viewPath) && property_exists($this, 'view')) {
             $view_postfix = $this->getViewMode() ? '_'.$this->getViewMode() : '';
@@ -50,7 +51,7 @@ trait Renderable
     }
 
     /**
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return View|Factory
      */
     public function render()
     {

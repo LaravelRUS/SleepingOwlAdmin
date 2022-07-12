@@ -13,5 +13,5 @@ interface FormButtonsInterface extends Renderable, Arrayable, WithModelInterface
      * @param  ModelConfigurationInterface  $modelConfiguration
      * @return $this
      */
-    public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration);
+    public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration): FormButtonsInterface;
 }

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
+
 use Closure;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
@@ -17,8 +18,8 @@ interface AdminInterface extends Initializable
     public function register(ModelConfigurationInterface $model);
 
     /**
-     * @param  string  $class
-     * @param  \Closure|null  $callback
+     * @param string $class
+     * @param Closure|null $callback
      * @return $this
      */
     public function registerModel($class, Closure $callback = null);
@@ -35,7 +36,7 @@ interface AdminInterface extends Initializable
     public function getMissedSections();
 
     /**
-     * @param  string  $alias
+     * @param string $alias
      * @return ModelConfigurationInterface|null
      */
     public function getModel($alias);
@@ -46,16 +47,16 @@ interface AdminInterface extends Initializable
     public function getModels();
 
     /**
-     * @param  string  $class
+     * @param string $class
      * @return bool
      */
-    public function hasModel($class);
+    public function hasModel(string $class): bool;
 
     /**
-     * @param  string  $key
+     * @param string $key
      * @param  ModelConfigurationInterface  $model
      */
-    public function setModel($key, ModelConfigurationInterface $model);
+    public function setModel(string $key, ModelConfigurationInterface $model);
 
     /**
      * @param  TemplateInterface  $template
@@ -65,15 +66,15 @@ interface AdminInterface extends Initializable
     /**
      * @return TemplateInterface
      */
-    public function template();
+    public function template(): TemplateInterface;
 
     /**
      * @return NavigationInterface
      */
-    public function navigation();
+    public function navigation(): NavigationInterface;
 
     /**
      * @return MetaInterface
      */
-    public function meta();
+    public function meta(): MetaInterface;
 }

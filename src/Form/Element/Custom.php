@@ -93,7 +93,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return void
      */
     public function save(Request $request)

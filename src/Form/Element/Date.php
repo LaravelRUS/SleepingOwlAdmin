@@ -5,19 +5,19 @@ namespace SleepingOwl\Admin\Form\Element;
 class Date extends DateTime
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $format = 'Y-m-d';
+    protected ?string $format = 'Y-m-d';
 
     /**
      * @var string
      */
-    protected $view = 'form.element.date';
+    protected string $view = 'form.element.date';
 
     /**
      * @return string
      */
-    public function getPickerFormat()
+    public function getPickerFormat(): string
     {
         return $this->pickerFormat ?: config('sleeping_owl.dateFormat');
     }

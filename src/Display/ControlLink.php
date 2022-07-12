@@ -26,17 +26,17 @@ class ControlLink implements ControlButtonInterface
     /**
      * @var int
      */
-    protected $position;
+    protected int $position;
 
     /**
      * @var string|View
      */
-    protected $view = 'column.control_link';
+    protected string $view = 'column.control_link';
 
     /**
      * @var string
      */
-    protected $class = 'btn btn-xs';
+    protected string $class = 'btn btn-xs';
 
     /**
      * @var Closure|string
@@ -101,9 +101,9 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
-     * @return bool|mixed
+     * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->condition ? call_user_func($this->condition, $this->model) : true;
     }
@@ -112,7 +112,7 @@ class ControlLink implements ControlButtonInterface
      * @param  Model  $model
      * @return $this
      */
-    public function getConditionAttributes(Model $model)
+    public function getConditionAttributes(Model $model): self
     {
         $temp = $this->attributeCondition ? call_user_func($this->attributeCondition, $model) : [];
 
@@ -130,7 +130,7 @@ class ControlLink implements ControlButtonInterface
      * @param  Closure  $condition
      * @return $this
      */
-    public function setCondition(Closure $condition)
+    public function setCondition(Closure $condition): self
     {
         $this->condition = $condition;
 
@@ -173,7 +173,7 @@ class ControlLink implements ControlButtonInterface
     /**
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -202,7 +202,7 @@ class ControlLink implements ControlButtonInterface
      * @param  Model|null  $model
      * @return mixed
      */
-    public function getText($model = null)
+    public function getText($model = null): ?string
     {
         $text = (is_callable($this->text) && is_object($model)) ? call_user_func($this->text, $model) : $this->text;
 
@@ -252,18 +252,18 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
     /**
-     * @param  Closure|string  $image
+     * @param string|Closure|null $image
      * @return $this
      */
-    public function setImage($image)
+    public function setImage(string|Closure|null $image): self
     {
         $this->image = $image;
 
@@ -282,7 +282,7 @@ class ControlLink implements ControlButtonInterface
      * @param  string  $icon
      * @return $this
      */
-    public function setIcon($icon)
+    public function setIcon($icon): self
     {
         $this->icon = $icon;
 
@@ -292,7 +292,7 @@ class ControlLink implements ControlButtonInterface
     /**
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
@@ -301,7 +301,7 @@ class ControlLink implements ControlButtonInterface
      * @param  string  $class
      * @return $this
      */
-    public function setClass($class)
+    public function setClass($class): self
     {
         $this->class = $class;
 
@@ -312,7 +312,7 @@ class ControlLink implements ControlButtonInterface
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): self
     {
         $this->model = $model;
 
@@ -322,7 +322,7 @@ class ControlLink implements ControlButtonInterface
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -332,7 +332,7 @@ class ControlLink implements ControlButtonInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'text' => $this->getText($this->getModel()),

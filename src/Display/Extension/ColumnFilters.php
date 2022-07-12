@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
@@ -20,7 +23,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     protected $columnFilters = [];
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.extensions.columns_filters_table';
 
@@ -33,7 +36,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
      * @param  array|ColumnFilterInterface  $columnFilters
      * @return $this
      */
-    public function set($columnFilters)
+    public function set($columnFilters): ColumnFilters
     {
         if (! is_array($columnFilters)) {
             $columnFilters = func_get_args();
@@ -49,7 +52,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return ColumnFilterInterface[]
+     * @return Collection|array|ColumnFilterInterface[]
      */
     public function all()
     {
@@ -57,10 +60,10 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  ColumnFilterInterface  $filter
+     * @param ColumnFilterInterface|null $filter
      * @return $this
      */
-    public function push(ColumnFilterInterface $filter = null)
+    public function push(ColumnFilterInterface $filter = null): ColumnFilters
     {
         $this->columnFilters[] = $filter;
 
@@ -76,7 +79,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string|\Illuminate\View\View
+     * @return string|View
      */
     public function getView()
     {
@@ -84,10 +87,10 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  string|\Illuminate\View\View  $view
+     * @param  string|View  $view
      * @return $this
      */
-    public function setView($view)
+    public function setView($view): ColumnFilters
     {
         $this->view = $view;
 
@@ -95,18 +98,18 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlacement()
+    public function getPlacement(): ?string
     {
         return $this->placement;
     }
 
     /**
-     * @param  string  $placement
+     * @param string $placement
      * @return $this
      */
-    public function setPlacement($placement)
+    public function setPlacement(string $placement): ColumnFilters
     {
         $this->placement = $placement;
 
@@ -114,32 +117,11 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string
-     *
-     * @deprecated use getPlacement()
-     */
-    public function getPosition()
-    {
-        return $this->getPlacement();
-    }
-
-    /**
-     * @param  string  $position
-     * @return $this
-     *
-     * @deprecated use setPlacement(string $placement)
-     */
-    public function setPosition($position)
-    {
-        return $this->setPlacement($position);
-    }
-
-    /**
      * Get the instance as an array.
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setHtmlAttribute('data-display', class_basename($this->getDisplay()));
 
@@ -182,9 +164,11 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Builder $query
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    public function modifyQuery(Builder $query)
     {
         $search = app('request')->get('columns', []);
 

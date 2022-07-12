@@ -2,8 +2,6 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Exception;
-
 class TemplateDefault extends Template
 {
     /**
@@ -11,7 +9,7 @@ class TemplateDefault extends Template
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return 'AdminLTE 3 (BS4)';
     }
@@ -21,7 +19,7 @@ class TemplateDefault extends Template
      *
      * @return string
      */
-    public function version()
+    public function version(): string
     {
         return '3.0.1';
     }
@@ -31,7 +29,7 @@ class TemplateDefault extends Template
      *
      * @return string
      */
-    public function homepage()
+    public function homepage(): string
     {
         return 'https://adminlte.io/';
     }
@@ -70,7 +68,7 @@ class TemplateDefault extends Template
     /**
      * @return string
      */
-    public function getViewNamespace()
+    public function getViewNamespace(): string
     {
         return 'sleeping_owl::default';
     }
@@ -81,7 +79,7 @@ class TemplateDefault extends Template
      *
      * @return string
      */
-    public function assetDir()
+    public function assetDir(): string
     {
         return $this->mainAsset().'/default';
     }
@@ -89,7 +87,7 @@ class TemplateDefault extends Template
     /**
      * @return string
      */
-    public function getLogo()
+    public function getLogo(): string
     {
         return config('sleeping_owl.logo');
     }
@@ -97,7 +95,7 @@ class TemplateDefault extends Template
     /**
      * @return string
      */
-    public function getMenuTop()
+    public function getMenuTop(): string
     {
         return config('sleeping_owl.menu_top');
     }
@@ -105,7 +103,7 @@ class TemplateDefault extends Template
     /**
      * @return string
      */
-    public function getLogoMini()
+    public function getLogoMini(): string
     {
         return config('sleeping_owl.logo_mini');
     }

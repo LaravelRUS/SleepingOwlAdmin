@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Traits\Renderable;
@@ -13,7 +14,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     /**
      * Header title.
      *
-     * @var string
+     * @var null|string
      */
     protected $title;
 
@@ -25,9 +26,9 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     protected $orderable = false;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
-    protected $view = 'column.header';
+    protected View|string $view = 'column.header';
 
     public function __construct()
     {
@@ -35,18 +36,18 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param  string  $title
+     * @param  null|string  $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -56,16 +57,16 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     /**
      * @return bool
      */
-    public function isOrderable()
+    public function isOrderable(): bool
     {
         return $this->orderable;
     }
 
     /**
-     * @param  bool  $orderable
+     * @param bool $orderable
      * @return $this
      */
-    public function setOrderable($orderable)
+    public function setOrderable(bool $orderable): self
     {
         $this->orderable = (bool) $orderable;
 
@@ -77,7 +78,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setHtmlAttribute('data-orderable', $this->isOrderable() ? 'true' : 'false');
 

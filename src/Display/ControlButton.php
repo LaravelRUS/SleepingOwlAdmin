@@ -9,18 +9,18 @@ class ControlButton extends ControlLink
     /**
      * @var string|View
      */
-    protected $view = 'column.control_button';
+    protected string $view = 'column.control_button';
 
     /**
      * @var string
      */
-    protected $method = 'post';
+    protected string $method = 'post';
 
     /**
      * @param  string  $method
      * @return $this
      */
-    public function setMethod($method)
+    public function setMethod($method): self
     {
         $this->method = $method;
 
@@ -30,7 +30,7 @@ class ControlButton extends ControlLink
     /**
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -40,7 +40,7 @@ class ControlButton extends ControlLink
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'method' => $this->getMethod(),

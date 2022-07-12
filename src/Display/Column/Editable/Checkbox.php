@@ -5,6 +5,9 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Form\FormDefault;
 
 class Checkbox extends EditableColumn implements ColumnEditableInterface
@@ -12,42 +15,42 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * @var string
      */
-    protected $view = 'column.editable.checkbox';
+    protected string $view = 'column.editable.checkbox';
 
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var null|string
      */
-    protected $checkedLabel;
+    protected ?string $checkedLabel;
 
     /**
      * @var null|string
      */
-    protected $uncheckedLabel;
+    protected ?string $uncheckedLabel;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $width = '70px';
+    protected ?string $width = '70px';
 
     /**
      * Checkbox constructor.
      *
      * @param  string  $name
-     * @param  string|null  $checkedLabel
-     * @param  string|null  $uncheckedLabel
+     * @param string|null $checkedLabel
+     * @param string|null $uncheckedLabel
      * @param  string|null  $columnLabel
      */
-    public function __construct($name, $columnLabel = null, $small = null, $uncheckedLabel = null, $checkedLabel = null)
+    public function __construct($name, $columnLabel = null, $small = null, string $uncheckedLabel = null, string $checkedLabel = null)
     {
         parent::__construct($name, $columnLabel, $small);
 
@@ -75,7 +78,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * @return null|string|array
      */
-    public function getCheckedLabel()
+    public function getCheckedLabel(): array|string|null
     {
         if (is_null($label = $this->checkedLabel)) {
             $label = trans('sleeping_owl::lang.editable.checkbox.checked');
@@ -85,10 +88,10 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param  null|string  $label
+     * @param string|null $label
      * @return $this
      */
-    public function setCheckedLabel($label)
+    public function setCheckedLabel(?string $label): static
     {
         $this->checkedLabel = $label;
 
@@ -98,7 +101,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * @return null|string|array
      */
-    public function getUncheckedLabel()
+    public function getUncheckedLabel(): array|string|null
     {
         if (is_null($label = $this->uncheckedLabel)) {
             $label = "<i class='fas fa-minus'></i>";
@@ -108,10 +111,10 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param  null|string  $label
+     * @param string|null $label
      * @return $this
      */
-    public function setUncheckedLabel($label)
+    public function setUncheckedLabel(?string $label): static
     {
         $this->uncheckedLabel = $label;
 
@@ -121,7 +124,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return array_merge(parent::toArray(), [
             'checkedLabel' => $this->getCheckedLabel(),
@@ -131,10 +134,11 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
+     * @throws FormElementException
+     * @throws FormException
+     * @throws RepositoryException
      */
     public function save(Request $request)
     {

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 
 class RelatedLink extends Link
@@ -19,10 +20,10 @@ class RelatedLink extends Link
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
-     * @param  \Closure|null|string  $name
+     * @param  Closure|null|string  $name
      * @param  null|string  $label
      */
     public function __construct($name, $label = null, $small = null)
@@ -35,7 +36,7 @@ class RelatedLink extends Link
      * @param  Model  $model
      * @return Link
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): Link
     {
         if (strpos($this->originalName, '.') !== false) {
             $parts = explode('.', $this->originalName);

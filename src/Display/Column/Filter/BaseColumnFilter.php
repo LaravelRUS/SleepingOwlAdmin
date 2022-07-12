@@ -18,10 +18,10 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
 {
     use SqlQueryOperators, HtmlAttributes, Assets, Width, \SleepingOwl\Admin\Traits\Renderable;
 
-    protected $view;
+    protected string $view;
 
     /**
-     * @var \Closure|null
+     * @var Closure|null
      */
     protected $callback;
 
@@ -96,7 +96,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @return \Closure|null
+     * @return Closure|null
      *
      * @deprecated
      */
@@ -106,7 +106,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return $this
      *
      * @deprecated
@@ -119,13 +119,13 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param  ColumnInterface  $column
-     * @param  Builder  $query
-     * @param  string  $queryString
-     * @param  array|string  $queryParams
+     * @param ColumnInterface $column
+     * @param Builder $query
+     * @param string|null $queryString
+     * @param array|string $queryParams
      * @return void
      */
-    public function apply(ColumnInterface $column, Builder $query, $queryString, $queryParams)
+    public function apply(ColumnInterface $column, Builder $query, ?string $queryString, $queryParams)
     {
         $queryString = $this->parseValue($queryString);
 

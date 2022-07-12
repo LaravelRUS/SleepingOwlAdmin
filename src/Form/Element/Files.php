@@ -13,7 +13,7 @@ class Files extends Images
 {
     protected $uploadValidationRules = ['required'];
 
-    protected $view = 'form.element.files';
+    protected string $view = 'form.element.files';
 
     protected $files_group_class = null;
 

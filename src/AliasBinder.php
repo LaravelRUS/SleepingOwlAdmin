@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\Registrar;
 use ReflectionClass;
+use ReflectionException;
 use SleepingOwl\Admin\Contracts\AliasBinderInterface;
 
 class AliasBinder implements AliasBinderInterface
@@ -16,7 +17,7 @@ class AliasBinder implements AliasBinderInterface
     protected static $routes = [];
 
     /**
-     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     * @param Registrar $router
      * @return void
      */
     public static function registerRoutes(Registrar $router)
@@ -28,14 +29,14 @@ class AliasBinder implements AliasBinderInterface
     }
 
     /**
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var Application
      */
     protected $app;
 
     /**
      * AliasBinder constructor.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $application
+     * @param Application $application
      */
     public function __construct(Application $application)
     {
@@ -50,11 +51,11 @@ class AliasBinder implements AliasBinderInterface
     /**
      * Bind new alias.
      *
-     * @param  string  $alias
-     * @param  string  $class
+     * @param string $alias
+     * @param string $class
      * @return $this
      */
-    public function bind($alias, $class)
+    public function bind(string $alias, string $class): AliasBinderInterface
     {
         $this->aliases[$alias] = $class;
 
@@ -66,13 +67,13 @@ class AliasBinder implements AliasBinderInterface
     }
 
     /**
-     * @param  string  $alias
-     * @param  string  $class
+     * @param string $alias
+     * @param string $class
      * @return $this
      *
      * @deprecated Use `bind` method
      */
-    public function add($alias, $class)
+    public function add(string $alias, string $class): AliasBinder
     {
         return $this->bind($alias, $class);
     }
@@ -81,7 +82,7 @@ class AliasBinder implements AliasBinderInterface
      * @param  array  $classes
      * @return $this
      */
-    public function register(array $classes)
+    public function register(array $classes): AliasBinderInterface
     {
         foreach ($classes as $alias => $class) {
             $this->bind($alias, $class);
@@ -93,7 +94,7 @@ class AliasBinder implements AliasBinderInterface
     /**
      * @return array
      */
-    public function getAliases()
+    public function getAliases(): array
     {
         return $this->aliases;
     }
@@ -101,10 +102,10 @@ class AliasBinder implements AliasBinderInterface
     /**
      * Get class by alias.
      *
-     * @param  string  $alias
+     * @param string $alias
      * @return string
      */
-    public function getAlias($alias)
+    public function getAlias(string $alias): string
     {
         return $this->aliases[$alias];
     }
@@ -112,22 +113,22 @@ class AliasBinder implements AliasBinderInterface
     /**
      * Check if alias is registered.
      *
-     * @param  string  $alias
+     * @param string $alias
      * @return bool
      */
-    public function hasAlias($alias)
+    public function hasAlias(string $alias): bool
     {
         return array_key_exists($alias, $this->aliases);
     }
 
     /**
-     * @param  string  $alias
+     * @param string $alias
      * @param  array  $arguments
      * @return object
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    public function makeClass($alias, array $arguments)
+    public function makeClass(string $alias, array $arguments): object
     {
         $reflection = new ReflectionClass($this->getAlias($alias));
 
@@ -139,7 +140,7 @@ class AliasBinder implements AliasBinderInterface
      * @param $arguments
      * @return object
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function __call($name, $arguments)
     {

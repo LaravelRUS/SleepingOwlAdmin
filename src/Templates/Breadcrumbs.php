@@ -2,22 +2,19 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
-use DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException;
+use Diglactic\Breadcrumbs\Manager;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
 
-class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
+class Breadcrumbs extends Manager implements BreadcrumbsContract
 {
     /**
-     * @param  string|null  $name
+     * @param string|null $name
      * @return string
      *
-     * @throws ViewNotSetException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
      */
-    public function renderIfExists($name = null)
+    public function renderIfExists(string $name = null): string
     {
         if (is_null($name)) {
             $params = $this->getCurrentRoute();
@@ -28,10 +25,9 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
             return '';
         }
 
-        $render = '';
         try {
             $render = $this->render($name);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $render = $this->render('home');
             Log::error($e->getMessage());
         }
@@ -40,29 +36,23 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     }
 
     /**
-     * @param  string  $name
-     * @param  array  $params
+     * @param string $name
+     * @param array $params
      * @return string
      *
-     * @throws ViewNotSetException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
      */
-    public function renderArray($name, ...$params)
+    public function renderArray(string $name, ...$params): string
     {
         return $this->render($name, ...$params);
     }
 
     /**
-     * @param  string  $name
-     * @param  array  $params
+     * @param string $name
+     * @param array $params
      * @return string
      *
-     * @throws ViewNotSetException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
      */
-    public function renderIfExistsArray($name, $params = [])
+    public function renderIfExistsArray(string $name, array $params = []): string
     {
         if (! $this->exists($name)) {
             return '';
@@ -70,4 +60,5 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 
         return $this->renderArray($name, $params);
     }
+
 }

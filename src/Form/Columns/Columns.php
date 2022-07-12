@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Form\Columns;
 use Exception;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 
@@ -15,12 +16,12 @@ class Columns extends FormElements implements ColumnInterface
     /**
      * @var int
      */
-    protected $maxWidth = 12;
+    protected int $maxWidth = 12;
 
     /**
      * @var string
      */
-    protected $view = 'form.element.columns';
+    protected string $view = 'form.element.columns';
 
     /**
      * @param  array  $elements
@@ -33,11 +34,11 @@ class Columns extends FormElements implements ColumnInterface
 
     /**
      * @param  array  $columns
-     * @return $this|\SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface|\SleepingOwl\Admin\Form\FormElements
+     * @return $this|ColumnInterface|FormElements
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function setElements(array $columns)
+    public function setElements(array $columns): Columns|ColumnInterface|FormElements
     {
         foreach ($columns as $column) {
             $this->addColumn($column);
@@ -49,23 +50,23 @@ class Columns extends FormElements implements ColumnInterface
     /**
      * @param $column
      * @param  null  $width
-     * @return \SleepingOwl\Admin\Form\Columns\Columns
+     * @return Columns
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function addColumn($column, $width = null)
+    public function addColumn($column, $width = null): Columns
     {
         return $this->addElement($column, $width);
     }
 
     /**
-     * @param  \SleepingOwl\Admin\Contracts\Form\FormElementInterface[]|\Closure|ColumnInterface  $element
-     * @param  int|null  $width
+     * @param  FormElementInterface[]|\Closure|ColumnInterface  $element
+     * @param int|null $width
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function addElement($element, $width = null)
+    public function addElement($element, int $width = null): Columns
     {
         if (is_callable($element)) {
             $element = new Column($element());
@@ -108,7 +109,7 @@ class Columns extends FormElements implements ColumnInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'columns' => $this->getElements()->onlyVisible(),
@@ -117,24 +118,24 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @return void
+     * @return string|null
      */
-    public function getWidth()
+    public function getWidth(): ?string
     {
     }
 
     /**
-     * @return void
+     * @return string|null
      */
-    public function getSize()
+    public function getSize(): ?string
     {
     }
 
     /**
-     * @param  string  $size
-     * @return \SleepingOwl\Admin\Contracts\Form\Columns\ColumnInterface|void
+     * @param string $size
+     * @return ColumnInterface
      */
-    public function setSize($size)
+    public function setSize(string $size): ColumnInterface
     {
         $this->getColumns()->each(function (ColumnInterface $column) use ($size) {
             $column->setSize($size);

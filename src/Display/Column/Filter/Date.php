@@ -3,7 +3,9 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Log;
+use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 use SleepingOwl\Admin\Traits\DateFormat;
 use SleepingOwl\Admin\Traits\DatePicker;
 
@@ -14,17 +16,17 @@ class Date extends Text
     /**
      * @var string
      */
-    protected $view = 'column.filter.date';
+    protected string $view = 'column.filter.date';
+
+    /**
+     * @var string|null
+     */
+    protected ?string $format = 'Y-m-d';
 
     /**
      * @var string
      */
-    protected $format = 'Y-m-d';
-
-    /**
-     * @var string
-     */
-    protected $timezone;
+    protected string $timezone;
 
     public function initialize()
     {
@@ -55,12 +57,12 @@ class Date extends Text
      * @param  bool  $add_day
      * @return string
      *
-     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
+     * @throws FilterOperatorException
      */
     public function parseValue($date, $add_day = false)
     {
         if (empty($date)) {
-            return;
+            return null;
         }
 
         //contains in date
@@ -69,17 +71,17 @@ class Date extends Text
         if (! $date instanceof Carbon) {
             try {
                 $date = Carbon::parse($date);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 try {
                     $date = Carbon::createFromFormat($this->getPickerFormat(), $date);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     Log::error('Unable to parse date!', [
                         'format' => $this->getPickerFormat(),
                         'date' => $date,
                         'exception' => $e,
                     ]);
 
-                    return;
+                    return null;
                 }
             }
         }

@@ -12,24 +12,24 @@ class DateTime extends NamedFormElement
     use DatePicker, DateFormat;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $format = 'Y-m-d H:i:s';
+    protected ?string $format = 'Y-m-d H:i:s';
 
     /**
      * @var string
      */
-    protected $timezone;
+    protected string $timezone;
 
     /**
      * @var bool
      */
-    protected $seconds = false;
+    protected bool $seconds = false;
 
     /**
      * @var string
      */
-    protected $view = 'form.element.datetime';
+    protected string $view = 'form.element.datetime';
 
     /**
      * @return $this|NamedFormElement|mixed|null|string
@@ -45,7 +45,7 @@ class DateTime extends NamedFormElement
     /**
      * @return bool
      */
-    public function hasSeconds()
+    public function hasSeconds(): bool
     {
         return (bool) $this->seconds;
     }

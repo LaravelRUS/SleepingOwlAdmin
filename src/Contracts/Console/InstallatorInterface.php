@@ -23,5 +23,5 @@ interface InstallatorInterface
      *
      * @return bool
      */
-    public function installed();
+    public function installed(): bool;
 }

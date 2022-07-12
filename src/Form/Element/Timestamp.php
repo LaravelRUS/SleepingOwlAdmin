@@ -9,12 +9,12 @@ class Timestamp extends DateTime
     /**
      * @var bool
      */
-    protected $seconds = true;
+    protected bool $seconds = true;
 
     /**
      * @var string
      */
-    protected $view = 'form.element.timestamp';
+    protected string $view = 'form.element.timestamp';
 
     /**
      * @return $this|NamedFormElement|mixed|null|string

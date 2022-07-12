@@ -22,7 +22,7 @@ class Number extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.number';
+    protected string $view = 'form.element.number';
 
     /**
      * @return float

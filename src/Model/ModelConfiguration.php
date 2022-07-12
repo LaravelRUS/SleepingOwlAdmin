@@ -3,128 +3,138 @@
 namespace SleepingOwl\Admin\Model;
 
 use Closure;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
+use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Display\DisplayDatatablesAsync;
 
 class ModelConfiguration extends ModelConfigurationManager
 {
     /**
-     * @var string
+     * @var string|Translator
      */
-    protected $createTitle;
+    protected Translator|string $createTitle;
 
     /**
-     * @var string
+     * @var string|Translator
      */
-    protected $editTitle;
-
-    /**
-     * @var Closure|null
-     */
-    protected $display;
+    protected Translator|string $editTitle;
 
     /**
      * @var Closure|null
      */
-    protected $create;
-
-    /**
-     * @var bool
-     */
-    protected $displayable = true;
-
-    /**
-     * @var bool
-     */
-    protected $creatable = true;
-
-    /**
-     * @var bool
-     */
-    protected $editable = true;
-
-    /**
-     * @var bool
-     */
-    protected $restorable = true;
-
-    /**
-     * @var bool
-     */
-    protected $deletable = true;
-
-    /**
-     * @var bool
-     */
-    protected $destroyable = true;
+    protected ?Closure $display;
 
     /**
      * @var Closure|null
      */
-    protected $edit;
+    protected ?Closure $create;
+
+    /**
+     * @var bool
+     */
+    protected bool $displayable = true;
+
+    /**
+     * @var bool
+     */
+    protected bool $creatable = true;
+
+    /**
+     * @var bool
+     */
+    protected bool $editable = true;
+
+    /**
+     * @var bool
+     */
+    protected bool $restorable = true;
+
+    /**
+     * @var bool
+     */
+    protected bool $deletable = true;
+
+    /**
+     * @var bool
+     */
+    protected bool $destroyable = true;
 
     /**
      * @var Closure|null
      */
-    protected $delete = true;
+    protected ?Closure $edit;
 
     /**
-     * @var Closure|null
+     * @var Closure|bool|null
      */
-    protected $destroy = true;
+    protected Closure|bool|null $delete = true;
 
     /**
-     * @var Closure|null
+     * @var Closure|bool|null
      */
-    protected $restore = true;
+    protected Closure|bool|null $destroy = true;
 
     /**
-     * @var string
+     * @var Closure|bool|null
      */
-    protected $messageOnCreate;
-
-    /**
-     * @var string
-     */
-    protected $messageOnUpdate;
+    protected Closure|bool|null $restore = true;
 
     /**
      * @var string
      */
-    protected $messageOnDelete;
+    protected string $messageOnCreate;
 
     /**
      * @var string
      */
-    protected $messageOnDestroy;
+    protected string $messageOnUpdate;
 
     /**
      * @var string
      */
-    protected $messageOnRestore;
+    protected string $messageOnDelete;
 
-    protected $breadcrumbs = null;
+    /**
+     * @var string
+     */
+    protected string $messageOnDestroy;
 
-    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
+    /**
+     * @var string
+     */
+    protected string $messageOnRestore;
+
+    /**
+     * @var Collection|null
+     */
+    protected ?Collection $breadcrumbs = null;
+
+    public function __construct(Application $app, $class)
     {
         parent::__construct($app, $class);
         $this->breadcrumbs = collect();
     }
 
     /**
-     * @return \Illuminate\Support\Collection|null
+     * @return Collection
+     * @TODO Daan test
      */
-    public function getBreadCrumbs()
+    public function getBreadCrumbs(): Collection
     {
-        return $this->breadcrumbs->toArray();
+        return $this->breadcrumbs;
+//        return $this->breadcrumbs->toArray();
     }
 
     /**
      * @param $breadcrumb
-     * @return mixed|void
+     * @return void
      */
     public function addBreadCrumb($breadcrumb)
     {
@@ -154,9 +164,9 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return string
+     * @return Translator
      */
-    public function getCreateTitle()
+    public function getCreateTitle(): Translator
     {
         if (is_null($this->createTitle)) {
             return parent::getCreateTitle();
@@ -166,10 +176,10 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param  string  $title
-     * @return $this
+     * @param string $title
+     * @return ModelConfiguration
      */
-    public function setCreateTitle($title)
+    public function setCreateTitle(string $title): ModelConfiguration
     {
         $this->createTitle = $title;
 
@@ -177,10 +187,9 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param  Model  $model
-     * @return string
+     * @return Translator
      */
-    public function getEditTitle()
+    public function getEditTitle(): Translator
     {
         if (is_null($this->editTitle)) {
             return parent::getEditTitle();
@@ -190,10 +199,10 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param  string  $title
-     * @return $this
+     * @param string $title
+     * @return ModelConfiguration
      */
-    public function setEditTitle($title)
+    public function setEditTitle(string $title): ModelConfiguration
     {
         $this->editTitle = $title;
 
@@ -203,15 +212,15 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return bool
      */
-    public function isDisplayable()
+    public function isDisplayable(): bool
     {
         return $this->displayable && parent::isDisplayable();
     }
 
     /**
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function disableDisplay()
+    public function disableDisplay(): ModelConfiguration
     {
         $this->displayable = false;
 
@@ -219,23 +228,23 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param string $action
+     * @param Model $model
      * @return bool
      */
-    public function can($action, Model $model)
+    public function can(string $action, Model $model): bool
     {
         if (! $this->checkAccess) {
             return true;
         }
 
-        return \Gate::allows($action, $model);
+        return Gate::allows($action, $model);
     }
 
     /**
      * @return bool
      */
-    public function isCreatable()
+    public function isCreatable(): bool
     {
         if (! is_callable($this->getCreate())) {
             return false;
@@ -245,9 +254,9 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function disableCreating()
+    public function disableCreating(): ModelConfiguration
     {
         $this->creatable = false;
 
@@ -258,7 +267,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Model  $model
      * @return bool
      */
-    public function isEditable(Model $model)
+    public function isEditable(Model $model): bool
     {
         if (! is_callable($this->getEdit())) {
             return false;
@@ -268,9 +277,9 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function disableEditing()
+    public function disableEditing(): ModelConfiguration
     {
         $this->editable = false;
 
@@ -279,9 +288,9 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param  bool  $deletable
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function setDeletable($deletable)
+    public function setDeletable($deletable): ModelConfiguration
     {
         $this->deletable = (bool) $deletable;
 
@@ -292,15 +301,15 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Model  $model
      * @return bool
      */
-    public function isDeletable(Model $model)
+    public function isDeletable(Model $model): bool
     {
         return $this->deletable && parent::isDeletable($model);
     }
 
     /**
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function disableDeleting()
+    public function disableDeleting(): ModelConfiguration
     {
         $this->setDeletable(false);
 
@@ -311,15 +320,15 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Model  $model
      * @return bool
      */
-    public function isDestroyable(Model $model)
+    public function isDestroyable(Model $model): bool
     {
         return $this->destroyable && parent::isDestroyable($model);
     }
 
     /**
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function disableDestroying()
+    public function disableDestroying(): ModelConfiguration
     {
         $this->destroyable = false;
 
@@ -330,7 +339,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Model  $model
      * @return bool
      */
-    public function isRestorable(Model $model)
+    public function isRestorable(Model $model): bool
     {
         return $this->restorable && parent::isRestorable($model);
     }
@@ -338,15 +347,15 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return bool
      */
-    public function isRestorableModel()
+    public function isRestorableModel(): bool
     {
         return $this->restorable && parent::isRestorableModel();
     }
 
     /**
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function disableRestoring()
+    public function disableRestoring(): ModelConfiguration
     {
         $this->restorable = false;
 
@@ -356,16 +365,16 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return Closure|null
      */
-    public function getDisplay()
+    public function getDisplay(): ?Closure
     {
         return $this->display;
     }
 
     /**
      * @param  Closure  $callback
-     * @return $this
+     * @return ModelConfiguration
      */
-    public function onDisplay(Closure $callback)
+    public function onDisplay(Closure $callback): ModelConfiguration
     {
         $this->display = $callback;
 
@@ -373,13 +382,13 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param  mixed  $payload
-     * @return DisplayInterface|mixed|void
+     * @param mixed $payload
+     * @return mixed
      */
-    public function fireDisplay($payload = [])
+    public function fireDisplay($payload = []): mixed
     {
         if (! is_callable($this->getDisplay())) {
-            return;
+            return null;
         }
 
         $display = $this->app->call($this->getDisplay(), ['payload' => $payload]);
@@ -420,12 +429,12 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param  mixed  $payload
-     * @return mixed|void
+     * @return mixed
      */
-    public function fireCreate($payload = [])
+    public function fireCreate($payload = []): mixed
     {
         if (! is_callable($this->getCreate())) {
-            return;
+            return null;
         }
 
         $form = $this->app->call($this->getCreate(), ['payload' => $payload]);
@@ -448,7 +457,7 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return Closure|null
      */
-    public function getEdit()
+    public function getEdit(): ?Closure
     {
         return $this->edit;
     }
@@ -469,10 +478,10 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  mixed  $payload
      * @return mixed|void
      */
-    public function fireEdit($id, $payload = [])
+    public function fireEdit($id, $payload = []): mixed
     {
         if (! is_callable($this->getEdit())) {
-            return;
+            return null;
         }
 
         $payload = array_merge(['id' => $id], ['payload' => $payload]);
@@ -496,6 +505,16 @@ class ModelConfiguration extends ModelConfigurationManager
         }
 
         return $form;
+    }
+
+    /**
+     * @param int $id
+     * @return ModelConfigurationInterface
+     * @TODO Все Fire переделать под один стандарт
+     */
+    public function fireFullEdit(int $id): ModelConfigurationInterface
+    {
+        return $this->fireEdit($id);
     }
 
     /**
@@ -533,11 +552,13 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  int|string  $id
      * @return mixed
      */
-    public function fireDelete($id)
+    public function fireDelete($id): mixed
     {
         if (is_callable($this->getDelete())) {
             return $this->app->call($this->getDelete(), [$id]);
         }
+
+        return null;
     }
 
     /**
@@ -563,11 +584,13 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  int|string  $id
      * @return mixed
      */
-    public function fireDestroy($id)
+    public function fireDestroy($id): mixed
     {
         if (is_callable($this->getDestroy())) {
             return $this->app->call($this->getDestroy(), [$id]);
         }
+
+        return null;
     }
 
     /**
@@ -593,17 +616,19 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  int|string  $id
      * @return bool|mixed
      */
-    public function fireRestore($id)
+    public function fireRestore($id): mixed
     {
         if (is_callable($this->getRestore())) {
             return $this->app->call($this->getRestore(), [$id]);
         }
+
+        return null;
     }
 
     /**
      * @return string
      */
-    public function getMessageOnCreate()
+    public function getMessageOnCreate(): string
     {
         if (is_null($this->messageOnCreate)) {
             $this->messageOnCreate = parent::getMessageOnCreate();
@@ -626,7 +651,7 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return string
      */
-    public function getMessageOnUpdate()
+    public function getMessageOnUpdate(): string
     {
         if (is_null($this->messageOnUpdate)) {
             $this->messageOnUpdate = parent::getMessageOnUpdate();
@@ -649,7 +674,7 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return string
      */
-    public function getMessageOnDelete()
+    public function getMessageOnDelete(): string
     {
         if (is_null($this->messageOnDelete)) {
             $this->messageOnDelete = parent::getMessageOnDelete();
@@ -672,7 +697,7 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return string
      */
-    public function getMessageOnDestroy()
+    public function getMessageOnDestroy(): string
     {
         if (is_null($this->messageOnDestroy)) {
             $this->messageOnDestroy = parent::getMessageOnDestroy();
@@ -695,7 +720,7 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return string
      */
-    public function getMessageOnRestore()
+    public function getMessageOnRestore(): string
     {
         if (is_null($this->messageOnRestore)) {
             $this->messageOnRestore = parent::getMessageOnRestore();

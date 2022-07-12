@@ -3,34 +3,42 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Closure;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
+use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Navigation\Page;
 
 /**
- * @method bool creating(\Closure $callback)
- * @method void created(\Closure $callback)
- * @method bool updating(\Closure $callback)
- * @method void updated(\Closure $callback)
- * @method bool deleting(\Closure $callback)
- * @method void deleted(\Closure $callback)
- * @method bool restoring(\Closure $callback)
- * @method void restored(\Closure $callback)
+ * @method bool creating(Closure $callback)
+ * @method void created(Closure $callback)
+ * @method bool updating(Closure $callback)
+ * @method void updated(Closure $callback)
+ * @method bool deleting(Closure $callback)
+ * @method void deleted(Closure $callback)
+ * @method bool restoring(Closure $callback)
+ * @method void restored(Closure $callback)
  */
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
     /**
      * Get the event dispatcher instance.
      *
-     * @return \Illuminate\Contracts\Events\Dispatcher
+     * @return Dispatcher
      */
-    public static function getEventDispatcher()
+    public static function getEventDispatcher(): Dispatcher
     {
         return self::$dispatcher;
     }
@@ -38,7 +46,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
+     * @param Dispatcher $dispatcher
      * @return void
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
@@ -49,14 +57,14 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * The event dispatcher instance.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var Dispatcher
      */
-    protected static $dispatcher;
+    protected static Dispatcher $dispatcher;
 
     /**
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var Application
      */
-    protected $app;
+    protected Application $app;
 
     /**
      * @var string
@@ -66,17 +74,17 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @var Model
      */
-    protected $model;
+    protected Model $model;
 
     /**
-     * @var string
+     * @var null|string
      */
-    protected $alias;
+    protected $alias = null;
 
     /**
      * @var string|null
      */
-    protected $controllerClass;
+    protected ?string $controllerClass = null;
 
     /**
      * @var string
@@ -84,9 +92,9 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     protected $title;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $icon;
+    protected $icon = null;
 
     /**
      * @var bool
@@ -96,28 +104,28 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @var array
      */
-    protected $redirect = ['edit' => 'edit', 'create' => 'edit'];
+    protected array $redirect = ['edit' => 'edit', 'create' => 'edit'];
 
     /**
      * @var RepositoryInterface
      */
-    private $repository;
+    private RepositoryInterface $repository;
 
     /**
      * @var Model|null
      */
-    protected $model_value = null;
+    protected ?Model $model_value = null;
 
     /**
      * ModelConfigurationManager constructor.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  Application  $app
      * @param  $class
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
+     * @throws BindingResolutionException
+     * @throws RepositoryException
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
+    public function __construct(Application $app, $class)
     {
         $this->app = $app;
         $this->class = $class;
@@ -134,7 +142,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
@@ -142,7 +150,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -150,15 +158,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return Model|null
      */
-    public function getModelValue()
+    public function getModelValue(): ?Model
     {
         return $this->model_value;
     }
 
     /**
-     * @param  Model  $item
+     * @param Model $item
      */
-    public function setModelValue($item)
+    public function setModelValue(Model $item)
     {
         $this->model_value = $item;
     }
@@ -177,18 +185,18 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
 
     /**
-     * @param  string  $icon
+     * @param string $icon
      * @return $this
      */
-    public function setIcon($icon)
+    public function setIcon(string $icon): ModelConfigurationManager
     {
         $this->icon = $icon;
 
@@ -198,7 +206,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return $this->alias;
     }
@@ -206,23 +214,23 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return RepositoryInterface
      */
-    public function getRepository()
+    public function getRepository(): RepositoryInterface
     {
         return $this->repository;
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return Translator
      */
-    public function getCreateTitle()
+    public function getCreateTitle(): Translator
     {
         return trans('sleeping_owl::lang.model.create', ['title' => $this->getTitle()]);
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return Translator
      */
-    public function getEditTitle()
+    public function getEditTitle(): Translator
     {
         return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
     }
@@ -230,7 +238,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return bool
      */
-    public function isDisplayable()
+    public function isDisplayable(): bool
     {
         return $this->can('display', $this->getModel());
     }
@@ -238,25 +246,25 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return bool
      */
-    public function isCreatable()
+    public function isCreatable(): bool
     {
         return $this->can('create', $this->getModel());
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
-    public function isEditable(Model $model)
+    public function isEditable(Model $model): bool
     {
         return $this->can('edit', $model);
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
-    public function isDeletable(Model $model)
+    public function isDeletable(Model $model): bool
     {
         return $this->can('delete', $model);
     }
@@ -265,16 +273,16 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  Model  $model
      * @return bool
      */
-    public function isDestroyable(Model $model)
+    public function isDestroyable(Model $model): bool
     {
         return $this->isRestorableModel() && $this->can('destroy', $model);
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
-    public function isRestorable(Model $model)
+    public function isRestorable(Model $model): bool
     {
         return $this->isRestorableModel() && $this->can('restore', $model);
     }
@@ -282,26 +290,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return bool
      */
-    public function isRestorableModel()
+    public function isRestorableModel(): bool
     {
         return $this->getRepository()->isRestorable();
     }
 
     /**
-     * @param  int  $id
-     * @return $this
-     *
-     * @deprecated
-     */
-    public function fireFullEdit($id)
-    {
-        return $this->fireEdit($id);
-    }
-
-    /**
      * @return $this
      */
-    public function enableAccessCheck()
+    public function enableAccessCheck(): ModelConfigurationManager
     {
         $this->checkAccess = true;
 
@@ -311,7 +308,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return $this
      */
-    public function disableAccessCheck()
+    public function disableAccessCheck(): ModelConfigurationManager
     {
         $this->checkAccess = false;
 
@@ -319,24 +316,24 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param string $action
+     * @param Model $model
      * @return bool
      */
-    public function can($action, Model $model)
+    public function can(string $action, Model $model): bool
     {
         if (! $this->checkAccess) {
             return true;
         }
 
-        return \Gate::allows($action, [$this, $model]);
+        return Gate::allows($action, [$this, $model]);
     }
 
     /**
-     * @param  string  $controllerClass
+     * @param string $controllerClass
      * @return $this
      */
-    public function setControllerClass($controllerClass)
+    public function setControllerClass(string $controllerClass): ModelConfigurationManager
     {
         $this->controllerClass = $controllerClass;
 
@@ -346,15 +343,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return null|string
      */
-    public function getControllerClass()
+    public function getControllerClass(): ?string
     {
         return $this->controllerClass;
     }
 
     /**
-     * @return null|string|bool
+     * @return bool
      */
-    public function hasCustomControllerClass()
+    public function hasCustomControllerClass(): bool
     {
         $controller = $this->getControllerClass();
 
@@ -365,7 +362,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  array  $parameters
      * @return string
      */
-    public function getDisplayUrl(array $parameters = [])
+    public function getDisplayUrl(array $parameters = []): string
     {
         array_unshift($parameters, $this->getAlias());
 
@@ -376,7 +373,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  array  $parameters
      * @return string
      */
-    public function getCancelUrl(array $parameters = [])
+    public function getCancelUrl(array $parameters = []): string
     {
         return $this->getDisplayUrl($parameters);
     }
@@ -385,7 +382,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  array  $parameters
      * @return string
      */
-    public function getCreateUrl(array $parameters = [])
+    public function getCreateUrl(array $parameters = []): string
     {
         array_unshift($parameters, $this->getAlias());
 
@@ -396,7 +393,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  array  $parameters
      * @return string
      */
-    public function getStoreUrl(array $parameters = [])
+    public function getStoreUrl(array $parameters = []): string
     {
         array_unshift($parameters, $this->getAlias());
 
@@ -404,11 +401,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getEditUrl($id, array $parameters = [])
+    public function getEditUrl(int|string $id, array $parameters = []): string
     {
         if (! $id) {
             return '#';
@@ -420,11 +417,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getUpdateUrl($id, array $parameters = [])
+    public function getUpdateUrl(int|string $id, array $parameters = []): string
     {
         if (! $id) {
             return '#';
@@ -436,11 +433,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getDeleteUrl($id, array $parameters = [])
+    public function getDeleteUrl(int|string $id, array $parameters = []): string
     {
         if (! $id) {
             return '#';
@@ -452,11 +449,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getDestroyUrl($id, array $parameters = [])
+    public function getDestroyUrl(int|string $id, array $parameters = []): string
     {
         if (! $id) {
             return '#';
@@ -468,11 +465,11 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getRestoreUrl($id, array $parameters = [])
+    public function getRestoreUrl(int|string $id, array $parameters = []): string
     {
         if (! $id) {
             return '#';
@@ -484,41 +481,41 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array
+     * @return string
      */
-    public function getMessageOnCreate()
+    public function getMessageOnCreate(): string
     {
         return trans('sleeping_owl::lang.message.created');
     }
 
     /**
-     * @return string|array
+     * @return string
      */
-    public function getMessageOnUpdate()
+    public function getMessageOnUpdate(): string
     {
         return trans('sleeping_owl::lang.message.updated');
     }
 
     /**
-     * @return string|array
+     * @return string
      */
-    public function getMessageOnDelete()
+    public function getMessageOnDelete(): string
     {
         return trans('sleeping_owl::lang.message.deleted');
     }
 
     /**
-     * @return string|array
+     * @return string
      */
-    public function getMessageOnRestore()
+    public function getMessageOnRestore(): string
     {
         return trans('sleeping_owl::lang.message.restored');
     }
 
     /**
-     * @return string|array
+     * @return string
      */
-    public function getMessageOnDestroy()
+    public function getMessageOnDestroy(): string
     {
         return trans('sleeping_owl::lang.message.destroyed');
     }
@@ -526,17 +523,17 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return Navigation
      */
-    public function getNavigation()
+    public function getNavigation(): Navigation
     {
         return $this->app['sleeping_owl.navigation'];
     }
 
     /**
-     * @param  int  $priority
-     * @param  string|\Closure|BadgeInterface  $badge
+     * @param int $priority
+     * @param string|Closure|BadgeInterface|null $badge
      * @return Page
      */
-    public function addToNavigation($priority = 100, $badge = null)
+    public function addToNavigation(int $priority = 100, BadgeInterface|string|Closure $badge = null): Page
     {
         $page = $this->makePage($priority, $badge);
 
@@ -547,19 +544,19 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param $page_id
-     * @return \KodiComponents\Navigation\Contracts\PageInterface|null
+     * @return PageInterface|null
      */
-    public function getNavigationPage($page_id)
+    public function getNavigationPage($page_id): ?PageInterface
     {
         return $this->getNavigation()->getPages()->findById($page_id);
     }
 
     /**
-     * @param  int  $priority
-     * @param  string|\Closure|BadgeInterface  $badge
+     * @param int $priority
+     * @param string|Closure|BadgeInterface|null $badge
      * @return Page
      */
-    protected function makePage($priority = 100, $badge = null)
+    protected function makePage(int $priority = 100, BadgeInterface|string|Closure $badge = null): Page
     {
         $page = new Page($this->getClass());
         $page->setPriority($priority);
@@ -579,7 +576,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  array  $redirect
      * @return $this
      */
-    public function setRedirect(array $redirect)
+    public function setRedirect(array $redirect): ModelConfigurationInterface
     {
         $this->redirect = $redirect;
 
@@ -587,9 +584,9 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    public function getRedirect()
+    public function getRedirect(): Collection
     {
         return collect($this->redirect);
     }
@@ -597,13 +594,13 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Fire the given event for the model.
      *
-     * @param  string  $event
-     * @param  bool  $halt
+     * @param string $event
+     * @param bool $halt
      * @param  Model|null  $model
      * @param  array  $payload
      * @return mixed
      */
-    public function fireEvent($event, $halt = true, Model $model = null, ...$payload)
+    public function fireEvent(string $event, bool $halt = true, Model $model = null, ...$payload): mixed
     {
         if (! isset(self::$dispatcher)) {
             return true;
@@ -616,7 +613,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         // We will append the names of the class to the event to distinguish it from
         // other model events that are fired, allowing us to listen on each model
         // event set individually instead of catching event for all the models.
-        $event = "sleeping_owl.section.{$event}: ".$this->getClass();
+        $event = "sleeping_owl.section." . $event . ": " .$this->getClass();
 
         // Laravel 5.8 and 5.4 support fire method
         if (version_compare('5.8.0', $this->app->version(), '<=') ||
@@ -657,9 +654,9 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @param  $event
      * @param  $callback
-     * @param  int  $priority
+     * @param int $priority
      */
-    protected function registerEvent($event, $callback, $priority = 0)
+    protected function registerEvent($event, $callback, int $priority = 0)
     {
         if (isset(self::$dispatcher)) {
             self::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
@@ -674,7 +671,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    protected function getDefaultClassTitle()
+    protected function getDefaultClassTitle(): string
     {
         return Str::snake(Str::plural(class_basename($this->getClass())));
     }

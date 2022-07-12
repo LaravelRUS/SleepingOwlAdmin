@@ -11,7 +11,7 @@ class FormTabbed extends FormDefault
     /**
      * @var string
      */
-    protected $view = 'form.tabbed';
+    protected string $view = 'form.tabbed';
 
     /**
      * FormTabbed constructor.

@@ -11,17 +11,17 @@ abstract class Extension implements DisplayExtensionInterface
     /**
      * @var DisplayInterface
      */
-    protected $display;
+    protected DisplayInterface $display;
 
     /**
      * @var int
      */
-    protected $order = 0;
+    protected int $order = 0;
 
     /**
      * @return DisplayInterface
      */
-    public function getDisplay()
+    public function getDisplay(): DisplayInterface
     {
         return $this->display;
     }
@@ -30,7 +30,7 @@ abstract class Extension implements DisplayExtensionInterface
      * @param  DisplayInterface  $display
      * @return $this
      */
-    public function setDisplay(DisplayInterface $display)
+    public function setDisplay(DisplayInterface $display): self
     {
         $this->display = $display;
 
@@ -38,7 +38,7 @@ abstract class Extension implements DisplayExtensionInterface
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Builder $query
      */
     public function modifyQuery(Builder $query)
     {
@@ -48,16 +48,16 @@ abstract class Extension implements DisplayExtensionInterface
     /**
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return $this->order;
     }
 
     /**
-     * @param  int  $order
+     * @param int $order
      * @return $this
      */
-    public function setOrder($order)
+    public function setOrder(int $order): self
     {
         $this->order = (int) $order;
 

@@ -3,25 +3,29 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Closure;
+use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 trait SmallDisplay
 {
     /**
-     * @var string
-     * @var bool
+     * @var string|Closure|null
      */
-    protected $small;
-    protected $smallString = false;
+    protected string|Closure|null $small = '';
 
     /**
      * @var bool
      */
-    protected $isolated = true;
+    protected bool $smallString = false;
 
     /**
-     * @return string
+     * @var bool
      */
-    public function getSmall()
+    protected bool $isolated = true;
+
+    /**
+     * @return string|null
+     */
+    public function getSmall(): ?string
     {
         if ($this->smallString) {
             return $this->small;
@@ -31,11 +35,11 @@ trait SmallDisplay
     }
 
     /**
-     * @param  string|Closure  $small
-     * @param  bool  $asString
+     * @param Closure|string $small
+     * @param bool $asString
      * @return $this
      */
-    public function setSmall($small, $asString = false)
+    public function setSmall(Closure|string $small, bool $asString = false): self
     {
         $this->small = $small;
         $this->smallString = $asString;
@@ -44,10 +48,10 @@ trait SmallDisplay
     }
 
     /**
-     * @param  bool  $isolatedHTML
+     * @param bool $isolatedHTML
      * @return $this
      */
-    public function setIsolated($isolatedHTML)
+    public function setIsolated(bool $isolatedHTML): self
     {
         $this->isolated = $isolatedHTML;
 
@@ -55,9 +59,9 @@ trait SmallDisplay
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getIsolated()
+    public function getIsolated(): bool
     {
         return $this->isolated;
     }

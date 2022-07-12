@@ -10,10 +10,10 @@ interface WidgetsRegistryInterface
      * @param $widget
      * @return $this
      */
-    public function registerWidget($widget);
+    public function registerWidget($widget): WidgetsRegistryInterface;
 
     /**
-     * @param  \Illuminate\Contracts\View\Factory  $factory
+     * @param Factory $factory
      * @return void
      */
     public function placeWidgets(Factory $factory);

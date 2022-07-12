@@ -9,9 +9,9 @@ class Trix extends NamedFormElement
     use Collapsed;
 
     /**
-     * @var bool|null
+     * @var bool
      */
-    protected $collapsed;
+    protected bool $collapsed;
 
     public function __construct($path, $label = null)
     {
@@ -25,12 +25,12 @@ class Trix extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.trix';
+    protected string $view = 'form.element.trix';
 
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'collapsed' => $this->getCollapsed(),

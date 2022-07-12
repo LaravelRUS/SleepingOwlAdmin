@@ -3,7 +3,9 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -19,7 +21,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     protected $action_form;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.extensions.actions_form';
 
@@ -36,7 +38,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     /**
      * @return $this
      */
-    public function clear()
+    public function clear(): ActionsForm
     {
         $this->action_form = new Collection();
 
@@ -44,10 +46,10 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  Collection|array  $actions
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @param $action_form
+     * @return DisplayInterface
      */
-    public function set($action_form)
+    public function set($action_form): DisplayInterface
     {
         if (! is_array($action_form)) {
             $action_form = func_get_args();
@@ -74,7 +76,7 @@ class ActionsForm extends Extension implements Initializable, Placable
      * @param  FormElement  $action
      * @return $this
      */
-    public function push(FormElement $action)
+    public function push(FormElement $action): ActionsForm
     {
         $this->action_form->push($action);
 
@@ -82,7 +84,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string|\Illuminate\View\View
+     * @return string|View
      */
     public function getView()
     {
@@ -90,10 +92,10 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  string|\Illuminate\View\View  $view
+     * @param  string|View  $view
      * @return $this
      */
-    public function setView($view)
+    public function setView($view): ActionsForm
     {
         $this->view = $view;
 
@@ -101,18 +103,18 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlacement()
+    public function getPlacement(): ?string
     {
         return $this->placement;
     }
 
     /**
-     * @param  string  $placement
+     * @param string $placement
      * @return $this
      */
-    public function setPlacement($placement)
+    public function setPlacement(string $placement): ActionsForm
     {
         $this->placement = $placement;
 
@@ -124,7 +126,7 @@ class ActionsForm extends Extension implements Initializable, Placable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->all()->each(function ($action) {
             $action->initialize();

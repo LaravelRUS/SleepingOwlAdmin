@@ -2,12 +2,14 @@
 
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
+use SleepingOwl\Admin\Exceptions\FilterOperatorException;
+
 class DateRange extends Date
 {
     /**
      * @var string
      */
-    protected $view = 'column.filter.daterange';
+    protected string $view = 'column.filter.daterange';
 
     /**
      * @var string
@@ -37,7 +39,7 @@ class DateRange extends Date
      * @param  bool  $add_day
      * @return array|string
      *
-     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
+     * @throws FilterOperatorException
      */
     public function parseValue($date, $add_day = false)
     {

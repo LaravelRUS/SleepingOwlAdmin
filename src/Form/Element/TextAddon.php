@@ -17,7 +17,7 @@ class TextAddon extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.textaddon';
+    protected string $view = 'form.element.textaddon';
 
     /**
      * @return string

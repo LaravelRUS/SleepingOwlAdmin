@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Exception;
 use Illuminate\Support\Str;
 
 class DisplayDatatables extends DisplayTable
@@ -103,7 +104,7 @@ class DisplayDatatables extends DisplayTable
     /**
      * @return bool
      */
-    public function usePagination()
+    public function usePagination(): bool
     {
         return false;
     }
@@ -111,7 +112,7 @@ class DisplayDatatables extends DisplayTable
     /**
      * @return $this
      */
-    public function disablePagination()
+    public function disablePagination(): self
     {
         $this->paginate = -1;
 
@@ -121,9 +122,9 @@ class DisplayDatatables extends DisplayTable
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         $params = parent::toArray();
 

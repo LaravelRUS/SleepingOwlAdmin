@@ -10,10 +10,10 @@ interface WithModelInterface
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model);
+    public function setModel(Model $model): self;
 
     /**
      * @return Model
      */
-    public function getModel();
+    public function getModel(): Model;
 }

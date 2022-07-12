@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Configuration;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Request;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\DatePicker;
@@ -10,20 +11,18 @@ use SleepingOwl\Admin\Traits\MaxFileSizeTrait;
 /**
  * Trait ProvidesScriptVariables.
  *
- * @property-read \Illuminate\Foundation\Application $app
+ * @property-read Application $app
  */
 trait ProvidesScriptVariables
 {
     use DatePicker, MaxFileSizeTrait;
 
     /**
-     * Получение массива глобальных
-     * переменных
-     * для JavaScript.
+     * Получение массива глобальных переменных для JavaScript.
      *
      * @return array
      */
-    public function scriptVariables()
+    public function scriptVariables(): array
     {
         $lang = trans('sleeping_owl::lang');
         if ($lang == 'sleeping_owl::lang') {

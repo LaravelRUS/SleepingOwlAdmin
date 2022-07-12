@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+
 class CKEditor extends Wysiwyg
 {
     /**
@@ -10,7 +12,7 @@ class CKEditor extends Wysiwyg
      * @param $path
      * @param  null  $label
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws FormElementException
      */
     public function __construct($path, $label = null)
     {

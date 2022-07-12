@@ -13,7 +13,7 @@ class Body extends FormElements implements CardInterface
     /**
      * @var string
      */
-    protected $view = 'form.card.element';
+    protected string $view = 'form.card.element';
 
     /**
      * @var string

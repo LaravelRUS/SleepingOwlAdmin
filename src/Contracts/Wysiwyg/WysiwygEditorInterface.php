@@ -10,41 +10,41 @@ interface WysiwygEditorInterface extends Arrayable
     /**
      * @return string
      */
-    public function getId();
+    public function getId(): string;
 
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @return WysiwygFilterInterface
      */
-    public function getFilter();
+    public function getFilter(): WysiwygFilterInterface;
 
     /**
      * @return Repository
      */
-    public function getConfig();
+    public function getConfig(): Repository;
 
     /**
      * @return bool
      */
-    public function isUsed();
+    public function isUsed(): bool;
 
     /**
-     * @param  string  $text
+     * @param string $text
      * @return string
      */
-    public function applyFilter($text);
+    public function applyFilter(string $text): string;
 
     /**
-     * @return void
+     * @return bool
      */
-    public function load();
+    public function load(): bool;
 
     /**
-     * @return void
+     * @return bool
      */
-    public function unload();
+    public function unload(): bool;
 }

@@ -9,7 +9,7 @@ interface TreeTypeInterface
     /**
      * Get tree structure.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection  $collection
+     * @param  Collection  $collection
      * @return mixed
      */
     public function getTree(Collection $collection);
@@ -17,7 +17,7 @@ interface TreeTypeInterface
     /**
      * Reorder tree by $data value.
      *
-     * @param $data
+     * @param array $data
      */
     public function reorder(array $data);
 

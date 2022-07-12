@@ -17,26 +17,27 @@ interface ColumnInterface extends Initializable, Renderable, Arrayable, WithMode
     /**
      * @return TableHeaderColumnInterface
      */
-    public function getHeader();
+    public function getHeader(): TableHeaderColumnInterface;
 
     /**
      * @param  bool|OrderByClauseInterface  $clause
      * @return $this
      */
-    public function setOrderable($clause);
+    public function setOrderable($clause): self;
 
     /**
      * @return bool
      */
-    public function isOrderable();
+    public function isOrderable(): bool;
 
     /**
      * @return bool
      */
-    public function isVisible();
+    public function isVisible(): bool;
 
     /**
      * @return bool
      */
-    public function isSearchable();
+    public function isSearchable(): bool;
+
 }

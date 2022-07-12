@@ -7,10 +7,10 @@ class SuccessMessages extends Messages
     /**
      * @var string
      */
-    protected static $sessionName = 'success_message';
+    protected static string $sessionName = 'success_message';
 
     /**
      * @var string
      */
-    protected $messageView = '_partials.messages.success';
+    protected string $messageView = '_partials.messages.success';
 }

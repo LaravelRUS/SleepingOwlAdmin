@@ -9,15 +9,15 @@ interface Validable
      *
      * @return array
      */
-    public function getValidationRules();
+    public function getValidationRules(): array;
 
     /**
      * @return array
      */
-    public function getValidationMessages();
+    public function getValidationMessages(): array;
 
     /**
      * @return array
      */
-    public function getValidationLabels();
+    public function getValidationLabels(): array;
 }

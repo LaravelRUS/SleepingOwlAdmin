@@ -8,18 +8,18 @@ use Illuminate\Contracts\Support\Renderable;
 interface TableHeaderColumnInterface extends Renderable, Arrayable
 {
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle();
+    public function getTitle(): ?string;
 
     /**
      * @param $title
      * @return $this
      */
-    public function setTitle($title);
+    public function setTitle($title): TableHeaderColumnInterface;
 
     /**
      * @return bool
      */
-    public function isOrderable();
+    public function isOrderable(): bool;
 }

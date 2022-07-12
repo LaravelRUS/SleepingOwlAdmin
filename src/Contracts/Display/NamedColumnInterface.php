@@ -7,13 +7,13 @@ interface NamedColumnInterface
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
-     * @param  string  $name
+     * @param string $name
      * @return $this
      */
-    public function setName($name);
+    public function setName(string $name): NamedColumnInterface;
 
     /**
      * @return mixed

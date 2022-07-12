@@ -2,35 +2,34 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-use Closure;
+use Exception;
 
 class Index extends NamedColumn
 {
     /**
      * @var string
      */
-    protected $view = 'column.custom';
+    protected string $view = 'column.custom';
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $width = '45px';
-
-    /**
-     * @var bool
-     */
-    protected $orderable = false;
+    protected ?string $width = '45px';
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $orderable = false;
+
+    /**
+     * @var bool
+     */
+    protected bool $isSearchable = false;
 
     /**
      * Custom constructor.
      *
-     * @param  null|string  $label
-     * @param  Closure  $callback
+     * @param null|string $label
      */
     public function __construct($label = null)
     {
@@ -43,9 +42,9 @@ class Index extends NamedColumn
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'value' => ++request()->start,

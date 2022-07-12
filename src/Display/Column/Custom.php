@@ -12,29 +12,29 @@ class Custom extends NamedColumn
      *
      * @var Closure
      */
-    protected $callback;
+    protected Closure $callback;
 
     /**
      * @var string
      */
-    protected $view = 'column.custom';
+    protected string $view = 'column.custom';
 
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * Custom constructor.
      *
-     * @param  null|string  $label
-     * @param  null|string  $small
-     * @param  Closure  $callback
+     * @param null|string $label
+     * @param Closure|null $callback
+     * @param null|string $small
      */
     public function __construct($label = null, Closure $callback = null, $small = null)
     {
@@ -53,7 +53,7 @@ class Custom extends NamedColumn
     /**
      * @return Closure
      */
-    public function getCallback()
+    public function getCallback(): Closure
     {
         return $this->callback;
     }
@@ -62,7 +62,7 @@ class Custom extends NamedColumn
      * @param  Closure  $callback
      * @return $this
      */
-    public function setCallback(Closure $callback)
+    public function setCallback(Closure $callback): Custom
     {
         $this->callback = $callback;
 
@@ -74,7 +74,7 @@ class Custom extends NamedColumn
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelValue()
     {
@@ -88,9 +88,9 @@ class Custom extends NamedColumn
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'value' => $this->getModelValue(),

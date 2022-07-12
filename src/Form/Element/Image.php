@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -17,7 +18,7 @@ class Image extends File
     protected static $route = 'image';
 
     /**
-     * @var \Closure
+     * @var Closure
      */
     protected $saveCallback;
 
@@ -36,7 +37,7 @@ class Image extends File
     /**
      * @var string
      */
-    protected $view = 'form.element.image';
+    protected string $view = 'form.element.image';
 
     /**
      * @var bool
@@ -98,10 +99,10 @@ class Image extends File
     /**
      * Set.
      *
-     * @param  \Closure  $callable
+     * @param  Closure  $callable
      * @return $this
      */
-    public function setSaveCallback(\Closure $callable)
+    public function setSaveCallback(Closure $callable)
     {
         $this->saveCallback = $callable;
 
@@ -111,7 +112,7 @@ class Image extends File
     /**
      * Return save callback.
      *
-     * @return \Closure
+     * @return Closure
      */
     public function getSaveCallback()
     {
@@ -121,10 +122,10 @@ class Image extends File
     /**
      * Set.
      *
-     * @param  \Closure  $callable
+     * @param  Closure  $callable
      * @return $this
      */
-    public function setAfterSaveCallback(\Closure $callable)
+    public function setAfterSaveCallback(Closure $callable)
     {
         $this->afterSaveCallback = $callable;
 
@@ -134,7 +135,7 @@ class Image extends File
     /**
      * Return save callback.
      *
-     * @return \Closure
+     * @return Closure
      */
     public function getAfterSaveCallback()
     {
@@ -146,7 +147,7 @@ class Image extends File
      * @param  string  $path
      * @param  string  $filename
      * @param  array  $settings
-     * @return \Closure|File|array
+     * @return Closure|File|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {

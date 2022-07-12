@@ -9,17 +9,17 @@ class View extends Custom
     /**
      * @var string
      */
-    protected $view;
+    protected string $view;
 
     /**
      * @var array
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
-     * @param  string  $view
-     * @param  array  $data
-     * @param  Closure  $callback
+     * @param string $view
+     * @param array $data
+     * @param Closure|null $callback
      */
     public function __construct($view, array $data = [], Closure $callback = null)
     {
@@ -32,7 +32,7 @@ class View extends Custom
     /**
      * @return string
      */
-    public function getView()
+    public function getView(): string
     {
         return $this->view;
     }
@@ -41,7 +41,7 @@ class View extends Custom
      * @param  string  $view
      * @return $this
      */
-    public function setView($view)
+    public function setView($view): View
     {
         $this->view = $view;
 
@@ -58,7 +58,7 @@ class View extends Custom
      * @param  array  $data
      * @return $this
      */
-    public function setData(array $data)
+    public function setData(array $data): View
     {
         $this->data = $data;
 

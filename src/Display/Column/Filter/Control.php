@@ -16,7 +16,7 @@ class Control extends BaseColumnFilter
     /**
      * @var string
      */
-    protected $view = 'column.filter.control';
+    protected string $view = 'column.filter.control';
 
     /**
      * @var string

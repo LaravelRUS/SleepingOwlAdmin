@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -30,7 +31,7 @@ class DisplayTable extends Display
     /**
      * @var string
      */
-    protected $view = 'display.table';
+    protected string $view = 'display.table';
 
     /**
      * @var array
@@ -75,7 +76,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function initialize()
     {
@@ -91,7 +92,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
+     * @return array|Translator|null|string
      */
     public function getNewEntryButtonText()
     {
@@ -122,10 +123,10 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param  array  $parameters
+     * @param array $parameters
      * @return $this
      */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters): self
     {
         $this->parameters = $parameters;
 
@@ -133,11 +134,11 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param  string  $key
+     * @param string $key
      * @param  mixed  $value
      * @return $this
      */
-    public function setParameter($key, $value)
+    public function setParameter(string $key, mixed $value):self
     {
         $this->parameters[$key] = $value;
 
@@ -145,11 +146,11 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param  int  $perPage
-     * @param  string  $pageName
+     * @param int $perPage
+     * @param string $pageName
      * @return $this
      */
-    public function paginate($perPage = 25, $pageName = 'page')
+    public function paginate(int $perPage = 25, string $pageName = 'page'): self
     {
         $this->paginate = (int) $perPage;
         $this->pageName = $pageName;
@@ -160,7 +161,7 @@ class DisplayTable extends Display
     /**
      * @return $this
      */
-    public function disablePagination()
+    public function disablePagination(): self
     {
         $this->paginate = 0;
 
@@ -170,7 +171,7 @@ class DisplayTable extends Display
     /**
      * @return bool
      */
-    public function usePagination()
+    public function usePagination(): bool
     {
         return $this->paginate > 0;
     }
@@ -197,7 +198,7 @@ class DisplayTable extends Display
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function toArray()
     {
@@ -227,7 +228,7 @@ class DisplayTable extends Display
     /**
      * @return Collection|LengthAwarePaginator|Builder
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCollection()
     {
@@ -249,7 +250,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder|Builder  $query
+     * @param Builder $query
      */
     protected function modifyQuery(Builder $query)
     {

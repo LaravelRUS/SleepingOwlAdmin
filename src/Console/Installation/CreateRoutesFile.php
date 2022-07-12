@@ -29,7 +29,7 @@ class CreateRoutesFile extends Installator
      *
      * @return bool
      */
-    public function installed()
+    public function installed(): bool
     {
         return file_exists($this->getFilePath());
     }
@@ -37,7 +37,7 @@ class CreateRoutesFile extends Installator
     /**
      * @return string
      */
-    protected function getFilePath()
+    protected function getFilePath(): string
     {
         $bootstrapDirectory = $this->config->get('bootstrapDirectory', app_path('Admin'));
 

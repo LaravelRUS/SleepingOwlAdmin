@@ -47,18 +47,18 @@ class Manager implements WysiwygMangerInterface
     /**
      * @return string|null
      */
-    public function getDefaultEditorId()
+    public function getDefaultEditorId(): ?string
     {
         return $this->config->get('default', 'ckeditor');
     }
 
     /**
-     * @param  string  $editorId
+     * @param string $editorId
      * @param  WysiwygFilterInterface|null  $filter
-     * @param  string|null  $name
+     * @param string|null $name
      * @return WysiwygEditorInterface
      */
-    public function register($editorId, WysiwygFilterInterface $filter = null, $name = null)
+    public function register(string $editorId, WysiwygFilterInterface $filter = null, string $name = null): WysiwygEditorInterface
     {
         $this->getFilters()->push(
             $editor = new Editor($editorId, $name, $filter, $this->config->get($editorId, []))
@@ -76,10 +76,10 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param  string  $editorId
+     * @param string $editorId
      * @return WysiwygEditorInterface|null
      */
-    public function getEditor($editorId)
+    public function getEditor(string $editorId): WysiwygEditorInterface
     {
         return $this->getFilters()->filter(function (WysiwygEditorInterface $editor) use ($editorId) {
             return $editor->getId() == $editorId;
@@ -92,12 +92,13 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param  string  $editorId
-     * @return bool
+     * @param string $editorId
+     * @return false
      */
-    public function loadEditor($editorId)
+    public function loadEditor(string $editorId): bool
     {
         if (! is_null($editor = $this->getEditor($editorId))) {
+
             if ($editor->isUsed()) {
                 return true;
             }
@@ -109,13 +110,13 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param  string  $editorId
-     * @param  string  $text
+     * @param string $editorId
+     * @param string $text
      * @return string string
      *
      * @throws WysiwygException
      */
-    public function applyFilter($editorId, $text)
+    public function applyFilter(string $editorId, string $text): string
     {
         if (! is_null($editor = $this->getEditor($editorId))) {
             return $editor->applyFilter($text);
@@ -135,7 +136,7 @@ class Manager implements WysiwygMangerInterface
     /**
      * @return WysiwygEditorInterface
      */
-    protected function getDefaultEditor()
+    protected function getDefaultEditor(): WysiwygEditorInterface
     {
         return $this->getEditor($this->getDefaultEditor());
     }

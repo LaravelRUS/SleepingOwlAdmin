@@ -152,11 +152,11 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * Добавление глобальной переменной.
      *
-     * @param  string  $key
+     * @param string $key
      * @param  mixed  $value
-     * @return self
+     * @return AssetsContract
      */
-    public function putGlobalVar($key, $value)
+    public function putGlobalVar(string $key, $value): AssetsContract
     {
         $this->globalVars[$key] = $value;
 
@@ -166,7 +166,7 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * @return array
      */
-    public function globalVars()
+    public function globalVars(): array
     {
         return $this->globalVars;
     }
@@ -174,7 +174,7 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->renderGlobalVars().PHP_EOL.parent::render();
     }
@@ -182,7 +182,7 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * @return string
      */
-    public function renderGlobalVars()
+    public function renderGlobalVars(): string
     {
         $json = json_encode($this->globalVars);
 

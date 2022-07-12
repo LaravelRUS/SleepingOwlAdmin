@@ -2,22 +2,24 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use KodiCMS\Assets\Exceptions\PackageException;
 use KodiCMS\Assets\Facades\PackageManager;
+use KodiCMS\Assets\Package;
 
 trait Assets
 {
     /**
-     * @var \KodiCMS\Assets\Package
+     * @var Package
      */
     protected $package;
 
     /**
-     * @param  string  $handle
-     * @param  string  $script
-     * @param  array  $dependency
+     * @param string|null $handle
+     * @param string $script
+     * @param array $dependency
      * @return $this
      */
-    public function addScript($handle, $script, array $dependency = [])
+    public function addScript(?string $handle, string $script, array $dependency = []): Assets
     {
         if (is_null($handle)) {
             $handle = $script;
@@ -29,12 +31,12 @@ trait Assets
     }
 
     /**
-     * @param  string  $handle
-     * @param  string  $style
-     * @param  array  $attributes
+     * @param string|null $handle
+     * @param string $style
+     * @param array $attributes
      * @return $this
      */
-    public function addStyle($handle, $style, array $attributes = [])
+    public function addStyle(?string $handle, string $style, array $attributes = []): Assets
     {
         if (is_null($handle)) {
             $handle = $style;
@@ -49,7 +51,7 @@ trait Assets
      * @param string ... $package
      * @return $this
      */
-    public function withPackage($packages)
+    public function withPackage($packages): Assets
     {
         $packages = is_array($packages)
             ? $packages
@@ -67,6 +69,9 @@ trait Assets
         }
     }
 
+    /**
+     * @throws PackageException
+     */
     protected function includePackage()
     {
         app('sleeping_owl.meta')->loadPackage($this->package->getName());

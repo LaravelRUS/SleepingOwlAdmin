@@ -5,6 +5,9 @@ namespace SleepingOwl\Admin\Display\Column\Editable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
+use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Form\FormDefault;
 
 class Number extends EditableColumn implements ColumnEditableInterface
@@ -76,7 +79,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'min' => $this->min,
@@ -86,11 +89,12 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @return void
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
+     * @throws FormElementException
+     * @throws FormException
+     * @throws RepositoryException
      */
     public function save(Request $request)
     {

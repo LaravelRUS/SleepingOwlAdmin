@@ -26,7 +26,7 @@ class UserManagerCommand extends Command
     /**
      * @return null|void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function fire()
     {
@@ -50,7 +50,7 @@ class UserManagerCommand extends Command
     /**
      * @return null|void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle()
     {
@@ -72,9 +72,9 @@ class UserManagerCommand extends Command
     /**
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getUserClass()
+    public function getUserClass(): string
     {
         if (is_null($userClass = config('auth.providers.'.config('sleeping_owl.auth_provider', 'users').'.model'))) {
             throw new Exception('User class not specified in config/auth.php providers.');
@@ -84,7 +84,7 @@ class UserManagerCommand extends Command
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getUsers()
     {
@@ -97,7 +97,7 @@ class UserManagerCommand extends Command
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function createNewUser()
     {
@@ -154,7 +154,7 @@ class UserManagerCommand extends Command
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function deleteUser()
     {
@@ -179,7 +179,7 @@ class UserManagerCommand extends Command
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function changePassword()
     {
@@ -221,7 +221,7 @@ class UserManagerCommand extends Command
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['create', 'c', InputOption::VALUE_NONE, 'Create new user.'],

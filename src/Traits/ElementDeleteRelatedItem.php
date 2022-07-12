@@ -2,25 +2,27 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use SleepingOwl\Admin\Contracts\Form\Element\MustDeleteRelatedItem;
+
 trait ElementDeleteRelatedItem
 {
     /**
-     * @var bool
+     * @var bool|null
      */
-    protected $deleteRelatedItem = false;
+    protected ?bool $deleteRelatedItem = false;
 
     /**
      * @return bool
      */
-    public function isDeleteRelatedItem()
+    public function isDeleteRelatedItem(): bool
     {
         return $this->deleteRelatedItem;
     }
 
     /**
-     * @return $this
+     * @return MustDeleteRelatedItem
      */
-    public function deleteRelatedItem()
+    public function deleteRelatedItem(): MustDeleteRelatedItem
     {
         $this->deleteRelatedItem = true;
 

@@ -80,7 +80,7 @@ abstract class Command extends ConsoleCommand
     /**
      * @return Filesystem
      */
-    public function files()
+    public function files(): Filesystem
     {
         return $this->files;
     }

@@ -41,9 +41,9 @@ abstract class Display implements DisplayInterface
     use HtmlAttributes, Assets, Renderable;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $modelClass;
+    protected ?string $modelClass = null;
 
     /**
      * @var array
@@ -189,10 +189,10 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param  string  $modelClass
+     * @param string $modelClass
      * @return $this
      */
-    public function setModelClass($modelClass)
+    public function setModelClass(string $modelClass)
     {
         if (is_null($this->modelClass)) {
             $this->modelClass = $modelClass;
@@ -220,10 +220,10 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 

@@ -7,13 +7,13 @@ use Closure;
 interface HasSyncCallback
 {
     /**
-     * @return \Closure
+     * @return Closure
      */
-    public function getSyncCallback();
+    public function getSyncCallback(): Closure;
 
     /**
-     * @param  \Closure  $callable
+     * @param Closure $callable
      * @return $this
      */
-    public function setSyncCallback(Closure $callable);
+    public function setSyncCallback(Closure $callable): HasSyncCallback;
 }

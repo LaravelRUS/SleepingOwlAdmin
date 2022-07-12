@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Console\Commands;
 
 use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use SleepingOwl\Admin\Console\Installation\CreateSectionServiceProvider;
 
 class SectionProvider extends Command
@@ -25,7 +26,7 @@ class SectionProvider extends Command
     /**
      * @param  Repository  $files
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function fire(Repository $files)
     {
@@ -42,7 +43,7 @@ class SectionProvider extends Command
     /**
      * @param  Repository  $files
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function handle(Repository $files)
     {

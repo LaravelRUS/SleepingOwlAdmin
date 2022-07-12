@@ -13,17 +13,17 @@ class Column extends FormElements implements ColumnInterface
     use HtmlAttributes, Width;
 
     /**
-     * @var int
+     * @var null|string
      */
-    protected $size = 'col-md-';
+    protected ?string $size = 'col-md-';
 
     /**
      * @var string
      */
-    protected $view = 'form.element.column';
+    protected string $view = 'form.element.column';
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function initialize()
     {
@@ -33,18 +33,18 @@ class Column extends FormElements implements ColumnInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSize()
+    public function getSize(): ?string
     {
         return $this->size;
     }
 
     /**
-     * @param  string  $size
-     * @return $this
+     * @param string $size
+     * @return ColumnInterface
      */
-    public function setSize($size)
+    public function setSize(string $size): ColumnInterface
     {
         if (strpos($size, 'col-') === false) {
             $size = 'col-'.$size.'-';
@@ -58,9 +58,9 @@ class Column extends FormElements implements ColumnInterface
     /**
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function getClass()
+    protected function getClass(): string
     {
         $width = $this->getWidth();
         if (is_numeric($width)) {
@@ -79,9 +79,9 @@ class Column extends FormElements implements ColumnInterface
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'width' => $this->getWidth(),

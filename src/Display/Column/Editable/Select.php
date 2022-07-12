@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
@@ -21,12 +22,12 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var null
@@ -65,7 +66,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
      * @param  null  $label
      * @param  array  $options
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws SelectException
      */
     public function __construct($name, $label = null, $options = [], $small = null)
     {
@@ -221,7 +222,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return array_merge(parent::toArray(), [
             'options' => $this->mutateOptions(),
@@ -236,7 +237,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * @param  \Illuminate\Http\Request  $request
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws SelectException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */

@@ -3,18 +3,19 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 
 class Range extends BaseColumnFilter
 {
     /**
      * @var string
      */
-    protected $view = 'column.filter.range';
+    protected string $view = 'column.filter.range';
 
     /**
      * @var bool
      */
-    protected $inline = false;
+    protected ?bool $inline = false;
 
     /**
      * @var ColumnFilterInterface|BaseColumnFilter
@@ -99,7 +100,7 @@ class Range extends BaseColumnFilter
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'from' => $this->getFrom(),
@@ -111,7 +112,7 @@ class Range extends BaseColumnFilter
      * @param  mixed  $range
      * @return array|mixed|null|void
      *
-     * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
+     * @throws FilterOperatorException
      */
     public function parseValue($range)
     {

@@ -38,12 +38,12 @@ interface FilterInterface extends Initializable
      *
      * @return bool
      */
-    public function isActive();
+    public function isActive(): bool;
 
     /**
      * @return string
      */
-    public function getTitle();
+    public function getTitle(): string;
 
     /**
      * Apply filter to the query.

@@ -19,7 +19,7 @@ abstract class FilterBase implements FilterInterface
     protected $alias;
 
     /**
-     * @var string|\Closure|null
+     * @var string|Closure|null
      */
     protected $title;
 
@@ -30,7 +30,7 @@ abstract class FilterBase implements FilterInterface
 
     /**
      * @param  string  $name
-     * @param  string|\Closure|null  $title
+     * @param  string|Closure|null  $title
      */
     public function __construct($name, $title = null)
     {
@@ -56,16 +56,16 @@ abstract class FilterBase implements FilterInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): FilterBase
     {
         $this->name = $name;
 
@@ -75,7 +75,7 @@ abstract class FilterBase implements FilterInterface
     /**
      * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         if (! $this->alias) {
             return $this->getName();
@@ -88,7 +88,7 @@ abstract class FilterBase implements FilterInterface
      * @param  string  $alias
      * @return $this
      */
-    public function setAlias($alias)
+    public function setAlias($alias): FilterBase
     {
         $this->alias = $alias;
 
@@ -98,7 +98,7 @@ abstract class FilterBase implements FilterInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if (is_null($this->title)) {
             return Str::studly($this->getAlias());
@@ -115,7 +115,7 @@ abstract class FilterBase implements FilterInterface
      * @param  Closure|string  $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle($title): FilterBase
     {
         $this->title = $title;
 
@@ -144,7 +144,7 @@ abstract class FilterBase implements FilterInterface
     /**
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         return ! is_null($this->getValue());
     }

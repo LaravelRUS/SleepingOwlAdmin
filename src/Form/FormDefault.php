@@ -5,14 +5,18 @@ namespace SleepingOwl\Admin\Form;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
+use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Form\Element\Upload;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
@@ -22,56 +26,56 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * View to render.
      *
-     * @var string|\Illuminate\View\View
+     * @var string
      */
-    protected $view = 'form.default';
+    protected string $view = 'form.default';
 
     /**
      * Form related class.
      *
      * @var string
      */
-    protected $class;
+    protected string $class;
 
     /**
      * @var FormButtons
      */
-    protected $buttons;
+    protected FormButtons $buttons;
 
     /**
      * Form related repository.
      *
      * @var RepositoryInterface
      */
-    protected $repository;
+    protected RepositoryInterface $repository;
 
     /**
      * Form action url.
      *
      * @var string
      */
-    protected $action;
+    protected string $action;
 
     /**
      * Form related model instance.
      *
      * @var Model
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * Currently loaded model id.
      *
-     * @var int
+     * @var string|int
      */
-    protected $id;
+    protected string|int $id;
 
     /**
      * Is form already initialized?
      *
      * @var bool
      */
-    protected $initialized = false;
+    protected bool $initialized = false;
 
     /**
      * FormDefault constructor.
@@ -90,7 +94,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * Initialize form.
      *
-     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
+     * @throws RepositoryException
      */
     public function initialize()
     {
@@ -131,7 +135,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @return $this
      */
-    public function withFiles()
+    public function withFiles(): FormDefault
     {
         $this->setHtmlAttribute('enctype', 'multipart/form-data');
 
@@ -141,7 +145,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * @return FormButtons
      */
-    public function getButtons()
+    public function getButtons(): FormButtons
     {
         return $this->buttons;
     }
@@ -150,7 +154,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param  FormButtonsInterface  $buttons
      * @return $this
      */
-    public function setButtons(FormButtonsInterface $buttons)
+    public function setButtons(FormButtonsInterface $buttons): FormDefault
     {
         $this->buttons = $buttons;
 
@@ -160,7 +164,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * @return RepositoryInterface
      */
-    public function getRepository()
+    public function getRepository(): RepositoryInterface
     {
         return $this->repository;
     }
@@ -168,16 +172,16 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
 
     /**
-     * @param  string  $action
+     * @param string $action
      * @return $this
      */
-    public function setAction($action)
+    public function setAction(string $action): FormDefault
     {
         if (is_null($this->action)) {
             $this->action = $action;
@@ -189,18 +193,16 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
 
     /**
-     * @param  string  $class
+     * @param string $class
      * @return $this
-     *
-     * @throws FormException
      */
-    public function setModelClass($class)
+    public function setModelClass(string $class): FormDefault
     {
         if (is_null($this->class)) {
             $this->class = $class;
@@ -210,52 +212,12 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @return \SleepingOwl\Admin\Form\FormElementsCollection
-     *
-     * @see getElements()
-     * @deprecated 4.5.0
-     */
-    public function getItems()
-    {
-        return $this->getElements();
-    }
-
-    /**
-     * @param  array|\SleepingOwl\Admin\Contracts\Form\FormElementInterface  $items
-     * @return $this
-     *
-     * @deprecated 4.5.0
-     * @see setElements()
-     */
-    public function setItems($items)
-    {
-        if (! is_array($items)) {
-            $items = func_get_args();
-        }
-
-        return $this->setElements($items);
-    }
-
-    /**
-     * @param  \SleepingOwl\Admin\Contracts\Form\FormElementInterface  $item
-     * @return $this
-     *
-     * @deprecated 4.5.0
-     * @see addElement()
-     */
-    public function addItem($item)
-    {
-        return $this->addElement($item);
-    }
-
-    /**
      * Set currently loaded model id.
      *
-     * @param  int  $id
-     *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
+     * @param int $id
+     * @return FormDefault
      */
-    public function setId($id)
+    public function setId(int $id): FormDefault
     {
         if (is_null($this->id)) {
             /**
@@ -283,6 +245,8 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
                 $this->setModelClass(get_class($model));
             }
         }
+
+        return $this;
     }
 
     /**
@@ -290,7 +254,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @return ModelConfigurationInterface
      */
-    public function getModelConfiguration()
+    public function getModelConfiguration(): ModelConfigurationInterface
     {
         $class = $this->class;
 
@@ -304,7 +268,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -313,7 +277,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): FormDefault
     {
         $this->model = $model;
 
@@ -324,7 +288,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param  ModelConfigurationInterface  $modelConfiguration
      * @return bool
      */
-    public function validModelConfiguration(ModelConfigurationInterface $modelConfiguration = null)
+    public function validModelConfiguration(ModelConfigurationInterface $modelConfiguration = null): bool
     {
         return is_null($modelConfiguration) || $modelConfiguration === $this->getModelConfiguration();
     }
@@ -332,11 +296,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * Save instance.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  ModelConfigurationInterface  $modelConfiguration
+     * @param Request $request
+     * @param ModelConfigurationInterface|null $modelConfiguration
      * @return bool
      */
-    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
+    public function saveForm(Request $request, ModelConfigurationInterface $modelConfiguration = null)
     {
         if (! $this->validModelConfiguration($modelConfiguration)) {
             return false;
@@ -365,7 +329,11 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         return true;
     }
 
-    protected function saveWithRelations(Model $model)
+    /**
+     * @param Model $model
+     * @return void
+     */
+    protected function saveWithRelations(Model $model): void
     {
         $this->saveBelongsToRelations($model);
         $model->save();
@@ -376,7 +344,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param  Model  $model
      * @return void
      */
-    protected function saveBelongsToRelations(Model $model)
+    protected function saveBelongsToRelations(Model $model): void
     {
         foreach ($model->getRelations() as $name => $relation) {
             if ($model->{$name}() instanceof BelongsTo && ! is_null($relation)) {
@@ -390,7 +358,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param  Model  $model
      * @return void
      */
-    protected function saveHasOneRelations(Model $model)
+    protected function saveHasOneRelations(Model $model): void
     {
         foreach ($model->getRelations() as $name => $relation) {
             if ($model->{$name}() instanceof HasOneOrMany && ! is_null($relation)) {
@@ -408,12 +376,12 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
-     * @param  ModelConfigurationInterface  $modelConfiguration
+     * @param Request $request
+     * @param ModelConfigurationInterface|null $modelConfiguration
      *
      * @throws ValidationException
      */
-    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $modelConfiguration = null)
+    public function validateForm(Request $request, ModelConfigurationInterface $modelConfiguration = null): void
     {
         if (! $this->validModelConfiguration($modelConfiguration)) {
             return;
@@ -444,7 +412,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         // This element needs only in template
         $this->setHtmlAttribute('method', 'POST');
@@ -462,7 +430,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * @return Model
      */
-    protected function makeModel()
+    protected function makeModel(): Model
     {
         $class = $this->getClass();
 

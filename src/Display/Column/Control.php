@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
@@ -14,37 +15,37 @@ class Control extends TableColumn
     /**
      * @var string
      */
-    protected $view = 'column.control';
+    protected string $view = 'column.control';
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $width = '110px';
+    protected ?string $width = '110px';
 
     /**
      * @var Collection
      */
-    protected $buttons;
+    protected Collection $buttons;
 
     /**
      * @var bool
      */
-    protected $editable = true;
+    protected bool $editable = true;
 
     /**
      * @var bool
      */
-    protected $deletable = true;
+    protected bool $deletable = true;
 
     /**
      * @var bool
      */
-    protected $destroyable = true;
+    protected bool $destroyable = true;
 
     /**
      * @var bool
      */
-    protected $restorable = true;
+    protected bool $restorable = true;
 
     /**
      * Control constructor.
@@ -113,7 +114,7 @@ class Control extends TableColumn
      * @param  ControlButtonInterface  $button
      * @return $this
      */
-    public function addButton(ControlButtonInterface $button)
+    public function addButton(ControlButtonInterface $button): Control
     {
         $this->buttons->push($button);
 
@@ -126,7 +127,7 @@ class Control extends TableColumn
      *
      * @internal param ControlButtonInterface $button
      */
-    public function addButtons(array $buttons)
+    public function addButtons(array $buttons): Control
     {
         foreach ($buttons as $button) {
             if ($button instanceof ControlButtonInterface) {
@@ -138,45 +139,45 @@ class Control extends TableColumn
     }
 
     /**
-     * @param  bool  $editable
+     * @param bool $editable
      * @return $this
      */
-    public function setEditable($editable)
+    public function setEditable(bool $editable): Control
     {
-        $this->editable = (bool) $editable;
+        $this->editable = $editable;
 
         return $this;
     }
 
     /**
-     * @param  bool  $deletable
+     * @param bool $deletable
      * @return $this
      */
-    public function setDeletable($deletable)
+    public function setDeletable(bool $deletable): Control
     {
-        $this->deletable = (bool) $deletable;
+        $this->deletable = $deletable;
 
         return $this;
     }
 
     /**
-     * @param  bool  $destroyable
+     * @param bool $destroyable
      * @return $this
      */
-    public function setDestroyable($destroyable)
+    public function setDestroyable(bool $destroyable): Control
     {
-        $this->destroyable = (bool) $destroyable;
+        $this->destroyable = $destroyable;
 
         return $this;
     }
 
     /**
-     * @param  bool  $restorable
+     * @param bool $restorable
      * @return $this
      */
-    public function setRestorable($restorable)
+    public function setRestorable(bool $restorable): Control
     {
-        $this->restorable = (bool) $restorable;
+        $this->restorable = $restorable;
 
         return $this;
     }
@@ -184,7 +185,7 @@ class Control extends TableColumn
     /**
      * Check if instance supports soft-deletes and trashed.
      *
-     * @return bool|\Illuminate\Database\Eloquent\Builder
+     * @return bool|Builder
      */
     protected function isTrashed()
     {
@@ -200,7 +201,7 @@ class Control extends TableColumn
      *
      * @return bool
      */
-    protected function isEditable()
+    protected function isEditable(): bool
     {
         return
             $this->editable
@@ -215,7 +216,7 @@ class Control extends TableColumn
      *
      * @return bool
      */
-    protected function isDeletable()
+    protected function isDeletable(): bool
     {
         return
             $this->deletable
@@ -232,7 +233,7 @@ class Control extends TableColumn
      *
      * @return bool
      */
-    protected function isDestroyable()
+    protected function isDestroyable(): bool
     {
         return
             $this->destroyable
@@ -249,7 +250,7 @@ class Control extends TableColumn
      *
      * @return bool
      */
-    protected function isRestorable()
+    protected function isRestorable(): bool
     {
         return
             $this->restorable
@@ -265,7 +266,7 @@ class Control extends TableColumn
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): Control
     {
         parent::setModel($model);
 
@@ -275,7 +276,7 @@ class Control extends TableColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'buttons' => $this->buttons

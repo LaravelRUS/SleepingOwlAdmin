@@ -7,7 +7,7 @@ class Text extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.text';
+    protected string $view = 'form.element.text';
 
     /**
      * @var bool

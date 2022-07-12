@@ -9,12 +9,12 @@ class Checkbox extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.checkbox';
+    protected string $view = 'column.checkbox';
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $width = '30px';
+    protected ?string $width = '30px';
 
     /**
      * Checkbox constructor.
@@ -32,12 +32,12 @@ class Checkbox extends NamedColumn
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @return mixed
@@ -50,7 +50,7 @@ class Checkbox extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'value' => $this->getModelValue(),

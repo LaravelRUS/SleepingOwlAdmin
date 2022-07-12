@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 
@@ -27,7 +28,7 @@ class Filters extends Extension implements Initializable
     /**
      * @return $this
      */
-    public function clear()
+    public function clear(): Filters
     {
         $this->filters = new Collection();
 
@@ -36,9 +37,9 @@ class Filters extends Extension implements Initializable
 
     /**
      * @param  array|FilterInterface  $filters
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @return DisplayInterface
      */
-    public function set($filters)
+    public function set($filters): DisplayInterface
     {
         if (! is_array($filters)) {
             $filters = func_get_args();
@@ -54,7 +55,7 @@ class Filters extends Extension implements Initializable
     }
 
     /**
-     * @return Collection|FilterInterface[]
+     * @return Collection|array|FilterInterface[]
      */
     public function all()
     {
@@ -65,7 +66,7 @@ class Filters extends Extension implements Initializable
      * @param  FilterInterface  $filter
      * @return $this
      */
-    public function push(FilterInterface $filter)
+    public function push(FilterInterface $filter): Filters
     {
         $this->filters->push($filter);
 
@@ -83,10 +84,10 @@ class Filters extends Extension implements Initializable
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Filters
     {
         $this->title = $title;
 
@@ -96,7 +97,7 @@ class Filters extends Extension implements Initializable
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return app('sleeping_owl.template')->view('display.extensions.filter_title', [
             'filter_title' => $this->title,
@@ -109,7 +110,7 @@ class Filters extends Extension implements Initializable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'filters' => $this->filters->toArray(),

@@ -7,10 +7,10 @@ interface MustDeleteRelatedItem
     /**
      * @return bool
      */
-    public function isDeleteRelatedItem();
+    public function isDeleteRelatedItem(): bool;
 
     /**
      * @return $this
      */
-    public function deleteRelatedItem();
+    public function deleteRelatedItem(): MustDeleteRelatedItem;
 }

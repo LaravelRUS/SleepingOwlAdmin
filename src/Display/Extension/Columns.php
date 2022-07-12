@@ -4,10 +4,14 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Column\Control;
 
@@ -28,12 +32,12 @@ class Columns extends Extension implements Initializable, Renderable
     /**
      * @var string
      */
-    protected $view = 'display.extensions.columns';
+    protected string $view = 'display.extensions.columns';
 
     /**
      * @var bool
      */
-    protected $initialize = false;
+    protected bool $initialize = false;
 
     /**
      * @var Control
@@ -51,7 +55,7 @@ class Columns extends Extension implements Initializable, Renderable
      * @param  ColumnInterface  $controlColumn
      * @return $this
      */
-    public function setControlColumn(ColumnInterface $controlColumn)
+    public function setControlColumn(ColumnInterface $controlColumn): self
     {
         $this->controlColumn = $controlColumn;
 
@@ -103,7 +107,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
+     * @return Collection|ColumnInterface[]
      */
     public function all()
     {
@@ -112,7 +116,7 @@ class Columns extends Extension implements Initializable, Renderable
 
     /**
      * @param $columns
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @return DisplayInterface
      */
     public function set($columns)
     {
@@ -128,10 +132,10 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param  ColumnInterface  $column
+     * @param ColumnInterface|null $column
      * @return $this
      */
-    public function push(ColumnInterface $column)
+    public function push(?ColumnInterface $column): self
     {
         $this->columns->push($column);
 
@@ -141,7 +145,7 @@ class Columns extends Extension implements Initializable, Renderable
     /**
      * @return bool
      */
-    public function isInitialize()
+    public function isInitialize(): bool
     {
         return $this->initialize;
     }
@@ -151,7 +155,7 @@ class Columns extends Extension implements Initializable, Renderable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'columns' => $this->all(),
@@ -195,9 +199,11 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Builder $query
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
+    public function modifyQuery(Builder $query)
     {
         $orders = app('request')->get('order', []);
 

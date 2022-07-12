@@ -4,12 +4,16 @@ namespace SleepingOwl\Admin;
 
 use Closure;
 use Collective\Html\HtmlServiceProvider;
+use Exception;
 use Illuminate\Config\Repository as ConfigRepository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\ProviderRepository;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -92,11 +96,12 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param  string  $class
-     * @param  Closure|null  $callback
+     * @param string $class
+     * @param Closure|null $callback
      * @return $this|AdminInterface
      *
      * @throws Exceptions\RepositoryException
+     * @throws BindingResolutionException
      */
     public function registerModel($class, Closure $callback = null)
     {
@@ -113,14 +118,14 @@ class Admin implements AdminInterface
      * @param  ModelConfigurationInterface  $model
      * @return $this
      */
-    public function register(ModelConfigurationInterface $model)
+    public function register(ModelConfigurationInterface $model): AdminInterface
     {
         $this->setModel($model->getClass(), $model);
 
         if ($model instanceof Initializable) {
             try {
                 $model->initialize();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error($e->getMessage());
             }
         }
@@ -132,7 +137,7 @@ class Admin implements AdminInterface
      * @param  array  $sections
      * @return $this
      */
-    public function registerSections(array $sections)
+    public function registerSections(array $sections): AdminInterface
     {
         foreach ($sections as $model => $section) {
             if (class_exists($section)) {
@@ -148,40 +153,41 @@ class Admin implements AdminInterface
     /**
      * @return array
      */
-    public function getMissedSections()
+    public function getMissedSections(): array
     {
         return $this->missedSections;
     }
 
     /**
-     * @param  string  $class
+     * @param string $key
      * @param  ModelConfigurationInterface  $model
      * @return $this
      */
-    public function setModel($class, ModelConfigurationInterface $model)
+    public function setModel(string $key, ModelConfigurationInterface $model): AdminInterface
     {
-        $this->models->put($class, $model);
+        $this->models->put($key, $model);
 
         return $this;
     }
 
     /**
-     * @param  string|object  $class
+     * @param string $alias
      * @return mixed|null|ModelConfigurationInterface
      *
      * @throws Exceptions\RepositoryException
+     * @throws BindingResolutionException
      */
-    public function getModel($class)
+    public function getModel($alias): ModelConfigurationInterface
     {
-        if (is_object($class)) {
-            $class = get_class($class);
+        if (is_object($alias)) {
+            $alias = get_class($alias);
         }
 
-        if (! $this->hasModel($class)) {
-            $this->registerModel($class);
+        if (! $this->hasModel($alias)) {
+            $this->registerModel($alias);
         }
 
-        return $this->models->get($class);
+        return $this->models->get($alias);
     }
 
     /**
@@ -193,10 +199,10 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param  string  $class
+     * @param string $class
      * @return bool
      */
-    public function hasModel($class)
+    public function hasModel(string $class): bool
     {
         return $this->models->has($class);
     }
@@ -204,7 +210,7 @@ class Admin implements AdminInterface
     /**
      * @return NavigationInterface
      */
-    public function navigation()
+    public function navigation(): NavigationInterface
     {
         return $this->template()->navigation();
     }
@@ -212,7 +218,7 @@ class Admin implements AdminInterface
     /**
      * @return MetaInterface
      */
-    public function meta()
+    public function meta(): MetaInterface
     {
         return $this->template()->meta();
     }
@@ -220,35 +226,36 @@ class Admin implements AdminInterface
     /**
      * @return TemplateInterface
      */
-    public function template()
+    public function template(): TemplateInterface
     {
         return $this->template;
     }
 
     /**
      * @param $class
-     * @param  int  $priority
-     * @return mixed
+     * @param int $priority
+     * @return Navigation\Page
      *
      * @throws Exceptions\RepositoryException
+     * @throws BindingResolutionException
      */
-    public function addMenuPage($class = null, $priority = 100)
+    public function addMenuPage($class = null, int $priority = 100): Navigation\Page
     {
         return $this->getModel($class)->addToNavigation($priority);
     }
 
     /**
      * @param  string|Renderable  $content
-     * @param  string|null  $title
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @param string|null $title
+     * @return View|Factory
      */
-    public function view($content, $title = null)
+    public function view($content, string $title = null)
     {
         return $this->app[AdminController::class]->renderContent($content, $title);
     }
 
     /**
-     * Register all of the base service providers.
+     * Register all the base service providers.
      *
      * @return void
      */

@@ -3,9 +3,11 @@
 namespace SleepingOwl\Admin\Display;
 
 use Closure;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
+use KodiCMS\Assets\Exceptions\PackageException;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
@@ -25,19 +27,19 @@ abstract class TableColumn implements ColumnInterface
     use SmallDisplay, Visibled;
 
     /**
-     * @var \Closure
+     * @var Closure|null
      */
-    protected $searchCallback = null;
+    protected ?Closure $searchCallback = null;
 
     /**
-     * @var \Closure
+     * @var Closure|null
      */
-    protected $orderCallback = null;
+    protected ?Closure $orderCallback = null;
 
     /**
-     * @var \Closure
+     * @var Closure|null
      */
-    protected $filterCallback = null;
+    protected ?Closure $filterCallback = null;
 
     /**
      * @var null
@@ -48,45 +50,45 @@ abstract class TableColumn implements ColumnInterface
      *
      * @var TableHeaderColumnInterface
      */
-    protected $header;
+    protected mixed $header;
 
     /**
      * Model instance currently rendering.
      *
      * @var Model
      */
-    protected $model;
+    protected Model $model;
 
     /**
-     * Column appendant.
+     * Column appended.
      *
-     * @var ColumnInterface
+     * @var ColumnInterface|null
      */
-    protected $append;
+    protected ?ColumnInterface $append = null;
 
     /**
      * Column width.
      *
-     * @var string
+     * @var string|null
      */
-    protected $width = null;
+    protected ?string $width = null;
 
     /**
      * @var OrderByClauseInterface
      */
-    protected $orderByClause;
+    protected OrderByClauseInterface $orderByClause;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * TableColumn constructor.
      *
-     * @param  string|null  $label
+     * @param string|null $label
      */
-    public function __construct($label = null)
+    public function __construct(string $label = null)
     {
         $this->header = app(TableHeaderColumnInterface::class);
 
@@ -99,6 +101,7 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * Initialize column.
+     * @throws PackageException
      */
     public function initialize()
     {
@@ -109,7 +112,7 @@ abstract class TableColumn implements ColumnInterface
      * @param $columnMetaClass
      * @return $this
      */
-    public function setMetaData($columnMetaClass)
+    public function setMetaData($columnMetaClass): TableColumn
     {
         $this->columMetaClass = $columnMetaClass;
 
@@ -118,8 +121,9 @@ abstract class TableColumn implements ColumnInterface
 
     /**
      * @return mixed
+     * @throws BindingResolutionException
      */
-    public function getMetaData()
+    public function getMetaData(): mixed
     {
         return $this->columMetaClass
             ? app()->make($this->columMetaClass)
@@ -127,10 +131,10 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param  \Closure  $callable
+     * @param  Closure  $callable
      * @return $this
      */
-    public function setOrderCallback(Closure $callable)
+    public function setOrderCallback(Closure $callable): TableColumn
     {
         $this->orderCallback = $callable;
 
@@ -138,10 +142,10 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param  \Closure  $callable
+     * @param  Closure  $callable
      * @return $this
      */
-    public function setSearchCallback(Closure $callable)
+    public function setSearchCallback(Closure $callable): TableColumn
     {
         $this->searchCallback = $callable;
 
@@ -149,10 +153,10 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param  \Closure  $callable
+     * @param  Closure  $callable
      * @return $this
      */
-    public function setFilterCallback(Closure $callable)
+    public function setFilterCallback(Closure $callable): TableColumn
     {
         $this->filterCallback = $callable;
 
@@ -160,25 +164,25 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @return \Closure
+     * @return Closure|null
      */
-    public function getOrderCallback()
+    public function getOrderCallback(): ?Closure
     {
         return $this->orderCallback;
     }
 
     /**
-     * @return \Closure
+     * @return Closure|null
      */
-    public function getSearchCallback()
+    public function getSearchCallback(): ?Closure
     {
         return $this->searchCallback;
     }
 
     /**
-     * @return \Closure
+     * @return Closure|null
      */
-    public function getFilterCallback()
+    public function getFilterCallback(): ?Closure
     {
         return $this->filterCallback;
     }
@@ -186,24 +190,24 @@ abstract class TableColumn implements ColumnInterface
     /**
      * @return TableHeaderColumnInterface
      */
-    public function getHeader()
+    public function getHeader(): TableHeaderColumnInterface
     {
         return $this->header;
     }
 
     /**
-     * @return int|string
+     * @return string|null
      */
-    public function getWidth()
+    public function getWidth(): ?string
     {
         return $this->width;
     }
 
     /**
-     * @param  int|string  $width
+     * @param int|string $width
      * @return $this
      */
-    public function setWidth($width)
+    public function setWidth(int|string $width): TableColumn
     {
         if (is_int($width)) {
             $width = $width.'px';
@@ -218,7 +222,7 @@ abstract class TableColumn implements ColumnInterface
      * @param $isSearchable
      * @return TableColumn
      */
-    public function setSearchable($isSearchable)
+    public function setSearchable($isSearchable): TableColumn
     {
         $this->isSearchable = $isSearchable;
 
@@ -226,9 +230,9 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @return ColumnInterface
+     * @return ColumnInterface|null
      */
-    public function getAppends()
+    public function getAppends(): ?ColumnInterface
     {
         return $this->append;
     }
@@ -237,7 +241,7 @@ abstract class TableColumn implements ColumnInterface
      * @param  ColumnInterface  $append
      * @return $this
      */
-    public function append(ColumnInterface $append)
+    public function append(ColumnInterface $append): self
     {
         $this->append = $append;
 
@@ -247,7 +251,7 @@ abstract class TableColumn implements ColumnInterface
     /**
      * @return Model $model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -256,7 +260,7 @@ abstract class TableColumn implements ColumnInterface
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): self
     {
         $this->model = $model;
         $append = $this->getAppends();
@@ -271,10 +275,10 @@ abstract class TableColumn implements ColumnInterface
     /**
      * Set column header label.
      *
-     * @param  string  $title
+     * @param string $title
      * @return $this
      */
-    public function setLabel($title)
+    public function setLabel(string $title): self
     {
         $this->getHeader()->setTitle($title);
 
@@ -282,10 +286,10 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param  OrderByClauseInterface|bool|string|\Closure  $orderable
+     * @param  OrderByClauseInterface|bool|string|Closure $clause
      * @return $this
      */
-    public function setOrderable($orderable)
+    public function setOrderable($orderable): self
     {
         if ($orderable instanceof Closure || is_string($orderable)) {
             $orderable = new OrderByClause($orderable);
@@ -304,7 +308,7 @@ abstract class TableColumn implements ColumnInterface
     /**
      * @return OrderByClauseInterface
      */
-    public function getOrderByClause()
+    public function getOrderByClause(): OrderByClauseInterface
     {
         return $this->orderByClause;
     }
@@ -314,7 +318,7 @@ abstract class TableColumn implements ColumnInterface
      *
      * @return bool
      */
-    public function isOrderable()
+    public function isOrderable(): bool
     {
         return $this->orderByClause instanceof OrderByClauseInterface;
     }
@@ -324,16 +328,17 @@ abstract class TableColumn implements ColumnInterface
      *
      * @return bool
      */
-    public function isSearchable()
+    public function isSearchable(): bool
     {
         return $this->isSearchable;
     }
 
     /**
      * @param  Builder  $query
-     * @param  string  $direction
+     * @param string $direction
      * @return $this
      *
+     * @TODO Почему депрекейтед?
      * @deprecated
      */
     public function orderBy(Builder $query, $direction)
@@ -352,7 +357,7 @@ abstract class TableColumn implements ColumnInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'attributes' => $this->htmlAttributesToString(),

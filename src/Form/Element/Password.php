@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
+
 class Password extends NamedFormElement
 {
     public function __construct($path, $label = null)
@@ -22,13 +24,13 @@ class Password extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.password';
+    protected string $view = 'form.element.password';
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $value = $this->getValueFromModel();
 
@@ -57,7 +59,7 @@ class Password extends NamedFormElement
     /**
      * @return array
      */
-    public function getValidationRules()
+    public function getValidationRules(): array
     {
         $data = parent::getValidationRules();
 
@@ -77,7 +79,7 @@ class Password extends NamedFormElement
     /**
      * @return bool
      */
-    public function isAllowedEmptyValue()
+    public function isAllowedEmptyValue(): bool
     {
         return $this->allowEmpty;
     }

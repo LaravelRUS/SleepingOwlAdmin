@@ -19,26 +19,26 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable, Wit
     /**
      * @return bool
      */
-    public function isReadonly();
+    public function isReadonly(): bool;
 
     /**
      * @return bool
      */
-    public function isValueSkipped();
+    public function isValueSkipped(): bool;
 
     /**
      * @return bool
      */
-    public function isVisible();
+    public function isVisible(): bool;
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return void
      */
     public function save(Request $request);
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return void
      */
     public function afterSave(Request $request);

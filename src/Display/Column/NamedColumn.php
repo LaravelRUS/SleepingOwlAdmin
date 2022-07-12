@@ -18,17 +18,17 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var bool
      */
-    protected $orderable = true;
+    protected bool $orderable = true;
 
     /**
      * @var bool
      */
-    protected $isSearchable = true;
+    protected bool $isSearchable = true;
 
     /**
      * NamedColumn constructor.
@@ -56,16 +56,16 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): NamedColumn
     {
         $this->name = $name;
 
@@ -81,25 +81,25 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param  OrderByClauseInterface|bool  $orderable
+     * @param  OrderByClauseInterface|bool  $clause
      * @return TableColumn
      */
-    public function setOrderable($orderable = true)
+    public function setOrderable($clause = true): TableColumn
     {
-        if ($orderable !== false && ! $orderable instanceof OrderByClauseInterface) {
-            if (! is_string($orderable) && ! $orderable instanceof Closure) {
-                $orderable = $this->getName();
+        if ($clause !== false && ! $clause instanceof OrderByClauseInterface) {
+            if (! is_string($clause) && ! $clause instanceof Closure) {
+                $clause = $this->getName();
             }
         }
 
-        return parent::setOrderable($orderable);
+        return parent::setOrderable($clause);
     }
 
     /**
      * @param $class
      * @return $this
      */
-    public function setClass($class)
+    public function setClass($class): NamedColumn
     {
         $this->setHtmlAttribute('class', $class);
 
@@ -109,7 +109,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * @return $this
      */
-    public function nowrap()
+    public function nowrap(): NamedColumn
     {
         $this->setClass('text-nowrap');
 
@@ -121,7 +121,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $model_value_small = $this->getSmall();
         if ($this->isolated) {
@@ -138,11 +138,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * Get column value from instance.
      *
-     * @param  Collection|Model|Closure  $instance
-     * @param  string  $name
+     * @param Collection|Model|Closure $instance
+     * @param string|null|Closure $name
      * @return mixed
      */
-    protected function getValueFromObject($instance, $name)
+    protected function getValueFromObject($instance, null|string|Closure $name): mixed
     {
         if ($name instanceof Closure) {
             return $name($instance);

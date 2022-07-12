@@ -3,13 +3,14 @@
 namespace SleepingOwl\Admin\Widgets;
 
 use SleepingOwl\Admin\Facades\Template as AdminTemplate;
+use Throwable;
 
 class EnvEditor extends Widget
 {
     /**
      * @return bool
      */
-    public function active()
+    public function active(): bool
     {
         return config('sleeping_owl.enable_editor');
     }
@@ -17,7 +18,7 @@ class EnvEditor extends Widget
     /**
      * @return string
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function toHtml()
     {
@@ -35,7 +36,7 @@ class EnvEditor extends Widget
     /**
      * @return string
      */
-    public function block()
+    public function block(): string
     {
         return 'navbar.right';
     }

@@ -2,38 +2,39 @@
 
 namespace SleepingOwl\Admin\Contracts;
 
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Navigation\Page;
 
 interface ModelConfigurationInterface
 {
     /**
      * @return RepositoryInterface
      */
-    public function getRepository();
+    public function getRepository(): RepositoryInterface;
 
     /**
-     * @return Collection
+     * @return Collection|array|null
      */
-    public function getBreadCrumbs();
+    public function getBreadCrumbs(): Collection|array|null;
 
     /**
      * @param $breadcrumb
-     * @return mixed
+     * @return mixed|void
      */
     public function addBreadCrumb($breadcrumb);
 
     /**
      * @return string
      */
-    public function getClass();
+    public function getClass(): string;
 
     /**
      * @return string
      */
-    public function getAlias();
+    public function getAlias(): string;
 
     /**
      * @return string
@@ -41,71 +42,70 @@ interface ModelConfigurationInterface
     public function getTitle();
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIcon();
 
     /**
-     * @return \Illuminate\Contracts\Translation\Translator
+     * @return Translator
      */
-    public function getCreateTitle();
+    public function getCreateTitle(): Translator;
 
     /**
-     * @param  Model  $model
-     * @return \Illuminate\Contracts\Translation\Translator
+     * @return Translator
      */
-    public function getEditTitle();
-
-    /**
-     * @return bool
-     */
-    public function isDisplayable();
+    public function getEditTitle(): Translator;
 
     /**
      * @return bool
      */
-    public function isCreatable();
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return bool
-     */
-    public function isEditable(Model $model);
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return bool
-     */
-    public function isDeletable(Model $model);
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return bool
-     */
-    public function isDestroyable(Model $model);
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return bool
-     */
-    public function isRestorable(Model $model);
+    public function isDisplayable(): bool;
 
     /**
      * @return bool
      */
-    public function isRestorableModel();
+    public function isCreatable(): bool;
 
     /**
-     * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
-    public function can($action, Model $model);
+    public function isEditable(Model $model): bool;
 
     /**
-     * @return DisplayInterface|mixed
+     * @param Model $model
+     * @return bool
      */
-    public function fireDisplay();
+    public function isDeletable(Model $model): bool;
+
+    /**
+     * @param Model $model
+     * @return bool
+     */
+    public function isDestroyable(Model $model): bool;
+
+    /**
+     * @param Model $model
+     * @return bool
+     */
+    public function isRestorable(Model $model): bool;
+
+    /**
+     * @return bool
+     */
+    public function isRestorableModel(): bool;
+
+    /**
+     * @param string $action
+     * @param Model $model
+     * @return bool
+     */
+    public function can(string $action, Model $model): bool;
+
+    /**
+     * @return mixed
+     */
+    public function fireDisplay(): mixed;
 
     /**
      * @return mixed|void
@@ -116,12 +116,12 @@ interface ModelConfigurationInterface
      * @param  array  $redirect
      * @return $this
      */
-    public function setRedirect(array $redirect);
+    public function setRedirect(array $redirect): ModelConfigurationInterface;
 
     /**
      * @return Collection
      */
-    public function getRedirect();
+    public function getRedirect(): Collection;
 
     /**
      * @param $id
@@ -130,127 +130,127 @@ interface ModelConfigurationInterface
     public function fireEdit($id);
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return $this
      *
      * @deprecated
      */
-    public function fireFullEdit($id);
+    public function fireFullEdit(int $id): ModelConfigurationInterface;
 
     /**
      * @param $id
      * @return mixed
      */
-    public function fireDelete($id);
+    public function fireDelete($id): mixed;
 
     /**
      * @param $id
      * @return mixed
      */
-    public function fireDestroy($id);
+    public function fireDestroy($id): mixed;
 
     /**
      * @param $id
-     * @return bool|mixed
+     * @return mixed
      */
-    public function fireRestore($id);
+    public function fireRestore($id): mixed;
 
     /**
      * @param  array  $parameters
      * @return string
      */
-    public function getDisplayUrl(array $parameters = []);
+    public function getDisplayUrl(array $parameters = []): string;
 
     /**
      * @param  array  $parameters
      * @return string
      */
-    public function getCreateUrl(array $parameters = []);
+    public function getCreateUrl(array $parameters = []): string;
 
     /**
      * @param  array  $parameters
      * @return string
      */
-    public function getCancelUrl(array $parameters = []);
+    public function getCancelUrl(array $parameters = []): string;
 
     /**
      * @param  array  $parameters
      * @return string
      */
-    public function getStoreUrl(array $parameters = []);
+    public function getStoreUrl(array $parameters = []): string;
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getEditUrl($id, array $parameters = []);
+    public function getEditUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getUpdateUrl($id, array $parameters = []);
+    public function getUpdateUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getDeleteUrl($id, array $parameters = []);
+    public function getDeleteUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getDestroyUrl($id, array $parameters = []);
+    public function getDestroyUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param  string|int  $id
+     * @param int|string $id
      * @param  array  $parameters
      * @return string
      */
-    public function getRestoreUrl($id, array $parameters = []);
+    public function getRestoreUrl(int|string $id, array $parameters = []): string;
 
     /**
      * @return string
      */
-    public function getMessageOnCreate();
+    public function getMessageOnCreate(): string;
 
     /**
      * @return string
      */
-    public function getMessageOnUpdate();
+    public function getMessageOnUpdate(): string;
 
     /**
      * @return string
      */
-    public function getMessageOnDelete();
+    public function getMessageOnDelete(): string;
 
     /**
      * @return string
      */
-    public function getMessageOnDestroy();
+    public function getMessageOnDestroy(): string;
 
     /**
      * @return string
      */
-    public function getMessageOnRestore();
+    public function getMessageOnRestore(): string;
 
     /**
      * @return bool
      */
-    public function hasCustomControllerClass();
+    public function hasCustomControllerClass(): bool;
 
     /**
      * @return null|string
      */
-    public function getControllerClass();
+    public function getControllerClass(): ?string;
 
     /**
-     * @return \SleepingOwl\Admin\Navigation\Page
+     * @return Page
      */
-    public function addToNavigation();
+    public function addToNavigation(): Page;
 }

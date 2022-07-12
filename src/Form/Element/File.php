@@ -20,7 +20,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     protected static $route = 'file';
 
     /**
-     * @var \Closure
+     * @var Closure
      */
     protected $saveCallback;
 
@@ -104,7 +104,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @var string
      */
-    protected $view = 'form.element.file';
+    protected string $view = 'form.element.file';
 
     /**
      * @var string
@@ -257,10 +257,10 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param  \Closure  $callable
+     * @param Closure $callable
      * @return $this
      */
-    public function setSaveCallback(\Closure $callable)
+    public function setSaveCallback(Closure $callable)
     {
         $this->saveCallback = $callable;
 
@@ -281,7 +281,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * Return save callback.
      *
-     * @return \Closure
+     * @return Closure
      */
     public function getSaveCallback()
     {
@@ -293,7 +293,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      * @param  string  $path
      * @param  string  $filename
      * @param  array  $settings
-     * @return \Closure|array
+     * @return Closure|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {

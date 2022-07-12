@@ -57,7 +57,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     /**
      * @var string
      */
-    protected $view = 'form.element.dependentselect';
+    protected string $view = 'form.element.dependentselect';
 
     /**
      * DependentSelect constructor.

@@ -250,11 +250,11 @@ class TableColumnTestModel extends \Illuminate\Database\Eloquent\Model
 
 class TableColumnTestOrderByClause implements \SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface
 {
-    public function setName($name)
+    public function setName(string|Closure $name)
     {
     }
 
-    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query, $direction = 'asc')
+    public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query, string $direction = 'asc')
     {
     }
 }

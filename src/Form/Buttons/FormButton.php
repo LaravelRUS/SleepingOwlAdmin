@@ -15,17 +15,17 @@ class FormButton implements FormButtonsInterface, Initializable
     /**
      * @var string
      */
-    protected $view = 'form.button';
+    protected string $view = 'form.button';
 
     /**
-     * @var
+     * @var string|null
      */
-    protected $iconClass;
+    protected ?string $iconClass;
 
     /**
      * @var Model
      */
-    protected $model;
+    protected Model $model;
     /**
      * @var
      */
@@ -94,7 +94,7 @@ class FormButton implements FormButtonsInterface, Initializable
      * @param  ModelConfigurationInterface  $modelConfiguration
      * @return $this
      */
-    public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration)
+    public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration): FormButton
     {
         $this->modelConfiguration = $modelConfiguration;
 
@@ -235,7 +235,7 @@ class FormButton implements FormButtonsInterface, Initializable
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -244,7 +244,7 @@ class FormButton implements FormButtonsInterface, Initializable
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): FormButton
     {
         $this->model = $model;
 
@@ -256,7 +256,10 @@ class FormButton implements FormButtonsInterface, Initializable
         return $this->show;
     }
 
-    public function toArray()
+    /**
+     * @return array
+     */
+    public function toArray(): array
     {
         return [
             'attributes' => $this->htmlAttributesToString(),
@@ -272,7 +275,7 @@ class FormButton implements FormButtonsInterface, Initializable
     /**
      * @return bool
      */
-    protected function isTrashed()
+    protected function isTrashed(): bool
     {
         return method_exists($this->getModel(), 'trashed') ? $this->getModel()->trashed() : false;
     }

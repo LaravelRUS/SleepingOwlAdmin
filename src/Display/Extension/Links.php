@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 
@@ -10,7 +11,7 @@ class Links extends Extension implements Placable
     use HtmlAttributes;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.extensions.links';
 
@@ -30,10 +31,10 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param  array  $links
+     * @param array $links
      * @return Links
      */
-    public function set($links)
+    public function set(array $links): Links
     {
         $this->links = $links;
 
@@ -41,7 +42,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @return \Illuminate\View\View|string
+     * @return View|string
      */
     public function getView()
     {
@@ -52,7 +53,7 @@ class Links extends Extension implements Placable
      * @param $view
      * @return $this
      */
-    public function setView($view)
+    public function setView($view): Links
     {
         $this->view = $view;
 
@@ -60,9 +61,9 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlacement()
+    public function getPlacement(): ?string
     {
         return $this->placement;
     }
@@ -71,7 +72,7 @@ class Links extends Extension implements Placable
      * @param $placement
      * @return $this
      */
-    public function setPlacement($placement)
+    public function setPlacement($placement): Links
     {
         $this->placement = $placement;
 
@@ -81,7 +82,7 @@ class Links extends Extension implements Placable
     /**
      * @return array
      */
-    public function getLinks()
+    public function getLinks(): array
     {
         return $this->links;
     }
@@ -90,7 +91,7 @@ class Links extends Extension implements Placable
      * @param  array  $links
      * @return $this
      */
-    public function setLinks(array $links)
+    public function setLinks(array $links): Links
     {
         $this->links = $links;
 
@@ -102,7 +103,7 @@ class Links extends Extension implements Placable
      * @param  null  $key
      * @return $this
      */
-    public function add($link, $key = null)
+    public function add($link, $key = null): Links
     {
         if ($key !== null) {
             $this->links[$key] = $link;
@@ -126,7 +127,7 @@ class Links extends Extension implements Placable
      * @param $key
      * @return $this
      */
-    public function remove($key)
+    public function remove($key): Links
     {
         unset($this->links[$key]);
 
@@ -138,7 +139,7 @@ class Links extends Extension implements Placable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'links' => $this->getLinks(),

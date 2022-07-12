@@ -39,7 +39,7 @@ class Select extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.select';
+    protected string $view = 'form.element.select';
 
     /**
      * @var string

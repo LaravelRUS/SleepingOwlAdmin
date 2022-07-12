@@ -21,16 +21,16 @@ class FilterRelated extends FilterField
     /**
      * @return string
      */
-    public function getDisplay()
+    public function getDisplay(): string
     {
         return $this->display;
     }
 
     /**
-     * @param  string  $display
+     * @param string $display
      * @return $this
      */
-    public function setDisplay($display)
+    public function setDisplay(string $display): FilterRelated
     {
         $this->display = $display;
 
@@ -40,18 +40,18 @@ class FilterRelated extends FilterField
     /**
      * @return string
      */
-    public function getModel()
+    public function getModel(): string
     {
         return $this->model;
     }
 
     /**
-     * @param  string  $model
+     * @param string $model
      * @return $this
      *
      * @throws Exception
      */
-    public function setModel($model)
+    public function setModel(string $model): FilterRelated
     {
         if (! class_exists($model)) {
             throw new Exception("Class model [$model] not found");
@@ -67,7 +67,7 @@ class FilterRelated extends FilterField
      *
      * @throws Exception
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if (is_null($parent = parent::getTitle())) {
             return $this->getDisplayField();

@@ -10,27 +10,27 @@ interface DisplayExtensionInterface extends Arrayable
     /**
      * @return int
      */
-    public function getOrder();
+    public function getOrder(): int;
 
     /**
-     * @param  int  $order
+     * @param int $order
      * @return $this
      */
-    public function setOrder($order);
+    public function setOrder(int $order): self;
 
     /**
      * @return DisplayInterface
      */
-    public function getDisplay();
+    public function getDisplay(): DisplayInterface;
 
     /**
      * @param  DisplayInterface  $display
      * @return $this
      */
-    public function setDisplay(DisplayInterface $display);
+    public function setDisplay(DisplayInterface $display): self;
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Builder $query
      */
     public function modifyQuery(Builder $query);
 }

@@ -11,12 +11,12 @@ interface WidgetInterface extends Arrayable, Htmlable
     /**
      * @return bool
      */
-    public function active();
+    public function active(): bool;
 
     /**
      * @return int
      */
-    public function position();
+    public function position(): int;
 
     /**
      * @return string|array

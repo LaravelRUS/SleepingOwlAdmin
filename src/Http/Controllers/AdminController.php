@@ -2,14 +2,18 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
+use Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
+use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
+
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -23,19 +27,19 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 class AdminController extends Controller
 {
     /**
-     * @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
+     * @var BreadcrumbTrail
      */
     protected $breadcrumbs;
 
     /**
      * @var
      */
-    protected $breadCrumbsData;
+    protected array $breadCrumbsData;
 
     /**
      * @var AdminInterface
      */
-    protected $admin;
+    protected AdminInterface $admin;
 
     /**
      * @var
@@ -55,11 +59,10 @@ class AdminController extends Controller
     /**
      * AdminController constructor.
      *
-     * @param  Request  $request
-     * @param  AdminInterface  $admin
-     * @param  Application  $application
+     * @param Request $request
+     * @param AdminInterface $admin
+     * @param Application $application
      *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function __construct(Request $request, AdminInterface $admin, Application $application)
     {
@@ -73,11 +76,11 @@ class AdminController extends Controller
 
         $admin->navigation()->setCurrentUrl($request->getUri());
 
-        if (! $this->breadcrumbs->exists('home')) {
-            $this->breadcrumbs->register('home', function (BreadcrumbsGenerator $breadcrumbs) {
-                $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
-            });
-        }
+//        if (! $this->breadcrumbs->exists('home')) {
+//            $this->breadcrumbs->register('home', function (BreadcrumbTrail $breadcrumbs) {
+//                $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
+//            });
+//        }
 
         $this->breadCrumbsData = [];
 
@@ -112,7 +115,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getDashboard()
     {
@@ -123,7 +126,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getEnvEditor()
     {
@@ -183,7 +186,7 @@ class AdminController extends Controller
 
     /**
      * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function postEnvEditor(Request $request)
     {
@@ -278,10 +281,9 @@ class AdminController extends Controller
     }
 
     /**
-     * @param  ModelConfigurationInterface  $model
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param ModelConfigurationInterface $model
+     * @return Factory|View
      *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     public function getDisplay(ModelConfigurationInterface $model)
     {
@@ -298,9 +300,7 @@ class AdminController extends Controller
 
     /**
      * @param  ModelConfigurationInterface  $model
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
+     * @return Factory|View
      */
     public function getCreate(ModelConfigurationInterface $model)
     {
@@ -319,7 +319,7 @@ class AdminController extends Controller
     /**
      * @param  ModelConfigurationInterface  $model
      * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function postStore(ModelConfigurationInterface $model, Request $request)
     {
@@ -393,9 +393,7 @@ class AdminController extends Controller
     /**
      * @param  ModelConfigurationInterface  $model
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
+     * @return Factory|View
      */
     public function getEdit(ModelConfigurationInterface $model, $id)
     {
@@ -421,7 +419,7 @@ class AdminController extends Controller
      * @param  ModelConfigurationInterface  $model
      * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -598,7 +596,7 @@ class AdminController extends Controller
      * @param  ModelConfigurationInterface  $model
      * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function deleteDelete(ModelConfigurationInterface $model, Request $request, $id)
     {
@@ -626,7 +624,7 @@ class AdminController extends Controller
      * @param  ModelConfigurationInterface  $model
      * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -660,7 +658,7 @@ class AdminController extends Controller
      * @param  ModelConfigurationInterface|ModelConfiguration  $model
      * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -694,7 +692,7 @@ class AdminController extends Controller
      * @param  ModelConfigurationInterface  $model
      * @param  Renderable|RedirectResponse|string  $content
      * @param  string|null  $title
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     * @return Factory|View|RedirectResponse
      */
     public function render(ModelConfigurationInterface $model, $content, $title = null)
     {
@@ -719,7 +717,7 @@ class AdminController extends Controller
     /**
      * @param  Renderable|string  $content
      * @param  string|null  $title
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function renderContent($content, $title = null)
     {
@@ -755,14 +753,12 @@ class AdminController extends Controller
     /**
      * @param $title
      * @param $parent
-     * @param $name
+     * @param string $name
      * @param $url
-     *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
-    protected function registerBreadcrumb($title, $parent, $name = 'render', $url = null)
+    protected function registerBreadcrumb($title, $parent, string $name = 'render', $url = null)
     {
-        $this->breadcrumbs->register($name, function (BreadcrumbsGenerator $breadcrumbs) use ($title, $parent, $url) {
+        $this->breadcrumbs->register($name, function (BreadcrumbTrail $breadcrumbs) use ($title, $parent, $url) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title, $url);
         });
@@ -773,20 +769,20 @@ class AdminController extends Controller
     /**
      * @param  ModelConfigurationInterface  $model
      *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException
      */
     protected function registerBreadcrumbs(ModelConfigurationInterface $model)
     {
         $this->breadCrumbsData = array_merge($this->breadCrumbsData, $model->getBreadCrumbs());
 
-        foreach ($this->breadCrumbsData as $breadcrumb) {
-            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
-                $this->breadcrumbs->register($breadcrumb['id'], function (BreadcrumbsGenerator $breadcrumbs) use ($breadcrumb) {
-                    $breadcrumbs->parent($breadcrumb['parent']);
-                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
-                });
-            }
-        }
+//        dd($this->breadCrumbsData);
+//        foreach ($this->breadCrumbsData as $breadcrumb) {
+//            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
+//                $this->breadcrumbs->register($breadcrumb['id'], function (BreadcrumbTrail $breadcrumbs) use ($breadcrumb) {
+//                    $breadcrumbs->parent($breadcrumb['parent']);
+//                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
+//                });
+//            }
+//        }
 
         //nit:Daan
         // $this->parentBreadcrumb = data_get(Arr::last($this->breadCrumbsData), 'id', 'render');
@@ -797,7 +793,7 @@ class AdminController extends Controller
      * @param  ModelConfigurationInterface  $model
      * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function deletedAll(ModelConfigurationInterface $model, Request $request)
     {

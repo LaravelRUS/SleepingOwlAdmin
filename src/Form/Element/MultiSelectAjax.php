@@ -20,7 +20,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     use SelectAjaxFunctions;
 
     protected static $route = 'multiselectajax';
-    protected $view = 'form.element.selectajax';
+    protected string $view = 'form.element.selectajax';
 
     /**
      * @var string|null
@@ -136,7 +136,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setLoadOptionsQueryPreparer($this->default_query_preparer);
 

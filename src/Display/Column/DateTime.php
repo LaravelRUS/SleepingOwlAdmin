@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DateFormat;
@@ -13,27 +14,27 @@ class DateTime extends NamedColumn
     /**
      * Datetime format.
      *
-     * @var string
+     * @var null|string
      */
-    protected $format;
+    protected ?string $format;
 
     /**
      * Datetime timezone.
      *
      * @var string
      */
-    protected $timezone;
+    protected string $timezone;
 
     /**
      * @var string
      */
-    protected $view = 'column.datetime';
+    protected string $view = 'column.datetime';
 
     /**
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): DateTime
     {
         parent::setModel($model);
         $this->setHtmlAttribute('data-value', $this->getModelValue());
@@ -44,7 +45,7 @@ class DateTime extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $value = $this->getModelValue();
 
@@ -55,10 +56,10 @@ class DateTime extends NamedColumn
     }
 
     /**
-     * @param  string  $date
-     * @return null|string
+     * @param string $date
+     * @return null|string|void
      */
-    protected function getFormatedDate($date)
+    protected function getFormatedDate(string $date)
     {
         if (empty($date)) {
             return;
@@ -67,10 +68,10 @@ class DateTime extends NamedColumn
         if (! $date instanceof Carbon) {
             try {
                 $date = Carbon::parse($date);
-            } catch (\Exception $e) {
+            } catch (Exception) {
                 try {
                     $date = Carbon::createFromFormat($this->getFormat(), $date);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     Log::error('Unable to parse date!', [
                         'format' => $this->getFormat(),
                         'date' => $date,

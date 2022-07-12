@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -18,7 +19,7 @@ trait FormElements
     /**
      * @var FormElementsCollection
      */
-    protected $elements;
+    protected FormElementsCollection $elements;
 
     /**
      * @return void
@@ -57,10 +58,10 @@ trait FormElements
     }
 
     /**
-     * @param  string  $path
+     * @param string $path
      * @return FormElementInterface|null
      */
-    public function getElement($path)
+    public function getElement(string $path): ?FormElementInterface
     {
         foreach ($this->getElements() as $element) {
             if ($element instanceof ElementsInterface) {
@@ -78,16 +79,16 @@ trait FormElements
     /**
      * @return FormElementsCollection
      */
-    public function getElements()
+    public function getElements(): FormElementsCollection
     {
         return $this->elements;
     }
 
     /**
      * @param  array  $elements
-     * @return $this
+     * @return ElementsInterface
      */
-    public function setElements(array $elements)
+    public function setElements(array $elements): ElementsInterface
     {
         $this->elements = new FormElementsCollection($elements);
 
@@ -106,10 +107,10 @@ trait FormElements
     }
 
     /**
-     * @param  Model  $model
-     * @return $this
+     * @param Model $model
+     * @return WithModelInterface
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): WithModelInterface
     {
         return $this->setModelForElements($model);
     }
@@ -117,7 +118,7 @@ trait FormElements
     /**
      * @return array
      */
-    public function getValidationRules()
+    public function getValidationRules(): array
     {
         return $this->getValidationRulesFromElements();
     }
@@ -125,7 +126,7 @@ trait FormElements
     /**
      * @return array
      */
-    public function getValidationMessages()
+    public function getValidationMessages(): array
     {
         if (is_array(trans('sleeping_owl::validation'))) {
             return trans('sleeping_owl::validation');
@@ -137,25 +138,25 @@ trait FormElements
     /**
      * @return array
      */
-    public function getValidationLabels()
+    public function getValidationLabels(): array
     {
         return $this->getValidationLabelsForElements();
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $this->saveElements($request);
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function afterSave(\Illuminate\Http\Request $request)
+    public function afterSave(Request $request)
     {
         $this->afterSaveElements($request);
     }
@@ -181,7 +182,7 @@ trait FormElements
      * @param  array  $rules
      * @return array
      */
-    protected function getValidationRulesFromElements(array $rules = [])
+    protected function getValidationRulesFromElements(array $rules = []): array
     {
         $this->getElements()->onlyActive()->each(function ($element) use (&$rules) {
             $element = $this->getElementContainer($element);
@@ -198,7 +199,7 @@ trait FormElements
      * @param  array  $messages
      * @return array
      */
-    protected function getValidationMessagesForElements(array $messages = [])
+    protected function getValidationMessagesForElements(array $messages = []): array
     {
         $this->getElements()->onlyActive()->each(function ($element) use (&$messages) {
             $element = $this->getElementContainer($element);
@@ -215,7 +216,7 @@ trait FormElements
      * @param  array  $labels
      * @return array
      */
-    protected function getValidationLabelsForElements(array $labels = [])
+    protected function getValidationLabelsForElements(array $labels = []): array
     {
         $this->getElements()->onlyActive()->each(function ($element) use (&$labels) {
             $element = $this->getElementContainer($element);
@@ -229,10 +230,10 @@ trait FormElements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    protected function saveElements(\Illuminate\Http\Request $request)
+    protected function saveElements(Request $request)
     {
         $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
@@ -244,10 +245,10 @@ trait FormElements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    protected function afterSaveElements(\Illuminate\Http\Request $request)
+    protected function afterSaveElements(Request $request)
     {
         $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
@@ -262,7 +263,7 @@ trait FormElements
      * @param $object
      * @return mixed
      */
-    protected function getElementContainer($object)
+    protected function getElementContainer($object): mixed
     {
         return $object;
     }

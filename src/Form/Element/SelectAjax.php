@@ -15,7 +15,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     use SelectAjaxFunctions;
 
     protected static $route = 'selectajax';
-    protected $view = 'form.element.selectajax';
+    protected string $view = 'form.element.selectajax';
 
     /**
      * @var string|null

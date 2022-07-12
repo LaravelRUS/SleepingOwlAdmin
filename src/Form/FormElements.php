@@ -13,7 +13,7 @@ class FormElements extends FormElement implements ElementsInterface
     /**
      * @var string
      */
-    protected $view = 'form.element.formelements';
+    protected string $view = 'form.element.formelements';
 
     /**
      * @param  array  $elements
@@ -35,7 +35,7 @@ class FormElements extends FormElement implements ElementsInterface
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): FormElements
     {
         parent::setModel($model);
 
@@ -45,7 +45,7 @@ class FormElements extends FormElement implements ElementsInterface
     /**
      * @return array
      */
-    public function getValidationRules()
+    public function getValidationRules(): array
     {
         return $this->getValidationRulesFromElements(
             parent::getValidationRules()
@@ -77,7 +77,7 @@ class FormElements extends FormElement implements ElementsInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'items' => $this->getElements()->onlyVisible(),

@@ -7,7 +7,7 @@ class Radio extends Select
     /**
      * @var string
      */
-    protected $view = 'form.element.radio';
+    protected string $view = 'form.element.radio';
 
     public function __construct($path, $label = null, $options = [])
     {
@@ -21,7 +21,7 @@ class Radio extends Select
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->removeHtmlAttribute('class');
 

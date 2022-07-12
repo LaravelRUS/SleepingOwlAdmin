@@ -2,7 +2,11 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
+use Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException;
+use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
@@ -64,13 +68,13 @@ abstract class Template implements TemplateInterface
      *
      * @return string
      */
-    public function longName()
+    public function longName(): string
     {
         return $this->name().' v.'.$this->version();
     }
 
     /**
-     * @return Breadcrumbs
+     * @return
      */
     public function breadcrumbs()
     {
@@ -80,7 +84,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return MetaInterface
      */
-    public function meta()
+    public function meta(): MetaInterface
     {
         return $this->meta;
     }
@@ -88,7 +92,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return NavigationInterface
      */
-    public function navigation()
+    public function navigation(): NavigationInterface
     {
         return $this->navigation;
     }
@@ -96,10 +100,10 @@ abstract class Template implements TemplateInterface
     /**
      * Генерация относительно пути до asset файлов для текущей темы.
      *
-     * @param  string  $path  относительный путь до файла, например `js/app.js`
+     * @param string|null $path  относительный путь до файла, например `js/app.js`
      * @return string
      */
-    public function assetPath($path = null)
+    public function assetPath(string $path = null): string
     {
         return ! is_null($path) ? $this->assetDir().'/'.ltrim($path, '/') : $this->assetDir();
     }
@@ -113,11 +117,11 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param  string  $title
-     * @param  string  $separator
+     * @param string $title
+     * @param string $separator
      * @return string
      */
-    public function makeTitle($title, $separator = ' | ')
+    public function makeTitle(string $title, string $separator = ' | ')
     {
         if (empty($title)) {
             return $this->getTitle();
@@ -127,10 +131,10 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param  string  $view
+     * @param string $view
      * @return string
      */
-    public function getViewPath($view)
+    public function getViewPath(string $view): string
     {
         if ($view instanceof View) {
             return $view->getPath();
@@ -146,10 +150,10 @@ abstract class Template implements TemplateInterface
     /**
      * @param  string|View  $view
      * @param  array  $data
-     * @param  array  $mergeData
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @param array $mergeData
+     * @return Factory|View
      */
-    public function view($view, array $data = [], $mergeData = [])
+    public function view($view, array $data = [], array $mergeData = [])
     {
         $data['template'] = $this;
 
@@ -161,14 +165,14 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param  string  $key
+     * @param string $key
      * @return string
      *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
+     * @throws InvalidBreadcrumbException
+     * @throws UnnamedRouteException
+     * @throws ViewNotSetException
      */
-    public function renderBreadcrumbs($key)
+    public function renderBreadcrumbs(string $key)
     {
         if (config('sleeping_owl.breadcrumbs')) {
             config()->set('breadcrumbs.view', $this->getViewPath('_partials.breadcrumbs'));
@@ -180,7 +184,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return string
      */
-    public function renderNavigation()
+    public function renderNavigation(): string
     {
         return $this->navigation()->render(
             $this->getViewPath('_partials.navigation.navigation')
@@ -190,7 +194,7 @@ abstract class Template implements TemplateInterface
     /**
      * Регистрация стандартных
      * глобальных
-     * Javascript перменных
+     * Javascript переменных
      * .
      */
     protected function setGlobalVariables()
@@ -203,10 +207,10 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      * @return string
      */
-    public function renderMeta($title)
+    public function renderMeta(string $title): string
     {
         $this->setGlobalVariables();
 
@@ -234,7 +238,7 @@ abstract class Template implements TemplateInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'asset_dir' => $this->assetDir(),

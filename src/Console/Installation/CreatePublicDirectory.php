@@ -28,7 +28,7 @@ class CreatePublicDirectory extends Installator
      *
      * @return bool
      */
-    public function installed()
+    public function installed(): bool
     {
         return is_dir($this->getDirectory());
     }
@@ -36,7 +36,7 @@ class CreatePublicDirectory extends Installator
     /**
      * @return string
      */
-    protected function getDirectory()
+    protected function getDirectory(): string
     {
         return public_path('images/uploads');
     }

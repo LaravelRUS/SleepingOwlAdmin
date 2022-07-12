@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
@@ -15,12 +16,12 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var string
@@ -74,12 +75,12 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return Model $model
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getModel()
+    public function getModel(): Model
     {
         if (! in_array(OrderableModel::class, trait_uses_recursive($class = get_class($this->model)))) {
-            throw new \Exception("Model [$class] should uses trait [SleepingOwl\\Admin\\Traits\\OrderableModel]");
+            throw new Exception("Model [$class] should uses trait [SleepingOwl\\Admin\\Traits\\OrderableModel]");
         }
 
         return $this->model;
@@ -88,7 +89,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getOrderValue()
     {
@@ -98,7 +99,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return int
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function totalCount()
     {
@@ -120,7 +121,7 @@ class Order extends TableColumn implements WithRoutesInterface
              * @see https://sleepingowladmin.ru/docs/model_configuration
              * @see https://sleepingowladmin.ru/docs/model_configuration_section
              */
-            throw new \Exception('Unknown type of the Model Configuration. Use Section or AdminSection::registerModel()');
+            throw new Exception('Unknown type of the Model Configuration. Use Section or AdminSection::registerModel()');
         }
         $onDisplay->getExtensions()->modifyQuery($query);
         $onDisplay->applySearch($query, $request);
@@ -133,7 +134,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function movableUp()
     {
@@ -143,7 +144,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function moveUpUrl()
     {
@@ -156,7 +157,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function movableDown()
     {
@@ -166,7 +167,7 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function moveDownUrl()
     {
@@ -179,9 +180,9 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'movableUp' => $this->movableUp(),

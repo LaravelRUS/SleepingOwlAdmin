@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Mockery\Matcher\Closure;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 
 class OrderByClause implements OrderByClauseInterface
@@ -38,7 +38,7 @@ class OrderByClause implements OrderByClauseInterface
 
     /**
      * @param  Builder  $query
-     * @param  string  $direction
+     * @param string $direction
      */
     public function modifyQuery(Builder $query, $direction = 'asc')
     {
@@ -60,7 +60,7 @@ class OrderByClause implements OrderByClauseInterface
 
     /**
      * @param  Builder  $query
-     * @param  string  $direction
+     * @param string $direction
      */
     protected function callCallable(Builder $query, $direction)
     {

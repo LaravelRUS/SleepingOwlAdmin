@@ -3,7 +3,9 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -18,7 +20,7 @@ class Actions extends Extension implements Initializable, Placable
     protected $actions;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.extensions.actions';
 
@@ -43,10 +45,10 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  ActionInterface  $actions
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @param ActionInterface|null $actions
+     * @return DisplayInterface
      */
-    public function set($actions = null)
+    public function set(ActionInterface $actions = null): DisplayInterface
     {
         if (! is_array($actions)) {
             $actions = func_get_args();
@@ -73,7 +75,7 @@ class Actions extends Extension implements Initializable, Placable
      * @param  ActionInterface  $action
      * @return $this
      */
-    public function push(ActionInterface $action)
+    public function push(ActionInterface $action): Actions
     {
         $this->actions->push($action);
 
@@ -81,7 +83,7 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string|\Illuminate\View\View
+     * @return string|View
      */
     public function getView()
     {
@@ -89,10 +91,10 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  string|\Illuminate\View\View  $view
+     * @param  string|View  $view
      * @return $this
      */
-    public function setView($view)
+    public function setView($view): Actions
     {
         $this->view = $view;
 
@@ -100,18 +102,18 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPlacement()
+    public function getPlacement(): ?string
     {
         return $this->placement;
     }
 
     /**
-     * @param  string  $placement
+     * @param string $placement
      * @return $this
      */
-    public function setPlacement($placement)
+    public function setPlacement(string $placement)
     {
         $this->placement = $placement;
 
@@ -123,7 +125,7 @@ class Actions extends Extension implements Initializable, Placable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'actions' => $this->actions,

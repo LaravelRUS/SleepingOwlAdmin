@@ -7,21 +7,21 @@ trait CardControl
     /**
      * @var string|null
      */
-    protected $cardClass = null;
+    protected ?string $cardClass = null;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCardClass()
+    public function getCardClass(): ?string
     {
         return $this->cardClass;
     }
 
     /**
-     * @param  string  $class
+     * @param string $class
      * @return $this
      */
-    public function setCardClass($class)
+    public function setCardClass(string $class): self
     {
         $this->cardClass = $class;
 

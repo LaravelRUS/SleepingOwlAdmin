@@ -15,7 +15,7 @@ abstract class Widget implements WidgetInterface
     /**
      * @return bool
      */
-    public function active()
+    public function active(): bool
     {
         return true;
     }
@@ -23,7 +23,7 @@ abstract class Widget implements WidgetInterface
     /**
      * @return int
      */
-    public function position()
+    public function position(): int
     {
         return 0;
     }
@@ -39,7 +39,7 @@ abstract class Widget implements WidgetInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'block' => $this->block(),

@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 use SleepingOwl\Admin\Exceptions\WysiwygException;
 use SleepingOwl\Admin\Traits\Collapsed;
 
@@ -13,7 +14,7 @@ class Wysiwyg extends NamedFormElement
     /**
      * @var string|null
      */
-    protected $editor;
+    protected ?string $editor;
 
     /**
      * @var bool|null
@@ -38,7 +39,7 @@ class Wysiwyg extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.wysiwyg';
+    protected string $view = 'form.element.wysiwyg';
 
     /**
      * Wysiwyg constructor.
@@ -47,7 +48,7 @@ class Wysiwyg extends NamedFormElement
      * @param  null  $label
      * @param  null  $editor
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws FormElementException
      */
     public function __construct($path, $label = null, $editor = null)
     {

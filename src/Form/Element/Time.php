@@ -5,19 +5,19 @@ namespace SleepingOwl\Admin\Form\Element;
 class Time extends DateTime
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $format = 'H:i:s';
+    protected ?string $format = 'H:i:s';
 
     /**
      * @var string
      */
-    protected $view = 'form.element.time';
+    protected string $view = 'form.element.time';
 
     /**
      * @return string
      */
-    public function getPickerFormat()
+    public function getPickerFormat(): string
     {
         return $this->pickerFormat ?: config('sleeping_owl.timeFormat');
     }

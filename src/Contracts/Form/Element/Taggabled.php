@@ -7,10 +7,10 @@ interface Taggabled
     /**
      * @return bool
      */
-    public function isTaggable();
+    public function isTaggable(): bool;
 
     /**
      * @return $this
      */
-    public function taggable();
+    public function taggable(): Taggabled;
 }

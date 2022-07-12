@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
+use Closure;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
@@ -10,23 +13,23 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     /**
      * Menu item related model class.
      *
-     * @var string
+     * @var string|null
      */
-    protected $model;
+    protected ?string $model = null;
 
     /**
      * Menu item by url id.
      *
-     * @var string
+     * @var string|null
      */
-    protected $aliasId;
+    protected ?string $aliasId = null;
 
     /**
      * Menu item target attribute.
      *
-     * @var string
+     * @var string|null
      */
-    protected $target;
+    protected ?string $target = null;
 
     /**
      * @param  string|null  $modelClass
@@ -56,15 +59,15 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAliasId()
+    public function getAliasId(): ?string
     {
         return $this->aliasId;
     }
 
     /**
-     * @return ModelConfigurationInterface
+     * @return ModelConfigurationInterface|void
      */
     public function getModelConfiguration()
     {
@@ -78,7 +81,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     /**
      * @return bool
      */
-    public function hasModel()
+    public function hasModel(): bool
     {
         return ! is_null($this->model) && class_exists($this->model);
     }
@@ -86,7 +89,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         if (is_null($this->id) && $this->hasModel()) {
             return $this->model;
@@ -98,7 +101,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if (is_null($this->title) && $this->hasModel()) {
             return $this->getModelConfiguration()->getTitle();
@@ -118,17 +121,17 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTarget()
+    public function getTarget(): ?string
     {
         return $this->target;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         if (is_null($this->url) && $this->hasModel()) {
             return $this->getModelConfiguration()->getDisplayUrl();
@@ -138,7 +141,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @return \Closure
+     * @return Closure|bool
      */
     public function getAccessLogic()
     {
@@ -155,9 +158,9 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
 
     /**
      * @param  string|null  $view
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View|string
      */
-    public function render($view = null)
+    public function render($view = null): Factory|View|string
     {
         if ($this->hasChild() && ! $this->hasClassProperty($class = config('navigation.class.has_child', 'treeview'))) {
             $this->setHtmlAttribute('class', $class);
@@ -177,12 +180,14 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @param  string  $model
+     * @param string|null $model
      * @return $this
      */
-    protected function setModel($model)
+    protected function setModel(?string $model): self
     {
-        $this->model = $model;
+        if ($model) {
+            $this->model = $model;
+        }
 
         return $this;
     }

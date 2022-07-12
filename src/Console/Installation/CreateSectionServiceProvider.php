@@ -15,7 +15,6 @@ class CreateSectionServiceProvider extends Installator
     }
 
     /**
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function install()
     {
@@ -36,7 +35,7 @@ class CreateSectionServiceProvider extends Installator
      *
      * @return bool
      */
-    public function installed()
+    public function installed(): bool
     {
         return file_exists($this->getFilePath());
     }
@@ -44,7 +43,7 @@ class CreateSectionServiceProvider extends Installator
     /**
      * @return string
      */
-    protected function getFilePath()
+    protected function getFilePath(): string
     {
         return app_path('Providers/AdminSectionsServiceProvider.php');
     }

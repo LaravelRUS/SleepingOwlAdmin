@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use KodiComponents\Navigation\Contracts\PageInterface as KodiPageInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
@@ -16,9 +17,9 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     /**
      * Overload current page.
      *
-     * @return \KodiComponents\Navigation\Contracts\PageInterface|null
+     * @return KodiPageInterface|null
      */
-    public function getCurrentPage()
+    public function getCurrentPage(): ?KodiPageInterface
     {
         $this->setAliasesId($this->getPages());
         $this->findActivePage();
@@ -87,7 +88,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     /**
      * @return bool
      */
-    protected function findActivePage()
+    protected function findActivePage(): bool
     {
         if (! is_null($this->currentPage)) {
             return true;

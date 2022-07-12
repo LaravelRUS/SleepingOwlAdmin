@@ -9,7 +9,7 @@ class Delete extends FormButton
 {
     protected $show = true;
     protected $name = 'delete';
-    protected $iconClass = 'fas fa-times';
+    protected ?string $iconClass = 'fas fa-times';
 
     public function __construct()
     {

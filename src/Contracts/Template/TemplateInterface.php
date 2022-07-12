@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Contracts\Template;
 
+use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
@@ -13,86 +16,85 @@ interface TemplateInterface extends Initializable, Arrayable
      *
      * @return string
      */
-    public function name();
+    public function name(): string;
 
     /**
      * Версия темы.
      *
      * @return string
      */
-    public function version();
+    public function version(): string;
 
     /**
      * URL проекта.
      *
      * @return string
      */
-    public function homepage();
+    public function homepage(): string;
 
     /**
      * @return string
      */
-    public function getViewNamespace();
+    public function getViewNamespace(): string;
 
     /**
-     * @param  string  $view
+     * @param string $view
      * @return string
      */
-    public function getViewPath($view);
+    public function getViewPath(string $view): string;
 
     /**
-     * @param  string|\Illuminate\View\View  $view
+     * @param  string|View  $view
      * @param  array  $data
-     * @param  array  $mergeData
-     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param array $mergeData
+     * @return bool|Factory|View
      */
-    public function view($view, array $data = [], $mergeData = []);
+    public function view($view, array $data = [], array $mergeData = []);
 
     /**
-     * @param  string  $key
+     * @param string $key
      * @return string
      */
-    public function renderBreadcrumbs($key);
+    public function renderBreadcrumbs(string $key);
 
     /**
-     * @return \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
+     * @return Breadcrumbs
      */
     public function breadcrumbs();
 
     /**
      * @return MetaInterface
      */
-    public function meta();
+    public function meta(): MetaInterface;
 
     /**
-     * @param  string  $title
+     * @param string $title
      * @return string
      */
-    public function renderMeta($title);
+    public function renderMeta(string $title): string;
 
     /**
      * @return NavigationInterface
      */
-    public function navigation();
+    public function navigation(): NavigationInterface;
 
     /**
      * @return string
      */
-    public function renderNavigation();
+    public function renderNavigation(): string;
 
     /**
-     * Получение относительного пути �
-     * ранения asset файлов.
+     * Получение относительного пути хранения asset файлов.
      *
      * @return string
      */
-    public function assetDir();
+    public function assetDir(): string;
 
     /**
      * Генерация относительно пути до asset файлов для текущей темы.
      *
-     * @param  string  $path  относительный путь до файла, например `js/app.js`
+     * @param string|null $path  Относительный путь до файла, например `js/app.js`
      * @return string
      */
-    public function assetPath($path = null);
+    public function assetPath(string $path = null): string;
 }

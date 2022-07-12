@@ -16,5 +16,5 @@ class Hidden extends NamedFormElement
     /**
      * @var string
      */
-    protected $view = 'form.element.hidden';
+    protected string $view = 'form.element.hidden';
 }

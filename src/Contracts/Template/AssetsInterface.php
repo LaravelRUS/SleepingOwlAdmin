@@ -9,23 +9,21 @@ interface AssetsInterface extends KodiAssetsInterface
     /**
      * Добавление глобальной переменной.
      *
-     * @param  string  $key
+     * @param string $key
      * @param  mixed  $value
      * @return self
      */
-    public function putGlobalVar($key, $value);
+    public function putGlobalVar(string $key, $value): AssetsInterface;
 
     /**
-     * Получение массива глобальных
-     * перменных
-     * .
+     * Получение массива глобальных переменных.
      *
      * @return array
      */
-    public function globalVars();
+    public function globalVars(): array;
 
     /**
      * @return string
      */
-    public function renderGlobalVars();
+    public function renderGlobalVars(): string;
 }

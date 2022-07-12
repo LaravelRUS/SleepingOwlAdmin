@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Config\Repository;
 use Illuminate\Support\Str;
+use KodiCMS\Assets\Package;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
@@ -12,7 +13,7 @@ final class Editor implements WysiwygEditorInterface
     /**
      * @var string
      */
-    private $id;
+    private string $id;
 
     /**
      * @var string
@@ -35,7 +36,7 @@ final class Editor implements WysiwygEditorInterface
     private $used = false;
 
     /**
-     * @var \KodiCMS\Assets\Package
+     * @var Package
      */
     private $package;
 
@@ -58,7 +59,7 @@ final class Editor implements WysiwygEditorInterface
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -66,7 +67,7 @@ final class Editor implements WysiwygEditorInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -74,13 +75,13 @@ final class Editor implements WysiwygEditorInterface
     /**
      * @return WysiwygFilterInterface
      */
-    public function getFilter()
+    public function getFilter(): WysiwygFilterInterface
     {
         return $this->filter;
     }
 
     /**
-     * @return \KodiCMS\Assets\Package
+     * @return Package
      */
     public function getPackage()
     {
@@ -90,7 +91,7 @@ final class Editor implements WysiwygEditorInterface
     /**
      * @return Repository
      */
-    public function getConfig()
+    public function getConfig(): Repository
     {
         return $this->config;
     }
@@ -98,28 +99,28 @@ final class Editor implements WysiwygEditorInterface
     /**
      * @return bool
      */
-    public function isUsed()
+    public function isUsed(): bool
     {
         return $this->used;
     }
 
     /**
-     * @param  string  $text
+     * @param string $text
      * @return string
      */
-    public function applyFilter($text)
+    public function applyFilter(string $text): string
     {
         return $this->getFilter()->apply($text);
     }
 
-    public function load()
+    public function load(): bool
     {
         app('sleeping_owl.meta')->loadPackage($this->getId());
 
         $this->used = true;
     }
 
-    public function unload()
+    public function unload(): bool
     {
         $this->used = false;
     }
@@ -129,7 +130,7 @@ final class Editor implements WysiwygEditorInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),

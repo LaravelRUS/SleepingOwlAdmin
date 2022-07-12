@@ -3,42 +3,43 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Contracts\AdminInterface;
 
 class Filter extends NamedColumn
 {
     /**
      * Filter related model.
      *
-     * @var Model
+     * @var Model|null
      */
-    protected $relatedModel = null;
+    protected ?Model $relatedModel = null;
 
     /**
      * Field to get filter value from.
      *
-     * @var string
+     * @var string|null
      */
-    protected $field = null;
+    protected ?string $field = null;
 
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var string
      */
-    protected $view = 'column.filter';
+    protected string $view = 'column.filter';
 
     /**
      * @return mixed
      */
-    public function getRelatedModel()
+    public function getRelatedModel(): mixed
     {
         if (is_null($this->relatedModel)) {
             $this->setRelatedModel($this->getModel());
@@ -48,10 +49,10 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @param  string|Model  $relatedModel
+     * @param string|Model $relatedModel
      * @return $this
      */
-    public function setRelatedModel($relatedModel)
+    public function setRelatedModel(Model|string $relatedModel): Filter
     {
         $this->relatedModel = $relatedModel;
 
@@ -59,9 +60,9 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getField()
+    public function getField(): ?string
     {
         if (is_null($this->field)) {
             $this->setField($this->isSelf() ? $this->getName() : 'id');
@@ -71,10 +72,10 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @param  string  $field
+     * @param string $field
      * @return $this
      */
-    public function setField($field)
+    public function setField(string $field): static
     {
         $this->field = $field;
 
@@ -86,7 +87,7 @@ class Filter extends NamedColumn
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         $request = clone request();
 
@@ -95,7 +96,7 @@ class Filter extends NamedColumn
             'page' => 1,
         ]);
 
-        /** @var \SleepingOwl\Admin\Contracts\AdminInterface $so */
+        /** @var AdminInterface $so */
         $so = app('sleeping_owl');
 
         return $so->getModel($this->getRelatedModel())
@@ -107,7 +108,7 @@ class Filter extends NamedColumn
      *
      * @return bool
      */
-    protected function isSelf()
+    protected function isSelf(): bool
     {
         return get_class($this->getModel()) == get_class($this->getRelatedModel());
     }
@@ -115,7 +116,7 @@ class Filter extends NamedColumn
     /**
      * @return string
      */
-    protected function getValue()
+    protected function getValue(): string
     {
         return $this->getModelValue();
     }
@@ -123,7 +124,7 @@ class Filter extends NamedColumn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'icon' => $this->isSelf() ? 'fas fa-filter' : 'fas fa-long-arrow-alt-right',

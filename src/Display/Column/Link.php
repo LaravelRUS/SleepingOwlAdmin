@@ -22,7 +22,7 @@ class Link extends Url
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'link' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),

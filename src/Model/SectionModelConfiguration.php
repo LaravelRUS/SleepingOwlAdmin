@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -25,9 +26,9 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return \Illuminate\Support\Collection|null
+     * @return Collection|array|null
      */
-    public function getBreadCrumbs()
+    public function getBreadCrumbs(): Collection|array|null
     {
         return $this->breadcrumbs->toArray();
     }
@@ -44,25 +45,25 @@ class SectionModelConfiguration extends ModelConfigurationManager
     /**
      * @return bool
      */
-    public function isCreatable()
+    public function isCreatable(): bool
     {
         return method_exists($this, 'onCreate') && parent::isCreatable($this->getModel());
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
-    public function isEditable(Model $model)
+    public function isEditable(Model $model): bool
     {
         return method_exists($this, 'onEdit') && parent::isEditable($model);
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
-    public function isDeletable(Model $model)
+    public function isDeletable(Model $model): bool
     {
         return method_exists($this, 'onDelete') && parent::isDeletable($model);
     }
@@ -71,10 +72,10 @@ class SectionModelConfiguration extends ModelConfigurationManager
      * @param  mixed  $payload
      * @return mixed|DisplayInterface|void
      */
-    public function fireDisplay($payload = [])
+    public function fireDisplay($payload = []): mixed
     {
         if (! method_exists($this, 'onDisplay')) {
-            return;
+            return null;
         }
 
         $this->setPayload($payload);
@@ -167,36 +168,51 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
+     * @param int $id
+     * @return SectionModelConfiguration
+     */
+    public function fireFullEdit(int $id): self
+    {
+        return $this->fireEdit($id);
+    }
+
+    /**
      * @param $id
      * @return mixed
      */
-    public function fireDelete($id)
+    public function fireDelete($id): mixed
     {
         if (method_exists($this, 'onDelete')) {
             return $this->app->call([$this, 'onDelete'], ['id' => $id]);
         }
+
+        return null;
     }
 
     /**
      * @param $id
      * @return mixed
      */
-    public function fireDestroy($id)
+    public function fireDestroy($id): mixed
     {
         if (method_exists($this, 'onDestroy')) {
             return $this->app->call([$this, 'onDestroy'], ['id' => $id]);
         }
+
+        return null;
     }
 
     /**
      * @param $id
-     * @return bool|mixed
+     * @return mixed
      */
-    public function fireRestore($id)
+    public function fireRestore($id): mixed
     {
         if (method_exists($this, 'onRestore')) {
             return $this->app->call([$this, 'onRestore'], ['id' => $id]);
         }
+
+        return null;
     }
 
     /**

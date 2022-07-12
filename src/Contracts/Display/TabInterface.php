@@ -11,25 +11,25 @@ interface TabInterface extends Arrayable, Renderable, Initializable
     /**
      * @return string
      */
-    public function getLabel();
+    public function getLabel(): string;
 
     /**
      * @return bool
      */
-    public function isActive();
+    public function isActive(): bool;
 
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @return string
      */
-    public function getIcon();
+    public function getIcon(): string;
 
     /**
      * @return Renderable
      */
-    public function getContent();
+    public function getContent(): Renderable;
 }

@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Illuminate\Database\Eloquent\Model;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class Select extends BaseColumnFilter
@@ -12,12 +13,12 @@ class Select extends BaseColumnFilter
     /**
      * @var string
      */
-    protected $view = 'column.filter.select';
+    protected string $view = 'column.filter.select';
 
     /**
      * @var Model
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * @var array
@@ -50,7 +51,7 @@ class Select extends BaseColumnFilter
      * @param  null|array|Model  $options
      * @param  null|string  $title
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws SelectException
      */
     public function __construct($options = null, $title = null)
     {
@@ -121,7 +122,7 @@ class Select extends BaseColumnFilter
      * @param $model
      * @return \SleepingOwl\Admin\Display\Column\Filter\Select
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @throws SelectException
      */
     public function setModel($model)
     {

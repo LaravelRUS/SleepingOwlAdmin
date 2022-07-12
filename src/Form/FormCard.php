@@ -22,7 +22,7 @@ class FormCard extends FormDefault
     /**
      * @var string
      */
-    protected $view = 'form.card';
+    protected string $view = 'form.card';
 
     /**
      * FormCard constructor.

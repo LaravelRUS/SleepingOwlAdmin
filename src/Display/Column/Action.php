@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Closure;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 
 class Action extends NamedColumn implements ActionInterface
@@ -11,52 +12,52 @@ class Action extends NamedColumn implements ActionInterface
      *
      * @var string
      */
-    protected $icon;
+    protected string $icon;
 
     /**
      * @var string
      */
-    protected $style = 'long';
+    protected string $style = 'long';
 
     /**
      * @var string
      */
-    protected $action;
+    protected string $action;
 
     /**
      * @var string
      */
-    protected $method = 'post';
+    protected string $method = 'post';
 
     /**
      * @var string
      */
-    protected $title;
+    protected string $title;
 
     /**
      * @var string
      */
-    protected $view = 'column.action';
+    protected string $view = 'column.action';
 
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected bool $orderable = false;
 
     /**
      * @var bool
      */
-    protected $isSearchable = false;
+    protected bool $isSearchable = false;
 
     /**
      * @var bool
      */
-    protected $selected = false;
+    protected bool $selected = false;
 
     /**
      * Action constructor.
      *
-     * @param  \Closure|null|string  $name
+     * @param  Closure|null|string  $name
      * @param  string|null  $title
      */
     public function __construct($name, $title = null)
@@ -80,16 +81,16 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Action
     {
         $this->title = $title;
 
@@ -99,16 +100,16 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return bool
      */
-    public function getSelected()
+    public function getSelected(): bool
     {
         return $this->selected;
     }
 
     /**
-     * @param  bool  $selected
+     * @param bool $selected
      * @return $this
      */
-    public function setSelected($selected)
+    public function setSelected(bool $selected): Action
     {
         $this->selected = $selected;
 
@@ -118,16 +119,16 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
 
     /**
-     * @param  string  $action
+     * @param string $action
      * @return $this
      */
-    public function setAction($action)
+    public function setAction(string $action): Action
     {
         $this->action = $action;
 
@@ -137,16 +138,16 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
 
     /**
-     * @param  string  $method
+     * @param string $method
      * @return $this
      */
-    public function setMethod($method)
+    public function setMethod(string $method): Action
     {
         $this->method = $method;
 
@@ -156,7 +157,7 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return $this
      */
-    public function useGet()
+    public function useGet(): Action
     {
         $this->method = 'get';
 
@@ -166,7 +167,7 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return $this
      */
-    public function usePost()
+    public function usePost(): Action
     {
         $this->method = 'post';
 
@@ -176,7 +177,7 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return $this
      */
-    public function usePut()
+    public function usePut(): Action
     {
         $this->method = 'put';
 
@@ -186,7 +187,7 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return $this
      */
-    public function useDelete()
+    public function useDelete(): Action
     {
         $this->method = 'delete';
 
@@ -196,16 +197,16 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return string
      */
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }
 
     /**
-     * @param  string  $icon
+     * @param string $icon
      * @return $this
      */
-    public function setIcon($icon)
+    public function setIcon(string $icon): Action
     {
         $this->icon = $icon;
 
@@ -215,7 +216,7 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'icon' => $this->getIcon(),
