@@ -31,9 +31,9 @@ abstract class FormElement implements FormElementInterface
     protected string $view;
 
     /**
-     * @var Model
+     * @var Model|null
      */
-    protected Model $model;
+    protected ?Model $model = null;
 
     /**
      * @var array
@@ -164,9 +164,9 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @return Model
+     * @return Model|null
      */
-    public function getModel(): Model
+    public function getModel(): ?Model
     {
         return $this->model;
     }

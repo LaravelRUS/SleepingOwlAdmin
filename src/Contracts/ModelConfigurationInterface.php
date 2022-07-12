@@ -116,7 +116,7 @@ interface ModelConfigurationInterface
      * @param  array  $redirect
      * @return $this
      */
-    public function setRedirect(array $redirect): ModelConfigurationInterface;
+    public function setRedirect(array $redirect): self;
 
     /**
      * @return Collection
@@ -135,7 +135,7 @@ interface ModelConfigurationInterface
      *
      * @deprecated
      */
-    public function fireFullEdit(int $id): ModelConfigurationInterface;
+    public function fireFullEdit(int $id): self;
 
     /**
      * @param $id

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 interface OrderByClauseInterface
 {
     /**
-     * @param  string|\Closure  $name
+     * @param Closure|string $name
      */
-    public function setName($name);
+    public function setName(Closure|string $name);
 
     /**
      * @param  Builder  $query

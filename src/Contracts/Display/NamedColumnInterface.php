@@ -5,9 +5,9 @@ namespace SleepingOwl\Admin\Contracts\Display;
 interface NamedColumnInterface
 {
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * @param string $name

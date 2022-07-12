@@ -537,7 +537,7 @@ class FormButtons implements FormButtonsInterface
      * @param  ModelConfigurationInterface  $modelConfiguration
      * @return $this
      */
-    public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration)
+    public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration): self
     {
         $this->modelConfiguration = $modelConfiguration;
 
@@ -555,7 +555,7 @@ class FormButtons implements FormButtonsInterface
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -564,7 +564,7 @@ class FormButtons implements FormButtonsInterface
      * @param  Model  $model
      * @return $this
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): self
     {
         $this->model = $model;
 

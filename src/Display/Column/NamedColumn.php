@@ -16,9 +16,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * Column field name.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $name;
+    protected ?string $name;
 
     /**
      * @var bool
@@ -54,18 +54,18 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return $this
      */
-    public function setName(string $name): NamedColumn
+    public function setName(?string $name): NamedColumn
     {
         $this->name = $name;
 

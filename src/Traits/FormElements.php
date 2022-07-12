@@ -74,6 +74,8 @@ trait FormElements
                 return $element;
             }
         }
+
+        return null;
     }
 
     /**

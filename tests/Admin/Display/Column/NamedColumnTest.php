@@ -132,7 +132,7 @@ class NamedColumnTest extends TestCase
 
 class NamedColumnTestOrderByClause implements \SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface
 {
-    public function setName(string|Closure $name)
+    public function setName(Closure|string $name)
     {
     }
 

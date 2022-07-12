@@ -48,10 +48,10 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * @param  string|\Closure  $name
+     * @param \Closure|string $name
      * @return \SleepingOwl\Admin\Display\Column\OrderByClause
      */
-    public function setName($name)
+    public function setName(Closure|string $name)
     {
         $this->name = $name;
 

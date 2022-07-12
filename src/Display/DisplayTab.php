@@ -44,14 +44,14 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     protected bool $active = false;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected string $icon;
+    protected ?string $icon = null;
 
     /**
      * @var Renderable
@@ -61,7 +61,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     /**
      * @var string|Closure|Badge|null
      */
-    protected Badge|string|Closure|null $badge;
+    protected Badge|string|Closure|null $badge = null;
 
     /**
      * @var bool
@@ -255,18 +255,18 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIcon(): string
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
 
     /**
-     * @param  string  $icon
+     * @param string $icon
      * @return $this
      */
-    public function setIcon($icon)
+    public function setIcon(string $icon)
     {
         $this->icon = $icon;
 

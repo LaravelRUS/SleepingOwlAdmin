@@ -66,7 +66,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      * @param string $class
      * @return $this
      */
-    public function setClass(string $class)
+    public function setClass(string $class): self
     {
         parent::setClass($class);
 
@@ -93,7 +93,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      *
      * @return string
      */
-    public function getParentField()
+    public function getParentField(): string
     {
         return $this->parentField;
     }
@@ -102,7 +102,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      * @param string $parentField
      * @return $this
      */
-    public function setParentField(string $parentField)
+    public function setParentField(string $parentField): self
     {
         $this->parentField = $parentField;
 
@@ -114,7 +114,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      *
      * @return string
      */
-    public function getOrderField()
+    public function getOrderField(): string
     {
         return $this->orderField;
     }
@@ -123,7 +123,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
      * @param string $orderField
      * @return $this
      */
-    public function setOrderField(string $orderField)
+    public function setOrderField(string $orderField): self
     {
         $this->orderField = $orderField;
 
@@ -133,18 +133,18 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     /**
      * Get or set parent field name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRootParentId()
+    public function getRootParentId(): ?string
     {
         return $this->rootParentId;
     }
 
     /**
-     * @param string $rootParentId
+     * @param string|null $rootParentId
      * @return $this
      */
-    public function setRootParentId(string $rootParentId)
+    public function setRootParentId(?string $rootParentId): self
     {
         $this->rootParentId = $rootParentId;
 

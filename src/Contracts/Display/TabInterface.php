@@ -24,9 +24,9 @@ interface TabInterface extends Arrayable, Renderable, Initializable
     public function getName(): string;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIcon(): string;
+    public function getIcon(): ?string;
 
     /**
      * @return Renderable

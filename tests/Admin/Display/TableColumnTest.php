@@ -250,7 +250,7 @@ class TableColumnTestModel extends \Illuminate\Database\Eloquent\Model
 
 class TableColumnTestOrderByClause implements \SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface
 {
-    public function setName(string|Closure $name)
+    public function setName(Closure|string $name)
     {
     }
 

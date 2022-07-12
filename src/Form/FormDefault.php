@@ -33,9 +33,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * Form related class.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $class;
+    protected ?string $class = null;
 
     /**
      * @var FormButtons
@@ -52,23 +52,23 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     /**
      * Form action url.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $action;
+    protected ?string $action = null;
 
     /**
      * Form related model instance.
      *
-     * @var Model
+     * @var Model|null
      */
-    protected Model $model;
+    protected ?Model $model;
 
     /**
      * Currently loaded model id.
      *
-     * @var string|int
+     * @var string|int|null
      */
-    protected string|int $id;
+    protected string|int|null $id = null;
 
     /**
      * Is form already initialized?
@@ -135,7 +135,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      *
      * @return $this
      */
-    public function withFiles(): FormDefault
+    public function withFiles(): self
     {
         $this->setHtmlAttribute('enctype', 'multipart/form-data');
 
@@ -143,9 +143,9 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
     }
 
     /**
-     * @return FormButtons
+     * @return $this
      */
-    public function getButtons(): FormButtons
+    public function getButtons()
     {
         return $this->buttons;
     }
@@ -154,7 +154,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
      * @param  FormButtonsInterface  $buttons
      * @return $this
      */
-    public function setButtons(FormButtonsInterface $buttons): FormDefault
+    public function setButtons(FormButtonsInterface $buttons): self
     {
         $this->buttons = $buttons;
 

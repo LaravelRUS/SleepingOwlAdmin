@@ -25,7 +25,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
      * @param string $parentField
      * @return $this
      */
-    public function setParentField(string $parentField): TreeRepositoryInterface;
+    public function setParentField(string $parentField): self;
 
     /**
      * Get order field name.
@@ -38,20 +38,20 @@ interface TreeRepositoryInterface extends RepositoryInterface
      * @param string $orderField
      * @return $this
      */
-    public function setOrderField(string $orderField): TreeRepositoryInterface;
+    public function setOrderField(string $orderField): self;
 
     /**
      * Get or set parent field name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRootParentId(): string;
+    public function getRootParentId(): ?string;
 
     /**
      * @param string $rootParentId
      * @return $this
      */
-    public function setRootParentId(string $rootParentId): TreeRepositoryInterface;
+    public function setRootParentId(string $rootParentId): self;
 
     /**
      * Reorder tree by $data value.

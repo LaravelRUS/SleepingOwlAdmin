@@ -74,9 +74,9 @@ abstract class TableColumn implements ColumnInterface
     protected ?string $width = null;
 
     /**
-     * @var OrderByClauseInterface
+     * @var OrderByClauseInterface|bool
      */
-    protected OrderByClauseInterface $orderByClause;
+    protected OrderByClauseInterface|bool $orderByClause = true;
 
     /**
      * @var bool

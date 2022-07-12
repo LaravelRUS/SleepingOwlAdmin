@@ -15,5 +15,5 @@ interface WithModelInterface
     /**
      * @return Model
      */
-    public function getModel(): Model;
+    public function getModel(): ?Model;
 }

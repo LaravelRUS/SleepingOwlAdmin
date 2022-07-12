@@ -114,9 +114,9 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    protected function getValue(): string
+    protected function getValue(): ?string
     {
         return $this->getModelValue();
     }
