@@ -9,7 +9,7 @@ class Text extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.text';
+    protected string $view = 'column.text';
 
     /**
      * @var Closure|mixed

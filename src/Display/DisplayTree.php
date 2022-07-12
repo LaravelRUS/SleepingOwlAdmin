@@ -147,9 +147,9 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @return string
+     * @return int|string
      */
-    public function getMaxDepth()
+    public function getMaxDepth(): int|string
     {
         return $this->max_depth;
     }
@@ -336,9 +336,9 @@ class DisplayTree extends Display implements WithRoutesInterface
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         $model = $this->getModelConfiguration();
         $this->setHtmlAttribute('class', 'dd nestable');
@@ -363,7 +363,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     /**
      * @return Collection
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCollection()
     {
@@ -397,7 +397,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     /**
      * @return \Illuminate\Foundation\Application|mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function makeRepository()
     {

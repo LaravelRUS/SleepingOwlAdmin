@@ -200,7 +200,7 @@ class DisplayTable extends Display
      *
      * @throws Exception
      */
-    public function toArray()
+    public function toArray(): array
     {
         $model = $this->getModelConfiguration();
 

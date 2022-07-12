@@ -17,9 +17,9 @@ class DateTime extends NamedFormElement
     protected ?string $format = 'Y-m-d H:i:s';
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected string $timezone;
+    protected ?string $timezone = null;
 
     /**
      * @var bool

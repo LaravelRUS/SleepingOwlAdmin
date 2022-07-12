@@ -7,10 +7,10 @@ class Boolean extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.boolean';
+    protected string $view = 'column.boolean';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected ?string $width = '50px';
 

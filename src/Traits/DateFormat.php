@@ -20,7 +20,7 @@ trait DateFormat
      * @param string|null $format
      * @return $this
      */
-    public function setFormat(?string $format): DateFormat
+    public function setFormat(?string $format): self
     {
         $this->format = $format;
 
@@ -28,9 +28,9 @@ trait DateFormat
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTimezone(): string
+    public function getTimezone(): ?string
     {
         if (is_null($this->timezone)) {
             $this->timezone = config('sleeping_owl.timezone');
@@ -40,10 +40,10 @@ trait DateFormat
     }
 
     /**
-     * @param string $timezone
+     * @param string|null $timezone
      * @return $this
      */
-    public function setTimezone(string $timezone): DateFormat
+    public function setTimezone(?string $timezone): self
     {
         $this->timezone = $timezone;
 

@@ -18,7 +18,7 @@ class Body extends FormElements implements CardInterface
     /**
      * @var string
      */
-    protected $class = 'card-body';
+    protected string $class = 'card-body';
 
     public function initialize()
     {
@@ -30,7 +30,7 @@ class Body extends FormElements implements CardInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return parent::toArray() + [
             'elements' => $this->getElements()->onlyVisible(),

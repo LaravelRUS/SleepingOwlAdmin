@@ -7,13 +7,13 @@ class Gravatar extends NamedColumn
     /**
      * @var string
      */
-    protected $size = '40';
+    protected string $size = '40';
 
     /** @var string */
-    protected $rating = 'pg';
+    protected string $rating = 'pg';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected ?string $width = '50px';
 
@@ -30,12 +30,12 @@ class Gravatar extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.gravatar';
+    protected string $view = 'column.gravatar';
 
     /**
      * @return string
      */
-    public function getSize()
+    public function getSize(): string
     {
         return $this->size;
     }
@@ -44,7 +44,7 @@ class Gravatar extends NamedColumn
      * @param  string  $size
      * @return $this
      */
-    public function setSize($size)
+    public function setSize($size): self
     {
         $this->size = $size;
 

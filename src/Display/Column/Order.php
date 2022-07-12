@@ -26,12 +26,12 @@ class Order extends TableColumn implements WithRoutesInterface
     /**
      * @var string
      */
-    protected $view = 'column.order';
+    protected string $view = 'column.order';
 
     /**
      * @var null|int
      */
-    protected $totalCountValue = null;
+    protected ?int $totalCountValue = null;
 
     /**
      * Register routes.
@@ -136,7 +136,7 @@ class Order extends TableColumn implements WithRoutesInterface
      *
      * @throws Exception
      */
-    protected function movableUp()
+    protected function movableUp(): bool
     {
         return $this->getOrderValue() > 0;
     }
@@ -146,7 +146,7 @@ class Order extends TableColumn implements WithRoutesInterface
      *
      * @throws Exception
      */
-    protected function moveUpUrl()
+    protected function moveUpUrl(): string
     {
         return route('admin.display.column.move-up', [
             $this->getModelConfiguration()->getAlias(),
@@ -159,7 +159,7 @@ class Order extends TableColumn implements WithRoutesInterface
      *
      * @throws Exception
      */
-    protected function movableDown()
+    protected function movableDown(): bool
     {
         return $this->getOrderValue() < $this->totalCount() - 1;
     }
@@ -169,7 +169,7 @@ class Order extends TableColumn implements WithRoutesInterface
      *
      * @throws Exception
      */
-    protected function moveDownUrl()
+    protected function moveDownUrl(): string
     {
         return route('admin.display.column.move-down', [
             $this->getModelConfiguration()->getAlias(),

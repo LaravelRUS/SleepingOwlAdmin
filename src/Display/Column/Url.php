@@ -7,7 +7,7 @@ class Url extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.url';
+    protected string $view = 'column.url';
 
     /**
      * @var string|bool

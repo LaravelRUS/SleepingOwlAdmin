@@ -10,9 +10,9 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * Action icon class.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $icon;
+    protected ?string $icon = null;
 
     /**
      * @var string
@@ -195,18 +195,18 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIcon(): string
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
 
     /**
-     * @param string $icon
+     * @param string|null $icon
      * @return $this
      */
-    public function setIcon(string $icon): Action
+    public function setIcon(?string $icon): self
     {
         $this->icon = $icon;
 

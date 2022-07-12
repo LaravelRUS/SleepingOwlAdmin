@@ -55,9 +55,9 @@ abstract class TableColumn implements ColumnInterface
     /**
      * Model instance currently rendering.
      *
-     * @var Model
+     * @var Model|null
      */
-    protected Model $model;
+    protected ?Model $model = null;
 
     /**
      * Column appended.
@@ -249,18 +249,18 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @return Model $model
+     * @return Model|null $model
      */
-    public function getModel(): Model
+    public function getModel(): ?Model
     {
         return $this->model;
     }
 
     /**
-     * @param  Model  $model
+     * @param Model|null $model
      * @return $this
      */
-    public function setModel(Model $model): self
+    public function setModel(?Model $model): self
     {
         $this->model = $model;
         $append = $this->getAppends();

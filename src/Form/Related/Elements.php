@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Form\Related;
 
+use Closure;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -45,9 +46,9 @@ abstract class Elements extends FormElements
     protected $deletable = true;
 
     /**
-     * @return bool|callable
+     * @return bool
      */
-    public function isDeletable()
+    public function isDeletable(): bool
     {
         if (is_callable($this->deletable)) {
             return (bool) call_user_func($this->deletable, $this->getModel());
@@ -57,10 +58,10 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @param  Closure|bool  $readonly
+     * @param bool|Closure $deletable
      * @return $this
      */
-    public function setDeletable($deletable)
+    public function setDeletable(Closure|bool $deletable): self
     {
         $this->deletable = $deletable;
 
@@ -90,23 +91,24 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @var bool|null
+     * @var bool
      */
     protected $collapsed;
 
     /**
      * How many items can be created.
      *
-     * @var int
+     * @var int|null
      */
-    protected $limit;
+    protected ?int $limit = 100;
 
     /**
      * Relation name of the model.
      *
      * @var string
      */
-    protected $relationName;
+    protected string $relationName;
+
 
     protected $emptyRelation;
 
@@ -115,19 +117,19 @@ abstract class Elements extends FormElements
      *
      * @var int
      */
-    protected $new = 0;
+    protected int $new = 0;
 
     /**
      * @var string
      */
-    protected $groupLabel;
+    protected string $groupLabel;
 
     /**
      * Main label of dynamic form.
      *
      * @var string
      */
-    protected $label;
+    protected string $label;
 
     /**
      * Loaded related values.
@@ -162,9 +164,9 @@ abstract class Elements extends FormElements
     protected $transactionLevel;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $helpText;
+    protected ?string $helpText = null;
 
     public function __construct(string $relationName, array $elements = [])
     {
@@ -200,7 +202,12 @@ abstract class Elements extends FormElements
         return $this;
     }
 
-    public function setLabel(string $label): self
+
+    /**
+     * @param string|null $label
+     * @return $this
+     */
+    public function setLabel(?string $label): self
     {
         $this->label = $label;
 
@@ -340,19 +347,20 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @param  Model  $model
-     * @return FormElements|void
+     * @param Model|null $model
+     * @return $this
      *
-     * @throws ModelNotFoundException
      */
-    public function setModel(Model $model): FormElements
+    public function setModel(?Model $model): self
     {
         parent::setModel($model);
 
-        if ($model->exists) {
+        if ($model && $model->exists) {
             $this->setInstance($model);
             $this->loadRelationValues();
         }
+
+        return $this;
     }
 
     public function setInstance($instance)
@@ -614,7 +622,7 @@ abstract class Elements extends FormElements
     /**
      * Returns empty relation of model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * @return Relation
      */
     protected function getEmptyRelation()
     {
@@ -629,7 +637,7 @@ abstract class Elements extends FormElements
     /**
      * Saves request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      */
     public function save(Request $request)
     {
@@ -668,9 +676,9 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function afterSave(Request $request)
     {
@@ -834,7 +842,7 @@ abstract class Elements extends FormElements
     /**
      * Proceeds saving related values after all validations passes.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return mixed
      */
     abstract protected function proceedSave(Request $request);

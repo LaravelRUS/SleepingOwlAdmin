@@ -7,22 +7,22 @@ class Image extends NamedColumn
     /**
      * @var string
      */
-    protected $imageWidth = '80px';
+    protected string $imageWidth = '80px';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected ?string $width = '80px';
 
     /**
      * @var string
      */
-    protected $asset = '';
+    protected string $asset = '';
 
     /**
      * @var bool
      */
-    protected $lazy = null;
+    protected ?bool $lazy = null;
 
     /**
      * @var bool
@@ -37,7 +37,7 @@ class Image extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.image';
+    protected string $view = 'column.image';
 
     /**
      * @return string
@@ -72,7 +72,7 @@ class Image extends NamedColumn
     /**
      * @return bool $lazy
      */
-    public function getLazyLoad()
+    public function getLazyLoad(): bool
     {
         if ($this->lazy !== null) {
             return (bool) $this->lazy;
@@ -82,10 +82,10 @@ class Image extends NamedColumn
     }
 
     /**
-     * @param  bool  $lazy
+     * @param bool $lazy
      * @return $this
      */
-    public function setLazyLoad($lazy)
+    public function setLazyLoad(bool $lazy): self
     {
         $this->lazy = $lazy;
 
@@ -103,7 +103,7 @@ class Image extends NamedColumn
             $value = $this->asset.$value;
         }
 
-        if (! empty($value) && (strpos($value, '://') === false)) {
+        if (! empty($value) && (!str_contains($value, '://'))) {
             $value = asset($value);
         }
 

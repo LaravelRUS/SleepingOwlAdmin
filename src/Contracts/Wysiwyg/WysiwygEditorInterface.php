@@ -39,9 +39,9 @@ interface WysiwygEditorInterface extends Arrayable
     public function applyFilter(string $text): string;
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function load(): bool;
+    public function load(): ?bool;
 
     /**
      * @return bool

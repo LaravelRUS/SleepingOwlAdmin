@@ -45,10 +45,10 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param ActionInterface|null $actions
+     * @param ActionInterface|array|null $actions
      * @return DisplayInterface
      */
-    public function set(ActionInterface $actions = null): DisplayInterface
+    public function set(array|ActionInterface $actions = null): DisplayInterface
     {
         if (! is_array($actions)) {
             $actions = func_get_args();

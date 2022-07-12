@@ -16,14 +16,14 @@ class DateTime extends NamedColumn
      *
      * @var null|string
      */
-    protected ?string $format;
+    protected ?string $format = null;
 
     /**
      * Datetime timezone.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $timezone;
+    protected ?string $timezone = null;
 
     /**
      * @var string
@@ -31,10 +31,10 @@ class DateTime extends NamedColumn
     protected string $view = 'column.datetime';
 
     /**
-     * @param  Model  $model
+     * @param Model|null $model
      * @return $this
      */
-    public function setModel(Model $model): DateTime
+    public function setModel(?Model $model): DateTime
     {
         parent::setModel($model);
         $this->setHtmlAttribute('data-value', $this->getModelValue());

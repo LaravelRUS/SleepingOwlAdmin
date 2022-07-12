@@ -263,10 +263,10 @@ class Control extends TableColumn
     }
 
     /**
-     * @param  Model  $model
+     * @param Model|null $model
      * @return $this
      */
-    public function setModel(Model $model): Control
+    public function setModel(?Model $model): self
     {
         parent::setModel($model);
 

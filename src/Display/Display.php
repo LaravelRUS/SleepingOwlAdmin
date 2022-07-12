@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use BadMethodCallException;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -204,7 +205,7 @@ abstract class Display implements DisplayInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         $titles = [
             $this->title,
@@ -235,7 +236,7 @@ abstract class Display implements DisplayInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'title' => $this->getTitle(),
@@ -295,7 +296,7 @@ abstract class Display implements DisplayInterface
             }
         }
 
-        throw new \BadMethodCallException("Call to undefined method [{$name}]");
+        throw new BadMethodCallException("Call to undefined method [{$name}]");
     }
 
     /**

@@ -113,16 +113,23 @@ final class Editor implements WysiwygEditorInterface
         return $this->getFilter()->apply($text);
     }
 
+    /**
+     * @return bool
+     */
     public function load(): bool
     {
-        app('sleeping_owl.meta')->loadPackage($this->getId());
+        $load = app('sleeping_owl.meta')->loadPackage($this->getId());
 
         $this->used = true;
+
+        return true;
     }
 
     public function unload(): bool
     {
         $this->used = false;
+
+        return false;
     }
 
     /**

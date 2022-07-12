@@ -17,7 +17,7 @@ use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 class OrderByClause implements OrderByClauseInterface
 {
     /**
-     * @var string|\Closure
+     * @var string|Closure
      */
     protected $name;
 
@@ -42,14 +42,14 @@ class OrderByClause implements OrderByClauseInterface
      */
     public function modifyQuery(Builder $query, $direction = 'asc')
     {
-        $this->name instanceof \Closure
+        $this->name instanceof Closure
             ? $this->callCallable($query, $direction)
             : $this->callDefaultClause($query, $direction);
     }
 
     /**
-     * @param \Closure|string $name
-     * @return \SleepingOwl\Admin\Display\Column\OrderByClause
+     * @param Closure|string $name
+     * @return OrderByClause
      */
     public function setName(Closure|string $name)
     {
@@ -104,7 +104,9 @@ class OrderByClause implements OrderByClauseInterface
      */
     protected function loadRelationOrder(Builder $query, $direction)
     {
-        /** @var Relation $relationClass */
+        /**
+         * @var Relation $relationClass
+         */
         $relations = collect(explode('.', $this->name));
         $loop = 0;
         if ($relations->count() >= 2) {

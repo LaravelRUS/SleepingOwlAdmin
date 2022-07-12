@@ -82,15 +82,17 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @return Model $model|null
+     * @return Model|null $model|null
      */
-    public function getModel(): Model
+    public function getModel(): ?Model
     {
         foreach ($this->getTabs() as $tab) {
             if ($tab->getContent() instanceof FormInterface) {
                 return $tab->getContent()->getModel();
             }
         }
+
+        return null;
     }
 
     /**

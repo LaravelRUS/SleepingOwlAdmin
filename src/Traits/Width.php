@@ -10,10 +10,10 @@ trait Width
     protected ?string $width = null;
 
     /**
-     * @param array|int|string $width
+     * @param array|int|string|null $width
      * @return $this
      */
-    public function setWidth(array|int|string $width): self
+    public function setWidth(array|int|string|null $width): self
     {
         $this->width = $width;
 

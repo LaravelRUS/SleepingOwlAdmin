@@ -9,7 +9,7 @@ class Lists extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.lists';
+    protected string $view = 'column.lists';
 
     /**
      * @var bool
@@ -24,20 +24,20 @@ class Lists extends NamedColumn
     /**
      * @var bool
      */
-    protected $sortable = false;
+    protected bool $sortable = false;
 
     /**
      * @var int
      */
-    protected $maxLists = 0;
+    protected int $maxLists = 0;
 
     /**
-     * @param  int  $maxListsItem
+     * @param int $maxListsItem
      * @return $this
      */
-    public function setMaxLists($maxListsItem)
+    public function setMaxLists(int $maxListsItem): self
     {
-        $this->maxLists = (int) $maxListsItem;
+        $this->maxLists = $maxListsItem;
 
         return $this;
     }
@@ -45,16 +45,16 @@ class Lists extends NamedColumn
     /**
      * @return int
      */
-    public function getMaxLists()
+    public function getMaxLists(): int
     {
         return $this->maxLists;
     }
 
     /**
-     * @param  bool  $sortable
+     * @param bool $sortable
      * @return $this
      */
-    public function setSortable($sortable)
+    public function setSortable(bool $sortable): self
     {
         $this->sortable = (bool) $sortable;
 
@@ -64,7 +64,7 @@ class Lists extends NamedColumn
     /**
      * @return bool
      */
-    public function isSortable()
+    public function isSortable(): bool
     {
         return $this->sortable;
     }

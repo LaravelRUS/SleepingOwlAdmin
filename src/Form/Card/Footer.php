@@ -7,5 +7,5 @@ class Footer extends Body
     /**
      * @var string
      */
-    protected $class = 'card-footer';
+    protected string $class = 'card-footer';
 }

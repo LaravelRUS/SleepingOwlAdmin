@@ -7,7 +7,7 @@ class Link extends Url
     /**
      * @var string
      */
-    protected $view = 'column.link';
+    protected string $view = 'column.link';
 
     /**
      * Check if instance editable.

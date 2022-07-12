@@ -10,7 +10,7 @@ class RelatedLink extends Link
     /**
      * @var string
      */
-    protected $view = 'column.link';
+    protected string $view = 'column.link';
 
     /**
      * @var string
@@ -33,12 +33,12 @@ class RelatedLink extends Link
     }
 
     /**
-     * @param  Model  $model
+     * @param Model|null $model
      * @return Link
      */
-    public function setModel(Model $model): Link
+    public function setModel(?Model $model): Link
     {
-        if (strpos($this->originalName, '.') !== false) {
+        if (str_contains($this->originalName, '.')) {
             $parts = explode('.', $this->originalName);
             $name = array_pop($parts);
 

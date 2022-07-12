@@ -7,7 +7,7 @@ class Email extends NamedColumn
     /**
      * @var string
      */
-    protected $view = 'column.email';
+    protected string $view = 'column.email';
 
     /**
      * @return array
