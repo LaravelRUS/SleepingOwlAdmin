@@ -31,10 +31,10 @@ return [
     | Sidebar default condition class
     |--------------------------------------------------------------------------
     |
-    |
+    | `.menu-ellipsis` - Limit text menu if you want
     |
     */
-    'body_default_class' => '',
+    'body_default_class' => 'menu-ellipsis',
 
     /*
     |--------------------------------------------------------------------------

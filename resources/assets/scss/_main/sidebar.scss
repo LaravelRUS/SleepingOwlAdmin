@@ -4,6 +4,14 @@ $widthColapsed: 80px !default;
 $widthNotColapsed: 260px !default;
 $sidebarTransition: .5s !default;
 
+// Limit text menu
+.menu-ellipsis {
+    .sidebar-item {
+        white-space: nowrap !important;
+    }
+
+}
+
 #sidebar-toggle-mobile {
     display: none;
 

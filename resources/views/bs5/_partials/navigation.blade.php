@@ -24,8 +24,11 @@
     @stack('sidebar.ul.top')
 
     <nav class="admin-sidebar-menu">
-{{--        {{ dd($template->navigation())  }}--}}
         {!! $template->renderNavigation() !!}
+
+
+        {{--        {{ dd($template->navigation())  }}--}}
+        {{--        EXAMPLE FOR DIVIDER & LABEL --}}
 
         {{--        <li role="separator" class="sidebar-divider"></li>--}}
 
