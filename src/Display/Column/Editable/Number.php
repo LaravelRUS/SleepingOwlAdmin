@@ -89,7 +89,7 @@ class Number extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return void
      *
      * @throws FormElementException

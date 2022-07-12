@@ -14,8 +14,6 @@ class CreateSectionServiceProvider extends Installator
         $this->command->line('Creating [AdminSectionsServiceProvider.php] file: <info>✔</info>');
     }
 
-    /**
-     */
     public function install()
     {
         $file = $this->getFilePath();

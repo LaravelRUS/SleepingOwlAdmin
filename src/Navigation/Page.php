@@ -180,7 +180,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @param string|null $model
+     * @param  string|null  $model
      * @return $this
      */
     protected function setModel(?string $model): self

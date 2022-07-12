@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Traits;
 
 use Closure;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 
 trait SmallDisplay
 {
@@ -35,8 +34,8 @@ trait SmallDisplay
     }
 
     /**
-     * @param Closure|string $small
-     * @param bool $asString
+     * @param  Closure|string  $small
+     * @param  bool  $asString
      * @return $this
      */
     public function setSmall(Closure|string $small, bool $asString = false): self
@@ -48,7 +47,7 @@ trait SmallDisplay
     }
 
     /**
-     * @param bool $isolatedHTML
+     * @param  bool  $isolatedHTML
      * @return $this
      */
     public function setIsolated(bool $isolatedHTML): self

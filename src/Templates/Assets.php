@@ -152,7 +152,7 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * Добавление глобальной переменной.
      *
-     * @param string $key
+     * @param  string  $key
      * @param  mixed  $value
      * @return AssetsContract
      */

@@ -49,7 +49,7 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @param string|Model $relatedModel
+     * @param  string|Model  $relatedModel
      * @return $this
      */
     public function setRelatedModel(Model|string $relatedModel): Filter
@@ -72,7 +72,7 @@ class Filter extends NamedColumn
     }
 
     /**
-     * @param string $field
+     * @param  string  $field
      * @return $this
      */
     public function setField(string $field): static

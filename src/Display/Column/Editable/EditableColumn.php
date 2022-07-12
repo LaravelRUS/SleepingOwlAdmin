@@ -172,7 +172,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param bool|Closure $readonlyEditable
+     * @param  bool|Closure  $readonlyEditable
      * @return ColumnEditableInterface
      */
     public function setReadonly(bool|Closure $readonlyEditable): ColumnEditableInterface

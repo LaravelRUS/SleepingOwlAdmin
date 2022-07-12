@@ -190,7 +190,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param string $modelClass
+     * @param  string  $modelClass
      * @return $this
      */
     public function setModelClass(string $modelClass)
@@ -221,7 +221,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return $this
      */
     public function setTitle(string $title): self

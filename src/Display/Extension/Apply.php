@@ -22,7 +22,7 @@ class Apply extends Extension
     }
 
     /**
-     * @param Closure $applies
+     * @param  Closure  $applies
      * @return DisplayInterface
      */
     public function set(Closure $applies): DisplayInterface

@@ -553,7 +553,7 @@ class HasManyLocal extends FormElements
     /**
      * Returns value from model for given element.
      *
-     * @param Model $model
+     * @param  Model  $model
      * @param  NamedFormElement  $el
      * @return mixed|null
      */
@@ -594,7 +594,7 @@ class HasManyLocal extends FormElements
     /**
      * Applies given callback to every element of form.
      *
-     * @param Collection $elements
+     * @param  Collection  $elements
      * @param $callback
      */
     protected function forEachElement(Collection $elements, $callback)
@@ -607,7 +607,7 @@ class HasManyLocal extends FormElements
     /**
      * Returns flat collection of elements in form ignoring everything but NamedFormElement. Works recursive.
      *
-     * @param Collection $elements
+     * @param  Collection  $elements
      * @return mixed
      */
     protected function flatNamedElements(Collection $elements)
@@ -636,7 +636,7 @@ class HasManyLocal extends FormElements
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @param  array  $attributes
      * @return Model
      */

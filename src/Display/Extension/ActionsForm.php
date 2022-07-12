@@ -111,7 +111,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string $placement
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement(string $placement): ActionsForm

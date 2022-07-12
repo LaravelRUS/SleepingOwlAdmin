@@ -260,7 +260,7 @@ class ControlLink implements ControlButtonInterface
     }
 
     /**
-     * @param string|Closure|null $image
+     * @param  string|Closure|null  $image
      * @return $this
      */
     public function setImage(string|Closure|null $image): self

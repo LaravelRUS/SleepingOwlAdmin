@@ -105,7 +105,7 @@ final class Editor implements WysiwygEditorInterface
     }
 
     /**
-     * @param string $text
+     * @param  string  $text
      * @return string
      */
     public function applyFilter(string $text): string

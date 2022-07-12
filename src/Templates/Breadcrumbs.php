@@ -10,9 +10,8 @@ use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsCont
 class Breadcrumbs extends Manager implements BreadcrumbsContract
 {
     /**
-     * @param string|null $name
+     * @param  string|null  $name
      * @return string
-     *
      */
     public function renderIfExists(string $name = null): string
     {
@@ -36,10 +35,9 @@ class Breadcrumbs extends Manager implements BreadcrumbsContract
     }
 
     /**
-     * @param string $name
-     * @param array $params
+     * @param  string  $name
+     * @param  array  $params
      * @return string
-     *
      */
     public function renderArray(string $name, ...$params): string
     {
@@ -47,10 +45,9 @@ class Breadcrumbs extends Manager implements BreadcrumbsContract
     }
 
     /**
-     * @param string $name
-     * @param array $params
+     * @param  string  $name
+     * @param  array  $params
      * @return string
-     *
      */
     public function renderIfExistsArray(string $name, array $params = []): string
     {
@@ -60,5 +57,4 @@ class Breadcrumbs extends Manager implements BreadcrumbsContract
 
         return $this->renderArray($name, $params);
     }
-
 }

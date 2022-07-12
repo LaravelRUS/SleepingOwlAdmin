@@ -46,7 +46,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Set the event dispatcher instance.
      *
-     * @param Dispatcher $dispatcher
+     * @param  Dispatcher  $dispatcher
      * @return void
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
@@ -164,7 +164,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $item
+     * @param  Model  $item
      */
     public function setModelValue(Model $item)
     {
@@ -193,7 +193,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param string $icon
+     * @param  string  $icon
      * @return $this
      */
     public function setIcon(string $icon): ModelConfigurationManager
@@ -252,7 +252,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isEditable(Model $model): bool
@@ -261,7 +261,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isDeletable(Model $model): bool
@@ -279,7 +279,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isRestorable(Model $model): bool
@@ -316,8 +316,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param string $action
-     * @param Model $model
+     * @param  string  $action
+     * @param  Model  $model
      * @return bool
      */
     public function can(string $action, Model $model): bool
@@ -330,7 +330,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param string $controllerClass
+     * @param  string  $controllerClass
      * @return $this
      */
     public function setControllerClass(string $controllerClass): ModelConfigurationManager
@@ -401,7 +401,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
@@ -417,7 +417,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
@@ -433,7 +433,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
@@ -449,7 +449,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
@@ -465,7 +465,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
@@ -529,8 +529,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int $priority
-     * @param string|Closure|BadgeInterface|null $badge
+     * @param  int  $priority
+     * @param  string|Closure|BadgeInterface|null  $badge
      * @return Page
      */
     public function addToNavigation(int $priority = 100, BadgeInterface|string|Closure $badge = null): Page
@@ -552,8 +552,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int $priority
-     * @param string|Closure|BadgeInterface|null $badge
+     * @param  int  $priority
+     * @param  string|Closure|BadgeInterface|null  $badge
      * @return Page
      */
     protected function makePage(int $priority = 100, BadgeInterface|string|Closure $badge = null): Page
@@ -594,8 +594,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Fire the given event for the model.
      *
-     * @param string $event
-     * @param bool $halt
+     * @param  string  $event
+     * @param  bool  $halt
      * @param  Model|null  $model
      * @param  array  $payload
      * @return mixed
@@ -613,7 +613,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         // We will append the names of the class to the event to distinguish it from
         // other model events that are fired, allowing us to listen on each model
         // event set individually instead of catching event for all the models.
-        $event = "sleeping_owl.section." . $event . ": " .$this->getClass();
+        $event = 'sleeping_owl.section.'.$event.': '.$this->getClass();
 
         // Laravel 5.8 and 5.4 support fire method
         if (version_compare('5.8.0', $this->app->version(), '<=') ||
@@ -654,7 +654,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @param  $event
      * @param  $callback
-     * @param int $priority
+     * @param  int  $priority
      */
     protected function registerEvent($event, $callback, int $priority = 0)
     {

@@ -62,7 +62,7 @@ abstract class FilterBase implements FilterInterface
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setName(string $name): FilterBase

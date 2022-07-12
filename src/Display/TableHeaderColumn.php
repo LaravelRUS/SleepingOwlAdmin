@@ -63,7 +63,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     }
 
     /**
-     * @param bool $orderable
+     * @param  bool  $orderable
      * @return $this
      */
     public function setOrderable(bool $orderable): self

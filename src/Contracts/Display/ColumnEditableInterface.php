@@ -14,13 +14,13 @@ interface ColumnEditableInterface extends ColumnInterface
     public function save(Request $request);
 
     /**
-     * @param bool|Closure $readonlyEditable
+     * @param  bool|Closure  $readonlyEditable
      * @return $this
      */
     public function setReadonly(bool|Closure $readonlyEditable);
 
     /**
-     * @param bool $setIsolated
+     * @param  bool  $setIsolated
      * @return $this
      */
     public function setIsolated(bool $setIsolated);

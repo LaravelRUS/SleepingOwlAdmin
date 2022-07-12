@@ -58,7 +58,7 @@ trait FormElements
     }
 
     /**
-     * @param string $path
+     * @param  string  $path
      * @return FormElementInterface|null
      */
     public function getElement(string $path): ?FormElementInterface
@@ -109,7 +109,7 @@ trait FormElements
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return WithModelInterface
      */
     public function setModel(Model $model): WithModelInterface

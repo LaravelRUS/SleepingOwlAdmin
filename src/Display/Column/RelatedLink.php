@@ -33,7 +33,7 @@ class RelatedLink extends Link
     }
 
     /**
-     * @param Model|null $model
+     * @param  Model|null  $model
      * @return Link
      */
     public function setModel(?Model $model): Link

@@ -67,25 +67,25 @@ interface ModelConfigurationInterface
     public function isCreatable(): bool;
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isEditable(Model $model): bool;
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isDeletable(Model $model): bool;
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isDestroyable(Model $model): bool;
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isRestorable(Model $model): bool;
@@ -96,8 +96,8 @@ interface ModelConfigurationInterface
     public function isRestorableModel(): bool;
 
     /**
-     * @param string $action
-     * @param Model $model
+     * @param  string  $action
+     * @param  Model  $model
      * @return bool
      */
     public function can(string $action, Model $model): bool;
@@ -130,7 +130,7 @@ interface ModelConfigurationInterface
     public function fireEdit($id);
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return $this
      *
      * @deprecated
@@ -180,35 +180,35 @@ interface ModelConfigurationInterface
     public function getStoreUrl(array $parameters = []): string;
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
     public function getEditUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
     public function getUpdateUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
     public function getDeleteUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */
     public function getDestroyUrl(int|string $id, array $parameters = []): string;
 
     /**
-     * @param int|string $id
+     * @param  int|string  $id
      * @param  array  $parameters
      * @return string
      */

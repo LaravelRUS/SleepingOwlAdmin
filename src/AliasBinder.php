@@ -17,7 +17,7 @@ class AliasBinder implements AliasBinderInterface
     protected static $routes = [];
 
     /**
-     * @param Registrar $router
+     * @param  Registrar  $router
      * @return void
      */
     public static function registerRoutes(Registrar $router)
@@ -36,7 +36,7 @@ class AliasBinder implements AliasBinderInterface
     /**
      * AliasBinder constructor.
      *
-     * @param Application $application
+     * @param  Application  $application
      */
     public function __construct(Application $application)
     {
@@ -51,8 +51,8 @@ class AliasBinder implements AliasBinderInterface
     /**
      * Bind new alias.
      *
-     * @param string $alias
-     * @param string $class
+     * @param  string  $alias
+     * @param  string  $class
      * @return $this
      */
     public function bind(string $alias, string $class): AliasBinderInterface
@@ -67,8 +67,8 @@ class AliasBinder implements AliasBinderInterface
     }
 
     /**
-     * @param string $alias
-     * @param string $class
+     * @param  string  $alias
+     * @param  string  $class
      * @return $this
      *
      * @deprecated Use `bind` method
@@ -102,7 +102,7 @@ class AliasBinder implements AliasBinderInterface
     /**
      * Get class by alias.
      *
-     * @param string $alias
+     * @param  string  $alias
      * @return string
      */
     public function getAlias(string $alias): string
@@ -113,7 +113,7 @@ class AliasBinder implements AliasBinderInterface
     /**
      * Check if alias is registered.
      *
-     * @param string $alias
+     * @param  string  $alias
      * @return bool
      */
     public function hasAlias(string $alias): bool
@@ -122,7 +122,7 @@ class AliasBinder implements AliasBinderInterface
     }
 
     /**
-     * @param string $alias
+     * @param  string  $alias
      * @param  array  $arguments
      * @return object
      *

@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Widgets;
 
-
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\View\Factory;
@@ -98,6 +97,7 @@ class WidgetsRegistry implements WidgetsRegistryInterface
     /**
      * @param $widget
      * @return Widget
+     *
      * @throws BindingResolutionException
      */
     public function createClassWidget($widget): Widget

@@ -61,7 +61,7 @@ class Columns extends FormElements implements ColumnInterface
 
     /**
      * @param  FormElementInterface[]|\Closure|ColumnInterface  $element
-     * @param int|null $width
+     * @param  int|null  $width
      * @return $this
      *
      * @throws Exception
@@ -132,7 +132,7 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param string $size
+     * @param  string  $size
      * @return ColumnInterface
      */
     public function setSize(string $size): ColumnInterface

@@ -60,7 +60,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param ColumnFilterInterface|null $filter
+     * @param  ColumnFilterInterface|null  $filter
      * @return $this
      */
     public function push(ColumnFilterInterface $filter = null): ColumnFilters
@@ -106,7 +106,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string $placement
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement(string $placement): ColumnFilters
@@ -164,7 +164,8 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
+     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */

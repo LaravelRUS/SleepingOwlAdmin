@@ -32,7 +32,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * DisplayTabbed constructor.
      *
-     * @param Closure|TabInterface[]|null $tabs
+     * @param  Closure|TabInterface[]|null  $tabs
      */
     public function __construct(array|Closure $tabs = null)
     {
@@ -96,7 +96,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $class
+     * @param  string  $class
      * @return $this
      */
     public function setModelClass(string $class): DisplayTabbed
@@ -119,7 +119,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param Closure|TabInterface[] $tabs
+     * @param  Closure|TabInterface[]  $tabs
      * @return $this
      */
     public function setTabs(array|Closure $tabs): DisplayTabbed|static
@@ -175,7 +175,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param string $action
+     * @param  string  $action
      * @return $this
      */
     public function setAction(string $action)
@@ -190,7 +190,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return $this
      */
     public function setId(int $id)

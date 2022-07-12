@@ -13,7 +13,7 @@ interface DisplayExtensionInterface extends Arrayable
     public function getOrder(): int;
 
     /**
-     * @param int $order
+     * @param  int  $order
      * @return $this
      */
     public function setOrder(int $order): self;
@@ -30,7 +30,7 @@ interface DisplayExtensionInterface extends Arrayable
     public function setDisplay(DisplayInterface $display): self;
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     public function modifyQuery(Builder $query);
 }

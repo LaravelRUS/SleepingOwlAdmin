@@ -96,8 +96,8 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
-     * @param Closure|null $callback
+     * @param  string  $class
+     * @param  Closure|null  $callback
      * @return $this|AdminInterface
      *
      * @throws Exceptions\RepositoryException
@@ -159,7 +159,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $key
+     * @param  string  $key
      * @param  ModelConfigurationInterface  $model
      * @return $this
      */
@@ -171,7 +171,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $alias
+     * @param  string  $alias
      * @return mixed|null|ModelConfigurationInterface
      *
      * @throws Exceptions\RepositoryException
@@ -199,7 +199,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param string $class
+     * @param  string  $class
      * @return bool
      */
     public function hasModel(string $class): bool
@@ -233,7 +233,7 @@ class Admin implements AdminInterface
 
     /**
      * @param $class
-     * @param int $priority
+     * @param  int  $priority
      * @return Navigation\Page
      *
      * @throws Exceptions\RepositoryException
@@ -246,7 +246,7 @@ class Admin implements AdminInterface
 
     /**
      * @param  string|Renderable  $content
-     * @param string|null $title
+     * @param  string|null  $title
      * @return View|Factory
      */
     public function view($content, string $title = null)

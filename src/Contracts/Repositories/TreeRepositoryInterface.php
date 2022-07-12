@@ -9,7 +9,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
     /**
      * Get tree structure.
      *
-     * @param Collection $collection
+     * @param  Collection  $collection
      * @return mixed
      */
     public function getTree(Collection $collection);
@@ -22,7 +22,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
     public function getParentField(): string;
 
     /**
-     * @param string $parentField
+     * @param  string  $parentField
      * @return $this
      */
     public function setParentField(string $parentField): self;
@@ -35,7 +35,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
     public function getOrderField(): string;
 
     /**
-     * @param string $orderField
+     * @param  string  $orderField
      * @return $this
      */
     public function setOrderField(string $orderField): self;
@@ -48,7 +48,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
     public function getRootParentId(): ?string;
 
     /**
-     * @param string $rootParentId
+     * @param  string  $rootParentId
      * @return $this
      */
     public function setRootParentId(string $rootParentId): self;

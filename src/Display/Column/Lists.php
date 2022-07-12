@@ -32,7 +32,7 @@ class Lists extends NamedColumn
     protected int $maxLists = 0;
 
     /**
-     * @param int $maxListsItem
+     * @param  int  $maxListsItem
      * @return $this
      */
     public function setMaxLists(int $maxListsItem): self
@@ -51,7 +51,7 @@ class Lists extends NamedColumn
     }
 
     /**
-     * @param bool $sortable
+     * @param  bool  $sortable
      * @return $this
      */
     public function setSortable(bool $sortable): self

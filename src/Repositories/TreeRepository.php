@@ -63,7 +63,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param string $class
+     * @param  string  $class
      * @return $this
      */
     public function setClass(string $class): self
@@ -99,7 +99,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param string $parentField
+     * @param  string  $parentField
      * @return $this
      */
     public function setParentField(string $parentField): self
@@ -120,7 +120,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param string $orderField
+     * @param  string  $orderField
      * @return $this
      */
     public function setOrderField(string $orderField): self
@@ -141,7 +141,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     }
 
     /**
-     * @param string|null $rootParentId
+     * @param  string|null  $rootParentId
      * @return $this
      */
     public function setRootParentId(?string $rootParentId): self

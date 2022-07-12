@@ -176,7 +176,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return ModelConfiguration
      */
     public function setCreateTitle(string $title): ModelConfiguration
@@ -199,7 +199,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param string $title
+     * @param  string  $title
      * @return ModelConfiguration
      */
     public function setEditTitle(string $title): ModelConfiguration
@@ -228,8 +228,8 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param string $action
-     * @param Model $model
+     * @param  string  $action
+     * @param  Model  $model
      * @return bool
      */
     public function can(string $action, Model $model): bool
@@ -382,7 +382,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param mixed $payload
+     * @param  mixed  $payload
      * @return mixed
      */
     public function fireDisplay($payload = []): mixed
@@ -508,7 +508,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return ModelConfigurationInterface
      * @TODO Все Fire переделать под один стандарт
      */

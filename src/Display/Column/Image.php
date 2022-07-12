@@ -82,7 +82,7 @@ class Image extends NamedColumn
     }
 
     /**
-     * @param bool $lazy
+     * @param  bool  $lazy
      * @return $this
      */
     public function setLazyLoad(bool $lazy): self
@@ -103,7 +103,7 @@ class Image extends NamedColumn
             $value = $this->asset.$value;
         }
 
-        if (! empty($value) && (!str_contains($value, '://'))) {
+        if (! empty($value) && (! str_contains($value, '://'))) {
             $value = asset($value);
         }
 

@@ -106,7 +106,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param Closure $callback
+     * @param  Closure  $callback
      * @return $this
      *
      * @deprecated
@@ -119,10 +119,10 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param ColumnInterface $column
-     * @param Builder $query
-     * @param string|null $queryString
-     * @param array|string $queryParams
+     * @param  ColumnInterface  $column
+     * @param  Builder  $query
+     * @param  string|null  $queryString
+     * @param  array|string  $queryParams
      * @return void
      */
     public function apply(ColumnInterface $column, Builder $query, ?string $queryString, $queryParams)

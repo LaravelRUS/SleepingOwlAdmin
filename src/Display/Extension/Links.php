@@ -31,7 +31,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param array $links
+     * @param  array  $links
      * @return Links
      */
     public function set(array $links): Links

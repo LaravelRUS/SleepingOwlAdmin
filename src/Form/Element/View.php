@@ -17,9 +17,9 @@ class View extends Custom
     protected array $data = [];
 
     /**
-     * @param string $view
-     * @param array $data
-     * @param Closure|null $callback
+     * @param  string  $view
+     * @param  array  $data
+     * @param  Closure|null  $callback
      */
     public function __construct($view, array $data = [], Closure $callback = null)
     {

@@ -38,7 +38,7 @@ class OrderByClause implements OrderByClauseInterface
 
     /**
      * @param  Builder  $query
-     * @param string $direction
+     * @param  string  $direction
      */
     public function modifyQuery(Builder $query, $direction = 'asc')
     {
@@ -48,7 +48,7 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * @param Closure|string $name
+     * @param  Closure|string  $name
      * @return OrderByClause
      */
     public function setName(Closure|string $name)
@@ -60,7 +60,7 @@ class OrderByClause implements OrderByClauseInterface
 
     /**
      * @param  Builder  $query
-     * @param string $direction
+     * @param  string  $direction
      */
     protected function callCallable(Builder $query, $direction)
     {

@@ -32,9 +32,9 @@ class Custom extends NamedColumn
     /**
      * Custom constructor.
      *
-     * @param null|string $label
-     * @param Closure|null $callback
-     * @param null|string $small
+     * @param  null|string  $label
+     * @param  Closure|null  $callback
+     * @param  null|string  $small
      */
     public function __construct($label = null, Closure $callback = null, $small = null)
     {

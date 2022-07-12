@@ -21,7 +21,7 @@ class HasMany extends Elements
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return mixed|void
      */
     protected function proceedSave(Request $request)

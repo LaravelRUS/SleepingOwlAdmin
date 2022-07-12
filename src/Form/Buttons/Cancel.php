@@ -7,7 +7,6 @@ namespace SleepingOwl\Admin\Form\Buttons;
  */
 class Cancel extends FormButton
 {
-
     protected $show = true;
 
     protected $name = 'cancel';

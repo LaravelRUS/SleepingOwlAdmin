@@ -73,7 +73,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param array $value
+     * @param  array  $value
      * @return $this
      */
     public function setCombodateValue(array $value): DateTime

@@ -27,7 +27,7 @@ class FilterRelated extends FilterField
     }
 
     /**
-     * @param string $display
+     * @param  string  $display
      * @return $this
      */
     public function setDisplay(string $display): FilterRelated
@@ -46,7 +46,7 @@ class FilterRelated extends FilterField
     }
 
     /**
-     * @param string $model
+     * @param  string  $model
      * @return $this
      *
      * @throws Exception

@@ -45,7 +45,7 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param ActionInterface|array|null $actions
+     * @param  ActionInterface|array|null  $actions
      * @return DisplayInterface
      */
     public function set(array|ActionInterface $actions = null): DisplayInterface
@@ -110,7 +110,7 @@ class Actions extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string $placement
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement(string $placement)

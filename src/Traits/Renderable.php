@@ -18,7 +18,7 @@ trait Renderable
     protected string $viewPathPostfix = '';
 
     /**
-     * @param string|View $view
+     * @param  string|View  $view
      * @return $this
      */
     public function setView(string|View $view): self
