@@ -1,10 +1,10 @@
 {
-    "/default/js/vue.js": "/default/js/vue.js?id=f30407dbe3e37511883a945e0d292fe2",
-    "/default/js/admin-app.js": "/default/js/admin-app.js?id=f8497838d610819f1928bb68116e4348",
-    "/default/js/admin-app-dev.js": "/default/js/admin-app-dev.js?id=2ed9ef0e82ea5216a21763a47634b410",
-    "/default/js/modules.js": "/default/js/modules.js?id=a9070f80a8fed47cdfad8a9ed0393aaa",
-    "/bs5/js/admin-app.js": "/bs5/js/admin-app.js?id=7935ea9dbf87b7decfa431bcddaeeee2",
-    "/bs5/js/admin-app-dev.js": "/bs5/js/admin-app-dev.js?id=cbc615cce8c68adc073d50265fdb6b76",
-    "/default/css/admin-app.css": "/default/css/admin-app.css?id=e3daf50c4edf7b41cb6c748641fd8cc9",
-    "/bs5/css/admin-app.css": "/bs5/css/admin-app.css?id=2cd4b080d2729d80afdb9c70c4b46692"
+    "/default/js/vue.js": "/default/js/vue.js",
+    "/default/js/admin-app.js": "/default/js/admin-app.js",
+    "/default/js/admin-app-dev.js": "/default/js/admin-app-dev.js",
+    "/default/js/modules.js": "/default/js/modules.js",
+    "/bs5/js/admin-app.js": "/bs5/js/admin-app.js",
+    "/bs5/js/admin-app-dev.js": "/bs5/js/admin-app-dev.js",
+    "/default/css/admin-app.css": "/default/css/admin-app.css",
+    "/bs5/css/admin-app.css": "/bs5/css/admin-app.css"
 }

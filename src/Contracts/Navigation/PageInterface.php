@@ -62,4 +62,20 @@ interface PageInterface extends NavigationInterface
      * @return bool
      */
     public function checkAccess();
+
+    /**
+     * @return PageInterface
+     */
+    public function addLabel(): self;
+
+    /**
+     * @return PageInterface
+     */
+    public function addDivider(): self;
+
+    /**
+     * @param string $type
+     * @return PageInterface
+     */
+    public function setType(string $type): self;
 }

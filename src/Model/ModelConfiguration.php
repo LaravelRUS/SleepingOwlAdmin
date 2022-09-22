@@ -125,9 +125,12 @@ class ModelConfiguration extends ModelConfigurationManager
     /**
      * @return Collection
      * @TODO Daan test
+     * @TODO nit:daan
+     * Collection|array|null
      */
-    public function getBreadCrumbs(): Collection
+    public function getBreadCrumbs(): Collection|array|null
     {
+//        dd($this->breadcrumbs);
         return $this->breadcrumbs;
 //        return $this->breadcrumbs->toArray();
     }
@@ -511,6 +514,8 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  int  $id
      * @return ModelConfigurationInterface
      * @TODO Все Fire переделать под один стандарт
+     *
+     * @deprecated nit:daan 2022-07 все фулл депрекейтед
      */
     public function fireFullEdit(int $id): ModelConfigurationInterface
     {

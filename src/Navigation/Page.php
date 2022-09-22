@@ -172,6 +172,14 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
 
         $data = $this->toArray();
 
+        if ($this->type == 'divider') {
+            return app('sleeping_owl.template')->view('_partials.navigation.divider', $data)->render();
+        }
+
+        if ($this->type == 'label') {
+            return app('sleeping_owl.template')->view('_partials.navigation.label', $data)->render();
+        }
+
         if (! is_null($view)) {
             return view($view, $data)->render();
         }
@@ -188,6 +196,51 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
         if ($model) {
             $this->model = $model;
         }
+
+        return $this;
+    }
+
+    /**
+     * Add divider
+     *
+     * @return $this
+     */
+    public function addLabel(): self
+    {
+        $this->setId('label-' . $this->getPriority());
+        $this->setType('label');
+
+        return $this;
+    }
+
+    /**
+     * Add divider
+     *
+     * @return $this
+     */
+    public function addDivider(): self
+    {
+        $this->setId('divider-' . $this->getPriority());
+        $this->setType('divider');
+
+        return $this;
+    }
+
+
+    /**
+     * Type navigation `divider` or `label`.
+     *
+     * @var string|null
+     */
+    protected ?string $type = null;
+
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

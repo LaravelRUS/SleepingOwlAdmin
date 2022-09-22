@@ -1,0 +1,61 @@
+.adm-pagination {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+
+    a {
+        text-decoration: none;
+    }
+
+    .paginate_button {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6;
+
+        a {
+            padding: 0.375rem 0.75rem;
+            position: relative;
+            display: block;
+            color: var(--adm-dark);
+            background-color: var(--adm-light);
+            border: 0.0625rem solid var(--adm-muted);
+            transition: background-color $trans;
+
+            &:hover,
+            &:focus {
+                background-color: var(--adm-light-darken);
+            }
+        }
+
+        &:not(:first-child) a {
+            margin-left: -0.0625rem;
+        }
+
+        &:first-child a {
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        &:last-child a {
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        &.active {
+            a {
+                background-color: var(--adm-primary);
+                color: var(--adm-light);
+            }
+        }
+
+        &.disabled a {
+            cursor: default;
+            color: var(--adm-light-darken);
+
+            &:hover,
+            &:focus {
+                background-color: inherit;
+            }
+        }
+    }
+}

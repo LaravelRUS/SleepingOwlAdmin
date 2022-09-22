@@ -30,6 +30,8 @@ trait Renderable
 
     /**
      * @return View|string
+     *
+     * @TODO При отсутствии вьюшки подставить из `default`
      */
     public function getView(): string|View
     {

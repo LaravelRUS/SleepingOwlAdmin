@@ -25,25 +25,8 @@
 
     <nav class="admin-sidebar-menu">
         {!! $template->renderNavigation() !!}
-
-
-        {{--        {{ dd($template->navigation())  }}--}}
-        {{--        EXAMPLE FOR DIVIDER & LABEL --}}
-
-        {{--        <li role="separator" class="sidebar-divider"></li>--}}
-
-        {{--        <li class="sidebar-item sidebar-label">--}}
-        {{--            <div class="sidebar-link">--}}
-        {{--                <span class="sidebar-ellipsis">--}}
-        {{--                    <i class="fa-solid fa-ellipsis"></i>--}}
-        {{--                </span>--}}
-        {{--                <span class="sidebar-text">--}}
-        {{--                    Label--}}
-        {{--                </span>--}}
-        {{--            </div>--}}
-        {{--        </li>--}}
-
     </nav>
+
     @stack('sidebar.ul.bottom')
 
 </div>

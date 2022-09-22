@@ -44,17 +44,17 @@ interface ModelConfigurationInterface
     /**
      * @return string|null
      */
-    public function getIcon();
+    public function getIcon(): ?string;
 
     /**
-     * @return Translator
+     * @return Translator|string
      */
-    public function getCreateTitle(): Translator;
+    public function getCreateTitle(): Translator|string;
 
     /**
-     * @return Translator
+     * @return Translator|string
      */
-    public function getEditTitle(): Translator;
+    public function getEditTitle(): Translator|string;
 
     /**
      * @return bool
@@ -253,4 +253,17 @@ interface ModelConfigurationInterface
      * @return Page
      */
     public function addToNavigation(): Page;
+
+    /**
+     * @param string $title
+     * @param int $priority
+     * @return Page
+     */
+    public function addNavigationLabel(string $title, int $priority): Page;
+
+    /**
+     * @param int $priority
+     * @return Page
+     */
+    public function addNavigationDivider(int $priority): Page;
 }

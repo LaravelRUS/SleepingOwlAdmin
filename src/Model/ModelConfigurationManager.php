@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
+use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Navigation;
@@ -228,9 +229,9 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return Translator
+     * @return Translator|string
      */
-    public function getEditTitle(): Translator
+    public function getEditTitle(): Translator|string
     {
         return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
     }
@@ -542,13 +543,35 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         return $page;
     }
 
+
     /**
-     * @param $page_id
-     * @return PageInterface|null
+     * @param int $priority
+     * @return Page
      */
-    public function getNavigationPage($page_id): ?PageInterface
+    public function addNavigationDivider(int $priority): Page
     {
-        return $this->getNavigation()->getPages()->findById($page_id);
+        $page = $this->makePage($priority);
+        $page->addDivider();
+
+        $this->getNavigation()->addPage($page);
+
+        return $page;
+    }
+
+    /**
+     * @param string $title
+     * @param int $priority
+     * @return Page
+     */
+    public function addNavigationLabel(string $title, int $priority): Page
+    {
+        $page = $this->makePage($priority);
+        $page->setTitle($title);
+        $page->addLabel();
+
+        $this->getNavigation()->addPage($page);
+
+        return $page;
     }
 
     /**

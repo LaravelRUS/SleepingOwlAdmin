@@ -18,9 +18,9 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
         ElementDeleteRelatedItem;
 
     /**
-     * @var int
+     * @var int|null
      */
-    protected int $max;
+    protected ?int $max = null;
 
     /**
      * @var string

@@ -2,12 +2,16 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Diglactic\Breadcrumbs\Manager;
+use Diglactic\Breadcrumbs\Exceptions\DuplicateBreadcrumbException;
+use Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
+use Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException;
+use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
+use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
 
-class Breadcrumbs extends Manager implements BreadcrumbsContract
+class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
     /**
      * @param  string|null  $name
@@ -56,5 +60,17 @@ class Breadcrumbs extends Manager implements BreadcrumbsContract
         }
 
         return $this->renderArray($name, $params);
+    }
+
+
+    /**
+     * Register Breadcrumbs.
+     * Add in old version.
+     *
+     * @throws DuplicateBreadcrumbException
+     */
+    public function register(string $name, callable $callback): void
+    {
+        $this->for($name, $callback);
     }
 }

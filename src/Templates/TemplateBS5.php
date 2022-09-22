@@ -42,17 +42,17 @@ class TemplateBS5 extends TemplateDefault
     public function initialize()
     {
         $this->meta()
-            ->addJs('admin-main-bs5', '//cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js')
-            ->addCss('admin-main-bs5', '//cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css')
+//            ->addJs('admin-main-bs5', '//cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js')
+//            ->addCss('admin-main-bs5', '//cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css')
 //            ->addJs('admin-main-tw', '//cdn.tailwindcss.com')
 ;
 
-        /**
-         * Include jQuery.
-         */
-        if (config('sleeping_owl.templateParam.jquery') && config('sleeping_owl.templateParam.jqueryPath')) {
-            $this->meta()->addJs('admin-jq', config('sleeping_owl.templateParam.jqueryPath'));
-        }
+//        /**
+//         * Include jQuery.
+//         */
+//        if (config('sleeping_owl.templateParam.jquery') && config('sleeping_owl.templateParam.jqueryPath')) {
+//            $this->meta()->addJs('admin-jq', config('sleeping_owl.templateParam.jqueryPath'));
+//        }
 
         if (config('sleeping_owl.dev_assets')) {
             $this->meta()->addJs('admin-bs5', mix('bs5/js/admin-app-dev.js', $this->mainAsset()));

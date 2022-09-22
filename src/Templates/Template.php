@@ -18,27 +18,27 @@ abstract class Template implements TemplateInterface
     /**
      * @var Application
      */
-    protected $app;
+    protected Application $app;
 
     /**
      * @var MetaInterface
      */
-    protected $meta;
+    protected MetaInterface $meta;
 
     /**
      * @var NavigationInterface
      */
-    protected $navigation;
+    protected NavigationInterface $navigation;
 
     /**
      * @var Breadcrumbs
      */
-    protected $breadcrumbs;
+    protected Breadcrumbs $breadcrumbs;
 
     /**
      * @var AdminInterface
      */
-    protected $admin;
+    protected AdminInterface $admin;
 
     /**
      * TemplateDefault constructor.
@@ -74,9 +74,9 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @return
+     * @return Breadcrumbs|\Diglactic\Breadcrumbs\Breadcrumbs
      */
-    public function breadcrumbs()
+    public function breadcrumbs(): Breadcrumbs|\Diglactic\Breadcrumbs\Breadcrumbs
     {
         return $this->breadcrumbs;
     }
@@ -100,7 +100,7 @@ abstract class Template implements TemplateInterface
     /**
      * Генерация относительно пути до asset файлов для текущей темы.
      *
-     * @param  string|null  $path  относительный путь до файла, например `js/app.js`
+     * @param string|null $path  Относительный путь до файла, например `js/app.js`
      * @return string
      */
     public function assetPath(string $path = null): string
@@ -111,7 +111,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return config('sleeping_owl.title');
     }
@@ -140,7 +140,7 @@ abstract class Template implements TemplateInterface
             return $view->getPath();
         }
 
-        if (strpos($view, '::') !== false) {
+        if (str_contains($view, '::')) {
             return $view;
         }
 

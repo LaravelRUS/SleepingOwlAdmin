@@ -1,19 +1,19 @@
 import Admin from './components/admin'
 
-// "use strict";
-const d = document
-const w = window
+"use strict";
+// const d = document
+// const w = window
 
 
-w._ = require('lodash')
+window._ = require('lodash')
 
-w.Admin = new Admin(
-    d.querySelector(`meta[name="csrf-token"]`).getAttribute('content'),
-    w.GlobalConfig || {},
+window.Admin = new Admin(
+    document.querySelector(`meta[name="csrf-token"]`).getAttribute('content'),
+    window.GlobalConfig || {},
 )
 
-w.axios = require('axios')
-w.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+window.axios = require('axios')
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 
 
@@ -38,6 +38,13 @@ require('./libs/sweetalert')
 
 
 
+// Datatables
+require('./libs/jquery') // for datatables
+require('./libs/datatables-new')
+require('./libs/lazyload')
+
+
+
 
 // require('./libs/select2'); //-- jQuery
 // require('./libs/noty');  //-- заменен на toast
@@ -52,7 +59,8 @@ require('./libs/sweetalert')
 // require('./libs/magnific-popup');
 // require('./libs/dropzone');
 // require('./libs/datatables');
-require('./libs/datatables-new');
+
+
 
 // require('./libs/xeditable');
 // require('./libs/nestable');
@@ -60,7 +68,7 @@ require('./libs/datatables-new');
 // require('./libs/dependent-dropdown');
 // require('./libs/progressbar');
 // require('@flowjs/flow.js');
-require('./libs/lazyload');
+
 
 
 //
@@ -79,12 +87,12 @@ require('./libs/lazyload');
 /**
  * Enabled Admin components
  */
-w.Admin.Events = require('./components/events');
-w.Admin.Messages = require('./components/messages');
-w.Admin.Storage = require('./components/storage');
-w.Admin.Asset = require('./components/asset');
-w.Admin.Modules = require('./components/modules');
-w.Admin.WYSIWYG = require('./components/wysiwyg');
+window.Admin.Events = require('./components/events');
+window.Admin.Messages = require('./components/messages');
+window.Admin.Storage = require('./components/storage');
+window.Admin.Asset = require('./components/asset');
+window.Admin.Modules = require('./components/modules');
+window.Admin.WYSIWYG = require('./components/wysiwyg');
 
 // /**
 //  * Initialize Wysiwyg editors
@@ -95,15 +103,21 @@ w.Admin.WYSIWYG = require('./components/wysiwyg');
 // require('./wysiwyg/tinymce');
 // require('./wysiwyg/summernote');
 //
-// /**
-//  * Initialize App
-//  */
+
+
+/**
+ * Initialize App
+ */
+require('./admin/display/datatables-new')
+
+
+
 //
 // /**
 //  * Initialize display
 //  */
 // require('./admin/display/datatables');
-require('./admin/display/datatables-new');
+
 // require('./admin/display/table');
 //
 // require('./admin/display/actions');

@@ -1,5 +1,39 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-07-12 Только для templates
+- появилась возможность добавлять разделитель и заголовок в навигационное меню
+```php
+// из секции в initialize()
+
+$this->addNavigationDivider(888); // 888 - порядок
+$this->addNavigationLabel('Label text', 1200);
+
+//Всегда перед навигацией для секции!!! т.е. перед:
+$this->addToNavigation()
+            ->setPriority(0);
+
+// Из массива навигации.
+// URL указывать обязательно и любой, иначе элемент проигнорируется.
+// type == divider - title указывайте обязательно и любой
+// type == label - title указывайте обязательно и любой
+    [
+        'title' =>'Divider1',
+        'type' =>'divider',
+        'priority' =>'888',
+        'url' =>'/',
+    ],
+
+    [
+        'title' =>'Label menu text',
+        'type' =>'label',
+        'priority' =>'1200',
+        'url' =>'/',
+    ],
+```
+
+
+
+
 ## 2022-07-11
 - заменен устаревший пакет крошек на `diglactic/laravel-breadcrumbs`
 - минимальная версия PHP поднялась до 8.0

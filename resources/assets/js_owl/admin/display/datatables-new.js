@@ -1,234 +1,167 @@
-Admin.Modules.register('display.datatables-new', () => {
-    // const stateFilters = Admin.Config.get('state_filters')
-    //
-    // if (stateFilters) {
-    //     var filters = jQuery('.display-filters[data-display="DisplayDatatablesAsync"]')
-    //
-    //     if (filters.length > 0) {
-    //         urlName = getName()
-    //         //Check in localStorage
-    //         if (localStorage.getItem(urlName)) {
-    //             activeFilters = localStorage.getItem(urlName)
-    //             setActiveFilters(filters, activeFilters)
-    //         }
-    //     }
-    // }
+Admin.Modules.register('display.datatables', () => {
+    const stateFilters = Admin.Config.get('state_filters')
+
+    if (stateFilters) {
+        var filters = $('.display-filters[data-display="DisplayDatatablesAsync"]')
+
+        if (filters.length > 0) {
+            urlName = getName()
+            //Check in localStorage
+            if (localStorage.getItem(urlName)) {
+                activeFilters = localStorage.getItem(urlName)
+                setActiveFilters(filters, activeFilters)
+            }
+        }
+    }
 
 
-    // jQuery.fn.dataTable.ext.errMode = (dt) => {
-    //     Admin.Messages.error(
-    //         dt.jqXHR.responseJSON.message || trans('lang.table.error')
-    //     )
-    // };
+    $.fn.dataTable.ext.errMode = (dt) => {
+        Admin.Messages.error(
+            dt.jqXHR.responseJSON.message || trans('lang.table.error')
+        )
+    };
 
-    // jQuery.fn.dataTable.ext.order['DateTime'] = function (settings, col) {
-    //     return this.api().column(col, {order: 'index'}).nodes().map((td, i) => {
-    //         return jQuery(td).data('value');
-    //     });
-    // }
+    $.fn.dataTable.ext.order['DateTime'] = function (settings, col) {
+        return this.api().column(col, {order: 'index'}).nodes().map((td, i) => {
+            return $(td).data('value');
+        });
+    }
 
-    // function iterateColumnFilters(datatableId, callback) {
-    //     $(`[data-datatables-id="${datatableId}"] .column-filter[data-type]`).each((i, subitem) => {
-    //         let $element = $(subitem)
-    //
-    //         callback(
-    //             $element,
-    //             $element.closest('[data-index]').data('index'),
-    //             $element.data('type')
-    //         )
-    //     });
-    // }
+    function iterateColumnFilters(datatableId, callback) {
+        $(`[data-datatables-id="${datatableId}"] .column-filter[data-type]`).each((i, subitem) => {
+            let $element = $(subitem)
 
-    // console.log($this.data('url'))
+            callback(
+                $element,
+                $element.closest('[data-index]').data('index'),
+                $element.data('type')
+            )
+        });
+    }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    $('.datatables').each((i, item) => {
+        let $this = $(item),
+            id = $this.data('id'),
+            params = $this.data('attributes') || {},
+            url = $this.data('url'),
+            payload = $this.data('payload'),
+            search = $this.data('display-search') || false,
+            dtlength = $this.data('display-dtlength') || false;
 
-        // let api = new DataTable();
-        // api.processing = true
-        // console.log(api)
+        if (url && url.length > 0) {
+            params.serverSide = true;
+            params.processing = true;
 
-        /**
-         * Init DataTables
-         */
-        const dataTables = document.querySelectorAll(".datatables")
-        dataTables.forEach(function(elem) {
-            // console.log(elem)
+            //<"H"lfr>t<"F"ip>
+            params.sDom = '<"H"';
 
+            if(dtlength){
+                params.sDom += 'l';
+            }
 
-            let id = elem.dataset.id
-            let attr = JSON.parse(elem.dataset.attributes)
-            let order = elem.dataset.order
-            let url = elem.dataset.url
-            let payload = elem.dataset.payload
-            let search = elem.dataset.display-search || false
+            if(search){
+                params.sDom += 'f';
+            }
 
-            // console.log('id', id)
-            // console.log('attr', attr)
-            // console.log('order', order)
-            // console.log('url', url)
-            // console.log('payload', payload)
-            let table = new DataTable(elem, {
-                language: attr.language,
-                pageLength: attr.pageLength, //кол-во записей по умолчанию в селекте
-                // columns: attr.columns,
-                searching: false,
+            params.sDom += 'r>t<"F"ip>';
 
-                dom: "<'row'<'col-sm-12'l><'col-sm-12'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-12'i><'col-sm-12'p>>",
-                renderer: 'bootstrap',
+            if (Admin.Config.get('state_datatables')) {
+                params.bStateSave = true;
+            }
 
-                // serverSide: true,
-                // processing: true,
-                // stateSave: false,
-                autoWidth: true,
-                // fixedColumns: true,
-
-                // выключим
-                // paging: false,
-                // 'autoWidth': false,
-
-                initComplete: (s, json) => {
-                    let api = new DataTable.Api(s);
-                    console.log(api)
-                },
-
-
-                // Проверяем
-                ajax: function (d, cb) {
-                    fetch(url)
-                        .then(response => response.json())
-                        .then(data => cb(data));
+            if (!Admin.Config.get('state_filters')) {
+                params.stateSaveParams = function (settings, item) {
+                    item.search.search = ''
+                    var columns = item.columns
+                    $.each(columns, function(index, value){
+                        value.search.search = ''
+                    })
                 }
+            }
 
-            })
+            params.ajax = {
+                url: url,
+                data (d) {
+                    Admin.Events.fire('datatables::ajax::data', d)
 
+                    // nit:Daan
+                    iterateColumnFilters(id, function ($element, index, type) {
+                        if (name = $element.data('ajax-data-name')) {
+                            d.columns[index]['search'][name] = $element.val()
+                        }
+                    });
+                    d.payload = payload;
+                }
+            };
+        }
+
+        params.fnDrawCallback = function (oSettings) {
+            Admin.Events.fire('datatables::draw', this)
+            jQuery('[data-toggle="tooltip"]').tooltip()
+            //use LazyLoad
+            lazyload()
+
+            //add td highlight in config
+            if (Admin.Config.get('datatables_highlight')) {
+                jQuery("[data-id="+this.data("id")+"].lightcolumn tbody").on('mouseenter', 'td', function() {
+                    if (table.data().any()) {
+                        var colIdx = table.cell(this).index().column;
+
+                        jQuery(table.cells().nodes()).removeClass('highlight');
+                        jQuery(table.column(colIdx).nodes()).addClass('highlight');
+                    }
+                })
+            }
+        }
+
+        params.createdRow = function (row, data, dataIndex) {
+            let row_class = data[data.length - 1];
+            if (row_class && row_class.add_class) {
+                $(row).addClass(row_class.add_class);
+            }
+        }
+
+        let table = $this.DataTable(params);
+
+
+        iterateColumnFilters(id, function ($element, index, type) {
+            if (_.isFunction(window.columnFilters[type])) {
+                window.columnFilters[type]($element, table, table.column(index), index, params.serverSide);
+            }
+        });
+
+
+
+        $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
+            if (stateFilters) {
+                fillFilters(filters)
+            }
+            table.draw()
+        });
+
+        //clear filter
+        $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
+            let input = $(".display-filters [data-index] input")
+            input.val(null)
+            input.trigger('change')
+
+            let selector = $(".display-filters [data-index] select")
+            selector.val(null)
+            selector.trigger('change')
+
+            table.state.clear();
+            var urlName = 'Filters_/' + Admin.Url.url_path
+            localStorage.removeItem(urlName)
+            table.draw()
+        });
+
+        $("[data-datatables-id="+$this.data("id")+"].display-filters [data-index] input").on('keyup', function(e) {
+            if(e.keyCode === 13) {
+                table.draw()
+            }
         })
-    } );
 
-    // $('.datatables').each((i, item) => {
-    //     let $this = $(item),
-    //         id = $this.data('id'),
-    //         params = $this.data('attributes') || {},
-    //         url = $this.data('url'),
-    //         payload = $this.data('payload'),
-    //         search = $this.data('display-search') || false,
-    //         dtlength = $this.data('display-dtlength') || false;
-    //
-    //     if (url && url.length > 0) {
-    //         params.serverSide = true;
-    //         params.processing = true;
-    //
-    //         //<"H"lfr>t<"F"ip>
-    //         params.sDom = '<"H"';
-    //
-    //         if(dtlength){
-    //             params.sDom += 'l';
-    //         }
-    //
-    //         if(search){
-    //             params.sDom += 'f';
-    //         }
-    //
-    //         params.sDom += 'r>t<"F"ip>';
-    //
-    //         if (Admin.Config.get('state_datatables')) {
-    //             params.bStateSave = true;
-    //         }
-    //
-    //         if (!Admin.Config.get('state_filters')) {
-    //             params.stateSaveParams = function (settings, item) {
-    //                 item.search.search = ''
-    //                 var columns = item.columns
-    //                 jQuery.each(columns, function(index, value){
-    //                     value.search.search = ''
-    //                 })
-    //             }
-    //         }
-    //
-    //         params.ajax = {
-    //             url: url,
-    //             data (d) {
-    //                 Admin.Events.fire('datatables::ajax::data', d)
-    //
-    //                 // nit:Daan
-    //                 iterateColumnFilters(id, function ($element, index, type) {
-    //                     if (name = $element.data('ajax-data-name')) {
-    //                         d.columns[index]['search'][name] = $element.val()
-    //                     }
-    //                 });
-    //                 d.payload = payload;
-    //             }
-    //         };
-    //     }
-    //
-    //     params.fnDrawCallback = function (oSettings) {
-    //         Admin.Events.fire('datatables::draw', this)
-    //         jQuery('[data-toggle="tooltip"]').tooltip()
-    //         //use LazyLoad
-    //         lazyload()
-    //
-    //         //add td highlight in config
-    //         if (Admin.Config.get('datatables_highlight')) {
-    //           jQuery("[data-id="+this.data("id")+"].lightcolumn tbody").on('mouseenter', 'td', function() {
-    //               if (table.data().any()) {
-    //                   var colIdx = table.cell(this).index().column;
-    //
-    //                   jQuery(table.cells().nodes()).removeClass('highlight');
-    //                   jQuery(table.column(colIdx).nodes()).addClass('highlight');
-    //               }
-    //           })
-    //         }
-    //     }
-    //
-    //     params.createdRow = function (row, data, dataIndex) {
-    //         let row_class = data[data.length - 1];
-    //         if (row_class && row_class.add_class) {
-    //             $(row).addClass(row_class.add_class);
-    //         }
-    //     }
-    //
-    //     let table = $this.DataTable(params);
-    //
-    //
-    //     iterateColumnFilters(id, function ($element, index, type) {
-    //         if (_.isFunction(window.columnFilters[type])) {
-    //             window.columnFilters[type]($element, table, table.column(index), index, params.serverSide);
-    //         }
-    //     });
-    //
-    //
-    //
-    //     $("[data-datatables-id="+$this.data("id")+"] #filters-exec").on('click', function () {
-    //         if (stateFilters) {
-    //             fillFilters(filters)
-    //         }
-    //         table.draw()
-    //     });
-    //
-    //     //clear filter
-    //     $("[data-datatables-id="+$this.data("id")+"] #filters-cancel").on('click', function () {
-    //         let input = $(".display-filters [data-index] input")
-    //         input.val(null)
-    //         input.trigger('change')
-    //
-    //         let selector = $(".display-filters [data-index] select")
-    //         selector.val(null)
-    //         selector.trigger('change')
-    //
-    //         table.state.clear();
-    //         var urlName = 'Filters_/' + Admin.Url.url_path
-    //         localStorage.removeItem(urlName)
-    //         table.draw()
-    //     });
-    //
-    //     $("[data-datatables-id="+$this.data("id")+"].display-filters [data-index] input").on('keyup', function(e) {
-    //         if(e.keyCode === 13) {
-    //             table.draw()
-    //         }
-    //     })
-    //
-    // })
+    })
 
 
     // ==========================
@@ -305,7 +238,7 @@ Admin.Modules.register('display.datatables-new', () => {
                 localStorage.setItem(urlName, JSON.stringify(arr))
             }
         } else {
-          localStorage.removeItem(urlName)
+            localStorage.removeItem(urlName)
         }
     }
 
@@ -381,9 +314,9 @@ window.columnFilters = {
     date (dateField, table, column, index, serverSide) {
         let $dateField = $(dateField)
         $dateField.closest('.input-date')
-        .on('dp.change', function () {
-            column.search($dateField.val());
-        })
+            .on('dp.change', function () {
+                column.search($dateField.val());
+            })
     },
 
     //range ========================================
@@ -417,7 +350,7 @@ window.columnFilters = {
             return;
         }
 
-        jQuery.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
+        $.fn.dataTable.ext.search.push((settings, data, dataIndex) => {
             if (table.settings()[0].sTableId != settings.sTableId) {
                 return true;
             }

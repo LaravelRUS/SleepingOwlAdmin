@@ -118,7 +118,7 @@ final class Editor implements WysiwygEditorInterface
      */
     public function load(): bool
     {
-        $load = app('sleeping_owl.meta')->loadPackage($this->getId());
+        app('sleeping_owl.meta')->loadPackage($this->getId());
 
         $this->used = true;
 

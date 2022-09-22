@@ -6,6 +6,7 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -73,11 +74,11 @@ class AdminController extends Controller
 
         $admin->navigation()->setCurrentUrl($request->getUri());
 
-//        if (! $this->breadcrumbs->exists('home')) {
-//            $this->breadcrumbs->register('home', function (BreadcrumbTrail $breadcrumbs) {
-//                $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
-//            });
-//        }
+        if (! $this->breadcrumbs->exists('home')) {
+            $this->breadcrumbs->register('home', function (BreadcrumbTrail $breadcrumbs) {
+                $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
+            });
+        }
 
         $this->breadCrumbsData = [];
 
@@ -256,7 +257,7 @@ class AdminController extends Controller
     {
         $envFile = app()->environmentFilePath();
         $str = file_get_contents($envFile);
-        //nit: daan issue#1188
+
         if (is_null($data)) {
             $str = preg_replace("/$key=.*/m", "$key=", $str);
             file_put_contents($envFile, $str);
@@ -769,15 +770,14 @@ class AdminController extends Controller
     {
         $this->breadCrumbsData = array_merge($this->breadCrumbsData, $model->getBreadCrumbs());
 
-//        dd($this->breadCrumbsData);
-//        foreach ($this->breadCrumbsData as $breadcrumb) {
-//            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
-//                $this->breadcrumbs->register($breadcrumb['id'], function (BreadcrumbTrail $breadcrumbs) use ($breadcrumb) {
-//                    $breadcrumbs->parent($breadcrumb['parent']);
-//                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
-//                });
-//            }
-//        }
+        foreach ($this->breadCrumbsData as $breadcrumb) {
+            if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
+                $this->breadcrumbs->register($breadcrumb['id'], function (BreadcrumbTrail $breadcrumbs) use ($breadcrumb) {
+                    $breadcrumbs->parent($breadcrumb['parent']);
+                    $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
+                });
+            }
+        }
 
         //nit:Daan
         // $this->parentBreadcrumb = data_get(Arr::last($this->breadCrumbsData), 'id', 'render');
@@ -785,12 +785,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param  ModelConfigurationInterface  $model
-     * @param  Request  $request
-     * @param  int  $id
-     * @return RedirectResponse
+     * @param ModelConfigurationInterface $model
+     * @param Request $request
+     * @return RedirectResponse|JsonResponse
      */
-    public function deletedAll(ModelConfigurationInterface $model, Request $request)
+    public function deletedAll(ModelConfigurationInterface $model, Request $request): RedirectResponse| JsonResponse
     {
         if (is_null($request->_id)) {
             return redirect()->back();
