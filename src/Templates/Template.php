@@ -100,7 +100,7 @@ abstract class Template implements TemplateInterface
     /**
      * Генерация относительно пути до asset файлов для текущей темы.
      *
-     * @param string|null $path  Относительный путь до файла, например `js/app.js`
+     * @param  string|null  $path  Относительный путь до файла, например `js/app.js`
      * @return string
      */
     public function assetPath(string $path = null): string
