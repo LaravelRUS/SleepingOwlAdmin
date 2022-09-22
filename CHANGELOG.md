@@ -1,5 +1,8 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-09-22
+* Add new yield position `filter.button`
+
 ## 2022-07-01
 * Add `setOptions(['Foo', 'Bar', 'Baz', 'Foobar'])` in `AdminFormElement::text` for DataList text
 
