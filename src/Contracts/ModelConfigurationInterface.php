@@ -255,14 +255,14 @@ interface ModelConfigurationInterface
     public function addToNavigation(): Page;
 
     /**
-     * @param string $title
-     * @param int $priority
+     * @param  string  $title
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationLabel(string $title, int $priority): Page;
 
     /**
-     * @param int $priority
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationDivider(int $priority): Page;

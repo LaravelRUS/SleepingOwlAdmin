@@ -3,9 +3,6 @@
 namespace SleepingOwl\Admin\Templates;
 
 use Diglactic\Breadcrumbs\Exceptions\DuplicateBreadcrumbException;
-use Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
-use Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException;
-use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
 use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -61,7 +58,6 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 
         return $this->renderArray($name, $params);
     }
-
 
     /**
      * Register Breadcrumbs.

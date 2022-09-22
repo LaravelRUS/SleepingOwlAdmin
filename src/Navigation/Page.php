@@ -201,31 +201,30 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * Add divider
+     * Add divider.
      *
      * @return $this
      */
     public function addLabel(): self
     {
-        $this->setId('label-' . $this->getPriority());
+        $this->setId('label-'.$this->getPriority());
         $this->setType('label');
 
         return $this;
     }
 
     /**
-     * Add divider
+     * Add divider.
      *
      * @return $this
      */
     public function addDivider(): self
     {
-        $this->setId('divider-' . $this->getPriority());
+        $this->setId('divider-'.$this->getPriority());
         $this->setType('divider');
 
         return $this;
     }
-
 
     /**
      * Type navigation `divider` or `label`.
@@ -235,7 +234,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     protected ?string $type = null;
 
     /**
-     * @param string $type
+     * @param  string  $type
      * @return $this
      */
     public function setType(string $type): self

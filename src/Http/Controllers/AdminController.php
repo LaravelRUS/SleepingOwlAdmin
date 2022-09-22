@@ -785,11 +785,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
      * @return RedirectResponse|JsonResponse
      */
-    public function deletedAll(ModelConfigurationInterface $model, Request $request): RedirectResponse| JsonResponse
+    public function deletedAll(ModelConfigurationInterface $model, Request $request): RedirectResponse|JsonResponse
     {
         if (is_null($request->_id)) {
             return redirect()->back();

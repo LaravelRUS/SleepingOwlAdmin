@@ -247,9 +247,9 @@ return [
     'template' => SleepingOwl\Admin\Templates\TemplateDefault::class,
     'templateParam' => [
 
-//        jQuery все равно будет, пока не переделают dataTables.
-//        'jquery' => false,
-//        'jqueryPath' => '//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js',
+        //        jQuery все равно будет, пока не переделают dataTables.
+        //        'jquery' => false,
+        //        'jqueryPath' => '//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js',
 
         // Add your colours ONLY in HEX format
         'colors' => [
@@ -368,7 +368,7 @@ return [
                  * See https://ckeditor.com/ckeditor-5/online-builder/
                  */
                 'editor' => '/packages/sleepingowl/ckeditor5/build/ckeditor.js',
-                'translation' => '/packages/sleepingowl/ckeditor5/build/translations/' . config('app.locale') . '.js',
+                'translation' => '/packages/sleepingowl/ckeditor5/build/translations/'.config('app.locale').'.js',
             ],
 
             'language' => config('app.locale'),

@@ -13,9 +13,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
-use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Navigation;
@@ -543,9 +541,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         return $page;
     }
 
-
     /**
-     * @param int $priority
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationDivider(int $priority): Page
@@ -559,8 +556,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param string $title
-     * @param int $priority
+     * @param  string  $title
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationLabel(string $title, int $priority): Page
