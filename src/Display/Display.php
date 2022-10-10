@@ -164,7 +164,7 @@ abstract class Display implements DisplayInterface
      */
     public function with($relations)
     {
-        $this->with = Arr::flatten(func_get_args());
+        $this->with = is_string($relations) ? func_get_args() : $relations;
 
         return $this;
     }
