@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
