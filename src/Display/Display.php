@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Display;
 
 use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
@@ -164,7 +163,7 @@ abstract class Display implements DisplayInterface
      */
     public function with($relations)
     {
-        $this->with = Arr::flatten(func_get_args());
+        $this->with = is_string($relations) ? func_get_args() : $relations;
 
         return $this;
     }
