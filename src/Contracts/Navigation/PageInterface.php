@@ -74,7 +74,7 @@ interface PageInterface extends NavigationInterface
     public function addDivider();
 
     /**
-     * @param string $type
+     * @param  string  $type
      * @return PageInterface
      */
     public function setType($type);

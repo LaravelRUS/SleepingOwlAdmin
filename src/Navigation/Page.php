@@ -199,27 +199,26 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * Add divider
+     * Add divider.
      */
     public function addLabel()
     {
-        $this->setId('label-' . $this->getPriority());
+        $this->setId('label-'.$this->getPriority());
         $this->setType('label');
     }
 
     /**
-     * Add divider
+     * Add divider.
      *
      * @return $this
      */
     public function addDivider()
     {
-        $this->setId('divider-' . $this->getPriority());
+        $this->setId('divider-'.$this->getPriority());
         $this->setType('divider');
 
         return $this;
     }
-
 
     /**
      * Type navigation `divider` or `label`.
@@ -229,7 +228,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     protected $type = null;
 
     /**
-     * @param string $type
+     * @param  string  $type
      * @return $this
      */
     public function setType($type)

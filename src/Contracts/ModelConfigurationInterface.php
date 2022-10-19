@@ -256,16 +256,15 @@ interface ModelConfigurationInterface
     public function addToNavigation();
 
     /**
-     * @param string $title
-     * @param int $priority
+     * @param  string  $title
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationLabel($title, $priority): Page;
 
     /**
-     * @param int $priority
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationDivider($priority): Page;
-
 }

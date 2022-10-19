@@ -4,11 +4,11 @@ namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
 use Closure;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
 use KodiComponents\Navigation\Contracts\PageInterface;
@@ -45,7 +45,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Set the event dispatcher instance.
      *
-     * @param Dispatcher $dispatcher
+     * @param  Dispatcher  $dispatcher
      * @return void
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
@@ -235,7 +235,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param int $priority
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationDivider($priority): Page
@@ -249,8 +249,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param string $title
-     * @param int $priority
+     * @param  string  $title
+     * @param  int  $priority
      * @return Page
      */
     public function addNavigationLabel($title, $priority): Page
@@ -281,7 +281,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isEditable(Model $model)
@@ -290,7 +290,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isDeletable(Model $model)
@@ -308,7 +308,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function isRestorable(Model $model)
@@ -357,7 +357,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param  string  $action
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function can($action, Model $model)
