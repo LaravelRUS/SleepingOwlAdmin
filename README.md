@@ -28,7 +28,7 @@ __Lumen is NOT supported(((__
 
 ## Documentation new ver.9
 
-Powered by Laravel 5.5 - 9+. (latest tested version 9.14.1)
+Powered by Laravel 5.5 - 9+. (latest tested version 9.34.1)
 
 * [Russian](http://sleepingowladmin.ru/#/ru/) (90% process)
 * [English](http://sleepingowladmin.ru/#/en/) (30% process)

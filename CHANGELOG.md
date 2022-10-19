@@ -1,10 +1,13 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-10-19
+* [Fix] Fix filter push if section have many filters
+
 ## 2022-09-22
-* Add new yield position `filter.button`
+* [Add] Add new yield position `filter.button`
 
 ## 2022-07-01
-* Add `setOptions(['Foo', 'Bar', 'Baz', 'Foobar'])` in `AdminFormElement::text` for DataList text
+* [Add] Add `setOptions(['Foo', 'Bar', 'Baz', 'Foobar'])` in `AdminFormElement::text` for DataList text
 
 ## 2022-05-30(31)
 * [Update] NPM packages:
