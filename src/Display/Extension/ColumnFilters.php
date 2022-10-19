@@ -87,11 +87,13 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
     /**
      * @param  string|View  $view
-     * @return void
+     * @return $this
      */
-    public function setView($view): void
+    public function setView($view): self
     {
         $this->view = $view;
+
+        return $this;
     }
 
     /**
@@ -104,11 +106,13 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
     /**
      * @param  string  $placement
-     * @return void
+     * @return $this
      */
-    public function setPlacement(string $placement): void
+    public function setPlacement(string $placement): self
     {
         $this->placement = $placement;
+
+        return $this;
     }
 
     /**
