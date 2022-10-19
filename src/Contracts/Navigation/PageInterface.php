@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts\Navigation;
 
+use Closure;
 use SleepingOwl\Admin\Navigation\Page;
 
 interface PageInterface extends NavigationInterface
@@ -53,7 +54,7 @@ interface PageInterface extends NavigationInterface
     public function getParent();
 
     /**
-     * @return \Closure
+     * @return Closure
      */
     public function getAccessLogic();
 
@@ -61,4 +62,20 @@ interface PageInterface extends NavigationInterface
      * @return bool
      */
     public function checkAccess();
+
+    /**
+     * @return PageInterface
+     */
+    public function addLabel();
+
+    /**
+     * @return PageInterface
+     */
+    public function addDivider();
+
+    /**
+     * @param string $type
+     * @return PageInterface
+     */
+    public function setType($type);
 }

@@ -3,32 +3,39 @@
 namespace SleepingOwl\Admin\Model;
 
 use BadMethodCallException;
+use Closure;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use KodiComponents\Navigation\Contracts\BadgeInterface;
+use KodiComponents\Navigation\Contracts\PageInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Navigation\Page;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * @method bool creating(\Closure $callback)
- * @method void created(\Closure $callback)
- * @method bool updating(\Closure $callback)
- * @method void updated(\Closure $callback)
- * @method bool deleting(\Closure $callback)
- * @method void deleted(\Closure $callback)
- * @method bool restoring(\Closure $callback)
- * @method void restored(\Closure $callback)
+ * @method bool creating(Closure $callback)
+ * @method void created(Closure $callback)
+ * @method bool updating(Closure $callback)
+ * @method void updated(Closure $callback)
+ * @method bool deleting(Closure $callback)
+ * @method void deleted(Closure $callback)
+ * @method bool restoring(Closure $callback)
+ * @method void restored(Closure $callback)
  */
 abstract class ModelConfigurationManager implements ModelConfigurationInterface
 {
     /**
      * Get the event dispatcher instance.
      *
-     * @return \Illuminate\Contracts\Events\Dispatcher
+     * @return Dispatcher
      */
     public static function getEventDispatcher()
     {
@@ -38,7 +45,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Set the event dispatcher instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
+     * @param Dispatcher $dispatcher
      * @return void
      */
     public static function setEventDispatcher(Dispatcher $dispatcher)
@@ -49,12 +56,12 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * The event dispatcher instance.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var Dispatcher
      */
     protected static $dispatcher;
 
     /**
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var Application
      */
     protected $app;
 
@@ -111,13 +118,13 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * ModelConfigurationManager constructor.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  Application  $app
      * @param  $class
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
+     * @throws BindingResolutionException
+     * @throws RepositoryException
      */
-    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
+    public function __construct(Application $app, $class)
     {
         $this->app = $app;
         $this->class = $class;
@@ -212,7 +219,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|array|TranslatorInterface
      */
     public function getCreateTitle()
     {
@@ -220,11 +227,41 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string|array|\Symfony\Component\Translation\TranslatorInterface
+     * @return string|array|TranslatorInterface
      */
     public function getEditTitle()
     {
         return trans('sleeping_owl::lang.model.edit', ['title' => $this->getTitle()]);
+    }
+
+    /**
+     * @param int $priority
+     * @return Page
+     */
+    public function addNavigationDivider($priority): Page
+    {
+        $page = $this->makePage($priority);
+        $page->addDivider();
+
+        $this->getNavigation()->addPage($page);
+
+        return $page;
+    }
+
+    /**
+     * @param string $title
+     * @param int $priority
+     * @return Page
+     */
+    public function addNavigationLabel($title, $priority): Page
+    {
+        $page = $this->makePage($priority);
+        $page->setTitle($title);
+        $page->addLabel();
+
+        $this->getNavigation()->addPage($page);
+
+        return $page;
     }
 
     /**
@@ -244,7 +281,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
     public function isEditable(Model $model)
@@ -253,7 +290,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
     public function isDeletable(Model $model)
@@ -271,7 +308,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
     public function isRestorable(Model $model)
@@ -320,7 +357,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
     public function can($action, Model $model)
@@ -329,7 +366,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
             return true;
         }
 
-        return \Gate::allows($action, [$this, $model]);
+        return Gate::allows($action, [$this, $model]);
     }
 
     /**
@@ -533,7 +570,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param  int  $priority
-     * @param  string|\Closure|BadgeInterface  $badge
+     * @param  string|Closure|BadgeInterface  $badge
      * @return Page
      */
     public function addToNavigation($priority = 100, $badge = null)
@@ -547,7 +584,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param $page_id
-     * @return \KodiComponents\Navigation\Contracts\PageInterface|null
+     * @return PageInterface|null
      */
     public function getNavigationPage($page_id)
     {
@@ -556,7 +593,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
 
     /**
      * @param  int  $priority
-     * @param  string|\Closure|BadgeInterface  $badge
+     * @param  string|Closure|BadgeInterface  $badge
      * @return Page
      */
     protected function makePage($priority = 100, $badge = null)

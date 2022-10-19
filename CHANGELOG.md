@@ -2,6 +2,22 @@
 
 ## 2022-10-19
 * [Fix] Fix filter push if section have many filters
+* [Add] Add separator and divider in navigation
+```
+    [
+        'title' =>'Menu Label',
+        'type' =>'label',
+        'priority' =>'800',
+        'url' => '#',
+    ],
+
+    [
+        'title' =>'Name Divider',
+        'type' =>'divider',
+        'priority' =>'900',
+        'url' => '#',
+    ]
+```
 
 ## 2022-09-22
 * [Add] Add new yield position `filter.button`

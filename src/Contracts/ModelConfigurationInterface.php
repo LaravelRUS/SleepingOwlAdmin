@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Navigation\Page;
 
 interface ModelConfigurationInterface
 {
@@ -250,7 +251,21 @@ interface ModelConfigurationInterface
     public function getControllerClass();
 
     /**
-     * @return \SleepingOwl\Admin\Navigation\Page
+     * @return Page
      */
     public function addToNavigation();
+
+    /**
+     * @param string $title
+     * @param int $priority
+     * @return Page
+     */
+    public function addNavigationLabel($title, $priority): Page;
+
+    /**
+     * @param int $priority
+     * @return Page
+     */
+    public function addNavigationDivider($priority): Page;
+
 }

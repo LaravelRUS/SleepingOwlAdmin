@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
+use Closure;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
@@ -138,7 +141,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @return \Closure
+     * @return Closure
      */
     public function getAccessLogic()
     {
@@ -155,7 +158,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
 
     /**
      * @param  string|null  $view
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function render($view = null)
     {
@@ -169,8 +172,16 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
 
         $data = $this->toArray();
 
+        if ($this->type == 'divider') {
+            return app('sleeping_owl.template')->view('_partials.navigation.divider', $data)->render();
+        }
+
+        if ($this->type == 'label') {
+            return app('sleeping_owl.template')->view('_partials.navigation.label', $data)->render();
+        }
+
         if (! is_null($view)) {
-            return view($view, $data)->render();
+            return app('sleeping_owl.template')->view($view, $data)->render();
         }
 
         return app('sleeping_owl.template')->view('_partials.navigation.page', $data)->render();
@@ -183,6 +194,47 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     protected function setModel($model)
     {
         $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Add divider
+     */
+    public function addLabel()
+    {
+        $this->setId('label-' . $this->getPriority());
+        $this->setType('label');
+    }
+
+    /**
+     * Add divider
+     *
+     * @return $this
+     */
+    public function addDivider()
+    {
+        $this->setId('divider-' . $this->getPriority());
+        $this->setType('divider');
+
+        return $this;
+    }
+
+
+    /**
+     * Type navigation `divider` or `label`.
+     *
+     * @var string|null
+     */
+    protected $type = null;
+
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }
