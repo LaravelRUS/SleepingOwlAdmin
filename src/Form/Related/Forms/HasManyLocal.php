@@ -951,10 +951,13 @@ class HasManyLocal extends FormElements
 
     /**
      * @param  callable|null  $loadCallback
+     * @return HasManyLocal
      */
-    public function setLoadCallback(?callable $loadCallback): void
+    public function setLoadCallback(?callable $loadCallback): self
     {
         $this->loadCallback = $loadCallback;
+
+        return $this;
     }
 
     /**
