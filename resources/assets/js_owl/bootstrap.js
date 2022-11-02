@@ -110,3 +110,4 @@ require('./admin/form/wysiwyg');
 require('./admin/form/dependent-select');
 require('./admin/display/env_editor');
 require('./admin/form/related');
+require('./admin/form/password');

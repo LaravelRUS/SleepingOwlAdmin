@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Form\Element;
 
+use Illuminate\Http\Request;
+
 class Password extends NamedFormElement
 {
     public function __construct($path, $label = null)
@@ -9,7 +11,7 @@ class Password extends NamedFormElement
         parent::__construct($path, $label);
 
         $this->setHtmlAttributes([
-            'class' => 'form-control',
+            'class' => 'passwd form-control pr-5',
             'type' => 'password',
         ]);
     }
@@ -18,6 +20,8 @@ class Password extends NamedFormElement
      * @var bool
      */
     protected $allowEmpty = false;
+    protected $canGenerate = false;
+    protected $generateLength = 8;
 
     /**
      * @var string
@@ -25,10 +29,10 @@ class Password extends NamedFormElement
     protected $view = 'form.element.password';
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $value = $this->getValueFromModel();
 
@@ -120,5 +124,34 @@ class Password extends NamedFormElement
         return $this->mutateValue(function ($value) {
             return sha1($value);
         });
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return parent::toArray() + [
+            'canGenerate' => $this->canGenerate,
+            'generateLength' => $this->generateLength,
+        ];
+    }
+
+    /**
+     * Добавляет возможность генерировать пароль.
+     * Длина пароля может задаваться параметром.
+     *
+     * @param null $length
+     * @return $this
+     */
+    public function canGenerate($length = null): self
+    {
+        $this->canGenerate = true;
+
+        if ($length) {
+            $this->generateLength = (int) $length;
+        }
+
+        return $this;
     }
 }

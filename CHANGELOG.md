@@ -1,5 +1,9 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-11-02
+* [Add] Add Visible/invisible password button
+* [Add] Add method `canGenerate($length = null)` (defauld:8) in `AdminFormElement::password()`
+
 ## 2022-10-19
 * [Fix] Fix filter push if section have many filters
 * [Add] Add separator and divider in navigation
