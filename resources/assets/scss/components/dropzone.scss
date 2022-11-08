@@ -1,5 +1,19 @@
 @import "~dropzone/dist/dropzone.css";
 
+.dark-mode {
+    .dropzone {
+        background: inherit;
+    }
+
+    .fileUploadMultiple .files-group .fileThumbnail .thumbnail {
+        background: inherit;
+    }
+
+    .files-group .fileThumbnail .thumbnail .fileicon-inner {
+        background-color: inherit;
+    }
+}
+
 .dropzone {
   min-height: 50px !important;
   border:     5px solid rgba(0, 0, 0, .1);

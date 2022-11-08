@@ -145,6 +145,7 @@ return [
         'add' => 'Add',
         'remove' => 'Remove',
         'clear' => 'Clear',
+        'theme' => 'Change theme',
     ],
 
     'message' => [

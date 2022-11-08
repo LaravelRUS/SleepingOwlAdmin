@@ -73,6 +73,7 @@ require('./wysiwyg/summernote');
  */
 require('./admin/display/datatables');
 require('./admin/display/table');
+require('./admin/display/themes');
 
 require('./admin/display/actions');
 require('./admin/display/actions_form');

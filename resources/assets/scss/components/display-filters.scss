@@ -1,96 +1,97 @@
 .display-filters {
-  td {
-    position: relative;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    vertical-align: middle;
-    border-top: 0;
-  }
-
-  [data-type='range']:not(.inline) {
-    & > div:first-child {
-      margin-bottom: 0.5rem;
+    td {
+        position: relative;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+        vertical-align: middle;
+        border-top: 0;
     }
-  }
 
-  [data-type='range'].inline {
-    display: flex;
-    & > div:first-child {
-      margin-right: 0.5rem;
+    [data-type='range']:not(.inline) {
+        & > div:first-child {
+            margin-bottom: 0.5rem;
+        }
     }
-  }
 
+    [data-type='range'].inline {
+        display: flex;
 
-  .input-group {
-    &.input-date.date {
-      flex-wrap: nowrap;
-      // max-width: 10rem;
+        & > div:first-child {
+            margin-right: 0.5rem;
+        }
     }
-  }
 
-  .input-group-text {
-    span {
-      line-height: 1.5;
+
+    .input-group {
+        &.input-date.date {
+            flex-wrap: nowrap;
+            // max-width: 10rem;
+        }
     }
-  }
 
-  // .select2-container,
-  // .column-filter.select2-hidden-accessible {
-  //   /* Fix for horizontal scroll */
-  //   width: 99%!important;
-  // }
+    .input-group-text {
+        span {
+            line-height: 1.5;
+        }
+    }
 
-  // .column-filter {
-  //   width: 100%;
-  //
-  //   .form-group {
-  //     width: 100%;
-  //     input {
-  //       width: calc(100% - 2.5rem);
-  //
-  //     }
-  //   }
-  // }
+    // .select2-container,
+    // .column-filter.select2-hidden-accessible {
+    //   /* Fix for horizontal scroll */
+    //   width: 99%!important;
+    // }
 
-  .btn-group {
-    // float: right;
-  }
+    // .column-filter {
+    //   width: 100%;
+    //
+    //   .form-group {
+    //     width: 100%;
+    //     input {
+    //       width: calc(100% - 2.5rem);
+    //
+    //     }
+    //   }
+    // }
+
+    .btn-group {
+        // float: right;
+    }
 }
 
 //fix filters width
 tfoot.display-filters {
-  .select2-container,
-  .column-filter.select2-hidden-accessible {
-    width: auto!important;
-    display: block;
-  }
+    .select2-container,
+    .column-filter.select2-hidden-accessible {
+        width: auto !important;
+        display: block;
+    }
 }
 
 .display-filters-top {
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
 
-  & > div {
-    flex: 0 1 auto;
-    padding-right: 1rem;
-    align-self: center;
-    margin-bottom: 0.5rem;
+    & > div {
+        flex: 0 1 auto;
+        padding-right: 1rem;
+        align-self: center;
+        margin-bottom: 0.5rem;
 
-    @media (max-width: 667px) {
-      & > div {
-        min-width: 1% !important;
-        max-width: 100% !important;
-      }
+        @media (max-width: 667px) {
+            & > div {
+                min-width: 1% !important;
+                max-width: 100% !important;
+            }
+        }
     }
-  }
 
-  & > div:last-child {
-    flex: 1 1 8rem;
-    padding-right: 0;
-    justify-content: right;
-    text-align: right;
-  }
+    & > div:last-child {
+        flex: 1 1 8rem;
+        padding-right: 0;
+        justify-content: right;
+        text-align: right;
+    }
 
 }
 
@@ -99,7 +100,7 @@ tfoot.display-filters {
     margin-bottom: 0;
 }
 
-.display-filters.display-filters-top>div {
+.display-filters.display-filters-top > div {
     margin-bottom: 0;
 }
 

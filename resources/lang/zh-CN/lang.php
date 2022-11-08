@@ -145,6 +145,7 @@ return [
         'add' => '加',
         'remove' => '删除',
         'clear' => '清',
+        'theme' => '改变主题',
     ],
 
     'message' => [

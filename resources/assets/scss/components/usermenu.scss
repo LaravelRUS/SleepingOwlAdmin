@@ -1,62 +1,80 @@
+.dark-mode {
+    .navbar-nav {
+        .user-menu {
+            .dropdown-menu {
+                background-color: rgba($dark-bg-color, 0.8);
+            }
+        }
+
+        a {
+            color: rgba($white, .5);
+
+            &:hover {
+                color: inherit;
+            }
+        }
+    }
+}
+
 .navbar-nav {
-  .user-menu {
-    .user-image {
-      width: 2em;
-      height: 2em;
-      border-radius: 50%;
-      margin: 0 0.5em;
-      object-fit: cover;
-    }
-
-    .dropdown-menu {
-      overflow: hidden;
-      background-color: rgba($white, 0.8);
-      right: 0;
-      left: inherit;
-      text-align: center;
-      padding: 1em;
-      min-width: 15em;
-
-      .user-header {
-
-        p {
-          margin-top: 1em;
+    .user-menu {
+        .user-image {
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+            margin: 0 0.5em;
+            object-fit: cover;
         }
 
-        img {
-          max-width: 10em;
-          object-fit: cover;
+        .dropdown-menu {
+            overflow: hidden;
+            background-color: rgba($white, 0.8);
+            right: 0;
+            left: inherit;
+            text-align: center;
+            padding: 1em;
+            min-width: 15em;
+
+            .user-header {
+
+                p {
+                    margin-top: 1em;
+                }
+
+                img {
+                    max-width: 10em;
+                    object-fit: cover;
+                }
+            }
         }
-      }
+
+        a {
+            transition: 0.5s;
+
+            &:hover {
+                text-decoration: none;
+                //color: $black;
+            }
+        }
     }
 
-    a {
-      transition: 0.5s;
-
-      &:hover {
-        text-decoration: none;
-        color: $black;
-      }
+    .nav-link {
+        display: flex;
+        align-items: center;
     }
-  }
 
-  .nav-link {
-    display: flex;
-    align-items: center;
-  }
+    & > li {
+        display: flex;
+        align-items: center;
 
-  & > li {
-    display: flex;
-    align-items: center;
+        & > a {
+            padding: 0 0.5em;
+            transition: 0.5s;
 
-    & > a {
-      padding: 0 0.5em;
-      transition: 0.5s;
-
-      &:hover {
-        text-decoration: none;
-        color: $black;
-      }
+            &:hover {
+                text-decoration: none;
+                color: $black;
+            }
+        }
     }
-  }
 }

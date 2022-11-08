@@ -1,0 +1,19 @@
+.dark-mode {
+    a,
+    a.btn:hover {
+        color: $white;
+    }
+
+    a:not(.btn):hover {
+        color: $gray-200;
+    }
+
+    .editor-toolbar {
+        background-color: $white;
+    }
+
+    .form-element-errors {
+        color: #ffff00;
+    }
+}
+

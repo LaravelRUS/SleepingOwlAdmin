@@ -1,3 +1,13 @@
+.dark-mode {
+    .swal2-popup {
+        background: $dark-bg-color;
+        color: inherit;
+    }
+    .swal2-popup.swal2-toast {
+        background: $dark-bg-color;
+    }
+}
+
 .swal2-header {
   overflow: hidden;
 }

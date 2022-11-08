@@ -1,42 +1,55 @@
 @import "~x-editable-bs4/dist/jquery-editable/css/jquery-editable.css";
 
+.dark-mode {
+    .editable-input {
+        input.form-control {
+            background-color: $white !important;
+            color: $black !important;
+        }
+    }
+}
+
 .editableform {
-  .control-group.form-group {
-    flex-direction: column;
-  }
+    .control-group.form-group {
+        flex-direction: column;
+    }
 }
 
 .editable-error-block {
-  text-align: center;
-  line-height: 1.2;
-  color: $danger;
-  max-width: 200px;
+    text-align: center;
+    line-height: 1.2;
+    color: $danger;
+    max-width: 200px;
 }
 
 .editable-buttons,
 .editable-input {
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: 0.3em 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.3em 0;
 }
 
 .editable-input {
-  select {
-    padding: 0.2em 0.4em;
-    border-radius: 5px;
-  }
-
-  [type="number"] {
-    padding-right: 0.3rem !important;
-    min-width: 5rem;
-  }
-
-  [type="range"] {
-    padding: 0;
-
-    output {
-      display: block;
+    select {
+        padding: 0.2em 0.4em;
+        border-radius: 5px;
     }
-  }
+
+    [type="number"] {
+        padding-right: 0.3rem !important;
+        min-width: 5rem;
+    }
+
+    [type="range"] {
+        padding: 0;
+
+        output {
+            display: block;
+        }
+    }
+}
+
+.editable-checklist label input[type="checkbox"], .editable-checklist label span {
+    padding-left: 0.3em;
 }
