@@ -141,7 +141,7 @@ class Password extends NamedFormElement
      * Добавляет возможность генерировать пароль.
      * Длина пароля может задаваться параметром.
      *
-     * @param null $length
+     * @param  null  $length
      * @return $this
      */
     public function canGenerate($length = null): self
