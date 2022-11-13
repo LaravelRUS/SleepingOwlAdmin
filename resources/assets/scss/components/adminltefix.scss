@@ -1,3 +1,36 @@
+.dark-mode {
+    input, button, select, optgroup, textarea {
+        background-color: inherit;
+    }
+
+    .callout {
+        border-color: $gray-600;
+    }
+
+    .bg-light {
+        background-color: lighten($dark-bg-color, 15%) !important;
+    }
+
+    .popover-header {
+        color: $black;
+    }
+
+    .bg-warning {
+        color: $dark;
+    }
+
+    // Other popular classes
+    .vti__dropdown.open,
+    .vti__dropdown:hover,
+    .vti__dropdown-list {
+        background-color: $dark-bg-color;
+    }
+
+    .vti__dropdown-item.highlighted {
+        background-color: lighten($dark-bg-color, 15%);
+    }
+}
+
 .sidebar {
     overflow-x: hidden;
 }
@@ -56,3 +89,5 @@
 .input-group {
     border-radius: 0.25rem;
 }
+
+

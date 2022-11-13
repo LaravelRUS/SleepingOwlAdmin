@@ -250,6 +250,11 @@ return [
     'template' => SleepingOwl\Admin\Templates\TemplateDefault::class,
 
     /*
+     * Show Theme Mode
+     */
+    'show_mode'     => true,
+
+    /*
     |--------------------------------------------------------------------------
     |  Default date and time formats
     |--------------------------------------------------------------------------

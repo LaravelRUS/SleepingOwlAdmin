@@ -2,10 +2,16 @@
 
 .dark-mode {
     .editable-input {
-        input.form-control {
+        .form-control {
             background-color: $white !important;
             color: $black !important;
         }
+    }
+
+    .editable-click,
+    a.editable-click,
+    a.editable-click:hover {
+        border-bottom-color: $white;
     }
 }
 

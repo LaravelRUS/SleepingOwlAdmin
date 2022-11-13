@@ -1,11 +1,17 @@
-.dropdown-menu {
-  min-width: 20rem;
-  left:inherit;
-  right: 0;
+.dark-mode {
+    .dropdown-menu {
+        border: 1px solid rgba($white, 0.15);
+    }
+}
 
-  &.btn-actions {
-    padding: 0;
-    background-color: transparent;
-    border: 0;
-  }
+.dropdown-menu {
+    min-width: 20rem;
+    left: inherit;
+    right: 0;
+
+    &.btn-actions {
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+    }
 }

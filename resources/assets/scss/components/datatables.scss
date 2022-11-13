@@ -1,3 +1,11 @@
+.dark-mode {
+    .dataTables_processing {
+        i {
+            color: $white;
+        }
+    }
+}
+
 
 .dataTables_filter {
   display: flex;

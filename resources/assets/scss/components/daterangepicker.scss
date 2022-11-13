@@ -4,3 +4,63 @@
 .bootstrap-datetimepicker-widget table td span.active {
     color: $white;
 }
+.dark-mode {
+    .mx-input,
+    .mx-datepicker-main {
+        background-color: $dark-bg-color;
+        color: $gray-500;
+    }
+
+    .mx-input {
+        &:focus,
+        &:hover {
+            border-color: $white;
+        }
+    }
+
+    .mx-datepicker-main {
+        border-radius: 0.25rem;
+        border-color: $gray-400;
+    }
+
+    .mx-btn,
+    .mx-icon-calendar,
+    .mx-icon-clear {
+        color: rgba($white, 0.5);
+
+        &:hover {
+            color: rgba($white, 0.8);
+        }
+    }
+
+    .mx-table-date .today {
+        color: $white;
+    }
+
+    .mx-calendar-content {
+        .cell {
+            &:hover,
+            &.hover-in-range,
+            &.in-range {
+                background-color: lighten($dark-bg-color, 15%);
+                color: $gray-500;
+            }
+
+            &.disabled {
+                background-color: $gray-700;
+            }
+
+            &.active {
+                background-color: $gray-200;
+                color: $black;
+            }
+        }
+    }
+
+
+
+
+
+
+
+}

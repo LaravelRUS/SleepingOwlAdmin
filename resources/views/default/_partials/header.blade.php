@@ -10,15 +10,18 @@
 			</a>
 		</li>
 	@endif
-    <li>
-        <a class="nav-link" data-mode="{{ @$_COOKIE['theme-mode'] ?? 'light' }}" id="theme-mode" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.theme') }}">
-            @if((@$_COOKIE['theme-mode'] ?? 'light') == 'light')
-                <i class="fa-solid fa-moon" id="theme-icon"></i>
-            @else
-                <i class="fa-regular fa-sun" id="theme-icon"></i>
-            @endif
-        </a>
-    </li>
+
+    @if(config('sleeping_owl.show_mode'))
+        <li>
+            <a class="nav-link" data-mode="{{ @$_COOKIE['theme-mode'] ?? 'light' }}" id="theme-mode" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.button.theme') }}">
+                @if((@$_COOKIE['theme-mode'] ?? 'light') == 'light')
+                    <i class="fa-solid fa-moon" id="theme-icon"></i>
+                @else
+                    <i class="fa-regular fa-sun" id="theme-icon"></i>
+                @endif
+            </a>
+        </li>
+    @endif
 
 	@stack('navbar.left')
 

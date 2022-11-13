@@ -11,7 +11,7 @@
 
         .multiselect__input,
         .multiselect__single {
-            background: $dark-bg-color;
+            //background: $dark-bg-color;
             color: inherit;
         }
 
@@ -32,15 +32,38 @@
             color: inherit;
         }
     }
+
+    .multiselect--disabled {
+        color: $gray-400 !important;
+        background-color: lighten($dark-bg-color, 15%) !important;
+        background: lighten($dark-bg-color, 15%) !important;
+
+        .multiselect__select {
+            background: transparent;
+        }
+    }
 }
 
 
 .multiselect {
     min-height: 34px;
+    border-radius: 0.25em;
 
     .multiselect__tags-wrap {
         display: inline-flex;
         flex-wrap: wrap;
+    }
+
+    &.multiselect__select,
+    &.multiselect--disabled {
+        opacity: 1;
+        background-color: $gray-200;
+
+        .multiselect__tags,
+        .multiselect__single,
+        .multiselect__select {
+            background: transparent;
+        }
     }
 
     .multiselect__select {
@@ -48,6 +71,7 @@
 
         &::before {
             top: 70%;
+            z-index: 9999;
         }
     }
 
@@ -82,4 +106,9 @@
 
 .multiselect--active {
     z-index: 9999;
+}
+
+.multiselect__input,
+.multiselect__single {
+    background: transparent;
 }

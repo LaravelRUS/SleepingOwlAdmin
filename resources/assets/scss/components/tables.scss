@@ -8,19 +8,185 @@
         &.table-info,
         &.table-red,
         &.table-black,
+        &.table-gray,
         &.table-light
         {
+            background-color: inherit;
+
             tbody {
                 background-color: $dark-bg-color;
             }
         }
 
+        .clearfix {
+            color: $gray-200;
+        }
 
+        .clearfix.text-dark {
+            color: $white !important;
+        }
     }
+
+    // Заголовки таблиц
+    .table.table-primary,
+    .table-primary {
+        background-color: darken($primary, 15%);
+        & > td {
+            background-color: darken($primary, 15%);
+        }
+
+        thead th {
+            border-bottom-color: darken($primary, 25%);
+            border-top-color: darken($primary, 25%);
+        }
+    }
+    .table-primary:not(.table),
+    .table-primary:not(.table) > td {
+        background-color: mix(darken($primary, 15%), $dark-bg-color, 20) !important;
+    }
+
+    .table.table-gray,
+    .table-gray,
+    .table.table-secondary,
+    .table-secondary {
+        background-color: darken($secondary, 15%);
+        & > td {
+            background-color: darken($secondary, 15%);
+        }
+
+        thead th {
+            border-bottom-color: darken($secondary, 25%);
+            border-top-color: darken($secondary, 25%);
+        }
+    }
+    .table-gray:not(.table),
+    .table-gray:not(.table) > td,
+    .table-secondary:not(.table),
+    .table-secondary:not(.table) > td {
+        background-color: mix(darken($secondary, 15%), $dark-bg-color, 20) !important;
+    }
+
+    .table.table-success,
+    .table-success {
+        background-color: darken($success, 15%);
+        & > td {
+            background-color: darken($success, 15%);
+        }
+
+        thead th {
+            border-bottom-color: darken($success, 25%);
+            border-top-color: darken($success, 25%);
+        }
+    }
+    .table-success:not(.table),
+    .table-success:not(.table) > td {
+        background-color: mix(darken($success, 15%), $dark-bg-color, 20) !important;
+    }
+
+    .table.table-danger,
+    .table-danger {
+        background-color: darken($danger, 15%);
+        & > td {
+            background-color: darken($danger, 15%);
+        }
+
+        thead th {
+            border-bottom-color: darken($danger, 25%);
+            border-top-color: darken($danger, 25%);
+        }
+    }
+    .table-danger:not(.table),
+    .table-danger:not(.table) > td {
+        background-color: mix(darken($danger, 15%), $dark-bg-color, 20) !important;
+    }
+
+    .table.table-warning,
+    .table-warning {
+        background-color: darken($warning, 20%);
+        & > td {
+            background-color: darken($warning, 20%);
+        }
+
+        thead th {
+            border-bottom-color: darken($warning, 25%);
+            border-top-color: darken($warning, 25%);
+        }
+    }
+    .table-warning:not(.table),
+    .table-warning:not(.table) > td {
+        background-color: mix(darken($warning, 20%), $dark-bg-color, 20) !important;
+    }
+
+    .table.table-info,
+    .table-info {
+        background-color: darken($info, 15%);
+        & > td {
+            background-color: darken($info, 15%);
+        }
+
+        thead th {
+            border-bottom-color: darken($info, 25%);
+            border-top-color: darken($info, 25%);
+        }
+    }
+    .table-info:not(.table),
+    .table-info:not(.table) > td {
+        background-color: mix(darken($info, 15%), $dark-bg-color, 20) !important;
+    }
+
+    .table.table-light,
+    .table-light {
+        background-color: darken($gray-100, 45%);
+        & > td {
+            background-color: darken($gray-100, 45%);
+        }
+
+        thead {
+            background-color: inherit;
+
+            th {
+                border-bottom-color: darken($gray-100, 50%);
+                border-top-color: darken($gray-100, 50%);
+            }
+        }
+    }
+    .table-light:not(.table),
+    .table-light:not(.table) > td {
+        background-color: mix(darken($gray-100, 15%), $dark-bg-color, 20) !important;
+    }
+
+    .table.table-dark,
+    .table-dark {
+        background-color: darken($dark-bg-color, 15%);
+        & > td {
+            background-color: darken($dark-bg-color, 15%);
+        }
+
+        thead {
+            background-color: inherit;
+
+            th {
+                border-bottom-color: darken($dark-bg-color, 30%);
+                border-top-color: darken($dark-bg-color, 30%);
+            }
+        }
+    }
+    .table-dark:not(.table),
+    .table-dark:not(.table) > td {
+        background-color: mix(darken($dark-bg-color, 15%), $dark-bg-color, 20) !important;
+    }
+
+
 }
 
 @mixin table-color($color, $text: $white) {
-    // border: 1px solid rgba($color, 0.3);
+    tbody {
+        background-color: $white;
+        border-bottom: 1px solid $color;
+    }
+}
+
+@mixin table-dark-color($color, $text: $white) {
     tbody {
         background-color: $white;
         border-bottom: 1px solid $color;

@@ -8,6 +8,38 @@ $gray-light: $gray-600 !default;
 
 @import "~bootstrap4-datetimepicker/src/sass/bootstrap-datetimepicker";
 
+.dark-mode {
+    .bootstrap-datetimepicker-widget table {
+        thead tr:first-child th:hover,
+        td.day:hover,
+        td.hour:hover,
+        td.minute:hover,
+        td span:hover,
+        td.second:hover {
+            background-color: $gray-700;
+        }
+
+    }
+
+    .bootstrap-datetimepicker-widget.dropdown-menu.bottom {
+        &:before {
+            border-bottom-color: rgba($white, 0.2);
+        }
+        &:after {
+            border-bottom-color: $dark-bg-color;
+        }
+    }
+
+    .bootstrap-datetimepicker-widget.dropdown-menu.top {
+        &:before {
+            border-top-color: rgba($white, 0.2);
+        }
+        &:after {
+            border-top-color: $dark-bg-color;
+        }
+    }
+
+}
 
 .bootstrap-datetimepicker-widget {
   .datepicker-years thead .picker-switch {

@@ -1,8 +1,14 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-11-14
+* [Fix] Fix darken mode
+
+## 2022-11-08
+* [Add] Add dark theme (test)
+
 ## 2022-11-02
 * [Add] Add Visible/invisible password button
-* [Add] Add method `canGenerate($length = null)` (defauld:8) in `AdminFormElement::password()`
+* [Add] Add method `canGenerate($length = null)` (default:8) in `AdminFormElement::password()`
 
 ## 2022-10-19
 * [Fix] Fix filter push if section have many filters

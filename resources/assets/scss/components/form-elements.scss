@@ -1,4 +1,10 @@
 .dark-mode {
+    .form-control:focus {
+        background-color: inherit;
+        box-shadow: none;
+        border-color: inherit;
+    }
+
     .form-element-file,
     .form-element-image,
     .form-element-images {
@@ -15,15 +21,27 @@
         background: darken($dark-bg-color, 5%);
     }
 
-    .form-element-files__file {
-        color: inherit;
-        background: $dark-bg-color;
+    .form-element-files {
 
+        &__file {
+            color: inherit;
+            background: $dark-bg-color;
+        }
+
+        &__item {
+            border-color: $gray-600;
+            border-radius: 0.25rem;
+        }
     }
 
     textarea {
         background-color: inherit;
         color: inherit;
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+        color: $gray-400 !important;
+        background-color: lighten($dark-bg-color, 15%) !important;
     }
 }
 
@@ -183,7 +201,8 @@ $arrow-size: 6px;
 .form-element-files__item {
     max-width: 100%;
     min-width: 260px;
-    border: 1px solid $gray-300;
+    border: 1px solid $gray-400;
+    border-radius: 0.25rem;
     margin-bottom: 10px;
     margin-right: 10px;
     padding: 3px;

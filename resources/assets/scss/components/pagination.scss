@@ -1,13 +1,24 @@
+.dark-mode {
+    .page-item.disabled .page-link,
+    .page-link {
+        background-color: inherit;
+
+        &:hover {
+            background-color: rgba($gray-200, 0.2);
+        }
+    }
+}
+
 .pagination {
-  flex-wrap: wrap;
-  padding-left: 1em;
+    flex-wrap: wrap;
+    padding-left: 1em;
 
-  .page-item {
-    margin-bottom: 0.5em;
-  }
+    .page-item {
+        margin-bottom: 0.5em;
+    }
 
-  @media (max-width: 768px) {
-    justify-content: center;
-    padding-left: 0;
-  }
+    @media (max-width: 768px) {
+        justify-content: center;
+        padding-left: 0;
+    }
 }
