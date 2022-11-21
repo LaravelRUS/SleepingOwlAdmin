@@ -1,5 +1,8 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2022-11-21
+* [Fix] Change theme icons
+
 ## 2022-11-14
 * [Fix] Fix darken mode
 

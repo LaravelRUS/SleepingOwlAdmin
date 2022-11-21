@@ -17,7 +17,7 @@
                 @if((@$_COOKIE['theme-mode'] ?? 'light') == 'light')
                     <i class="fa-solid fa-moon" id="theme-icon"></i>
                 @else
-                    <i class="fa-regular fa-sun" id="theme-icon"></i>
+                    <i class="fa-regular fa-lightbulb" id="theme-icon"></i>
                 @endif
             </a>
         </li>

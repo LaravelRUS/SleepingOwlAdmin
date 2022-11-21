@@ -4,12 +4,11 @@ Admin.Modules.register('display.theme', () => {
 
     const theme_mode = document.querySelector('#theme-mode')
     const theme_icon = document.querySelector('#theme-icon')
-    // const theme_icon = document.querySelector('#theme-icon')
 
     const setColorMode = (mode) => {
         if (mode == 'dark') {
             document.body.classList.add('dark-mode')
-            theme_icon.classList = 'fa-regular fa-sun'
+            theme_icon.classList = 'fa-regular fa-lightbulb'
         } else {
             document.body.classList.remove('dark-mode')
             theme_icon.classList = 'fa-solid fa-moon'
