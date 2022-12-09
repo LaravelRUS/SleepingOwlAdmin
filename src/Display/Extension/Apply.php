@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 
 class Apply extends Extension
 {
@@ -22,7 +23,7 @@ class Apply extends Extension
 
     /**
      * @param  Closure  $applies
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @return DisplayInterface
      */
     public function set($applies)
     {
@@ -53,7 +54,7 @@ class Apply extends Extension
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'applies' => $this->applies,
@@ -61,7 +62,7 @@ class Apply extends Extension
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Builder $query
      */
     public function modifyQuery(Builder $query)
     {

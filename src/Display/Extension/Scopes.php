@@ -55,7 +55,7 @@ class Scopes extends Extension
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'scopes' => $this->scopes,

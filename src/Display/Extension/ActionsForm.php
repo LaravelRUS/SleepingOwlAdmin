@@ -3,7 +3,9 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -19,7 +21,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     protected $action_form;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.extensions.actions_form';
 
@@ -45,7 +47,7 @@ class ActionsForm extends Extension implements Initializable, Placable
 
     /**
      * @param  Collection|array  $actions
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @return DisplayInterface
      */
     public function set($action_form)
     {
@@ -82,7 +84,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @return string|\Illuminate\View\View
+     * @return string|View
      */
     public function getView()
     {
@@ -90,7 +92,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  string|\Illuminate\View\View  $view
+     * @param  string|View  $view
      * @return $this
      */
     public function setView($view)
@@ -124,7 +126,7 @@ class ActionsForm extends Extension implements Initializable, Placable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->all()->each(function ($action) {
             $action->initialize();

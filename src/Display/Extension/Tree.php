@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -24,7 +25,7 @@ class Tree extends Extension implements Initializable, Renderable
     protected $columns;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.columns';
 
@@ -88,7 +89,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
+     * @return Collection|ColumnInterface[]
      */
     public function all()
     {
@@ -96,7 +97,7 @@ class Tree extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @return Collection|\SleepingOwl\Admin\Contracts\Display\ColumnInterface[]
+     * @return Collection|ColumnInterface[]
      */
     public function allWithControl()
     {
@@ -125,7 +126,7 @@ class Tree extends Extension implements Initializable, Renderable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'columns' => $this->allWithControl(),

@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\FilterInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 
@@ -36,7 +37,7 @@ class Filters extends Extension implements Initializable
 
     /**
      * @param  array|FilterInterface  $filters
-     * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
+     * @return DisplayInterface
      */
     public function set($filters)
     {
@@ -109,7 +110,7 @@ class Filters extends Extension implements Initializable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'filters' => $this->filters->toArray(),

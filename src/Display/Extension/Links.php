@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Display\Extension;
 
+use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 
@@ -10,7 +11,7 @@ class Links extends Extension implements Placable
     use HtmlAttributes;
 
     /**
-     * @var string|\Illuminate\View\View
+     * @var string|View
      */
     protected $view = 'display.extensions.links';
 
@@ -41,7 +42,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @return \Illuminate\View\View|string
+     * @return View|string
      */
     public function getView()
     {
@@ -138,7 +139,7 @@ class Links extends Extension implements Placable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'links' => $this->getLinks(),

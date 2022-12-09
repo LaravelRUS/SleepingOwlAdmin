@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use KodiComponents\Support\HtmlAttributes;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
@@ -164,7 +166,9 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param  Builder  $query
+     * @param Builder $query
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function modifyQuery(Builder $query)
     {

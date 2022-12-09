@@ -333,8 +333,6 @@ abstract class TableColumn implements ColumnInterface
      * @param  Builder  $query
      * @param  string  $direction
      * @return $this
-     *
-     * @deprecated
      */
     public function orderBy(Builder $query, $direction)
     {
