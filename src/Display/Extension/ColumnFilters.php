@@ -166,7 +166,8 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

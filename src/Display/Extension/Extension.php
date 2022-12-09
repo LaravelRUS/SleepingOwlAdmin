@@ -38,7 +38,7 @@ abstract class Extension implements DisplayExtensionInterface
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     public function modifyQuery(Builder $query)
     {
