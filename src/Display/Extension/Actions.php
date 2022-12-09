@@ -150,8 +150,8 @@ class Actions extends Extension implements Initializable, Placable
         $this->setHtmlAttribute('data-type', 'display-actions');
 
         /**
-          * @deprecated panel.footer
-          */
+         * @deprecated panel.footer
+         */
         if ($this->getPlacement() == 'card.footer' || $this->getPlacement() == 'panel.footer') {
             $this->setHtmlAttribute('class', 'card-footer');
         } else {

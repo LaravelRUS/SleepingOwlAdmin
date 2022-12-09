@@ -199,7 +199,8 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
