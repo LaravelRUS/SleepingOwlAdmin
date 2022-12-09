@@ -62,7 +62,7 @@ class Apply extends Extension
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     public function modifyQuery(Builder $query)
     {
