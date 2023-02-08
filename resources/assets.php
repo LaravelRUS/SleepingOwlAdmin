@@ -43,4 +43,3 @@ $wysiwyg_manager->register('tinymce')->js(null, $tinyCDN, null, false);
 $wysiwyg_manager->register('simplemde', new \SleepingOwl\Admin\Wysiwyg\MarkdownFilter())
     ->js(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js', null, false)
     ->css(null, '//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css');
-
