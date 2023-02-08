@@ -292,7 +292,7 @@ return [
         // 23.1.0 - Проверенная версия CDN и версия, установленная локально 'useCdn' => false,
         'ckeditor5' => [
             'useCdn' => false,
-            'ver' => '36.0.1'
+            'ver' => '36.0.1',
         ],
 
         // Если есть API ключ для домена - вставить, иначе оставьте 'no-api-key'
@@ -346,7 +346,7 @@ return [
          * See https://www.tinymce.com/docs/
          */
         'tinymce'    => [
-//            'height' => 200,
+            //            'height' => 200,
         ],
 
         /*
