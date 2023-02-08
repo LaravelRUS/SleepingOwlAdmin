@@ -1,5 +1,11 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2023-02-08
+* [Fix] Fix wysiwyg dark theme (Ckeditor 5)
+
+## 2022-12-09
+* [Update] Downgrade sweetalert2 11.4.9 -> 11.4.8
+
 ## 2022-11-21
 * [Fix] Change theme icons
 

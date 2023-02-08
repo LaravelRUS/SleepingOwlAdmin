@@ -1,8 +1,8 @@
 module.exports = (function() {
 
-    var wysiwyg = [],
+    let wysiwyg = [],
         switchedOn = {},
-        editors = {}
+        editors = {};
 
     return {
 
@@ -34,7 +34,7 @@ module.exports = (function() {
         },
 
         /**
-         * Получение объекта подключеного редактора по ID инпута в котором он подключен
+         * Получение объекта подключенного редактора по ID инпута в котором он подключен
          *
          * @param {String} textareaId
          * @returns {Object}
@@ -51,7 +51,7 @@ module.exports = (function() {
          *
          * @param {String} textareaId
          * @param {String} name ключ подключаемого редактора
-         * @param {Object} params Дполнительные параметры
+         * @param {Object} params Дополнительные параметры
          */
         switchOn (textareaId, name, params) {
             $(`#${textareaId}`).css('display', 'block')
@@ -105,7 +105,7 @@ module.exports = (function() {
         },
 
         /**
-         * Выполение команды в редакторе по ID инпута в котором он подключен
+         * Выполнение команды в редакторе по ID инпута в котором он подключен
          *
          * @param {String} textareaId
          * @param {String} command
