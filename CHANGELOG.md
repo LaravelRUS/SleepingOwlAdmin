@@ -20,7 +20,7 @@ config('sleeping_owl.wysiwyg_cdn.tinymce')
             'ver' => '36.0.1'
     ],
 ```
-
+* [Deleted] Wysiwig Summernote NOT supported from SleepingOwl
 
 
 ## 2022-12-09

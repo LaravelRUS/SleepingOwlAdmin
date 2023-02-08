@@ -64,7 +64,6 @@ require('./wysiwyg/ckeditor');
 require('./wysiwyg/ckeditor5');
 require('./wysiwyg/simplemde');
 require('./wysiwyg/tinymce');
-require('./wysiwyg/summernote');
 
 /**
  * Initialize App
