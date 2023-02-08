@@ -54,7 +54,6 @@ module.exports = (function() {
          * @param {Object} params Дополнительные параметры
          */
         switchOn (textareaId, name, params) {
-            $(`#${textareaId}`).css('display', 'block')
 
             if (wysiwyg.length > 0) {
                 let oldFilter = this.get(textareaId),

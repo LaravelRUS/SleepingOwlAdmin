@@ -287,6 +287,41 @@ return [
     |
     */
 
+    'wysiwyg_cdn' => [
+        // Перевод берется от настройки локального языка
+        // 23.1.0 - Проверенная версия CDN и версия, установленная локально 'useCdn' => false,
+        'ckeditor5' => [
+            'useCdn' => false,
+            'ver' => '36.0.1'
+        ],
+
+        // Если есть API ключ для домена - вставить, иначе оставьте 'no-api-key'
+        // версии 4, 5, 6
+        'tinymce' => [
+            'api' => 'no-api-key',
+            'ver' => 4,
+        ],
+
+        // 0.8.12 - Проверенная версия CDN
+        // addition - позволяет добавлять стили Bootstrap
+        // bs - версия Bootstrap
+        'summernote' => [
+            'ver' => '0.8.12',
+            'lang' => 'ru-RU',
+            'bs' => 4,
+        ],
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Editors
+    |--------------------------------------------------------------------------
+    |
+    | Select default editor and tweak options if needed.
+    |
+    */
+
     'wysiwyg'                => [
         'default'    => 'ckeditor',
 
@@ -311,7 +346,7 @@ return [
          * See https://www.tinymce.com/docs/
          */
         'tinymce'    => [
-            'height' => 200,
+//            'height' => 200,
         ],
 
         /*
@@ -401,7 +436,7 @@ return [
             // Images options
             'image'         => [
                 'styles'  => [
-                    'alignLeft', 'alignCenter', 'alignRight', 'full', 'side',
+                    'alignLeft', 'alignCenter', 'alignRight', 'side', 'full',
                 ],
                 'toolbar' => [
                     'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight', '|',

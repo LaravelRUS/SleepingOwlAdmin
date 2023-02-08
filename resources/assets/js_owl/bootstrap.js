@@ -53,6 +53,8 @@ window.Admin.Messages = require('./components/messages');
 window.Admin.Storage = require('./components/storage');
 window.Admin.Asset = require('./components/asset');
 window.Admin.Modules = require('./components/modules');
+
+
 window.Admin.WYSIWYG = require('./components/wysiwyg');
 
 /**
