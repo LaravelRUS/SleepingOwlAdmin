@@ -1,5 +1,8 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2023-03-14
+* [Add] Add new method for display datatables `->setMethod('POST') // по умолчанию GET так и остался`
+
 ## 2023-02-08
 * [Fix] Fix wysiwyg dark theme (Ckeditor 5)
 * [Fix] Поправил tinymce, можно выбирать версию в конфиге, но нет возможности локализации
