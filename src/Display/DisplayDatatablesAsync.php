@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display;
 
+use Closure;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
@@ -10,6 +12,7 @@ use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Display\Column\Control;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInterface
 {
@@ -20,13 +23,13 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      *
      * @param  Router  $router
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public static function registerRoutes(Router $router)
     {
         $routeName = 'admin.display.async';
         if (! $router->has($routeName)) {
-            $router->get('{adminModel}/async/{adminDisplayName?}', [
+            $router->match(['get', 'post'], '{adminModel}/async/{adminDisplayName?}', [
                 'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\DisplayController@async',
             ]);
@@ -34,7 +37,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $routeName = 'admin.display.async.inlineEdit';
         if (! $router->has($routeName)) {
-            $router->post('{adminModel}/async/{adminDisplayName?}', [
+            $router->post('{adminModel}/async-inline/{adminDisplayName?}', [
                 'as' => $routeName,
                 'uses' => 'SleepingOwl\Admin\Http\Controllers\AdminController@inlineEdit',
             ]);
@@ -63,12 +66,17 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected $displayLength = false;
 
     /**
+     * @var
+     */
+    protected $displayMethod = 'GET';
+
+    /**
      * DisplayDatatablesAsync constructor.
      *
-     * @param  string|null  $name
-     * @param  string|null  $distinct
+     * @param string|null $name
+     * @param string|null $distinct
      */
-    public function __construct($name = null, $distinct = null)
+    public function __construct(string $name = null, string $distinct = null)
     {
         parent::__construct();
 
@@ -91,6 +99,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $this->setHtmlAttribute('style', 'width:100%');
         $this->setHtmlAttribute('data-url', route('admin.display.async', $attributes, false));
+        $this->setHtmlAttribute('data-method', $this->displayMethod);
         $this->setHtmlAttribute('data-payload', json_encode($this->payload));
 
         if ($this->getDisplaySearch()) {
@@ -149,10 +158,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param  string  $name
+     * @param string|null $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name = null)
     {
         $this->name = $name;
 
@@ -276,15 +285,15 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  array|Collection  $collection
-     * @param  int  $totalCount
-     * @param  int  $filteredCount
+     * @param int $totalCount
+     * @param int $filteredCount
      * @return array
      */
     protected function prepareDatatablesStructure(
         \Illuminate\Http\Request $request,
         Collection $collection,
-        $totalCount,
-        $filteredCount
+        int $totalCount,
+        int $filteredCount
     ) {
         $columns = $this->getColumns();
 
@@ -324,7 +333,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @return \Closure|mixed
+     * @return Closure|mixed
      */
     public function getRowClassCallback()
     {
@@ -332,10 +341,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return $this
      */
-    public function setRowClassCallback($callback)
+    public function setRowClassCallback(Closure $callback)
     {
         $this->rowClassCallback = $callback;
 
@@ -365,10 +374,30 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
         return $this->payload;
     }
 
+
+    /**
+     * @param $method
+     * @return $this
+     */
+    public function setMethod($method)
+    {
+        $this->displayMethod = $method;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->displayMethod;
+    }
+
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function toArray()
     {

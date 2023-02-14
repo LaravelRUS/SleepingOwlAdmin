@@ -44,6 +44,7 @@ Admin.Modules.register('display.datatables', () => {
             id = $this.data('id'),
             params = $this.data('attributes') || {},
             url = $this.data('url'),
+            drawMethod = $this.data('method') ? $this.data('method') : 'GET',
             payload = $this.data('payload'),
             search = $this.data('display-search') || false,
             dtlength = $this.data('display-dtlength') || false;
@@ -72,7 +73,7 @@ Admin.Modules.register('display.datatables', () => {
             if (!Admin.Config.get('state_filters')) {
                 params.stateSaveParams = function (settings, item) {
                     item.search.search = ''
-                    var columns = item.columns
+                    var columns = item.columns;
                     $.each(columns, function(index, value){
                         value.search.search = ''
                     })
@@ -81,6 +82,7 @@ Admin.Modules.register('display.datatables', () => {
 
             params.ajax = {
                 url: url,
+                type: drawMethod,
                 data (d) {
                     Admin.Events.fire('datatables::ajax::data', d)
 
@@ -175,8 +177,7 @@ Admin.Modules.register('display.datatables', () => {
             path = path.replace(/\d+\/edit$/, '') + 'edit'
         }
 
-        var urlName = 'Filters_/' + path
-        return urlName
+        return 'Filters_/' + path
     }
 
     //Fill Filters array

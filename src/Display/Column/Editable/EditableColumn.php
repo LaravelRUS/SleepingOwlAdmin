@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Closure;
+use Illuminate\Support\Facades\URL;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class EditableColumn extends NamedColumn
@@ -36,7 +37,8 @@ class EditableColumn extends NamedColumn
      * Text constructor.
      *
      * @param  $name
-     * @param  $label
+     * @param mixed|null $label
+     * @param mixed|null $small
      */
     public function __construct($name, $label = null, $small = null)
     {
@@ -70,7 +72,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param  mixed  $text
+     * @param $modifier
      * @return $this
      */
     public function setModifier($modifier)
@@ -93,10 +95,10 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param  bool  $sortable
+     * @param bool $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(bool $title)
     {
         $this->title = $title;
 
@@ -104,27 +106,28 @@ class EditableColumn extends NamedColumn
     }
 
     /**
+     * Роут подменен.
+     * nit:Daan 2023-02-14
      * @return string
      */
     public function getUrl()
     {
         if (! $this->url) {
             $return = request()->url();
-            if (request()->getScheme() != rtrim(\URL::formatScheme(), ':/')) {
-                $return = preg_replace('~^[^:]+://~isu', \URL::formatScheme(), $return);
+            if (request()->getScheme() != rtrim(URL::formatScheme(), ':/')) {
+                $return = preg_replace('~^[^:]+://~isu', URL::formatScheme(), $return);
             }
-
-            return $return;
+            return str_replace('/async/', '/async-inline/', $return);
         }
 
-        return $this->url;
+        return str_replace('/async/', '/async-inline/', $this->url);
     }
 
     /**
-     * @param $url
-     * @return string
+     * @param string|null $url
+     * @return $this
      */
-    public function setUrl($url)
+    public function setUrl(?string $url)
     {
         $this->url = $url;
 
@@ -140,10 +143,10 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param $url
-     * @return string
+     * @param string|null $mode
+     * @return $this
      */
-    public function setEditableMode($mode)
+    public function setEditableMode(?string $mode)
     {
         if (isset($mode) && in_array($mode, ['inline', 'popup'])) {
             $this->editableMode = $mode;
