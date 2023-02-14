@@ -73,8 +73,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * DisplayDatatablesAsync constructor.
      *
-     * @param string|null $name
-     * @param string|null $distinct
+     * @param  string|null  $name
+     * @param  string|null  $distinct
      */
     public function __construct(string $name = null, string $distinct = null)
     {
@@ -158,7 +158,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param string|null $name
+     * @param  string|null  $name
      * @return $this
      */
     public function setName(string $name = null)
@@ -285,8 +285,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  array|Collection  $collection
-     * @param int $totalCount
-     * @param int $filteredCount
+     * @param  int  $totalCount
+     * @param  int  $filteredCount
      * @return array
      */
     protected function prepareDatatablesStructure(
@@ -341,7 +341,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param Closure $callback
+     * @param  Closure  $callback
      * @return $this
      */
     public function setRowClassCallback(Closure $callback)
@@ -373,7 +373,6 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     {
         return $this->payload;
     }
-
 
     /**
      * @param $method
