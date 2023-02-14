@@ -725,7 +725,7 @@ class AdminController extends Controller
 
     /**
      * @param  Renderable|string  $content
-     * @param string|null $title
+     * @param  string|null  $title
      * @return Factory|View
      */
     public function renderContent($content, string $title = null)
@@ -762,7 +762,7 @@ class AdminController extends Controller
     /**
      * @param $title
      * @param $parent
-     * @param string $name
+     * @param  string  $name
      * @param $url
      *
      * @throws DuplicateBreadcrumbException
@@ -801,8 +801,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
      * @return JsonResponse|RedirectResponse
      */
     public function deletedAll(ModelConfigurationInterface $model, Request $request)

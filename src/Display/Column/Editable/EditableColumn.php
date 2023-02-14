@@ -37,8 +37,8 @@ class EditableColumn extends NamedColumn
      * Text constructor.
      *
      * @param  $name
-     * @param mixed|null $label
-     * @param mixed|null $small
+     * @param  mixed|null  $label
+     * @param  mixed|null  $small
      */
     public function __construct($name, $label = null, $small = null)
     {
@@ -95,7 +95,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param bool $title
+     * @param  bool  $title
      * @return $this
      */
     public function setTitle(bool $title)
@@ -107,7 +107,8 @@ class EditableColumn extends NamedColumn
 
     /**
      * Роут подменен.
-     * nit:Daan 2023-02-14
+     * nit:Daan 2023-02-14.
+     *
      * @return string
      */
     public function getUrl()
@@ -117,6 +118,7 @@ class EditableColumn extends NamedColumn
             if (request()->getScheme() != rtrim(URL::formatScheme(), ':/')) {
                 $return = preg_replace('~^[^:]+://~isu', URL::formatScheme(), $return);
             }
+
             return str_replace('/async/', '/async-inline/', $return);
         }
 
@@ -124,7 +126,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param string|null $url
+     * @param  string|null  $url
      * @return $this
      */
     public function setUrl(?string $url)
@@ -143,7 +145,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param string|null $mode
+     * @param  string|null  $mode
      * @return $this
      */
     public function setEditableMode(?string $mode)
