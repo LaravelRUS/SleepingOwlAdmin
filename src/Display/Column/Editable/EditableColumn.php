@@ -119,10 +119,10 @@ class EditableColumn extends NamedColumn
                 $return = preg_replace('~^[^:]+://~isu', URL::formatScheme(), $return);
             }
 
-            return str_replace('/async/', '/async-inline/', $return);
+            return str_replace('/async', '/async-inline', $return);
         }
 
-        return str_replace('/async/', '/async-inline/', $this->url);
+        return str_replace('/async', '/async-inline', $this->url);
     }
 
     /**
