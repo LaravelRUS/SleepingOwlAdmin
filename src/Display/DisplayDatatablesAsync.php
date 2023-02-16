@@ -68,7 +68,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * @var
      */
-    protected $displayMethod = 'GET';
+    protected $displayMethod;
 
     /**
      * DisplayDatatablesAsync constructor.
@@ -82,6 +82,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
         $this->setName($name);
         $this->setDistinct($distinct);
+        $this->displayMethod = config('sleepingowl.default_datatables_method', 'GET');
 
         $this->getColumns()->setView('display.extensions.columns_async');
     }

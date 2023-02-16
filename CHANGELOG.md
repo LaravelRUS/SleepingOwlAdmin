@@ -1,6 +1,9 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
-## 2023-03-14
+## 2023-02-16
+* [Add] Add default datatables send method in config `default_datatables_method`
+
+## 2023-02-14
 * [Add] Add new method for display datatables `->setMethod('POST') // по умолчанию GET так и остался`
 
 ## 2023-02-08
