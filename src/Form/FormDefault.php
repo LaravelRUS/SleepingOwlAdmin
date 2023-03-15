@@ -109,7 +109,6 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         parent::initialize();
 
         if (! $this->hasHtmlAttribute('enctype')) {
-
             // Recursive iterate subset of form elements
             // and if subset contains an upload element then add to for
             $this->recursiveIterateElements(function ($element) {

@@ -34,6 +34,7 @@ class BaseColumnFilterTest extends TestCase
      * @throws ReflectionException
      *
      * @dataProvider sqlOperatorsProvider
+     *
      * @doesNotPerformAssertions
      */
     public function testApply($operator, $condition, $args)

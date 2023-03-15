@@ -26,7 +26,7 @@ class Checkbox extends NamedColumn
         parent::__construct($label);
         $this->setLabel(
             Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
-        ));
+            ));
     }
 
     /**
