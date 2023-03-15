@@ -39,7 +39,6 @@ class AlterPaginateDisplayController extends Controller
 
                 if ($content instanceof FormElements) {
                     foreach ($content->getElements() as $element) {
-
                         //Return data-table if inside FormElements
                         if ($element instanceof DisplayDatatablesAsyncAlterPaginate) {
                             if ($element->getName() == $name) {

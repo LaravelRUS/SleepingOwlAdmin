@@ -508,9 +508,9 @@ class HasManyLocal extends FormElements
         $model = $attributes instanceof Model
             ? $attributes
             : (
-            null != ($instanceModel = $this->getInstance())
-                ? $this->safeFillModel(clone $instanceModel, $attributes)
-                : $this->safeCreateModel($this->getModelClassForElements(), $attributes)
+                null != ($instanceModel = $this->getInstance())
+                    ? $this->safeFillModel(clone $instanceModel, $attributes)
+                    : $this->safeCreateModel($this->getModelClassForElements(), $attributes)
             );
         $group = new Group($model);
 

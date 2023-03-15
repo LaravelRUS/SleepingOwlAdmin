@@ -398,7 +398,6 @@ abstract class Elements extends FormElements
 
         $query = $this->getRelation();
         if (count($this->queryCallbacks) > 0) {
-
             //get $query instance Illuminate\Database\Eloquent\Builder for HasMany
             $query = $query->getQuery();
 

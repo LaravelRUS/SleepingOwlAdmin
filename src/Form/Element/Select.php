@@ -324,7 +324,7 @@ class Select extends NamedFormElement
      */
     public function toArray()
     {
-        $this->setHtmlAttribute('id', ($this->getHtmlAttribute('id') ?: $this->getId()));
+        $this->setHtmlAttribute('id', $this->getHtmlAttribute('id') ?: $this->getId());
         $this->setHtmlAttributes([
             'size' => 2,
             'data-select-type' => 'single',

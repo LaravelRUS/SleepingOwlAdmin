@@ -532,7 +532,6 @@ abstract class NamedFormElement extends FormElement
             if ($previousModel->getAttribute($relation) instanceof Model) {
                 $relatedModel = $previousModel->getAttribute($relation);
             } elseif (method_exists($previousModel, $relation)) {
-
                 /* @var Relation $relation */
                 $relationObject = $previousModel->{$relation}();
 
