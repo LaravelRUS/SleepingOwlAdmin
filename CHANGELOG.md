@@ -1,5 +1,8 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2023-04-23
+* [Fix] Fix select2 multiple placeholder and add scc fir light and dark theme
+
 ## 2023-02-16
 * [Add] Add default datatables send method in config `default_datatables_method`
 
