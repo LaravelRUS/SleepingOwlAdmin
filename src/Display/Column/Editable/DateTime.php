@@ -215,7 +215,7 @@ class DateTime extends EditableColumn implements ColumnEditableInterface
 
         if ($request->input('value')) {
             $value = Carbon::createFromFormat(
-              $this->format, $request->input('value'), $this->getTimezone()
+                $this->format, $request->input('value'), $this->getTimezone()
             );
         } else {
             $value = null;

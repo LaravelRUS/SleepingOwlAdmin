@@ -162,7 +162,6 @@ class EditableColumn extends NamedColumn
      */
     public function isReadonly()
     {
-
         // Add policy
         if ($this->getModelConfiguration()->isEditable($this->getModel())) {
             if (is_callable($this->readonlyEditable)) {

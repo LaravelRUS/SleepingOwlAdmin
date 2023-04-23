@@ -172,8 +172,8 @@ class AdminController extends Controller
      */
     protected function validatePolicy($permission, $key)
     {
-        return ($this->envPolicy && ((method_exists($this->envPolicy, $permission)
-                    && $this->envPolicy->$permission(Auth::user(), $key) !== false)))
+        return ($this->envPolicy && (method_exists($this->envPolicy, $permission)
+                    && $this->envPolicy->$permission(Auth::user(), $key) !== false))
             || ! method_exists($this->envPolicy, $permission) || ! $this->envPolicy || $this->validateBeforePolicy($key);
     }
 
@@ -183,7 +183,7 @@ class AdminController extends Controller
      */
     protected function validateBeforePolicy($key)
     {
-        return ($this->envPolicy && (method_exists($this->envPolicy, 'before'))
+        return ($this->envPolicy && method_exists($this->envPolicy, 'before')
                 && $this->envPolicy->before(Auth::user(), $key) == true)
             || ! method_exists($this->envPolicy, 'before') || ! $this->envPolicy;
     }
