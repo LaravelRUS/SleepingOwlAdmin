@@ -19,7 +19,7 @@ abstract class FilterBase implements FilterInterface
     protected $alias;
 
     /**
-     * @var string|\Closure|null
+     * @var string|Closure|null
      */
     protected $title;
 
@@ -30,7 +30,7 @@ abstract class FilterBase implements FilterInterface
 
     /**
      * @param  string  $name
-     * @param  string|\Closure|null  $title
+     * @param  string|Closure|null  $title
      */
     public function __construct($name, $title = null)
     {
