@@ -10,7 +10,7 @@ class FilterField extends FilterBase
     use SqlQueryOperators;
 
     /**
-     * @param mixed $value
+     * @param  mixed  $value
      * @return $this
      */
     public function setValue($value)
@@ -23,7 +23,7 @@ class FilterField extends FilterBase
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     public function apply(Builder $query)
     {
@@ -37,7 +37,7 @@ class FilterField extends FilterBase
             $relationName = implode('.', $parts);
         }
 
-        if (!is_null($relationName)) {
+        if (! is_null($relationName)) {
             $query->whereHas($relationName, function ($q) use ($name, $value) {
                 $this->buildQuery($q, $name, $value);
             });

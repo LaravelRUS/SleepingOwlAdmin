@@ -27,7 +27,7 @@ class FilterRelated extends FilterField
     }
 
     /**
-     * @param string $display
+     * @param  string  $display
      * @return $this
      */
     public function setDisplay($display)
@@ -46,14 +46,14 @@ class FilterRelated extends FilterField
     }
 
     /**
-     * @param string $model
+     * @param  string  $model
      * @return $this
      *
      * @throws Exception
      */
     public function setModel($model)
     {
-        if (!class_exists($model)) {
+        if (! class_exists($model)) {
             throw new Exception("Class model [$model] not found");
         }
 
@@ -86,7 +86,7 @@ class FilterRelated extends FilterField
         $model = $this->getModel();
 
         if (is_null($model)) {
-            throw new Exception('Specify model for filter: ' . $this->getName());
+            throw new Exception('Specify model for filter: '.$this->getName());
         }
 
         try {
