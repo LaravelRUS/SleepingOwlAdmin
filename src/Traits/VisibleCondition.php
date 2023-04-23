@@ -35,10 +35,10 @@ trait VisibleCondition
     }
 
     /**
-     * @param  Closure  $condition
+     * @param  Closure|bool  $condition
      * @return $this
      */
-    public function setVisibilityCondition(Closure $condition)
+    public function setVisibilityCondition($condition)
     {
         $this->visibleCondition = $condition;
 
