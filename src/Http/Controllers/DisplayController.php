@@ -40,7 +40,6 @@ class DisplayController extends Controller
 
                 if ($content instanceof FormElements) {
                     foreach ($content->getElements() as $element) {
-
                         /*
                           * Return data-table if inside FormElements
                           */
