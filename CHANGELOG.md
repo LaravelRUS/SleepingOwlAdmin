@@ -2,6 +2,7 @@
 
 ## 2023-04-23
 * [Fix] Fix select2 multiple placeholder and add scc fir light and dark theme
+* [Fix] Fix pre css
 
 ## 2023-02-16
 * [Add] Add default datatables send method in config `default_datatables_method`
