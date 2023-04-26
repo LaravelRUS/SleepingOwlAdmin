@@ -149,7 +149,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             return;
         }
 
-        if (empty($queryString) && !$queryString) {
+        if (empty($queryString) && ! $queryString) {
             return;
         }
 

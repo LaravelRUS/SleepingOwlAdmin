@@ -62,7 +62,7 @@ class Url extends NamedColumn
 
     /**
      * @param $text
-     * @param bool $textString
+     * @param  bool  $textString
      * @return $this
      */
     public function setText($text, $textString = false)

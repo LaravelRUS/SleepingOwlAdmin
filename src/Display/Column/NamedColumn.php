@@ -149,7 +149,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
         }
 
         /** nit:Daan 2023-04-26 */
-        if (!$name) {
+        if (! $name) {
             return null;
         }
 
