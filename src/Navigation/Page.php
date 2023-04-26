@@ -53,7 +53,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
      */
     public function setAliasId()
     {
-        if (!is_null($this->getUrl())) {
+        if (! is_null($this->getUrl())) {
             $url = parse_url($this->getUrl(), PHP_URL_PATH);
             if ($url) {
                 $this->aliasId = md5($url);
@@ -238,7 +238,6 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
 
         return $this;
     }
-
 
     /** FIX 8.1 */
     /**
