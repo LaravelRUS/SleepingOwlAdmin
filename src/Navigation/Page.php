@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Navigation;
 
 use Closure;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -48,13 +49,15 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * Set Alias Id.
+     * Set Alias ID.
      */
     public function setAliasId()
     {
-        $url = parse_url($this->getUrl(), PHP_URL_PATH);
-        if ($url) {
-            $this->aliasId = md5($url);
+        if (!is_null($this->getUrl())) {
+            $url = parse_url($this->getUrl(), PHP_URL_PATH);
+            if ($url) {
+                $this->aliasId = md5($url);
+            }
         }
     }
 
@@ -67,15 +70,13 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
     }
 
     /**
-     * @return ModelConfigurationInterface
+     * @return ModelConfigurationInterface|void
      */
     public function getModelConfiguration()
     {
-        if (! $this->hasModel()) {
-            return;
+        if ($this->hasModel()) {
+            return app('sleeping_owl')->getModel($this->model);
         }
-
-        return app('sleeping_owl')->getModel($this->model);
     }
 
     /**
@@ -137,7 +138,7 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
             return $this->getModelConfiguration()->getDisplayUrl();
         }
 
-        return parent::getUrl();
+        return $this->getParentUrl();
     }
 
     /**
@@ -236,5 +237,31 @@ class Page extends \KodiComponents\Navigation\Page implements PageInterface
         $this->type = $type;
 
         return $this;
+    }
+
+
+    /** FIX 8.1 */
+    /**
+     * @return string|null
+     */
+    public function getParentUrl(): ?string
+    {
+        if (is_null($this->url)) {
+            return null;
+        }
+
+        if (strpos($this->url, '://') !== false) {
+            return $this->url;
+        }
+
+        if (is_string($this->url)) {
+            $this->url = url($this->url);
+        }
+
+        if ($this->url instanceof UrlGenerator) {
+            return $this->url->full();
+        }
+
+        return $this->url;
     }
 }

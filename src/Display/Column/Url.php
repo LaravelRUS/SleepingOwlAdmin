@@ -16,9 +16,12 @@ class Url extends NamedColumn
 
     /**
      * @var string
-     * @var bool
      */
     protected $text = '';
+
+    /**
+     * @var bool
+     */
     protected $textString = false;
 
     /**
@@ -58,7 +61,8 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param  string|bool  $icon
+     * @param $text
+     * @param bool $textString
      * @return $this
      */
     public function setText($text, $textString = false)
@@ -94,7 +98,7 @@ class Url extends NamedColumn
     public function toArray()
     {
         $model_value = $this->getModelValue();
-        if ($this->isolated) {
+        if ($this->isolated && $model_value) {
             $model_value = htmlspecialchars($model_value);
         }
 

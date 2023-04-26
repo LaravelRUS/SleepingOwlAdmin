@@ -2,6 +2,8 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
+use Closure;
+
 class Text extends NamedColumn
 {
     /**
@@ -10,12 +12,12 @@ class Text extends NamedColumn
     protected $view = 'column.text';
 
     /**
-     * @var \Closure|mixed
+     * @var Closure|mixed
      */
     protected $modifier = null;
 
     /**
-     * @return \Closure|mixed
+     * @return Closure|mixed
      */
     public function getModifier()
     {
@@ -23,7 +25,7 @@ class Text extends NamedColumn
     }
 
     /**
-     * @param  \Closure|mixed  $modifier
+     * @param  Closure|mixed  $modifier
      * @return $this
      */
     public function setModifier($modifier)
@@ -43,7 +45,7 @@ class Text extends NamedColumn
             $model_value = $modifier($model_value, $this->getModel());
         }
 
-        if ($this->isolated) {
+        if ($this->isolated && $model_value) {
             $model_value = htmlspecialchars($model_value);
         }
 

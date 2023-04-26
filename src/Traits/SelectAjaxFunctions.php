@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
 use SleepingOwl\Admin\Http\Controllers\FormElementController;
+use SleepingOwl\Admin\Facades\Admin as AdminSection;
 
 trait SelectAjaxFunctions
 {
@@ -114,7 +115,7 @@ trait SelectAjaxFunctions
     {
         // get model, model configuration interface, model logic
         $model = $this->getModel();
-        $section = \AdminSection::getModel($this->getModel());
+        $section = AdminSection::getModel($this->getModel());
         $payload = method_exists($section, 'getPayload') ? $section->getPayload() : [];
         $form_element_controller = new FormElementController();
         $form = $form_element_controller->getModelLogicPayload($section, $model->id, $payload);
@@ -173,7 +174,7 @@ trait SelectAjaxFunctions
         }
 
         $options = Arr::except($this->options, $this->exclude);
-        if ($this->isSortable()) {
+        if ($this->isSortable() && $this->getSortableFlags()) {
             asort($options, $this->getSortableFlags());
         }
 

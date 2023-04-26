@@ -124,7 +124,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     public function toArray()
     {
         $model_value_small = $this->getSmall();
-        if ($this->isolated) {
+        if ($this->isolated && $model_value_small) {
             $model_value_small = htmlspecialchars($model_value_small);
         }
 
@@ -146,6 +146,11 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     {
         if ($name instanceof Closure) {
             return $name($instance);
+        }
+
+        /** nit:Daan 2023-04-26 */
+        if (!$name) {
+            return null;
         }
 
         /*
