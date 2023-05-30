@@ -593,10 +593,21 @@ class AdminController extends Controller
 
         $model->fireEvent('updated', false, $item, $request);
 
+        $relationModel = $repository->find($id);
+        if (str_contains($field, '.')) {
+            $relations = explode('.', $field);
+            $field = array_pop($relations);
+            foreach ($relations as $relation) {
+                if(!is_null($relationModel->$relation)) {
+                    $relationModel = $relationModel->$relation;
+                }
+            }
+        }
+
         return response()->json([
             'status'   => true,
             'name'     => $field,
-            'newValue' => $newValue !== null ? $newValue : $repository->find($id)->{$field},
+            'newValue' => $newValue !== null ? $newValue : $relationModel->$field,
             'pk'       => $id,
         ]);
     }
