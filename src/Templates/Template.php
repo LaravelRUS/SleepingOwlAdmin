@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Templates;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
@@ -35,6 +36,11 @@ abstract class Template implements TemplateInterface
      * @var AdminInterface
      */
     protected $admin;
+
+    /**
+     * string VendorVersion
+     */
+    protected $ver = '<b>Ver:</b> dev.20230609.01';
 
     /**
      * TemplateDefault constructor.
@@ -147,7 +153,7 @@ abstract class Template implements TemplateInterface
      * @param  string|View  $view
      * @param  array  $data
      * @param  array  $mergeData
-     * @return \Illuminate\Contracts\View\Factory|View
+     * @return Factory|View
      */
     public function view($view, array $data = [], $mergeData = [])
     {
@@ -180,7 +186,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return string
      */
-    public function renderNavigation()
+    public function renderNavigation(): string
     {
         return $this->navigation()->render(
             $this->getViewPath('_partials.navigation.navigation')
@@ -188,10 +194,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Регистрация стандартных
-     * глобальных
-     * Javascript перменных
-     * .
+     * Регистрация стандартных глобальных Javascript переменных.
      */
     protected function setGlobalVariables()
     {
@@ -220,11 +223,25 @@ abstract class Template implements TemplateInterface
     }
 
     /**
+     * Отображение версии в футере.
+     *
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        if (config('sleeping_owl.version_text')) {
+            $this->ver = config('sleeping_owl.version_text');
+        }
+
+        return $this->ver;
+    }
+
+    /**
      * Render func.
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'asset_dir' => $this->assetDir(),

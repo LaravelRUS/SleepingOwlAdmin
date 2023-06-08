@@ -37,5 +37,17 @@
                 @stack('content.bottom')
             </div>
         </div>
+
+        @if(config('sleeping_owl.show_footer'))
+            <footer class="main-footer small">
+                {!! config('sleeping_owl.footer_text') !!}
+
+                @if(config('sleeping_owl.show_version'))
+                    <div class="float-right d-none d-sm-inline-block">
+                        {!! $template->getVersion() !!}
+                    </div>
+                @endif
+            </footer>
+        @endif
     </div>
 @stop

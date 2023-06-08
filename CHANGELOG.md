@@ -2,7 +2,8 @@
 
 ## 2023-06-09
 * [Fix] Revert select/selectajax sortable
-* 
+* [Add] Add version and footer text
+
 ## 2023-04-26
 * [Fix] Fix php8.1 warning deprecations
 
