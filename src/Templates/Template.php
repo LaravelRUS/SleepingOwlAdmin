@@ -38,7 +38,7 @@ abstract class Template implements TemplateInterface
     protected $admin;
 
     /**
-     * string VendorVersion
+     * string VendorVersion.
      */
     protected $ver = '<b>Ver:</b> dev.20230609.01';
 
