@@ -116,7 +116,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param array $options
+     * @param  array  $options
      * @return $this
      */
     public function setOptions(array $options): self
@@ -156,7 +156,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param bool $sortable
+     * @param  bool  $sortable
      * @param  null  $sortable_flags
      * @return $this
      */
@@ -366,5 +366,4 @@ class Select extends NamedFormElement
 
         return parent::prepareValue($value);
     }
-
 }
