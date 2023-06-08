@@ -40,7 +40,7 @@ abstract class Template implements TemplateInterface
     /**
      * string VendorVersion.
      */
-    protected $ver = '<b>Ver:</b> dev.2306.0901';
+    protected $ver = '<b>Ver:</b> dev.2306.0902';
 
     /**
      * TemplateDefault constructor.

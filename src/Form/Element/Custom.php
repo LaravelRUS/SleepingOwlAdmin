@@ -66,9 +66,9 @@ class Custom extends FormElement
     }
 
     /**
-     * @return Closure
+     * @return Closure|null
      */
-    public function getCallback(): Closure
+    public function getCallback(): ?Closure
     {
         return $this->callback;
     }
