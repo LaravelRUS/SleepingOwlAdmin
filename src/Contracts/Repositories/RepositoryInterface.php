@@ -2,7 +2,9 @@
 
 namespace SleepingOwl\Admin\Contracts\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Exceptions\RepositoryException;
 
@@ -22,7 +24,7 @@ interface RepositoryInterface extends WithModelInterface
     public function setClass($class);
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getWith();
 
@@ -35,7 +37,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Get base query.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     public function getQuery();
 
@@ -59,7 +61,7 @@ interface RepositoryInterface extends WithModelInterface
      * Find model instances by ids.
      *
      * @param  int[]  $ids
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function findMany(array $ids);
 

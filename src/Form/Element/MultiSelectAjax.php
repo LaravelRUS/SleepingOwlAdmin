@@ -13,6 +13,8 @@ use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 use SleepingOwl\Admin\Traits\SelectAjaxFunctions;
 
 class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesInterface
@@ -33,8 +35,8 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
      * @param $path
      * @param  null  $label
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws SelectException
+     * @throws FormElementException
      */
     public function __construct($path, $label = null)
     {
@@ -136,7 +138,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setLoadOptionsQueryPreparer($this->default_query_preparer);
 
@@ -176,7 +178,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     /**
      * @return array
      */
-    protected function loadOptions()
+    protected function loadOptions(): array
     {
         $repository = app(RepositoryInterface::class);
         $repository->setModel($this->getModelForOptions());
@@ -199,7 +201,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
             );
         }
 
-        // call the pre load options query preparer if has be set
+        // call the preload options query preparer if has be set
         if (! is_null($preparer = $this->getLoadOptionsQueryPreparer())) {
             $options = $preparer($this, $options);
         }

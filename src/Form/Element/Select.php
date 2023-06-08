@@ -4,6 +4,8 @@ namespace SleepingOwl\Admin\Form\Element;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
 class Select extends NamedFormElement
@@ -58,8 +60,8 @@ class Select extends NamedFormElement
      * @param  null  $label
      * @param  array  $options
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws SelectException
+     * @throws FormElementException
      */
     public function __construct($path, $label = null, $options = [])
     {
@@ -75,7 +77,7 @@ class Select extends NamedFormElement
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         if (! empty($this->options)) {
             return $this->options;
@@ -91,7 +93,7 @@ class Select extends NamedFormElement
         }
 
         $options = Arr::except($this->options, $this->exclude);
-        if ($this->isSortable() && $this->getSortableFlags()) {
+        if ($this->isSortable()) {
             asort($options, $this->getSortableFlags());
         }
 
@@ -103,11 +105,10 @@ class Select extends NamedFormElement
     /**
      * @return array
      */
-    public function mutateOptions()
+    public function mutateOptions(): array
     {
         $options = [];
-        $temp = $this->getOptions();
-        foreach ($temp as $key => $value) {
+        foreach ($this->getOptions() as $key => $value) {
             $options[] = ['id' => $key, 'text' => $value];
         }
 
@@ -115,10 +116,10 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param array
+     * @param array $options
      * @return $this
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): self
     {
         $this->options = $options;
 
@@ -129,7 +130,7 @@ class Select extends NamedFormElement
      * @param  array  $values
      * @return $this
      */
-    public function setEnum(array $values)
+    public function setEnum(array $values): self
     {
         return $this->setOptions(array_combine($values, $values));
     }
@@ -137,7 +138,7 @@ class Select extends NamedFormElement
     /**
      * @return bool
      */
-    public function isNullable()
+    public function isNullable(): bool
     {
         return $this->nullable;
     }
@@ -145,7 +146,7 @@ class Select extends NamedFormElement
     /**
      * @return $this
      */
-    public function nullable()
+    public function nullable(): self
     {
         $this->nullable = true;
 
@@ -155,11 +156,11 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param  bool  $sortable
+     * @param bool $sortable
      * @param  null  $sortable_flags
      * @return $this
      */
-    public function setSortable($sortable, $sortable_flags = null)
+    public function setSortable($sortable, $sortable_flags = null): self
     {
         $this->sortable = (bool) $sortable;
         $this->sortable_flags = $sortable_flags;
@@ -178,7 +179,7 @@ class Select extends NamedFormElement
     /**
      * @return bool
      */
-    public function isSortable()
+    public function isSortable(): bool
     {
         return $this->sortable;
     }
@@ -186,7 +187,7 @@ class Select extends NamedFormElement
     /**
      * @return int
      */
-    protected function getLimit()
+    protected function getLimit(): int
     {
         return $this->limit;
     }
@@ -195,7 +196,7 @@ class Select extends NamedFormElement
      * @param $limit
      * @return $this
      */
-    public function setLimit($limit)
+    public function setLimit($limit): self
     {
         $this->limit = $limit;
 
@@ -205,7 +206,7 @@ class Select extends NamedFormElement
     /**
      * @return bool
      */
-    public function getSelect2()
+    public function getSelect2(): bool
     {
         return $this->select2_mode;
     }
@@ -215,7 +216,7 @@ class Select extends NamedFormElement
      * @param  array  $select2_options  See: https://select2.org/configuration/options-api
      * @return $this
      */
-    public function setSelect2($mode, array $select2_options = [])
+    public function setSelect2($mode, array $select2_options = []): self
     {
         $this->select2_mode = $mode;
 
@@ -242,9 +243,9 @@ class Select extends NamedFormElement
     /**
      * @param  string|array  $key
      * @param  string|bool|int|null  $value
-     * @return Select
+     * @return $this
      */
-    public function setSelect2Options($key, $value = null)
+    public function setSelect2Options($key, $value = null): self
     {
         if (is_array($key)) {
             foreach ($key as $k => $v) {
@@ -268,7 +269,7 @@ class Select extends NamedFormElement
     /**
      * @return $this
      */
-    public function disableSelect2EscapeMarkup()
+    public function disableSelect2EscapeMarkup(): self
     {
         $this->setHtmlAttribute('data-select2-allow-html', 'true');
 
@@ -278,7 +279,7 @@ class Select extends NamedFormElement
     /**
      * @return array
      */
-    public function getExclude()
+    public function getExclude(): array
     {
         return $this->exclude;
     }
@@ -287,7 +288,7 @@ class Select extends NamedFormElement
      * @param  array  $keys
      * @return $this
      */
-    public function setExclude($keys)
+    public function setExclude($keys): self
     {
         return $this->exclude($keys);
     }
@@ -365,4 +366,5 @@ class Select extends NamedFormElement
 
         return parent::prepareValue($value);
     }
+
 }

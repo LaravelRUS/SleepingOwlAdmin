@@ -75,7 +75,7 @@ class DisplayTable extends Display
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function initialize()
     {
@@ -197,7 +197,7 @@ class DisplayTable extends Display
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function toArray()
     {
@@ -227,7 +227,7 @@ class DisplayTable extends Display
     /**
      * @return Collection|LengthAwarePaginator|Builder
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCollection()
     {

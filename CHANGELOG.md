@@ -1,10 +1,13 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2023-06-09
+* [Fix] Revert select/selectajax sortable
+* 
 ## 2023-04-26
 * [Fix] Fix php8.1 warning deprecations
 
 ## 2023-04-23
-* [Fix] Fix select2 multiple placeholder and add scc fir light and dark theme
+* [Fix] Fix select2 multiple placeholder and add css for light and dark theme
 * [Fix] Fix pre css
 
 ## 2023-02-16

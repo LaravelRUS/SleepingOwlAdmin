@@ -8,6 +8,8 @@ use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 use SleepingOwl\Admin\Traits\SelectAjaxFunctions;
 
 class SelectAjax extends Select implements Initializable, WithRoutesInterface
@@ -28,8 +30,8 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      * @param $path
      * @param  null  $label
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws SelectException
+     * @throws FormElementException
      */
     public function __construct($path, $label = null)
     {
@@ -71,7 +73,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     /**
      * @return string|null
      */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
@@ -80,7 +82,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      * @param $language
      * @return $this
      */
-    public function setLanguage($language)
+    public function setLanguage($language): self
     {
         $this->language = $language;
 
@@ -107,7 +109,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      *
      * @return string
      */
-    public function getSearchUrl()
+    public function getSearchUrl(): string
     {
         return $this->search_url ? $this->search_url : route('admin.form.element.'.static::$route, [
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
@@ -122,7 +124,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      * @param $url
      * @return $this
      */
-    public function setSearchUrl($url)
+    public function setSearchUrl($url): self
     {
         $this->search_url = $url;
 
@@ -134,7 +136,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      *
      * @return $this
      */
-    public function allowClear()
+    public function allowClear(): self
     {
         $this->setHtmlAttribute('data-allow-clear', 'true');
 
@@ -144,7 +146,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setLoadOptionsQueryPreparer($this->default_query_preparer);
 

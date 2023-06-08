@@ -93,7 +93,7 @@ trait SelectAjaxFunctions
      * @param $symbols
      * @return $this
      */
-    public function setMinSymbols($symbols)
+    public function setMinSymbols($symbols): self
     {
         $this->min_symbols = $symbols;
 
@@ -103,7 +103,7 @@ trait SelectAjaxFunctions
     /**
      * @return array
      */
-    public function mutateOptions()
+    public function mutateOptions(): array
     {
         return $this->getOptions();
     }
@@ -111,7 +111,7 @@ trait SelectAjaxFunctions
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         // get model, model configuration interface, model logic
         $model = $this->getModel();
@@ -174,7 +174,7 @@ trait SelectAjaxFunctions
         }
 
         $options = Arr::except($this->options, $this->exclude);
-        if ($this->isSortable() && $this->getSortableFlags()) {
+        if ($this->isSortable()) {
             asort($options, $this->getSortableFlags());
         }
 

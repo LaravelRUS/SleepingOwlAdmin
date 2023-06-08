@@ -30,7 +30,7 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return parent::getName().'[]';
     }
@@ -38,7 +38,7 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
     /**
      * @return int|null
      */
-    public function getMax()
+    public function getMax(): ?int
     {
         return $this->max;
     }
@@ -47,7 +47,7 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
      * @param  int  $max
      * @return $this
      */
-    public function setMax(int $max)
+    public function setMax(int $max): self
     {
         $this->max = $max;
 
@@ -57,7 +57,7 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $this->setHtmlAttributes([
             'id' => $this->getId(),
@@ -78,5 +78,16 @@ class MultiSelect extends Select implements Taggabled, HasSyncCallback, MustDele
             'taggable' => $this->isTaggable(),
             'attributes' => $this->htmlAttributesToString(),
         ] + parent::toArray();
+    }
+
+    /**
+     * @param  array  $defaultValue
+     * @return $this
+     */
+    public function setDefaultValue($defaultValue): self
+    {
+        $this->defaultValue = $defaultValue;
+
+        return $this;
     }
 }

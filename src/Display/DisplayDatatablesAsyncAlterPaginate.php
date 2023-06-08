@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync implements WithRoutesInterface
 {
@@ -13,7 +14,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
      *
      * @param  Router  $router
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public static function registerRoutes(Router $router)
     {

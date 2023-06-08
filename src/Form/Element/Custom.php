@@ -58,7 +58,7 @@ class Custom extends FormElement
      * @param  Closure|string|Htmlable|ViewContract  $display
      * @return $this
      */
-    public function setDisplay($display)
+    public function setDisplay($display): self
     {
         $this->display = $display;
 
@@ -68,7 +68,7 @@ class Custom extends FormElement
     /**
      * @return Closure
      */
-    public function getCallback()
+    public function getCallback(): Closure
     {
         return $this->callback;
     }
@@ -77,7 +77,7 @@ class Custom extends FormElement
      * @param  Closure  $callback
      * @return $this
      */
-    public function setCallback(Closure $callback)
+    public function setCallback(Closure $callback): self
     {
         $this->callback = $callback;
 
@@ -93,7 +93,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return void
      */
     public function save(Request $request)
