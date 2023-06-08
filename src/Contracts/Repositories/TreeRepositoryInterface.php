@@ -9,7 +9,7 @@ interface TreeRepositoryInterface extends RepositoryInterface
     /**
      * Get tree structure.
      *
-     * @param Collection $collection
+     * @param  Collection  $collection
      * @return mixed
      */
     public function getTree(Collection $collection);

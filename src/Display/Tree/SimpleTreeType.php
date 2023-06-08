@@ -32,7 +32,7 @@ class SimpleTreeType implements TreeTypeInterface
     /**
      * Get tree structure.
      *
-     * @param Collection $collection
+     * @param  Collection  $collection
      * @return mixed
      */
     public function getTree(Collection $collection)
@@ -49,7 +49,7 @@ class SimpleTreeType implements TreeTypeInterface
     /**
      * Reorder tree by $data value.
      *
-     * @param array $data
+     * @param  array  $data
      */
     public function reorder(array $data)
     {
