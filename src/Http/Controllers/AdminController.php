@@ -598,7 +598,7 @@ class AdminController extends Controller
             $relations = explode('.', $field);
             $field = array_pop($relations);
             foreach ($relations as $relation) {
-                if(!is_null($relationModel->$relation)) {
+                if(! is_null($relationModel->$relation)) {
                     $relationModel = $relationModel->$relation;
                 }
             }
