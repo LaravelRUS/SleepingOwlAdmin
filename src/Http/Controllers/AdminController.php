@@ -501,8 +501,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface  $model
-     * @param Request  $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
      * @return JsonResponse
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
