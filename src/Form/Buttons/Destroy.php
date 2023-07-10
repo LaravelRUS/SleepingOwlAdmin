@@ -22,10 +22,10 @@ class Destroy extends FormButton
     public function initialize()
     {
         parent::initialize();
+
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'type' => 'submit',
             'name' => 'next_action',
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-danger btn-destroy',
             'data-url' => $this->getModelConfiguration()->getDestroyUrl($this->getModel()->getKey()),
             'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
         ]);
@@ -42,5 +42,7 @@ class Destroy extends FormButton
 
         $this->show = $this->isTrashed() &&
             $this->getModelConfiguration()->isDestroyable($this->getModel());
+
+        return parent::canShow();
     }
 }
