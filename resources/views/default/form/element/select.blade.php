@@ -41,7 +41,7 @@
                     @endif
                 >
                 <span slot="noResult">{{ trans('sleeping_owl::lang.select.no_items') }}</span>
-                <span slot="NoOptions">{{ trans('sleeping_owl::lang.select.no_items') }}</span>
+                <span slot="noOptions">{{ trans('sleeping_owl::lang.select.no_items') }}</span>
                 </multiselect>
 
                 <input type="hidden"
