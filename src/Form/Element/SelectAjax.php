@@ -27,7 +27,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     /**
      * SelectAjax constructor.
      *
-     * @param $path
+     * @param  $path
      * @param  null  $label
      *
      * @throws SelectException
@@ -79,7 +79,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     }
 
     /**
-     * @param $language
+     * @param  $language
      * @return $this
      */
     public function setLanguage($language): self
@@ -121,7 +121,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     /**
      * Search url for ajax.
      *
-     * @param $url
+     * @param  $url
      * @return $this
      */
     public function setSearchUrl($url): self

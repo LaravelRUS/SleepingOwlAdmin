@@ -33,7 +33,7 @@ class WidgetsRegistry implements WidgetsRegistryInterface
     }
 
     /**
-     * @param $widget
+     * @param  $widget
      * @return $this
      */
     public function registerWidget($widget)
@@ -94,7 +94,7 @@ class WidgetsRegistry implements WidgetsRegistryInterface
     }
 
     /**
-     * @param $widget
+     * @param  $widget
      * @return \Closure
      */
     public function createClassWidget($widget)

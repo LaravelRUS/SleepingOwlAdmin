@@ -50,7 +50,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param $view
+     * @param  $view
      * @return $this
      */
     public function setView($view)
@@ -69,7 +69,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param $placement
+     * @param  $placement
      * @return $this
      */
     public function setPlacement($placement)
@@ -115,7 +115,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param $key
+     * @param  $key
      * @return mixed|null
      */
     public function get($key)
@@ -124,7 +124,7 @@ class Links extends Extension implements Placable
     }
 
     /**
-     * @param $key
+     * @param  $key
      * @return $this
      */
     public function remove($key)

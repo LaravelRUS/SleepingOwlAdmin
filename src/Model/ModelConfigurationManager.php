@@ -583,7 +583,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param $page_id
+     * @param  $page_id
      * @return PageInterface|null
      */
     public function getNavigationPage($page_id)
@@ -673,8 +673,8 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * Handle dynamic method calls into the model.
      *
-     * @param $method
-     * @param $arguments
+     * @param  $method
+     * @param  $arguments
      * @return mixed
      */
     public function __call($method, $arguments)

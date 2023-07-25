@@ -43,7 +43,7 @@ class Wysiwyg extends NamedFormElement
     /**
      * Wysiwyg constructor.
      *
-     * @param $path
+     * @param  $path
      * @param  null  $label
      * @param  null  $editor
      *

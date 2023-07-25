@@ -7,7 +7,7 @@ class CKEditor extends Wysiwyg
     /**
      * CKEditor constructor.
      *
-     * @param $path
+     * @param  $path
      * @param  null  $label
      *
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException

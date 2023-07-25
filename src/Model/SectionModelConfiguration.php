@@ -33,7 +33,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $breadcrumb
+     * @param  $breadcrumb
      * @return mixed|void
      */
     public function addBreadCrumb($breadcrumb)
@@ -167,7 +167,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
+     * @param  $id
      * @return mixed
      */
     public function fireDelete($id)
@@ -178,7 +178,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
+     * @param  $id
      * @return mixed
      */
     public function fireDestroy($id)
@@ -189,7 +189,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
+     * @param  $id
      * @return bool|mixed
      */
     public function fireRestore($id)

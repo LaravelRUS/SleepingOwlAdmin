@@ -48,7 +48,7 @@ class Range extends BaseColumnFilter
     }
 
     /**
-     * @param $inline
+     * @param  $inline
      * @return $this
      */
     public function setInline($inline)

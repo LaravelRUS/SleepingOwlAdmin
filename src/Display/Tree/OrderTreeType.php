@@ -45,7 +45,7 @@ class OrderTreeType implements TreeTypeInterface
     /**
      * Reorder tree by $data value.
      *
-     * @param $data
+     * @param  $data
      */
     public function reorder(array $data)
     {

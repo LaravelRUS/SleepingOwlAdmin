@@ -154,7 +154,7 @@ class TreeRepository extends BaseRepository implements TreeRepositoryInterface
     /**
      * Reorder tree by $data value.
      *
-     * @param $data
+     * @param  $data
      */
     public function reorder(array $data)
     {

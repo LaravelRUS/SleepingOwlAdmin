@@ -259,7 +259,7 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @param $item
+     * @param  $item
      * @param  array  $columns
      * @return string
      */
@@ -543,7 +543,7 @@ abstract class Elements extends FormElements
      * Applies given callback to every element of form.
      *
      * @param  \Illuminate\Support\Collection  $elements
-     * @param $callback
+     * @param  $callback
      */
     protected function forEachElement(Collection $elements, $callback)
     {
@@ -758,7 +758,7 @@ abstract class Elements extends FormElements
     /**
      * Appends fresh related model if total count is not exceeding limit.
      *
-     * @param $key
+     * @param  $key
      * @return $this
      */
     protected function addOrGetRelated($key)

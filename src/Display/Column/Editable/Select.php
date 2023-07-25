@@ -61,7 +61,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * Select constructor.
      *
-     * @param $name
+     * @param  $name
      * @param  null  $label
      * @param  array  $options
      *
@@ -92,7 +92,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param $relationKey
+     * @param  $relationKey
      * @return $this
      */
     public function setRelationKey($relationKey)
@@ -111,7 +111,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param $defaultValue
+     * @param  $defaultValue
      * @return $this
      */
     public function setDefaultValue($defaultValue)
@@ -184,7 +184,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param $key
+     * @param  $key
      * @return mixed|null
      */
     public function getOptionName($value)

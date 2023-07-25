@@ -310,7 +310,7 @@ class HasManyLocal extends FormElements
     }
 
     /**
-     * @param $element
+     * @param  $element
      * @return Columns|Custom|FormElements
      *
      * @throws Exception
@@ -392,7 +392,7 @@ class HasManyLocal extends FormElements
     }
 
     /**
-     * @param $instance
+     * @param  $instance
      * @return $this
      */
     public function setInstance($instance)
@@ -595,7 +595,7 @@ class HasManyLocal extends FormElements
      * Applies given callback to every element of form.
      *
      * @param  \Illuminate\Support\Collection  $elements
-     * @param $callback
+     * @param  $callback
      */
     protected function forEachElement(Collection $elements, $callback)
     {

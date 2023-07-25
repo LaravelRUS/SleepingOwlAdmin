@@ -61,7 +61,7 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param $text
+     * @param  $text
      * @param  bool  $textString
      * @return $this
      */

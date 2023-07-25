@@ -72,7 +72,7 @@ class EditableColumn extends NamedColumn
     }
 
     /**
-     * @param $modifier
+     * @param  $modifier
      * @return $this
      */
     public function setModifier($modifier)

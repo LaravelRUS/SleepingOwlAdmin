@@ -67,7 +67,7 @@ trait SelectAjaxFunctions
     }
 
     /**
-     * @param $search
+     * @param  $search
      * @return $this
      */
     public function setSearch($search)
@@ -90,7 +90,7 @@ trait SelectAjaxFunctions
     /**
      * Set min symbols to search.
      *
-     * @param $symbols
+     * @param  $symbols
      * @return $this
      */
     public function setMinSymbols($symbols): self

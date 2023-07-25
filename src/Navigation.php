@@ -53,7 +53,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
 
     /**
      * @param  Collection  $pages
-     * @param $url
+     * @param  $url
      */
     protected function findPageByAliasId(Collection $pages, $url)
     {
