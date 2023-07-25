@@ -122,7 +122,7 @@ class Select extends BaseColumnFilter
     }
 
     /**
-     * @param $model
+     * @param  $model
      * @return Select
      *
      * @throws SelectException

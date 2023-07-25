@@ -115,7 +115,7 @@ class Columns extends Extension implements Initializable, Renderable
     }
 
     /**
-     * @param $columns
+     * @param  $columns
      * @return DisplayInterface
      */
     public function set($columns)

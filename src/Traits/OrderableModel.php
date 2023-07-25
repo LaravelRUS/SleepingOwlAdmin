@@ -62,7 +62,7 @@ trait OrderableModel
     /**
      * Move model in the $destination.
      *
-     * @param $destination -1 (move down) or 1 (move up)
+     * @param  $destination  -1 (move down) or 1 (move up)
      */
     protected function move($destination)
     {
@@ -106,7 +106,7 @@ trait OrderableModel
     /**
      * Order scope.
      *
-     * @param $query
+     * @param  $query
      * @return mixed
      */
     public function scopeOrderModel($query)

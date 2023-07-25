@@ -292,7 +292,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
     /**
      * Using in trait FormElements;.
      *
-     * @param $object
+     * @param  $object
      * @return mixed
      */
     protected function getElementContainer($object)

@@ -82,8 +82,8 @@ class SimpleTreeType implements TreeTypeInterface
     /**
      * Get children for simple tree type structure.
      *
-     * @param $collection
-     * @param $id
+     * @param  $collection
+     * @param  $id
      * @return Collection
      */
     protected function getChildren($collection, $id)

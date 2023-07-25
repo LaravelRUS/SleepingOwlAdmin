@@ -135,8 +135,8 @@ class AliasBinder implements AliasBinderInterface
     }
 
     /**
-     * @param $name
-     * @param $arguments
+     * @param  $name
+     * @param  $arguments
      * @return object
      *
      * @throws \ReflectionException

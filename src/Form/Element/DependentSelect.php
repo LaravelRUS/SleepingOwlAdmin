@@ -62,7 +62,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     /**
      * DependentSelect constructor.
      *
-     * @param $path
+     * @param  $path
      * @param  null  $label
      * @param  array  $depends
      *
@@ -86,7 +86,7 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
-     * @param $language
+     * @param  $language
      * @return $this
      */
     public function setLanguage($language)

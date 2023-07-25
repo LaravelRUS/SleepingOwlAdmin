@@ -81,7 +81,7 @@ class OrderByClause implements OrderByClauseInterface
     }
 
     /**
-     * @param $name
+     * @param  $name
      * @return bool
      */
     protected function isRelationName($name)
@@ -100,7 +100,7 @@ class OrderByClause implements OrderByClauseInterface
      * Load Relations by this->name.
      *
      * @param  Builder  $query
-     * @param $direction
+     * @param  $direction
      */
     protected function loadRelationOrder(Builder $query, $direction)
     {
@@ -146,7 +146,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param  Model  $relationModel
      * @param  Model  $model
      * @param  Builder  $query
-     * @param $direction
+     * @param  $direction
      */
     protected function loadHasOne(
         Collection $relations,
@@ -167,7 +167,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param  Model  $relationModel
      * @param  Model  $model
      * @param  Builder  $query
-     * @param $direction
+     * @param  $direction
      */
     protected function loadHasMany(
         Collection $relations,
@@ -188,7 +188,7 @@ class OrderByClause implements OrderByClauseInterface
      * @param  Model  $relationModel
      * @param  Model  $model
      * @param  Builder  $query
-     * @param $direction
+     * @param  $direction
      */
     protected function loadHasOneOrMany(
         Collection $relations,

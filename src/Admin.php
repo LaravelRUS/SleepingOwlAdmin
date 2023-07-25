@@ -226,7 +226,7 @@ class Admin implements AdminInterface
     }
 
     /**
-     * @param $class
+     * @param  $class
      * @param  int  $priority
      * @return mixed
      *

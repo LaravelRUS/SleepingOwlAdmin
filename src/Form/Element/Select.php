@@ -56,7 +56,7 @@ class Select extends NamedFormElement
     /**
      * Select constructor.
      *
-     * @param $path
+     * @param  $path
      * @param  null  $label
      * @param  array  $options
      *
@@ -193,7 +193,7 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param $limit
+     * @param  $limit
      * @return $this
      */
     public function setLimit($limit): self

@@ -123,7 +123,7 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $breadcrumb
+     * @param  $breadcrumb
      * @return mixed|void
      */
     public function addBreadCrumb($breadcrumb)

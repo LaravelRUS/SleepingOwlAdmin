@@ -65,7 +65,7 @@ class Files extends Images
     }
 
     /**
-     * @param $bool
+     * @param  $bool
      * @return $this
      */
     public function showOriginalName($bool)
@@ -119,7 +119,7 @@ class Files extends Images
     }
 
     /**
-     * @param $driver
+     * @param  $driver
      * @param  array  $driverOptions
      * @return $this
      */

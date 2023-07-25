@@ -33,9 +33,9 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * NamedColumn constructor.
      *
-     * @param $name
-     * @param $label string|null
-     * @param $small string|Closure|null
+     * @param  $name
+     * @param  $label  string|null
+     * @param  $small  string|Closure|null
      */
     public function __construct($name, string $label = null, $small = null)
     {
@@ -96,7 +96,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param $class
+     * @param  $class
      * @return $this
      */
     public function setClass($class)

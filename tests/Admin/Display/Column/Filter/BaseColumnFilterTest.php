@@ -27,9 +27,9 @@ class BaseColumnFilterTest extends TestCase
     }
 
     /**
-     * @param $operator
-     * @param $condition
-     * @param $args
+     * @param  $operator
+     * @param  $condition
+     * @param  $args
      *
      * @throws ReflectionException
      *

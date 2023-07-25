@@ -132,7 +132,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param $search
+     * @param  $search
      * @return $this
      */
     public function setDisplaySearch($search)
@@ -360,7 +360,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param $payload
+     * @param  $payload
      */
     public function setPayload($payload)
     {
@@ -376,7 +376,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param $method
+     * @param  $method
      * @return $this
      */
     public function setMethod($method)

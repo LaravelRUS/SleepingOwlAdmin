@@ -58,7 +58,7 @@ class Badge extends \KodiComponents\Navigation\Badge
     }
 
     /**
-     * @param $view
+     * @param  $view
      */
     public function setView($view = null)
     {

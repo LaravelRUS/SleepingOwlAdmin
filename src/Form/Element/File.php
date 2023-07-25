@@ -133,7 +133,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param $driver
+     * @param  $driver
      * @param  array  $driverOptions
      * @return $this
      */

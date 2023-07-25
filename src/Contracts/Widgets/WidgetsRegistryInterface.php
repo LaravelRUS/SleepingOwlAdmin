@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\Factory;
 interface WidgetsRegistryInterface
 {
     /**
-     * @param $widget
+     * @param  $widget
      * @return $this
      */
     public function registerWidget($widget);

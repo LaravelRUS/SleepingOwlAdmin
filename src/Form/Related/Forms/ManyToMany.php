@@ -27,7 +27,7 @@ class ManyToMany extends Elements
     /**
      * ManyToMany constructor.
      *
-     * @param $relationName
+     * @param  $relationName
      * @param  array  $elements
      *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
@@ -117,7 +117,7 @@ class ManyToMany extends Elements
     }
 
     /**
-     * @param $item
+     * @param  $item
      * @return string
      */
     protected function getKeyFromItem($item): string
@@ -260,8 +260,8 @@ class ManyToMany extends Elements
     }
 
     /**
-     * @param $name
-     * @param $arguments
+     * @param  $name
+     * @param  $arguments
      * @return $this
      */
     public function __call($name, $arguments)
