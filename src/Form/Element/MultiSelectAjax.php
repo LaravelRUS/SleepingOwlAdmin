@@ -32,7 +32,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     /**
      * MultiSelectAjax constructor.
      *
-     * @param $path
+     * @param  $path
      * @param  null  $label
      *
      * @throws SelectException
@@ -83,7 +83,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     }
 
     /**
-     * @param $language
+     * @param  $language
      * @return $this
      */
     public function setLanguage($language)
@@ -125,7 +125,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
     /**
      * Search url for ajax.
      *
-     * @param $url
+     * @param  $url
      * @return $this
      */
     public function setSearchUrl($url)

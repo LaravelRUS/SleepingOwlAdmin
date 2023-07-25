@@ -21,7 +21,7 @@ interface ModelConfigurationInterface
     public function getBreadCrumbs();
 
     /**
-     * @param $breadcrumb
+     * @param  $breadcrumb
      * @return mixed
      */
     public function addBreadCrumb($breadcrumb);
@@ -125,7 +125,7 @@ interface ModelConfigurationInterface
     public function getRedirect();
 
     /**
-     * @param $id
+     * @param  $id
      * @return mixed|void
      */
     public function fireEdit($id);
@@ -139,19 +139,19 @@ interface ModelConfigurationInterface
     public function fireFullEdit($id);
 
     /**
-     * @param $id
+     * @param  $id
      * @return mixed
      */
     public function fireDelete($id);
 
     /**
-     * @param $id
+     * @param  $id
      * @return mixed
      */
     public function fireDestroy($id);
 
     /**
-     * @param $id
+     * @param  $id
      * @return bool|mixed
      */
     public function fireRestore($id);

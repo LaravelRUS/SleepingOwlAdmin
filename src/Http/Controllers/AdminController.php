@@ -140,7 +140,7 @@ class AdminController extends Controller
         /**
          * Use filter masks.
          *
-         * @param $key
+         * @param  $key
          * @return bool
          */
         $envContent = $envContent->filter(function ($value, $key) {
@@ -166,8 +166,8 @@ class AdminController extends Controller
     }
 
     /**
-     * @param $permission
-     * @param $key
+     * @param  $permission
+     * @param  $key
      * @return bool
      */
     protected function validatePolicy($permission, $key)
@@ -178,7 +178,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @param $key
+     * @param  $key
      * @return bool
      */
     protected function validateBeforePolicy($key)
@@ -236,7 +236,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @param $key
+     * @param  $key
      * @return bool
      */
     public function filterKey($key)
@@ -254,7 +254,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @param $key
+     * @param  $key
      * @param  null  $data
      * @param  bool  $new
      * @return bool
@@ -399,7 +399,7 @@ class AdminController extends Controller
 
     /**
      * @param  ModelConfigurationInterface  $model
-     * @param $id
+     * @param  $id
      * @return Factory|View
      *
      * @throws DuplicateBreadcrumbException
@@ -760,10 +760,10 @@ class AdminController extends Controller
     }
 
     /**
-     * @param $title
-     * @param $parent
+     * @param  $title
+     * @param  $parent
      * @param  string  $name
-     * @param $url
+     * @param  $url
      *
      * @throws DuplicateBreadcrumbException
      */

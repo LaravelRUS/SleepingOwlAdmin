@@ -60,7 +60,7 @@ class BelongsTo extends Elements
     }
 
     /**
-     * @param $query
+     * @param  $query
      * @return \Illuminate\Support\Collection
      */
     protected function retrieveRelationValuesFromQuery($query): Collection

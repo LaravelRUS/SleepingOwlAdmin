@@ -47,7 +47,7 @@ class Columns extends FormElements implements ColumnInterface
     }
 
     /**
-     * @param $column
+     * @param  $column
      * @param  null  $width
      * @return \SleepingOwl\Admin\Form\Columns\Columns
      *

@@ -90,14 +90,14 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * Inserts a new key/value before the key in the array.
      *
-     * @param $key
-     *   The key to insert before.
-     * @param $array
-     *   An array to insert in to.
-     * @param $new_key
-     *   The key to insert.
-     * @param $new_value
-     *   An value to insert.
+     * @param  $key
+     *               The key to insert before.
+     * @param  $array
+     *                 An array to insert in to.
+     * @param  $new_key
+     *                   The key to insert.
+     * @param  $new_value
+     *                     An value to insert.
      * @return array|bool The new array if the key exists, FALSE otherwise.
      *
      * @see array_insert_after()
@@ -122,14 +122,14 @@ class Assets extends BaseAssets implements AssetsContract
     /**
      * Inserts a new key/value after the key in the array.
      *
-     * @param $key
-     *   The key to insert after.
-     * @param $array
-     *   An array to insert in to.
-     * @param $new_key
-     *   The key to insert.
-     * @param $new_value
-     *   An value to insert.
+     * @param  $key
+     *               The key to insert after.
+     * @param  $array
+     *                 An array to insert in to.
+     * @param  $new_key
+     *                   The key to insert.
+     * @param  $new_value
+     *                     An value to insert.
      * @return Collection|bool The new array if the key exists, FALSE otherwise.
      */
     protected function insertAfter($key, Collection &$array, $new_key, $new_value)

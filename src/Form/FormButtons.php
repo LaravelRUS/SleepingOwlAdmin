@@ -141,7 +141,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param $buttons
+     * @param  $buttons
      * @return $this
      */
     public function setButtons($buttons)
@@ -152,7 +152,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param $buttons
+     * @param  $buttons
      * @return $this
      */
     public function replaceButtons($buttons)
@@ -179,7 +179,7 @@ class FormButtons implements FormButtonsInterface
     }
 
     /**
-     * @param $placements
+     * @param  $placements
      * @return $this
      */
     public function setPlacements($placements)

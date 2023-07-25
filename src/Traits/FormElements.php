@@ -259,7 +259,7 @@ trait FormElements
     }
 
     /**
-     * @param $object
+     * @param  $object
      * @return mixed
      */
     protected function getElementContainer($object)

@@ -122,7 +122,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param $key
+     * @param  $key
      * @return DisplayExtensionInterface|null
      */
     public function getExtension($key)
@@ -147,7 +147,7 @@ abstract class Display implements DisplayInterface
     }
 
     /**
-     * @param $repositoryClass
+     * @param  $repositoryClass
      * @return $this
      */
     public function setRepositoryClass($repositoryClass)

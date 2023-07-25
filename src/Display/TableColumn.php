@@ -106,7 +106,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param $columnMetaClass
+     * @param  $columnMetaClass
      * @return $this
      */
     public function setMetaData($columnMetaClass)
@@ -215,7 +215,7 @@ abstract class TableColumn implements ColumnInterface
     }
 
     /**
-     * @param $isSearchable
+     * @param  $isSearchable
      * @return TableColumn
      */
     public function setSearchable($isSearchable)
