@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\Registrar;
 use ReflectionClass;
+use ReflectionException;
 use SleepingOwl\Admin\Contracts\AliasBinderInterface;
 
 class AliasBinder implements AliasBinderInterface
@@ -16,7 +17,7 @@ class AliasBinder implements AliasBinderInterface
     protected static $routes = [];
 
     /**
-     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     * @param Registrar $router
      * @return void
      */
     public static function registerRoutes(Registrar $router)
@@ -28,14 +29,14 @@ class AliasBinder implements AliasBinderInterface
     }
 
     /**
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var Application
      */
     protected $app;
 
     /**
      * AliasBinder constructor.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $application
+     * @param Application $application
      */
     public function __construct(Application $application)
     {
@@ -125,7 +126,7 @@ class AliasBinder implements AliasBinderInterface
      * @param  array  $arguments
      * @return object
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function makeClass($alias, array $arguments)
     {
@@ -139,7 +140,7 @@ class AliasBinder implements AliasBinderInterface
      * @param  $arguments
      * @return object
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function __call($name, $arguments)
     {

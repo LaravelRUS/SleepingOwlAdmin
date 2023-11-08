@@ -1,5 +1,9 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2023-11-08
+* [Fix] Dark mode css (tag hr)
+* [Update] NPM Package @fortawesome/fontawesome-free
+
 ## 2023-06-09
 * [Fix] Revert select/selectajax sortable
 * [Add] Add version and footer text

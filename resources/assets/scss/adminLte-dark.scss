@@ -32,5 +32,9 @@
     select:-webkit-autofill:focus {
         -webkit-text-fill-color: $dark;
     }
+
+    hr {
+        border-top: 1px solid rgba($white, .1);
+    }
 }
 

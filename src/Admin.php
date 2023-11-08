@@ -7,9 +7,11 @@ use Collective\Html\HtmlServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\ProviderRepository;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Configuration\ProvidesScriptVariables;
 use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -240,7 +242,7 @@ class Admin implements AdminInterface
     /**
      * @param  string|Renderable  $content
      * @param  string|null  $title
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return View|Factory
      */
     public function view($content, $title = null)
     {

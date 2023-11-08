@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@flowjs/flow.js": "^2.14.1",
-    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@fortawesome/fontawesome-free": "^6.4.2",
     "admin-lte": "^3.2.0",
     "autoprefixer": "^10.4.7",
     "axios": "^0.27.2",
