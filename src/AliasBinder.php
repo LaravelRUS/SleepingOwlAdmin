@@ -17,7 +17,7 @@ class AliasBinder implements AliasBinderInterface
     protected static $routes = [];
 
     /**
-     * @param Registrar $router
+     * @param  Registrar  $router
      * @return void
      */
     public static function registerRoutes(Registrar $router)
@@ -36,7 +36,7 @@ class AliasBinder implements AliasBinderInterface
     /**
      * AliasBinder constructor.
      *
-     * @param Application $application
+     * @param  Application  $application
      */
     public function __construct(Application $application)
     {
