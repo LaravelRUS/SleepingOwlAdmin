@@ -24,9 +24,8 @@ class Restore extends FormButton
         parent::initialize();
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
-            'type' => 'submit',
             'name' => 'next_action',
-            'class' => 'btn btn-warning',
+            'class' => 'btn btn-warning btn-restore',
             'data-url' => $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
             'data-redirect' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
         ]);
@@ -43,5 +42,7 @@ class Restore extends FormButton
 
         $this->show = $this->isTrashed() &&
             $this->getModelConfiguration()->isRestorable($this->getModel());
+
+        return parent::canShow();
     }
 }
