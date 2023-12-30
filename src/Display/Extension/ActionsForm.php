@@ -44,8 +44,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param Collection|array $actions
-     *
+     * @param  Collection|array  $actions
      * @return \SleepingOwl\Admin\Contracts\Display\DisplayInterface
      */
     public function set($action_form)
@@ -72,8 +71,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param FormElement $action
-     *
+     * @param  FormElement  $action
      * @return $this
      */
     public function push(FormElement $action)
@@ -92,8 +90,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string|\Illuminate\View\View $view
-     *
+     * @param  string|\Illuminate\View\View  $view
      * @return $this
      */
     public function setView($view)
@@ -112,8 +109,7 @@ class ActionsForm extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string $placement
-     *
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement($placement)

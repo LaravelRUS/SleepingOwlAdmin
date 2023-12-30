@@ -11,23 +11,20 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 interface AdminInterface extends Initializable
 {
     /**
-     * @param ModelConfigurationInterface $model
-     *
+     * @param  ModelConfigurationInterface  $model
      * @return $this
      */
     public function register(ModelConfigurationInterface $model);
 
     /**
-     * @param string $class
-     * @param \Closure|null $callback
-     *
+     * @param  string  $class
+     * @param  \Closure|null  $callback
      * @return $this
      */
     public function registerModel($class, Closure $callback = null);
 
     /**
-     * @param array $sections
-     *
+     * @param  array  $sections
      * @return $this
      */
     public function registerSections(array $sections);
@@ -38,8 +35,7 @@ interface AdminInterface extends Initializable
     public function getMissedSections();
 
     /**
-     * @param string $alias
-     *
+     * @param  string  $alias
      * @return ModelConfigurationInterface|null
      */
     public function getModel($alias);
@@ -50,20 +46,19 @@ interface AdminInterface extends Initializable
     public function getModels();
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return bool
      */
     public function hasModel($class);
 
     /**
-     * @param string $key
-     * @param ModelConfigurationInterface $model
+     * @param  string  $key
+     * @param  ModelConfigurationInterface  $model
      */
     public function setModel($key, ModelConfigurationInterface $model);
 
     /**
-     * @param TemplateInterface $template
+     * @param  TemplateInterface  $template
      */
     public function setTemplate(TemplateInterface $template);
 

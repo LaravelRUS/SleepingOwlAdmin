@@ -23,7 +23,7 @@ class Custom extends FormElement
     /**
      * Custom constructor.
      *
-     * @param Closure|null $callback
+     * @param  Closure|null  $callback
      */
     public function __construct(Closure $callback = null)
     {
@@ -55,8 +55,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @param Closure|string|Htmlable|ViewContract $display
-     *
+     * @param  Closure|string|Htmlable|ViewContract  $display
      * @return $this
      */
     public function setDisplay($display)
@@ -75,8 +74,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function setCallback(Closure $callback)
@@ -95,8 +93,7 @@ class Custom extends FormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function save(Request $request)

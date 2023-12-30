@@ -26,10 +26,10 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * Checkbox constructor.
      *
-     * @param string $name
-     * @param string|null $checkedLabel
-     * @param string|null $uncheckedLabel
-     * @param string|null $columnLabel
+     * @param  string  $name
+     * @param  string|null  $checkedLabel
+     * @param  string|null  $uncheckedLabel
+     * @param  string|null  $columnLabel
      */
     public function __construct($name, $checkedLabel = null, $uncheckedLabel = null, $columnLabel = null)
     {
@@ -65,8 +65,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param null|string $label
-     *
+     * @param  null|string  $label
      * @return $this
      */
     public function setCheckedLabel($label)
@@ -89,8 +88,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param null|string $label
-     *
+     * @param  null|string  $label
      * @return $this
      */
     public function setUncheckedLabel($label)
@@ -113,7 +111,8 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */

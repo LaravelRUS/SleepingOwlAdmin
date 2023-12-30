@@ -16,7 +16,7 @@ class FormTabbed extends FormDefault
     /**
      * FormTabbed constructor.
      *
-     * @param array $elements
+     * @param  array  $elements
      */
     public function __construct(array $elements = [])
     {

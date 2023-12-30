@@ -15,7 +15,7 @@ class Checkbox extends TableColumn
     /**
      * Checkbox constructor.
      *
-     * @param string|null $label
+     * @param  string|null  $label
      */
     public function __construct($label = null)
     {

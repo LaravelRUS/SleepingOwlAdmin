@@ -41,8 +41,7 @@ class DateRange extends Date
     }
 
     /**
-     * @param string $defaultFrom
-     *
+     * @param  string  $defaultFrom
      * @return $this
      */
     public function setDefaultFrom($defaultFrom)
@@ -67,8 +66,7 @@ class DateRange extends Date
     }
 
     /**
-     * @param string $defaultTo
-     *
+     * @param  string  $defaultTo
      * @return $this
      */
     public function setDefaultTo($defaultTo)
@@ -79,8 +77,7 @@ class DateRange extends Date
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function setModelAttribute($value)
@@ -112,8 +109,7 @@ class DateRange extends Date
     }
 
     /**
-     * @param string $value
-     *
+     * @param  string  $value
      * @return string|void
      */
     protected function parseValue($value)

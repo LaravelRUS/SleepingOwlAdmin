@@ -14,9 +14,9 @@ interface RepositoryInterface extends WithModelInterface
     public function getClass();
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
+     *
      * @throws RepositoryException
      */
     public function setClass($class);
@@ -27,14 +27,14 @@ interface RepositoryInterface extends WithModelInterface
     public function getWith();
 
     /**
-     * @param string[] $with
-     *
+     * @param  string[]  $with
      * @return $this
      */
     public function with($with);
 
     /**
      * Get base query.
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getQuery();
@@ -42,8 +42,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Find model instance by id.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Model|null
      */
     public function find($id);
@@ -51,8 +50,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Find model instance by id.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return Model|null
      */
     public function findOnlyTrashed($id);
@@ -60,8 +58,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Find model instances by ids.
      *
-     * @param int[] $ids
-     *
+     * @param  int[]  $ids
      * @return \Illuminate\Support\Collection
      */
     public function findMany(array $ids);
@@ -69,8 +66,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Delete model instance by id.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return void
      */
     public function delete($id);
@@ -78,8 +74,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Permanently delete model instance by id.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return void
      */
     public function forceDelete($id);
@@ -87,8 +82,7 @@ interface RepositoryInterface extends WithModelInterface
     /**
      * Restore model instance by id.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return void
      */
     public function restore($id);

@@ -46,7 +46,7 @@ class FormElementFactory extends AliasBinder implements FormElementFactoryInterf
     /**
      * FormElementFactory constructor.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $application
+     * @param  \Illuminate\Contracts\Foundation\Application  $application
      */
     public function __construct(Application $application)
     {

@@ -13,9 +13,9 @@ class FilterCustom extends FilterField
     protected $callback;
 
     /**
-     * @param string $name
-     * @param string|\Closure|null $title
-     * @param Closure $callback
+     * @param  string  $name
+     * @param  string|\Closure|null  $title
+     * @param  Closure  $callback
      */
     public function __construct($name, $title = null, Closure $callback = null)
     {
@@ -27,7 +27,7 @@ class FilterCustom extends FilterField
     }
 
     /**
-     * @param Builder $query
+     * @param  Builder  $query
      */
     public function apply(Builder $query)
     {
@@ -43,8 +43,7 @@ class FilterCustom extends FilterField
     }
 
     /**
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function setCallback(Closure $callback)

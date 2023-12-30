@@ -74,9 +74,8 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param string $rule
-     * @param string $message
-     *
+     * @param  string  $rule
+     * @param  string  $message
      * @return $this
      */
     public function addValidationMessage($rule, $message)
@@ -91,8 +90,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param array $validationMessages
-     *
+     * @param  array  $validationMessages
      * @return $this
      */
     public function setValidationMessages(array $validationMessages)
@@ -119,9 +117,8 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param string $rule
-     * @param string|null $message
-     *
+     * @param  string  $rule
+     * @param  string|null  $message
      * @return $this
      */
     public function addValidationRule($rule, $message = null)
@@ -136,8 +133,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param array|string $validationRules
-     *
+     * @param  array|string  $validationRules
      * @return $this
      */
     public function setValidationRules($validationRules)
@@ -170,8 +166,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)
@@ -206,8 +201,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Closure|bool $valueSkipped
-     *
+     * @param  Closure|bool  $valueSkipped
      * @return $this
      */
     public function setValueSkipped($valueSkipped)
@@ -218,8 +212,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Closure|bool $readonly
-     *
+     * @param  Closure|bool  $readonly
      * @return $this
      */
     public function setReadonly($readonly)
@@ -238,8 +231,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return $this
      */
     public function setValue($value)
@@ -250,8 +242,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return void
      */
     public function save(Request $request)
@@ -259,8 +250,7 @@ abstract class FormElement implements FormElementInterface
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return void
      */
     public function afterSave(Request $request)

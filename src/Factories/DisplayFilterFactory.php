@@ -18,7 +18,7 @@ class DisplayFilterFactory extends AliasBinder implements DisplayFilterFactoryIn
     /**
      * DisplayFilterFactory constructor.
      *
-     * @param \Illuminate\Contracts\Foundation\Application $application
+     * @param  \Illuminate\Contracts\Foundation\Application  $application
      */
     public function __construct(Application $application)
     {

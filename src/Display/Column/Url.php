@@ -23,8 +23,7 @@ class Url extends NamedColumn
     }
 
     /**
-     * @param array $linkAttributes
-     *
+     * @param  array  $linkAttributes
      * @return $this
      */
     public function setLinkAttributes(array $linkAttributes)

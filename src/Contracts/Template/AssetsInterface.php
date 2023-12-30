@@ -9,9 +9,8 @@ interface AssetsInterface extends KodiAssetsInterface
     /**
      * Добавление глобальной переменной.
      *
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return self
      */
     public function putGlobalVar($key, $value);

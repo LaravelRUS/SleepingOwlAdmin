@@ -8,6 +8,7 @@ class Action extends NamedColumn implements ActionInterface
 {
     /**
      * Action icon class.
+     *
      * @var string
      */
     protected $icon;
@@ -50,8 +51,8 @@ class Action extends NamedColumn implements ActionInterface
     /**
      * Action constructor.
      *
-     * @param \Closure|null|string $name
-     * @param string|null $title
+     * @param  \Closure|null|string  $name
+     * @param  string|null  $title
      */
     public function __construct($name, $title = null)
     {
@@ -80,8 +81,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function setTitle($title)
@@ -100,8 +100,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param bool $selected
-     *
+     * @param  bool  $selected
      * @return $this
      */
     public function setSelected($selected)
@@ -120,8 +119,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string $action
-     *
+     * @param  string  $action
      * @return $this
      */
     public function setAction($action)
@@ -140,8 +138,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string $method
-     *
+     * @param  string  $method
      * @return $this
      */
     public function setMethod($method)
@@ -200,8 +197,7 @@ class Action extends NamedColumn implements ActionInterface
     }
 
     /**
-     * @param string $icon
-     *
+     * @param  string  $icon
      * @return $this
      */
     public function setIcon($icon)

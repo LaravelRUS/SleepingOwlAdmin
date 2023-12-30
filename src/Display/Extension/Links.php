@@ -25,7 +25,7 @@ class Links extends Extension implements Placable
     protected $links = [];
 
     /**
-     * @param array $links
+     * @param  array  $links
      */
     public function set($links)
     {

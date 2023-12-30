@@ -33,7 +33,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $breadcrumb
+     * @param  $breadcrumb
      * @return mixed|void
      */
     public function addBreadCrumb($breadcrumb)
@@ -50,8 +50,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return bool
      */
     public function isEditable(Model $model)
@@ -65,7 +64,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param mixed $payload
+     * @param  mixed  $payload
      * @return mixed|DisplayInterface|void
      */
     public function fireDisplay($payload = [])
@@ -91,7 +90,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param mixed $payload
+     * @param  mixed  $payload
      * @return mixed|void
      */
     public function fireCreate($payload = [])
@@ -120,9 +119,8 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param int $id
-     * @param mixed $payload
-     *
+     * @param  int  $id
+     * @param  mixed  $payload
      * @return mixed|void
      */
     public function fireEdit($id, $payload = [])
@@ -165,8 +163,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
-     *
+     * @param  $id
      * @return mixed
      */
     public function fireDelete($id)
@@ -177,8 +174,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
-     *
+     * @param  $id
      * @return mixed
      */
     public function fireDestroy($id)
@@ -189,8 +185,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param $id
-     *
+     * @param  $id
      * @return bool|mixed
      */
     public function fireRestore($id)
@@ -209,8 +204,7 @@ class SectionModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @param mixed $payload
-     *
+     * @param  mixed  $payload
      * @return $this
      */
     public function setPayload($payload = [])

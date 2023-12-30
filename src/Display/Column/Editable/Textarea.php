@@ -21,8 +21,8 @@ class Textarea extends EditableColumn implements ColumnEditableInterface
     /**
      * Text constructor.
      *
-     * @param             $name
-     * @param             $label
+     * @param  $name
+     * @param  $label
      */
     public function __construct($name, $label = null)
     {
@@ -30,9 +30,9 @@ class Textarea extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return void
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */

@@ -16,11 +16,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AlterPaginateDisplayController extends Controller
 {
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
-     * @param Application $application
-     * @param null $name
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
+     * @param  Application  $application
+     * @param  null  $name
      * @return JsonResponse
+     *
      * @throws NotFoundHttpException
      */
     public function async(ModelConfigurationInterface $model, Request $request, Application $application, $name = null)
@@ -37,7 +38,6 @@ class AlterPaginateDisplayController extends Controller
 
                 if ($content instanceof FormElements) {
                     foreach ($content->getElements() as $element) {
-
                         //Return data-table if inside FormElements
                         if ($element instanceof DisplayDatatablesAsyncAlterPaginate) {
                             if ($element->getName() == $name) {
@@ -75,8 +75,8 @@ class AlterPaginateDisplayController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param Request $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  Request  $request
      */
     public function treeReorder(ModelConfigurationInterface $model, Request $request)
     {
@@ -99,9 +99,9 @@ class AlterPaginateDisplayController extends Controller
     }
 
     /**
-     * @param DisplayDatatablesAsyncAlterPaginate $datatable
-     * @param Application $application
-     * @param Request $request
+     * @param  DisplayDatatablesAsyncAlterPaginate  $datatable
+     * @param  Application  $application
+     * @param  Request  $request
      * @return array|JsonResponse
      */
     protected function renderFindedTable(DisplayDatatablesAsyncAlterPaginate $datatable, Application $application, Request $request)

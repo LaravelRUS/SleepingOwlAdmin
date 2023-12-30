@@ -10,8 +10,7 @@ use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 trait FormHelpers
 {
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return m\MockInterface
      */
     public function makeMockForFormElement($class)
@@ -25,8 +24,7 @@ trait FormHelpers
     }
 
     /**
-     * @param array $elements
-     *
+     * @param  array  $elements
      * @return mixed
      */
     public function makeFormDefault(array $elements = [])

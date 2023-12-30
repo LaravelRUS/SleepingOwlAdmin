@@ -28,7 +28,7 @@ class DateRange extends Date
     }
 
     /**
-     * @param string $date
+     * @param  string  $date
      * @return array|string
      */
     public function parseValue($date)

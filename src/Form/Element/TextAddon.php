@@ -28,8 +28,7 @@ class TextAddon extends NamedFormElement
     }
 
     /**
-     * @param string $placement
-     *
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement($placement)
@@ -68,8 +67,7 @@ class TextAddon extends NamedFormElement
     }
 
     /**
-     * @param string $addon
-     *
+     * @param  string  $addon
      * @return $this
      */
     public function setAddon($addon)

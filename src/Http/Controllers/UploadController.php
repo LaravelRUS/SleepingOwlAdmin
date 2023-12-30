@@ -14,11 +14,10 @@ use Validator;
 class UploadController extends Controller
 {
     /**
-     * @param Request $request
-     * @param ModelConfigurationInterface $model
-     * @param string $field
-     * @param int|null $id
-     *
+     * @param  Request  $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  string  $field
+     * @param  int|null  $id
      * @return JsonResponse
      */
     public function fromField(Request $request, ModelConfigurationInterface $model, $field, $id = null)
@@ -76,7 +75,7 @@ class UploadController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\Response
      */
     public function ckEditorStore(Request $request)

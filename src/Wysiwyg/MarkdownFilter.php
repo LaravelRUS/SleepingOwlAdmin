@@ -7,8 +7,7 @@ use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 class MarkdownFilter implements WysiwygFilterInterface
 {
     /**
-     * @param string $text
-     *
+     * @param  string  $text
      * @return string
      */
     public function apply($text)

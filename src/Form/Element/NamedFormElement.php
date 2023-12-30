@@ -71,8 +71,8 @@ abstract class NamedFormElement extends FormElement
     protected $mutator;
 
     /**
-     * @param string $path
-     * @param string|null $label
+     * @param  string  $path
+     * @param  string|null  $label
      *
      * @throws FormElementException
      */
@@ -96,8 +96,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * Compose html name from array like this: 'first[second][third]'.
      *
-     * @param array $parts
-     *
+     * @param  array  $parts
      * @return string
      */
     private function composeName(array $parts)
@@ -115,8 +114,7 @@ abstract class NamedFormElement extends FormElement
     /**
      * Compose html id from array like this: 'first__second__third'.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     private function composeId(string $path)
@@ -135,8 +133,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return $this
      */
     public function setPath($path)
@@ -163,8 +160,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $name
-     *
+     * @param  string  $name
      * @return $this
      */
     public function setName($name)
@@ -183,8 +179,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $id
-     *
+     * @param  string  $id
      * @return $this
      */
     public function setId($id)
@@ -195,8 +190,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $id
-     *
+     * @param  string  $id
      * @return $this
      */
     public function setComposeId($id)
@@ -215,8 +209,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $label
-     *
+     * @param  string  $label
      * @return $this
      */
     public function setLabel($label)
@@ -235,8 +228,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return $this
      */
     public function setModelAttributeKey($key)
@@ -255,8 +247,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param mixed $defaultValue
-     *
+     * @param  mixed  $defaultValue
      * @return $this
      */
     public function setDefaultValue($defaultValue)
@@ -279,8 +270,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string|Htmlable $helpText
-     *
+     * @param  string|Htmlable  $helpText
      * @return $this
      */
     public function setHelpText($helpText)
@@ -291,8 +281,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string|null $message
-     *
+     * @param  string|null  $message
      * @return $this
      */
     public function required($message = null)
@@ -303,8 +292,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string|null $message
-     *
+     * @param  string|null  $message
      * @return $this
      */
     public function unique($message = null)
@@ -413,8 +401,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return array|string
      */
     public function getValueFromRequest(\Illuminate\Http\Request $request)
@@ -502,8 +489,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function save(\Illuminate\Http\Request $request)
@@ -512,8 +498,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function setModelAttribute($value)
@@ -528,8 +513,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return Model|null
      */
     protected function getModelByPath($path)
@@ -550,7 +534,6 @@ abstract class NamedFormElement extends FormElement
                 if ($previousModel->getAttribute($relation) instanceof Model) {
                     $relatedModel = $previousModel->getAttribute($relation);
                 } elseif (method_exists($previousModel, $relation)) {
-
                     /* @var Relation $relation */
                     $relationObject = $previousModel->{$relation}();
 
@@ -592,8 +575,7 @@ abstract class NamedFormElement extends FormElement
      *     return bcrypt($value);
      * }).
      *
-     * @param \Closure $mutator
-     *
+     * @param  \Closure  $mutator
      * @return $this
      */
     public function mutateValue(Closure $mutator)
@@ -612,8 +594,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     public function prepareValue($value)
@@ -634,8 +615,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param mixed $exactValue
-     *
+     * @param  mixed  $exactValue
      * @return $this
      */
     public function setExactValue($exactValue)

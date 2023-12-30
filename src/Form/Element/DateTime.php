@@ -52,8 +52,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param string|null $format
-     *
+     * @param  string|null  $format
      * @return $this
      */
     public function setFormat($format)
@@ -64,8 +63,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param string $timezone
-     *
+     * @param  string  $timezone
      * @return $this
      */
     public function setTimezone($timezone)
@@ -95,8 +93,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param bool $seconds
-     *
+     * @param  bool  $seconds
      * @return $this
      */
     public function setSeconds($seconds)
@@ -107,8 +104,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function setModelAttribute($value)
@@ -163,7 +159,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param $value mixed
+     * @param  $value  mixed
      * @return string|void
      */
     protected function parseValue($value)

@@ -9,9 +9,9 @@ use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsCont
 class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
 {
     /**
-     * @param string|null $name
-     *
+     * @param  string|null  $name
      * @return string
+     *
      * @throws ViewNotSetException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
@@ -31,10 +31,10 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     }
 
     /**
-     * @param string $name
-     * @param array $params
-     *
+     * @param  string  $name
+     * @param  array  $params
      * @return string
+     *
      * @throws ViewNotSetException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
@@ -46,10 +46,10 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
     }
 
     /**
-     * @param string $name
-     * @param array $params
-     *
+     * @param  string  $name
+     * @param  array  $params
      * @return string
+     *
      * @throws ViewNotSetException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException

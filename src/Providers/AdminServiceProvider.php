@@ -38,6 +38,7 @@ class AdminServiceProvider extends ServiceProvider
 
     /**
      * All global widgets.
+     *
      * @var array
      */
     protected $widgets = [
@@ -101,8 +102,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     protected function getConfig($key)
@@ -111,8 +111,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     protected function getBootstrapPath($path = null)
@@ -296,7 +295,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param \Closure $callback
+     * @param  \Closure  $callback
      */
     protected function registerRoutes(\Closure $callback)
     {

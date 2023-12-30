@@ -11,7 +11,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
     /**
      * Register display routes.
      *
-     * @param Router $router
+     * @param  Router  $router
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -37,8 +37,7 @@ class DisplayDatatablesAsyncAlterPaginate extends DisplayDatatablesAsync impleme
     /**
      * Render async request.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function renderAsync(Request $request)

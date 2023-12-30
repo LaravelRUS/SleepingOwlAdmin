@@ -33,6 +33,7 @@ class Delete extends FormButton
 
     /**
      * Show policy.
+     *
      * @return bool
      */
     public function canShow()

@@ -39,11 +39,11 @@ abstract class Template implements TemplateInterface
     /**
      * TemplateDefault constructor.
      *
-     * @param Application $application
-     * @param AdminInterface $admin
-     * @param MetaInterface $meta
-     * @param NavigationInterface $navigation
-     * @param Breadcrumbs $breadcrumbs
+     * @param  Application  $application
+     * @param  AdminInterface  $admin
+     * @param  MetaInterface  $meta
+     * @param  NavigationInterface  $navigation
+     * @param  Breadcrumbs  $breadcrumbs
      */
     public function __construct(
         Application $application,
@@ -96,8 +96,7 @@ abstract class Template implements TemplateInterface
     /**
      * Генерация относительно пути до asset файлов для текущей темы.
      *
-     * @param string $path относительный путь до файла, например `js/app.js`
-     *
+     * @param  string  $path  относительный путь до файла, например `js/app.js`
      * @return string
      */
     public function assetPath($path = null)
@@ -114,9 +113,8 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $title
-     * @param string $separator
-     *
+     * @param  string  $title
+     * @param  string  $separator
      * @return string
      */
     public function makeTitle($title, $separator = ' | ')
@@ -129,8 +127,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $view
-     *
+     * @param  string  $view
      * @return string
      */
     public function getViewPath($view)
@@ -147,10 +144,9 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string|View $view
-     * @param array $data
-     * @param array $mergeData
-     *
+     * @param  string|View  $view
+     * @param  array  $data
+     * @param  array  $mergeData
      * @return \Illuminate\Contracts\View\Factory|View
      */
     public function view($view, array $data = [], $mergeData = [])
@@ -165,9 +161,9 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return string
+     *
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
      * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
@@ -207,8 +203,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * @param string $title
-     *
+     * @param  string  $title
      * @return string
      */
     public function renderMeta($title)
@@ -226,6 +221,7 @@ abstract class Template implements TemplateInterface
 
     /**
      * Render func.
+     *
      * @return array
      */
     public function toArray()

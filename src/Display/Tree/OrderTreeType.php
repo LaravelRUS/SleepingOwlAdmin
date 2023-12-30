@@ -22,7 +22,7 @@ class OrderTreeType implements TreeTypeInterface
     }
 
     /**
-     * @param TreeRepositoryInterface $repository
+     * @param  TreeRepositoryInterface  $repository
      */
     public function __construct(TreeRepositoryInterface $repository)
     {
@@ -32,8 +32,7 @@ class OrderTreeType implements TreeTypeInterface
     /**
      * Get tree structure.
      *
-     * @param \Illuminate\Database\Eloquent\Collection $collection
-     *
+     * @param  \Illuminate\Database\Eloquent\Collection  $collection
      * @return mixed
      */
     public function getTree(Collection $collection)
@@ -46,7 +45,7 @@ class OrderTreeType implements TreeTypeInterface
     /**
      * Reorder tree by $data value.
      *
-     * @param $data
+     * @param  $data
      */
     public function reorder(array $data)
     {
@@ -56,7 +55,7 @@ class OrderTreeType implements TreeTypeInterface
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      */
     protected function recursiveReorder(array $data)
     {

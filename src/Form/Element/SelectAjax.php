@@ -24,8 +24,10 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
 
     /**
      * SelectAjax constructor.
-     * @param $path
-     * @param null $label
+     *
+     * @param  $path
+     * @param  null  $label
+     *
      * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
      */
@@ -67,7 +69,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     }
 
     /**
-     * @param $language
+     * @param  $language
      * @return $this
      */
     public function setLanguage($language)
@@ -78,7 +80,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
     }
 
     /**
-     * @param Router $router
+     * @param  Router  $router
      */
     public static function registerRoutes(Router $router)
     {
@@ -94,6 +96,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
 
     /**
      * Getter of search url.
+     *
      * @return string
      */
     public function getSearchUrl()
@@ -107,7 +110,8 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
 
     /**
      * Search url for ajax.
-     * @param $url
+     *
+     * @param  $url
      * @return $this
      */
     public function setSearchUrl($url)

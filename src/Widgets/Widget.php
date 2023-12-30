@@ -29,7 +29,7 @@ abstract class Widget implements WidgetInterface
     }
 
     /**
-     * @param View $view
+     * @param  View  $view
      */
     public function setInjectableView(View $view)
     {

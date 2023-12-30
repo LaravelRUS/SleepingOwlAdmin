@@ -12,8 +12,7 @@ trait Renderable
     protected $viewPath;
 
     /**
-     * @param string|View $view
-     *
+     * @param  string|View  $view
      * @return $this
      */
     public function setView($view)

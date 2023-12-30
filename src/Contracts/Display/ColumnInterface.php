@@ -20,8 +20,7 @@ interface ColumnInterface extends Initializable, Renderable, Arrayable, WithMode
     public function getHeader();
 
     /**
-     * @param bool|OrderByClauseInterface $clause
-     *
+     * @param  bool|OrderByClauseInterface  $clause
      * @return $this
      */
     public function setOrderable($clause);

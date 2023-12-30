@@ -6,6 +6,7 @@ use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
 /**
  * Trait ProvidesScriptVariables.
+ *
  * @property-read \Illuminate\Foundation\Application $app
  */
 trait ProvidesScriptVariables
