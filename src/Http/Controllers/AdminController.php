@@ -407,7 +407,11 @@ class AdminController extends Controller
         $edit = $model->fireEdit($id);
 
         $this->registerBreadcrumbs($model);
-        $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
+        try {
+            $this->registerBreadcrumb($model->getEditTitle(), $this->parentBreadcrumb);
+        } catch (\DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException $e) {
+            ## do nothing...
+        }
 
         return $this->render($model, $edit, $model->getEditTitle());
     }
