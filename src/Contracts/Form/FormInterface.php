@@ -10,9 +10,9 @@ use SleepingOwl\Admin\Exceptions\Form\FormException;
 interface FormInterface extends FormElementInterface, ElementsInterface
 {
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
+     *
      * @throws FormException
      */
     public function setModelClass($class);
@@ -20,22 +20,22 @@ interface FormInterface extends FormElementInterface, ElementsInterface
     /**
      * Set form action url.
      *
-     * @param string $action
+     * @param  string  $action
      */
     public function setAction($action);
 
     /**
      * Set form model instance id.
      *
-     * @param int $id
+     * @param  int  $id
      */
     public function setId($id);
 
     /**
-     * @param \Illuminate\Http\Request $request
-     * @param ModelConfigurationInterface $model
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  ModelConfigurationInterface  $model
      * @return void
+     *
      * @throws ValidationException
      */
     public function validateForm(Request $request, ModelConfigurationInterface $model = null);
@@ -43,9 +43,8 @@ interface FormInterface extends FormElementInterface, ElementsInterface
     /**
      * Save model.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param ModelConfigurationInterface $model
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  ModelConfigurationInterface  $model
      * @return void
      */
     public function saveForm(Request $request, ModelConfigurationInterface $model = null);

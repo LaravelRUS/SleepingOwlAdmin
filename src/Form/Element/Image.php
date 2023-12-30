@@ -26,6 +26,7 @@ class Image extends File
 
     /**
      * After save callback.
+     *
      * @var
      */
     protected $afterSaveCallback;
@@ -35,7 +36,7 @@ class Image extends File
     protected $view = 'form.element.image';
 
     /**
-     * @param Validator $validator
+     * @param  Validator  $validator
      */
     public function customValidation(Validator $validator)
     {
@@ -53,7 +54,8 @@ class Image extends File
 
     /**
      * Set.
-     * @param \Closure $callable
+     *
+     * @param  \Closure  $callable
      * @return $this
      */
     public function setSaveCallback(\Closure $callable)
@@ -65,6 +67,7 @@ class Image extends File
 
     /**
      * Return save callback.
+     *
      * @return \Closure
      */
     public function getSaveCallback()
@@ -74,7 +77,8 @@ class Image extends File
 
     /**
      * Set.
-     * @param \Closure $callable
+     *
+     * @param  \Closure  $callable
      * @return $this
      */
     public function setAfterSaveCallback(\Closure $callable)
@@ -86,6 +90,7 @@ class Image extends File
 
     /**
      * Return save callback.
+     *
      * @return \Closure
      */
     public function getAfterSaveCallback()
@@ -94,10 +99,10 @@ class Image extends File
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $path
-     * @param string $filename
-     * @param array $settings
+     * @param  UploadedFile  $file
+     * @param  string  $path
+     * @param  string  $filename
+     * @param  array  $settings
      * @return \Closure|File|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
@@ -124,8 +129,7 @@ class Image extends File
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     public function defaultUploadPath(UploadedFile $file)
@@ -134,7 +138,7 @@ class Image extends File
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
     public function afterSave(Request $request)

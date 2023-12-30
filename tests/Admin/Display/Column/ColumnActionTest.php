@@ -10,9 +10,8 @@ class ColumnActionTest extends TestCase
     }
 
     /**
-     * @param string $name
-     * @param string|null $title
-     *
+     * @param  string  $name
+     * @param  string|null  $title
      * @return \SleepingOwl\Admin\Display\Column\Action
      */
     protected function getColumn($name = 'test_name', $title = null)

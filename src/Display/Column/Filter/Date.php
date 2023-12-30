@@ -51,8 +51,7 @@ class Date extends Text
     }
 
     /**
-     * @param string $format
-     *
+     * @param  string  $format
      * @return $this
      */
     public function setFormat($format)
@@ -71,9 +70,9 @@ class Date extends Text
     }
 
     /**
-     * @param bool $status
-     *
+     * @param  bool  $status
      * @return $this
+     *
      * @deprecated use showSeconds
      */
     public function setSeconds($status)
@@ -82,8 +81,7 @@ class Date extends Text
     }
 
     /**
-     * @param bool $status
-     *
+     * @param  bool  $status
      * @return $this
      */
     public function showSeconds($status = true)
@@ -110,8 +108,7 @@ class Date extends Text
     }
 
     /**
-     * @param int $width
-     *
+     * @param  int  $width
      * @return $this
      */
     public function setWidth($width)
@@ -140,8 +137,7 @@ class Date extends Text
     }
 
     /**
-     * @param string $date
-     *
+     * @param  string  $date
      * @return string
      */
     public function parseValue($date)

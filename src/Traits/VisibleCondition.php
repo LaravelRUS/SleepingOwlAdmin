@@ -24,8 +24,7 @@ trait VisibleCondition
     }
 
     /**
-     * @param Closure $condition
-     *
+     * @param  Closure  $condition
      * @return $this
      */
     public function setVisibilityCondition(Closure $condition)

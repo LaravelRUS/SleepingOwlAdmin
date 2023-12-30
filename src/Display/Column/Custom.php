@@ -9,6 +9,7 @@ class Custom extends NamedColumn
 {
     /**
      * Callback to render column contents.
+     *
      * @var Closure
      */
     protected $callback;
@@ -26,8 +27,8 @@ class Custom extends NamedColumn
     /**
      * Custom constructor.
      *
-     * @param null|string $label
-     * @param Closure $callback
+     * @param  null|string  $label
+     * @param  Closure  $callback
      */
     public function __construct($label = null, Closure $callback = null)
     {
@@ -49,8 +50,7 @@ class Custom extends NamedColumn
     }
 
     /**
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function setCallback(Closure $callback)
@@ -78,6 +78,7 @@ class Custom extends NamedColumn
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     public function toArray()

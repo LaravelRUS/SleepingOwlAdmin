@@ -11,10 +11,10 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @param string $path
-     * @param null $label
-     *
+     * @param  string  $path
+     * @param  null  $label
      * @return \PHPUnit\Framework\MockObject\MockObject
+     *
      * @throws ReflectionException
      */
     protected function getElement($path = 'path', $label = null)
@@ -159,7 +159,7 @@ class NamedFormElementTest extends TestCase
         $element->addValidationMessage('test', 'test message');
         $element->addValidationMessage('hello', 'hello message');
         $this->assertEquals([
-            'key.test'  => 'test message',
+            'key.test' => 'test message',
             'key.hello' => 'hello message',
         ], $element->getValidationMessages());
     }
@@ -301,18 +301,18 @@ class NamedFormElementTest extends TestCase
         $session->shouldReceive('getOldInput')->andReturn(null);
 
         $this->assertEquals([
-            'value'      => null,
-            'readonly'   => false,
-            'model'      => null,
-            'id'         => 'key2__subkey',
-            'name'       => 'key2[subkey]',
-            'path'       => 'key2.subkey',
-            'label'      => 'Label',
-            'helpText'   => null,
-            'required'   => false,
+            'value' => null,
+            'readonly' => false,
+            'model' => null,
+            'id' => 'key2__subkey',
+            'name' => 'key2[subkey]',
+            'path' => 'key2.subkey',
+            'label' => 'Label',
+            'helpText' => null,
+            'required' => false,
             'attributes' => ' id="key2__subkey" name="key2[subkey]"',
-            'class'      => null,
-            'style'      => null,
+            'class' => null,
+            'style' => null,
         ], $element->toArray());
     }
 
@@ -399,10 +399,10 @@ class NamedFormElementTest extends TestCase
     }
 
     /**
-     * @param NamedFormElement $element
-     * @param $path
-     *
+     * @param  NamedFormElement  $element
+     * @param  $path
      * @return mixed
+     *
      * @throws ReflectionException
      */
     protected function callMethodByPath(NamedFormElement $element, $path)

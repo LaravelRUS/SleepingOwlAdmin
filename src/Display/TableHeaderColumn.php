@@ -12,12 +12,14 @@ class TableHeaderColumn implements TableHeaderColumnInterface
 
     /**
      * Header title.
+     *
      * @var string
      */
     protected $title;
 
     /**
      * Is column orderable?
+     *
      * @var bool
      */
     protected $orderable = false;
@@ -41,8 +43,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     }
 
     /**
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function setTitle($title)
@@ -61,8 +62,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
     }
 
     /**
-     * @param bool $orderable
-     *
+     * @param  bool  $orderable
      * @return $this
      */
     public function setOrderable($orderable)

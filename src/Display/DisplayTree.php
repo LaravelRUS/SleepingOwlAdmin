@@ -17,7 +17,9 @@ use SleepingOwl\Admin\Traits\PanelControl;
 
 /**
  * @method TreeRepositoryInterface getRepository()
+ *
  * @property TreeRepositoryInterface $repository
+ *
  * @method Columns getColumns()
  * @method $this setColumns(ColumnInterface|ColumnInterface[] $column)
  */
@@ -26,7 +28,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     use PanelControl;
 
     /**
-     * @param Router $router
+     * @param  Router  $router
      */
     public static function registerRoutes(Router $router)
     {
@@ -104,7 +106,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     /**
      * DisplayTree constructor.
      *
-     * @param string|null $treeType
+     * @param  string|null  $treeType
      */
     public function __construct($treeType = null)
     {
@@ -148,8 +150,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string|callable $value
-     *
+     * @param  string|callable  $value
      * @return $this
      */
     public function setMaxDepth($value)
@@ -168,8 +169,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string|callable $value
-     *
+     * @param  string|callable  $value
      * @return $this
      */
     public function setValue($value)
@@ -188,8 +188,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string $parentField
-     *
+     * @param  string  $parentField
      * @return $this
      */
     public function setParentField($parentField)
@@ -212,8 +211,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string $newEntryButtonText
-     *
+     * @param  string  $newEntryButtonText
      * @return $this
      */
     public function setNewEntryButtonText($newEntryButtonText)
@@ -232,8 +230,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string $orderField
-     *
+     * @param  string  $orderField
      * @return $this
      */
     public function setOrderField($orderField)
@@ -252,8 +249,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param null|string $rootParentId
-     *
+     * @param  null|string  $rootParentId
      * @return $this
      */
     public function setRootParentId($rootParentId)
@@ -272,8 +268,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param array $parameters
-     *
+     * @param  array  $parameters
      * @return $this
      */
     public function setParameters($parameters)
@@ -284,9 +279,8 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function setParameter($key, $value)
@@ -305,8 +299,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param bool $reorderable
-     *
+     * @param  bool  $reorderable
      * @return $this
      */
     public function setReorderable($reorderable)
@@ -318,6 +311,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     public function toArray()
@@ -341,6 +335,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @return Collection
+     *
      * @throws \Exception
      */
     public function getCollection()
@@ -365,7 +360,7 @@ class DisplayTree extends Display implements WithRoutesInterface
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     protected function modifyQuery(Builder $query)
     {
@@ -374,6 +369,7 @@ class DisplayTree extends Display implements WithRoutesInterface
 
     /**
      * @return \Illuminate\Foundation\Application|mixed
+     *
      * @throws \Exception
      */
     protected function makeRepository()

@@ -15,6 +15,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 {
     /**
      * Column field name.
+     *
      * @var string
      */
     protected $name;
@@ -31,9 +32,10 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
 
     /**
      * NamedColumn constructor.
-     * @param $name
-     * @param $label string
-     * @param $small string
+     *
+     * @param  $name
+     * @param  $label  string
+     * @param  $small  string
      */
     public function __construct($name, $label = null, $small = null)
     {
@@ -57,8 +59,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param string $name
-     *
+     * @param  string  $name
      * @return $this
      */
     public function setName($name)
@@ -77,8 +78,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param string $small
-     *
+     * @param  string  $small
      * @return $this
      */
     public function setSmall($small)
@@ -105,7 +105,7 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     }
 
     /**
-     * @param OrderByClauseInterface|bool $orderable
+     * @param  OrderByClauseInterface|bool  $orderable
      * @return TableColumn
      */
     public function setOrderable($orderable = true)
@@ -134,9 +134,8 @@ abstract class NamedColumn extends TableColumn implements NamedColumnInterface
     /**
      * Get column value from instance.
      *
-     * @param Collection|Model|Closure $instance
-     * @param string $name
-     *
+     * @param  Collection|Model|Closure  $instance
+     * @param  string  $name
      * @return mixed
      */
     protected function getValueFromObject($instance, $name)

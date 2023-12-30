@@ -54,7 +54,7 @@ abstract class Messages extends Widget
     }
 
     /**
-     * @param string $messageView
+     * @param  string  $messageView
      */
     public function setMessageView($messageView)
     {
@@ -70,7 +70,7 @@ abstract class Messages extends Widget
     }
 
     /**
-     * @param string $text
+     * @param  string  $text
      * @return mixed
      */
     public static function addMessage($text)

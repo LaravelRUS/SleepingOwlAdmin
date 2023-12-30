@@ -18,8 +18,7 @@ trait PanelControl
     }
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
      */
     public function setPanelClass($class)

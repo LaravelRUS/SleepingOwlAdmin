@@ -20,7 +20,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     }
 
     /**
-     * @param Admin $admin
+     * @param  Admin  $admin
      */
     public function boot(Admin $admin)
     {

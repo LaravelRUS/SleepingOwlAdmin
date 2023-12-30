@@ -18,7 +18,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Register display routes.
      *
-     * @param Router $router
+     * @param  Router  $router
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -48,7 +48,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     protected $name;
 
     /**
-     * @param string|null $name
+     * @param  string|null  $name
      */
     protected $distinct;
 
@@ -65,8 +65,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * DisplayDatatablesAsync constructor.
      *
-     * @param string|null $name
-     * @param string|null $distinct
+     * @param  string|null  $name
+     * @param  string|null  $distinct
      */
     public function __construct($name = null, $distinct = null)
     {
@@ -103,7 +103,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param bool $length
+     * @param  bool  $length
      * @return $this
      */
     public function setDisplayLength($length)
@@ -122,7 +122,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param $search
+     * @param  $search
      * @return $this
      */
     public function setDisplaySearch($search)
@@ -149,8 +149,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param string $name
-     *
+     * @param  string  $name
      * @return $this
      */
     public function setName($name)
@@ -169,8 +168,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param mixed $distinct
-     *
+     * @param  mixed  $distinct
      * @return $this
      */
     public function setDistinct($distinct)
@@ -183,8 +181,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Render async request.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function renderAsync(\Illuminate\Http\Request $request)
@@ -215,8 +212,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Apply offset and limit to the query.
      *
-     * @param \Illuminate\Database\Query\Builder $query
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Http\Request  $request
      */
     public function applyOffset($query, \Illuminate\Http\Request $request)
     {
@@ -233,8 +230,8 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Apply search to the query.
      *
-     * @param Builder $query
-     * @param \Illuminate\Http\Request $request
+     * @param  Builder  $query
+     * @param  \Illuminate\Http\Request  $request
      */
     public function applySearch(Builder $query, \Illuminate\Http\Request $request)
     {
@@ -277,11 +274,10 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * Convert collection to the datatables structure.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param array|Collection $collection
-     * @param int $totalCount
-     * @param int $filteredCount
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array|Collection  $collection
+     * @param  int  $totalCount
+     * @param  int  $filteredCount
      * @return array
      */
     protected function prepareDatatablesStructure(
@@ -333,8 +329,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function setRowClassCallback($callback)
@@ -352,7 +347,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     }
 
     /**
-     * @param $payload
+     * @param  $payload
      */
     public function setPayload($payload)
     {
@@ -369,6 +364,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     public function toArray()

@@ -36,7 +36,7 @@ class Badge extends \KodiComponents\Navigation\Badge
     }
 
     /**
-     * @param $view
+     * @param  $view
      */
     public function setView($view)
     {
@@ -44,7 +44,7 @@ class Badge extends \KodiComponents\Navigation\Badge
     }
 
     /**
-     * @param null $view
+     * @param  null  $view
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function render($view = null)

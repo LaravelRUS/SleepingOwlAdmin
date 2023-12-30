@@ -30,8 +30,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     protected $placement = 'table.footer';
 
     /**
-     * @param array|ColumnFilterInterface $columnFilters
-     *
+     * @param  array|ColumnFilterInterface  $columnFilters
      * @return $this
      */
     public function set($columnFilters)
@@ -58,8 +57,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param ColumnFilterInterface $filter
-     *
+     * @param  ColumnFilterInterface  $filter
      * @return $this
      */
     public function push(ColumnFilterInterface $filter = null)
@@ -86,8 +84,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string|\Illuminate\View\View $view
-     *
+     * @param  string|\Illuminate\View\View  $view
      * @return $this
      */
     public function setView($view)
@@ -106,8 +103,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string $placement
-     *
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement($placement)
@@ -119,6 +115,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
 
     /**
      * @return string
+     *
      * @deprecated use getPlacement()
      */
     public function getPosition()
@@ -127,9 +124,9 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param string $position
-     *
+     * @param  string  $position
      * @return $this
+     *
      * @deprecated use setPlacement(string $placement)
      */
     public function setPosition($position)
@@ -185,7 +182,7 @@ class ColumnFilters extends Extension implements Initializable, Placable
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function modifyQuery(\Illuminate\Database\Eloquent\Builder $query)
     {

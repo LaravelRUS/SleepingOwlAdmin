@@ -28,7 +28,7 @@ class DisplayFactory extends AliasBinder implements DisplayFactoryInterface
     /**
      * DisplayFactory constructor.
      *
-     * @param Application $application
+     * @param  Application  $application
      */
     public function __construct(Application $application)
     {

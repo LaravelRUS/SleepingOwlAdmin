@@ -80,7 +80,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param $iconClass
+     * @param  $iconClass
      * @return $this
      */
     public function setIconClass($iconClass)
@@ -91,8 +91,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param ModelConfigurationInterface $modelConfiguration
-     *
+     * @param  ModelConfigurationInterface  $modelConfiguration
      * @return $this
      */
     public function setModelConfiguration(ModelConfigurationInterface $modelConfiguration)
@@ -111,7 +110,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param $text
+     * @param  $text
      * @return $this
      */
     public function setText($text)
@@ -130,7 +129,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param $next_action
+     * @param  $next_action
      * @return $this
      */
     public function setNextAction($next_action)
@@ -165,7 +164,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param $name
+     * @param  $name
      * @return $this
      */
     public function setName($name)
@@ -184,7 +183,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param $url
+     * @param  $url
      * @return $this
      */
     public function setUrl($url)
@@ -211,7 +210,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param array $elements
+     * @param  array  $elements
      * @return $this
      */
     public function setGroupElements(array $elements)
@@ -222,8 +221,8 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param $name
-     * @param $element
+     * @param  $name
+     * @param  $element
      * @return $this
      */
     public function setGroupElement($name, $element)
@@ -242,7 +241,7 @@ class FormButton implements FormButtonsInterface, Initializable
     }
 
     /**
-     * @param Model $model
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)

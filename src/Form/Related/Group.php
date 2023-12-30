@@ -63,8 +63,7 @@ class Group extends Collection
     }
 
     /**
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function setLabel($label): self

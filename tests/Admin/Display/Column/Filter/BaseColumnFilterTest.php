@@ -12,8 +12,9 @@ class BaseColumnFilterTest extends TestCase
     }
 
     /**
-     * @param string $operator
+     * @param  string  $operator
      * @return \PHPUnit\Framework\MockObject\MockObject
+     *
      * @throws ReflectionException
      */
     public function getFilter($operator = 'equal')
@@ -26,12 +27,14 @@ class BaseColumnFilterTest extends TestCase
     }
 
     /**
-     * @param $operator
-     * @param $condition
-     * @param $args
+     * @param  $operator
+     * @param  $condition
+     * @param  $args
+     *
      * @throws ReflectionException
      *
      * @dataProvider sqlOperatorsProvider
+     *
      * @doesNotPerformAssertions
      */
     public function testApply($operator, $condition, $args)
@@ -85,8 +88,8 @@ class BaseColumnFilterTest extends TestCase
             'less' => ['less', 'where', ['columnName', '<', 'keyword']],
             'less_or_equal' => ['less_or_equal', 'where', ['columnName', '<=', 'keyword']],
             'greater' => ['greater', 'where', ['columnName', '>', 'keyword']],
-            'greater_or_equal'=> ['greater_or_equal', 'where', ['columnName', '>=', 'keyword']],
-            'begins_with'=> ['begins_with', 'where', ['columnName', 'like', 'keyword%']],
+            'greater_or_equal' => ['greater_or_equal', 'where', ['columnName', '>=', 'keyword']],
+            'begins_with' => ['begins_with', 'where', ['columnName', 'like', 'keyword%']],
             'not_begins_with' => ['not_begins_with', 'where', ['columnName', 'not like', 'keyword%']],
             'contains' => ['contains', 'where', ['columnName', 'like', '%keyword%']],
             'not_contains' => ['not_contains', 'where', ['columnName', 'not like', '%keyword%']],

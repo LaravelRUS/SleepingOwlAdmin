@@ -15,8 +15,8 @@ use SleepingOwl\Admin\Form\Element\SelectAjax;
 class FormElementController extends Controller
 {
     /**
-     * @param ModelConfigurationInterface $model
-     * @param null $id
+     * @param  ModelConfigurationInterface  $model
+     * @param  null  $id
      * @return JsonResponse|mixed
      */
     public function getModelLogic(ModelConfigurationInterface $model, $id = null)
@@ -42,9 +42,9 @@ class FormElementController extends Controller
     }
 
     /**
-     * @param ModelConfigurationInterface $model
-     * @param null $id
-     * @param mixed $payload
+     * @param  ModelConfigurationInterface  $model
+     * @param  null  $id
+     * @param  mixed  $payload
      * @return JsonResponse|mixed
      */
     public function getModelLogicPayload(ModelConfigurationInterface $model, $id = null, $payload = [])
@@ -70,11 +70,10 @@ class FormElementController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param ModelConfigurationInterface $model
-     * @param string $field
-     * @param int|null $id
-     *
+     * @param  Request  $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  string  $field
+     * @param  int|null  $id
      * @return JsonResponse
      */
     public function dependentSelect(Request $request, ModelConfigurationInterface $model, $field, $id = null)
@@ -116,11 +115,10 @@ class FormElementController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param ModelConfigurationInterface $model
-     * @param string $field
-     * @param int|null $id
-     *
+     * @param  Request  $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  string  $field
+     * @param  int|null  $id
      * @return JsonResponse
      */
     public function multiselectSearch(Request $request, ModelConfigurationInterface $model, $field, $id = null)
@@ -129,11 +127,10 @@ class FormElementController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param ModelConfigurationInterface $model
-     * @param string $field
-     * @param int|null $id
-     *
+     * @param  Request  $request
+     * @param  ModelConfigurationInterface  $model
+     * @param  string  $field
+     * @param  int|null  $id
      * @return JsonResponse
      */
     public function selectSearch(Request $request, ModelConfigurationInterface $model, $field, $id = null)

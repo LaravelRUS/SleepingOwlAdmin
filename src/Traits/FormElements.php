@@ -33,8 +33,7 @@ trait FormElements
     }
 
     /**
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return bool|void
      */
     public function recursiveIterateElements(\Closure $callback)
@@ -58,8 +57,7 @@ trait FormElements
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return FormElementInterface|null
      */
     public function getElement($path)
@@ -88,8 +86,7 @@ trait FormElements
     }
 
     /**
-     * @param array $elements
-     *
+     * @param  array  $elements
      * @return $this
      */
     public function setElements(array $elements)
@@ -100,8 +97,7 @@ trait FormElements
     }
 
     /**
-     * @param FormElementInterface $element
-     *
+     * @param  FormElementInterface  $element
      * @return $this
      */
     public function addElement($element)
@@ -112,8 +108,7 @@ trait FormElements
     }
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     public function setModel(Model $model)
@@ -146,8 +141,7 @@ trait FormElements
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function save(\Illuminate\Http\Request $request)
@@ -156,8 +150,7 @@ trait FormElements
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function afterSave(\Illuminate\Http\Request $request)
@@ -166,8 +159,7 @@ trait FormElements
     }
 
     /**
-     * @param Model $model
-     *
+     * @param  Model  $model
      * @return $this
      */
     protected function setModelForElements(Model $model)
@@ -184,8 +176,7 @@ trait FormElements
     }
 
     /**
-     * @param array $rules
-     *
+     * @param  array  $rules
      * @return array
      */
     protected function getValidationRulesFromElements(array $rules = [])
@@ -202,8 +193,7 @@ trait FormElements
     }
 
     /**
-     * @param array $messages
-     *
+     * @param  array  $messages
      * @return array
      */
     protected function getValidationMessagesForElements(array $messages = [])
@@ -220,8 +210,7 @@ trait FormElements
     }
 
     /**
-     * @param array $labels
-     *
+     * @param  array  $labels
      * @return array
      */
     protected function getValidationLabelsForElements(array $labels = [])
@@ -238,8 +227,7 @@ trait FormElements
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     protected function saveElements(\Illuminate\Http\Request $request)
@@ -254,8 +242,7 @@ trait FormElements
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     protected function afterSaveElements(\Illuminate\Http\Request $request)
@@ -270,8 +257,7 @@ trait FormElements
     }
 
     /**
-     * @param $object
-     *
+     * @param  $object
      * @return mixed
      */
     protected function getElementContainer($object)

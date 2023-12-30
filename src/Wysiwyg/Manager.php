@@ -32,7 +32,7 @@ class Manager implements WysiwygMangerInterface
     /**
      * Manager constructor.
      *
-     * @param Application $application
+     * @param  Application  $application
      */
     public function __construct(Application $application)
     {
@@ -53,10 +53,9 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
-     * @param WysiwygFilterInterface|null $filter
-     * @param string|null $name
-     *
+     * @param  string  $editorId
+     * @param  WysiwygFilterInterface|null  $filter
+     * @param  string|null  $name
      * @return WysiwygEditorInterface
      */
     public function register($editorId, WysiwygFilterInterface $filter = null, $name = null)
@@ -77,8 +76,7 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
-     *
+     * @param  string  $editorId
      * @return WysiwygEditorInterface|null
      */
     public function getEditor($editorId)
@@ -94,8 +92,7 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
-     *
+     * @param  string  $editorId
      * @return bool
      */
     public function loadEditor($editorId)
@@ -112,10 +109,10 @@ class Manager implements WysiwygMangerInterface
     }
 
     /**
-     * @param string $editorId
-     * @param string $text
-     *
+     * @param  string  $editorId
+     * @param  string  $text
      * @return string string
+     *
      * @throws WysiwygException
      */
     public function applyFilter($editorId, $text)

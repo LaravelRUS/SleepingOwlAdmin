@@ -17,8 +17,7 @@ interface ColumnInterface extends ElementsInterface
     public function getSize();
 
     /**
-     * @param string $size
-     *
+     * @param  string  $size
      * @return $this
      */
     public function setSize($size);

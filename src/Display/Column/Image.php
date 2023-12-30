@@ -23,8 +23,7 @@ class Image extends NamedColumn
     }
 
     /**
-     * @param string $width
-     *
+     * @param  string  $width
      * @return $this
      */
     public function setImageWidth($width)

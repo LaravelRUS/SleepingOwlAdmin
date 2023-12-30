@@ -40,10 +40,10 @@ final class Editor implements WysiwygEditorInterface
     private $package;
 
     /**
-     * @param string $id
-     * @param string|null $name
-     * @param WysiwygFilterInterface|null $filter
-     * @param array $config
+     * @param  string  $id
+     * @param  string|null  $name
+     * @param  WysiwygFilterInterface|null  $filter
+     * @param  array  $config
      */
     public function __construct($id, $name = null, WysiwygFilterInterface $filter = null, array $config = [])
     {
@@ -104,8 +104,7 @@ final class Editor implements WysiwygEditorInterface
     }
 
     /**
-     * @param string $text
-     *
+     * @param  string  $text
      * @return string
      */
     public function applyFilter($text)

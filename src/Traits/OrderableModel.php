@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait OrderableModel.
+ *
  * @method static $this orderModel()
  * @method Builder findByPosition($position)
  */
@@ -34,6 +35,7 @@ trait OrderableModel
 
     /**
      * Get order value.
+     *
      * @return int
      */
     public function getOrderValue()
@@ -60,7 +62,7 @@ trait OrderableModel
     /**
      * Move model in the $destination.
      *
-     * @param $destination -1 (move down) or 1 (move up)
+     * @param  $destination  -1 (move down) or 1 (move up)
      */
     protected function move($destination)
     {
@@ -104,8 +106,7 @@ trait OrderableModel
     /**
      * Order scope.
      *
-     * @param $query
-     *
+     * @param  $query
      * @return mixed
      */
     public function scopeOrderModel($query)
@@ -122,9 +123,8 @@ trait OrderableModel
     }
 
     /**
-     * @param Builder $query
-     * @param int $position
-     *
+     * @param  Builder  $query
+     * @param  int  $position
      * @return mixed
      */
     public function scopeFindByPosition(Builder $query, $position)
