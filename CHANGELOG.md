@@ -1,5 +1,10 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2024-01-10
+* [Fix] hasMany element multiselect, parent model linking to the hasmany model
+* [Fix] in form the correct name value element multiselect `has_many_related_name[relatedId][multiselect_related_name]` 
+* [Fix] the saving is made multiselect separately from the general hasMany saving 
+
 ## 2023-11-08
 * [Fix] Dark mode css (tag hr)
 * [Update] NPM Package @fortawesome/fontawesome-free

@@ -50,6 +50,21 @@ class HasMany extends Elements
             foreach ($elements as $element) {
                 $attribute = $element->getModelAttributeKey();
                 $value = $element->prepareValue(Arr::get($attributes, $attribute));
+
+                //for model hasmany->multiselect
+                if ($element instanceof MultiSelect){
+                    
+                    $model = $attributes instanceof Model ? $attributes: $this->safeCreateModel($this->getModelClassForElements(), $attributes);
+            
+                    $element->setModel($model->find($relatedId));
+    
+                    $request = new Request();
+                    $request->replace([$element->getPath() => $value]);
+                    $element->setValueSkipped(false);
+                    $element->afterSave($request);
+                    continue;
+                }
+                
                 $related->setAttribute($attribute, $value);
                 $element->setModel($related);
             }
