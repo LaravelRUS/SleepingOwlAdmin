@@ -2,22 +2,22 @@
 
 return [
     'dashboard' => '仪表板',
-    '404'       => '不能找到此页面。',
+    '404' => '不能找到此页面。',
 
-    'auth'      => [
-        'title'           => '验证',
-        'username'        => '用户名',
-        'password'        => '密码',
-        'login'           => '登录',
-        'logout'          => '登出',
-        'wrong-username'  => '错误的用户名',
-        'wrong-password'  => '密码错误',
-        'since'           => '注册时间 :date',
+    'auth' => [
+        'title' => '验证',
+        'username' => '用户名',
+        'password' => '密码',
+        'login' => '登录',
+        'logout' => '登出',
+        'wrong-username' => '错误的用户名',
+        'wrong-password' => '密码错误',
+        'since' => '注册时间 :date',
     ],
 
     'model' => [
-        'create'  => '创建 :title',
-        'edit'    => '更新 :title',
+        'create' => '创建 :title',
+        'edit' => '更新 :title',
     ],
 
     'links' => [
@@ -104,13 +104,13 @@ return [
         'nothing' => '没有选中',
         'selected' => '选',
         'placeholder' => '控制面板',
-        'no_items'    => '没有项目',
-        'init'        => '选',
-        'empty'       => '空的',
-        'limit'       => '还有 ${count} 以上',
-        'more'       => '还有 :count 以上',
-        'deselect'    => '取消',
-        'short'       => '输入最小值 :min 人物',
+        'no_items' => '没有项目',
+        'init' => '选',
+        'empty' => '空的',
+        'limit' => '还有 ${count} 以上',
+        'more' => '还有 :count 以上',
+        'deselect' => '取消',
+        'short' => '输入最小值 :min 人物',
     ],
 
     'image' => [
@@ -128,9 +128,9 @@ return [
     ],
 
     'button' => [
-        'yes'       => '是',
-        'no'        => '没有',
-        'cancel'    => '取消',
+        'yes' => '是',
+        'no' => '没有',
+        'cancel' => '取消',
         'save' => '保存',
         'new-entry' => '新增',
         'edit' => '编辑',

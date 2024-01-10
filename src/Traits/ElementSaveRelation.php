@@ -68,8 +68,8 @@ trait ElementSaveRelation
         }
 
         //for model hasmany->multiselect
-        if(is_null($values));
-            $values = $request->input($this->getPath());
+        if (is_null($values));
+        $values = $request->input($this->getPath());
 
         $relation = $this->getModel()->{$attribute}();
         if ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
