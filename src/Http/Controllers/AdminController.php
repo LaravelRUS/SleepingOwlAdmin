@@ -605,10 +605,10 @@ class AdminController extends Controller
         }
 
         return response()->json([
-            'status'   => true,
-            'name'     => $field,
+            'status' => true,
+            'name' => $field,
             'newValue' => $newValue !== null ? $newValue : $relationModel->$field,
-            'pk'       => $id,
+            'pk' => $id,
         ]);
     }
 

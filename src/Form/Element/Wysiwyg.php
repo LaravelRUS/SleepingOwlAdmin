@@ -190,7 +190,7 @@ class Wysiwyg extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'v-pre'=> true,
+            'v-pre' => true,
             'data-wysiwyg-editor' => $this->getEditor(),
             'data-wysiwyg-parameters' => json_encode($this->getParameters()),
         ]);

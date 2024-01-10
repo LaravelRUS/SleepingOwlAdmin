@@ -2,22 +2,22 @@
 
 return [
     'dashboard' => 'Dashboard',
-    '404'       => 'Seite nicht gefunden.',
+    '404' => 'Seite nicht gefunden.',
 
-    'auth'      => [
-        'title'           => 'Authorisierung',
-        'username'        => 'Nutzername',
-        'password'        => 'Passwort',
-        'login'           => 'Login',
-        'logout'          => 'Logout',
-        'wrong-username'  => 'Falscher Nutzername',
-        'wrong-password'  => 'oder Passwort',
-        'since'           => 'Registriert am :date',
+    'auth' => [
+        'title' => 'Authorisierung',
+        'username' => 'Nutzername',
+        'password' => 'Passwort',
+        'login' => 'Login',
+        'logout' => 'Logout',
+        'wrong-username' => 'Falscher Nutzername',
+        'wrong-password' => 'oder Passwort',
+        'since' => 'Registriert am :date',
     ],
 
     'model' => [
-        'create'  => 'Erstelle :title',
-        'edit'    => 'Bearbeite :title',
+        'create' => 'Erstelle :title',
+        'edit' => 'Bearbeite :title',
     ],
 
     'links' => [
@@ -104,13 +104,13 @@ return [
         'nothing' => 'Nichts ausgewählt',
         'selected' => 'ausgewählt',
         'placeholder' => 'Aus der Liste auswählen',
-        'no_items'    => 'Keine Einträge',
-        'init'        => 'Auswählen',
-        'empty'       => 'leer',
-        'limit'       => 'und ${count} mehr',
-        'more'       => 'und :count mehr',
-        'deselect'    => 'Abwählen',
-        'short'       => 'Mindestens :min Zeichen eingeben',
+        'no_items' => 'Keine Einträge',
+        'init' => 'Auswählen',
+        'empty' => 'leer',
+        'limit' => 'und ${count} mehr',
+        'more' => 'und :count mehr',
+        'deselect' => 'Abwählen',
+        'short' => 'Mindestens :min Zeichen eingeben',
     ],
 
     'image' => [
@@ -128,9 +128,9 @@ return [
     ],
 
     'button' => [
-        'yes'       => 'Ja',
-        'no'        => 'Nein',
-        'cancel'    => 'Abbrechen',
+        'yes' => 'Ja',
+        'no' => 'Nein',
+        'cancel' => 'Abbrechen',
         'save' => 'Speichern',
         'new-entry' => 'Neuer Eintrag',
         'edit' => 'Bearbeiten',
