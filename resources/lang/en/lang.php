@@ -2,22 +2,22 @@
 
 return [
     'dashboard' => 'Dashboard',
-    '404'       => 'Page not found.',
+    '404' => 'Page not found.',
 
-    'auth'      => [
-        'title'           => 'Authorization',
-        'username'        => 'Username',
-        'password'        => 'Password',
-        'login'           => 'Login',
-        'logout'          => 'Logout',
-        'wrong-username'  => 'Wrong username',
-        'wrong-password'  => 'or password',
-        'since'           => 'Registered at :date',
+    'auth' => [
+        'title' => 'Authorization',
+        'username' => 'Username',
+        'password' => 'Password',
+        'login' => 'Login',
+        'logout' => 'Logout',
+        'wrong-username' => 'Wrong username',
+        'wrong-password' => 'or password',
+        'since' => 'Registered at :date',
     ],
 
     'model' => [
-        'create'  => 'Create record in section :title',
-        'edit'    => 'Update record in section :title',
+        'create' => 'Create record in section :title',
+        'edit' => 'Update record in section :title',
     ],
 
     'links' => [
@@ -104,13 +104,13 @@ return [
         'nothing' => 'Nothing selected',
         'selected' => 'selected',
         'placeholder' => 'Select from the list',
-        'no_items'    => 'No items',
-        'init'        => 'Select',
-        'empty'       => 'empty',
-        'limit'       => 'and ${count} more',
-        'more'       => 'and :count more',
-        'deselect'    => 'Deselect',
-        'short'       => 'Enter min :min characters',
+        'no_items' => 'No items',
+        'init' => 'Select',
+        'empty' => 'empty',
+        'limit' => 'and ${count} more',
+        'more' => 'and :count more',
+        'deselect' => 'Deselect',
+        'short' => 'Enter min :min characters',
     ],
 
     'image' => [
@@ -128,9 +128,9 @@ return [
     ],
 
     'button' => [
-        'yes'       => 'Yes',
-        'no'        => 'No',
-        'cancel'    => 'Cancel',
+        'yes' => 'Yes',
+        'no' => 'No',
+        'cancel' => 'Cancel',
         'save' => 'Save',
         'new-entry' => 'New Entry',
         'edit' => 'Edit',

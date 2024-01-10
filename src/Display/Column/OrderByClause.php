@@ -305,8 +305,8 @@ class OrderByClause implements OrderByClauseInterface
             $tableName = (new $relatedModelClassName())->getTable();
             $existsMorphTypesTablesMap[] = [
                 'morph_type_alias' => $existsMorphTypeAlias,
-                'morph_type'       => $existsMorphType,
-                'table_name'       => $tableName,
+                'morph_type' => $existsMorphType,
+                'table_name' => $tableName,
             ];
         }
 

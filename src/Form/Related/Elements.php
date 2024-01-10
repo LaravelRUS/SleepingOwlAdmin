@@ -480,13 +480,12 @@ abstract class Elements extends FormElements
         }
 
         $this->forEachElement($elements = $this->getNewElements(), function (NamedFormElement $el) use ($model, $key, $old) {
-            
-            //add validate condition instance 
+            //add validate condition instance
             //for model hasmany->multiselect
             $nameElement = $el->getName();
-            if (strpos(get_class($el), 'MultiSelect')){
+            if (strpos(get_class($el), 'MultiSelect')) {
                 //delete last 2 symbol [] for Multiselect correct format name array in form input
-                $nameElement = substr($el->getName(), 0, -2); 
+                $nameElement = substr($el->getName(), 0, -2);
             }
 
             // Setting default value, name and model for element with name attribute
