@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Form\Related\Elements;
+use SleepingOwl\Admin\Form\Element\MultiSelect;
 
 class HasMany extends Elements
 {

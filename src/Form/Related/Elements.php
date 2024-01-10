@@ -491,7 +491,7 @@ abstract class Elements extends FormElements
 
             // Setting default value, name and model for element with name attribute
             $el->setDefaultValue($el->prepareValue($this->getElementValue($model, $el)));
-            $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?? $model->getKey(), $this->formatElementName($el->getName())));
+            $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?? $model->getKey(), $this->formatElementName($nameElement)));
             $el->setModel($model);
 
             if ($old && strpos($el->getPath(), '->') === false && ! ($el instanceof HasFakeModel)) {
