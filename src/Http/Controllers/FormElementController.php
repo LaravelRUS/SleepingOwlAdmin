@@ -101,6 +101,7 @@ class FormElementController extends Controller
         /** @var DependentSelect|MultiDependentSelect $element */
         $element = $form->getElement($fieldPrepared);
 
+
         if (is_null($element)) {
             return new JsonResponse([
                 'message' => 'Element not found',
@@ -110,14 +111,13 @@ class FormElementController extends Controller
         $params = $request->input('depdrop_all_params', []);
 
         //related element, hasMany, ManyToMany, BelongTo
-        if ($isRelatedForm) {
+        if($isRelatedForm){
             $paramsRelated = [];
-            collect($params)->each(function ($value, $key) use (&$paramsRelated) {
+            collect($params)->each(function ($value, $key) use (&$paramsRelated){
                 $prepare_param = preg_match('/(.+)(_\d+)$/', $key, $matches);
 
-                if (count($matches) > 0) {
+                if(count($matches) > 0)
                     $paramsRelated[$matches[1]] = $value;
-                }
             });
 
             $params = count($paramsRelated) ? $paramsRelated : $params;
@@ -134,8 +134,7 @@ class FormElementController extends Controller
         }
 
         //for related element, hasMany, ManyToMany, BelongTo
-        $addSelected = $element->getIsOutsideTargetDepend() ? ['selected' => $element->getValueFromModel()] : [];
-
+        $addSelected = !$isRelatedForm ? ['selected' => $element->getValueFromModel()] : [];
         return new JsonResponse([
             'output' => collect($options)->map(function ($value, $key) {
                 return ['id' => $key, 'name' => $value];
