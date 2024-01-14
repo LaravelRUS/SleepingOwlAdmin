@@ -36,6 +36,11 @@ abstract class FormElement implements FormElementInterface
     protected $model;
 
     /**
+     * @var Model
+     */
+    protected $parentModel;
+
+    /**
      * @var array
      */
     protected $validationRules = [];
@@ -92,6 +97,22 @@ abstract class FormElement implements FormElementInterface
         $this->validationMessages[$rule] = $message;
 
         return $this;
+    }
+
+    /**
+     * @return Model
+     */
+    public function getParentModel()
+    {
+         return $this->parentModel;
+    }
+
+     /**
+     * @param Model
+     */
+    public function setParentModel(Model $model)
+    {
+         $this->parentModel = $model;
     }
 
     /**

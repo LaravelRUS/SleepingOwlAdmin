@@ -23,6 +23,7 @@ use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Traits\Collapsed;
 use Throwable;
+use AdminSection;
 
 abstract class Elements extends FormElements
 {
@@ -488,6 +489,21 @@ abstract class Elements extends FormElements
                 $nameElement = substr($el->getName(), 0, -2);
             }
 
+            //for model->hasMany->select->dependent-select
+            if (strpos(get_class($el), 'Select') && !strpos(get_class($el), 'MultiSelect')) {
+                if($key){
+                    if(is_numeric($key)){
+                        $el->setId($el->getId().'_'.$key-1);
+                    }
+
+                    if(is_string($key)){
+                        $el->setId($el->getId().'_'.$key);
+                    }
+                }
+            }
+
+            //Set Parent model fot dependent select
+            $el->setParentModel($this->model);
             // Setting default value, name and model for element with name attribute
             $el->setDefaultValue($el->prepareValue($this->getElementValue($model, $el)));
             $el->setName(sprintf('%s[%s][%s]', $this->relationName, $key ?? $model->getKey(), $this->formatElementName($nameElement)));
@@ -500,6 +516,34 @@ abstract class Elements extends FormElements
                 // form with company's shops inside "Companies" section. There will be collisions of "name" if validation
                 // fails, and each "shop"-form will have "company->name" value inside "name" field.
                 $el->setPath($el->getName());
+            }
+
+            //for model->hasMany->select->dependent-select
+            if (strpos(get_class($el), 'DependentSelect')) {
+
+                if(!$el->getIsOutsideTargetDepend()){
+                    $dataDepends = json_decode($el->getDataDepends());
+                    $dataDepends = collect($dataDepends)->map(function ($item, $k) use($key) {
+
+                        if(is_numeric($key)){
+                            return $item.'_'.$key-1;
+                        }
+
+                        if(is_string($key)){
+                            return $item.'_'.$key;
+                        }
+
+                    })->all();
+                    $el->setDataDepends($dataDepends);
+                }
+
+                $url = $el->getDataUrl() ?: route('admin.form.element.dependent-select', [
+                    'adminModel' => AdminSection::getModel($el->getParentModel())->getAlias(),
+                    'field' => $el->getName(),
+                    'id' => $el->getModel()->getKey(),
+                ], false);
+
+                $el->setDataUrl($url);
             }
         });
 

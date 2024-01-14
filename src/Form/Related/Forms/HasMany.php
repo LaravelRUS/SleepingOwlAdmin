@@ -34,7 +34,6 @@ class HasMany extends Elements
             $class = get_class($relation->getRelated());
             $class::destroy($this->toRemove->all());
         }
-
         $relation->saveMany($this->relatedValues);
     }
 

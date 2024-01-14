@@ -35,10 +35,10 @@ Vue.component('related-group', {
     },
 
     mounted() {
-
         each(this.$el.querySelectorAll('input, select, textarea'), (el) => {
             const id = el.getAttribute('id');
-            if (id) {
+            //already taken into account for dependent select
+            if (id && !(/_\d+$/.test(id))) {
                 el.setAttribute('id', `${id}_${this.index}`);
             }
         });

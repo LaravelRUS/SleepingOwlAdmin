@@ -45,6 +45,11 @@ class DependentSelect extends Select implements WithRoutesInterface
     protected $dataUrl = '';
 
     /**
+     * @var boolean
+     */
+    protected $isOutsideTargetDepend = true;
+
+    /**
      * @var array
      */
     protected $dataDepends = [];
@@ -83,6 +88,24 @@ class DependentSelect extends Select implements WithRoutesInterface
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsOutsideTargetDepend()
+    {
+        return $this->isOutsideTargetDepend;
+    }
+
+    /**
+     * @param boolean $isOutsideTargetDepend
+     * @return $this
+     */
+    public function setIsOutsideTargetDepend(bool $isOutsideTargetDepend)
+    {
+        $this->isOutsideTargetDepend = $isOutsideTargetDepend;
+        return $this;
     }
 
     /**
@@ -137,6 +160,17 @@ class DependentSelect extends Select implements WithRoutesInterface
      */
     public function getDataUrl()
     {
+        //for model->hasMany->select->dependent-select
+        //name: exam_results[1][exam_answer_id]
+        $field = preg_match('/\\w+\\[(\\d)\\]\\[(\\w+)\\]/', $this->getName(), $matches);
+        if($field){
+            return $this->dataUrl ?: route('admin.form.element.dependent-select', [
+                'adminModel' => AdminSection::getModel($this->getParentModel())->getAlias(),
+                'field' => $this->getName(),
+                'id' => $this->getParentModel()->getKey(),
+            ], false);
+        }
+
         return $this->dataUrl ?: route('admin.form.element.dependent-select', [
             'adminModel' => AdminSection::getModel($this->model)->getAlias(),
             'field' => $this->getName(),

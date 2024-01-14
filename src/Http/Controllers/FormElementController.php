@@ -84,11 +84,23 @@ class FormElementController extends Controller
             return $form;
         }
 
+        //for related element, hasMany, ManyToMany, BelongTo
+        $isRelatedForm = preg_match('/\\w+\\[(\\d)\\]\\[(\\w+)\\]/', $field, $matches);
+
+        $field_relate = $isRelatedForm ? $matches[2] : $field;
+
         // because field name in MultiDependentSelect ends with '[]'
-        $fieldPrepared = str_replace('[]', '', $field);
+        $fieldPrepared = str_replace('[]', '', $field_relate);
 
         /** @var DependentSelect|MultiDependentSelect $element */
         $element = $form->getElement($fieldPrepared);
+
+        // because field name in MultiDependentSelect ends with '[]'
+        $fieldPrepared = str_replace('[]', '', $field_relate);
+
+        /** @var DependentSelect|MultiDependentSelect $element */
+        $element = $form->getElement($fieldPrepared);
+
 
         if (is_null($element)) {
             return new JsonResponse([
@@ -96,8 +108,23 @@ class FormElementController extends Controller
             ], 404);
         }
 
+        $params = $request->input('depdrop_all_params', []);
+
+        //related element, hasMany, ManyToMany, BelongTo
+        if($isRelatedForm){
+            $paramsRelated = [];
+            collect($params)->each(function ($value, $key) use (&$paramsRelated){
+                $prepare_param = preg_match('/(.+)(_\d+)$/', $key, $matches);
+
+                if(count($matches) > 0)
+                    $paramsRelated[$matches[1]] = $value;
+            });
+
+            $params = count($paramsRelated) ? $paramsRelated : $params;
+        }
+
         $element->setAjaxParameters(
-            $request->input('depdrop_all_params', [])
+            $params
         );
 
         $options = $element->getOptions();
@@ -106,12 +133,13 @@ class FormElementController extends Controller
             $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
         }
 
+        //for related element, hasMany, ManyToMany, BelongTo
+        $addSelected = $element->getIsOutsideTargetDepend() ? ['selected' => $element->getValueFromModel()] : [];
         return new JsonResponse([
             'output' => collect($options)->map(function ($value, $key) {
                 return ['id' => $key, 'name' => $value];
             }),
-            'selected' => $element->getValueFromModel(),
-        ]);
+        ] + $addSelected);
     }
 
     /**

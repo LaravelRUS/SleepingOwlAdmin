@@ -16,7 +16,7 @@ trait ElementSaveRelation
     public function getValueFromModel()
     {
         $value = parent::getValueFromModel();
-
+        
         if (is_array($value)) {
             foreach ($value as $key => $val) {
                 $value[$key] = $val;

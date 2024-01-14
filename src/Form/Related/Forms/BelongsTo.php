@@ -49,7 +49,6 @@ class BelongsTo extends Elements
         $elements = $this->flatNamedElements($this->getNewElements());
         foreach ($data as $relatedId => $attributes) {
             $related = $this->addOrGetRelated($relatedId);
-
             foreach ($elements as $element) {
                 $attribute = $element->getModelAttributeKey();
                 $value = $element->prepareValue(Arr::get($attributes, $attribute));

@@ -1,5 +1,14 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2024-01-14
+* [Fix] Fix work dependent-select with element HasMany, BelongTo, ManyToMany
+* [Add] Add unique id in select and in dependent-select params depends attribute to each element
+* [Fix] With dependent-select added the ability to use select inside and outside the hasMany, belongTo, ManyToMany elements
+* [Add] Add in DependentSelect prop isOutsideTargetDepend, methods setIsOutsideTargetDepend, getIsOutsideTargetDepend
+* [Fix] Fix correct selected option by default
+* [Add] Add in FormElement prop parentModel, methods setParentModel, getParentModel
+* [Update] need rebuild the package
+
 ## 2024-01-10
 * [Fix] hasMany element multiselect, parent model linking to the hasmany model
 * [Fix] in form the correct name value element multiselect `has_many_related_name[relatedId][multiselect_related_name]` 
