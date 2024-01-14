@@ -134,7 +134,7 @@ class FormElementController extends Controller
         }
 
         //for related element, hasMany, ManyToMany, BelongTo
-        $addSelected = $element->getIsOutsideTargetDepend() ? ['selected' => $element->getValueFromModel()] : [];
+        $addSelected = !$isRelatedForm ? ['selected' => $element->getValueFromModel()] : [];
         return new JsonResponse([
             'output' => collect($options)->map(function ($value, $key) {
                 return ['id' => $key, 'name' => $value];
