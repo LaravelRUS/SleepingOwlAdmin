@@ -407,7 +407,7 @@ abstract class NamedFormElement extends FormElement
         if ($request->hasSession() && ! is_null($value = $request->old($this->getPath()))) {
             return $value;
         }
-        
+
         return $request->input($this->getNameKey()) ?: $request->input($this->getPath());
     }
 
@@ -430,7 +430,6 @@ abstract class NamedFormElement extends FormElement
               */
             return $value;
         }
-
 
         /*
           * Implement json parsing
