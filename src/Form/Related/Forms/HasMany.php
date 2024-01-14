@@ -58,6 +58,7 @@ class HasMany extends Elements
                     $element->setModel($model->find($relatedId));
 
                     $request = new Request();
+                    $value = is_null($value) ? [] : $value;
                     $request->replace([$element->getPath() => $value]);
                     $element->setValueSkipped(false);
                     $element->afterSave($request);
