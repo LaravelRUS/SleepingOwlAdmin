@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Form\Related;
 
 use Admin\Contracts\HasFakeModel;
+use AdminSection;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +24,6 @@ use SleepingOwl\Admin\Form\Element\NamedFormElement;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Traits\Collapsed;
 use Throwable;
-use AdminSection;
 
 abstract class Elements extends FormElements
 {
@@ -490,13 +490,13 @@ abstract class Elements extends FormElements
             }
 
             //for model->hasMany->select->dependent-select
-            if (strpos(get_class($el), 'Select') && !strpos(get_class($el), 'MultiSelect')) {
-                if($key){
-                    if(is_numeric($key)){
-                        $el->setId($el->getId().'_'.$key-1);
+            if (strpos(get_class($el), 'Select') && ! strpos(get_class($el), 'MultiSelect')) {
+                if ($key) {
+                    if (is_numeric($key)) {
+                        $el->setId($el->getId().'_'.$key - 1);
                     }
 
-                    if(is_string($key)){
+                    if (is_string($key)) {
                         $el->setId($el->getId().'_'.$key);
                     }
                 }
@@ -520,19 +520,16 @@ abstract class Elements extends FormElements
 
             //for model->hasMany->select->dependent-select
             if (strpos(get_class($el), 'DependentSelect')) {
-
-                if(!$el->getIsOutsideTargetDepend()){
+                if (! $el->getIsOutsideTargetDepend()) {
                     $dataDepends = json_decode($el->getDataDepends());
-                    $dataDepends = collect($dataDepends)->map(function ($item, $k) use($key) {
-
-                        if(is_numeric($key)){
-                            return $item.'_'.$key-1;
+                    $dataDepends = collect($dataDepends)->map(function ($item, $k) use ($key) {
+                        if (is_numeric($key)) {
+                            return $item.'_'.$key - 1;
                         }
 
-                        if(is_string($key)){
+                        if (is_string($key)) {
                             return $item.'_'.$key;
                         }
-
                     })->all();
                     $el->setDataDepends($dataDepends);
                 }
