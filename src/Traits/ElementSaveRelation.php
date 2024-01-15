@@ -69,9 +69,9 @@ trait ElementSaveRelation
 
         //for model hasmany->multiselect
         if (is_array($values) && count($values) == 0);
-            $values = $request->input($this->getPath());
+        $values = $request->input($this->getPath());
 
-        if(is_null($values)){
+        if (is_null($values)) {
             $values = [];
         }
 
