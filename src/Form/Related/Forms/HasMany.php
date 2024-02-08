@@ -69,7 +69,7 @@ class HasMany extends Elements
                 $element->setModel($related);
 
                 //for model hasmany->image, images
-                if($element instanceof Image){
+                if ($element instanceof Image) {
                     $request = new Request();
                     $request->replace([$element->getPath() => $value]);
                     $element->afterSave($request);
