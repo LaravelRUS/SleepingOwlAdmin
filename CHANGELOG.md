@@ -1,5 +1,8 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2024-02-08
+* [Fix] hasMany element image, images, not call function setAfterSaveCallback when save Model
+
 ## 2024-01-14
 * [Fix] Fix work dependent-select with element HasMany, BelongTo, ManyToMany
 * [Add] Add unique id in select and in dependent-select params depends attribute to each element
