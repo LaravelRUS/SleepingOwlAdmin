@@ -17,7 +17,8 @@ class Password extends NamedFormElement
     }
 
     /**
-     * Generate text
+     * Generate text.
+     *
      * @var bool
      */
     protected $allowEmpty = false;
@@ -161,7 +162,7 @@ class Password extends NamedFormElement
     /**
      * Подставляет юзерские символы для генерации.
      *
-     * @param string $chars
+     * @param  string  $chars
      * @return $this
      */
     public function setCharsGenerate(string $chars): self
