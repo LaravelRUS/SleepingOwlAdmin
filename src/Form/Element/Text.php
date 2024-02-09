@@ -15,6 +15,14 @@ class Text extends NamedFormElement
     protected $dataList = false;
 
     /**
+     * Generate text
+     * @var bool
+     */
+    protected $canGenerate = false;
+    protected $generateLength = 8;
+    protected $generateChars = null;
+
+    /**
      * @var array
      */
     protected $options = [];
@@ -24,7 +32,7 @@ class Text extends NamedFormElement
         parent::__construct($path, $label);
 
         $this->setHtmlAttributes([
-            'class' => 'form-control',
+            'class' => 'form-control text-element',
             'type' => 'text',
         ]);
     }
@@ -46,17 +54,51 @@ class Text extends NamedFormElement
      */
     public function toArray(): array
     {
+        $columns = [
+            'canGenerate' => $this->canGenerate,
+            'generateLength' => $this->generateLength,
+            'generateChars' => $this->generateChars,
+        ];
+
         if ($this->dataList) {
             $this->setHtmlAttributes([
                 'list' => $this->getId().'Datalist',
             ]);
 
-            return
-                parent::toArray() + [
-                    'datalistOptions' => $this->options,
-                ];
+            $columns['datalistOptions'] = $this->options;
         }
 
-        return parent::toArray();
+        return parent::toArray() + $columns;
+    }
+
+    /**
+     * Добавляет возможность генерировать текст.
+     * Длина может задаваться параметром.
+     *
+     * @param  null  $length
+     * @return $this
+     */
+    public function canGenerate($length = null): self
+    {
+        $this->canGenerate = true;
+
+        if ($length) {
+            $this->generateLength = (int) $length;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Подставляет юзерские символы для генерации.
+     *
+     * @param string $chars
+     * @return $this
+     */
+    public function setCharsGenerate(string $chars): self
+    {
+        $this->generateChars = $chars;
+
+        return $this;
     }
 }

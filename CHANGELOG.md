@@ -1,5 +1,15 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2024-02-09
+* [Add] Add methods to `AdminFormElement::text` for generate words (for pincode or promocode)
+```
+// work ONLY first element on page
+AdminFormElement::text('promocode', 'Promo')
+    ->canGenerate(8)
+    ->setCharsGenerate('ABC1234567890'),
+```
+* [Fix] Add method to add custom chars for password generation `->setCharsGenerate('1234567890')`
+
 ## 2024-02-08
 * [Fix] hasMany element image, images, not call function setAfterSaveCallback when save Model
 
@@ -14,8 +24,8 @@
 
 ## 2024-01-10
 * [Fix] hasMany element multiselect, parent model linking to the hasmany model
-* [Fix] in form the correct name value element multiselect `has_many_related_name[relatedId][multiselect_related_name]` 
-* [Fix] the saving is made multiselect separately from the general hasMany saving 
+* [Fix] in form the correct name value element multiselect `has_many_related_name[relatedId][multiselect_related_name]`
+* [Fix] the saving is made multiselect separately from the general hasMany saving
 
 ## 2023-11-08
 * [Fix] Dark mode css (tag hr)

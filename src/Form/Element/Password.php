@@ -17,11 +17,13 @@ class Password extends NamedFormElement
     }
 
     /**
+     * Generate text
      * @var bool
      */
     protected $allowEmpty = false;
     protected $canGenerate = false;
     protected $generateLength = 8;
+    protected $generateChars = null;
 
     /**
      * @var string
@@ -134,6 +136,7 @@ class Password extends NamedFormElement
         return parent::toArray() + [
             'canGenerate' => $this->canGenerate,
             'generateLength' => $this->generateLength,
+            'generateChars' => $this->generateChars,
         ];
     }
 
@@ -151,6 +154,19 @@ class Password extends NamedFormElement
         if ($length) {
             $this->generateLength = (int) $length;
         }
+
+        return $this;
+    }
+
+    /**
+     * Подставляет юзерские символы для генерации.
+     *
+     * @param string $chars
+     * @return $this
+     */
+    public function setCharsGenerate(string $chars): self
+    {
+        $this->generateChars = $chars;
 
         return $this;
     }

@@ -31,6 +31,9 @@ Admin.Modules.register('form.elements.password', () => {
             if(generateBTN && field) {
                 generateBTN.addEventListener('click', () => {
                     var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    if (field.dataset.generateChars) {
+                        chars = field.dataset.generateChars
+                    }
                     var passwordLength = field.dataset.generateLength;
                     var password = '';
                     for (var i = 1; i <= passwordLength; i++) {

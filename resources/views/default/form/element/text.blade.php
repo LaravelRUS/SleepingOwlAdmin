@@ -7,9 +7,24 @@
                 <span class="form-element-required">*</span>
             @endif
         </label>
-        <input v-pre {!! $attributes !!} value="{{$value}}"
-               @if($readonly) readonly @endif
-        >
+
+        <div class="position-relative">
+            <input v-pre {!! $attributes !!} value="{{$value}}"
+                   @if($readonly) readonly @endif
+                   @if($canGenerate)
+                        data-generate-length="{{ $generateLength }}"
+                        @if($generateChars) data-generate-chars="{{ $generateChars }}" @endif
+                   @endif
+            >
+
+            @if($canGenerate && !$readonly)
+                <div class="control-button {{ isset($datalistOptions) && $datalistOptions ? 'pr-4' : '' }}">
+                    <span class="btn btn-sm text-muted generate">
+                        <i class="fa-solid fa-plus"></i>
+                    </span>
+                </div>
+            @endif
+        </div>
 
         @if(isset($datalistOptions) && $datalistOptions && is_array($datalistOptions))
             <datalist id="{{ $id }}Datalist">

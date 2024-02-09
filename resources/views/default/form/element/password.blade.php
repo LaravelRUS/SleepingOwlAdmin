@@ -12,14 +12,17 @@
             value="{{$value}}"
                    @if($readonly) readonly @endif
                    autocomplete="off"
-                   @if($canGenerate) data-generate-length="{{ $generateLength }}" @endif
+                   @if($canGenerate)
+                       data-generate-length="{{ $generateLength }}"
+                       @if($generateChars) data-generate-chars="{{ $generateChars }}" @endif
+                   @endif
             >
             <div class="control-button">
                 <span class="btn btn-sm text-muted button-show">
                     <i class="fa-solid fa-eye"></i>
                 </span>
 
-                @if($canGenerate)
+                @if($canGenerate && !$readonly)
                     <span class="btn btn-sm text-muted generate">
                         <i class="fa-solid fa-plus"></i>
                     </span>

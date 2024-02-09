@@ -113,3 +113,4 @@ require('./admin/form/dependent-select');
 require('./admin/display/env_editor');
 require('./admin/form/related');
 require('./admin/form/password');
+require('./admin/form/text');
