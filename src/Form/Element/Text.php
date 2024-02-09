@@ -15,7 +15,8 @@ class Text extends NamedFormElement
     protected $dataList = false;
 
     /**
-     * Generate text
+     * Generate text.
+     *
      * @var bool
      */
     protected $canGenerate = false;
@@ -92,7 +93,7 @@ class Text extends NamedFormElement
     /**
      * Подставляет юзерские символы для генерации.
      *
-     * @param string $chars
+     * @param  string  $chars
      * @return $this
      */
     public function setCharsGenerate(string $chars): self
