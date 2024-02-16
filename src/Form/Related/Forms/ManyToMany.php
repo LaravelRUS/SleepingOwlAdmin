@@ -216,10 +216,13 @@ class ManyToMany extends Elements
      * element to be inside this columns.
      *
      * @param  \SleepingOwl\Admin\Form\Columns\Columns  $columns
+     * @return $this
      */
     public function wrapRelatedInto(Columns $columns)
     {
         $this->relatedWrapper = $columns;
+
+        return $this;
     }
 
     /**

@@ -1,5 +1,7 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2024-02-16
+* [Add] add in method wrapRelatedInto $this for correct work in form element
 ## 2024-02-09
 * [Add] Add methods to `AdminFormElement::text` for generate words (for pincode or promocode)
 ```
