@@ -571,7 +571,7 @@ abstract class NamedFormElement extends FormElement
      *     return bcrypt($value);
      * }).
      *
-     * @param Closure $mutator
+     * @param  Closure  $mutator
      * @return $this
      */
     public function mutateValue(Closure $mutator)
