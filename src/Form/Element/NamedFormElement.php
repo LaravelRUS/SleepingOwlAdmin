@@ -66,7 +66,7 @@ abstract class NamedFormElement extends FormElement
     protected $defaultValue;
 
     /**
-     * @var \Closure
+     * @var Closure
      */
     protected $mutator;
 
@@ -262,6 +262,10 @@ abstract class NamedFormElement extends FormElement
      */
     public function getHelpText()
     {
+        if (is_callable($this->helpText)) {
+            return call_user_func($this->helpText, $this->getModel());
+        }
+
         if ($this->helpText instanceof Htmlable) {
             return $this->helpText->toHtml();
         }
@@ -270,7 +274,7 @@ abstract class NamedFormElement extends FormElement
     }
 
     /**
-     * @param  string|Htmlable  $helpText
+     * @param  Closure|string|Htmlable  $helpText
      * @return $this
      */
     public function setHelpText($helpText)
@@ -567,7 +571,7 @@ abstract class NamedFormElement extends FormElement
      *     return bcrypt($value);
      * }).
      *
-     * @param  \Closure  $mutator
+     * @param Closure $mutator
      * @return $this
      */
     public function mutateValue(Closure $mutator)

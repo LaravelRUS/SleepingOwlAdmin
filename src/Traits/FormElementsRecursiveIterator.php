@@ -2,15 +2,16 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Closure;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 
 trait FormElementsRecursiveIterator
 {
     /**
-     * @param  \Closure  $callback
+     * @param  Closure  $callback
      * @return bool|void
      */
-    public function recursiveIterateElements(\Closure $callback)
+    public function recursiveIterateElements(Closure $callback)
     {
         // If Callback function returns TRUE then recurse iterator should stop.
         $result = null;

@@ -2,7 +2,9 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormElementInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -33,10 +35,10 @@ trait FormElements
     }
 
     /**
-     * @param  \Closure  $callback
+     * @param  Closure  $callback
      * @return bool|void
      */
-    public function recursiveIterateElements(\Closure $callback)
+    public function recursiveIterateElements(Closure $callback)
     {
         // If Callback function returns TRUE then recurse iterator should stop.
         $result = null;
@@ -58,7 +60,7 @@ trait FormElements
 
     /**
      * @param  string  $path
-     * @return FormElementInterface|null
+     * @return FormElementInterface|null|void
      */
     public function getElement($path)
     {
@@ -143,19 +145,19 @@ trait FormElements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function save(\Illuminate\Http\Request $request)
+    public function save(Request $request)
     {
         $this->saveElements($request);
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    public function afterSave(\Illuminate\Http\Request $request)
+    public function afterSave(Request $request)
     {
         $this->afterSaveElements($request);
     }
@@ -229,10 +231,10 @@ trait FormElements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    protected function saveElements(\Illuminate\Http\Request $request)
+    protected function saveElements(Request $request)
     {
         $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
@@ -244,10 +246,10 @@ trait FormElements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return void
      */
-    protected function afterSaveElements(\Illuminate\Http\Request $request)
+    protected function afterSaveElements(Request $request)
     {
         $this->getElements()->onlyActive()->each(function ($element) use ($request) {
             $element = $this->getElementContainer($element);
