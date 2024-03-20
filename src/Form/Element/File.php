@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Validator;
 use KodiComponents\Support\Upload;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Traits\FileSize;
@@ -20,7 +21,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     protected static $route = 'file';
 
     /**
-     * @var \Closure
+     * @var Closure
      */
     protected $saveCallback;
 
@@ -235,7 +236,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * @param  string  $rule
      * @param  null  $message
-     * @return $this|\SleepingOwl\Admin\Form\Element\File|\SleepingOwl\Admin\Form\Element\NamedFormElement
+     * @return $this|File|NamedFormElement
      */
     public function addValidationRule($rule, $message = null)
     {
@@ -257,10 +258,10 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param  \Closure  $callable
+     * @param Closure $callable
      * @return $this
      */
-    public function setSaveCallback(\Closure $callable)
+    public function setSaveCallback(Closure $callable)
     {
         $this->saveCallback = $callable;
 
@@ -281,7 +282,7 @@ class File extends NamedFormElement implements WithRoutesInterface
     /**
      * Return save callback.
      *
-     * @return \Closure
+     * @return Closure
      */
     public function getSaveCallback()
     {
@@ -293,7 +294,7 @@ class File extends NamedFormElement implements WithRoutesInterface
      * @param  string  $path
      * @param  string  $filename
      * @param  array  $settings
-     * @return \Closure|array
+     * @return Closure|array
      */
     public function saveFile(UploadedFile $file, $path, $filename, array $settings)
     {
@@ -310,9 +311,9 @@ class File extends NamedFormElement implements WithRoutesInterface
     }
 
     /**
-     * @param  \Illuminate\Validation\Validator  $validator
+     * @param  Validator  $validator
      */
-    public function customValidation(\Illuminate\Validation\Validator $validator)
+    public function customValidation(Validator $validator)
     {
     }
 

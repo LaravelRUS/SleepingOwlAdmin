@@ -1,5 +1,16 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2024-03-20
+* [Doc] Getter for element without documentation.
+```php
+    AdminFormElement::images('images', 'Image in Relation')
+        ->setExactValue($this->getModelValue()->images->pluck('image_path')),
+
+    //or
+    AdminFormElement::textarea('other', 'Full data model')
+        ->setExactValue($this->getModelValue())
+```
+
 ## 2024-02-21
 * [Add] Add Closure in `->setHelpText(fn(Model $model) => $model->title)`
 
