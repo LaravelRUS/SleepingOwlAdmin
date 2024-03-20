@@ -182,7 +182,7 @@ class Image extends File
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return mixed|void
      */
     public function afterSave(Request $request)
