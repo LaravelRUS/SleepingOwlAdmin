@@ -64,9 +64,10 @@ class Select extends EditableColumn implements ColumnEditableInterface
      * Select constructor.
      *
      * @param  $name
-     * @param null $label
-     * @param array $options
-     * @param null $small
+     * @param  null  $label
+     * @param  array  $options
+     * @param  null  $small
+     *
      * @throws SelectException
      */
     public function __construct($name, $label = null, $options = [], $small = null)
@@ -186,7 +187,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param $value
+     * @param  $value
      * @return mixed|null|void
      */
     public function getOptionName($value)
@@ -201,7 +202,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param array $options
+     * @param  array  $options
      * @return $this
      */
     public function setOptions(array $options)
@@ -236,7 +237,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      *
      * @throws SelectException
      * @throws FormElementException
