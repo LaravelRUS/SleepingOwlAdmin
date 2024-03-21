@@ -94,7 +94,11 @@ class Select extends NamedFormElement
 
         $options = Arr::except($this->options, $this->exclude);
         if ($this->isSortable()) {
-            asort($options, $this->getSortableFlags());
+            if ($this->getSortableFlags()) {
+                asort($options, $this->getSortableFlags());
+            } else {
+                asort($options);
+            }
         }
 
         $this->setOptions($options);

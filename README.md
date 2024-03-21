@@ -22,13 +22,14 @@ SleepingOwl Admin is an administrative interface builder for Laravel. __Complete
 - `Laravel 7.*` (`PHP >= 7.2.5`)
 - `Laravel 8.*` (`PHP >= 7.3`)
 - `Laravel 9.*` (`PHP >= 8.0`)
+- `Laravel 10.*` (`PHP >= 8.1`)
 
 __Lumen is NOT supported(((__
 
 
 ## Documentation new ver.9
 
-Powered by Laravel 5.5 - 9+. (latest tested version 10.30.1)
+Powered by Laravel 5.5 - 10+. (latest tested version 10.48.2)
 
 * [Russian](http://sleepingowladmin.ru/#/ru/) (90% process)
 * [English](http://sleepingowladmin.ru/#/en/) (30% process)

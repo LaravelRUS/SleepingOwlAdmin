@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
+use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
 
@@ -62,10 +64,10 @@ class Select extends EditableColumn implements ColumnEditableInterface
      * Select constructor.
      *
      * @param  $name
-     * @param  null  $label
-     * @param  array  $options
-     *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
+     * @param null $label
+     * @param array $options
+     * @param null $small
+     * @throws SelectException
      */
     public function __construct($name, $label = null, $options = [], $small = null)
     {
@@ -143,7 +145,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * @return bool
      */
-    public function isSortable()
+    public function isSortable(): bool
     {
         return $this->sortable;
     }
@@ -151,7 +153,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
             $this->setOptions(
@@ -170,7 +172,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * @return array
      */
-    public function mutateOptions()
+    public function mutateOptions(): array
     {
         $options = [];
 
@@ -184,8 +186,8 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param  $key
-     * @return mixed|null
+     * @param $value
+     * @return mixed|null|void
      */
     public function getOptionName($value)
     {
@@ -199,7 +201,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param array
+     * @param array $options
      * @return $this
      */
     public function setOptions(array $options)
@@ -234,10 +236,10 @@ class Select extends EditableColumn implements ColumnEditableInterface
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
+     * @throws SelectException
+     * @throws FormElementException
      * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
      */
     public function save(Request $request)
