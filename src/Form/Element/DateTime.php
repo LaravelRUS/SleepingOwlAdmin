@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Form\Element;
 
 use Carbon\Carbon;
-use Closure;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Traits\DateFormat;
@@ -119,7 +118,7 @@ class DateTime extends NamedFormElement
     }
 
     /**
-     * @param $date
+     * @param  $date
      * @return string|void
      */
     public function parseValue($date)
