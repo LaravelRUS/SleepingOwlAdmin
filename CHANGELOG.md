@@ -11,8 +11,11 @@
         ->setExactValue($this->getModelValue())
 ```
 
+## 2024-03-23
+* [Add] Add callable/Closure in AdminFormElement::date / datetime `->setDefaultValue(fn() => now()->addDays(2))`
+
 ## 2024-02-21
-* [Add] Add Closure in `->setHelpText(fn(Model $model) => $model->title)`
+* [Add] Add callable/Closure in `->setHelpText(fn(Model $model) => $model->title)`
 
 ## 2024-02-16
 * [Add] add in method wrapRelatedInto $this for correct work in form element
