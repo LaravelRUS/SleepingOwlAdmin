@@ -35,14 +35,14 @@ class DateRange extends Date
     /**
      * @param  string  $date
      * @param  bool  $add_day
-     * @return array|string
+     * @return array|void
      *
      * @throws \SleepingOwl\Admin\Exceptions\FilterOperatorException
      */
     public function parseValue($date, $add_day = false)
     {
         if ($date === null) {
-            return ['0000-00-00', '9999-12-31'];
+            return;
         }
 
         $dates = explode(' - ', $date, 2);
