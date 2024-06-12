@@ -452,7 +452,7 @@ abstract class NamedFormElement extends FormElement
                 $jsonAttr = json_decode($jsonAttr, true);
             }
 
-            return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'));
+            return Arr::get($jsonAttr, $jsonParts->slice(1)->implode('.'), $value);
         }
 
         $relations = explode('.', $path);
