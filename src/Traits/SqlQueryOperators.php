@@ -80,7 +80,7 @@ trait SqlQueryOperators
      */
     public function setOperator($operator)
     {
-        if (! array_key_exists($operator, $this->sqlOperators)) {
+        if (! array_key_exists($operator, $this->getSqlOperators())) {
             throw new FilterOperatorException("Operator [$operator] not found");
         }
 
@@ -131,7 +131,7 @@ trait SqlQueryOperators
      */
     protected function getOperatorParams()
     {
-        return Arr::get($this->sqlOperators, $this->getOperator(), ['method' => 'where', 'op' => '=']);
+        return Arr::get($this->getSqlOperators(), $this->getOperator(), ['method' => 'where', 'op' => '=']);
     }
 
     /**
