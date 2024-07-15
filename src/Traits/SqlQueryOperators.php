@@ -2,11 +2,11 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Grammars\PostgresGrammar;
 use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Exceptions\FilterOperatorException;
-use DB;
 
 trait SqlQueryOperators
 {
