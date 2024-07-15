@@ -18,10 +18,10 @@ trait SqlQueryOperators
     /**
      * @var array
      */
-
     protected $sqlOperators = [
 
     ];
+
     protected $ilikeSqlOperators = [
         'begins_with' => ['method' => 'where', 'op' => 'ilike', 'mod' => '?%'],
         'not_begins_with' => ['method' => 'where', 'op' => 'not ilike', 'mod' => '?%'],
@@ -70,6 +70,7 @@ trait SqlQueryOperators
         if (DB::query()->getGrammar() instanceof PostgresGrammar && mb_strtolower(config('sleeping_owl.search_operator')) === 'ilike') {
             return $this->sqlOperators = array_merge($this->preSqlOperators, $this->ilikeSqlOperators);
         }
+
         return $this->sqlOperators = $this->preSqlOperators;
     }
 
