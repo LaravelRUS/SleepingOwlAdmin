@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Grammars\PostgresGrammar;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Request;
@@ -311,8 +312,8 @@ class DisplayTable extends Display
                     if ($_model->getAttribute($column->getName())) {
                         continue;
                     }
-
-                    $query->orWhere($column->getName(), 'like', '%'.$search.'%');
+                    $operator = $query->getConnection()->getQueryGrammar() instanceof PostgresGrammar ? config('sleeping_owl.search_operator') : 'LIKE';
+                    $query->orWhere($column->getName(), $operator, '%'.$search.'%');
                 }
             }
         });
