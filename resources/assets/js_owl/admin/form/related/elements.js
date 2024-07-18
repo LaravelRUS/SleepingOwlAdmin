@@ -54,11 +54,11 @@ Vue.component('related-elements', {
         },
 
         canAddMore() {
-            if (!this.limit) {
-                return true;
+            if (this.limit || this.limit === 0) {
+                return this.limit > this.totalGroupsCount;
             }
 
-            return this.limit > this.totalGroupsCount;
+            return true;
         },
     },
 

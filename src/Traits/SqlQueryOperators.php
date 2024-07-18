@@ -2,7 +2,9 @@
 
 namespace SleepingOwl\Admin\Traits;
 
+use DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Grammars\PostgresGrammar;
 use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Exceptions\FilterOperatorException;
 
@@ -17,6 +19,19 @@ trait SqlQueryOperators
      * @var array
      */
     protected $sqlOperators = [
+
+    ];
+
+    protected $ilikeSqlOperators = [
+        'begins_with' => ['method' => 'where', 'op' => 'ilike', 'mod' => '?%'],
+        'not_begins_with' => ['method' => 'where', 'op' => 'not ilike', 'mod' => '?%'],
+        'contains' => ['method' => 'where', 'op' => 'ilike', 'mod' => '%?%'],
+        'not_contains' => ['method' => 'where', 'op' => 'not ilike', 'mod' => '%?%'],
+        'ends_with' => ['method' => 'where', 'op' => 'ilike', 'mod' => '%?'],
+        'not_ends_with' => ['method' => 'where', 'op' => 'not ilike', 'mod' => '%?'],
+    ];
+
+    protected $preSqlOperators = [
         'equal' => ['method' => 'where', 'op' => '='],
         'not_equal' => ['method' => 'where', 'op' => '!='],
         'less' => ['method' => 'where', 'op' => '<'],
@@ -47,6 +62,18 @@ trait SqlQueryOperators
         return $this->operator;
     }
 
+    public function getSqlOperators()
+    {
+        if ($this->sqlOperators) {
+            return $this->sqlOperators;
+        }
+        if (DB::query()->getGrammar() instanceof PostgresGrammar && mb_strtolower(config('sleeping_owl.search_operator')) === 'ilike') {
+            return $this->sqlOperators = array_merge($this->preSqlOperators, $this->ilikeSqlOperators);
+        }
+
+        return $this->sqlOperators = $this->preSqlOperators;
+    }
+
     /**
      * @param  string  $operator
      * @return $this
@@ -55,7 +82,7 @@ trait SqlQueryOperators
      */
     public function setOperator($operator)
     {
-        if (! array_key_exists($operator, $this->sqlOperators)) {
+        if (! array_key_exists($operator, $this->getSqlOperators())) {
             throw new FilterOperatorException("Operator [$operator] not found");
         }
 
@@ -106,7 +133,7 @@ trait SqlQueryOperators
      */
     protected function getOperatorParams()
     {
-        return Arr::get($this->sqlOperators, $this->getOperator(), ['method' => 'where', 'op' => '=']);
+        return Arr::get($this->getSqlOperators(), $this->getOperator(), ['method' => 'where', 'op' => '=']);
     }
 
     /**

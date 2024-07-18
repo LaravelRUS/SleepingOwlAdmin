@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Grammars\PostgresGrammar;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -216,12 +217,13 @@ class FormElementController extends Controller
 
             if ($request->q && is_object($model)) {
                 $query = $model;
+                $operator = $query->getConnection()->getQueryGrammar() instanceof PostgresGrammar ? config('sleeping_owl.search_operator') : 'LIKE';
 
                 // search logic
                 $model_table = $model->getTable();
                 $q = $request->q;
                 if (is_array($search)) {
-                    $query = $query->where(function ($query) use ($model_table, $search, $q) {
+                    $query = $query->where(function ($query) use ($operator, $model_table, $search, $q) {
                         foreach ($search as $key => $val) {
                             if (is_numeric($key)) {
                                 $srch = $val;
@@ -244,11 +246,11 @@ class FormElementController extends Controller
                                         break;
                                 }
                             }
-                            $query = $query->orWhere($model_table.'.'.$srch, 'LIKE', $value);
+                            $query = $query->orWhere($model_table.'.'.$srch, $operator, $value);
                         }
                     });
                 } else {
-                    $query = $query->where($model_table.'.'.$search, 'LIKE', "%{$request->q}%");
+                    $query = $query->where($model_table.'.'.$search, $operator, "%{$request->q}%");
                 }
 
                 // exclude result elements by id
