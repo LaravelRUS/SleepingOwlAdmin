@@ -215,7 +215,7 @@ class FormElementController extends Controller
             $custom_name = $element->getCustomName();
             $exclude = $element->getExclude();
 
-            if ($request->q && is_object($model)) {
+            if (is_object($model)) {
                 $query = $model;
                 $operator = $query->getConnection()->getQueryGrammar() instanceof PostgresGrammar ? config('sleeping_owl.search_operator') : 'LIKE';
 
