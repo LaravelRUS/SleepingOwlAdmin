@@ -524,8 +524,10 @@ class AdminController extends Controller
         } else {
             if ($display instanceof DisplayTabbed) {
                 foreach ($display->getTabs() as $tab) {
-                    if($column) continue;
-                    
+                    if ($column) {
+                        continue;
+                    }
+
                     $content = $tab->getContent();
 
                     if ($content instanceof DisplayTable) {
