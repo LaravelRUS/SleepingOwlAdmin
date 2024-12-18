@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Collective\Html\HtmlServiceProvider;
+use Spatie\Html\HtmlServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
