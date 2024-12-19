@@ -6,7 +6,7 @@
             @endif
             {{
               app('A')
-                ->attributes([$linkAttributes, 'target'=> '_blank'])
+                ->attributes(array_merge($linkAttributes, ['target'=> '_blank']))
                 ->href($value)
                 ->text($text)
             }}
