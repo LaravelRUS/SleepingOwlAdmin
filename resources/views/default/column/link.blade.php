@@ -1,9 +1,7 @@
 <div {!! $attributes !!}>
   @if ($visibled)
     @if($isEditable)
-      <a href="{{ $link }}" {!! app('html')->attributes($linkAttributes) !!}>
-        {!! $value !!}
-      </a>
+      {!! app('A')->attributes($linkAttributes)->href($link)->text($value) !!}
     @else
       {!! $value !!}
     @endif
