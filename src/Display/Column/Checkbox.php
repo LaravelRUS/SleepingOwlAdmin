@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Form;
-use Spatie\Html\Elements\Input;
 
 class Checkbox extends NamedColumn
 {
