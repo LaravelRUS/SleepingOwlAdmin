@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column;
 
 use Form;
+use Spatie\Html\Elements\Input;
 
 class Checkbox extends NamedColumn
 {
@@ -24,9 +25,7 @@ class Checkbox extends NamedColumn
     public function __construct($label = null)
     {
         parent::__construct($label);
-        $this->setLabel(
-            Form::checkbox(null, 1, false, ['class' => 'adminCheckboxAll']
-            ));
+        $this->setLabel(Form::checkbox(null, 1, false)->attribute('class', 'adminCheckboxAll'));
     }
 
     /**
