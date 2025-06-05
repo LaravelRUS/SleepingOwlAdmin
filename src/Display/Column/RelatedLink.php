@@ -37,6 +37,8 @@ class RelatedLink extends Link
      */
     public function setModel(Model $model)
     {
+        $this->setName($this->originalName);
+        
         if (strpos($this->originalName, '.') !== false) {
             $parts = explode('.', $this->originalName);
             $name = array_pop($parts);
