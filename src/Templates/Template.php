@@ -2,6 +2,9 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
+use DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException;
+use DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
@@ -40,7 +43,7 @@ abstract class Template implements TemplateInterface
     /**
      * string VendorVersion.
      */
-    protected $ver = '<b>Ver:</b> dev.2408.1013';
+    protected $ver = '<b>Ver:</b> dev.2507.1022';
 
     /**
      * TemplateDefault constructor.
@@ -70,7 +73,7 @@ abstract class Template implements TemplateInterface
      *
      * @return string
      */
-    public function longName()
+    public function longName(): string
     {
         return $this->name().' v.'.$this->version();
     }
@@ -78,7 +81,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return Breadcrumbs
      */
-    public function breadcrumbs()
+    public function breadcrumbs(): Breadcrumbs
     {
         return $this->breadcrumbs;
     }
@@ -86,7 +89,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return MetaInterface
      */
-    public function meta()
+    public function meta(): MetaInterface
     {
         return $this->meta;
     }
@@ -94,7 +97,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return NavigationInterface
      */
-    public function navigation()
+    public function navigation(): NavigationInterface
     {
         return $this->navigation;
     }
@@ -105,7 +108,7 @@ abstract class Template implements TemplateInterface
      * @param  string  $path  относительный путь до файла, например `js/app.js`
      * @return string
      */
-    public function assetPath($path = null)
+    public function assetPath($path = null): string
     {
         return ! is_null($path) ? $this->assetDir().'/'.ltrim($path, '/') : $this->assetDir();
     }
@@ -113,7 +116,7 @@ abstract class Template implements TemplateInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return config('sleeping_owl.title');
     }
@@ -123,7 +126,7 @@ abstract class Template implements TemplateInterface
      * @param  string  $separator
      * @return string
      */
-    public function makeTitle($title, $separator = ' | ')
+    public function makeTitle($title, $separator = ' | '): string
     {
         if (empty($title)) {
             return $this->getTitle();
@@ -136,7 +139,7 @@ abstract class Template implements TemplateInterface
      * @param  string  $view
      * @return string
      */
-    public function getViewPath($view)
+    public function getViewPath($view): string
     {
         if ($view instanceof View) {
             return $view->getPath();
@@ -170,9 +173,9 @@ abstract class Template implements TemplateInterface
      * @param  string  $key
      * @return string|void
      *
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException
+     * @throws InvalidBreadcrumbException
+     * @throws UnnamedRouteException
+     * @throws ViewNotSetException
      */
     public function renderBreadcrumbs($key)
     {
@@ -209,7 +212,7 @@ abstract class Template implements TemplateInterface
      * @param  string  $title
      * @return string
      */
-    public function renderMeta($title)
+    public function renderMeta($title): string
     {
         $this->setGlobalVariables();
 
