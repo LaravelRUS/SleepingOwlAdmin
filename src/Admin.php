@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Collective\Html\HtmlServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
@@ -25,6 +24,7 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Providers\AdminServiceProvider;
 use SleepingOwl\Admin\Providers\AliasesServiceProvider;
 use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
+use Spatie\Html\HtmlServiceProvider;
 
 /**
  * Class Admin.

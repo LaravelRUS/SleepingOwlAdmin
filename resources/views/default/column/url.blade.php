@@ -1,16 +1,15 @@
 <div {!! $attributes !!}>
 	@if ($visibled)
 		@if (!empty($value))
-			<a href="{{ $value }}" {{ app('html')->attributes($linkAttributes) }} target="_blank">
-				@if($icon)
-					<i class="{{ $icon }}" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.filter-goto') }}"></i>
-				@endif
-
-				@if($text)
-					{{ $text }}
-				@endif
-
-			</a>
+            @if($icon)
+                <i class="{{ $icon }}" data-toggle="tooltip" title="{{ trans('sleeping_owl::lang.table.filter-goto') }}"></i>
+            @endif
+            {{
+              app('A')
+                ->attributes(array_merge($linkAttributes, ['target'=> '_blank']))
+                ->href($value)
+                ->text($text)
+            }}
 		@endif
 		{!! $append !!}
 
