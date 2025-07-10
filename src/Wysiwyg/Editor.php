@@ -45,7 +45,7 @@ final class Editor implements WysiwygEditorInterface
      * @param  WysiwygFilterInterface|null  $filter
      * @param  array  $config
      */
-    public function __construct($id, $name = null, WysiwygFilterInterface $filter = null, array $config = [])
+    public function __construct($id, $name = null, ?WysiwygFilterInterface $filter = null, array $config = [])
     {
         $this->id = $id;
         $this->name = is_null($name) ? Str::studly($id) : $name;

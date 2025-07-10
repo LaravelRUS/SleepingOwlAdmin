@@ -17,7 +17,7 @@ class FilterCustom extends FilterField
      * @param  string|Closure|null  $title
      * @param  Closure|null  $callback
      */
-    public function __construct($name, $title = null, Closure $callback = null)
+    public function __construct($name, $title = null, ?Closure $callback = null)
     {
         parent::__construct($name, $title);
 

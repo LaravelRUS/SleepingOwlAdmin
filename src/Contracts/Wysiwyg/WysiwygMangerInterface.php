@@ -17,7 +17,7 @@ interface WysiwygMangerInterface
      * @param  string|null  $name
      * @return WysiwygEditorInterface
      */
-    public function register($editorId, WysiwygFilterInterface $filter = null, $name = null);
+    public function register($editorId, ?WysiwygFilterInterface $filter = null, $name = null);
 
     /**
      * @return \Illuminate\Support\Collection|WysiwygEditorInterface[]

@@ -15,7 +15,7 @@ trait HasUniqueValidation
      * @param  string|null  $message
      * @return static
      */
-    public function unique(array $columns, string $message = null)
+    public function unique(array $columns, ?string $message = null)
     {
         $this->initializeUniqueValidator($message);
         $this->unique = $columns;
@@ -23,7 +23,7 @@ trait HasUniqueValidation
         return $this;
     }
 
-    protected function initializeUniqueValidator(string $message = null)
+    protected function initializeUniqueValidator(?string $message = null)
     {
         Validator::extendImplicit('unique_related', function () {
             return false;

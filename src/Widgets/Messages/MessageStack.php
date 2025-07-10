@@ -16,7 +16,7 @@ class MessageStack
     /**
      * @param  null|array  $types
      */
-    public function __construct(array $types = null)
+    public function __construct(?array $types = null)
     {
         $this->types = $types;
     }

@@ -21,7 +21,7 @@ interface AdminInterface extends Initializable
      * @param  \Closure|null  $callback
      * @return $this
      */
-    public function registerModel($class, Closure $callback = null);
+    public function registerModel($class, ?Closure $callback = null);
 
     /**
      * @param  array  $sections

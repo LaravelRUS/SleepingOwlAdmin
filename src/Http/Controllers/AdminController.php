@@ -743,7 +743,7 @@ class AdminController extends Controller
      * @param  string|null  $title
      * @return Factory|View
      */
-    public function renderContent($content, string $title = null)
+    public function renderContent($content, ?string $title = null)
     {
         if ($content instanceof Renderable) {
             $content = $content->render();

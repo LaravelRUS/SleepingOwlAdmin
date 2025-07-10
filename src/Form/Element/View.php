@@ -21,7 +21,7 @@ class View extends Custom
      * @param  array  $data
      * @param  Closure  $callback
      */
-    public function __construct($view, array $data = [], Closure $callback = null)
+    public function __construct($view, array $data = [], ?Closure $callback = null)
     {
         $this->setView($view);
         $this->setData($data);

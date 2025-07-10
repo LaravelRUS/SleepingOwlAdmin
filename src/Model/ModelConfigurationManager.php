@@ -640,7 +640,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  array  $payload
      * @return mixed
      */
-    public function fireEvent($event, $halt = true, Model $model = null, ...$payload)
+    public function fireEvent($event, $halt = true, ?Model $model = null, ...$payload)
     {
         if (! isset(self::$dispatcher)) {
             return true;
