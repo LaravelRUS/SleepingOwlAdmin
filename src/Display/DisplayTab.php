@@ -357,7 +357,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      *
      * @throws ValidationException
      */
-    public function validateForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function validateForm(\Illuminate\Http\Request $request, ?ModelConfigurationInterface $model = null)
     {
         if (($content = $this->getContent()) instanceof FormInterface) {
             $content->validateForm($request, $model);
@@ -371,7 +371,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
      * @param  ModelConfigurationInterface  $model
      * @return void
      */
-    public function saveForm(\Illuminate\Http\Request $request, ModelConfigurationInterface $model = null)
+    public function saveForm(\Illuminate\Http\Request $request, ?ModelConfigurationInterface $model = null)
     {
         if (($content = $this->getContent()) instanceof FormInterface) {
             $content->saveForm($request, $model);

@@ -38,7 +38,7 @@ interface FormInterface extends FormElementInterface, ElementsInterface
      *
      * @throws ValidationException
      */
-    public function validateForm(Request $request, ModelConfigurationInterface $model = null);
+    public function validateForm(Request $request, ?ModelConfigurationInterface $model = null);
 
     /**
      * Save model.
@@ -47,5 +47,5 @@ interface FormInterface extends FormElementInterface, ElementsInterface
      * @param  ModelConfigurationInterface  $model
      * @return void
      */
-    public function saveForm(Request $request, ModelConfigurationInterface $model = null);
+    public function saveForm(Request $request, ?ModelConfigurationInterface $model = null);
 }

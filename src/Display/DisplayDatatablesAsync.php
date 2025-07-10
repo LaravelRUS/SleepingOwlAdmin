@@ -77,7 +77,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param  string|null  $name
      * @param  string|null  $distinct
      */
-    public function __construct(string $name = null, string $distinct = null)
+    public function __construct(?string $name = null, ?string $distinct = null)
     {
         parent::__construct();
 
@@ -163,7 +163,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
      * @param  string|null  $name
      * @return $this
      */
-    public function setName(string $name = null)
+    public function setName(?string $name = null)
     {
         $this->name = $name;
 

@@ -220,7 +220,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * @param  ModelConfigurationInterface  $model
      * @return void
      */
-    public function validateForm(Request $request, ModelConfigurationInterface $model = null)
+    public function validateForm(Request $request, ?ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function ($tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');
@@ -236,7 +236,7 @@ class DisplayTabbed implements DisplayInterface, FormInterface
      * @param  ModelConfigurationInterface  $model
      * @return void
      */
-    public function saveForm(Request $request, ModelConfigurationInterface $model = null)
+    public function saveForm(Request $request, ?ModelConfigurationInterface $model = null)
     {
         $this->getTabs()->each(function (TabInterface $tab) use ($request, $model) {
             $tabId = $request->get('sleeping_owl_tab_id');

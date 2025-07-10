@@ -58,7 +58,7 @@ class Manager implements WysiwygMangerInterface
      * @param  string|null  $name
      * @return WysiwygEditorInterface
      */
-    public function register($editorId, WysiwygFilterInterface $filter = null, $name = null)
+    public function register($editorId, ?WysiwygFilterInterface $filter = null, $name = null)
     {
         $this->getFilters()->push(
             $editor = new Editor($editorId, $name, $filter, $this->config->get($editorId, []))

@@ -411,7 +411,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Closure|null  $callback
      * @return $this
      */
-    public function onCreate(Closure $callback = null)
+    public function onCreate(?Closure $callback = null)
     {
         $this->create = $callback;
 
@@ -457,7 +457,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Closure|null  $callback
      * @return $this
      */
-    public function onEdit(Closure $callback = null)
+    public function onEdit(?Closure $callback = null)
     {
         $this->edit = $callback;
 
@@ -502,7 +502,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Closure|null  $callback
      * @return $this
      */
-    public function onCreateAndEdit(Closure $callback = null)
+    public function onCreateAndEdit(?Closure $callback = null)
     {
         $this->onCreate($callback);
         $this->onEdit($callback);
@@ -522,7 +522,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Closure|null  $callback
      * @return $this
      */
-    public function onDelete(Closure $callback = null)
+    public function onDelete(?Closure $callback = null)
     {
         $this->delete = $callback;
 
@@ -552,7 +552,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Closure|null  $callback
      * @return $this
      */
-    public function onDestroy(Closure $callback = null)
+    public function onDestroy(?Closure $callback = null)
     {
         $this->destroy = $callback;
 
@@ -582,7 +582,7 @@ class ModelConfiguration extends ModelConfigurationManager
      * @param  Closure|null  $callback
      * @return $this
      */
-    public function onRestore(Closure $callback = null)
+    public function onRestore(?Closure $callback = null)
     {
         $this->restore = $callback;
 

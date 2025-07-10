@@ -17,7 +17,7 @@ class Html extends Custom
      * @param  string|Closure|Htmlable|ViewContract  $html
      * @param  Closure  $callback
      */
-    public function __construct($html, Closure $callback = null)
+    public function __construct($html, ?Closure $callback = null)
     {
         $this->setDisplay($html);
 
