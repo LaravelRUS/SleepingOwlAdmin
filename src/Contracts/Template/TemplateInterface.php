@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Contracts\Template;
 
+use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Illuminate\Contracts\Support\Arrayable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
@@ -55,7 +56,7 @@ interface TemplateInterface extends Initializable, Arrayable
     public function renderBreadcrumbs($key);
 
     /**
-     * @return \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
+     * @return BreadcrumbsManager
      */
     public function breadcrumbs();
 

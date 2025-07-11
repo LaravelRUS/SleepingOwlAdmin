@@ -11,14 +11,14 @@ class Generator extends IdeHelperGenerator
     /**
      * Regroup aliases by namespace of extended classes.
      *
-     * @return Collection
+     * @return Collection|null
      */
-    protected function getAliasesByExtendsNamespace()
+    protected function getAliasesByExtendsNamespace(): ?Collection
     {
         $aliases = $this->getValidAliases();
 
         $aliases = $aliases->filter(function (Alias $item) {
-            return ! collect([
+            return !collect([
                 'MessageStack',
                 'AdminSection',
                 'AdminTemplate',

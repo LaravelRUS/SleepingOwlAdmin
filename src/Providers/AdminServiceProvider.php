@@ -235,6 +235,14 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerAliases()
     {
+//        $aliases = config('sleeping_owl.aliases', []);
+//
+//        $loader = AliasLoader::getInstance();
+//
+//        foreach ($aliases as $alias => $class) {
+//            $loader->alias($alias, $class);
+//        }
+
         AliasLoader::getInstance(config('sleeping_owl.aliases', []));
     }
 

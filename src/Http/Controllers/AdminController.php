@@ -2,8 +2,10 @@
 
 namespace SleepingOwl\Admin\Http\Controllers;
 
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
-use DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException;
+
+use Diglactic\Breadcrumbs\Generator as BreadcrumbsGenerator;
+use Diglactic\Breadcrumbs\Exceptions\DuplicateBreadcrumbException;
+use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
@@ -30,7 +32,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AdminController extends Controller
 {
     /**
-     * @var \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
+     * @var BreadcrumbsManager
      */
     protected $breadcrumbs;
 
@@ -81,7 +83,7 @@ class AdminController extends Controller
         $admin->navigation()->setCurrentUrl($request->getUri());
 
         if (! $this->breadcrumbs->exists('home')) {
-            $this->breadcrumbs->register('home', function (BreadcrumbsGenerator $breadcrumbs) {
+            $this->breadcrumbs->for('home', function (BreadcrumbsGenerator $breadcrumbs) {
                 $breadcrumbs->push(trans('sleeping_owl::lang.dashboard'), route('admin.dashboard'));
             });
         }
@@ -784,7 +786,7 @@ class AdminController extends Controller
      */
     protected function registerBreadcrumb($title, $parent, string $name = 'render', $url = null)
     {
-        $this->breadcrumbs->register($name, function (BreadcrumbsGenerator $breadcrumbs) use ($title, $parent, $url) {
+        $this->breadcrumbs->for($name, function (BreadcrumbsGenerator $breadcrumbs) use ($title, $parent, $url) {
             $breadcrumbs->parent($parent);
             $breadcrumbs->push($title, $url);
         });
@@ -803,7 +805,7 @@ class AdminController extends Controller
 
         foreach ($this->breadCrumbsData as $breadcrumb) {
             if (! $this->breadcrumbs->exists($breadcrumb['id'])) {
-                $this->breadcrumbs->register($breadcrumb['id'], function (BreadcrumbsGenerator $breadcrumbs) use ($breadcrumb) {
+                $this->breadcrumbs->for($breadcrumb['id'], function (BreadcrumbsGenerator $breadcrumbs) use ($breadcrumb) {
                     $breadcrumbs->parent($breadcrumb['parent']);
                     $breadcrumbs->push($breadcrumb['title'], $breadcrumb['url']);
                 });

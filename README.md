@@ -18,9 +18,9 @@ SleepingOwl Admin is an administrative interface builder for Laravel. __Complete
 
 ## ⚠️ Laravel Version Support
 
-> **Starting from the next major release, SleepingOwl Admin will support Laravel 9 and above only.**
+> **Starting from the next major release, SleepingOwl Admin will support Laravel 10 and above only.**
 >
-> Support for older Laravel versions (<= 8) will be dropped to align with modern PHP (>= 8.1) and Laravel standards.
+> Support for older Laravel versions (<= 9) will be dropped to align with modern PHP (>= 8.1) and Laravel standards.
 
 Please ensure your application is updated before upgrading to the next version.
 

@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Configuration;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Request;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Traits\DatePicker;
@@ -10,7 +11,7 @@ use SleepingOwl\Admin\Traits\MaxFileSizeTrait;
 /**
  * Trait ProvidesScriptVariables.
  *
- * @property-read \Illuminate\Foundation\Application $app
+ * @property-read Application $app
  */
 trait ProvidesScriptVariables
 {
@@ -33,7 +34,7 @@ trait ProvidesScriptVariables
         // $maxFileSize = $this->convertMB(ini_get('upload_max_filesize'));
 
         $state_filters = $this->config['state_filters'];
-        if (! $this->config['state_datatables']) {
+        if (!$this->config['state_datatables']) {
             $state_filters = false;
         }
 

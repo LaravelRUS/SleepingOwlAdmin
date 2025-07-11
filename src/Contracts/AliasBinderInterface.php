@@ -7,7 +7,7 @@ use Illuminate\Contracts\Routing\Registrar;
 interface AliasBinderInterface
 {
     /**
-     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     * @param Registrar $router
      * @return void
      */
     public static function registerRoutes(Registrar $router);

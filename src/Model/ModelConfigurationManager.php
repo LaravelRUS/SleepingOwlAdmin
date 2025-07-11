@@ -18,7 +18,7 @@ use SleepingOwl\Admin\Exceptions\RepositoryException;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Navigation\Badge;
 use SleepingOwl\Admin\Navigation\Page;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method bool creating(Closure $callback)
@@ -37,7 +37,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      *
      * @return Dispatcher
      */
-    public static function getEventDispatcher()
+    public static function getEventDispatcher(): Dispatcher
     {
         return self::$dispatcher;
     }
@@ -141,7 +141,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
@@ -149,7 +149,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
@@ -157,15 +157,15 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return Model|null
      */
-    public function getModelValue()
+    public function getModelValue(): ?Model
     {
         return $this->model_value;
     }
 
     /**
-     * @param  Model  $item
+     * @param Model $item
      */
-    public function setModelValue($item)
+    public function setModelValue(Model $item)
     {
         $this->model_value = $item;
     }
@@ -173,7 +173,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if (is_null($this->title)) {
             $title = str_replace('_', ' ', $this->getDefaultClassTitle());
@@ -184,18 +184,18 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
 
     /**
-     * @param  string  $icon
+     * @param string $icon
      * @return $this
      */
-    public function setIcon($icon)
+    public function setIcon(string $icon): ModelConfigurationManager
     {
         $this->icon = $icon;
 
@@ -205,7 +205,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return $this->alias;
     }
@@ -360,7 +360,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
      * @param  Model  $model
      * @return bool
      */
-    public function can($action, Model $model)
+    public function can($action, Model $model): bool
     {
         if (! $this->checkAccess) {
             return true;
@@ -383,7 +383,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return null|string
      */
-    public function getControllerClass()
+    public function getControllerClass(): ?string
     {
         return $this->controllerClass;
     }
@@ -694,9 +694,9 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @param  $event
      * @param  $callback
-     * @param  int  $priority
+     * @param int $priority
      */
-    protected function registerEvent($event, $callback, $priority = 0)
+    protected function registerEvent($event, $callback, int $priority = 0)
     {
         if (isset(self::$dispatcher)) {
             self::$dispatcher->listen("sleeping_owl.section.{$event}: ".$this->getClass(), $callback, $priority);
@@ -711,7 +711,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    protected function getDefaultClassTitle()
+    protected function getDefaultClassTitle(): string
     {
         return Str::snake(Str::plural(class_basename($this->getClass())));
     }

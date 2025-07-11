@@ -3,6 +3,8 @@
 namespace SleepingOwl\Admin\Model;
 
 use Closure;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -115,9 +117,9 @@ class ModelConfiguration extends ModelConfigurationManager
     }
 
     /**
-     * @return \Illuminate\Support\Collection|null
+     * @return mixed[]
      */
-    public function getBreadCrumbs()
+    public function getBreadCrumbs(): array
     {
         return $this->breadcrumbs->toArray();
     }
@@ -220,16 +222,16 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
-    public function can($action, Model $model)
+    public function can($action, Model $model): bool
     {
         if (! $this->checkAccess) {
             return true;
         }
 
-        return \Gate::allows($action, $model);
+        return Gate::allows($action, $model);
     }
 
     /**

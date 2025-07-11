@@ -1,5 +1,6 @@
 <?php
 
+use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Mockery as m;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
@@ -102,11 +103,11 @@ class TestCase extends Orchestra\Testbench\TestCase
     }
 
     /**
-     * @return m\MockInterface|\DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
+     * @return m\MockInterface|BreadcrumbsManager
      */
     public function getBreadcrumbsMock()
     {
-        return $this->app['breadcrumbs'] = m::mock(DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::class);
+        return $this->app['breadcrumbs'] = m::mock(BreadcrumbsManager::class);
     }
 
     /**
