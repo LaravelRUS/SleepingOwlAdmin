@@ -163,7 +163,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param Model $item
+     * @param  Model  $item
      */
     public function setModelValue(Model $item)
     {
@@ -192,7 +192,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     }
 
     /**
-     * @param string $icon
+     * @param  string  $icon
      * @return $this
      */
     public function setIcon(string $icon): ModelConfigurationManager
@@ -694,7 +694,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @param  $event
      * @param  $callback
-     * @param int $priority
+     * @param  int  $priority
      */
     protected function registerEvent($event, $callback, int $priority = 0)
     {
