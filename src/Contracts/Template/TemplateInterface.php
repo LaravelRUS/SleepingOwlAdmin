@@ -2,7 +2,10 @@
 
 namespace SleepingOwl\Admin\Contracts\Template;
 
+use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 
@@ -41,10 +44,10 @@ interface TemplateInterface extends Initializable, Arrayable
     public function getViewPath($view);
 
     /**
-     * @param  string|\Illuminate\View\View  $view
+     * @param  string|View  $view
      * @param  array  $data
      * @param  array  $mergeData
-     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return bool|Factory|View
      */
     public function view($view, array $data = [], $mergeData = []);
 
@@ -55,7 +58,7 @@ interface TemplateInterface extends Initializable, Arrayable
     public function renderBreadcrumbs($key);
 
     /**
-     * @return \DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
+     * @return BreadcrumbsManager
      */
     public function breadcrumbs();
 

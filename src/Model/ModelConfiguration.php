@@ -3,7 +3,9 @@
 namespace SleepingOwl\Admin\Model;
 
 use Closure;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -108,25 +110,25 @@ class ModelConfiguration extends ModelConfigurationManager
 
     protected $breadcrumbs = null;
 
-    public function __construct(\Illuminate\Contracts\Foundation\Application $app, $class)
+    public function __construct(Application $app, $class)
     {
         parent::__construct($app, $class);
         $this->breadcrumbs = collect();
     }
 
     /**
-     * @return \Illuminate\Support\Collection|null
+     * @return array
      */
-    public function getBreadCrumbs()
+    public function getBreadCrumbs(): array
     {
         return $this->breadcrumbs->toArray();
     }
 
     /**
      * @param  $breadcrumb
-     * @return mixed|void
+     * @return void
      */
-    public function addBreadCrumb($breadcrumb)
+    public function addBreadCrumb($breadcrumb): void
     {
         $this->breadcrumbs->push($breadcrumb);
     }
@@ -220,7 +222,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @return bool
      */
     public function can($action, Model $model)

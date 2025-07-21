@@ -63,7 +63,7 @@ trait SelectOptionsFromModel
 
     /**
      * @param  string|Model  $modelForOptions
-     * @param  null  $display
+     * @param  string|null  $display
      * @param  null|bool  $cacheOptions
      * @return $this
      *

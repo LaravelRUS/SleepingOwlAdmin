@@ -11,9 +11,9 @@ class Generator extends IdeHelperGenerator
     /**
      * Regroup aliases by namespace of extended classes.
      *
-     * @return Collection
+     * @return Collection|null
      */
-    protected function getAliasesByExtendsNamespace()
+    protected function getAliasesByExtendsNamespace(): ?Collection
     {
         $aliases = $this->getValidAliases();
 

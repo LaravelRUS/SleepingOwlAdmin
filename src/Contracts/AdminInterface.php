@@ -18,7 +18,7 @@ interface AdminInterface extends Initializable
 
     /**
      * @param  string  $class
-     * @param  \Closure|null  $callback
+     * @param Closure|null  $callback
      * @return $this
      */
     public function registerModel($class, ?Closure $callback = null);

@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
-use DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException;
-use DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException;
+use Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
+use Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException;
+use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;

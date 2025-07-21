@@ -46,7 +46,7 @@
         "laravelcollective/html": ">=5.5",
         "kodicms/laravel-assets": "0.*",
         "erusev/parsedown": "1.*",
-        "davejamesmiller/laravel-breadcrumbs": ">=4.0",
+        "diglactic/laravel-breadcrumbs": ">=4.0",
         "barryvdh/laravel-ide-helper": ">=2.4"
     },
     "require-dev": {

@@ -1,6 +1,11 @@
 <?php
 
+use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Translation\Translator;
 use Mockery as m;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
@@ -18,12 +23,12 @@ class TestCase extends Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
     {
-        /** @var \Illuminate\Http\Request $request */
+        /** @var Request $request */
         $request = $app['request'];
 
         if (! version_compare($app->version(), '5.4', '>=')) {
@@ -42,7 +47,7 @@ class TestCase extends Orchestra\Testbench\TestCase
 
     /**
      * @param  string  $url
-     * @return \Illuminate\Http\Request
+     * @return Request
      */
     public function getRequest($url = 'http://www.foo.com/hello/world')
     {
@@ -53,7 +58,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     }
 
     /**
-     * @return m\MockInterface|\Illuminate\Translation\Translator
+     * @return m\MockInterface|Translator
      */
     public function getTranslatorMock()
     {
@@ -64,15 +69,15 @@ class TestCase extends Orchestra\Testbench\TestCase
             return new Lang;
         }
 
-        return $this->app['translator'] = m::mock(\Illuminate\Translation\Translator::class);
+        return $this->app['translator'] = m::mock(Translator::class);
     }
 
     /**
-     * @return m\MockInterface|\Illuminate\Contracts\Routing\UrlGenerator
+     * @return m\MockInterface|UrlGenerator
      */
     public function getRouterMock()
     {
-        return $this->app['url'] = m::mock(\Illuminate\Contracts\Routing\UrlGenerator::class);
+        return $this->app['url'] = m::mock(UrlGenerator::class);
     }
 
     /**
@@ -102,11 +107,11 @@ class TestCase extends Orchestra\Testbench\TestCase
     }
 
     /**
-     * @return m\MockInterface|\DaveJamesMiller\Breadcrumbs\BreadcrumbsManager
+     * @return m\MockInterface|BreadcrumbsManager
      */
     public function getBreadcrumbsMock()
     {
-        return $this->app['breadcrumbs'] = m::mock(DaveJamesMiller\Breadcrumbs\BreadcrumbsManager::class);
+        return $this->app['breadcrumbs'] = m::mock(BreadcrumbsManager::class);
     }
 
     /**

@@ -2,8 +2,10 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
-use DaveJamesMiller\Breadcrumbs\Exceptions\ViewNotSetException;
+use Diglactic\Breadcrumbs\Exceptions\InvalidBreadcrumbException;
+use Diglactic\Breadcrumbs\Exceptions\UnnamedRouteException;
+use Diglactic\Breadcrumbs\Exceptions\ViewNotSetException;
+use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Illuminate\Support\Facades\Log;
 use SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface as BreadcrumbsContract;
 
@@ -14,8 +16,8 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
      * @return string
      *
      * @throws ViewNotSetException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws InvalidBreadcrumbException
+     * @throws UnnamedRouteException
      */
     public function renderIfExists($name = null)
     {
@@ -45,8 +47,8 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
      * @return string
      *
      * @throws ViewNotSetException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws InvalidBreadcrumbException
+     * @throws UnnamedRouteException
      */
     public function renderArray($name, ...$params)
     {
@@ -59,8 +61,8 @@ class Breadcrumbs extends BreadcrumbsManager implements BreadcrumbsContract
      * @return string
      *
      * @throws ViewNotSetException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\InvalidBreadcrumbException
-     * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\UnnamedRouteException
+     * @throws InvalidBreadcrumbException
+     * @throws UnnamedRouteException
      */
     public function renderIfExistsArray($name, $params = [])
     {
