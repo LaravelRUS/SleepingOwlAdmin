@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Http\Controllers;
 use Diglactic\Breadcrumbs\Exceptions\DuplicateBreadcrumbException;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbsGenerator;
 use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
-
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;

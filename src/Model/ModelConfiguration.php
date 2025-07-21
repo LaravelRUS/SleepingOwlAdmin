@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Model;
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
@@ -222,7 +221,7 @@ class ModelConfiguration extends ModelConfigurationManager
 
     /**
      * @param  string  $action
-     * @param Model $model
+     * @param  Model  $model
      * @return bool
      */
     public function can($action, Model $model)
