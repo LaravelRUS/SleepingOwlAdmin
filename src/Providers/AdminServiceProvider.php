@@ -6,6 +6,7 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
@@ -125,23 +126,36 @@ class AdminServiceProvider extends ServiceProvider
         return $this->getConfig('bootstrapDirectory').$path;
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->registerMessages();
         $this->registerBootstrap();
         $this->registerWidgets();
+
+        $this->registerComponents();
     }
 
     /**
      * Global register widgets.
      */
-    protected function registerWidgets()
+    protected function registerWidgets(): void
     {
         $widgetsRegistry = $this->app[WidgetsRegistryInterface::class];
 
         foreach ($this->widgets as $widget) {
             $widgetsRegistry->registerWidget($widget);
         }
+    }
+
+    /**
+     * Register components
+     * @return void
+     */
+    protected function registerComponents(): void
+    {
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleepingowl');
+
+        Blade::componentNamespace('SleepingOwl\Admin\View\Components', 'sleepingowl');
     }
 
     /**

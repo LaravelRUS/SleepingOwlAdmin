@@ -19,8 +19,15 @@
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-        {!! Form::textarea($name, $value, $attributesArray) !!}
-
+        <textarea name="{{ $name }}"
+        @foreach(($attributesArray ?? []) as $attr => $val)
+            @if(is_bool($val))
+                @if($val) {{ $attr }} @endif
+            @else
+                {{ $attr }}="{{ $val }}"
+            @endif
+        @endforeach
+        >{{ old($name, $value) }}</textarea>
         @include(app('sleeping_owl.template')->getViewPath('form.element.partials.errors'))
     </div>
 @endif

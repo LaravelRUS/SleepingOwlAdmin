@@ -11,12 +11,14 @@
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
         @if (! $readonly)
-            {!! Form::file($name, ['id' => $name]) !!}
+            <input type="file" name="{{ $name }}" id="{{ $name }}">
         @endif
 
         @if(!empty($value) && !$readonly)
             <div class="checkbox">
-                <label>{!! Form::checkbox("{$name}_remove") !!} @lang('sleeping_owl::lang.file.remove')</label>
+                <label>
+                    <input type="checkbox" name="{{ $name }}_remove"> @lang('sleeping_owl::lang.file.remove')
+                </label>
             </div>
         @endif
     </div>

@@ -1,7 +1,7 @@
 <div {!! $attributes !!}>
   @if ($visibled)
     @if (!empty($value))
-      {!! HTML::mailto($value, $value) !!}
+            <a href="mailto:{{ e($value) }}">{{ e($value) }}</a>
     @endif
     {!! $append !!}
 

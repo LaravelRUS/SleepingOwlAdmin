@@ -8,8 +8,14 @@
             @endif
         </label>
 
-        <div>
-            {!! Form::select($name, $options, $value, $attributes) !!}
+        <div class="adm-form-dependent-select">
+
+            <x-sleepingowl::form.select
+                :name="$name"
+                :options="$options"
+                :value="$value"
+                :attributes="$attributes"
+            />
         </div>
 
 

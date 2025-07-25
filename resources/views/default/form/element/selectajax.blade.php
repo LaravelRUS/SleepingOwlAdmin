@@ -8,8 +8,14 @@
             @endif
         </label>
 
-        <div>
-            {!! Form::select($name, $options, $value, $attributes) !!}
+        <div class="adm-form-select-ajax">
+                <x-sleepingowl::form.select
+                    :name="$name"
+                    :options="$options"
+                    :value="$value"
+                    :attributes="$attributes"
+                    :attributesArr="$attributes_array"
+                />
         </div>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

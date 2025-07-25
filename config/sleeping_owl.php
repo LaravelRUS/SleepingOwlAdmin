@@ -562,8 +562,6 @@ return [
         'Assets' => KodiCMS\Assets\Facades\Assets::class,
         'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
         'Meta' => KodiCMS\Assets\Facades\Meta::class, // will destroy
-        'Form' => Collective\Html\FormFacade::class,
-        'HTML' => Collective\Html\HtmlFacade::class,
         'WysiwygManager' => SleepingOwl\Admin\Facades\WysiwygManager::class,
         'MessagesStack' => SleepingOwl\Admin\Facades\MessageStack::class,
 

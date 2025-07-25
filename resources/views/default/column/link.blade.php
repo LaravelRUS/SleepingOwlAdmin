@@ -1,7 +1,19 @@
 <div {!! $attributes !!}>
+
+    @php
+        $attrs = '';
+        foreach ($linkAttributes as $attr => $val) {
+            if (is_bool($val)) {
+                if ($val) $attrs .= ' ' . $attr;
+            } else {
+                $attrs .= ' ' . $attr . '="' . e($val) . '"';
+            }
+        }
+    @endphp
+
   @if ($visibled)
     @if($isEditable)
-      <a href="{{ $link }}" {!! app('html')->attributes($linkAttributes) !!}>
+      <a href="{{ $link }}" {!! $attrs !!}>
         {!! $value !!}
       </a>
     @else

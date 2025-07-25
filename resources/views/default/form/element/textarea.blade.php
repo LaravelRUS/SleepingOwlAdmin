@@ -12,7 +12,7 @@
 
         <textarea v-pre {!! $attributes !!}
                   @if($readonly) readonly @endif
-		>{!! $value !!}</textarea>
+		>{{ old($name, $value) }}</textarea>
         @include(AdminTemplate::getViewPath('form.element.partials.errors'))
     </div>
 @endif

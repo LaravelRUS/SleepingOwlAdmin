@@ -36,8 +36,16 @@
             </div>
         </div>
 
-        <div class="card-body pad pt-0">
-            {!! Form::textarea($name, $value, $attributesArray) !!}
+        <div class="card-body pad pt-0 adm-form-testarea">
+            <textarea name="{{ $name }}"
+            @foreach(($attributesArray ?? []) as $attr => $val)
+                @if(is_bool($val))
+                    @if($val) {{ $attr }} @endif
+                @else
+                    {{ $attr }}="{{ $val }}"
+                @endif
+            @endforeach
+            >{{ old($name, $value) }}</textarea>
         </div>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

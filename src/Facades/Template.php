@@ -4,6 +4,9 @@ namespace SleepingOwl\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @method static getViewPath(string $string)
+ */
 class Template extends Facade
 {
     /**

@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin;
 
 use Closure;
-use Collective\Html\HtmlServiceProvider;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
@@ -258,7 +257,6 @@ class Admin implements AdminInterface
     {
         $providers = [
             AliasesServiceProvider::class,
-            HtmlServiceProvider::class,
             BreadcrumbsServiceProvider::class,
             AdminServiceProvider::class,
         ];

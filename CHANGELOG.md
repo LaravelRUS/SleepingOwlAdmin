@@ -1,5 +1,10 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2025-07-25
+* [Removed] - Removed `laravelcollective/html` dependency.
+* Replaced all `Form::` and `HTML::` calls with custom Blade components and native HTML.
+* Updated forms (`select`, `file`, `checkbox`, `textarea`, `open/close`) while preserving compatibility with existing attributes and Select2.
+
 ## 2024-03-20
 * [Doc] Getter for element without documentation.
 ```php
