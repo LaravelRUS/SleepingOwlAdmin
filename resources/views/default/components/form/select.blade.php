@@ -25,10 +25,10 @@
 
 
 <select name="{{ $name }}" {!! $attributes !!} {!! $renderedAttributes !!}>
+    @if(!empty($attributesArray['placeholder']))
+        <option value="">{{ $attributesArray['placeholder'] }}</option>
+    @endif
     @foreach($normalizedOptions as $option)
-        @if(!empty($attributesArray['placeholder']))
-            <option value="">{{ $attributesArray['placeholder'] }}</option>
-        @endif
         <option value="{{ $option['id'] }}" @selected($option['id'] == $selectedValue)>
             {{ $option['text'] }}
         </option>
