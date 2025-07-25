@@ -19,7 +19,7 @@
 
         <x-sleepingowl::form.select
             :name="$name"
-            :options="$options"
+            :options="collect($options)->pluck('text', 'id')"
             :value="$value"
             :attributes="$attributes_array" />
     </div>
