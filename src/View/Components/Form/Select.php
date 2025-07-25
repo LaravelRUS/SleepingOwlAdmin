@@ -2,10 +2,10 @@
 
 namespace SleepingOwl\Admin\View\Components\Form;
 
-
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use SleepingOwl\Admin\Facades\Template as AdminTemplate;
+
 class Select extends Component
 {
     public string $name;
@@ -25,5 +25,4 @@ class Select extends Component
     {
         return AdminTemplate::getViewPath('components.form.select');
     }
-
 }
