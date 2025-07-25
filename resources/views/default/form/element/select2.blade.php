@@ -17,9 +17,10 @@
 //                */
             @endphp
 
+{{--        $attributes_array--}}
         <x-sleepingowl::form.select
             :name="$name"
-            :options="collect($options)->pluck('text', 'id')"
+            :options="$options"
             :value="$value"
             :attributes="$attributes_array" />
     </div>

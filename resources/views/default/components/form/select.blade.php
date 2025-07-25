@@ -18,8 +18,16 @@
                 $renderedAttributes .= ' ' . $attr;
             }
         } else {
+            if (is_array($val)) {
+                $val = implode(' ', $val);
+            }
             $renderedAttributes .= ' ' . $attr . '="' . e($val) . '"';
         }
+    }
+
+    //на всякий...
+    if (is_array($attributes)) {
+        $attributes = implode(' ', $attributes);
     }
 @endphp
 
