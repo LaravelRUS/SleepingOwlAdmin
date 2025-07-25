@@ -32,13 +32,13 @@ interface FormElementInterface extends Renderable, Arrayable, Initializable, Wit
     public function isVisible();
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return void
      */
     public function save(Request $request);
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return void
      */
     public function afterSave(Request $request);

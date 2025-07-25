@@ -148,7 +148,8 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register components
+     * Register components.
+     *
      * @return void
      */
     protected function registerComponents(): void
