@@ -25,14 +25,23 @@
         }
     }
 
-    //на всякий...
-    if (is_array($attributes)) {
-        $attributes = implode(' ', $attributes);
+    //fix trim() attr
+    $renderedAttributesString = '';
+    if ($attributes && is_array($attributes)) {
+        if (is_bool($val)) {
+            if ($val) {
+                $renderedAttributesString .= ' ' . $attr;
+            }
+        } else {
+            if (is_array($val)) {
+                $val = implode(' ', $val);
+            }
+            $renderedAttributesString .= ' ' . $attr . '="' . e($val) . '"';
+        }
     }
 @endphp
 
-
-<select name="{{ $name }}" {!! $attributes !!} {!! $renderedAttributes !!}>
+<select name="{{ $name }}"  {!! $renderedAttributesString !!} {!! $renderedAttributes !!}>
     @if(!empty($attributesArray['placeholder']))
         <option value="">{{ $attributesArray['placeholder'] }}</option>
     @endif
