@@ -6,7 +6,6 @@ use Closure;
 
 interface PageInterface extends NavigationInterface
 {
-
     /**
      * @return string
      */
@@ -63,8 +62,7 @@ interface PageInterface extends NavigationInterface
     public function checkAccess();
 
     /**
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function setPages(Closure $callback);
@@ -75,8 +73,7 @@ interface PageInterface extends NavigationInterface
     public function isChild();
 
     /**
-     * @param PageInterface $page
-     *
+     * @param  PageInterface  $page
      * @return bool
      */
     public function isChildOf(PageInterface $page);
@@ -97,8 +94,7 @@ interface PageInterface extends NavigationInterface
     public function hasAliases();
 
     /**
-     * @param string|array $aliases
-     *
+     * @param  string|array  $aliases
      * @return $this
      */
     public function addAlias($aliases);

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -14,6 +13,7 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\Form\FormException;
 use SleepingOwl\Admin\Form\Element\Upload;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class FormDefault extends FormElements implements DisplayInterface, FormInterface
 {
@@ -468,4 +468,3 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
         return new $class();
     }
 }
-

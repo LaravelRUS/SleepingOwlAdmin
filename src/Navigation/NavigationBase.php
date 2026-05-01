@@ -3,19 +3,17 @@
 namespace SleepingOwl\Admin\Navigation;
 
 use Closure;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 class NavigationBase implements NavigationInterface
 {
-
     /**
-     * @param array $data
-     * @param string $class
-     *
+     * @param  array  $data
+     * @param  string  $class
      * @return PageInterface
      */
     public static function makePage(array $data, $class = PageInterface::class)
@@ -27,12 +25,12 @@ class NavigationBase implements NavigationInterface
                 if ($value instanceof BadgeInterface) {
                     $page->setBadge($value);
                     continue;
-                } else if (!is_array($value)) {
+                } elseif (! is_array($value)) {
                     $value = [$value];
                 }
 
                 call_user_func_array([$page, 'addBadge'], $value);
-            } else if ($key != 'pages' and method_exists($page, $method = 'set'.ucfirst($key))) {
+            } elseif ($key != 'pages' and method_exists($page, $method = 'set'.ucfirst($key))) {
                 $page->{$method}($value);
             }
         }
@@ -69,9 +67,9 @@ class NavigationBase implements NavigationInterface
     /**
      * Navigation constructor.
      *
-     * @param array|null $pages
+     * @param  array|null  $pages
      */
-    public function __construct(array $pages = null)
+    public function __construct(?array $pages = null)
     {
         $this->items = new PageCollection();
 
@@ -93,8 +91,7 @@ class NavigationBase implements NavigationInterface
     }
 
     /**
-     * @param null|string $url
-     *
+     * @param  null|string  $url
      * @return $this
      */
     public function setCurrentUrl($url)
@@ -106,7 +103,7 @@ class NavigationBase implements NavigationInterface
     }
 
     /**
-     * @param array $navigation
+     * @param  array  $navigation
      */
     public function setFromArray(array $navigation)
     {
@@ -116,8 +113,7 @@ class NavigationBase implements NavigationInterface
     }
 
     /**
-     * @param string|array|PageInterface $page
-     *
+     * @param  string|array|PageInterface  $page
      * @return PageInterface|null
      */
     public function addPage($page)
@@ -164,8 +160,7 @@ class NavigationBase implements NavigationInterface
     }
 
     /**
-     * @param Closure $accessLogic
-     *
+     * @param  Closure  $accessLogic
      * @return $this
      */
     public function setAccessLogic(Closure $accessLogic)
@@ -243,13 +238,12 @@ class NavigationBase implements NavigationInterface
     public function toArray()
     {
         return [
-            'pages' => $this->getPages()
+            'pages' => $this->getPages(),
         ];
     }
 
     /**
-     * @param string|null $view
-     *
+     * @param  string|null  $view
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render($view = null)
@@ -289,7 +283,7 @@ class NavigationBase implements NavigationInterface
         }
 
         if (count($calculates)) {
-            $this->currentPage = Arr::get($foundPages, array_search(min($calculates), $calculates).'.1'); 
+            $this->currentPage = Arr::get($foundPages, array_search(min($calculates), $calculates).'.1');
         }
 
         if (! is_null($this->currentPage)) {
@@ -306,13 +300,12 @@ class NavigationBase implements NavigationInterface
     }
 
     /**
-     * @param string $url
-     * @param array $foundPages
+     * @param  string  $url
+     * @param  array  $foundPages
      */
-    protected function findActive($url, array & $foundPages)
+    protected function findActive($url, array &$foundPages)
     {
         $this->getPages()->each(function (PageInterface $page) use ($url, &$foundPages) {
-
             if (strpos($url, $page->getUrl()) !== false) {
                 $foundPages[] = [
                     levenshtein(substr($url, 0, 255), substr($page->getUrl(), 0, 255)),
@@ -325,7 +318,7 @@ class NavigationBase implements NavigationInterface
     }
 
     /**
-     * @param string $url
+     * @param  string  $url
      */
     protected function findActiveByAliases($url)
     {

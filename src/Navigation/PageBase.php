@@ -25,12 +25,14 @@ class PageBase extends NavigationBase implements PageInterface
 
     /**
      * Menu item icon.
+     *
      * @var string
      */
     protected $icon;
 
     /**
      * Menu item url.
+     *
      * @var string
      */
     protected $url;
@@ -68,13 +70,13 @@ class PageBase extends NavigationBase implements PageInterface
     /**
      * Page constructor.
      *
-     * @param string $title
-     * @param string|null $url
-     * @param string|null $id
-     * @param int|null $priority
-     * @param string|null $icon
+     * @param  string  $title
+     * @param  string|null  $url
+     * @param  string|null  $id
+     * @param  int|null  $priority
+     * @param  string|null  $icon
      */
-    public function __construct($title = null, $url = null, $id = null, $priority = 100, $icon = null)    
+    public function __construct($title = null, $url = null, $id = null, $priority = 100, $icon = null)
     {
         $this->items = new PageCollection();
         $this->badges = new Collection();
@@ -115,8 +117,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param string|array $aliases
-     *
+     * @param  string|array  $aliases
      * @return $this
      */
     public function addAlias($aliases)
@@ -133,8 +134,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param string|array|PageInterface|null $page
-     *
+     * @param  string|array|PageInterface|null  $page
      * @return PageInterface|null
      */
     public function addPage($page = null)
@@ -147,8 +147,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function setPages(Closure $callback)
@@ -171,8 +170,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param string $id
-     *
+     * @param  string  $id
      * @return $this
      */
     public function setId($id)
@@ -191,8 +189,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function setTitle($title)
@@ -211,8 +208,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param string $icon
-     *
+     * @param  string  $icon
      * @return $this
      */
     public function setIcon($icon)
@@ -243,8 +239,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param string $url
-     *
+     * @param  string  $url
      * @return $this
      */
     public function setUrl($url)
@@ -299,8 +294,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param BadgeInterface $badge
-     *
+     * @param  BadgeInterface  $badge
      * @return $this
      */
     public function setBadge(BadgeInterface $badge)
@@ -311,12 +305,11 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param Closure|string $value
-     * @param array $attributes
-     *
+     * @param  Closure|string  $value
+     * @param  array  $attributes
      * @return $this
      */
-    public function addBadge($value, array $attributes = null)
+    public function addBadge($value, ?array $attributes = null)
     {
         $this->setBadge(
             $badge = app(BadgeInterface::class)
@@ -340,8 +333,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param int $priority
-     *
+     * @param  int  $priority
      * @return $this
      */
     public function setPriority($priority)
@@ -398,8 +390,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param PageInterface $page
-     *
+     * @param  PageInterface  $page
      * @return bool
      */
     public function isChildOf(PageInterface $page)
@@ -449,24 +440,23 @@ class PageBase extends NavigationBase implements PageInterface
         }
 
         return parent::toArray() + [
-                'hasChild' => $this->hasChild(),
-                'id' => $this->getId(),
-                'title' => $this->getTitle(),
-                'icon' => $this->getIcon(),
-                'priority' => $this->getPriority(),
-                'url' => $this->getUrl(),
-                'path' => $this->getPath(),
-                'isActive' => $this->isActive(),
-                'attributes' => $this->htmlAttributesToString(),
-                'badges' => $this->getBadges()->sortBy(function (BadgeInterface $badge) {
-                    return $badge->getPriority();
-                }),
-            ];
+            'hasChild' => $this->hasChild(),
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'icon' => $this->getIcon(),
+            'priority' => $this->getPriority(),
+            'url' => $this->getUrl(),
+            'path' => $this->getPath(),
+            'isActive' => $this->isActive(),
+            'attributes' => $this->htmlAttributesToString(),
+            'badges' => $this->getBadges()->sortBy(function (BadgeInterface $badge) {
+                return $badge->getPriority();
+            }),
+        ];
     }
 
     /**
-     * @param string|null $view
-     *
+     * @param  string|null  $view
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render($view = null)
@@ -482,7 +472,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param PageInterface $page
+     * @param  PageInterface  $page
      */
     protected function setParent(PageInterface $page)
     {

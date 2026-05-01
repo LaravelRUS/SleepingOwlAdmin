@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
@@ -24,6 +23,7 @@ use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Form\FormElementsCollection;
 use SleepingOwl\Admin\Navigation\Badge;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\FormElementsRecursiveIterator;
 use SleepingOwl\Admin\Traits\VisibleCondition;
 
@@ -563,4 +563,3 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         ];
     }
 }
-

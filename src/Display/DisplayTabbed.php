@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Model\SectionModelConfiguration;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\FormElements;
 use SleepingOwl\Admin\Traits\Renderable as AdminRenderable;
 use SleepingOwl\Admin\Traits\VisibleCondition;
@@ -300,4 +300,3 @@ class DisplayTabbed implements DisplayInterface, FormInterface
         return $object->getContent();
     }
 }
-

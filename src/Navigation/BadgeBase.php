@@ -8,7 +8,6 @@ use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class BadgeBase implements BadgeInterface
 {
-
     use HtmlAttributes;
 
     /**
@@ -24,8 +23,8 @@ class BadgeBase implements BadgeInterface
     /**
      * Badge constructor.
      *
-     * @param string|Closure|null $value
-     * @param int $priority
+     * @param  string|Closure|null  $value
+     * @param  int  $priority
      */
     public function __construct($value = null, $priority = 0)
     {
@@ -39,7 +38,7 @@ class BadgeBase implements BadgeInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getPriority()
     {
@@ -47,8 +46,7 @@ class BadgeBase implements BadgeInterface
     }
 
     /**
-     * @param int $priority
-     *
+     * @param  int  $priority
      * @return $this
      */
     public function setPriority($priority)
@@ -71,8 +69,7 @@ class BadgeBase implements BadgeInterface
     }
 
     /**
-     * @param string|Closure $value
-     *
+     * @param  string|Closure  $value
      * @return $this
      */
     public function setValue($value)
@@ -94,8 +91,7 @@ class BadgeBase implements BadgeInterface
     }
 
     /**
-     * @param string|null $view
-     *
+     * @param  string|null  $view
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render($view = null)

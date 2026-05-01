@@ -19,9 +19,9 @@ abstract class Form
     /**
      * Form constructor.
      *
-     * @param Request|null $request
+     * @param  Request|null  $request
      */
-    public function __construct(Request $request = null)
+    public function __construct(?Request $request = null)
     {
         $this->request = $request ?: request();
     }
@@ -92,8 +92,7 @@ abstract class Form
     /**
      * Fetch properties from the request.
      *
-     * @param string $property
-     *
+     * @param  string  $property
      * @return array|string
      */
     public function __get($property)

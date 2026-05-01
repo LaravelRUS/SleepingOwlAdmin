@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use LogicException;
 use SleepingOwl\Admin\Exceptions\Form\FormElementException;
 use SleepingOwl\Admin\Form\FormElement;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 abstract class NamedFormElement extends FormElement
 {
@@ -647,4 +647,3 @@ abstract class NamedFormElement extends FormElement
         ]);
     }
 }
-

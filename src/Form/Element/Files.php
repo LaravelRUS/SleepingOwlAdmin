@@ -440,4 +440,3 @@ class Files extends Images
         ]);
     }
 }
-

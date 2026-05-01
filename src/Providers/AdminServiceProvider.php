@@ -337,4 +337,3 @@ class AdminServiceProvider extends ServiceProvider
         }
     }
 }
-

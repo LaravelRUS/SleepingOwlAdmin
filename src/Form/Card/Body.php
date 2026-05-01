@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Form\Card;
 
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\CardInterface;
 use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class Body extends FormElements implements CardInterface
 {
@@ -38,4 +38,3 @@ class Body extends FormElements implements CardInterface
         ];
     }
 }
-

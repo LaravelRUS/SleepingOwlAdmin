@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Display;
 
 use Exception;
 use Illuminate\Support\Str;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
@@ -18,6 +17,7 @@ use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Links;
 use SleepingOwl\Admin\Display\Extension\Scopes;
 use SleepingOwl\Admin\Form\FormElements;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
 
@@ -322,4 +322,3 @@ abstract class Display implements DisplayInterface
         return $repository;
     }
 }
-

@@ -24,7 +24,7 @@ abstract class CollectionFilters
     /**
      * Create a new QueryFilters instance.
      *
-     * @param Request $request
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {
@@ -34,8 +34,7 @@ abstract class CollectionFilters
     /**
      * Apply the filters to the collection.
      *
-     * @param Collection $collection
-     *
+     * @param  Collection  $collection
      * @return Collection
      */
     public function apply(Collection $collection)
