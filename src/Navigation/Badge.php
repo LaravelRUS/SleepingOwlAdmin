@@ -2,9 +2,9 @@
 
 namespace SleepingOwl\Admin\Navigation;
 
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
-class Badge extends \KodiComponents\Navigation\Badge
+class Badge extends BadgeBase
 {
     // fix KodiComponents for bootstrap 4
     // http://bootstrap-4.ru/docs/4.0/migration/#labels-and-badges

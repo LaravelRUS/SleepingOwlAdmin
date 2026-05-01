@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Traits\Renderable;
 
@@ -88,3 +88,4 @@ class TableHeaderColumn implements TableHeaderColumnInterface
         ];
     }
 }
+

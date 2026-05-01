@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Column\Control;
@@ -143,3 +143,4 @@ class Tree extends Extension implements Initializable, Renderable
         $this->setHtmlAttribute('class', 'table table-striped');
     }
 }
+

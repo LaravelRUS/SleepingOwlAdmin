@@ -13,6 +13,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
+        $this->mergeConfigFrom(__DIR__.'/../../config/navigation.php', 'navigation');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
 
         $this->registerCore();

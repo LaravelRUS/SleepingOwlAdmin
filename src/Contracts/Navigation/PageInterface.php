@@ -3,30 +3,19 @@
 namespace SleepingOwl\Admin\Contracts\Navigation;
 
 use Closure;
-use SleepingOwl\Admin\Navigation\Page;
 
 interface PageInterface extends NavigationInterface
 {
-    /**
-     * @param  string|array|PageInterface|null  $page
-     * @return Page
-     */
-    public function addPage($page = null);
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAliasId();
+    public function getId();
 
     /**
      * @return string
      */
     public function getTitle();
-
-    /**
-     * @return mixed
-     */
-    public function setAliasId();
 
     /**
      * @return string
@@ -49,14 +38,24 @@ interface PageInterface extends NavigationInterface
     public function isActive();
 
     /**
+     * @return $this
+     */
+    public function setActive();
+
+    /**
      * @return PageInterface
      */
     public function getParent();
 
     /**
-     * @return Closure
+     * @return array
      */
-    public function getAccessLogic();
+    public function getPath();
+
+    /**
+     * @return array
+     */
+    public function getPathArray();
 
     /**
      * @return bool
@@ -64,18 +63,43 @@ interface PageInterface extends NavigationInterface
     public function checkAccess();
 
     /**
-     * @return PageInterface
+     * @param Closure $callback
+     *
+     * @return $this
      */
-    public function addLabel();
+    public function setPages(Closure $callback);
 
     /**
-     * @return PageInterface
+     * @return bool
      */
-    public function addDivider();
+    public function isChild();
 
     /**
-     * @param  string  $type
-     * @return PageInterface
+     * @param PageInterface $page
+     *
+     * @return bool
      */
-    public function setType($type);
+    public function isChildOf(PageInterface $page);
+
+    /**
+     * @return int
+     */
+    public function getLevel();
+
+    /**
+     * @return array
+     */
+    public function getAliases();
+
+    /**
+     * @return bool
+     */
+    public function hasAliases();
+
+    /**
+     * @param string|array $aliases
+     *
+     * @return $this
+     */
+    public function addAlias($aliases);
 }

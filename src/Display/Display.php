@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display;
 
 use Exception;
 use Illuminate\Support\Str;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayExtensionInterface;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
@@ -322,3 +322,4 @@ abstract class Display implements DisplayInterface
         return $repository;
     }
 }
+

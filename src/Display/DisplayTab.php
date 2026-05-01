@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\TabInterface;
 use SleepingOwl\Admin\Contracts\Form\ElementsInterface;
@@ -563,3 +563,4 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
         ];
     }
 }
+

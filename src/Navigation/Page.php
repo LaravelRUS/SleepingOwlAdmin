@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
-class Page extends \KodiComponents\Navigation\Page implements PageInterface
+class Page extends PageBase implements PageInterface
 {
     /**
      * Menu item related model class.

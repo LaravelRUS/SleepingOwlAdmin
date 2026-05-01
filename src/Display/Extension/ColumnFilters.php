@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
@@ -230,3 +230,4 @@ class ColumnFilters extends Extension implements Initializable, Placable
         $this->setHtmlAttribute('class', 'display-filters');
     }
 }
+

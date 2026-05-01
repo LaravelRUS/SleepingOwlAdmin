@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Display\Element;
 use SleepingOwl\Admin\Traits\ElementPlacementTrait;
@@ -64,3 +64,4 @@ class ColumnsTotal extends Extension implements Placable
         ];
     }
 }
+

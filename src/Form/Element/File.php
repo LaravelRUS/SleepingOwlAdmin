@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Validator;
-use KodiComponents\Support\Upload;
+use SleepingOwl\Admin\Support\Upload;
 use SleepingOwl\Admin\Contracts\WithRoutesInterface;
 use SleepingOwl\Admin\Traits\FileSize;
 
@@ -348,3 +348,4 @@ class File extends NamedFormElement implements WithRoutesInterface
         ]);
     }
 }
+

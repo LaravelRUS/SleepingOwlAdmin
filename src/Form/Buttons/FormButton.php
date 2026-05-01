@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Form\Buttons;
 
 use Illuminate\Database\Eloquent\Model;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
@@ -277,3 +277,4 @@ class FormButton implements FormButtonsInterface, Initializable
         return method_exists($this->getModel(), 'trashed') ? $this->getModel()->trashed() : false;
     }
 }
+

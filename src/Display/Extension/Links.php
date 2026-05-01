@@ -3,7 +3,7 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\View\View;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 
 class Links extends Extension implements Placable
@@ -147,3 +147,4 @@ class Links extends Extension implements Placable
         ];
     }
 }
+

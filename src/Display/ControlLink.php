@@ -5,7 +5,7 @@ namespace SleepingOwl\Admin\Display;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ControlButtonInterface;
 use SleepingOwl\Admin\Traits\Renderable;
 
@@ -345,3 +345,4 @@ class ControlLink implements ControlButtonInterface
         ];
     }
 }
+

@@ -182,12 +182,12 @@ class AdminServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            \KodiComponents\Navigation\Contracts\PageInterface::class,
+            \SleepingOwl\Admin\Contracts\Navigation\PageInterface::class,
             \SleepingOwl\Admin\Navigation\Page::class
         );
 
         $this->app->bind(
-            \KodiComponents\Navigation\Contracts\BadgeInterface::class,
+            \SleepingOwl\Admin\Contracts\Navigation\BadgeInterface::class,
             \SleepingOwl\Admin\Navigation\Badge::class
         );
 
@@ -337,3 +337,4 @@ class AdminServiceProvider extends ServiceProvider
         }
     }
 }
+

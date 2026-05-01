@@ -10,8 +10,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use KodiComponents\Navigation\Contracts\BadgeInterface;
-use KodiComponents\Navigation\Contracts\PageInterface;
+use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Exceptions\RepositoryException;
@@ -716,3 +716,4 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
         return Str::snake(Str::plural(class_basename($this->getClass())));
     }
 }
+

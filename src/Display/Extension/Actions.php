@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
@@ -159,3 +159,4 @@ class Actions extends Extension implements Initializable, Placable
         }
     }
 }
+

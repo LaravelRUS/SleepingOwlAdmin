@@ -1,6 +1,6 @@
 <?php
 
-use KodiComponents\Navigation\Contracts\PageInterface;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use Mockery as m;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 
@@ -173,3 +173,4 @@ class OtherTestModel extends \Illuminate\Database\Eloquent\Model
 abstract class TestModelConfiguration implements \SleepingOwl\Admin\Contracts\ModelConfigurationInterface, \SleepingOwl\Admin\Contracts\Initializable
 {
 }
+

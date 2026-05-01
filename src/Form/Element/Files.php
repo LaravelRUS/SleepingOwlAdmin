@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use KodiComponents\Support\Upload;
+use SleepingOwl\Admin\Support\Upload;
 
 class Files extends Images
 {
@@ -440,3 +440,4 @@ class Files extends Images
         ]);
     }
 }
+

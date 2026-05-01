@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use KodiComponents\Support\HtmlAttributes;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class Element
 {
@@ -47,3 +47,4 @@ class Element
         return $this->htmlAttributesToString();
     }
 }
+

@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
-class Navigation extends \KodiComponents\Navigation\Navigation implements NavigationInterface
+class Navigation extends Navigation\NavigationBase implements NavigationInterface
 {
     protected $currentPage;
     protected $currentUrl;
@@ -16,7 +16,7 @@ class Navigation extends \KodiComponents\Navigation\Navigation implements Naviga
     /**
      * Overload current page.
      *
-     * @return \KodiComponents\Navigation\Contracts\PageInterface|null
+     * @return \SleepingOwl\Admin\Contracts\Navigation\PageInterface|null
      */
     public function getCurrentPage()
     {
