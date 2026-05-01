@@ -561,7 +561,7 @@ return [
         // Components
         'Assets' => KodiCMS\Assets\Facades\Assets::class,
         'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
-        'Meta' => KodiCMS\Assets\Facades\Meta::class, // will destroy
+        'Meta' => KodiCMS\Assets\Facades\Meta::class,
         'Form' => Spatie\Html\Facades\Html::class,
         'HTML' => Spatie\Html\Elements\Element::class,
         'A' => \Spatie\Html\Elements\A::class,

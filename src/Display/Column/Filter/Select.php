@@ -148,6 +148,10 @@ class Select extends BaseColumnFilter
             asort($options);
         }
 
+        if (! $this->multiple && ! is_null($this->getPlaceholder())) {
+            $options = ['' => $this->getPlaceholder()] + $options;
+        }
+
         return $options;
     }
 
