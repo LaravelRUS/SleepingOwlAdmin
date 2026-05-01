@@ -3,8 +3,8 @@
 namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\View\View;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class Links extends Extension implements Placable
 {
@@ -147,4 +147,3 @@ class Links extends Extension implements Placable
         ];
     }
 }
-

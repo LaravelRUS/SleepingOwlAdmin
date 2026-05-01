@@ -6,10 +6,10 @@ use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnMetaInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
 use SleepingOwl\Admin\Traits\Width;
@@ -205,4 +205,3 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
         ];
     }
 }
-

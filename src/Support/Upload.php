@@ -3,13 +3,12 @@
 namespace SleepingOwl\Admin\Support;
 
 use File;
-use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 
 trait Upload
 {
-
     protected static function bootUpload()
     {
         static::updating(function (Model $model) {
@@ -37,7 +36,7 @@ trait Upload
         });
 
         static::deleting(function (Model $model) {
-            if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, trait_uses_recursive($model)) && !$model->forceDeleting) {
+            if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, trait_uses_recursive($model)) && ! $model->forceDeleting) {
                 return;
             }
 
@@ -78,8 +77,7 @@ trait Upload
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     protected function getUploadFilename(UploadedFile $file)
@@ -88,17 +86,17 @@ trait Upload
     }
 
     /**
-     * @param string $field
-     * @param UploadedFile $file
+     * @param  string  $field
+     * @param  UploadedFile  $file
      */
     protected function attachFile($field, UploadedFile $file)
     {
         $destination_path = 'storage';
-        $filename         = $this->getUploadFilename($file);
+        $filename = $this->getUploadFilename($file);
 
         $subFolder = substr(md5($filename), 0, 2);
 
-        if (! is_dir(public_path($dir = "{$destination_path}/{$this->getTable()}/{$field}/{$subFolder}"))) {    
+        if (! is_dir(public_path($dir = "{$destination_path}/{$this->getTable()}/{$field}/{$subFolder}"))) {
             File::makeDirectory(public_path($dir), 493, true);
         }
 
@@ -128,8 +126,7 @@ trait Upload
     /**
      * Get an attribute from the model.
      *
-     * @param  string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function getAttribute($key)
@@ -137,7 +134,7 @@ trait Upload
         $this->findUploadFields();
 
         if ($this->isUploadField($key)) {
-            list($method, $originalKey) = $this->uploadGetKeys[$key];
+            [$method, $originalKey] = $this->uploadGetKeys[$key];
 
             $value = $this->getAttribute($originalKey);
 
@@ -154,9 +151,8 @@ trait Upload
     /**
      * Get the value of an attribute using its mutator.
      *
-     * @param  string $key
-     * @param  mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return mixed
      */
     protected function mutateAttribute($key, $value)
@@ -173,9 +169,8 @@ trait Upload
     /**
      * Set a given attribute on the model.
      *
-     * @param  string $key
-     * @param  mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function setAttribute($key, $value)
@@ -183,7 +178,7 @@ trait Upload
         $this->findUploadFields();
 
         if ($this->isUploadField($key)) {
-            list($method, $originalKey) = $this->uploadSetKeys[$key];
+            [$method, $originalKey] = $this->uploadSetKeys[$key];
 
             if ($this->hasSetMutator($key)) {
                 $method = 'set'.Str::studly($key).'Attribute';
@@ -200,19 +195,17 @@ trait Upload
     /**
      * Determine if a set mutator exists for an attribute.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function isUploadField($key)
     {
-        return array_key_exists($key, $this->uploadGetKeys) || array_key_exists($key, $this->uploadSetKeys);    
+        return array_key_exists($key, $this->uploadGetKeys) || array_key_exists($key, $this->uploadSetKeys);
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
+     * @param  string  $key
+     * @param  string  $value
      * @return string|null
      */
     public function getUploadUrl($key, $value)
@@ -223,9 +216,8 @@ trait Upload
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     *
+     * @param  string  $key
+     * @param  string  $value
      * @return string|null
      */
     public function getUploadPath($key, $value)
@@ -236,10 +228,10 @@ trait Upload
     }
 
     /**
-     * @param string $key
-     * @param UploadedFile|null $file
+     * @param  string  $key
+     * @param  UploadedFile|null  $file
      */
-    public function setUploadFile($key, UploadedFile $file = null)
+    public function setUploadFile($key, ?UploadedFile $file = null)
     {
         $this->{$key} = $file;
     }
@@ -271,10 +263,10 @@ trait Upload
         }
 
         $this->uploadFieldsKeys = array_unique($fields);
-        $this->uploadGetKeys    = $this->uploadSetKeys = [];
+        $this->uploadGetKeys = $this->uploadSetKeys = [];
 
         foreach ($this->uploadFieldsKeys as $field) {
-            $this->uploadGetKeys[$field.'_url']  = ['getUploadUrl', $field];
+            $this->uploadGetKeys[$field.'_url'] = ['getUploadUrl', $field];
             $this->uploadGetKeys[$field.'_path'] = ['getUploadPath', $field];
 
             $this->uploadSetKeys[$field.'_file'] = ['setUploadFile', $field];
@@ -282,8 +274,7 @@ trait Upload
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return bool
      */
     protected function isImageUploadedFile(UploadedFile $file)

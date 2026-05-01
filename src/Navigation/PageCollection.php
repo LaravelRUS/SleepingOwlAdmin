@@ -7,7 +7,6 @@ use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 
 class PageCollection extends Collection
 {
-
     /**
      * The items contained in the collection.
      *
@@ -16,8 +15,7 @@ class PageCollection extends Collection
     protected $items = [];
 
     /**
-     * @param string $id
-     *
+     * @param  string  $id
      * @return PageInterface|null
      */
     public function findById($id)
@@ -25,16 +23,15 @@ class PageCollection extends Collection
         foreach ($this->items as $page) {
             if ($page->getId() == $id) {
                 return $page;
-            } else if ($found = $page->getPages()->findById($id)) {
+            } elseif ($found = $page->getPages()->findById($id)) {
                 return $found;
             }
         }
     }
 
     /**
-     * @param string $path
-     * @param string $separator
-     *
+     * @param  string  $path
+     * @param  string  $separator
      * @return PageInterface|null
      */
     public function findByPath($path, $separator = '/')
@@ -42,7 +39,7 @@ class PageCollection extends Collection
         foreach ($this->items as $page) {
             if (implode($separator, $page->getPath()) == $path) {
                 return $page;
-            } else if ($found = $page->getPages()->findByPath($path, $separator)) {
+            } elseif ($found = $page->getPages()->findByPath($path, $separator)) {
                 return $found;
             }
         }
@@ -65,9 +62,10 @@ class PageCollection extends Collection
      */
     public function filterEmptyPages()
     {
-        return $this->filter(function(PageInterface $page) {
+        return $this->filter(function (PageInterface $page) {
             $page->filterEmptyPages();
-            return !(is_null($page->getUrl()) and ! $page->hasChild());
+
+            return ! (is_null($page->getUrl()) and ! $page->hasChild());
         });
     }
 
@@ -84,9 +82,8 @@ class PageCollection extends Collection
     }
 
     /**
-     * @param PageInterface $page
-     * @param string|null $key
-     *
+     * @param  PageInterface  $page
+     * @param  string|null  $key
      * @return $this
      */
     public function prepend($page, $key = null)
@@ -99,14 +96,12 @@ class PageCollection extends Collection
     }
 
     /**
-     * @param  mixed  $pages [optional]
-     * @param PageInterface $page
-     *
+     * @param  mixed  $pages  [optional]
+     * @param  PageInterface  $page
      * @return $this
      */
     public function push(...$pages)
     {
-
         foreach ($pages as $page) {
             if (! ($page instanceof PageInterface)) {
                 throw new \InvalidArgumentException('$page must be instance of PageInterface');

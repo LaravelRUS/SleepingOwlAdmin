@@ -54,4 +54,3 @@ class Link
         return $this->htmlAttributesToString();
     }
 }
-

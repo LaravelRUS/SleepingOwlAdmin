@@ -47,4 +47,3 @@ class Element
         return $this->htmlAttributesToString();
     }
 }
-

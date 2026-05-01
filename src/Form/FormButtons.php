@@ -4,7 +4,6 @@ namespace SleepingOwl\Admin\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\View;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Form\Buttons\Cancel;
@@ -13,6 +12,7 @@ use SleepingOwl\Admin\Form\Buttons\FormButton;
 use SleepingOwl\Admin\Form\Buttons\Save;
 use SleepingOwl\Admin\Form\Buttons\SaveAndClose;
 use SleepingOwl\Admin\Form\Buttons\SaveAndCreate;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\Renderable;
 
 class FormButtons implements FormButtonsInterface
@@ -571,4 +571,3 @@ class FormButtons implements FormButtonsInterface
         return $this;
     }
 }
-

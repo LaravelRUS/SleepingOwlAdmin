@@ -5,10 +5,10 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Column\Control;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class Tree extends Extension implements Initializable, Renderable
 {
@@ -143,4 +143,3 @@ class Tree extends Extension implements Initializable, Renderable
         $this->setHtmlAttribute('class', 'table table-striped');
     }
 }
-

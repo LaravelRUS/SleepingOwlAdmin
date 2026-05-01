@@ -6,13 +6,13 @@ use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\OrderByClauseInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\WithModelInterface;
 use SleepingOwl\Admin\Display\Column\OrderByClause;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\Renderable;
 use SleepingOwl\Admin\Traits\SmallDisplay;
@@ -371,4 +371,3 @@ abstract class TableColumn implements ColumnInterface
         );
     }
 }
-

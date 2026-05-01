@@ -4,9 +4,9 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Display\Element;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\ElementPlacementTrait;
 use SleepingOwl\Admin\Traits\ElementViewTrait;
 
@@ -64,4 +64,3 @@ class ColumnsTotal extends Extension implements Placable
         ];
     }
 }
-

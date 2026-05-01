@@ -1,7 +1,7 @@
 <?php
 
-use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
 class ModelConfigurationManagerTest extends TestCase
@@ -407,4 +407,3 @@ class ModelConfigurationManagerTestModel extends \Illuminate\Database\Eloquent\M
 class ModelConfigurationManagerTestController
 {
 }
-

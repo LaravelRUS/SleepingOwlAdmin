@@ -5,7 +5,6 @@ namespace SleepingOwl\Admin\Display\Extension;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
@@ -13,6 +12,7 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Display\Column\Filter\Control;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class ColumnFilters extends Extension implements Initializable, Placable
 {
@@ -230,4 +230,3 @@ class ColumnFilters extends Extension implements Initializable, Placable
         $this->setHtmlAttribute('class', 'display-filters');
     }
 }
-
