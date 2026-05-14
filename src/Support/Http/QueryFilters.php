@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 abstract class QueryFilters
 {
-
     /**
      * The request object.
      *
@@ -25,7 +24,7 @@ abstract class QueryFilters
     /**
      * Create a new QueryFilters instance.
      *
-     * @param Request $request
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {
@@ -35,8 +34,7 @@ abstract class QueryFilters
     /**
      * Apply the filters to the builder.
      *
-     * @param  Builder $builder
-     *
+     * @param  Builder  $builder
      * @return Builder
      */
     public function apply(Builder $builder)

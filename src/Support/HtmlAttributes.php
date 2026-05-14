@@ -25,9 +25,8 @@ trait HtmlAttributes
     }
 
     /**
-     * @param string $key
-     * @param string $default
-     *
+     * @param  string  $key
+     * @param  string  $default
      * @return string|null
      */
     public function getHtmlAttribute($key, $default = null)
@@ -36,9 +35,8 @@ trait HtmlAttributes
     }
 
     /**
-     * @param string       $key
-     * @param string|array $attribute
-     *
+     * @param  string  $key
+     * @param  string|array  $attribute
      * @return $this
      */
     public function setHtmlAttribute($key, $attribute)
@@ -55,8 +53,7 @@ trait HtmlAttributes
     }
 
     /**
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return $this
      */
     public function setHtmlAttributes(array $attributes)
@@ -73,22 +70,20 @@ trait HtmlAttributes
     }
 
     /**
-     * @param string       $key
-     * @param string|array $attribute
-     *
+     * @param  string  $key
+     * @param  string|array  $attribute
      * @return $this
      */
     public function replaceHtmlAttribute($key, $attribute)
     {
-        $attribute                  = $this->prepareHtmlAttributeValue($attribute);
+        $attribute = $this->prepareHtmlAttributeValue($attribute);
         $this->htmlAttributes[$key] = $attribute;
 
         return $this;
     }
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return bool
      */
     public function hasClassProperty($class)
@@ -111,8 +106,7 @@ trait HtmlAttributes
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function hasHtmlAttribute($key)
@@ -121,8 +115,7 @@ trait HtmlAttributes
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return $this
      */
     public function removeHtmlAttribute($key)
@@ -133,8 +126,7 @@ trait HtmlAttributes
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return $this
      */
     public function removeHtmlAttributes($key)
@@ -191,8 +183,7 @@ trait HtmlAttributes
     }
 
     /**
-     * @param string|array $value
-     *
+     * @param  string|array  $value
      * @return string
      */
     protected function prepareHtmlAttributeValue($value)

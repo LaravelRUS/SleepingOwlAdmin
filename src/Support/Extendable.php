@@ -7,16 +7,14 @@ use SleepingOwl\Admin\Support\Contracts\ExtensionInterface;
 
 trait Extendable
 {
-
     /**
      * @var ExtensionInterface[]|Collection
      */
     protected $extensions;
 
     /**
-     * @param string             $name
-     * @param ExtensionInterface $extension
-     *
+     * @param  string  $name
+     * @param  ExtensionInterface  $extension
      * @return ExtensionInterface
      */
     public function extend($name, ExtensionInterface $extension)

@@ -9,7 +9,7 @@ use SleepingOwl\Admin\Navigation\PageCollection;
 interface NavigationInterface extends Renderable, Arrayable
 {
     /**
-     * @param array $navigation
+     * @param  array  $navigation
      */
     public function setFromArray(array $navigation);
 
@@ -29,8 +29,7 @@ interface NavigationInterface extends Renderable, Arrayable
     public function hasChild();
 
     /**
-     * @param string|array|PageInterface $page
-     *
+     * @param  string|array|PageInterface  $page
      * @return PageInterface|null
      */
     public function addPage($page);
@@ -41,8 +40,7 @@ interface NavigationInterface extends Renderable, Arrayable
     public function getAccessLogic();
 
     /**
-     * @param \Closure $accessLogic
-     *
+     * @param  \Closure  $accessLogic
      * @return $this
      */
     public function setAccessLogic(\Closure $accessLogic);

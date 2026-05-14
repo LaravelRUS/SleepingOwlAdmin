@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Display;
 
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\Renderable;
 
 class TableHeaderColumn implements TableHeaderColumnInterface
@@ -88,4 +88,3 @@ class TableHeaderColumn implements TableHeaderColumnInterface
         ];
     }
 }
-

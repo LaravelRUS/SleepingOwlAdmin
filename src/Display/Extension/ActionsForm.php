@@ -4,12 +4,12 @@ namespace SleepingOwl\Admin\Display\Extension;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Display\Extension\ActionInterface;
 use SleepingOwl\Admin\Contracts\Display\Placable;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Form\FormElement;
+use SleepingOwl\Admin\Support\HtmlAttributes;
 
 class ActionsForm extends Extension implements Initializable, Placable
 {
@@ -155,4 +155,3 @@ class ActionsForm extends Extension implements Initializable, Placable
         $this->setHtmlAttribute('class', 'display-actions-form-wrapper');
     }
 }
-
