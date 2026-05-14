@@ -72,11 +72,11 @@ class PageBase extends NavigationBase implements PageInterface
     /**
      * Page constructor.
      *
-     * @param string $title
-     * @param string|null $url
-     * @param string|null $id
-     * @param int|null $priority
-     * @param string|null $icon
+     * @param  string  $title
+     * @param  string|null  $url
+     * @param  string|null  $id
+     * @param  int|null  $priority
+     * @param  string|null  $icon
      */
     public function __construct($title = null, ?string $url = null, ?string $id = null, ?int $priority = 100, ?string $icon = null)
     {
@@ -462,8 +462,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param string|null $view
-     *
+     * @param  string|null  $view
      * @return Factory|View|string
      */
     public function render($view = null)
