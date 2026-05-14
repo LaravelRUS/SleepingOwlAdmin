@@ -239,7 +239,6 @@ class Page extends PageBase implements PageInterface
         return $this;
     }
 
-    /** FIX 8.1 */
     /**
      * @return string|null
      */
@@ -249,12 +248,16 @@ class Page extends PageBase implements PageInterface
             return null;
         }
 
+        if ($this->url instanceof Closure) {
+            return call_user_func($this->url, $this);
+        }
+
         if (strpos($this->url, '://') !== false) {
             return $this->url;
         }
 
         if (is_string($this->url)) {
-            $this->url = url($this->url);
+            return url($this->url);
         }
 
         if ($this->url instanceof UrlGenerator) {

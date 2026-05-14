@@ -173,7 +173,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         if (is_null($this->title)) {
             $title = str_replace('_', ' ', $this->getDefaultClassTitle());
@@ -186,7 +186,7 @@ abstract class ModelConfigurationManager implements ModelConfigurationInterface
     /**
      * @return string|null
      */
-    public function getIcon(): ?string
+    public function getIcon()
     {
         return $this->icon;
     }

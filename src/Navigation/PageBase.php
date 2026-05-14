@@ -4,7 +4,9 @@ namespace SleepingOwl\Admin\Navigation;
 
 use Closure;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\Navigation\BadgeInterface;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Support\HtmlAttributes;
@@ -74,7 +76,7 @@ class PageBase extends NavigationBase implements PageInterface
      * @param int|null $priority
      * @param string|null $icon
      */
-    public function __construct($title = null, $url = null, $id = null, $priority = 100, $icon = null)    
+    public function __construct($title = null, ?string $url = null, ?string $id = null, ?int $priority = 100, ?string $icon = null)
     {
         $this->items = new PageCollection();
         $this->badges = new Collection();
@@ -107,7 +109,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @return array
+     * @return bool
      */
     public function hasAliases()
     {
@@ -227,12 +229,16 @@ class PageBase extends NavigationBase implements PageInterface
      */
     public function getUrl()
     {
+        if ($this->url instanceof Closure) {
+            return call_user_func($this->url, $this);
+        }
+
         if (strpos($this->url, '://') !== false) {
             return $this->url;
         }
 
         if (is_string($this->url)) {
-            $this->url = url($this->url);
+            return url($this->url);
         }
 
         if ($this->url instanceof UrlGenerator) {
@@ -422,7 +428,7 @@ class PageBase extends NavigationBase implements PageInterface
     }
 
     /**
-     * @return bool
+     * @return bool|Closure
      */
     public function checkAccess()
     {
@@ -467,7 +473,7 @@ class PageBase extends NavigationBase implements PageInterface
     /**
      * @param string|null $view
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View|string
      */
     public function render($view = null)
     {
