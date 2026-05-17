@@ -444,8 +444,8 @@ class Page extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param Closure|string $value
-     * @param array|null $attributes
+     * @param  Closure|string  $value
+     * @param  array|null  $attributes
      * @return $this
      */
     public function addBadge($value, ?array $attributes = null)
@@ -501,7 +501,7 @@ class Page extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param bool|Closure $active
+     * @param  bool|Closure  $active
      * @return $this
      */
     public function setIsActive($active)
@@ -534,7 +534,7 @@ class Page extends NavigationBase implements PageInterface
     }
 
     /**
-     * @param PageInterface $page
+     * @param  PageInterface  $page
      */
     protected function setParent(PageInterface $page)
     {
