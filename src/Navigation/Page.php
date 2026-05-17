@@ -108,7 +108,7 @@ class Page extends NavigationBase implements PageInterface
      * @param  int|Closure|null  $priority
      * @param  string|Closure|null  $icon
      */
-    public function __construct($title = null, $url = null, ?string $id = null, $priority = 100, $icon = null)
+    public function __construct($title = null, $url = null, $id = null, $priority = 100, $icon = null)
     {
         parent::__construct();
 

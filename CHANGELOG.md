@@ -1,5 +1,26 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
 
+## 2026-05-17
+* [Change] Перенес `kodicomponents/support` и `kodicomponents/navigation` в проект
+* [Add] Добавлен калбэк в основные параметры для указания навигации
+```php
+        $addNavigation = [
+            'title' => fn() => 'Navigate',
+            'icon' => fn() => 'fas fa-save',
+            'url' => fn() => '/example/more/data',
+            'priority' => fn() => 10000,
+            'accessLogic' => function () {
+                return true;
+            },
+        ];
+
+            AdminNavigation::setFromArray([$addNavigation]);
+```
+* [Fix] Формированная ссылка в навигации, если домен HTTPS
+* [Fix] Исправлено поведение placeholder в select (в основном в фильтрах видно)
+* [Update] Адаптировано к Laravel 11+
+
+
 ## 2024-03-20
 * [Doc] Getter for element without documentation.
 ```php

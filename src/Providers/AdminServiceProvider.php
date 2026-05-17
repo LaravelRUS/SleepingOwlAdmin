@@ -252,7 +252,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerCustomRoutes()
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
-            $this->registerRoutes(function (Router $route) use ($file) {
+            $this->registerRoutes(function (Router $router) use ($file) {
                 require $file;
             });
         }
@@ -279,27 +279,11 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerSupportRoutes()
     {
-        $domain = config('sleeping_owl.domain', false);
-
-        $middlewares = collect($this->getConfig('middleware'));
-        $configGroup = collect([
-            'prefix' => $this->getConfig('url_prefix'),
-            'middleware' => $middlewares,
-        ]);
-
-        if ($domain) {
-            $configGroup->put('domain', $domain);
-        }
-
-        $this->app['router']->group($configGroup->toArray(), function (Router $route) {
-            $route->get('ckeditor/upload/image', [
-                'as' => 'admin.ckeditor.upload',
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
-            ]);
-
-            $route->post('ckeditor/upload/image', [
-                'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
-            ]);
+        $this->registerRoutes(function (Router $router) {
+            $router->group(['as' => 'admin.'], function (Router $router) {
+                $router->get('ckeditor/upload/image', [\SleepingOwl\Admin\Http\Controllers\UploadController::class, 'ckEditorStore'])->name('ckeditor.upload');
+                $router->post('ckeditor/upload/image', [\SleepingOwl\Admin\Http\Controllers\UploadController::class, 'ckEditorStore']);
+            });
         });
     }
 
@@ -309,18 +293,16 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerRoutes(\Closure $callback)
     {
         $domain = config('sleeping_owl.domain', false);
-        $configGroup = collect([
-            'prefix' => $this->getConfig('url_prefix'),
-            'middleware' => $this->getConfig('middleware'),
-        ]);
+
+        $router = $this->app['router']
+            ->prefix($this->getConfig('url_prefix'))
+            ->middleware($this->getConfig('middleware'));
 
         if ($domain) {
-            $configGroup->put('domain', $domain);
+            $router->domain($domain);
         }
 
-        $this->app['router']->group($configGroup->toArray(), function (Router $route) use ($callback) {
-            call_user_func($callback, $route);
-        });
+        $router->group($callback);
     }
 
     /**
