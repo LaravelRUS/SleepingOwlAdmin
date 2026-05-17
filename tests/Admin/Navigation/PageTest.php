@@ -1,7 +1,7 @@
 <?php
 
-use SleepingOwl\Admin\Navigation\Page;
 use Illuminate\Support\Facades\Config;
+use SleepingOwl\Admin\Navigation\Page;
 
 class PageTest extends TestCase
 {
@@ -99,7 +99,7 @@ class PageTest extends TestCase
     public function test_fixes_http_to_https_when_app_url_is_https()
     {
         Config::set('app.url', 'https://domain.com');
-        
+
         $page = new Page();
         $page->setUrl('http://domain.com/admin/test');
 
@@ -109,7 +109,7 @@ class PageTest extends TestCase
     public function test_does_not_fix_http_when_app_url_is_http()
     {
         Config::set('app.url', 'http://domain.com');
-        
+
         $page = new Page();
         $page->setUrl('http://domain.com/admin/test');
 
@@ -119,7 +119,7 @@ class PageTest extends TestCase
     public function test_fixes_relative_url_when_app_url_is_https()
     {
         Config::set('app.url', 'https://domain.com');
-        
+
         $page = new Page();
         $page->setUrl('admin/test');
 
