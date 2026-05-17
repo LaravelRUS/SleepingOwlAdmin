@@ -1,4 +1,4 @@
-# [Unreleased] (Only in SleepingOwl <code class="language-php">8+</code> branch)
+# [Unreleased] (Only in SleepingOwl <code class="language-php">development</code> branch)
 
 ## 2026-05-17
 * [Change] Перенес `kodicomponents/support` и `kodicomponents/navigation` в проект
@@ -43,7 +43,7 @@
 
 ## 2024-02-09
 * [Add] Add methods to `AdminFormElement::text` for generate words (for pincode or promocode)
-```
+```php
 // work ONLY first element on page
 AdminFormElement::text('promocode', 'Promo')
     ->canGenerate(8)
@@ -92,7 +92,7 @@ AdminFormElement::text('promocode', 'Promo')
 ## 2023-02-08
 * [Fix] Fix wysiwyg dark theme (Ckeditor 5)
 * [Fix] Поправил tinymce, можно выбирать версию в конфиге, но нет возможности локализации
-```
+```php
 config('sleeping_owl.wysiwyg_cdn.tinymce')
     //Если есть API ключ для домена - вставить, иначе оставьте 'no-api-key'
     // версии 4, 5, 6
@@ -102,7 +102,7 @@ config('sleeping_owl.wysiwyg_cdn.tinymce')
     ],
 ```
 * [Fix] Поправил ckeditor5. Появилась возможность переключаться с CDN на локальную и выбирать версию (только CDN)
-```
+```php
 // Перевод берется от настройки локального языка
     'ckeditor5' => [
             'useCdn' => false,
@@ -131,7 +131,7 @@ config('sleeping_owl.wysiwyg_cdn.tinymce')
 ## 2022-10-19
 * [Fix] Fix filter push if section have many filters
 * [Add] Add separator and divider in navigation
-```
+```php
     [
         'title' =>'Menu Label',
         'type' =>'label',
