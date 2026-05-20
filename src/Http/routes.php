@@ -1,39 +1,76 @@
 <?php
 
 use Illuminate\Routing\Router;
-use SleepingOwl\Admin\Http\Controllers\AdminController;
 
 $router->group(['as' => 'admin.', 'namespace' => 'SleepingOwl\Admin\Http\Controllers'], function (Router $router) {
     if (! $router->has('admin.dashboard')) {
-        $router->get('', [AdminController::class, 'getDashboard'])->name('dashboard');
+        $router->get('', ['as' => 'dashboard', 'uses' => 'AdminController@getDashboard']);
     }
 
-    $router->get('{adminModel}', [AdminController::class, 'getDisplay'])->name('model');
+    $router->get('{adminModel}', [
+        'as' => 'model',
+        'uses' => 'AdminController@getDisplay',
+    ]);
 
-    $router->post('{adminModel}', [AdminController::class, 'inlineEdit']);
+    $router->post('{adminModel}', [
+        'uses' => 'AdminController@inlineEdit',
+    ]);
 
-    $router->get('{adminModel}/create', [AdminController::class, 'getCreate'])->name('model.create');
+    $router->get('{adminModel}/create', [
+        'as' => 'model.create',
+        'uses' => 'AdminController@getCreate',
+    ]);
 
-    $router->post('{adminModel}/create', [AdminController::class, 'postStore'])->name('model.store');
+    $router->post('{adminModel}/create', [
+        'as' => 'model.store',
+        'uses' => 'AdminController@postStore',
+    ]);
 
-    $router->get('{adminModel}/{adminModelId?}/edit', [AdminController::class, 'getEdit'])->name('model.edit');
+    $router->get('{adminModel}/{adminModelId?}/edit', [
+        'as' => 'model.edit',
+        'uses' => 'AdminController@getEdit',
+    ]);
 
-    $router->post('{adminModel}/{adminModelId?}/edit', [AdminController::class, 'postUpdate'])->name('model.update');
+    $router->post('{adminModel}/{adminModelId?}/edit', [
+        'as' => 'model.update',
+        'uses' => 'AdminController@postUpdate',
+    ]);
 
-    $router->delete('{adminModel}/{adminModelId?}/delete', [AdminController::class, 'deleteDelete'])->name('model.delete');
+    $router->delete('{adminModel}/{adminModelId?}/delete', [
+        'as' => 'model.delete',
+        'uses' => 'AdminController@deleteDelete',
+    ]);
 
-    $router->delete('{adminModel}/{adminModelId?}/destroy', [AdminController::class, 'deleteDestroy'])->name('model.destroy');
+    $router->delete('{adminModel}/{adminModelId?}/destroy', [
+        'as' => 'model.destroy',
+        'uses' => 'AdminController@deleteDestroy',
+    ]);
 
-    $router->post('{adminModel}/{adminModelId?}/restore', [AdminController::class, 'postRestore'])->name('model.restore');
+    $router->post('{adminModel}/{adminModelId?}/restore', [
+        'as' => 'model.restore',
+        'uses' => 'AdminController@postRestore',
+    ]);
 
-    $router->get('{adminWildcard}', [AdminController::class, 'getWildcard'])->name('wildcard');
+    $router->get('{adminWildcard}', [
+        'as' => 'wildcard',
+        'uses' => 'AdminController@getWildcard',
+    ]);
 
-    $router->post('{adminModel}/deletedAll', [AdminController::class, 'deletedAll'])->name('deletedAll');
+    $router->post('{adminModel}/deletedAll', [
+        'as' => 'deletedAll',
+        'uses' => 'AdminController@deletedAll',
+    ]);
 
     if (config('sleeping_owl.enable_editor')) {
         $router->group(['middleware' => config('sleeping_owl.env_editor_middlewares')], function (Router $router) {
-            $router->get(config('sleeping_owl.env_editor_url'), [AdminController::class, 'getEnvEditor'])->name('env.editor');
-            $router->post(config('sleeping_owl.env_editor_url'), [AdminController::class, 'postEnvEditor'])->name('env.editor.post');
+            $router->get(config('sleeping_owl.env_editor_url'), [
+                'as' => 'env.editor',
+                'uses' => 'AdminController@getEnvEditor',
+            ]);
+            $router->post(config('sleeping_owl.env_editor_url'), [
+                'as' => 'env.editor.post',
+                'uses' => 'AdminController@postEnvEditor',
+            ]);
         });
     }
 });

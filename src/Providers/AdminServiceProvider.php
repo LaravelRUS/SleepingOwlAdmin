@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Providers;
 
+use Closure;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
@@ -45,7 +46,7 @@ class AdminServiceProvider extends ServiceProvider
         EnvEditor::class,
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->registerWysiwyg();
         $this->registerTemplate();
@@ -74,7 +75,7 @@ class AdminServiceProvider extends ServiceProvider
         ModelConfigurationManager::setEventDispatcher($this->app['events']);
     }
 
-    protected function registerTemplate()
+    protected function registerTemplate(): void
     {
         $this->app->singleton('assets.packages', function ($app) {
             return new \KodiCMS\Assets\PackageManager();
@@ -125,7 +126,7 @@ class AdminServiceProvider extends ServiceProvider
         return $this->getConfig('bootstrapDirectory').$path;
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->registerMessages();
         $this->registerBootstrap();
@@ -135,7 +136,7 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Global register widgets.
      */
-    protected function registerWidgets()
+    protected function registerWidgets(): void
     {
         $widgetsRegistry = $this->app[WidgetsRegistryInterface::class];
 
@@ -147,7 +148,7 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Global register messages of adminpanel.
      */
-    protected function registerMessages()
+    protected function registerMessages(): void
     {
         $messageTypes = [
             'error' => ErrorMessages::class,
@@ -164,7 +165,7 @@ class AdminServiceProvider extends ServiceProvider
         });
     }
 
-    protected function initializeNavigation()
+    protected function initializeNavigation(): void
     {
         $this->app->bind(
             TableHeaderColumnInterface::class,
@@ -196,7 +197,7 @@ class AdminServiceProvider extends ServiceProvider
         });
     }
 
-    protected function registerWysiwyg()
+    protected function registerWysiwyg(): void
     {
         $this->app->singleton('sleeping_owl.wysiwyg', function () {
             return new Manager($this->app);
@@ -206,7 +207,7 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Register bootstrap file.
      */
-    protected function registerBootstrap()
+    protected function registerBootstrap(): void
     {
         $directory = $this->getBootstrapPath();
 
@@ -233,23 +234,15 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Register Alias from App.
      */
-    protected function registerAliases()
+    protected function registerAliases(): void
     {
-//        $aliases = config('sleeping_owl.aliases', []);
-//
-//        $loader = AliasLoader::getInstance();
-//
-//        foreach ($aliases as $alias => $class) {
-//            $loader->alias($alias, $class);
-//        }
-
         AliasLoader::getInstance(config('sleeping_owl.aliases', []));
     }
 
     /**
      * Register Custom Routes From Users.
      */
-    protected function registerCustomRoutes()
+    protected function registerCustomRoutes(): void
     {
         if (file_exists($file = $this->getBootstrapPath('routes.php'))) {
             $this->registerRoutes(function (Router $router) use ($file) {
@@ -261,7 +254,7 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Register Default Admin Routes.
      */
-    protected function registerDefaultRoutes()
+    protected function registerDefaultRoutes(): void
     {
         $this->registerRoutes(function (Router $router) {
             (new ModelRouter($this->app, $router))->register($this->app['sleeping_owl']->getModels());
@@ -277,38 +270,56 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Register CKEditor Upload and D&D plugins.
      */
-    protected function registerSupportRoutes()
+    protected function registerSupportRoutes(): void
     {
-        $this->registerRoutes(function (Router $router) {
-            $router->group(['as' => 'admin.'], function (Router $router) {
-                $router->get('ckeditor/upload/image', [\SleepingOwl\Admin\Http\Controllers\UploadController::class, 'ckEditorStore'])->name('ckeditor.upload');
-                $router->post('ckeditor/upload/image', [\SleepingOwl\Admin\Http\Controllers\UploadController::class, 'ckEditorStore']);
-            });
+        $domain = config('sleeping_owl.domain', false);
+
+        $middlewares = collect($this->getConfig('middleware'));
+        $configGroup = collect([
+            'prefix' => $this->getConfig('url_prefix'),
+            'middleware' => $middlewares,
+        ]);
+
+        if ($domain) {
+            $configGroup->put('domain', $domain);
+        }
+
+        $this->app['router']->group($configGroup->toArray(), function (Router $route) {
+            $route->get('ckeditor/upload/image', [
+                'as' => 'admin.ckeditor.upload',
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
+            ]);
+
+            $route->post('ckeditor/upload/image', [
+                'uses' => 'SleepingOwl\Admin\Http\Controllers\UploadController@ckEditorStore',
+            ]);
         });
     }
 
     /**
-     * @param  \Closure  $callback
+     * @param  Closure  $callback
      */
-    protected function registerRoutes(\Closure $callback)
+    protected function registerRoutes(Closure $callback): void
     {
         $domain = config('sleeping_owl.domain', false);
-
-        $router = $this->app['router']
-            ->prefix($this->getConfig('url_prefix'))
-            ->middleware($this->getConfig('middleware'));
+        $configGroup = collect([
+            'prefix' => $this->getConfig('url_prefix'),
+            'middleware' => $this->getConfig('middleware'),
+        ]);
 
         if ($domain) {
-            $router->domain($domain);
+            $configGroup->put('domain', $domain);
         }
 
-        $router->group($callback);
+        $this->app['router']->group($configGroup->toArray(), function (Router $route) use ($callback) {
+            call_user_func($callback, $route);
+        });
     }
 
     /**
      * Register navigation file.
      */
-    protected function registerNavigationFile()
+    protected function registerNavigationFile(): void
     {
         if (file_exists($navigation = $this->getBootstrapPath('navigation.php'))) {
             $items = include $navigation;
