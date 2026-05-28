@@ -1,0 +1,27 @@
+//Core
+@import "variables";
+@import "colors";
+@import "bootstrap/scss/bootstrap";
+@import "adminLte";
+@import "adminLte-dark";
+@import "font";
+
+
+//Component
+@import "components";
+@import "addition";
+@import "css";
+
+
+//fontawesome 6
+//@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+//fontawesome 7
+//@import "@fortawesome/fontawesome-free/css/all.css";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/regular";
+
+//responsive-datatable-bs4
+@import "datatables.net-responsive-bs4/css/responsive.bootstrap4.css";

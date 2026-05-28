@@ -32,12 +32,6 @@ Admin.Modules.register('display.tree', () => {
               icon: 'success',
               title: trans('lang.tree.reorderCompleted')
             })
-
-            // new Noty({
-            //     type: 'success',
-            //     timeout:3000,
-            //     text: trans('lang.tree.reorderCompleted')
-            // }).show();
         });
     });
 

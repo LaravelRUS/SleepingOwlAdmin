@@ -39,12 +39,6 @@ Vue.component('env_editor', Vue.extend({
                       icon: 'error',
                       title: this.errorText
                     })
-
-                // new Noty({
-                //     type: 'error',
-                //     layout: 'topRight',
-                //     text: this.errorText
-                // }).show();
             }
         }
     },

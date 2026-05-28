@@ -23,11 +23,12 @@ class Assets extends BaseAssets implements AssetsContract
      * @param  string  $src  Asset source
      * @param  array|string  $dependency  Dependencies
      * @param  bool  $footer  Whether to show in header or footer
+     * @param  array  $attributes  Additional attributes
      * @return AssetElementInterface Setting returns asset array, getting returns asset HTML
      */
-    public function addJs($handle = false, $src = null, $dependency = null, $footer = true)
+    public function addJs($handle = false, $src = null, $dependency = null, $footer = true, array $attributes = [])
     {
-        return parent::addJs($handle, $src, $dependency, $footer);
+        return $this->scripts[$handle] = new \KodiCMS\Assets\Javascript($handle, $src, $dependency, $footer, $attributes);
     }
 
     /**

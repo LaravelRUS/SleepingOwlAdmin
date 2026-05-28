@@ -6,7 +6,7 @@ $gray-lighter: $gray-300 !default;
 $gray-light: $gray-600 !default;
 
 
-@import "~bootstrap4-datetimepicker/src/sass/bootstrap-datetimepicker";
+@import "bootstrap4-datetimepicker/src/sass/bootstrap-datetimepicker";
 
 .dark-mode {
     .bootstrap-datetimepicker-widget table {

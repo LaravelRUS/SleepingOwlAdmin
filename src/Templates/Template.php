@@ -197,9 +197,9 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Регистрация стандартных глобальных Javascript переменных.
+     * Registering standard global Javascript variables.
      */
-    protected function setGlobalVariables()
+    protected function setGlobalVariables(): void
     {
         $globalVars = $this->admin->scriptVariables();
 
@@ -226,7 +226,7 @@ abstract class Template implements TemplateInterface
     }
 
     /**
-     * Отображение версии в футере.
+     * Displaying the version in the footer.
      *
      * @return string
      */

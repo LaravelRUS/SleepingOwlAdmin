@@ -6,10 +6,12 @@ mix.webpackConfig({
     stats: {
         children: true,
     },
+    infrastructureLogging: {
+        level: 'none'
+    }
 })
 
-
-mix.sass('resources/assets/scss/app.scss', 'css/admin-app.css')
+mix.sass('resources/assets/scss/admin-app.scss', 'css/admin-app.css')
     .js('resources/assets/js_owl/vue_init.js', 'js/vue.js')
     .js('resources/assets/js_owl/app.js', 'js/admin-app.js')
     .js('resources/assets/js_owl/app-dev.js', 'js/admin-app-dev.js')
@@ -23,9 +25,12 @@ mix.sass('resources/assets/scss/app.scss', 'css/admin-app.css')
         imgLoaderOptions: {
             enabled: false,
         },
+        progress: false
     })
-
 
 if (mix.inProduction()) {
     mix.version()
 }
+
+mix.disableNotifications()
+

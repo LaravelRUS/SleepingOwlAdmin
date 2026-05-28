@@ -1,4 +1,15 @@
 /**
+ * DEPRECATION
+ *
+ * use Swal
+ * @see https://sweetalert2.github.io
+ *
+ * Swal.fire({
+ *   title: "Good job!",
+ *   text: "You clicked the button!",
+ *   icon: "success"
+ * });
+ *
  * NOTY is a jQuery plugin that makes it easy to create
  * - alert
  * - success
@@ -31,8 +42,8 @@
  // }).show();
 
 
-window.Noty = require('noty')
-
-Noty.overrideDefaults({
-    theme: 'metroui'
-});
+// window.Noty = require('noty')
+//
+// Noty.overrideDefaults({
+//     theme: 'metroui'
+// });

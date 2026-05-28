@@ -1,5 +1,8 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">development</code> branch)
 
+## 2026-05-19
+
+
 ## 2026-05-17
 * [Change] Перенес `kodicomponents/support` и `kodicomponents/navigation` в проект
 * [Add] Добавлен калбэк в основные параметры для указания навигации

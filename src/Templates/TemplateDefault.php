@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Templates;
 
+use Illuminate\Support\Facades\Vite;
 use Exception;
 
 class TemplateDefault extends Template
@@ -66,6 +67,36 @@ class TemplateDefault extends Template
                 ->addCss('admin-default', $this->assetPath('css/admin-app.css'));
         }
     }
+
+    /**
+     * @param string $mixPath
+     * @param string $vitePath
+     * @return string
+     */
+//    protected function getAssetUrl(string $mixPath, string $vitePath): string
+//    {
+//        if (class_exists(Vite::class)) {
+//            $buildDir = $this->assetDir();
+//            $vite = Vite::useBuildDirectory($buildDir);
+//
+//            if (is_file(public_path($buildDir.'/hot')) ||
+//                is_file(public_path($buildDir.'/.vite/manifest.json')) ||
+//                is_file(public_path($buildDir.'/manifest.json'))
+//            ) {
+//                try {
+//                    return $vite->asset($vitePath);
+//                } catch (Exception $e) {
+//                    //
+//                }
+//            }
+//        }
+//
+//        try {
+//            return mix($mixPath, $this->assetDir());
+//        } catch (Exception $e) {
+//            return $this->assetPath($mixPath);
+//        }
+//    }
 
     /**
      * @return string
