@@ -2,8 +2,8 @@
 
 namespace SleepingOwl\Admin\Templates;
 
-use Illuminate\Support\Facades\Vite;
 use Exception;
+use Illuminate\Support\Facades\Vite;
 
 class TemplateDefault extends Template
 {
@@ -69,8 +69,8 @@ class TemplateDefault extends Template
     }
 
     /**
-     * @param string $mixPath
-     * @param string $vitePath
+     * @param  string  $mixPath
+     * @param  string  $vitePath
      * @return string
      */
 //    protected function getAssetUrl(string $mixPath, string $vitePath): string
