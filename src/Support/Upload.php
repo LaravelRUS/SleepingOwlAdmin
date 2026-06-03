@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Support;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -281,7 +280,7 @@ trait Upload
     protected function isImageUploadedFile(UploadedFile $file)
     {
         $realPath = $file->getRealPath();
-        if (!$realPath || !is_file($realPath)) {
+        if (! $realPath || ! is_file($realPath)) {
             return false;
         }
 
