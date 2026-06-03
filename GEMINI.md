@@ -63,4 +63,29 @@ The project uses PHPUnit and Orchestra Testbench for testing.
 -   `resources/lang/`: Translation files.
 -   `config/`: Default package configuration.
 -   `public/`: Compiled assets (managed via Webpack Mix).
--   `tests/`: Unit and integration tests.
+
+## Lead Developer's Architectural Analysis (June 2026)
+
+### Core & Registration
+*   **Central Hub:** The `Admin` class acts as the registry for models (sections) and manages component aliases.
+*   **Flexible Initialization:** Uses the `AliasBinder` pattern, allowing developers to extend functionality by overriding standard element classes.
+*   **Laravel Integration:** Deeply integrated via service providers, utilizing the container (DI) for injecting dependencies into section closures.
+
+### CRUD Engine
+*   **Section Pattern:** Model interfaces are defined via `ModelConfiguration`, allowing for declarative UI descriptions while keeping logic in closures fired on demand.
+*   **Repositories:** `RepositoryInterface` abstracts data handling from Eloquent, providing uniform processing (including Soft Deletes).
+*   **Fluent API:** Factories provide a convenient interface for building complex tables and forms.
+
+### Request Handling
+*   **Universal Controller:** `AdminController` handles most actions via the `{adminModel}` dynamic parameter.
+*   **Lifecycle:** Resolves section configuration, initiates UI object construction, and passes it to the rendering layer.
+*   **Inline Editing:** Supports X-editable via `inlineEdit`, mapping columns to the `Display` object for updates.
+
+### Rendering Layer
+*   **Recursive Saving:** `FormDefault` automatically handles validation and saving for related models (`BelongsTo`, `HasOneOrMany`).
+*   **Extensions:** Tables support a system of extensions for column filters, totals, etc., allowing for modular functional growth.
+
+### Evaluation & Tech Debt
+*   **Strengths:** High extensibility, clean Fluent API, solid data abstraction.
+*   **Risks:** `AdminController` is overloaded with diverse responsibilities (breadcrumbs, `.env` editing, CRUD). Direct `.env` file manipulation via regex is risky. Legacy Laravel version checks and patterns should be refactored for simplicity.
+

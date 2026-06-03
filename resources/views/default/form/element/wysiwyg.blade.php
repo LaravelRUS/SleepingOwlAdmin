@@ -37,7 +37,8 @@
         </div>
 
         <div class="card-body pad pt-0">
-            {!! Form::textarea($name, $value, $attributesArray) !!}
+{{--            {!! Form::textarea($name, $value, $attributesArray) !!}--}}
+            {!! html()->textarea($name, $value)->attributes($attributesArray) !!}
         </div>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))

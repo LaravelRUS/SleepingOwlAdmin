@@ -68,7 +68,10 @@ class Image extends File
             /** @var \Illuminate\Http\UploadedFile $file */
             $file = Arr::get($validator->attributes(), 'file');
 
-            $size = getimagesize($file->getRealPath());
+            $size = false;
+            if (is_file($file->getRealPath())) {
+                $size = @getimagesize($file->getRealPath());
+            }
 
             if (! $size) {
                 if (! $this->isAllowSvg()) {
@@ -155,7 +158,10 @@ class Image extends File
             return $callback($file, $path, $filename, $settings);
         }
 
-        if (class_exists('Intervention\Image\Facades\Image') && (bool) getimagesize($file->getRealPath())) {
+        if (class_exists('Intervention\Image\Facades\Image')
+            && is_file($file->getRealPath())
+            && (bool) getimagesize($file->getRealPath())
+        ) {
             $image = \Intervention\Image\Facades\Image::make($file);
 
             foreach ($settings as $method => $args) {

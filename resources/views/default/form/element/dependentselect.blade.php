@@ -9,7 +9,8 @@
         </label>
 
         <div>
-            {!! Form::select($name, $options, $value, $attributes) !!}
+{{--            {!! Form::select($name, $options, $value, $attributes) !!}--}}
+            {!! html()->select($name, $options, $value)->attributes($attributes) !!}
         </div>
 
 
