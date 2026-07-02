@@ -13,6 +13,7 @@ use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Display\Extension\Actions;
 use SleepingOwl\Admin\Display\Extension\ActionsForm;
 use SleepingOwl\Admin\Display\Extension\Apply;
+use SleepingOwl\Admin\Display\Extension\CustomView;
 use SleepingOwl\Admin\Display\Extension\Filters;
 use SleepingOwl\Admin\Display\Extension\Links;
 use SleepingOwl\Admin\Display\Extension\Scopes;
@@ -273,6 +274,23 @@ abstract class Display implements DisplayInterface
         }
 
         return $view;
+    }
+
+    /**
+     * Add a custom view to a placable block.
+     *
+     * @param string $view
+     * @param string $placement
+     * @param array $data
+     * @return $this
+     */
+    public function addCustomView($view, $placement = 'before.card', array $data = [])
+    {
+        $key = 'custom_view_' . md5($view . $placement . serialize($data) . microtime(true));
+
+        $this->extend($key, new CustomView($view, $placement, $data));
+
+        return $this;
     }
 
     /**

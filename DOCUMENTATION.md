@@ -81,6 +81,36 @@ AdminSection::registerModel(User::class, function (ModelConfiguration $model) {
 | **Boolean** | `AdminColumn::boolean('is_active', 'Active')` | Иконка true/false |
 | **Custom** | `AdminColumn::custom('Label', function($model) { ... })` | Произвольный HTML |
 
+### Добавление кастомных вьюшек (addCustomView)
+Метод `addCustomView($view, $placement, array $data = [])` позволяет выводить кастомные Blade-шаблоны или готовые объекты `View` в `yield`-секции (placable blocks) макета страницы без конфликтов перезаписи.
+
+**Пример использования:**
+```php
+$display = AdminDisplay::datatables();
+$display
+    // Через имя шаблона и массив параметров
+    ->addCustomView('Product::status-form', 'card.heading.actions', [
+        'statuses' => $this->statuses
+    ])
+    // Через объект View и метод ->with()
+    ->addCustomView(
+        view('Product::clear-comment')->with('statuses', $this->statuses),
+        'card.heading.actions'
+    );
+```
+
+**Доступные секции разметки (`$placement`):**
+* **Блоки вокруг карточки/таблицы:**
+  * `before.card` (или `before.panel`) — верх страницы перед карточкой (дефолтное значение).
+  * `card.heading` (или `panel.heading`) — заголовок карточки.
+  * `card.heading.actions` (или `panel.heading.actions`) — правая часть заголовка (кнопки управления).
+  * `card.buttons` (или `panel.buttons`) — область кнопок внутри карточки.
+  * `card.footer` (или `panel.footer`) — подвал карточки.
+  * `after.card` (или `after.panel`) — низ страницы под карточкой.
+* **Блоки внутри самой таблицы:**
+  * `table.header` — перед строками `<thead>` таблицы.
+  * `table.footer` — в самом низу таблицы перед закрывающим тегом.
+
 ## 6. Компоненты форм (Form)
 
 ### Типы форм

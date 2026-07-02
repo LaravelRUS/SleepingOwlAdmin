@@ -1,5 +1,23 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">development</code> branch)
 
+## 2026-07-03
+* [Add] Добавлен метод `addCustomView($view, $placement, $data)` в класс `Display` для удобного добавления кастомных Blade-шаблонов или объектов `View` в `yield`-секции (placable blocks) макета без конфликтов перезаписи.
+```php
+        $display = AdminDisplay::datatables();
+
+        $display
+            // Вариант 1: Через имя шаблона и массив параметров
+            ->addCustomView('Product::status-form', 'card.heading.actions', [
+                'statuses' => $this->statuses
+            ])
+            // Вариант 2: Через объект View и метод ->with()
+            ->addCustomView(
+                view('Product::clear-comment')->with('statuses', $this->statuses),
+                'card.heading.actions'
+            );
+```
+
+
 ## 2026-05-19
 
 
