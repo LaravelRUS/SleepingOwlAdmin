@@ -24,9 +24,9 @@ class CustomView extends Extension implements Placable
     /**
      * CustomView constructor.
      *
-     * @param string $view
-     * @param string $placement
-     * @param array $data
+     * @param  string  $view
+     * @param  string  $placement
+     * @param  array  $data
      */
     public function __construct($view, $placement = 'before.card', array $data = [])
     {
@@ -44,7 +44,7 @@ class CustomView extends Extension implements Placable
     }
 
     /**
-     * @param string $view
+     * @param  string  $view
      * @return $this
      */
     public function setView($view)
@@ -63,7 +63,7 @@ class CustomView extends Extension implements Placable
     }
 
     /**
-     * @param string $placement
+     * @param  string  $placement
      * @return $this
      */
     public function setPlacement($placement)
@@ -82,7 +82,7 @@ class CustomView extends Extension implements Placable
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      * @return $this
      */
     public function setData(array $data)
