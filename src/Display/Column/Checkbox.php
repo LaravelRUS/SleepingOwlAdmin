@@ -26,7 +26,8 @@ class Checkbox extends NamedColumn
     public function __construct($label = null)
     {
         parent::__construct($label);
-        $this->setLabel(Html::checkbox(null, 1, false)->attribute('class', 'adminCheckboxAll'));
+        $html = app(Html::class);
+        $this->setLabel($html->checkbox(null, 0, false)->attribute('class', 'adminCheckboxAll'));
     }
 
     /**
