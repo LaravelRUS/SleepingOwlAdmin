@@ -2,8 +2,6 @@
 
 namespace SleepingOwl\Admin\Display\Column;
 
-
-
 use Spatie\Html\Html;
 
 class Checkbox extends NamedColumn
