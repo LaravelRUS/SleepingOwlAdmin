@@ -259,17 +259,11 @@ abstract class Display implements DisplayInterface
         $view->getFactory()->flushSections();
 
         foreach ($blocks as $block => $data) {
-            foreach ($data as $html) {
-                if (! empty($html)) {
-                    $view->getFactory()->startSection($block);
-                    echo $html;
-                    $view->getFactory()->yieldSection();
-                } else {
-                    /*
-                    * Need test for action (BUG)
-                    */
-                    //$view->getFactory()->flushSections();
-                }
+            $content = implode('', array_filter($data));
+            if (! empty($content)) {
+                $view->getFactory()->startSection($block);
+                echo $content;
+                $view->getFactory()->yieldSection();
             }
         }
 
