@@ -1,6 +1,8 @@
 <?php
 
 use Mockery as m;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
@@ -78,6 +80,67 @@ class BaseColumnFilterTest extends TestCase
         });
 
         $filter->apply($column, $builder, 'keyword', []);
+    }
+
+    /**
+     * The literal zero is a selectable filter value (`0 => 'No'`), not "nothing selected".
+     */
+    #[DoesNotPerformAssertions]
+    public function testApplyKeepsZeroValue()
+    {
+        $column = m::mock(ColumnInterface::class);
+        $column->shouldReceive('getMetaData')->once()->andReturn(null);
+        $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
+        $column->shouldReceive('getName')->andReturn('columnName');
+
+        $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
+        $builder->shouldReceive('where')->once()->withArgs(['columnName', '=', '0']);
+
+        $this->getPlainFilter()->apply($column, $builder, '0', []);
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    #[DataProvider('emptyValuesProvider')]
+    #[DoesNotPerformAssertions]
+    public function testApplySkipsEmptyValue($value)
+    {
+        $column = m::mock(ColumnInterface::class);
+        $column->shouldReceive('getMetaData')->once()->andReturn(null);
+        $column->shouldReceive('getFilterCallback')->once()->andReturn(null);
+        $column->shouldReceive('getName')->andReturn('columnName');
+
+        $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class);
+        $builder->shouldNotReceive('where');
+
+        $this->getPlainFilter()->apply($column, $builder, $value, []);
+    }
+
+    public static function emptyValuesProvider()
+    {
+        return [
+            'null' => [null],
+            'empty string' => [''],
+            'empty array' => [[]],
+            'false' => [false],
+        ];
+    }
+
+    /**
+     * A bare filter with the default `equal` operator, without the asset package
+     * initialization the constructor does — `apply()` does not need it.
+     *
+     * @return BaseColumnFilter
+     */
+    protected function getPlainFilter()
+    {
+        return new class extends BaseColumnFilter
+        {
+            public function __construct()
+            {
+            }
+        };
     }
 
     public function sqlOperatorsProvider()
