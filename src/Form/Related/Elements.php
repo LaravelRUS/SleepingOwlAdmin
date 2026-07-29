@@ -129,12 +129,12 @@ abstract class Elements extends FormElements
     /**
      * Loaded related values.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $relatedValues;
 
     /**
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     protected $instance;
 
@@ -143,7 +143,7 @@ abstract class Elements extends FormElements
     /**
      * Elements that are about to be removed.
      *
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $toRemove;
 
@@ -325,9 +325,12 @@ abstract class Elements extends FormElements
         if ($el instanceof FormElements) {
             $el->setElements($this->cloneElements($el)->all());
         } else {
-            if (! ($el instanceof Custom)) {
-                //$el->setDefaultValue(null);
-            }
+            /**
+             * TODO: Custom
+             */
+//            if (! ($el instanceof Custom)) {
+//                //$el->setDefaultValue(null);
+//            }
             if (is_object($el)) {
                 $el->setValueSkipped(true);
             }
@@ -340,7 +343,7 @@ abstract class Elements extends FormElements
      * @param  Model  $model
      * @return FormElements|void
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws ModelNotFoundException
      */
     public function setModel(Model $model)
     {
@@ -389,7 +392,7 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws ModelNotFoundException
      */
     protected function loadRelationValues()
     {
@@ -558,9 +561,9 @@ abstract class Elements extends FormElements
     /**
      * Returns value from model for given element.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @param  NamedFormElement  $el
-     * @return mixed|null
+     * @return mixed|null|void
      */
     protected function getElementValue(Model $model, NamedFormElement $el)
     {
@@ -591,7 +594,7 @@ abstract class Elements extends FormElements
     /**
      * Applies given callback to every element of form.
      *
-     * @param  \Illuminate\Support\Collection  $elements
+     * @param Collection $elements
      * @param  $callback
      */
     protected function forEachElement(Collection $elements, $callback)
@@ -604,7 +607,7 @@ abstract class Elements extends FormElements
     /**
      * Returns flat collection of elements in form ignoring everything but NamedFormElement. Works recursive.
      *
-     * @param  \Illuminate\Support\Collection  $elements
+     * @param Collection $elements
      * @return mixed
      */
     protected function flatNamedElements(Collection $elements)
@@ -628,9 +631,9 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param Model $model
      * @param  array  $attributes
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     protected function safeFillModel(Model $model, array $attributes = []): Model
     {
@@ -668,7 +671,7 @@ abstract class Elements extends FormElements
     /**
      * Saves request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      */
     public function save(Request $request)
     {
@@ -707,9 +710,9 @@ abstract class Elements extends FormElements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function afterSave(Request $request)
     {
@@ -781,7 +784,7 @@ abstract class Elements extends FormElements
 
     /**
      * @param  string  $groupLabel
-     * @return Elements|\Illuminate\Database\Eloquent\Model
+     * @return Elements|Model
      */
     public function setGroupLabel(string $groupLabel): self
     {
@@ -859,21 +862,21 @@ abstract class Elements extends FormElements
     /**
      * Returns model for each element in form.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     abstract protected function getModelForElements(): Model;
 
     /**
      * Returns fresh instance of model for each element in form.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     abstract protected function getFreshModelForElements(): Model;
 
     /**
      * Proceeds saving related values after all validations passes.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return mixed
      */
     abstract protected function proceedSave(Request $request);
@@ -885,4 +888,24 @@ abstract class Elements extends FormElements
      * @return mixed
      */
     abstract protected function prepareRelatedValues(array $data);
+
+    /**
+     * Forward unknown method calls to all inner elements that implement them.
+     * Allows calling any setter (e.g., setReadonly, setOnlyLink, setSomeOption)
+     * on a HasMany/Elements container without enumerating each element.
+     *
+     * @param string $method
+     * @param array  $arguments
+     * @return $this
+     */
+    public function __call($method, $arguments)
+    {
+        foreach ($this->getElements() as $el) {
+            if (method_exists($el, $method)) {
+                $el->$method(...$arguments);
+            }
+        }
+
+        return $this;
+    }
 }

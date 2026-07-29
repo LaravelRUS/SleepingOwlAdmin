@@ -23,7 +23,7 @@ class HasMany extends Elements
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return mixed|void
      */
     protected function proceedSave(Request $request)
@@ -81,7 +81,7 @@ class HasMany extends Elements
 
     /**
      * @param  $query
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     protected function retrieveRelationValuesFromQuery($query): Collection
     {
@@ -92,7 +92,7 @@ class HasMany extends Elements
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     protected function getModelForElements(): Model
     {
@@ -102,7 +102,7 @@ class HasMany extends Elements
     /**
      * Returns fresh instance of model for each element in form.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     protected function getFreshModelForElements(): Model
     {

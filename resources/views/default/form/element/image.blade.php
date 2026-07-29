@@ -62,7 +62,6 @@
                         <i class="fa-fw fas fa-link"></i>
                     </button>
 
-
                 </div>
 
                 <input :name="name" type="hidden" :value="val">
