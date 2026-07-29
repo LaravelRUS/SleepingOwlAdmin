@@ -2,7 +2,9 @@
     inline-template
     name="{{ $name }}"
     label="{{ $label }}"
-    :limit="{{ (int)$limit }}"
+    @if (!empty($limit))
+        :limit="{{ (int) $limit }}"
+    @endif
     :initial-groups-count="{{ (int)$groups->count() }}"
     :removed="{{ $remove->toJson() }}"
 >
@@ -16,5 +18,5 @@
 
       @include(AdminTemplate::getViewPath('form.element.related.inner_element'))
     </div>
-    
+
 </related-elements>
