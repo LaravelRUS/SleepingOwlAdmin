@@ -9,7 +9,7 @@
                   'draggable' => isset($draggable) ? $draggable : false,
               ])
           @endforeach
-          
+
           <template v-for="index in newGroups">
               @include(AdminTemplate::getViewPath('form.element.related.group'), [
                   'name' => $name,
@@ -18,7 +18,6 @@
               ])
           </template>
       </draggable>
-
 
       @if (!$readonly)
         <div class="d-block clearfix">
@@ -29,7 +28,7 @@
             class='grouped-elements__action pull-right related-action_add btn btn-success btn-sm'
           >
             <i class='fas fa-plus'></i>
-            {{ trans('sleeping_owl::lang.button.add') }}
+              {{ trans('sleeping_owl::lang.button.add') }}
           </button>
         </div>
       @endif
