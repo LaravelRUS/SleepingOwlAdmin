@@ -10,7 +10,8 @@
 
         <div>
             {{--            {!! Form::select($name, $options, $value, $attributes) !!}--}}
-            {!! html()->select($name, $options, $value)->attributes($attributes) !!}
+            @php($select = html()->select($name, $options, $value)->attributes($attributes))
+            {!! $select->hasAttribute('multiple') ? $select->multiple() : $select !!}
         </div>
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
