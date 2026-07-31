@@ -64,7 +64,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
                 return $query->where([$key => $default_value]);
             }
 
-            return $query->where([$key => null]);
+            return $query->whereIn($key, []);
         };
 
         $this->setLanguage(config('app.locale'));
