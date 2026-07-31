@@ -115,7 +115,7 @@ class Range extends BaseColumnFilter
      */
     public function parseValue($range)
     {
-        if (strpos($range, '::') === false) {
+        if (strpos((string) $range, '::') === false) {
             return;
         }
 
