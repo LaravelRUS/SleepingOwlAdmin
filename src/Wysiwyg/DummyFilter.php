@@ -14,7 +14,7 @@ class DummyFilter implements WysiwygFilterInterface
     public function apply($text)
     {
         return Blade::compileString(
-            preg_replace(['/<(\?|\%)\=?(php)?/', '/(\%|\?)>/'], ['', ''], $text)
+            preg_replace(['/<(\?|\%)\=?(php)?/', '/(\%|\?)>/'], ['', ''], (string) $text)
         );
     }
 }
