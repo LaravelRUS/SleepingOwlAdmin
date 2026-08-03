@@ -2,7 +2,7 @@
     inline-template
     name="{{ $name }}"
     label="{{ $label }}"
-    @if (!empty($limit))
+    @if (!is_null($limit))
         :limit="{{ (int) $limit }}"
     @endif
     :initial-groups-count="{{ (int)$groups->count() }}"
