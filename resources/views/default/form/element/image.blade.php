@@ -34,7 +34,7 @@
                     </p>
                 </div>
 
-                <div class="form-element-files clearfix" v-if="has_value" v-show="has_value" style="display:none;">
+<div class="form-element-files clearfix" v-if="has_value" v-show="has_value">
                     <div class="form-element-files__item">
                         <a :href="createdimage" class="form-element-files__image" data-toggle="lightbox">
                             <img :src="createdimage"/>

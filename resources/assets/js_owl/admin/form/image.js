@@ -123,19 +123,29 @@ Vue.component('element-image', Vue.extend({
             }
           }
 
+          // indicate upload in progress for blob paste
+          self.uploadingImage = true
+          self.uploading = true
+
           axios.post(this.url, formData, config).then(response => {
             if (response.data.path) {
               self.val = response.data.path
+              self.$forceUpdate()
             }
+            self.uploadingImage = false
+            self.uploading = false
           })
           .catch(error => {
-            if (error.response.data.errors) {
+            if (error.response && error.response.data && error.response.data.errors) {
               Admin.Messages.error(error.response.data.message, error.response.data.errors[0])
             } else {
-              Admin.Messages.error(error.response.statusText + ' (' + error.response.status + ')', error.response.data.message)
+              Admin.Messages.error(error.response ? error.response.statusText + ' (' + error.response.status + ')' : 'Upload error', error.response ? error.response.data.message : '')
             }
+            self.uploadingImage = false
+            self.uploading = false
           })
 
+          // clean temporary input
           input = document.getElementById('image-paste-in-buffer')
           if (input) {
             if (input.name) {

@@ -1,5 +1,9 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">development</code> branch)
 
+## 2026-08-17
+* [Fix] Change index for multiselect arrows
+* [Fix] Bug after update image and images
+
 ## 2026-07-03
 * [Add] Добавлен метод `addCustomView($view, $placement, $data)` в класс `Display` для удобного добавления кастомных Blade-шаблонов или объектов `View` в `yield`-секции (placable blocks) макета без конфликтов перезаписи.
 ```php

@@ -107,24 +107,25 @@ Vue.component('element-images', Vue.extend({
             }
 
             Admin.Messages.cliptobuffer(trans('lang.file.insert_link'), null, null, url, link).then(result => {
-              if(result && result.value) {
+              if (result && result.value) {
                 var input = document.getElementById('image-paste-in-buffer')
 
                 if (typeof(index) !== 'undefined') {
                   self.$set(this.vals, [index], result.value)
                 } else {
                   if (self.onlylink && result.value.indexOf('blob:') === 0) {
-                    if (input) {
-                      input.remove()
-                    }
+                    if (input) { input.remove() }
                     return false
                   }
                   if (result.value.indexOf('blob:') === 0) {
-                    this.uploadImage()
-                  } else {
-                    if (input) {
-                      input.remove()
+                    // upload blob; if editing existing index, replace it, else push after upload
+                    if (typeof(index) !== 'undefined') {
+                      this.uploadImage(index)
+                    } else {
+                      this.uploadImage()
                     }
+                  } else {
+                    if (input) { input.remove() }
                     self.vals.push(result.value);
                   }
                 }
@@ -134,7 +135,7 @@ Vue.component('element-images', Vue.extend({
             });
         },
 
-        uploadImage() {
+        uploadImage(index = null) {
           let self = this
           var input = document.getElementById('image-paste-in-buffer')
 
@@ -165,19 +166,33 @@ Vue.component('element-images', Vue.extend({
             }
           }
 
+          // indicate upload in progress
+          self.uploading = true
+
           axios.post(this.url, formData, config).then(response => {
             if (response.data.path) {
-              self.vals.push(response.data.path)
+              if (index !== null && typeof self.vals[index] !== 'undefined') {
+                // replace existing blob entry
+                self.$set(self.vals, index, response.data.path)
+              } else {
+                // fallback: push new
+                self.vals.push(response.data.path)
+              }
+              // ensure Vue updates UI
+              self.$forceUpdate()
             }
+            self.uploading = false
           })
           .catch(error => {
-            if (error.response.data.errors) {
+            if (error.response && error.response.data && error.response.data.errors) {
               Admin.Messages.error(error.response.data.message, error.response.data.errors[0])
             } else {
-              Admin.Messages.error(error.response.statusText + ' (' + error.response.status + ')', error.response.data.message)
+              Admin.Messages.error(error.response ? error.response.statusText + ' (' + error.response.status + ')' : 'Upload error', error.response ? error.response.data.message : '')
             }
+            self.uploading = false
           })
 
+          // clean temporary input
           input = document.getElementById('image-paste-in-buffer')
           if (input) {
             if (input.name) {
@@ -215,6 +230,10 @@ Vue.component('element-images', Vue.extend({
         },
         has_values () {
             return this.vals.length > 0
+        },
+        // alias for Blade template which expects has_value
+        has_value () {
+            return this.has_values
         },
         serializedValues () {
             return this.vals.join(',')
