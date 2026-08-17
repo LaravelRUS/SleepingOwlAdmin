@@ -87,7 +87,9 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
                 }
             );
 
-            $this->commands('command.sleepingowl.ide.generate');
+            if (class_exists('Barryvdh\LaravelIdeHelper\Console\GeneratorCommand')) {
+                $this->commands('command.sleepingowl.ide.generate');
+            }
         }
     }
 }
