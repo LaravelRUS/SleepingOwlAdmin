@@ -2,6 +2,7 @@
 
 ## 2026-08-26
 * [Add] Added a callable to the Select `setOption`
+* [Add] Added setVisibled(bool|Closure) in DisplayFilterColumns
 
 
 ## 2026-08-17

@@ -12,16 +12,17 @@ use SleepingOwl\Admin\Contracts\Display\Extension\ColumnFilterInterface;
 use SleepingOwl\Admin\Support\HtmlAttributes;
 use SleepingOwl\Admin\Traits\Assets;
 use SleepingOwl\Admin\Traits\SqlQueryOperators;
+use SleepingOwl\Admin\Traits\Visibled;
 use SleepingOwl\Admin\Traits\Width;
 
 abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Arrayable
 {
-    use SqlQueryOperators, HtmlAttributes, Assets, Width, \SleepingOwl\Admin\Traits\Renderable;
+    use SqlQueryOperators, HtmlAttributes, Assets, Width, \SleepingOwl\Admin\Traits\Renderable, Visibled;
 
     protected $view;
 
     /**
-     * @var \Closure|null
+     * @var Closure|null
      */
     protected $callback;
 
@@ -96,7 +97,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @return \Closure|null
+     * @return Closure|null
      *
      * @deprecated
      */
@@ -106,7 +107,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return $this
      *
      * @deprecated
@@ -202,6 +203,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             'width' => $width,
             'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
+            'visibled' => $this->getVisibled(),
         ];
     }
 }

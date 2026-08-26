@@ -17,7 +17,9 @@ trait Visibled
     public function getVisibled()
     {
         if (is_callable($this->visibled)) {
-            return (bool) call_user_func($this->visibled, $this->getModel());
+            $param = method_exists($this, 'getModel') ? $this->getModel() : $this;
+
+            return (bool) call_user_func($this->visibled, $param);
         }
 
         return (bool) $this->visibled;

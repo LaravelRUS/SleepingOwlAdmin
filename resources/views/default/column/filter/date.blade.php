@@ -1,3 +1,4 @@
+@if ($visibled)
 <div class="input-group input-date date" {!! $width !!}>
     <input
         data-date-format="{{ $pickerFormat }}"
@@ -11,3 +12,4 @@
         </div>
     </div>
 </div>
+@endif
