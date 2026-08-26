@@ -32,6 +32,9 @@ Please ensure your application is updated before upgrading to the next version.
 - `Laravel 8.*` (`PHP >= 7.3`)
 - `Laravel 9.*` (`PHP >= 8.0`)
 - `Laravel 10.*` (`PHP >= 8.1`)
+- `Laravel 11.*` (`PHP >= 8.2`)
+- `Laravel 12.*` (`PHP >= 8.2`)
+- `Laravel 13.*` (`PHP >= 8.3`)
 
 __Tested and worked on Laravel (v10.48) and php 8.3__
 

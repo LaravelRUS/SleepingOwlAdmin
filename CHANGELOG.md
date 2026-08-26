@@ -1,5 +1,9 @@
 # [Unreleased] (Only in SleepingOwl <code class="language-php">development</code> branch)
 
+## 2026-08-26
+* [Add] Added a callable to the Select `setOption`
+
+
 ## 2026-08-17
 * [Fix] Change index for multiselect arrows
 * [Fix] Bug after update image and images

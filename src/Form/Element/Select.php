@@ -13,7 +13,7 @@ class Select extends NamedFormElement
     use SelectOptionsFromModel;
 
     /**
-     * @var array
+     * @var array|callable
      */
     protected $options = [];
 
@@ -58,7 +58,7 @@ class Select extends NamedFormElement
      *
      * @param  $path
      * @param  null  $label
-     * @param  array  $options
+     * @param  array|callable|Model|string  $options
      *
      * @throws SelectException
      * @throws FormElementException
@@ -67,7 +67,7 @@ class Select extends NamedFormElement
     {
         parent::__construct($path, $label);
 
-        if (is_array($options)) {
+        if (is_array($options) || is_callable($options)) {
             $this->setOptions($options);
         } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
@@ -79,6 +79,10 @@ class Select extends NamedFormElement
      */
     public function getOptions(): array
     {
+        if (is_callable($this->options)) {
+            $this->setOptions(call_user_func($this->options, $this) ?: []);
+        }
+
         if (! empty($this->options)) {
             return $this->options;
         }
@@ -120,10 +124,10 @@ class Select extends NamedFormElement
     }
 
     /**
-     * @param  array  $options
+     * @param  array|callable  $options
      * @return $this
      */
-    public function setOptions(array $options): self
+    public function setOptions($options): self
     {
         $this->options = $options;
 

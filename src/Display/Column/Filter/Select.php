@@ -22,7 +22,7 @@ class Select extends BaseColumnFilter
     protected $model;
 
     /**
-     * @var array
+     * @var array|callable
      */
     protected $options = [];
 
@@ -49,7 +49,7 @@ class Select extends BaseColumnFilter
     /**
      * Select constructor.
      *
-     * @param  null|array|Model  $options
+     * @param  null|array|callable|Model  $options
      * @param  null|string  $title
      *
      * @throws SelectException
@@ -58,7 +58,7 @@ class Select extends BaseColumnFilter
     {
         parent::__construct();
 
-        if (is_array($options)) {
+        if (is_array($options) || is_callable($options)) {
             $this->setOptions($options);
         } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
@@ -135,36 +135,38 @@ class Select extends BaseColumnFilter
     /**
      * @return array
      */
-    public function getOptions()
-    {
-        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
-            $this->setOptions(
-                $this->loadOptions()
-            );
-        }
+     public function getOptions()
+     {
+         if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
+             $this->setOptions(
+                 $this->loadOptions()
+             );
+         }
 
-        $options = $this->options;
-        if ($this->isSortable()) {
-            asort($options);
-        }
+         $options = is_callable($this->options) ? call_user_func($this->options, $this) : $this->options;
+         $options = is_array($options) ? $options : [];
 
-        if (! $this->multiple && ! is_null($this->getPlaceholder())) {
-            $options = ['' => $this->getPlaceholder()] + $options;
-        }
+         if ($this->isSortable()) {
+             asort($options);
+         }
 
-        return $options;
-    }
+         if (! $this->multiple && ! is_null($this->getPlaceholder())) {
+             $options = ['' => $this->getPlaceholder()] + $options;
+         }
 
-    /**
-     * @param  array  $options
-     * @return $this
-     */
-    public function setOptions(array $options)
-    {
-        $this->options = $options;
+         return $options;
+     }
 
-        return $this;
-    }
+     /**
+      * @param  array|callable  $options
+      * @return $this
+      */
+     public function setOptions($options)
+     {
+         $this->options = $options;
+
+         return $this;
+     }
 
     /**
      * @return mixed
