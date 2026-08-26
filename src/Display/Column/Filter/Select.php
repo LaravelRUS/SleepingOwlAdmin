@@ -135,38 +135,38 @@ class Select extends BaseColumnFilter
     /**
      * @return array
      */
-     public function getOptions()
-     {
-         if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
-             $this->setOptions(
-                 $this->loadOptions()
-             );
-         }
+    public function getOptions()
+    {
+        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
+            $this->setOptions(
+                $this->loadOptions()
+            );
+        }
 
-         $options = is_callable($this->options) ? call_user_func($this->options, $this) : $this->options;
-         $options = is_array($options) ? $options : [];
+        $options = is_callable($this->options) ? call_user_func($this->options, $this) : $this->options;
+        $options = is_array($options) ? $options : [];
 
-         if ($this->isSortable()) {
-             asort($options);
-         }
+        if ($this->isSortable()) {
+            asort($options);
+        }
 
-         if (! $this->multiple && ! is_null($this->getPlaceholder())) {
-             $options = ['' => $this->getPlaceholder()] + $options;
-         }
+        if (! $this->multiple && ! is_null($this->getPlaceholder())) {
+            $options = ['' => $this->getPlaceholder()] + $options;
+        }
 
-         return $options;
-     }
+        return $options;
+    }
 
-     /**
-      * @param  array|callable  $options
-      * @return $this
-      */
-     public function setOptions($options)
-     {
-         $this->options = $options;
+    /**
+     * @param  array|callable  $options
+     * @return $this
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
 
-         return $this;
-     }
+        return $this;
+    }
 
     /**
      * @return mixed
