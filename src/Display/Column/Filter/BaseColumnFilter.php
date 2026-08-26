@@ -107,7 +107,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     }
 
     /**
-     * @param Closure $callback
+     * @param  Closure  $callback
      * @return $this
      *
      * @deprecated
