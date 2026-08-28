@@ -392,7 +392,7 @@ class AdminController extends Controller
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
-            $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to($request->input('_redirectBack') ?? $model->getDisplayUrl());
         }
 
         return $response->with('success_message', $model->getMessageOnCreate());
@@ -495,7 +495,7 @@ class AdminController extends Controller
                 'sleeping_owl_tab_id' => $request->get('sleeping_owl_tab_id') ?: null,
             ]);
         } else {
-            $response = redirect()->to($request->input('_redirectBack', $model->getDisplayUrl()));
+            $response = redirect()->to($request->input('_redirectBack') ?? $model->getDisplayUrl());
         }
 
         return $response->with('success_message', $model->getMessageOnUpdate());
