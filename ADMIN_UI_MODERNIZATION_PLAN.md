@@ -2,7 +2,9 @@
 
 ## Статус и границы
 
-- Статус: планирование, реализация не начата.
+- Статус: выполняется.
+- Текущий этап: **Этап 0 — решения и baseline**.
+- Точка возобновления: выбрать критерий удаления jQuery после проверки актуального production dependency tree DataTables 2.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -627,3 +629,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Правило №1 | Декомпозиция и читаемость объявлены главным правилом; добавлены пределы размера функций, feature boundaries и CI guards | — |
 | 2026-09-06 | Styling contract | First-party стили закреплены за Sass; colors и настраиваемые значения централизуются через variables files и `--soa-*` root properties | — |
 | 2026-09-06 | Sidebar color | В config добавлен планируемый `sidebar_background_color`, применяемый через `--soa-sidebar-bg` без frontend rebuild | — |
+| 2026-09-06 | Этап 0 / запуск | План закреплён в Git как источник истины; ветка и чистое рабочее дерево проверены; выполнение переведено в активный статус | `2029528c` |
