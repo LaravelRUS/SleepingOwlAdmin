@@ -40,14 +40,15 @@ top-level `[data-soa-vue-app]` host and exposes their temporary lifecycle as
   internals;
 - `unmount(element)` and `unmountAll(root)` release the app before its host is
   removed;
-- a marker nested below another marker is owned by the parent app and is not
-  mounted a second time.
+- the initial registry pass mounts only top-level markers, then the shared
+  `Admin.Components` lifecycle mounts direct nested islands from the parent's
+  rendered DOM exactly once.
 
 `#vueApp` remains a legacy layout id for non-Vue DOM integrations, but it is no
-longer a Vue root. The seven package-owned component definitions are exported
+longer a Vue root. The eight package-owned component definitions are exported
 with `defineComponent` and registered from one frozen catalog on every app
-before mount. Four definitions still own runtime-compiled legacy templates;
-the env editor, file and image elements are precompiled SFCs. The Vue Multiselect
+before mount. Three definitions still own runtime-compiled legacy templates;
+the env editor, file, image and images elements are precompiled SFCs. The Vue Multiselect
 compatibility wrapper is registered from the same catalog because runtime
 compilation resolves its tag in the app context. The package does not call
 global `Vue.component` or `Vue.extend`. A consumer's existing global compat
@@ -57,8 +58,10 @@ temporary stage; the final custom-module API replaces that path.
 `data-soa-vue-app` and `Admin.VueApps` are migration-only contracts, not the
 final custom-module API. Until a legacy custom component is migrated, its Blade
 view must put one marker around the component host. A dynamically inserted
-top-level host calls `Admin.VueApps.mountAll(insertedRoot)` after insertion and
-`Admin.VueApps.unmountAll(removedRoot)` before removal. Custom element tags must
+host calls `Admin.Components.scan(insertedRoot)` after insertion and
+`Admin.Components.destroy(removedRoot)` before removal. This is the same
+lifecycle used by native components and it also supports islands nested inside
+legacy related forms. Custom element tags must
 use explicit closing tags; self-closing HTML such as `<np-service />` is not a
 safe Vue host. The read-only Laluna inventory contains eight such hosts and six
 self-closing examples that must be updated during its pilot migration.
@@ -66,9 +69,10 @@ self-closing examples that must be updated during its pilot migration.
 ### Precompiled root contract
 
 The env editor establishes the migration contract for a precompiled island;
-the file and image elements follow it. A Blade view renders an empty top-level
-host with three attributes:
+the file, image and images elements follow it. A Blade view renders an empty
+host with one compiler guard and three lifecycle attributes:
 
+- `v-pre` protects the empty host when it is nested in a legacy compiled template;
 - `data-soa-vue-app` marks lifecycle ownership;
 - `data-soa-vue-component` names a definition from the app-local catalog;
 - `data-soa-vue-props` contains one HTML-escaped JSON object.
@@ -77,7 +81,7 @@ The registry resolves the component and parses the props before it creates an
 app. Unknown names, malformed JSON, arrays and scalar props fail explicitly.
 Vue receives the selected SFC and its props through `createApp(component,
 props)`; it does not compile server markup. PHP render contracts prove that
-quotes and HTML inside env, file and image values remain data after the Blade
+quotes and HTML inside env, file, image and images values remain data after the Blade
 attribute is decoded.
 
 ## Explicit allowlist
@@ -89,10 +93,9 @@ another legacy use.
 
 | Flag | Temporary owner | Removal condition |
 | --- | --- | --- |
-| `COMPILER_INLINE_TEMPLATE` | Six remaining legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
-| `COMPONENT_V_MODEL` | Legacy `v-model` in select/images views and Vue 2 draggable | Each owner uses the Vue 3 model contract |
-| `INSTANCE_SET` | Two array replacements in the images component | Ordinary reactive assignment replaces `$set` |
-| `INSTANCE_CHILDREN`, `INSTANCE_SCOPED_SLOTS`, `OPTIONS_BEFORE_DESTROY`, `RENDER_FUNCTION`, `PRIVATE_APIS` | `vuedraggable@2` compatibility surface | Images/related islands use the selected Vue 3 drag driver |
+| `COMPILER_INLINE_TEMPLATE` | Five remaining legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
+| `COMPONENT_V_MODEL` | Legacy `v-model` in select views and Vue 2 draggable | Each owner uses the Vue 3 model contract |
+| `INSTANCE_CHILDREN`, `INSTANCE_SCOPED_SLOTS`, `OPTIONS_BEFORE_DESTROY`, `RENDER_FUNCTION`, `PRIVATE_APIS` | `vuedraggable@2` compatibility surface | Related islands use the selected Vue 3 drag driver |
 | `WATCH_ARRAY` | Related-elements array mutation watcher | Island uses an explicit deep watcher or direct state transition |
 | `ATTR_ENUMERATED_COERCION`, `CONFIG_WHITESPACE`, `INSTANCE_ATTRS_CLASS_STYLE` | Server-compiled legacy templates and dependency markup | No runtime-compiled legacy template remains |
 
@@ -111,7 +114,7 @@ instance's server template. `withLegacyInlineTemplate()` clears that cached
 render just before each legacy instance is created. The current instance keeps
 its already selected render function.
 
-This bridge is applied only to the four remaining legacy catalog definitions. Remove
+This bridge is applied only to the three remaining legacy catalog definitions. Remove
 it together with the last `inline-template`; do not use it for new components.
 
 ### File and image uploads
@@ -126,8 +129,10 @@ The image island uses the same constructor boundary and preserves stored-value
 `setAssetPrefix()` behavior. Preview/value resolution, Dropzone options,
 data-URL conversion, paste-buffer cleanup and transport are separate modules.
 Pasted blobs use native `Admin.Http`, temporary object URLs are revoked, and
-readonly/only-link modes do not create an uploader. Images remains on the
-legacy jQuery Dropzone bridge until its own island migration.
+readonly/only-link modes do not create an uploader. The images island shares
+those upload boundaries, uses SortableJS directly for reordering and destroys
+both drivers before unmount. Its native dialog owns gallery preview and
+keyboard navigation without Magnific Popup.
 
 ### Vue Multiselect
 

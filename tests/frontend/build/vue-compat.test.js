@@ -47,7 +47,6 @@ const expectedCompatFeatures = [
     'INSTANCE_ATTRS_CLASS_STYLE',
     'INSTANCE_CHILDREN',
     'INSTANCE_SCOPED_SLOTS',
-    'INSTANCE_SET',
     'OPTIONS_BEFORE_DESTROY',
     'PRIVATE_APIS',
     'RENDER_FUNCTION',
@@ -155,6 +154,10 @@ describe('bounded legacy Vue apps', () => {
         const initializer = readSource('resources/assets/js_owl/vue_init.js')
 
         expect(initializer).toContain('createVueAppRegistry')
+        expect(initializer).toContain('registerVueAppLifecycle')
+        expect(initializer.indexOf('vueApps.mountAll(document)')).toBeLessThan(
+            initializer.indexOf('registerVueAppLifecycle(Admin.Components, vueApps)'),
+        )
         expect(initializer).not.toMatch(/new Vue|#vueApp/)
     })
 
@@ -199,6 +202,7 @@ describe('precompiled Vue islands', () => {
         expect(readSource('webpack.mix.js')).toContain('mix.vue({ version: 3 })')
         expect(view).toContain('data-soa-vue-component="env_editor"')
         expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('v-pre')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
         expect(component).not.toContain('withLegacyInlineTemplate')
@@ -215,6 +219,7 @@ describe('precompiled Vue islands', () => {
 
         expect(view).toContain('data-soa-vue-component="element-file"')
         expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('v-pre')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
         expect(component).not.toMatch(/\$\(|withLegacyInlineTemplate/)
@@ -234,6 +239,7 @@ describe('precompiled image island', () => {
         expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/image.js'))).toBe(false)
         expect(view).toContain('data-soa-vue-component="element-image"')
         expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('v-pre')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
         expect(component).toContain('postPastedImage(Admin.Http')
@@ -255,6 +261,7 @@ describe('precompiled images island', () => {
         )
         expect(view).toContain('data-soa-vue-component="element-images"')
         expect(view).toContain('data-soa-vue-props=')
+        expect(view).toContain('v-pre')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
         expect(component).toContain('postPastedImage(')

@@ -119,7 +119,7 @@ async function openFixture(page) {
     await page.goto('/legacy-vue')
     await expect(page.locator('html')).toHaveAttribute('data-ready', 'true')
     await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
-    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(7)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
 }
 
 async function useProductionBundle(page) {
@@ -149,7 +149,7 @@ async function inspectReadonlyFile(page) {
         host.dataset.soaVueComponent = 'element-file'
         host.dataset.soaVueProps = JSON.stringify(props)
         globalThis.document.body.append(host)
-        globalThis.Admin.VueApps.mount(host)
+        globalThis.Admin.Components.scan(host)
 
         const result = {
             value: host.querySelector('[data-soa-file-value]').value,
@@ -158,7 +158,7 @@ async function inspectReadonlyFile(page) {
             hasUpload: Boolean(host.querySelector('.upload-button')),
         }
 
-        globalThis.Admin.VueApps.unmount(host)
+        globalThis.Admin.Components.destroy(host)
         host.remove()
 
         return result
@@ -172,7 +172,7 @@ async function inspectReadonlyImage(page) {
         host.dataset.soaVueComponent = 'element-image'
         host.dataset.soaVueProps = JSON.stringify(props)
         globalThis.document.body.append(host)
-        globalThis.Admin.VueApps.mount(host)
+        globalThis.Admin.Components.scan(host)
 
         const result = {
             hasInsert: Boolean(host.querySelector('[data-soa-image-insert-current]')),
@@ -182,7 +182,7 @@ async function inspectReadonlyImage(page) {
             value: host.querySelector('[data-soa-image-value]').value,
         }
 
-        globalThis.Admin.VueApps.unmount(host)
+        globalThis.Admin.Components.destroy(host)
         host.remove()
 
         return result
@@ -196,7 +196,7 @@ async function inspectReadonlyImages(page) {
         host.dataset.soaVueComponent = 'element-images'
         host.dataset.soaVueProps = JSON.stringify(props)
         globalThis.document.body.append(host)
-        globalThis.Admin.VueApps.mount(host)
+        globalThis.Admin.Components.scan(host)
 
         const result = {
             dragHandles: host.querySelectorAll('[data-soa-images-drag-handle]').length,
@@ -207,7 +207,7 @@ async function inspectReadonlyImages(page) {
             value: host.querySelector('[data-soa-images-value]').value,
         }
 
-        globalThis.Admin.VueApps.unmount(host)
+        globalThis.Admin.Components.destroy(host)
         host.remove()
 
         return result
@@ -228,7 +228,7 @@ async function mountOnlyLinkImage(page) {
             value: '',
         })
         globalThis.document.body.append(host)
-        globalThis.Admin.VueApps.mount(host)
+        globalThis.Admin.Components.scan(host)
         globalThis.Admin.Messages.cliptobuffer = () => {
             const buffer = globalThis.document.createElement('img')
             buffer.id = 'image-paste-in-buffer'
@@ -254,7 +254,7 @@ async function mountOnlyLinkImages(page) {
             values: [],
         })
         globalThis.document.body.append(host)
-        globalThis.Admin.VueApps.mount(host)
+        globalThis.Admin.Components.scan(host)
         globalThis.Admin.Messages.cliptobuffer = () => {
             const buffer = globalThis.document.createElement('img')
             buffer.id = 'image-paste-in-buffer'
@@ -272,8 +272,8 @@ async function selectedValues(locator) {
     )
 }
 
-async function expectBoundedVueApps(page) {
-    const ownership = await page.evaluate((componentNames) => {
+async function readBoundedVueOwnership(page) {
+    return page.evaluate((componentNames) => {
         const hosts = [...globalThis.document.querySelectorAll('[data-soa-vue-app]')]
         const mountedHosts = hosts.filter((element) => element.__vue_app__)
         const firstApp = globalThis.Admin.VueApps.get(mountedHosts[0])
@@ -290,14 +290,16 @@ async function expectBoundedVueApps(page) {
             layoutMounted: Boolean(globalThis.document.querySelector('#vueApp').__vue_app__),
             mountedIds: mountedHosts.map((element) => element.id),
             nestedMounted: Boolean(
-                globalThis.document.querySelector('#nested-vue-marker').__vue_app__,
+                globalThis.document.querySelector('#nested-image-wrapper').__vue_app__,
             ),
             prototypeTranslation: Boolean(globalThis.Vue.prototype?.$trans),
             translation: translation?.trans('lang.button.cancel'),
         }
     }, legacyVueComponentNames)
+}
 
-    expect(ownership).toEqual({
+async function expectBoundedVueApps(page) {
+    expect(await readBoundedVueOwnership(page)).toEqual({
         componentsAreLocal: true,
         layoutMounted: false,
         mountedIds: [
@@ -308,11 +310,67 @@ async function expectBoundedVueApps(page) {
             'single-select-fixture',
             'multi-select-fixture',
             'related-fixture',
+            'nested-image-wrapper',
         ],
-        nestedMounted: false,
+        nestedMounted: true,
         prototypeTranslation: false,
         translation: 'Cancel',
     })
+}
+
+async function expectInitialRelatedGroup(page) {
+    await expect(page.locator('#existing-related-group')).toHaveAttribute(
+        'data-lifecycle-mounted',
+        'true',
+    )
+    await expect(page.locator('#nested-image-wrapper [data-soa-image-value]')).toHaveValue(
+        'fixtures/pixel.svg',
+    )
+    await expect(page.locator('#related-name_0')).toHaveAttribute('name', 'name')
+}
+
+async function addAndExpectRelatedGroup(page) {
+    await page.locator('#add-related-group').click()
+    await expect(page.locator('#new-related-group-2')).toHaveAttribute(
+        'data-lifecycle-mounted',
+        'true',
+    )
+    await expect(page.locator('#dynamic-nested-image [data-soa-image-value]')).toHaveValue(
+        'fixtures/second.svg',
+    )
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
+    await expect(page.locator('#related-title_2')).toHaveAttribute('name', 'items[new_2][title]')
+    await expect(page.locator('#related-status_2')).toHaveAttribute('name', 'items[new_2][status]')
+    await expect(page.locator('#related-status_2')).toHaveClass(/select2-hidden-accessible/)
+}
+
+async function expectRelatedLifecycleCalls(page) {
+    const calls = await page.evaluate(() => globalThis.__moduleCalls)
+    expect(calls).toEqual(
+        expect.arrayContaining([
+            'form.elements.date',
+            'form.elements.select',
+            'form.elements.wysiwyg',
+        ]),
+    )
+    expect(await page.evaluate(() => globalThis.Admin.Components.scan(globalThis.document))).toBe(0)
+    expect(await page.evaluate(() => globalThis.__componentMounts)).toEqual(
+        relatedLifecycleComponents,
+    )
+}
+
+async function removeAndExpectRelatedGroups(page) {
+    await page.locator('#remove-existing-group').click()
+    await expect(page.locator('.existing-related-group')).toHaveCount(0)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
+    await expect(page.locator('.removed-related')).toHaveValue('42')
+    await expect(page.locator('.removed-related')).toHaveAttribute('name', 'items[remove][]')
+    await page.locator('.remove-new-group').click()
+    await expect(page.locator('.new-related-group')).toHaveCount(0)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(7)
+    expect(await page.evaluate(() => globalThis.__componentDestroys)).toEqual(
+        relatedLifecycleComponents,
+    )
 }
 
 test('bounded Vue 3 compat apps preserve env editor behavior', async ({ page }) => {
@@ -443,21 +501,21 @@ test('images island applies sortable order and destroys both drivers', async ({ 
         const gallery = host.querySelector('[data-soa-images-gallery]')
         const sortableKey = Object.keys(gallery).find((key) => key.startsWith('Sortable'))
         const existed = Boolean(gallery.dropzone && gallery[sortableKey])
-        const unmounted = globalThis.Admin.VueApps.unmount(host)
+        const lifecycleDestroyed = globalThis.Admin.Components.destroy(host)
 
         return {
             destroyed: !gallery.dropzone && !gallery[sortableKey],
             existed,
+            lifecycleDestroyed,
             remainingApps: globalThis.Admin.VueApps.size,
-            unmounted,
         }
     })
 
     expect(result).toEqual({
         destroyed: true,
         existed: true,
-        remainingApps: 6,
-        unmounted: true,
+        lifecycleDestroyed: 1,
+        remainingApps: 7,
     })
     expectNoUnexpectedPageErrors(pageErrors)
 })
@@ -489,12 +547,12 @@ test('link-only images island rejects blobs without creating an uploader', async
     expect(
         await page.evaluate(() => {
             const host = globalThis.document.querySelector('#only-link-images')
-            const unmounted = globalThis.Admin.VueApps.unmount(host)
+            const destroyed = globalThis.Admin.Components.destroy(host)
             host.remove()
 
-            return unmounted
+            return destroyed
         }),
-    ).toBe(true)
+    ).toBe(1)
     expectNoUnexpectedPageErrors(pageErrors)
 })
 
@@ -540,7 +598,7 @@ test('file island destroys its upload driver before unmount', async ({ page }) =
 
         return {
             existed: Boolean(button.dropzone),
-            unmounted: globalThis.Admin.VueApps.unmount(host),
+            lifecycleDestroyed: globalThis.Admin.Components.destroy(host),
             destroyed: !button.dropzone,
             remainingApps: globalThis.Admin.VueApps.size,
         }
@@ -548,9 +606,9 @@ test('file island destroys its upload driver before unmount', async ({ page }) =
 
     expect(result).toEqual({
         existed: true,
-        unmounted: true,
+        lifecycleDestroyed: 1,
         destroyed: true,
-        remainingApps: 6,
+        remainingApps: 7,
     })
     expectNoUnexpectedPageErrors(pageErrors)
 })
@@ -577,21 +635,21 @@ test('image island destroys its upload driver before unmount', async ({ page }) 
         const host = globalThis.document.querySelector('#image-wrapper')
         const button = host.querySelector('.upload-button')
         const existed = Boolean(button.dropzone)
-        const unmounted = globalThis.Admin.VueApps.unmount(host)
+        const lifecycleDestroyed = globalThis.Admin.Components.destroy(host)
 
         return {
             destroyed: !button.dropzone,
             existed,
+            lifecycleDestroyed,
             remainingApps: globalThis.Admin.VueApps.size,
-            unmounted,
         }
     })
 
     expect(result).toEqual({
         destroyed: true,
         existed: true,
-        remainingApps: 6,
-        unmounted: true,
+        lifecycleDestroyed: 1,
+        remainingApps: 7,
     })
     expectNoUnexpectedPageErrors(pageErrors)
 })
@@ -625,12 +683,12 @@ test('link-only image island rejects blob values without creating an uploader', 
     expect(
         await page.evaluate(() => {
             const host = globalThis.document.querySelector('#only-link-image')
-            const unmounted = globalThis.Admin.VueApps.unmount(host)
+            const destroyed = globalThis.Admin.Components.destroy(host)
             host.remove()
 
-            return unmounted
+            return destroyed
         }),
-    ).toBe(true)
+    ).toBe(1)
     expectNoUnexpectedPageErrors(pageErrors)
 })
 
@@ -698,39 +756,8 @@ test('related elements rewrite new field names and initialize dynamic controls',
     page,
 }) => {
     await openFixture(page)
-    await expect(page.locator('#existing-related-group')).toHaveAttribute(
-        'data-lifecycle-mounted',
-        'true',
-    )
-    await expect(page.locator('#related-name_0')).toHaveAttribute('name', 'name')
-    await page.locator('#add-related-group').click()
-    await expect(page.locator('#new-related-group-2')).toHaveAttribute(
-        'data-lifecycle-mounted',
-        'true',
-    )
-    await expect(page.locator('#related-title_2')).toHaveAttribute('name', 'items[new_2][title]')
-    await expect(page.locator('#related-status_2')).toHaveAttribute('name', 'items[new_2][status]')
-    await expect(page.locator('#related-status_2')).toHaveClass(/select2-hidden-accessible/)
-
-    const calls = await page.evaluate(() => globalThis.__moduleCalls)
-    expect(calls).toEqual(
-        expect.arrayContaining([
-            'form.elements.date',
-            'form.elements.select',
-            'form.elements.wysiwyg',
-        ]),
-    )
-    expect(await page.evaluate(() => globalThis.Admin.Components.scan(globalThis.document))).toBe(0)
-    expect(await page.evaluate(() => globalThis.__componentMounts)).toEqual(
-        relatedLifecycleComponents,
-    )
-    await page.locator('#remove-existing-group').click()
-    await expect(page.locator('.existing-related-group')).toHaveCount(0)
-    await expect(page.locator('.removed-related')).toHaveValue('42')
-    await expect(page.locator('.removed-related')).toHaveAttribute('name', 'items[remove][]')
-    await page.locator('.remove-new-group').click()
-    await expect(page.locator('.new-related-group')).toHaveCount(0)
-    expect(await page.evaluate(() => globalThis.__componentDestroys)).toEqual(
-        relatedLifecycleComponents,
-    )
+    await expectInitialRelatedGroup(page)
+    await addAndExpectRelatedGroup(page)
+    await expectRelatedLifecycleCalls(page)
+    await removeAndExpectRelatedGroups(page)
 })

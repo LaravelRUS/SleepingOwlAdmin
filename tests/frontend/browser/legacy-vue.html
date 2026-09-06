@@ -191,6 +191,13 @@
                                     v-if="!removed"
                                 >
                                     <input id="related-name" name="name" />
+                                    <div
+                                        id="nested-image-wrapper"
+                                        v-pre
+                                        data-soa-vue-app
+                                        data-soa-vue-component="element-image"
+                                        data-soa-vue-props='{"assetPrefix":"","csrfToken":"fixture-token","labels":{"browse":"Upload image","download":"Download","insertLink":"Insert link","remove":"Remove image"},"maxFileSize":2,"messages":{"confirmRemove":"Remove image?","fileTooBig":"File is too large","invalidFileType":"Wrong image type","responseError":"Upload error"},"name":"existing_image","onlyLink":false,"readonly":true,"url":"/api/upload","value":"fixtures/pixel.svg"}'
+                                    ></div>
                                     <button
                                         id="remove-existing-group"
                                         type="button"
@@ -217,6 +224,13 @@
                                         :id="'new-related-group-' + index"
                                     >
                                         <input id="related-title" name="title" />
+                                        <div
+                                            id="dynamic-nested-image"
+                                            v-pre
+                                            data-soa-vue-app
+                                            data-soa-vue-component="element-image"
+                                            data-soa-vue-props='{"assetPrefix":"","csrfToken":"fixture-token","labels":{"browse":"Upload image","download":"Download","insertLink":"Insert link","remove":"Remove image"},"maxFileSize":2,"messages":{"confirmRemove":"Remove image?","fileTooBig":"File is too large","invalidFileType":"Wrong image type","responseError":"Upload error"},"name":"new_image","onlyLink":false,"readonly":true,"url":"/api/upload","value":"fixtures/second.svg"}'
+                                        ></div>
                                         <select
                                             id="related-status"
                                             name="status"
@@ -251,7 +265,6 @@
                             :name="`${name}[remove][]`"
                             :value="id"
                         />
-                        <div id="nested-vue-marker" data-soa-vue-app></div>
                     </div>
                 </related-elements>
             </section>

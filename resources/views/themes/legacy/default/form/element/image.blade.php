@@ -44,6 +44,7 @@
         @endphp
 
         <div
+            v-pre
             data-soa-vue-app
             data-soa-vue-component="element-image"
             data-soa-vue-props="{{ json_encode($imageProps, JSON_THROW_ON_ERROR) }}"

@@ -1,4 +1,5 @@
 import { createVueAppRegistry } from '../../frontend/legacy/vue/app-registry'
+import { registerVueAppLifecycle } from '../../frontend/legacy/vue/app-lifecycle'
 import {
     createVueTranslation,
     installVueTranslation,
@@ -19,3 +20,4 @@ const vueApps = createVueAppRegistry(
 
 Admin.VueApps = vueApps
 vueApps.mountAll(document)
+registerVueAppLifecycle(Admin.Components, vueApps)

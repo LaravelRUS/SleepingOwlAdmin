@@ -108,8 +108,11 @@ all cases and before cleanup starts, preventing re-entrant destroy from cleaning
 and allowing a later clean mount.
 
 Dynamic related groups invoke this boundary before Vue removes their DOM and again from their
-Vue 2 destruction hook; the second call is intentionally a no-op. Future Vue 3 islands and table,
-upload, date/time, lightbox and editor drivers use the same symmetric contract.
+compatibility destruction hook; the second call is intentionally a no-op. Precompiled Vue 3
+islands are registered through this same boundary: an initial top-level Vue pass preserves legacy
+boot order, then the component scan mounts nested islands from the rendered subtree. Cleanup
+therefore unmounts a nested island before its related parent. Table, upload, date/time, lightbox
+and editor drivers use the same symmetric contract.
 
 The lifecycle stores state outside the DOM and does not add presentation classes or marker
 attributes. Selectors are owned by feature markup, while visual behavior remains with the selected

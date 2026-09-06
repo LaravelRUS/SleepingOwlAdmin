@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 4 — Vue 3 islands**.
-- Точка возобновления: перенести Select и Multiselect `inline-template` в общий precompiled Vue 3 island; env editor, file, image и images завершены.
+- Точка возобновления: перенести Select и Multiselect `inline-template` в общий precompiled Vue 3 island; lifecycle вложенных islands, env editor, file, image и images завершены.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -562,6 +562,7 @@ No-build consumer contract является release-blocking:
 - [x] Заменить глобальную регистрацию `Vue.component`/`Vue.extend` на `createApp`/`defineComponent` и локальную регистрацию.
 - [x] Заменить `Vue.http`/`vue-resource` на core HTTP client поверх Axios/`fetch`.
 - [x] Заменить `Vue.prototype.$trans` на injection/composable без глобального mutable API.
+- [x] Интегрировать direct Vue hosts с `Admin.Components`: после top-level mount находить вложенные islands в отрендерированном DOM, поддерживать динамические related groups и уничтожать child раньше parent.
 - [ ] Перенести все 9 `inline-template` в precompiled Vue 3 islands.
   - [x] Env editor.
   - [x] File.
@@ -572,7 +573,7 @@ No-build consumer contract является release-blocking:
   - [ ] Related elements с card.
   - [ ] Related elements без card.
   - [ ] Related group.
-- [ ] Перевести `$set` на обычные reactive assignments и проверить array updates.
+- [x] Перевести `$set` на обычные reactive assignments и проверить array updates.
 - [ ] Обновить/заменить Vue wrappers для multiselect и drag/drop.
 - [ ] На каждый island реализовать `mount`/`unmount`, повторную инициализацию и защиту от двойного mount.
 - [ ] Вынести upload, serialization, HTTP/error mapping и sortable logic из Vue components в отдельные composables/services; components оставить orchestration/presentation слоем.
@@ -769,7 +770,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] отсутствует `inline-template`;
 - [ ] отсутствуют глобальные `Vue`, `Vue.component`, `Vue.extend`, `Vue.http` и `Vue.prototype`;
 - [ ] отсутствует `@vue/compat` в production dependencies/bundle;
-- [ ] динамически добавленные related groups монтируют и демонтируют вложенные widgets ровно один раз;
+- [x] динамически добавленные related groups монтируют и демонтируют вложенные widgets ровно один раз;
 - [ ] file/image uploads, multiselect, sorting и validation корректно обновляют reactive state;
 - [ ] несколько одинаковых islands на странице не разделяют состояние.
 
@@ -987,3 +988,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 4 / file island | File element перенесён из server `inline-template` в native Vue 3 SFC/direct host; PHP передаёт route, CSRF, upload limit, labels, messages, readonly и value одним escaped JSON object. Value/URL normalization и Dropzone options/error mapping вынесены в малые тестируемые modules. jQuery `.dropzone()` заменён constructor API, actual Dropzone constructor владеет `autoDiscover = false`, а `beforeUnmount` гарантированно вызывает `destroy`; readonly island не создаёт uploader и не показывает remove. Env/file catalog entries получили отключённые compat flags. Осталось 7 `inline-template` и 5 bridge definitions. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 431 test, 1596 assertions, 2 прежних TODO-skip; frontend gate: 201 Vitest + 26 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / image island | Image element перенесён из server `inline-template` в native Vue 3 SFC/direct host. Blade передаёт escaped typed props, включая `setAssetPrefix`, `setOnlyLink`, readonly, upload limit, route/CSRF и локализованные labels/messages. Preview/value, Dropzone adapter, data-URL/paste-buffer и native `Admin.Http` transport разделены на малые modules; общий разбор upload errors вынесен из File. jQuery `.dropzone()` и Axios удалены из Image, uploader уничтожается при unmount, временный blob очищается/revoke, readonly не создаёт driver, а only-link режим отвергает blob. Осталось 6 `inline-template` и 4 bridge definitions. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 432 tests, 1607 assertions, 2 прежних TODO-skip; frontend gate: 212 Vitest + 30 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / images island | Images element перенесён из server `inline-template` в native Vue 3 SFC/direct host с escaped props для `setAssetPrefix`, `setOnlyLink`, `setDraggable`, readonly, upload limit, route/CSRF, values и локализованного UI. Array normalization/add/replace/remove/reorder/serialization, Dropzone и Sortable adapters вынесены в малые modules; jQuery, Axios, `vuedraggable` и Magnific Popup удалены из island. Нативный `<dialog>` даёт keyboard-friendly preview с previous/next/close и порядковым счётчиком, а Dropzone/Sortable/dialog уничтожаются при unmount; readonly не создаёт drivers, only-link не создаёт uploader. Исправлен подтверждённый Laluna-дефект: вставленный blob при редактировании загружается через `Admin.Http` и заменяет выбранный индекс. Визуально проверены gallery и dialog на собранном fixture. Осталось 5 `inline-template` и 3 bridge definitions. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 433 tests, 1620 assertions, 2 прежних TODO-skip; frontend gate: 219 Vitest + 35 Playwright | текущий commit |
+| 2026-09-06 | Этап 4 / nested island lifecycle | Временный `VueApps` registry интегрирован с единым `Admin.Components`: первоначальный top-level Vue mount сохраняет legacy boot order, затем lifecycle принимает parent apps и сканирует их фактически отрендерированное subtree. Direct hosts защищены `v-pre` от компиляции legacy parent template. Unit contracts доказывают idempotent adoption, динамический nested mount и reverse `child -> parent` teardown; browser fixture воспроизводит реальный Laluna `hasMany(image)`, монтирует initial/dynamic Image islands и удаляет их из registry до Vue DOM removal. Документация переводит динамических consumers на `Admin.Components.scan/destroy`; глобальный поиск подтвердил отсутствие `$set`, поэтому лишний `INSTANCE_SET` удалён из оставшихся 11 compat flags. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 433 tests, 1620 assertions, 2 прежних TODO-skip; frontend gate: 221 Vitest + 35 Playwright | текущий commit |

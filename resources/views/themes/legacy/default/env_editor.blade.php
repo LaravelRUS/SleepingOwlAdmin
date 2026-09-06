@@ -28,6 +28,7 @@
 @endphp
 
 <div
+    v-pre
     data-soa-vue-app
     data-soa-vue-component="env_editor"
     data-soa-vue-props="{{ json_encode($envEditorProps, JSON_THROW_ON_ERROR) }}"

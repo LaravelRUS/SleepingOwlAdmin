@@ -6,7 +6,6 @@ export const vueCompatFeatures = Object.freeze({
     INSTANCE_ATTRS_CLASS_STYLE: 'suppress-warning',
     INSTANCE_CHILDREN: 'suppress-warning',
     INSTANCE_SCOPED_SLOTS: 'suppress-warning',
-    INSTANCE_SET: 'suppress-warning',
     OPTIONS_BEFORE_DESTROY: 'suppress-warning',
     PRIVATE_APIS: 'suppress-warning',
     RENDER_FUNCTION: 'suppress-warning',
