@@ -2645,14 +2645,14 @@ module.exports = {
 
 var _require = __webpack_require__(/*! ../../../../frontend/features/table/actions/bulk-actions */ "./resources/frontend/features/table/actions/bulk-actions.js"),
   bindBulkActions = _require.bindBulkActions;
-var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/themes/legacy-adminlte/action-callbacks */ "./resources/frontend/features/table/themes/legacy-adminlte/action-callbacks.js"),
-  createLegacyActionCallbacks = _require2.createLegacyActionCallbacks;
+var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/actions/named-action-callbacks */ "./resources/frontend/features/table/actions/named-action-callbacks.js"),
+  createNamedActionCallbacks = _require2.createNamedActionCallbacks;
 var unbind = null;
 Admin.Modules.register('display.actions', function () {
   var _unbind;
   (_unbind = unbind) === null || _unbind === void 0 || _unbind();
   unbind = bindBulkActions({
-    callbacks: createLegacyActionCallbacks(),
+    callbacks: createNamedActionCallbacks(),
     events: Admin.Events,
     http: Admin.Http,
     location: window.location,
@@ -2676,14 +2676,14 @@ Admin.Modules.register('display.actions', function () {
 
 var _require = __webpack_require__(/*! ../../../../frontend/features/table/actions/form-actions */ "./resources/frontend/features/table/actions/form-actions.js"),
   bindFormActions = _require.bindFormActions;
-var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/themes/legacy-adminlte/action-callbacks */ "./resources/frontend/features/table/themes/legacy-adminlte/action-callbacks.js"),
-  createLegacyActionCallbacks = _require2.createLegacyActionCallbacks;
+var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/actions/named-action-callbacks */ "./resources/frontend/features/table/actions/named-action-callbacks.js"),
+  createNamedActionCallbacks = _require2.createNamedActionCallbacks;
 var unbind = null;
 Admin.Modules.register('display.actions_form', function () {
   var _unbind;
   (_unbind = unbind) === null || _unbind === void 0 || _unbind();
   unbind = bindFormActions({
-    callbacks: createLegacyActionCallbacks(),
+    callbacks: createNamedActionCallbacks(),
     events: Admin.Events,
     FormData: window.FormData,
     http: Admin.Http,
@@ -3032,52 +3032,6 @@ installLightboxes(Admin);
 Admin.Modules.register('display.table', function () {
   //use LazyLoad
   lazyload();
-
-  //nit: Daan
-  // Все что ниже было отключено, но для работы ленивой загрузке нужно вызвать этот модуль
-
-  // $('.display-filters[data-display="DisplayTable"]').each((i, el) => {
-  //     let $self = $(el),
-  //         $filtersRow = $self.find('tr').first(),
-  //         tag = $self[0].tagName,
-  //         $filters = $filtersRow.find('td'),
-  //         $button = $('<button class="btn btn-default">' + trans('lang.table.filters.control') + '</button>')
-  //
-  //     $filtersRow.after(
-  //         $(`<tr><td colspan="${$filters.length}" class="text-right"></td></tr>`).append($button)
-  //     )
-  //
-  //     $button.on('click', () => {
-  //         let query = {columns: []}
-  //
-  //         $filters.each((i, td) => {
-  //             let $filter = $(td).find('.column-filter'),
-  //                 val = null
-  //
-  //             switch ($filter.data('type')) {
-  //                 case 'range':
-  //
-  //                     break
-  //
-  //                 case 'text':
-  //                 case 'select':
-  //                     val = $filter.val()
-  //
-  //                     break
-  //             }
-  //
-  //             if (!_.isNull(val) && val.length > 0) {
-  //                 query['columns'][i] = {
-  //                     search: {
-  //                         value: val
-  //                     }
-  //                 }
-  //             }
-  //         })
-  //
-  //         Admin.Url.query(query)
-  //     })
-  // })
 });
 
 /***/ }),
@@ -3392,9 +3346,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //
 // window.Trix = require('trix');
 
-__webpack_require__(/*! ./libs/noty */ "./resources/assets/js_owl/libs/noty.js");
 __webpack_require__(/*! ./libs/jquery */ "./resources/assets/js_owl/libs/jquery.js");
-// require('./libs/jquery-form');
 __webpack_require__(/*! ./libs/bootstrap */ "./resources/assets/js_owl/libs/bootstrap.js");
 __webpack_require__(/*! ./libs/i18next */ "./resources/assets/js_owl/libs/i18next.js");
 __webpack_require__(/*! ./libs/dropzone */ "./resources/assets/js_owl/libs/dropzone.js");
@@ -3405,7 +3357,6 @@ var _require2 = __webpack_require__(/*! ../../frontend/features/table/themes/leg
 installLegacyDataTablesPresentation(dataTables2Runtime());
 __webpack_require__(/*! ./libs/sweetalert */ "./resources/assets/js_owl/libs/sweetalert.js");
 __webpack_require__(/*! ./libs/progressbar */ "./resources/assets/js_owl/libs/progressbar.js");
-__webpack_require__(/*! ./libs/noty */ "./resources/assets/js_owl/libs/noty.js");
 __webpack_require__(/*! ./libs/lazyload */ "./resources/assets/js_owl/libs/lazyload.js");
 (0,_frontend_core_runtime_admin_core__WEBPACK_IMPORTED_MODULE_1__.installAdminCore)(window);
 window.Admin.Messages = __webpack_require__(/*! ./components/messages */ "./resources/assets/js_owl/components/messages.js");
@@ -4386,63 +4337,6 @@ $.ajaxSetup({
 
 __webpack_require__(/*! lazyload */ "./node_modules/lazyload/lazyload.js");
 lazyload();
-
-/***/ }),
-
-/***/ "./resources/assets/js_owl/libs/noty.js":
-/*!**********************************************!*\
-  !*** ./resources/assets/js_owl/libs/noty.js ***!
-  \**********************************************/
-/***/ (() => {
-
-/**
- * DEPRECATION
- *
- * use Swal
- * @see https://sweetalert2.github.io
- *
- * Swal.fire({
- *   title: "Good job!",
- *   text: "You clicked the button!",
- *   icon: "success"
- * });
- *
- * NOTY is a jQuery plugin that makes it easy to create
- * - alert
- * - success
- * - error
- * - warning
- * - information
- * - confirmation
- *
- * Theme:
- * - metroui
- * - bootstrap-v4
- * - light
- * - mint
- * - nest
- * - relax
- * - semanticui
- * - sunset
- *
- * messages as an alternative the standard alert dialog.
- *
- * @see http://ned.im/noty/
- */
-
-// new Noty({
-//   text: 'Notification text',
-//   progressBar: true,
-//   theme: 'light',
-//   timeout: 3000,
-//   type: 'error'
-// }).show();
-
-// window.Noty = require('noty')
-//
-// Noty.overrideDefaults({
-//     theme: 'metroui'
-// });
 
 /***/ }),
 
@@ -9694,6 +9588,43 @@ function assertDependencies(dependencies) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/actions/named-action-callbacks.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/frontend/features/table/actions/named-action-callbacks.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createNamedActionCallbacks": () => (/* binding */ createNamedActionCallbacks)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function createNamedActionCallbacks() {
+  var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
+  return {
+    bulk: function bulk(message, context) {
+      invokeNamedCallback(root, message, [context.wrapper, context.checkboxes, context.select, message]);
+    },
+    form: function form(message, context) {
+      invokeNamedCallback(root, message, [context.wrapper, context.checkboxes]);
+    }
+  };
+}
+function invokeNamedCallback(root, message, parameters) {
+  var callback = message.__callback && root[message.__callback];
+  if (typeof callback === 'function') {
+    callback.apply(void 0, _toConsumableArray(parameters));
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/autoupdate/table-auto-update.js":
 /*!***************************************************************************!*\
   !*** ./resources/frontend/features/table/autoupdate/table-auto-update.js ***!
@@ -12041,47 +11972,6 @@ function parseState(serialized) {
     throw new TypeError('Saved table filters contain invalid JSON.', {
       cause: error
     });
-  }
-}
-
-/***/ }),
-
-/***/ "./resources/frontend/features/table/themes/legacy-adminlte/action-callbacks.js":
-/*!**************************************************************************************!*\
-  !*** ./resources/frontend/features/table/themes/legacy-adminlte/action-callbacks.js ***!
-  \**************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createLegacyActionCallbacks": () => (/* binding */ createLegacyActionCallbacks)
-/* harmony export */ });
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function createLegacyActionCallbacks() {
-  var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
-  var jquery = root.jQuery;
-  if (typeof jquery !== 'function') {
-    throw new TypeError('The legacy AdminLTE action callback adapter requires jQuery.');
-  }
-  return {
-    bulk: function bulk(message, context) {
-      invokeNamedCallback(root, message, [jquery(context.wrapper), jquery(context.checkboxes), jquery(context.select), message]);
-    },
-    form: function form(message, context) {
-      invokeNamedCallback(root, message, [jquery(context.wrapper), jquery(context.checkboxes)]);
-    }
-  };
-}
-function invokeNamedCallback(root, message, parameters) {
-  var callback = message.__callback && root[message.__callback];
-  if (typeof callback === 'function') {
-    callback.apply(void 0, _toConsumableArray(parameters));
   }
 }
 

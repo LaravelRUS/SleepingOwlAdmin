@@ -138,8 +138,8 @@ it('routes actions and auto-update through native modules and Admin.Tables', () 
         'resources/frontend/features/table/autoupdate/table-auto-update.js',
     )
     const autoUpdateView = readSource('resources/views/features/datatables/autoupdate.blade.php')
-    const legacyCallbacks = readSource(
-        'resources/frontend/features/table/themes/legacy-adminlte/action-callbacks.js',
+    const namedCallbacks = readSource(
+        'resources/frontend/features/table/actions/named-action-callbacks.js',
     )
 
     expect(`${legacyActions}\n${actions}\n${autoUpdate}`).not.toMatch(
@@ -150,5 +150,7 @@ it('routes actions and auto-update through native modules and Admin.Tables', () 
     expect(autoUpdate).toContain('dependencies.tables.reload(table)')
     expect(autoUpdateView).toContain('data-admin-table-autoupdate')
     expect(autoUpdateView).not.toContain('<script')
-    expect(legacyCallbacks).toContain('jquery(context.wrapper)')
+    expect(namedCallbacks).not.toMatch(/jquery|jQuery|\$\(/)
+    expect(namedCallbacks).toContain('context.wrapper')
+    expect(namedCallbacks).toContain('context.checkboxes')
 })

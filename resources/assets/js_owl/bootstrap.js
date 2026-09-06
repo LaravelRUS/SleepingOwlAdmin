@@ -14,10 +14,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //
 // window.Trix = require('trix');
 
-require('./libs/noty');
-
 require('./libs/jquery');
-// require('./libs/jquery-form');
 require('./libs/bootstrap');
 require('./libs/i18next');
 
@@ -31,7 +28,6 @@ const {
 installLegacyDataTablesPresentation(dataTables2Runtime());
 require('./libs/sweetalert');
 require('./libs/progressbar');
-require('./libs/noty');
 require('./libs/lazyload');
 
 installAdminCore(window);

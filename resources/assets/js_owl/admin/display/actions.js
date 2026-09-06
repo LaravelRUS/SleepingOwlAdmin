@@ -2,15 +2,15 @@ const {
     bindBulkActions,
 } = require('../../../../frontend/features/table/actions/bulk-actions')
 const {
-    createLegacyActionCallbacks,
-} = require('../../../../frontend/features/table/themes/legacy-adminlte/action-callbacks')
+    createNamedActionCallbacks,
+} = require('../../../../frontend/features/table/actions/named-action-callbacks')
 
 let unbind = null
 
 Admin.Modules.register('display.actions', () => {
     unbind?.()
     unbind = bindBulkActions({
-        callbacks: createLegacyActionCallbacks(),
+        callbacks: createNamedActionCallbacks(),
         events: Admin.Events,
         http: Admin.Http,
         location: window.location,
