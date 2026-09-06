@@ -1,21 +1,14 @@
-let switchOn_handler = (textareaId, params) => {
-    return new SimpleMDE(
-        _.extend({
-            element: $("#" + textareaId)[0]
-        }, params || {})
-    );
-}
+const {
+    createSimpleMdeAdapter,
+} = require('../../../frontend/features/forms/wysiwyg/adapters/simplemde')
 
-let switchOff_handler = (editor, textareaId) => {
-    editor.destroy()
-}
+let adapter
+const current = () =>
+    (adapter ??= createSimpleMdeAdapter(globalThis.SimpleMDE, globalThis.document))
 
-let exec_handler = (editor, command, textareaId, data) => {
-    switch (command) {
-        case 'insert':
-            editor.codemirror.replaceSelection(data);
-            break;
-    }
-}
-
-Admin.WYSIWYG.register('simplemde', switchOn_handler, switchOff_handler, exec_handler);
+Admin.WYSIWYG.register(
+    'simplemde',
+    (...args) => current().switchOn(...args),
+    (...args) => current().switchOff(...args),
+    (...args) => current().exec(...args),
+)

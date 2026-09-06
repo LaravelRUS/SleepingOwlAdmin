@@ -34,3 +34,17 @@ export {
     readFile,
     serializeFiles,
 } from './files/files-values.js'
+export { createCkeditor4Adapter } from './wysiwyg/adapters/ckeditor4.js'
+export { createCkeditor5Adapter } from './wysiwyg/adapters/ckeditor5.js'
+export { createSimpleMdeAdapter } from './wysiwyg/adapters/simplemde.js'
+export { createTinyMceAdapter } from './wysiwyg/adapters/tinymce.js'
+export { installWysiwyg, LEGACY_WYSIWYG_MODULE } from './wysiwyg/install-wysiwyg.js'
+export { parseParameters, readWysiwygConfig } from './wysiwyg/wysiwyg-config.js'
+export {
+    createWysiwygDefinition,
+    mountWysiwyg,
+    WYSIWYG_COMPONENT,
+    WYSIWYG_INIT_ATTRIBUTE,
+    WYSIWYG_SELECTOR,
+} from './wysiwyg/wysiwyg-component.js'
+export { createWysiwygRegistry } from './wysiwyg/wysiwyg-registry.js'

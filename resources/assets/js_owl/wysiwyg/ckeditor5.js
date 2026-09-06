@@ -1,20 +1,14 @@
-let switchOn_handler = (textareaId, params) => {
-  ClassicEditor
-    .create(document.querySelector('#' + textareaId ), params || {});
-}
+const {
+    createCkeditor5Adapter,
+} = require('../../../frontend/features/forms/wysiwyg/adapters/ckeditor5')
 
-let switchOff_handler = (editor, textareaId) => {
-    editor.destroy()
-}
+let adapter
+const current = () =>
+    (adapter ??= createCkeditor5Adapter(globalThis.ClassicEditor, globalThis.document))
 
-let exec_handler = (editor, command, textareaId, data) => {
-    switch (command) {
-        case 'insert':
-            editor.insertText(data);
-            break;
-        case 'changeHeight':
-            editor.resize('100%', data);
-    }
-}
-
-Admin.WYSIWYG.register('ckeditor5', switchOn_handler, switchOff_handler, exec_handler);
+Admin.WYSIWYG.register(
+    'ckeditor5',
+    (...args) => current().switchOn(...args),
+    (...args) => current().switchOff(...args),
+    (...args) => current().exec(...args),
+)

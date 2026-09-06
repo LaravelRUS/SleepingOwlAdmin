@@ -1,13 +1,4 @@
 @if ($visibled)
-    @push('footer-scripts')
-        {{--
-        <script>
-            // Admin.WYSIWYG.switchOn('{!! $name !!}', '{{ $editor }}', {!! $parameters !!})
-            // Admin.Modules.call('form.elements.wysiwyg');
-        </script>
-        --}}
-    @endpush
-
     <div class="card card-outline card-info {{ $collapsed ? 'collapsed-card':'' }} {{ $errors->has($name) ? 'has-error' : '' }}">
         <div class="card-header">
             <h3 class="card-title form-group">
@@ -37,7 +28,6 @@
         </div>
 
         <div class="card-body pad pt-0">
-{{--            {!! Form::textarea($name, $value, $attributesArray) !!}--}}
             {!! html()->textarea($name, $value)->attributes($attributesArray) !!}
         </div>
 

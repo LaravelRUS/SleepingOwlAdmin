@@ -1,21 +1,13 @@
-let switchOn_handler = (textareaId, params) => {
-    return tinymce.init(
-        _.extend({
-            selector: '#' + textareaId
-        }, params || {})
-    )
-}
+const {
+    createTinyMceAdapter,
+} = require('../../../frontend/features/forms/wysiwyg/adapters/tinymce')
 
-let switchOff_handler = (editor, textareaId) => {
-    editor.destroy()
-}
+let adapter
+const current = () => (adapter ??= createTinyMceAdapter(globalThis.tinymce))
 
-let exec_handler = (editor, command, textareaId, data) => {
-    switch (command) {
-        case 'insert':
-            editor.insertContent(data);
-            break;
-    }
-}
-
-Admin.WYSIWYG.register('tinymce', switchOn_handler, switchOff_handler, exec_handler);
+Admin.WYSIWYG.register(
+    'tinymce',
+    (...args) => current().switchOn(...args),
+    (...args) => current().switchOff(...args),
+    (...args) => current().exec(...args),
+)

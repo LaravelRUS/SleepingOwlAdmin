@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="wysiwyg-token" />
+        <title>WYSIWYG lifecycle fixture</title>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'wysiwyg',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    message: {
+                        are_you_sure: 'Are you sure?',
+                        something_went_wrong: 'Something went wrong',
+                    },
+                    table: { error: 'Table error' },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <main id="editors">
+            <textarea
+                id="ckeditor4-body"
+                data-wysiwyg-editor="ckeditor"
+                data-wysiwyg-parameters='{"height":240}'
+            ></textarea>
+            <textarea
+                id="ckeditor5-body"
+                data-wysiwyg-editor="ckeditor5"
+                data-wysiwyg-parameters='{"language":"en"}'
+            ></textarea>
+            <textarea
+                id="markdown-body"
+                data-wysiwyg-editor="simplemde"
+                data-wysiwyg-parameters='{"spellChecker":false}'
+            ></textarea>
+            <textarea
+                id="tinymce-body"
+                data-wysiwyg-editor="tinymce"
+                data-wysiwyg-parameters='{"menubar":false}'
+            ></textarea>
+        </main>
+
+        <script src="/public/default/js/admin-app-dev.js"></script>
+        <script>
+            window.__wysiwygCalls = []
+            const editor = (name) => ({
+                destroy: () => window.__wysiwygCalls.push(['destroy', name]),
+                insertContent: (value) => window.__wysiwygCalls.push(['insert', name, value]),
+                insertText: (value) => window.__wysiwygCalls.push(['insert', name, value]),
+                remove: () => window.__wysiwygCalls.push(['destroy', name]),
+                resize: (...size) => window.__wysiwygCalls.push(['resize', name, ...size]),
+            })
+            window.CKEDITOR = {
+                replace: (id, parameters) => {
+                    window.__wysiwygCalls.push(['mount', 'ckeditor', id, parameters])
+                    return editor('ckeditor')
+                },
+            }
+            window.ClassicEditor = {
+                create: async (element, parameters) => {
+                    window.__wysiwygCalls.push(['mount', 'ckeditor5', element.id, parameters])
+                    return {
+                        ...editor('ckeditor5'),
+                        model: {
+                            change: (callback) => callback({ createText: (value) => value }),
+                            insertContent: (value) =>
+                                window.__wysiwygCalls.push(['insert', 'ckeditor5', value]),
+                        },
+                    }
+                },
+            }
+            window.SimpleMDE = function (parameters) {
+                window.__wysiwygCalls.push([
+                    'mount',
+                    'simplemde',
+                    parameters.element.id,
+                    { spellChecker: parameters.spellChecker },
+                ])
+                return {
+                    ...editor('simplemde'),
+                    codemirror: {
+                        replaceSelection: (value) =>
+                            window.__wysiwygCalls.push(['insert', 'simplemde', value]),
+                    },
+                }
+            }
+            window.tinymce = {
+                init: async (parameters) => {
+                    window.__wysiwygCalls.push([
+                        'mount',
+                        'tinymce',
+                        parameters.selector,
+                        { menubar: parameters.menubar },
+                    ])
+                    return [editor('tinymce')]
+                },
+            }
+            for (const name of ['wysiwyg:switchOn', 'wysiwyg:switchOff', 'wysiwyg:exec']) {
+                Admin.Events.on(name, (...parameters) => {
+                    window.__wysiwygCalls.push(['event', name, ...parameters.slice(0, 1)])
+                })
+            }
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+        <script>
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

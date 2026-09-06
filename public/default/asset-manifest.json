@@ -374,8 +374,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/forms.js",
-                            "version": "b78175154819f035cbe7da903746f80c",
-                            "checksum": "sha256:d344c44a340a5ab0c9d9182d5ba3723389c63d7d3a7f85d85393375ed84e792c"
+                            "version": "321b580d4f8732db6f54ed4ac2650fc6",
+                            "checksum": "sha256:6a965b94873365da1ed3455f9e5419124feda4b0af9267eba2c931ffcd3621d0"
                         }
                     ],
                     "styles": [
@@ -631,5 +631,5 @@
             }
         }
     },
-    "build_id": "sha256:8406e61136aae16247e7e40890538861237acaf18d547cd756c761ac5bd61b32"
+    "build_id": "sha256:5888e43285d8e5c3cf38d2f901923c62edb3f221efdeecc38da79e450c72db6e"
 }

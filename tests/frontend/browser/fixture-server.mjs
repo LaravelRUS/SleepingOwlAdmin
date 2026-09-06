@@ -20,6 +20,7 @@ const staticRoutes = new Map([
     ],
     ['/legacy-vue', [join(browserDirectory, 'legacy-vue.html'), 'text/html; charset=utf-8']],
     ['/files', [join(browserDirectory, 'files.html'), 'text/html; charset=utf-8']],
+    ['/wysiwyg', [join(browserDirectory, 'wysiwyg.html'), 'text/html; charset=utf-8']],
     [
         '/custom-vue-island',
         [join(browserDirectory, 'custom-vue-island.html'), 'text/html; charset=utf-8'],
