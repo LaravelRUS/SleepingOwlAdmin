@@ -83,7 +83,7 @@
         </div>
 
         <div id="vueApp">
-            <section id="env-fixture">
+            <section id="env-fixture" data-soa-vue-app>
                 <env_editor
                     :data='[{"value":"one","deletable":true,"editable":true},{"value":"locked","deletable":false,"editable":false}]'
                     :error-text="'Access denied'"
@@ -120,7 +120,7 @@
                 </env_editor>
             </section>
 
-            <section id="file-wrapper">
+            <section id="file-wrapper" data-soa-vue-app>
                 <element-file
                     url="/api/upload"
                     value="docs/start.pdf"
@@ -144,7 +144,7 @@
                 </element-file>
             </section>
 
-            <section id="image-wrapper">
+            <section id="image-wrapper" data-soa-vue-app>
                 <element-image
                     url="/api/upload"
                     value="fixtures/pixel.svg"
@@ -169,7 +169,7 @@
                 </element-image>
             </section>
 
-            <section id="images-wrapper">
+            <section id="images-wrapper" data-soa-vue-app>
                 <element-images
                     url="/api/upload"
                     :values='["fixtures/pixel.svg","fixtures/second.svg"]'
@@ -205,7 +205,7 @@
                 </element-images>
             </section>
 
-            <section id="single-select-fixture">
+            <section id="single-select-fixture" data-soa-vue-app>
                 <deselect
                     :value="2"
                     :id="'single-select'"
@@ -226,7 +226,7 @@
                 </deselect>
             </section>
 
-            <section id="multi-select-fixture">
+            <section id="multi-select-fixture" data-soa-vue-app>
                 <deselect
                     :value="[1,3]"
                     :id="'multi-select'"
@@ -258,7 +258,7 @@
                 </deselect>
             </section>
 
-            <section id="related-fixture">
+            <section id="related-fixture" data-soa-vue-app>
                 <related-elements
                     inline-template
                     name="items"
@@ -345,6 +345,7 @@
                             :name="`${name}[remove][]`"
                             :value="id"
                         />
+                        <div id="nested-vue-marker" data-soa-vue-app></div>
                     </div>
                 </related-elements>
             </section>

@@ -59,6 +59,7 @@ async function openFixture(page) {
     await page.goto('/legacy-vue')
     await expect(page.locator('html')).toHaveAttribute('data-ready', 'true')
     await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(7)
 }
 
 async function useProductionBundle(page) {
@@ -87,11 +88,36 @@ async function selectedValues(locator) {
     )
 }
 
-test('Vue 3 compat root mounts env editor and preserves add/remove rules', async ({ page }) => {
+async function expectBoundedVueApps(page) {
+    const ownership = await page.evaluate(() => ({
+        layoutMounted: Boolean(globalThis.document.querySelector('#vueApp').__vue_app__),
+        mountedIds: [...globalThis.document.querySelectorAll('[data-soa-vue-app]')]
+            .filter((element) => element.__vue_app__)
+            .map((element) => element.id),
+        nestedMounted: Boolean(globalThis.document.querySelector('#nested-vue-marker').__vue_app__),
+    }))
+
+    expect(ownership).toEqual({
+        layoutMounted: false,
+        mountedIds: [
+            'env-fixture',
+            'file-wrapper',
+            'image-wrapper',
+            'images-wrapper',
+            'single-select-fixture',
+            'multi-select-fixture',
+            'related-fixture',
+        ],
+        nestedMounted: false,
+    })
+}
+
+test('bounded Vue 3 compat apps preserve env editor behavior', async ({ page }) => {
     const pageErrors = capturePageErrors(page)
     await openFixture(page)
     expect(await page.evaluate(() => globalThis.Vue.version)).toMatch(/^3\.5\./)
     expect(compatWarningIds(page)).toEqual(expectedCompatWarnings)
+    await expectBoundedVueApps(page)
 
     await page.locator('#env-fixture .env-remove').nth(1).click()
     await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
@@ -109,7 +135,7 @@ test('Vue 3 compat root mounts env editor and preserves add/remove rules', async
     expectNoUnexpectedPageErrors(pageErrors)
 })
 
-test('production Vue 3 compat bundle mounts the legacy root', async ({ page }) => {
+test('production Vue 3 compat bundle mounts bounded apps', async ({ page }) => {
     await useProductionBundle(page)
     await openFixture(page)
 

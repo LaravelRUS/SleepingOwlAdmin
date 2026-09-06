@@ -1,5 +1,5 @@
 @if ($visibled)
-    <div class="form-group form-element-image{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}">
+    <div data-soa-vue-app class="form-group form-element-image{{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}">
         <label for="{{ $name }}" class="control-label{{ $required ? ' required' : '' }}">
             {!! $label !!}
 

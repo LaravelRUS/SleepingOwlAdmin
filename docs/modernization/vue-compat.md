@@ -28,6 +28,35 @@ are absent from production assets.
 - Consumers select these committed assets with `ADMIN_DEV_ASSETS`; they do not
   install Node.js or rebuild the package.
 
+## Bounded legacy app registry
+
+The page-wide `new Vue({ el: '#vueApp' })` root has been removed. During the
+compatibility phase, `vue_init.js` creates one small compat app for every
+top-level `[data-soa-vue-app]` host and exposes their temporary lifecycle as
+`Admin.VueApps`:
+
+- `mount(element)` and `mountAll(root)` are idempotent;
+- `get(element)` and `size` make ownership observable without reading Vue
+  internals;
+- `unmount(element)` and `unmountAll(root)` release the app before its host is
+  removed;
+- a marker nested below another marker is owned by the parent app and is not
+  mounted a second time.
+
+`#vueApp` remains a legacy layout id for non-Vue DOM integrations, but it is no
+longer a Vue root. The registry still inherits the audited global compat
+components from the single selected runtime. That inheritance is temporary and
+is removed as each component moves to app-local registration.
+
+`data-soa-vue-app` and `Admin.VueApps` are migration-only contracts, not the
+final custom-module API. Until a legacy custom component is migrated, its Blade
+view must put one marker around the component host. A dynamically inserted
+top-level host calls `Admin.VueApps.mountAll(insertedRoot)` after insertion and
+`Admin.VueApps.unmountAll(removedRoot)` before removal. Custom element tags must
+use explicit closing tags; self-closing HTML such as `<np-service />` is not a
+safe Vue host. The read-only Laluna inventory contains eight such hosts and six
+self-closing examples that must be updated during its pilot migration.
+
 ## Explicit allowlist
 
 The global boundary starts in `MODE: 3`. Vue 2 behavior is enabled only by the
@@ -38,7 +67,6 @@ another legacy use.
 | Flag | Temporary owner | Removal condition |
 | --- | --- | --- |
 | `COMPILER_INLINE_TEMPLATE` | Nine legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
-| `GLOBAL_MOUNT` | `vue_init.js` page-wide root | Root is replaced by the island factory |
 | `GLOBAL_EXTEND` | env editor, deselect and file/image(s) definitions | Corresponding global definitions are removed |
 | `GLOBAL_PROTOTYPE` | `$trans` plugin in `libs/vuejs.js` | Translation composable/injection is used |
 | `COMPONENT_V_MODEL` | Legacy `v-model` in select/images views and Vue 2 draggable | Each owner uses the Vue 3 model contract |

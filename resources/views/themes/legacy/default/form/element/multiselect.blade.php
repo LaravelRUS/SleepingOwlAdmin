@@ -1,5 +1,5 @@
 @if ($visibled)
-    <div class="form-group form-element-multiselect {{ $errors->has($name) ? 'has-error' : '' }}">
+    <div data-soa-vue-app class="form-group form-element-multiselect {{ $errors->has($name) ? 'has-error' : '' }}">
         <label for="{{ $id }}" class="control-label {{ $required ? 'required' : '' }}">
             {!! $label !!}
 

@@ -1,3 +1,4 @@
+<div data-soa-vue-app>
 <related-elements
     inline-template
     name="{{ $name }}"
@@ -42,3 +43,4 @@
   </div>
 
 </related-elements>
+</div>

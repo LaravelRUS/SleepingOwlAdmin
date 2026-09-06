@@ -16,6 +16,16 @@ const require = createRequire(import.meta.url)
 const { resolveVueRuntime, runtimeFiles } = require('../../../build/vue-runtime')
 const packageJson = readJson('package.json')
 const packageLock = readJson('package-lock.json')
+const legacyVueViews = [
+    'resources/views/themes/legacy/default/env_editor.blade.php',
+    'resources/views/themes/legacy/default/form/element/file.blade.php',
+    'resources/views/themes/legacy/default/form/element/image.blade.php',
+    'resources/views/themes/legacy/default/form/element/images.blade.php',
+    'resources/views/themes/legacy/default/form/element/select.blade.php',
+    'resources/views/themes/legacy/default/form/element/multiselect.blade.php',
+    'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
+    'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
+]
 
 const expectedCompatFeatures = [
     'ATTR_ENUMERATED_COERCION',
@@ -23,7 +33,6 @@ const expectedCompatFeatures = [
     'COMPONENT_V_MODEL',
     'CONFIG_WHITESPACE',
     'GLOBAL_EXTEND',
-    'GLOBAL_MOUNT',
     'GLOBAL_PROTOTYPE',
     'INSTANCE_ATTRS_CLASS_STYLE',
     'INSTANCE_CHILDREN',
@@ -37,6 +46,10 @@ const expectedCompatFeatures = [
 
 function readJson(path) {
     return JSON.parse(readFileSync(resolve(root, path), 'utf8'))
+}
+
+function readSource(path) {
+    return readFileSync(resolve(root, path), 'utf8')
 }
 
 function md5(path) {
@@ -108,5 +121,18 @@ describe('Vue asset profiles', () => {
         )
         expect(manifest['/js/admin-app-dev.js']).toBe(`/js/admin-app-dev.js?id=${md5(development)}`)
         expect(manifest['/js/admin-app.js']).toBe(`/js/admin-app.js?id=${md5(production)}`)
+    })
+})
+
+describe('bounded legacy Vue apps', () => {
+    it.each(legacyVueViews)('marks the Vue host in %s', (path) => {
+        expect(readSource(path)).toContain('data-soa-vue-app')
+    })
+
+    it('does not mount the page-wide #vueApp element', () => {
+        const initializer = readSource('resources/assets/js_owl/vue_init.js')
+
+        expect(initializer).toContain('createVueAppRegistry')
+        expect(initializer).not.toMatch(/new Vue|#vueApp/)
     })
 })

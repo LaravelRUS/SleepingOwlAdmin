@@ -9,6 +9,7 @@
         @stack('block.top.column.right')
     </div>
 </div>
+<div data-soa-vue-app>
 <env_editor :data="{{ json_encode($data) }}" :error-text="'{{ trans('sleeping_owl::validation.access_denied') }}'" inline-template>
     {{ Form::open(['method' => 'POST', 'url' => route('admin.env.editor.post')]) }}
     <div class="links-row"></div>
@@ -76,6 +77,7 @@
     </div>
     {{ Form::close() }}
 </env_editor>
+</div>
 <div class="row">
     <div class="col-md-8">
         @stack('block.content.column.left')
