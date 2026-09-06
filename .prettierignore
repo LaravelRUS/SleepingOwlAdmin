@@ -1,0 +1,6 @@
+node_modules/
+public/
+resources/assets/
+vendor/
+docs/modernization/baseline/
+package-lock.json
