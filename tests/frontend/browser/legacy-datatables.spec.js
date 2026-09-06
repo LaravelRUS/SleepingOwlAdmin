@@ -120,13 +120,23 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
     const runtime = await page.evaluate(() => ({
         draws: globalThis.__legacyEvents.filter((event) => event === 'datatables::draw').length,
+        globalDataTable: typeof globalThis.DataTable,
         lazyloadCalls: globalThis.__lazyloadCalls,
+        responsiveVersion: globalThis.jQuery.fn.dataTable.Responsive.version,
         tooltip: Boolean(globalThis.jQuery('#draw-tooltip-1').data('bs.tooltip')),
         version: globalThis.jQuery.fn.dataTable.version,
+        wrapperClass: globalThis.document.querySelector('#legacy-table_wrapper').className,
     }))
     const requests = await recordedRequests(request, 'datatable')
 
-    expect(runtime).toMatchObject({ draws: 1, tooltip: true, version: '1.13.11' })
+    expect(runtime).toMatchObject({
+        draws: 1,
+        globalDataTable: 'undefined',
+        responsiveVersion: '3.0.8',
+        tooltip: true,
+        version: '2.3.8',
+        wrapperClass: expect.stringContaining('dt-bootstrap4'),
+    })
     expect(runtime.lazyloadCalls).toBeGreaterThan(0)
     expect(requests[0].method).toBe('POST')
     expect(requests[0].parameters['payload[fixture]']).toBe('legacy')

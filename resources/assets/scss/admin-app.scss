@@ -1,4 +1,5 @@
 @use '../../frontend/features/forms/styles/files' as form-files;
+@use '../../frontend/features/table/themes/legacy-adminlte/styles/datatables';
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
 @use '../../frontend/themes/legacy-adminlte/styles/sidebar' as theme-sidebar;
 
@@ -32,6 +33,3 @@
 @import "@fortawesome/fontawesome-free/scss/solid";
 @import "@fortawesome/fontawesome-free/scss/brands";
 @import "@fortawesome/fontawesome-free/scss/regular";
-
-//responsive-datatable-bs4
-@import "datatables.net-responsive-bs4/css/responsive.bootstrap4.css";

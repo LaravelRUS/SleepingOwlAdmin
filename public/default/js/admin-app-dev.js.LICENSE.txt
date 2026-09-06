@@ -74,13 +74,25 @@
  * http://jquery.org/license
  */
 
-/*! DataTables 1.13.11
- * ©2008-2024 SpryMedia Ltd - datatables.net/license
+/*! Bootstrap 4 integration for DataTables' Responsive
+ * © SpryMedia Ltd - datatables.net/license
+ */
+
+/*! DataTables 2.3.8
+ * © SpryMedia Ltd - datatables.net/license
+ */
+
+/*! DataTables Bootstrap 4 integration
+ * © SpryMedia Ltd - datatables.net/license
  */
 
 /*! Magnific Popup - v1.2.0 - 2024-06-08
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2024 Dmytro Semenov; */
+
+/*! Responsive 3.0.8
+ * © SpryMedia Ltd - datatables.net/license
+ */
 
 /*! X-editable - v1.5.3
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery

@@ -27,7 +27,13 @@ require('./libs/datetimepicker');
 require('./libs/daterangepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
-require('./libs/datatables');
+const {
+    dataTables2Runtime,
+} = require('../../frontend/features/table/engine/datatables2');
+const {
+    installLegacyDataTablesPresentation,
+} = require('../../frontend/features/table/themes/legacy-adminlte/datatables');
+installLegacyDataTablesPresentation(dataTables2Runtime());
 require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
