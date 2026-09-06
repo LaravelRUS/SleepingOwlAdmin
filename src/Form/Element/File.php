@@ -344,6 +344,7 @@ class File extends NamedFormElement implements WithRoutesInterface
 
         return array_merge($return, [
             'asset_prefix' => $this->asset,
+            'max_file_size' => (float) $this->getMaxFileSize(),
             'paste_only_link' => $this->getOnlyLink(),
         ]);
     }

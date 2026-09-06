@@ -28,14 +28,12 @@ const legacyVueViews = [
 ]
 const legacyVueDefinitions = [
     'resources/assets/js_owl/admin/form/deselect.js',
-    'resources/assets/js_owl/admin/form/file.js',
     'resources/assets/js_owl/admin/form/image.js',
     'resources/assets/js_owl/admin/form/images.js',
     'resources/assets/js_owl/admin/form/related/elements.js',
     'resources/assets/js_owl/admin/form/related/group.js',
 ]
 const legacyInlineTemplateViews = [
-    'resources/views/themes/legacy/default/form/element/file.blade.php',
     'resources/views/themes/legacy/default/form/element/image.blade.php',
     'resources/views/themes/legacy/default/form/element/images.blade.php',
     'resources/views/themes/legacy/default/form/element/select.blade.php',
@@ -212,5 +210,19 @@ describe('precompiled Vue islands', () => {
 
     it.each(legacyInlineTemplateViews)('keeps the audited inline template in %s', (path) => {
         expect(readSource(path).match(/inline-template/g)).toHaveLength(1)
+    })
+
+    it('mounts the file element directly and uses the Dropzone constructor', () => {
+        const view = readSource('resources/views/themes/legacy/default/form/element/file.blade.php')
+        const component = readSource('resources/assets/js_owl/admin/form/file.vue')
+        const dropzone = readSource('resources/assets/js_owl/libs/dropzone.js')
+
+        expect(view).toContain('data-soa-vue-component="element-file"')
+        expect(view).toContain('data-soa-vue-props=')
+        expect(view).not.toContain('inline-template')
+        expect(component).toContain('<template>')
+        expect(component).not.toMatch(/\$\(|withLegacyInlineTemplate/)
+        expect(dropzone).toContain('dropzoneModule.Dropzone')
+        expect(dropzone).not.toContain("window.Dropzone = require('dropzone')")
     })
 })

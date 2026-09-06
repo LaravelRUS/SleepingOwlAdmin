@@ -1,17 +1,18 @@
 import EnvEditor from './display/env-editor.vue'
 import Deselect from './form/deselect'
-import ElementFile from './form/file'
+import ElementFile from './form/file.vue'
 import ElementImage from './form/image'
 import ElementImages from './form/images'
 import { LegacyMultiselect } from './form/multiselect-compat'
 import { RelatedElements, RelatedGroup } from './form/related'
+import { asNativeVue3Component } from '../libs/vue-compat-config'
 
 export const legacyVueComponents = Object.freeze({
     deselect: Deselect,
-    'element-file': ElementFile,
+    'element-file': asNativeVue3Component(ElementFile),
     'element-image': ElementImage,
     'element-images': ElementImages,
-    env_editor: EnvEditor,
+    env_editor: asNativeVue3Component(EnvEditor),
     multiselect: LegacyMultiselect,
     'related-elements': RelatedElements,
     'related-group': RelatedGroup,

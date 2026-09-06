@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 4 — Vue 3 islands**.
-- Точка возобновления: перенести file `inline-template` в precompiled Vue 3 island; env editor завершён.
+- Точка возобновления: перенести image `inline-template` в precompiled Vue 3 island; env editor и file завершены.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -564,7 +564,7 @@ No-build consumer contract является release-blocking:
 - [x] Заменить `Vue.prototype.$trans` на injection/composable без глобального mutable API.
 - [ ] Перенести все 9 `inline-template` в precompiled Vue 3 islands.
   - [x] Env editor.
-  - [ ] File.
+  - [x] File.
   - [ ] Image.
   - [ ] Images.
   - [ ] Select.
@@ -984,3 +984,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 4 / core HTTP | Удалены `vue-resource`, глобальный `Vue.http` interceptor и зависимость из lockfile; package-owned `$http` consumers отсутствовали, поэтому временный compatibility facade не вводился. Vue islands используют существующий `Admin.Http` на native Fetch с same-origin credentials, CSRF/request headers, сохранением caller headers и typed `HttpError`; после `npm prune` `got` остался только optional dependency цепочки `popper -> ngrok`. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 428 tests, 1582 assertions, 2 прежних TODO-skip; frontend gate: 180 Vitest + 24 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / app-local translations | Удалены `Vue.prototype.$trans`, пустой legacy plugin и compat flag `GLOBAL_PROTOTYPE`. Каждый bounded app получает через `app.provide` один замороженный translator с cross-bundle `Symbol.for` key; setup-компоненты используют `useTranslation()`, а отсутствие provider диагностируется явно. Новые `globalProperties`/`window` API не вводились; существующий `window.trans` сохранён только для non-Vue legacy consumers. Unit test проверяет изоляцию двух apps, browser fixture получает `Cancel` через public `runWithContext`/`inject` и подтверждает отсутствие `$trans` на prototype. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 428 tests, 1582 assertions, 2 прежних TODO-skip; frontend gate: 184 Vitest + 24 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / env editor island | Первый legacy `inline-template` перенесён в precompiled Vue SFC: Blade оставляет пустой lifecycle host и передаёт один HTML-escaped JSON object через `data-soa-vue-props`, registry до создания app валидирует имя component/props и вызывает `createApp(component, props)`. State normalization/add/remove вынесены из component, новая строка сразу editable/deletable; locked delete сохраняет прежний toast. `vue-loader` и scoped Vue ESLint/Prettier checks включены без расширения legacy JS rule surface. Осталось 8 `inline-template` и 6 legacy definitions с runtime compiler bridge. Render-contract доказывает безопасную передачу кавычек/HTML из env data. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 429 tests, 1586 assertions, 2 прежних TODO-skip; frontend gate: 197 Vitest + 24 Playwright | текущий commit |
+| 2026-09-06 | Этап 4 / file island | File element перенесён из server `inline-template` в native Vue 3 SFC/direct host; PHP передаёт route, CSRF, upload limit, labels, messages, readonly и value одним escaped JSON object. Value/URL normalization и Dropzone options/error mapping вынесены в малые тестируемые modules. jQuery `.dropzone()` заменён constructor API, actual Dropzone constructor владеет `autoDiscover = false`, а `beforeUnmount` гарантированно вызывает `destroy`; readonly island не создаёт uploader и не показывает remove. Env/file catalog entries получили отключённые compat flags. Осталось 7 `inline-template` и 5 bridge definitions. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 431 test, 1596 assertions, 2 прежних TODO-skip; frontend gate: 201 Vitest + 26 Playwright | текущий commit |

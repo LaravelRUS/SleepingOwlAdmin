@@ -90,29 +90,12 @@
                 data-soa-vue-props='{"action":"#","canAdd":true,"canDelete":true,"csrfToken":"fixture-token","data":[{"value":"one","deletable":true,"editable":true},{"value":"locked","deletable":false,"editable":false}],"errorText":"Access denied","keysReadonly":false,"labels":{"add":"Add","key":"Key","save":"Save","value":"Value"}}'
             ></section>
 
-            <section id="file-wrapper" data-soa-vue-app>
-                <element-file
-                    url="/api/upload"
-                    value="docs/start.pdf"
-                    :readonly="false"
-                    name="document"
-                    inline-template
-                >
-                    <div>
-                        <a id="file-link" v-if="has_value" :href="file">Current file</a>
-                        <button
-                            id="file-remove"
-                            v-if="has_value"
-                            type="button"
-                            @click.prevent="remove()"
-                        >
-                            Remove file
-                        </button>
-                        <div class="upload-button">Upload file</div>
-                        <input id="file-value" :name="name" type="hidden" :value="val" />
-                    </div>
-                </element-file>
-            </section>
+            <section
+                id="file-wrapper"
+                data-soa-vue-app
+                data-soa-vue-component="element-file"
+                data-soa-vue-props='{"csrfToken":"fixture-token","labels":{"browse":"Upload file","download":"Download"},"maxFileSize":2,"messages":{"confirmRemove":"Remove file?","fileTooBig":"File is too large","responseError":"Upload error"},"name":"document","readonly":false,"url":"/api/upload","value":"docs/start.pdf"}'
+            ></section>
 
             <section id="image-wrapper" data-soa-vue-app>
                 <element-image

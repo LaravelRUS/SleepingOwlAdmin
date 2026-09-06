@@ -33,8 +33,6 @@ test.afterEach(async ({ page }) => {
     expect(unexpectedVueWarnings(page)).toEqual([])
 })
 
-// The published bundle disables discovery on the CommonJS wrapper, not its Dropzone constructor.
-const knownLegacyPageErrors = ['Dropzone already attached.']
 const legacyVueComponentNames = [
     'deselect',
     'element-file',
@@ -46,6 +44,20 @@ const legacyVueComponentNames = [
     'related-group',
 ]
 const relatedLifecycleComponents = ['existing-related-group', 'new-related-group-2']
+const readonlyFileProps = {
+    csrfToken: 'fixture-token',
+    labels: { browse: 'Upload file', download: 'Download' },
+    maxFileSize: 2,
+    messages: {
+        confirmRemove: 'Remove file?',
+        fileTooBig: 'File is too large',
+        responseError: 'Upload error',
+    },
+    name: 'readonly-document',
+    readonly: true,
+    url: '/api/upload',
+    value: 'docs/readonly.pdf',
+}
 
 function capturePageErrors(page) {
     const errors = []
@@ -54,15 +66,7 @@ function capturePageErrors(page) {
 }
 
 function expectNoUnexpectedPageErrors(errors) {
-    const unexpectedErrors = errors.filter(
-        (error) => !knownLegacyPageErrors.includes(pageErrorMessage(error)),
-    )
-
-    expect(unexpectedErrors).toEqual([])
-}
-
-function pageErrorMessage(error) {
-    return error.split('\n', 1)[0].replace(/^Error:\s*/, '')
+    expect(errors).toEqual([])
 }
 
 async function openFixture(page) {
@@ -90,6 +94,29 @@ async function runUploadCallback(page, selector, value) {
         },
         { selector, value },
     )
+}
+
+async function inspectReadonlyFile(page) {
+    return page.evaluate((props) => {
+        const host = globalThis.document.createElement('section')
+        host.dataset.soaVueApp = ''
+        host.dataset.soaVueComponent = 'element-file'
+        host.dataset.soaVueProps = JSON.stringify(props)
+        globalThis.document.body.append(host)
+        globalThis.Admin.VueApps.mount(host)
+
+        const result = {
+            value: host.querySelector('[data-soa-file-value]').value,
+            hasDownload: Boolean(host.querySelector('[data-soa-file-download]')),
+            hasRemove: Boolean(host.querySelector('[data-soa-file-remove]')),
+            hasUpload: Boolean(host.querySelector('.upload-button')),
+        }
+
+        globalThis.Admin.VueApps.unmount(host)
+        host.remove()
+
+        return result
+    }, readonlyFileProps)
 }
 
 async function selectedValues(locator) {
@@ -195,10 +222,19 @@ test('legacy tab state restores and updates without leaking globals', async ({ p
 
 test('file, image and images components expose values and upload callbacks', async ({ page }) => {
     await openFixture(page)
-    await expect(page.locator('#file-value')).toHaveValue('docs/start.pdf')
-    await expect(page.locator('#file-link')).toHaveAttribute('href', /\/docs\/start\.pdf$/)
+    const fileValue = page.locator('#file-wrapper [data-soa-file-value]')
+    await expect(fileValue).toHaveValue('docs/start.pdf')
+    await expect(page.locator('#file-wrapper [data-soa-file-download]')).toHaveAttribute(
+        'href',
+        /\/docs\/start\.pdf$/,
+    )
     await runUploadCallback(page, '#file-wrapper .upload-button', 'docs/uploaded.pdf')
-    await expect(page.locator('#file-value')).toHaveValue('docs/uploaded.pdf')
+    await expect(fileValue).toHaveValue('docs/uploaded.pdf')
+    await page.evaluate(() => {
+        globalThis.Admin.Messages.confirm = () => Promise.resolve({ value: true })
+    })
+    await page.locator('#file-wrapper [data-soa-file-remove]').click()
+    await expect(fileValue).toHaveValue('')
 
     await expect(page.locator('#image-preview')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
     await runUploadCallback(page, '#image-wrapper .upload-button', 'fixtures/uploaded.svg')
@@ -219,6 +255,45 @@ test('file, image and images components expose values and upload callbacks', asy
     await expect(page.locator('#images-value')).toHaveValue(
         'fixtures/second.svg,fixtures/third.svg',
     )
+})
+
+test('file island destroys its upload driver before unmount', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+
+    const result = await page.evaluate(() => {
+        const host = globalThis.document.querySelector('#file-wrapper')
+        const button = host.querySelector('.upload-button')
+
+        return {
+            existed: Boolean(button.dropzone),
+            unmounted: globalThis.Admin.VueApps.unmount(host),
+            destroyed: !button.dropzone,
+            remainingApps: globalThis.Admin.VueApps.size,
+        }
+    })
+
+    expect(result).toEqual({
+        existed: true,
+        unmounted: true,
+        destroyed: true,
+        remainingApps: 6,
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('readonly file island renders without mounting an upload driver', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    const state = await inspectReadonlyFile(page)
+
+    expect(state).toEqual({
+        value: 'docs/readonly.pdf',
+        hasDownload: true,
+        hasRemove: false,
+        hasUpload: false,
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
 })
 
 test('single and multiple Vue Multiselect fields synchronize submitted values', async ({
