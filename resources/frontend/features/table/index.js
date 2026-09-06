@@ -20,6 +20,7 @@ export {
     clearSavedTableSearch,
     filterStateKey,
     loadFilterState,
+    migrateLegacyFilterState,
     saveFilterState,
 } from './state/filter-state.js'
 export { appendNamedFilterData, createTableAjax } from './transport/table-ajax.js'

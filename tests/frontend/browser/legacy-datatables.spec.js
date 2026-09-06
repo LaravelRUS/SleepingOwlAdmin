@@ -8,6 +8,11 @@ const filterValues = {
     text: 'Alice',
 }
 
+const filterStateKeys = {
+    primary: 'Filters_/legacy-datatables::legacy-table-fixture',
+    secondary: 'Filters_/legacy-datatables::secondary-table-fixture',
+}
+
 function capturePageErrors(page) {
     const errors = []
     page.on('pageerror', (error) => errors.push(error.message))
@@ -45,6 +50,24 @@ async function executeFilters(page) {
     const response = page.waitForResponse((item) => item.url().endsWith('/api/datatables'))
     await page.locator('#filters-exec').click()
     await response
+}
+
+function filterPanel(page, id) {
+    return page.locator(`[data-datatables-id="${id}"].display-filters`)
+}
+
+async function saveTextFilter(panel, selector, value) {
+    await panel.locator(selector).fill(value)
+    await panel.locator(selector).dispatchEvent('change')
+    await panel.locator('#filters-exec').click()
+}
+
+async function readScopedFilterState(page) {
+    return page.evaluate((keys) => {
+        return Object.fromEntries(
+            Object.entries(keys).map(([name, key]) => [name, globalThis.localStorage.getItem(key)]),
+        )
+    }, filterStateKeys)
 }
 
 function latest(items) {
@@ -171,7 +194,9 @@ test('custom filters restore from storage and clear through the legacy control',
     await setFilters(page)
     await executeFilters(page)
     expect(
-        await page.evaluate(() => globalThis.localStorage.getItem('Filters_/legacy-datatables')),
+        await page.evaluate(() =>
+            globalThis.localStorage.getItem('Filters_/legacy-datatables::legacy-table-fixture'),
+        ),
     ).not.toBeNull()
 
     await page.reload()
@@ -183,7 +208,9 @@ test('custom filters restore from storage and clear through the legacy control',
     await page.locator('#filters-cancel').click()
     await response
     expect(
-        await page.evaluate(() => globalThis.localStorage.getItem('Filters_/legacy-datatables')),
+        await page.evaluate(() =>
+            globalThis.localStorage.getItem('Filters_/legacy-datatables::legacy-table-fixture'),
+        ),
     ).toBeNull()
     await expect(page.locator('#text-filter')).toHaveValue('')
     await expect(page.locator('#select-filter')).toHaveValues([])
@@ -191,6 +218,67 @@ test('custom filters restore from storage and clear through the legacy control',
     const parameters = latest(await recordedRequests(request, 'datatable')).parameters
     expect(parameters['columns[1][search][value]']).toBe('')
     expect(parameters['columns[4][search][value]']).toBe('')
+})
+
+test('filter state and clear controls stay scoped to their table', async ({ page }) => {
+    await openFixture(page, '?multiple=1')
+    await expect(page.locator('#secondary-table tbody tr')).toHaveCount(2)
+
+    const primaryFilters = filterPanel(page, 'legacy-table-fixture')
+    const secondaryFilters = filterPanel(page, 'secondary-table-fixture')
+
+    await saveTextFilter(primaryFilters, '#text-filter', 'Alice')
+    await saveTextFilter(secondaryFilters, '#secondary-text-filter', 'Bob')
+
+    const stored = await readScopedFilterState(page)
+    expect(JSON.parse(stored.primary)).toEqual({
+        0: { 1: { type: 'text', val: 'Alice' } },
+    })
+    expect(JSON.parse(stored.secondary)).toEqual({
+        0: { 1: { type: 'text', val: 'Bob' } },
+    })
+
+    await primaryFilters.locator('#filters-cancel').click()
+    await expect(secondaryFilters.locator('#secondary-text-filter')).toHaveValue('Bob')
+    const afterClear = await readScopedFilterState(page)
+    expect(afterClear.primary).toBeNull()
+    expect(afterClear.secondary).not.toBeNull()
+
+    await page.reload()
+    await expect(page.locator('#secondary-table tbody tr')).toHaveCount(2)
+    await expect(page.locator('#text-filter')).toHaveValue('')
+    await expect(page.locator('#secondary-text-filter')).toHaveValue('Bob')
+})
+
+test('legacy positional filter state migrates to table-scoped keys', async ({ page }) => {
+    await page.addInitScript(() => {
+        globalThis.localStorage.setItem(
+            'Filters_/legacy-datatables',
+            JSON.stringify({
+                0: { 1: { type: 'text', val: 'Legacy primary' } },
+                1: { 1: { type: 'text', val: 'Legacy secondary' } },
+            }),
+        )
+    })
+
+    await openFixture(page, '?multiple=1')
+    await expect(page.locator('#secondary-table tbody tr')).toHaveCount(2)
+    await expect(page.locator('#text-filter')).toHaveValue('Legacy primary')
+    await expect(page.locator('#secondary-text-filter')).toHaveValue('Legacy secondary')
+
+    const keys = await page.evaluate(() => ({
+        legacy: globalThis.localStorage.getItem('Filters_/legacy-datatables'),
+        primary: globalThis.localStorage.getItem(
+            'Filters_/legacy-datatables::legacy-table-fixture',
+        ),
+        secondary: globalThis.localStorage.getItem(
+            'Filters_/legacy-datatables::secondary-table-fixture',
+        ),
+    }))
+
+    expect(keys.legacy).toBeNull()
+    expect(keys.primary).not.toBeNull()
+    expect(keys.secondary).not.toBeNull()
 })
 
 test('DataTables state restores ordering and pagination after reload', async ({

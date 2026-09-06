@@ -1,9 +1,28 @@
 import { readControlValue } from '../filters/filter-elements.js'
 
-export function filterStateKey(path) {
+export function filterStateKey(path, tableId) {
     const normalized = path.match(/\d+\/edit$/) ? path.replace(/\d+\/edit$/, 'edit') : path
+    const legacyKey = `Filters_/${normalized}`
 
-    return `Filters_/${normalized}`
+    return tableId === undefined
+        ? legacyKey
+        : `${legacyKey}::${globalThis.encodeURIComponent(String(tableId))}`
+}
+
+export function migrateLegacyFilterState(storage, path, containers) {
+    const legacyKey = filterStateKey(path)
+    const serialized = storage.getItem(legacyKey)
+
+    if (!serialized) return []
+
+    const migration = groupLegacyState(parseState(serialized), containers)
+    const keys = writeMigratedState(storage, path, migration.tables)
+
+    if (migration.complete) {
+        storage.removeItem(legacyKey)
+    }
+
+    return keys
 }
 
 export function loadFilterState(storage, key, containers) {
@@ -43,6 +62,41 @@ function collectFilterState(containers) {
             .map((container, index) => [index, collectContainerState(container)])
             .filter(([, state]) => Object.keys(state).length > 0),
     )
+}
+
+function groupLegacyState(state, containers) {
+    const tables = new Map()
+    let complete = true
+
+    for (const [containerIndex, columns] of Object.entries(state)) {
+        const tableId = containers[containerIndex]?.dataset?.datatablesId
+
+        if (!tableId) {
+            complete = false
+            continue
+        }
+
+        const table = tables.get(tableId) ?? []
+        table.push(columns)
+        tables.set(tableId, table)
+    }
+
+    return { complete, tables }
+}
+
+function writeMigratedState(storage, path, tables) {
+    const keys = []
+
+    for (const [tableId, containers] of tables) {
+        const key = filterStateKey(path, tableId)
+        keys.push(key)
+
+        if (storage.getItem(key) === null) {
+            storage.setItem(key, JSON.stringify(Object.fromEntries(containers.entries())))
+        }
+    }
+
+    return keys
 }
 
 function collectContainerState(container) {
@@ -127,7 +181,10 @@ function setControlValue(control, value) {
 }
 
 function isEmptyValue(value) {
-    return value === null || value === '' || (Array.isArray(value) && value.length === 0)
+    if (value === null || value === '') return true
+    if (Array.isArray(value)) return value.length === 0
+
+    return typeof value === 'object' && Object.keys(value).length === 0
 }
 
 function parseState(serialized) {

@@ -130,6 +130,55 @@
             </table>
         </main>
 
+        <section id="secondary-fixture" class="card">
+            <div
+                class="display-filters"
+                data-display="DisplayDatatablesAsync"
+                data-datatables-id="secondary-table-fixture"
+            >
+                <div data-index="0">
+                    <div class="column-filter" data-type="control">
+                        <button id="filters-exec" type="button">Filter secondary</button>
+                        <button id="filters-cancel" type="button">Clear secondary</button>
+                    </div>
+                </div>
+                <div data-index="1">
+                    <input id="secondary-text-filter" class="column-filter" data-type="text" />
+                </div>
+            </div>
+
+            <table
+                id="secondary-table"
+                class="datatables"
+                data-id="secondary-table-fixture"
+                data-url="/api/datatables"
+                data-method="POST"
+                data-payload='{"fixture":"secondary"}'
+                data-display-search="0"
+                data-display-dtlength="0"
+                data-attributes='{"autoWidth":false,"columns":[{"orderable":false},{"orderable":true},{"orderable":true},{"orderable":true},{"orderable":true},{"orderable":false},{"orderable":false}],"order":[[1,"asc"]],"pageLength":2,"responsive":false,"searchDelay":0}'
+            >
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Window</th>
+                        <th>Preview</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <script>
+            if (!new URLSearchParams(window.location.search).has('multiple')) {
+                document.querySelector('#secondary-fixture').remove()
+            }
+        </script>
+
         <script src="/public/default/js/admin-app.js"></script>
         <script>
             window.__legacyEvents = []

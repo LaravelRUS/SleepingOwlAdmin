@@ -4520,6 +4520,7 @@ var _require0 = __webpack_require__(/*! ../../../../frontend/features/table/stat
   clearSavedTableSearch = _require0.clearSavedTableSearch,
   filterStateKey = _require0.filterStateKey,
   loadFilterState = _require0.loadFilterState,
+  migrateLegacyFilterState = _require0.migrateLegacyFilterState,
   saveFilterState = _require0.saveFilterState;
 var _require1 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
   createTableAjax = _require1.createTableAjax;
@@ -4528,17 +4529,15 @@ globalThis.checkDateRange = isDateInRange;
 globalThis.columnFilters = createTableFilterDrivers(dataTables2Runtime(), createLegacyFilterEventBridge());
 Admin.Modules.register('display.datatables', function () {
   var stateFilters = Boolean(Admin.Config.get('state_filters'));
-  var filterContainers = document.querySelectorAll('.display-filters[data-display="DisplayDatatablesAsync"]');
-  var stateKey = filterStateKey(Admin.Url.url_path);
+  var path = Admin.Url.url_path;
   if (stateFilters) {
-    loadFilterState(localStorage, stateKey, filterContainers);
+    migrateLegacyFilterState(localStorage, path, allFilterContainers());
   }
   configureDataTableExtensions();
   document.querySelectorAll('.datatables').forEach(function (element) {
     return mountLegacyTable(element, {
-      filterContainers: filterContainers,
-      stateFilters: stateFilters,
-      stateKey: stateKey
+      path: path,
+      stateFilters: stateFilters
     });
   });
 });
@@ -4557,6 +4556,10 @@ function mountLegacyTable(element, context) {
     return Admin.Tables.get(element);
   }
   var definition = readTableDefinition(element);
+  var filterContext = createFilterContext(definition.id, context);
+  if (filterContext.stateFilters) {
+    loadFilterState(localStorage, filterContext.stateKey, filterContext.filterContainers);
+  }
   var options = buildOptions(element, definition, context.stateFilters);
   var adapter = mountDataTable({
     createEngine: createDataTables2,
@@ -4565,8 +4568,17 @@ function mountLegacyTable(element, context) {
     registry: Admin.Tables
   });
   bindColumnFilters(definition.id, adapter.engineInstance, options.serverSide);
-  bindTableFilterControls(definition.id, adapter, context);
+  bindTableFilterControls(definition.id, adapter, filterContext);
   return adapter;
+}
+function createFilterContext(id, _ref) {
+  var path = _ref.path,
+    stateFilters = _ref.stateFilters;
+  return {
+    filterContainers: matchingContainers(id),
+    stateFilters: stateFilters,
+    stateKey: filterStateKey(path, id)
+  };
 }
 function buildOptions(element, definition, stateFilters) {
   var options = applyServerOptions(definition.options, definition);
@@ -4627,27 +4639,30 @@ function bindTableFilterControls(id, adapter, context) {
     });
   });
 }
-function executeFilters(adapter, _ref) {
-  var filterContainers = _ref.filterContainers,
-    stateFilters = _ref.stateFilters,
-    stateKey = _ref.stateKey;
+function executeFilters(adapter, _ref2) {
+  var filterContainers = _ref2.filterContainers,
+    stateFilters = _ref2.stateFilters,
+    stateKey = _ref2.stateKey;
   if (stateFilters) {
     saveFilterState(localStorage, stateKey, filterContainers);
   }
   adapter.reload();
 }
-function clearFilters(adapter, _ref2) {
-  var filterContainers = _ref2.filterContainers,
-    stateKey = _ref2.stateKey;
+function clearFilters(adapter, _ref3) {
+  var filterContainers = _ref3.filterContainers,
+    stateKey = _ref3.stateKey;
   clearFilterControls(filterContainers);
   adapter.clearState();
   clearFilterState(localStorage, stateKey);
   adapter.reload();
 }
 function matchingContainers(id) {
-  return _toConsumableArray(document.querySelectorAll('[data-datatables-id]')).filter(function (container) {
+  return allFilterContainers().filter(function (container) {
     return container.dataset.datatablesId === String(id);
   });
+}
+function allFilterContainers() {
+  return _toConsumableArray(document.querySelectorAll('.display-filters[data-display="DisplayDatatablesAsync"][data-datatables-id]'));
 }
 function bindHighlight(element, engineContext) {
   if (!Admin.Config.get('datatables_highlight')) {
@@ -9530,9 +9545,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "clearSavedTableSearch": () => (/* binding */ clearSavedTableSearch),
 /* harmony export */   "filterStateKey": () => (/* binding */ filterStateKey),
 /* harmony export */   "loadFilterState": () => (/* binding */ loadFilterState),
+/* harmony export */   "migrateLegacyFilterState": () => (/* binding */ migrateLegacyFilterState),
 /* harmony export */   "saveFilterState": () => (/* binding */ saveFilterState)
 /* harmony export */ });
 /* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -9545,9 +9562,21 @@ function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 
-function filterStateKey(path) {
+function filterStateKey(path, tableId) {
   var normalized = path.match(/\d+\/edit$/) ? path.replace(/\d+\/edit$/, 'edit') : path;
-  return "Filters_/".concat(normalized);
+  var legacyKey = "Filters_/".concat(normalized);
+  return tableId === undefined ? legacyKey : "".concat(legacyKey, "::").concat(globalThis.encodeURIComponent(String(tableId)));
+}
+function migrateLegacyFilterState(storage, path, containers) {
+  var legacyKey = filterStateKey(path);
+  var serialized = storage.getItem(legacyKey);
+  if (!serialized) return [];
+  var migration = groupLegacyState(parseState(serialized), containers);
+  var keys = writeMigratedState(storage, path, migration.tables);
+  if (migration.complete) {
+    storage.removeItem(legacyKey);
+  }
+  return keys;
 }
 function loadFilterState(storage, key, containers) {
   var serialized = storage.getItem(key);
@@ -9590,6 +9619,50 @@ function collectFilterState(containers) {
     return Object.keys(state).length > 0;
   }));
 }
+function groupLegacyState(state, containers) {
+  var tables = new Map();
+  var complete = true;
+  for (var _i = 0, _Object$entries = Object.entries(state); _i < _Object$entries.length; _i++) {
+    var _containers$container, _tables$get;
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+      containerIndex = _Object$entries$_i[0],
+      columns = _Object$entries$_i[1];
+    var tableId = (_containers$container = containers[containerIndex]) === null || _containers$container === void 0 || (_containers$container = _containers$container.dataset) === null || _containers$container === void 0 ? void 0 : _containers$container.datatablesId;
+    if (!tableId) {
+      complete = false;
+      continue;
+    }
+    var table = (_tables$get = tables.get(tableId)) !== null && _tables$get !== void 0 ? _tables$get : [];
+    table.push(columns);
+    tables.set(tableId, table);
+  }
+  return {
+    complete: complete,
+    tables: tables
+  };
+}
+function writeMigratedState(storage, path, tables) {
+  var keys = [];
+  var _iterator2 = _createForOfIteratorHelper(tables),
+    _step2;
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var _step2$value = _slicedToArray(_step2.value, 2),
+        tableId = _step2$value[0],
+        containers = _step2$value[1];
+      var key = filterStateKey(path, tableId);
+      keys.push(key);
+      if (storage.getItem(key) === null) {
+        storage.setItem(key, JSON.stringify(Object.fromEntries(containers.entries())));
+      }
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+  return keys;
+}
 function collectContainerState(container) {
   return Object.fromEntries(_toConsumableArray(container.querySelectorAll('[data-index]')).map(function (column) {
     return [column.dataset.index, collectColumnState(column)];
@@ -9621,10 +9694,10 @@ function collectRangeState(filter) {
   }));
 }
 function restoreFilterState(containers, state) {
-  for (var _i = 0, _Object$entries = Object.entries(state); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-      containerIndex = _Object$entries$_i[0],
-      columns = _Object$entries$_i[1];
+  for (var _i2 = 0, _Object$entries2 = Object.entries(state); _i2 < _Object$entries2.length; _i2++) {
+    var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
+      containerIndex = _Object$entries2$_i[0],
+      columns = _Object$entries2$_i[1];
     var container = containers[containerIndex];
     if (container) {
       restoreContainerState(container, columns);
@@ -9632,10 +9705,10 @@ function restoreFilterState(containers, state) {
   }
 }
 function restoreContainerState(container, columns) {
-  for (var _i2 = 0, _Object$entries2 = Object.entries(columns); _i2 < _Object$entries2.length; _i2++) {
-    var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
-      index = _Object$entries2$_i[0],
-      state = _Object$entries2$_i[1];
+  for (var _i3 = 0, _Object$entries3 = Object.entries(columns); _i3 < _Object$entries3.length; _i3++) {
+    var _Object$entries3$_i = _slicedToArray(_Object$entries3[_i3], 2),
+      index = _Object$entries3$_i[0],
+      state = _Object$entries3$_i[1];
     var column = findColumn(container, index);
     if (state.type === 'range') {
       restoreRangeState(column, state.val);
@@ -9647,10 +9720,10 @@ function restoreContainerState(container, columns) {
 function restoreRangeState(column, values) {
   var _column$querySelector;
   var controls = (_column$querySelector = column === null || column === void 0 ? void 0 : column.querySelectorAll('[data-type="range"] .column-filter')) !== null && _column$querySelector !== void 0 ? _column$querySelector : [];
-  for (var _i3 = 0, _Object$entries3 = Object.entries(values); _i3 < _Object$entries3.length; _i3++) {
-    var _Object$entries3$_i = _slicedToArray(_Object$entries3[_i3], 2),
-      index = _Object$entries3$_i[0],
-      value = _Object$entries3$_i[1];
+  for (var _i4 = 0, _Object$entries4 = Object.entries(values); _i4 < _Object$entries4.length; _i4++) {
+    var _Object$entries4$_i = _slicedToArray(_Object$entries4[_i4], 2),
+      index = _Object$entries4$_i[0],
+      value = _Object$entries4$_i[1];
     setControlValue(controls[index], value);
   }
 }
@@ -9664,17 +9737,17 @@ function setControlValue(control, value) {
     return;
   }
   if (control.multiple && Array.isArray(value)) {
-    var _iterator2 = _createForOfIteratorHelper(control.options),
-      _step2;
+    var _iterator3 = _createForOfIteratorHelper(control.options),
+      _step3;
     try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var option = _step2.value;
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var option = _step3.value;
         option.selected = value.includes(option.value);
       }
     } catch (err) {
-      _iterator2.e(err);
+      _iterator3.e(err);
     } finally {
-      _iterator2.f();
+      _iterator3.f();
     }
   } else {
     control.value = value;
@@ -9684,7 +9757,9 @@ function setControlValue(control, value) {
   }));
 }
 function isEmptyValue(value) {
-  return value === null || value === '' || Array.isArray(value) && value.length === 0;
+  if (value === null || value === '') return true;
+  if (Array.isArray(value)) return value.length === 0;
+  return _typeof(value) === 'object' && Object.keys(value).length === 0;
 }
 function parseState(serialized) {
   try {

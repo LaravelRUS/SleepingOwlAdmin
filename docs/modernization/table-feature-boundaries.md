@@ -26,7 +26,15 @@ orchestration: it reads config, composes the modules, delegates DataTables 2
 creation to the engine factory and binds legacy controls. The previous 413-line
 closure, implicit globals and inline state/filter implementations are removed.
 
-The server-side DataTables wire protocol is unchanged. Filter storage keeps its existing `Filters_/...` key and edit-route normalization. State cleanup no longer clears unrelated local storage. Repeated module boot resolves the registered adapter instead of initializing a second engine for the same table.
+The server-side DataTables wire protocol is unchanged. Filter storage uses the
+table-scoped `Filters_/route::<encoded table id>` key while retaining edit-route
+normalization. Existing positional `Filters_/route` data is migrated once by
+matching its containers to `data-datatables-id`; a current scoped value is
+never overwritten, and an incomplete migration retains the legacy source.
+Save, restore and clear operate only on the owning table, including pages with
+multiple displays. Empty range objects are not persisted. State cleanup never
+clears unrelated local storage. Repeated module boot resolves the registered
+adapter instead of initializing a second engine for the same table.
 
 First-party runtime options use the DataTables 2 names `layout`, `stateSave`
 and `drawCallback`. Async tables receive a layout object with conditional

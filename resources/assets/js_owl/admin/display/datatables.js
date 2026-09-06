@@ -36,6 +36,7 @@ const {
     clearSavedTableSearch,
     filterStateKey,
     loadFilterState,
+    migrateLegacyFilterState,
     saveFilterState,
 } = require('../../../../frontend/features/table/state/filter-state')
 const {
@@ -51,18 +52,15 @@ globalThis.columnFilters = createTableFilterDrivers(
 
 Admin.Modules.register('display.datatables', () => {
     const stateFilters = Boolean(Admin.Config.get('state_filters'))
-    const filterContainers = document.querySelectorAll(
-        '.display-filters[data-display="DisplayDatatablesAsync"]',
-    )
-    const stateKey = filterStateKey(Admin.Url.url_path)
+    const path = Admin.Url.url_path
 
     if (stateFilters) {
-        loadFilterState(localStorage, stateKey, filterContainers)
+        migrateLegacyFilterState(localStorage, path, allFilterContainers())
     }
 
     configureDataTableExtensions()
     document.querySelectorAll('.datatables').forEach((element) =>
-        mountLegacyTable(element, { filterContainers, stateFilters, stateKey }),
+        mountLegacyTable(element, { path, stateFilters }),
     )
 })
 
@@ -84,6 +82,12 @@ function mountLegacyTable(element, context) {
     }
 
     const definition = readTableDefinition(element)
+    const filterContext = createFilterContext(definition.id, context)
+
+    if (filterContext.stateFilters) {
+        loadFilterState(localStorage, filterContext.stateKey, filterContext.filterContainers)
+    }
+
     const options = buildOptions(element, definition, context.stateFilters)
     const adapter = mountDataTable({
         createEngine: createDataTables2,
@@ -93,9 +97,17 @@ function mountLegacyTable(element, context) {
     })
 
     bindColumnFilters(definition.id, adapter.engineInstance, options.serverSide)
-    bindTableFilterControls(definition.id, adapter, context)
+    bindTableFilterControls(definition.id, adapter, filterContext)
 
     return adapter
+}
+
+function createFilterContext(id, { path, stateFilters }) {
+    return {
+        filterContainers: matchingContainers(id),
+        stateFilters,
+        stateKey: filterStateKey(path, id),
+    }
 }
 
 function buildOptions(element, definition, stateFilters) {
@@ -170,9 +182,17 @@ function clearFilters(adapter, { filterContainers, stateKey }) {
 }
 
 function matchingContainers(id) {
-    return [...document.querySelectorAll('[data-datatables-id]')].filter(
+    return allFilterContainers().filter(
         (container) => container.dataset.datatablesId === String(id),
     )
+}
+
+function allFilterContainers() {
+    return [
+        ...document.querySelectorAll(
+            '.display-filters[data-display="DisplayDatatablesAsync"][data-datatables-id]',
+        ),
+    ]
 }
 
 function bindHighlight(element, engineContext) {
