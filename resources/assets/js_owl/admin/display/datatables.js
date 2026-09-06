@@ -5,7 +5,11 @@ const {
 } = require('../../../../frontend/features/table/filters/legacy-filter-drivers')
 const {
     createDataTables2,
+    dataTables2Runtime,
 } = require('../../../../frontend/features/table/engine/datatables2')
+const {
+    installDataTables2Extensions,
+} = require('../../../../frontend/features/table/engine/extensions')
 const {
     forEachColumnFilter,
 } = require('../../../../frontend/features/table/filters/filter-elements')
@@ -33,7 +37,7 @@ const {
 
 globalThis.checkNumberRange = isNumberInRange
 globalThis.checkDateRange = isDateInRange
-globalThis.columnFilters = createLegacyFilterDrivers()
+globalThis.columnFilters = createLegacyFilterDrivers(dataTables2Runtime())
 
 Admin.Modules.register('display.datatables', () => {
     const stateFilters = Boolean(Admin.Config.get('state_filters'))
@@ -46,24 +50,22 @@ Admin.Modules.register('display.datatables', () => {
         loadFilterState(localStorage, stateKey, filterContainers)
     }
 
-    configureDataTableGlobals()
+    configureDataTableExtensions()
     document.querySelectorAll('.datatables').forEach((element) =>
         mountLegacyTable(element, { filterContainers, stateFilters, stateKey }),
     )
 })
 
-function configureDataTableGlobals() {
-    $.fn.dataTable.ext.errMode = (settings) => {
-        const message = settings.jqXHR?.responseJSON?.message || trans('lang.table.error')
-        Admin.Messages.error(message)
-    }
+function configureDataTableExtensions() {
+    installDataTables2Extensions(dataTables2Runtime(), {
+        onError: reportDataTableError,
+    })
+}
 
-    $.fn.dataTable.ext.order.DateTime = function (_settings, column) {
-        return this.api()
-            .column(column, { order: 'index' })
-            .nodes()
-            .map((cell) => $(cell).data('value'))
-    }
+function reportDataTableError(settings) {
+    const message = settings.jqXHR?.responseJSON?.message || trans('lang.table.error')
+
+    Admin.Messages.error(message)
 }
 
 function mountLegacyTable(element, context) {

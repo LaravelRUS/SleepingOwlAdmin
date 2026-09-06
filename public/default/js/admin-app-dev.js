@@ -4496,28 +4496,31 @@ var _require = __webpack_require__(/*! ../../../../frontend/features/table/filte
   isDateInRange = _require.isDateInRange,
   isNumberInRange = _require.isNumberInRange;
 var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/engine/datatables2 */ "./resources/frontend/features/table/engine/datatables2.js"),
-  createDataTables2 = _require2.createDataTables2;
-var _require3 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-elements */ "./resources/frontend/features/table/filters/filter-elements.js"),
-  forEachColumnFilter = _require3.forEachColumnFilter;
-var _require4 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/table-hooks */ "./resources/frontend/features/table/hooks/table-hooks.js"),
-  applyCreatedRowClass = _require4.applyCreatedRowClass,
-  createDrawHook = _require4.createDrawHook;
-var _require5 = __webpack_require__(/*! ../../../../frontend/features/table/lifecycle/data-table-adapter */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"),
-  mountDataTable = _require5.mountDataTable;
-var _require6 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
-  applyServerOptions = _require6.applyServerOptions,
-  readTableDefinition = _require6.readTableDefinition;
-var _require7 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
-  clearFilterState = _require7.clearFilterState,
-  clearSavedTableSearch = _require7.clearSavedTableSearch,
-  filterStateKey = _require7.filterStateKey,
-  loadFilterState = _require7.loadFilterState,
-  saveFilterState = _require7.saveFilterState;
-var _require8 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
-  createTableAjax = _require8.createTableAjax;
+  createDataTables2 = _require2.createDataTables2,
+  dataTables2Runtime = _require2.dataTables2Runtime;
+var _require3 = __webpack_require__(/*! ../../../../frontend/features/table/engine/extensions */ "./resources/frontend/features/table/engine/extensions.js"),
+  installDataTables2Extensions = _require3.installDataTables2Extensions;
+var _require4 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-elements */ "./resources/frontend/features/table/filters/filter-elements.js"),
+  forEachColumnFilter = _require4.forEachColumnFilter;
+var _require5 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/table-hooks */ "./resources/frontend/features/table/hooks/table-hooks.js"),
+  applyCreatedRowClass = _require5.applyCreatedRowClass,
+  createDrawHook = _require5.createDrawHook;
+var _require6 = __webpack_require__(/*! ../../../../frontend/features/table/lifecycle/data-table-adapter */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"),
+  mountDataTable = _require6.mountDataTable;
+var _require7 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
+  applyServerOptions = _require7.applyServerOptions,
+  readTableDefinition = _require7.readTableDefinition;
+var _require8 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
+  clearFilterState = _require8.clearFilterState,
+  clearSavedTableSearch = _require8.clearSavedTableSearch,
+  filterStateKey = _require8.filterStateKey,
+  loadFilterState = _require8.loadFilterState,
+  saveFilterState = _require8.saveFilterState;
+var _require9 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
+  createTableAjax = _require9.createTableAjax;
 globalThis.checkNumberRange = isNumberInRange;
 globalThis.checkDateRange = isDateInRange;
-globalThis.columnFilters = createLegacyFilterDrivers();
+globalThis.columnFilters = createLegacyFilterDrivers(dataTables2Runtime());
 Admin.Modules.register('display.datatables', function () {
   var stateFilters = Boolean(Admin.Config.get('state_filters'));
   var filterContainers = document.querySelectorAll('.display-filters[data-display="DisplayDatatablesAsync"]');
@@ -4525,7 +4528,7 @@ Admin.Modules.register('display.datatables', function () {
   if (stateFilters) {
     loadFilterState(localStorage, stateKey, filterContainers);
   }
-  configureDataTableGlobals();
+  configureDataTableExtensions();
   document.querySelectorAll('.datatables').forEach(function (element) {
     return mountLegacyTable(element, {
       filterContainers: filterContainers,
@@ -4534,19 +4537,15 @@ Admin.Modules.register('display.datatables', function () {
     });
   });
 });
-function configureDataTableGlobals() {
-  $.fn.dataTable.ext.errMode = function (settings) {
-    var _settings$jqXHR;
-    var message = ((_settings$jqXHR = settings.jqXHR) === null || _settings$jqXHR === void 0 || (_settings$jqXHR = _settings$jqXHR.responseJSON) === null || _settings$jqXHR === void 0 ? void 0 : _settings$jqXHR.message) || trans('lang.table.error');
-    Admin.Messages.error(message);
-  };
-  $.fn.dataTable.ext.order.DateTime = function (_settings, column) {
-    return this.api().column(column, {
-      order: 'index'
-    }).nodes().map(function (cell) {
-      return $(cell).data('value');
-    });
-  };
+function configureDataTableExtensions() {
+  installDataTables2Extensions(dataTables2Runtime(), {
+    onError: reportDataTableError
+  });
+}
+function reportDataTableError(settings) {
+  var _settings$jqXHR;
+  var message = ((_settings$jqXHR = settings.jqXHR) === null || _settings$jqXHR === void 0 || (_settings$jqXHR = _settings$jqXHR.responseJSON) === null || _settings$jqXHR === void 0 ? void 0 : _settings$jqXHR.message) || trans('lang.table.error');
+  Admin.Messages.error(message);
 }
 function mountLegacyTable(element, context) {
   if (Admin.Tables.has(element)) {
@@ -8733,6 +8732,48 @@ function dataTables2Versions() {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/engine/extensions.js":
+/*!****************************************************************!*\
+  !*** ./resources/frontend/features/table/engine/extensions.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DATE_TIME_ORDER": () => (/* binding */ DATE_TIME_ORDER),
+/* harmony export */   "dateTimeOrderValues": () => (/* binding */ dateTimeOrderValues),
+/* harmony export */   "installDataTables2Extensions": () => (/* binding */ installDataTables2Extensions)
+/* harmony export */ });
+var DATE_TIME_ORDER = 'DateTime';
+function installDataTables2Extensions(engine, _ref) {
+  var onError = _ref.onError;
+  assertExtensionDependencies(engine, onError);
+  engine.ext.errMode = onError;
+  engine.ext.order[DATE_TIME_ORDER] = function (settings, column) {
+    return dateTimeOrderValues(engine, settings, column);
+  };
+  return engine.ext;
+}
+function dateTimeOrderValues(engine, settings, column) {
+  return new engine.Api(settings).column(column, {
+    order: 'index'
+  }).nodes().map(function (cell) {
+    return cell.dataset.value;
+  });
+}
+function assertExtensionDependencies(engine, onError) {
+  var _engine$ext;
+  if (typeof (engine === null || engine === void 0 ? void 0 : engine.Api) !== 'function' || !((_engine$ext = engine.ext) !== null && _engine$ext !== void 0 && _engine$ext.order)) {
+    throw new TypeError('DataTables extensions require an engine extension registry.');
+  }
+  if (typeof onError !== 'function') {
+    throw new TypeError('DataTables extensions require an error handler.');
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/filters/filter-elements.js":
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/filters/filter-elements.js ***!
@@ -8811,6 +8852,7 @@ function assertRoot(root) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createLegacyFilterDrivers": () => (/* binding */ createLegacyFilterDrivers),
+/* harmony export */   "dataTables2SearchExtensions": () => (/* binding */ dataTables2SearchExtensions),
 /* harmony export */   "isDateInRange": () => (/* binding */ isDateInRange),
 /* harmony export */   "isNumberInRange": () => (/* binding */ isNumberInRange)
 /* harmony export */ });
@@ -8820,17 +8862,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 
 
-function createLegacyFilterDrivers() {
-  var dataTable = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (jquery__WEBPACK_IMPORTED_MODULE_0___default().fn.dataTable);
+function createLegacyFilterDrivers(engine) {
+  var searchExtensions = dataTables2SearchExtensions(engine);
   return {
     date: bindDateFilter,
     daterange: bindTextFilter,
     range: function range(container, table, column, index, serverSide) {
-      return bindRangeFilter(container, table, column, index, serverSide, dataTable);
+      return bindRangeFilter(container, table, column, index, serverSide, searchExtensions);
     },
     select: bindSelectFilter,
     text: bindTextFilter
   };
+}
+function dataTables2SearchExtensions(engine) {
+  var _engine$ext;
+  if (!Array.isArray(engine === null || engine === void 0 || (_engine$ext = engine.ext) === null || _engine$ext === void 0 ? void 0 : _engine$ext.search)) {
+    throw new TypeError('Legacy range filters require a DataTables search registry.');
+  }
+  return engine.ext.search;
 }
 function isNumberInRange(fromValue, toValue, value) {
   if (Number.isNaN(fromValue) && Number.isNaN(toValue)) return true;
@@ -8874,7 +8923,7 @@ function searchSelectedValues(column, selected, serverSide) {
     column.search(selected.join('|'), true, false, true);
   }
 }
-function bindRangeFilter(container, table, column, index, serverSide, dataTable) {
+function bindRangeFilter(container, table, column, index, serverSide, searchExtensions) {
   var _rangeInputs = rangeInputs(container),
     from = _rangeInputs.from,
     to = _rangeInputs.to;
@@ -8885,7 +8934,7 @@ function bindRangeFilter(container, table, column, index, serverSide, dataTable)
   from.add(to).on('keyup change', search);
   bindDateRange(from, to, search, isDateRange, serverSide);
   if (!serverSide) {
-    dataTable.ext.search.push(function (settings, data) {
+    searchExtensions.push(function (settings, data) {
       return filterRange(settings, data, table, index, from, to, isDateRange);
     });
   }

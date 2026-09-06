@@ -73,3 +73,14 @@ it('uses current DataTables 2 option names in first-party runtime code', () => {
         /\b(?:sDom|bStateSave|fnDrawCallback)\b/,
     )
 })
+
+it('registers errors, ordering and search through the active engine API', () => {
+    const extensions = readSource('resources/frontend/features/table/engine/extensions.js')
+    const filters = readSource('resources/frontend/features/table/filters/legacy-filter-drivers.js')
+    const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+
+    expect(extensions).toContain('engine.ext.errMode')
+    expect(extensions).toContain('engine.ext.order[DATE_TIME_ORDER]')
+    expect(filters).toContain('engine.ext.search')
+    expect(`${orchestration}\n${filters}`).not.toMatch(/(?:\$|jQuery)\.fn\.dataTable/)
+})

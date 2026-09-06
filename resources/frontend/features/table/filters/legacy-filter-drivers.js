@@ -1,15 +1,25 @@
 import jQuery from 'jquery'
 import moment from 'moment'
 
-export function createLegacyFilterDrivers(dataTable = jQuery.fn.dataTable) {
+export function createLegacyFilterDrivers(engine) {
+    const searchExtensions = dataTables2SearchExtensions(engine)
+
     return {
         date: bindDateFilter,
         daterange: bindTextFilter,
         range: (container, table, column, index, serverSide) =>
-            bindRangeFilter(container, table, column, index, serverSide, dataTable),
+            bindRangeFilter(container, table, column, index, serverSide, searchExtensions),
         select: bindSelectFilter,
         text: bindTextFilter,
     }
+}
+
+export function dataTables2SearchExtensions(engine) {
+    if (!Array.isArray(engine?.ext?.search)) {
+        throw new TypeError('Legacy range filters require a DataTables search registry.')
+    }
+
+    return engine.ext.search
 }
 
 export function isNumberInRange(fromValue, toValue, value) {
@@ -61,7 +71,7 @@ function searchSelectedValues(column, selected, serverSide) {
     }
 }
 
-function bindRangeFilter(container, table, column, index, serverSide, dataTable) {
+function bindRangeFilter(container, table, column, index, serverSide, searchExtensions) {
     const { from, to } = rangeInputs(container)
     const isDateRange = hasDatePickers(from, to)
     const search = () => searchRange(from, to, table, column, serverSide)
@@ -70,7 +80,7 @@ function bindRangeFilter(container, table, column, index, serverSide, dataTable)
     bindDateRange(from, to, search, isDateRange, serverSide)
 
     if (!serverSide) {
-        dataTable.ext.search.push((settings, data) =>
+        searchExtensions.push((settings, data) =>
             filterRange(settings, data, table, index, from, to, isDateRange),
         )
     }

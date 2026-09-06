@@ -1,6 +1,8 @@
 import { expect, it } from 'vitest'
 
 import {
+    createLegacyFilterDrivers,
+    dataTables2SearchExtensions,
     isDateInRange,
     isNumberInRange,
 } from '../../../../resources/frontend/features/table/filters/legacy-filter-drivers.js'
@@ -28,4 +30,16 @@ it('preserves date range boundary behavior', () => {
     expect(isDateInRange(false, {}, date({ before: true }))).toBe(true)
     expect(isDateInRange({}, false, date({ after: true }))).toBe(true)
     expect(isDateInRange({}, {}, date({ between: true }))).toBe(true)
+})
+
+it('resolves custom search registration from the active engine', () => {
+    const search = []
+    const engine = { ext: { search } }
+
+    expect(dataTables2SearchExtensions(engine)).toBe(search)
+    expect(createLegacyFilterDrivers(engine)).toMatchObject({
+        date: expect.any(Function),
+        range: expect.any(Function),
+    })
+    expect(() => createLegacyFilterDrivers({})).toThrow('search registry')
 })

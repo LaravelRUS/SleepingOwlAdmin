@@ -9,6 +9,7 @@ registry.
 
 | Module                             | Responsibility                                                           |
 | ---------------------------------- | ------------------------------------------------------------------------ |
+| `engine/extensions.js`             | error handling, custom ordering and engine extension registration        |
 | `options/table-options.js`         | typed DOM definition, table options and control layout                   |
 | `transport/table-ajax.js`          | unchanged server request payload and named filter data                   |
 | `filters/filter-elements.js`       | filter discovery and native control values                               |
@@ -39,6 +40,11 @@ official Bootstrap 4 core/Responsive adapters and owns their CSS. The deleted
 `resources/assets/js_owl/libs/datatables.js` no longer publishes
 `window.DataTable`, overrides pagination or calls the private `settings.oApi`.
 
+Error handling, custom `DateTime` ordering and range-search registration use
+the extension registries exposed by the active engine. Date ordering creates a
+public `DataTable.Api` instance and reads native `dataset.value`; first-party
+runtime code no longer reaches the extension API through `$.fn.dataTable`.
+
 The isolated legacy filter driver intentionally remains jQuery-based until the
 native-filter checkpoint. It is not exported from the modern feature entry and
 is loaded only by the legacy aggregate. All other modules are engine-neutral
@@ -49,5 +55,5 @@ directly. Bulk actions and custom action forms resolve the adapter for their
 table and read `Admin.Tables.selectedRows(element)`; action submission and the
 auto-update view use `Admin.Tables.reload(...)`. No first-party runtime path
 creates a table through `$(element).DataTable(...)`. The remaining jQuery-based
-global extension/filter/control bindings are tracked as separate migration
-checkpoints.
+filter/control bindings are isolated in the legacy filter driver and tracked by
+the native-filter checkpoint.
