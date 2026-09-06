@@ -3,6 +3,7 @@ import js from '@eslint/js'
 const modernJavaScript = [
     'resources/frontend/**/*.js',
     'tests/frontend/**/*.js',
+    'stylelint.config.mjs',
     'vitest.config.mjs',
 ]
 
