@@ -25,7 +25,7 @@
         "baseline:config:fixtures:validate": "php scripts/modernization/validate-config-fixtures.php"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^7.2.0",
+        "@fortawesome/fontawesome-free": "^7.3.1",
         "admin-lte": "^3.2.0",
         "air-datepicker": "3.6.0",
         "autoprefixer": "^10.4.7",

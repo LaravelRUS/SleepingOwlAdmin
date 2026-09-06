@@ -1,11 +1,11 @@
 {
-    "/js/vue.js": "/js/vue.js?id=7af38495654b73dbccba68f762f5b09b",
+    "/js/vue.js": "/js/vue.js?id=50979cb91257fda389f3c75126440966",
     "/js/vue-dev.js": "/js/vue-dev.js?id=c4ea74a28acdb37a9b5209e8959b81a3",
-    "/js/admin-app.js": "/js/admin-app.js?id=5855154fe456522ba90dcb1cda66a3a2",
-    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=78409fb942b6b186c7758cdf807e1caa",
+    "/js/admin-app.js": "/js/admin-app.js?id=7d1e30f85e5f1c62e4390ddd426280ce",
+    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=9bed84e2057474a5d5a1ccfd73421b12",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
     "/js/admin-core.js": "/js/admin-core.js?id=b983a01323cd440b5502c8123c18a184",
-    "/js/features/alert.js": "/js/features/alert.js?id=aef8525b3eb06fc39d0e20709e2bb52d",
+    "/js/features/alert.js": "/js/features/alert.js?id=aa22149a82264dc180184070eb72ce8a",
     "/js/features/dropdown.js": "/js/features/dropdown.js?id=88a53f696508ba72da1e678a693faba2",
     "/js/features/forms.js": "/js/features/forms.js?id=8f47c626584fe75ca7d79a9568c501a6",
     "/js/features/sidebar.js": "/js/features/sidebar.js?id=710de912777206b899153eb06ac2fadb",
@@ -16,9 +16,9 @@
     "/js/features/tree.js": "/js/features/tree.js?id=64240d1b383cf4ede43d2a08cf1ce788",
     "/js/themes/legacy-adminlte.js": "/js/themes/legacy-adminlte.js?id=f5d387540235443141917d352abe4d71",
     "/js/themes/tailwind.js": "/js/themes/tailwind.js?id=f5d387540235443141917d352abe4d71",
-    "/css/admin-app.css": "/css/admin-app.css?id=bc106513e6b15ff44af13909558dd75d",
-    "/css/features/forms.css": "/css/features/forms.css?id=dddffe8833518428c6de5c6aff5dda27",
+    "/css/admin-app.css": "/css/admin-app.css?id=20fc2598a71bf57c0d996213b24699b8",
     "/css/features/dropdown.css": "/css/features/dropdown.css?id=6fa7730081ed22f74a507a9aa1b70b93",
+    "/css/icons.css": "/css/icons.css?id=ced3d042cd1037a9ba134d1964ad9547",
     "/css/admin-core.css": "/css/admin-core.css?id=0ab8b34c6e46477fc5066f206cf3da97",
     "/css/themes/tailwind.css": "/css/themes/tailwind.css?id=5f4e442f6740a37639edde2e1f62ac7c",
     "/css/themes/legacy-adminlte.css": "/css/themes/legacy-adminlte.css?id=514e4526a697e6b8563d137ad4fddba9",
@@ -40,5 +40,6 @@
     "/css/features/tooltip.css": "/css/features/tooltip.css?id=8f27349ac20d217772f1d9b21b29d2b7",
     "/css/features/table.css": "/css/features/table.css?id=0486f14bd03357524d6cb5a97dc6e459",
     "/css/features/lightbox.css": "/css/features/lightbox.css?id=ca781dbf82d26da58ceb5ce08477e5f6",
-    "/css/features/sidebar.css": "/css/features/sidebar.css?id=14ab54d5043f7a10ff50eec988c46505"
+    "/css/features/sidebar.css": "/css/features/sidebar.css?id=14ab54d5043f7a10ff50eec988c46505",
+    "/css/features/forms.css": "/css/features/forms.css?id=dddffe8833518428c6de5c6aff5dda27"
 }

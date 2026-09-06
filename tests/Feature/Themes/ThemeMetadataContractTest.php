@@ -13,6 +13,7 @@ class ThemeMetadataContractTest extends TestCase
         $theme = new MetadataContractTheme(
             assets: [
                 'feature:table:theme:custom-admin',
+                'shared:icons',
                 'theme:custom-admin',
                 'feature:tabs:theme:custom-admin',
             ],
@@ -26,11 +27,13 @@ class ThemeMetadataContractTest extends TestCase
 
         $this->assertSame('custom-admin', $manifest->themeId());
         $this->assertSame([
+            'shared:icons',
             'theme:custom-admin',
             'feature:table:theme:custom-admin',
             'feature:tabs:theme:custom-admin',
         ], $manifest->entries());
         $this->assertSame([
+            'shared:icons',
             'theme:custom-admin',
             'feature:tabs:theme:custom-admin',
             'feature:table:theme:custom-admin',
@@ -81,6 +84,14 @@ class ThemeMetadataContractTest extends TestCase
             'theme:custom-admin',
             'theme:custom-admin',
         ]);
+    }
+
+    public function test_manifest_rejects_duplicate_shared_entries(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Duplicate shared asset entry [shared:icons].');
+
+        new ThemeAssetManifest('custom-admin', ['shared:icons', 'shared:icons']);
     }
 
     public function test_capabilities_reject_unknown_values(): void

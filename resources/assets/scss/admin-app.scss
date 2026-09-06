@@ -16,19 +16,8 @@
 @use '../../frontend/features/tooltip/themes/legacy-adminlte/styles/legacy' as legacy-tooltip;
 @use '../../frontend/features/tree/themes/legacy-adminlte/styles/legacy' as legacy-tree;
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
+@use '../../frontend/themes/legacy-adminlte/styles/legacy-build' as legacy-theme;
 
-//Core
-@import "variables";
-@import "colors";
-@import "bootstrap/scss/bootstrap";
-@import "adminLte";
-@import "adminLte-dark";
-@import "font";
-
-
-//Component
-@import "components";
-@import "addition";
 @include dropdown-properties.define;
 @include dropdown-driver.styles;
 @include legacy-dropdown.styles;
@@ -44,21 +33,12 @@
 @include legacy-tooltip.styles;
 @include legacy-tree.styles;
 @include form-files.styles(
-  $thumbnail-border: $file-thumbnail-border,
-  $thumbnail-surface: $file-thumbnail-surface,
-  $file-name-text: $file-name-text,
+  $thumbnail-border: legacy-theme.$file-thumbnail-border,
+  $thumbnail-surface: legacy-theme.$file-thumbnail-surface,
+  $file-name-text: legacy-theme.$file-name-text,
 );
 @include form-properties.define;
 @include form-date-picker.styles;
 @include theme-properties.define;
 
-
-//fontawesome 6
-//@import "@fortawesome/fontawesome-free/css/all.min.css";
-
-//fontawesome 7
-//@import "@fortawesome/fontawesome-free/css/all.css";
-@import "@fortawesome/fontawesome-free/scss/fontawesome";
-@import "@fortawesome/fontawesome-free/scss/solid";
-@import "@fortawesome/fontawesome-free/scss/brands";
-@import "@fortawesome/fontawesome-free/scss/regular";
+@import '../../frontend/shared/icons/styles/font-awesome';

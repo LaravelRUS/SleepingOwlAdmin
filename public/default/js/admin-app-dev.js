@@ -5905,10 +5905,9 @@ __webpack_require__.r(__webpack_exports__);
 var ALERT_SELECTOR = '.alert';
 var ALERT_DISMISS_SELECTOR = '[data-dismiss="alert"]';
 function findAlert(root, element) {
-  var _element$matches, _ref, _element$closest;
-  var direct = element !== null && element !== void 0 && (_element$matches = element.matches) !== null && _element$matches !== void 0 && _element$matches.call(element, ALERT_SELECTOR) ? element : null;
-  var target = (_ref = direct !== null && direct !== void 0 ? direct : targetedAlert(element)) !== null && _ref !== void 0 ? _ref : element === null || element === void 0 || (_element$closest = element.closest) === null || _element$closest === void 0 ? void 0 : _element$closest.call(element, ALERT_SELECTOR);
-  return target && root.contains(target) ? target : null;
+  var _ref, _directAlert;
+  var target = (_ref = (_directAlert = directAlert(element)) !== null && _directAlert !== void 0 ? _directAlert : targetedAlert(element)) !== null && _ref !== void 0 ? _ref : closestAlert(element);
+  return containedAlert(root, target);
 }
 function findAlertDismiss(root, target) {
   var _target$closest;
@@ -5916,8 +5915,26 @@ function findAlertDismiss(root, target) {
   return dismiss && root.contains(dismiss) ? dismiss : null;
 }
 function isAlertDismissDisabled(element) {
-  var _element$hasAttribute, _element$getAttribute, _element$classList;
-  return (element === null || element === void 0 || (_element$hasAttribute = element.hasAttribute) === null || _element$hasAttribute === void 0 ? void 0 : _element$hasAttribute.call(element, 'disabled')) || (element === null || element === void 0 || (_element$getAttribute = element.getAttribute) === null || _element$getAttribute === void 0 ? void 0 : _element$getAttribute.call(element, 'aria-disabled')) === 'true' || (element === null || element === void 0 || (_element$classList = element.classList) === null || _element$classList === void 0 ? void 0 : _element$classList.contains('disabled'));
+  return hasDisabledAttribute(element) || hasDisabledState(element);
+}
+function directAlert(element) {
+  var _element$matches;
+  return element !== null && element !== void 0 && (_element$matches = element.matches) !== null && _element$matches !== void 0 && _element$matches.call(element, ALERT_SELECTOR) ? element : null;
+}
+function closestAlert(element) {
+  var _element$closest, _element$closest2;
+  return (_element$closest = element === null || element === void 0 || (_element$closest2 = element.closest) === null || _element$closest2 === void 0 ? void 0 : _element$closest2.call(element, ALERT_SELECTOR)) !== null && _element$closest !== void 0 ? _element$closest : null;
+}
+function containedAlert(root, alert) {
+  return alert && root.contains(alert) ? alert : null;
+}
+function hasDisabledAttribute(element) {
+  var _element$hasAttribute;
+  return (element === null || element === void 0 || (_element$hasAttribute = element.hasAttribute) === null || _element$hasAttribute === void 0 ? void 0 : _element$hasAttribute.call(element, 'disabled')) === true;
+}
+function hasDisabledState(element) {
+  var _element$getAttribute, _element$classList;
+  return (element === null || element === void 0 || (_element$getAttribute = element.getAttribute) === null || _element$getAttribute === void 0 ? void 0 : _element$getAttribute.call(element, 'aria-disabled')) === 'true' || (element === null || element === void 0 || (_element$classList = element.classList) === null || _element$classList === void 0 ? void 0 : _element$classList.contains('disabled')) === true;
 }
 function targetedAlert(element) {
   var _ref2, _element$getAttribute2, _element$getAttribute3, _element$getAttribute4;

@@ -99,6 +99,11 @@
                 "output": "css/admin-core.css"
             },
             {
+                "logicalId": "shared:icons",
+                "source": "resources/frontend/shared/icons/styles/font-awesome.scss",
+                "output": "css/icons.css"
+            },
+            {
                 "logicalId": "feature:dropdown",
                 "source": "resources/frontend/features/dropdown/styles/dropdown-base.scss",
                 "output": "css/features/dropdown.css"

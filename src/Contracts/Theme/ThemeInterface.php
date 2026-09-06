@@ -9,7 +9,7 @@ interface ThemeInterface
     public function viewNamespace(): string;
 
     /**
-     * Logical asset entries owned by the theme. Physical paths and URLs are not allowed.
+     * Logical asset entries required by the theme. Physical paths and URLs are not allowed.
      *
      * @see \SleepingOwl\Admin\Themes\ThemeAssetManifest
      *

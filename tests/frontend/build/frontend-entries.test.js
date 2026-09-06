@@ -25,6 +25,10 @@ function expectedSourceRoot(logicalId) {
         return 'resources/frontend/core/'
     }
 
+    if (type === 'shared') {
+        return `resources/frontend/shared/${id}/`
+    }
+
     return `resources/frontend/${type}s/${id}/`
 }
 
@@ -69,6 +73,15 @@ describe('frontend build entries', () => {
             .forEach(({ logicalId, source }) => {
                 expect(source.startsWith(expectedSourceRoot(logicalId))).toBe(true)
             })
+    })
+})
+
+it('publishes shared icons as a standalone stylesheet', () => {
+    expect(modernEntry('shared:icons', 'scripts')).toBeUndefined()
+    expect(modernEntry('shared:icons', 'styles')).toEqual({
+        logicalId: 'shared:icons',
+        source: 'resources/frontend/shared/icons/styles/font-awesome.scss',
+        output: 'css/icons.css',
     })
 })
 

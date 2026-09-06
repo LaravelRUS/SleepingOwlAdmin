@@ -13,6 +13,7 @@ $packageVersion = packageVersion();
 
 prepareProfileDirectory($root, $profile);
 $entries = buildEntries(readJson("{$root}/build/frontend-entries.json"), $root, $profile);
+copyProfileFonts($root, $profile);
 $profiles = existingProfiles($manifestPath, $packageVersion);
 $profiles[$profile] = ['entries' => $entries];
 $manifest = manifest($packageVersion, orderedProfiles($profiles));
@@ -119,6 +120,17 @@ function prepareProfileDirectory(string $root, string $profile): void
 
     $files->deleteDirectory($directory);
     $files->ensureDirectoryExists($directory);
+}
+
+function copyProfileFonts(string $root, string $profile): void
+{
+    $source = "{$root}/public/default/fonts";
+    $target = "{$root}/public/default/profiles/{$profile}/fonts";
+    $files = new Filesystem();
+
+    if (! $files->copyDirectory($source, $target)) {
+        throw new RuntimeException("Unable to copy font assets to [{$target}].");
+    }
 }
 
 function existingProfiles(string $path, string $packageVersion): array

@@ -24,8 +24,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/alert.js",
-                            "version": "aef8525b3eb06fc39d0e20709e2bb52d",
-                            "checksum": "sha256:b4b5e8dd6924b9ded06f27e25d3a43235355e2edb7bec16fb735a1a1a9a1beaa"
+                            "version": "aa22149a82264dc180184070eb72ce8a",
+                            "checksum": "sha256:e7794c3685166184781e64f20822aa12d06be5d8299ce0ca5fd97a75a8d0b403"
                         }
                     ],
                     "styles": []
@@ -292,6 +292,16 @@
                         }
                     ]
                 },
+                "shared:icons": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/icons.css",
+                            "version": "ced3d042cd1037a9ba134d1964ad9547",
+                            "checksum": "sha256:524af6b185523895590606e1858f52fdb2ce25fac7715d7b443f462ce2a1e289"
+                        }
+                    ]
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -348,8 +358,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/alert.js",
-                            "version": "59b3350fff052d99d4b52dc7960d5cca",
-                            "checksum": "sha256:0ab8e779782ad743abc068becffefb0f441f3c0f1fa812bf8246e611667cb425"
+                            "version": "2c17f46c02471e275489c25a3cff89db",
+                            "checksum": "sha256:8aa12206a79aabd6b2a8783126f9549fba917d25ae7094ad7c05d61778f45e08"
                         }
                     ],
                     "styles": []
@@ -616,6 +626,16 @@
                         }
                     ]
                 },
+                "shared:icons": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/icons.css",
+                            "version": "80f70287f5789213b45a1751209ca44f",
+                            "checksum": "sha256:605ac0ffba82e846aae224e503bee8cf2c5e5b0be676a073677500a36ef9029f"
+                        }
+                    ]
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -651,5 +671,5 @@
             }
         }
     },
-    "build_id": "sha256:b410b01b4f27c4d02f2abd16a95854fa4c9cfe997d0b7f55a71d6c820dff62b2"
+    "build_id": "sha256:f9b9302689e8b1509596ea207df8ee2e11c962770c8758dfde2aa84c4a6acf2d"
 }

@@ -12,6 +12,9 @@ final class ThemeAssetManifest
     private ?string $themeEntry = null;
 
     /** @var array<string, string> */
+    private array $sharedEntries = [];
+
+    /** @var array<string, string> */
     private array $featureEntries = [];
 
     /**
@@ -42,6 +45,7 @@ final class ThemeAssetManifest
     public function entries(): array
     {
         return array_values(array_filter([
+            ...array_values($this->sharedEntries),
             $this->themeEntry,
             ...array_values($this->featureEntries),
         ]));
@@ -53,7 +57,11 @@ final class ThemeAssetManifest
      */
     public function entriesFor(array $features): array
     {
-        $entries = array_values(array_filter([$this->themeEntry]));
+        $entries = array_values($this->sharedEntries);
+
+        if ($this->themeEntry !== null) {
+            $entries[] = $this->themeEntry;
+        }
 
         foreach ($this->uniqueFeatureIds($features) as $feature) {
             if (isset($this->featureEntries[$feature])) {
@@ -90,7 +98,25 @@ final class ThemeAssetManifest
             return;
         }
 
+        if (str_starts_with($entry, 'shared:')) {
+            $this->addSharedEntry($entry);
+
+            return;
+        }
+
         $this->addFeatureEntry($entry);
+    }
+
+    private function addSharedEntry(string $entry): void
+    {
+        $id = substr($entry, strlen('shared:'));
+        $this->assertIdentifier('shared asset', $id);
+
+        if (isset($this->sharedEntries[$id])) {
+            throw new InvalidArgumentException("Duplicate shared asset entry [{$entry}].");
+        }
+
+        $this->sharedEntries[$id] = $entry;
     }
 
     private function addThemeEntry(string $entry): void

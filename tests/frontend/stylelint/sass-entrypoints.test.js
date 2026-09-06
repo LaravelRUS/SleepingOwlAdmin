@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
 const entries = readJson('build/frontend-entries.json').modern.styles
+const tokenizedEntries = entries.filter((entry) => entry.logicalId !== 'shared:icons')
 
 function readJson(path) {
     return JSON.parse(readFileSync(resolve(root, path), 'utf8'))
@@ -19,32 +20,40 @@ function siblingPath(entry, filename) {
 }
 
 describe('Sass entrypoint boundaries', () => {
-    it.each(entries)('$logicalId loads its local variables and colors modules', (entry) => {
-        const source = readSource(entry.source)
+    it.each(tokenizedEntries)(
+        '$logicalId loads its local variables and colors modules',
+        (entry) => {
+            const source = readSource(entry.source)
 
-        expect(source).toContain("@use 'variables';")
-        expect(source).toContain("@use 'colors';")
-        expect(source).toContain("@use 'custom-properties';")
-        expect(readFileSync(siblingPath(entry, '_variables.scss')).byteLength).toBeGreaterThan(0)
-        expect(readFileSync(siblingPath(entry, '_colors.scss')).byteLength).toBeGreaterThan(0)
-        expect(
-            readFileSync(siblingPath(entry, '_custom-properties.scss')).byteLength,
-        ).toBeGreaterThan(0)
-    })
+            expect(source).toContain("@use 'variables';")
+            expect(source).toContain("@use 'colors';")
+            expect(source).toContain("@use 'custom-properties';")
+            expect(readFileSync(siblingPath(entry, '_variables.scss')).byteLength).toBeGreaterThan(
+                0,
+            )
+            expect(readFileSync(siblingPath(entry, '_colors.scss')).byteLength).toBeGreaterThan(0)
+            expect(
+                readFileSync(siblingPath(entry, '_custom-properties.scss')).byteLength,
+            ).toBeGreaterThan(0)
+        },
+    )
 
-    it.each(entries)('$logicalId exposes owner-local overridable build-time tokens', (entry) => {
-        const variables = readFileSync(siblingPath(entry, '_variables.scss'), 'utf8')
-        const colors = readFileSync(siblingPath(entry, '_colors.scss'), 'utf8')
+    it.each(tokenizedEntries)(
+        '$logicalId exposes owner-local overridable build-time tokens',
+        (entry) => {
+            const variables = readFileSync(siblingPath(entry, '_variables.scss'), 'utf8')
+            const colors = readFileSync(siblingPath(entry, '_colors.scss'), 'utf8')
 
-        expect(variableDeclarations(variables)).not.toHaveLength(0)
-        if (entry.logicalId === 'core') {
-            expect(variableDeclarations(colors)).toEqual([])
-        } else {
-            expect(variableDeclarations(colors)).not.toHaveLength(0)
-        }
-        expect(nonDefaultDeclarations(variables)).toEqual([])
-        expect(nonDefaultDeclarations(colors)).toEqual([])
-    })
+            expect(variableDeclarations(variables)).not.toHaveLength(0)
+            if (entry.logicalId === 'core') {
+                expect(variableDeclarations(colors)).toEqual([])
+            } else {
+                expect(variableDeclarations(colors)).not.toHaveLength(0)
+            }
+            expect(nonDefaultDeclarations(variables)).toEqual([])
+            expect(nonDefaultDeclarations(colors)).toEqual([])
+        },
+    )
 
     it('contains no handwritten plain CSS below resources', () => {
         const files = readdirSync(resolve(root, 'resources'), { recursive: true })

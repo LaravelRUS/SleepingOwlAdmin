@@ -1,0 +1,10 @@
+// Transitional AdminLTE 3 build. All framework imports live behind this
+// theme-owned boundary until the modern AdminLTE theme replaces them.
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/colors';
+@import 'bootstrap/scss/bootstrap';
+@import '../../../../assets/scss/adminLte';
+@import '../../../../assets/scss/adminLte-dark';
+@import '../../../../assets/scss/font';
+@import '../../../../assets/scss/components';
+@import '../../../../assets/scss/addition';
