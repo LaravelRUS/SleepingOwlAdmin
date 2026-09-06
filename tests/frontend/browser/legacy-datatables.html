@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="browser-fixture-token" />
+        <title>Legacy DataTables browser fixture</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+
+            .fixture-row {
+                outline: 1px solid currentColor;
+            }
+        </style>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'legacy-datatables',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: true,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: true,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: {
+                        action_confirm: 'Confirm action',
+                        error: 'Table error',
+                        no_action: 'No action',
+                    },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <main class="card">
+            <form data-type="display-actions" id="bulk-action-form">
+                <select class="sleepingOwlActionsStore" id="sleepingOwlActionsStore">
+                    <option value="0">No action</option>
+                    <option value="/api/action" data-method="POST" selected>Archive</option>
+                </select>
+                <button type="submit" id="bulk-action-submit">Apply</button>
+            </form>
+
+            <div class="display-actions-form-wrapper">
+                <form action="/api/action-form" method="POST" data-confirm="false">
+                    <input name="reason" value="fixture" />
+                    <button type="submit" id="custom-action-submit">Custom action</button>
+                </form>
+            </div>
+
+            <div
+                class="display-filters"
+                data-display="DisplayDatatablesAsync"
+                data-datatables-id="legacy-table-fixture"
+            >
+                <div data-index="0">
+                    <div class="column-filter" data-type="control">
+                        <button id="filters-exec" type="button">Filter</button>
+                        <button id="filters-cancel" type="button">Clear</button>
+                    </div>
+                </div>
+                <div data-index="1">
+                    <input id="text-filter" class="column-filter" data-type="text" />
+                </div>
+                <div data-index="2">
+                    <div class="input-date">
+                        <input id="date-filter" class="column-filter" data-type="date" />
+                    </div>
+                </div>
+                <div data-index="3">
+                    <div id="range-filter" class="column-filter" data-type="range">
+                        <input id="range-from" class="form-control column-filter" />
+                        <input id="range-to" class="form-control column-filter" />
+                    </div>
+                </div>
+                <div data-index="4">
+                    <select id="select-filter" class="column-filter" data-type="select" multiple>
+                        <option value="active">Active</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                </div>
+                <div data-index="5">
+                    <input id="daterange-filter" class="column-filter" data-type="daterange" />
+                </div>
+            </div>
+
+            <table
+                id="legacy-table"
+                class="datatables autorefresh lightcolumn"
+                data-id="legacy-table-fixture"
+                data-url="/api/datatables"
+                data-method="POST"
+                data-payload='{"fixture":"legacy"}'
+                data-display-search="1"
+                data-display-dtlength="1"
+                data-attributes='{"autoWidth":false,"columns":[{"orderable":false},{"orderable":true},{"orderable":true},{"orderable":true},{"orderable":true},{"orderable":false},{"orderable":false}],"order":[[1,"asc"]],"pageLength":2,"responsive":false,"searchDelay":0}'
+            >
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Window</th>
+                        <th>Preview</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </main>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__legacyEvents = []
+            window.__lazyloadCalls = 0
+
+            const originalLazyload = window.lazyload
+            window.lazyload = (...args) => {
+                window.__lazyloadCalls += 1
+                return originalLazyload(...args)
+            }
+
+            ;[
+                'datatables::draw',
+                'datatables::actions::submitting',
+                'datatables::actions::submitted',
+                'datatables::actions::cancel',
+            ].forEach((eventName) => {
+                Admin.Events.on(eventName, () => window.__legacyEvents.push(eventName))
+            })
+
+            Admin.Messages.confirm = () => Promise.resolve({ value: true })
+            Swal.fire = () => Promise.resolve({ value: true })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+        <script>
+            function startAutoUpdate() {
+                const tableSelector = '.datatables.autorefresh'
+                const interval = 250
+                const bar = new ProgressBar.Line('.datatables', {
+                    strokeWidth: 2,
+                    duration: interval,
+                    color: 'currentColor',
+                    svgStyle: null,
+                })
+                let stopped = false
+                let timer
+
+                function update() {
+                    bar.set(0)
+                    if (stopped) return
+
+                    bar.animate(1)
+                    timer = setTimeout(update, interval)
+                    window.jQuery('.datatables').DataTable().draw()
+                }
+
+                document.querySelectorAll(tableSelector).forEach((table) => {
+                    table.classList.add('autoupdater')
+                    table.insertAdjacentHTML(
+                        'beforeend',
+                        '<span class="autoupdater-close">&times;</span>',
+                    )
+                })
+                bar.animate(1)
+                timer = setTimeout(update, interval)
+
+                window.jQuery('.autoupdater-close').on('click', () => {
+                    bar.set(0)
+                    stopped = true
+                    clearTimeout(timer)
+                    window.jQuery('.autoupdater-close').remove()
+                })
+            }
+
+            if (new URLSearchParams(window.location.search).has('autoupdate')) {
+                window.addEventListener('load', startAutoUpdate)
+            }
+        </script>
+    </body>
+</html>

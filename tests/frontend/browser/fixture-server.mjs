@@ -1,12 +1,17 @@
 import { createReadStream } from 'node:fs'
 import { createServer } from 'node:http'
 import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, URL, URLSearchParams } from 'node:url'
 
 const browserDirectory = dirname(fileURLToPath(import.meta.url))
 const projectRoot = join(browserDirectory, '..', '..', '..')
-const routes = new Map([
+const origin = 'http://127.0.0.1:4173'
+const staticRoutes = new Map([
     ['/', [join(browserDirectory, 'island-props.html'), 'text/html; charset=utf-8']],
+    [
+        '/legacy-datatables',
+        [join(browserDirectory, 'legacy-datatables.html'), 'text/html; charset=utf-8'],
+    ],
     [
         '/resources/frontend/core/data/island-props.js',
         [
@@ -14,19 +19,163 @@ const routes = new Map([
             'text/javascript',
         ],
     ],
+    [
+        '/public/default/js/admin-app.js',
+        [join(projectRoot, 'public', 'default', 'js', 'admin-app.js'), 'text/javascript'],
+    ],
+    [
+        '/public/default/js/modules.js',
+        [join(projectRoot, 'public', 'default', 'js', 'modules.js'), 'text/javascript'],
+    ],
 ])
 
-function respond(request, response) {
-    const route = routes.get(request.url)
+const fixtureState = {
+    requests: [],
+}
 
-    if (!route) {
-        response.writeHead(404).end('Not found')
-        return
-    }
+function sendJson(response, value) {
+    response.writeHead(200, { 'Content-Type': 'application/json' })
+    response.end(JSON.stringify(value))
+}
 
+function serveFile(response, route) {
     const [path, contentType] = route
     response.writeHead(200, { 'Content-Type': contentType })
     createReadStream(path).pipe(response)
 }
 
-createServer(respond).listen(4173, '127.0.0.1')
+async function readBody(request) {
+    request.setEncoding('utf8')
+    let body = ''
+
+    for await (const chunk of request) {
+        body += chunk
+    }
+
+    return body
+}
+
+async function readParameters(request, url) {
+    if (request.method === 'GET') {
+        return Object.fromEntries(url.searchParams)
+    }
+
+    return Object.fromEntries(new URLSearchParams(await readBody(request)))
+}
+
+function recordRequest(kind, request, parameters) {
+    fixtureState.requests.push({
+        kind,
+        method: request.method,
+        parameters,
+        url: request.url,
+    })
+}
+
+function editableCell(id) {
+    return `<a href="#" class="inline-editable" id="inline-edit-${id}" data-name="status" data-value="Draft" data-url="/api/inline-edit" data-type="text" data-pk="${id}" data-mode="inline">Draft</a>`
+}
+
+function fixtureRow(id) {
+    return [
+        `<input type="checkbox" class="adminCheckboxRow" name="_id[]" value="${id}">`,
+        editableCell(id),
+        `2026-09-0${id}`,
+        String(id * 10),
+        id % 2 === 0 ? 'archived' : 'active',
+        '2026-09-01 - 2026-09-06',
+        `<span id="draw-tooltip-${id}" data-toggle="tooltip" title="row ${id}">row ${id}</span><img id="lazy-image-${id}" class="lazyload" data-src="/fixtures/pixel.svg" alt="">`,
+        { add_class: 'fixture-row' },
+    ]
+}
+
+function tableRows(parameters) {
+    const ids = [1, 2, 3, 4, 5, 6]
+    const start = Number(parameters.start || 0)
+    const length = Number(parameters.length || 2)
+    const visible = length === -1 ? ids.slice(start) : ids.slice(start, start + length)
+
+    return visible.map(fixtureRow)
+}
+
+async function handleTable(request, response, url) {
+    const parameters = await readParameters(request, url)
+    recordRequest('datatable', request, parameters)
+    sendJson(response, {
+        draw: Number(parameters.draw || 0),
+        recordsFiltered: 6,
+        recordsTotal: 6,
+        data: tableRows(parameters),
+    })
+}
+
+async function handleMutation(kind, request, response, url) {
+    const parameters = await readParameters(request, url)
+    recordRequest(kind, request, parameters)
+    const result = kind === 'inline-edit' ? { status: true, newValue: 'Server normalized' } : {}
+
+    sendJson(response, result)
+}
+
+function resetFixture(response) {
+    fixtureState.requests.length = 0
+    sendJson(response, { ok: true })
+}
+
+function sendPixel(response) {
+    response.writeHead(200, { 'Content-Type': 'image/svg+xml' })
+    response.end('<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>')
+}
+
+async function respond(request, response) {
+    const url = new URL(request.url, origin)
+    const route = staticRoutes.get(url.pathname)
+
+    if (route) {
+        serveFile(response, route)
+        return
+    }
+
+    if (url.pathname === '/api/datatables') {
+        await handleTable(request, response, url)
+        return
+    }
+
+    const mutations = new Map([
+        ['/api/action', 'action'],
+        ['/api/action-form', 'action-form'],
+        ['/api/inline-edit', 'inline-edit'],
+    ])
+    const mutation = mutations.get(url.pathname)
+
+    if (mutation) {
+        await handleMutation(mutation, request, response, url)
+        return
+    }
+
+    if (url.pathname === '/__fixture/requests') {
+        sendJson(response, fixtureState)
+        return
+    }
+
+    if (url.pathname === '/__fixture/reset') {
+        resetFixture(response)
+        return
+    }
+
+    if (url.pathname === '/fixtures/pixel.svg') {
+        sendPixel(response)
+        return
+    }
+
+    response.writeHead(404).end('Not found')
+}
+
+function handleFailure(response, error) {
+    response.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' })
+    response.end(error instanceof Error ? error.message : String(error))
+}
+
+createServer((request, response) => {
+    respond(request, response).catch((error) => handleFailure(response, error))
+}).listen(4173, '127.0.0.1')
