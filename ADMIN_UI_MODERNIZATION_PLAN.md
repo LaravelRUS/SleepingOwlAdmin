@@ -308,6 +308,7 @@ No-build consumer contract является release-blocking:
 
 - production consumer выполняет только Composer/PHP/Artisan-команды; отсутствие `node`, `npm`, Vite, Mix и Tailwind CLI не ограничивает штатные displays/forms/features/themes;
 - Composer artifact обязательно содержит manifest, precompiled core, все standard feature bundles, обе встроенные темы и их статические ресурсы;
+- Composer artifact обязательно содержит два согласованных заранее собранных профиля assets: `production` и `development`; оба устанавливаются без Node.js/npm;
 - `sleepingowl:install` публикует готовые assets при первой установке, а `sleepingowl:update` атомарно обновляет только package-owned published assets;
 - смена `template` между встроенными темами после публикации не требует новой frontend-сборки;
 - создание section/model/display/form/column/filter через PHP DSL не меняет bundle и не запускает генератор frontend-кода;
@@ -328,13 +329,13 @@ No-build consumer contract является release-blocking:
 - Добавляется `sleepingowl:update --check`: read-only проверка установленного manifest/files для deployment health check; успех и ошибка имеют стабильные exit codes.
 - Release CI проверяет идемпотентный повторный запуск update, recovery после искусственно оборванной staging copy и отсутствие изменений config/application files.
 
-- Первый major поставляется одним Composer package `laravelrus/sleepingowl`: PHP core, обе встроенные темы, standard feature drivers, views, manifest и готовые production assets версионируются совместно.
+- Первый major поставляется одним Composer package `laravelrus/sleepingowl`: PHP core, обе встроенные темы, standard feature drivers, views, manifest и готовые production/development assets версионируются совместно.
 - Исходники разделяются внутри монорепозитория по `core/features/themes`, а build создаёт независимые entries; монорепозиторий не означает один монолитный browser bundle.
 - Composer archive содержит готовые assets обеих встроенных тем. Лишняя тема занимает место только в vendor/public после публикации, но не загружается браузером и не влияет на runtime.
 - В первой итерации встроенные темы не выносятся в отдельные Composer packages: атомарная версия исключает несовместимые сочетания PHP contracts, Blade views и assets и сохраняет одну update-команду.
 - Внешняя custom theme может поставляться отдельным Composer package с service provider, views и готовым manifest fragment; Node.js нужен автору такой темы, но не её потребителю.
 - Выделение официальных тем в отдельные packages допускается только после стабилизации `ThemeInterface` и manifest schema и требует отдельного compatibility решения.
-- Репозиторий и релизные archives содержат готовые versioned production bundles: core, feature chunks и bundles поддерживаемых тем.
+- Репозиторий и релизные archives содержат готовые versioned production/development bundles: core, feature chunks и bundles поддерживаемых тем.
 - Composer-пользователь не получает frontend toolchain как обязательное условие работы админки. `npm` используется только maintainers и авторами распространяемых тем/features.
 - Первичная установка использует существующий `sleepingowl:install`, а обновление готовых assets — существующий `php artisan sleepingowl:update`. Сейчас update-команда выполняет `vendor:publish --tag=assets --force`; её контракт расширяется проверкой manifest/version/theme без запуска frontend toolchain.
 - Asset manifest связывает логические имена (`core`, `table-datatables`, `theme-adminlte`, `theme-tailwind`) с versioned файлами и позволяет корректно обновлять cache/CDN.
@@ -346,6 +347,18 @@ No-build consumer contract является release-blocking:
 - Расширенная разработка новой темы может использовать собственный frontend build, но потребитель готовой theme package устанавливает уже собранные assets и также не запускает Node.js.
 - Пользователь может добавить собственные CSS/JS URLs через документированный asset API без пересборки core. Custom JavaScript взаимодействует только с публичными событиями/registries.
 - Финальная Vue 3 сборка использует заранее скомпилированные component templates и по возможности runtime-only build. Blade передаёт данные, а не новый Vue template; compiler-included build допустим только на промежуточном migration этапе.
+
+### Production и development profiles
+
+- Существующий ключ `sleeping_owl.dev_assets`, получающий значение из `ADMIN_DEV_ASSETS`, остаётся единственным runtime-переключателем: `false` выбирает профиль `production`, `true` — профиль `development`.
+- Оба профиля имеют одинаковые логические manifest entries, набор core/features/themes и публичные API. Переключение профиля не меняет PHP/Blade contract, выбранную тему или список активных features.
+- Production-профиль содержит minified bundles и production runtime-only build Vue 3; Vue warnings/devtools выключены, development Vue и ссылки на development source maps в загружаемые production entries не попадают.
+- Development-профиль содержит читаемые unminified bundles, source maps и отдельный development runtime-only build Vue 3 с warnings, понятными component names/stacks и поддержкой Vue Devtools. Это позволяет отлаживать штатные и пользовательские Vue islands/custom modules.
+- Vue runtime каждого профиля выделяется в один общий versioned chunk, чтобы все штатные islands и зарегистрированные через публичный extension API custom modules использовали одну Vue instance, а не включали собственные копии Vue.
+- Development-профиль не возвращает runtime template compiler, `inline-template`, `@vue/compat`, `window.Vue` или другие Vue 2 globals: различается режим сборки и диагностика, но не архитектура приложения.
+- Manifest хранит оба профиля и checksums всех их файлов. Resolver сначала выбирает профиль по `dev_assets`, затем разрешает те же логические ids (`core`, `theme:<id>`, `feature:<id>`, `feature:<id>:theme:<id>`) только внутри выбранного профиля; смешивание prod/dev chunks является ошибкой.
+- `sleepingowl:install` и `sleepingowl:update` публикуют и валидируют оба заранее собранных профиля атомарно. Для переключения `ADMIN_DEV_ASSETS` пользователю не требуется повторная frontend-сборка; после изменения env достаточно обычного сброса Laravel config cache согласно deployment-процессу.
+- Development assets предназначены для локальной/отладочной среды. Документация явно предупреждает не включать `ADMIN_DEV_ASSETS=true` в production из-за размера bundles, source maps и расширенной диагностики.
 
 ### DOM и события
 
@@ -453,6 +466,7 @@ No-build consumer contract является release-blocking:
 - [x] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
 - [x] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
 - [x] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
+- [x] Зафиксировать два готовых asset profiles: production и development Vue 3, переключаемые существующим `ADMIN_DEV_ASSETS` без Node.js у пользователя.
 - [x] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
 - [x] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
 - [x] Выбрать replacements для Select2, date/time controls и lightbox.
@@ -479,6 +493,7 @@ No-build consumer contract является release-blocking:
 - [ ] Добавить render snapshots/contract assertions для layout, navigation, forms, displays, validation и messages текущей темы.
 - [ ] Добавить tests, загружающие пакет с прежним полным опубликованным конфигом и с конфигом, в котором отсутствуют новые keys.
 - [ ] Добавить CI-команды для PHP и frontend тестов.
+- [ ] Добавить contract tests выбора production/development manifest entries через `sleeping_owl.dev_assets`, включая запрет смешивания профилей и попадания development Vue в production page.
 
 Критерий завершения: текущая реализация проходит тесты, которые способны обнаружить основные регрессии миграции.
 
@@ -504,6 +519,7 @@ No-build consumer contract является release-blocking:
 - [ ] Перевести затронутые plain CSS sources в SCSS partials; generated vendor/Tailwind CSS не редактировать вручную.
 - [ ] Ввести публичные `:root` custom properties с префиксом `--soa-*` для runtime/no-build настройки цветов и основных theme values.
 - [ ] Добавить versioned asset manifest и PHP resolver для precompiled core/theme/feature bundles.
+- [ ] Реализовать в manifest и resolver два полных профиля с одинаковыми logical ids: `production` и `development`, выбираемые существующим `sleeping_owl.dev_assets`.
 - [ ] Расширить существующие `sleepingowl:install` и `sleepingowl:update`: публиковать выбранные precompiled theme/feature assets, проверять manifest/version, не вызывать npm и не компилировать frontend.
 - [ ] Сохранить обратную совместимость `sleepingowl:update` как минимум на уровне неинтерактивного forced asset publish, пригодного для deployment scripts.
 - [ ] Переписать внутреннюю реализацию `Admin.Events` на native events, сохранив текущий публичный интерфейс.
@@ -533,6 +549,8 @@ No-build consumer contract является release-blocking:
 - [ ] Проверить Blade escaping, `@{{ }}`, JSON props, CSP nonce и отсутствие исполнения пользовательского HTML как Vue template.
 - [ ] Удалить `@vue/compat`, compat flags, Vue 2 packages и глобальный `Vue` до завершения этапа.
 - [ ] Переключить финальную сборку на runtime-only Vue 3 после переноса всех runtime templates в заранее компилируемые components.
+- [ ] Собрать Vue 3 в двух отдельных runtime-only chunks: production/minified без dev diagnostics и development/unminified с warnings, devtools и source maps.
+- [ ] Предоставить публичный extension API, через который custom modules регистрируют islands и используют единственную Vue runtime instance выбранного профиля.
 
 Критерий завершения: production bundle использует Vue 3 без compatibility build и `inline-template`; server-rendered Blade безопасно передаёт данные изолированным islands.
 
@@ -626,7 +644,8 @@ No-build consumer contract является release-blocking:
 - [ ] Обновить PHPDoc/facades/interfaces для актуального API.
 - [ ] Добавить CHANGELOG с перечнем breaking changes.
 - [ ] Обновить опубликованные assets через `npm run production`.
-- [ ] Проверить, что `mix-manifest.json` соответствует собранным файлам.
+- [ ] Собрать и опубликовать development profile через `npm run development`, включая development Vue runtime и source maps.
+- [ ] Проверить, что versioned asset manifest содержит согласованные production/development entries, файлы и checksums.
 - [ ] Выполнить полный PHP/frontend/browser test suite.
 - [ ] Выполнить установку зависимостей и production build в чистой среде по lock-файлу.
 - [ ] Отдельно установить release artifact в чистое Laravel-приложение без Node.js/npm и проверить AdminLTE и Tailwind themes на готовых assets.
@@ -646,6 +665,7 @@ npm run lint
 npm test
 npm run test:e2e
 npm run production
+npm run development
 npm ls jquery
 php artisan sleepingowl:update
 ```
@@ -717,6 +737,17 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] file/image uploads, multiselect, sorting и validation корректно обновляют reactive state;
 - [ ] несколько одинаковых islands на странице не разделяют состояние.
 
+### Production/development assets
+
+- [ ] `ADMIN_DEV_ASSETS=false` загружает только production entries, minified код и production runtime-only Vue 3;
+- [ ] `ADMIN_DEV_ASSETS=true` загружает только development entries, unminified код, source maps и development runtime-only Vue 3;
+- [ ] Vue warnings, component stacks и Vue Devtools доступны для штатных и пользовательских islands в development profile;
+- [ ] production HTML/manifest resolution не ссылается на development Vue, development chunks или source maps;
+- [ ] logical ids и runtime behavior совпадают между профилями; отличаются только оптимизация и diagnostics;
+- [ ] все islands/custom modules страницы используют одну Vue runtime instance выбранного профиля;
+- [ ] изменение `ADMIN_DEV_ASSETS` не требует Node.js, npm или пересборки assets;
+- [ ] `sleepingowl:update --check` валидирует наличие и checksums обоих профилей.
+
 ### Темы
 
 - [ ] core работает без подключённого Bootstrap/AdminLTE/Tailwind CSS;
@@ -741,6 +772,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] пользовательский CSS или JS подключается отдельным asset, не пересобирая core/theme bundles;
 - [ ] отсутствующие/устаревшие published assets дают понятную диагностическую ошибку с командой обновления;
 - [ ] версии PHP package, asset manifest и published bundles согласованы;
+- [ ] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
 - [ ] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.
 
 ### Config compatibility
@@ -793,6 +825,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - core не импортирует Bootstrap, AdminLTE, Tailwind, DataTables или Vue и имеет отдельный минимальный bundle;
 - конечный пользователь использует все стандартные функции и выбирает готовую тему без Node.js и frontend-сборки;
 - release содержит согласованные versioned core/theme/feature bundles и asset manifest;
+- release содержит готовые production/development profiles; `ADMIN_DEV_ASSETS` выбирает их без frontend build, а development profile использует диагностическую сборку Vue 3;
 - большинство существующих config keys сохранено, а старый опубликованный config является обязательным compatibility fixture;
 - PHP core не генерирует framework-specific CSS classes;
 - AdminLTE, Tailwind и custom theme выбираются через стабильный публичный contract;
@@ -833,6 +866,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / update command | Зафиксирован staging/validation/manifest-last протокол, `--check`, fail-fast runtime diagnostic и запрет изменения опубликованного config/application files | текущий commit |
 | 2026-09-06 | Этап 0 / Vue strategy | Выбран короткий `@vue/compat` этап с миграцией по одному island и обязательным удалением compat до release; baseline уточнён до 9 `inline-template` и 7 global components | текущий commit |
 | 2026-09-06 | Этап 0 / Vue props | Зафиксирован typed `data-*` contract для скаляров и безопасный `application/json` payload через `Js::encode()` для сложных props; выполнение server data как template/code запрещено | текущий commit |
+| 2026-09-06 | Этап 0 / asset profiles | Зафиксированы два готовых профиля: production и development; существующий `ADMIN_DEV_ASSETS` выбирает профиль целиком, development использует отдельный Vue 3 dev runtime с warnings/devtools/source maps, Node.js пользователю не нужен | текущий commit |
 | 2026-09-06 | Этап 0 / Sass structure | Определены независимые Sass entries и локальные `_variables.scss`/`_colors.scss` для core/features/themes; first-party modules переходят на `@use`/`@forward`, Tailwind output остаётся generated exception | текущий commit |
 | 2026-09-06 | Этап 0 / colors | Color literals ограничены `_colors.scss` и узкими vendor/generated/brand exceptions; dark mode меняет только `--soa-*` в root selector, sidebar config проходит validation | текущий commit |
 | 2026-09-06 | Этап 0 / plugin replacements | Изначально предложены Tom Select, Air Datepicker и GLightbox; выбор select пересмотрен после обсуждения | `359de337` |
