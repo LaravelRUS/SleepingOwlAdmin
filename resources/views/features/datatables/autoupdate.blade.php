@@ -1,37 +1,29 @@
 @php
-  $autoupdate_enable = config('sleeping_owl.dt_autoupdate');
-
-  $autoupdate_timer0 = (int) config('sleeping_owl.dt_autoupdate_interval');
-  !$autoupdate_timer0 >= 1 ? $autoupdate_timer0 = 5 : '';
-  $autoupdate_timer = $autoupdate_timer0 * 1000 * 60;
-
-  $autoupdate_class = config('sleeping_owl.dt_autoupdate_class');
-  $autoupdate_class ? $autoupdate_class = '.datatables.' . $autoupdate_class : $autoupdate_class = '.datatables';
-
-  $autoupdate_color = config('sleeping_owl.dt_autoupdate_color');
-  !$autoupdate_color ? $autoupdate_color = '#dc3545': '';
+  $autoupdate = app(\SleepingOwl\Admin\Configuration\DataTablesAutoUpdateConfiguration::class);
 @endphp
 
-@if ($autoupdate_enable)
+@if ($autoupdate->enabled())
 
   <script type="text/javascript">
     $(window).on('load', () => {
       if ($('table').hasClass('datatables')) {
 
+      const autoupdateSelector = {{ \Illuminate\Support\Js::from($autoupdate->tableSelector()) }};
+
       var bar = new ProgressBar.Line('.datatables', {
         strokeWidth: 2,
-        duration: {{ $autoupdate_timer }},
-        color: '{{ $autoupdate_color }}',
+        duration: {{ $autoupdate->intervalMilliseconds() }},
+        color: {{ \Illuminate\Support\Js::from($autoupdate->color()) }},
         svgStyle: null
       });
 
-      if(document.querySelectorAll("{{ $autoupdate_class }}").length) {
-        $('{{ $autoupdate_class }}').addClass('autoupdater');
-        $('{{ $autoupdate_class }}').append('<span class="autoupdater-close">&times;</span>');
+      if(document.querySelectorAll(autoupdateSelector).length) {
+        $(autoupdateSelector).addClass('autoupdater');
+        $(autoupdateSelector).append('<span class="autoupdater-close">&times;</span>');
 
         bar.animate(1.0);
-        progressbar = setTimeout(autoupdate, {{ $autoupdate_timer }})
-        console.log('Autoupdate dataTables: ' + {{ $autoupdate_timer0 }} + ' min.');
+        progressbar = setTimeout(autoupdate, {{ $autoupdate->intervalMilliseconds() }})
+        console.log('Autoupdate dataTables: ' + {{ $autoupdate->intervalMinutes() }} + ' min.');
         stop = 0;
 
         function autoupdate() {
@@ -43,8 +35,8 @@
           }
 
           bar.animate(1.0);
-          progressbar = setTimeout(autoupdate, {{ $autoupdate_timer }});
-          document.querySelectorAll("{{ $autoupdate_class }}").forEach((table) => {
+          progressbar = setTimeout(autoupdate, {{ $autoupdate->intervalMilliseconds() }});
+          document.querySelectorAll(autoupdateSelector).forEach((table) => {
             Admin.Tables.reload(table);
           });
         }

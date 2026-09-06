@@ -310,6 +310,41 @@ test('DataTables state restores ordering and pagination after reload', async ({
     expect(parameters['order[0][dir]']).toBe('desc')
 })
 
+test('state config disables DataTables and custom filter persistence together', async ({
+    page,
+}) => {
+    await openFixture(page, '?state_datatables=false')
+    await page.locator('#text-filter').fill('Not persisted')
+    await page.locator('#text-filter').dispatchEvent('change')
+    await executeFilters(page)
+
+    const state = await page.evaluate(() => {
+        const table = globalThis.Admin.Tables.get(
+            globalThis.document.querySelector('#legacy-table'),
+        ).engineInstance
+
+        return {
+            dataTables: globalThis.localStorage.getItem(
+                'DataTables_legacy-table_/legacy-datatables',
+            ),
+            filters: globalThis.localStorage.getItem(
+                'Filters_/legacy-datatables::legacy-table-fixture',
+            ),
+            stateSave: table.settings()[0].oFeatures.bStateSave,
+        }
+    })
+
+    expect(state).toEqual({ dataTables: null, filters: null, stateSave: null })
+})
+
+test('highlight config marks only the hovered DataTables column', async ({ page }) => {
+    await openFixture(page, '?highlight=true')
+    await page.locator('#legacy-table tbody tr').first().locator('td').nth(1).hover()
+
+    await expect(page.locator('#legacy-table tbody td:nth-child(2).highlight')).toHaveCount(2)
+    await expect(page.locator('#legacy-table tbody td.highlight')).toHaveCount(2)
+})
+
 test('bulk and custom actions submit checked rows and fire lifecycle events', async ({
     page,
     request,

@@ -11,7 +11,7 @@ Machine-readable source: `docs/modernization/config-migration-matrix.json`.
 | `unchanged` | backend/core keys | Сохраняются имя, тип default и backend behavior. `bootstrapDirectory` по-прежнему означает каталог `app/Admin`. |
 | `unchanged` | aliases, кроме assets/meta | Классы из пользовательского config регистрируются напрямую; тема их не преобразует. |
 | `unchanged` | `wysiwyg.*`, `wysiwyg_cdn.*` | Сохраняются до отдельного editor audit, включая сейчас неиспользуемые CDN settings. |
-| `same key/new implementation` | DataTables/state/auto-update | PHP/config API остаётся, реализация переезжает на DataTables 2 и native modules. Raw vendor options получают отдельную migration table. |
+| `same key/new implementation` | DataTables/state/auto-update | PHP/config API остаётся, реализация переезжает на DataTables 2 и native modules. Raw vendor options описаны в [`datatables2-options.md`](datatables2-options.md). |
 | `same key/new implementation` | `dev_assets` | Существующий `ADMIN_DEV_ASSETS` выбирает готовый production/development manifest profile целиком. |
 | `same key/new implementation` | date/time, uploads, lazy images, scroll helpers | Пользовательский contract сохраняется, jQuery/Vue 2 integrations заменяются feature drivers/Vue 3 islands/native APIs. |
 | `same key/new implementation` | `template` | Тот же ключ выбирает AdminLTE, Tailwind или custom `ThemeInterface`; legacy `TemplateDefault` получает adapter. |

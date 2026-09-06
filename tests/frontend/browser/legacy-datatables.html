@@ -14,6 +14,9 @@
             }
         </style>
         <script>
+            const fixtureConfig = new URLSearchParams(window.location.search)
+            const stateDatatables = fixtureConfig.get('state_datatables') !== 'false'
+
             window.GlobalConfig = {
                 debug: true,
                 env: 'testing',
@@ -26,10 +29,10 @@
                 max_file_size: 1,
                 datetime_format: 'DD.MM.YYYY HH:mm',
                 date_format: 'DD.MM.YYYY',
-                state_datatables: true,
-                datatables_highlight: false,
+                state_datatables: stateDatatables,
+                datatables_highlight: fixtureConfig.get('highlight') === 'true',
                 state_tabs: false,
-                state_filters: true,
+                state_filters: stateDatatables && fixtureConfig.get('state_filters') !== 'false',
                 wysiwyg: {},
                 lang: {
                     button: { cancel: 'Cancel', yes: 'Yes' },

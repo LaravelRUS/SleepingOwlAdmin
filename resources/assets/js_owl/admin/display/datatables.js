@@ -32,8 +32,10 @@ const {
     readTableDefinition,
 } = require('../../../../frontend/features/table/options/table-options')
 const {
+    applyTableStateOptions,
+} = require('../../../../frontend/features/table/options/state-options')
+const {
     clearFilterState,
-    clearSavedTableSearch,
     filterStateKey,
     loadFilterState,
     migrateLegacyFilterState,
@@ -122,7 +124,10 @@ function buildOptions(element, definition, stateFilters) {
             root: document,
             url: definition.url,
         })
-        applyStateOptions(options, stateFilters)
+        applyTableStateOptions(options, {
+            stateDatatables: Boolean(Admin.Config.get('state_datatables')),
+            stateFilters,
+        })
     }
 
     options.drawCallback = createDrawHook({
@@ -134,16 +139,6 @@ function buildOptions(element, definition, stateFilters) {
     options.createdRow = applyCreatedRowClass
 
     return options
-}
-
-function applyStateOptions(options, stateFilters) {
-    if (Admin.Config.get('state_datatables')) {
-        options.stateSave = true
-    }
-
-    if (!stateFilters) {
-        options.stateSaveParams = clearSavedTableSearch
-    }
 }
 
 function bindColumnFilters(id, table, serverSide) {

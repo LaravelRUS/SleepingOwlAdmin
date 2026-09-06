@@ -70,7 +70,7 @@
             },
             "status": "same key/new implementation",
             "owner": "feature:tables",
-            "contract": "Keep the PHP/config surface while native modules and the DataTables 2 driver replace the legacy implementation. Incompatible raw DataTables 1 options require an option-level migration entry."
+            "contract": "Keep the PHP/config surface while native modules and the DataTables 2 driver replace the legacy implementation. Incompatible raw DataTables 1 options are listed in docs/modernization/datatables2-options.md."
         },
         {
             "selector": {

@@ -64,12 +64,14 @@ it('mounts live tables through the DataTables 2 constructor boundary', () => {
 
 it('uses current DataTables 2 option names in first-party runtime code', () => {
     const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+    const stateOptions = readSource('resources/frontend/features/table/options/state-options.js')
     const tableOptions = readSource('resources/frontend/features/table/options/table-options.js')
 
     expect(orchestration).toContain('options.drawCallback')
-    expect(orchestration).toContain('options.stateSave')
+    expect(orchestration).toContain('applyTableStateOptions')
+    expect(stateOptions).toContain('options.stateSave')
     expect(tableOptions).toContain('layout: tableLayout(definition)')
-    expect(`${orchestration}\n${tableOptions}`).not.toMatch(
+    expect(`${orchestration}\n${stateOptions}\n${tableOptions}`).not.toMatch(
         /\b(?:sDom|bStateSave|fnDrawCallback)\b/,
     )
 })

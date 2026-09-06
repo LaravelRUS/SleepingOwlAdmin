@@ -4515,15 +4515,16 @@ var _require8 = __webpack_require__(/*! ../../../../frontend/features/table/life
 var _require9 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
   applyServerOptions = _require9.applyServerOptions,
   readTableDefinition = _require9.readTableDefinition;
-var _require0 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
-  clearFilterState = _require0.clearFilterState,
-  clearSavedTableSearch = _require0.clearSavedTableSearch,
-  filterStateKey = _require0.filterStateKey,
-  loadFilterState = _require0.loadFilterState,
-  migrateLegacyFilterState = _require0.migrateLegacyFilterState,
-  saveFilterState = _require0.saveFilterState;
-var _require1 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
-  createTableAjax = _require1.createTableAjax;
+var _require0 = __webpack_require__(/*! ../../../../frontend/features/table/options/state-options */ "./resources/frontend/features/table/options/state-options.js"),
+  applyTableStateOptions = _require0.applyTableStateOptions;
+var _require1 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
+  clearFilterState = _require1.clearFilterState,
+  filterStateKey = _require1.filterStateKey,
+  loadFilterState = _require1.loadFilterState,
+  migrateLegacyFilterState = _require1.migrateLegacyFilterState,
+  saveFilterState = _require1.saveFilterState;
+var _require10 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
+  createTableAjax = _require10.createTableAjax;
 globalThis.checkNumberRange = isNumberInRange;
 globalThis.checkDateRange = isDateInRange;
 globalThis.columnFilters = createTableFilterDrivers(dataTables2Runtime(), createLegacyFilterEventBridge());
@@ -4591,7 +4592,10 @@ function buildOptions(element, definition, stateFilters) {
       root: document,
       url: definition.url
     });
-    applyStateOptions(options, stateFilters);
+    applyTableStateOptions(options, {
+      stateDatatables: Boolean(Admin.Config.get('state_datatables')),
+      stateFilters: stateFilters
+    });
   }
   options.drawCallback = createDrawHook({
     events: Admin.Events,
@@ -4607,14 +4611,6 @@ function buildOptions(element, definition, stateFilters) {
   });
   options.createdRow = applyCreatedRowClass;
   return options;
-}
-function applyStateOptions(options, stateFilters) {
-  if (Admin.Config.get('state_datatables')) {
-    options.stateSave = true;
-  }
-  if (!stateFilters) {
-    options.stateSaveParams = clearSavedTableSearch;
-  }
 }
 function bindColumnFilters(id, table, serverSide) {
   forEachColumnFilter(document, id, function (filter, index, type) {
@@ -9327,13 +9323,23 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var LEGACY_OPTION_ALIASES = Object.freeze([['sDom', 'dom'], ['bStateSave', 'stateSave'], ['fnDrawCallback', 'drawCallback']]);
+var REMOVED_DATATABLES1_OPTIONS = Object.freeze([['asStripeClasses', 'Move row striping to the active theme CSS.'], ['fnServerData', 'Use an ajax function.'], ['fnServerParams', 'Use ajax.data.'], ['sAjaxSource', 'Use ajax.'], ['sAjaxDataProp', 'Use ajax.dataSrc.']]);
 function normalizeDataTables2Options(options) {
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    _ref$warn = _ref.warn,
+    warn = _ref$warn === void 0 ? warnRemovedOption : _ref$warn;
   var normalized = _objectSpread({}, options);
-  LEGACY_OPTION_ALIASES.forEach(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-      legacyName = _ref2[0],
-      currentName = _ref2[1];
+  LEGACY_OPTION_ALIASES.forEach(function (_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 2),
+      legacyName = _ref3[0],
+      currentName = _ref3[1];
     moveOption(normalized, legacyName, currentName);
+  });
+  REMOVED_DATATABLES1_OPTIONS.forEach(function (_ref4) {
+    var _ref5 = _slicedToArray(_ref4, 2),
+      legacyName = _ref5[0],
+      migration = _ref5[1];
+    removeUnsupportedOption(normalized, legacyName, migration, warn);
   });
   return normalized;
 }
@@ -9342,6 +9348,45 @@ function moveOption(options, legacyName, currentName) {
     options[currentName] = options[legacyName];
   }
   delete options[legacyName];
+}
+function removeUnsupportedOption(options, legacyName, migration, warn) {
+  if (!Object.hasOwn(options, legacyName)) {
+    return;
+  }
+  warn(formatRemovedOptionWarning(legacyName, migration));
+  delete options[legacyName];
+}
+function formatRemovedOptionWarning(legacyName, migration) {
+  return "[SleepingOwl Admin] DataTables 1 option \"".concat(legacyName, "\" ") + "is not supported by DataTables 2. ".concat(migration);
+}
+function warnRemovedOption(message) {
+  var _globalThis$console;
+  (_globalThis$console = globalThis.console) === null || _globalThis$console === void 0 || _globalThis$console.warn(message);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/options/state-options.js":
+/*!********************************************************************!*\
+  !*** ./resources/frontend/features/table/options/state-options.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "applyTableStateOptions": () => (/* binding */ applyTableStateOptions)
+/* harmony export */ });
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+
+function applyTableStateOptions(options, config) {
+  if (config.stateDatatables) {
+    options.stateSave = true;
+  }
+  if (!config.stateFilters) {
+    options.stateSaveParams = _state_filter_state_js__WEBPACK_IMPORTED_MODULE_0__.clearSavedTableSearch;
+  }
+  return options;
 }
 
 /***/ }),
