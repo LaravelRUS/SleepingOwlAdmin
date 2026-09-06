@@ -1,4 +1,5 @@
 import { parseJsonProps } from '../../core/data/island-props'
+import { createVueComponentCatalog, VueComponentCatalog } from './component-catalog'
 
 export const vueAppSelector = '[data-soa-vue-app]'
 
@@ -6,8 +7,7 @@ export class VueAppRegistry {
     constructor(createApp, components = {}) {
         assertFunction(createApp, 'createApp')
         this.createApp = createApp
-        this.components = componentEntries(components)
-        this.componentMap = new Map(this.components)
+        this.components = resolveCatalog(components)
         this.apps = new Map()
     }
 
@@ -19,10 +19,10 @@ export class VueAppRegistry {
         assertElement(element)
         if (this.apps.has(element)) return this.apps.get(element)
 
-        const root = resolveRootComponent(element, this.componentMap)
+        const root = resolveRootComponent(element, this.components)
         const app = this.createApp(root.component, root.props)
         assertApp(app)
-        registerComponents(app, this.components)
+        registerComponents(app, this.components.entries())
         this.apps.set(element, app)
 
         try {
@@ -67,6 +67,12 @@ export class VueAppRegistry {
 
     get(element) {
         return this.apps.get(element)
+    }
+
+    canMount(element) {
+        const name = element.dataset?.soaVueComponent
+
+        return !name || this.components.has(name)
     }
 }
 
@@ -114,22 +120,10 @@ function assertJsonPropsScript(script, propsId) {
     throw new TypeError(`Vue app props [${propsId}] must reference an application/json script.`)
 }
 
-function componentEntries(components) {
-    if (!components || typeof components !== 'object' || Array.isArray(components)) {
-        throw new TypeError('Vue app components must be an object.')
-    }
+function resolveCatalog(components) {
+    if (components instanceof VueComponentCatalog) return components
 
-    return Object.entries(components).map(validateComponent)
-}
-
-function validateComponent([name, component]) {
-    const validDefinition = component !== null && ['function', 'object'].includes(typeof component)
-
-    if (!name.trim() || !validDefinition) {
-        throw new TypeError('Vue app component entries require a name and definition.')
-    }
-
-    return [name, component]
+    return createVueComponentCatalog(components)
 }
 
 function topLevelVueRoots(root) {

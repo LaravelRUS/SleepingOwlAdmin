@@ -8,8 +8,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/admin-core.js",
-                            "version": "429960d49c4d7552355c39d8d120a273",
-                            "checksum": "sha256:2ec35329a0bfd6d11957b6445a8d0cb9a9c3e77ca452684099ecd0749e4143a2"
+                            "version": "b983a01323cd440b5502c8123c18a184",
+                            "checksum": "sha256:669e46816b454105166d0e018d6a45c660f6ac0601c75ebd600f739a12412d06"
                         }
                     ],
                     "styles": [
@@ -92,8 +92,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/admin-core.js",
-                            "version": "cb689c56067843f6a9a06ac0579a15c5",
-                            "checksum": "sha256:b7aa3491c2d8efa16f1079d41873a81ccc46056af30d63d165a7598d9504b347"
+                            "version": "e0e85c92e7fe99122834235fcd990f87",
+                            "checksum": "sha256:82675c3b128a276846bfe0b9b0d9151fcaf5097ffe39c9ca2743ff0c64477fd6"
                         }
                     ],
                     "styles": [
@@ -171,5 +171,5 @@
             }
         }
     },
-    "build_id": "sha256:c628d528f65d8ddf0dd67c4decde7de75c4d09cde151a4f502f9ed728df2a475"
+    "build_id": "sha256:29f8ce0a0957d1372adc009d0482cbefabc561bc6935712b7158a07a10a71280"
 }

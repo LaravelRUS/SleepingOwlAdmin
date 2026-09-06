@@ -4,6 +4,7 @@ import {
     createVueAppRegistry,
     vueAppSelector,
 } from '../../../../resources/frontend/legacy/vue/app-registry.js'
+import { createVueComponentCatalog } from '../../../../resources/frontend/legacy/vue/component-catalog.js'
 
 function createElement(id, marked = false, children = []) {
     const element = {
@@ -150,6 +151,23 @@ it('rejects unknown precompiled components and invalid props before creating an 
     expect(() => registry.mount(unknown)).toThrow('Unknown Vue app component [missing]')
     expect(() => registry.mount(invalid)).toThrow('props JSON must contain an object')
     expect(factory).not.toHaveBeenCalled()
+})
+
+it('observes components registered after the app registry is created', () => {
+    const component = { name: 'LateComponent' }
+    const host = createElement('late', true)
+    const factory = fakeAppFactory([])
+    const catalog = createVueComponentCatalog()
+    const registry = createVueAppRegistry(factory, catalog)
+    host.dataset = { soaVueComponent: 'late-component' }
+
+    expect(registry.canMount(host)).toBe(false)
+    expect(() => registry.mount(host)).toThrow('Unknown Vue app component [late-component]')
+
+    catalog.register('late-component', component)
+    expect(registry.canMount(host)).toBe(true)
+    registry.mount(host)
+    expect(factory).toHaveBeenCalledWith(component, {})
 })
 
 it('unmounts a subtree once and allows a later remount', () => {

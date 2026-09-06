@@ -2,6 +2,7 @@ import { expect, it, vi } from 'vitest'
 
 import {
     ComponentLifecycle,
+    componentMountSkipped,
     createComponentLifecycle,
 } from '../../../../resources/frontend/core/lifecycle/component-lifecycle.js'
 
@@ -50,6 +51,47 @@ it('mounts multiple registered component types on one element in registration or
     expect(() => lifecycle.register({ name: 'first', selector: '.other', mount: vi.fn() })).toThrow(
         'already registered',
     )
+})
+
+it('leaves skipped mounts untracked so a later scan can retry them', () => {
+    const element = createElement('pending', ['.widget'])
+    const mount = vi.fn(() => componentMountSkipped)
+    const lifecycle = createComponentLifecycle()
+    lifecycle.register({ name: 'widget', selector: '.widget', mount })
+
+    expect(lifecycle.scan(element)).toBe(0)
+    expect(lifecycle.get(element, 'widget')).toBeUndefined()
+
+    mount.mockReturnValue({ ready: true })
+    expect(lifecycle.scan(element, 'widget')).toBe(1)
+    expect(lifecycle.get(element, 'widget')).toEqual({ ready: true })
+})
+
+it('shares the skipped-mount sentinel across separately compiled bundles', () => {
+    expect(componentMountSkipped).toBe(Symbol.for('sleepingowl.component-mount-skipped'))
+})
+
+it('scans and destroys one named definition without touching its peers', () => {
+    const element = createElement('shared', ['.first', '.second'])
+    const destroyed = []
+    const lifecycle = createComponentLifecycle()
+    lifecycle.register({
+        name: 'first',
+        selector: '.first',
+        mount: () => () => destroyed.push('first'),
+    })
+    lifecycle.register({
+        name: 'second',
+        selector: '.second',
+        mount: () => () => destroyed.push('second'),
+    })
+
+    expect(lifecycle.scan(element, 'first')).toBe(1)
+    expect(lifecycle.get(element, 'second')).toBeUndefined()
+    expect(lifecycle.scan(element)).toBe(1)
+    expect(lifecycle.destroy(element, 'first')).toBe(1)
+    expect(destroyed).toEqual(['first'])
+    expect(lifecycle.get(element, 'second')).toBeDefined()
 })
 
 it('destroys a subtree in reverse mount order and allows remounting', () => {

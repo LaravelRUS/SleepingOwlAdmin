@@ -108,15 +108,15 @@ describe('bounded legacy Vue apps', () => {
         expect(readSource(path)).toContain('data-soa-vue-app')
     })
 
-    it('does not mount the page-wide #vueApp element', () => {
+    it('mounts bounded hosts through the tolerant shared lifecycle', () => {
         const initializer = readSource('resources/assets/js_owl/vue_init.js')
 
         expect(initializer).toContain('createVueAppRegistry')
         expect(initializer).toContain('registerVueAppLifecycle')
-        expect(initializer.indexOf('vueApps.mountAll(document)')).toBeLessThan(
+        expect(
             initializer.indexOf('registerVueAppLifecycle(Admin.Components, vueApps)'),
-        )
-        expect(initializer).not.toMatch(/new Vue|#vueApp/)
+        ).toBeLessThan(initializer.indexOf('Admin.Vue.scan(document)'))
+        expect(initializer).not.toMatch(/vueApps\.mountAll|new Vue|#vueApp/)
     })
 
     it('provides translations per app without a global Vue prototype plugin', () => {
@@ -140,6 +140,19 @@ describe('bounded legacy Vue apps', () => {
         )
         expect(sources).not.toMatch(/Vue\.(?:component|extend)/)
     })
+})
+
+it('publishes a namespaced extension API and a shared runtime external stub', () => {
+    const initializer = readSource('resources/assets/js_owl/vue_init.js')
+    const extension = readSource('resources/frontend/legacy/vue/extension-api.js')
+    const stub = readSource('docs/modernization/examples/custom-vue-island/webpack.mix.js')
+
+    expect(initializer).toContain("import * as VueRuntime from 'vue'")
+    expect(initializer).toContain('Admin.Vue = createVueExtensionApi')
+    expect(extension).toContain('register(name, component)')
+    expect(extension).toContain('plugins.use(plugin, ...pluginOptions)')
+    expect(stub).toContain("vue: ['Admin', 'Vue', 'runtime']")
+    expect(initializer).not.toMatch(/window\.Vue|globalThis\.Vue/)
 })
 
 describe('precompiled Vue islands', () => {

@@ -1,6 +1,9 @@
-import { createApp } from 'vue'
+import * as VueRuntime from 'vue'
 
+import { createVueAppPlugins } from '../../frontend/legacy/vue/app-plugins'
 import { createVueAppRegistry } from '../../frontend/legacy/vue/app-registry'
+import { createVueComponentCatalog } from '../../frontend/legacy/vue/component-catalog'
+import { createVueExtensionApi } from '../../frontend/legacy/vue/extension-api'
 import { registerVueAppLifecycle } from '../../frontend/legacy/vue/app-lifecycle'
 import {
     createVueTranslation,
@@ -9,18 +12,26 @@ import {
 import { vueComponents } from './admin/vue-components'
 
 const translation = createVueTranslation(trans)
+const components = createVueComponentCatalog(vueComponents)
+const plugins = createVueAppPlugins()
 
 function createAdminVueApp(component, props) {
-    const app = createApp(component, props)
+    const app = VueRuntime.createApp(component, props)
 
-    return installVueTranslation(app, translation)
+    installVueTranslation(app, translation)
+
+    return plugins.install(app)
 }
 
-const vueApps = createVueAppRegistry(
-    createAdminVueApp,
-    vueComponents,
-)
+const vueApps = createVueAppRegistry(createAdminVueApp, components)
+registerVueAppLifecycle(Admin.Components, vueApps)
 
 Admin.VueApps = vueApps
-vueApps.mountAll(document)
-registerVueAppLifecycle(Admin.Components, vueApps)
+Admin.Vue = createVueExtensionApi({
+    catalog: components,
+    lifecycle: Admin.Components,
+    plugins,
+    root: document,
+    runtime: VueRuntime,
+})
+Admin.Vue.scan(document)

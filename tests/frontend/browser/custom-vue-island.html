@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="browser-fixture-token" />
+        <title>Custom Vue island browser fixture</title>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'custom-vue-island',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 2,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: { button: {}, message: {}, select: {}, table: {} },
+            }
+        </script>
+    </head>
+    <body>
+        <section
+            id="package-island"
+            data-soa-vue-app
+            data-soa-vue-component="env_editor"
+            data-soa-vue-props='{"action":"#","canAdd":false,"canDelete":false,"csrfToken":"fixture-token","data":[],"errorText":"Denied","keysReadonly":false,"labels":{"add":"Add","key":"Key","save":"Save","value":"Value"}}'
+        ></section>
+        <section
+            id="custom-island-first"
+            data-soa-vue-app
+            data-soa-vue-component="custom-counter"
+            data-soa-vue-props='{"start":2}'
+        ></section>
+        <section
+            id="custom-island-second"
+            data-soa-vue-app
+            data-soa-vue-component="custom-counter"
+            data-soa-vue-props='{"start":5}'
+        ></section>
+
+        <script src="/public/default/js/admin-app-dev.js"></script>
+        <script src="/public/default/js/vue-dev.js"></script>
+        <script src="/public/default/js/modules.js"></script>
+        <script src="/fixtures/custom-vue-island.js"></script>
+    </body>
+</html>

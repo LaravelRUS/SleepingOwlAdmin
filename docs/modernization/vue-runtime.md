@@ -9,9 +9,9 @@ from dependencies and published runtime bundles. New code must use Vue 3 APIs
 and isolated islands; it must not add `inline-template`, `new Vue`, global
 component registration, prototype plugins or runtime template strings.
 
-`Admin.VueApps` remains an internal lifecycle registry while the public custom
-island registration API is designed. It is not permission to expose Vue as a
-browser global.
+`Admin.VueApps` remains an internal lifecycle registry. Custom projects use the
+small [`Admin.Vue` extension API](custom-vue-islands.md); this does not expose
+Vue as a browser global.
 
 ## Runtime and dependency contract
 
@@ -41,36 +41,34 @@ browser global.
 
 The page-wide `new Vue({ el: '#vueApp' })` root has been removed. The Vue entry
 creates one small native app for every top-level `[data-soa-vue-app]` host and
-exposes their temporary lifecycle as `Admin.VueApps`:
+keeps their internal migration registry as `Admin.VueApps`:
 
 - `mount(element)` and `mountAll(root)` are idempotent;
 - `get(element)` and `size` make ownership observable without reading Vue
   internals;
 - `unmount(element)` and `unmountAll(root)` release the app before its host is
   removed;
-- the initial registry pass mounts only top-level markers, then the shared
+- the initial lifecycle pass mounts only top-level markers, then the shared
   `Admin.Components` lifecycle mounts direct nested islands from the parent's
   rendered DOM exactly once.
 
 `#vueApp` remains a legacy layout id for non-Vue DOM integrations, but it is no
-longer a Vue root. The six package-owned component definitions are exported
-from one frozen catalog and registered on every app before mount. Env editor,
+longer a Vue root. Six frozen package-owned definitions seed a dynamic catalog
+and are registered on every app before mount. Env editor,
 file, image, images, shared single/multiple select and related elements are all
 precompiled SFCs. No package definition owns a runtime-compiled template.
 `ElementSelect` imports the native Vue Multiselect dependency directly, so
 neither `deselect` nor a runtime-compiled Multiselect adapter remains in the
 catalog. The package does not call global `Vue.component` or `Vue.extend`, and
-no consumer component is inherited from a browser global. Custom modules will
-register precompiled definitions through the public extension API in the next
-checkpoint.
+no consumer component is inherited from a browser global. Custom modules add
+precompiled definitions through the public `Admin.Vue` extension API.
 
-`data-soa-vue-app` and `Admin.VueApps` are migration-only contracts, not the
-final custom-module API. Until a legacy custom component is migrated, its Blade
-view must put one marker around the component host. A dynamically inserted
-host calls `Admin.Components.scan(insertedRoot)` after insertion and
-`Admin.Components.destroy(removedRoot)` before removal. This is the same
-lifecycle used by native components and it also supports islands nested inside
-legacy related forms. Custom element tags must
+`data-soa-vue-app` is the stable server marker, while `Admin.VueApps` is an
+internal migration diagnostic. Custom modules register through `Admin.Vue`.
+A dynamically inserted Vue-only subtree calls `Admin.Vue.scan(insertedRoot)`
+after insertion and `Admin.Vue.destroy(removedRoot)` before removal. Mixed
+subtrees continue to use the broader `Admin.Components` lifecycle. Custom
+element tags must
 use explicit closing tags; self-closing HTML such as `<np-service />` is not a
 safe Vue host. The read-only Laluna inventory contains eight such hosts and six
 self-closing examples that must be updated during its pilot migration.

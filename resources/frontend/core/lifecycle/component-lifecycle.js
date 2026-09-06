@@ -1,3 +1,5 @@
+export const componentMountSkipped = Symbol.for('sleepingowl.component-mount-skipped')
+
 export class ComponentLifecycle {
     constructor() {
         this.definitions = []
@@ -29,10 +31,10 @@ export class ComponentLifecycle {
         return true
     }
 
-    scan(root = globalThis.document) {
+    scan(root = globalThis.document, name) {
         assertRoot(root)
 
-        return this.definitions.reduce(
+        return this.resolveDefinitions(name).reduce(
             (count, definition) =>
                 count +
                 matchingElements(root, definition.selector).reduce(
@@ -56,10 +58,10 @@ export class ComponentLifecycle {
         )
     }
 
-    destroy(root) {
+    destroy(root, name) {
         assertRoot(root)
 
-        return this.destroyRecords(recordsInside(this.records, root))
+        return this.destroyRecords(recordsInside(this.records, root, name))
     }
 
     get(element, name) {
@@ -79,7 +81,21 @@ export class ComponentLifecycle {
             throw error
         }
 
+        if (record.instance === componentMountSkipped) {
+            this.untrack(record)
+
+            return 0
+        }
+
         return 1
+    }
+
+    resolveDefinitions(name) {
+        if (name === undefined) return this.definitions
+
+        const definition = this.definitionsByName.get(name)
+
+        return definition ? [definition] : []
     }
 
     destroyRecords(records) {
@@ -146,9 +162,10 @@ function matchingElements(root, selector) {
     return descendants
 }
 
-function recordsInside(records, root) {
+function recordsInside(records, root, name) {
     return [...records]
         .filter((record) => root === record.element || root.contains(record.element))
+        .filter((record) => name === undefined || record.definition.name === name)
         .reverse()
 }
 

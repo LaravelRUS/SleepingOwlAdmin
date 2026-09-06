@@ -16749,24 +16749,40 @@ module.exports = Dropzone;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
-/* harmony import */ var _frontend_legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-registry */ "./resources/frontend/legacy/vue/app-registry.js");
-/* harmony import */ var _frontend_legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-lifecycle */ "./resources/frontend/legacy/vue/app-lifecycle.js");
-/* harmony import */ var _frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../frontend/legacy/vue/translation */ "./resources/frontend/legacy/vue/translation.js");
-/* harmony import */ var _admin_vue_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./admin/vue-components */ "./resources/assets/js_owl/admin/vue-components.js");
+/* harmony import */ var _frontend_legacy_vue_app_plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-plugins */ "./resources/frontend/legacy/vue/app-plugins.js");
+/* harmony import */ var _frontend_legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-registry */ "./resources/frontend/legacy/vue/app-registry.js");
+/* harmony import */ var _frontend_legacy_vue_component_catalog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../frontend/legacy/vue/component-catalog */ "./resources/frontend/legacy/vue/component-catalog.js");
+/* harmony import */ var _frontend_legacy_vue_extension_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../frontend/legacy/vue/extension-api */ "./resources/frontend/legacy/vue/extension-api.js");
+/* harmony import */ var _frontend_legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-lifecycle */ "./resources/frontend/legacy/vue/app-lifecycle.js");
+/* harmony import */ var _frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../frontend/legacy/vue/translation */ "./resources/frontend/legacy/vue/translation.js");
+/* harmony import */ var _admin_vue_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./admin/vue-components */ "./resources/assets/js_owl/admin/vue-components.js");
 
 
 
 
 
-var translation = (0,_frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_3__.createVueTranslation)(trans);
+
+
+
+var translation = (0,_frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_6__.createVueTranslation)(trans);
+var components = (0,_frontend_legacy_vue_component_catalog__WEBPACK_IMPORTED_MODULE_3__.createVueComponentCatalog)(_admin_vue_components__WEBPACK_IMPORTED_MODULE_7__.vueComponents);
+var plugins = (0,_frontend_legacy_vue_app_plugins__WEBPACK_IMPORTED_MODULE_1__.createVueAppPlugins)();
 function createAdminVueApp(component, props) {
-  var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(component, props);
-  return (0,_frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_3__.installVueTranslation)(app, translation);
+  var app = vue__WEBPACK_IMPORTED_MODULE_0__.createApp(component, props);
+  (0,_frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_6__.installVueTranslation)(app, translation);
+  return plugins.install(app);
 }
-var vueApps = (0,_frontend_legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_1__.createVueAppRegistry)(createAdminVueApp, _admin_vue_components__WEBPACK_IMPORTED_MODULE_4__.vueComponents);
+var vueApps = (0,_frontend_legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_2__.createVueAppRegistry)(createAdminVueApp, components);
+(0,_frontend_legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_5__.registerVueAppLifecycle)(Admin.Components, vueApps);
 Admin.VueApps = vueApps;
-vueApps.mountAll(document);
-(0,_frontend_legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_2__.registerVueAppLifecycle)(Admin.Components, vueApps);
+Admin.Vue = (0,_frontend_legacy_vue_extension_api__WEBPACK_IMPORTED_MODULE_4__.createVueExtensionApi)({
+  catalog: components,
+  lifecycle: Admin.Components,
+  plugins: plugins,
+  root: document,
+  runtime: vue__WEBPACK_IMPORTED_MODULE_0__
+});
+Admin.Vue.scan(document);
 
 /***/ }),
 
@@ -16846,6 +16862,238 @@ function parseDatasetValue(value, type, name) {
 
 /***/ }),
 
+/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js":
+/*!******************************************************************!*\
+  !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ComponentLifecycle": () => (/* binding */ ComponentLifecycle),
+/* harmony export */   "componentMountSkipped": () => (/* binding */ componentMountSkipped),
+/* harmony export */   "createComponentLifecycle": () => (/* binding */ createComponentLifecycle)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var componentMountSkipped = Symbol["for"]('sleepingowl.component-mount-skipped');
+var ComponentLifecycle = /*#__PURE__*/function () {
+  function ComponentLifecycle() {
+    _classCallCheck(this, ComponentLifecycle);
+    this.definitions = [];
+    this.definitionsByName = new Map();
+    this.records = new Set();
+    this.recordsByElement = new WeakMap();
+  }
+  return _createClass(ComponentLifecycle, [{
+    key: "register",
+    value: function register(definition) {
+      var _this = this;
+      var normalized = normalizeDefinition(definition);
+      if (this.definitionsByName.has(normalized.name)) {
+        throw new Error("Component ".concat(normalized.name, " is already registered."));
+      }
+      this.definitions.push(normalized);
+      this.definitionsByName.set(normalized.name, normalized);
+      return function () {
+        return _this.unregister(normalized.name);
+      };
+    }
+  }, {
+    key: "unregister",
+    value: function unregister(name) {
+      var definition = this.definitionsByName.get(name);
+      if (!definition) return false;
+      this.definitions = this.definitions.filter(function (item) {
+        return item !== definition;
+      });
+      this.definitionsByName["delete"](name);
+      this.destroyRecords(recordsForDefinition(this.records, definition));
+      return true;
+    }
+  }, {
+    key: "scan",
+    value: function scan() {
+      var _this2 = this;
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis.document;
+      var name = arguments.length > 1 ? arguments[1] : undefined;
+      assertRoot(root);
+      return this.resolveDefinitions(name).reduce(function (count, definition) {
+        return count + matchingElements(root, definition.selector).reduce(function (mounted, element) {
+          return mounted + _this2.mountDefinition(element, definition);
+        }, 0);
+      }, 0);
+    }
+  }, {
+    key: "mount",
+    value: function mount(element) {
+      var _this3 = this;
+      assertElement(element);
+      return this.definitions.reduce(function (count, definition) {
+        return count + (element.matches(definition.selector) ? _this3.mountDefinition(element, definition) : 0);
+      }, 0);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy(root, name) {
+      assertRoot(root);
+      return this.destroyRecords(recordsInside(this.records, root, name));
+    }
+  }, {
+    key: "get",
+    value: function get(element, name) {
+      var _this$recordsByElemen;
+      return (_this$recordsByElemen = this.recordsByElement.get(element)) === null || _this$recordsByElemen === void 0 || (_this$recordsByElemen = _this$recordsByElemen.get(name)) === null || _this$recordsByElemen === void 0 ? void 0 : _this$recordsByElemen.instance;
+    }
+  }, {
+    key: "mountDefinition",
+    value: function mountDefinition(element, definition) {
+      var _this$recordsByElemen2;
+      if ((_this$recordsByElemen2 = this.recordsByElement.get(element)) !== null && _this$recordsByElemen2 !== void 0 && _this$recordsByElemen2.has(definition.name)) return 0;
+      var record = {
+        definition: definition,
+        element: element,
+        instance: undefined
+      };
+      this.track(record);
+      try {
+        record.instance = definition.mount(element);
+      } catch (error) {
+        this.untrack(record);
+        throw error;
+      }
+      if (record.instance === componentMountSkipped) {
+        this.untrack(record);
+        return 0;
+      }
+      return 1;
+    }
+  }, {
+    key: "resolveDefinitions",
+    value: function resolveDefinitions(name) {
+      if (name === undefined) return this.definitions;
+      var definition = this.definitionsByName.get(name);
+      return definition ? [definition] : [];
+    }
+  }, {
+    key: "destroyRecords",
+    value: function destroyRecords(records) {
+      var _this4 = this;
+      var errors = [];
+      records.forEach(function (record) {
+        if (!_this4.records.has(record)) return;
+        _this4.untrack(record);
+        try {
+          destroyRecord(record);
+        } catch (error) {
+          errors.push(error);
+        }
+      });
+      throwCleanupErrors(errors);
+      return records.length;
+    }
+  }, {
+    key: "track",
+    value: function track(record) {
+      var _this$recordsByElemen3;
+      var elementRecords = (_this$recordsByElemen3 = this.recordsByElement.get(record.element)) !== null && _this$recordsByElemen3 !== void 0 ? _this$recordsByElemen3 : new Map();
+      elementRecords.set(record.definition.name, record);
+      this.recordsByElement.set(record.element, elementRecords);
+      this.records.add(record);
+    }
+  }, {
+    key: "untrack",
+    value: function untrack(record) {
+      var elementRecords = this.recordsByElement.get(record.element);
+      elementRecords === null || elementRecords === void 0 || elementRecords["delete"](record.definition.name);
+      if ((elementRecords === null || elementRecords === void 0 ? void 0 : elementRecords.size) === 0) this.recordsByElement["delete"](record.element);
+      this.records["delete"](record);
+    }
+  }]);
+}();
+function createComponentLifecycle() {
+  return new ComponentLifecycle();
+}
+function normalizeDefinition(definition) {
+  var _definition$destroy;
+  if (!definition || _typeof(definition) !== 'object') {
+    throw new TypeError('Component definition must be an object.');
+  }
+  assertNonEmptyString(definition.name, 'name');
+  assertNonEmptyString(definition.selector, 'selector');
+  if (typeof definition.mount !== 'function') {
+    throw new TypeError('Component definition mount must be a function.');
+  }
+  if (definition.destroy !== undefined && typeof definition.destroy !== 'function') {
+    throw new TypeError('Component definition destroy must be a function when provided.');
+  }
+  return Object.freeze({
+    destroy: (_definition$destroy = definition.destroy) !== null && _definition$destroy !== void 0 ? _definition$destroy : null,
+    mount: definition.mount,
+    name: definition.name,
+    selector: definition.selector
+  });
+}
+function matchingElements(root, selector) {
+  var descendants = _toConsumableArray(root.querySelectorAll(selector));
+  if (typeof root.matches === 'function' && root.matches(selector)) descendants.unshift(root);
+  return descendants;
+}
+function recordsInside(records, root, name) {
+  return _toConsumableArray(records).filter(function (record) {
+    return root === record.element || root.contains(record.element);
+  }).filter(function (record) {
+    return name === undefined || record.definition.name === name;
+  }).reverse();
+}
+function recordsForDefinition(records, definition) {
+  return _toConsumableArray(records).filter(function (record) {
+    return record.definition === definition;
+  }).reverse();
+}
+function destroyRecord(_ref) {
+  var definition = _ref.definition,
+    element = _ref.element,
+    instance = _ref.instance;
+  if (definition.destroy) return definition.destroy(element, instance);
+  if (typeof instance === 'function') return instance();
+  if (typeof (instance === null || instance === void 0 ? void 0 : instance.destroy) === 'function') return instance.destroy();
+}
+function throwCleanupErrors(errors) {
+  if (errors.length === 1) throw errors[0];
+  if (errors.length > 1) {
+    throw new AggregateError(errors, 'Multiple component destroy callbacks failed.');
+  }
+}
+function assertRoot(root) {
+  if (typeof (root === null || root === void 0 ? void 0 : root.querySelectorAll) !== 'function' || typeof (root === null || root === void 0 ? void 0 : root.contains) !== 'function') {
+    throw new TypeError('Component lifecycle root must be a DOM query root.');
+  }
+}
+function assertElement(element) {
+  if (!element || element.nodeType !== 1 || typeof element.matches !== 'function') {
+    throw new TypeError('Component lifecycle mount requires an Element.');
+  }
+}
+function assertNonEmptyString(value, field) {
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new TypeError("Component definition ".concat(field, " must be a non-empty string."));
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/legacy/vue/app-lifecycle.js":
 /*!********************************************************!*\
   !*** ./resources/frontend/legacy/vue/app-lifecycle.js ***!
@@ -16858,7 +17106,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "registerVueAppLifecycle": () => (/* binding */ registerVueAppLifecycle),
 /* harmony export */   "vueAppLifecycleName": () => (/* binding */ vueAppLifecycleName)
 /* harmony export */ });
-/* harmony import */ var _app_registry__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-registry */ "./resources/frontend/legacy/vue/app-registry.js");
+/* harmony import */ var _core_lifecycle_component_lifecycle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/lifecycle/component-lifecycle */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _app_registry__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-registry */ "./resources/frontend/legacy/vue/app-registry.js");
+
 
 var vueAppLifecycleName = 'soa.vue-app';
 function registerVueAppLifecycle(components, vueApps) {
@@ -16870,13 +17120,87 @@ function registerVueAppLifecycle(components, vueApps) {
       return mountVueApp(components, vueApps, element);
     },
     name: vueAppLifecycleName,
-    selector: _app_registry__WEBPACK_IMPORTED_MODULE_0__.vueAppSelector
+    selector: _app_registry__WEBPACK_IMPORTED_MODULE_1__.vueAppSelector
   });
 }
 function mountVueApp(components, vueApps, element) {
+  if (!vueApps.canMount(element)) return _core_lifecycle_component_lifecycle__WEBPACK_IMPORTED_MODULE_0__.componentMountSkipped;
   var app = vueApps.mount(element);
   components.scan(element);
   return app;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/legacy/vue/app-plugins.js":
+/*!******************************************************!*\
+  !*** ./resources/frontend/legacy/vue/app-plugins.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VueAppPlugins": () => (/* binding */ VueAppPlugins),
+/* harmony export */   "createVueAppPlugins": () => (/* binding */ createVueAppPlugins)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var VueAppPlugins = /*#__PURE__*/function () {
+  function VueAppPlugins() {
+    _classCallCheck(this, VueAppPlugins);
+    this.plugins = [];
+    this.registered = new Set();
+  }
+  return _createClass(VueAppPlugins, [{
+    key: "use",
+    value: function use(plugin) {
+      assertPlugin(plugin);
+      if (this.registered.has(plugin)) return plugin;
+      this.registered.add(plugin);
+      for (var _len = arguments.length, options = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        options[_key - 1] = arguments[_key];
+      }
+      this.plugins.push({
+        options: options,
+        plugin: plugin
+      });
+      return plugin;
+    }
+  }, {
+    key: "install",
+    value: function install(app) {
+      assertUse(app);
+      this.plugins.forEach(function (_ref) {
+        var options = _ref.options,
+          plugin = _ref.plugin;
+        return app.use.apply(app, [plugin].concat(_toConsumableArray(options)));
+      });
+      return app;
+    }
+  }]);
+}();
+function createVueAppPlugins() {
+  return new VueAppPlugins();
+}
+function assertPlugin(plugin) {
+  var valid = typeof plugin === 'function' || typeof (plugin === null || plugin === void 0 ? void 0 : plugin.install) === 'function';
+  if (!valid) throw new TypeError('Vue app plugin must be a function or expose install().');
+}
+function assertUse(app) {
+  if (typeof (app === null || app === void 0 ? void 0 : app.use) !== 'function') {
+    throw new TypeError('Vue app plugin installation requires app.use().');
+  }
 }
 
 /***/ }),
@@ -16895,6 +17219,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "vueAppSelector": () => (/* binding */ vueAppSelector)
 /* harmony export */ });
 /* harmony import */ var _core_data_island_props__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/data/island-props */ "./resources/frontend/core/data/island-props.js");
+/* harmony import */ var _component_catalog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./component-catalog */ "./resources/frontend/legacy/vue/component-catalog.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -16912,6 +17237,7 @@ function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), 
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
+
 var vueAppSelector = '[data-soa-vue-app]';
 var VueAppRegistry = /*#__PURE__*/function () {
   function VueAppRegistry(createApp) {
@@ -16919,8 +17245,7 @@ var VueAppRegistry = /*#__PURE__*/function () {
     _classCallCheck(this, VueAppRegistry);
     assertFunction(createApp, 'createApp');
     this.createApp = createApp;
-    this.components = componentEntries(components);
-    this.componentMap = new Map(this.components);
+    this.components = resolveCatalog(components);
     this.apps = new Map();
   }
   return _createClass(VueAppRegistry, [{
@@ -16933,10 +17258,10 @@ var VueAppRegistry = /*#__PURE__*/function () {
     value: function mount(element) {
       assertElement(element);
       if (this.apps.has(element)) return this.apps.get(element);
-      var root = resolveRootComponent(element, this.componentMap);
+      var root = resolveRootComponent(element, this.components);
       var app = this.createApp(root.component, root.props);
       assertApp(app);
-      registerComponents(app, this.components);
+      registerComponents(app, this.components.entries());
       this.apps.set(element, app);
       try {
         app.mount(element);
@@ -16986,6 +17311,13 @@ var VueAppRegistry = /*#__PURE__*/function () {
     value: function get(element) {
       return this.apps.get(element);
     }
+  }, {
+    key: "canMount",
+    value: function canMount(element) {
+      var _element$dataset;
+      var name = (_element$dataset = element.dataset) === null || _element$dataset === void 0 ? void 0 : _element$dataset.soaVueComponent;
+      return !name || this.components.has(name);
+    }
   }]);
 }();
 function createVueAppRegistry(createApp, components) {
@@ -17000,8 +17332,8 @@ function registerComponents(app, components) {
   });
 }
 function resolveRootComponent(element, components) {
-  var _element$dataset;
-  var name = (_element$dataset = element.dataset) === null || _element$dataset === void 0 ? void 0 : _element$dataset.soaVueComponent;
+  var _element$dataset2;
+  var name = (_element$dataset2 = element.dataset) === null || _element$dataset2 === void 0 ? void 0 : _element$dataset2.soaVueComponent;
   if (!name) return {
     component: {},
     props: undefined
@@ -17016,9 +17348,9 @@ function resolveRootComponent(element, components) {
   };
 }
 function readPropsSource(element) {
-  var _element$dataset2, _element$dataset3;
-  var propsId = (_element$dataset2 = element.dataset) === null || _element$dataset2 === void 0 ? void 0 : _element$dataset2.soaVuePropsId;
-  if (!propsId) return ((_element$dataset3 = element.dataset) === null || _element$dataset3 === void 0 ? void 0 : _element$dataset3.soaVueProps) || '{}';
+  var _element$dataset3, _element$dataset4;
+  var propsId = (_element$dataset3 = element.dataset) === null || _element$dataset3 === void 0 ? void 0 : _element$dataset3.soaVuePropsId;
+  if (!propsId) return ((_element$dataset4 = element.dataset) === null || _element$dataset4 === void 0 ? void 0 : _element$dataset4.soaVueProps) || '{}';
   return readReferencedProps(element, propsId);
 }
 function readReferencedProps(element, propsId) {
@@ -17032,21 +17364,9 @@ function assertJsonPropsScript(script, propsId) {
   if (script.tagName === 'SCRIPT' && script.type === 'application/json') return;
   throw new TypeError("Vue app props [".concat(propsId, "] must reference an application/json script."));
 }
-function componentEntries(components) {
-  if (!components || _typeof(components) !== 'object' || Array.isArray(components)) {
-    throw new TypeError('Vue app components must be an object.');
-  }
-  return Object.entries(components).map(validateComponent);
-}
-function validateComponent(_ref3) {
-  var _ref4 = _slicedToArray(_ref3, 2),
-    name = _ref4[0],
-    component = _ref4[1];
-  var validDefinition = component !== null && ['function', 'object'].includes(_typeof(component));
-  if (!name.trim() || !validDefinition) {
-    throw new TypeError('Vue app component entries require a name and definition.');
-  }
-  return [name, component];
+function resolveCatalog(components) {
+  if (components instanceof _component_catalog__WEBPACK_IMPORTED_MODULE_1__.VueComponentCatalog) return components;
+  return (0,_component_catalog__WEBPACK_IMPORTED_MODULE_1__.createVueComponentCatalog)(components);
 }
 function topLevelVueRoots(root) {
   return matchingElements(root).filter(function (element) {
@@ -17085,6 +17405,165 @@ function assertRoot(root) {
 function assertElement(element) {
   if (!element || element.nodeType !== 1) {
     throw new TypeError('Vue app mount requires an Element.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/legacy/vue/component-catalog.js":
+/*!************************************************************!*\
+  !*** ./resources/frontend/legacy/vue/component-catalog.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VueComponentCatalog": () => (/* binding */ VueComponentCatalog),
+/* harmony export */   "createVueComponentCatalog": () => (/* binding */ createVueComponentCatalog)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var VueComponentCatalog = /*#__PURE__*/function () {
+  function VueComponentCatalog() {
+    var _this = this;
+    var components = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    _classCallCheck(this, VueComponentCatalog);
+    assertComponentObject(components);
+    this.components = new Map();
+    Object.entries(components).forEach(function (_ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+        name = _ref2[0],
+        component = _ref2[1];
+      return _this.register(name, component);
+    });
+  }
+  return _createClass(VueComponentCatalog, [{
+    key: "register",
+    value: function register(name, component) {
+      var entry = validateComponent(name, component);
+      if (this.components.has(entry.name)) {
+        throw new Error("Vue app component [".concat(entry.name, "] is already registered."));
+      }
+      this.components.set(entry.name, entry.component);
+      return entry.component;
+    }
+  }, {
+    key: "has",
+    value: function has(name) {
+      return this.components.has(name);
+    }
+  }, {
+    key: "get",
+    value: function get(name) {
+      return this.components.get(name);
+    }
+  }, {
+    key: "entries",
+    value: function entries() {
+      return _toConsumableArray(this.components.entries());
+    }
+  }]);
+}();
+function createVueComponentCatalog(components) {
+  return new VueComponentCatalog(components);
+}
+function validateComponent(name, component) {
+  var validDefinition = component !== null && ['function', 'object'].includes(_typeof(component));
+  if (typeof name !== 'string' || !name.trim() || !validDefinition) {
+    throw new TypeError('Vue app component entries require a name and definition.');
+  }
+  return {
+    component: component,
+    name: name
+  };
+}
+function assertComponentObject(components) {
+  if (!components || _typeof(components) !== 'object' || Array.isArray(components)) {
+    throw new TypeError('Vue app components must be an object.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/legacy/vue/extension-api.js":
+/*!********************************************************!*\
+  !*** ./resources/frontend/legacy/vue/extension-api.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createVueExtensionApi": () => (/* binding */ createVueExtensionApi)
+/* harmony export */ });
+/* harmony import */ var _app_lifecycle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-lifecycle */ "./resources/frontend/legacy/vue/app-lifecycle.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+
+function createVueExtensionApi(options) {
+  var _options$root;
+  assertOptions(options);
+  var catalog = options.catalog,
+    lifecycle = options.lifecycle,
+    plugins = options.plugins,
+    runtime = options.runtime;
+  var defaultRoot = (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+  function scan() {
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultRoot;
+    return lifecycle.scan(root, _app_lifecycle__WEBPACK_IMPORTED_MODULE_0__.vueAppLifecycleName);
+  }
+  function destroy() {
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultRoot;
+    return lifecycle.destroy(root, _app_lifecycle__WEBPACK_IMPORTED_MODULE_0__.vueAppLifecycleName);
+  }
+  function register(name, component) {
+    var registered = catalog.register(name, component);
+    scan();
+    return registered;
+  }
+  return Object.freeze({
+    destroy: destroy,
+    register: register,
+    runtime: runtime,
+    scan: scan,
+    use: function use(plugin) {
+      for (var _len = arguments.length, pluginOptions = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        pluginOptions[_key - 1] = arguments[_key];
+      }
+      return plugins.use.apply(plugins, [plugin].concat(pluginOptions));
+    },
+    version: runtime.version
+  });
+}
+function assertOptions(options) {
+  if (!options || _typeof(options) !== 'object') {
+    throw new TypeError('Vue extension API options must be an object.');
+  }
+  assertMethod(options.catalog, 'register', 'component catalog');
+  assertMethod(options.lifecycle, 'scan', 'component lifecycle');
+  assertMethod(options.lifecycle, 'destroy', 'component lifecycle');
+  assertMethod(options.plugins, 'use', 'app plugins');
+  if (!options.runtime || _typeof(options.runtime) !== 'object') {
+    throw new TypeError('Vue extension API runtime must be an object.');
+  }
+}
+function assertMethod(owner, method, name) {
+  if (typeof (owner === null || owner === void 0 ? void 0 : owner[method]) !== 'function') {
+    throw new TypeError("Vue extension API ".concat(name, " must expose ").concat(method, "()."));
   }
 }
 

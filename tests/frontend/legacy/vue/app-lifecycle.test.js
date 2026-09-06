@@ -107,3 +107,21 @@ it('mounts dynamic nested islands once and destroys children before their parent
     ])
     expect(vueApps.size).toBe(0)
 })
+
+it('leaves unknown component hosts pending until their definition is registered', () => {
+    const pending = createElement('custom', true)
+    pending.dataset = { soaVueComponent: 'custom-status' }
+    const root = createElement('document', false, [pending])
+    const events = []
+    const vueApps = createVueAppRegistry(fakeAppFactory(events), {})
+    const components = createComponentLifecycle()
+    registerVueAppLifecycle(components, vueApps)
+
+    expect(components.scan(root)).toBe(0)
+    expect(vueApps.size).toBe(0)
+
+    vueApps.components.register('custom-status', {})
+    expect(components.scan(root, vueAppLifecycleName)).toBe(1)
+    expect(components.scan(root, vueAppLifecycleName)).toBe(0)
+    expect(events).toEqual(['mount:custom'])
+})

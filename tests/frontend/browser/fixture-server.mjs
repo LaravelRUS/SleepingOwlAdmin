@@ -20,6 +20,10 @@ const staticRoutes = new Map([
     ],
     ['/legacy-vue', [join(browserDirectory, 'legacy-vue.html'), 'text/html; charset=utf-8']],
     [
+        '/custom-vue-island',
+        [join(browserDirectory, 'custom-vue-island.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/native-controls',
         [join(browserDirectory, 'native-controls.html'), 'text/html; charset=utf-8'],
     ],
@@ -65,6 +69,10 @@ const staticRoutes = new Map([
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
+    ],
+    [
+        '/fixtures/custom-vue-island.js',
+        [join(browserDirectory, 'custom-vue-island.js'), 'text/javascript; charset=utf-8'],
     ],
 ])
 

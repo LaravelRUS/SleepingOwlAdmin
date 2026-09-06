@@ -794,6 +794,7 @@ function assertOptions(options) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ComponentLifecycle": () => (/* binding */ ComponentLifecycle),
+/* harmony export */   "componentMountSkipped": () => (/* binding */ componentMountSkipped),
 /* harmony export */   "createComponentLifecycle": () => (/* binding */ createComponentLifecycle)
 /* harmony export */ });
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -808,6 +809,7 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var componentMountSkipped = Symbol["for"]('sleepingowl.component-mount-skipped');
 var ComponentLifecycle = /*#__PURE__*/function () {
   function ComponentLifecycle() {
     _classCallCheck(this, ComponentLifecycle);
@@ -847,8 +849,9 @@ var ComponentLifecycle = /*#__PURE__*/function () {
     value: function scan() {
       var _this2 = this;
       var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis.document;
+      var name = arguments.length > 1 ? arguments[1] : undefined;
       assertRoot(root);
-      return this.definitions.reduce(function (count, definition) {
+      return this.resolveDefinitions(name).reduce(function (count, definition) {
         return count + matchingElements(root, definition.selector).reduce(function (mounted, element) {
           return mounted + _this2.mountDefinition(element, definition);
         }, 0);
@@ -865,9 +868,9 @@ var ComponentLifecycle = /*#__PURE__*/function () {
     }
   }, {
     key: "destroy",
-    value: function destroy(root) {
+    value: function destroy(root, name) {
       assertRoot(root);
-      return this.destroyRecords(recordsInside(this.records, root));
+      return this.destroyRecords(recordsInside(this.records, root, name));
     }
   }, {
     key: "get",
@@ -892,7 +895,18 @@ var ComponentLifecycle = /*#__PURE__*/function () {
         this.untrack(record);
         throw error;
       }
+      if (record.instance === componentMountSkipped) {
+        this.untrack(record);
+        return 0;
+      }
       return 1;
+    }
+  }, {
+    key: "resolveDefinitions",
+    value: function resolveDefinitions(name) {
+      if (name === undefined) return this.definitions;
+      var definition = this.definitionsByName.get(name);
+      return definition ? [definition] : [];
     }
   }, {
     key: "destroyRecords",
@@ -958,9 +972,11 @@ function matchingElements(root, selector) {
   if (typeof root.matches === 'function' && root.matches(selector)) descendants.unshift(root);
   return descendants;
 }
-function recordsInside(records, root) {
+function recordsInside(records, root, name) {
   return _toConsumableArray(records).filter(function (record) {
     return root === record.element || root.contains(record.element);
+  }).filter(function (record) {
+    return name === undefined || record.definition.name === name;
   }).reverse();
 }
 function recordsForDefinition(records, definition) {
