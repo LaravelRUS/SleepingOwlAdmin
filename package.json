@@ -37,7 +37,6 @@
         "datatables.net-bs4": "2.3.8",
         "datatables.net-responsive": "3.0.8",
         "datatables.net-responsive-bs4": "3.0.8",
-        "dependent-dropdown": "^1.4.9",
         "dropzone": "^5.7.2",
         "i18n": "^0.15.0",
         "i18next": "^21.8.5",

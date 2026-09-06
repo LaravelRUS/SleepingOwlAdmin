@@ -221,6 +221,18 @@ class DependentSelect extends Select implements WithRoutesInterface
     }
 
     /**
+     * Frontend configuration for the Vue Multiselect dependency driver.
+     */
+    public function getDependentSelectConfiguration(): array
+    {
+        return [
+            'dependencies' => array_values($this->dataDepends),
+            'initialize' => $this->isInitializable(),
+            'url' => $this->getDataUrl(),
+        ];
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -232,32 +244,10 @@ class DependentSelect extends Select implements WithRoutesInterface
             'data-depends' => $this->getDataDepends(),
             'data-language' => $this->getLanguage(),
             'data-initialize' => $this->isInitializable() ? 'true' : 'false',
-            'class' => 'input-select input-select-dependent',
         ]);
 
-        if ($this->isReadonly()) {
-            $this->setHtmlAttribute('disabled', 'disabled');
-        }
-
-        $options = $this->getOptions();
-
-        if ($this->isNullable()) {
-            $options = [null => trans('sleeping_owl::lang.select.nothing')] + $options;
-        }
-
         return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'path' => $this->getPath(),
-            'label' => $this->getLabel(),
-            'readonly' => $this->isReadonly(),
-            'visibled' => $this->isVisible(),
-            'options' => $options,
-            'value' => $this->getValueFromModel(),
-            'helpText' => $this->getHelpText(),
-            'required' => in_array('required', $this->validationRules),
-            'attributes' => $this->getHtmlAttributes(),
-            'attributesArray' => $this->getHtmlAttributes(),
-        ];
+            'dependentSelect' => $this->getDependentSelectConfiguration(),
+        ] + parent::toArray();
     }
 }

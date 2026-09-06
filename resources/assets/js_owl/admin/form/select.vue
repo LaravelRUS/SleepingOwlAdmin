@@ -5,7 +5,7 @@
             label="text"
             :allow-empty="allowEmpty"
             :deselect-label="required ? '' : labels.deselect"
-            :disabled="effectiveReadonly"
+            :disabled="effectiveDisabled"
             :internal-search="!remote"
             :limit="resolvedLimit"
             :loading="loading"
@@ -26,8 +26,8 @@
             <template #noOptions>{{ emptyMessage }}</template>
         </Multiselect>
 
-        <span v-if="remoteStatusMessage" data-soa-select-status aria-live="polite">
-            {{ remoteStatusMessage }}
+        <span v-if="statusMessage" data-soa-select-status aria-live="polite">
+            {{ statusMessage }}
         </span>
 
         <input
@@ -36,7 +36,7 @@
             v-bind="attributes"
             data-soa-select-native
             type="hidden"
-            :disabled="effectiveReadonly"
+            :disabled="effectiveDisabled"
             :value="singleValue"
         />
         <select
@@ -46,7 +46,7 @@
             data-soa-select-native
             hidden
             multiple
-            :disabled="effectiveReadonly"
+            :disabled="effectiveDisabled"
         >
             <option
                 v-for="(option, index) in localOptions"
@@ -77,6 +77,8 @@ import {
     selectOptionKey,
     selectedOptionIds,
 } from './select-values'
+import { createDependentSelectLoad } from './select-dependent-load'
+import { dependentSelectValue } from './select-dependent-options'
 import { mergeRemoteSelectOptions } from './select-remote-options'
 import { createRemoteSelectSearch } from './select-remote-search'
 import { normalizeLegacySelect2Options } from './select2-option-migration'
@@ -86,6 +88,7 @@ export default defineComponent({
     components: { Multiselect },
     props: {
         attributes: { type: Object, required: true },
+        dependent: { type: Object, default: null },
         legacyOptions: { type: Object, default: () => ({}) },
         labels: { type: Object, required: true },
         limit: { type: Number, default: 0 },
@@ -102,10 +105,12 @@ export default defineComponent({
         const localOptions = copySelectOptions(this.options)
 
         return {
+            dependentLoad: null,
+            dependentReady: !this.dependent || this.dependent.initialize === false,
+            loadError: false,
             legacy: normalizeLegacySelect2Options(this.legacyOptions),
             loading: false,
             localOptions,
-            remoteError: false,
             remoteSearch: null,
             searchQuery: '',
             selection: initialSelectValue(localOptions, this.value, this.multiple),
@@ -118,11 +123,17 @@ export default defineComponent({
         effectiveReadonly() {
             return this.legacy.readonly ?? this.readonly
         },
+        effectiveDisabled() {
+            return (
+                this.effectiveReadonly ||
+                Boolean(this.dependent && (this.loading || !this.dependentReady))
+            )
+        },
         effectiveTaggable() {
             return this.legacy.taggable ?? this.taggable
         },
         emptyMessage() {
-            return this.remoteError ? this.labels.error : this.labels.noItems
+            return this.loadError ? this.labels.error : this.labels.noItems
         },
         minimumSearchLength() {
             return this.legacy.minSymbols ?? Number(this.remote?.minSymbols ?? 0)
@@ -130,12 +141,12 @@ export default defineComponent({
         placeholder() {
             if (this.legacy.placeholder !== null) return this.legacy.placeholder
 
-            return this.localOptions.length || this.remote
+            return this.localOptions.length || this.remote || this.dependent
                 ? this.labels.placeholder
                 : this.labels.noItems
         },
-        remoteStatusMessage() {
-            if (this.remoteError) return this.labels.error
+        statusMessage() {
+            if (this.loadError) return this.labels.error
             if (this.loading) return this.labels.searching
             if (this.searchQuery && this.searchQuery.length < this.minimumSearchLength) {
                 return this.labels.tooShort
@@ -160,8 +171,11 @@ export default defineComponent({
     },
     mounted() {
         this.mountRemoteSearch()
+        this.mountDependentSelect()
     },
     beforeUnmount() {
+        this.dependentLoad?.destroy()
+        this.dependentLoad = null
         this.remoteSearch?.destroy()
         this.remoteSearch = null
     },
@@ -174,14 +188,34 @@ export default defineComponent({
             this.selectionChanged(next.selection)
         },
         applyRemoteOptions(options) {
-            this.remoteError = false
+            this.loadError = false
             this.localOptions = mergeRemoteSelectOptions(this.selection, options, this.multiple)
+        },
+        async applyDependentOptions(result, context) {
+            this.loadError = false
+            this.localOptions = result.options
+            this.selection = dependentSelectValue(result.options, result, this.value, this.multiple)
+            this.dependentReady = true
+            await nextTick()
+            this.dispatchChange()
+            this.dispatchDependentEvent('depdrop:change', {
+                ...context,
+                optionCount: result.options.length,
+                selected: this.selectedIds,
+            })
         },
         dispatchChange() {
             const control = this.$refs.nativeControl
             const EventConstructor = control?.ownerDocument.defaultView.Event
             if (control && EventConstructor) {
                 control.dispatchEvent(new EventConstructor('change', { bubbles: true }))
+            }
+        },
+        dispatchDependentEvent(name, detail = {}) {
+            const control = this.$refs.nativeControl
+            const EventConstructor = control?.ownerDocument.defaultView.CustomEvent
+            if (control && EventConstructor) {
+                control.dispatchEvent(new EventConstructor(name, { bubbles: true, detail }))
             }
         },
         formValue(value) {
@@ -202,13 +236,37 @@ export default defineComponent({
                 http: globalThis.Admin.Http,
                 minSymbols: this.minimumSearchLength,
                 onError: () => {
-                    this.remoteError = true
+                    this.loadError = true
                 },
                 onLoading: (loading) => {
                     this.loading = loading
-                    if (loading) this.remoteError = false
+                    if (loading) this.loadError = false
                 },
                 onResults: this.applyRemoteOptions,
+            })
+        },
+        mountDependentSelect() {
+            if (!this.dependent) return
+
+            this.dependentLoad = createDependentSelectLoad({
+                ...this.dependent,
+                document: this.$el.ownerDocument,
+                http: globalThis.Admin.Http,
+                onAfter: (context) => this.dispatchDependentEvent('depdrop:afterChange', context),
+                onBefore: (context) => {
+                    this.dependentReady = false
+                    this.dispatchDependentEvent('depdrop:beforeChange', context)
+                },
+                onError: (error, context) => {
+                    this.loadError = true
+                    this.dispatchDependentEvent('depdrop:error', { ...context, error })
+                },
+                onInit: () => this.dispatchDependentEvent('depdrop:init'),
+                onLoading: (loading) => {
+                    this.loading = loading
+                    if (loading) this.loadError = false
+                },
+                onResults: this.applyDependentOptions,
             })
         },
         reachedMaximum() {

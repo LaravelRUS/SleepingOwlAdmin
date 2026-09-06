@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
 
+let fixtureHeaders
+
 function capturePageErrors(page) {
     const errors = []
     page.on('pageerror', (error) => errors.push(error.stack || error.message))
@@ -14,7 +16,7 @@ async function openFixture(page) {
 }
 
 async function recordedSearches(request) {
-    const response = await request.get('/__fixture/requests')
+    const response = await request.get('/__fixture/requests', { headers: fixtureHeaders })
     const state = await response.json()
 
     return state.requests.filter(({ kind }) => kind === 'select-search')
@@ -59,8 +61,10 @@ async function triggerRemoteError(page) {
     )
 }
 
-test.beforeEach(async ({ request }) => {
-    await request.post('/__fixture/reset')
+test.beforeEach(async ({ page, request }, testInfo) => {
+    fixtureHeaders = { 'x-fixture-scope': String(testInfo.workerIndex) }
+    await page.setExtraHTTPHeaders(fixtureHeaders)
+    await request.post('/__fixture/reset', { headers: fixtureHeaders })
 })
 
 test('remote select preserves payload, values, text safety and error state', async ({

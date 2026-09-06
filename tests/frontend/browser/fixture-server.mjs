@@ -36,6 +36,10 @@ const staticRoutes = new Map([
         '/select-controls',
         [join(browserDirectory, 'select-controls.html'), 'text/html; charset=utf-8'],
     ],
+    [
+        '/dependent-controls',
+        [join(browserDirectory, 'dependent-controls.html'), 'text/html; charset=utf-8'],
+    ],
     ['/date-controls', [join(browserDirectory, 'date-controls.html'), 'text/html; charset=utf-8']],
     [
         '/resources/frontend/core/data/island-props.js',
@@ -132,8 +136,21 @@ const staticRoutes = new Map([
     ],
 ])
 
-const fixtureState = {
-    requests: [],
+const fixtureRequests = new Map()
+const defaultFixtureScope = 'default'
+
+function fixtureScope(request) {
+    return request.headers['x-fixture-scope'] || defaultFixtureScope
+}
+
+function scopedRequests(request) {
+    const scope = fixtureScope(request)
+
+    if (!fixtureRequests.has(scope)) {
+        fixtureRequests.set(scope, [])
+    }
+
+    return fixtureRequests.get(scope)
 }
 
 function sendJson(response, value) {
@@ -167,7 +184,7 @@ async function readParameters(request, url) {
 }
 
 function recordRequest(kind, request, parameters) {
-    fixtureState.requests.push({
+    scopedRequests(request).push({
         kind,
         method: request.method,
         parameters,
@@ -228,6 +245,30 @@ async function handleSelectSearch(request, response, url) {
     ])
 }
 
+async function handleDependentSelect(request, response, url) {
+    const parameters = await readParameters(request, url)
+    recordRequest('dependent-select', request, parameters)
+    const country = parameters['depdrop_all_params[country]']
+
+    if (country === 'error') {
+        response.writeHead(503, { 'Content-Type': 'application/json' })
+        response.end(JSON.stringify({ message: 'Dependent options unavailable' }))
+        return
+    }
+
+    const options =
+        country === 'de'
+            ? [{ id: 'berlin', name: 'Berlin' }]
+            : {
+                  lyon: { id: 'lyon', name: 'Lyon' },
+                  paris: { id: 'paris', name: 'Paris' },
+              }
+    sendJson(response, {
+        output: options,
+        selected: country === 'de' ? 'berlin' : 'paris',
+    })
+}
+
 async function handleMutation(kind, request, response, url) {
     const parameters = await readParameters(request, url)
     recordRequest(kind, request, parameters)
@@ -245,8 +286,8 @@ function mutationResult(kind) {
     return {}
 }
 
-function resetFixture(response) {
-    fixtureState.requests.length = 0
+function resetFixture(request, response) {
+    scopedRequests(request).length = 0
     sendJson(response, { ok: true })
 }
 
@@ -281,6 +322,21 @@ function serveFixtureAsset(response, path) {
     return false
 }
 
+const apiHandlers = new Map([
+    ['/api/datatables', handleTable],
+    ['/api/dependent-options', handleDependentSelect],
+    ['/api/select-search', handleSelectSearch],
+])
+
+async function serveApi(request, response, url) {
+    const handler = apiHandlers.get(url.pathname)
+    if (!handler) return false
+
+    await handler(request, response, url)
+
+    return true
+}
+
 async function respond(request, response) {
     const url = new URL(request.url, origin)
     const route = staticRoutes.get(url.pathname)
@@ -290,15 +346,7 @@ async function respond(request, response) {
         return
     }
 
-    if (url.pathname === '/api/datatables') {
-        await handleTable(request, response, url)
-        return
-    }
-
-    if (url.pathname === '/api/select-search') {
-        await handleSelectSearch(request, response, url)
-        return
-    }
+    if (await serveApi(request, response, url)) return
 
     const mutations = new Map([
         ['/api/action', 'action'],
@@ -313,12 +361,12 @@ async function respond(request, response) {
     }
 
     if (url.pathname === '/__fixture/requests') {
-        sendJson(response, fixtureState)
+        sendJson(response, { requests: scopedRequests(request) })
         return
     }
 
     if (url.pathname === '/__fixture/reset') {
-        resetFixture(response)
+        resetFixture(request, response)
         return
     }
 

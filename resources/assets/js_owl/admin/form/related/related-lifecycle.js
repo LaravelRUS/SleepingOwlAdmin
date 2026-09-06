@@ -1,7 +1,4 @@
-export const relatedModuleNames = Object.freeze([
-    'form.elements.dependent-select',
-    'form.elements.wysiwyg',
-])
+export const relatedModuleNames = Object.freeze(['form.elements.wysiwyg'])
 
 export function initializeRelatedGroup(admin, element) {
     relatedModuleNames.forEach((name) => admin.Modules.call(name))

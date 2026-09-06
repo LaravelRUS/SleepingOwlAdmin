@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="browser-fixture-token" />
+        <title>Dependent Vue Multiselect fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'dependent-controls',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    message: { something_went_wrong: 'Something went wrong' },
+                    select: { no_items: 'No items', short: 'Type more' },
+                    table: { loadingRecords: 'Loading' },
+                },
+            }
+            window.__dependentEvents = []
+            ;[
+                'depdrop:init',
+                'depdrop:beforeChange',
+                'depdrop:change',
+                'depdrop:error',
+                'depdrop:afterChange',
+            ].forEach((name) => {
+                document.addEventListener(name, (event) => {
+                    window.__dependentEvents.push({
+                        detail: {
+                            dependencyId: event.detail?.dependencyId ?? null,
+                            dependencyValue: event.detail?.dependencyValue ?? null,
+                            optionCount: event.detail?.optionCount ?? null,
+                            selected: event.detail?.selected ?? null,
+                        },
+                        name,
+                    })
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <label for="country">Country</label>
+        <select id="country" name="country">
+            <option value="fr" selected>France</option>
+            <option value="de">Germany</option>
+            <option value="error">Unavailable</option>
+        </select>
+
+        <section
+            id="dependent-city-fixture"
+            v-pre
+            data-soa-vue-app
+            data-soa-vue-component="element-select"
+            data-soa-vue-props='{"attributes":{"class":"project-dependent-select","id":"city","name":"city"},"dependent":{"dependencies":["country"],"initialize":true,"url":"/api/dependent-options"},"labels":{"deselect":"Deselect","error":"Something went wrong","noItems":"No items","placeholder":"Choose city","required":"City is required","searching":"Loading","select":"Select","selected":"Selected","tooShort":"Type more"},"legacyOptions":{},"limit":0,"max":0,"multiple":false,"options":[{"id":"legacy","text":"Legacy city"}],"readonly":false,"remote":null,"required":false,"taggable":false,"value":"legacy"}'
+        ></section>
+
+        <script src="/public/default/js/admin-app-dev.js"></script>
+        <script src="/public/default/js/vue-dev.js"></script>
+        <script src="/public/default/js/modules.js"></script>
+        <script>
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

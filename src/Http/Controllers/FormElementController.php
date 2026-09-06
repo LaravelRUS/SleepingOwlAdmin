@@ -96,12 +96,6 @@ class FormElementController extends Controller
         /** @var DependentSelect|MultiDependentSelect $element */
         $element = $form->getElement($fieldPrepared);
 
-        // because field name in MultiDependentSelect ends with '[]'
-        $fieldPrepared = str_replace('[]', '', $field_relate);
-
-        /** @var DependentSelect|MultiDependentSelect $element */
-        $element = $form->getElement($fieldPrepared);
-
         if (is_null($element)) {
             return new JsonResponse([
                 'message' => 'Element not found',

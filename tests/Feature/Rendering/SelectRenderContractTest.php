@@ -70,6 +70,37 @@ class SelectRenderContractTest extends TestCase
         $this->assertStringNotContainsString('search_url=', $html);
     }
 
+    public function test_dependent_select_uses_the_same_island_and_preserves_attributes(): void
+    {
+        $data = array_replace($this->baseData(), [
+            'attributesArray' => [
+                'class' => 'project-dependent',
+                'data-contract' => 'city',
+                'id' => 'city',
+                'name' => 'city',
+            ],
+            'dependentSelect' => [
+                'dependencies' => ['country'],
+                'initialize' => true,
+                'url' => '/admin/dependent/cities',
+            ],
+            'limit' => 0,
+            'name' => 'city',
+            'options' => [['id' => 7, 'text' => 'Paris']],
+            'select2Options' => [],
+            'value' => 7,
+        ]);
+        $html = $this->renderSelect('dependentselect', $data);
+        $props = $this->extractIslandProps($html);
+
+        $this->assertIslandHost($html);
+        $this->assertSame('/admin/dependent/cities', $props['dependent']['url']);
+        $this->assertSame(['country'], $props['dependent']['dependencies']);
+        $this->assertSame('form-control project-dependent', $props['attributes']['class']);
+        $this->assertStringNotContainsString('<select', $html);
+        $this->assertStringNotContainsString('input-select-dependent', $html);
+    }
+
     private function renderSelect(string $view, array $data): string
     {
         $template = new SelectRenderTemplateStub();

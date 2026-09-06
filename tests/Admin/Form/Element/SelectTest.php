@@ -2,6 +2,8 @@
 
 use SleepingOwl\Admin\Form\Element\MultiSelect;
 use SleepingOwl\Admin\Form\Element\MultiSelectAjax;
+use SleepingOwl\Admin\Form\Element\DependentSelect;
+use SleepingOwl\Admin\Form\Element\MultiDependentSelect;
 use SleepingOwl\Admin\Form\Element\Select;
 use SleepingOwl\Admin\Form\Element\SelectAjax;
 
@@ -93,5 +95,36 @@ class FormElementSelectTest extends TestCase
             'minSymbols' => 3,
             'url' => '/search/tags',
         ], $multiple->getRemoteSelectConfiguration());
+    }
+
+    public function test_dependent_selects_publish_the_vue_dependency_contract(): void
+    {
+        $single = new DependentSelect('city', 'City', ['country', 'region']);
+        $single->setDataUrl('/dependent/cities');
+        $single->setOptions([7 => 'Paris']);
+        $single->setSortable(false);
+        $single->setExactValue(7);
+        $single->setHtmlAttribute('class', 'project-dependent');
+
+        $data = $single->toArray();
+
+        $this->assertSame([
+            'dependencies' => ['country', 'region'],
+            'initialize' => true,
+            'url' => '/dependent/cities',
+        ], $data['dependentSelect']);
+        $this->assertSame([['id' => 7, 'text' => 'Paris']], $data['options']);
+        $this->assertSame('project-dependent', $data['attributesArray']['class']);
+        $this->assertStringNotContainsString('input-select-dependent', $data['attributesArray']['class']);
+
+        $multiple = new MultiDependentSelect('roles', 'Roles', ['city']);
+        $multiple->setDataUrl('/dependent/roles');
+        $multiple->setInitializable(false);
+        $multiple->setExactValue([]);
+        $multipleData = $multiple->toArray();
+
+        $this->assertFalse($multipleData['dependentSelect']['initialize']);
+        $this->assertSame('roles[]', $multipleData['attributesArray']['name']);
+        $this->assertSame('multiple', $multipleData['attributesArray']['multiple']);
     }
 }

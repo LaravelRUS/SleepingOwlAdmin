@@ -482,9 +482,8 @@ async function addAndExpectRelatedGroup(page) {
 
 async function expectRelatedLifecycleCalls(page) {
     const calls = await page.evaluate(() => globalThis.__moduleCalls)
-    expect(calls).toEqual(
-        expect.arrayContaining(['form.elements.dependent-select', 'form.elements.wysiwyg']),
-    )
+    expect(calls).toEqual(expect.arrayContaining(['form.elements.wysiwyg']))
+    expect(calls).not.toContain('form.elements.dependent-select')
     expect(calls).not.toContain('form.elements.select')
     expect(calls).not.toContain('form.elements.selectajax')
     expect(await page.evaluate(() => globalThis.Admin.Components.scan(globalThis.document))).toBe(0)

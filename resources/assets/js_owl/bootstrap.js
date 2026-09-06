@@ -36,7 +36,6 @@ require('./libs/datetimepicker');
 require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
-require('./libs/dependent-dropdown');
 require('./libs/js-cookie');
 require('./libs/progressbar');
 require('@flowjs/flow.js');
@@ -105,6 +104,5 @@ require('./admin/localstorage/tabs');
 //OLD need test
 require('./admin/form/buttons');
 require('./admin/form/wysiwyg');
-require('./admin/form/dependent-select');
 require('./admin/form/password');
 require('./admin/form/text');

@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
 
+let fixtureHeaders
+
 const filterValues = {
     date: '06.09.2026',
     daterange: '01.09.2026 - 06.09.2026',
@@ -27,7 +29,7 @@ async function openFixture(page, suffix = '') {
 }
 
 async function recordedRequests(request, kind) {
-    const response = await request.get('/__fixture/requests')
+    const response = await request.get('/__fixture/requests', { headers: fixtureHeaders })
     const state = await response.json()
     return state.requests.filter((item) => item.kind === kind)
 }
@@ -103,8 +105,10 @@ async function repeatTableBoot(page) {
     }, mixedTableIds)
 }
 
-test.beforeEach(async ({ request }) => {
-    await request.post('/__fixture/reset')
+test.beforeEach(async ({ page, request }, testInfo) => {
+    fixtureHeaders = { 'x-fixture-scope': String(testInfo.workerIndex) }
+    await page.setExtraHTTPHeaders(fixtureHeaders)
+    await request.post('/__fixture/reset', { headers: fixtureHeaders })
 })
 
 test('Admin.Events dispatches native document events', async ({ page }) => {

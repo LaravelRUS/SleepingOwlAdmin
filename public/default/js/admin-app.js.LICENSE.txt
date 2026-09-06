@@ -37,17 +37,6 @@
  */
 
 /*!
- * dependent-dropdown v1.4.9
- * http://plugins.krajee.com/dependent-dropdown
- *
- * Author: Kartik Visweswaran
- * Copyright: 2014 - 2019, Kartik Visweswaran, Krajee.com
- *
- * Licensed under the BSD-3-Clause
- * https://github.com/kartik-v/dependent-dropdown/blob/master/LICENSE.md
- */
-
-/*!
  * jQuery JavaScript Library v3.7.1
  * https://jquery.com/
  *
