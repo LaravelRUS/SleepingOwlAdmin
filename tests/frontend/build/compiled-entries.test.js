@@ -50,4 +50,14 @@ describe('compiled frontend entries', () => {
         expect(core).toContain('@layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme')
         expect(core).not.toMatch(/bootstrap|adminlte|tailwind|dataTables/i)
     })
+
+    it('publishes multiple-file styles in the forms feature and legacy aggregate', () => {
+        const forms = readFileSync(resolve(root, 'public/default/css/features/forms.css'), 'utf8')
+        const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
+        const selector = '.fileUploadMultiple .files-group .fileThumbnail'
+
+        expect(forms).toContain('@layer sleepingowl-feature.forms')
+        expect(forms).toContain(selector)
+        expect(legacy).toContain(selector)
+    })
 })

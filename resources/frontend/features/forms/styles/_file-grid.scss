@@ -1,0 +1,34 @@
+/* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
+@mixin styles($thumbnail-border, $thumbnail-surface) {
+  .fileUploadMultiple {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fileUploadMultiple .files-group {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail {
+    float: left;
+    width: 206px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 3px;
+    border: 1px solid $thumbnail-border;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail {
+    margin: 0;
+    padding: 0;
+    background: $thumbnail-surface;
+    border: 0;
+    border-radius: 0;
+  }
+}
+/* stylelint-enable selector-class-pattern */

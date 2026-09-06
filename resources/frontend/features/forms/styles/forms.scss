@@ -1,3 +1,12 @@
 @use 'colors';
+@use 'files';
 @use 'variables';
 @layer sleepingowl-feature.forms;
+
+@layer sleepingowl-feature.forms {
+  @include files.styles(
+    $thumbnail-border: colors.$file-thumbnail-border,
+    $thumbnail-surface: colors.$file-thumbnail-surface,
+    $file-name-text: colors.$file-name-text,
+  );
+}

@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: инвентаризировать затрагиваемые plain CSS sources и переводить только first-party файлы в owner-local SCSS partials, не меняя generated/vendor CSS.
+- Точка возобновления: ввести публичные `:root` custom properties с префиксом `--soa-*` для runtime/no-build настройки цветов и основных theme values.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -534,7 +534,7 @@ No-build consumer contract является release-blocking:
 
 - [x] Разделить сборку на `admin-core.js`, `admin-core.css`, feature chunks и независимые theme bundles.
 - [x] Создать Sass entrypoints и отдельные `_variables.scss`/`_colors.scss` для core, features и themes.
-- [ ] Перевести затронутые plain CSS sources в SCSS partials; generated vendor/Tailwind CSS не редактировать вручную.
+- [x] Перевести затронутые plain CSS sources в SCSS partials; generated vendor/Tailwind CSS не редактировать вручную.
 - [ ] Ввести публичные `:root` custom properties с префиксом `--soa-*` для runtime/no-build настройки цветов и основных theme values.
 - [ ] Добавить versioned asset manifest и PHP resolver для precompiled core/theme/feature bundles.
 - [ ] Реализовать в manifest и resolver два полных профиля с одинаковыми logical ids: `production` и `development`, выбираемые существующим `sleeping_owl.dev_assets`.
@@ -951,3 +951,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 2 / завершение | Headless PHP boundary, extracted legacy theme, stable direct attribute API, cross-theme rendering, metadata/config contracts, selector adapters и dependency guards зафиксированы; текущий AdminLTE 3 UI остаётся рабочим через isolated legacy theme. Точка возобновления перенесена на независимые core/feature/theme bundles этапа 3 | текущий commit |
 | 2026-09-06 | Этап 3 / bundle topology | Laravel Mix читает единую декларативную build matrix и выпускает отдельные `core`, `feature:forms`, `feature:table`, `theme:legacy-adminlte` и `theme:tailwind` JS/CSS entries, сохраняя пять legacy outputs до переключения resolver. Новые Sass roots задают только cascade layers и не импортируют старый монолит; compiled-contract проверяет content hashes и отсутствие jQuery/Vue/Bootstrap/AdminLTE/DataTables в core. Production build успешен; полный PHP gate: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 29 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / Sass modules | Каждый modern core/feature/theme entry загружает только соседние `_variables.scss` и `_colors.scss` через `@use`; размеры/типографика/motion отделены от цветов, все build-time tokens объявлены с `!default`, включая независимые sidebar defaults обеих тем. Contract tests проверяют наличие локальных partials и overridable declarations. Production build успешен; полный PHP gate: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 39 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 3 / handwritten CSS | Единственный handwritten plain CSS source `files.css` перенесён в owner-local `feature:forms` Sass и разложен на небольшие label/grid/icon/action/name/vertical partials. Параметризованный aggregate mixin сохраняет публичные file-element selectors в modern forms bundle и legacy aggregate, цвета вынесены в bundle-local `_colors.scss`; guard запрещает новые handwritten `.css` вне явных generated/vendor roots. Production build успешен; полный PHP gate: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 41 Vitest + 12 Playwright | текущий commit |

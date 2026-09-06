@@ -1,0 +1,15 @@
+@use 'file-actions';
+@use 'file-grid';
+@use 'file-icon';
+@use 'file-labels';
+@use 'file-name';
+@use 'file-vertical';
+
+@mixin styles($thumbnail-border, $thumbnail-surface, $file-name-text) {
+  @include file-labels.styles;
+  @include file-grid.styles($thumbnail-border, $thumbnail-surface);
+  @include file-icon.styles;
+  @include file-actions.styles;
+  @include file-name.styles($file-name-text);
+  @include file-vertical.styles;
+}

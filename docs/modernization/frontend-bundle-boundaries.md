@@ -24,6 +24,8 @@ They intentionally do not import the legacy stylesheet. Core contains no reset, 
 
 Every Sass entry loads sibling `_variables.scss` and `_colors.scss` modules through `@use`. Variables are local to their owner and use `!default`, so maintainers and external theme authors can configure a source build without cross-bundle globals. Color values live in `_colors.scss`; dimensions, typography, spacing and motion live in `_variables.scss`. The future runtime/no-build surface will expose the supported subset as `--soa-*` custom properties rather than Sass variables.
 
+The former handwritten `resources/assets/scss/css/files.css` is split into owner-local form feature partials. A parameterized `files.styles(...)` mixin lets both the legacy aggregate and modern forms entry emit the same stable selectors while taking colors from their own `_colors.scss`. No handwritten plain CSS remains under `resources`; generated and vendor directories are explicit exceptions and are never edited as first-party Sass.
+
 ## Legacy bridge
 
 The following outputs remain available and unchanged during incremental migration:

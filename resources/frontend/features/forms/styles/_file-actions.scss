@@ -1,0 +1,45 @@
+/* stylelint-disable selector-class-pattern -- Existing file element hooks are public compatibility selectors. */
+@mixin styles {
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions {
+    margin: 5px auto 0;
+    padding: 0 0 10px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .fileinfo {
+    display: none;
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    word-break: break-all;
+    cursor: default;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .tit,
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc {
+    display: block;
+    width: 100%;
+    margin: 5px auto;
+    padding: 2px 5px;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc {
+    resize: none;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .tit.hidden,
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .desc.hidden {
+    display: none;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-actions .file-buttons {
+    clear: both;
+    margin: 10px 0 0;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .fileUploadMultiple .files-group .fileThumbnail .thumbnail .file-clearfix {
+    clear: both;
+  }
+}
+/* stylelint-enable selector-class-pattern */

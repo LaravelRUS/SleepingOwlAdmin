@@ -1,3 +1,5 @@
+@use '../../frontend/features/forms/styles/files' as form-files;
+
 //Core
 @import "variables";
 @import "colors";
@@ -10,7 +12,11 @@
 //Component
 @import "components";
 @import "addition";
-@import "css";
+@include form-files.styles(
+  $thumbnail-border: $file-thumbnail-border,
+  $thumbnail-surface: $file-thumbnail-surface,
+  $file-name-text: $file-name-text,
+);
 
 
 //fontawesome 6

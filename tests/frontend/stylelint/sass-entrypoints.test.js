@@ -1,5 +1,5 @@
 import { dirname, resolve } from 'node:path'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
@@ -37,6 +37,12 @@ describe('Sass entrypoint boundaries', () => {
         expect(nonDefaultDeclarations(variables)).toEqual([])
         expect(nonDefaultDeclarations(colors)).toEqual([])
     })
+
+    it('contains no handwritten plain CSS below resources', () => {
+        const files = readdirSync(resolve(root, 'resources'), { recursive: true })
+
+        expect(files.filter(isHandwrittenCss)).toEqual([])
+    })
 })
 
 function variableDeclarations(source) {
@@ -45,4 +51,10 @@ function variableDeclarations(source) {
 
 function nonDefaultDeclarations(source) {
     return variableDeclarations(source).filter((line) => !line.includes('!default'))
+}
+
+function isHandwrittenCss(path) {
+    const normalized = path.replaceAll('\\', '/')
+
+    return normalized.endsWith('.css') && !/(^|\/)(generated|vendor)\//.test(normalized)
 }
