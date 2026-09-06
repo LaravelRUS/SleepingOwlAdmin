@@ -57,6 +57,11 @@
                 "output": "js/features/tabs.js"
             },
             {
+                "logicalId": "feature:tooltip",
+                "source": "resources/frontend/features/tooltip/browser.js",
+                "output": "js/features/tooltip.js"
+            },
+            {
                 "logicalId": "feature:tree",
                 "source": "resources/frontend/features/tree/index.js",
                 "output": "js/features/tree.js"
@@ -94,6 +99,11 @@
                 "output": "css/features/table.css"
             },
             {
+                "logicalId": "feature:tooltip",
+                "source": "resources/frontend/features/tooltip/styles/tooltip-base.scss",
+                "output": "css/features/tooltip.css"
+            },
+            {
                 "logicalId": "feature:tree",
                 "source": "resources/frontend/features/tree/styles/tree.scss",
                 "output": "css/features/tree.css"
@@ -127,6 +137,16 @@
                 "logicalId": "feature:tabs:theme:tailwind",
                 "source": "resources/frontend/features/tabs/themes/tailwind/styles/tabs-tailwind.scss",
                 "output": "css/features/tabs/themes/tailwind.css"
+            },
+            {
+                "logicalId": "feature:tooltip:theme:legacy-adminlte",
+                "source": "resources/frontend/features/tooltip/themes/legacy-adminlte/styles/tooltip-adminlte.scss",
+                "output": "css/features/tooltip/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:tooltip:theme:tailwind",
+                "source": "resources/frontend/features/tooltip/themes/tailwind/styles/tooltip-tailwind.scss",
+                "output": "css/features/tooltip/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:tree:theme:legacy-adminlte",

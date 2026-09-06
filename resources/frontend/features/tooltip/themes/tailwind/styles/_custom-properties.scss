@@ -1,0 +1,20 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+    :root {
+        --soa-tooltip-surface: #{colors.$surface};
+        --soa-tooltip-text: #{colors.$text};
+        --soa-tooltip-padding-block: #{variables.$padding-block};
+        --soa-tooltip-padding-inline: #{variables.$padding-inline};
+        --soa-tooltip-radius: #{variables.$radius};
+        --soa-tooltip-font-size: #{variables.$font-size};
+        --soa-tooltip-line-height: #{variables.$line-height};
+        --soa-tooltip-shadow: #{variables.$shadow} #{colors.$shadow};
+    }
+
+    :root[data-soa-color-scheme='dark'] {
+        --soa-tooltip-surface: #{colors.$dark-surface};
+        --soa-tooltip-text: #{colors.$dark-text};
+    }
+}

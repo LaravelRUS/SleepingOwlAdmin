@@ -1,0 +1,11 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+    :root {
+        --soa-tooltip-max-width: #{variables.$maximum-width};
+        --soa-tooltip-z-index: #{variables.$stack-level};
+        --soa-tooltip-surface: #{colors.$surface};
+        --soa-tooltip-text: #{colors.$text};
+    }
+}

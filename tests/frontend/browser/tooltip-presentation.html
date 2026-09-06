@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" data-soa-color-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/features/tooltip.css" />
+        <script>
+            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
+            const supported = ['legacy-adminlte', 'tailwind']
+            if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
+
+            const link = document.createElement('link')
+            link.rel = 'stylesheet'
+            link.href = `/public/default/css/features/tooltip/themes/${theme}.css`
+            document.head.append(link)
+        </script>
+    </head>
+    <body>
+        <div data-soa-tooltip-popup role="tooltip" style="left: 16px; top: 16px">Theme tooltip</div>
+    </body>
+</html>

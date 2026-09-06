@@ -53,6 +53,8 @@ window.Admin.Modules = require('./components/modules');
 
 window.Admin.WYSIWYG = require('./components/wysiwyg');
 
+require('./admin/tooltip');
+
 /**
  * Initialize Wysiwyg editors
  */
@@ -81,7 +83,6 @@ require('./admin/display/columns/checkbox');
 require('./admin/display/columns/control');
 require('./admin/display/columns/tree_control');
 require('./admin/display/columns/inline_edit');
-require('./admin/tooltip');
 require('./components/scrolltotop');
 
 //localStorage

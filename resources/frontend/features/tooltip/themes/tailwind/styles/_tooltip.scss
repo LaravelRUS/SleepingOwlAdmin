@@ -1,0 +1,13 @@
+@mixin styles {
+    [data-soa-tooltip-popup] {
+        padding: var(--soa-tooltip-padding-block) var(--soa-tooltip-padding-inline);
+        border-radius: var(--soa-tooltip-radius);
+        background: var(--soa-tooltip-surface);
+        box-shadow: var(--soa-tooltip-shadow);
+        color: var(--soa-tooltip-text);
+        font-size: var(--soa-tooltip-font-size);
+        font-weight: 500;
+        line-height: var(--soa-tooltip-line-height);
+        text-align: center;
+    }
+}

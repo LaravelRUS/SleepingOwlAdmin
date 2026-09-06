@@ -178,17 +178,21 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
     await expect(page.locator('#legacy-table_wrapper .dt-info')).toBeVisible()
     await expect(page.locator('#legacy-table_wrapper .dt-paging')).toBeVisible()
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
+    await page.locator('#draw-tooltip-1').hover()
+    await expect(page.locator('[role="tooltip"]')).toHaveText('row 1')
     const runtime = await page.evaluate(() => ({
+        bootstrapTooltip: Boolean(globalThis.jQuery('#draw-tooltip-1').data('bs.tooltip')),
         draws: globalThis.__legacyEvents.filter((event) => event === 'datatables::draw').length,
         globalDataTable: typeof globalThis.DataTable,
         responsiveVersion: globalThis.jQuery.fn.dataTable.Responsive.version,
-        tooltip: Boolean(globalThis.jQuery('#draw-tooltip-1').data('bs.tooltip')),
+        tooltip: Boolean(globalThis.document.querySelector('[role="tooltip"]')),
         version: globalThis.jQuery.fn.dataTable.version,
         wrapperClass: globalThis.document.querySelector('#legacy-table_wrapper').className,
     }))
     const requests = await recordedRequests(request, 'datatable')
 
     expect(runtime).toMatchObject({
+        bootstrapTooltip: false,
         draws: 1,
         globalDataTable: 'undefined',
         responsiveVersion: '3.0.8',

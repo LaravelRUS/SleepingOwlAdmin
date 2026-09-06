@@ -58,7 +58,7 @@ const {
 } = require('../../../../frontend/features/table/transport/table-ajax')
 const inlineEditor = require('./columns/inline_edit')
 
-const tableTooltips = createLegacyTableTooltips()
+const tableTooltips = createLegacyTableTooltips(Admin)
 
 globalThis.checkNumberRange = isNumberInRange
 globalThis.checkDateRange = isDateInRange

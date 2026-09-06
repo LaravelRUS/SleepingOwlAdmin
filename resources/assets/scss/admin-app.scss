@@ -5,6 +5,9 @@
 @use '../../frontend/features/lightbox/themes/legacy-adminlte/styles/legacy' as legacy-lightbox;
 @use '../../frontend/features/tabs/themes/legacy-adminlte/styles/legacy' as legacy-tabs;
 @use '../../frontend/features/table/themes/legacy-adminlte/styles/legacy' as legacy-datatables;
+@use '../../frontend/features/tooltip/styles/custom-properties' as tooltip-properties;
+@use '../../frontend/features/tooltip/styles/tooltip' as tooltip-driver;
+@use '../../frontend/features/tooltip/themes/legacy-adminlte/styles/legacy' as legacy-tooltip;
 @use '../../frontend/features/tree/themes/legacy-adminlte/styles/legacy' as legacy-tree;
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
 @use '../../frontend/themes/legacy-adminlte/styles/sidebar' as theme-sidebar;
@@ -25,6 +28,9 @@
 @include legacy-lightbox.styles;
 @include legacy-tabs.styles;
 @include legacy-datatables.styles;
+@include tooltip-properties.define;
+@include tooltip-driver.styles;
+@include legacy-tooltip.styles;
 @include legacy-tree.styles;
 @include form-files.styles(
   $thumbnail-border: $file-thumbnail-border,

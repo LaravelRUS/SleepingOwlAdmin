@@ -1,0 +1,9 @@
+@use 'colors';
+@use 'custom-properties';
+@use 'tooltip';
+@use 'variables';
+@include custom-properties.define;
+
+@layer sleepingowl-theme.tooltip {
+    @include tooltip.styles;
+}

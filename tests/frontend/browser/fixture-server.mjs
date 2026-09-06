@@ -55,6 +55,11 @@ const staticRoutes = new Map([
         '/tabs-presentation',
         [join(browserDirectory, 'tabs-presentation.html'), 'text/html; charset=utf-8'],
     ],
+    ['/tooltips', [join(browserDirectory, 'tooltips.html'), 'text/html; charset=utf-8']],
+    [
+        '/tooltip-presentation',
+        [join(browserDirectory, 'tooltip-presentation.html'), 'text/html; charset=utf-8'],
+    ],
     ['/trees', [join(browserDirectory, 'trees.html'), 'text/html; charset=utf-8']],
     [
         '/tree-presentation',
@@ -84,6 +89,10 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'features', 'tabs.js'), 'text/javascript'],
     ],
     [
+        '/public/default/js/features/tooltip.js',
+        [join(projectRoot, 'public', 'default', 'js', 'features', 'tooltip.js'), 'text/javascript'],
+    ],
+    [
         '/public/default/js/admin-app.js',
         [join(projectRoot, 'public', 'default', 'js', 'admin-app.js'), 'text/javascript'],
     ],
@@ -106,6 +115,42 @@ const staticRoutes = new Map([
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/tooltip.css',
+        [join(projectRoot, 'public', 'default', 'css', 'features', 'tooltip.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/tooltip/themes/legacy-adminlte.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'tooltip',
+                'themes',
+                'legacy-adminlte.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/tooltip/themes/tailwind.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'tooltip',
+                'themes',
+                'tailwind.css',
+            ),
+            'text/css',
+        ],
     ],
     [
         '/public/default/css/themes/legacy-adminlte.css',

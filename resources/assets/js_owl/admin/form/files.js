@@ -51,7 +51,7 @@ $(function () {
             });
             $input.val(JSON.stringify(values));
 
-            $('[data-toggle="tooltip"]').tooltip()
+            Admin.Tooltips?.scan(document)
         };
 
         var baseName = function (str) {

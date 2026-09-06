@@ -119,7 +119,8 @@ it('keeps reusable draw hooks native and isolates legacy plugins in theme adapte
     expect(hooks).toContain("element.loading = 'lazy'")
     expect(inlineEditor).not.toMatch(/(?:\$|jQuery)\s*\(/)
     expect(inlineEditor).toContain('http: admin.Http')
-    expect(tooltips).toContain('jquery(elements).tooltip')
+    expect(tooltips).not.toMatch(/(?:\$|jQuery)\s*\(/)
+    expect(tooltips).toContain('admin?.Tooltips?.scan')
 })
 
 it('routes actions and auto-update through native modules and Admin.Tables', () => {

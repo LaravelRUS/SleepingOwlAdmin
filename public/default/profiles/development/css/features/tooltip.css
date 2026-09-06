@@ -1,0 +1,21 @@
+@layer sleepingowl-feature.tooltip;
+:root {
+  --soa-tooltip-max-width: 18rem;
+  --soa-tooltip-z-index: 1080;
+  --soa-tooltip-surface: #111827;
+  --soa-tooltip-text: #fff;
+}
+
+@layer sleepingowl-feature.tooltip {
+  [data-soa-tooltip-popup] {
+    position: fixed;
+    z-index: var(--soa-tooltip-z-index);
+    max-inline-size: min(var(--soa-tooltip-max-width), 100vw - 0.5rem);
+    background: var(--soa-tooltip-surface);
+    color: var(--soa-tooltip-text);
+    pointer-events: none;
+    overflow-wrap: anywhere;
+  }
+}
+
+/*# sourceMappingURL=tooltip.css.map*/

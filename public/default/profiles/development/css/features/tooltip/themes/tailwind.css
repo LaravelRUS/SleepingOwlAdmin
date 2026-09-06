@@ -1,0 +1,31 @@
+:root {
+  --soa-tooltip-surface: #111827;
+  --soa-tooltip-text: #f9fafb;
+  --soa-tooltip-padding-block: 0.375rem;
+  --soa-tooltip-padding-inline: 0.625rem;
+  --soa-tooltip-radius: 0.375rem;
+  --soa-tooltip-font-size: 0.75rem;
+  --soa-tooltip-line-height: 1rem;
+  --soa-tooltip-shadow: 0 0.5rem 1rem rgba(15, 23, 42, 0.18);
+}
+
+:root[data-soa-color-scheme=dark] {
+  --soa-tooltip-surface: #f9fafb;
+  --soa-tooltip-text: #111827;
+}
+
+@layer sleepingowl-theme.tooltip {
+  [data-soa-tooltip-popup] {
+    padding: var(--soa-tooltip-padding-block) var(--soa-tooltip-padding-inline);
+    border-radius: var(--soa-tooltip-radius);
+    background: var(--soa-tooltip-surface);
+    box-shadow: var(--soa-tooltip-shadow);
+    color: var(--soa-tooltip-text);
+    font-size: var(--soa-tooltip-font-size);
+    font-weight: 500;
+    line-height: var(--soa-tooltip-line-height);
+    text-align: center;
+  }
+}
+
+/*# sourceMappingURL=tailwind.css.map*/
