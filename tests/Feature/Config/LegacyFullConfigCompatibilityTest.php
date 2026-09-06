@@ -1,6 +1,9 @@
 <?php
 
 use SleepingOwl\Admin\Templates\TemplateDefault;
+use SleepingOwl\Admin\Facades\Assets;
+use SleepingOwl\Admin\Facades\Meta;
+use SleepingOwl\Admin\Facades\PackageManager;
 
 class LegacyFullConfigCompatibilityTest extends TestCase
 {
@@ -23,8 +26,14 @@ class LegacyFullConfigCompatibilityTest extends TestCase
         $this->assertSame('d-m-Y H:i', $config['datetimeFormat']);
         $this->assertSame('ckeditor', $config['wysiwyg']['default']);
         $this->assertSame(
-            'KodiCMS\\Assets\\Facades\\Assets',
+            Assets::class,
             $config['aliases']['Assets']
+        );
+        $this->assertSame(Meta::class, $config['aliases']['Meta']);
+        $this->assertSame(PackageManager::class, $config['aliases']['PackageManager']);
+        $this->assertSame(
+            'KodiCMS\\Assets\\Facades\\Assets',
+            $this->legacyConfig['aliases']['Assets']
         );
     }
 

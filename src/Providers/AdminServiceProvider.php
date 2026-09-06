@@ -10,6 +10,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Assets\AssetAliasNormalizer;
 use SleepingOwl\Admin\Assets\AssetDependencySorter;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
@@ -144,6 +145,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerAssetServices(): void
     {
         $this->app->singleton(AssetDependencySorter::class);
+        $this->app->singleton(AssetAliasNormalizer::class);
         $this->app->singleton(HtmlAttributes::class);
         $this->app->singleton(AssetPackageRegistry::class);
         $this->app->alias(AssetPackageRegistry::class, 'assets.packages');
@@ -311,7 +313,12 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerAliases(): void
     {
-        AliasLoader::getInstance(config('sleeping_owl.aliases', []));
+        $aliases = $this->app->make(AssetAliasNormalizer::class)->normalize(
+            config('sleeping_owl.aliases', [])
+        );
+
+        $this->app['config']->set('sleeping_owl.aliases', $aliases);
+        AliasLoader::getInstance($aliases);
     }
 
     /**

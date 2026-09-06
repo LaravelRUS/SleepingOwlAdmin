@@ -571,9 +571,9 @@ return [
 
     'aliases' => [
         // Components
-        'Assets' => KodiCMS\Assets\Facades\Assets::class,
-        'PackageManager' => KodiCMS\Assets\Facades\PackageManager::class,
-        'Meta' => KodiCMS\Assets\Facades\Meta::class,
+        'Assets' => SleepingOwl\Admin\Facades\Assets::class,
+        'PackageManager' => SleepingOwl\Admin\Facades\PackageManager::class,
+        'Meta' => SleepingOwl\Admin\Facades\Meta::class,
         'Form' => Spatie\Html\Facades\Html::class,
         'HTML' => Spatie\Html\Elements\Element::class,
         'A' => \Spatie\Html\Elements\A::class,

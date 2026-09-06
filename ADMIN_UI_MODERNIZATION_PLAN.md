@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: нормализовать legacy config aliases `KodiCMS\Assets\Facades\*` в first-party aliases и покрыть старый опубликованный config fixture.
+- Точка возобновления: расширить `sleepingowl:install` и `sleepingowl:update` для публикации и проверки готовых manifest-based assets без npm/rebuild.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -540,7 +540,7 @@ No-build consumer contract является release-blocking:
 - [x] Реализовать в manifest и resolver два полных профиля с одинаковыми logical ids: `production` и `development`, выбираемые существующим `sleeping_owl.dev_assets`.
 - [x] Реализовать минимальные first-party asset value object, dependency sorter/registry, package registry и meta renderer в `SleepingOwl\Admin`, не смешивая их обязанности с manifest resolver.
 - [x] Перевести внутренние `Templates\Assets`, `Templates\Meta`, trait `Assets`, provider bindings, facades и stubs с `KodiCMS\Assets` на first-party classes.
-- [ ] Нормализовать legacy config aliases `KodiCMS\Assets\Facades\*` в first-party aliases и покрыть это fixture старого опубликованного конфига.
+- [x] Нормализовать legacy config aliases `KodiCMS\Assets\Facades\*` в first-party aliases и покрыть это fixture старого опубликованного конфига.
 - [ ] Расширить существующие `sleepingowl:install` и `sleepingowl:update`: публиковать выбранные precompiled theme/feature assets, проверять manifest/version, не вызывать npm и не компилировать frontend.
 - [ ] Сохранить обратную совместимость `sleepingowl:update` как минимум на уровне неинтерактивного forced asset publish, пригодного для deployment scripts.
 - [ ] Переписать внутреннюю реализацию `Admin.Events` на native events, сохранив текущий публичный интерфейс.
@@ -957,3 +957,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 3 / asset profiles | `npm run production` воспроизводимо собирает оба modern-профиля: development без minify с внешними source maps и production minified без maps; manifest объединяет одинаковые logical ids под изолированными `profiles/<profile>` paths. `AssetProfileSelector` сохраняет контракт `ADMIN_DEV_ASSETS`/`sleeping_owl.dev_assets`, а container resolver выбирает профиль целиком и не смешивает URL. Полный PHP gate: 413 tests, 1529 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest + 13 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / first-party asset foundation | Добавлены независимые `Asset`, стабильный dependency sorter/registry, package registry и отдельные HTML/meta renderers без наследования или imports из `KodiCMS\Assets`. Unknown/circular dependencies не теряют элементы, duplicate handles заменяются, head/footer изолированы, пользовательские attributes экранируются на render boundary. Manifest resolver остаётся отдельной подсистемой; переключение public adapters/provider отложено до следующего пункта. Полный PHP gate: 419 tests, 1544 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |
 | 2026-09-06 | Этап 3 / first-party asset adapters | `Templates\Assets`, `Templates\Meta`, asset trait, WYSIWYG package PHPDoc, provider bindings, first-party facades и installation stub переведены на composition поверх собственного registry/renderers. Сохранены container keys, fluent Meta API, handles/dependencies, head/footer, packages, global config и last-registration-wins; исправлена старая передача CSS attributes как dependencies в trait. В runtime `src`/resources/stubs больше нет `KodiCMS\Assets`; legacy config aliases остаются отдельным compatibility-пунктом. Полный PHP gate: 421 tests, 1554 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |
+| 2026-09-06 | Этап 3 / legacy asset aliases | Default config переведён на first-party `Assets`, `Meta` и `PackageManager` facades. Узкий `AssetAliasNormalizer` до Laravel AliasLoader заменяет только три точных старых `KodiCMS\Assets\Facades\*` значения, сохраняя имена и все custom aliases. Полный long-lived config fixture загружается без перепубликации; исходные compatibility strings не исполняются как классы. Полный PHP gate: 423 tests, 1563 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |
