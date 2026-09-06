@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: определить стабильное поведение `sleepingowl:install`/`sleepingowl:update` и asset version mismatch.
+- Точка возобновления: выбрать Vue 3 migration strategy.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -215,6 +215,19 @@ No-build consumer contract является release-blocking:
 - custom theme package поставляет собственные готовые assets; требование build toolchain относится только к её автору;
 - CI устанавливает release artifact в чистое Laravel-приложение, где Node.js/npm отсутствуют, и выполняет smoke tests обеих встроенных тем.
 
+Контракт install/update и manifest mismatch:
+
+- `sleepingowl:install` использует тот же узкий asset publisher, что и `sleepingowl:update`; bootstrap files создаются отдельно и не смешиваются с обновлением frontend assets.
+- `sleepingowl:update` остаётся единственной штатной командой обновления assets и не вызывает npm/build tools.
+- Команда копирует package-owned assets во временный каталог, проверяет manifest schema, обязательные entries и checksums, затем заменяет опубликованный asset root; manifest переносится последним как commit marker.
+- Ошибка копирования/валидации даёт non-zero exit code и оставляет прежний полный опубликованный набор рабочим; частично обновлённый manifest не публикуется.
+- Устаревшие hashed package files удаляются только после успешной замены. Пользовательские CSS/JS должны находиться вне package-owned asset root и никогда не удаляются этой командой.
+- Published `config/sleeping_owl.php`, application bootstrap files и custom theme package assets не перезаписываются `sleepingowl:update`.
+- Manifest содержит как минимум `schema_version`, `package_version`, `build_id`, логические entries, относительные filenames и checksums. PHP package version определяется через Composer metadata, а не дублируется вручную в config.
+- Runtime resolver проверяет manifest до render. Отсутствующий, повреждённый или несовместимый manifest вызывает специализированную диагностическую ошибку с точной командой `php artisan sleepingowl:update`; silent fallback на старые/unversioned files запрещён.
+- Добавляется `sleepingowl:update --check`: read-only проверка установленного manifest/files для deployment health check; успех и ошибка имеют стабильные exit codes.
+- Release CI проверяет идемпотентный повторный запуск update, recovery после искусственно оборванной staging copy и отсутствие изменений config/application files.
+
 - Первый major поставляется одним Composer package `laravelrus/sleepingowl`: PHP core, обе встроенные темы, standard feature drivers, views, manifest и готовые production assets версионируются совместно.
 - Исходники разделяются внутри монорепозитория по `core/features/themes`, а build создаёт независимые entries; монорепозиторий не означает один монолитный browser bundle.
 - Composer archive содержит готовые assets обеих встроенных тем. Лишняя тема занимает место только в vendor/public после публикации, но не загружается браузером и не влияет на runtime.
@@ -336,7 +349,7 @@ No-build consumer contract является release-blocking:
 - [x] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
 - [x] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
 - [x] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
-- [ ] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
+- [x] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
 - [ ] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
 - [ ] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
 - [ ] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
@@ -716,3 +729,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / темы | Подтверждены AdminLTE 4/Bootstrap 5 и Tailwind 4; AdminLTE остаётся default ради upgrade/config compatibility, но загружается только как выбранная опциональная тема | текущий commit |
 | 2026-09-06 | Этап 0 / packaging | Выбран единый Composer package и монорепозиторий с независимо собираемыми core/feature/theme entries; внешние custom themes могут поставляться отдельными готовыми packages | текущий commit |
 | 2026-09-06 | Этап 0 / no-build | No-build consumer UX принят как release-blocking contract и будущий CI smoke scenario без Node.js/npm; все стандартные assets обязаны входить в Composer artifact | текущий commit |
+| 2026-09-06 | Этап 0 / update command | Зафиксирован staging/validation/manifest-last протокол, `--check`, fail-fast runtime diagnostic и запрет изменения опубликованного config/application files | текущий commit |
