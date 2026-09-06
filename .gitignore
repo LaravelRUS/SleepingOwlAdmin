@@ -1,4 +1,6 @@
 /node_modules
+/playwright-report
+/test-results
 /vendor
 composer.lock
 .DS_Store

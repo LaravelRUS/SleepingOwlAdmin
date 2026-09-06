@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Island props browser fixture</title>
+    </head>
+    <body>
+        <div id="island" data-enabled="false" data-limit="25" data-name="orders"></div>
+        <script id="island-payload" type="application/json">
+            { "filters": ["active"], "page": 2 }
+        </script>
+        <output id="result"></output>
+
+        <script type="module">
+            import {
+                parseJsonProps,
+                readDataset,
+            } from '/resources/frontend/core/data/island-props.js'
+
+            const island = document.querySelector('#island')
+            const payload = document.querySelector('#island-payload')
+            const result = document.querySelector('#result')
+            const dataset = readDataset(island.dataset, {
+                enabled: 'boolean',
+                limit: 'number',
+                name: 'string',
+            })
+
+            result.textContent = JSON.stringify({
+                dataset,
+                payload: parseJsonProps(payload.textContent),
+            })
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

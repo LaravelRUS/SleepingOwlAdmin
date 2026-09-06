@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 1 — страховочная сетка тестов**.
-- Точка возобновления: добавить Playwright smoke suite либо минимальный browser fixture для compiled assets.
+- Точка возобновления: покрыть PHP feature tests async DataTables request/response.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -502,7 +502,7 @@ No-build consumer contract является release-blocking:
 - [x] Настроить ESLint guards для длины функций и cyclomatic complexity с локальными обоснованными исключениями.
 - [x] Добавить formatter/check-команду и единый style для нового JavaScript.
 - [x] Добавить Stylelint/`stylelint-scss` и правила, запрещающие color literals вне variables/color files.
-- [ ] Добавить Playwright smoke suite либо минимальный browser fixture, пригодный для проверки compiled assets.
+- [x] Добавить Playwright smoke suite либо минимальный browser fixture, пригодный для проверки compiled assets.
 - [ ] Покрыть PHP feature-тестами DataTables async request/response: pagination, global search, ordering, column filters, payload, distinct и row class.
 - [ ] Зафиксировать browser-сценарии DataTables 1 до обновления: state restore/clear, range/date/select/text filters, actions, inline edit, auto-update, tooltip/lazyload after draw.
 - [ ] Зафиксировать Vue 2 browser-сценарии: env editor, file/image/images, select/multiselect и related elements, включая динамическое добавление групп.
@@ -926,3 +926,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 1 / decomposition guards | Новый JavaScript ограничен complexity 8, 25 statements и 40 непустыми/некомментарийными строками на функцию; исключения допускаются только точечно с review-обоснованием | текущий commit |
 | 2026-09-06 | Этап 1 / formatter | Добавлен Prettier 3 для нового frontend/tests/config и единая `npm run check` (format check, ESLint, Vitest); legacy assets исключены до их поэтапной миграции | текущий commit |
 | 2026-09-06 | Этап 1 / Stylelint | Добавлены Stylelint 17/stylelint-scss и standard SCSS rules; executable tests запрещают named/hex/color functions вне `_colors.scss`/`_variables.scss` и разрешают `--soa-*` consumers | текущий commit |
+| 2026-09-06 | Этап 1 / Playwright | Добавлены Playwright 1.63, Chromium fixture server и первый real-browser ES-module smoke test typed `data-*`/JSON props; browser binaries остаются CI/maintainer dependency | текущий commit |
