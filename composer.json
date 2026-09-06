@@ -61,6 +61,9 @@
             "SleepingOwl\\Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
     "extra": {
         "branch-alias": {
             "dev-development": "12.x-dev"

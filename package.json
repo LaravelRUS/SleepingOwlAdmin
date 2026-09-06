@@ -9,6 +9,7 @@
         "production": "mix --production",
         "prod": "mix --production",
         "check": "npm run format:check && npm run lint && npm run lint:styles && npm test",
+        "check:ci": "npm run check && npm run test:e2e",
         "format": "prettier --write \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "format:check": "prettier --check \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "lint": "eslint resources/frontend tests/frontend eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
