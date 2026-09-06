@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="inline-editor-token" />
+        <title>Inline editors browser fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'inline-editors',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', save: 'Save', yes: 'Yes' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: { error: 'Request failed', no_action: 'No action' },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <main id="editors">
+            <button
+                id="editor-text"
+                type="button"
+                data-soa-inline-editor="text"
+                data-name="title"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="Draft"
+                data-mode="inline"
+                data-empty-text="empty"
+            >
+                Draft
+            </button>
+            <button
+                id="editor-textarea"
+                type="button"
+                data-soa-inline-editor="textarea"
+                data-name="description"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="Notes"
+                data-mode="popup"
+                data-empty-text="empty"
+            >
+                Notes
+            </button>
+            <button
+                id="editor-number"
+                type="button"
+                data-soa-inline-editor="number"
+                data-name="amount"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="5"
+                data-mode="inline"
+                data-empty-text="empty"
+                data-min="1"
+                data-max="10"
+                data-step="1"
+            >
+                5
+            </button>
+            <button
+                id="editor-range"
+                type="button"
+                data-soa-inline-editor="range"
+                data-name="progress"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="40"
+                data-mode="inline"
+                data-empty-text="empty"
+                data-min="0"
+                data-max="100"
+                data-step="10"
+            >
+                40
+            </button>
+            <button
+                id="editor-select"
+                type="button"
+                data-soa-inline-editor="select"
+                data-name="state"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="draft"
+                data-mode="popup"
+                data-title="State"
+                data-soa-inline-editor-options-id="editor-select-options"
+                data-empty-text="No items"
+            >
+                Draft
+            </button>
+            <script id="editor-select-options" type="application/json">
+                [
+                    { "value": "draft", "text": "Draft" },
+                    { "value": "published", "text": "Published" }
+                ]
+            </script>
+            <button
+                id="editor-checklist"
+                type="button"
+                data-soa-inline-editor="checklist"
+                data-name="roles"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="1"
+                data-mode="popup"
+                data-title="Roles"
+                data-soa-inline-editor-options-id="editor-checklist-options"
+                data-empty-text="None"
+            >
+                Admin
+            </button>
+            <script id="editor-checklist-options" type="application/json">
+                [
+                    { "value": "1", "text": "Admin" },
+                    { "value": "2", "text": "Editor" }
+                ]
+            </script>
+            <button
+                id="editor-checkbox"
+                type="button"
+                data-soa-inline-editor="checkbox"
+                data-name="active"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="1"
+                data-mode="inline"
+                data-soa-inline-editor-options-id="editor-checkbox-options"
+                data-empty-text="No"
+            >
+                Yes
+            </button>
+            <script id="editor-checkbox-options" type="application/json">
+                [{ "value": "1", "text": "Yes" }]
+            </script>
+            <button
+                id="editor-date"
+                type="button"
+                data-soa-inline-editor="date"
+                data-name="published_on"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="06.09.2026"
+                data-mode="popup"
+                data-empty-text="empty"
+                data-date-format="DD.MM.YYYY"
+            >
+                06.09.2026
+            </button>
+            <button
+                id="editor-datetime"
+                type="button"
+                data-soa-inline-editor="datetime"
+                data-name="published_at"
+                data-pk="2"
+                data-url="/api/inline-edit"
+                data-value="06.09.2026 15:30"
+                data-mode="popup"
+                data-empty-text="empty"
+                data-date-format="DD.MM.YYYY HH:mm"
+            >
+                06.09.2026 15:30
+            </button>
+        </main>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__inlineEvents = []
+            ;[
+                'inline-edit:opened',
+                'inline-edit:submitting',
+                'inline-edit:submitted',
+                'inline-edit:failed',
+                'inline-edit:closed',
+            ].forEach((name) => {
+                document.addEventListener(name, (event) => {
+                    window.__inlineEvents.push({ name, field: event.detail.name })
+                })
+            })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+    </body>
+</html>

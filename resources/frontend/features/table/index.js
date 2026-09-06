@@ -23,6 +23,21 @@ export { forEachColumnFilter, readControlValue } from './filters/filter-elements
 export { highlightColumn, syncColumnHighlight } from './hooks/column-highlight.js'
 export { loadLazyImage, loadLazyImages } from './hooks/lazy-images.js'
 export { applyCreatedRowClass, createDrawHook } from './hooks/table-hooks.js'
+export { readInlineEditorConfig, INLINE_EDITOR_TYPES } from './editing/inline-editor-config.js'
+export {
+    createInlineEditorDefinition,
+    INLINE_EDITOR_COMPONENT,
+    INLINE_EDITOR_SELECTOR,
+    mountInlineEditor,
+} from './editing/inline-editor.js'
+export { installInlineEditors } from './editing/install-inline-editors.js'
+export {
+    inlineEditErrorMessage,
+    inlineEditParameters,
+    InlineEditRejectedError,
+    normalizeInlineEditResponse,
+    submitInlineEdit,
+} from './editing/inline-editor-request.js'
 export { DataTableAdapter, mountDataTable } from './lifecycle/data-table-adapter.js'
 export { normalizeDataTables2Options } from './options/option-aliases.js'
 export { applyServerOptions, readTableDefinition, tableLayout } from './options/table-options.js'

@@ -1018,6 +1018,844 @@ function assertQuestion(value, action) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/editing/inline-editor-config.js":
+/*!***************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-config.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "INLINE_EDITOR_TYPES": () => (/* binding */ INLINE_EDITOR_TYPES),
+/* harmony export */   "readInlineEditorConfig": () => (/* binding */ readInlineEditorConfig)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var INLINE_EDITOR_TYPES = Object.freeze(['checkbox', 'checklist', 'date', 'datetime', 'number', 'range', 'select', 'text', 'textarea']);
+var MULTIPLE_TYPES = new Set(['checkbox', 'checklist']);
+function readInlineEditorConfig(element) {
+  var _element$dataset$date, _element$dataset$empt, _element$dataset$max, _element$dataset$min, _element$dataset$step, _element$dataset$titl;
+  var type = element.dataset.soaInlineEditor;
+  assertType(type);
+  return Object.freeze({
+    dateFormat: (_element$dataset$date = element.dataset.dateFormat) !== null && _element$dataset$date !== void 0 ? _element$dataset$date : '',
+    displayHtml: element.dataset.displayHtml === 'true',
+    emptyText: (_element$dataset$empt = element.dataset.emptyText) !== null && _element$dataset$empt !== void 0 ? _element$dataset$empt : '',
+    max: (_element$dataset$max = element.dataset.max) !== null && _element$dataset$max !== void 0 ? _element$dataset$max : null,
+    min: (_element$dataset$min = element.dataset.min) !== null && _element$dataset$min !== void 0 ? _element$dataset$min : null,
+    mode: normalizeMode(element.dataset.mode),
+    name: requiredValue(element.dataset.name, 'name'),
+    options: parseOptions(readOptionsSource(element)),
+    pk: requiredValue(element.dataset.pk, 'pk'),
+    step: (_element$dataset$step = element.dataset.step) !== null && _element$dataset$step !== void 0 ? _element$dataset$step : null,
+    title: (_element$dataset$titl = element.dataset.title) !== null && _element$dataset$titl !== void 0 ? _element$dataset$titl : '',
+    type: type,
+    url: requiredValue(element.dataset.url, 'url'),
+    value: parseValue(element.dataset.value, type)
+  });
+}
+function readOptionsSource(element) {
+  var _element$ownerDocumen;
+  var id = element.dataset.soaInlineEditorOptionsId;
+  if (!id) return element.dataset.options;
+  var script = (_element$ownerDocumen = element.ownerDocument) === null || _element$ownerDocumen === void 0 ? void 0 : _element$ownerDocumen.getElementById(id);
+  if (!script) throw new Error("Inline editor options [".concat(id, "] were not found."));
+  if (script.tagName !== 'SCRIPT' || script.type !== 'application/json') {
+    throw new TypeError("Inline editor options [".concat(id, "] must reference application/json."));
+  }
+  return script.textContent;
+}
+function parseOptions(source) {
+  if (!source) return [];
+  var value = JSON.parse(source);
+  if (!Array.isArray(value)) throw new TypeError('Inline editor options must be an array.');
+  return value.map(normalizeOption);
+}
+function normalizeOption(option) {
+  var _option$text, _option$value;
+  if (!option || _typeof(option) !== 'object' || !Object.hasOwn(option, 'value')) {
+    throw new TypeError('Inline editor option must contain a value.');
+  }
+  return Object.freeze({
+    text: String((_option$text = option.text) !== null && _option$text !== void 0 ? _option$text : ''),
+    value: String((_option$value = option.value) !== null && _option$value !== void 0 ? _option$value : '')
+  });
+}
+function parseValue(value, type) {
+  if (!MULTIPLE_TYPES.has(type)) return String(value !== null && value !== void 0 ? value : '');
+  return String(value !== null && value !== void 0 ? value : '').split(',').map(function (item) {
+    return item.trim();
+  }).filter(Boolean);
+}
+function normalizeMode(mode) {
+  return mode === 'inline' ? 'inline' : 'popup';
+}
+function requiredValue(value, field) {
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new TypeError("Inline editor requires ".concat(field, "."));
+  }
+  return value;
+}
+function assertType(type) {
+  if (!INLINE_EDITOR_TYPES.includes(type)) {
+    throw new TypeError("Unsupported inline editor type [".concat(type !== null && type !== void 0 ? type : '', "]."));
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/editing/inline-editor-request.js":
+/*!****************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-request.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "InlineEditRejectedError": () => (/* binding */ InlineEditRejectedError),
+/* harmony export */   "inlineEditErrorMessage": () => (/* binding */ inlineEditErrorMessage),
+/* harmony export */   "inlineEditParameters": () => (/* binding */ inlineEditParameters),
+/* harmony export */   "normalizeInlineEditResponse": () => (/* binding */ normalizeInlineEditResponse),
+/* harmony export */   "submitInlineEdit": () => (/* binding */ submitInlineEdit)
+/* harmony export */ });
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _wrapNativeSuper(t) { var r = "function" == typeof Map ? new Map() : void 0; return _wrapNativeSuper = function _wrapNativeSuper(t) { if (null === t || !_isNativeFunction(t)) return t; if ("function" != typeof t) throw new TypeError("Super expression must either be null or a function"); if (void 0 !== r) { if (r.has(t)) return r.get(t); r.set(t, Wrapper); } function Wrapper() { return _construct(t, arguments, _getPrototypeOf(this).constructor); } return Wrapper.prototype = Object.create(t.prototype, { constructor: { value: Wrapper, enumerable: !1, writable: !0, configurable: !0 } }), _setPrototypeOf(Wrapper, t); }, _wrapNativeSuper(t); }
+function _construct(t, e, r) { if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && _setPrototypeOf(p, r.prototype), p; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _isNativeFunction(t) { try { return -1 !== Function.toString.call(t).indexOf("[native code]"); } catch (n) { return "function" == typeof t; } }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+var InlineEditRejectedError = /*#__PURE__*/function (_Error) {
+  function InlineEditRejectedError(message) {
+    var _this;
+    _classCallCheck(this, InlineEditRejectedError);
+    _this = _callSuper(this, InlineEditRejectedError, [message]);
+    _this.name = 'InlineEditRejectedError';
+    return _this;
+  }
+  _inherits(InlineEditRejectedError, _Error);
+  return _createClass(InlineEditRejectedError);
+}(/*#__PURE__*/_wrapNativeSuper(Error));
+function submitInlineEdit(_x, _x2, _x3, _x4) {
+  return _submitInlineEdit.apply(this, arguments);
+}
+function _submitInlineEdit() {
+  _submitInlineEdit = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(http, config, value, signal) {
+    var response, payload;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          assertHttp(http);
+          _context.n = 1;
+          return http.post(config.url, inlineEditParameters(config, value), {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            signal: signal
+          });
+        case 1:
+          response = _context.v;
+          _context.n = 2;
+          return response.json();
+        case 2:
+          payload = _context.v;
+          return _context.a(2, normalizeInlineEditResponse(payload, value));
+      }
+    }, _callee);
+  }));
+  return _submitInlineEdit.apply(this, arguments);
+}
+function inlineEditParameters(config, value) {
+  var parameters = new globalThis.URLSearchParams();
+  parameters.set('name', config.name);
+  parameters.set('pk', config.pk);
+  appendValue(parameters, value);
+  return parameters;
+}
+function normalizeInlineEditResponse(payload, fallbackValue) {
+  if (!payload || _typeof(payload) !== 'object' || Array.isArray(payload)) {
+    throw new InlineEditRejectedError('Inline edit response must be an object.');
+  }
+  if (payload.status !== true && payload.status !== 'true') {
+    throw new InlineEditRejectedError(payload.reason || '');
+  }
+  return Object.hasOwn(payload, 'newValue') ? payload.newValue : fallbackValue;
+}
+function inlineEditErrorMessage(_x5, _x6) {
+  return _inlineEditErrorMessage.apply(this, arguments);
+}
+function _inlineEditErrorMessage() {
+  _inlineEditErrorMessage = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(error, fallback) {
+    var rejected, response, payload;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          rejected = rejectedErrorMessage(error, fallback);
+          if (!(rejected !== null)) {
+            _context2.n = 1;
+            break;
+          }
+          return _context2.a(2, rejected);
+        case 1:
+          response = error === null || error === void 0 ? void 0 : error.response;
+          if (response) {
+            _context2.n = 2;
+            break;
+          }
+          return _context2.a(2, (error === null || error === void 0 ? void 0 : error.message) || fallback);
+        case 2:
+          if (!(response.status >= 500)) {
+            _context2.n = 3;
+            break;
+          }
+          return _context2.a(2, fallback);
+        case 3:
+          _context2.n = 4;
+          return readErrorPayload(response);
+        case 4:
+          payload = _context2.v;
+          return _context2.a(2, payloadErrorMessage(payload, fallback));
+      }
+    }, _callee2);
+  }));
+  return _inlineEditErrorMessage.apply(this, arguments);
+}
+function rejectedErrorMessage(error, fallback) {
+  return error instanceof InlineEditRejectedError ? error.message || fallback : null;
+}
+function payloadErrorMessage(payload, fallback) {
+  return validationMessage(payload) || (payload === null || payload === void 0 ? void 0 : payload.message) || (payload === null || payload === void 0 ? void 0 : payload.reason) || fallback;
+}
+function readErrorPayload(_x7) {
+  return _readErrorPayload.apply(this, arguments);
+}
+function _readErrorPayload() {
+  _readErrorPayload = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(response) {
+    var text, _t;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.p = _context3.n) {
+        case 0:
+          if (!(typeof response.text === 'function')) {
+            _context3.n = 4;
+            break;
+          }
+          _context3.n = 1;
+          return response.text();
+        case 1:
+          text = _context3.v;
+          if (text) {
+            _context3.n = 2;
+            break;
+          }
+          return _context3.a(2, null);
+        case 2:
+          _context3.p = 2;
+          return _context3.a(2, JSON.parse(text));
+        case 3:
+          _context3.p = 3;
+          _t = _context3.v;
+          return _context3.a(2, {
+            message: text
+          });
+        case 4:
+          return _context3.a(2, typeof response.json === 'function' ? response.json() : null);
+      }
+    }, _callee3, null, [[2, 3]]);
+  }));
+  return _readErrorPayload.apply(this, arguments);
+}
+function validationMessage(payload) {
+  var errors = payload === null || payload === void 0 ? void 0 : payload.errors;
+  if (!errors || _typeof(errors) !== 'object') return null;
+  var first = Object.values(errors).flat().find(function (value) {
+    return typeof value === 'string';
+  });
+  return first !== null && first !== void 0 ? first : null;
+}
+function appendValue(parameters, value) {
+  if (Array.isArray(value)) {
+    if (value.length === 0) parameters.set('value', '');
+    value.forEach(function (item) {
+      return parameters.append('value[]', String(item));
+    });
+    return;
+  }
+  parameters.set('value', String(value !== null && value !== void 0 ? value : ''));
+}
+function assertHttp(http) {
+  if (typeof (http === null || http === void 0 ? void 0 : http.post) !== 'function') {
+    throw new TypeError('Inline editor requires Admin.Http.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/editing/inline-editor-value.js":
+/*!**************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-value.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "applyInlineEditorValue": () => (/* binding */ applyInlineEditorValue),
+/* harmony export */   "inlineEditorDisplayValue": () => (/* binding */ inlineEditorDisplayValue),
+/* harmony export */   "normalizeInlineEditorValue": () => (/* binding */ normalizeInlineEditorValue),
+/* harmony export */   "serializeInlineEditorValue": () => (/* binding */ serializeInlineEditorValue)
+/* harmony export */ });
+var MULTIPLE_TYPES = new Set(['checkbox', 'checklist']);
+function applyInlineEditorValue(element, config, value) {
+  var normalized = normalizeInlineEditorValue(value, config.type);
+  element.dataset.value = serializeInlineEditorValue(normalized);
+  var display = inlineEditorDisplayValue(config, normalized);
+  if (config.displayHtml) element.innerHTML = display;else element.textContent = display;
+}
+function normalizeInlineEditorValue(value, type) {
+  if (!MULTIPLE_TYPES.has(type)) return String(value !== null && value !== void 0 ? value : '');
+  if (Array.isArray(value)) return value.map(function (item) {
+    return String(item);
+  });
+  if (value === null || value === undefined || value === '') return [];
+  return String(value).split(',').map(function (item) {
+    return item.trim();
+  }).filter(Boolean);
+}
+function inlineEditorDisplayValue(config, value) {
+  if (config.type === 'select') return optionText(config.options, value) || config.emptyText;
+  if (MULTIPLE_TYPES.has(config.type)) {
+    var labels = value.map(function (item) {
+      return optionText(config.options, item);
+    }).filter(Boolean);
+    return labels.length ? labels.join(', ') : config.emptyText;
+  }
+  return String(value !== null && value !== void 0 ? value : '') || config.emptyText;
+}
+function serializeInlineEditorValue(value) {
+  return Array.isArray(value) ? value.join(',') : String(value !== null && value !== void 0 ? value : '');
+}
+function optionText(options, value) {
+  var _options$find$text, _options$find;
+  return (_options$find$text = (_options$find = options.find(function (option) {
+    return option.value === String(value !== null && value !== void 0 ? value : '');
+  })) === null || _options$find === void 0 ? void 0 : _options$find.text) !== null && _options$find$text !== void 0 ? _options$find$text : '';
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/editing/inline-editor-view.js":
+/*!*************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-view.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createInlineEditorView": () => (/* binding */ createInlineEditorView)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+var CONTROL_CLASS = 'soa-inline-editor-control';
+function createInlineEditorView(trigger, config, labels, handlers) {
+  var document = trigger.ownerDocument;
+  var control = createControl(document, config);
+  var elements = createEditorElements(document, config, labels, control.element);
+  var removeListeners = bindViewEvents(elements, control, handlers);
+  trigger.hidden = true;
+  trigger.setAttribute('aria-expanded', 'true');
+  trigger.insertAdjacentElement('afterend', elements.root);
+  focusControl(control.element);
+  return {
+    destroy: function destroy() {
+      return destroyView(trigger, elements.root, control, removeListeners);
+    },
+    readValue: control.read,
+    root: elements.root,
+    setBusy: function setBusy(busy) {
+      return _setBusy(elements, busy);
+    },
+    setError: function setError(message) {
+      return _setError(elements.error, message);
+    }
+  };
+}
+function createEditorElements(document, config, labels, control) {
+  var root = createElement(document, 'div', "soa-inline-editor soa-inline-editor-".concat(config.mode));
+  var form = createElement(document, 'form', 'soa-inline-editor-form');
+  var title = createTitle(document, config.title);
+  var input = createElement(document, 'div', 'soa-inline-editor-input');
+  var actions = createElement(document, 'div', 'soa-inline-editor-actions');
+  var submit = createButton(document, 'submit', 'soa-inline-editor-submit', labels.save);
+  var cancel = createButton(document, 'button', 'soa-inline-editor-cancel', labels.cancel);
+  var error = createElement(document, 'div', 'soa-inline-editor-error');
+  input.append(control);
+  actions.append(submit, cancel);
+  form.append.apply(form, _toConsumableArray([title, input, actions, error].filter(Boolean)));
+  root.append(form);
+  root.setAttribute('role', config.mode === 'popup' ? 'dialog' : 'group');
+  return {
+    cancel: cancel,
+    error: error,
+    form: form,
+    root: root,
+    submit: submit
+  };
+}
+function bindViewEvents(elements, control, handlers) {
+  var submit = function submit(event) {
+    event.preventDefault();
+    handlers.submit(control.read());
+  };
+  var cancel = function cancel() {
+    return handlers.cancel();
+  };
+  var keydown = function keydown(event) {
+    if (event.key === 'Escape') handlers.cancel();
+  };
+  elements.form.addEventListener('submit', submit);
+  elements.form.addEventListener('keydown', keydown);
+  elements.cancel.addEventListener('click', cancel);
+  return function () {
+    elements.form.removeEventListener('submit', submit);
+    elements.form.removeEventListener('keydown', keydown);
+    elements.cancel.removeEventListener('click', cancel);
+  };
+}
+function createControl(document, config) {
+  if (config.type === 'select') return createSelect(document, config);
+  if (config.type === 'checklist' || config.type === 'checkbox') {
+    return createChecklist(document, config);
+  }
+  if (config.type === 'textarea') return createTextarea(document, config);
+  if (config.type === 'range') return createRange(document, config);
+  return createInput(document, config);
+}
+function createInput(document, config) {
+  var input = createElement(document, 'input', CONTROL_CLASS);
+  input.type = config.type === 'number' ? 'number' : 'text';
+  input.value = config.value;
+  applyNumberAttributes(input, config);
+  applyDateAttributes(input, config);
+  return {
+    element: input,
+    read: function read() {
+      return input.value;
+    }
+  };
+}
+function createTextarea(document, config) {
+  var textarea = createElement(document, 'textarea', CONTROL_CLASS);
+  textarea.value = config.value;
+  return {
+    element: textarea,
+    read: function read() {
+      return textarea.value;
+    }
+  };
+}
+function createSelect(document, config) {
+  var select = createElement(document, 'select', CONTROL_CLASS);
+  config.options.forEach(function (option) {
+    return select.append(createOption(document, option, config.value));
+  });
+  return {
+    element: select,
+    read: function read() {
+      return select.value;
+    }
+  };
+}
+function createChecklist(document, config) {
+  var fieldset = createElement(document, 'fieldset', 'soa-inline-editor-checklist');
+  config.options.forEach(function (option) {
+    return fieldset.append(createCheckOption(document, option, config));
+  });
+  return {
+    element: fieldset,
+    read: function read() {
+      return _toConsumableArray(fieldset.querySelectorAll('input:checked')).map(function (input) {
+        return input.value;
+      });
+    }
+  };
+}
+function createRange(document, config) {
+  var wrapper = createElement(document, 'div', 'soa-inline-editor-range');
+  var input = createElement(document, 'input', CONTROL_CLASS);
+  var output = createElement(document, 'output', 'soa-inline-editor-range-value');
+  var update = function update() {
+    output.value = input.value;
+  };
+  input.type = 'range';
+  input.value = config.value;
+  applyNumberAttributes(input, config);
+  input.addEventListener('input', update);
+  update();
+  wrapper.append(input, output);
+  return {
+    destroy: function destroy() {
+      return input.removeEventListener('input', update);
+    },
+    element: wrapper,
+    read: function read() {
+      return input.value;
+    }
+  };
+}
+function createCheckOption(document, option, config) {
+  var label = createElement(document, 'label', 'soa-inline-editor-check-option');
+  var input = createElement(document, 'input', 'soa-inline-editor-check-input');
+  var text = createElement(document, 'span', 'soa-inline-editor-check-label');
+  input.type = 'checkbox';
+  input.value = option.value;
+  input.checked = config.value.includes(option.value);
+  text.textContent = option.text;
+  label.append(input, text);
+  return label;
+}
+function createOption(document, option, value) {
+  var element = document.createElement('option');
+  element.value = option.value;
+  element.textContent = option.text;
+  element.selected = option.value === String(value !== null && value !== void 0 ? value : '');
+  return element;
+}
+function applyNumberAttributes(input, config) {
+  for (var _i = 0, _arr = ['min', 'max', 'step']; _i < _arr.length; _i++) {
+    var name = _arr[_i];
+    if (config[name] !== null) input.setAttribute(name, config[name]);
+  }
+}
+function applyDateAttributes(input, config) {
+  if (config.type !== 'date' && config.type !== 'datetime') return;
+  input.dataset.soaDateControl = config.type;
+  input.dataset.dateFormat = config.dateFormat;
+}
+function _setBusy(elements, busy) {
+  elements.form.setAttribute('aria-busy', String(busy));
+  elements.form.querySelectorAll('input, textarea, select, button').forEach(function (control) {
+    control.disabled = busy;
+  });
+}
+function _setError(element, message) {
+  element.textContent = message;
+  element.hidden = !message;
+}
+function destroyView(trigger, root, control, removeListeners) {
+  var _control$destroy;
+  removeListeners();
+  (_control$destroy = control.destroy) === null || _control$destroy === void 0 || _control$destroy.call(control);
+  root.remove();
+  trigger.hidden = false;
+  trigger.setAttribute('aria-expanded', 'false');
+}
+function focusControl(control) {
+  var input = control.matches('input, textarea, select') ? control : control.querySelector('input, textarea, select');
+  input === null || input === void 0 || input.focus();
+}
+function createButton(document, type, className, label) {
+  var button = createElement(document, 'button', className);
+  button.type = type;
+  button.textContent = label;
+  return button;
+}
+function createTitle(document, title) {
+  if (!title) return null;
+  var element = createElement(document, 'div', 'soa-inline-editor-title');
+  element.textContent = title;
+  return element;
+}
+function createElement(document, tag, className) {
+  var element = document.createElement(tag);
+  element.className = className;
+  return element;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/editing/inline-editor.js":
+/*!********************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "INLINE_EDITOR_COMPONENT": () => (/* binding */ INLINE_EDITOR_COMPONENT),
+/* harmony export */   "INLINE_EDITOR_SELECTOR": () => (/* binding */ INLINE_EDITOR_SELECTOR),
+/* harmony export */   "createInlineEditorDefinition": () => (/* binding */ createInlineEditorDefinition),
+/* harmony export */   "mountInlineEditor": () => (/* binding */ mountInlineEditor)
+/* harmony export */ });
+/* harmony import */ var _inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-config.js */ "./resources/frontend/features/table/editing/inline-editor-config.js");
+/* harmony import */ var _inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-request.js */ "./resources/frontend/features/table/editing/inline-editor-request.js");
+/* harmony import */ var _inline_editor_value_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inline-editor-value.js */ "./resources/frontend/features/table/editing/inline-editor-value.js");
+/* harmony import */ var _inline_editor_view_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inline-editor-view.js */ "./resources/frontend/features/table/editing/inline-editor-view.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+
+var INLINE_EDITOR_COMPONENT = 'inline-editor';
+var INLINE_EDITOR_SELECTOR = '[data-soa-inline-editor]';
+function createInlineEditorDefinition(dependencies) {
+  var settings = normalizeDependencies(dependencies);
+  return {
+    name: INLINE_EDITOR_COMPONENT,
+    selector: INLINE_EDITOR_SELECTOR,
+    mount: function mount(element) {
+      return mountInlineEditor(element, settings);
+    }
+  };
+}
+function mountInlineEditor(element, dependencies) {
+  var config = (0,_inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__.readInlineEditorConfig)(element);
+  var settings = normalizeDependencies(dependencies);
+  var state = {
+    config: config,
+    dependencies: settings,
+    element: element,
+    request: null,
+    view: null
+  };
+  var open = function open(event) {
+    event === null || event === void 0 || event.preventDefault();
+    openEditor(state);
+  };
+  element.addEventListener('click', open);
+  return {
+    destroy: function destroy() {
+      return destroyEditor(state, open);
+    },
+    open: function open() {
+      return openEditor(state);
+    }
+  };
+}
+function openEditor(state) {
+  if (state.view) return state.view;
+  state.view = state.dependencies.createView(state.element, state.config, state.dependencies.labels, {
+    cancel: function cancel() {
+      return closeEditor(state);
+    },
+    submit: function submit(value) {
+      return submitValue(state, value);
+    }
+  });
+  state.dependencies.components.scan(state.view.root, 'date-control');
+  dispatch(state, 'inline-edit:opened');
+  return state.view;
+}
+function submitValue(_x, _x2) {
+  return _submitValue.apply(this, arguments);
+}
+function _submitValue() {
+  _submitValue = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(state, value) {
+    var request, saved, _t;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.p = _context.n) {
+        case 0:
+          if (!state.request) {
+            _context.n = 1;
+            break;
+          }
+          return _context.a(2);
+        case 1:
+          request = new globalThis.AbortController();
+          state.request = request;
+          state.view.setError('');
+          state.view.setBusy(true);
+          dispatch(state, 'inline-edit:submitting', {
+            value: value
+          });
+          _context.p = 2;
+          _context.n = 3;
+          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.submitInlineEdit)(state.dependencies.http, state.config, value, request.signal);
+        case 3:
+          saved = _context.v;
+          if (!(state.request !== request)) {
+            _context.n = 4;
+            break;
+          }
+          return _context.a(2);
+        case 4:
+          state.request = null;
+          (0,_inline_editor_value_js__WEBPACK_IMPORTED_MODULE_2__.applyInlineEditorValue)(state.element, state.config, saved);
+          dispatch(state, 'inline-edit:submitted', {
+            value: saved
+          });
+          closeEditor(state);
+          _context.n = 6;
+          break;
+        case 5:
+          _context.p = 5;
+          _t = _context.v;
+          _context.n = 6;
+          return handleSubmitError(state, request, _t);
+        case 6:
+          return _context.a(2);
+      }
+    }, _callee, null, [[2, 5]]);
+  }));
+  return _submitValue.apply(this, arguments);
+}
+function handleSubmitError(_x3, _x4, _x5) {
+  return _handleSubmitError.apply(this, arguments);
+}
+function _handleSubmitError() {
+  _handleSubmitError = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(state, request, error) {
+    var message;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          if (!(state.request !== request || (error === null || error === void 0 ? void 0 : error.name) === 'AbortError')) {
+            _context2.n = 1;
+            break;
+          }
+          return _context2.a(2);
+        case 1:
+          _context2.n = 2;
+          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.inlineEditErrorMessage)(error, state.dependencies.labels.error);
+        case 2:
+          message = _context2.v;
+          if (!(state.request !== request)) {
+            _context2.n = 3;
+            break;
+          }
+          return _context2.a(2);
+        case 3:
+          state.request = null;
+          state.view.setBusy(false);
+          state.view.setError(message);
+          dispatch(state, 'inline-edit:failed', {
+            error: error
+          });
+        case 4:
+          return _context2.a(2);
+      }
+    }, _callee2);
+  }));
+  return _handleSubmitError.apply(this, arguments);
+}
+function closeEditor(state) {
+  var _state$request;
+  if (!state.view) return;
+  (_state$request = state.request) === null || _state$request === void 0 || _state$request.abort();
+  state.request = null;
+  state.dependencies.components.destroy(state.view.root, 'date-control');
+  state.view.destroy();
+  state.view = null;
+  dispatch(state, 'inline-edit:closed');
+}
+function destroyEditor(state, open) {
+  state.element.removeEventListener('click', open);
+  closeEditor(state);
+}
+function dispatch(state, name) {
+  var extra = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  state.element.dispatchEvent(new globalThis.CustomEvent(name, {
+    bubbles: true,
+    detail: _objectSpread({
+      name: state.config.name,
+      pk: state.config.pk
+    }, extra)
+  }));
+}
+function normalizeDependencies(input) {
+  var _input$createView;
+  assertFunction(input === null || input === void 0 ? void 0 : input.http, 'post', 'Inline editor requires HTTP.');
+  assertFunction(input === null || input === void 0 ? void 0 : input.components, 'scan', 'Inline editor requires component lifecycle.');
+  assertFunction(input === null || input === void 0 ? void 0 : input.components, 'destroy', 'Inline editor requires component lifecycle.');
+  return {
+    components: input.components,
+    createView: (_input$createView = input.createView) !== null && _input$createView !== void 0 ? _input$createView : _inline_editor_view_js__WEBPACK_IMPORTED_MODULE_3__.createInlineEditorView,
+    http: input.http,
+    labels: normalizeLabels(input.labels)
+  };
+}
+function normalizeLabels() {
+  var _labels$cancel, _labels$error, _labels$save;
+  var labels = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return {
+    cancel: (_labels$cancel = labels.cancel) !== null && _labels$cancel !== void 0 ? _labels$cancel : 'Cancel',
+    error: (_labels$error = labels.error) !== null && _labels$error !== void 0 ? _labels$error : 'Request failed',
+    save: (_labels$save = labels.save) !== null && _labels$save !== void 0 ? _labels$save : 'Save'
+  };
+}
+function assertFunction(object, method, message) {
+  if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/editing/install-inline-editors.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/install-inline-editors.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "installInlineEditors": () => (/* binding */ installInlineEditors)
+/* harmony export */ });
+/* harmony import */ var _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor.js */ "./resources/frontend/features/table/editing/inline-editor.js");
+
+function installInlineEditors(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  assertAdmin(admin);
+  var definition = (0,_inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.createInlineEditorDefinition)({
+    components: admin.Components,
+    http: admin.Http,
+    labels: options.labels
+  });
+  admin.Components.register(definition);
+  var scan = function scan() {
+    var _options$root;
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+    return admin.Components.scan(root, _inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.INLINE_EDITOR_COMPONENT);
+  };
+  admin.Modules.register('display.columns.inline-edit', function () {
+    return scan();
+  }, 0, ['bootstrap::tab::shown']);
+  return {
+    definition: definition,
+    scan: scan
+  };
+}
+function assertAdmin(admin) {
+  assertFunction(admin === null || admin === void 0 ? void 0 : admin.Components, 'register', 'Inline editors require Admin.Components.');
+  assertFunction(admin === null || admin === void 0 ? void 0 : admin.Modules, 'register', 'Inline editors require Admin.Modules.');
+  assertFunction(admin === null || admin === void 0 ? void 0 : admin.Http, 'post', 'Inline editors require Admin.Http.');
+}
+function assertFunction(object, method, message) {
+  if (typeof (object === null || object === void 0 ? void 0 : object[method]) !== 'function') throw new TypeError(message);
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/filters/date-filter-support.js":
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/filters/date-filter-support.js ***!
@@ -2280,49 +3118,61 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AUTO_UPDATE_COLOR_PROPERTY": () => (/* reexport safe */ _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.AUTO_UPDATE_COLOR_PROPERTY),
-/* harmony export */   "DataTableAdapter": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_13__.DataTableAdapter),
+/* harmony export */   "DataTableAdapter": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_17__.DataTableAdapter),
+/* harmony export */   "INLINE_EDITOR_COMPONENT": () => (/* reexport safe */ _editing_inline_editor_js__WEBPACK_IMPORTED_MODULE_14__.INLINE_EDITOR_COMPONENT),
+/* harmony export */   "INLINE_EDITOR_SELECTOR": () => (/* reexport safe */ _editing_inline_editor_js__WEBPACK_IMPORTED_MODULE_14__.INLINE_EDITOR_SELECTOR),
+/* harmony export */   "INLINE_EDITOR_TYPES": () => (/* reexport safe */ _editing_inline_editor_config_js__WEBPACK_IMPORTED_MODULE_13__.INLINE_EDITOR_TYPES),
+/* harmony export */   "InlineEditRejectedError": () => (/* reexport safe */ _editing_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_16__.InlineEditRejectedError),
 /* harmony export */   "TABLE_FEATURE_ID": () => (/* binding */ TABLE_FEATURE_ID),
 /* harmony export */   "actionRequestSettings": () => (/* reexport safe */ _actions_action_request_js__WEBPACK_IMPORTED_MODULE_2__.actionRequestSettings),
-/* harmony export */   "appendNamedFilterData": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_19__.appendNamedFilterData),
+/* harmony export */   "appendNamedFilterData": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_23__.appendNamedFilterData),
 /* harmony export */   "applyCreatedRowClass": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_12__.applyCreatedRowClass),
-/* harmony export */   "applyServerOptions": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_15__.applyServerOptions),
+/* harmony export */   "applyServerOptions": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_19__.applyServerOptions),
 /* harmony export */   "bindBulkActions": () => (/* reexport safe */ _actions_bulk_actions_js__WEBPACK_IMPORTED_MODULE_3__.bindBulkActions),
 /* harmony export */   "bindConfirmedControls": () => (/* reexport safe */ _controls_confirm_submit_js__WEBPACK_IMPORTED_MODULE_5__.bindConfirmedControls),
 /* harmony export */   "bindFilterControls": () => (/* reexport safe */ _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_6__.bindFilterControls),
 /* harmony export */   "bindFormActions": () => (/* reexport safe */ _actions_form_actions_js__WEBPACK_IMPORTED_MODULE_4__.bindFormActions),
-/* harmony export */   "bindTableCheckboxes": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_17__.bindTableCheckboxes),
+/* harmony export */   "bindTableCheckboxes": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_21__.bindTableCheckboxes),
 /* harmony export */   "clearFilterControls": () => (/* reexport safe */ _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_6__.clearFilterControls),
-/* harmony export */   "clearFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_18__.clearFilterState),
-/* harmony export */   "clearSavedTableSearch": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_18__.clearSavedTableSearch),
+/* harmony export */   "clearFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_22__.clearFilterState),
+/* harmony export */   "clearSavedTableSearch": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_22__.clearSavedTableSearch),
 /* harmony export */   "createDateFilterSupport": () => (/* reexport safe */ _filters_date_filter_support_js__WEBPACK_IMPORTED_MODULE_7__.createDateFilterSupport),
 /* harmony export */   "createDrawHook": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_12__.createDrawHook),
-/* harmony export */   "createTableAjax": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_19__.createTableAjax),
+/* harmony export */   "createInlineEditorDefinition": () => (/* reexport safe */ _editing_inline_editor_js__WEBPACK_IMPORTED_MODULE_14__.createInlineEditorDefinition),
+/* harmony export */   "createTableAjax": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_23__.createTableAjax),
 /* harmony export */   "createTableFilterDrivers": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_8__.createTableFilterDrivers),
 /* harmony export */   "dataTables2SearchExtensions": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_8__.dataTables2SearchExtensions),
 /* harmony export */   "executeTableAction": () => (/* reexport safe */ _actions_action_request_js__WEBPACK_IMPORTED_MODULE_2__.executeTableAction),
-/* harmony export */   "filterStateKey": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_18__.filterStateKey),
+/* harmony export */   "filterStateKey": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_22__.filterStateKey),
 /* harmony export */   "findActionTable": () => (/* reexport safe */ _actions_action_context_js__WEBPACK_IMPORTED_MODULE_1__.findActionTable),
 /* harmony export */   "forEachColumnFilter": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_9__.forEachColumnFilter),
 /* harmony export */   "highlightColumn": () => (/* reexport safe */ _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_10__.highlightColumn),
+/* harmony export */   "inlineEditErrorMessage": () => (/* reexport safe */ _editing_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_16__.inlineEditErrorMessage),
+/* harmony export */   "inlineEditParameters": () => (/* reexport safe */ _editing_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_16__.inlineEditParameters),
+/* harmony export */   "installInlineEditors": () => (/* reexport safe */ _editing_install_inline_editors_js__WEBPACK_IMPORTED_MODULE_15__.installInlineEditors),
 /* harmony export */   "isDateInRange": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_8__.isDateInRange),
 /* harmony export */   "isNumberInRange": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_8__.isNumberInRange),
-/* harmony export */   "loadFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_18__.loadFilterState),
+/* harmony export */   "loadFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_22__.loadFilterState),
 /* harmony export */   "loadLazyImage": () => (/* reexport safe */ _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_11__.loadLazyImage),
 /* harmony export */   "loadLazyImages": () => (/* reexport safe */ _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_11__.loadLazyImages),
-/* harmony export */   "migrateLegacyFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_18__.migrateLegacyFilterState),
-/* harmony export */   "mountDataTable": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_13__.mountDataTable),
+/* harmony export */   "migrateLegacyFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_22__.migrateLegacyFilterState),
+/* harmony export */   "mountDataTable": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_17__.mountDataTable),
+/* harmony export */   "mountInlineEditor": () => (/* reexport safe */ _editing_inline_editor_js__WEBPACK_IMPORTED_MODULE_14__.mountInlineEditor),
 /* harmony export */   "mountTableAutoUpdate": () => (/* reexport safe */ _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.mountTableAutoUpdate),
 /* harmony export */   "mountTableAutoUpdates": () => (/* reexport safe */ _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.mountTableAutoUpdates),
-/* harmony export */   "normalizeDataTables2Options": () => (/* reexport safe */ _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_14__.normalizeDataTables2Options),
+/* harmony export */   "normalizeDataTables2Options": () => (/* reexport safe */ _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_18__.normalizeDataTables2Options),
+/* harmony export */   "normalizeInlineEditResponse": () => (/* reexport safe */ _editing_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_16__.normalizeInlineEditResponse),
 /* harmony export */   "readAutoUpdateConfig": () => (/* reexport safe */ _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.readAutoUpdateConfig),
 /* harmony export */   "readControlValue": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_9__.readControlValue),
-/* harmony export */   "readTableDefinition": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_15__.readTableDefinition),
-/* harmony export */   "saveFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_18__.saveFilterState),
+/* harmony export */   "readInlineEditorConfig": () => (/* reexport safe */ _editing_inline_editor_config_js__WEBPACK_IMPORTED_MODULE_13__.readInlineEditorConfig),
+/* harmony export */   "readTableDefinition": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_19__.readTableDefinition),
+/* harmony export */   "saveFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_22__.saveFilterState),
 /* harmony export */   "selectedRowParameters": () => (/* reexport safe */ _actions_action_context_js__WEBPACK_IMPORTED_MODULE_1__.selectedRowParameters),
-/* harmony export */   "selectedRowValues": () => (/* reexport safe */ _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_16__.selectedRowValues),
+/* harmony export */   "selectedRowValues": () => (/* reexport safe */ _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_20__.selectedRowValues),
+/* harmony export */   "submitInlineEdit": () => (/* reexport safe */ _editing_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_16__.submitInlineEdit),
 /* harmony export */   "syncColumnHighlight": () => (/* reexport safe */ _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_10__.syncColumnHighlight),
-/* harmony export */   "tableLayout": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_15__.tableLayout),
-/* harmony export */   "updateRowSelection": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_17__.updateRowSelection)
+/* harmony export */   "tableLayout": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_19__.tableLayout),
+/* harmony export */   "updateRowSelection": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_21__.updateRowSelection)
 /* harmony export */ });
 /* harmony import */ var _autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./autoupdate/table-auto-update.js */ "./resources/frontend/features/table/autoupdate/table-auto-update.js");
 /* harmony import */ var _actions_action_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions/action-context.js */ "./resources/frontend/features/table/actions/action-context.js");
@@ -2337,14 +3187,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
 /* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
 /* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
-/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
-/* harmony import */ var _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./options/option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
-/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./selection/checkbox-controls.js */ "./resources/frontend/features/table/selection/checkbox-controls.js");
-/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
-/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
+/* harmony import */ var _editing_inline_editor_config_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./editing/inline-editor-config.js */ "./resources/frontend/features/table/editing/inline-editor-config.js");
+/* harmony import */ var _editing_inline_editor_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./editing/inline-editor.js */ "./resources/frontend/features/table/editing/inline-editor.js");
+/* harmony import */ var _editing_install_inline_editors_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./editing/install-inline-editors.js */ "./resources/frontend/features/table/editing/install-inline-editors.js");
+/* harmony import */ var _editing_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./editing/inline-editor-request.js */ "./resources/frontend/features/table/editing/inline-editor-request.js");
+/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
+/* harmony import */ var _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./options/option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
+/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./selection/checkbox-controls.js */ "./resources/frontend/features/table/selection/checkbox-controls.js");
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
 var TABLE_FEATURE_ID = 'table';
+
+
+
+
 
 
 

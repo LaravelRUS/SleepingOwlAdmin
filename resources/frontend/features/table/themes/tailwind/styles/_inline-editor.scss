@@ -1,0 +1,105 @@
+@use 'variables';
+
+@mixin styles {
+  .soa-inline-editable {
+    padding: 0.125rem 0.25rem;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-bottom: variables.$inline-editor-border-width solid
+      var(--soa-inline-editor-accent);
+    border-radius: variables.$inline-editor-radius;
+  }
+
+  .soa-inline-editable:hover {
+    background: var(--soa-table-row-hover-color);
+  }
+
+  .soa-inline-editor {
+    display: inline-block;
+    min-width: variables.$inline-editor-min-width;
+    color: var(--soa-inline-editor-text);
+  }
+
+  .soa-inline-editor-popup {
+    padding: variables.$inline-editor-padding;
+    background: var(--soa-inline-editor-surface);
+    border: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
+    border-radius: variables.$inline-editor-radius;
+    box-shadow: variables.$inline-editor-shadow var(--soa-inline-editor-shadow);
+  }
+
+  .soa-inline-editor-form,
+  .soa-inline-editor-checklist,
+  .soa-inline-editor-range {
+    display: grid;
+    gap: variables.$inline-editor-gap;
+    margin: 0;
+  }
+
+  .soa-inline-editor-title {
+    font-weight: 600;
+  }
+
+  .soa-inline-editor-control {
+    width: 100%;
+    min-width: 5rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-surface);
+    border: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
+    border-radius: variables.$inline-editor-radius;
+  }
+
+  .soa-inline-editor-actions {
+    display: flex;
+    gap: variables.$inline-editor-gap;
+  }
+
+  .soa-inline-editor-submit,
+  .soa-inline-editor-cancel {
+    padding: 0.375rem 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: variables.$inline-editor-border-width solid transparent;
+    border-radius: variables.$inline-editor-radius;
+  }
+
+  .soa-inline-editor-submit {
+    color: var(--soa-inline-editor-on-accent);
+    background: var(--soa-inline-editor-accent);
+  }
+
+  .soa-inline-editor-submit:hover {
+    background: var(--soa-inline-editor-accent-hover);
+  }
+
+  .soa-inline-editor-cancel {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-surface);
+    border-color: var(--soa-inline-editor-border);
+  }
+
+  .soa-inline-editor-error {
+    max-width: variables.$inline-editor-min-width;
+    color: var(--soa-inline-editor-error);
+    line-height: 1.25;
+  }
+
+  .soa-inline-editor-check-option {
+    display: flex;
+    gap: variables.$inline-editor-gap;
+    align-items: center;
+  }
+
+  .soa-inline-editor-range-value {
+    color: var(--soa-inline-editor-muted);
+    text-align: center;
+  }
+
+  .soa-inline-editor-form[aria-busy='true'] {
+    opacity: 0.65;
+  }
+}

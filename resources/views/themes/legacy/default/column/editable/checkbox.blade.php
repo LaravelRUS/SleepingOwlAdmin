@@ -1,29 +1,7 @@
-<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
-
-  @if ($visibled)
-    @if(!$isReadonly)
-        <a href="#"
-           class="inline-editable"
-           data-mode="{{ $mode }}"
-           data-name="{{ $name }}"
-           data-value="{{ $value }}"
-           data-url="{{ $url }}"
-           data-type="checklist"
-           data-pk="{{ $id }}"
-           data-source="{ 1 : '{{ $checkedLabel }}' }"
-           data-emptytext="{{ $uncheckedLabel }}"
-           {{ $isReadonly ? 'data-disabled' : '' }}
-        ></a>
-    @else
-        <span v-pre>
-            {!! $text !!}
-        </span>
-    @endif
-
-    {!! $append !!}
-
-    @if($small)
-      <small class="clearfix">{!! $small !!}</small>
-    @endif
-  @endif
-</div>
+@include(AdminTemplate::getViewPath('column.editable.partials.editor'), [
+    'editorDisplayHtml' => true,
+    'editorEmptyText' => $uncheckedLabel,
+    'editorOptions' => [['value' => 1, 'text' => $checkedLabel]],
+    'editorTextHtml' => true,
+    'editorType' => 'checkbox',
+])

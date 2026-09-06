@@ -1,20 +1,20 @@
 {
     "/js/vue.js": "/js/vue.js?id=17c8d8e5c688339eb4d8594b20960a2d",
     "/js/vue-dev.js": "/js/vue-dev.js?id=995057949faef58e481a9557600213ab",
-    "/js/admin-app.js": "/js/admin-app.js?id=1f59972c16439ae6237cd65661b79fb1",
-    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=c7483a4bfbaa1200255d0807b637b192",
+    "/js/admin-app.js": "/js/admin-app.js?id=306e8c973aa9f3c09db16c543c92e0d7",
+    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=1eb95479a63a26dbe3cb485a42e8843d",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
     "/js/admin-core.js": "/js/admin-core.js?id=b983a01323cd440b5502c8123c18a184",
     "/js/features/forms.js": "/js/features/forms.js?id=605954adb457cc5490c7e67754bda3cb",
-    "/js/features/table.js": "/js/features/table.js?id=2dd57410b0de724a8f7c3788ab95cd39",
+    "/js/features/table.js": "/js/features/table.js?id=0a50714c412ebace0e8519578a51b99d",
     "/js/themes/legacy-adminlte.js": "/js/themes/legacy-adminlte.js?id=f5d387540235443141917d352abe4d71",
     "/js/themes/tailwind.js": "/js/themes/tailwind.js?id=f5d387540235443141917d352abe4d71",
-    "/css/admin-app.css": "/css/admin-app.css?id=6abc27f3a4c0052dd46ae6a29f6b922a",
+    "/css/admin-app.css": "/css/admin-app.css?id=4f5dc61153af6e4f9b0f054e5f58d664",
     "/css/features/table.css": "/css/features/table.css?id=0486f14bd03357524d6cb5a97dc6e459",
     "/css/features/forms.css": "/css/features/forms.css?id=dddffe8833518428c6de5c6aff5dda27",
     "/css/admin-core.css": "/css/admin-core.css?id=0ab8b34c6e46477fc5066f206cf3da97",
     "/css/themes/tailwind.css": "/css/themes/tailwind.css?id=5f4e442f6740a37639edde2e1f62ac7c",
     "/css/themes/legacy-adminlte.css": "/css/themes/legacy-adminlte.css?id=514e4526a697e6b8563d137ad4fddba9",
-    "/css/features/table/themes/tailwind.css": "/css/features/table/themes/tailwind.css?id=2bd33867b7227bf0998d73b4a4fbfb01",
-    "/css/features/table/themes/datatables-legacy-adminlte.css": "/css/features/table/themes/datatables-legacy-adminlte.css?id=c1e3e9dd7ef18d57ab96d07dd8b3b187"
+    "/css/features/table/themes/tailwind.css": "/css/features/table/themes/tailwind.css?id=0526912c6138ddd82fc53784fe4486f8",
+    "/css/features/table/themes/datatables-legacy-adminlte.css": "/css/features/table/themes/datatables-legacy-adminlte.css?id=1c9143018eb7f7c19b64007a3ebbfc67"
 }

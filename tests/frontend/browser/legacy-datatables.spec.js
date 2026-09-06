@@ -474,9 +474,9 @@ test('bulk and custom actions submit checked rows and fire lifecycle events', as
 test('inline edit posts its value and is rebound after a draw', async ({ page, request }) => {
     await openFixture(page)
     await page.locator('#inline-edit-1').click()
-    await page.locator('.editable-input input').fill('Published')
+    await page.locator('.soa-inline-editor-control').fill('Published')
     const editResponse = page.waitForResponse((item) => item.url().endsWith('/api/inline-edit'))
-    await page.locator('.editable-submit').click()
+    await page.locator('.soa-inline-editor-submit').click()
     await editResponse
     await expect(page.locator('#inline-edit-1')).toHaveText('Server normalized')
 
@@ -486,8 +486,16 @@ test('inline edit posts its value and is rebound after a draw', async ({ page, r
     await page.evaluate(() => globalThis.jQuery('#legacy-table').DataTable().draw(false))
     await drawResponse
     expect(
-        await page.evaluate(() => Boolean(globalThis.jQuery('#inline-edit-1').data('editable'))),
+        await page.evaluate(() =>
+            Boolean(
+                globalThis.Admin.Components.get(
+                    globalThis.document.querySelector('#inline-edit-1'),
+                    'inline-editor',
+                ),
+            ),
+        ),
     ).toBe(true)
+    expect(await page.evaluate(() => globalThis.jQuery?.fn?.editable)).toBeUndefined()
 })
 
 test('auto-update redraws the table and its close control stops the timer', async ({

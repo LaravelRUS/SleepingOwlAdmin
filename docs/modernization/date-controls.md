@@ -62,6 +62,8 @@ they delegate to the shared component scan and do not initialize a legacy
 jQuery plugin. Table date/range filters parse the same formats and listen for
 native `change` events.
 
-Moment, `bootstrap4-datetimepicker`, and `tempusdominus-core` remain temporary
-direct dependencies only because the legacy X-editable adapter still imports
-them. They are removed in the `X-editable/inline editor` checkpoint.
+The inline-editor migration removed the remaining direct dependencies on
+Moment, `bootstrap4-datetimepicker`, and `tempusdominus-core`. These packages
+may remain temporarily in `node_modules` only as unused transitive dependencies
+of the legacy `admin-lte` package; date controls and inline editors do not
+import them.

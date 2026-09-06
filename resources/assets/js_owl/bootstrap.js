@@ -30,10 +30,6 @@ const {
     installLegacyDataTablesPresentation,
 } = require('../../frontend/features/table/themes/legacy-adminlte/datatables');
 installLegacyDataTablesPresentation(dataTables2Runtime());
-// Temporary legacy ownership: removed together with X-editable later in stage 6.
-require('./libs/moment');
-require('./libs/datetimepicker');
-require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
 require('./libs/js-cookie');

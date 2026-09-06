@@ -2,11 +2,23 @@
 :root {
   --soa-table-row-hover-color: #f8fafc;
   --soa-table-row-selected-color: #eff6ff;
+  --soa-inline-editor-surface: #fff;
+  --soa-inline-editor-text: #0f172a;
+  --soa-inline-editor-border: #cbd5e1;
+  --soa-inline-editor-accent: #2563eb;
+  --soa-inline-editor-accent-hover: #1d4ed8;
+  --soa-inline-editor-on-accent: #fff;
+  --soa-inline-editor-muted: #64748b;
+  --soa-inline-editor-error: #dc2626;
+  --soa-inline-editor-shadow: rgba(15, 23, 42, 0.14);
 }
 
 :root[data-soa-color-scheme=dark] {
   --soa-table-row-hover-color: #172033;
   --soa-table-row-selected-color: #172554;
+  --soa-inline-editor-surface: #0f172a;
+  --soa-inline-editor-text: #f8fafc;
+  --soa-inline-editor-border: #475569;
 }
 
 @layer sleepingowl-theme.table {
@@ -118,6 +130,91 @@
     background-color: var(--soa-surface-color);
     font-size: 0.875rem;
     transform: translateX(-50%);
+  }
+  .soa-inline-editable {
+    padding: 0.125rem 0.25rem;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-bottom: 0.0625rem solid var(--soa-inline-editor-accent);
+    border-radius: 0.5rem;
+  }
+  .soa-inline-editable:hover {
+    background: var(--soa-table-row-hover-color);
+  }
+  .soa-inline-editor {
+    display: inline-block;
+    min-width: 14rem;
+    color: var(--soa-inline-editor-text);
+  }
+  .soa-inline-editor-popup {
+    padding: 0.875rem;
+    background: var(--soa-inline-editor-surface);
+    border: 0.0625rem solid var(--soa-inline-editor-border);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem var(--soa-inline-editor-shadow);
+  }
+  .soa-inline-editor-form,
+  .soa-inline-editor-checklist,
+  .soa-inline-editor-range {
+    display: grid;
+    gap: 0.625rem;
+    margin: 0;
+  }
+  .soa-inline-editor-title {
+    font-weight: 600;
+  }
+  .soa-inline-editor-control {
+    width: 100%;
+    min-width: 5rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-surface);
+    border: 0.0625rem solid var(--soa-inline-editor-border);
+    border-radius: 0.5rem;
+  }
+  .soa-inline-editor-actions {
+    display: flex;
+    gap: 0.625rem;
+  }
+  .soa-inline-editor-submit,
+  .soa-inline-editor-cancel {
+    padding: 0.375rem 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 0.0625rem solid transparent;
+    border-radius: 0.5rem;
+  }
+  .soa-inline-editor-submit {
+    color: var(--soa-inline-editor-on-accent);
+    background: var(--soa-inline-editor-accent);
+  }
+  .soa-inline-editor-submit:hover {
+    background: var(--soa-inline-editor-accent-hover);
+  }
+  .soa-inline-editor-cancel {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-surface);
+    border-color: var(--soa-inline-editor-border);
+  }
+  .soa-inline-editor-error {
+    max-width: 14rem;
+    color: var(--soa-inline-editor-error);
+    line-height: 1.25;
+  }
+  .soa-inline-editor-check-option {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+  }
+  .soa-inline-editor-range-value {
+    color: var(--soa-inline-editor-muted);
+    text-align: center;
+  }
+  .soa-inline-editor-form[aria-busy=true] {
+    opacity: 0.65;
   }
   table[class~=dataTable] {
     width: 100%;

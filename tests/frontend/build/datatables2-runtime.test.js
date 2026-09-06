@@ -105,9 +105,11 @@ it('keeps reusable draw hooks native and isolates legacy plugins in theme adapte
         readSource('resources/frontend/features/table/hooks/column-highlight.js'),
         readSource('resources/frontend/features/table/hooks/lazy-images.js'),
     ].join('\n')
-    const inlineEditor = readSource(
-        'resources/frontend/features/table/themes/legacy-adminlte/inline-editor.js',
-    )
+    const inlineEditor = [
+        readSource('resources/frontend/features/table/editing/inline-editor.js'),
+        readSource('resources/frontend/features/table/editing/inline-editor-request.js'),
+        readSource('resources/frontend/features/table/editing/install-inline-editors.js'),
+    ].join('\n')
     const tooltips = readSource(
         'resources/frontend/features/table/themes/legacy-adminlte/tooltips.js',
     )
@@ -115,7 +117,8 @@ it('keeps reusable draw hooks native and isolates legacy plugins in theme adapte
     expect(`${orchestration}\n${hooks}`).not.toMatch(/(?:\$|jQuery)\s*\(/)
     expect(hooks).toContain('addEventListener')
     expect(hooks).toContain("element.loading = 'lazy'")
-    expect(inlineEditor).toContain('jquery(elements).editable')
+    expect(inlineEditor).not.toMatch(/(?:\$|jQuery)\s*\(/)
+    expect(inlineEditor).toContain('http: admin.Http')
     expect(tooltips).toContain('jquery(elements).tooltip')
 })
 

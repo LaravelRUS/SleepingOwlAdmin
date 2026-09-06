@@ -1,14 +1,13 @@
 const {
-    createLegacyInlineEditor,
-} = require('../../../../../frontend/features/table/themes/legacy-adminlte/inline-editor')
+    installInlineEditors,
+} = require('../../../../../frontend/features/table/editing/install-inline-editors')
 
-const inlineEditor = createLegacyInlineEditor()
-
-Admin.Modules.register(
-    'display.columns.inline-edit',
-    () => inlineEditor.scan(document),
-    0,
-    ['bootstrap::tab::shown'],
-)
+const inlineEditor = installInlineEditors(Admin, {
+    labels: {
+        cancel: trans('lang.button.cancel'),
+        error: trans('lang.table.error'),
+        save: trans('lang.button.save'),
+    },
+})
 
 module.exports = inlineEditor

@@ -4,10 +4,22 @@
   :root {
     --soa-table-row-hover-color: #{colors.$row-hover};
     --soa-table-row-selected-color: #{colors.$row-selected};
+    --soa-inline-editor-surface: #{colors.$inline-editor-surface};
+    --soa-inline-editor-text: #{colors.$inline-editor-text};
+    --soa-inline-editor-border: #{colors.$inline-editor-border};
+    --soa-inline-editor-accent: #{colors.$inline-editor-accent};
+    --soa-inline-editor-accent-hover: #{colors.$inline-editor-accent-hover};
+    --soa-inline-editor-on-accent: #{colors.$inline-editor-on-accent};
+    --soa-inline-editor-muted: #{colors.$inline-editor-muted};
+    --soa-inline-editor-error: #{colors.$inline-editor-error};
+    --soa-inline-editor-shadow: #{colors.$inline-editor-shadow};
   }
 
   :root[data-soa-color-scheme='dark'] {
     --soa-table-row-hover-color: #{colors.$dark-row-hover};
     --soa-table-row-selected-color: #{colors.$dark-row-selected};
+    --soa-inline-editor-surface: #{colors.$dark-inline-editor-surface};
+    --soa-inline-editor-text: #{colors.$dark-inline-editor-text};
+    --soa-inline-editor-border: #{colors.$dark-inline-editor-border};
   }
 }

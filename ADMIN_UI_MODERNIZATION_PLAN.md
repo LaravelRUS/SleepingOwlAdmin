@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 6 — замена остальных jQuery-плагинов и legacy modules**.
-- Точка возобновления: заменить X-editable/inline editor; Select2/AJAX/dependent select уже переведены на Vue Multiselect 3, а date/datetime/time/daterange — на единый Air Datepicker driver.
+- Точка возобновления: заменить Nestable tree; Select2/AJAX/dependent select уже переведены на Vue Multiselect 3, date/datetime/time/daterange — на единый Air Datepicker driver, а X-editable — на native inline-editor controller.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -611,7 +611,7 @@ No-build consumer contract является release-blocking:
 - [x] Select2 и AJAX select.
 - [x] Date, datetime и daterange controls.
 - [x] Dependent dropdown.
-- [ ] X-editable/inline editor.
+- [x] X-editable/inline editor.
 - [ ] Nestable tree.
 - [ ] Magnific Popup/lightbox.
 - [ ] Theme tooltip/tab/dropdown/sidebar capabilities.
@@ -749,9 +749,9 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] bulk action submit/cancel/error;
 - [ ] action form serialization;
 - [ ] delete/control confirmation;
-- [ ] inline text/select/date/datetime/checklist editing;
+- [x] inline text/select/date/datetime/checklist editing;
 - [ ] reload после успешного действия;
-- [ ] CSRF и backend validation errors.
+- [x] CSRF и backend validation errors.
 
 ### Остальная админка
 
@@ -1014,3 +1014,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 6 / Select2 и AJAX select | `Select`, `MultiSelect`, `SelectAjax` и `MultiSelectAjax` используют один precompiled Vue Multiselect 3 island. Transport, response normalization, exact-id dependency lookup и raw Select2 option migration разделены на небольшие modules; AJAX сохраняет POST endpoint, `q`/`page`/`depends`/`depdrop_*` payload, debounce, cancellation/stale-response protection и CSRF через `Admin.Http`. `setSelect2()` оставлен deprecated compatibility alias без смены view или подмены пользовательских classes; шесть options имеют явное mapping, plugin/unsafe/unknown options дают migration warning, а `disabled` блокирует и widget, и submitted control. Server `custom_name` рендерится как text, HTML не исполняется. Удалены first-party Select2 JS/CSS modules, behavior scans и direct dependency; `select2@4.0.13` пока остаётся только транзитивным dependency старого `admin-lte@3.2.0` до полной theme-миграции. Raw custom `.input-select` остаётся рабочим native select. Добавлена migration matrix `select2-options.md` и отдельный browser fixture. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; локальный PHP gate: 453 tests, 1704 assertions, 2 прежних TODO-skip и 8 environment-skip без PDO SQLite; frontend gate: 321 Vitest + 49 Playwright | текущий commit |
 | 2026-09-06 | Этап 6 / date controls | `Date`, `DateTime`, `Time`, `Timestamp` и date/date-range table filters переведены на единый Air Datepicker 3.6 driver. Parsing/formatting, locale resolution, option normalization, range constraints и lifecycle разложены на отдельные modules; сохранены Moment-style форматы, seconds/month names/literals/12–24 hour time, ISO fallback, separator ` - ` и прежние range `data-*`. PHP публикует явный `data-soa-date-control`, не меняя пользовательские classes/attributes, config keys `dateFormat`/`datetimeFormat`/`timeFormat`/`timezone`, server string serialization и timezone conversion. Dynamic controls используют idempotent `Admin.Components.scan/destroy`, disabled/readonly picker не монтируют. Табличные filters перешли на native `change` и общий parser; legacy jQuery/Moment bridge, DateTimePicker/Daterangepicker modules и их Sass удалены. Moment и старые picker dependencies временно остаются только для X-editable и транзитивного AdminLTE до следующих checkpoints. Добавлена `date-controls.md`. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate: 454 tests, 1710 assertions, 10 skipped; frontend gate: 333 Vitest + 52 Playwright | текущий commit |
 | 2026-09-06 | Этап 6 / dependent select | `DependentSelect` и `MultiDependentSelect` переведены с jQuery `dependent-dropdown` на общий precompiled Vue Multiselect 3 island. Сохранены PHP DSL, POST payload `depdrop_parents`/`depdrop_all_params`, keyed/array `output`, optional `selected`, initializable mode и single/multiple values; пользовательские classes/attributes передаются напрямую. Transport, response normalization и value resolution разделены на малые modules; запросы используют `Admin.Http`, отмену и stale-response protection. Lifecycle публикует native bubbling `change` и `depdrop:*` CustomEvent, а related elements используют общий `Admin.Components` lifecycle. Прямой dependency и first-party jQuery wrappers удалены. Playwright request ledger изолирован по worker для детерминированного параллельного gate. Добавлена `dependent-select.md`. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate: 456 tests, 1728 assertions, 10 skipped; frontend gate: 341 Vitest + 54 Playwright | текущий commit |
+| 2026-09-06 | Этап 6 / inline editor | Все девять editable column types переведены с X-editable на небольшой native controller через `Admin.Components` и `Admin.Http`; сохранены PHP DSL, inline/popup modes, readonly policy и URL-encoded `name`/`pk`/`value`/`value[]` contract. Пустой checkbox/checklist отправляет явное значение, а date/datetime повторно используют общий Air Datepicker lifecycle. Options публикуются безопасным inert `application/json` payload через `Js::encode`; 422 validation остаётся внутри editor, HTTP 500 получает локализованную ошибку, активный запрос отменяется через `AbortController`, lifecycle наружу использует bubbling `CustomEvent`. Поиск editable column и backend update flow вынесены из controller в отдельные малые PHP services с recursive nested-display lookup и тестами event/404/nested value. AdminLTE/Tailwind presentation принадлежит отдельным Sass adapters и `--soa-*`; пользовательские classes/attributes передаются напрямую. Прямые `x-editable-bs4`, `bootstrap4-datetimepicker`, `moment` и `tempusdominus-core`, legacy wrappers и component Sass удалены; остатки Moment/Tempus Dominus существуют только транзитивно под `admin-lte`. Добавлена `inline-editor.md`. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate: 474 tests, 1848 assertions, 10 skipped; frontend gate: 351 Vitest + 58 Playwright | текущий commit |

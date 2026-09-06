@@ -2,6 +2,7 @@
 @use 'auto-update';
 @use 'colors';
 @use 'custom-properties';
+@use 'inline-editor';
 @use 'layout';
 @use 'table';
 @use 'variables';
@@ -15,6 +16,7 @@
     '../../../../../../../node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.css'
   );
   @include layout.styles;
+  @include inline-editor.styles;
   @include table.styles;
   @include auto-update.styles;
 }

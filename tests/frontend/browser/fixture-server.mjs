@@ -40,6 +40,10 @@ const staticRoutes = new Map([
         '/dependent-controls',
         [join(browserDirectory, 'dependent-controls.html'), 'text/html; charset=utf-8'],
     ],
+    [
+        '/inline-editors',
+        [join(browserDirectory, 'inline-editors.html'), 'text/html; charset=utf-8'],
+    ],
     ['/date-controls', [join(browserDirectory, 'date-controls.html'), 'text/html; charset=utf-8']],
     [
         '/resources/frontend/core/data/island-props.js',
@@ -193,7 +197,7 @@ function recordRequest(kind, request, parameters) {
 }
 
 function editableCell(id) {
-    return `<a href="#" class="inline-editable" id="inline-edit-${id}" data-name="status" data-value="Draft" data-url="/api/inline-edit" data-type="text" data-pk="${id}" data-mode="inline">Draft</a>`
+    return `<button type="button" class="soa-inline-editable" id="inline-edit-${id}" data-soa-inline-editor="text" data-name="status" data-value="Draft" data-url="/api/inline-edit" data-pk="${id}" data-mode="inline" data-empty-text="empty" aria-expanded="false">Draft</button>`
 }
 
 function fixtureRow(id) {
@@ -269,6 +273,38 @@ async function handleDependentSelect(request, response, url) {
     })
 }
 
+async function handleInlineEdit(request, response, url) {
+    const parameters = await readInlineEditParameters(request, url)
+    recordRequest('inline-edit', request, parameters)
+
+    if (parameters.value === 'invalid') {
+        response.writeHead(422, { 'Content-Type': 'application/json' })
+        response.end(
+            JSON.stringify({ errors: { status: ['The status is invalid.'] }, message: 'Invalid' }),
+        )
+        return
+    }
+
+    sendJson(response, {
+        newValue:
+            parameters.name === 'status' && parameters.pk === '1'
+                ? 'Server normalized'
+                : (parameters['value[]'] ?? parameters.value),
+        status: true,
+    })
+}
+
+async function readInlineEditParameters(request, url) {
+    if (request.method === 'GET') return Object.fromEntries(url.searchParams)
+
+    const body = new URLSearchParams(await readBody(request))
+    const parameters = Object.fromEntries(body)
+    const values = body.getAll('value[]')
+    if (values.length) parameters['value[]'] = values
+
+    return parameters
+}
+
 async function handleMutation(kind, request, response, url) {
     const parameters = await readParameters(request, url)
     recordRequest(kind, request, parameters)
@@ -325,6 +361,7 @@ function serveFixtureAsset(response, path) {
 const apiHandlers = new Map([
     ['/api/datatables', handleTable],
     ['/api/dependent-options', handleDependentSelect],
+    ['/api/inline-edit', handleInlineEdit],
     ['/api/select-search', handleSelectSearch],
 ])
 
@@ -351,7 +388,6 @@ async function respond(request, response) {
     const mutations = new Map([
         ['/api/action', 'action'],
         ['/api/action-form', 'action-form'],
-        ['/api/inline-edit', 'inline-edit'],
     ])
     const mutation = mutations.get(url.pathname)
 

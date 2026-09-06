@@ -18,14 +18,10 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use SleepingOwl\Admin\Contracts\AdminInterface;
-use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
-use SleepingOwl\Admin\Display\DisplayTabbed;
-use SleepingOwl\Admin\Display\DisplayTable;
-use SleepingOwl\Admin\Form\Columns\Column;
-use SleepingOwl\Admin\Form\FormElements;
 use SleepingOwl\Admin\Model\ModelConfiguration;
+use SleepingOwl\Admin\Support\Display\InlineEditHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdminController extends Controller
@@ -60,6 +56,8 @@ class AdminController extends Controller
      */
     protected $envPolicy;
 
+    protected InlineEditHandler $inlineEdits;
+
     /**
      * AdminController constructor.
      *
@@ -69,11 +67,17 @@ class AdminController extends Controller
      *
      * @throws DuplicateBreadcrumbException
      */
-    public function __construct(Request $request, AdminInterface $admin, Application $application)
+    public function __construct(
+        Request $request,
+        AdminInterface $admin,
+        Application $application,
+        InlineEditHandler $inlineEdits
+    )
     {
         $this->app = $application;
         $this->admin = $admin;
         $this->breadcrumbs = $admin->template()->breadcrumbs();
+        $this->inlineEdits = $inlineEdits;
 
         if ($this->envPolicy = config('sleeping_owl.env_editor_policy')) {
             $this->envPolicy = new $this->envPolicy;
@@ -508,113 +512,7 @@ class AdminController extends Controller
      */
     public function inlineEdit(ModelConfigurationInterface $model, Request $request)
     {
-        $field = $request->input('name');
-        $id = $request->input('pk');
-        $display = $model->fireDisplay();
-        $column = null;
-
-        /**
-         * @var ColumnEditableInterface|null $column
-         */
-        if (is_callable([$display, 'getColumns'])) {
-            $column = $display->getColumns()->all()->filter(function ($column) use ($field) {
-                return ($column instanceof ColumnEditableInterface)
-                    && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
-                    && $field == $column->getName();
-            })->first();
-        } else {
-            if ($display instanceof DisplayTabbed) {
-                foreach ($display->getTabs() as $tab) {
-                    if ($column) {
-                        continue;
-                    }
-
-                    $content = $tab->getContent();
-
-                    if ($content instanceof DisplayTable) {
-                        $column = $content->getColumns()->all()->filter(function ($column) use ($field) {
-                            return ($column instanceof ColumnEditableInterface)
-                                && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
-                                && $field == $column->getName();
-                        })->first();
-                    }
-
-                    if ($content instanceof FormElements) {
-                        foreach ($content->getElements() as $element) {
-                            /*
-                             * Return data-table if inside FormElements
-                             */
-                            if ($element instanceof DisplayTable) {
-                                $column = $element->getColumns()->all()->filter(function ($column) use ($field) {
-                                    return ($column instanceof ColumnEditableInterface)
-                                        && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
-                                        && $field == $column->getName();
-                                })->first();
-                            }
-
-                            /*
-                             * Try to find inline Editable in columns
-                             */
-                            if ($element instanceof Column) {
-                                foreach ($element->getElements() as $columnElement) {
-                                    if ($columnElement instanceof DisplayTable) {
-                                        $column = $columnElement->getColumns()->all()->filter(function ($column) use (
-                                            $field
-                                        ) {
-                                            return ($column instanceof ColumnEditableInterface)
-                                                && ($column instanceof \SleepingOwl\Admin\Display\Column\NamedColumn)
-                                                && $field == $column->getName();
-                                        })->first();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (is_null($column)) {
-            abort(404);
-        }
-
-        $repository = $model->getRepository();
-        $item = $repository->find($id);
-
-        if (is_null($item) || ! $model->isEditable($item)) {
-            abort(404);
-        }
-
-        $column->setModel($item);
-
-        if ($model->fireEvent('updating', true, $item, $request) === false) {
-            return response()->json([
-                'status' => false,
-                'reason' => 'Can not fire event: updating',
-            ]);
-        }
-
-        $newValue = $column->save($request);
-
-        $model->fireEvent('updated', false, $item, $request);
-
-        $relationModel = $repository->find($id);
-        if (str_contains($field, '.')) {
-            $relations = explode('.', $field);
-            $field = array_pop($relations);
-            foreach ($relations as $relation) {
-                if (! is_null($relationModel->$relation)) {
-                    $relationModel = $relationModel->$relation;
-                }
-            }
-        }
-
-        return response()->json([
-            'status' => true,
-            'name' => $field,
-            'newValue' => $newValue !== null ? $newValue : $relationModel->$field,
-            'pk' => $id,
-        ]);
+        return response()->json($this->inlineEdits->handle($model, $request));
     }
 
     /**

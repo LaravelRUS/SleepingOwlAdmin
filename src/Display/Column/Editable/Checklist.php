@@ -29,24 +29,6 @@ class Checklist extends Select implements ColumnEditableInterface
             return call_user_func($this->modifier, $this);
         }
 
-        /**
-         * It's useless to modify output here, because of it's will be changed by js-script on the frontend after updating.
-         *
-         * @see https://vitalets.github.io/x-editable/docs.html#editable - option "display"
-         */
-        /*
-        if (is_null($this->modifier)) {
-            $return = parent::getValueFromObject($this->getModel(), $this->getName());
-
-            $return = $return->pluck($this->getDisplay());
-            if ($this->isSortable()) {
-                $return = $return->sort();
-            }
-
-            return $return->implode('<br/>');
-        }
-        */
-
         return $this->modifier;
     }
 
