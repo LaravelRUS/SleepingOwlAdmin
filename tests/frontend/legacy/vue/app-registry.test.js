@@ -86,6 +86,36 @@ it('registers the component catalog locally on every app', () => {
     })
 })
 
+it('mounts a named precompiled component with JSON props', () => {
+    const host = createElement('precompiled', true)
+    const component = { name: 'PrecompiledFixture' }
+    const factory = fakeAppFactory([])
+    host.dataset = {
+        soaVueComponent: 'fixture',
+        soaVueProps: '{"message":"ready","enabled":true}',
+    }
+
+    createVueAppRegistry(factory, { fixture: component }).mount(host)
+
+    expect(factory).toHaveBeenCalledWith(component, {
+        message: 'ready',
+        enabled: true,
+    })
+})
+
+it('rejects unknown precompiled components and invalid props before creating an app', () => {
+    const factory = fakeAppFactory([])
+    const registry = createVueAppRegistry(factory, { fixture: {} })
+    const unknown = createElement('unknown', true)
+    unknown.dataset = { soaVueComponent: 'missing' }
+    const invalid = createElement('invalid', true)
+    invalid.dataset = { soaVueComponent: 'fixture', soaVueProps: '[]' }
+
+    expect(() => registry.mount(unknown)).toThrow('Unknown Vue app component [missing]')
+    expect(() => registry.mount(invalid)).toThrow('props JSON must contain an object')
+    expect(factory).not.toHaveBeenCalled()
+})
+
 it('unmounts a subtree once and allows a later remount', () => {
     const first = createElement('first', true)
     const second = createElement('second', true)

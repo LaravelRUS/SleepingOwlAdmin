@@ -21,6 +21,7 @@ mix.webpackConfig({
 })
 
 registerEntries(frontendEntries)
+mix.vue({ version: 3 })
 
 mix.then(() => generateAssetManifest(assetProfile))
 

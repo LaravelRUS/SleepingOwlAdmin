@@ -1,3 +1,5 @@
+import { parseJsonProps } from '../../core/data/island-props'
+
 export const vueAppSelector = '[data-soa-vue-app]'
 
 export class VueAppRegistry {
@@ -5,6 +7,7 @@ export class VueAppRegistry {
         assertFunction(createApp, 'createApp')
         this.createApp = createApp
         this.components = componentEntries(components)
+        this.componentMap = new Map(this.components)
         this.apps = new Map()
     }
 
@@ -16,7 +19,8 @@ export class VueAppRegistry {
         assertElement(element)
         if (this.apps.has(element)) return this.apps.get(element)
 
-        const app = this.createApp({})
+        const root = resolveRootComponent(element, this.componentMap)
+        const app = this.createApp(root.component, root.props)
         assertApp(app)
         registerComponents(app, this.components)
         this.apps.set(element, app)
@@ -72,6 +76,21 @@ export function createVueAppRegistry(createApp, components) {
 
 function registerComponents(app, components) {
     components.forEach(([name, component]) => app.component(name, component))
+}
+
+function resolveRootComponent(element, components) {
+    const name = element.dataset?.soaVueComponent
+    if (!name) return { component: {}, props: undefined }
+
+    const component = components.get(name)
+    if (!component) {
+        throw new Error(`Unknown Vue app component [${name}].`)
+    }
+
+    return {
+        component,
+        props: parseJsonProps(element.dataset.soaVueProps || '{}'),
+    }
 }
 
 function componentEntries(components) {

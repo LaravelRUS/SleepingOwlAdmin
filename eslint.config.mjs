@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import vue from 'eslint-plugin-vue'
 
 const modernJavaScript = [
     'resources/frontend/**/*.js',
@@ -17,6 +18,12 @@ const legacyFirstPartyJavaScript = [
     'resources/assets/js_owl/components/**/*.js',
     'resources/assets/js_owl/wysiwyg/**/*.js',
 ]
+
+const legacyVueComponents = ['resources/assets/js_owl/**/*.vue']
+const vueEssential = vue.configs['flat/essential'].map((config) => ({
+    ...config,
+    files: legacyVueComponents,
+}))
 
 const qualityRules = {
     complexity: ['error', 8],
@@ -86,6 +93,16 @@ export default [
         },
         rules: {
             ...js.configs.recommended.rules,
+            ...qualityRules,
+        },
+    },
+    ...vueEssential,
+    {
+        files: legacyVueComponents,
+        languageOptions: {
+            globals: legacyRuntimeGlobals,
+        },
+        rules: {
             ...qualityRules,
         },
     },

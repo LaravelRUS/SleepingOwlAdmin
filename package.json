@@ -10,8 +10,8 @@
         "prod": "node scripts/modernization/build-asset-profiles.mjs",
         "check": "npm run format:check && npm run lint && npm run lint:styles && npm test",
         "check:ci": "npm run check && npm run test:e2e",
-        "format": "prettier --write \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
-        "format:check": "prettier --check \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
+        "format": "prettier --write \"resources/frontend/**/*.js\" \"resources/assets/js_owl/**/*.vue\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
+        "format:check": "prettier --check \"resources/frontend/**/*.js\" \"resources/assets/js_owl/**/*.vue\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "lint": "eslint build resources/frontend resources/assets/js_owl/*.js resources/assets/js_owl/libs/vue-*.js resources/assets/js_owl/admin resources/assets/js_owl/components resources/assets/js_owl/wysiwyg tests/frontend scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "lint:fix": "npm run lint -- --fix",
         "lint:styles": "stylelint \"resources/frontend/**/*.scss\" --allow-empty-input",
@@ -66,6 +66,7 @@
         "@vue/compiler-sfc": "3.5.42",
         "cross-env": "^7.0.3",
         "eslint": "10.10.0",
+        "eslint-plugin-vue": "^10.11.0",
         "laravel-mix": "^6.0.43",
         "prettier": "3.9.6",
         "resolve-url-loader": "^5.0.0",
@@ -75,6 +76,7 @@
         "stylelint-config-standard-scss": "17.0.0",
         "stylelint-scss": "7.2.0",
         "vitest": "5.0.0",
+        "vue-loader": "^16.8.3",
         "webpack": "^5.76.0"
     },
     "overrides": {

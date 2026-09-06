@@ -6,8 +6,8 @@ import {
 
 const translation = createVueTranslation(trans)
 
-function createLegacyVueApp(options) {
-    const app = Vue.createApp(options)
+function createLegacyVueApp(component, props) {
+    const app = Vue.createApp(component, props)
 
     return installVueTranslation(app, translation)
 }

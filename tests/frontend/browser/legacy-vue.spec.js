@@ -154,7 +154,7 @@ test('bounded Vue 3 compat apps preserve env editor behavior', async ({ page }) 
 
     await page.locator('#env-fixture .env-remove').first().click()
     await expect(page.locator('#env-fixture .env-row')).toHaveCount(1)
-    await page.locator('#env-add-entry').click()
+    await page.locator('#env_add_entry').click()
     await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
     await page.locator('#env-fixture .env-key').last().fill('NEW_KEY')
     await expect(page.locator('#env-fixture .env-key').last()).toHaveAttribute(

@@ -1,4 +1,4 @@
-import EnvEditor from './display/env_editor'
+import EnvEditor from './display/env-editor.vue'
 import Deselect from './form/deselect'
 import ElementFile from './form/file'
 import ElementImage from './form/image'

@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 4 — Vue 3 islands**.
-- Точка возобновления: перенести 9 legacy `inline-template` в precompiled Vue 3 islands, начиная с env editor.
+- Точка возобновления: перенести file `inline-template` в precompiled Vue 3 island; env editor завершён.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -397,7 +397,7 @@ No-build consumer contract является release-blocking:
 - Заменить `vue-resource` на уже используемый Axios либо `fetch`.
 - Удалить `this.$set`: Vue 3 отслеживает обычное присваивание элементам reactive arrays/objects.
 - Обновить либо удалить Vue 2-only packages (`vue-template-compiler`, `vue-multiselect` 2.x, `vuedraggable` 2.x, `vue-resource`).
-- Перевести 10 Blade `inline-template` блоков в Vue 3 islands. В первую очередь: env editor, file/image/images, select/multiselect и related elements.
+- Перевести 9 Blade `inline-template` блоков в Vue 3 islands. В первую очередь: env editor, file/image/images, select/multiselect и related elements.
 - Не использовать Vue для компонентов, которые проще и меньше реализовать native Web/DOM API; Vue 3 остаётся для действительно stateful islands.
 - Динамически добавленные формы должны явно монтировать/демонтировать island через общий registry, а не рассчитывать на один глобальный root app.
 
@@ -562,7 +562,16 @@ No-build consumer contract является release-blocking:
 - [x] Заменить глобальную регистрацию `Vue.component`/`Vue.extend` на `createApp`/`defineComponent` и локальную регистрацию.
 - [x] Заменить `Vue.http`/`vue-resource` на core HTTP client поверх Axios/`fetch`.
 - [x] Заменить `Vue.prototype.$trans` на injection/composable без глобального mutable API.
-- [ ] Перенести все 9 `inline-template`: env editor, file/image/images, select/multiselect, related elements.
+- [ ] Перенести все 9 `inline-template` в precompiled Vue 3 islands.
+  - [x] Env editor.
+  - [ ] File.
+  - [ ] Image.
+  - [ ] Images.
+  - [ ] Select.
+  - [ ] Multiselect.
+  - [ ] Related elements с card.
+  - [ ] Related elements без card.
+  - [ ] Related group.
 - [ ] Перевести `$set` на обычные reactive assignments и проверить array updates.
 - [ ] Обновить/заменить Vue wrappers для multiselect и drag/drop.
 - [ ] На каждый island реализовать `mount`/`unmount`, повторную инициализацию и защиту от двойного mount.
@@ -974,3 +983,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 4 / app-local Vue definitions | Семь package-owned legacy components переведены с `Vue.component`/`Vue.extend` на экспортируемые `defineComponent` definitions; side-effect imports заменены единым frozen catalog. Registry регистрирует catalog через публичный `app.component` до каждого mount; runtime-compiled Multiselect wrapper включён восьмой локальной зависимостью, потому что `inline-template` разрешает его тег в app context. Package runtime больше не вызывает глобальные component/extend APIs, `GLOBAL_EXTEND` удалён из compat allowlist; consumer globals остаются только временной compat-возможностью до публичного extension API. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 428 tests, 1582 assertions, 2 прежних TODO-skip; frontend gate: 179 Vitest + 24 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / core HTTP | Удалены `vue-resource`, глобальный `Vue.http` interceptor и зависимость из lockfile; package-owned `$http` consumers отсутствовали, поэтому временный compatibility facade не вводился. Vue islands используют существующий `Admin.Http` на native Fetch с same-origin credentials, CSRF/request headers, сохранением caller headers и typed `HttpError`; после `npm prune` `got` остался только optional dependency цепочки `popper -> ngrok`. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 428 tests, 1582 assertions, 2 прежних TODO-skip; frontend gate: 180 Vitest + 24 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / app-local translations | Удалены `Vue.prototype.$trans`, пустой legacy plugin и compat flag `GLOBAL_PROTOTYPE`. Каждый bounded app получает через `app.provide` один замороженный translator с cross-bundle `Symbol.for` key; setup-компоненты используют `useTranslation()`, а отсутствие provider диагностируется явно. Новые `globalProperties`/`window` API не вводились; существующий `window.trans` сохранён только для non-Vue legacy consumers. Unit test проверяет изоляцию двух apps, browser fixture получает `Cancel` через public `runWithContext`/`inject` и подтверждает отсутствие `$trans` на prototype. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 428 tests, 1582 assertions, 2 прежних TODO-skip; frontend gate: 184 Vitest + 24 Playwright | текущий commit |
+| 2026-09-06 | Этап 4 / env editor island | Первый legacy `inline-template` перенесён в precompiled Vue SFC: Blade оставляет пустой lifecycle host и передаёт один HTML-escaped JSON object через `data-soa-vue-props`, registry до создания app валидирует имя component/props и вызывает `createApp(component, props)`. State normalization/add/remove вынесены из component, новая строка сразу editable/deletable; locked delete сохраняет прежний toast. `vue-loader` и scoped Vue ESLint/Prettier checks включены без расширения legacy JS rule surface. Осталось 8 `inline-template` и 6 legacy definitions с runtime compiler bridge. Render-contract доказывает безопасную передачу кавычек/HTML из env data. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 429 tests, 1586 assertions, 2 прежних TODO-skip; frontend gate: 197 Vitest + 24 Playwright | текущий commit |
