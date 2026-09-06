@@ -118,3 +118,33 @@ it('keeps reusable draw hooks native and isolates legacy plugins in theme adapte
     expect(inlineEditor).toContain('jquery(elements).editable')
     expect(tooltips).toContain('jquery(elements).tooltip')
 })
+
+it('routes actions and auto-update through native modules and Admin.Tables', () => {
+    const legacyActions = [
+        readSource('resources/assets/js_owl/admin/display/actions.js'),
+        readSource('resources/assets/js_owl/admin/display/actions_form.js'),
+    ].join('\n')
+    const actions = [
+        readSource('resources/frontend/features/table/actions/action-context.js'),
+        readSource('resources/frontend/features/table/actions/action-request.js'),
+        readSource('resources/frontend/features/table/actions/bulk-actions.js'),
+        readSource('resources/frontend/features/table/actions/form-actions.js'),
+    ].join('\n')
+    const autoUpdate = readSource(
+        'resources/frontend/features/table/autoupdate/table-auto-update.js',
+    )
+    const autoUpdateView = readSource('resources/views/features/datatables/autoupdate.blade.php')
+    const legacyCallbacks = readSource(
+        'resources/frontend/features/table/themes/legacy-adminlte/action-callbacks.js',
+    )
+
+    expect(`${legacyActions}\n${actions}\n${autoUpdate}`).not.toMatch(
+        /(?:\$|jQuery)\s*\(|\.DataTable\(/,
+    )
+    expect(legacyActions).toContain('http: Admin.Http')
+    expect(actions).toContain('tables.reload(table)')
+    expect(autoUpdate).toContain('dependencies.tables.reload(table)')
+    expect(autoUpdateView).toContain('data-admin-table-autoupdate')
+    expect(autoUpdateView).not.toContain('<script')
+    expect(legacyCallbacks).toContain('jquery(context.wrapper)')
+})

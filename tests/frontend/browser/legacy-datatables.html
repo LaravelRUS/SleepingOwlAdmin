@@ -203,48 +203,18 @@
             }
         </script>
         <script src="/public/default/js/modules.js"></script>
+        <span
+            id="autoupdate-fixture"
+            data-admin-table-autoupdate
+            data-close-label="Stop auto-update"
+            data-interval="250"
+            data-table-class="autorefresh"
+            style="--soa-datatables-autoupdate-color: currentColor"
+            hidden
+        ></span>
         <script>
-            function startAutoUpdate() {
-                const tableSelector = '.datatables.autorefresh'
-                const interval = 250
-                const bar = new ProgressBar.Line('.datatables', {
-                    strokeWidth: 2,
-                    duration: interval,
-                    color: 'currentColor',
-                    svgStyle: null,
-                })
-                let stopped = false
-                let timer
-
-                function update() {
-                    bar.set(0)
-                    if (stopped) return
-
-                    bar.animate(1)
-                    timer = setTimeout(update, interval)
-                    window.Admin.Tables.reload()
-                }
-
-                document.querySelectorAll(tableSelector).forEach((table) => {
-                    table.classList.add('autoupdater')
-                    table.insertAdjacentHTML(
-                        'beforeend',
-                        '<span class="autoupdater-close">&times;</span>',
-                    )
-                })
-                bar.animate(1)
-                timer = setTimeout(update, interval)
-
-                window.jQuery('.autoupdater-close').on('click', () => {
-                    bar.set(0)
-                    stopped = true
-                    clearTimeout(timer)
-                    window.jQuery('.autoupdater-close').remove()
-                })
-            }
-
-            if (new URLSearchParams(window.location.search).has('autoupdate')) {
-                window.addEventListener('load', startAutoUpdate)
+            if (!new URLSearchParams(window.location.search).has('autoupdate')) {
+                document.querySelector('#autoupdate-fixture').remove()
             }
         </script>
     </body>

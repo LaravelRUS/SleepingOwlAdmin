@@ -13,13 +13,14 @@ class DataTablesAutoUpdateRenderTest extends TestCase
 
         $html = view('sleeping_owl::features.datatables.autoupdate')->render();
 
+        $this->assertStringContainsString('data-admin-table-autoupdate', $html);
+        $this->assertStringContainsString('data-table-class="project-orders"', $html);
+        $this->assertStringContainsString('data-interval="120000"', $html);
         $this->assertStringContainsString(
-            "const autoupdateSelector = '.datatables.project-orders';",
+            'style="--soa-datatables-autoupdate-color: #123456"',
             $html
         );
-        $this->assertStringContainsString('duration: 120000', $html);
-        $this->assertStringContainsString("color: '#123456'", $html);
-        $this->assertStringContainsString("' + 2 + ' min.'", $html);
+        $this->assertStringNotContainsString('<script', $html);
     }
 
     public function test_disabled_auto_update_renders_no_script(): void

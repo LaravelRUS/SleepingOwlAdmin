@@ -1,5 +1,15 @@
 export const TABLE_FEATURE_ID = 'table'
 
+export {
+    AUTO_UPDATE_COLOR_PROPERTY,
+    mountTableAutoUpdate,
+    mountTableAutoUpdates,
+    readAutoUpdateConfig,
+} from './autoupdate/table-auto-update.js'
+export { findActionTable, selectedRowParameters } from './actions/action-context.js'
+export { actionRequestSettings, executeTableAction } from './actions/action-request.js'
+export { bindBulkActions } from './actions/bulk-actions.js'
+export { bindFormActions } from './actions/form-actions.js'
 export { bindConfirmedControls } from './controls/confirm-submit.js'
 export { bindFilterControls, clearFilterControls } from './filters/filter-controls.js'
 export {

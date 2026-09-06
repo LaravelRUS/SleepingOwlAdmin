@@ -79,6 +79,7 @@ require('./wysiwyg/tinymce');
 require('./admin/display/datatables');
 require('./admin/display/table');
 require('./admin/display/themes');
+require('./admin/display/autoupdate');
 
 require('./admin/display/actions');
 require('./admin/display/actions_form');

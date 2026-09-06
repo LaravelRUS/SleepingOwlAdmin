@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Configuration;
 
 use Illuminate\Contracts\Config\Repository;
+use SleepingOwl\Admin\Themes\CssColor;
 
 final class DataTablesAutoUpdateConfiguration
 {
@@ -80,6 +81,10 @@ final class DataTablesAutoUpdateConfiguration
     {
         $color = trim((string) $value);
 
-        return $color === '' ? self::DEFAULT_COLOR : $color;
+        if ($color === '') {
+            return self::DEFAULT_COLOR;
+        }
+
+        return CssColor::from($color, 'sleeping_owl.dt_autoupdate_color')->value();
     }
 }

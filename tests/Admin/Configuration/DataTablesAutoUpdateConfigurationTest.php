@@ -47,6 +47,16 @@ class DataTablesAutoUpdateConfigurationTest extends TestCase
         $this->assertSame(5, $configuration->intervalMinutes());
     }
 
+    public function test_it_rejects_an_unsafe_progress_color(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('[sleeping_owl.dt_autoupdate_color]');
+
+        $this->configuration([
+            'dt_autoupdate_color' => '#fff; } body { display: none',
+        ]);
+    }
+
     private function configuration(array $values): DataTablesAutoUpdateConfiguration
     {
         return new DataTablesAutoUpdateConfiguration(new Repository([
