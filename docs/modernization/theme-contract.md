@@ -65,3 +65,16 @@ Capability говорит только о presentation support. Он не озн
 ## Legacy AdminLTE metadata
 
 Текущая extracted legacy theme объявляет логический entry `theme:legacy-adminlte` и все семь capabilities, которые уже присутствуют в её Bootstrap/AdminLTE presentation. До появления versioned resolver фактическую регистрацию старых файлов продолжает выполнять `TemplateDefault`; декларация manifest не меняет runtime asset URLs и не смешивает переходный adapter с будущим resolver.
+
+## Выбор темы и config values
+
+Существующий `sleeping_owl.template` остаётся единственным selector key. Значением является class-string одной из двух форм:
+
+- legacy implementation `TemplateInterface` — продолжает работать как `sleeping_owl.template` и получает `LegacyTemplateThemeAdapter`;
+- новая implementation `ThemeInterface` — становится выбранной темой и получает внутренний `ThemeTemplateAdapter` для переходных вызовов старого rendering API.
+
+Класс, не реализующий ни один contract, вызывает `TemplateException`; неявного fallback к AdminLTE нет. Реализация обоих interfaces может использоваться напрямую с обеих сторон selection boundary.
+
+`ThemeConfiguration` передаёт выбранной теме только зафиксированные theme-owned keys под исходными именами. Значения не приводятся к строкам, не переименовываются и не преобразуются в semantic classes. В каждый view, созданный через transitional template renderer, передаются зарезервированные переменные `$theme` и `$themeConfig` вместе с прежним `$template`.
+
+В набор входят 14 существующих keys из config migration matrix и запланированный `sidebar_background_color`. Старый опубликованный config может не содержать новый ключ: в этом случае значение остаётся `null`, и theme default применяется без пересборки assets.

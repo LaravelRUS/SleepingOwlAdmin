@@ -12,6 +12,8 @@ use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
+use SleepingOwl\Admin\Themes\ThemeConfiguration;
 
 abstract class Template implements TemplateInterface
 {
@@ -160,13 +162,27 @@ abstract class Template implements TemplateInterface
      */
     public function view($view, array $data = [], $mergeData = [])
     {
-        $data['template'] = $this;
+        $data = array_replace($data, $this->themeViewData(), [
+            'template' => $this,
+        ]);
 
         if ($view instanceof View) {
             return $view->with($data);
         }
 
         return view($this->getViewPath($view), $data, $mergeData);
+    }
+
+    private function themeViewData(): array
+    {
+        if (! $this->app->bound(ThemeInterface::class) || ! $this->app->bound(ThemeConfiguration::class)) {
+            return [];
+        }
+
+        return [
+            'theme' => $this->app->make(ThemeInterface::class),
+            'themeConfig' => $this->app->make(ThemeConfiguration::class),
+        ];
     }
 
     /**

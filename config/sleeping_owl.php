@@ -273,8 +273,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    |  Admin panel template
+    |  Admin panel theme/template
     |--------------------------------------------------------------------------
+    |
+    | The configured class may implement the new ThemeInterface or the legacy
+    | TemplateInterface. The existing key remains the public theme selector.
     */
 
     'template' => SleepingOwl\Admin\Templates\TemplateDefault::class,

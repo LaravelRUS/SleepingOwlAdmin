@@ -14,14 +14,14 @@ use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
-use SleepingOwl\Admin\Exceptions\TemplateException;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Templates\Assets;
 use SleepingOwl\Admin\Templates\Meta;
-use SleepingOwl\Admin\Themes\LegacyTemplateThemeAdapter;
-use SleepingOwl\Admin\Themes\ThemeCapability;
+use SleepingOwl\Admin\Themes\ThemeConfiguration;
+use SleepingOwl\Admin\Themes\ThemeResolver;
+use SleepingOwl\Admin\Themes\ThemeSelection;
 use SleepingOwl\Admin\Widgets\EnvEditor;
 use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
 use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
@@ -94,25 +94,21 @@ class AdminServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->singleton('sleeping_owl.template', function (Application $app) {
-            if (! class_exists($class = $this->getConfig('template'))) {
-                throw new TemplateException("Template class [{$class}] not found in config file");
-            }
+        $this->app->singleton('sleeping_owl.theme.config', function (Application $app) {
+            return new ThemeConfiguration($app['config']);
+        });
+        $this->app->alias('sleeping_owl.theme.config', ThemeConfiguration::class);
 
-            return $app->make($class);
+        $this->app->singleton(ThemeSelection::class, function (Application $app) {
+            return (new ThemeResolver($app))->resolve($this->getConfig('template'));
+        });
+
+        $this->app->singleton('sleeping_owl.template', function (Application $app) {
+            return $app->make(ThemeSelection::class)->template();
         });
 
         $this->app->singleton('sleeping_owl.theme', function (Application $app) {
-            return new LegacyTemplateThemeAdapter(
-                $app['sleeping_owl.template'],
-                'legacy-adminlte',
-                ['theme:legacy-adminlte'],
-                [],
-                array_map(
-                    fn (ThemeCapability $capability) => $capability->value,
-                    ThemeCapability::cases()
-                )
-            );
+            return $app->make(ThemeSelection::class)->theme();
         });
         $this->app->alias('sleeping_owl.theme', ThemeInterface::class);
 

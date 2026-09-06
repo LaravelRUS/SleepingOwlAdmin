@@ -1,7 +1,9 @@
 <?php
 
 use Mockery as m;
+use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Templates\TemplateDefault;
+use SleepingOwl\Admin\Themes\ThemeConfiguration;
 
 class TemplateDefaultTest extends TestCase
 {
@@ -40,10 +42,18 @@ class TemplateDefaultTest extends TestCase
     public function test_view()
     {
         $template = $this->getTemplate();
+        $theme = $this->app->make(ThemeInterface::class);
+        $themeConfig = $this->app->make(ThemeConfiguration::class);
         $renderedView = m::mock(\Illuminate\Contracts\View\View::class);
+        $data = [
+            'test',
+            'theme' => $theme,
+            'themeConfig' => $themeConfig,
+            'template' => $template,
+        ];
 
         $this->getViewMock()->shouldReceive('make')->once()->withArgs([
-            'sleeping_owl::default.test', ['test', 'template' => $template], [],
+            'sleeping_owl::default.test', $data, [],
         ])->andReturn($renderedView);
 
         $this->assertSame($renderedView, $template->view(
@@ -52,7 +62,7 @@ class TemplateDefaultTest extends TestCase
 
         $view = m::mock(\Illuminate\View\View::class);
 
-        $view->shouldReceive('with')->with(['test', 'template' => $template])->once()->andReturnSelf();
+        $view->shouldReceive('with')->with($data)->once()->andReturnSelf();
 
         $this->assertEquals($view, $template->view($view, ['test']));
     }

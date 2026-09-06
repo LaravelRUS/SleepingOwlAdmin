@@ -26,6 +26,7 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 use SleepingOwl\Admin\Providers\AdminServiceProvider;
 use SleepingOwl\Admin\Providers\AliasesServiceProvider;
 use SleepingOwl\Admin\Providers\BreadcrumbsServiceProvider;
+use SleepingOwl\Admin\Themes\ThemeConfiguration;
 use Spatie\Html\HtmlServiceProvider;
 
 /**
@@ -292,6 +293,7 @@ class Admin implements AdminInterface
             'assets' => [AssetsInterface::class],
             'sleeping_owl.template' => ['SleepingOwl\Admin\Contracts\Template\TemplateInterface'],
             'sleeping_owl.theme' => [ThemeInterface::class],
+            'sleeping_owl.theme.config' => [ThemeConfiguration::class],
             'sleeping_owl.breadcrumbs' => ['SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface'],
             'sleeping_owl.widgets' => ['SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface', 'SleepingOwl\Admin\Widgets\WidgetsRegistry'],
             'sleeping_owl.message' => ['SleepingOwl\Admin\Widgets\Messages\MessageStack'],
