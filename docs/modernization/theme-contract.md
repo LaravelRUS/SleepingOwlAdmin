@@ -63,9 +63,11 @@ Capability говорит только о presentation support. Он не озн
 
 `ThemeIcons::fromTheme($theme)` проверяет логические имена и непустые строковые tokens, затем предоставляет `has()`, `get()` и `all()`. Отсутствующий icon возвращает `null`; решение показать текст, скрыть необязательный icon или сообщить об ошибке принимает вызывающий theme component, без неявного обращения к другой теме.
 
-## Legacy AdminLTE metadata
+## Встроенная AdminLTE theme
 
-Текущая extracted legacy theme объявляет логический entry `theme:legacy-adminlte` и все восемь capabilities, которые уже присутствуют в её Bootstrap/AdminLTE presentation. До контролируемого переключения coordinator/registry фактическую регистрацию старых файлов продолжает выполнять `TemplateDefault`; наличие resolver не меняет legacy runtime asset URLs и не смешивает переходный adapter с незавершёнными modern bundles.
+`AdminLTETheme` является прямой реализацией `ThemeInterface` и одновременно наследует `TemplateDefault`, пока legacy rendering API остаётся публичным. Она владеет namespace `sleeping_owl::default`, объявляет `shared:icons`, `theme:legacy-adminlte`, все существующие feature presentation adapters и восемь capabilities. Icon classes не преобразуются в PHP: существующие Blade views и пользовательские расширения продолжают задавать нужные Font Awesome classes напрямую.
+
+Новый package config выбирает `AdminLTETheme::class`. Опубликованный config, в котором сохранён `TemplateDefault::class`, продолжает работать через `LegacyTemplateThemeAdapter`. До контролируемого переключения browser entries фактическую регистрацию compatibility aggregate выполняет унаследованный `TemplateDefault::initialize()`; standalone `theme:legacy-adminlte` CSS уже содержит Bootstrap/AdminLTE, но не содержит отдельный `shared:icons` bundle.
 
 ## Выбор темы и config values
 

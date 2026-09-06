@@ -40,7 +40,8 @@ The bridge list is executable contract data in `ViewBoundaryTest`: every listed 
 
 The current compatibility implementation is explicitly identified as `legacy-adminlte` through `ThemeInterface`. Its ownership boundary is:
 
-- template selector and lifecycle: `SleepingOwl\Admin\Templates\TemplateDefault`;
+- default theme/template selector: `SleepingOwl\Admin\Themes\AdminLTETheme`;
+- legacy template lifecycle retained for published config: `SleepingOwl\Admin\Templates\TemplateDefault`;
 - Blade implementation: `resources/views/themes/legacy/default`;
 - stable logical namespace: `sleeping_owl::default`;
 - current precompiled distribution: `public/default`;

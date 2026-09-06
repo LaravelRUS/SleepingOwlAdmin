@@ -289,7 +289,7 @@ return [
     | TemplateInterface. The existing key remains the public theme selector.
     */
 
-    'template' => SleepingOwl\Admin\Templates\TemplateDefault::class,
+    'template' => SleepingOwl\Admin\Themes\AdminLTETheme::class,
 
     /*
      * Show Theme Mode

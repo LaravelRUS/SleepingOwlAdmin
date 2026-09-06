@@ -6,13 +6,15 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Templates\TemplateDefault;
 use SleepingOwl\Admin\Themes\LegacyTemplateThemeAdapter;
 use SleepingOwl\Admin\Themes\ThemeCapability;
+use SleepingOwl\Admin\Themes\ThemeResolver;
 
 class LegacyTemplateThemeAdapterTest extends TestCase
 {
-    public function test_default_template_is_available_through_the_theme_contract(): void
+    public function test_template_default_remains_available_through_the_legacy_adapter(): void
     {
-        $template = $this->app->make('sleeping_owl.template');
-        $theme = $this->app->make(ThemeInterface::class);
+        $selection = (new ThemeResolver($this->app))->resolve(TemplateDefault::class);
+        $template = $selection->template();
+        $theme = $selection->theme();
 
         $this->assertInstanceOf(TemplateDefault::class, $template);
         $this->assertInstanceOf(TemplateInterface::class, $template);
@@ -23,9 +25,7 @@ class LegacyTemplateThemeAdapterTest extends TestCase
             array_map(fn (ThemeCapability $capability) => $capability->value, ThemeCapability::cases()),
             $theme->capabilities()
         );
-        $this->assertSame($theme, $this->app->make('sleeping_owl.theme'));
         $this->assertSame($template, $theme->legacyTemplate());
-        $this->assertSame($theme, $this->app->make('sleeping_owl')->theme());
     }
 
     public function test_adapter_exposes_only_narrow_theme_metadata(): void
