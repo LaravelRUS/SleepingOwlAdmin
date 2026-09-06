@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 2 — headless core и theme contract**.
-- Точка возобновления: отвязать first-party `AssetsInterface`/`MetaInterface` от contracts `KodiCMS\Assets` и зафиксировать собственный узкий contract.
+- Точка возобновления: перенести стандартные Bootstrap/AdminLTE-классы встроенных компонентов из PHP core в Blade views legacy theme.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -517,7 +517,7 @@ No-build consumer contract является release-blocking:
 ### Этап 2. Выделить headless core и theme contract
 
 - [x] Расширить существующий `TemplateInterface` до `ThemeInterface`, сохранив адаптер для старого `TemplateDefault` на время миграции.
-- [ ] Отвязать first-party `AssetsInterface`/`MetaInterface` от contracts `KodiCMS\Assets` и зафиксировать собственный узкий contract.
+- [x] Отвязать first-party `AssetsInterface`/`MetaInterface` от contracts `KodiCMS\Assets` и зафиксировать собственный узкий contract.
 - [ ] Перенести стандартные Bootstrap/AdminLTE-классы встроенных button, form, card/panel, grid, navigation, table, alert, badge и validation components из PHP core в Blade views legacy theme.
 - [ ] Сохранить прямой API пользовательских HTML attributes/classes и проверить, что theme rendering передаёт их без преобразований и потерь.
 - [ ] Разделить общие Blade views, theme-owned layout/views и feature-owned views.
@@ -938,3 +938,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 1 / legacy PHP assets | Добавлены 7 characterization tests используемого `kodicms/laravel-assets`: shared container services, handles/dependencies/order, JS attributes и head/footer, CSS attributes, recursive packages, meta tags, global config и last-registration-wins. Полный PHP gate: 335 tests, 1078 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 1 / завершение | Страховочная сетка закрывает PHP async DataTables, legacy DataTables/Vue browser behavior, render/config/assets contracts и оба CI gate; точка возобновления перенесена на `ThemeInterface` этапа 2 | текущий commit |
 | 2026-09-06 | Этап 2 / theme contract | Введён узкий `ThemeInterface` (`id`, view namespace, logical assets, icons, capabilities), container entry `sleeping_owl.theme` и deprecated `LegacyTemplateThemeAdapter`; текущий `TemplateDefault` и `sleeping_owl.template` остаются без изменения lifecycle/API. Полный PHP gate: 338 tests, 1096 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 2 / asset contracts | First-party `AssetsInterface`/`MetaInterface` больше не наследуют KodiCMS contracts; зафиксированы только используемые registration/render/meta operations, container aliases и явные небольшие делегаты `Meta` вместо magic-only API. Vendor implementation пока остаётся за contract boundary до отдельной замены. Полный PHP gate: 342 tests, 1107 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |

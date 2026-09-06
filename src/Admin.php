@@ -16,6 +16,7 @@ use SleepingOwl\Admin\Contracts\AdminInterface;
 use SleepingOwl\Admin\Contracts\Initializable;
 use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
+use SleepingOwl\Admin\Contracts\Template\AssetsInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
@@ -288,6 +289,7 @@ class Admin implements AdminInterface
     {
         $aliases = [
             'sleeping_owl' => ['SleepingOwl\Admin\Admin', 'SleepingOwl\Admin\Contracts\AdminInterface'],
+            'assets' => [AssetsInterface::class],
             'sleeping_owl.template' => ['SleepingOwl\Admin\Contracts\Template\TemplateInterface'],
             'sleeping_owl.theme' => [ThemeInterface::class],
             'sleeping_owl.breadcrumbs' => ['SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface'],

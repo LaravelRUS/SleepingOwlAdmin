@@ -2,40 +2,32 @@
 
 namespace SleepingOwl\Admin\Contracts\Template;
 
-use KodiCMS\Assets\Contracts\AssetsInterface as KodiAssetsInterface;
-
-interface AssetsInterface extends KodiAssetsInterface
+interface AssetsInterface
 {
-    /**
-     * @param  bool|string  $handle
-     * @param  string  $src
-     * @param  array|string  $dependency
-     * @param  bool  $footer
-     * @param  array  $attributes
-     * @return \KodiCMS\Assets\Contracts\AssetElementInterface
-     */
-    public function addJs($handle = false, $src = null, $dependency = null, $footer = true, array $attributes = []);
+    public function clear();
 
-    /**
-     * Добавление глобальной переменной.
-     *
-     * @param  string  $key
-     * @param  mixed  $value
-     * @return self
-     */
+    public function addJs(
+        $handle = false,
+        $src = null,
+        $dependency = null,
+        $footer = true,
+        array $attributes = []
+    );
+
+    public function addCss(
+        $handle = null,
+        $src = null,
+        $dependency = null,
+        array $attributes = []
+    );
+
+    public function loadPackage($names);
+
     public function putGlobalVar($key, $value);
 
-    /**
-     * Получение массива глобальных
-     * перменных
-     * .
-     *
-     * @return array
-     */
-    public function globalVars();
+    public function renderScripts($footer = false);
 
-    /**
-     * @return string
-     */
-    public function renderGlobalVars();
+    public function renderStyles();
+
+    public function render();
 }
