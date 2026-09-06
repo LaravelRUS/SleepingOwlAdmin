@@ -1,7 +1,9 @@
+import { defineComponent } from 'vue'
 import { each } from 'lodash';
+
 import { withLegacyInlineTemplate } from '../../../libs/vue-inline-template'
 
-Vue.component('related-group', withLegacyInlineTemplate({
+export default withLegacyInlineTemplate(defineComponent({
     props: {
         primary: {
             type: [Number, String],
@@ -74,4 +76,4 @@ Vue.component('related-group', withLegacyInlineTemplate({
     beforeDestroy() {
         this.destroyAdminComponents();
     },
-}));
+}))

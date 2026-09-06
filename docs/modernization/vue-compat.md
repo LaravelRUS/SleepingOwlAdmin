@@ -44,9 +44,14 @@ top-level `[data-soa-vue-app]` host and exposes their temporary lifecycle as
   mounted a second time.
 
 `#vueApp` remains a legacy layout id for non-Vue DOM integrations, but it is no
-longer a Vue root. The registry still inherits the audited global compat
-components from the single selected runtime. That inheritance is temporary and
-is removed as each component moves to app-local registration.
+longer a Vue root. The seven package-owned legacy definitions are exported with
+`defineComponent` and registered from one frozen catalog on every app before
+mount. The Vue Multiselect compatibility wrapper is registered from the same
+catalog because runtime compilation resolves its tag in the app context. The
+package does not call global `Vue.component` or `Vue.extend`. A consumer's
+existing global compat components can still be inherited from the selected
+runtime during this temporary stage; the final custom-module API replaces that
+path.
 
 `data-soa-vue-app` and `Admin.VueApps` are migration-only contracts, not the
 final custom-module API. Until a legacy custom component is migrated, its Blade
@@ -67,7 +72,6 @@ another legacy use.
 | Flag | Temporary owner | Removal condition |
 | --- | --- | --- |
 | `COMPILER_INLINE_TEMPLATE` | Nine legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
-| `GLOBAL_EXTEND` | env editor, deselect and file/image(s) definitions | Corresponding global definitions are removed |
 | `GLOBAL_PROTOTYPE` | `$trans` plugin in `libs/vuejs.js` | Translation composable/injection is used |
 | `COMPONENT_V_MODEL` | Legacy `v-model` in select/images views and Vue 2 draggable | Each owner uses the Vue 3 model contract |
 | `INSTANCE_SET` | Two array replacements in the images component | Ordinary reactive assignment replaces `$set` |
@@ -90,7 +94,7 @@ instance's server template. `withLegacyInlineTemplate()` clears that cached
 render just before each legacy instance is created. The current instance keeps
 its already selected render function.
 
-This bridge is applied only to the seven existing global definitions. Remove
+This bridge is applied only to the seven existing catalog definitions. Remove
 it together with the last `inline-template`; do not use it for new components.
 
 ### Vue Multiselect

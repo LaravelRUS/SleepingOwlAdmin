@@ -26,13 +26,21 @@ const legacyVueViews = [
     'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
     'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
 ]
+const legacyVueDefinitions = [
+    'resources/assets/js_owl/admin/display/env_editor.js',
+    'resources/assets/js_owl/admin/form/deselect.js',
+    'resources/assets/js_owl/admin/form/file.js',
+    'resources/assets/js_owl/admin/form/image.js',
+    'resources/assets/js_owl/admin/form/images.js',
+    'resources/assets/js_owl/admin/form/related/elements.js',
+    'resources/assets/js_owl/admin/form/related/group.js',
+]
 
 const expectedCompatFeatures = [
     'ATTR_ENUMERATED_COERCION',
     'COMPILER_INLINE_TEMPLATE',
     'COMPONENT_V_MODEL',
     'CONFIG_WHITESPACE',
-    'GLOBAL_EXTEND',
     'GLOBAL_PROTOTYPE',
     'INSTANCE_ATTRS_CLASS_STYLE',
     'INSTANCE_CHILDREN',
@@ -134,5 +142,27 @@ describe('bounded legacy Vue apps', () => {
 
         expect(initializer).toContain('createVueAppRegistry')
         expect(initializer).not.toMatch(/new Vue|#vueApp/)
+    })
+
+    it.each(legacyVueDefinitions)('exports an app-local definition from %s', (path) => {
+        const source = readSource(path)
+
+        expect(source).toContain('defineComponent')
+        expect(source).toContain('export default')
+        expect(source).not.toMatch(/Vue\.(?:component|extend)/)
+    })
+
+    it('contains no package-owned global component registration', () => {
+        const sources = [...legacyVueDefinitions, 'resources/assets/js_owl/bootstrap.js']
+            .map(readSource)
+            .join('\n')
+
+        expect(readSource('resources/assets/js_owl/admin/vue-components.js')).toContain(
+            'legacyVueComponents',
+        )
+        expect(readSource('resources/assets/js_owl/bootstrap.js')).toContain(
+            'Admin.LegacyVueComponents',
+        )
+        expect(sources).not.toMatch(/Vue\.(?:component|extend)/)
     })
 })

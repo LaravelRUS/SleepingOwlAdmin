@@ -1,10 +1,11 @@
+import { defineComponent } from 'vue'
+
 import { withLegacyInlineTemplate } from '../../libs/vue-inline-template'
 import { LegacyMultiselect, NativeMultiselect } from './multiselect-compat'
 
 window.Multiselect = NativeMultiselect;
-Vue.component('multiselect', LegacyMultiselect)
 
-Vue.component('deselect', withLegacyInlineTemplate(Vue.extend({
+export default withLegacyInlineTemplate(defineComponent({
     props: {
         value: {
             type: [Number, Array, String]
@@ -69,4 +70,4 @@ Vue.component('deselect', withLegacyInlineTemplate(Vue.extend({
             val: '',
         }
     }
-})));
+}))

@@ -95,11 +95,7 @@ require('./admin/localstorage/tabs');
  require('./admin/form/date');
  require('./admin/form/datetime');
  require('./admin/form/daterange');
- require('./admin/form/deselect');
- require('./admin/form/file');
  require('./admin/form/files');
- require('./admin/form/image');
- require('./admin/form/images');
  // require('./components/trix');
 
 
@@ -109,7 +105,7 @@ require('./admin/form/select');
 require('./admin/form/selectajax');
 require('./admin/form/wysiwyg');
 require('./admin/form/dependent-select');
-require('./admin/display/env_editor');
-require('./admin/form/related');
 require('./admin/form/password');
 require('./admin/form/text');
+
+window.Admin.LegacyVueComponents = require('./admin/vue-components').legacyVueComponents

@@ -1,9 +1,10 @@
 export const vueAppSelector = '[data-soa-vue-app]'
 
 export class VueAppRegistry {
-    constructor(createApp) {
+    constructor(createApp, components = {}) {
         assertFunction(createApp, 'createApp')
         this.createApp = createApp
+        this.components = componentEntries(components)
         this.apps = new Map()
     }
 
@@ -17,6 +18,7 @@ export class VueAppRegistry {
 
         const app = this.createApp({})
         assertApp(app)
+        registerComponents(app, this.components)
         this.apps.set(element, app)
 
         try {
@@ -64,8 +66,30 @@ export class VueAppRegistry {
     }
 }
 
-export function createVueAppRegistry(createApp) {
-    return new VueAppRegistry(createApp)
+export function createVueAppRegistry(createApp, components) {
+    return new VueAppRegistry(createApp, components)
+}
+
+function registerComponents(app, components) {
+    components.forEach(([name, component]) => app.component(name, component))
+}
+
+function componentEntries(components) {
+    if (!components || typeof components !== 'object' || Array.isArray(components)) {
+        throw new TypeError('Vue app components must be an object.')
+    }
+
+    return Object.entries(components).map(validateComponent)
+}
+
+function validateComponent([name, component]) {
+    const validDefinition = component !== null && ['function', 'object'].includes(typeof component)
+
+    if (!name.trim() || !validDefinition) {
+        throw new TypeError('Vue app component entries require a name and definition.')
+    }
+
+    return [name, component]
 }
 
 function topLevelVueRoots(root) {
@@ -90,6 +114,7 @@ function contains(root, element) {
 }
 
 function assertApp(app) {
+    assertFunction(app?.component, 'Vue app component registration')
     assertFunction(app?.mount, 'Vue app mount')
     assertFunction(app?.unmount, 'Vue app unmount')
 }

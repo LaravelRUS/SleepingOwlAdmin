@@ -35,6 +35,16 @@ test.afterEach(async ({ page }) => {
 
 // The published bundle disables discovery on the CommonJS wrapper, not its Dropzone constructor.
 const knownLegacyPageErrors = ['Dropzone already attached.']
+const legacyVueComponentNames = [
+    'deselect',
+    'element-file',
+    'element-image',
+    'element-images',
+    'env_editor',
+    'multiselect',
+    'related-elements',
+    'related-group',
+]
 const relatedLifecycleComponents = ['existing-related-group', 'new-related-group-2']
 
 function capturePageErrors(page) {
@@ -89,15 +99,26 @@ async function selectedValues(locator) {
 }
 
 async function expectBoundedVueApps(page) {
-    const ownership = await page.evaluate(() => ({
-        layoutMounted: Boolean(globalThis.document.querySelector('#vueApp').__vue_app__),
-        mountedIds: [...globalThis.document.querySelectorAll('[data-soa-vue-app]')]
-            .filter((element) => element.__vue_app__)
-            .map((element) => element.id),
-        nestedMounted: Boolean(globalThis.document.querySelector('#nested-vue-marker').__vue_app__),
-    }))
+    const ownership = await page.evaluate((componentNames) => {
+        const hosts = [...globalThis.document.querySelectorAll('[data-soa-vue-app]')]
+        const mountedHosts = hosts.filter((element) => element.__vue_app__)
+
+        return {
+            componentsAreLocal: mountedHosts.every((element) =>
+                componentNames.every((name) =>
+                    globalThis.Admin.VueApps.get(element).component(name),
+                ),
+            ),
+            layoutMounted: Boolean(globalThis.document.querySelector('#vueApp').__vue_app__),
+            mountedIds: mountedHosts.map((element) => element.id),
+            nestedMounted: Boolean(
+                globalThis.document.querySelector('#nested-vue-marker').__vue_app__,
+            ),
+        }
+    }, legacyVueComponentNames)
 
     expect(ownership).toEqual({
+        componentsAreLocal: true,
         layoutMounted: false,
         mountedIds: [
             'env-fixture',

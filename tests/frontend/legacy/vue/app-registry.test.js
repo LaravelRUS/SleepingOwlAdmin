@@ -43,6 +43,7 @@ function closest(element, selector) {
 function fakeAppFactory(apps) {
     return vi.fn(() => {
         const app = {
+            component: vi.fn(),
             mount: vi.fn(),
             unmount: vi.fn(),
         }
@@ -67,6 +68,24 @@ it('mounts only top-level marked roots and remains idempotent', () => {
     expect(registry.get(nested)).toBeUndefined()
 })
 
+it('registers the component catalog locally on every app', () => {
+    const first = createElement('first', true)
+    const second = createElement('second', true)
+    const root = createElement('root', false, [first, second])
+    const components = { alpha: {}, beta: () => null }
+    const apps = []
+    const registry = createVueAppRegistry(fakeAppFactory(apps), components)
+
+    registry.mountAll(root)
+
+    apps.forEach((app) => {
+        expect(app.component.mock.calls).toEqual([
+            ['alpha', components.alpha],
+            ['beta', components.beta],
+        ])
+    })
+})
+
 it('unmounts a subtree once and allows a later remount', () => {
     const first = createElement('first', true)
     const second = createElement('second', true)
@@ -86,6 +105,7 @@ it('returns the same app during a re-entrant mount', () => {
     const host = createElement('host', true)
     let registry
     const app = {
+        component: vi.fn(),
         mount: vi.fn(() => expect(registry.mount(host)).toBe(app)),
         unmount: vi.fn(),
     }
@@ -101,6 +121,7 @@ it('returns the same app during a re-entrant mount', () => {
 it('does not retain an app whose mount fails', () => {
     const host = createElement('host', true)
     const registry = createVueAppRegistry(() => ({
+        component: vi.fn(),
         mount: () => {
             throw new Error('mount failed')
         },
@@ -117,11 +138,26 @@ it('validates factories, roots, elements and returned apps', () => {
 
     const invalid = createVueAppRegistry(() => ({}))
     expect(() => invalid.mount(createElement('host', true))).toThrow(
-        'Vue app mount must be a function',
+        'Vue app component registration must be a function',
     )
     expect(invalid.size).toBe(0)
 
-    const registry = createVueAppRegistry(() => ({ mount: vi.fn(), unmount: vi.fn() }))
+    const registry = createVueAppRegistry(() => ({
+        component: vi.fn(),
+        mount: vi.fn(),
+        unmount: vi.fn(),
+    }))
     expect(() => registry.mount(null)).toThrow('requires an Element')
     expect(() => registry.mountAll({})).toThrow('must be a DOM query root')
+})
+
+it('validates component catalogs before creating an app', () => {
+    const factory = fakeAppFactory([])
+
+    expect(() => createVueAppRegistry(factory, [])).toThrow('must be an object')
+    expect(() => createVueAppRegistry(factory, { '': {} })).toThrow('require a name and definition')
+    expect(() => createVueAppRegistry(factory, { invalid: null })).toThrow(
+        'require a name and definition',
+    )
+    expect(factory).not.toHaveBeenCalled()
 })

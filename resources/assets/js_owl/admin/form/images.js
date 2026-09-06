@@ -1,7 +1,9 @@
+import { defineComponent } from 'vue'
 import draggable from 'vuedraggable'
+
 import { withLegacyInlineTemplate } from '../../libs/vue-inline-template'
 
-Vue.component('element-images', withLegacyInlineTemplate(Vue.extend({
+export default withLegacyInlineTemplate(defineComponent({
     props: {
         url: {
             required: true
@@ -240,4 +242,4 @@ Vue.component('element-images', withLegacyInlineTemplate(Vue.extend({
             return this.vals.join(',')
         }
     }
-})));
+}))
