@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 1 — страховочная сетка тестов**.
-- Точка возобновления: добавить compatibility tests полного и минимального опубликованного config.
+- Точка возобновления: добавить CI-команды для PHP и frontend тестов.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -507,7 +507,7 @@ No-build consumer contract является release-blocking:
 - [x] Зафиксировать browser-сценарии DataTables 1 до обновления: state restore/clear, range/date/select/text filters, actions, inline edit, auto-update, tooltip/lazyload after draw.
 - [x] Зафиксировать Vue 2 browser-сценарии: env editor, file/image/images, select/multiselect и related elements, включая динамическое добавление групп.
 - [x] Добавить render snapshots/contract assertions для layout, navigation, forms, displays, validation и messages текущей темы.
-- [ ] Добавить tests, загружающие пакет с прежним полным опубликованным конфигом и с конфигом, в котором отсутствуют новые keys.
+- [x] Добавить tests, загружающие пакет с прежним полным опубликованным конфигом и с конфигом, в котором отсутствуют новые keys.
 - [ ] Добавить CI-команды для PHP и frontend тестов.
 - [ ] Добавить contract tests выбора production/development manifest entries через `sleeping_owl.dev_assets`, включая запрет смешивания профилей и попадания development Vue в production page.
 - [ ] Добавить characterization tests используемого API `kodicms/laravel-assets`: handles/dependencies/order, CSS/JS attributes, head/footer, packages, meta tags, global config и duplicate registration.
@@ -932,3 +932,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 1 / DataTables 1 browser | Готовый опубликованный DataTables 1.13.11 bundle покрыт 7 Playwright-сценариями: POST/payload, state restore/clear, text/date/range/select/daterange filters, bulk/custom actions, inline edit/rebind, auto-update stop и tooltip/lazyload draw hooks; подтверждён legacy range wire format `from::to` без отдельных `search[from]`/`search[to]` | текущий commit |
 | 2026-09-06 | Этап 1 / Vue 2 browser | Опубликованные `admin-app.js`/`vue.js`/`modules.js` покрыты 4 Playwright-сценариями: env editor, file/image/images upload callbacks, Vue Multiselect single/multiple/taggable values и related groups с динамическим Select2 rebind; зафиксирован известный legacy-дефект Dropzone CommonJS wrapper, оставляющий auto-discovery включённым на внутреннем constructor | текущий commit |
 | 2026-09-06 | Этап 1 / default theme render | Добавлены 9 render-contract tests для layout, nested/leaf navigation, text form с validation, table display и success/warning/info/error messages; user attributes/classes проверяются без преобразования. Полный PHP gate с PDO SQLite: 321 test, 974 assertions, 2 прежних TODO-skip. Выявлены legacy-дефекты пустых message widgets/output buffers и несовпадающей `has-error`-нормализации bracket names | текущий commit |
+| 2026-09-06 | Этап 1 / config loading | Добавлены Testbench application tests, подставляющие full legacy и one-key minimal config до регистрации package providers; проверены shallow merge defaults, сохранение пользовательских values/KodiCMS aliases, отсутствие planned sidebar key и загрузка template/views без перепубликации config. Полный PHP gate с PDO SQLite: 326 tests, 1003 assertions, 2 прежних TODO-skip | текущий commit |
