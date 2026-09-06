@@ -77,6 +77,81 @@ function parseDatasetValue(value, type, name) {
 
 /***/ }),
 
+/***/ "./resources/frontend/core/dom/listeners.js":
+/*!**************************************************!*\
+  !*** ./resources/frontend/core/dom/listeners.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "delegate": () => (/* binding */ delegate),
+/* harmony export */   "listen": () => (/* binding */ listen)
+/* harmony export */ });
+function listen(target, type, listener, options) {
+  assertEventTarget(target);
+  assertEventType(type);
+  assertListener(listener);
+  target.addEventListener(type, listener, options);
+  return function () {
+    return target.removeEventListener(type, listener, options);
+  };
+}
+function delegate(root, type, selector, listener, options) {
+  assertDelegationRoot(root);
+  assertSelector(selector);
+  assertListener(listener);
+  return listen(root, type, function (event) {
+    return invokeDelegate(event, root, selector, listener);
+  }, options);
+}
+function invokeDelegate(event, root, selector, listener) {
+  var matched = findDelegateTarget(event.target, root, selector);
+  if (matched) {
+    listener.call(matched, event, matched);
+  }
+}
+function findDelegateTarget(target, root, selector) {
+  var element = closestElement(target);
+  var matched = element === null || element === void 0 ? void 0 : element.closest(selector);
+  return matched && root.contains(matched) ? matched : null;
+}
+function closestElement(target) {
+  var _target$parentElement;
+  if (typeof (target === null || target === void 0 ? void 0 : target.closest) === 'function') {
+    return target;
+  }
+  return (_target$parentElement = target === null || target === void 0 ? void 0 : target.parentElement) !== null && _target$parentElement !== void 0 ? _target$parentElement : null;
+}
+function assertEventTarget(target) {
+  if (typeof (target === null || target === void 0 ? void 0 : target.addEventListener) !== 'function' || typeof (target === null || target === void 0 ? void 0 : target.removeEventListener) !== 'function') {
+    throw new TypeError('Event target must support addEventListener and removeEventListener.');
+  }
+}
+function assertDelegationRoot(root) {
+  assertEventTarget(root);
+  if (typeof root.contains !== 'function') {
+    throw new TypeError('Delegation root must support contains().');
+  }
+}
+function assertEventType(type) {
+  if (typeof type !== 'string' || type.length === 0) {
+    throw new TypeError('Event type must be a non-empty string.');
+  }
+}
+function assertSelector(selector) {
+  if (typeof selector !== 'string' || selector.length === 0) {
+    throw new TypeError('Delegated selector must be a non-empty string.');
+  }
+}
+function assertListener(listener) {
+  if (typeof listener !== 'function') {
+    throw new TypeError('Event listener must be a function.');
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/core/events/event-bus.js":
 /*!*****************************************************!*\
   !*** ./resources/frontend/core/events/event-bus.js ***!
@@ -330,15 +405,19 @@ var __webpack_exports__ = {};
   \******************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AdminEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_1__.AdminEventBus),
-/* harmony export */   "createEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_1__.createEventBus),
+/* harmony export */   "AdminEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_2__.AdminEventBus),
+/* harmony export */   "createEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_2__.createEventBus),
+/* harmony export */   "delegate": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__.delegate),
+/* harmony export */   "listen": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__.listen),
 /* harmony export */   "parseBoolean": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.parseBoolean),
 /* harmony export */   "parseJsonProps": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.parseJsonProps),
 /* harmony export */   "parseNumber": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.parseNumber),
 /* harmony export */   "readDataset": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.readDataset)
 /* harmony export */ });
 /* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/island-props.js */ "./resources/frontend/core/data/island-props.js");
-/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
+/* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
+
 
 
 })();

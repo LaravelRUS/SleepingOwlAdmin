@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>DOM listeners browser fixture</title>
+    </head>
+    <body>
+        <main id="actions">
+            <button data-action="save" type="button"><span id="save-label">Save</span></button>
+        </main>
+        <output id="result"></output>
+
+        <script type="module">
+            import { delegate } from '/resources/frontend/core/dom/listeners.js'
+
+            const actions = document.querySelector('#actions')
+            const result = document.querySelector('#result')
+
+            globalThis.stopDelegation = delegate(
+                actions,
+                'click',
+                '[data-action]',
+                (event, button) => {
+                    result.textContent = JSON.stringify({
+                        action: button.dataset.action,
+                        currentTarget: event.currentTarget.id,
+                    })
+                },
+            )
+
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>
