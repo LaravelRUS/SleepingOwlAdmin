@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: выбрать критерий удаления jQuery после проверки актуального production dependency tree DataTables 2.
+- Точка возобновления: выбрать базовый критерий удаления jQuery для DataTables 2 либо явно пересмотреть целевую major-версию.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -65,6 +65,14 @@ DataTables 2 поддерживает современную инициализ�
 2. **Строгий критерий:** пакет `jquery` отсутствует и в production bundle, и в `npm` dependency tree. Если DataTables 2 не позволяет этого добиться, для строгого критерия придётся заменить DataTables на независимый grid (основной кандидат — Tabulator) либо принять базовый критерий отдельным решением.
 
 До обновления зависимостей нужно зафиксировать выбранный критерий в этом документе. По умолчанию план ориентирован на базовый критерий, поскольку пользователь явно выбрал DataTables 2.
+
+#### Проверка npm packages от 2026-09-06
+
+- Последняя версия согласованной major-ветки — `datatables.net@2.3.8`; совместимый Responsive — `datatables.net-responsive@3.0.8`.
+- `datatables.net`, `datatables.net-bs4`, `datatables.net-bs5`, `datatables.net-dt` и Responsive packages этих major-веток объявляют production dependency `jquery >=1.7`.
+- Чистая временная установка `datatables.net@2.3.8`, `datatables.net-bs4@2.3.8`, `datatables.net-responsive@3.0.8` и `datatables.net-responsive-bs4@3.0.8` установила пять production packages, включая дедуплицированный `jquery@4.0.0`.
+- Следовательно, строгий критерий несовместим с DataTables 2 без замены grid либо неподдерживаемого вмешательства в package/bundle.
+- На дату проверки npm tag `latest` уже указывает на `datatables.net@3.0.3` и Responsive `4.0.3`; их metadata не содержит зависимости от jQuery. Это отдельная major-миграция и не меняет согласованную цель автоматически.
 
 ### Ограничение Vue 3 и серверных шаблонов
 
@@ -251,7 +259,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 ### Этап 0. Зафиксировать решения и baseline
 
 - [ ] Выбрать базовый или строгий критерий удаления jQuery.
-- [ ] Проверить актуальные DataTables 2 packages и их production dependency tree.
+- [x] Проверить актуальные DataTables 2 packages и их production dependency tree.
 - [ ] Зафиксировать список поддерживаемых браузеров.
 - [ ] Зафиксировать границы `core`, `feature driver`, `theme` и пользовательских extensions.
 - [ ] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
@@ -630,3 +638,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Styling contract | First-party стили закреплены за Sass; colors и настраиваемые значения централизуются через variables files и `--soa-*` root properties | — |
 | 2026-09-06 | Sidebar color | В config добавлен планируемый `sidebar_background_color`, применяемый через `--soa-sidebar-bg` без frontend rebuild | — |
 | 2026-09-06 | Этап 0 / запуск | План закреплён в Git как источник истины; ветка и чистое рабочее дерево проверены; выполнение переведено в активный статус | `2029528c` |
+| 2026-09-06 | Этап 0 / DataTables packages | Проверены npm metadata и чистая production-установка: DataTables `2.3.8` + Responsive `3.0.8` обязательно включают jQuery; DataTables `3.0.3` отмечен только как отдельная будущая major-альтернатива | текущий commit |
