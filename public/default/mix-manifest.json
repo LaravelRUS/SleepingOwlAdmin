@@ -1,10 +1,11 @@
 {
-    "/js/vue.js": "/js/vue.js?id=d46164bfc94803712bf29ddaf0d4bdb1",
+    "/js/vue.js": "/js/vue.js?id=ec74b39e2f6e728004e6669c1189d565",
     "/js/vue-dev.js": "/js/vue-dev.js?id=c4ea74a28acdb37a9b5209e8959b81a3",
-    "/js/admin-app.js": "/js/admin-app.js?id=bc38b67a72dd8e0eeb54d603c3fc2b11",
-    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=80e790b98cd93c731f25f0b7b8737ed9",
+    "/js/admin-app.js": "/js/admin-app.js?id=29139eb05606a6d5335861ac91621e85",
+    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=dbb729fca654c0c4088e63e39b9e4082",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
     "/js/admin-core.js": "/js/admin-core.js?id=b983a01323cd440b5502c8123c18a184",
+    "/js/features/dropdown.js": "/js/features/dropdown.js?id=88a53f696508ba72da1e678a693faba2",
     "/js/features/forms.js": "/js/features/forms.js?id=605954adb457cc5490c7e67754bda3cb",
     "/js/features/lightbox.js": "/js/features/lightbox.js?id=10da8d876c334d23dd1f4b912da65d87",
     "/js/features/table.js": "/js/features/table.js?id=0a50714c412ebace0e8519578a51b99d",
@@ -13,9 +14,9 @@
     "/js/features/tree.js": "/js/features/tree.js?id=64240d1b383cf4ede43d2a08cf1ce788",
     "/js/themes/legacy-adminlte.js": "/js/themes/legacy-adminlte.js?id=f5d387540235443141917d352abe4d71",
     "/js/themes/tailwind.js": "/js/themes/tailwind.js?id=f5d387540235443141917d352abe4d71",
-    "/css/admin-app.css": "/css/admin-app.css?id=638bf305fb14cba30d11b4319816bb98",
-    "/css/features/lightbox.css": "/css/features/lightbox.css?id=ca781dbf82d26da58ceb5ce08477e5f6",
+    "/css/admin-app.css": "/css/admin-app.css?id=2a8cf1f6cc840aff23baeaa211916d0e",
     "/css/features/forms.css": "/css/features/forms.css?id=dddffe8833518428c6de5c6aff5dda27",
+    "/css/features/dropdown.css": "/css/features/dropdown.css?id=6fa7730081ed22f74a507a9aa1b70b93",
     "/css/admin-core.css": "/css/admin-core.css?id=0ab8b34c6e46477fc5066f206cf3da97",
     "/css/themes/tailwind.css": "/css/themes/tailwind.css?id=5f4e442f6740a37639edde2e1f62ac7c",
     "/css/themes/legacy-adminlte.css": "/css/themes/legacy-adminlte.css?id=514e4526a697e6b8563d137ad4fddba9",
@@ -29,7 +30,10 @@
     "/css/features/lightbox/themes/legacy-adminlte.css": "/css/features/lightbox/themes/legacy-adminlte.css?id=90305ac70d49e0ae1dd1c7268f1c0486",
     "/css/features/table/themes/tailwind.css": "/css/features/table/themes/tailwind.css?id=0526912c6138ddd82fc53784fe4486f8",
     "/css/features/table/themes/datatables-legacy-adminlte.css": "/css/features/table/themes/datatables-legacy-adminlte.css?id=1c9143018eb7f7c19b64007a3ebbfc67",
+    "/css/features/dropdown/themes/tailwind.css": "/css/features/dropdown/themes/tailwind.css?id=ab7854bbef6ae0b8612729d6d2a761d6",
+    "/css/features/dropdown/themes/legacy-adminlte.css": "/css/features/dropdown/themes/legacy-adminlte.css?id=9200339d717d862e2c292824ff94ca7b",
     "/css/features/tree.css": "/css/features/tree.css?id=39845e6738864a229a7844d89d22954a",
     "/css/features/tooltip.css": "/css/features/tooltip.css?id=8f27349ac20d217772f1d9b21b29d2b7",
-    "/css/features/table.css": "/css/features/table.css?id=0486f14bd03357524d6cb5a97dc6e459"
+    "/css/features/table.css": "/css/features/table.css?id=0486f14bd03357524d6cb5a97dc6e459",
+    "/css/features/lightbox.css": "/css/features/lightbox.css?id=ca781dbf82d26da58ceb5ce08477e5f6"
 }

@@ -44,6 +44,7 @@ describe('frontend build entries', () => {
 
     it.each([
         'core',
+        'feature:dropdown',
         'feature:forms',
         'feature:lightbox',
         'feature:table',
@@ -135,6 +136,18 @@ describe('tooltip presentation entries', () => {
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:tooltip:theme:${theme}`
+
+            expect(modernEntry(logicalId, 'styles')).toBeDefined()
+            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+        },
+    )
+})
+
+describe('dropdown presentation entries', () => {
+    it.each(['legacy-adminlte', 'tailwind'])(
+        'publishes the %s adapter as an independent stylesheet',
+        (theme) => {
+            const logicalId = `feature:dropdown:theme:${theme}`
 
             expect(modernEntry(logicalId, 'styles')).toBeDefined()
             expect(modernEntry(logicalId, 'scripts')).toBeUndefined()

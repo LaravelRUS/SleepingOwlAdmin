@@ -37,6 +37,11 @@
                 "output": "js/admin-core.js"
             },
             {
+                "logicalId": "feature:dropdown",
+                "source": "resources/frontend/features/dropdown/browser.js",
+                "output": "js/features/dropdown.js"
+            },
+            {
                 "logicalId": "feature:forms",
                 "source": "resources/frontend/features/forms/index.js",
                 "output": "js/features/forms.js"
@@ -84,6 +89,11 @@
                 "output": "css/admin-core.css"
             },
             {
+                "logicalId": "feature:dropdown",
+                "source": "resources/frontend/features/dropdown/styles/dropdown-base.scss",
+                "output": "css/features/dropdown.css"
+            },
+            {
                 "logicalId": "feature:forms",
                 "source": "resources/frontend/features/forms/styles/forms.scss",
                 "output": "css/features/forms.css"
@@ -107,6 +117,16 @@
                 "logicalId": "feature:tree",
                 "source": "resources/frontend/features/tree/styles/tree.scss",
                 "output": "css/features/tree.css"
+            },
+            {
+                "logicalId": "feature:dropdown:theme:legacy-adminlte",
+                "source": "resources/frontend/features/dropdown/themes/legacy-adminlte/styles/dropdown-adminlte.scss",
+                "output": "css/features/dropdown/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:dropdown:theme:tailwind",
+                "source": "resources/frontend/features/dropdown/themes/tailwind/styles/dropdown-tailwind.scss",
+                "output": "css/features/dropdown/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:table:theme:legacy-adminlte",

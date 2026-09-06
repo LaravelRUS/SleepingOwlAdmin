@@ -15,6 +15,9 @@ class AssetManifestLoaderTest extends TestCase
         $this->assertSame(['production', 'development'], $manifest->profileIds());
         $this->assertSame([
             'core',
+            'feature:dropdown',
+            'feature:dropdown:theme:legacy-adminlte',
+            'feature:dropdown:theme:tailwind',
             'feature:forms',
             'feature:lightbox',
             'feature:lightbox:theme:legacy-adminlte',

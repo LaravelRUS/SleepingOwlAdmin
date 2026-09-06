@@ -1,0 +1,10 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+    :root {
+        --soa-dropdown-surface: #{colors.$surface};
+        --soa-dropdown-text: #{colors.$text};
+        --soa-dropdown-z-index: #{variables.$z-index};
+    }
+}

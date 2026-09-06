@@ -54,6 +54,7 @@ window.Admin.Modules = require('./components/modules');
 window.Admin.WYSIWYG = require('./components/wysiwyg');
 
 require('./admin/tooltip');
+require('./admin/dropdown');
 
 /**
  * Initialize Wysiwyg editors

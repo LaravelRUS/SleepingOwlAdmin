@@ -40,6 +40,15 @@ const staticRoutes = new Map([
         '/dependent-controls',
         [join(browserDirectory, 'dependent-controls.html'), 'text/html; charset=utf-8'],
     ],
+    ['/dropdowns', [join(browserDirectory, 'dropdowns.html'), 'text/html; charset=utf-8']],
+    [
+        '/dropdowns-modern',
+        [join(browserDirectory, 'dropdowns-modern.html'), 'text/html; charset=utf-8'],
+    ],
+    [
+        '/dropdown-presentation',
+        [join(browserDirectory, 'dropdown-presentation.html'), 'text/html; charset=utf-8'],
+    ],
     [
         '/inline-editors',
         [join(browserDirectory, 'inline-editors.html'), 'text/html; charset=utf-8'],
@@ -89,6 +98,13 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'features', 'tabs.js'), 'text/javascript'],
     ],
     [
+        '/public/default/js/features/dropdown.js',
+        [
+            join(projectRoot, 'public', 'default', 'js', 'features', 'dropdown.js'),
+            'text/javascript',
+        ],
+    ],
+    [
         '/public/default/js/features/tooltip.js',
         [join(projectRoot, 'public', 'default', 'js', 'features', 'tooltip.js'), 'text/javascript'],
     ],
@@ -115,6 +131,42 @@ const staticRoutes = new Map([
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/dropdown.css',
+        [join(projectRoot, 'public', 'default', 'css', 'features', 'dropdown.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/dropdown/themes/legacy-adminlte.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'dropdown',
+                'themes',
+                'legacy-adminlte.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/dropdown/themes/tailwind.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'dropdown',
+                'themes',
+                'tailwind.css',
+            ),
+            'text/css',
+        ],
     ],
     [
         '/public/default/css/features/tooltip.css',

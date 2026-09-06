@@ -1,6 +1,9 @@
 @use '../../frontend/features/forms/styles/files' as form-files;
 @use '../../frontend/features/forms/styles/date-picker' as form-date-picker;
 @use '../../frontend/features/forms/styles/custom-properties' as form-properties;
+@use '../../frontend/features/dropdown/styles/custom-properties' as dropdown-properties;
+@use '../../frontend/features/dropdown/styles/dropdown' as dropdown-driver;
+@use '../../frontend/features/dropdown/themes/legacy-adminlte/styles/legacy' as legacy-dropdown;
 @use '../../frontend/features/lightbox/styles/legacy' as legacy-lightbox-driver;
 @use '../../frontend/features/lightbox/themes/legacy-adminlte/styles/legacy' as legacy-lightbox;
 @use '../../frontend/features/tabs/themes/legacy-adminlte/styles/legacy' as legacy-tabs;
@@ -24,6 +27,9 @@
 //Component
 @import "components";
 @import "addition";
+@include dropdown-properties.define;
+@include dropdown-driver.styles;
+@include legacy-dropdown.styles;
 @include legacy-lightbox-driver.styles;
 @include legacy-lightbox.styles;
 @include legacy-tabs.styles;

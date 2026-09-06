@@ -1,0 +1,1 @@
+:root{--soa-dropdown-surface:canvas;--soa-dropdown-text:canvastext;--soa-dropdown-z-index:1000}@layer sleepingowl-feature.dropdown{:where(.dropdown,.btn-group){position:relative}.dropdown-menu{background:var(--soa-dropdown-surface);color:var(--soa-dropdown-text);position:absolute;z-index:var(--soa-dropdown-z-index)}.dropdown-menu[hidden]{display:none!important}}

@@ -2,6 +2,7 @@
 
 use Mockery as m;
 use PHPUnit\Framework\Attributes\DataProvider;
+use SleepingOwl\Admin\Form\Buttons\FormButton;
 use SleepingOwl\Admin\Form\Buttons\SaveAndClose;
 use SleepingOwl\Admin\Form\Columns\Column;
 
@@ -22,6 +23,34 @@ class LegacyThemePresentationTest extends TestCase
             'data-contract="save"',
             'value="save_and_close"',
         ]);
+    }
+
+    public function test_grouped_form_button_keeps_the_public_dropdown_marker(): void
+    {
+        $groupButton = m::mock(FormButton::class);
+        $groupButton->shouldReceive('getShow')->once()->andReturnTrue();
+        $groupButton->shouldReceive('render')->once()->andReturn(
+            '<button data-contract="group-action">Run</button>'
+        );
+
+        $html = view('sleeping_owl::default.form.button', [
+            'attributesArray' => [],
+            'groupElements' => [$groupButton],
+            'iconClass' => null,
+            'name' => 'save_and_close',
+            'text' => 'Save',
+            'url' => null,
+        ])->render();
+
+        $this->assertContainsAll($html, [
+            'class="btn-group"',
+            'data-toggle="dropdown"',
+            'class="dropdown-menu btn-actions"',
+            'aria-haspopup="true"',
+            'aria-expanded="false"',
+            '<button data-contract="group-action">Run</button>',
+        ]);
+        $this->assertStringNotContainsString('data-soa-dropdown', $html);
     }
 
     public function test_grid_column_renders_numeric_width_in_legacy_theme(): void

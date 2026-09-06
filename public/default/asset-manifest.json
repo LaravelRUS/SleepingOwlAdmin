@@ -20,6 +20,42 @@
                         }
                     ]
                 },
+                "feature:dropdown": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/dropdown.js",
+                            "version": "88a53f696508ba72da1e678a693faba2",
+                            "checksum": "sha256:64dede54bb44c51076bb5e4ff061db4f7da2aa0103f0e313e90d29a020328a34"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/dropdown.css",
+                            "version": "6fa7730081ed22f74a507a9aa1b70b93",
+                            "checksum": "sha256:a31e693bf3b324d883343ac9bb6d111d8b93e9515852d4c4b23b78457c1eba5b"
+                        }
+                    ]
+                },
+                "feature:dropdown:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/dropdown/themes/legacy-adminlte.css",
+                            "version": "9200339d717d862e2c292824ff94ca7b",
+                            "checksum": "sha256:cb24ce0624b2c0ad6d0748287d2650bd1edb3611f45fb5c88b297da94d2b0c78"
+                        }
+                    ]
+                },
+                "feature:dropdown:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/dropdown/themes/tailwind.css",
+                            "version": "ab7854bbef6ae0b8612729d6d2a761d6",
+                            "checksum": "sha256:6233ee3d5801ead4330d18150373d53bf661092468c7f74fbae1d0a7853c4136"
+                        }
+                    ]
+                },
                 "feature:forms": {
                     "scripts": [
                         {
@@ -262,6 +298,42 @@
                         }
                     ]
                 },
+                "feature:dropdown": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/dropdown.js",
+                            "version": "89cb3b9910bcb892fb1e87a4bb54302a",
+                            "checksum": "sha256:76a85cb9fbc04aabe3b3c83a7cce7c6ef578f91a0317ad657e6772e56d336547"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/dropdown.css",
+                            "version": "e4ec0f204b219671cddff36dbc96d00b",
+                            "checksum": "sha256:fbef547f50ec1e9cb73764d03f6f2c597b60ef255de25b91b09bc985394f0032"
+                        }
+                    ]
+                },
+                "feature:dropdown:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/dropdown/themes/legacy-adminlte.css",
+                            "version": "bf9ec50ac94494604de70a923d1f4381",
+                            "checksum": "sha256:d3faa9ed763aed0def9fe5827cd2f2ba595ab91866d99ff533847efcabfbc505"
+                        }
+                    ]
+                },
+                "feature:dropdown:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/dropdown/themes/tailwind.css",
+                            "version": "2de98c816ba9d98993171fc92ebfe0f0",
+                            "checksum": "sha256:ce6200b3a61d7ce46bb95e799b05340b5b20b76eb18f6f296785160bbb45f857"
+                        }
+                    ]
+                },
                 "feature:forms": {
                     "scripts": [
                         {
@@ -487,5 +559,5 @@
             }
         }
     },
-    "build_id": "sha256:f7a06b0c33f895451eff40f882cfb0d083bc7e4ed3aaca6a442d707180b78658"
+    "build_id": "sha256:a73f93053ae6bb6a89cae39d45a3bc19d336aae66920170e08cd66fa34ac71be"
 }

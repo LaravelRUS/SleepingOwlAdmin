@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" data-soa-color-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/features/dropdown.css" />
+        <script>
+            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
+            const supported = ['legacy-adminlte', 'tailwind']
+            if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
+
+            const link = document.createElement('link')
+            link.rel = 'stylesheet'
+            link.href = `/public/default/css/features/dropdown/themes/${theme}.css`
+            document.head.append(link)
+        </script>
+    </head>
+    <body>
+        <div class="dropdown show open">
+            <button data-toggle="dropdown" aria-expanded="true">Actions</button>
+            <div class="dropdown-menu show">
+                <a href="#edit" class="dropdown-item">Edit</a>
+            </div>
+        </div>
+    </body>
+</html>

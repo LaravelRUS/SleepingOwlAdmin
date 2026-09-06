@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="dropdown-modern-token" />
+        <title>Headless dropdown browser fixture</title>
+        <link rel="stylesheet" href="/public/default/css/features/dropdown.css" />
+        <link rel="stylesheet" href="/public/default/css/features/dropdown/themes/tailwind.css" />
+    </head>
+    <body>
+        <div class="dropdown">
+            <button
+                id="modern-toggle"
+                type="button"
+                data-toggle="dropdown"
+                aria-controls="modern-menu"
+            >
+                Modern actions
+            </button>
+            <div id="modern-menu" class="dropdown-menu">
+                <button id="modern-action" type="button" class="dropdown-item">Run</button>
+            </div>
+        </div>
+
+        <script src="/public/default/js/admin-core.js"></script>
+        <script src="/public/default/js/features/dropdown.js"></script>
+    </body>
+</html>
