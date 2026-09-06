@@ -3,8 +3,8 @@
 ## Статус и границы
 
 - Статус: выполняется.
-- Текущий этап: **Этап 1 — страховочная сетка тестов**.
-- Точка возобновления: добавить characterization tests используемого API `kodicms/laravel-assets`.
+- Текущий этап: **Этап 2 — headless core и theme contract**.
+- Точка возобновления: расширить существующий `TemplateInterface` до `ThemeInterface`, сохранив переходный адаптер для `TemplateDefault`.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -510,7 +510,7 @@ No-build consumer contract является release-blocking:
 - [x] Добавить tests, загружающие пакет с прежним полным опубликованным конфигом и с конфигом, в котором отсутствуют новые keys.
 - [x] Добавить CI-команды для PHP и frontend тестов.
 - [x] Добавить contract tests выбора production/development manifest entries через `sleeping_owl.dev_assets`, включая запрет смешивания профилей и попадания development Vue в production page.
-- [ ] Добавить characterization tests используемого API `kodicms/laravel-assets`: handles/dependencies/order, CSS/JS attributes, head/footer, packages, meta tags, global config и duplicate registration.
+- [x] Добавить characterization tests используемого API `kodicms/laravel-assets`: handles/dependencies/order, CSS/JS attributes, head/footer, packages, meta tags, global config и duplicate registration.
 
 Критерий завершения: текущая реализация проходит тесты, которые способны обнаружить основные регрессии миграции.
 
@@ -935,3 +935,5 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 1 / config loading | Добавлены Testbench application tests, подставляющие full legacy и one-key minimal config до регистрации package providers; проверены shallow merge defaults, сохранение пользовательских values/KodiCMS aliases, отсутствие planned sidebar key и загрузка template/views без перепубликации config. Полный PHP gate с PDO SQLite: 326 tests, 1003 assertions, 2 прежних TODO-skip | текущий commit |
 | 2026-09-06 | Этап 1 / CI gates | Добавлены `composer test`, единый `npm run check:ci` и GitHub Actions jobs: PHP 8.3 с явными PDO SQLite/sqlite3 и frontend Node 22 с clean npm install, lint/unit/style gates и Playwright Chromium. Локально `npm run check:ci`: 9 Vitest + 12 Playwright tests | текущий commit |
 | 2026-09-06 | Этап 1 / asset profiles | Добавлены contract tests реального Mix manifest и `TemplateDefault`: production/development выбирают ровно один `admin-app` profile, не смешиваются, сохраняют порядок общих `vue.js`/`modules.js`/CSS handles, а source entries связывают profiles с `vue-prod`/`vue-dev`. Полный PHP gate: 328 tests, 1029 assertions, 2 прежних TODO-skip | текущий commit |
+| 2026-09-06 | Этап 1 / legacy PHP assets | Добавлены 7 characterization tests используемого `kodicms/laravel-assets`: shared container services, handles/dependencies/order, JS attributes и head/footer, CSS attributes, recursive packages, meta tags, global config и last-registration-wins. Полный PHP gate: 335 tests, 1078 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 1 / завершение | Страховочная сетка закрывает PHP async DataTables, legacy DataTables/Vue browser behavior, render/config/assets contracts и оба CI gate; точка возобновления перенесена на `ThemeInterface` этапа 2 | текущий commit |
