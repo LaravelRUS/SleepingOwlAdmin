@@ -195,6 +195,10 @@ class Assets implements AssetsInterface
 
     private function source(mixed $source): string
     {
+        if ($source instanceof \Stringable) {
+            $source = (string) $source;
+        }
+
         if (! is_string($source) || trim($source) === '') {
             throw new InvalidArgumentException('Asset source must be a non-empty string.');
         }
