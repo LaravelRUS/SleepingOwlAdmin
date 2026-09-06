@@ -1,3 +1,1 @@
-@foreach($buttons as $button)
-  {!! $button->render() !!}
-@endforeach
+@include('sleeping_owl::features.tree.controls')

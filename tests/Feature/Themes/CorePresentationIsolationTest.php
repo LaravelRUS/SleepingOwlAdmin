@@ -58,12 +58,12 @@ class CorePresentationIsolationTest extends TestCase
         $this->assertSame([], $violations);
     }
 
-    public function test_default_theme_blade_sources_compile_to_valid_php(): void
+    public function test_package_blade_sources_compile_to_valid_php(): void
     {
         $compiler = $this->app->make('blade.compiler');
         $errors = [];
 
-        foreach ($this->defaultThemeViews() as $path) {
+        foreach ($this->packageViews() as $path) {
             try {
                 token_get_all($compiler->compileString(file_get_contents($path)), TOKEN_PARSE);
             } catch (ParseError $error) {
@@ -74,7 +74,7 @@ class CorePresentationIsolationTest extends TestCase
         $this->assertSame([], $errors);
     }
 
-    public function test_default_theme_renders_html_attributes_from_arrays(): void
+    public function test_package_views_render_html_attributes_from_arrays(): void
     {
         $patterns = [
             '~\{!!\s*\$(?:attributes|htmlStringAttributes)\s*!!\}~',
@@ -82,7 +82,7 @@ class CorePresentationIsolationTest extends TestCase
         ];
         $violations = [];
 
-        foreach ($this->defaultThemeViews() as $path) {
+        foreach ($this->packageViews() as $path) {
             $source = preg_replace('~\{\{--.*?--\}\}~s', '', file_get_contents($path));
 
             foreach ($patterns as $pattern) {
@@ -125,9 +125,9 @@ class CorePresentationIsolationTest extends TestCase
         return $literals;
     }
 
-    private function defaultThemeViews(): iterable
+    private function packageViews(): iterable
     {
-        $root = realpath(__DIR__.'/../../../resources/views/default');
+        $root = realpath(__DIR__.'/../../../resources/views');
         $directory = new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS);
 
         foreach (new RecursiveIteratorIterator($directory) as $file) {
