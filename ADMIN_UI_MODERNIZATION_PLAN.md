@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 2 — headless core и theme contract**.
-- Точка возобновления: извлечь текущую AdminLTE 3/Bootstrap 4 реализацию как временную reference/legacy theme без изменения поведения.
+- Точка возобновления: добавить contract tests, которые рендерят один и тот же PHP display/form через разные test themes.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -521,7 +521,7 @@ No-build consumer contract является release-blocking:
 - [x] Перенести стандартные Bootstrap/AdminLTE-классы встроенных button, form, card/panel, grid, navigation, table, alert, badge и validation components из PHP core в Blade views legacy theme.
 - [x] Сохранить прямой API пользовательских HTML attributes/classes и проверить, что theme rendering передаёт их без преобразований и потерь.
 - [x] Разделить общие Blade views, theme-owned layout/views и feature-owned views.
-- [ ] Извлечь текущую AdminLTE 3/Bootstrap 4 реализацию как временную reference/legacy theme без изменения поведения.
+- [x] Извлечь текущую AdminLTE 3/Bootstrap 4 реализацию как временную reference/legacy theme без изменения поведения.
 - [ ] Добавить contract tests, которые рендерят один и тот же PHP display/form через разные test themes.
 - [ ] Определить theme asset manifest и capability API: tabs, tooltip, dropdown, modal, notification, icons и table presentation.
 - [ ] Сохранить `sleeping_owl.template` как selector реализации темы и передать theme-owned config values без переименования.
@@ -942,3 +942,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 2 / presentation defaults | Bootstrap/AdminLTE defaults встроенных buttons, forms, cards, grid, tabs, badges, tables, filters и controls перенесены из PHP core в legacy Blade views; behavior hooks сохранены. `ComponentAttributeBag` объединяет theme defaults с пользовательскими attributes, отдельные tests фиксируют variants/grid/tabs/controls, PHP guard запрещает возврат framework class defaults и проверяет синтаксис всех legacy Blade views. Уточнён read-only inventory `Laluna/Modules`: 72 sections, 74 datatables displays, 444 прямых class attributes и 72 placement-вхождения. Полный PHP gate: 357 tests, 1140 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / user attributes | Прямой API пользовательских classes/attributes сохранён без semantic resolver: raw arrays доступны темам, прежние строковые keys оставлены для custom views. Все default theme views используют first-party `HtmlAttributeBag`, который объединяет theme/user classes и безопасно экранирует values только при HTML-выводе; static guard запрещает возврат к raw attribute strings. Покрыты navigation, headers, extensions, columns, `data-*`, `aria-*`, inline style и boolean attributes. Полный PHP gate: 366 tests, 1171 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / view boundaries | Blade implementations разделены по физическим ownership roots `shared`, `features` и theme-owned `default`; framework-dependent feature markup оставлен theme adapter-слою. Восемь прежних `sleeping_owl::default.*` paths сохранены однострочными bridge views, поэтому published overrides и custom templates продолжают работать. Добавлены карта границ и guards: shared не зависит от theme/runtime, features не зависит от default theme, все package Blade views компилируются. Полный PHP gate: 371 test, 1199 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 2 / legacy theme extraction | `default` физически перенесён в `resources/views/themes/legacy/default` и явно идентифицирован через `ThemeInterface` как `legacy-adminlte`; стабильный namespace `sleeping_owl::default`, `TemplateDefault`, config selector, published overrides и `public/default` URLs не изменены. Provider регистрирует общий root перед legacy root; executable contract проверяет разрешение каждого legacy Blade-файла. Asset source/distribution пока только объявлены legacy-owned и будут физически разделены вместе с versioned manifests, без промежуточного сломанного runtime. Полный PHP gate: 374 tests, 1326 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |

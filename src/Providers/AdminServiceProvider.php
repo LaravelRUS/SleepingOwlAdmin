@@ -102,7 +102,10 @@ class AdminServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('sleeping_owl.theme', function (Application $app) {
-            return new LegacyTemplateThemeAdapter($app['sleeping_owl.template']);
+            return new LegacyTemplateThemeAdapter(
+                $app['sleeping_owl.template'],
+                'legacy-adminlte'
+            );
         });
         $this->app->alias('sleeping_owl.theme', ThemeInterface::class);
 

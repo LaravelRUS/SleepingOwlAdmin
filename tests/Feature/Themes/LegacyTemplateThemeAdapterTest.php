@@ -16,6 +16,7 @@ class LegacyTemplateThemeAdapterTest extends TestCase
         $this->assertInstanceOf(TemplateDefault::class, $template);
         $this->assertInstanceOf(TemplateInterface::class, $template);
         $this->assertInstanceOf(LegacyTemplateThemeAdapter::class, $theme);
+        $this->assertSame('legacy-adminlte', $theme->id());
         $this->assertSame($theme, $this->app->make('sleeping_owl.theme'));
         $this->assertSame($template, $theme->legacyTemplate());
         $this->assertSame($theme, $this->app->make('sleeping_owl')->theme());

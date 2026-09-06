@@ -14,7 +14,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/sleeping_owl.php', 'sleeping_owl');
         $this->mergeConfigFrom(__DIR__.'/../../config/navigation.php', 'navigation');
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'sleeping_owl');
+        $this->loadViewsFrom($this->viewPaths(), 'sleeping_owl');
 
         $this->registerCore();
         $this->registerCommands();
@@ -55,11 +55,19 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
         $resolver->register('php', function () {
             return new PhpEngine($this->app['files']);
         });
-        $finder = new FileViewFinder($this->app['files'], [__DIR__.'/../../resources/views']);
+        $finder = new FileViewFinder($this->app['files'], $this->viewPaths());
         $factory = new Factory($resolver, $finder, $this->app['events']);
         $factory->addExtension('php', 'php');
 
         return $factory;
+    }
+
+    private function viewPaths(): array
+    {
+        return [
+            __DIR__.'/../../resources/views',
+            __DIR__.'/../../resources/views/themes/legacy',
+        ];
     }
 
     protected function registerCommands()
