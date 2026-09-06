@@ -8,6 +8,8 @@
         "hot": "mix watch --hot",
         "production": "mix --production",
         "prod": "mix --production",
+        "lint": "eslint resources/frontend tests/frontend vitest.config.mjs",
+        "lint:fix": "npm run lint -- --fix",
         "test": "vitest run",
         "test:watch": "vitest",
         "baseline:frontend": "node scripts/modernization/capture-frontend-baseline.mjs",
@@ -52,7 +54,9 @@
         "x-editable-bs4": "^1.5.5"
     },
     "devDependencies": {
+        "@eslint/js": "10.0.1",
         "cross-env": "^7.0.3",
+        "eslint": "10.10.0",
         "laravel-mix": "^6.0.43",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.52.1",
