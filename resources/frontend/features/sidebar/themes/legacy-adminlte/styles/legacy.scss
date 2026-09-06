@@ -1,0 +1,7 @@
+@use 'custom-properties';
+@use 'sidebar';
+
+@mixin styles {
+  @include custom-properties.define;
+  @include sidebar.styles;
+}

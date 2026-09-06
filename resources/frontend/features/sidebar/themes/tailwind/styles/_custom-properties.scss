@@ -1,0 +1,24 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+  :root {
+    --soa-sidebar-bg: #{colors.$sidebar-background};
+    --soa-sidebar-text-color: #{colors.$sidebar-text};
+    --soa-sidebar-link-hover-bg: #{colors.$sidebar-link-hover};
+    --soa-sidebar-link-active-bg: #{colors.$sidebar-link-active};
+    --soa-sidebar-link-active-text: #{colors.$sidebar-link-active-text};
+    --soa-sidebar-submenu-bg: #{colors.$sidebar-submenu};
+    --soa-sidebar-overlay-bg: #{colors.$overlay-background};
+    --soa-sidebar-width: #{variables.$width};
+    --soa-sidebar-collapsed-width: #{variables.$collapsed-width};
+    --soa-sidebar-z-index: #{variables.$z-index};
+    --soa-sidebar-overlay-z-index: #{variables.$overlay-z-index};
+    --soa-sidebar-indicator-angle: #{variables.$indicator-angle};
+    --soa-sidebar-link-radius: #{variables.$link-radius};
+    --soa-sidebar-link-gap: #{variables.$link-gap};
+    --soa-sidebar-link-padding-block: #{variables.$link-padding-block};
+    --soa-sidebar-link-padding-inline: #{variables.$link-padding-inline};
+    --soa-sidebar-submenu-padding-inline: #{variables.$submenu-padding-inline};
+  }
+}

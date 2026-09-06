@@ -50,6 +50,7 @@ public function assets(): array
 | `modal` | dialog presentation; lifecycle остаётся в отдельном driver/core service |
 | `notification` | presentation success/warning/info/error messages |
 | `icons` | собственная icon presentation и интерпретация объявленных tokens |
+| `sidebar` | layout, navigation tree и presentation состояний open/collapsed |
 | `table-presentation` | table wrapper, responsive presentation и styles для table driver |
 
 `ThemeCapabilities::fromTheme($theme)` отклоняет неизвестные значения и предоставляет типизированный `supports(ThemeCapability $capability)`. Отсутствующая capability не включает AdminLTE fallback и не даёт core права добавить Bootstrap/Tailwind classes. Компонент или будущий coordinator должен либо выбрать поддерживаемое theme-owned представление, либо выдать явную диагностическую ошибку.
@@ -64,7 +65,7 @@ Capability говорит только о presentation support. Он не озн
 
 ## Legacy AdminLTE metadata
 
-Текущая extracted legacy theme объявляет логический entry `theme:legacy-adminlte` и все семь capabilities, которые уже присутствуют в её Bootstrap/AdminLTE presentation. До контролируемого переключения coordinator/registry фактическую регистрацию старых файлов продолжает выполнять `TemplateDefault`; наличие resolver не меняет legacy runtime asset URLs и не смешивает переходный adapter с незавершёнными modern bundles.
+Текущая extracted legacy theme объявляет логический entry `theme:legacy-adminlte` и все восемь capabilities, которые уже присутствуют в её Bootstrap/AdminLTE presentation. До контролируемого переключения coordinator/registry фактическую регистрацию старых файлов продолжает выполнять `TemplateDefault`; наличие resolver не меняет legacy runtime asset URLs и не смешивает переходный adapter с незавершёнными modern bundles.
 
 ## Выбор темы и config values
 

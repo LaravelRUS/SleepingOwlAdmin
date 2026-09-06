@@ -5,12 +5,6 @@
   */
 
 /*!
- * AdminLTE v3.2.0 (https://adminlte.io)
- * Copyright 2014-2022 Colorlib <https://colorlib.com>
- * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
- */
-
-/*!
  * Lazy Load - JavaScript plugin for lazy loading images
  *
  * Copyright (c) 2007-2019 Mika Tuupola

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/features/sidebar.css" />
+        <script>
+            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
+            const supported = ['legacy-adminlte', 'tailwind']
+            if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
+            const link = document.createElement('link')
+            link.rel = 'stylesheet'
+            link.href = `/public/default/css/features/sidebar/themes/${theme}.css`
+            document.head.append(link)
+        </script>
+    </head>
+    <body class="sidebar-mini sidebar-open">
+        <aside id="presented-sidebar" class="main-sidebar">
+            <ul class="nav-sidebar">
+                <li class="nav-item menu-open">
+                    <a id="presented-link" class="nav-link active" href="#active">Active</a>
+                    <ul class="nav-treeview">
+                        <li>Child</li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+    </body>
+</html>

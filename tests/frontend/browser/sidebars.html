@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="csrf-token" content="sidebar-token" />
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'sidebars',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: { button: {}, select: {}, table: {} },
+            }
+        </script>
+    </head>
+    <body class="hold-transition sidebar-mini sidebar-open">
+        <div class="wrapper">
+            <header class="main-header">
+                <a id="pushmenu" class="nav-link" data-widget="pushmenu">
+                    <span>Toggle navigation</span>
+                </a>
+            </header>
+            <aside class="main-sidebar">
+                <nav class="sidebar">
+                    <ul
+                        id="navigation"
+                        class="nav nav-sidebar"
+                        data-widget="treeview"
+                        data-accordion="false"
+                    >
+                        <li id="first-branch" class="nav-item">
+                            <a id="first-link" class="nav-link" href="#first">
+                                First <i class="right"></i>
+                            </a>
+                            <ul id="first-menu" class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a id="first-child" class="nav-link" href="#child">Child</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="second-branch" class="nav-item">
+                            <a id="second-link" class="nav-link" href="#second">
+                                Second <i class="right"></i>
+                            </a>
+                            <ul id="second-menu" class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a id="second-child" class="nav-link" href="#second-child"
+                                        >Child</a
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a id="leaf-link" class="nav-link" href="#leaf">Leaf</a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <main class="content-wrapper">Content</main>
+            <div id="dynamic-navigation"></div>
+        </div>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__sidebarEvents = []
+            ;[
+                'sidebar:collapsed',
+                'sidebar:shown',
+                'collapsed.lte.pushmenu',
+                'shown.lte.pushmenu',
+                'navigation:expanded',
+                'navigation:collapsed',
+            ].forEach((name) => {
+                document.addEventListener(name, () => window.__sidebarEvents.push(name))
+            })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+    </body>
+</html>

@@ -6,6 +6,9 @@
 @use '../../frontend/features/dropdown/themes/legacy-adminlte/styles/legacy' as legacy-dropdown;
 @use '../../frontend/features/lightbox/styles/legacy' as legacy-lightbox-driver;
 @use '../../frontend/features/lightbox/themes/legacy-adminlte/styles/legacy' as legacy-lightbox;
+@use '../../frontend/features/sidebar/styles/custom-properties' as sidebar-properties;
+@use '../../frontend/features/sidebar/styles/sidebar' as sidebar-driver;
+@use '../../frontend/features/sidebar/themes/legacy-adminlte/styles/legacy' as legacy-sidebar;
 @use '../../frontend/features/tabs/themes/legacy-adminlte/styles/legacy' as legacy-tabs;
 @use '../../frontend/features/table/themes/legacy-adminlte/styles/legacy' as legacy-datatables;
 @use '../../frontend/features/tooltip/styles/custom-properties' as tooltip-properties;
@@ -13,7 +16,6 @@
 @use '../../frontend/features/tooltip/themes/legacy-adminlte/styles/legacy' as legacy-tooltip;
 @use '../../frontend/features/tree/themes/legacy-adminlte/styles/legacy' as legacy-tree;
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
-@use '../../frontend/themes/legacy-adminlte/styles/sidebar' as theme-sidebar;
 
 //Core
 @import "variables";
@@ -32,6 +34,9 @@
 @include legacy-dropdown.styles;
 @include legacy-lightbox-driver.styles;
 @include legacy-lightbox.styles;
+@include sidebar-properties.define;
+@include sidebar-driver.styles;
+@include legacy-sidebar.styles;
 @include legacy-tabs.styles;
 @include legacy-datatables.styles;
 @include tooltip-properties.define;
@@ -46,7 +51,6 @@
 @include form-properties.define;
 @include form-date-picker.styles;
 @include theme-properties.define;
-@include theme-sidebar.styles;
 
 
 //fontawesome 6

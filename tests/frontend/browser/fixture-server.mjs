@@ -41,6 +41,15 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'dependent-controls.html'), 'text/html; charset=utf-8'],
     ],
     ['/dropdowns', [join(browserDirectory, 'dropdowns.html'), 'text/html; charset=utf-8']],
+    ['/sidebars', [join(browserDirectory, 'sidebars.html'), 'text/html; charset=utf-8']],
+    [
+        '/sidebars-modern',
+        [join(browserDirectory, 'sidebars-modern.html'), 'text/html; charset=utf-8'],
+    ],
+    [
+        '/sidebar-presentation',
+        [join(browserDirectory, 'sidebar-presentation.html'), 'text/html; charset=utf-8'],
+    ],
     [
         '/dropdowns-modern',
         [join(browserDirectory, 'dropdowns-modern.html'), 'text/html; charset=utf-8'],
@@ -105,6 +114,10 @@ const staticRoutes = new Map([
         ],
     ],
     [
+        '/public/default/js/features/sidebar.js',
+        [join(projectRoot, 'public', 'default', 'js', 'features', 'sidebar.js'), 'text/javascript'],
+    ],
+    [
         '/public/default/js/features/tooltip.js',
         [join(projectRoot, 'public', 'default', 'js', 'features', 'tooltip.js'), 'text/javascript'],
     ],
@@ -162,6 +175,42 @@ const staticRoutes = new Map([
                 'css',
                 'features',
                 'dropdown',
+                'themes',
+                'tailwind.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/sidebar.css',
+        [join(projectRoot, 'public', 'default', 'css', 'features', 'sidebar.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/sidebar/themes/legacy-adminlte.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'sidebar',
+                'themes',
+                'legacy-adminlte.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/sidebar/themes/tailwind.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'sidebar',
                 'themes',
                 'tailwind.css',
             ),

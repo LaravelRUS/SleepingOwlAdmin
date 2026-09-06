@@ -30,21 +30,10 @@ const {
 } = require('../../frontend/features/table/themes/legacy-adminlte/datatables');
 installLegacyDataTablesPresentation(dataTables2Runtime());
 require('./libs/sweetalert');
-require('./libs/js-cookie');
 require('./libs/progressbar');
 require('@flowjs/flow.js');
 require('./libs/noty');
 require('./libs/lazyload');
-
-/**
- * Best open source admin dashboard & control panel theme.
- * Built on top of Bootstrap 4, AdminLTE provides a range of
- * responsive, reusable, and commonly used components.
- *
- * @see https://adminlte.io/themes/AdminLTE/
- */
-require('admin-lte');
-
 
 installAdminCore(window);
 window.Admin.Messages = require('./components/messages');
@@ -55,6 +44,7 @@ window.Admin.WYSIWYG = require('./components/wysiwyg');
 
 require('./admin/tooltip');
 require('./admin/dropdown');
+require('./admin/sidebar');
 
 /**
  * Initialize Wysiwyg editors

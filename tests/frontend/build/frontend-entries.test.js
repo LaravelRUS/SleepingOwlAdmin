@@ -47,6 +47,7 @@ describe('frontend build entries', () => {
         'feature:dropdown',
         'feature:forms',
         'feature:lightbox',
+        'feature:sidebar',
         'feature:table',
         'feature:tooltip',
         'feature:tree',
@@ -148,6 +149,18 @@ describe('dropdown presentation entries', () => {
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:dropdown:theme:${theme}`
+
+            expect(modernEntry(logicalId, 'styles')).toBeDefined()
+            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+        },
+    )
+})
+
+describe('sidebar presentation entries', () => {
+    it.each(['legacy-adminlte', 'tailwind'])(
+        'publishes the %s adapter as an independent stylesheet',
+        (theme) => {
+            const logicalId = `feature:sidebar:theme:${theme}`
 
             expect(modernEntry(logicalId, 'styles')).toBeDefined()
             expect(modernEntry(logicalId, 'scripts')).toBeUndefined()

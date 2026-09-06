@@ -47,6 +47,11 @@
                 "output": "js/features/forms.js"
             },
             {
+                "logicalId": "feature:sidebar",
+                "source": "resources/frontend/features/sidebar/browser.js",
+                "output": "js/features/sidebar.js"
+            },
+            {
                 "logicalId": "feature:lightbox",
                 "source": "resources/frontend/features/lightbox/index.js",
                 "output": "js/features/lightbox.js"
@@ -99,6 +104,11 @@
                 "output": "css/features/forms.css"
             },
             {
+                "logicalId": "feature:sidebar",
+                "source": "resources/frontend/features/sidebar/styles/sidebar-base.scss",
+                "output": "css/features/sidebar.css"
+            },
+            {
                 "logicalId": "feature:lightbox",
                 "source": "resources/frontend/features/lightbox/styles/lightbox-base.scss",
                 "output": "css/features/lightbox.css"
@@ -127,6 +137,16 @@
                 "logicalId": "feature:dropdown:theme:tailwind",
                 "source": "resources/frontend/features/dropdown/themes/tailwind/styles/dropdown-tailwind.scss",
                 "output": "css/features/dropdown/themes/tailwind.css"
+            },
+            {
+                "logicalId": "feature:sidebar:theme:legacy-adminlte",
+                "source": "resources/frontend/features/sidebar/themes/legacy-adminlte/styles/sidebar-adminlte.scss",
+                "output": "css/features/sidebar/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:sidebar:theme:tailwind",
+                "source": "resources/frontend/features/sidebar/themes/tailwind/styles/sidebar-tailwind.scss",
+                "output": "css/features/sidebar/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:table:theme:legacy-adminlte",

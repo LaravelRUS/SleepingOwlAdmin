@@ -1,0 +1,7 @@
+@use 'variables';
+
+@mixin define {
+  :root {
+    --soa-sidebar-transition-duration: #{variables.$transition-duration};
+  }
+}

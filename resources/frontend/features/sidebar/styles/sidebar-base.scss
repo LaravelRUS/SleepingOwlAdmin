@@ -1,0 +1,9 @@
+@use 'colors';
+@use 'custom-properties';
+@use 'sidebar';
+@use 'variables';
+@include custom-properties.define;
+
+@layer sleepingowl-feature.sidebar {
+  @include sidebar.styles;
+}

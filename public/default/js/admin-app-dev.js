@@ -1677,22 +1677,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./node_modules/admin-lte/dist/js/adminlte.min.js":
-/*!********************************************************!*\
-  !*** ./node_modules/admin-lte/dist/js/adminlte.min.js ***!
-  \********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-/*!
- * AdminLTE v3.2.0 (https://adminlte.io)
- * Copyright 2014-2022 Colorlib <https://colorlib.com>
- * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
- */
-!function(e,t){ true?t(exports,__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")):0}(this,(function(e,t){"use strict";function a(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var n=a(t),i="CardRefresh",o="lte.cardrefresh",l=n.default.fn[i],s="card",r='[data-card-widget="card-refresh"]',d={source:"",sourceSelector:"",params:{},trigger:r,content:".card-body",loadInContent:!0,loadOnInit:!0,loadErrorTemplate:!0,responseType:"",overlayTemplate:'<div class="overlay"><i class="fas fa-2x fa-sync-alt fa-spin"></i></div>',errorTemplate:'<span class="text-danger"></span>',onLoadStart:function(){},onLoadDone:function(e){return e},onLoadFail:function(e,t,a){}},f=function(){function e(e,t){if(this._element=e,this._parent=e.parents(".card").first(),this._settings=n.default.extend({},d,t),this._overlay=n.default(this._settings.overlayTemplate),e.hasClass(s)&&(this._parent=e),""===this._settings.source)throw new Error("Source url was not defined. Please specify a url in your CardRefresh source option.")}var t=e.prototype;return t.load=function(){var e=this;this._addOverlay(),this._settings.onLoadStart.call(n.default(this)),n.default.get(this._settings.source,this._settings.params,(function(t){e._settings.loadInContent&&(""!==e._settings.sourceSelector&&(t=n.default(t).find(e._settings.sourceSelector).html()),e._parent.find(e._settings.content).html(t)),e._settings.onLoadDone.call(n.default(e),t),e._removeOverlay()}),""!==this._settings.responseType&&this._settings.responseType).fail((function(t,a,i){if(e._removeOverlay(),e._settings.loadErrorTemplate){var o=n.default(e._settings.errorTemplate).text(i);e._parent.find(e._settings.content).empty().append(o)}e._settings.onLoadFail.call(n.default(e),t,a,i)})),n.default(this._element).trigger(n.default.Event("loaded.lte.cardrefresh"))},t._addOverlay=function(){this._parent.append(this._overlay),n.default(this._element).trigger(n.default.Event("overlay.added.lte.cardrefresh"))},t._removeOverlay=function(){this._parent.find(this._overlay).remove(),n.default(this._element).trigger(n.default.Event("overlay.removed.lte.cardrefresh"))},t._init=function(){var e=this;n.default(this).find(this._settings.trigger).on("click",(function(){e.load()})),this._settings.loadOnInit&&this.load()},e._jQueryInterface=function(t){var a=n.default(this).data(o),i=n.default.extend({},d,n.default(this).data());a||(a=new e(n.default(this),i),n.default(this).data(o,"string"==typeof t?a:t)),"string"==typeof t&&/load/.test(t)?a[t]():a._init(n.default(this))},e}();n.default(document).on("click",r,(function(e){e&&e.preventDefault(),f._jQueryInterface.call(n.default(this),"load")})),n.default((function(){n.default(r).each((function(){f._jQueryInterface.call(n.default(this))}))})),n.default.fn[i]=f._jQueryInterface,n.default.fn[i].Constructor=f,n.default.fn[i].noConflict=function(){return n.default.fn[i]=l,f._jQueryInterface};var u="CardWidget",c="lte.cardwidget",h=n.default.fn[u],g="card",p="collapsed-card",m="collapsing-card",v="expanding-card",_="was-collapsed",b="maximized-card",y='[data-card-widget="remove"]',C='[data-card-widget="collapse"]',w='[data-card-widget="maximize"]',x={animationSpeed:"normal",collapseTrigger:C,removeTrigger:y,maximizeTrigger:w,collapseIcon:"fa-minus",expandIcon:"fa-plus",maximizeIcon:"fa-expand",minimizeIcon:"fa-compress"},I=function(){function e(e,t){this._element=e,this._parent=e.parents(".card").first(),e.hasClass(g)&&(this._parent=e),this._settings=n.default.extend({},x,t)}var t=e.prototype;return t.collapse=function(){var e=this;this._parent.addClass(m).children(".card-body, .card-footer").slideUp(this._settings.animationSpeed,(function(){e._parent.addClass(p).removeClass(m)})),this._parent.find("> .card-header "+this._settings.collapseTrigger+" ."+this._settings.collapseIcon).addClass(this._settings.expandIcon).removeClass(this._settings.collapseIcon),this._element.trigger(n.default.Event("collapsed.lte.cardwidget"),this._parent)},t.expand=function(){var e=this;this._parent.addClass(v).children(".card-body, .card-footer").slideDown(this._settings.animationSpeed,(function(){e._parent.removeClass(p).removeClass(v)})),this._parent.find("> .card-header "+this._settings.collapseTrigger+" ."+this._settings.expandIcon).addClass(this._settings.collapseIcon).removeClass(this._settings.expandIcon),this._element.trigger(n.default.Event("expanded.lte.cardwidget"),this._parent)},t.remove=function(){this._parent.slideUp(),this._element.trigger(n.default.Event("removed.lte.cardwidget"),this._parent)},t.toggle=function(){this._parent.hasClass(p)?this.expand():this.collapse()},t.maximize=function(){this._parent.find(this._settings.maximizeTrigger+" ."+this._settings.maximizeIcon).addClass(this._settings.minimizeIcon).removeClass(this._settings.maximizeIcon),this._parent.css({height:this._parent.height(),width:this._parent.width(),transition:"all .15s"}).delay(150).queue((function(){var e=n.default(this);e.addClass(b),n.default("html").addClass(b),e.hasClass(p)&&e.addClass(_),e.dequeue()})),this._element.trigger(n.default.Event("maximized.lte.cardwidget"),this._parent)},t.minimize=function(){this._parent.find(this._settings.maximizeTrigger+" ."+this._settings.minimizeIcon).addClass(this._settings.maximizeIcon).removeClass(this._settings.minimizeIcon),this._parent.css("cssText","height: "+this._parent[0].style.height+" !important; width: "+this._parent[0].style.width+" !important; transition: all .15s;").delay(10).queue((function(){var e=n.default(this);e.removeClass(b),n.default("html").removeClass(b),e.css({height:"inherit",width:"inherit"}),e.hasClass(_)&&e.removeClass(_),e.dequeue()})),this._element.trigger(n.default.Event("minimized.lte.cardwidget"),this._parent)},t.toggleMaximize=function(){this._parent.hasClass(b)?this.minimize():this.maximize()},t._init=function(e){var t=this;this._parent=e,n.default(this).find(this._settings.collapseTrigger).click((function(){t.toggle()})),n.default(this).find(this._settings.maximizeTrigger).click((function(){t.toggleMaximize()})),n.default(this).find(this._settings.removeTrigger).click((function(){t.remove()}))},e._jQueryInterface=function(t){var a=n.default(this).data(c),i=n.default.extend({},x,n.default(this).data());a||(a=new e(n.default(this),i),n.default(this).data(c,"string"==typeof t?a:t)),"string"==typeof t&&/collapse|expand|remove|toggle|maximize|minimize|toggleMaximize/.test(t)?a[t]():"object"==typeof t&&a._init(n.default(this))},e}();n.default(document).on("click",C,(function(e){e&&e.preventDefault(),I._jQueryInterface.call(n.default(this),"toggle")})),n.default(document).on("click",y,(function(e){e&&e.preventDefault(),I._jQueryInterface.call(n.default(this),"remove")})),n.default(document).on("click",w,(function(e){e&&e.preventDefault(),I._jQueryInterface.call(n.default(this),"toggleMaximize")})),n.default.fn[u]=I._jQueryInterface,n.default.fn[u].Constructor=I,n.default.fn[u].noConflict=function(){return n.default.fn[u]=h,I._jQueryInterface};var T="ControlSidebar",S="lte.controlsidebar",j=n.default.fn[T],k=".control-sidebar",Q=".control-sidebar-content",H='[data-widget="control-sidebar"]',z=".main-header",F=".main-footer",E="control-sidebar-animate",L="control-sidebar-open",D="control-sidebar-slide-open",R="layout-fixed",A={controlsidebarSlide:!0,scrollbarTheme:"os-theme-light",scrollbarAutoHide:"l",target:k,animationSpeed:300},M=function(){function e(e,t){this._element=e,this._config=t}var t=e.prototype;return t.collapse=function(){var e=this,t=n.default("body"),a=n.default("html");this._config.controlsidebarSlide?(a.addClass(E),t.removeClass(D).delay(300).queue((function(){n.default(k).hide(),a.removeClass(E),n.default(this).dequeue()}))):t.removeClass(L),n.default(this._element).trigger(n.default.Event("collapsed.lte.controlsidebar")),setTimeout((function(){n.default(e._element).trigger(n.default.Event("collapsed-done.lte.controlsidebar"))}),this._config.animationSpeed)},t.show=function(e){void 0===e&&(e=!1);var t=n.default("body"),a=n.default("html");e&&n.default(k).hide(),this._config.controlsidebarSlide?(a.addClass(E),n.default(this._config.target).show().delay(10).queue((function(){t.addClass(D).delay(300).queue((function(){a.removeClass(E),n.default(this).dequeue()})),n.default(this).dequeue()}))):t.addClass(L),this._fixHeight(),this._fixScrollHeight(),n.default(this._element).trigger(n.default.Event("expanded.lte.controlsidebar"))},t.toggle=function(){var e=n.default("body"),t=this._config.target,a=!n.default(t).is(":visible"),i=e.hasClass(L)||e.hasClass(D),o=a&&(e.hasClass(L)||e.hasClass(D));a||o?this.show(a):i&&this.collapse()},t._init=function(){var e=this,t=n.default("body");t.hasClass(L)||t.hasClass(D)?(n.default(k).not(this._config.target).hide(),n.default(this._config.target).css("display","block")):n.default(k).hide(),this._fixHeight(),this._fixScrollHeight(),n.default(window).resize((function(){e._fixHeight(),e._fixScrollHeight()})),n.default(window).scroll((function(){var t=n.default("body");(t.hasClass(L)||t.hasClass(D))&&e._fixScrollHeight()}))},t._isNavbarFixed=function(){var e=n.default("body");return e.hasClass("layout-navbar-fixed")||e.hasClass("layout-sm-navbar-fixed")||e.hasClass("layout-md-navbar-fixed")||e.hasClass("layout-lg-navbar-fixed")||e.hasClass("layout-xl-navbar-fixed")},t._isFooterFixed=function(){var e=n.default("body");return e.hasClass("layout-footer-fixed")||e.hasClass("layout-sm-footer-fixed")||e.hasClass("layout-md-footer-fixed")||e.hasClass("layout-lg-footer-fixed")||e.hasClass("layout-xl-footer-fixed")},t._fixScrollHeight=function(){var e=n.default("body"),t=n.default(this._config.target);if(e.hasClass(R)){var a={scroll:n.default(document).height(),window:n.default(window).height(),header:n.default(z).outerHeight(),footer:n.default(F).outerHeight()},i=Math.abs(a.window+n.default(window).scrollTop()-a.scroll),o=n.default(window).scrollTop(),l=this._isNavbarFixed()&&"fixed"===n.default(z).css("position"),s=this._isFooterFixed()&&"fixed"===n.default(F).css("position"),r=n.default(this._config.target+", "+this._config.target+" "+Q);if(0===o&&0===i)t.css({bottom:a.footer,top:a.header}),r.css("height",a.window-(a.header+a.footer));else if(i<=a.footer)if(!1===s){var d=a.header-o;t.css("bottom",a.footer-i).css("top",d>=0?d:0),r.css("height",a.window-(a.footer-i))}else t.css("bottom",a.footer);else o<=a.header?!1===l?(t.css("top",a.header-o),r.css("height",a.window-(a.header-o))):t.css("top",a.header):!1===l?(t.css("top",0),r.css("height",a.window)):t.css("top",a.header);s&&l?(r.css("height","100%"),t.css("height","")):(s||l)&&(r.css("height","100%"),r.css("height",""))}},t._fixHeight=function(){var e=n.default("body"),t=n.default(this._config.target+" "+Q);if(e.hasClass(R)){var a=n.default(window).height(),i=n.default(z).outerHeight(),o=n.default(F).outerHeight(),l=a-i;this._isFooterFixed()&&"fixed"===n.default(F).css("position")&&(l=a-i-o),t.css("height",l),"undefined"!=typeof n.default.fn.overlayScrollbars&&t.overlayScrollbars({className:this._config.scrollbarTheme,sizeAutoCapable:!0,scrollbars:{autoHide:this._config.scrollbarAutoHide,clickScrolling:!0}})}else t.attr("style","")},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(S),i=n.default.extend({},A,n.default(this).data());if(a||(a=new e(this,i),n.default(this).data(S,a)),"undefined"===a[t])throw new Error(t+" is not a function");a[t]()}))},e}();n.default(document).on("click",H,(function(e){e.preventDefault(),M._jQueryInterface.call(n.default(this),"toggle")})),n.default(document).ready((function(){M._jQueryInterface.call(n.default(H),"_init")})),n.default.fn[T]=M._jQueryInterface,n.default.fn[T].Constructor=M,n.default.fn[T].noConflict=function(){return n.default.fn[T]=j,M._jQueryInterface};var q="DirectChat",O="lte.directchat",N=n.default.fn[q],P=function(){function e(e){this._element=e}return e.prototype.toggle=function(){n.default(this._element).parents(".direct-chat").first().toggleClass("direct-chat-contacts-open"),n.default(this._element).trigger(n.default.Event("toggled.lte.directchat"))},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(O);a||(a=new e(n.default(this)),n.default(this).data(O,a)),a[t]()}))},e}();n.default(document).on("click",'[data-widget="chat-pane-toggle"]',(function(e){e&&e.preventDefault(),P._jQueryInterface.call(n.default(this),"toggle")})),n.default.fn[q]=P._jQueryInterface,n.default.fn[q].Constructor=P,n.default.fn[q].noConflict=function(){return n.default.fn[q]=N,P._jQueryInterface};var U="Dropdown",B="lte.dropdown",$=n.default.fn[U],J=".dropdown-menu",W={},V=function(){function e(e,t){this._config=t,this._element=e}var t=e.prototype;return t.toggleSubmenu=function(){this._element.siblings().show().toggleClass("show"),this._element.next().hasClass("show")||this._element.parents(J).first().find(".show").removeClass("show").hide(),this._element.parents("li.nav-item.dropdown.show").on("hidden.bs.dropdown",(function(){n.default(".dropdown-submenu .show").removeClass("show").hide()}))},t.fixPosition=function(){var e=n.default(".dropdown-menu.show");if(0!==e.length){e.hasClass("dropdown-menu-right")?e.css({left:"inherit",right:0}):e.css({left:0,right:"inherit"});var t=e.offset(),a=e.width(),i=n.default(window).width()-t.left;t.left<0?e.css({left:"inherit",right:t.left-5}):i<a&&e.css({left:"inherit",right:0})}},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(B),i=n.default.extend({},W,n.default(this).data());a||(a=new e(n.default(this),i),n.default(this).data(B,a)),"toggleSubmenu"!==t&&"fixPosition"!==t||a[t]()}))},e}();n.default('.dropdown-menu [data-toggle="dropdown"]').on("click",(function(e){e.preventDefault(),e.stopPropagation(),V._jQueryInterface.call(n.default(this),"toggleSubmenu")})),n.default('.navbar [data-toggle="dropdown"]').on("click",(function(e){e.preventDefault(),n.default(e.target).parent().hasClass("dropdown-submenu")||setTimeout((function(){V._jQueryInterface.call(n.default(this),"fixPosition")}),1)})),n.default.fn[U]=V._jQueryInterface,n.default.fn[U].Constructor=V,n.default.fn[U].noConflict=function(){return n.default.fn[U]=$,V._jQueryInterface};var G="ExpandableTable",K="lte.expandableTable",X=n.default.fn[G],Y=".expandable-body",Z='[data-widget="expandable-table"]',ee="aria-expanded",te=function(){function e(e,t){this._options=t,this._element=e}var t=e.prototype;return t.init=function(){n.default(Z).each((function(e,t){var a=n.default(t).attr(ee),i=n.default(t).next(Y).children().first().children();"true"===a?i.show():"false"===a&&(i.hide(),i.parent().parent().addClass("d-none"))}))},t.toggleRow=function(){var e=this._element;"TR"!==e[0].nodeName&&"TR"!==(e=e.parent())[0].nodeName&&(e=e.parent());var t=e.attr(ee),a=e.next(Y).children().first().children();a.stop(),"true"===t?(a.slideUp(500,(function(){e.next(Y).addClass("d-none")})),e.attr(ee,"false"),e.trigger(n.default.Event("collapsed.lte.expandableTable"))):"false"===t&&(e.next(Y).removeClass("d-none"),a.slideDown(500),e.attr(ee,"true"),e.trigger(n.default.Event("expanded.lte.expandableTable")))},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(K);a||(a=new e(n.default(this)),n.default(this).data(K,a)),"string"==typeof t&&/init|toggleRow/.test(t)&&a[t]()}))},e}();n.default(".expandable-table").ready((function(){te._jQueryInterface.call(n.default(this),"init")})),n.default(document).on("click",Z,(function(){te._jQueryInterface.call(n.default(this),"toggleRow")})),n.default.fn[G]=te._jQueryInterface,n.default.fn[G].Constructor=te,n.default.fn[G].noConflict=function(){return n.default.fn[G]=X,te._jQueryInterface};var ae="Fullscreen",ne="lte.fullscreen",ie=n.default.fn[ae],oe='[data-widget="fullscreen"]',le=oe+" i",se={minimizeIcon:"fa-compress-arrows-alt",maximizeIcon:"fa-expand-arrows-alt"},re=function(){function e(e,t){this.element=e,this.options=n.default.extend({},se,t)}var t=e.prototype;return t.toggle=function(){document.fullscreenElement||document.mozFullScreenElement||document.webkitFullscreenElement||document.msFullscreenElement?this.windowed():this.fullscreen()},t.toggleIcon=function(){document.fullscreenElement||document.mozFullScreenElement||document.webkitFullscreenElement||document.msFullscreenElement?n.default(le).removeClass(this.options.maximizeIcon).addClass(this.options.minimizeIcon):n.default(le).removeClass(this.options.minimizeIcon).addClass(this.options.maximizeIcon)},t.fullscreen=function(){document.documentElement.requestFullscreen?document.documentElement.requestFullscreen():document.documentElement.webkitRequestFullscreen?document.documentElement.webkitRequestFullscreen():document.documentElement.msRequestFullscreen&&document.documentElement.msRequestFullscreen()},t.windowed=function(){document.exitFullscreen?document.exitFullscreen():document.webkitExitFullscreen?document.webkitExitFullscreen():document.msExitFullscreen&&document.msExitFullscreen()},e._jQueryInterface=function(t){var a=n.default(this).data(ne);a||(a=n.default(this).data());var i=n.default.extend({},se,"object"==typeof t?t:a),o=new e(n.default(this),i);n.default(this).data(ne,"object"==typeof t?t:a),"string"==typeof t&&/toggle|toggleIcon|fullscreen|windowed/.test(t)?o[t]():o.init()},e}();n.default(document).on("click",oe,(function(){re._jQueryInterface.call(n.default(this),"toggle")})),n.default(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange",(function(){re._jQueryInterface.call(n.default(oe),"toggleIcon")})),n.default.fn[ae]=re._jQueryInterface,n.default.fn[ae].Constructor=re,n.default.fn[ae].noConflict=function(){return n.default.fn[ae]=ie,re._jQueryInterface};var de="lte.iframe",fe=n.default.fn.IFrame,ue='[data-widget="iframe"]',ce='[data-widget="iframe-fullscreen"]',he=".content-wrapper",ge=".content-wrapper iframe",pe=".content-wrapper.iframe-mode .nav",me=".content-wrapper.iframe-mode .navbar-nav",ve=me+" .nav-item",_e=me+" .nav-link",be=".content-wrapper.iframe-mode .tab-content",ye=be+" .tab-empty",Ce=be+" .tab-loading",we=be+" .tab-pane",xe=".main-sidebar .nav-item > a.nav-link",Ie=".main-header .nav-item a.nav-link",Te=".main-header a.dropdown-item",Se="iframe-mode",je="iframe-mode-fullscreen",ke={onTabClick:function(e){return e},onTabChanged:function(e){return e},onTabCreated:function(e){return e},autoIframeMode:!0,autoItemActive:!0,autoShowNewTab:!0,autoDarkMode:!1,allowDuplicates:!1,allowReload:!0,loadingScreen:!0,useNavbarItems:!0,scrollOffset:40,scrollBehaviorSwap:!1,iconMaximize:"fa-expand",iconMinimize:"fa-compress"},Qe=function(){function e(e,t){this._config=t,this._element=e,this._init()}var t=e.prototype;return t.onTabClick=function(e){this._config.onTabClick(e)},t.onTabChanged=function(e){this._config.onTabChanged(e)},t.onTabCreated=function(e){this._config.onTabCreated(e)},t.createTab=function(e,t,a,i){var o=this,l="panel-"+a,s="tab-"+a;this._config.allowDuplicates&&(l+="-"+Math.floor(1e3*Math.random()),s+="-"+Math.floor(1e3*Math.random()));var r='<li class="nav-item" role="presentation"><a href="#" class="btn-iframe-close" data-widget="iframe-close" data-type="only-this"><i class="fas fa-times"></i></a><a class="nav-link" data-toggle="row" id="'+s+'" href="#'+l+'" role="tab" aria-controls="'+l+'" aria-selected="false">'+e+"</a></li>";n.default(me).append(unescape(escape(r)));var d='<div class="tab-pane fade" id="'+l+'" role="tabpanel" aria-labelledby="'+s+'"><iframe src="'+t+'"></iframe></div>';if(n.default(be).append(unescape(escape(d))),i)if(this._config.loadingScreen){var f=n.default(Ce);f.fadeIn(),n.default(l+" iframe").ready((function(){"number"==typeof o._config.loadingScreen?(o.switchTab("#"+s),setTimeout((function(){f.fadeOut()}),o._config.loadingScreen)):(o.switchTab("#"+s),f.fadeOut())}))}else this.switchTab("#"+s);this.onTabCreated(n.default("#"+s))},t.openTabSidebar=function(e,t){void 0===t&&(t=this._config.autoShowNewTab);var a=n.default(e).clone();void 0===a.attr("href")&&(a=n.default(e).parent("a").clone()),a.find(".right, .search-path").remove();var i=a.find("p").text();""===i&&(i=a.text());var o=a.attr("href");if("#"!==o&&""!==o&&void 0!==o){var l=unescape(o).replace("./","").replace(/["#&'./:=?[\]]/gi,"-").replace(/(--)/gi,""),s="tab-"+l;if(!this._config.allowDuplicates&&n.default("#"+s).length>0)return this.switchTab("#"+s,this._config.allowReload);(!this._config.allowDuplicates&&0===n.default("#"+s).length||this._config.allowDuplicates)&&this.createTab(i,o,l,t)}},t.switchTab=function(e,t){var a=this;void 0===t&&(t=!1);var i=n.default(e),o=i.attr("href");if(n.default(ye).hide(),t){var l=n.default(Ce);this._config.loadingScreen?l.show(0,(function(){n.default(o+" iframe").attr("src",n.default(o+" iframe").attr("src")).ready((function(){a._config.loadingScreen&&("number"==typeof a._config.loadingScreen?setTimeout((function(){l.fadeOut()}),a._config.loadingScreen):l.fadeOut())}))})):n.default(o+" iframe").attr("src",n.default(o+" iframe").attr("src"))}n.default(me+" .active").tab("dispose").removeClass("active"),this._fixHeight(),i.tab("show"),i.parents("li").addClass("active"),this.onTabChanged(i),this._config.autoItemActive&&this._setItemActive(n.default(o+" iframe").attr("src"))},t.removeActiveTab=function(e,t){if("all"==e)n.default(ve).remove(),n.default(we).remove(),n.default(ye).show();else if("all-other"==e)n.default(ve+":not(.active)").remove(),n.default(we+":not(.active)").remove();else if("only-this"==e){var a=n.default(t),i=a.parent(".nav-item"),o=i.parent(),l=i.index(),s=a.siblings(".nav-link").attr("aria-controls");if(i.remove(),n.default("#"+s).remove(),n.default(be).children().length==n.default(ye+", "+Ce).length)n.default(ye).show();else{var r=l-1;this.switchTab(o.children().eq(r).find("a.nav-link"))}}else{var d=n.default(ve+".active"),f=d.parent(),u=d.index();if(d.remove(),n.default(we+".active").remove(),n.default(be).children().length==n.default(ye+", "+Ce).length)n.default(ye).show();else{var c=u-1;this.switchTab(f.children().eq(c).find("a.nav-link"))}}},t.toggleFullscreen=function(){n.default("body").hasClass(je)?(n.default(ce+" i").removeClass(this._config.iconMinimize).addClass(this._config.iconMaximize),n.default("body").removeClass(je),n.default(ye+", "+Ce).height("100%"),n.default(he).height("100%"),n.default(ge).height("100%")):(n.default(ce+" i").removeClass(this._config.iconMaximize).addClass(this._config.iconMinimize),n.default("body").addClass(je)),n.default(window).trigger("resize"),this._fixHeight(!0)},t._init=function(){var e=n.default(be).children().length>2;if(this._setupListeners(),this._fixHeight(!0),e){var t=n.default(""+we).first();console.log(t);var a="#tab-"+t.attr("id").replace("panel-","");this.switchTab(a,!0)}},t._initFrameElement=function(){if(window.frameElement&&this._config.autoIframeMode){var e=n.default("body");e.addClass(Se),this._config.autoDarkMode&&e.addClass("dark-mode")}},t._navScroll=function(e){var t=n.default(me).scrollLeft();n.default(me).animate({scrollLeft:t+e},250,"linear")},t._setupListeners=function(){var e=this;n.default(window).on("resize",(function(){setTimeout((function(){e._fixHeight()}),1)})),n.default(he).hasClass(Se)&&(n.default(document).on("click",xe+", .sidebar-search-results .list-group-item",(function(t){t.preventDefault(),e.openTabSidebar(t.target)})),this._config.useNavbarItems&&n.default(document).on("click",Ie+", "+Te,(function(t){t.preventDefault(),e.openTabSidebar(t.target)}))),n.default(document).on("click",_e,(function(t){t.preventDefault(),e.onTabClick(t.target),e.switchTab(t.target)})),n.default(document).on("click",_e,(function(t){t.preventDefault(),e.onTabClick(t.target),e.switchTab(t.target)})),n.default(document).on("click",'[data-widget="iframe-close"]',(function(t){t.preventDefault();var a=t.target;"I"==a.nodeName&&(a=t.target.offsetParent),e.removeActiveTab(a.attributes["data-type"]?a.attributes["data-type"].nodeValue:null,a)})),n.default(document).on("click",ce,(function(t){t.preventDefault(),e.toggleFullscreen()}));var t=!1,a=null;n.default(document).on("mousedown",'[data-widget="iframe-scrollleft"]',(function(n){n.preventDefault(),clearInterval(a);var i=e._config.scrollOffset;e._config.scrollBehaviorSwap||(i=-i),t=!0,e._navScroll(i),a=setInterval((function(){e._navScroll(i)}),250)})),n.default(document).on("mousedown",'[data-widget="iframe-scrollright"]',(function(n){n.preventDefault(),clearInterval(a);var i=e._config.scrollOffset;e._config.scrollBehaviorSwap&&(i=-i),t=!0,e._navScroll(i),a=setInterval((function(){e._navScroll(i)}),250)})),n.default(document).on("mouseup",(function(){t&&(t=!1,clearInterval(a),a=null)}))},t._setItemActive=function(e){n.default(xe+", "+Te).removeClass("active"),n.default(Ie).parent().removeClass("active");var t=n.default(Ie+'[href$="'+e+'"]'),a=n.default('.main-header a.dropdown-item[href$="'+e+'"]'),i=n.default(xe+'[href$="'+e+'"]');t.each((function(e,t){n.default(t).parent().addClass("active")})),a.each((function(e,t){n.default(t).addClass("active")})),i.each((function(e,t){n.default(t).addClass("active"),n.default(t).parents(".nav-treeview").prevAll(".nav-link").addClass("active")}))},t._fixHeight=function(e){if(void 0===e&&(e=!1),n.default("body").hasClass(je)){var t=n.default(window).height(),a=n.default(pe).outerHeight();n.default(ye+", "+Ce+", "+ge).height(t-a),n.default(he).height(t)}else{var i=parseFloat(n.default(he).css("height")),o=n.default(pe).outerHeight();1==e?setTimeout((function(){n.default(ye+", "+Ce).height(i-o)}),50):n.default(ge).height(i-o)}},e._jQueryInterface=function(t){if(n.default(ue).length>0){var a=n.default(this).data(de);a||(a=n.default(this).data());var i=n.default.extend({},ke,"object"==typeof t?t:a);localStorage.setItem("AdminLTE:IFrame:Options",JSON.stringify(i));var o=new e(n.default(this),i);n.default(this).data(de,"object"==typeof t?t:a),"string"==typeof t&&/createTab|openTabSidebar|switchTab|removeActiveTab/.test(t)&&o[t]()}else new e(n.default(this),JSON.parse(localStorage.getItem("AdminLTE:IFrame:Options")))._initFrameElement()},e}();n.default(window).on("load",(function(){Qe._jQueryInterface.call(n.default(ue))})),n.default.fn.IFrame=Qe._jQueryInterface,n.default.fn.IFrame.Constructor=Qe,n.default.fn.IFrame.noConflict=function(){return n.default.fn.IFrame=fe,Qe._jQueryInterface};var He="lte.layout",ze=n.default.fn.Layout,Fe=".main-header",Ee=".main-sidebar",Le=".main-sidebar .sidebar",De=".main-footer",Re="sidebar-focused",Ae={scrollbarTheme:"os-theme-light",scrollbarAutoHide:"l",panelAutoHeight:!0,panelAutoHeightMode:"min-height",preloadDuration:200,loginRegisterAutoHeight:!0},Me=function(){function e(e,t){this._config=t,this._element=e}var t=e.prototype;return t.fixLayoutHeight=function(e){void 0===e&&(e=null);var t=n.default("body"),a=0;(t.hasClass("control-sidebar-slide-open")||t.hasClass("control-sidebar-open")||"control_sidebar"===e)&&(a=n.default(".control-sidebar-content").outerHeight());var i={window:n.default(window).height(),header:n.default(Fe).length>0?n.default(Fe).outerHeight():0,footer:n.default(De).length>0?n.default(De).outerHeight():0,sidebar:n.default(Le).length>0?n.default(Le).height():0,controlSidebar:a},o=this._max(i),l=this._config.panelAutoHeight;!0===l&&(l=0);var s=n.default(".content-wrapper");!1!==l&&(o===i.controlSidebar?s.css(this._config.panelAutoHeightMode,o+l):o===i.window?s.css(this._config.panelAutoHeightMode,o+l-i.header-i.footer):s.css(this._config.panelAutoHeightMode,o+l-i.header),this._isFooterFixed()&&s.css(this._config.panelAutoHeightMode,parseFloat(s.css(this._config.panelAutoHeightMode))+i.footer)),t.hasClass("layout-fixed")&&("undefined"!=typeof n.default.fn.overlayScrollbars?n.default(Le).overlayScrollbars({className:this._config.scrollbarTheme,sizeAutoCapable:!0,scrollbars:{autoHide:this._config.scrollbarAutoHide,clickScrolling:!0}}):n.default(Le).css("overflow-y","auto"))},t.fixLoginRegisterHeight=function(){var e=n.default("body"),t=n.default(".login-box, .register-box");if(e.hasClass("iframe-mode"))e.css("height","100%"),n.default(".wrapper").css("height","100%"),n.default("html").css("height","100%");else if(0===t.length)e.css("height","auto"),n.default("html").css("height","auto");else{var a=t.height();e.css(this._config.panelAutoHeightMode)!==a&&e.css(this._config.panelAutoHeightMode,a)}},t._init=function(){var e=this;this.fixLayoutHeight(),!0===this._config.loginRegisterAutoHeight?this.fixLoginRegisterHeight():this._config.loginRegisterAutoHeight===parseInt(this._config.loginRegisterAutoHeight,10)&&setInterval(this.fixLoginRegisterHeight,this._config.loginRegisterAutoHeight),n.default(Le).on("collapsed.lte.treeview expanded.lte.treeview",(function(){e.fixLayoutHeight()})),n.default(Ee).on("mouseenter mouseleave",(function(){n.default("body").hasClass("sidebar-collapse")&&e.fixLayoutHeight()})),n.default('[data-widget="pushmenu"]').on("collapsed.lte.pushmenu shown.lte.pushmenu",(function(){setTimeout((function(){e.fixLayoutHeight()}),300)})),n.default('[data-widget="control-sidebar"]').on("collapsed.lte.controlsidebar",(function(){e.fixLayoutHeight()})).on("expanded.lte.controlsidebar",(function(){e.fixLayoutHeight("control_sidebar")})),n.default(window).resize((function(){e.fixLayoutHeight()})),setTimeout((function(){n.default("body.hold-transition").removeClass("hold-transition")}),50),setTimeout((function(){var e=n.default(".preloader");e&&(e.css("height",0),setTimeout((function(){e.children().hide()}),200))}),this._config.preloadDuration)},t._max=function(e){var t=0;return Object.keys(e).forEach((function(a){e[a]>t&&(t=e[a])})),t},t._isFooterFixed=function(){return"fixed"===n.default(De).css("position")},e._jQueryInterface=function(t){return void 0===t&&(t=""),this.each((function(){var a=n.default(this).data(He),i=n.default.extend({},Ae,n.default(this).data());a||(a=new e(n.default(this),i),n.default(this).data(He,a)),"init"===t||""===t?a._init():"fixLayoutHeight"!==t&&"fixLoginRegisterHeight"!==t||a[t]()}))},e}();n.default(window).on("load",(function(){Me._jQueryInterface.call(n.default("body"))})),n.default(Le+" a").on("focusin",(function(){n.default(Ee).addClass(Re)})).on("focusout",(function(){n.default(Ee).removeClass(Re)})),n.default.fn.Layout=Me._jQueryInterface,n.default.fn.Layout.Constructor=Me,n.default.fn.Layout.noConflict=function(){return n.default.fn.Layout=ze,Me._jQueryInterface};var qe="PushMenu",Oe="lte.pushmenu",Ne="."+Oe,Pe=n.default.fn[qe],Ue='[data-widget="pushmenu"]',Be="body",$e="sidebar-collapse",Je="sidebar-open",We="sidebar-is-opening",Ve="sidebar-closed",Ge={autoCollapseSize:992,enableRemember:!1,noTransitionAfterReload:!0,animationSpeed:300},Ke=function(){function e(e,t){this._element=e,this._options=n.default.extend({},Ge,t),0===n.default("#sidebar-overlay").length&&this._addOverlay(),this._init()}var t=e.prototype;return t.expand=function(){var e=n.default(Be);this._options.autoCollapseSize&&n.default(window).width()<=this._options.autoCollapseSize&&e.addClass(Je),e.addClass(We).removeClass("sidebar-collapse sidebar-closed").delay(50).queue((function(){e.removeClass(We),n.default(this).dequeue()})),this._options.enableRemember&&localStorage.setItem("remember"+Ne,Je),n.default(this._element).trigger(n.default.Event("shown.lte.pushmenu"))},t.collapse=function(){var e=this,t=n.default(Be);this._options.autoCollapseSize&&n.default(window).width()<=this._options.autoCollapseSize&&t.removeClass(Je).addClass(Ve),t.addClass($e),this._options.enableRemember&&localStorage.setItem("remember"+Ne,$e),n.default(this._element).trigger(n.default.Event("collapsed.lte.pushmenu")),setTimeout((function(){n.default(e._element).trigger(n.default.Event("collapsed-done.lte.pushmenu"))}),this._options.animationSpeed)},t.toggle=function(){n.default(Be).hasClass($e)?this.expand():this.collapse()},t.autoCollapse=function(e){if(void 0===e&&(e=!1),this._options.autoCollapseSize){var t=n.default(Be);n.default(window).width()<=this._options.autoCollapseSize?t.hasClass(Je)||this.collapse():!0===e&&(t.hasClass(Je)?t.removeClass(Je):t.hasClass(Ve)&&this.expand())}},t.remember=function(){if(this._options.enableRemember){var e=n.default("body");localStorage.getItem("remember"+Ne)===$e?this._options.noTransitionAfterReload?e.addClass("hold-transition").addClass($e).delay(50).queue((function(){n.default(this).removeClass("hold-transition"),n.default(this).dequeue()})):e.addClass($e):this._options.noTransitionAfterReload?e.addClass("hold-transition").removeClass($e).delay(50).queue((function(){n.default(this).removeClass("hold-transition"),n.default(this).dequeue()})):e.removeClass($e)}},t._init=function(){var e=this;this.remember(),this.autoCollapse(),n.default(window).resize((function(){e.autoCollapse(!0)}))},t._addOverlay=function(){var e=this,t=n.default("<div />",{id:"sidebar-overlay"});t.on("click",(function(){e.collapse()})),n.default(".wrapper").append(t)},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(Oe),i=n.default.extend({},Ge,n.default(this).data());a||(a=new e(this,i),n.default(this).data(Oe,a)),"string"==typeof t&&/collapse|expand|toggle/.test(t)&&a[t]()}))},e}();n.default(document).on("click",Ue,(function(e){e.preventDefault();var t=e.currentTarget;"pushmenu"!==n.default(t).data("widget")&&(t=n.default(t).closest(Ue)),Ke._jQueryInterface.call(n.default(t),"toggle")})),n.default(window).on("load",(function(){Ke._jQueryInterface.call(n.default(Ue))})),n.default.fn[qe]=Ke._jQueryInterface,n.default.fn[qe].Constructor=Ke,n.default.fn[qe].noConflict=function(){return n.default.fn[qe]=Pe,Ke._jQueryInterface};var Xe="SidebarSearch",Ye="lte.sidebar-search",Ze=n.default.fn[Xe],et="sidebar-search-open",tt="fa-search",at="fa-times",nt="sidebar-search-results",it="list-group",ot='[data-widget="sidebar-search"]',lt=ot+" .form-control",st=ot+" .btn",rt=st+" i",dt=".sidebar-search-results",ft=".sidebar-search-results .list-group",ut={arrowSign:"->",minLength:3,maxResults:7,highlightName:!0,highlightPath:!1,highlightClass:"text-light",notFoundText:"No element found!"},ct=[],ht=function(){function e(e,t){this.element=e,this.options=n.default.extend({},ut,t),this.items=[]}var a=e.prototype;return a.init=function(){var e=this;0!==n.default(ot).length&&(0===n.default(ot).next(dt).length&&n.default(ot).after(n.default("<div />",{class:nt})),0===n.default(dt).children(".list-group").length&&n.default(dt).append(n.default("<div />",{class:it})),this._addNotFound(),n.default(".main-sidebar .nav-sidebar").children().each((function(t,a){e._parseItem(a)})))},a.search=function(){var e=this,t=n.default(lt).val().toLowerCase();if(t.length<this.options.minLength)return n.default(ft).empty(),this._addNotFound(),void this.close();var a=ct.filter((function(e){return e.name.toLowerCase().includes(t)})),i=n.default(a.slice(0,this.options.maxResults));n.default(ft).empty(),0===i.length?this._addNotFound():i.each((function(t,a){n.default(ft).append(e._renderItem(escape(a.name),encodeURI(a.link),a.path))})),this.open()},a.open=function(){n.default(ot).parent().addClass(et),n.default(rt).removeClass(tt).addClass(at)},a.close=function(){n.default(ot).parent().removeClass(et),n.default(rt).removeClass(at).addClass(tt)},a.toggle=function(){n.default(ot).parent().hasClass(et)?this.close():this.open()},a._parseItem=function(e,t){var a=this;if(void 0===t&&(t=[]),!n.default(e).hasClass("nav-header")){var i={},o=n.default(e).clone().find("> .nav-link"),l=n.default(e).clone().find("> .nav-treeview"),s=o.attr("href"),r=o.find("p").children().remove().end().text();if(i.name=this._trimText(r),i.link=s,i.path=t,0===l.length)ct.push(i);else{var d=i.path.concat([i.name]);l.children().each((function(e,t){a._parseItem(t,d)}))}}},a._trimText=function(e){return t.trim(e.replace(/(\r\n|\n|\r)/gm," "))},a._renderItem=function(e,t,a){var i=this;if(a=a.join(" "+this.options.arrowSign+" "),e=unescape(e),t=decodeURI(t),this.options.highlightName||this.options.highlightPath){var o=n.default(lt).val().toLowerCase(),l=new RegExp(o,"gi");this.options.highlightName&&(e=e.replace(l,(function(e){return'<strong class="'+i.options.highlightClass+'">'+e+"</strong>"}))),this.options.highlightPath&&(a=a.replace(l,(function(e){return'<strong class="'+i.options.highlightClass+'">'+e+"</strong>"})))}var s=n.default("<a/>",{href:decodeURIComponent(t),class:"list-group-item"}),r=n.default("<div/>",{class:"search-title"}).html(e),d=n.default("<div/>",{class:"search-path"}).html(a);return s.append(r).append(d),s},a._addNotFound=function(){n.default(ft).append(this._renderItem(this.options.notFoundText,"#",[]))},e._jQueryInterface=function(t){var a=n.default(this).data(Ye);a||(a=n.default(this).data());var i=n.default.extend({},ut,"object"==typeof t?t:a),o=new e(n.default(this),i);n.default(this).data(Ye,"object"==typeof t?t:a),"string"==typeof t&&/init|toggle|close|open|search/.test(t)?o[t]():o.init()},e}();n.default(document).on("click",st,(function(e){e.preventDefault(),ht._jQueryInterface.call(n.default(ot),"toggle")})),n.default(document).on("keyup",lt,(function(e){return 38==e.keyCode?(e.preventDefault(),void n.default(ft).children().last().focus()):40==e.keyCode?(e.preventDefault(),void n.default(ft).children().first().focus()):void setTimeout((function(){ht._jQueryInterface.call(n.default(ot),"search")}),100)})),n.default(document).on("keydown",ft,(function(e){var t=n.default(":focus");38==e.keyCode&&(e.preventDefault(),t.is(":first-child")?t.siblings().last().focus():t.prev().focus()),40==e.keyCode&&(e.preventDefault(),t.is(":last-child")?t.siblings().first().focus():t.next().focus())})),n.default(window).on("load",(function(){ht._jQueryInterface.call(n.default(ot),"init")})),n.default.fn[Xe]=ht._jQueryInterface,n.default.fn[Xe].Constructor=ht,n.default.fn[Xe].noConflict=function(){return n.default.fn[Xe]=Ze,ht._jQueryInterface};var gt="NavbarSearch",pt="lte.navbar-search",mt=n.default.fn[gt],vt='[data-widget="navbar-search"]',_t=".form-control",bt="navbar-search-open",yt={resetOnClose:!0,target:".navbar-search-block"},Ct=function(){function e(e,t){this._element=e,this._config=n.default.extend({},yt,t)}var t=e.prototype;return t.open=function(){n.default(this._config.target).css("display","flex").hide().fadeIn().addClass(bt),n.default(this._config.target+" "+_t).focus()},t.close=function(){n.default(this._config.target).fadeOut().removeClass(bt),this._config.resetOnClose&&n.default(this._config.target+" "+_t).val("")},t.toggle=function(){n.default(this._config.target).hasClass(bt)?this.close():this.open()},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(pt),i=n.default.extend({},yt,n.default(this).data());if(a||(a=new e(this,i),n.default(this).data(pt,a)),!/toggle|close|open/.test(t))throw new Error("Undefined method "+t);a[t]()}))},e}();n.default(document).on("click",vt,(function(e){e.preventDefault();var t=n.default(e.currentTarget);"navbar-search"!==t.data("widget")&&(t=t.closest(vt)),Ct._jQueryInterface.call(t,"toggle")})),n.default.fn[gt]=Ct._jQueryInterface,n.default.fn[gt].Constructor=Ct,n.default.fn[gt].noConflict=function(){return n.default.fn[gt]=mt,Ct._jQueryInterface};var wt=n.default.fn.Toasts,xt="topRight",It="topLeft",Tt="bottomRight",St="bottomLeft",jt={position:xt,fixed:!0,autohide:!1,autoremove:!0,delay:1e3,fade:!0,icon:null,image:null,imageAlt:null,imageHeight:"25px",title:null,subtitle:null,close:!0,body:null,class:null},kt=function(){function e(e,t){this._config=t,this._prepareContainer(),n.default("body").trigger(n.default.Event("init.lte.toasts"))}var t=e.prototype;return t.create=function(){var e=n.default('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true"/>');e.data("autohide",this._config.autohide),e.data("animation",this._config.fade),this._config.class&&e.addClass(this._config.class),this._config.delay&&500!=this._config.delay&&e.data("delay",this._config.delay);var t=n.default('<div class="toast-header">');if(null!=this._config.image){var a=n.default("<img />").addClass("rounded mr-2").attr("src",this._config.image).attr("alt",this._config.imageAlt);null!=this._config.imageHeight&&a.height(this._config.imageHeight).width("auto"),t.append(a)}if(null!=this._config.icon&&t.append(n.default("<i />").addClass("mr-2").addClass(this._config.icon)),null!=this._config.title&&t.append(n.default("<strong />").addClass("mr-auto").html(this._config.title)),null!=this._config.subtitle&&t.append(n.default("<small />").html(this._config.subtitle)),1==this._config.close){var i=n.default('<button data-dismiss="toast" />').attr("type","button").addClass("ml-2 mb-1 close").attr("aria-label","Close").append('<span aria-hidden="true">&times;</span>');null==this._config.title&&i.toggleClass("ml-2 ml-auto"),t.append(i)}e.append(t),null!=this._config.body&&e.append(n.default('<div class="toast-body" />').html(this._config.body)),n.default(this._getContainerId()).prepend(e);var o=n.default("body");o.trigger(n.default.Event("created.lte.toasts")),e.toast("show"),this._config.autoremove&&e.on("hidden.bs.toast",(function(){n.default(this).delay(200).remove(),o.trigger(n.default.Event("removed.lte.toasts"))}))},t._getContainerId=function(){return this._config.position==xt?"#toastsContainerTopRight":this._config.position==It?"#toastsContainerTopLeft":this._config.position==Tt?"#toastsContainerBottomRight":this._config.position==St?"#toastsContainerBottomLeft":void 0},t._prepareContainer=function(){if(0===n.default(this._getContainerId()).length){var e=n.default("<div />").attr("id",this._getContainerId().replace("#",""));this._config.position==xt?e.addClass("toasts-top-right"):this._config.position==It?e.addClass("toasts-top-left"):this._config.position==Tt?e.addClass("toasts-bottom-right"):this._config.position==St&&e.addClass("toasts-bottom-left"),n.default("body").append(e)}this._config.fixed?n.default(this._getContainerId()).addClass("fixed"):n.default(this._getContainerId()).removeClass("fixed")},e._jQueryInterface=function(t,a){return this.each((function(){var i=n.default.extend({},jt,a),o=new e(n.default(this),i);"create"===t&&o[t]()}))},e}();n.default.fn.Toasts=kt._jQueryInterface,n.default.fn.Toasts.Constructor=kt,n.default.fn.Toasts.noConflict=function(){return n.default.fn.Toasts=wt,kt._jQueryInterface};var Qt="TodoList",Ht="lte.todolist",zt=n.default.fn[Qt],Ft="done",Et={onCheck:function(e){return e},onUnCheck:function(e){return e}},Lt=function(){function e(e,t){this._config=t,this._element=e,this._init()}var t=e.prototype;return t.toggle=function(e){e.parents("li").toggleClass(Ft),n.default(e).prop("checked")?this.check(e):this.unCheck(n.default(e))},t.check=function(e){this._config.onCheck.call(e)},t.unCheck=function(e){this._config.onUnCheck.call(e)},t._init=function(){var e=this,t=this._element;t.find("input:checkbox:checked").parents("li").toggleClass(Ft),t.on("change","input:checkbox",(function(t){e.toggle(n.default(t.target))}))},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(Ht);a||(a=n.default(this).data());var i=n.default.extend({},Et,"object"==typeof t?t:a),o=new e(n.default(this),i);n.default(this).data(Ht,"object"==typeof t?t:a),"init"===t&&o[t]()}))},e}();n.default(window).on("load",(function(){Lt._jQueryInterface.call(n.default('[data-widget="todo-list"]'))})),n.default.fn[Qt]=Lt._jQueryInterface,n.default.fn[Qt].Constructor=Lt,n.default.fn[Qt].noConflict=function(){return n.default.fn[Qt]=zt,Lt._jQueryInterface};var Dt="Treeview",Rt="lte.treeview",At=n.default.fn[Dt],Mt=".nav-item",qt=".nav-treeview",Ot=".menu-open",Nt='[data-widget="treeview"]',Pt="menu-open",Ut="menu-is-opening",Bt={trigger:Nt+" .nav-link",animationSpeed:300,accordion:!0,expandSidebar:!1,sidebarButtonSelector:'[data-widget="pushmenu"]'},$t=function(){function e(e,t){this._config=t,this._element=e}var t=e.prototype;return t.init=function(){n.default(".nav-item.menu-open .nav-treeview.menu-open").css("display","block"),this._setupListeners()},t.expand=function(e,t){var a=this,i=n.default.Event("expanded.lte.treeview");if(this._config.accordion){var o=t.siblings(Ot).first(),l=o.find(qt).first();this.collapse(l,o)}t.addClass(Ut),e.stop().slideDown(this._config.animationSpeed,(function(){t.addClass(Pt),n.default(a._element).trigger(i)})),this._config.expandSidebar&&this._expandSidebar()},t.collapse=function(e,t){var a=this,i=n.default.Event("collapsed.lte.treeview");t.removeClass("menu-is-opening menu-open"),e.stop().slideUp(this._config.animationSpeed,(function(){n.default(a._element).trigger(i),e.find(".menu-open > .nav-treeview").slideUp(),e.find(Ot).removeClass("menu-is-opening menu-open")}))},t.toggle=function(e){var t=n.default(e.currentTarget),a=t.parent(),i=a.find("> .nav-treeview");if(i.is(qt)||(a.is(Mt)||(i=a.parent().find("> .nav-treeview")),i.is(qt))){e.preventDefault();var o=t.parents(Mt).first();o.hasClass(Pt)?this.collapse(n.default(i),o):this.expand(n.default(i),o)}},t._setupListeners=function(){var e=this,t=void 0!==this._element.attr("id")?"#"+this._element.attr("id"):"";n.default(document).on("click",""+t+this._config.trigger,(function(t){e.toggle(t)}))},t._expandSidebar=function(){n.default("body").hasClass("sidebar-collapse")&&n.default(this._config.sidebarButtonSelector).PushMenu("expand")},e._jQueryInterface=function(t){return this.each((function(){var a=n.default(this).data(Rt),i=n.default.extend({},Bt,n.default(this).data());a||(a=new e(n.default(this),i),n.default(this).data(Rt,a)),"init"===t&&a[t]()}))},e}();n.default(window).on("load.lte.treeview",(function(){n.default(Nt).each((function(){$t._jQueryInterface.call(n.default(this),"init")}))})),n.default.fn[Dt]=$t._jQueryInterface,n.default.fn[Dt].Constructor=$t,n.default.fn[Dt].noConflict=function(){return n.default.fn[Dt]=At,$t._jQueryInterface},e.CardRefresh=f,e.CardWidget=I,e.ControlSidebar=M,e.DirectChat=P,e.Dropdown=V,e.ExpandableTable=te,e.Fullscreen=re,e.IFrame=Qe,e.Layout=Me,e.NavbarSearch=Ct,e.PushMenu=Ke,e.SidebarSearch=ht,e.Toasts=kt,e.TodoList=Lt,e.Treeview=$t,Object.defineProperty(e,"__esModule",{value:!0})}));
-//# sourceMappingURL=adminlte.min.js.map
-
-/***/ }),
-
 /***/ "./node_modules/air-datepicker/air-datepicker.js":
 /*!*******************************************************!*\
   !*** ./node_modules/air-datepicker/air-datepicker.js ***!
@@ -5209,6 +5193,21 @@ installTabs(Admin);
 
 /***/ }),
 
+/***/ "./resources/assets/js_owl/admin/sidebar.js":
+/*!**************************************************!*\
+  !*** ./resources/assets/js_owl/admin/sidebar.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var _require = __webpack_require__(/*! ../../../frontend/features/sidebar/install-sidebar */ "./resources/frontend/features/sidebar/install-sidebar.js"),
+  installSidebar = _require.installSidebar;
+Admin.Sidebar = installSidebar(Admin);
+Admin.Modules.register('helpers.sidebar', function () {
+  return Admin.Sidebar.scan();
+});
+
+/***/ }),
+
 /***/ "./resources/assets/js_owl/admin/tooltip.js":
 /*!**************************************************!*\
   !*** ./resources/assets/js_owl/admin/tooltip.js ***!
@@ -5256,26 +5255,17 @@ var _require2 = __webpack_require__(/*! ../../frontend/features/table/themes/leg
   installLegacyDataTablesPresentation = _require2.installLegacyDataTablesPresentation;
 installLegacyDataTablesPresentation(dataTables2Runtime());
 __webpack_require__(/*! ./libs/sweetalert */ "./resources/assets/js_owl/libs/sweetalert.js");
-__webpack_require__(/*! ./libs/js-cookie */ "./resources/assets/js_owl/libs/js-cookie.js");
 __webpack_require__(/*! ./libs/progressbar */ "./resources/assets/js_owl/libs/progressbar.js");
 __webpack_require__(/*! @flowjs/flow.js */ "./node_modules/@flowjs/flow.js/src/flow.js");
 __webpack_require__(/*! ./libs/noty */ "./resources/assets/js_owl/libs/noty.js");
 __webpack_require__(/*! ./libs/lazyload */ "./resources/assets/js_owl/libs/lazyload.js");
-
-/**
- * Best open source admin dashboard & control panel theme.
- * Built on top of Bootstrap 4, AdminLTE provides a range of
- * responsive, reusable, and commonly used components.
- *
- * @see https://adminlte.io/themes/AdminLTE/
- */
-__webpack_require__(/*! admin-lte */ "./node_modules/admin-lte/dist/js/adminlte.min.js");
 (0,_frontend_core_runtime_admin_core__WEBPACK_IMPORTED_MODULE_1__.installAdminCore)(window);
 window.Admin.Messages = __webpack_require__(/*! ./components/messages */ "./resources/assets/js_owl/components/messages.js");
 window.Admin.Modules = __webpack_require__(/*! ./components/modules */ "./resources/assets/js_owl/components/modules.js");
 window.Admin.WYSIWYG = __webpack_require__(/*! ./components/wysiwyg */ "./resources/assets/js_owl/components/wysiwyg.js");
 __webpack_require__(/*! ./admin/tooltip */ "./resources/assets/js_owl/admin/tooltip.js");
 __webpack_require__(/*! ./admin/dropdown */ "./resources/assets/js_owl/admin/dropdown.js");
+__webpack_require__(/*! ./admin/sidebar */ "./resources/assets/js_owl/admin/sidebar.js");
 
 /**
  * Initialize Wysiwyg editors
@@ -6327,54 +6317,6 @@ $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': Admin.token
   }
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js_owl/libs/js-cookie.js":
-/*!***************************************************!*\
-  !*** ./resources/assets/js_owl/libs/js-cookie.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-/**
- * @see https://github.com/js-cookie/js-cookie
- */
-window.Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/dist/js.cookie.js");
-
-// const Selector = {
-//     TOGGLE_BUTTON    : '[data-widget="pushmenu"]',
-//     SIDEBAR_MINI     : '.sidebar-mini',
-//     SIDEBAR_COLLAPSED: '.sidebar-collapse',
-//     BODY             : 'body',
-//     OVERLAY          : '#sidebar-overlay',
-//     WRAPPER          : '.wrapper'
-// }
-//
-// const ClassName = {
-//     SIDEBAR_OPEN: 'sidebar-open',
-//     COLLAPSED   : 'sidebar-collapse',
-//     OPEN        : 'sidebar-open',
-//     SIDEBAR_MINI: 'sidebar-mini'
-// }
-
-var $sidebar = $('body');
-var sizeColapsed = 1200;
-$(document).ready(function () {
-  if (localStorage.getItem('sidebar-state') && !$sidebar.hasClass(localStorage.getItem('sidebar-state'))) {
-    $('[data-widget="pushmenu"]').PushMenu('toggle');
-  }
-  if ($(window).width() <= sizeColapsed && $sidebar.hasClass('sidebar-open')) {
-    $('[data-widget="pushmenu"]').PushMenu('toggle');
-  }
-  $(document).on('collapsed.lte.pushmenu', function () {
-    localStorage.setItem('sidebar-state', 'sidebar-collapse');
-    Cookies.set('sidebar-state', 'sidebar-collapse');
-  });
-  $(document).on('shown.lte.pushmenu', function () {
-    localStorage.setItem('sidebar-state', 'sidebar-open');
-    Cookies.set('sidebar-state', 'sidebar-open');
-  });
 });
 
 /***/ }),
@@ -9325,6 +9267,732 @@ function assertDependencies(root, factory) {
 function assertInstance(instance) {
   if (typeof (instance === null || instance === void 0 ? void 0 : instance.openAt) !== 'function' || typeof (instance === null || instance === void 0 ? void 0 : instance.destroy) !== 'function') {
     throw new TypeError('Lightbox driver must provide openAt() and destroy().');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/install-sidebar.js":
+/*!****************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/install-sidebar.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SIDEBAR_COMPONENT": () => (/* binding */ SIDEBAR_COMPONENT),
+/* harmony export */   "SIDEBAR_ROOT_SELECTOR": () => (/* binding */ SIDEBAR_ROOT_SELECTOR),
+/* harmony export */   "installSidebar": () => (/* binding */ installSidebar)
+/* harmony export */ });
+/* harmony import */ var _sidebars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebars.js */ "./resources/frontend/features/sidebar/sidebars.js");
+
+var SIDEBAR_COMPONENT = 'sidebar-navigation';
+var SIDEBAR_ROOT_SELECTOR = 'body';
+function installSidebar(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  assertAdmin(admin);
+  var controller = null;
+  admin.Components.register({
+    mount: function mount(body) {
+      controller = (0,_sidebars_js__WEBPACK_IMPORTED_MODULE_0__.mountSidebar)(body, options);
+      return {
+        destroy: function destroy() {
+          var _controller;
+          return (_controller = controller) === null || _controller === void 0 ? void 0 : _controller.destroy();
+        }
+      };
+    },
+    name: SIDEBAR_COMPONENT,
+    selector: SIDEBAR_ROOT_SELECTOR
+  });
+  return {
+    collapse: function collapse(settings) {
+      var _controller$collapse, _controller2;
+      return (_controller$collapse = (_controller2 = controller) === null || _controller2 === void 0 ? void 0 : _controller2.collapse(settings)) !== null && _controller$collapse !== void 0 ? _controller$collapse : false;
+    },
+    collapseItem: function collapseItem(context) {
+      var _controller$collapseI, _controller3;
+      return (_controller$collapseI = (_controller3 = controller) === null || _controller3 === void 0 ? void 0 : _controller3.collapseItem(context)) !== null && _controller$collapseI !== void 0 ? _controller$collapseI : false;
+    },
+    expand: function expand(settings) {
+      var _controller$expand, _controller4;
+      return (_controller$expand = (_controller4 = controller) === null || _controller4 === void 0 ? void 0 : _controller4.expand(settings)) !== null && _controller$expand !== void 0 ? _controller$expand : false;
+    },
+    expandItem: function expandItem(context) {
+      var _controller$expandIte, _controller5;
+      return (_controller$expandIte = (_controller5 = controller) === null || _controller5 === void 0 ? void 0 : _controller5.expandItem(context)) !== null && _controller$expandIte !== void 0 ? _controller$expandIte : false;
+    },
+    scan: function scan() {
+      var _options$root;
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+      return _scan(admin, controller, root);
+    },
+    toggle: function toggle(settings) {
+      var _controller$toggle, _controller6;
+      return (_controller$toggle = (_controller6 = controller) === null || _controller6 === void 0 ? void 0 : _controller6.toggle(settings)) !== null && _controller$toggle !== void 0 ? _controller$toggle : false;
+    },
+    toggleItem: function toggleItem(context) {
+      var _controller$toggleIte, _controller7;
+      return (_controller$toggleIte = (_controller7 = controller) === null || _controller7 === void 0 ? void 0 : _controller7.toggleItem(context)) !== null && _controller$toggleIte !== void 0 ? _controller$toggleIte : false;
+    }
+  };
+}
+function _scan(admin, controller, root) {
+  var _controller$scan;
+  admin.Components.scan(root, SIDEBAR_COMPONENT);
+  return (_controller$scan = controller === null || controller === void 0 ? void 0 : controller.scan(root)) !== null && _controller$scan !== void 0 ? _controller$scan : 0;
+}
+function assertAdmin(admin) {
+  var _admin$Components;
+  if (typeof (admin === null || admin === void 0 || (_admin$Components = admin.Components) === null || _admin$Components === void 0 ? void 0 : _admin$Components.register) !== 'function') {
+    throw new TypeError('Sidebar requires Admin.Components.');
+  }
+  if (typeof admin.Components.scan !== 'function') {
+    throw new TypeError('Sidebar requires Admin.Components.scan().');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-elements.js":
+/*!*****************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-elements.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PUSH_MENU_SELECTOR": () => (/* binding */ PUSH_MENU_SELECTOR),
+/* harmony export */   "TREE_ITEM_SELECTOR": () => (/* binding */ TREE_ITEM_SELECTOR),
+/* harmony export */   "TREE_LINK_SELECTOR": () => (/* binding */ TREE_LINK_SELECTOR),
+/* harmony export */   "TREE_MENU_SELECTOR": () => (/* binding */ TREE_MENU_SELECTOR),
+/* harmony export */   "TREE_ROOT_SELECTOR": () => (/* binding */ TREE_ROOT_SELECTOR),
+/* harmony export */   "collectPushMenuToggles": () => (/* binding */ collectPushMenuToggles),
+/* harmony export */   "collectTreeContexts": () => (/* binding */ collectTreeContexts),
+/* harmony export */   "collectTreeRoots": () => (/* binding */ collectTreeRoots),
+/* harmony export */   "findPushMenuToggle": () => (/* binding */ findPushMenuToggle),
+/* harmony export */   "findTreeContext": () => (/* binding */ findTreeContext),
+/* harmony export */   "isControlDisabled": () => (/* binding */ isControlDisabled),
+/* harmony export */   "parentTreeContext": () => (/* binding */ parentTreeContext),
+/* harmony export */   "siblingTreeContexts": () => (/* binding */ siblingTreeContexts)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+var PUSH_MENU_SELECTOR = '[data-widget="pushmenu"]';
+var TREE_ROOT_SELECTOR = '[data-widget="treeview"]';
+var TREE_ITEM_SELECTOR = '.nav-item';
+var TREE_LINK_SELECTOR = '.nav-link';
+var TREE_MENU_SELECTOR = '.nav-treeview';
+function collectPushMenuToggles(root) {
+  return collectMatching(root, PUSH_MENU_SELECTOR);
+}
+function collectTreeRoots(root) {
+  return collectMatching(root, TREE_ROOT_SELECTOR);
+}
+function findPushMenuToggle(root, target) {
+  var _target$closest;
+  var toggle = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, PUSH_MENU_SELECTOR);
+  return toggle && root.contains(toggle) ? toggle : null;
+}
+function findTreeContext(root, target) {
+  var _target$closest2;
+  var link = target === null || target === void 0 || (_target$closest2 = target.closest) === null || _target$closest2 === void 0 ? void 0 : _target$closest2.call(target, TREE_LINK_SELECTOR);
+  if (!link) return null;
+  var context = contextForLink(link);
+  return isTreeContextInside(root, context) ? context : null;
+}
+function collectTreeContexts(tree) {
+  return _toConsumableArray(tree.querySelectorAll(TREE_ITEM_SELECTOR)).map(function (item) {
+    return treeContextForItem(tree, item);
+  }).filter(Boolean);
+}
+function siblingTreeContexts(context) {
+  var _context$item$parentE, _context$item$parentE2;
+  return _toConsumableArray((_context$item$parentE = (_context$item$parentE2 = context.item.parentElement) === null || _context$item$parentE2 === void 0 ? void 0 : _context$item$parentE2.children) !== null && _context$item$parentE !== void 0 ? _context$item$parentE : []).map(function (item) {
+    return treeContextForItem(context.tree, item);
+  }).filter(Boolean);
+}
+function parentTreeContext(context) {
+  var _context$item$parentE3, _context$item$parentE4;
+  var parentItem = (_context$item$parentE3 = context.item.parentElement) === null || _context$item$parentE3 === void 0 || (_context$item$parentE4 = _context$item$parentE3.closest) === null || _context$item$parentE4 === void 0 ? void 0 : _context$item$parentE4.call(_context$item$parentE3, TREE_ITEM_SELECTOR);
+  return parentItem ? treeContextForItem(context.tree, parentItem) : null;
+}
+function isControlDisabled(element) {
+  var _element$hasAttribute, _element$getAttribute, _element$classList;
+  var checks = [element === null || element === void 0 || (_element$hasAttribute = element.hasAttribute) === null || _element$hasAttribute === void 0 ? void 0 : _element$hasAttribute.call(element, 'disabled'), (element === null || element === void 0 || (_element$getAttribute = element.getAttribute) === null || _element$getAttribute === void 0 ? void 0 : _element$getAttribute.call(element, 'aria-disabled')) === 'true', element === null || element === void 0 || (_element$classList = element.classList) === null || _element$classList === void 0 ? void 0 : _element$classList.contains('disabled')];
+  return checks.some(Boolean);
+}
+function contextForLink(link) {
+  var _item$closest;
+  var item = link.closest(TREE_ITEM_SELECTOR);
+  var tree = item === null || item === void 0 || (_item$closest = item.closest) === null || _item$closest === void 0 ? void 0 : _item$closest.call(item, TREE_ROOT_SELECTOR);
+  var menu = directChild(item, TREE_MENU_SELECTOR);
+  return item && tree && menu ? {
+    item: item,
+    link: link,
+    menu: menu,
+    tree: tree
+  } : null;
+}
+function isTreeContextInside(root, context) {
+  return Boolean(context && root.contains(context.tree) && directChild(context.item, TREE_LINK_SELECTOR) === context.link);
+}
+function treeContextForItem(tree, item) {
+  if (item.closest(TREE_ROOT_SELECTOR) !== tree) return null;
+  var link = directChild(item, TREE_LINK_SELECTOR);
+  var menu = directChild(item, TREE_MENU_SELECTOR);
+  return link && menu ? {
+    item: item,
+    link: link,
+    menu: menu,
+    tree: tree
+  } : null;
+}
+function directChild(element, selector) {
+  var _find, _element$children;
+  return (_find = _toConsumableArray((_element$children = element === null || element === void 0 ? void 0 : element.children) !== null && _element$children !== void 0 ? _element$children : []).find(function (child) {
+    return child.matches(selector);
+  })) !== null && _find !== void 0 ? _find : null;
+}
+function collectMatching(root, selector) {
+  var _root$querySelectorAl, _root$querySelectorAl2, _root$matches;
+  var elements = _toConsumableArray((_root$querySelectorAl = (_root$querySelectorAl2 = root.querySelectorAll) === null || _root$querySelectorAl2 === void 0 ? void 0 : _root$querySelectorAl2.call(root, selector)) !== null && _root$querySelectorAl !== void 0 ? _root$querySelectorAl : []);
+  if ((_root$matches = root.matches) !== null && _root$matches !== void 0 && _root$matches.call(root, selector)) elements.unshift(root);
+  return elements;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-navigation.js":
+/*!*******************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-navigation.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TREE_NAVIGATION_KEYS": () => (/* binding */ TREE_NAVIGATION_KEYS),
+/* harmony export */   "navigateTree": () => (/* binding */ navigateTree)
+/* harmony export */ });
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
+/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/frontend/features/sidebar/sidebar-tree.js");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+var TREE_NAVIGATION_KEYS = new Set(['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home']);
+function navigateTree(context, key) {
+  if (key === 'ArrowRight') return navigateRight(context);
+  if (key === 'ArrowLeft') return navigateLeft(context);
+  var links = visibleTreeLinks(context.tree);
+  var current = links.indexOf(context.link);
+  var target = navigationTarget(links, current, key);
+  target === null || target === void 0 || target.focus();
+  return Boolean(target);
+}
+function navigateRight(context) {
+  if (!context.item.classList.contains('menu-open')) return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__.expandTreeItem)(context);
+  var child = visibleTreeLinks(context.menu)[0];
+  child === null || child === void 0 || child.focus();
+  return Boolean(child);
+}
+function navigateLeft(context) {
+  if (context.item.classList.contains('menu-open')) return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__.collapseTreeItem)(context);
+  var parent = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.parentTreeContext)(context);
+  parent === null || parent === void 0 || parent.link.focus();
+  return Boolean(parent);
+}
+function navigationTarget(links, current, key) {
+  if (key === 'Home') return links[0];
+  if (key === 'End') return links.at(-1);
+  var offset = key === 'ArrowUp' ? -1 : 1;
+  return links[(current + offset + links.length) % links.length];
+}
+function visibleTreeLinks(root) {
+  return _toConsumableArray(root.querySelectorAll('.nav-link')).filter(function (link) {
+    return !isInsideHiddenMenu(link) && !link.matches('[disabled], [aria-disabled="true"]');
+  }).filter(function (link) {
+    return link.closest('.nav-item');
+  });
+}
+function isInsideHiddenMenu(link) {
+  var menu = link.closest('.nav-treeview');
+  while (menu) {
+    var _menu$parentElement, _menu$parentElement$c;
+    if (menu.hidden) return true;
+    menu = (_menu$parentElement = menu.parentElement) === null || _menu$parentElement === void 0 || (_menu$parentElement$c = _menu$parentElement.closest) === null || _menu$parentElement$c === void 0 ? void 0 : _menu$parentElement$c.call(_menu$parentElement, '.nav-treeview');
+  }
+  return false;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-state.js":
+/*!**************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-state.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clearCollapsedDone": () => (/* binding */ clearCollapsedDone),
+/* harmony export */   "collapseSidebar": () => (/* binding */ collapseSidebar),
+/* harmony export */   "expandSidebar": () => (/* binding */ expandSidebar),
+/* harmony export */   "normalizeSidebar": () => (/* binding */ normalizeSidebar),
+/* harmony export */   "sidebarPreference": () => (/* binding */ sidebarPreference),
+/* harmony export */   "toggleSidebar": () => (/* binding */ toggleSidebar)
+/* harmony export */ });
+/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/frontend/features/sidebar/sidebar-storage.js");
+
+var COLLAPSED_EVENTS = ['sidebar:collapsed', 'collapsed.lte.pushmenu'];
+var EXPANDED_EVENTS = ['sidebar:shown', 'shown.lte.pushmenu'];
+function normalizeSidebar(state, expanded) {
+  state.expanded = expanded;
+  applySidebarClasses(state, expanded);
+  syncPushMenuToggles(state);
+}
+function expandSidebar(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return changeSidebarState(state, true, options);
+}
+function collapseSidebar(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return changeSidebarState(state, false, options);
+}
+function toggleSidebar(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return state.expanded ? collapseSidebar(state, options) : expandSidebar(state, options);
+}
+function sidebarPreference(expanded) {
+  return expanded ? _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__.SIDEBAR_EXPANDED : _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__.SIDEBAR_COLLAPSED;
+}
+function changeSidebarState(state, expanded, options) {
+  var _ref, _options$target;
+  if (state.expanded === expanded) return false;
+  var target = (_ref = (_options$target = options.target) !== null && _options$target !== void 0 ? _options$target : state.toggles[0]) !== null && _ref !== void 0 ? _ref : state.body;
+  var before = expanded ? 'sidebar:show' : 'sidebar:collapse';
+  if (!dispatchSidebarEvent(target, before, state, true)) return false;
+  clearCollapsedDone(state);
+  state.expanded = expanded;
+  applySidebarClasses(state, expanded);
+  syncPushMenuToggles(state);
+  dispatchSidebarEvents(target, expanded ? EXPANDED_EVENTS : COLLAPSED_EVENTS, state);
+  if (!expanded) dispatchCollapsedDone(target, state);
+  return true;
+}
+function applySidebarClasses(state, expanded) {
+  state.body.classList.toggle('sidebar-collapse', !expanded);
+  state.body.classList.toggle('sidebar-closed', !expanded && state.compact);
+  state.body.classList.toggle('sidebar-open', expanded || !state.compact);
+}
+function syncPushMenuToggles(state) {
+  state.toggles.forEach(function (toggle) {
+    toggle.setAttribute('aria-expanded', String(state.expanded));
+    if (!toggle.hasAttribute('href')) toggle.setAttribute('role', 'button');
+    if (!toggle.hasAttribute('href') && !toggle.hasAttribute('tabindex')) {
+      toggle.setAttribute('tabindex', '0');
+    }
+  });
+}
+function dispatchSidebarEvents(target, names, state) {
+  names.forEach(function (name) {
+    return dispatchSidebarEvent(target, name, state);
+  });
+}
+function dispatchCollapsedDone(target, state) {
+  state.collapseTimer = state.window.setTimeout(function () {
+    return completeCollapsedEvent(target, state);
+  }, state.animationDuration);
+}
+function completeCollapsedEvent(target, state) {
+  state.collapseTimer = null;
+  dispatchSidebarEvent(target, 'collapsed-done.lte.pushmenu', state);
+}
+function clearCollapsedDone(state) {
+  if (state.collapseTimer === null) return;
+  state.window.clearTimeout(state.collapseTimer);
+  state.collapseTimer = null;
+}
+function dispatchSidebarEvent(target, name, state) {
+  var cancelable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  return target.dispatchEvent(new state.window.CustomEvent(name, {
+    bubbles: true,
+    cancelable: cancelable,
+    detail: {
+      body: state.body,
+      expanded: state.expanded
+    }
+  }));
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-storage.js":
+/*!****************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-storage.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SIDEBAR_COLLAPSED": () => (/* binding */ SIDEBAR_COLLAPSED),
+/* harmony export */   "SIDEBAR_EXPANDED": () => (/* binding */ SIDEBAR_EXPANDED),
+/* harmony export */   "SIDEBAR_STORAGE_KEY": () => (/* binding */ SIDEBAR_STORAGE_KEY),
+/* harmony export */   "normalizeSidebarPreference": () => (/* binding */ normalizeSidebarPreference),
+/* harmony export */   "readSidebarPreference": () => (/* binding */ readSidebarPreference),
+/* harmony export */   "writeSidebarPreference": () => (/* binding */ writeSidebarPreference)
+/* harmony export */ });
+var SIDEBAR_COLLAPSED = 'sidebar-collapse';
+var SIDEBAR_EXPANDED = 'sidebar-open';
+var SIDEBAR_STORAGE_KEY = 'sidebar-state';
+function readSidebarPreference(storage) {
+  try {
+    var _storage$getItem;
+    return normalizeSidebarPreference(storage === null || storage === void 0 || (_storage$getItem = storage.getItem) === null || _storage$getItem === void 0 ? void 0 : _storage$getItem.call(storage, SIDEBAR_STORAGE_KEY));
+  } catch (_unused) {
+    return null;
+  }
+}
+function writeSidebarPreference(storage, document, value) {
+  var preference = normalizeSidebarPreference(value);
+  if (!preference) return false;
+  writeStorage(storage, preference);
+  writeCookie(document, preference);
+  return true;
+}
+function normalizeSidebarPreference(value) {
+  return [SIDEBAR_COLLAPSED, SIDEBAR_EXPANDED].includes(value) ? value : null;
+}
+function writeStorage(storage, value) {
+  try {
+    var _storage$setItem;
+    storage === null || storage === void 0 || (_storage$setItem = storage.setItem) === null || _storage$setItem === void 0 || _storage$setItem.call(storage, SIDEBAR_STORAGE_KEY, value);
+  } catch (_unused2) {
+    // Storage can be unavailable in privacy-restricted browsing contexts.
+  }
+}
+function writeCookie(document, value) {
+  var _document$location;
+  if (!document || typeof document.cookie !== 'string') return;
+  var secure = ((_document$location = document.location) === null || _document$location === void 0 ? void 0 : _document$location.protocol) === 'https:' ? '; Secure' : '';
+  document.cookie = "".concat(SIDEBAR_STORAGE_KEY, "=").concat(encodeURIComponent(value), "; Path=/; SameSite=Lax").concat(secure);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-tree.js":
+/*!*************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-tree.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "collapseTreeItem": () => (/* binding */ collapseTreeItem),
+/* harmony export */   "expandTreeItem": () => (/* binding */ expandTreeItem),
+/* harmony export */   "normalizeTree": () => (/* binding */ normalizeTree),
+/* harmony export */   "toggleTreeItem": () => (/* binding */ toggleTreeItem)
+/* harmony export */ });
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
+
+function normalizeTree(tree) {
+  var _tree$getAttribute;
+  tree.setAttribute('role', (_tree$getAttribute = tree.getAttribute('role')) !== null && _tree$getAttribute !== void 0 ? _tree$getAttribute : 'menu');
+  (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeContexts)(tree).forEach(function (context) {
+    applyTreeItemState(context, context.item.classList.contains('menu-open'));
+  });
+}
+function expandTreeItem(context) {
+  if (context.item.classList.contains('menu-open')) return false;
+  if (!dispatchTreeEvent(context, 'navigation:expand', true)) return false;
+  if (!collapseAccordionSiblings(context)) return false;
+  applyTreeItemState(context, true);
+  dispatchTreeEvents(context, ['navigation:expanded', 'expanded.lte.treeview']);
+  return true;
+}
+function collapseTreeItem(context) {
+  if (!context.item.classList.contains('menu-open')) return false;
+  if (!dispatchTreeEvent(context, 'navigation:collapse', true)) return false;
+  closeTreeBranch(context);
+  dispatchTreeEvents(context, ['navigation:collapsed', 'collapsed.lte.treeview']);
+  return true;
+}
+function toggleTreeItem(context) {
+  return context.item.classList.contains('menu-open') ? collapseTreeItem(context) : expandTreeItem(context);
+}
+function collapseAccordionSiblings(context) {
+  if (context.tree.getAttribute('data-accordion') === 'false') return true;
+  return (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.siblingTreeContexts)(context).filter(function (sibling) {
+    return sibling.item !== context.item;
+  }).filter(function (sibling) {
+    return sibling.item.classList.contains('menu-open');
+  }).every(collapseTreeItem);
+}
+function closeTreeBranch(context) {
+  applyTreeItemState(context, false);
+  (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeContexts)(context.menu).forEach(function (nested) {
+    return applyTreeItemState(nested, false);
+  });
+}
+function applyTreeItemState(context, expanded) {
+  context.item.classList.toggle('menu-open', expanded);
+  context.item.classList.remove('menu-is-opening');
+  context.menu.hidden = !expanded;
+  context.link.setAttribute('aria-expanded', String(expanded));
+  context.link.setAttribute('aria-haspopup', 'true');
+}
+function dispatchTreeEvents(context, names) {
+  names.forEach(function (name) {
+    return dispatchTreeEvent(context, name);
+  });
+}
+function dispatchTreeEvent(context, name) {
+  var cancelable = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  return context.tree.dispatchEvent(new context.tree.ownerDocument.defaultView.CustomEvent(name, {
+    bubbles: true,
+    cancelable: cancelable,
+    detail: context
+  }));
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebars.js":
+/*!*********************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebars.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "mountSidebar": () => (/* binding */ mountSidebar)
+/* harmony export */ });
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
+/* harmony import */ var _sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-navigation.js */ "./resources/frontend/features/sidebar/sidebar-navigation.js");
+/* harmony import */ var _sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar-state.js */ "./resources/frontend/features/sidebar/sidebar-state.js");
+/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/frontend/features/sidebar/sidebar-storage.js");
+/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/frontend/features/sidebar/sidebar-tree.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+
+var DEFAULT_BREAKPOINT = 1200;
+var DEFAULT_ANIMATION_DURATION = 300;
+function mountSidebar(root) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var state = createSidebarState(root, options);
+  var listeners = bindSidebarListeners(state);
+  scanSidebar(state, root);
+  restoreSidebar(state);
+  return sidebarController(state, listeners);
+}
+function sidebarController(state, listeners) {
+  return {
+    collapse: function collapse(options) {
+      return setSidebar(state, false, options);
+    },
+    collapseItem: _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.collapseTreeItem,
+    destroy: function destroy() {
+      return destroySidebar(state, listeners);
+    },
+    expand: function expand(options) {
+      return setSidebar(state, true, options);
+    },
+    expandItem: _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.expandTreeItem,
+    scan: function scan() {
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : state.root;
+      return scanSidebar(state, root);
+    },
+    toggle: function toggle(options) {
+      return toggleAndPersist(state, options);
+    },
+    toggleItem: _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.toggleTreeItem
+  };
+}
+function createSidebarState(root, options) {
+  var _options$animationDur, _options$breakpoint, _options$breakpoint2;
+  assertRoot(root);
+  var document = root.ownerDocument;
+  var window = document.defaultView;
+  return {
+    animationDuration: (_options$animationDur = options.animationDuration) !== null && _options$animationDur !== void 0 ? _options$animationDur : DEFAULT_ANIMATION_DURATION,
+    body: root,
+    breakpoint: (_options$breakpoint = options.breakpoint) !== null && _options$breakpoint !== void 0 ? _options$breakpoint : DEFAULT_BREAKPOINT,
+    compact: isCompact(window, (_options$breakpoint2 = options.breakpoint) !== null && _options$breakpoint2 !== void 0 ? _options$breakpoint2 : DEFAULT_BREAKPOINT),
+    collapseTimer: null,
+    document: document,
+    expanded: !root.classList.contains('sidebar-collapse'),
+    preference: (0,_sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.readSidebarPreference)(window.localStorage),
+    root: root,
+    toggles: [],
+    treeRoots: [],
+    window: window
+  };
+}
+function bindSidebarListeners(state) {
+  var listeners = {
+    click: function click(event) {
+      return handleSidebarClick(state, event);
+    },
+    keydown: function keydown(event) {
+      return handleSidebarKeydown(state, event);
+    },
+    resize: function resize() {
+      return handleSidebarResize(state);
+    }
+  };
+  state.root.addEventListener('click', listeners.click);
+  state.root.addEventListener('keydown', listeners.keydown);
+  state.window.addEventListener('resize', listeners.resize);
+  return listeners;
+}
+function handleSidebarClick(state, event) {
+  var _event$target$closest, _event$target;
+  var toggle = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findPushMenuToggle)(state.root, event.target);
+  if (toggle) return handlePushMenuClick(state, event, toggle);
+  if ((_event$target$closest = (_event$target = event.target).closest) !== null && _event$target$closest !== void 0 && _event$target$closest.call(_event$target, '#sidebar-overlay')) return handleOverlayClick(state, event);
+  var context = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTreeContext)(state.root, event.target);
+  if (!context || !isPlainPrimaryClick(event) || (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.isControlDisabled)(context.link)) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.toggleTreeItem)(context);
+}
+function handlePushMenuClick(state, event, toggle) {
+  if (!isPlainPrimaryClick(event) || (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.isControlDisabled)(toggle)) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  return toggleAndPersist(state, {
+    target: toggle
+  });
+}
+function handleOverlayClick(state, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  return setSidebar(state, false, {
+    persist: true
+  });
+}
+function handleSidebarKeydown(state, event) {
+  if (event.key === 'Escape') return handleSidebarEscape(state, event);
+  var toggle = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findPushMenuToggle)(state.root, event.target);
+  if (toggle) return handlePushMenuKeydown(state, event, toggle);
+  var context = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTreeContext)(state.root, event.target);
+  return context ? handleTreeKeydown(event, context) : false;
+}
+function handlePushMenuKeydown(state, event, toggle) {
+  return ['Enter', ' '].includes(event.key) ? handleKeyboardToggle(state, event, toggle) : false;
+}
+function handleSidebarEscape(state, event) {
+  return state.compact && state.expanded ? closeOnEscape(state, event) : false;
+}
+function handleTreeKeydown(event, context) {
+  if ((0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.isControlDisabled)(context.link)) return false;
+  if (['Enter', ' '].includes(event.key)) return handleKeyboardTreeToggle(event, context);
+  if (!_sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__.TREE_NAVIGATION_KEYS.has(event.key)) return false;
+  event.preventDefault();
+  return (0,_sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__.navigateTree)(context, event.key);
+}
+function handleKeyboardToggle(state, event, toggle) {
+  event.preventDefault();
+  event.stopPropagation();
+  return toggleAndPersist(state, {
+    target: toggle
+  });
+}
+function handleKeyboardTreeToggle(event, context) {
+  event.preventDefault();
+  event.stopPropagation();
+  return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.toggleTreeItem)(context);
+}
+function closeOnEscape(state, event) {
+  var _state$toggles$;
+  event.preventDefault();
+  var changed = setSidebar(state, false, {
+    persist: true
+  });
+  if (changed) (_state$toggles$ = state.toggles[0]) === null || _state$toggles$ === void 0 || _state$toggles$.focus();
+  return changed;
+}
+function handleSidebarResize(state) {
+  var compact = isCompact(state.window, state.breakpoint);
+  if (compact === state.compact) return false;
+  state.compact = compact;
+  var expanded = compact ? false : state.preference !== _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.SIDEBAR_COLLAPSED;
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, expanded);
+  return true;
+}
+function restoreSidebar(state) {
+  var expanded = state.compact ? false : state.preference !== _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.SIDEBAR_COLLAPSED;
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, expanded);
+}
+function toggleAndPersist(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var expanded = !state.expanded;
+  return setSidebar(state, expanded, _objectSpread(_objectSpread({}, options), {}, {
+    persist: true
+  }));
+}
+function setSidebar(state, expanded) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var changed = expanded ? (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.expandSidebar)(state, options) : (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.collapseSidebar)(state, options);
+  if (!changed || !options.persist) return changed;
+  state.preference = (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.sidebarPreference)(expanded);
+  (0,_sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.writeSidebarPreference)(state.window.localStorage, state.document, state.preference);
+  return true;
+}
+function scanSidebar(state, root) {
+  state.toggles = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectPushMenuToggles)(state.root);
+  state.treeRoots = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeRoots)(state.root);
+  state.treeRoots.forEach(_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.normalizeTree);
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, state.expanded);
+  ensureSidebarOverlay(state);
+  return (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectPushMenuToggles)(root).length + (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeRoots)(root).length;
+}
+function ensureSidebarOverlay(state) {
+  if (state.root.querySelector('#sidebar-overlay')) return;
+  var wrapper = state.root.querySelector('.wrapper');
+  if (!wrapper) return;
+  var overlay = state.document.createElement('div');
+  overlay.id = 'sidebar-overlay';
+  wrapper.append(overlay);
+}
+function destroySidebar(state, listeners) {
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.clearCollapsedDone)(state);
+  state.root.removeEventListener('click', listeners.click);
+  state.root.removeEventListener('keydown', listeners.keydown);
+  state.window.removeEventListener('resize', listeners.resize);
+}
+function isCompact(window, breakpoint) {
+  return window.innerWidth <= breakpoint;
+}
+function isPlainPrimaryClick(event) {
+  return !event.defaultPrevented && event.button === 0 && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey;
+}
+function assertRoot(root) {
+  if (!(root !== null && root !== void 0 && root.ownerDocument) || typeof root.addEventListener !== 'function') {
+    throw new TypeError('Sidebar requires a document body root.');
   }
 }
 

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="csrf-token" content="sidebar-modern-token" />
+        <link rel="stylesheet" href="/public/default/css/features/sidebar.css" />
+        <link rel="stylesheet" href="/public/default/css/features/sidebar/themes/tailwind.css" />
+    </head>
+    <body class="sidebar-mini sidebar-open">
+        <div class="wrapper">
+            <button id="modern-pushmenu" data-widget="pushmenu">Menu</button>
+            <aside class="main-sidebar">
+                <ul class="nav-sidebar" data-widget="treeview">
+                    <li id="modern-branch" class="nav-item">
+                        <a id="modern-link" class="nav-link" href="#modern">Modern</a>
+                        <ul id="modern-menu" class="nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="#child">Child</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+        <script src="/public/default/js/admin-core.js"></script>
+        <script src="/public/default/js/features/sidebar.js"></script>
+    </body>
+</html>

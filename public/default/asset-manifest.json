@@ -108,6 +108,42 @@
                         }
                     ]
                 },
+                "feature:sidebar": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/sidebar.js",
+                            "version": "710de912777206b899153eb06ac2fadb",
+                            "checksum": "sha256:6e3a75268790cf37bc4671d1fe947d9170a4c6c5ec9e3866770f78903c6bd05c"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/sidebar.css",
+                            "version": "14ab54d5043f7a10ff50eec988c46505",
+                            "checksum": "sha256:560a8fb21a533b8ea8233eb5326f09627d61b7c33e3e0f04938bb07827127e25"
+                        }
+                    ]
+                },
+                "feature:sidebar:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/sidebar/themes/legacy-adminlte.css",
+                            "version": "966248cb1cd6338a6f7e49f67e1c6121",
+                            "checksum": "sha256:99dddfb21c9bfcb3ffe6b07df472b7b0b5d78dacab91bee7ca459b9c8f986998"
+                        }
+                    ]
+                },
+                "feature:sidebar:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/sidebar/themes/tailwind.css",
+                            "version": "48a0c6ff510782643f04b6518bbb7ebb",
+                            "checksum": "sha256:72e7941964b3c1c56ab689a501c3f0e9b7ec2920a5124a1e57401a77da6896ca"
+                        }
+                    ]
+                },
                 "feature:table": {
                     "scripts": [
                         {
@@ -386,6 +422,42 @@
                         }
                     ]
                 },
+                "feature:sidebar": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/sidebar.js",
+                            "version": "c3c73efe43aef7c41c64961d8571ae5b",
+                            "checksum": "sha256:6b1ca957cb38f4ffa1da3edc4b03803bc8634b0bcbd022ad093fc8603d4de28e"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/sidebar.css",
+                            "version": "7979effdd6385afc6fd726ac043a9ab5",
+                            "checksum": "sha256:e28e6bfa5a8261164fc676168f01bd1f5c1e7b63d313cabb8b772a3357b73b01"
+                        }
+                    ]
+                },
+                "feature:sidebar:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/sidebar/themes/legacy-adminlte.css",
+                            "version": "10cc9d66ae6fa0625823d188731cca49",
+                            "checksum": "sha256:fcb8abcf319423e07cb7b39a9754290b1b251639dd6403ab8b076b56f09fe760"
+                        }
+                    ]
+                },
+                "feature:sidebar:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/sidebar/themes/tailwind.css",
+                            "version": "1e156de819aeca4950bac5d5805b283a",
+                            "checksum": "sha256:6517184173d2fc93d76457994afd37d40d66420d7cff2a1ece5ed818d04423e1"
+                        }
+                    ]
+                },
                 "feature:table": {
                     "scripts": [
                         {
@@ -559,5 +631,5 @@
             }
         }
     },
-    "build_id": "sha256:a73f93053ae6bb6a89cae39d45a3bc19d336aae66920170e08cd66fa34ac71be"
+    "build_id": "sha256:5ce263d87e928cb97e2804bcfd129df56f9ddedf545351e86d12e8306e396803"
 }

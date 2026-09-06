@@ -10,5 +10,6 @@ enum ThemeCapability: string
     case Modal = 'modal';
     case Notification = 'notification';
     case Icons = 'icons';
+    case Sidebar = 'sidebar';
     case TablePresentation = 'table-presentation';
 }
