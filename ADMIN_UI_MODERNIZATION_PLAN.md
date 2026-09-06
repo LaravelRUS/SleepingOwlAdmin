@@ -360,6 +360,19 @@ No-build consumer contract является release-blocking:
 - `sleepingowl:install` и `sleepingowl:update` публикуют и валидируют оба заранее собранных профиля атомарно. Для переключения `ADMIN_DEV_ASSETS` пользователю не требуется повторная frontend-сборка; после изменения env достаточно обычного сброса Laravel config cache согласно deployment-процессу.
 - Development assets предназначены для локальной/отладочной среды. Документация явно предупреждает не включать `ADMIN_DEV_ASSETS=true` в production из-за размера bundles, source maps и расширенной диагностики.
 
+### Отказ от `kodicms/laravel-assets`
+
+- `kodicms/laravel-assets` удаляется из Composer dependencies и lock-файла. В runtime-коде, contracts, PHPDoc, tests, config defaults и stubs не остаётся обязательных ссылок на namespace `KodiCMS\Assets`.
+- Полная копия API пакета не переносится. Внутри SleepingOwl реализуется только фактически используемый минимум: описание CSS/JS asset, registry по handle, зависимости и детерминированный порядок, head/footer placement, HTML attributes, именованные packages, title/meta/favicon и безопасная передача global config.
+- Обязанности разделяются на небольшие классы: value object asset, asset registry/sorter, package registry и meta renderer. Manifest resolver отвечает только за выбор versioned files и не превращается в registry или HTML renderer.
+- Цикл зависимостей assets вызывает понятное исключение с перечислением handles. Отсутствующая optional dependency игнорируется только по явно документированному правилу; случайный бесконечный sort loop невозможен.
+- First-party contracts `AssetsInterface` и `MetaInterface` больше не наследуют интерфейсы KodiCMS. Их новый узкий API фиксируется contract tests до удаления Composer package.
+- Сохраняются реально используемые SleepingOwl entry points и aliases `Assets`, `Meta`, `PackageManager`. Новый first-party facade/API живёт только в namespace `SleepingOwl\Admin`; совместимость не требует подделывать весь namespace удалённого пакета.
+- Старые опубликованные config aliases со строками `KodiCMS\Assets\Facades\Assets`, `Meta` и `PackageManager` распознаются config normalization слоем и перенаправляются на first-party реализации. Это позволяет загрузить legacy config fixture после удаления зависимости.
+- Прямые imports/classes `KodiCMS\Assets\...` в пользовательском application code считаются breaking change нового major и получают точную таблицу замен в migration guide.
+- Рендер HTML attributes выполняет escaping, а JavaScript config сериализуется через безопасный JSON/`Js::encode()` contract; текущая конкатенация raw `json_encode()` в executable script не переносится как есть.
+- First-party asset registry интегрируется с новым versioned manifest и двумя build profiles; он не вычисляет Mix/Vite paths самостоятельно и не требует frontend toolchain у потребителя.
+
 ### DOM и события
 
 - Использовать `querySelector`, `querySelectorAll`, `closest`, `classList`, `dataset`, `FormData`, `URLSearchParams`, `CustomEvent` и делегирование через `addEventListener`.
@@ -467,6 +480,7 @@ No-build consumer contract является release-blocking:
 - [x] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
 - [x] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
 - [x] Зафиксировать два готовых asset profiles: production и development Vue 3, переключаемые существующим `ADMIN_DEV_ASSETS` без Node.js у пользователя.
+- [x] Зафиксировать удаление `kodicms/laravel-assets` и границы минимальной first-party реализации assets/meta/packages без копирования всего vendor API.
 - [x] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
 - [x] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
 - [x] Выбрать replacements для Select2, date/time controls и lightbox.
@@ -494,12 +508,14 @@ No-build consumer contract является release-blocking:
 - [ ] Добавить tests, загружающие пакет с прежним полным опубликованным конфигом и с конфигом, в котором отсутствуют новые keys.
 - [ ] Добавить CI-команды для PHP и frontend тестов.
 - [ ] Добавить contract tests выбора production/development manifest entries через `sleeping_owl.dev_assets`, включая запрет смешивания профилей и попадания development Vue в production page.
+- [ ] Добавить characterization tests используемого API `kodicms/laravel-assets`: handles/dependencies/order, CSS/JS attributes, head/footer, packages, meta tags, global config и duplicate registration.
 
 Критерий завершения: текущая реализация проходит тесты, которые способны обнаружить основные регрессии миграции.
 
 ### Этап 2. Выделить headless core и theme contract
 
 - [ ] Расширить существующий `TemplateInterface` до `ThemeInterface`, сохранив адаптер для старого `TemplateDefault` на время миграции.
+- [ ] Отвязать first-party `AssetsInterface`/`MetaInterface` от contracts `KodiCMS\Assets` и зафиксировать собственный узкий contract.
 - [ ] Перенести стандартные Bootstrap/AdminLTE-классы встроенных button, form, card/panel, grid, navigation, table, alert, badge и validation components из PHP core в Blade views legacy theme.
 - [ ] Сохранить прямой API пользовательских HTML attributes/classes и проверить, что theme rendering передаёт их без преобразований и потерь.
 - [ ] Разделить общие Blade views, theme-owned layout/views и feature-owned views.
@@ -520,6 +536,9 @@ No-build consumer contract является release-blocking:
 - [ ] Ввести публичные `:root` custom properties с префиксом `--soa-*` для runtime/no-build настройки цветов и основных theme values.
 - [ ] Добавить versioned asset manifest и PHP resolver для precompiled core/theme/feature bundles.
 - [ ] Реализовать в manifest и resolver два полных профиля с одинаковыми logical ids: `production` и `development`, выбираемые существующим `sleeping_owl.dev_assets`.
+- [ ] Реализовать минимальные first-party asset value object, dependency sorter/registry, package registry и meta renderer в `SleepingOwl\Admin`, не смешивая их обязанности с manifest resolver.
+- [ ] Перевести внутренние `Templates\Assets`, `Templates\Meta`, trait `Assets`, provider bindings, facades и stubs с `KodiCMS\Assets` на first-party classes.
+- [ ] Нормализовать legacy config aliases `KodiCMS\Assets\Facades\*` в first-party aliases и покрыть это fixture старого опубликованного конфига.
 - [ ] Расширить существующие `sleepingowl:install` и `sleepingowl:update`: публиковать выбранные precompiled theme/feature assets, проверять manifest/version, не вызывать npm и не компилировать frontend.
 - [ ] Сохранить обратную совместимость `sleepingowl:update` как минимум на уровне неинтерактивного forced asset publish, пригодного для deployment scripts.
 - [ ] Переписать внутреннюю реализацию `Admin.Events` на native events, сохранив текущий публичный интерфейс.
@@ -616,6 +635,7 @@ No-build consumer contract является release-blocking:
 - [ ] Проверить production bundle и license-файлы на наличие jQuery.
 - [ ] Удалить устаревшие картинки/assets x-editable и прочие orphaned resources.
 - [ ] Сравнить размер production bundle с baseline.
+- [ ] Удалить `kodicms/laravel-assets` из `composer.json`/lock после перевода всех runtime/contracts/tests и проверить отсутствие `KodiCMS\Assets` вне migration compatibility data/docs.
 
 Критерий завершения: выбранный критерий удаления jQuery выполнен и закреплён автоматической проверкой.
 
@@ -639,6 +659,7 @@ No-build consumer contract является release-blocking:
 
 - [ ] Обновить README и frontend build instructions.
 - [ ] Добавить migration guide с заменой пользовательских jQuery hooks, Bootstrap/AdminLTE classes/selectors, Vue 2 extensions, `inline-template` и DataTables 1 options.
+- [ ] Добавить в migration guide таблицу замен прямых `KodiCMS\Assets` imports/facades и примеры нового first-party asset API.
 - [ ] Опубликовать config migration matrix и примеры только новых/изменённых keys вместо требования перепубликовать весь конфиг.
 - [ ] Добавить руководство по выбору AdminLTE/Tailwind theme и созданию custom theme.
 - [ ] Обновить PHPDoc/facades/interfaces для актуального API.
@@ -775,6 +796,18 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
 - [ ] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.
 
+### First-party asset registry
+
+- [ ] `kodicms/laravel-assets` отсутствует в Composer dependency tree;
+- [ ] runtime, contracts, default config, PHPDoc, stubs и tests не зависят от классов `KodiCMS\Assets`;
+- [ ] стандартные и пользовательские CSS/JS регистрируются по handle с dependencies, attributes и head/footer placement;
+- [ ] порядок assets детерминирован, duplicate handle имеет документированное поведение, а dependency cycle даёт диагностическое исключение;
+- [ ] package registration/activation сохраняет нужные существующим form/display components сценарии без общего mutable god object;
+- [ ] title, meta, favicon и global config выводятся корректно и безопасно экранируются;
+- [ ] старый полный config fixture с KodiCMS alias strings загружается и получает first-party replacements;
+- [ ] прямые старые imports в application code имеют однозначную замену в migration guide;
+- [ ] registry получает package-owned URLs от versioned manifest resolver и одинаково работает с production/development profiles.
+
 ### Config compatibility
 
 - [ ] прежний опубликованный `config/sleeping_owl.php` загружается без fatal errors и сохраняет ожидаемое поведение поддерживаемых keys;
@@ -826,6 +859,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - конечный пользователь использует все стандартные функции и выбирает готовую тему без Node.js и frontend-сборки;
 - release содержит согласованные versioned core/theme/feature bundles и asset manifest;
 - release содержит готовые production/development profiles; `ADMIN_DEV_ASSETS` выбирает их без frontend build, а development profile использует диагностическую сборку Vue 3;
+- `kodicms/laravel-assets` удалён; небольшой first-party asset/meta registry покрывает только используемый contract и работает с versioned manifest;
 - большинство существующих config keys сохранено, а старый опубликованный config является обязательным compatibility fixture;
 - PHP core не генерирует framework-specific CSS classes;
 - AdminLTE, Tailwind и custom theme выбираются через стабильный публичный contract;
@@ -867,6 +901,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / Vue strategy | Выбран короткий `@vue/compat` этап с миграцией по одному island и обязательным удалением compat до release; baseline уточнён до 9 `inline-template` и 7 global components | текущий commit |
 | 2026-09-06 | Этап 0 / Vue props | Зафиксирован typed `data-*` contract для скаляров и безопасный `application/json` payload через `Js::encode()` для сложных props; выполнение server data как template/code запрещено | текущий commit |
 | 2026-09-06 | Этап 0 / asset profiles | Зафиксированы два готовых профиля: production и development; существующий `ADMIN_DEV_ASSETS` выбирает профиль целиком, development использует отдельный Vue 3 dev runtime с warnings/devtools/source maps, Node.js пользователю не нужен | текущий commit |
+| 2026-09-06 | Этап 0 / PHP assets | `kodicms/laravel-assets` запланирован к удалению; вместо vendor API остаются узкие first-party asset/meta/package contracts, legacy config aliases нормализуются, прямые пользовательские imports документируются как major migration | текущий commit |
 | 2026-09-06 | Этап 0 / Sass structure | Определены независимые Sass entries и локальные `_variables.scss`/`_colors.scss` для core/features/themes; first-party modules переходят на `@use`/`@forward`, Tailwind output остаётся generated exception | текущий commit |
 | 2026-09-06 | Этап 0 / colors | Color literals ограничены `_colors.scss` и узкими vendor/generated/brand exceptions; dark mode меняет только `--soa-*` в root selector, sidebar config проходит validation | текущий commit |
 | 2026-09-06 | Этап 0 / plugin replacements | Изначально предложены Tom Select, Air Datepicker и GLightbox; выбор select пересмотрен после обсуждения | `359de337` |
