@@ -22,6 +22,8 @@ sleepingowl-core < sleepingowl-feature < sleepingowl-theme
 
 They intentionally do not import the legacy stylesheet. Core contains no reset, layout framework or feature/theme presentation. Feature and theme styles will move from the legacy tree only with characterization coverage.
 
+Every Sass entry loads sibling `_variables.scss` and `_colors.scss` modules through `@use`. Variables are local to their owner and use `!default`, so maintainers and external theme authors can configure a source build without cross-bundle globals. Color values live in `_colors.scss`; dimensions, typography, spacing and motion live in `_variables.scss`. The future runtime/no-build surface will expose the supported subset as `--soa-*` custom properties rather than Sass variables.
+
 ## Legacy bridge
 
 The following outputs remain available and unchanged during incremental migration:
