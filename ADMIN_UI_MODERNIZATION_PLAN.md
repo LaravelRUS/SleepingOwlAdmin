@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 1 — страховочная сетка тестов**.
-- Точка возобновления: добавить Vitest для чистых JavaScript modules и сериализации данных.
+- Точка возобновления: добавить ESLint с запретом неявных globals.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -497,7 +497,7 @@ No-build consumer contract является release-blocking:
 
 ### Этап 1. Создать страховочную сетку тестов
 
-- [ ] Добавить Vitest для чистых JS-модулей и сериализации данных.
+- [x] Добавить Vitest для чистых JS-модулей и сериализации данных.
 - [ ] Добавить ESLint с запретом неявных глобалов.
 - [ ] Настроить ESLint guards для длины функций и cyclomatic complexity с локальными обоснованными исключениями.
 - [ ] Добавить formatter/check-команду и единый style для нового JavaScript.
@@ -921,3 +921,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / config matrix | Все 113 current config paths получили ровно один проверяемый статус: 70 unchanged, 29 same key/new implementation, 14 theme-owned, 0 removed; отдельно записаны legacy `show_editor`, implicit `policies_namespace` и новый `sidebar_background_color` | текущий commit |
 | 2026-09-06 | Этап 0 / config fixtures | Добавлены обезличенный full legacy fixture с 49 top-level keys/`show_editor`/KodiCMS aliases и minimal fixture из одного ключа; invariants проверяются отдельной командой | текущий commit |
 | 2026-09-06 | Этап 0 / завершение | Все решения, inventories, reference scenarios, dependency/asset baselines, config matrix и fixtures зафиксированы; точка возобновления перенесена на Vitest этапа 1 | текущий commit |
+| 2026-09-06 | Этап 1 / Vitest | Добавлен Vitest 5 и первые 5 tests чистого island props parser: строгие boolean/number `data-*`, schema filtering и JSON object payload; Node environment не требует DOM | текущий commit |

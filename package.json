@@ -8,6 +8,8 @@
         "hot": "mix watch --hot",
         "production": "mix --production",
         "prod": "mix --production",
+        "test": "vitest run",
+        "test:watch": "vitest",
         "baseline:frontend": "node scripts/modernization/capture-frontend-baseline.mjs",
         "baseline:config": "php scripts/modernization/capture-config-inventory.php",
         "baseline:config:validate": "php scripts/modernization/validate-config-migration-matrix.php",
@@ -55,6 +57,7 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.52.1",
         "sass-loader": "^12.6.0",
+        "vitest": "5.0.0",
         "vue-template-compiler": "^2.6.14",
         "webpack": "^5.76.0"
     },
