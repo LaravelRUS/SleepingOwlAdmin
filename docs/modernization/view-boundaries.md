@@ -47,3 +47,13 @@ The current compatibility implementation is explicitly identified as `legacy-adm
 - transitional source tree: `resources/assets`, to be split into core/features/themes during the asset-bundle stage.
 
 The physical view move does not change logical view names, template config, published override priority or public asset URLs. Moving or rebuilding the legacy asset tree is deliberately deferred until versioned manifests and independent bundles exist, so this extraction does not create a half-migrated runtime.
+
+## Executable dependency guards
+
+`ThemeDependencyBoundaryTest` protects the direction of dependencies in all server-side layers:
+
+- PHP outside concrete theme directories cannot reference `AdminLte`, `Tailwind` or `Legacy` theme subnamespaces;
+- shared and feature Blade roots cannot refer to physical theme paths;
+- frontend core module specifiers cannot point into `features` or `themes`.
+
+The modern frontend ESLint config repeats the `core → features/themes` restriction through `no-restricted-imports`, so a new JavaScript violation fails at lint time before the wider PHPUnit architecture gate. Theme selection remains data-driven through `sleeping_owl.template`; adding a theme does not authorize a core import of its implementation.

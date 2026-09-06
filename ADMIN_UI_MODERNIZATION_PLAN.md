@@ -3,8 +3,8 @@
 ## Статус и границы
 
 - Статус: выполняется.
-- Текущий этап: **Этап 2 — headless core и theme contract**.
-- Точка возобновления: запретить core imports из каталогов конкретной темы автоматической проверкой.
+- Текущий этап: **Этап 3 — минимальный native frontend foundation**.
+- Точка возобновления: разделить сборку на `admin-core.js`, `admin-core.css`, feature chunks и независимые theme bundles.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -526,7 +526,7 @@ No-build consumer contract является release-blocking:
 - [x] Определить theme asset manifest и capability API: tabs, tooltip, dropdown, modal, notification, icons и table presentation.
 - [x] Сохранить `sleeping_owl.template` как selector реализации темы и передать theme-owned config values без переименования.
 - [x] Проверить `body_default_class`, logo/favicon/menu/footer/version/show_mode и layout card flags в legacy и новых темах.
-- [ ] Запретить core imports из каталогов конкретной темы автоматической проверкой.
+- [x] Запретить core imports из каталогов конкретной темы автоматической проверкой.
 
 Критерий завершения: PHP core не генерирует framework-specific classes, а текущий UI продолжает работать через изолированную legacy theme.
 
@@ -947,3 +947,5 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 2 / theme metadata | Зафиксированы логические theme manifest ids `theme:<id>`/`feature:<id>:theme:<id>` без физических путей, семь типизированных presentation capabilities и безопасный registry theme-owned icon tokens. Legacy adapter валидирует metadata, а extracted theme объявляет собственный logical entry и capabilities; границы и custom-theme пример описаны в `docs/modernization/theme-contract.md`. Полный PHP gate с PDO SQLite: 383 tests, 1395 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / theme selector | Существующий `sleeping_owl.template` выбирает как legacy `TemplateInterface`, так и прямой custom `ThemeInterface`; узкий resolver создаёт парный transitional adapter без смены config key и без fallback к AdminLTE для неверного класса. `ThemeConfiguration` передаёт 14 существующих theme-owned keys и planned sidebar color под исходными именами/типами, а template renderer предоставляет theme/config выбранным views. Полный PHP gate с PDO SQLite: 387 tests, 1413 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / theme config rendering | Legacy render contract проверяет body/favicon/brand/menu/footer/version/mode visibility и обе стороны трёх card flags на фактической разметке/view modes; direct custom theme потребляет тот же полный `ThemeConfiguration` без переименования, включая nullable/planned sidebar value. Полный PHP gate с PDO SQLite: 391 test, 1448 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 2 / dependency guards | PHPUnit запрещает PHP core references на concrete AdminLTE/Tailwind/Legacy namespaces, физические theme paths из shared/feature Blade и frontend core imports из features/themes; self-check доказывает, что patterns ловят каждый тип нарушения. ESLint дублирует JS boundary через `no-restricted-imports`. Полный PHP gate с PDO SQLite: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 2 / завершение | Headless PHP boundary, extracted legacy theme, stable direct attribute API, cross-theme rendering, metadata/config contracts, selector adapters и dependency guards зафиксированы; текущий AdminLTE 3 UI остаётся рабочим через isolated legacy theme. Точка возобновления перенесена на независимые core/feature/theme bundles этапа 3 | текущий commit |

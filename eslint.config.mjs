@@ -30,4 +30,21 @@ export default [
             'no-undef': 'error',
         },
     },
+    {
+        files: ['resources/frontend/core/**/*.js'],
+        rules: {
+            'no-restricted-imports': [
+                'error',
+                {
+                    patterns: [
+                        {
+                            group: ['**/features/**', '**/themes/**'],
+                            message:
+                                'Frontend core cannot import feature or theme implementations.',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
 ]
