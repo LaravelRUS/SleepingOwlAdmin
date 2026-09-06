@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="alert-token" />
+        <title>Alert browser fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                template: { asset_dir: 'default' },
+                wysiwyg: {},
+            }
+        </script>
+    </head>
+    <body>
+        <main>
+            <div id="static-alert" class="alert alert-success fade show" role="alert">
+                Saved
+                <button id="static-close" type="button" data-dismiss="alert">Close</button>
+            </div>
+            <div id="protected-alert" class="alert alert-warning show" role="alert">
+                Protected
+                <button id="protected-close" type="button" data-dismiss="alert">Close</button>
+            </div>
+            <div id="target-alert" class="alert alert-info show" role="alert">Targeted</div>
+            <button
+                id="target-close"
+                type="button"
+                data-dismiss="alert"
+                data-target="#target-alert"
+            >
+                Close targeted alert
+            </button>
+            <div id="dynamic-host"></div>
+        </main>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__alertEvents = []
+            ;['alert:close', 'close.bs.alert', 'alert:closed', 'closed.bs.alert'].forEach(
+                (name) => {
+                    document.addEventListener(name, (event) => {
+                        window.__alertEvents.push({ id: event.target.id, name })
+                    })
+                },
+            )
+            ;['alert:closed', 'closed.bs.alert'].forEach((name) => {
+                document.querySelector('#static-alert').addEventListener(name, (event) => {
+                    window.__alertEvents.push({ id: event.target.id, name })
+                })
+            })
+            document.querySelector('#protected-alert').addEventListener('alert:close', (event) => {
+                event.preventDefault()
+            })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+    </body>
+</html>

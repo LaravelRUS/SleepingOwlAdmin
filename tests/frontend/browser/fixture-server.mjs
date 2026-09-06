@@ -9,6 +9,8 @@ const origin = 'http://127.0.0.1:4173'
 const staticRoutes = new Map([
     ['/', [join(browserDirectory, 'island-props.html'), 'text/html; charset=utf-8']],
     ['/admin-core', [join(browserDirectory, 'admin-core.html'), 'text/html; charset=utf-8']],
+    ['/alerts', [join(browserDirectory, 'alerts.html'), 'text/html; charset=utf-8']],
+    ['/alerts-modern', [join(browserDirectory, 'alerts-modern.html'), 'text/html; charset=utf-8']],
     [
         '/island-props-csp',
         [join(browserDirectory, 'island-props-csp.html'), 'text/html; charset=utf-8'],
@@ -103,6 +105,10 @@ const staticRoutes = new Map([
     [
         '/public/default/js/admin-core.js',
         [join(projectRoot, 'public', 'default', 'js', 'admin-core.js'), 'text/javascript'],
+    ],
+    [
+        '/public/default/js/features/alert.js',
+        [join(projectRoot, 'public', 'default', 'js', 'features', 'alert.js'), 'text/javascript'],
     ],
     [
         '/public/default/js/features/tabs.js',

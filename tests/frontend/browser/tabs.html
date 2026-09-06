@@ -88,8 +88,6 @@
             ;['bootstrap::tab::hidden', 'bootstrap::tab::shown'].forEach((name) => {
                 Admin.Events.on(name, (id) => window.__bootstrapTabEvents.push({ id, name }))
             })
-            window.__jqueryTabEvents = 0
-            window.jQuery(document).on('shown.bs.tab', () => window.__jqueryTabEvents++)
         </script>
         <script src="/public/default/js/modules.js"></script>
     </body>

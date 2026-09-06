@@ -20,6 +20,16 @@
                         }
                     ]
                 },
+                "feature:alert": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/alert.js",
+                            "version": "aef8525b3eb06fc39d0e20709e2bb52d",
+                            "checksum": "sha256:b4b5e8dd6924b9ded06f27e25d3a43235355e2edb7bec16fb735a1a1a9a1beaa"
+                        }
+                    ],
+                    "styles": []
+                },
                 "feature:dropdown": {
                     "scripts": [
                         {
@@ -334,6 +344,16 @@
                         }
                     ]
                 },
+                "feature:alert": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/alert.js",
+                            "version": "59b3350fff052d99d4b52dc7960d5cca",
+                            "checksum": "sha256:0ab8e779782ad743abc068becffefb0f441f3c0f1fa812bf8246e611667cb425"
+                        }
+                    ],
+                    "styles": []
+                },
                 "feature:dropdown": {
                     "scripts": [
                         {
@@ -631,5 +651,5 @@
             }
         }
     },
-    "build_id": "sha256:5888e43285d8e5c3cf38d2f901923c62edb3f221efdeecc38da79e450c72db6e"
+    "build_id": "sha256:b410b01b4f27c4d02f2abd16a95854fa4c9cfe997d0b7f55a71d6c820dff62b2"
 }

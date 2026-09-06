@@ -20,7 +20,7 @@ test('restores and persists legacy tab state through the native controller', asy
             page.evaluate(() => JSON.parse(globalThis.localStorage.getItem('Tabbed_/tabs'))),
         )
         .toEqual({ 0: 'overview-panel', 1: 'first-keyboard-panel' })
-    expect(await page.evaluate(() => globalThis.__jqueryTabEvents)).toBe(0)
+    expect(await page.evaluate(() => globalThis.jQuery)).toBeUndefined()
 })
 
 test('publishes native and compatibility events without Bootstrap tab execution', async ({
@@ -37,7 +37,7 @@ test('publishes native and compatibility events without Bootstrap tab execution'
         { id: 'overview-panel', name: 'bootstrap::tab::hidden' },
         { id: 'details-panel', name: 'bootstrap::tab::shown' },
     ])
-    expect(await page.evaluate(() => globalThis.__jqueryTabEvents)).toBe(0)
+    expect(await page.evaluate(() => globalThis.jQuery)).toBeUndefined()
 })
 
 test('keyboard navigation skips disabled tabs and wraps inside its tablist', async ({ page }) => {

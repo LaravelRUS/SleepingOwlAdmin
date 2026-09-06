@@ -38,7 +38,6 @@ const qualityRules = {
 }
 
 const legacyRuntimeGlobals = {
-    $: 'readonly',
     _: 'readonly',
     Admin: 'readonly',
     atob: 'readonly',
@@ -53,7 +52,6 @@ const legacyRuntimeGlobals = {
     FormData: 'readonly',
     globalThis: 'readonly',
     Image: 'readonly',
-    jQuery: 'readonly',
     lazyload: 'readonly',
     localStorage: 'readonly',
     location: 'readonly',

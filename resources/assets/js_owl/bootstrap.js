@@ -14,8 +14,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //
 // window.Trix = require('trix');
 
-require('./libs/jquery');
-require('./libs/bootstrap');
 require('./libs/i18next');
 
 require('./libs/dropzone');
@@ -37,6 +35,7 @@ window.Admin.Modules = require('./components/modules');
 
 window.Admin.WYSIWYG = require('./components/wysiwyg');
 
+require('./admin/alert');
 require('./admin/tooltip');
 require('./admin/dropdown');
 require('./admin/sidebar');

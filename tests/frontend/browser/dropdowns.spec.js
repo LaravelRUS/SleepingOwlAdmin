@@ -55,7 +55,7 @@ test('keeps one menu open and honors cancelable lifecycle events', async ({ page
 
     await expect(page.locator('#native-menu')).toBeHidden()
     await expect(page.locator('#legacy-menu')).toBeVisible()
-    expect(await page.evaluate(() => globalThis.__jqueryDropdownEvents)).toBe(0)
+    expect(await page.evaluate(() => globalThis.jQuery)).toBeUndefined()
 
     await page.evaluate(() => {
         globalThis.document
@@ -81,7 +81,7 @@ test('handles dynamically inserted legacy markup without Bootstrap dropdown exec
 
     await page.locator('#dynamic-toggle').click()
     await expect(page.locator('#dynamic-menu')).toBeVisible()
-    expect(await page.evaluate(() => globalThis.__jqueryDropdownEvents)).toBe(0)
+    expect(await page.evaluate(() => globalThis.jQuery)).toBeUndefined()
 })
 
 test('precompiled feature entry boots on the headless core without jQuery', async ({ page }) => {

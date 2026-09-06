@@ -72,6 +72,13 @@ describe('frontend build entries', () => {
     })
 })
 
+describe('behavior-only entries', () => {
+    it('keeps alerts free of a generic presentation stylesheet', () => {
+        expect(modernEntry('feature:alert', 'scripts')).toBeDefined()
+        expect(modernEntry('feature:alert', 'styles')).toBeUndefined()
+    })
+})
+
 describe('frontend build entry files', () => {
     it('uses existing sources and unique output paths', () => {
         const configured = allEntries()

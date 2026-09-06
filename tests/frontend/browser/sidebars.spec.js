@@ -21,8 +21,7 @@ test('keeps legacy markers while native state persists without AdminLTE executio
     expect(await page.evaluate(() => globalThis.localStorage.getItem('sidebar-state'))).toBe(
         'sidebar-collapse',
     )
-    expect(await page.evaluate(() => globalThis.jQuery.fn.PushMenu)).toBeUndefined()
-    expect(await page.evaluate(() => globalThis.jQuery.fn.Treeview)).toBeUndefined()
+    expect(await page.evaluate(() => globalThis.jQuery)).toBeUndefined()
     expect(await page.evaluate(() => globalThis.__sidebarEvents.slice(0, 2))).toEqual([
         'sidebar:collapsed',
         'collapsed.lte.pushmenu',

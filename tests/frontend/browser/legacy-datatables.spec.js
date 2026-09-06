@@ -180,24 +180,27 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
     await page.locator('#draw-tooltip-1').hover()
     await expect(page.locator('[role="tooltip"]')).toHaveText('row 1')
-    const runtime = await page.evaluate(() => ({
-        bootstrapTooltip: Boolean(globalThis.jQuery('#draw-tooltip-1').data('bs.tooltip')),
-        draws: globalThis.__legacyEvents.filter((event) => event === 'datatables::draw').length,
-        globalDataTable: typeof globalThis.DataTable,
-        responsiveVersion: globalThis.jQuery.fn.dataTable.Responsive.version,
-        tooltip: Boolean(globalThis.document.querySelector('[role="tooltip"]')),
-        version: globalThis.jQuery.fn.dataTable.version,
-        wrapperClass: globalThis.document.querySelector('#legacy-table_wrapper').className,
-    }))
+    const runtime = await page.evaluate(() => {
+        const table = globalThis.document.querySelector('#legacy-table')
+        const adapter = globalThis.Admin.Tables.get(table)
+
+        return {
+            draws: globalThis.__legacyEvents.filter((event) => event === 'datatables::draw').length,
+            globalDataTable: typeof globalThis.DataTable,
+            jquery: typeof globalThis.jQuery,
+            responsive: Boolean(adapter.engineInstance.responsive),
+            tooltip: Boolean(globalThis.document.querySelector('[role="tooltip"]')),
+            wrapperClass: globalThis.document.querySelector('#legacy-table_wrapper').className,
+        }
+    })
     const requests = await recordedRequests(request, 'datatable')
 
     expect(runtime).toMatchObject({
-        bootstrapTooltip: false,
         draws: 1,
         globalDataTable: 'undefined',
-        responsiveVersion: '3.0.8',
+        jquery: 'undefined',
+        responsive: true,
         tooltip: true,
-        version: '2.3.8',
         wrapperClass: expect.stringContaining('dt-bootstrap4'),
     })
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('loading', 'lazy')
@@ -377,10 +380,9 @@ test('DataTables state restores ordering and pagination after reload', async ({
     await openFixture(page)
     const response = page.waitForResponse((item) => item.url().endsWith('/api/datatables'))
     await page.evaluate(() => {
-        globalThis
-            .jQuery('#legacy-table')
-            .DataTable()
-            .order([[3, 'desc']])
+        const table = globalThis.document.querySelector('#legacy-table')
+        globalThis.Admin.Tables.get(table)
+            .engineInstance.order([[3, 'desc']])
             .page(1)
             .draw(false)
     })
@@ -487,7 +489,10 @@ test('inline edit posts its value and is rebound after a draw', async ({ page, r
     const edit = latest(await recordedRequests(request, 'inline-edit')).parameters
     expect(edit).toMatchObject({ name: 'status', pk: '1', value: 'Published' })
     const drawResponse = page.waitForResponse((item) => item.url().endsWith('/api/datatables'))
-    await page.evaluate(() => globalThis.jQuery('#legacy-table').DataTable().draw(false))
+    await page.evaluate(() => {
+        const table = globalThis.document.querySelector('#legacy-table')
+        globalThis.Admin.Tables.get(table).engineInstance.draw(false)
+    })
     await drawResponse
     expect(
         await page.evaluate(() =>
@@ -499,7 +504,7 @@ test('inline edit posts its value and is rebound after a draw', async ({ page, r
             ),
         ),
     ).toBe(true)
-    expect(await page.evaluate(() => globalThis.jQuery?.fn?.editable)).toBeUndefined()
+    expect(await page.evaluate(() => globalThis.jQuery)).toBeUndefined()
 })
 
 test('auto-update redraws the table and its close control stops the timer', async ({

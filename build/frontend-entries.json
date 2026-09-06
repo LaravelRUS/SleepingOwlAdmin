@@ -37,6 +37,11 @@
                 "output": "js/admin-core.js"
             },
             {
+                "logicalId": "feature:alert",
+                "source": "resources/frontend/features/alert/browser.js",
+                "output": "js/features/alert.js"
+            },
+            {
                 "logicalId": "feature:dropdown",
                 "source": "resources/frontend/features/dropdown/browser.js",
                 "output": "js/features/dropdown.js"
