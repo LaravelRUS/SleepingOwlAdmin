@@ -77,9 +77,19 @@ final class Asset
         return $this->handle;
     }
 
+    public function getHandle(): string
+    {
+        return $this->handle();
+    }
+
     public function source(): string
     {
         return $this->source;
+    }
+
+    public function getSrc(): string
+    {
+        return $this->source();
     }
 
     /**
@@ -90,9 +100,29 @@ final class Asset
         return $this->dependencies;
     }
 
+    /**
+     * @return list<string>
+     */
+    public function getDependency(): array
+    {
+        return $this->dependencies();
+    }
+
+    public function hasDependency(?string $dependency = null): bool
+    {
+        return $dependency === null
+            ? $this->dependencies !== []
+            : in_array($dependency, $this->dependencies, true);
+    }
+
     public function footer(): bool
     {
         return $this->footer;
+    }
+
+    public function isFooter(): bool
+    {
+        return $this->footer();
     }
 
     /**
@@ -101,6 +131,14 @@ final class Asset
     public function attributes(): array
     {
         return $this->attributes;
+    }
+
+    /**
+     * @return array<int|string, mixed>
+     */
+    public function getAttributes(): array
+    {
+        return $this->attributes();
     }
 
     public function isScript(): bool

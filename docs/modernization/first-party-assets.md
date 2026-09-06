@@ -21,4 +21,8 @@ Manifest classes остаются отдельной подсистемой. `As
 - CSS получает прежние defaults `media=all`, `type=text/css`, `rel=stylesheet` при render;
 - scripts из head и footer сортируются независимо.
 
-Этот foundation пока не меняет container bindings и публичные facades. Перевод `Templates\Assets`, `Templates\Meta`, trait `Assets`, providers и stubs выполняется следующим отдельным migration-пунктом и использует эти классы через композицию.
+## Public adapters
+
+`Templates\Assets` и `Templates\Meta` используют foundation через композицию и сохраняют узкие `AssetsInterface`/`MetaInterface`. Container keys `assets`, `assets.packages` и `sleeping_owl.meta` оставлены для совместимости, но теперь указывают только на first-party services. Facades находятся в `SleepingOwl\Admin\Facades`; installation stub импортирует их явно и не зависит от опубликованного списка aliases.
+
+Legacy aliases из старого опубликованного config пока нормализуются отдельным следующим пунктом. Поэтому Composer dependency удаляется только после config compatibility fixture и проверки, что `src`, resources и stubs больше не загружают `KodiCMS\Assets`.

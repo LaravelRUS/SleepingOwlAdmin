@@ -2,7 +2,7 @@
 
 namespace SleepingOwl\Admin\Assets;
 
-final class AssetPackageRegistry
+class AssetPackageRegistry
 {
     /** @var array<string, AssetPackage> */
     private array $packages = [];

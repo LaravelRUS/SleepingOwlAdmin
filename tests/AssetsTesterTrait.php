@@ -2,16 +2,21 @@
 
 namespace SleepingOwl\Tests;
 
+use SleepingOwl\Admin\Assets\AssetPackage;
+use SleepingOwl\Admin\Facades\PackageManager;
+
 trait AssetsTesterTrait
 {
     public function packageIncluded()
     {
-        \KodiCMS\Assets\Facades\PackageManager::shouldReceive('load')->once();
-        \KodiCMS\Assets\Facades\PackageManager::shouldReceive('add')->once();
+        PackageManager::shouldReceive('load')->once()->andReturnNull();
+        PackageManager::shouldReceive('add')->once()->andReturn(
+            AssetPackage::create('test-package')
+        );
     }
 
     public function packageInitialized()
     {
-        //\KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
+        //\SleepingOwl\Admin\Facades\Meta::shouldReceive('loadPackage')->once();
     }
 }

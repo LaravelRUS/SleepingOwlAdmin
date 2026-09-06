@@ -4,6 +4,7 @@ namespace SleepingOwl\Admin\Wysiwyg;
 
 use Illuminate\Config\Repository;
 use Illuminate\Support\Str;
+use SleepingOwl\Admin\Assets\AssetPackage;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygEditorInterface;
 use SleepingOwl\Admin\Contracts\Wysiwyg\WysiwygFilterInterface;
 
@@ -35,9 +36,9 @@ final class Editor implements WysiwygEditorInterface
     private $used = false;
 
     /**
-     * @var \KodiCMS\Assets\Package
+     * @var AssetPackage
      */
-    private $package;
+    private AssetPackage $package;
 
     /**
      * @param  string  $id
@@ -80,7 +81,7 @@ final class Editor implements WysiwygEditorInterface
     }
 
     /**
-     * @return \KodiCMS\Assets\Package
+     * @return AssetPackage
      */
     public function getPackage()
     {

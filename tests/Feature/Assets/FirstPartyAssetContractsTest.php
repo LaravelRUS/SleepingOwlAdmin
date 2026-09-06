@@ -1,9 +1,16 @@
 <?php
 
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
+use SleepingOwl\Admin\Assets\AssetPackageRegistry;
 use SleepingOwl\Admin\Assets\AssetProfileSelector;
+use SleepingOwl\Admin\Assets\AssetRegistry;
+use SleepingOwl\Admin\Assets\AssetRenderer;
+use SleepingOwl\Admin\Assets\MetaRenderer;
 use SleepingOwl\Admin\Contracts\Template\AssetsInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
+use SleepingOwl\Admin\Facades\Assets as AssetsFacade;
+use SleepingOwl\Admin\Facades\Meta as MetaFacade;
+use SleepingOwl\Admin\Facades\PackageManager as PackageManagerFacade;
 
 class FirstPartyAssetContractsTest extends TestCase
 {
@@ -46,6 +53,9 @@ class FirstPartyAssetContractsTest extends TestCase
     {
         $this->assertTrue($this->app->bound(AssetManifestResolver::class));
         $this->assertTrue($this->app->bound(AssetProfileSelector::class));
+        $this->assertTrue($this->app->bound(AssetRegistry::class));
+        $this->assertTrue($this->app->bound(AssetRenderer::class));
+        $this->assertTrue($this->app->bound(MetaRenderer::class));
         $this->assertSame(
             $this->app->make('assets'),
             $this->app->make(AssetsInterface::class)
@@ -53,6 +63,20 @@ class FirstPartyAssetContractsTest extends TestCase
         $this->assertSame(
             $this->app->make('sleeping_owl.meta'),
             $this->app->make(MetaInterface::class)
+        );
+        $this->assertSame(
+            $this->app->make('assets.packages'),
+            $this->app->make(AssetPackageRegistry::class)
+        );
+    }
+
+    public function test_first_party_facades_resolve_shared_services(): void
+    {
+        $this->assertSame($this->app->make('assets'), AssetsFacade::getFacadeRoot());
+        $this->assertSame($this->app->make('sleeping_owl.meta'), MetaFacade::getFacadeRoot());
+        $this->assertSame(
+            $this->app->make('assets.packages'),
+            PackageManagerFacade::getFacadeRoot()
         );
     }
 

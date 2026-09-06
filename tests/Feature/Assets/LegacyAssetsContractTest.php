@@ -1,7 +1,10 @@
 <?php
 
-use KodiCMS\Assets\Package;
-use KodiCMS\Assets\PackageManager;
+use SleepingOwl\Admin\Assets\AssetDependencySorter;
+use SleepingOwl\Admin\Assets\AssetPackage as Package;
+use SleepingOwl\Admin\Assets\AssetPackageRegistry as PackageManager;
+use SleepingOwl\Admin\Assets\AssetRegistry;
+use SleepingOwl\Admin\Assets\AssetRenderer;
 use SleepingOwl\Admin\Templates\Assets;
 use SleepingOwl\Admin\Templates\Meta;
 
@@ -67,7 +70,7 @@ class LegacyAssetsContractTest extends TestCase
     public function test_duplicate_asset_and_package_handles_use_the_latest_registration(): void
     {
         $manager = new PackageManager();
-        $assets = new Assets($manager);
+        $assets = $this->freshAssets($manager);
 
         $assets->addJs('duplicate-js', 'contract/first.js');
         $assets->addJs('duplicate-js', 'contract/second.js');
@@ -88,7 +91,7 @@ class LegacyAssetsContractTest extends TestCase
     public function test_packages_load_dependencies_and_contribute_ordered_assets(): void
     {
         $manager = new PackageManager();
-        $assets = new Assets($manager);
+        $assets = $this->freshAssets($manager);
 
         $manager->add('contract-core')
             ->js(null, 'contract/package-core.js', null, false)
@@ -155,9 +158,13 @@ class LegacyAssetsContractTest extends TestCase
         );
     }
 
-    private function freshAssets(): Assets
+    private function freshAssets(?PackageManager $manager = null): Assets
     {
-        return new Assets(new PackageManager());
+        return new Assets(
+            $manager ?? new PackageManager(),
+            new AssetRegistry(new AssetDependencySorter()),
+            $this->app->make(AssetRenderer::class)
+        );
     }
 
     private function assertJavascriptPlacement(Assets $assets): void

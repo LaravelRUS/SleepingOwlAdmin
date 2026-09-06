@@ -24,7 +24,7 @@ class FormElementTest extends TestCase
      */
     public function test_initializable()
     {
-        //\KodiCMS\Assets\Facades\Meta::shouldReceive('loadPackage')->once();
+        //\SleepingOwl\Admin\Facades\Meta::shouldReceive('loadPackage')->once();
 
         $this->assertNull(
             $this->getElement()->initialize()

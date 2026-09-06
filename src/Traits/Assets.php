@@ -2,14 +2,15 @@
 
 namespace SleepingOwl\Admin\Traits;
 
-use KodiCMS\Assets\Facades\PackageManager;
+use SleepingOwl\Admin\Assets\AssetPackage;
+use SleepingOwl\Admin\Facades\PackageManager;
 
 trait Assets
 {
     /**
-     * @var \KodiCMS\Assets\Package
+     * @var AssetPackage
      */
-    protected $package;
+    protected ?AssetPackage $package = null;
 
     /**
      * @param  string  $handle
@@ -40,7 +41,7 @@ trait Assets
             $handle = $style;
         }
 
-        $this->package->css($handle, $style, $attributes);
+        $this->package->css($handle, $style, null, $attributes);
 
         return $this;
     }

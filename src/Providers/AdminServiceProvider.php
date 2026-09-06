@@ -10,9 +10,15 @@ use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
+use SleepingOwl\Admin\Assets\AssetDependencySorter;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
+use SleepingOwl\Admin\Assets\AssetPackageRegistry;
 use SleepingOwl\Admin\Assets\AssetProfileSelector;
+use SleepingOwl\Admin\Assets\AssetRegistry;
+use SleepingOwl\Admin\Assets\AssetRenderer;
+use SleepingOwl\Admin\Assets\HtmlAttributes;
+use SleepingOwl\Admin\Assets\MetaRenderer;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
@@ -85,19 +91,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerTemplate(): void
     {
-        $this->app->singleton('assets.packages', function ($app) {
-            return new \KodiCMS\Assets\PackageManager();
-        });
-
-        $this->app->singleton('assets', function ($app) {
-            return new Assets($app['assets.packages']);
-        });
-
-        $this->app->singleton('sleeping_owl.meta', function ($app) {
-            return new Meta(
-                $app['assets']
-            );
-        });
+        $this->registerAssetServices();
 
         $this->app->singleton('sleeping_owl.theme.config', function (Application $app) {
             return new ThemeConfiguration($app['config']);
@@ -145,6 +139,44 @@ class AdminServiceProvider extends ServiceProvider
         if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
             include $assetsFile;
         }
+    }
+
+    protected function registerAssetServices(): void
+    {
+        $this->app->singleton(AssetDependencySorter::class);
+        $this->app->singleton(HtmlAttributes::class);
+        $this->app->singleton(AssetPackageRegistry::class);
+        $this->app->alias(AssetPackageRegistry::class, 'assets.packages');
+
+        $this->app->singleton(AssetRegistry::class, function (Application $app) {
+            return new AssetRegistry($app->make(AssetDependencySorter::class));
+        });
+
+        $this->app->singleton(AssetRenderer::class, function (Application $app) {
+            return new AssetRenderer(
+                $app->make(UrlGenerator::class),
+                $app->make(HtmlAttributes::class)
+            );
+        });
+
+        $this->app->singleton(MetaRenderer::class, function (Application $app) {
+            return new MetaRenderer($app->make(HtmlAttributes::class));
+        });
+
+        $this->app->singleton('assets', function (Application $app) {
+            return new Assets(
+                $app->make(AssetPackageRegistry::class),
+                $app->make(AssetRegistry::class),
+                $app->make(AssetRenderer::class)
+            );
+        });
+
+        $this->app->singleton('sleeping_owl.meta', function (Application $app) {
+            return new Meta(
+                $app['assets'],
+                $app->make(MetaRenderer::class)
+            );
+        });
     }
 
     /**
