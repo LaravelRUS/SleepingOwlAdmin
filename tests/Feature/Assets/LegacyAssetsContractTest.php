@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\HtmlString;
 use SleepingOwl\Admin\Assets\AssetDependencySorter;
 use SleepingOwl\Admin\Assets\AssetPackage as Package;
 use SleepingOwl\Admin\Assets\AssetPackageRegistry as PackageManager;
@@ -65,6 +66,17 @@ class LegacyAssetsContractTest extends TestCase
         $this->assertStringContainsString('media="all"', $rendered);
         $this->assertStringContainsString('data-theme="admin&amp;lte"', $rendered);
         $this->assertAppearsBefore('contract/base.css', 'contract/theme.css', $rendered);
+    }
+
+    public function test_stringable_sources_are_normalized_before_registration(): void
+    {
+        $assets = $this->freshAssets();
+
+        $script = $assets->addJs('mix-script', new HtmlString('contract/mix.js'));
+        $style = $assets->addCss('mix-style', new HtmlString('contract/mix.css'));
+
+        $this->assertSame('contract/mix.js', $script->source());
+        $this->assertSame('contract/mix.css', $style->source());
     }
 
     public function test_duplicate_asset_and_package_handles_use_the_latest_registration(): void

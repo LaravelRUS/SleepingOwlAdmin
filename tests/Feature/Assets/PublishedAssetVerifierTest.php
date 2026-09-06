@@ -66,6 +66,16 @@ class PublishedAssetVerifierTest extends TestCase
         $this->verifier()->verify($this->assetRoot);
     }
 
+    public function test_it_accepts_a_manifest_from_another_development_branch(): void
+    {
+        $path = $this->assetRoot.'/asset-manifest.json';
+        $manifest = json_decode($this->files()->get($path), true, 512, JSON_THROW_ON_ERROR);
+        $manifest['package_version'] = 'dev-feature-branch';
+        $this->files()->put($path, json_encode($manifest, JSON_THROW_ON_ERROR));
+
+        $this->assertSame('production', $this->verifier()->verify($this->assetRoot)->profile());
+    }
+
     private function verifier(): PublishedAssetVerifier
     {
         return $this->app->make(PublishedAssetVerifier::class);

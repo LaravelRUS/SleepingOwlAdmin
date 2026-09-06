@@ -40,7 +40,7 @@ final class PublishedAssetVerifier
         $installed = $this->normalizeVersion($current);
         $published = $this->normalizeVersion($manifest->packageVersion());
 
-        if ($installed !== $published) {
+        if (! $this->versionsMatch($installed, $published)) {
             throw $this->failure(
                 "manifest version [{$manifest->packageVersion()}] does not match installed version "
                 ."[{$current}]"
@@ -92,6 +92,12 @@ final class PublishedAssetVerifier
     private function normalizeVersion(string $version): string
     {
         return ltrim(trim($version), 'v');
+    }
+
+    private function versionsMatch(string $installed, string $published): bool
+    {
+        return $installed === $published
+            || (str_starts_with($installed, 'dev-') && str_starts_with($published, 'dev-'));
     }
 
     private function failure(
