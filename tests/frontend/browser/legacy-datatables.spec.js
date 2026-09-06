@@ -148,7 +148,6 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
     const runtime = await page.evaluate(() => ({
         draws: globalThis.__legacyEvents.filter((event) => event === 'datatables::draw').length,
         globalDataTable: typeof globalThis.DataTable,
-        lazyloadCalls: globalThis.__lazyloadCalls,
         responsiveVersion: globalThis.jQuery.fn.dataTable.Responsive.version,
         tooltip: Boolean(globalThis.jQuery('#draw-tooltip-1').data('bs.tooltip')),
         version: globalThis.jQuery.fn.dataTable.version,
@@ -164,7 +163,7 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
         version: '2.3.8',
         wrapperClass: expect.stringContaining('dt-bootstrap4'),
     })
-    expect(runtime.lazyloadCalls).toBeGreaterThan(0)
+    await expect(page.locator('#lazy-image-1')).toHaveAttribute('loading', 'lazy')
     expect(requests[0].method).toBe('POST')
     expect(requests[0].parameters['payload[fixture]']).toBe('legacy')
     expect(pageErrors).toEqual([])

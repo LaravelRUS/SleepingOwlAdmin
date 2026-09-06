@@ -4385,74 +4385,15 @@ Admin.Modules.register('display.columns.control', function () {
 /*!**********************************************************************!*\
   !*** ./resources/assets/js_owl/admin/display/columns/inline_edit.js ***!
   \**********************************************************************/
-/***/ (() => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+var _require = __webpack_require__(/*! ../../../../../frontend/features/table/themes/legacy-adminlte/inline-editor */ "./resources/frontend/features/table/themes/legacy-adminlte/inline-editor.js"),
+  createLegacyInlineEditor = _require.createLegacyInlineEditor;
+var inlineEditor = createLegacyInlineEditor();
 Admin.Modules.register('display.columns.inline-edit', function () {
-  //AdminColumnEditable
-
-  $('.inline-editable').editable({
-    success: function success(response, newValue) {
-      if (response.status !== 'true' && response.status !== true) {
-        return response.reason || trans('lang.table.error');
-      } else if (response.newValue !== undefined) {
-        return {
-          newValue: response.newValue
-        };
-      }
-    },
-    error: function error(response, newValue) {
-      if (response.status === 500) {
-        return trans('lang.table.error');
-      } else {
-        return response.responseText;
-      }
-    }
-  });
-  $('.dt-editable, .dat-editable').editable({
-    onblur: 'ignore',
-    error: function error(response, newValue) {
-      if (response.status === 500) {
-        return trans('lang.table.error');
-      } else {
-        return response.responseText;
-      }
-    }
-  });
-  $('.dt-editable').on('shown', function (e, editable) {
-    $('.datatime-editable').datetimepicker({
-      locale: Admin.locale,
-      format: Admin.Config.get('datetime_format'),
-      icons: {
-        time: "fas fa-clock",
-        date: "far fa-calendar-alt",
-        up: "fas fa-arrow-up",
-        down: "fas fa-arrow-down",
-        previous: 'fas fa-arrow-left',
-        next: 'fas fa-arrow-right',
-        today: 'fas fa-calendar-week',
-        clear: 'far fa-calendar-times',
-        close: 'fas fa-times'
-      }
-    });
-  });
-  $('.dat-editable').on('shown', function (e, editable) {
-    $('.date-editable').datetimepicker({
-      locale: Admin.locale,
-      format: Admin.Config.get('date_format'),
-      icons: {
-        time: "fas fa-clock",
-        date: "far fa-calendar-alt",
-        up: "fas fa-arrow-up",
-        down: "fas fa-arrow-down",
-        previous: 'fas fa-arrow-left',
-        next: 'fas fa-arrow-right',
-        today: 'fas fa-calendar-week',
-        clear: 'far fa-calendar-times',
-        close: 'fas fa-times'
-      }
-    });
-  });
-}, 0, ['datatables::draw', 'bootstrap::tab::shown']);
+  return inlineEditor.scan(document);
+}, 0, ['bootstrap::tab::shown']);
+module.exports = inlineEditor;
 
 /***/ }),
 
@@ -4505,26 +4446,34 @@ var _require4 = __webpack_require__(/*! ../../../../frontend/features/table/engi
   installDataTables2Extensions = _require4.installDataTables2Extensions;
 var _require5 = __webpack_require__(/*! ../../../../frontend/features/table/themes/legacy-adminlte/filter-events */ "./resources/frontend/features/table/themes/legacy-adminlte/filter-events.js"),
   createLegacyFilterEventBridge = _require5.createLegacyFilterEventBridge;
-var _require6 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-elements */ "./resources/frontend/features/table/filters/filter-elements.js"),
-  forEachColumnFilter = _require6.forEachColumnFilter;
-var _require7 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/table-hooks */ "./resources/frontend/features/table/hooks/table-hooks.js"),
-  applyCreatedRowClass = _require7.applyCreatedRowClass,
-  createDrawHook = _require7.createDrawHook;
-var _require8 = __webpack_require__(/*! ../../../../frontend/features/table/lifecycle/data-table-adapter */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"),
-  mountDataTable = _require8.mountDataTable;
-var _require9 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
-  applyServerOptions = _require9.applyServerOptions,
-  readTableDefinition = _require9.readTableDefinition;
-var _require0 = __webpack_require__(/*! ../../../../frontend/features/table/options/state-options */ "./resources/frontend/features/table/options/state-options.js"),
-  applyTableStateOptions = _require0.applyTableStateOptions;
-var _require1 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
-  clearFilterState = _require1.clearFilterState,
-  filterStateKey = _require1.filterStateKey,
-  loadFilterState = _require1.loadFilterState,
-  migrateLegacyFilterState = _require1.migrateLegacyFilterState,
-  saveFilterState = _require1.saveFilterState;
-var _require10 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
-  createTableAjax = _require10.createTableAjax;
+var _require6 = __webpack_require__(/*! ../../../../frontend/features/table/themes/legacy-adminlte/tooltips */ "./resources/frontend/features/table/themes/legacy-adminlte/tooltips.js"),
+  createLegacyTableTooltips = _require6.createLegacyTableTooltips;
+var _require7 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-elements */ "./resources/frontend/features/table/filters/filter-elements.js"),
+  forEachColumnFilter = _require7.forEachColumnFilter;
+var _require8 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/column-highlight */ "./resources/frontend/features/table/hooks/column-highlight.js"),
+  syncColumnHighlight = _require8.syncColumnHighlight;
+var _require9 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/lazy-images */ "./resources/frontend/features/table/hooks/lazy-images.js"),
+  loadLazyImages = _require9.loadLazyImages;
+var _require0 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/table-hooks */ "./resources/frontend/features/table/hooks/table-hooks.js"),
+  applyCreatedRowClass = _require0.applyCreatedRowClass,
+  createDrawHook = _require0.createDrawHook;
+var _require1 = __webpack_require__(/*! ../../../../frontend/features/table/lifecycle/data-table-adapter */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"),
+  mountDataTable = _require1.mountDataTable;
+var _require10 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
+  applyServerOptions = _require10.applyServerOptions,
+  readTableDefinition = _require10.readTableDefinition;
+var _require11 = __webpack_require__(/*! ../../../../frontend/features/table/options/state-options */ "./resources/frontend/features/table/options/state-options.js"),
+  applyTableStateOptions = _require11.applyTableStateOptions;
+var _require12 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
+  clearFilterState = _require12.clearFilterState,
+  filterStateKey = _require12.filterStateKey,
+  loadFilterState = _require12.loadFilterState,
+  migrateLegacyFilterState = _require12.migrateLegacyFilterState,
+  saveFilterState = _require12.saveFilterState;
+var _require13 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
+  createTableAjax = _require13.createTableAjax;
+var _inlineEditor = __webpack_require__(/*! ./columns/inline_edit */ "./resources/assets/js_owl/admin/display/columns/inline_edit.js");
+var tableTooltips = createLegacyTableTooltips();
 globalThis.checkNumberRange = isNumberInRange;
 globalThis.checkDateRange = isDateInRange;
 globalThis.columnFilters = createTableFilterDrivers(dataTables2Runtime(), createLegacyFilterEventBridge());
@@ -4600,13 +4549,16 @@ function buildOptions(element, definition, stateFilters) {
   options.drawCallback = createDrawHook({
     events: Admin.Events,
     highlight: function highlight(engineContext) {
-      return bindHighlight(element, engineContext);
+      return syncColumnHighlight(element, engineContext.api(), Boolean(Admin.Config.get('datatables_highlight')));
+    },
+    inlineEditor: function inlineEditor() {
+      return _inlineEditor.scan(element);
     },
     lazyload: function lazyload() {
-      return globalThis.lazyload();
+      return loadLazyImages(element);
     },
     tooltips: function tooltips() {
-      return jQuery('[data-toggle="tooltip"]').tooltip();
+      return tableTooltips.scan(element);
     }
   });
   options.createdRow = applyCreatedRowClass;
@@ -4659,23 +4611,6 @@ function matchingContainers(id) {
 }
 function allFilterContainers() {
   return _toConsumableArray(document.querySelectorAll('.display-filters[data-display="DisplayDatatablesAsync"][data-datatables-id]'));
-}
-function bindHighlight(element, engineContext) {
-  if (!Admin.Config.get('datatables_highlight')) {
-    return;
-  }
-  var table = engineContext.api();
-  $(element.tBodies).off('mouseenter.soa-highlight', 'td').on('mouseenter.soa-highlight', 'td', function () {
-    highlightColumn(table, this);
-  });
-}
-function highlightColumn(table, cell) {
-  if (!table.data().any()) {
-    return;
-  }
-  var column = table.cell(cell).index().column;
-  $(table.cells().nodes()).removeClass('highlight');
-  $(table.column(column).nodes()).addClass('highlight');
 }
 
 /***/ }),
@@ -9168,6 +9103,130 @@ function assertRoot(root) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/hooks/column-highlight.js":
+/*!*********************************************************************!*\
+  !*** ./resources/frontend/features/table/hooks/column-highlight.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "highlightColumn": () => (/* binding */ highlightColumn),
+/* harmony export */   "syncColumnHighlight": () => (/* binding */ syncColumnHighlight)
+/* harmony export */ });
+var bindings = new WeakMap();
+function syncColumnHighlight(element, table, enabled) {
+  if (!enabled) {
+    removeColumnHighlight(element);
+    return null;
+  }
+  var current = bindings.get(element);
+  if (current) {
+    current.table = table;
+    return current.destroy;
+  }
+  return bindColumnHighlight(element, table);
+}
+function highlightColumn(table, cell) {
+  var _table$cell$index;
+  if (!table.data().any()) {
+    return;
+  }
+  var index = (_table$cell$index = table.cell(cell).index()) === null || _table$cell$index === void 0 ? void 0 : _table$cell$index.column;
+  if (index === undefined) {
+    return;
+  }
+  Array.from(table.cells().nodes()).forEach(function (node) {
+    return node.classList.remove('highlight');
+  });
+  Array.from(table.column(index).nodes()).forEach(function (node) {
+    return node.classList.add('highlight');
+  });
+}
+function bindColumnHighlight(element, table) {
+  var binding = {
+    destroy: null,
+    table: table
+  };
+  var onMouseOver = function onMouseOver(event) {
+    return handleMouseOver(element, binding.table, event);
+  };
+  binding.destroy = function () {
+    element.removeEventListener('mouseover', onMouseOver);
+    bindings["delete"](element);
+  };
+  element.addEventListener('mouseover', onMouseOver);
+  bindings.set(element, binding);
+  return binding.destroy;
+}
+function removeColumnHighlight(element) {
+  var _bindings$get;
+  (_bindings$get = bindings.get(element)) === null || _bindings$get === void 0 || _bindings$get.destroy();
+}
+function handleMouseOver(element, table, event) {
+  var _event$target$closest, _event$target;
+  var cell = (_event$target$closest = (_event$target = event.target).closest) === null || _event$target$closest === void 0 ? void 0 : _event$target$closest.call(_event$target, 'td');
+  if (!cell || !element.contains(cell) || cell.contains(event.relatedTarget)) {
+    return;
+  }
+  highlightColumn(table, cell);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/hooks/lazy-images.js":
+/*!****************************************************************!*\
+  !*** ./resources/frontend/features/table/hooks/lazy-images.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "loadLazyImage": () => (/* binding */ loadLazyImage),
+/* harmony export */   "loadLazyImages": () => (/* binding */ loadLazyImages)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function loadLazyImages(root) {
+  var images = matchingElements(root, '.lazyload');
+  images.forEach(loadLazyImage);
+  return images.length;
+}
+function loadLazyImage(element) {
+  var _element$tagName;
+  if (((_element$tagName = element.tagName) === null || _element$tagName === void 0 ? void 0 : _element$tagName.toLowerCase()) === 'img') {
+    element.loading = 'lazy';
+    copyAttribute(element, 'data-src', 'src');
+    copyAttribute(element, 'data-srcset', 'srcset');
+    return;
+  }
+  var source = element.getAttribute('data-src');
+  if (source) {
+    element.style.backgroundImage = "url(".concat(JSON.stringify(source), ")");
+  }
+}
+function copyAttribute(element, source, target) {
+  var value = element.getAttribute(source);
+  if (value) {
+    element.setAttribute(target, value);
+  }
+}
+function matchingElements(root, selector) {
+  var elements = _toConsumableArray(root.querySelectorAll(selector));
+  if (typeof root.matches === 'function' && root.matches(selector)) {
+    elements.unshift(root);
+  }
+  return elements;
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/hooks/table-hooks.js":
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/table/hooks/table-hooks.js ***!
@@ -9189,11 +9248,13 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function createDrawHook(_ref) {
   var events = _ref.events,
     highlight = _ref.highlight,
+    inlineEditor = _ref.inlineEditor,
     lazyload = _ref.lazyload,
     tooltips = _ref.tooltips;
-  assertHookDependencies(events, highlight, lazyload, tooltips);
+  assertHookDependencies(events, highlight, inlineEditor, lazyload, tooltips);
   return function drawHook() {
     events.fire('datatables::draw', this);
+    inlineEditor();
     tooltips();
     lazyload();
     highlight(this);
@@ -9880,6 +9941,164 @@ function bindSyntheticChange(input, listener) {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()(input).on('change', function (event) {
     if (!event.originalEvent) listener();
   });
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/themes/legacy-adminlte/inline-editor.js":
+/*!***********************************************************************************!*\
+  !*** ./resources/frontend/features/table/themes/legacy-adminlte/inline-editor.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createLegacyInlineEditor": () => (/* binding */ createLegacyInlineEditor),
+/* harmony export */   "mapInlineEditError": () => (/* binding */ mapInlineEditError),
+/* harmony export */   "mapInlineEditSuccess": () => (/* binding */ mapInlineEditSuccess)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function createLegacyInlineEditor() {
+  var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
+  var jquery = root.jQuery;
+  assertDependencies(jquery);
+  return {
+    scan: function scan() {
+      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : root.document;
+      var standard = unmountedElements(container, '.inline-editable', jquery);
+      var dateTime = unmountedElements(container, '.dt-editable', jquery);
+      var date = unmountedElements(container, '.dat-editable', jquery);
+      mountStandardEditors(standard, jquery, root.trans);
+      mountDateEditors([].concat(_toConsumableArray(dateTime), _toConsumableArray(date)), jquery, root.trans);
+      bindPicker(dateTime, '.datatime-editable', 'datetime_format', jquery, root);
+      bindPicker(date, '.date-editable', 'date_format', jquery, root);
+      return standard.length + dateTime.length + date.length;
+    }
+  };
+}
+function mapInlineEditSuccess(response, translate) {
+  if (response.status !== 'true' && response.status !== true) {
+    return response.reason || translate('lang.table.error');
+  }
+  if (response.newValue !== undefined) {
+    return {
+      newValue: response.newValue
+    };
+  }
+}
+function mapInlineEditError(response, translate) {
+  return response.status === 500 ? translate('lang.table.error') : response.responseText;
+}
+function mountStandardEditors(elements, jquery, translate) {
+  jquery(elements).editable({
+    error: function error(response) {
+      return mapInlineEditError(response, translate);
+    },
+    success: function success(response) {
+      return mapInlineEditSuccess(response, translate);
+    }
+  });
+}
+function mountDateEditors(elements, jquery, translate) {
+  jquery(elements).editable({
+    error: function error(response) {
+      return mapInlineEditError(response, translate);
+    },
+    onblur: 'ignore'
+  });
+}
+function bindPicker(elements, selector, formatKey, jquery, root) {
+  jquery(elements).off('shown.soa-inline-edit').on('shown.soa-inline-edit', function () {
+    jquery(selector).datetimepicker(pickerOptions(root, formatKey));
+  });
+}
+function pickerOptions(root, formatKey) {
+  return {
+    format: root.Admin.Config.get(formatKey),
+    icons: {
+      clear: 'far fa-calendar-times',
+      close: 'fas fa-times',
+      date: 'far fa-calendar-alt',
+      down: 'fas fa-arrow-down',
+      next: 'fas fa-arrow-right',
+      previous: 'fas fa-arrow-left',
+      time: 'fas fa-clock',
+      today: 'fas fa-calendar-week',
+      up: 'fas fa-arrow-up'
+    },
+    locale: root.Admin.locale
+  };
+}
+function unmountedElements(root, selector, jquery) {
+  return matchingElements(root, selector).filter(function (element) {
+    return !jquery(element).data('editable');
+  });
+}
+function matchingElements(root, selector) {
+  var elements = _toConsumableArray(root.querySelectorAll(selector));
+  if (typeof root.matches === 'function' && root.matches(selector)) {
+    elements.unshift(root);
+  }
+  return elements;
+}
+function assertDependencies(jquery) {
+  var _jquery$fn, _jquery$fn2;
+  if (typeof (jquery === null || jquery === void 0 || (_jquery$fn = jquery.fn) === null || _jquery$fn === void 0 ? void 0 : _jquery$fn.editable) !== 'function') {
+    throw new TypeError('The legacy AdminLTE inline editor requires X-editable.');
+  }
+  if (typeof (jquery === null || jquery === void 0 || (_jquery$fn2 = jquery.fn) === null || _jquery$fn2 === void 0 ? void 0 : _jquery$fn2.datetimepicker) !== 'function') {
+    throw new TypeError('The legacy AdminLTE inline editor requires DateTimePicker.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/themes/legacy-adminlte/tooltips.js":
+/*!******************************************************************************!*\
+  !*** ./resources/frontend/features/table/themes/legacy-adminlte/tooltips.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createLegacyTableTooltips": () => (/* binding */ createLegacyTableTooltips)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function createLegacyTableTooltips() {
+  var _jquery$fn;
+  var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
+  var jquery = root.jQuery;
+  if (typeof (jquery === null || jquery === void 0 || (_jquery$fn = jquery.fn) === null || _jquery$fn === void 0 ? void 0 : _jquery$fn.tooltip) !== 'function') {
+    throw new TypeError('The legacy AdminLTE table tooltip adapter requires Bootstrap tooltip.');
+  }
+  return {
+    scan: function scan(container) {
+      var elements = matchingElements(container, '[data-toggle="tooltip"]');
+      if (elements.length > 0) {
+        jquery(elements).tooltip();
+      }
+      return elements.length;
+    }
+  };
+}
+function matchingElements(root, selector) {
+  var elements = _toConsumableArray(root.querySelectorAll(selector));
+  if (typeof root.matches === 'function' && root.matches(selector)) {
+    elements.unshift(root);
+  }
+  return elements;
 }
 
 /***/ }),

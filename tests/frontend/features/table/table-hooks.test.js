@@ -11,6 +11,7 @@ it('runs draw hooks in stable order with the engine callback context', () => {
     const draw = createDrawHook({
         events,
         highlight: () => calls.push('highlight'),
+        inlineEditor: () => calls.push('inline-editor'),
         lazyload: () => calls.push('lazyload'),
         tooltips: () => calls.push('tooltips'),
     })
@@ -19,7 +20,7 @@ it('runs draw hooks in stable order with the engine callback context', () => {
     draw.call(context)
 
     expect(events.fire).toHaveBeenCalledWith('datatables::draw', context)
-    expect(calls).toEqual(['event', 'tooltips', 'lazyload', 'highlight'])
+    expect(calls).toEqual(['event', 'inline-editor', 'tooltips', 'lazyload', 'highlight'])
 })
 
 it('applies server-provided row classes through classList', () => {

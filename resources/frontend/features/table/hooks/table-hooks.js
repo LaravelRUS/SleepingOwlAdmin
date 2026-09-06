@@ -1,8 +1,9 @@
-export function createDrawHook({ events, highlight, lazyload, tooltips }) {
-    assertHookDependencies(events, highlight, lazyload, tooltips)
+export function createDrawHook({ events, highlight, inlineEditor, lazyload, tooltips }) {
+    assertHookDependencies(events, highlight, inlineEditor, lazyload, tooltips)
 
     return function drawHook() {
         events.fire('datatables::draw', this)
+        inlineEditor()
         tooltips()
         lazyload()
         highlight(this)

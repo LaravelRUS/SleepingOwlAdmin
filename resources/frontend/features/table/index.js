@@ -9,6 +9,8 @@ export {
     isNumberInRange,
 } from './filters/filter-drivers.js'
 export { forEachColumnFilter, readControlValue } from './filters/filter-elements.js'
+export { highlightColumn, syncColumnHighlight } from './hooks/column-highlight.js'
+export { loadLazyImage, loadLazyImages } from './hooks/lazy-images.js'
 export { applyCreatedRowClass, createDrawHook } from './hooks/table-hooks.js'
 export { DataTableAdapter, mountDataTable } from './lifecycle/data-table-adapter.js'
 export { normalizeDataTables2Options } from './options/option-aliases.js'

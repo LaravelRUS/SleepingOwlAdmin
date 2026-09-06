@@ -186,13 +186,6 @@
         <script>
             window.__legacyEvents = []
             window.__swalCalls = []
-            window.__lazyloadCalls = 0
-
-            const originalLazyload = window.lazyload
-            window.lazyload = (...args) => {
-                window.__lazyloadCalls += 1
-                return originalLazyload(...args)
-            }
 
             ;[
                 'datatables::draw',

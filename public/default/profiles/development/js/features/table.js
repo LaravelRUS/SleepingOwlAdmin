@@ -641,6 +641,128 @@ function assertRoot(root) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/hooks/column-highlight.js":
+/*!*********************************************************************!*\
+  !*** ./resources/frontend/features/table/hooks/column-highlight.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "highlightColumn": () => (/* binding */ highlightColumn),
+/* harmony export */   "syncColumnHighlight": () => (/* binding */ syncColumnHighlight)
+/* harmony export */ });
+var bindings = new WeakMap();
+function syncColumnHighlight(element, table, enabled) {
+  if (!enabled) {
+    removeColumnHighlight(element);
+    return null;
+  }
+  var current = bindings.get(element);
+  if (current) {
+    current.table = table;
+    return current.destroy;
+  }
+  return bindColumnHighlight(element, table);
+}
+function highlightColumn(table, cell) {
+  var _table$cell$index;
+  if (!table.data().any()) {
+    return;
+  }
+  var index = (_table$cell$index = table.cell(cell).index()) === null || _table$cell$index === void 0 ? void 0 : _table$cell$index.column;
+  if (index === undefined) {
+    return;
+  }
+  Array.from(table.cells().nodes()).forEach(function (node) {
+    return node.classList.remove('highlight');
+  });
+  Array.from(table.column(index).nodes()).forEach(function (node) {
+    return node.classList.add('highlight');
+  });
+}
+function bindColumnHighlight(element, table) {
+  var binding = {
+    destroy: null,
+    table: table
+  };
+  var onMouseOver = function onMouseOver(event) {
+    return handleMouseOver(element, binding.table, event);
+  };
+  binding.destroy = function () {
+    element.removeEventListener('mouseover', onMouseOver);
+    bindings["delete"](element);
+  };
+  element.addEventListener('mouseover', onMouseOver);
+  bindings.set(element, binding);
+  return binding.destroy;
+}
+function removeColumnHighlight(element) {
+  var _bindings$get;
+  (_bindings$get = bindings.get(element)) === null || _bindings$get === void 0 || _bindings$get.destroy();
+}
+function handleMouseOver(element, table, event) {
+  var _event$target$closest, _event$target;
+  var cell = (_event$target$closest = (_event$target = event.target).closest) === null || _event$target$closest === void 0 ? void 0 : _event$target$closest.call(_event$target, 'td');
+  if (!cell || !element.contains(cell) || cell.contains(event.relatedTarget)) {
+    return;
+  }
+  highlightColumn(table, cell);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/hooks/lazy-images.js":
+/*!****************************************************************!*\
+  !*** ./resources/frontend/features/table/hooks/lazy-images.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "loadLazyImage": () => (/* binding */ loadLazyImage),
+/* harmony export */   "loadLazyImages": () => (/* binding */ loadLazyImages)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function loadLazyImages(root) {
+  var images = matchingElements(root, '.lazyload');
+  images.forEach(loadLazyImage);
+  return images.length;
+}
+function loadLazyImage(element) {
+  var _element$tagName;
+  if (((_element$tagName = element.tagName) === null || _element$tagName === void 0 ? void 0 : _element$tagName.toLowerCase()) === 'img') {
+    element.loading = 'lazy';
+    copyAttribute(element, 'data-src', 'src');
+    copyAttribute(element, 'data-srcset', 'srcset');
+    return;
+  }
+  var source = element.getAttribute('data-src');
+  if (source) {
+    element.style.backgroundImage = "url(".concat(JSON.stringify(source), ")");
+  }
+}
+function copyAttribute(element, source, target) {
+  var value = element.getAttribute(source);
+  if (value) {
+    element.setAttribute(target, value);
+  }
+}
+function matchingElements(root, selector) {
+  var elements = _toConsumableArray(root.querySelectorAll(selector));
+  if (typeof root.matches === 'function' && root.matches(selector)) {
+    elements.unshift(root);
+  }
+  return elements;
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/hooks/table-hooks.js":
 /*!****************************************************************!*\
   !*** ./resources/frontend/features/table/hooks/table-hooks.js ***!
@@ -661,11 +783,13 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function createDrawHook(_ref) {
   var events = _ref.events,
     highlight = _ref.highlight,
+    inlineEditor = _ref.inlineEditor,
     lazyload = _ref.lazyload,
     tooltips = _ref.tooltips;
-  assertHookDependencies(events, highlight, lazyload, tooltips);
+  assertHookDependencies(events, highlight, inlineEditor, lazyload, tooltips);
   return function drawHook() {
     events.fire('datatables::draw', this);
+    inlineEditor();
     tooltips();
     lazyload();
     highlight(this);
@@ -1372,49 +1496,57 @@ var __webpack_exports__ = {};
   \****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DataTableAdapter": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_5__.DataTableAdapter),
+/* harmony export */   "DataTableAdapter": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_7__.DataTableAdapter),
 /* harmony export */   "TABLE_FEATURE_ID": () => (/* binding */ TABLE_FEATURE_ID),
-/* harmony export */   "appendNamedFilterData": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_11__.appendNamedFilterData),
-/* harmony export */   "applyCreatedRowClass": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.applyCreatedRowClass),
-/* harmony export */   "applyServerOptions": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.applyServerOptions),
+/* harmony export */   "appendNamedFilterData": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_13__.appendNamedFilterData),
+/* harmony export */   "applyCreatedRowClass": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_6__.applyCreatedRowClass),
+/* harmony export */   "applyServerOptions": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_9__.applyServerOptions),
 /* harmony export */   "bindConfirmedControls": () => (/* reexport safe */ _controls_confirm_submit_js__WEBPACK_IMPORTED_MODULE_0__.bindConfirmedControls),
 /* harmony export */   "bindFilterControls": () => (/* reexport safe */ _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_1__.bindFilterControls),
-/* harmony export */   "bindTableCheckboxes": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_9__.bindTableCheckboxes),
+/* harmony export */   "bindTableCheckboxes": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_11__.bindTableCheckboxes),
 /* harmony export */   "clearFilterControls": () => (/* reexport safe */ _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_1__.clearFilterControls),
-/* harmony export */   "clearFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.clearFilterState),
-/* harmony export */   "clearSavedTableSearch": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.clearSavedTableSearch),
-/* harmony export */   "createDrawHook": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.createDrawHook),
-/* harmony export */   "createTableAjax": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_11__.createTableAjax),
+/* harmony export */   "clearFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_12__.clearFilterState),
+/* harmony export */   "clearSavedTableSearch": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_12__.clearSavedTableSearch),
+/* harmony export */   "createDrawHook": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_6__.createDrawHook),
+/* harmony export */   "createTableAjax": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_13__.createTableAjax),
 /* harmony export */   "createTableFilterDrivers": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.createTableFilterDrivers),
 /* harmony export */   "dataTables2SearchExtensions": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.dataTables2SearchExtensions),
-/* harmony export */   "filterStateKey": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.filterStateKey),
+/* harmony export */   "filterStateKey": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_12__.filterStateKey),
 /* harmony export */   "forEachColumnFilter": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_3__.forEachColumnFilter),
+/* harmony export */   "highlightColumn": () => (/* reexport safe */ _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_4__.highlightColumn),
 /* harmony export */   "isDateInRange": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.isDateInRange),
 /* harmony export */   "isNumberInRange": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.isNumberInRange),
-/* harmony export */   "loadFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.loadFilterState),
-/* harmony export */   "migrateLegacyFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.migrateLegacyFilterState),
-/* harmony export */   "mountDataTable": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_5__.mountDataTable),
-/* harmony export */   "normalizeDataTables2Options": () => (/* reexport safe */ _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_6__.normalizeDataTables2Options),
+/* harmony export */   "loadFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_12__.loadFilterState),
+/* harmony export */   "loadLazyImage": () => (/* reexport safe */ _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_5__.loadLazyImage),
+/* harmony export */   "loadLazyImages": () => (/* reexport safe */ _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_5__.loadLazyImages),
+/* harmony export */   "migrateLegacyFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_12__.migrateLegacyFilterState),
+/* harmony export */   "mountDataTable": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_7__.mountDataTable),
+/* harmony export */   "normalizeDataTables2Options": () => (/* reexport safe */ _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_8__.normalizeDataTables2Options),
 /* harmony export */   "readControlValue": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_3__.readControlValue),
-/* harmony export */   "readTableDefinition": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.readTableDefinition),
-/* harmony export */   "saveFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.saveFilterState),
-/* harmony export */   "selectedRowValues": () => (/* reexport safe */ _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_8__.selectedRowValues),
-/* harmony export */   "tableLayout": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.tableLayout),
-/* harmony export */   "updateRowSelection": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_9__.updateRowSelection)
+/* harmony export */   "readTableDefinition": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_9__.readTableDefinition),
+/* harmony export */   "saveFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_12__.saveFilterState),
+/* harmony export */   "selectedRowValues": () => (/* reexport safe */ _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_10__.selectedRowValues),
+/* harmony export */   "syncColumnHighlight": () => (/* reexport safe */ _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_4__.syncColumnHighlight),
+/* harmony export */   "tableLayout": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_9__.tableLayout),
+/* harmony export */   "updateRowSelection": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_11__.updateRowSelection)
 /* harmony export */ });
 /* harmony import */ var _controls_confirm_submit_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controls/confirm-submit.js */ "./resources/frontend/features/table/controls/confirm-submit.js");
 /* harmony import */ var _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filters/filter-controls.js */ "./resources/frontend/features/table/filters/filter-controls.js");
 /* harmony import */ var _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filters/filter-drivers.js */ "./resources/frontend/features/table/filters/filter-drivers.js");
 /* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
-/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
-/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
-/* harmony import */ var _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./options/option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
-/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./selection/checkbox-controls.js */ "./resources/frontend/features/table/selection/checkbox-controls.js");
-/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
-/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
+/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
+/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
+/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
+/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
+/* harmony import */ var _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./options/option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
+/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./selection/checkbox-controls.js */ "./resources/frontend/features/table/selection/checkbox-controls.js");
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
 var TABLE_FEATURE_ID = 'table';
+
+
 
 
 

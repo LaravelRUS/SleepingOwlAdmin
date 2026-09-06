@@ -97,3 +97,24 @@ it('keeps the reusable filter modules on native DOM APIs', () => {
     expect(controls).toContain('addEventListener')
     expect(drivers).toContain('addEventListener')
 })
+
+it('keeps reusable draw hooks native and isolates legacy plugins in theme adapters', () => {
+    const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+    const hooks = [
+        readSource('resources/frontend/features/table/hooks/table-hooks.js'),
+        readSource('resources/frontend/features/table/hooks/column-highlight.js'),
+        readSource('resources/frontend/features/table/hooks/lazy-images.js'),
+    ].join('\n')
+    const inlineEditor = readSource(
+        'resources/frontend/features/table/themes/legacy-adminlte/inline-editor.js',
+    )
+    const tooltips = readSource(
+        'resources/frontend/features/table/themes/legacy-adminlte/tooltips.js',
+    )
+
+    expect(`${orchestration}\n${hooks}`).not.toMatch(/(?:\$|jQuery)\s*\(/)
+    expect(hooks).toContain('addEventListener')
+    expect(hooks).toContain("element.loading = 'lazy'")
+    expect(inlineEditor).toContain('jquery(elements).editable')
+    expect(tooltips).toContain('jquery(elements).tooltip')
+})

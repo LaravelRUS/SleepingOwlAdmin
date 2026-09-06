@@ -18,8 +18,17 @@ const {
     createLegacyFilterEventBridge,
 } = require('../../../../frontend/features/table/themes/legacy-adminlte/filter-events')
 const {
+    createLegacyTableTooltips,
+} = require('../../../../frontend/features/table/themes/legacy-adminlte/tooltips')
+const {
     forEachColumnFilter,
 } = require('../../../../frontend/features/table/filters/filter-elements')
+const {
+    syncColumnHighlight,
+} = require('../../../../frontend/features/table/hooks/column-highlight')
+const {
+    loadLazyImages,
+} = require('../../../../frontend/features/table/hooks/lazy-images')
 const {
     applyCreatedRowClass,
     createDrawHook,
@@ -44,6 +53,9 @@ const {
 const {
     createTableAjax,
 } = require('../../../../frontend/features/table/transport/table-ajax')
+const inlineEditor = require('./columns/inline_edit')
+
+const tableTooltips = createLegacyTableTooltips()
 
 globalThis.checkNumberRange = isNumberInRange
 globalThis.checkDateRange = isDateInRange
@@ -132,9 +144,15 @@ function buildOptions(element, definition, stateFilters) {
 
     options.drawCallback = createDrawHook({
         events: Admin.Events,
-        highlight: (engineContext) => bindHighlight(element, engineContext),
-        lazyload: () => globalThis.lazyload(),
-        tooltips: () => jQuery('[data-toggle="tooltip"]').tooltip(),
+        highlight: (engineContext) =>
+            syncColumnHighlight(
+                element,
+                engineContext.api(),
+                Boolean(Admin.Config.get('datatables_highlight')),
+            ),
+        inlineEditor: () => inlineEditor.scan(element),
+        lazyload: () => loadLazyImages(element),
+        tooltips: () => tableTooltips.scan(element),
     })
     options.createdRow = applyCreatedRowClass
 
@@ -188,27 +206,4 @@ function allFilterContainers() {
             '.display-filters[data-display="DisplayDatatablesAsync"][data-datatables-id]',
         ),
     ]
-}
-
-function bindHighlight(element, engineContext) {
-    if (!Admin.Config.get('datatables_highlight')) {
-        return
-    }
-
-    const table = engineContext.api()
-    $(element.tBodies)
-        .off('mouseenter.soa-highlight', 'td')
-        .on('mouseenter.soa-highlight', 'td', function () {
-            highlightColumn(table, this)
-        })
-}
-
-function highlightColumn(table, cell) {
-    if (!table.data().any()) {
-        return
-    }
-
-    const column = table.cell(cell).index().column
-    $(table.cells().nodes()).removeClass('highlight')
-    $(table.column(column).nodes()).addClass('highlight')
 }
