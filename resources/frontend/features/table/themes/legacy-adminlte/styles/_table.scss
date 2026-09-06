@@ -1,0 +1,16 @@
+@mixin styles {
+  .table.datatables,
+  .table.table-striped {
+    tbody {
+      border-bottom: var(--soa-table-border-width) solid var(--soa-table-border-color);
+    }
+
+    thead th {
+      line-height: 1.2;
+    }
+  }
+
+  .lightcolumn.table td.highlight {
+    background-color: var(--soa-table-row-hover-color) !important;
+  }
+}

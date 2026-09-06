@@ -1,0 +1,9 @@
+@use 'auto-update';
+@use 'layout';
+@use 'table';
+
+@mixin styles {
+  @include layout.styles;
+  @include table.styles;
+  @include auto-update.styles;
+}

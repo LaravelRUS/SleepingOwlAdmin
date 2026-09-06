@@ -1,2 +1,20 @@
-@import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
-@import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
+@use 'sass:meta';
+@use 'auto-update';
+@use 'colors';
+@use 'custom-properties';
+@use 'layout';
+@use 'table';
+@use 'variables';
+@include custom-properties.define;
+
+@layer sleepingowl-theme.table {
+  @include meta.load-css(
+    '../../../../../../../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css'
+  );
+  @include meta.load-css(
+    '../../../../../../../node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.css'
+  );
+  @include layout.styles;
+  @include table.styles;
+  @include auto-update.styles;
+}

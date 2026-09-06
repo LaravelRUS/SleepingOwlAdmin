@@ -1,7 +1,7 @@
 {
-    "/js/vue.js": "/js/vue.js?id=b00f8499c52a766e7dcecb5612d9c25a",
+    "/js/vue.js": "/js/vue.js?id=5ae09e9365d12796adcfbc20c81776ac",
     "/js/vue-dev.js": "/js/vue-dev.js?id=a4ce22699e9c6031eb81c2efb48a60d0",
-    "/js/admin-app.js": "/js/admin-app.js?id=5fbe4209ccc25b007278a3b5ab77e09b",
+    "/js/admin-app.js": "/js/admin-app.js?id=57a2a39e308ba4bed4f881d3559f436c",
     "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=061a399bdfd544379b24e06d074fc833",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
     "/js/admin-core.js": "/js/admin-core.js?id=b983a01323cd440b5502c8123c18a184",
@@ -9,10 +9,12 @@
     "/js/features/table.js": "/js/features/table.js?id=8b6999813a7ee04060cdbf4dd9c757aa",
     "/js/themes/legacy-adminlte.js": "/js/themes/legacy-adminlte.js?id=f5d387540235443141917d352abe4d71",
     "/js/themes/tailwind.js": "/js/themes/tailwind.js?id=f5d387540235443141917d352abe4d71",
-    "/css/admin-app.css": "/css/admin-app.css?id=e7e0ce0cbad1001c85058905d68a6205",
+    "/css/admin-app.css": "/css/admin-app.css?id=57f8a076249d3d6f6abc3d253af40c23",
     "/css/features/table.css": "/css/features/table.css?id=0486f14bd03357524d6cb5a97dc6e459",
     "/css/features/forms.css": "/css/features/forms.css?id=ce247f8dcfc6d7791a31b0ca74689221",
     "/css/admin-core.css": "/css/admin-core.css?id=0ab8b34c6e46477fc5066f206cf3da97",
-    "/css/themes/tailwind.css": "/css/themes/tailwind.css?id=95b77fa958e4c6c1554b3f74f75f9cb0",
-    "/css/themes/legacy-adminlte.css": "/css/themes/legacy-adminlte.css?id=c79925f10d025d8f325267ca0496d6f0"
+    "/css/themes/tailwind.css": "/css/themes/tailwind.css?id=5f4e442f6740a37639edde2e1f62ac7c",
+    "/css/themes/legacy-adminlte.css": "/css/themes/legacy-adminlte.css?id=514e4526a697e6b8563d137ad4fddba9",
+    "/css/features/table/themes/tailwind.css": "/css/features/table/themes/tailwind.css?id=2bd33867b7227bf0998d73b4a4fbfb01",
+    "/css/features/table/themes/datatables-legacy-adminlte.css": "/css/features/table/themes/datatables-legacy-adminlte.css?id=c1e3e9dd7ef18d57ab96d07dd8b3b187"
 }

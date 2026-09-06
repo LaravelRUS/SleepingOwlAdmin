@@ -1,0 +1,40 @@
+@use 'variables';
+
+@mixin styles {
+  .datatables {
+    position: relative;
+
+    &.autoupdater .autoupdater-close {
+      position: absolute;
+      z-index: 2;
+      top: -1.3rem;
+      right: -0.6rem;
+      padding: 0.2rem;
+      border: 0;
+      color: var(--soa-muted-text-color);
+      background: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color var(--soa-table-row-transition-duration);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--soa-danger-color);
+      }
+    }
+
+    & > svg {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 0.125rem;
+    }
+  }
+
+  @media (width <= variables.$mobile-breakpoint) {
+    .datatables.autoupdater .autoupdater-close {
+      top: -0.5rem;
+      right: 0;
+    }
+  }
+}

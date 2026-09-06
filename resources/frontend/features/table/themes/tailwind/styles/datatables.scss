@@ -1,0 +1,15 @@
+@use 'auto-update';
+@use 'colors';
+@use 'controls';
+@use 'custom-properties';
+@use 'layout';
+@use 'table';
+@use 'variables';
+@include custom-properties.define;
+
+@layer sleepingowl-theme.table {
+  @include layout.styles;
+  @include controls.styles;
+  @include table.styles;
+  @include auto-update.styles;
+}

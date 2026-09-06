@@ -35,13 +35,13 @@ class UpdateCommandTest extends TestCase
         $this->assertFileExists($assetRoot.'/asset-manifest.json');
         $this->assertFileExists($license);
         $this->assertStringContainsString(basename($license), (new Filesystem())->get($asset));
-        $this->assertSame(10, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
+        $this->assertSame(12, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
 
         (new Filesystem())->put($asset, 'corrupt');
         $this->artisan('sleepingowl:update')->assertSuccessful();
 
         $this->assertNotSame('corrupt', (new Filesystem())->get($asset));
-        $this->assertSame(10, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
+        $this->assertSame(12, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
     }
 
     public function test_install_and_update_paths_do_not_invoke_a_frontend_toolchain(): void

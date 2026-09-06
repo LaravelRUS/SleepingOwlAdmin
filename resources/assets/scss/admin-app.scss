@@ -1,5 +1,5 @@
 @use '../../frontend/features/forms/styles/files' as form-files;
-@use '../../frontend/features/table/themes/legacy-adminlte/styles/datatables';
+@use '../../frontend/features/table/themes/legacy-adminlte/styles/legacy' as legacy-datatables;
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
 @use '../../frontend/themes/legacy-adminlte/styles/sidebar' as theme-sidebar;
 
@@ -15,6 +15,7 @@
 //Component
 @import "components";
 @import "addition";
+@include legacy-datatables.styles;
 @include form-files.styles(
   $thumbnail-border: $file-thumbnail-border,
   $thumbnail-surface: $file-thumbnail-surface,

@@ -4,6 +4,7 @@
 @mixin define {
   :root {
     --soa-primary-color: #{colors.$primary};
+    --soa-danger-color: #{colors.$danger};
     --soa-surface-color: #{colors.$surface};
     --soa-page-background-color: #{colors.$page-background};
     --soa-text-color: #{colors.$text};

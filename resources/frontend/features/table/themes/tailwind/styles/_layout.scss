@@ -1,0 +1,56 @@
+@use 'variables';
+
+@mixin styles {
+  .dt-container {
+    position: relative;
+    min-height: variables.$minimum-height;
+    color: var(--soa-text-color);
+    font-family: var(--soa-font-family-sans);
+    font-size: var(--soa-font-size-base);
+
+    .dt-layout-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: variables.$layout-gap-block variables.$layout-gap-inline;
+      margin: 0 0 1rem;
+    }
+
+    .dt-layout-cell {
+      min-width: 0;
+    }
+
+    .dt-layout-end {
+      justify-self: end;
+    }
+
+    .dt-layout-full {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+
+    .dt-info {
+      color: var(--soa-muted-text-color);
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (width <= variables.$mobile-breakpoint) {
+    .dt-container {
+      .dt-layout-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .dt-layout-end {
+        justify-self: stretch;
+      }
+
+      .dt-search,
+      .dt-length {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+      }
+    }
+  }
+}

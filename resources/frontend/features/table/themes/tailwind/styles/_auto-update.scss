@@ -1,0 +1,36 @@
+@mixin styles {
+  .datatables {
+    position: relative;
+
+    &.autoupdater .autoupdater-close {
+      position: absolute;
+      z-index: 2;
+      top: -2.25rem;
+      right: 0;
+      display: inline-grid;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border: var(--soa-table-border-width) solid var(--soa-border-color);
+      border-radius: 50%;
+      color: var(--soa-muted-text-color);
+      background-color: var(--soa-surface-color);
+      cursor: pointer;
+      place-items: center;
+
+      &:hover,
+      &:focus-visible {
+        border-color: var(--soa-danger-color);
+        color: var(--soa-danger-color);
+        outline: none;
+      }
+    }
+
+    & > svg {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 0.125rem;
+    }
+  }
+}

@@ -74,6 +74,16 @@
                 "output": "css/features/table.css"
             },
             {
+                "logicalId": "feature:table:theme:legacy-adminlte",
+                "source": "resources/frontend/features/table/themes/legacy-adminlte/styles/datatables.scss",
+                "output": "css/features/table/themes/datatables-legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:table:theme:tailwind",
+                "source": "resources/frontend/features/table/themes/tailwind/styles/datatables.scss",
+                "output": "css/features/table/themes/tailwind.css"
+            },
+            {
                 "logicalId": "theme:legacy-adminlte",
                 "source": "resources/frontend/themes/legacy-adminlte/styles/theme.scss",
                 "output": "css/themes/legacy-adminlte.css"

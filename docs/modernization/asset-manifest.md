@@ -11,10 +11,15 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 - `core`;
 - `feature:forms`;
 - `feature:table`;
+- `feature:table:theme:legacy-adminlte`;
+- `feature:table:theme:tailwind`;
 - `theme:legacy-adminlte`;
 - `theme:tailwind`.
 
-Фрагменты custom theme продолжают объявлять только `theme:<id>` и `feature:<feature-id>:theme:<id>`. Они не содержат URL или filenames.
+Table driver не содержит presentation CSS. Встроенные table adapters публикуются отдельными
+feature/theme entries и загружаются только вместе с выбранной темой и активным table feature.
+Фрагменты custom theme продолжают объявлять только `theme:<id>` и
+`feature:<feature-id>:theme:<id>`. Они не содержат URL или filenames.
 
 ## Schema 1
 

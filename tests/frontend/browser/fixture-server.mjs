@@ -29,6 +29,10 @@ const staticRoutes = new Map([
     ],
     ['/runtime-theme', [join(browserDirectory, 'runtime-theme.html'), 'text/html; charset=utf-8']],
     [
+        '/table-presentation',
+        [join(browserDirectory, 'table-presentation.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/resources/frontend/core/data/island-props.js',
         [
             join(projectRoot, 'resources', 'frontend', 'core', 'data', 'island-props.js'),
@@ -69,6 +73,53 @@ const staticRoutes = new Map([
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/themes/legacy-adminlte.css',
+        [
+            join(projectRoot, 'public', 'default', 'css', 'themes', 'legacy-adminlte.css'),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/themes/tailwind.css',
+        [join(projectRoot, 'public', 'default', 'css', 'themes', 'tailwind.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/table.css',
+        [join(projectRoot, 'public', 'default', 'css', 'features', 'table.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/table/themes/datatables-legacy-adminlte.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'table',
+                'themes',
+                'datatables-legacy-adminlte.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/table/themes/tailwind.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'table',
+                'themes',
+                'tailwind.css',
+            ),
+            'text/css',
+        ],
     ],
     [
         '/fixtures/custom-vue-island.js',

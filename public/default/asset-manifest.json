@@ -52,6 +52,26 @@
                         }
                     ]
                 },
+                "feature:table:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/table/themes/datatables-legacy-adminlte.css",
+                            "version": "c1e3e9dd7ef18d57ab96d07dd8b3b187",
+                            "checksum": "sha256:18fa0e89ef53508120fcc263280819db7496c0680460c331e77374154df6eac5"
+                        }
+                    ]
+                },
+                "feature:table:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/table/themes/tailwind.css",
+                            "version": "2bd33867b7227bf0998d73b4a4fbfb01",
+                            "checksum": "sha256:12922a3e364d7aa8341d6245e2bc0fcf97e4f275515d180e4e33ba11cfc69123"
+                        }
+                    ]
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -63,8 +83,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/legacy-adminlte.css",
-                            "version": "c79925f10d025d8f325267ca0496d6f0",
-                            "checksum": "sha256:2361d8c502c0c35ce8f4c66d17109b945313afc5575e93e42b6c30deea6b277e"
+                            "version": "514e4526a697e6b8563d137ad4fddba9",
+                            "checksum": "sha256:82df2aad91b83ea43791a9f3b2a02c686e1dbbb3b840afa9e3d6ab48a0083451"
                         }
                     ]
                 },
@@ -79,8 +99,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/tailwind.css",
-                            "version": "95b77fa958e4c6c1554b3f74f75f9cb0",
-                            "checksum": "sha256:c8d49340876e5642c5e17795b7497c12a15036e7e98022c479dd64ec037001f1"
+                            "version": "5f4e442f6740a37639edde2e1f62ac7c",
+                            "checksum": "sha256:147f593c9ce68462d32a715cd9694ddcca8c151485b2b8c4317a8e5f10c0d4c9"
                         }
                     ]
                 }
@@ -136,6 +156,26 @@
                         }
                     ]
                 },
+                "feature:table:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/table/themes/datatables-legacy-adminlte.css",
+                            "version": "8199f06a0ae053280fe9bb10cc04eb5d",
+                            "checksum": "sha256:632fe38eb147f9ed7fc91791f05f5f070466d9cf76f6aa6a6538584c80d21502"
+                        }
+                    ]
+                },
+                "feature:table:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/table/themes/tailwind.css",
+                            "version": "40fdb2923be1185af5e36f1c47da81ab",
+                            "checksum": "sha256:68352502a7de342785e4b4af64f7a665fff7a3bac318ad53c085ee1204d6048a"
+                        }
+                    ]
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -147,8 +187,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/legacy-adminlte.css",
-                            "version": "4e1cb25461d5e9a01aa361d051cfcef1",
-                            "checksum": "sha256:77de45de8925ac97993215f00c6299ae53169c7b92cf0c2db9eff3ebe974585a"
+                            "version": "d5c236d20cc337eacf51084f8f41eaaa",
+                            "checksum": "sha256:adedb08183da343a565c1a9567fcaeb4eb234d77222e306ee9de607be72150bb"
                         }
                     ]
                 },
@@ -163,13 +203,13 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/tailwind.css",
-                            "version": "0d6fdd8ab608ea980f4b630abf9c4ce3",
-                            "checksum": "sha256:22159538f013a85067f701bf3b65b07a16fd64a5ce1b0d036ae425d97fe18dac"
+                            "version": "01217eb6c506fcf6c5369dba43d01300",
+                            "checksum": "sha256:170ead9dfd2a2d73889759442459bb9523c1ece91bf8494f63dc70158778fdd6"
                         }
                     ]
                 }
             }
         }
     },
-    "build_id": "sha256:b6f41ce38f75e57034d6be99a19e1ab9c8ffda363e3d3017fff881c9d3875bc2"
+    "build_id": "sha256:1dd8f729c37ad5df2958509ebf0b192049be1416f949e6bec8a2750fda7952b1"
 }

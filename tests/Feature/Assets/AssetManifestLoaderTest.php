@@ -17,6 +17,8 @@ class AssetManifestLoaderTest extends TestCase
             'core',
             'feature:forms',
             'feature:table',
+            'feature:table:theme:legacy-adminlte',
+            'feature:table:theme:tailwind',
             'theme:legacy-adminlte',
             'theme:tailwind',
         ], $manifest->profile('production')->entryIds());

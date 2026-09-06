@@ -9,10 +9,19 @@ The modernization build publishes independent entrypoints while the existing UI 
 | `core` | `js/admin-core.js` | `css/admin-core.css` | framework-neutral runtime and shared primitives |
 | `feature:forms` | `js/features/forms.js` | `css/features/forms.css` | form behavior independent of a concrete theme |
 | `feature:table` | `js/features/table.js` | `css/features/table.css` | table registry and drivers independent of presentation |
+| `feature:table:theme:legacy-adminlte` | — | `css/features/table/themes/datatables-legacy-adminlte.css` | Bootstrap 4/DataTables presentation owned by the AdminLTE table adapter |
+| `feature:table:theme:tailwind` | — | `css/features/table/themes/tailwind.css` | standalone Tailwind-oriented DataTables presentation without a Tailwind CLI runtime |
 | `theme:legacy-adminlte` | `js/themes/legacy-adminlte.js` | `css/themes/legacy-adminlte.css` | transitional AdminLTE 3/Bootstrap 4 presentation |
 | `theme:tailwind` | `js/themes/tailwind.js` | `css/themes/tailwind.css` | Tailwind presentation |
 
 The source/output mapping is declared once in `build/frontend-entries.json` and consumed by Laravel Mix. The same file is a build-time contract; after compilation it generates `public/default/asset-manifest.json`, which maps logical ids to validated runtime files, content versions and SHA-256 checksums. The schema and PHP resolver are documented in `asset-manifest.md`.
+
+DataTables behavior, engine and public table tokens remain in `feature:table`. Concrete wrapper,
+control, pagination, responsive and auto-update presentation lives in
+`feature:table:theme:<theme-id>`. The legacy AdminLTE aggregate includes the same owner-local
+AdminLTE adapter without a layer while the modern entry wraps it in `sleepingowl-theme.table`;
+the Tailwind adapter is precompiled Sass and does not require Tailwind, PostCSS or Node.js in a
+consumer project.
 
 The new Sass entries declare cascade-layer boundaries:
 

@@ -1,0 +1,9 @@
+@use 'custom-properties';
+@use 'presentation';
+@import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
+@import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
+
+@mixin styles {
+  @include custom-properties.define;
+  @include presentation.styles;
+}

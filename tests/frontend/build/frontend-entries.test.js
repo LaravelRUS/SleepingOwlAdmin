@@ -69,6 +69,18 @@ describe('frontend build entries', () => {
     })
 })
 
+describe('table presentation entries', () => {
+    it.each(['legacy-adminlte', 'tailwind'])(
+        'publishes the %s adapter as an independent stylesheet',
+        (theme) => {
+            const logicalId = `feature:table:theme:${theme}`
+
+            expect(modernEntry(logicalId, 'styles')).toBeDefined()
+            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+        },
+    )
+})
+
 function sourceEntry(source, output) {
     return { source, output }
 }

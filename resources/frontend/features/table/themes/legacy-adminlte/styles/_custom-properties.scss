@@ -1,0 +1,13 @@
+@use 'colors';
+
+@mixin define {
+  :root {
+    --soa-table-row-hover-color: #{colors.$row-hover};
+    --soa-table-row-selected-color: #{colors.$row-selected};
+  }
+
+  :root[data-soa-color-scheme='dark'] {
+    --soa-table-row-hover-color: #{colors.$dark-row-hover};
+    --soa-table-row-selected-color: #{colors.$dark-row-selected};
+  }
+}

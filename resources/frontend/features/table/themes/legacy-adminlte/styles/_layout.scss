@@ -1,0 +1,50 @@
+@use 'variables';
+
+@mixin styles {
+  .dt-container {
+    position: relative;
+    min-height: variables.$minimum-height;
+  }
+
+  .dt-search {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: variables.$control-gap;
+    margin-bottom: 1rem;
+
+    label {
+      margin-bottom: 0;
+    }
+
+    input {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .dt-info {
+    padding-left: 1.25rem;
+    font-size: 85%;
+    font-weight: 500;
+  }
+
+  .dt-processing {
+    position: absolute;
+    z-index: 999;
+    top: variables.$processing-offset;
+    left: 50%;
+    color: var(--soa-text-color);
+    transform: translateX(-50%);
+  }
+
+  .dt-paging .pagination {
+    flex-wrap: wrap;
+  }
+
+  @media (width <= variables.$mobile-breakpoint) {
+    .dt-paging .pagination {
+      justify-content: center;
+      padding-left: 0;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" data-soa-color-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/features/table.css" />
+        <script>
+            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
+            const supported = ['legacy-adminlte', 'tailwind']
+
+            if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
+
+            const adapter = theme === 'legacy-adminlte' ? 'datatables-legacy-adminlte' : 'tailwind'
+
+            for (const href of [
+                `/public/default/css/themes/${theme}.css`,
+                `/public/default/css/features/table/themes/${adapter}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
+        </script>
+    </head>
+    <body>
+        <main class="dt-container" id="table-presentation">
+            <div class="dt-layout-row">
+                <div class="dt-layout-cell dt-layout-start">
+                    <div class="dt-length">
+                        <label for="page-size">Rows</label>
+                        <select id="page-size" class="dt-input form-control form-control-sm">
+                            <option>10</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="dt-layout-cell dt-layout-end">
+                    <div class="dt-search">
+                        <label for="table-search">Search</label>
+                        <input
+                            id="table-search"
+                            class="dt-input form-control form-control-sm"
+                            type="search"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="dt-layout-row">
+                <div class="dt-layout-cell dt-layout-full">
+                    <table class="table dataTable lightcolumn" id="records">
+                        <thead>
+                            <tr>
+                                <th class="dt-orderable-asc" aria-sort="ascending">
+                                    Project<span class="dt-column-order"></span>
+                                </th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="selected">
+                                <td class="highlight">Luna catalog</td>
+                                <td>Active</td>
+                            </tr>
+                            <tr>
+                                <td>Archive</td>
+                                <td>Paused</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="dt-layout-row">
+                <div class="dt-layout-cell dt-layout-start dt-info">Showing 1 to 2 of 2 rows</div>
+                <div class="dt-layout-cell dt-layout-end dt-paging">
+                    <nav aria-label="Pagination">
+                        <button class="dt-paging-button current" type="button">1</button>
+                        <button class="dt-paging-button" type="button">2</button>
+                    </nav>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

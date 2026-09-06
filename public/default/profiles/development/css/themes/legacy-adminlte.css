@@ -1,6 +1,7 @@
 @layer sleepingowl-theme;
 :root {
   --soa-primary-color: #3c8dbc;
+  --soa-danger-color: #dc3545;
   --soa-surface-color: #fff;
   --soa-page-background-color: #f4f6f9;
   --soa-text-color: #212529;

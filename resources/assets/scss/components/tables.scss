@@ -260,39 +260,6 @@
     }
 }
 
-.table.datatables,
-.table.table-striped {
-    tbody {
-        border-bottom: 1px solid $gray;
-    }
-
-    thead th {
-        line-height: 1.2;
-    }
-}
-
-.lightcolumn {
-    &.table {
-        td.highlight {
-            background-color: rgba($black, 0.08) !important;
-        }
-
-        @each $key, $value in $colors_palette {
-            &.table-#{"" + $key} {
-                td.highlight {
-                    background-color: rgba($value, 0.08) !important;
-                }
-            }
-        }
-
-        &.table-white, &.table-gray {
-            td.highlight {
-                background-color: rgba($black, 0.08) !important;
-            }
-        }
-    }
-}
-
 .table {
     &.table-primary {
         @include table-color($primary);
