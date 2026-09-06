@@ -124,8 +124,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "a06d74493522a5e33d1f2116ab955da9",
-                            "checksum": "sha256:1274c1da2511050ab15b5e7dd1f942479f3d49be1bae5196178253ac997cbea6"
+                            "version": "5d0cfaef712e21beda0ef3e6a4fd2206",
+                            "checksum": "sha256:9285bcba418a77f0a3ea1c43ea19a6e9b6425cabe501421185e7c1786e153053"
                         }
                     ],
                     "styles": [
@@ -171,5 +171,5 @@
             }
         }
     },
-    "build_id": "sha256:c0294f3d48ea3d023ed5f1368788347f0c12d192a240573a7116c41bfc88a148"
+    "build_id": "sha256:8b760c0f0171a2cc8f47d9d1f7a0e51ea761f12273422562a28a83122a22e3c9"
 }

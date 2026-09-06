@@ -82,39 +82,30 @@ test('Admin.Events dispatches native document events', async ({ page }) => {
     })
 })
 
-test('published bundle exposes the engine-neutral Admin.Tables registry', async ({ page }) => {
+test('legacy DataTables mounts through the engine-neutral Admin.Tables registry', async ({
+    page,
+}) => {
     await openFixture(page)
 
     const registry = await page.evaluate(() => {
         const element = globalThis.document.querySelector('#legacy-table')
-        const adapter = {
-            clearState() {},
-            destroy() {},
-            element,
-            engineInstance: { name: 'fixture-engine' },
-            reload() {},
-            selectedRows: () => ['row-1'],
-        }
+        const adapter = globalThis.Admin.Tables.get(element)
 
-        globalThis.Admin.Tables.register(adapter)
-        const registered = globalThis.Admin.Tables.get(element)
-        const result = {
+        return {
             adapterCount: globalThis.Admin.Tables.all().length,
-            engine: registered.engineInstance.name,
-            sameAdapter: registered === adapter,
-            selectedRows: registered.selectedRows(),
+            elementMatches: adapter.element === element,
+            hasEngine: Boolean(adapter.engineInstance.table),
+            methods: ['reload', 'destroy', 'clearState', 'selectedRows'].map(
+                (method) => typeof adapter[method],
+            ),
         }
-        globalThis.Admin.Tables.unregister(element)
-
-        return { ...result, removed: globalThis.Admin.Tables.get(element) === null }
     })
 
     expect(registry).toEqual({
         adapterCount: 1,
-        engine: 'fixture-engine',
-        removed: true,
-        sameAdapter: true,
-        selectedRows: ['row-1'],
+        elementMatches: true,
+        hasEngine: true,
+        methods: ['function', 'function', 'function', 'function'],
     })
 })
 
@@ -223,6 +214,13 @@ test('bulk and custom actions submit checked rows and fire lifecycle events', as
 }) => {
     await openFixture(page)
     await page.locator('.adminCheckboxRow').first().check()
+    expect(
+        await page.evaluate(() =>
+            globalThis.Admin.Tables.get(
+                globalThis.document.querySelector('#legacy-table'),
+            ).selectedRows(),
+        ),
+    ).toEqual(['1'])
     const bulkResponse = page.waitForResponse((item) => item.url().endsWith('/api/action'))
     await page.locator('#bulk-action-submit').click()
     await bulkResponse

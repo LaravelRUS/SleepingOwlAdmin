@@ -58,6 +58,17 @@ describe('compiled frontend entries', () => {
         )
     })
 
+    it('keeps the transitional jQuery filter driver out of modern table profiles', () => {
+        for (const profile of ['production', 'development']) {
+            const table = readFileSync(
+                resolve(root, `public/default/profiles/${profile}/js/features/table.js`),
+                'utf8',
+            )
+
+            expect(table).not.toMatch(/jquery|jQuery|legacy-filter-drivers/)
+        }
+    })
+
     it('keeps framework and theme CSS out of the compiled core stylesheet', () => {
         const core = readFileSync(resolve(root, 'public/default/css/admin-core.css'), 'utf8')
 
