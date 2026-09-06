@@ -1,0 +1,202 @@
+{
+    "formatVersion": 1,
+    "sourceInventory": "docs/modernization/baseline/config-inventory.json",
+    "defaultPolicy": "Preserve every existing key unless a documented migration rule says otherwise.",
+    "rules": [
+        {
+            "selector": {
+                "prefix": "aliases",
+                "exclude": [
+                    "aliases.Assets",
+                    "aliases.Meta",
+                    "aliases.PackageManager"
+                ]
+            },
+            "status": "unchanged",
+            "owner": "core:aliases",
+            "contract": "Keep the key and configured class string; aliases remain direct and are not translated between themes."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "aliases.Assets",
+                    "aliases.Meta",
+                    "aliases.PackageManager"
+                ]
+            },
+            "status": "same key/new implementation",
+            "owner": "compatibility:assets",
+            "contract": "Normalize legacy KodiCMS facade strings to first-party SleepingOwl facades after kodicms/laravel-assets is removed."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "auth_provider",
+                    "bootstrapDirectory",
+                    "domain",
+                    "enable_editor",
+                    "env_can_add",
+                    "env_can_delete",
+                    "env_editor_excluded_keys",
+                    "env_editor_middlewares",
+                    "env_editor_policy",
+                    "env_editor_url",
+                    "env_keys_readonly",
+                    "middleware",
+                    "search_operator",
+                    "timezone",
+                    "title",
+                    "url_prefix"
+                ]
+            },
+            "status": "unchanged",
+            "owner": "core",
+            "contract": "Keep the key, default type and backend behavior. bootstrapDirectory remains an app/Admin path and is unrelated to CSS Bootstrap."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "datatables",
+                    "datatables_highlight",
+                    "default_datatables_method",
+                    "dt_autoupdate",
+                    "dt_autoupdate_class",
+                    "dt_autoupdate_color",
+                    "dt_autoupdate_interval",
+                    "state_datatables",
+                    "state_filters",
+                    "state_tabs"
+                ]
+            },
+            "status": "same key/new implementation",
+            "owner": "feature:tables",
+            "contract": "Keep the PHP/config surface while native modules and the DataTables 2 driver replace the legacy implementation. Incompatible raw DataTables 1 options require an option-level migration entry."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "dev_assets"
+                ]
+            },
+            "status": "same key/new implementation",
+            "owner": "core:assets",
+            "contract": "Keep ADMIN_DEV_ASSETS and sleeping_owl.dev_assets; select the complete prebuilt production or development manifest profile."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "dateFormat",
+                    "datetimeFormat",
+                    "timeFormat"
+                ]
+            },
+            "status": "same key/new implementation",
+            "owner": "feature:date-time",
+            "contract": "Keep server-facing PHP formats and convert them inside the Air Datepicker adapter without exposing vendor options as the stable API."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "filesAllowedExtensions",
+                    "filesUploadDirectory",
+                    "filesUploadFilenameBehavior",
+                    "imagesAllowSvg",
+                    "imagesAllowedExtensions",
+                    "imagesUploadDirectory",
+                    "imagesUploadFilenameBehavior"
+                ]
+            },
+            "status": "same key/new implementation",
+            "owner": "feature:uploads",
+            "contract": "Keep upload validation/storage behavior while Vue 3 islands and native transport replace jQuery/Dropzone integration."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "imageLazyLoad",
+                    "imageLazyLoadFile",
+                    "scroll_to_bottom",
+                    "scroll_to_top"
+                ]
+            },
+            "status": "same key/new implementation",
+            "owner": "feature:dom-helpers",
+            "contract": "Keep visible behavior and config keys; implement with modern browser APIs and no jQuery plugin."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "template"
+                ]
+            },
+            "status": "same key/new implementation",
+            "owner": "core:themes",
+            "contract": "Keep the selector key. Resolve AdminLTE, Tailwind or a custom ThemeInterface; adapt legacy TemplateDefault during migration."
+        },
+        {
+            "selector": {
+                "keys": [
+                    "body_default_class",
+                    "breadcrumbs",
+                    "favicon",
+                    "footer_text",
+                    "logo",
+                    "logo_mini",
+                    "menu_top",
+                    "show_footer",
+                    "show_mode",
+                    "show_version",
+                    "useHasManyLocalCard",
+                    "useRelationCard",
+                    "useWysiwygCard",
+                    "version_text"
+                ]
+            },
+            "status": "theme-owned",
+            "owner": "theme",
+            "contract": "Keep the key and pass its value to the selected theme unchanged. Users continue to provide theme-specific classes directly; no semantic class resolver is introduced."
+        },
+        {
+            "selector": {
+                "prefix": "wysiwyg"
+            },
+            "status": "unchanged",
+            "owner": "feature:wysiwyg",
+            "contract": "Keep editor selection and nested vendor configuration. Keys without current consumers remain preserved until a separate editor audit proves they can be deprecated."
+        },
+        {
+            "selector": {
+                "prefix": "wysiwyg_cdn"
+            },
+            "status": "unchanged",
+            "owner": "feature:wysiwyg",
+            "contract": "Preserve currently unused CDN settings until a separate editor audit proves they can be deprecated or removed."
+        }
+    ],
+    "legacyKeys": [
+        {
+            "key": "show_editor",
+            "source": "D:/domains/laluna.kit/config/sleeping_owl.php",
+            "status": "deprecated",
+            "owner": "core:env-editor",
+            "replacement": "enable_editor",
+            "contract": "When enable_editor is absent, normalize show_editor to enable_editor and emit a deprecation notice for the major migration window."
+        },
+        {
+            "key": "policies_namespace",
+            "source": "src/Providers/AdminSectionsServiceProvider.php",
+            "status": "unchanged",
+            "owner": "core:policies",
+            "contract": "Add the existing implicit default to package defaults; old configs may omit it and continue using the runtime fallback."
+        }
+    ],
+    "plannedKeys": [
+        {
+            "key": "sidebar_background_color",
+            "status": "theme-owned",
+            "owner": "theme",
+            "default": null,
+            "contract": "Validated optional color sets --soa-sidebar-bg; null uses the selected theme default without a frontend rebuild."
+        }
+    ]
+}
