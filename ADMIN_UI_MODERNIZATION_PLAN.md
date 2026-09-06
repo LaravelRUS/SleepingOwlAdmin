@@ -3,8 +3,8 @@
 ## Статус и границы
 
 - Статус: выполняется.
-- Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: подготовить fixtures старого полного и минимального config на основе утверждённой migration matrix.
+- Текущий этап: **Этап 1 — страховочная сетка тестов**.
+- Точка возобновления: добавить Vitest для чистых JavaScript modules и сериализации данных.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -491,7 +491,7 @@ No-build consumer contract является release-blocking:
 - [x] Снять обезличенный inventory реального read-only проекта Laluna как источник сценариев для compatibility tests, документации и generator stubs.
 - [x] Составить полный machine-readable inventory top-level/nested config keys и найти их consumers в PHP, Blade и JavaScript.
 - [x] Заполнить config migration matrix (`unchanged`, `same key/new implementation`, `theme-owned`, `deprecated`, `removed`) с правилом сохранения по умолчанию.
-- [ ] Подготовить fixture старого опубликованного конфига и fixture минимального конфига с отсутствующими новыми ключами.
+- [x] Подготовить fixture старого опубликованного конфига и fixture минимального конфига с отсутствующими новыми ключами.
 
 Критерий завершения: решения записаны, зависимости воспроизводимы, набор эталонных сценариев согласован.
 
@@ -919,3 +919,5 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / reference project | `D:\domains\laluna.kit` принят только для чтения; снят обезличенный inventory sections/forms/widgets/config/custom assets/Vue/jQuery для будущих docs, fixtures и generator stubs | текущий commit |
 | 2026-09-06 | Этап 0 / config inventory | Добавлен воспроизводимый JSON inventory: 59 top-level/113 named keys, прямые и parent-scope consumers, 3 namespace reads, 7 derived JS values; отдельно выявлен отсутствующий в published config ключ `policies_namespace` | текущий commit |
 | 2026-09-06 | Этап 0 / config matrix | Все 113 current config paths получили ровно один проверяемый статус: 70 unchanged, 29 same key/new implementation, 14 theme-owned, 0 removed; отдельно записаны legacy `show_editor`, implicit `policies_namespace` и новый `sidebar_background_color` | текущий commit |
+| 2026-09-06 | Этап 0 / config fixtures | Добавлены обезличенный full legacy fixture с 49 top-level keys/`show_editor`/KodiCMS aliases и minimal fixture из одного ключа; invariants проверяются отдельной командой | текущий commit |
+| 2026-09-06 | Этап 0 / завершение | Все решения, inventories, reference scenarios, dependency/asset baselines, config matrix и fixtures зафиксированы; точка возобновления перенесена на Vitest этапа 1 | текущий commit |

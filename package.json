@@ -10,7 +10,8 @@
         "prod": "mix --production",
         "baseline:frontend": "node scripts/modernization/capture-frontend-baseline.mjs",
         "baseline:config": "php scripts/modernization/capture-config-inventory.php",
-        "baseline:config:validate": "php scripts/modernization/validate-config-migration-matrix.php"
+        "baseline:config:validate": "php scripts/modernization/validate-config-migration-matrix.php",
+        "baseline:config:fixtures:validate": "php scripts/modernization/validate-config-fixtures.php"
     },
     "dependencies": {
         "@flowjs/flow.js": "^2.14.1",
