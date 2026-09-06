@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: зафиксировать исключения color literals и dark-mode strategy.
+- Точка возобновления: выбрать replacements для legacy UI plugins.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -76,6 +76,19 @@ resources/frontend/
 - Theme-specific feature presentation хранится рядом с темой либо в явном adapter entry, но не возвращается в generic feature stylesheet.
 - `tailwind.input.css` содержит только необходимые Tailwind/PostCSS directives/config и считается build-tool input; все написанные вручную overrides остаются в `theme.scss`. Generated Tailwind CSS существует только в output и вручную не редактируется.
 - Текущие `resources/assets/scss/admin-app.scss`, глобальные `_variables.scss`/`colors.scss` и component aggregators разбираются по этим владельцам постепенно; монолит удаляется после parity обеих тем.
+
+Color literals и dark mode:
+
+- first-party color literals разрешены только в `_colors.scss`; component/theme files используют Sass variables или `var(--soa-*)`;
+- `transparent`, `currentColor`, `inherit`, `initial`, `unset` и CSS system colors разрешены локально, поскольку не создают новую palette value;
+- alpha/gradient calculations над централизованной переменной разрешены локально; новый hex/rgb/hsl literal внутри такого выражения запрещён;
+- vendor sources, generated Tailwind CSS и compiled output исключаются из literal rule и не редактируются вручную;
+- first-party monochrome SVG использует `currentColor`; фиксированные literals допустимы только в явно помеченных multicolor brand/logo assets, где цвет является содержимым изображения, а не UI token;
+- действительно динамический пользовательский цвет сначала валидируется PHP value object, затем передаётся только в allowlisted `--soa-*` custom property; произвольный style fragment из config не принимается;
+- light defaults объявляются в `:root`, dark values — только в `:root[data-soa-color-scheme="dark"]`; components не дублируются отдельными `.dark-*` blocks;
+- JavaScript меняет только `data-soa-color-scheme` и сохранённое предпочтение (`light`, `dark`, `system`), но не назначает отдельные цвета;
+- theme variables задают default `--soa-sidebar-bg`, а валидированный `sidebar_background_color` переопределяет его с более высоким cascade priority для обоих color schemes; `null` не выводит override;
+- Stylelint проверяет first-party `.scss` и допускает исключения только по точным generated/vendor/brand paths, без глобального disable.
 
 ## Важное техническое ограничение
 
@@ -397,7 +410,7 @@ No-build consumer contract является release-blocking:
 - [x] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
 - [x] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
 - [x] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
-- [ ] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
+- [x] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
 - [ ] Выбрать replacements для Select2, date/time controls и lightbox.
 - [ ] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
 - [ ] Сохранить baseline production bundle size и перечень лицензий.
@@ -777,3 +790,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / Vue strategy | Выбран короткий `@vue/compat` этап с миграцией по одному island и обязательным удалением compat до release; baseline уточнён до 9 `inline-template` и 7 global components | текущий commit |
 | 2026-09-06 | Этап 0 / Vue props | Зафиксирован typed `data-*` contract для скаляров и безопасный `application/json` payload через `Js::encode()` для сложных props; выполнение server data как template/code запрещено | текущий commit |
 | 2026-09-06 | Этап 0 / Sass structure | Определены независимые Sass entries и локальные `_variables.scss`/`_colors.scss` для core/features/themes; first-party modules переходят на `@use`/`@forward`, Tailwind output остаётся generated exception | текущий commit |
+| 2026-09-06 | Этап 0 / colors | Color literals ограничены `_colors.scss` и узкими vendor/generated/brand exceptions; dark mode меняет только `--soa-*` в root selector, sidebar config проходит validation | текущий commit |
