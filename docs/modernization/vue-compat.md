@@ -110,6 +110,14 @@ The one `ATTR_ENUMERATED_COERCION` override preserves the package's explicit
 development warning. Browser tests cover single, multiple and taggable fields
 and fail on any unlisted Vue warning.
 
+### HTTP
+
+`vue-resource` and the global `Vue.http` interceptor have been removed. The
+package had no `$http` consumers, so no compatibility facade is retained.
+Vue islands use the existing `Admin.Http` service, which is backed by native
+Fetch, supplies same-origin credentials and CSRF/request headers, preserves
+caller headers and throws a typed `HttpError` for unsuccessful responses.
+
 ## Verification and change policy
 
 For every compat removal:

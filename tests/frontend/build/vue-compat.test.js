@@ -81,6 +81,17 @@ describe('Vue 3 compat dependencies', () => {
         expect(packageJson.devDependencies).not.toHaveProperty('vue-template-compiler')
         expect(packageLock.packages).not.toHaveProperty('node_modules/vue-template-compiler')
     })
+
+    it('uses Admin.Http instead of vue-resource', () => {
+        const legacyPlugin = readSource('resources/assets/js_owl/libs/vuejs.js')
+
+        expect(packageJson.dependencies).not.toHaveProperty('vue-resource')
+        expect(packageLock.packages).not.toHaveProperty('node_modules/vue-resource')
+        expect(legacyPlugin).not.toMatch(/vue-resource|Vue\.http|\$http/)
+        expect(readSource('resources/frontend/core/runtime/admin-core.js')).toContain(
+            'Http: createHttpClient',
+        )
+    })
 })
 
 describe('explicit Vue compatibility boundary', () => {
