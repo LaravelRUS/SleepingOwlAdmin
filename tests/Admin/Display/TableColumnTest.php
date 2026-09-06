@@ -5,14 +5,13 @@ use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Display\TableColumn;
 
+class ConcreteTableColumn extends TableColumn
+{
+}
+
 class TableColumnTest extends TestCase
 {
     use \SleepingOwl\Tests\AssetsTesterTrait;
-
-    public function tearDown(): void
-    {
-        m::close();
-    }
 
     /**
      * @param  null  $label
@@ -22,7 +21,7 @@ class TableColumnTest extends TestCase
      */
     protected function getColumn($label = null)
     {
-        return $this->getMockForAbstractClass(TableColumn::class, [$label]);
+        return new ConcreteTableColumn($label);
     }
 
     /**
@@ -228,8 +227,6 @@ class TableColumnTest extends TestCase
         $columns = $this->app['sleeping_owl.table.column'];
 
         foreach ($columns->getAliases() as $class) {
-            $column = $this->createMock($class);
-
             $reflection = new ReflectionClass($class);
 
             if ($reflection->isAbstract()) {
@@ -239,7 +236,7 @@ class TableColumnTest extends TestCase
             $property = $reflection->getProperty('view');
             $property->setAccessible(true);
 
-            $this->assertNotNull($property->getValue($column), $class);
+            $this->assertNotNull($property->getDefaultValue(), $class);
         }
     }
 }

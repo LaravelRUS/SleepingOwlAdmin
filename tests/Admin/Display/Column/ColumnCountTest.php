@@ -4,11 +4,6 @@ use Mockery as m;
 
 class ColumnCountTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string  $name
      * @param  string|null  $label

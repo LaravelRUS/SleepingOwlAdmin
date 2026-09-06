@@ -4,11 +4,6 @@ use Mockery as m;
 
 class ColumnCheckboxTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string|null  $label
      * @return \SleepingOwl\Admin\Display\Column\Checkbox

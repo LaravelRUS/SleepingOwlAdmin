@@ -6,11 +6,6 @@ use SleepingOwl\Admin\Repositories\BaseRepository;
 
 class BaseRepositoryTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string  $model
      * @return BaseRepository

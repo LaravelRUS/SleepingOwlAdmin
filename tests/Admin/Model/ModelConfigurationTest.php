@@ -7,11 +7,6 @@ use SleepingOwl\Admin\Model\ModelConfiguration;
 
 class ModelConfigurationTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string  $class
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -20,7 +15,7 @@ class ModelConfigurationTest extends TestCase
      */
     protected function getConfiguration($class = ModelConfigurationTestModel::class)
     {
-        return $this->getMockForAbstractClass(ModelConfiguration::class, [$this->app, $class]);
+        return new ModelConfiguration($this->app, $class);
     }
 
     /**

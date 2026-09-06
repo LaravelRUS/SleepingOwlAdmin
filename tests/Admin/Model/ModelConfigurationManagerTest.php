@@ -4,13 +4,49 @@ use Mockery as m;
 use SleepingOwl\Admin\Contracts\Navigation\PageInterface;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
 
-class ModelConfigurationManagerTest extends TestCase
+class ConcreteModelConfigurationManager extends ModelConfigurationManager
 {
-    public function tearDown(): void
+    private $breadcrumbs;
+
+    public function getBreadCrumbs()
     {
-        m::close();
+        return $this->breadcrumbs ??= collect();
     }
 
+    public function addBreadCrumb($breadcrumb)
+    {
+        $this->getBreadCrumbs()->push($breadcrumb);
+
+        return $this;
+    }
+
+    public function fireDisplay()
+    {
+    }
+
+    public function fireCreate()
+    {
+    }
+
+    public function fireEdit($id)
+    {
+    }
+
+    public function fireDelete($id)
+    {
+    }
+
+    public function fireDestroy($id)
+    {
+    }
+
+    public function fireRestore($id)
+    {
+    }
+}
+
+class ModelConfigurationManagerTest extends TestCase
+{
     /**
      * @param  string  $class
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -19,7 +55,7 @@ class ModelConfigurationManagerTest extends TestCase
      */
     protected function getConfiguration($class = ModelConfigurationManagerTestModel::class)
     {
-        return $this->getMockForAbstractClass(ModelConfigurationManager::class, [$this->app, $class]);
+        return new ConcreteModelConfigurationManager($this->app, $class);
     }
 
     /**

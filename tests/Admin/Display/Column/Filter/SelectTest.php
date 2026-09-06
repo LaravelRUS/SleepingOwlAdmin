@@ -1,15 +1,9 @@
 <?php
 
-use Mockery as m;
 use SleepingOwl\Admin\Display\Column\Filter\Select;
 
 class SelectTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @return Select
      */

@@ -2,15 +2,8 @@
 
 namespace SleepingOwl\Tests\Admin\Form\Element;
 
-use Mockery as m;
-
 class PasswordTest extends \TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @covers \SleepingOwl\Admin\Form\Element\Password::getValueFromModel()
      *
@@ -21,7 +14,7 @@ class PasswordTest extends \TestCase
         $request = $this->app['request'];
         $element = new \SleepingOwl\Admin\Form\Element\Password('password', 'Password');
 
-        $session = $request->getSession();
+        $session = $request->session();
         $session->shouldReceive('getOldInput')->andReturn(null);
 
         $request->offsetSet('password', 'secret');

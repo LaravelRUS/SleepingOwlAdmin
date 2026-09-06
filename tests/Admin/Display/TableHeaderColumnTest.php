@@ -1,15 +1,9 @@
 <?php
 
-use Mockery as m;
 use SleepingOwl\Admin\Display\TableHeaderColumn;
 
 class TableHeaderColumnTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @return SleepingOwl\Admin\Display\TableHeaderColumn
      */

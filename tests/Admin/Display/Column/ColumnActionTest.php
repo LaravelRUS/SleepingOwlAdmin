@@ -1,14 +1,8 @@
 <?php
 
-use Mockery as m;
 
 class ColumnActionTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string  $name
      * @param  string|null  $title

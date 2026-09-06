@@ -1,15 +1,10 @@
 <?php
 
-use Mockery as m;
+use PHPUnit\Framework\Attributes\DataProvider;
 use SleepingOwl\Admin\Display\Column\Filter\Date;
 
 class DateTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @return Date
      */
@@ -52,6 +47,7 @@ class DateTest extends TestCase
     /**
      * @dataProvider datesProvider
      */
+    #[DataProvider('datesProvider')]
     public function test_parse_value($date, $pickerFormat, $format, $expected)
     {
         $filter = $this->getFilter();
@@ -61,7 +57,7 @@ class DateTest extends TestCase
         $this->assertEquals($expected, $filter->parseValue($date));
     }
 
-    public function datesProvider()
+    public static function datesProvider()
     {
         return [
             'db_format' => ['2016-05-23', 'd.F.Y', 'd.m.Y', '23.05.2016'],

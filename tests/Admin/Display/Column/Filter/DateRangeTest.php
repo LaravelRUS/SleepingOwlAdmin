@@ -1,15 +1,10 @@
 <?php
 
-use Mockery as m;
+use PHPUnit\Framework\Attributes\DataProvider;
 use SleepingOwl\Admin\Display\Column\Filter\DateRange;
 
 class DateRangeTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @return DateRange
      */
@@ -36,6 +31,7 @@ class DateRangeTest extends TestCase
     /**
      * @dataProvider datesProvider
      */
+    #[DataProvider('datesProvider')]
     public function test_parse_value($string, $expected)
     {
         $filter = $this->getFilter();
@@ -45,7 +41,7 @@ class DateRangeTest extends TestCase
         $this->assertEquals($expected, $filter->parseValue($string));
     }
 
-    public function datesProvider()
+    public static function datesProvider()
     {
         return [
             ['2021-01-01', ['01-01-2021']],

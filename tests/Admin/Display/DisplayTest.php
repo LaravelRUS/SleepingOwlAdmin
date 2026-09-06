@@ -14,11 +14,6 @@ class ConcreteDisplay extends Display
 
 class DisplayTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @test
      */

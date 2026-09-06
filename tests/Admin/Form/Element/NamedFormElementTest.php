@@ -3,13 +3,12 @@
 use Mockery as m;
 use SleepingOwl\Admin\Form\Element\NamedFormElement;
 
+class ConcreteNamedFormElement extends NamedFormElement
+{
+}
+
 class NamedFormElementTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string  $path
      * @param  null  $label
@@ -19,10 +18,7 @@ class NamedFormElementTest extends TestCase
      */
     protected function getElement($path = 'path', $label = null)
     {
-        return $this->getMockForAbstractClass(NamedFormElement::class, [
-            $path,
-            $label,
-        ]);
+        return new ConcreteNamedFormElement($path, $label);
     }
 
     /**
@@ -182,7 +178,7 @@ class NamedFormElementTest extends TestCase
     public function test_gets_session_value_from_request()
     {
         $request = $this->app['request'];
-        $session = $request->getSession();
+        $session = $request->session();
 
         $element = $this->getElement('key.subkey', 'Label');
         $session->shouldReceive('getOldInput')->andReturn('test');
@@ -201,7 +197,7 @@ class NamedFormElementTest extends TestCase
             'subkey1' => 'hello world',
         ]);
 
-        $session = $request->getSession();
+        $session = $request->session();
 
         $element = $this->getElement('key.subkey1', 'Label');
         $session->shouldReceive('getOldInput')->andReturn(null);
@@ -215,7 +211,7 @@ class NamedFormElementTest extends TestCase
     {
         $request = $this->app['request'];
 
-        $session = $request->getSession();
+        $session = $request->session();
         $session->shouldReceive('getOldInput')->andReturn(null);
 
         $element = $this->getElement('key.subkey', 'Label');
@@ -232,7 +228,7 @@ class NamedFormElementTest extends TestCase
     public function test_gets_value()
     {
         $request = $this->app['request'];
-        $session = $request->getSession();
+        $session = $request->session();
         $session->shouldReceive('getOldInput')->andReturn(null);
 
         $element = $this->getElement('key', 'Label');
@@ -299,7 +295,7 @@ class NamedFormElementTest extends TestCase
         $element = $this->getElement('key2.subkey', 'Label');
 
         $request = $this->app['request'];
-        $session = $request->getSession();
+        $session = $request->session();
         $session->shouldReceive('getOldInput')->andReturn(null);
 
         $this->assertEquals([

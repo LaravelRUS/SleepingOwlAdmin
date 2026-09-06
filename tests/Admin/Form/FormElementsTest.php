@@ -10,11 +10,6 @@ use SleepingOwl\Admin\Form\FormElements;
 
 class FormElementsTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  array  $elements
      * @return FormElements

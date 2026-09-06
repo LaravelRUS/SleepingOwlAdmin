@@ -3,13 +3,12 @@
 use Mockery as m;
 use SleepingOwl\Admin\Form\FormElement;
 
+class ConcreteFormElement extends FormElement
+{
+}
+
 class FormElementTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      *
@@ -17,7 +16,7 @@ class FormElementTest extends TestCase
      */
     protected function getElement()
     {
-        return $this->getMockForAbstractClass(FormElement::class);
+        return new ConcreteFormElement();
     }
 
     /**

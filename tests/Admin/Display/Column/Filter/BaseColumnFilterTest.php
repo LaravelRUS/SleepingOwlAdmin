@@ -2,17 +2,15 @@
 
 use Mockery as m;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use SleepingOwl\Admin\Contracts\Display\ColumnInterface;
 use SleepingOwl\Admin\Display\Column\Filter\BaseColumnFilter;
 
+class ConcreteBaseColumnFilter extends BaseColumnFilter
+{
+}
+
 class BaseColumnFilterTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string  $operator
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -21,7 +19,7 @@ class BaseColumnFilterTest extends TestCase
      */
     public function getFilter($operator = 'equal')
     {
-        $filter = $this->getMockForAbstractClass(BaseColumnFilter::class);
+        $filter = new ConcreteBaseColumnFilter();
 
         $filter->setOperator($operator);
 
@@ -39,6 +37,7 @@ class BaseColumnFilterTest extends TestCase
      *
      * @doesNotPerformAssertions
      */
+    #[DataProvider('sqlOperatorsProvider')]
     public function testApply($operator, $condition, $args)
     {
         $filter = $this->getFilter();
@@ -59,6 +58,7 @@ class BaseColumnFilterTest extends TestCase
     /**
      * @dataProvider sqlOperatorsProvider
      */
+    #[DataProvider('sqlOperatorsProvider')]
     public function testApplyRelated($operator, $condition, $args)
     {
         $filter = $this->getFilter();
@@ -85,7 +85,6 @@ class BaseColumnFilterTest extends TestCase
     /**
      * The literal zero is a selectable filter value (`0 => 'No'`), not "nothing selected".
      */
-    #[DoesNotPerformAssertions]
     public function testApplyKeepsZeroValue()
     {
         $column = m::mock(ColumnInterface::class);
@@ -103,7 +102,6 @@ class BaseColumnFilterTest extends TestCase
      * @param  mixed  $value
      */
     #[DataProvider('emptyValuesProvider')]
-    #[DoesNotPerformAssertions]
     public function testApplySkipsEmptyValue($value)
     {
         $column = m::mock(ColumnInterface::class);
@@ -143,7 +141,7 @@ class BaseColumnFilterTest extends TestCase
         };
     }
 
-    public function sqlOperatorsProvider()
+    public static function sqlOperatorsProvider()
     {
         return [
             'equal' => ['equal', 'where', ['columnName', '=', 'keyword']],

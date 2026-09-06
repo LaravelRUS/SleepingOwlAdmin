@@ -3,11 +3,27 @@
 use Diglactic\Breadcrumbs\Manager as BreadcrumbsManager;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
 
 class TestCase extends Orchestra\Testbench\TestCase
 {
+    use MockeryPHPUnitIntegration;
     use \SleepingOwl\Tests\Helpers\FormHelpers;
+
+    /**
+     * Services replaced by a test helper and restored before Testbench cleanup.
+     *
+     * @var array<string, mixed>
+     */
+    private array $replacedServices = [];
+
+    protected function tearDown(): void
+    {
+        $this->restoreReplacedServices();
+
+        parent::tearDown();
+    }
 
     protected function getPackageProviders($app)
     {
@@ -73,7 +89,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getRouterMock()
     {
-        return $this->app['url'] = m::mock(\Illuminate\Contracts\Routing\UrlGenerator::class);
+        return $this->replaceService('url', m::mock(\Illuminate\Contracts\Routing\UrlGenerator::class));
     }
 
     /**
@@ -81,7 +97,8 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getViewMock()
     {
-        $this->app->instance(ViewFactory::class, $mock = m::mock(ViewFactory::class));
+        $mock = m::mock(ViewFactory::class);
+        $this->replaceService(ViewFactory::class, $mock);
 
         return $mock;
     }
@@ -91,7 +108,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getCacheMock()
     {
-        return $this->app['cache'] = m::mock(\Illuminate\Cache\CacheManager::class);
+        return $this->replaceService('cache', m::mock(\Illuminate\Cache\CacheManager::class));
     }
 
     /**
@@ -99,7 +116,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getConfigMock()
     {
-        return $this->app['config'] = m::mock(\Illuminate\Config\Repository::class);
+        return $this->replaceService('config', m::mock(\Illuminate\Config\Repository::class));
     }
 
     /**
@@ -107,7 +124,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getBreadcrumbsMock()
     {
-        return $this->app['breadcrumbs'] = m::mock(BreadcrumbsManager::class);
+        return $this->replaceService('breadcrumbs', m::mock(BreadcrumbsManager::class));
     }
 
     /**
@@ -115,7 +132,10 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getTemplateMock()
     {
-        return $this->app['sleeping_owl.template'] = m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class);
+        return $this->replaceService(
+            'sleeping_owl.template',
+            m::mock(\SleepingOwl\Admin\Contracts\TemplateInterface::class)
+        );
     }
 
     /**
@@ -123,6 +143,34 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     public function getSleepingOwlMock()
     {
-        return $this->app['sleeping_owl'] = m::mock(\SleepingOwl\Admin\Admin::class);
+        return $this->replaceService('sleeping_owl', m::mock(\SleepingOwl\Admin\Admin::class));
+    }
+
+    /**
+     * Replace one container service for a test without breaking Testbench cleanup.
+     *
+     * @template TMock of object
+     * @param  class-string|string  $abstract
+     * @param  TMock  $mock
+     * @return TMock
+     */
+    private function replaceService(string $abstract, object $mock): object
+    {
+        if (! array_key_exists($abstract, $this->replacedServices)) {
+            $this->replacedServices[$abstract] = $this->app->make($abstract);
+        }
+
+        $this->app->instance($abstract, $mock);
+
+        return $mock;
+    }
+
+    private function restoreReplacedServices(): void
+    {
+        foreach ($this->replacedServices as $abstract => $service) {
+            $this->app->instance($abstract, $service);
+        }
+
+        $this->replacedServices = [];
     }
 }

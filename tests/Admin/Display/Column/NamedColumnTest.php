@@ -4,14 +4,13 @@ use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
+class ConcreteNamedColumn extends NamedColumn
+{
+}
+
 class NamedColumnTest extends TestCase
 {
     use \SleepingOwl\Tests\AssetsTesterTrait;
-
-    public function tearDown(): void
-    {
-        m::close();
-    }
 
     /**
      * @param  string  $name
@@ -22,7 +21,7 @@ class NamedColumnTest extends TestCase
      */
     protected function getColumn($name = 'test_name', $label = 'Test Label')
     {
-        return $this->getMockForAbstractClass(NamedColumn::class, [$name, $label]);
+        return new ConcreteNamedColumn($name, $label);
     }
 
     public function test_constructor()

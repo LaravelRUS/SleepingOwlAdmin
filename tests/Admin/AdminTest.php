@@ -11,11 +11,6 @@ class AdminTest extends TestCase
      */
     private $admin;
 
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     public function setUp(): void
     {
         parent::setUp();
@@ -51,18 +46,18 @@ class AdminTest extends TestCase
     public function test_register_configuration()
     {
         $configuration = $this->createMock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class);
-        $configuration->expects($this->once())->method('getClass')->will($this->returnValue(TestModel::class));
+        $configuration->expects($this->once())->method('getClass')->willReturn(TestModel::class);
 
         $this->admin->register($configuration);
 
         $configuration1 = $this->createMock(TestModelConfiguration::class);
-        $configuration1->expects($this->once())->method('getClass')->will($this->returnValue(OtherTestModel::class));
+        $configuration1->expects($this->once())->method('getClass')->willReturn(OtherTestModel::class);
         $configuration1->expects($this->once())->method('initialize');
 
         $this->admin->register($configuration1);
 
         $configuration2 = $this->createMock(TestModelConfiguration::class);
-        $configuration2->expects($this->once())->method('getClass')->will($this->returnValue(TestModel::class));
+        $configuration2->expects($this->once())->method('getClass')->willReturn(TestModel::class);
         $this->admin->register($configuration2);
 
         $this->assertCount(2, $this->admin->getModels());
@@ -74,7 +69,7 @@ class AdminTest extends TestCase
     public function test_gets_model()
     {
         $configuration = $this->createMock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class);
-        $configuration->expects($this->once())->method('getClass')->will($this->returnValue(TestModel::class));
+        $configuration->expects($this->once())->method('getClass')->willReturn(TestModel::class);
 
         $this->admin->register($configuration);
 
@@ -97,7 +92,7 @@ class AdminTest extends TestCase
      */
     public function test_set_model()
     {
-        $configuration = $this->createMock(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class);
+        $configuration = $this->createStub(\SleepingOwl\Admin\Contracts\ModelConfigurationInterface::class);
 
         $this->admin->setModel(TestClass::class, $configuration);
         $this->assertCount(1, $this->admin->getModels());

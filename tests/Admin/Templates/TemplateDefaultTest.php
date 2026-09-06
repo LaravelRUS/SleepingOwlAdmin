@@ -5,11 +5,6 @@ use SleepingOwl\Admin\Templates\TemplateDefault;
 
 class TemplateDefaultTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @return SleepingOwl\Admin\Templates\TemplateDefault
      */
@@ -45,17 +40,16 @@ class TemplateDefaultTest extends TestCase
     public function test_view()
     {
         $template = $this->getTemplate();
+        $renderedView = m::mock(\Illuminate\Contracts\View\View::class);
+
         $this->getViewMock()->shouldReceive('make')->once()->withArgs([
             'sleeping_owl::default.test', ['test', 'template' => $template], [],
-        ])->andReturn('html');
+        ])->andReturn($renderedView);
 
-        $this->assertEquals('html', $template->view(
+        $this->assertSame($renderedView, $template->view(
             'test', ['test']
         ));
 
-        $this->tearDown();
-
-        $template = $this->getTemplate();
         $view = m::mock(\Illuminate\View\View::class);
 
         $view->shouldReceive('with')->with(['test', 'template' => $template])->once()->andReturnSelf();

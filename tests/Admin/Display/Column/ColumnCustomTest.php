@@ -4,11 +4,6 @@ use Mockery as m;
 
 class ColumnCustomTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string|null  $label
      * @return \SleepingOwl\Admin\Display\Column\Custom

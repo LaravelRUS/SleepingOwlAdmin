@@ -11,11 +11,6 @@ use SleepingOwl\Admin\Display\DisplayTab;
 
 class DisplayTabTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @param  string  $label
      * @param  string  $icon

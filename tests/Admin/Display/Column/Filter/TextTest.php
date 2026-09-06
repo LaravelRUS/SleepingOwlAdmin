@@ -1,15 +1,9 @@
 <?php
 
-use Mockery as m;
 use SleepingOwl\Admin\Display\Column\Filter\Text;
 
 class TextTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * @return Text
      */
