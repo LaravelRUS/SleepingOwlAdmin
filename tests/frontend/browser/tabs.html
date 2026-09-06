@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="tabs-token" />
+        <title>Tabs browser fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'tabs',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: true,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', save: 'Save', yes: 'Yes' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: { error: 'Request failed', no_action: 'No action' },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <main>
+            <div class="nav nav-tabs" id="primary-list" role="tablist">
+                <a
+                    id="overview-tab"
+                    class="nav-link active"
+                    data-soa-tab
+                    href="#overview-panel"
+                    aria-controls="overview-panel"
+                    aria-selected="true"
+                    >Overview</a
+                >
+                <a
+                    id="details-tab"
+                    class="nav-link"
+                    data-toggle="tab"
+                    href="#details-panel"
+                    aria-controls="details-panel"
+                    aria-selected="false"
+                    >Details</a
+                >
+            </div>
+            <div class="tab-content">
+                <section class="tab-pane active" id="overview-panel">Overview panel</section>
+                <section class="tab-pane" id="details-panel">Details panel</section>
+            </div>
+
+            <div data-soa-tablist id="keyboard-list" role="tablist">
+                <button data-soa-tab id="first-keyboard-tab" aria-controls="first-keyboard-panel">
+                    First keyboard tab
+                </button>
+                <button
+                    data-soa-tab
+                    id="disabled-keyboard-tab"
+                    aria-controls="disabled-keyboard-panel"
+                    aria-disabled="true"
+                >
+                    Disabled keyboard tab
+                </button>
+                <button data-soa-tab id="last-keyboard-tab" aria-controls="last-keyboard-panel">
+                    Last keyboard tab
+                </button>
+            </div>
+            <section id="first-keyboard-panel">First keyboard panel</section>
+            <section id="disabled-keyboard-panel">Disabled keyboard panel</section>
+            <section id="last-keyboard-panel">Last keyboard panel</section>
+        </main>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__tabEvents = []
+            window.__bootstrapTabEvents = []
+            ;['tab:hidden', 'tab:shown'].forEach((name) => {
+                document.addEventListener(name, (event) => {
+                    window.__tabEvents.push({ id: event.target.id, name })
+                })
+            })
+            ;['bootstrap::tab::hidden', 'bootstrap::tab::shown'].forEach((name) => {
+                Admin.Events.on(name, (id) => window.__bootstrapTabEvents.push({ id, name }))
+            })
+            window.__jqueryTabEvents = 0
+            window.jQuery(document).on('shown.bs.tab', () => window.__jqueryTabEvents++)
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+    </body>
+</html>

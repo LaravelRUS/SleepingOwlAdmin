@@ -112,7 +112,7 @@ class LegacyThemePresentationTest extends TestCase
 
         $this->assertContainsAll($html, [
             'class="nav-item nav-link active user-tab"',
-            'data-toggle="tab"',
+            'data-soa-tab',
             'data-contract="tab"',
             'href="#nav-orders"',
         ]);

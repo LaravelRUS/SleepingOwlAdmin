@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-soa-color-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script>
+            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
+            const supported = ['legacy-adminlte', 'tailwind']
+            if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
+
+            for (const href of [
+                `/public/default/css/themes/${theme}.css`,
+                `/public/default/css/features/tabs/themes/${theme}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
+        </script>
+    </head>
+    <body>
+        <div data-soa-tablist role="tablist">
+            <a data-soa-tab href="#one" class="active">One</a>
+            <a data-soa-tab href="#two">Two</a>
+        </div>
+        <section id="one">One panel</section>
+        <section id="two" hidden>Two panel</section>
+    </body>
+</html>

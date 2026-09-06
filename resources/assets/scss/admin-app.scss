@@ -3,6 +3,7 @@
 @use '../../frontend/features/forms/styles/custom-properties' as form-properties;
 @use '../../frontend/features/lightbox/styles/legacy' as legacy-lightbox-driver;
 @use '../../frontend/features/lightbox/themes/legacy-adminlte/styles/legacy' as legacy-lightbox;
+@use '../../frontend/features/tabs/themes/legacy-adminlte/styles/legacy' as legacy-tabs;
 @use '../../frontend/features/table/themes/legacy-adminlte/styles/legacy' as legacy-datatables;
 @use '../../frontend/features/tree/themes/legacy-adminlte/styles/legacy' as legacy-tree;
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
@@ -22,6 +23,7 @@
 @import "addition";
 @include legacy-lightbox-driver.styles;
 @include legacy-lightbox.styles;
+@include legacy-tabs.styles;
 @include legacy-datatables.styles;
 @include legacy-tree.styles;
 @include form-files.styles(

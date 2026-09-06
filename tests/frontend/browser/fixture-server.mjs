@@ -49,6 +49,12 @@ const staticRoutes = new Map([
         '/lightbox-presentation',
         [join(browserDirectory, 'lightbox-presentation.html'), 'text/html; charset=utf-8'],
     ],
+    ['/tabs', [join(browserDirectory, 'tabs.html'), 'text/html; charset=utf-8']],
+    ['/tabs-modern', [join(browserDirectory, 'tabs-modern.html'), 'text/html; charset=utf-8']],
+    [
+        '/tabs-presentation',
+        [join(browserDirectory, 'tabs-presentation.html'), 'text/html; charset=utf-8'],
+    ],
     ['/trees', [join(browserDirectory, 'trees.html'), 'text/html; charset=utf-8']],
     [
         '/tree-presentation',
@@ -72,6 +78,10 @@ const staticRoutes = new Map([
     [
         '/public/default/js/admin-core.js',
         [join(projectRoot, 'public', 'default', 'js', 'admin-core.js'), 'text/javascript'],
+    ],
+    [
+        '/public/default/js/features/tabs.js',
+        [join(projectRoot, 'public', 'default', 'js', 'features', 'tabs.js'), 'text/javascript'],
     ],
     [
         '/public/default/js/admin-app.js',
@@ -142,6 +152,38 @@ const staticRoutes = new Map([
                 'css',
                 'features',
                 'lightbox',
+                'themes',
+                'tailwind.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/tabs/themes/legacy-adminlte.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'tabs',
+                'themes',
+                'legacy-adminlte.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/tabs/themes/tailwind.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'tabs',
                 'themes',
                 'tailwind.css',
             ),

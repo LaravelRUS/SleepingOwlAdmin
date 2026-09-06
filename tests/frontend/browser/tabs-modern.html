@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="tabs-modern-token" />
+        <script>
+            window.GlobalConfig = { state_tabs: false }
+        </script>
+    </head>
+    <body>
+        <main>
+            <div data-soa-tablist role="tablist">
+                <button
+                    class="active"
+                    data-soa-tab
+                    id="modern-first-tab"
+                    aria-controls="modern-first-panel"
+                >
+                    First
+                </button>
+                <button data-soa-tab id="modern-second-tab" aria-controls="modern-second-panel">
+                    Second
+                </button>
+            </div>
+            <section id="modern-first-panel">First panel</section>
+            <section id="modern-second-panel">Second panel</section>
+        </main>
+        <script src="/public/default/js/admin-core.js"></script>
+        <script src="/public/default/js/features/tabs.js"></script>
+    </body>
+</html>

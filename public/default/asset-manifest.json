@@ -108,6 +108,36 @@
                         }
                     ]
                 },
+                "feature:tabs": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/tabs.js",
+                            "version": "aae3e59064b6d0177cbcd9d712db2bdb",
+                            "checksum": "sha256:c347c9d8f496ee4bbdeeb359955fafb4a7b5052931f5bca62f8436d49afe9def"
+                        }
+                    ],
+                    "styles": []
+                },
+                "feature:tabs:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/tabs/themes/legacy-adminlte.css",
+                            "version": "44bbb507c57cc5cf724f8c30357b956f",
+                            "checksum": "sha256:90236fc26360880bc649ba75e93fab28e4aea4f7ccbb887c11d8d28038893356"
+                        }
+                    ]
+                },
+                "feature:tabs:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/tabs/themes/tailwind.css",
+                            "version": "529eb0a5cdf56a07415db263904561c0",
+                            "checksum": "sha256:c258e38faaa74d33e80bea263eb2e0c2d3c6374cc573af141ce7794a7cad2ee1"
+                        }
+                    ]
+                },
                 "feature:tree": {
                     "scripts": [
                         {
@@ -284,6 +314,36 @@
                         }
                     ]
                 },
+                "feature:tabs": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/tabs.js",
+                            "version": "10e3d29b089847abe21942f2b84129ca",
+                            "checksum": "sha256:5d6669678256b34aa4b0186fae4aa70afc997faf2bf40394674a0d74914ace05"
+                        }
+                    ],
+                    "styles": []
+                },
+                "feature:tabs:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/tabs/themes/legacy-adminlte.css",
+                            "version": "764782e13dafbfc7346d5111d4d375f3",
+                            "checksum": "sha256:4951b9ea5eb46b0ed62fd7528da0eac62bbeb21c9a4ed20452a8b78f843fb4a6"
+                        }
+                    ]
+                },
+                "feature:tabs:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/tabs/themes/tailwind.css",
+                            "version": "318d944d8fad675ae4e766b24744c2f1",
+                            "checksum": "sha256:4a481a7339f29ebb0679fe47378e1ecce85e6f546fbfd70c175887dc010b43af"
+                        }
+                    ]
+                },
                 "feature:tree": {
                     "scripts": [
                         {
@@ -355,5 +415,5 @@
             }
         }
     },
-    "build_id": "sha256:557a78a24b04e32988248292d824de8df02c757721de0ba64f378fbf5a98281f"
+    "build_id": "sha256:d6add9f1b521d6cc158305143419802aed37d4a7c0db76b0e8d0b9e780f2015a"
 }

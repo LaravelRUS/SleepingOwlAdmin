@@ -52,6 +52,11 @@
                 "output": "js/features/table.js"
             },
             {
+                "logicalId": "feature:tabs",
+                "source": "resources/frontend/features/tabs/browser.js",
+                "output": "js/features/tabs.js"
+            },
+            {
                 "logicalId": "feature:tree",
                 "source": "resources/frontend/features/tree/index.js",
                 "output": "js/features/tree.js"
@@ -112,6 +117,16 @@
                 "logicalId": "feature:lightbox:theme:tailwind",
                 "source": "resources/frontend/features/lightbox/themes/tailwind/styles/lightbox-tailwind.scss",
                 "output": "css/features/lightbox/themes/tailwind.css"
+            },
+            {
+                "logicalId": "feature:tabs:theme:legacy-adminlte",
+                "source": "resources/frontend/features/tabs/themes/legacy-adminlte/styles/tabs-adminlte.scss",
+                "output": "css/features/tabs/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:tabs:theme:tailwind",
+                "source": "resources/frontend/features/tabs/themes/tailwind/styles/tabs-tailwind.scss",
+                "output": "css/features/tabs/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:tree:theme:legacy-adminlte",

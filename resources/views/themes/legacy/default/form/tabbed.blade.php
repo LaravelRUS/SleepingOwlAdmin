@@ -13,7 +13,7 @@
                 @endif
                 <li role="presentation" {!! ($active == $label) ? 'class="active"' : '' !!}>
                     <a href="#{{ md5($label) }}" aria-controls="{{ md5($label) }}" role="tab"
-                       data-toggle="tab">{{ $label }}</a>
+                       data-soa-tab>{{ $label }}</a>
                 </li>
             @endforeach
         </ul>

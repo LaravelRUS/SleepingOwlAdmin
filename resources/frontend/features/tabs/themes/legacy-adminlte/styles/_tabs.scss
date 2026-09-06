@@ -1,0 +1,33 @@
+@mixin styles {
+    [data-soa-tablist],
+    [role='tablist'] {
+        display: flex;
+        gap: var(--soa-tabs-gap);
+        border-block-end: var(--soa-tabs-border-width) solid var(--soa-tabs-border);
+    }
+
+    [data-soa-tab],
+    [data-toggle='tab'] {
+        margin-block-end: calc(-1 * var(--soa-tabs-border-width));
+        padding: var(--soa-tabs-padding-block) var(--soa-tabs-padding-inline);
+        border: var(--soa-tabs-border-width) solid transparent;
+        border-start-start-radius: var(--soa-tabs-radius);
+        border-start-end-radius: var(--soa-tabs-radius);
+        color: var(--soa-tabs-text);
+        text-decoration: none;
+    }
+
+    [data-soa-tab].active,
+    [data-toggle='tab'].active {
+        border-color: var(--soa-tabs-border) var(--soa-tabs-border)
+            var(--soa-tabs-active-surface);
+        background: var(--soa-tabs-active-surface);
+        color: var(--soa-tabs-active-text);
+    }
+
+    [data-soa-tab]:focus-visible,
+    [data-toggle='tab']:focus-visible {
+        outline: var(--soa-tabs-focus-width) solid var(--soa-tabs-focus);
+        outline-offset: calc(-1 * var(--soa-tabs-focus-width));
+    }
+}

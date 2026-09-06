@@ -55,6 +55,11 @@ describe('frontend build entries', () => {
         expect(modernEntry(logicalId, 'styles')).toBeDefined()
     })
 
+    it('keeps behavior-only tabs free of a generic presentation stylesheet', () => {
+        expect(modernEntry('feature:tabs', 'scripts')).toBeDefined()
+        expect(modernEntry('feature:tabs', 'styles')).toBeUndefined()
+    })
+
     it('keeps modern source ownership aligned with logical ids', () => {
         Object.values(entries.modern)
             .flat()
@@ -105,6 +110,18 @@ describe('lightbox presentation entries', () => {
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:lightbox:theme:${theme}`
+
+            expect(modernEntry(logicalId, 'styles')).toBeDefined()
+            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+        },
+    )
+})
+
+describe('tabs presentation entries', () => {
+    it.each(['legacy-adminlte', 'tailwind'])(
+        'publishes the %s adapter as an independent stylesheet',
+        (theme) => {
+            const logicalId = `feature:tabs:theme:${theme}`
 
             expect(modernEntry(logicalId, 'styles')).toBeDefined()
             expect(modernEntry(logicalId, 'scripts')).toBeUndefined()

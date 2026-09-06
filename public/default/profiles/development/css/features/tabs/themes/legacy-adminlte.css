@@ -1,0 +1,52 @@
+:root {
+  --soa-tabs-text: #495057;
+  --soa-tabs-active-text: #007bff;
+  --soa-tabs-active-surface: #fff;
+  --soa-tabs-border: #dee2e6;
+  --soa-tabs-focus: #80bdff;
+  --soa-tabs-gap: 0.125rem;
+  --soa-tabs-padding-block: 0.5rem;
+  --soa-tabs-padding-inline: 1rem;
+  --soa-tabs-border-width: 1px;
+  --soa-tabs-radius: 0.25rem;
+  --soa-tabs-focus-width: 0.2rem;
+}
+
+:root[data-soa-color-scheme=dark] {
+  --soa-tabs-text: #ced4da;
+  --soa-tabs-active-text: #f8f9fa;
+  --soa-tabs-active-surface: #343a40;
+  --soa-tabs-border: #4b545c;
+}
+
+@layer sleepingowl-theme.tabs {
+  [data-soa-tablist],
+  [role=tablist] {
+    display: flex;
+    gap: var(--soa-tabs-gap);
+    border-block-end: var(--soa-tabs-border-width) solid var(--soa-tabs-border);
+  }
+  [data-soa-tab],
+  [data-toggle=tab] {
+    margin-block-end: calc(-1 * var(--soa-tabs-border-width));
+    padding: var(--soa-tabs-padding-block) var(--soa-tabs-padding-inline);
+    border: var(--soa-tabs-border-width) solid transparent;
+    border-start-start-radius: var(--soa-tabs-radius);
+    border-start-end-radius: var(--soa-tabs-radius);
+    color: var(--soa-tabs-text);
+    text-decoration: none;
+  }
+  [data-soa-tab].active,
+  [data-toggle=tab].active {
+    border-color: var(--soa-tabs-border) var(--soa-tabs-border) var(--soa-tabs-active-surface);
+    background: var(--soa-tabs-active-surface);
+    color: var(--soa-tabs-active-text);
+  }
+  [data-soa-tab]:focus-visible,
+  [data-toggle=tab]:focus-visible {
+    outline: var(--soa-tabs-focus-width) solid var(--soa-tabs-focus);
+    outline-offset: calc(-1 * var(--soa-tabs-focus-width));
+  }
+}
+
+/*# sourceMappingURL=legacy-adminlte.css.map*/
