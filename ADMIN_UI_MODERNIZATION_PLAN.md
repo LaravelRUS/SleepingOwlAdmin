@@ -3,8 +3,8 @@
 ## Статус и границы
 
 - Статус: выполняется.
-- Текущий этап: **Этап 5 — DataTables 2 feature driver**.
-- Точка возобновления: проверить sync/async displays, несколько таблиц на странице и таблицу внутри tab; AdminLTE/Tailwind presentation adapters уже вынесены в отдельные bundles.
+- Текущий этап: **Этап 6 — замена остальных jQuery-плагинов и legacy modules**.
+- Точка возобновления: заменить Select2 и AJAX select узким native/headless driver; этап 5 с DataTables 2 завершён.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -590,7 +590,7 @@ No-build consumer contract является release-blocking:
 ### Этап 5. Перейти на DataTables 2 feature driver
 
 - [x] Обновить DataTables core и extensions; отделить engine от theme presentation adapters.
-- [ ] Не создавать новый монолитный `datatables.js`: lifecycle, request/response, filters, state, selection, actions и draw hooks должны быть отдельными тестируемыми modules.
+- [x] Не создавать новый монолитный `datatables.js`: lifecycle, request/response, filters, state, selection, actions и draw hooks должны быть отдельными тестируемыми modules.
 - [x] Удалить собственный Bootstrap 3 renderer и обращения к `settings.oApi`.
 - [x] Переписать инициализацию на `new DataTable(element, options)`.
 - [x] Перевести legacy options (`sDom`, `bStateSave`, `fnDrawCallback`) на актуальные DataTables 2 options.
@@ -601,7 +601,7 @@ No-build consumer contract является release-blocking:
 - [x] Перевести draw hooks: `Admin.Events`, tooltip, lazyload, highlight и inline editor.
 - [x] Перевести actions и auto-update на `Admin.Tables.reload()`.
 - [x] Удалить DataTables presentation CSS из core; добавить отдельные presentation adapters для AdminLTE и Tailwind themes.
-- [ ] Проверить sync и async displays, несколько таблиц на странице и таблицу внутри tab.
+- [x] Проверить sync и async displays, несколько таблиц на странице и таблицу внутри tab.
 
 Критерий завершения: все существующие табличные сценарии работают на DataTables 2, а код SleepingOwlAdmin не вызывает jQuery DataTables plugin API.
 
@@ -1007,3 +1007,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 5 / native draw hooks | Draw orchestration разделён на native lazy-image и column-highlight modules, общий ordered hook и два явно legacy AdminLTE adapters. `Admin.Events` остаётся native lifecycle contract; lazy images получают browser `loading="lazy"` и source без глобального LazyLoad вызова, а подсветка использует один idempotent delegated listener и native `classList`. Bootstrap tooltip и временный X-editable изолированы под `themes/legacy-adminlte`; inline editor больше не подписан на глобальный `datatables::draw`, а таблица напрямую сканирует только собственный redraw subtree. Сам X-editable сохраняется до отдельной замены в этапе 6. Static contract запрещает jQuery в table orchestration/reusable hooks; browser gate подтверждает draw event, tooltip, lazy image, highlight и повторный inline edit. Production/development assets пересобраны, manifest content hashes валидны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 449 tests, 1708 assertions, 2 прежних TODO-skip; frontend gate: 287 Vitest + 42 Playwright | текущий commit |
 | 2026-09-06 | Этап 5 / actions и auto-update | Bulk/form actions разделены на native delegated submit, context/serialization и HTTP lifecycle modules; прежний URL-encoded wire format и `_id[]` сохранены. Успешный JSON-ответ теперь предшествует `submitted` и `Admin.Tables.reload(table)`, failure не перезагружает таблицу и публикует `failed`; lifecycle получает native `HTMLFormElement`, а старый ABI именованных callbacks с jQuery wrapper/checkbox/select изолирован только в legacy AdminLTE adapter. Auto-update больше не генерирует inline jQuery script: Blade публикует inert config host, отдельный controller на каждую таблицу вызывает только registry reload, имеет собственный timer/close teardown, а валидированный config color передаётся через `--soa-datatables-autoupdate-color`. Production/development assets пересобраны, Mix/profile MD5 и SHA-256 проверены compiled-entry tests; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 450 tests, 1711 assertions, 2 прежних TODO-skip; frontend gate: 296 Vitest + 42 Playwright | текущий commit |
 | 2026-09-06 | Этап 5 / table presentation adapters | DataTables presentation удалён из общего legacy components tree и разложен на небольшие AdminLTE/Tailwind Sass adapters с owner-local `_variables.scss`, `_colors.scss` и `_custom-properties.scss`. `feature:table` сохраняет только driver tokens; два style-only logical entries `feature:table:theme:*` добавлены в оба manifest profiles и no-build verifier теперь проверяет 12 файлов. AdminLTE adapter включает официальные Bootstrap 4/Responsive styles внутри `sleepingowl-theme.table` и повторно используется legacy aggregate без слоя; Tailwind adapter самостоятельно оформляет layout, controls, table, responsive и auto-update без Tailwind CLI. Root palette overrides намеренно остаются вне cascade layer, selectors — внутри; browser fixture проверяет реальную каскадную границу обеих тем. Production/development assets пересобраны, manifest MD5/SHA-256 валидны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 450 tests, 1711 assertions, 2 прежних TODO-skip; frontend gate: 310 Vitest + 44 Playwright | текущий commit |
+| 2026-09-06 | Этап 5 / sync, async, tabs и завершение | Browser fixture одновременно поднимает две независимые async-таблицы и server-rendered sync-таблицу; локальные order/search не создают HTTP-запросов, а повторный вызов legacy module сохраняет те же adapters и engines. Отдельный сценарий инициализирует DataTables 2 внутри скрытой вкладки, затем проверяет видимость, ненулевую геометрию колонок и локальный поиск после открытия; подтверждённой потребности в лишнем `columns.adjust()` coordinator нет. Static scan не находит вызовов jQuery DataTables plugin API в first-party runtime. Этап 5 закрыт. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; локальный PHP gate: 450 tests, 1687 assertions, 2 прежних TODO-skip и 8 environment-skip без PDO SQLite; frontend gate: 310 Vitest + 46 Playwright | текущий commit |

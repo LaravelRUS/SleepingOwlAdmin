@@ -13,6 +13,8 @@ const filterStateKeys = {
     secondary: 'Filters_/legacy-datatables::secondary-table-fixture',
 }
 
+const mixedTableIds = ['legacy-table', 'secondary-table', 'sync-table']
+
 function capturePageErrors(page) {
     const errors = []
     page.on('pageerror', (error) => errors.push(error.message))
@@ -72,6 +74,35 @@ async function readScopedFilterState(page) {
 
 function latest(items) {
     return items.at(-1)
+}
+
+async function rememberTableAdapters(page) {
+    return page.evaluate((ids) => {
+        const tables = ids.map((id) => globalThis.document.getElementById(id))
+        globalThis.__fixtureTableAdapters = tables.map((table) =>
+            globalThis.Admin.Tables.get(table),
+        )
+
+        return {
+            count: globalThis.Admin.Tables.all().length,
+            registered: globalThis.__fixtureTableAdapters.every(Boolean),
+        }
+    }, mixedTableIds)
+}
+
+async function repeatTableBoot(page) {
+    return page.evaluate((ids) => {
+        globalThis.Admin.Modules.call('display.datatables')
+        const tables = ids.map((id) => globalThis.document.getElementById(id))
+
+        return {
+            count: globalThis.Admin.Tables.all().length,
+            sameAdapters: tables.every(
+                (table, index) =>
+                    globalThis.Admin.Tables.get(table) === globalThis.__fixtureTableAdapters[index],
+            ),
+        }
+    }, mixedTableIds)
 }
 
 test.beforeEach(async ({ request }) => {
@@ -247,6 +278,59 @@ test('filter state and clear controls stay scoped to their table', async ({ page
     await expect(page.locator('#secondary-table tbody tr')).toHaveCount(2)
     await expect(page.locator('#text-filter')).toHaveValue('')
     await expect(page.locator('#secondary-text-filter')).toHaveValue('Bob')
+})
+
+test('sync and async tables mount independently without duplicate engines', async ({
+    page,
+    request,
+}) => {
+    await openFixture(page, '?multiple=1&sync=1')
+    await expect(page.locator('#secondary-table tbody tr')).toHaveCount(2)
+    await expect(page.locator('#sync-table tbody tr')).toHaveCount(3)
+    await expect(page.locator('#sync-table tbody tr').first()).toContainText('Gamma')
+
+    const before = await rememberTableAdapters(page)
+    expect(before).toEqual({ count: 3, registered: true })
+
+    await page.locator('#sync-table_wrapper .dt-search input').fill('Alpha')
+    await expect(page.locator('#sync-table tbody tr')).toHaveCount(1)
+    await expect(page.locator('#sync-table tbody tr').first()).toContainText('Alpha')
+    expect(await recordedRequests(request, 'datatable')).toHaveLength(2)
+
+    const after = await repeatTableBoot(page)
+
+    expect(after).toEqual({ count: 3, sameAdapters: true })
+    expect(await recordedRequests(request, 'datatable')).toHaveLength(2)
+})
+
+test('a table initialized inside a hidden tab is usable after activation', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page, '?tab=1')
+
+    const registeredWhileHidden = await page.evaluate(() => {
+        const table = globalThis.document.querySelector('#tab-table')
+
+        return globalThis.Admin.Tables.has(table)
+    })
+    expect(registeredWhileHidden).toBe(true)
+
+    await page.locator('#tab-trigger').click()
+    await expect(page.locator('#tab-table_wrapper')).toBeVisible()
+    await expect(page.locator('#tab-table tbody tr')).toHaveCount(2)
+
+    const geometry = await page.locator('#tab-table').evaluate((table) => ({
+        headers: [...table.querySelectorAll('thead th')].map(
+            (header) => header.getBoundingClientRect().width,
+        ),
+        table: table.getBoundingClientRect().width,
+    }))
+    expect(geometry.table).toBeGreaterThan(0)
+    expect(geometry.headers.every((width) => width > 0)).toBe(true)
+
+    await page.locator('#tab-table_wrapper .dt-search input').fill('Borealis')
+    await expect(page.locator('#tab-table tbody tr')).toHaveCount(1)
+    await expect(page.locator('#tab-table tbody tr').first()).toContainText('Borealis')
+    expect(pageErrors).toEqual([])
 })
 
 test('legacy positional filter state migrates to table-scoped keys', async ({ page }) => {

@@ -176,9 +176,85 @@
             </table>
         </section>
 
+        <section id="sync-fixture" class="card">
+            <h2>Server-rendered table</h2>
+            <table
+                id="sync-table"
+                class="datatables"
+                data-id="sync-table-fixture"
+                data-display-search="1"
+                data-display-dtlength="1"
+                data-attributes='{"autoWidth":false,"order":[[1,"desc"]],"pageLength":10,"responsive":false}'
+            >
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Beta</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Alpha</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Gamma</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="tab-fixture" class="card">
+            <button id="tab-trigger" type="button" aria-controls="tab-panel">Show table tab</button>
+            <div id="tab-panel" hidden>
+                <table
+                    id="tab-table"
+                    class="datatables"
+                    data-id="tab-table-fixture"
+                    data-display-search="1"
+                    data-display-dtlength="1"
+                    data-attributes='{"autoWidth":true,"order":[[0,"asc"]],"pageLength":10,"responsive":false}'
+                >
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Aurora administration workspace</td>
+                            <td>Alice</td>
+                        </tr>
+                        <tr>
+                            <td>Borealis reporting workspace</td>
+                            <td>Bob</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         <script>
-            if (!new URLSearchParams(window.location.search).has('multiple')) {
+            const fixtureFeatures = new URLSearchParams(window.location.search)
+
+            if (!fixtureFeatures.has('multiple')) {
                 document.querySelector('#secondary-fixture').remove()
+            }
+            if (!fixtureFeatures.has('sync')) {
+                document.querySelector('#sync-fixture').remove()
+            }
+            if (!fixtureFeatures.has('tab')) {
+                document.querySelector('#tab-fixture').remove()
+            } else {
+                document.querySelector('#tab-trigger').addEventListener('click', () => {
+                    document.querySelector('#tab-panel').hidden = false
+                })
             }
         </script>
 
