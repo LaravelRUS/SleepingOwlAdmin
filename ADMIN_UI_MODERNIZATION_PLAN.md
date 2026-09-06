@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: выбрать Vue 3 migration strategy.
+- Точка возобновления: выбрать контракт передачи данных в Vue islands.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -96,6 +96,18 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - использовать compiler-included Vue build только там, где временно остаётся серверный in-DOM template;
 - применить `@vue/compat` только как промежуточный инструмент и удалить его до завершения миграции.
 
+Выбрана короткая migration strategy через `@vue/compat`:
+
+- после characterization tests Vue обновляется до Vue 3 с compat build в `MODE: 2`; `COMPILER_INLINE_TEMPLATE` разрешается только для уже существующих legacy views;
+- compat mode не является новой архитектурой: новые и мигрированные widgets сразу создаются как отдельные Vue 3 islands через `createApp`;
+- миграция идёт по одному bounded widget: env editor, select/multiselect, file/image(s), затем related elements/groups;
+- для каждого island сначала фиксируются входные данные и события, затем template переносится из Blade в precompiled component, после чего удаляется соответствующий global registration/`inline-template`;
+- compat warnings учитываются как конечный backlog; новые suppressions и Vue 2 APIs после включения compat запрещены;
+- после последнего island удаляются глобальный root app, `window.Vue`, `Vue.component`, `Vue.extend`, `vue-resource`, prototype plugin и compiler-included build;
+- обязательный exit gate до release: удалить `@vue/compat` из dependencies и production bundles, переключиться на runtime-only Vue 3 и пройти поиск/тесты из acceptance matrix.
+
+Повторный inventory на 2026-09-06 нашёл 9, а не 10 использований `inline-template` в 9 Blade views, 7 глобально регистрируемых components, один глобальный `new Vue(...)`, `Vue.http` interceptor и prototype translation helper. Эти числа становятся проверяемым исходным baseline.
+
 ### Поддерживаемые браузеры
 
 Админка ориентируется на современные браузеры; Internet Explorer и legacy Edge не поддерживаются. Production target:
@@ -114,7 +126,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - `jquery` объявлен как `^3.5.1`, установленная локально версия — `3.7.1`;
 - `datatables.net` объявлен как `^1.12.1`, установленная локально версия — `1.13.11`;
 - Bootstrap — `4.6.1`, AdminLTE — `3.2.0`;
-- Vue — `2.6.14`, `vue-template-compiler` — `2.6.14`, используется устаревший `vue-resource`;
+- `vue` и `vue-template-compiler` объявлены как `^2.6.14`, локально установлены `2.7.16`; используется устаревший `vue-resource`;
 - npm lock-файл отсутствует;
 - из 73 исходных JS-файлов не менее 33 используют jQuery-style API;
 - JavaScript unit/browser test infrastructure отсутствует;
@@ -125,7 +137,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - `datatables.net-responsive` установлен, но его подключение закомментировано.
 - Vue создаётся одним глобальным `new Vue({ el: '#vueApp' })` на всей внутренней странице;
 - компоненты регистрируются через глобальные `Vue.component`/`Vue.extend`, а HTTP interceptor — через `Vue.http`;
-- в Blade найдено 10 использований удалённого в Vue 3 атрибута `inline-template`;
+- в Blade найдено 9 использований удалённого в Vue 3 атрибута `inline-template`;
 - текущие Blade/PHP views жёстко связаны с Bootstrap/AdminLTE: 113 Blade-файлов, Bootstrap-классы также создаются непосредственно в PHP form/display classes.
 - основной `config/sleeping_owl.php` содержит около 500 строк и управляет core, routes/auth, uploads, date/time, WYSIWYG, tables, UI state, template и aliases; его нельзя заменять новым минимальным конфигом целиком.
 
@@ -350,7 +362,7 @@ No-build consumer contract является release-blocking:
 - [x] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
 - [x] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
 - [x] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
-- [ ] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
+- [x] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
 - [ ] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
 - [ ] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
 - [ ] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
@@ -730,3 +742,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / packaging | Выбран единый Composer package и монорепозиторий с независимо собираемыми core/feature/theme entries; внешние custom themes могут поставляться отдельными готовыми packages | текущий commit |
 | 2026-09-06 | Этап 0 / no-build | No-build consumer UX принят как release-blocking contract и будущий CI smoke scenario без Node.js/npm; все стандартные assets обязаны входить в Composer artifact | текущий commit |
 | 2026-09-06 | Этап 0 / update command | Зафиксирован staging/validation/manifest-last протокол, `--check`, fail-fast runtime diagnostic и запрет изменения опубликованного config/application files | текущий commit |
+| 2026-09-06 | Этап 0 / Vue strategy | Выбран короткий `@vue/compat` этап с миграцией по одному island и обязательным удалением compat до release; baseline уточнён до 9 `inline-template` и 7 global components | текущий commit |
