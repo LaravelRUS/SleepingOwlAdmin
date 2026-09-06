@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: сохранить baseline production bundle size и перечень лицензий.
+- Точка возобновления: составить перечень эталонных экранов для обеих тем.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -194,6 +194,17 @@ Dependency baseline, закреплённый после составления 
 - `npm ls --depth=0` и `npm ls jquery --all` завершились с exit code `0`;
 - npm сообщает legacy peer conflict: `bootstrap-switch@3.3.4` из AdminLTE 3 требует Bootstrap 3, тогда как root использует Bootstrap 4.6.2;
 - `admin-lte@3.2.0` транзитивно устанавливает множество jQuery plugins и DataTables extensions, включая отдельные ветки DataTables 2; эти зависимости не считаются используемыми features и исчезнут вместе с монолитной AdminLTE 3 dependency.
+
+Production asset/license baseline хранится в `docs/modernization/baseline/frontend.json` и воспроизводится командой `npm run baseline:frontend`:
+
+- четыре реально загружаемых production entries занимают 2 585 357 bytes raw и 587 787 bytes gzip;
+- `admin-app.css`: 952 803 raw / 112 572 gzip bytes;
+- `admin-app.js`: 1 631 541 raw / 474 572 gzip bytes;
+- `vue.js`: 992 raw / 602 gzip bytes; `modules.js`: 21 raw / 41 gzip bytes;
+- для каждого asset сохранён SHA-256, а для отчёта — SHA-256 соответствующего `package-lock.json`;
+- license inventory содержит 869 уникальных runtime `name@version`, их declared license и признак direct dependency;
+- 12 legacy packages не объявляют license в доступной lock/package metadata и помечены `UNKNOWN`; это явный audit backlog, а не разрешение включать packages с неустановленной лицензией в release;
+- отчёт не содержит timestamp/absolute paths и при неизменных inputs генерируется без diff.
 
 Основные зоны jQuery-связности:
 
@@ -446,7 +457,7 @@ No-build consumer contract является release-blocking:
 - [x] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
 - [x] Выбрать replacements для Select2, date/time controls и lightbox.
 - [x] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
-- [ ] Сохранить baseline production bundle size и перечень лицензий.
+- [x] Сохранить baseline production bundle size и перечень лицензий.
 - [ ] Составить перечень эталонных экранов для каждой темы: layout/navigation, async table, sync table, filters, bulk actions, inline edit, tree, select, date/time, single/multiple file upload.
 - [ ] Составить полный machine-readable inventory top-level/nested config keys и найти их consumers в PHP, Blade и JavaScript.
 - [ ] Заполнить config migration matrix (`unchanged`, `same key/new implementation`, `theme-owned`, `deprecated`, `removed`) с правилом сохранения по умолчанию.
@@ -827,3 +838,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / plugin replacements | Изначально предложены Tom Select, Air Datepicker и GLightbox; выбор select пересмотрен после обсуждения | `359de337` |
 | 2026-09-06 | Этап 0 / select correction | Vue Multiselect сохранён и обновляется до стабильной Vue 3-ветки 3.5.x; Select2/AJAX/dependent behavior переносится в тот же island через отдельные composables, Tom Select исключён | текущий commit |
 | 2026-09-06 | Этап 0 / dependency lock | Добавлен npm lockfile v3; чистый `npm ci` и dependency tree проверены, зафиксированы 1376 entries и legacy Bootstrap 3 peer conflict внутри AdminLTE 3 | текущий commit |
+| 2026-09-06 | Этап 0 / asset baseline | Добавлены воспроизводимый generator и JSON baseline: 2 585 357 raw / 587 787 gzip bytes, SHA-256 assets/lock и license inventory 869 runtime packages с 12 явными `UNKNOWN` | текущий commit |
