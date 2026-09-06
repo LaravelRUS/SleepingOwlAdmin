@@ -44,7 +44,9 @@
 
           bar.animate(1.0);
           progressbar = setTimeout(autoupdate, {{ $autoupdate_timer }});
-          $('.datatables').DataTable().draw();
+          document.querySelectorAll("{{ $autoupdate_class }}").forEach((table) => {
+            Admin.Tables.reload(table);
+          });
         }
       }
 

@@ -33,6 +33,16 @@ export class TableRegistry {
         return this.adapters.get(element) ?? null
     }
 
+    require(element) {
+        const adapter = this.get(element)
+
+        if (!adapter) {
+            throw new Error('No table adapter is registered for this element.')
+        }
+
+        return adapter
+    }
+
     has(element) {
         assertElement(element)
 
@@ -41,6 +51,24 @@ export class TableRegistry {
 
     all() {
         return [...this.adapters.values()]
+    }
+
+    reload(element) {
+        return invokeAdapters(this, 'reload', element)
+    }
+
+    clearState(element) {
+        return invokeAdapters(this, 'clearState', element)
+    }
+
+    selectedRows(element) {
+        const rows = this.require(element).selectedRows()
+
+        if (!Array.isArray(rows)) {
+            throw new TypeError('Table adapter selectedRows() must return an array.')
+        }
+
+        return rows
     }
 }
 
@@ -77,4 +105,12 @@ function assertAdapterMethod(adapter, method) {
     if (typeof adapter[method] !== 'function') {
         throw new TypeError(`Table adapter must implement ${method}().`)
     }
+}
+
+function invokeAdapters(registry, method, element) {
+    if (element !== undefined) {
+        return registry.require(element)[method]()
+    }
+
+    return registry.all().map((adapter) => adapter[method]())
 }

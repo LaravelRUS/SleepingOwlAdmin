@@ -1,8 +1,11 @@
+const { findActionTable, serializeSelectedRows } = require('./action-table')
+
 Admin.Modules.register('display.actions_form', () => {
     $('.display-actions-form-wrapper form').on('submit', function (e) {
 
         e.preventDefault();
         let self = $(this);
+        const tableElement = findActionTable(this)
         let confirm = $(self).attr('data-confirm') || true;
         var result = $(self).attr('data-result') || true;
         var result_timeout = $(self).attr('data-result-timeout') || 5000;
@@ -10,7 +13,7 @@ Admin.Modules.register('display.actions_form', () => {
         var run_action = function() {
             let $datatable_wrapper = $(self).parents('.card').find('.dataTables_wrapper'),
                 $checkboxes = $datatable_wrapper.find('.adminCheckboxRow').filter(':checked'),
-                data = $(self).serialize() + '&' + $checkboxes.serialize();
+                data = $(self).serialize() + '&' + serializeSelectedRows(tableElement);
 
             let settings = {
                 url: $(self).attr('action'),

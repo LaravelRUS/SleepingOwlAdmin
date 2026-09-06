@@ -44,9 +44,17 @@
         </script>
     </head>
     <body>
+        <aside class="card" hidden>
+            <form data-type="display-actions">
+                <select class="sleepingOwlActionsStore" id="sleepingOwlActionsStore">
+                    <option value="0" selected>Decoy action</option>
+                </select>
+            </form>
+        </aside>
+
         <main class="card">
             <form data-type="display-actions" id="bulk-action-form">
-                <select class="sleepingOwlActionsStore" id="sleepingOwlActionsStore">
+                <select class="sleepingOwlActionsStore" id="bulk-action-select">
                     <option value="0">No action</option>
                     <option value="/api/action" data-method="POST" selected>Archive</option>
                 </select>
@@ -165,7 +173,7 @@
 
                     bar.animate(1)
                     timer = setTimeout(update, interval)
-                    window.jQuery('.datatables').DataTable().draw()
+                    window.Admin.Tables.reload()
                 }
 
                 document.querySelectorAll(tableSelector).forEach((table) => {

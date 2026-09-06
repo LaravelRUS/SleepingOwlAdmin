@@ -400,6 +400,15 @@ var TableRegistry = /*#__PURE__*/function () {
       return (_this$adapters$get2 = this.adapters.get(element)) !== null && _this$adapters$get2 !== void 0 ? _this$adapters$get2 : null;
     }
   }, {
+    key: "require",
+    value: function require(element) {
+      var adapter = this.get(element);
+      if (!adapter) {
+        throw new Error('No table adapter is registered for this element.');
+      }
+      return adapter;
+    }
+  }, {
     key: "has",
     value: function has(element) {
       assertElement(element);
@@ -409,6 +418,25 @@ var TableRegistry = /*#__PURE__*/function () {
     key: "all",
     value: function all() {
       return _toConsumableArray(this.adapters.values());
+    }
+  }, {
+    key: "reload",
+    value: function reload(element) {
+      return invokeAdapters(this, 'reload', element);
+    }
+  }, {
+    key: "clearState",
+    value: function clearState(element) {
+      return invokeAdapters(this, 'clearState', element);
+    }
+  }, {
+    key: "selectedRows",
+    value: function selectedRows(element) {
+      var rows = this.require(element).selectedRows();
+      if (!Array.isArray(rows)) {
+        throw new TypeError('Table adapter selectedRows() must return an array.');
+      }
+      return rows;
     }
   }]);
 }();
@@ -448,6 +476,14 @@ function assertAdapterMethod(adapter, method) {
   if (typeof adapter[method] !== 'function') {
     throw new TypeError("Table adapter must implement ".concat(method, "()."));
   }
+}
+function invokeAdapters(registry, method, element) {
+  if (element !== undefined) {
+    return registry.require(element)[method]();
+  }
+  return registry.all().map(function (adapter) {
+    return adapter[method]();
+  });
 }
 
 /***/ })

@@ -57,6 +57,44 @@ describe('TableRegistry', () => {
     })
 })
 
+describe('TableRegistry operations', () => {
+    it('runs reload and clear state for one adapter or all registered adapters', () => {
+        const registry = createTableRegistry()
+        const first = createAdapter(createElement('first'))
+        const second = createAdapter(createElement('second'))
+        first.reload.mockReturnValue('first reload')
+        second.reload.mockReturnValue('second reload')
+        first.clearState.mockReturnValue('first clear')
+        second.clearState.mockReturnValue('second clear')
+        registry.register(first)
+        registry.register(second)
+
+        expect(registry.reload(first.element)).toBe('first reload')
+        expect(registry.reload()).toEqual(['first reload', 'second reload'])
+        expect(registry.clearState(second.element)).toBe('second clear')
+        expect(registry.clearState()).toEqual(['first clear', 'second clear'])
+        expect(first.reload).toHaveBeenCalledTimes(2)
+        expect(second.reload).toHaveBeenCalledOnce()
+        expect(first.clearState).toHaveBeenCalledOnce()
+        expect(second.clearState).toHaveBeenCalledTimes(2)
+    })
+
+    it('returns selected rows for one table and diagnoses invalid adapters', () => {
+        const registry = createTableRegistry()
+        const adapter = createAdapter()
+        adapter.selectedRows.mockReturnValue(['10', '20'])
+        registry.register(adapter)
+
+        expect(registry.selectedRows(adapter.element)).toEqual(['10', '20'])
+        expect(() => registry.require(createElement('missing'))).toThrow(
+            'No table adapter is registered',
+        )
+
+        adapter.selectedRows.mockReturnValue(null)
+        expect(() => registry.selectedRows(adapter.element)).toThrow('must return an array')
+    })
+})
+
 describe('table adapter contract', () => {
     it('accepts a null engine instance when the property is explicit', () => {
         const adapter = createAdapter()
