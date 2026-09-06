@@ -326,7 +326,9 @@ No-build consumer contract является release-blocking:
 - Устаревшие hashed package files удаляются только после успешной замены. Пользовательские CSS/JS должны находиться вне package-owned asset root и никогда не удаляются этой командой.
 - Published `config/sleeping_owl.php`, application bootstrap files и custom theme package assets не перезаписываются `sleepingowl:update`.
 - Manifest содержит как минимум `schema_version`, `package_version`, `build_id`, логические entries, относительные filenames и checksums. PHP package version определяется через Composer metadata, а не дублируется вручную в config.
-- Runtime resolver проверяет manifest до render. Отсутствующий, повреждённый или несовместимый manifest вызывает специализированную диагностическую ошибку с точной командой `php artisan sleepingowl:update`; silent fallback на старые/unversioned files запрещён.
+- Runtime resolver проверяет manifest до render. Отсутствующий, повреждённый, несовместимый по schema или checksum manifest вызывает специализированную диагностическую ошибку с точной командой `php artisan sleepingowl:update`; silent fallback на unversioned files запрещён.
+- Если manifest структурно валиден и его файлы доступны, но `package_version` не совпадает с установленной Composer-версией PHP package, админка может загрузить этот последний целостный набор и обязана показать постоянное локализованное уведомление в footer с точной командой `php artisan sleepingowl:update`. Проверка выполняется один раз на request и не требует frontend-запроса.
+- Данные о mismatch принадлежат PHP asset health service, а presentation — footer partial выбранной темы: AdminLTE и Tailwind получают аккуратные собственные варианты через Sass/`--soa-*`; custom theme получает публичный status contract и сама решает разметку. PHP core не возвращает CSS-классы.
 - Добавляется `sleepingowl:update --check`: read-only проверка установленного manifest/files для deployment health check; успех и ошибка имеют стабильные exit codes.
 - Release CI проверяет идемпотентный повторный запуск update, recovery после искусственно оборванной staging copy и отсутствие изменений config/application files.
 
@@ -635,6 +637,7 @@ No-build consumer contract является release-blocking:
 - [ ] Проверить одинаковое функциональное поведение feature drivers в AdminLTE и Tailwind themes.
 - [ ] Проверить, что одновременно загружается только один theme bundle.
 - [ ] Добавить theme selection через конфигурацию и документированный service provider hook.
+- [ ] Добавить проверку версии PHP package против опубликованного asset manifest и локализованное theme-aware уведомление в footer с `php artisan sleepingowl:update`; translation keys добавить во все штатные locales с проверяемым fallback, а отсутствие предупреждения при совпадении и rendering в AdminLTE/Tailwind покрыть tests.
 - [ ] Измерить core, feature и theme bundles по отдельности.
 
 Критерий завершения: установка выбирает AdminLTE, Tailwind или custom theme без изменения core; Tailwind/custom не получают Bootstrap/AdminLTE assets транзитивно.
@@ -811,7 +814,8 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] стандартная TailwindTheme работает без пользовательского Tailwind config/content scan;
 - [ ] дополнительный CSS подключается без пересборки core; ограничения произвольных Tailwind utilities явно документированы;
 - [ ] пользовательский CSS или JS подключается отдельным asset, не пересобирая core/theme bundles;
-- [ ] отсутствующие/устаревшие published assets дают понятную диагностическую ошибку с командой обновления;
+- [ ] отсутствующие/повреждённые published assets дают понятную диагностическую ошибку с командой обновления;
+- [ ] валидные, но несовпадающие версии PHP package/assets показывают локализованное footer-уведомление в AdminLTE и Tailwind без frontend rebuild; совпадающие версии не добавляют разметку;
 - [ ] версии PHP package, asset manifest и published bundles согласованы;
 - [ ] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
 - [ ] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.

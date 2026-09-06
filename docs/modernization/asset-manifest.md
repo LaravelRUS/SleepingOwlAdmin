@@ -77,6 +77,21 @@ php artisan sleepingowl:update
 
 Silent fallback на unversioned legacy path не используется.
 
+Несовпадение `package_version` обрабатывается отдельно от повреждения. Если
+manifest и опубликованные файлы структурно валидны, PHP asset health service
+сравнивает manifest с Composer metadata один раз за request и позволяет
+отрисовать последний целостный набор. Layout при этом показывает в footer
+локализованное уведомление с точной командой
+`php artisan sleepingowl:update`. При совпадении версий дополнительная
+разметка не выводится.
+
+Core передаёт теме только immutable status data и не выбирает CSS-классы.
+AdminLTE и Tailwind оформляют уведомление своими Blade/Sass partials и
+`--soa-*` variables; custom theme может отрисовать тот же публичный status
+contract собственной разметкой. Missing/corrupt manifest, неверная schema и
+checksum mismatch остаются hard errors: для них недостаточно безопасного
+целостного набора, на котором можно показать обычный layout.
+
 ## No-build publish/update
 
 Обычный пользователь не запускает npm, Mix или Vite. Оба готовых профиля входят в Composer package и публикуются стандартными командами:
