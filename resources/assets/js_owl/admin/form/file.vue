@@ -54,8 +54,9 @@
 import { defineComponent } from 'vue'
 
 import Dropzone from '../../libs/dropzone'
-import { createFileUpload, responseErrors } from './file-upload'
+import { createFileUpload } from './file-upload'
 import { fileDownloadUrl, normalizeFileValue } from './file-value'
+import { responseErrors } from './upload-response'
 
 export default defineComponent({
     name: 'ElementFile',

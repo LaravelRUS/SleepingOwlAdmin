@@ -28,13 +28,11 @@ const legacyVueViews = [
 ]
 const legacyVueDefinitions = [
     'resources/assets/js_owl/admin/form/deselect.js',
-    'resources/assets/js_owl/admin/form/image.js',
     'resources/assets/js_owl/admin/form/images.js',
     'resources/assets/js_owl/admin/form/related/elements.js',
     'resources/assets/js_owl/admin/form/related/group.js',
 ]
 const legacyInlineTemplateViews = [
-    'resources/views/themes/legacy/default/form/element/image.blade.php',
     'resources/views/themes/legacy/default/form/element/images.blade.php',
     'resources/views/themes/legacy/default/form/element/select.blade.php',
     'resources/views/themes/legacy/default/form/element/multiselect.blade.php',
@@ -224,5 +222,24 @@ describe('precompiled Vue islands', () => {
         expect(component).not.toMatch(/\$\(|withLegacyInlineTemplate/)
         expect(dropzone).toContain('dropzoneModule.Dropzone')
         expect(dropzone).not.toContain("window.Dropzone = require('dropzone')")
+    })
+})
+
+describe('precompiled image island', () => {
+    it('mounts the image element directly without jQuery or Axios', () => {
+        const view = readSource(
+            'resources/views/themes/legacy/default/form/element/image.blade.php',
+        )
+        const component = readSource('resources/assets/js_owl/admin/form/image.vue')
+        const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
+
+        expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/image.js'))).toBe(false)
+        expect(view).toContain('data-soa-vue-component="element-image"')
+        expect(view).toContain('data-soa-vue-props=')
+        expect(view).not.toContain('inline-template')
+        expect(component).toContain('<template>')
+        expect(component).toContain('postPastedImage(Admin.Http')
+        expect(component).not.toMatch(/\$\(|axios|withLegacyInlineTemplate/)
+        expect(catalog).toContain("'element-image': asNativeVue3Component(ElementImage)")
     })
 })

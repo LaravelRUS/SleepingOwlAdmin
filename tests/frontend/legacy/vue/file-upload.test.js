@@ -3,8 +3,8 @@ import { describe, expect, it, vi } from 'vitest'
 import {
     createFileUpload,
     fileUploadOptions,
-    responseErrors,
 } from '../../../../resources/assets/js_owl/admin/form/file-upload'
+import { responseErrors } from '../../../../resources/assets/js_owl/admin/form/upload-response'
 
 function uploadConfig(overrides = {}) {
     return {

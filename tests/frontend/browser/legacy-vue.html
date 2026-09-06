@@ -97,30 +97,12 @@
                 data-soa-vue-props='{"csrfToken":"fixture-token","labels":{"browse":"Upload file","download":"Download"},"maxFileSize":2,"messages":{"confirmRemove":"Remove file?","fileTooBig":"File is too large","responseError":"Upload error"},"name":"document","readonly":false,"url":"/api/upload","value":"docs/start.pdf"}'
             ></section>
 
-            <section id="image-wrapper" data-soa-vue-app>
-                <element-image
-                    url="/api/upload"
-                    value="fixtures/pixel.svg"
-                    :readonly="false"
-                    :onlylink="false"
-                    name="avatar"
-                    inline-template
-                >
-                    <div>
-                        <img id="image-preview" v-if="has_value" :src="createdimage" alt="" />
-                        <button
-                            id="image-remove"
-                            v-if="has_value"
-                            type="button"
-                            @click.prevent="remove()"
-                        >
-                            Remove image
-                        </button>
-                        <div class="upload-button">Upload image</div>
-                        <input id="image-value" :name="name" type="hidden" :value="val" />
-                    </div>
-                </element-image>
-            </section>
+            <section
+                id="image-wrapper"
+                data-soa-vue-app
+                data-soa-vue-component="element-image"
+                data-soa-vue-props='{"assetPrefix":"","csrfToken":"fixture-token","labels":{"browse":"Upload image","download":"Download","insertLink":"Insert link","remove":"Remove image"},"maxFileSize":2,"messages":{"confirmRemove":"Remove image?","fileTooBig":"File is too large","invalidFileType":"Wrong image type","responseError":"Upload error"},"name":"avatar","onlyLink":false,"readonly":false,"url":"/api/upload","value":"fixtures/pixel.svg"}'
+            ></section>
 
             <section id="images-wrapper" data-soa-vue-app>
                 <element-images

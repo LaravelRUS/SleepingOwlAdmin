@@ -46,8 +46,8 @@ top-level `[data-soa-vue-app]` host and exposes their temporary lifecycle as
 `#vueApp` remains a legacy layout id for non-Vue DOM integrations, but it is no
 longer a Vue root. The seven package-owned component definitions are exported
 with `defineComponent` and registered from one frozen catalog on every app
-before mount. Five definitions still own runtime-compiled legacy templates;
-the env editor and file element are precompiled SFCs. The Vue Multiselect
+before mount. Four definitions still own runtime-compiled legacy templates;
+the env editor, file and image elements are precompiled SFCs. The Vue Multiselect
 compatibility wrapper is registered from the same catalog because runtime
 compilation resolves its tag in the app context. The package does not call
 global `Vue.component` or `Vue.extend`. A consumer's existing global compat
@@ -65,9 +65,9 @@ self-closing examples that must be updated during its pilot migration.
 
 ### Precompiled root contract
 
-The env editor establishes the migration contract for a precompiled island,
-and the file element follows it. A Blade view renders an empty top-level host
-with three attributes:
+The env editor establishes the migration contract for a precompiled island;
+the file and image elements follow it. A Blade view renders an empty top-level
+host with three attributes:
 
 - `data-soa-vue-app` marks lifecycle ownership;
 - `data-soa-vue-component` names a definition from the app-local catalog;
@@ -77,7 +77,7 @@ The registry resolves the component and parses the props before it creates an
 app. Unknown names, malformed JSON, arrays and scalar props fail explicitly.
 Vue receives the selected SFC and its props through `createApp(component,
 props)`; it does not compile server markup. PHP render contracts prove that
-quotes and HTML inside env and file values remain data after the Blade
+quotes and HTML inside env, file and image values remain data after the Blade
 attribute is decoded.
 
 ## Explicit allowlist
@@ -89,7 +89,7 @@ another legacy use.
 
 | Flag | Temporary owner | Removal condition |
 | --- | --- | --- |
-| `COMPILER_INLINE_TEMPLATE` | Seven remaining legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
+| `COMPILER_INLINE_TEMPLATE` | Six remaining legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
 | `COMPONENT_V_MODEL` | Legacy `v-model` in select/images views and Vue 2 draggable | Each owner uses the Vue 3 model contract |
 | `INSTANCE_SET` | Two array replacements in the images component | Ordinary reactive assignment replaces `$set` |
 | `INSTANCE_CHILDREN`, `INSTANCE_SCOPED_SLOTS`, `OPTIONS_BEFORE_DESTROY`, `RENDER_FUNCTION`, `PRIVATE_APIS` | `vuedraggable@2` compatibility surface | Images/related islands use the selected Vue 3 drag driver |
@@ -111,18 +111,23 @@ instance's server template. `withLegacyInlineTemplate()` clears that cached
 render just before each legacy instance is created. The current instance keeps
 its already selected render function.
 
-This bridge is applied only to the five remaining legacy catalog definitions. Remove
+This bridge is applied only to the four remaining legacy catalog definitions. Remove
 it together with the last `inline-template`; do not use it for new components.
 
-### File upload
+### File and image uploads
 
 The precompiled file island creates Dropzone through its constructor rather
 than the jQuery plugin. Upload option mapping and response-error normalization
 live outside the component, the hidden value has a separate pure normalizer,
 and `beforeUnmount` destroys the Dropzone instance. The actual constructor owns
-`autoDiscover = false`, fixing the old CommonJS-wrapper assignment. Image and
-images still use the legacy jQuery Dropzone bridge until their own island
-migrations.
+`autoDiscover = false`, fixing the old CommonJS-wrapper assignment.
+
+The image island uses the same constructor boundary and preserves stored-value
+`setAssetPrefix()` behavior. Preview/value resolution, Dropzone options,
+data-URL conversion, paste-buffer cleanup and transport are separate modules.
+Pasted blobs use native `Admin.Http`, temporary object URLs are revoked, and
+readonly/only-link modes do not create an uploader. Images remains on the
+legacy jQuery Dropzone bridge until its own island migration.
 
 ### Vue Multiselect
 

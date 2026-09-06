@@ -26886,10 +26886,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_libs_dropzone__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _file_upload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./file-upload */ "./resources/assets/js_owl/admin/form/file-upload.js");
 /* harmony import */ var _file_value__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./file-value */ "./resources/assets/js_owl/admin/form/file-value.js");
+/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 
 
@@ -26964,7 +26966,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.val = (0,_file_value__WEBPACK_IMPORTED_MODULE_3__.normalizeFileValue)(response === null || response === void 0 ? void 0 : response.value);
     },
     failUpload: function failUpload(response) {
-      var errors = (0,_file_upload__WEBPACK_IMPORTED_MODULE_2__.responseErrors)(response);
+      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_4__.responseErrors)(response);
       if (errors[0]) Admin.Messages.error(response === null || response === void 0 ? void 0 : response.message, errors[0]);
       this.errors = errors;
     },
@@ -27005,6 +27007,277 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     startUpload: function startUpload() {
       this.uploading = true;
       this.closeAlert();
+    }
+  }
+}));
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/assets/js_owl/admin/form/image.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/assets/js_owl/admin/form/image.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/@vue/compat/dist/vue.cjs.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../libs/dropzone */ "./resources/assets/js_owl/libs/dropzone.js");
+/* harmony import */ var _libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_libs_dropzone__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./image-paste-buffer */ "./resources/assets/js_owl/admin/form/image-paste-buffer.js");
+/* harmony import */ var _image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./image-upload */ "./resources/assets/js_owl/admin/form/image-upload.js");
+/* harmony import */ var _image_value__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./image-value */ "./resources/assets/js_owl/admin/form/image-value.js");
+/* harmony import */ var _upload_response__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./upload-response */ "./resources/assets/js_owl/admin/form/upload-response.js");
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  name: 'ElementImage',
+  props: {
+    assetPrefix: {
+      type: String,
+      "default": ''
+    },
+    csrfToken: {
+      type: String,
+      required: true
+    },
+    labels: {
+      type: Object,
+      required: true
+    },
+    maxFileSize: {
+      type: Number,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    onlyLink: Boolean,
+    readonly: Boolean,
+    url: {
+      type: String,
+      required: true
+    },
+    value: {
+      type: [String, Number],
+      "default": ''
+    }
+  },
+  data: function data() {
+    return {
+      disposed: false,
+      errors: [],
+      pasteActive: false,
+      uploader: null,
+      uploading: false,
+      useAssetPrefix: true,
+      val: (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(this.value)
+    };
+  },
+  computed: {
+    hasValue: function hasValue() {
+      return this.val.length > 0;
+    },
+    previewUrl: function previewUrl() {
+      return (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.imagePreviewUrl)(this.val, {
+        assetPrefix: this.assetPrefix,
+        createUploadUrl: function createUploadUrl(path) {
+          return Admin.Url.upload(path);
+        },
+        useAssetPrefix: this.useAssetPrefix
+      });
+    },
+    uploadClass: function uploadClass() {
+      return this.uploading ? 'fas fa-spinner fa-spin' : 'fas fa-image';
+    }
+  },
+  mounted: function mounted() {
+    if (!this.readonly && !this.onlyLink) this.mountUpload();
+  },
+  beforeUnmount: function beforeUnmount() {
+    var _this$uploader;
+    this.disposed = true;
+    (_this$uploader = this.uploader) === null || _this$uploader === void 0 || _this$uploader.destroy();
+    this.uploader = null;
+    if (this.pasteActive) (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
+  },
+  methods: {
+    acceptPastedUpload: function acceptPastedUpload(response) {
+      var _response$path;
+      var value = (_response$path = response === null || response === void 0 ? void 0 : response.path) !== null && _response$path !== void 0 ? _response$path : response === null || response === void 0 ? void 0 : response.value;
+      if (value === undefined) return;
+      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(value);
+      this.useAssetPrefix = false;
+    },
+    applyInsertedValue: function applyInsertedValue(value) {
+      if (!value) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
+      if ((0,_image_value__WEBPACK_IMPORTED_MODULE_4__.isBlobImageValue)(value)) {
+        if (this.onlyLink) return (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
+        return this.uploadPastedImage();
+      }
+      (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(this.pasteDocument());
+      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(value);
+      return true;
+    },
+    closeAlert: function closeAlert() {
+      this.errors = [];
+    },
+    completeUpload: function completeUpload(response) {
+      if ((response === null || response === void 0 ? void 0 : response.value) === undefined) return;
+      this.val = (0,_image_value__WEBPACK_IMPORTED_MODULE_4__.normalizeImageValue)(response.value);
+      this.useAssetPrefix = false;
+    },
+    failUpload: function failUpload(response) {
+      var errors = (0,_upload_response__WEBPACK_IMPORTED_MODULE_5__.responseErrors)(response);
+      if (errors[0]) Admin.Messages.error(response === null || response === void 0 ? void 0 : response.message, errors[0]);
+      this.errors = errors;
+    },
+    finishUpload: function finishUpload() {
+      this.uploading = false;
+    },
+    insert: function insert(showCurrent) {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+        var result;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.p = _context.n) {
+            case 0:
+              _this.pasteActive = true;
+              _context.p = 1;
+              _context.n = 2;
+              return Admin.Messages.cliptobuffer(_this.labels.insertLink, null, null, showCurrent ? _this.val : null, showCurrent ? _this.previewUrl : null);
+            case 2:
+              result = _context.v;
+              if (_this.disposed) {
+                _context.n = 3;
+                break;
+              }
+              _context.n = 3;
+              return _this.applyInsertedValue(result === null || result === void 0 ? void 0 : result.value);
+            case 3:
+              _context.p = 3;
+              _this.pasteActive = false;
+              return _context.f(3);
+            case 4:
+              return _context.a(2);
+          }
+        }, _callee, null, [[1,, 3, 4]]);
+      }))();
+    },
+    mountUpload: function mountUpload() {
+      this.uploader = (0,_image_upload__WEBPACK_IMPORTED_MODULE_3__.createImageUpload)((_libs_dropzone__WEBPACK_IMPORTED_MODULE_1___default()), this.$refs.uploadButton, {
+        csrfToken: this.csrfToken,
+        fileTooBigText: this.messages.fileTooBig,
+        invalidFileTypeText: this.messages.invalidFileType,
+        maxFileSize: this.maxFileSize,
+        onComplete: this.finishUpload,
+        onError: this.failUpload,
+        onSending: this.startUpload,
+        onSuccess: this.completeUpload,
+        responseErrorText: this.messages.responseError,
+        url: this.url
+      });
+    },
+    pasteDocument: function pasteDocument() {
+      return this.$el.ownerDocument;
+    },
+    remove: function remove() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+        var result;
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.n) {
+            case 0:
+              _context2.n = 1;
+              return Admin.Messages.confirm(_this2.messages.confirmRemove);
+            case 1:
+              result = _context2.v;
+              if (!_this2.disposed && result.value) _this2.val = '';
+            case 2:
+              return _context2.a(2);
+          }
+        }, _callee2);
+      }))();
+    },
+    startUpload: function startUpload() {
+      this.uploading = true;
+      this.closeAlert();
+    },
+    uploadPastedImage: function uploadPastedImage() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+        var document, buffer, body, response, _t;
+        return _regenerator().w(function (_context3) {
+          while (1) switch (_context3.p = _context3.n) {
+            case 0:
+              document = _this3.pasteDocument();
+              buffer = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.readImagePasteBuffer)(document);
+              if (buffer) {
+                _context3.n = 1;
+                break;
+              }
+              return _context3.a(2, false);
+            case 1:
+              _this3.startUpload();
+              _context3.p = 2;
+              body = (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.createImagePasteBody)(buffer);
+              _context3.n = 3;
+              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_3__.postPastedImage)(Admin.Http, _this3.url, body);
+            case 3:
+              response = _context3.v;
+              if (!_this3.disposed) _this3.acceptPastedUpload(response);
+              _context3.n = 5;
+              break;
+            case 4:
+              _context3.p = 4;
+              _t = _context3.v;
+              _context3.n = 5;
+              return _this3.showPasteUploadError(_t);
+            case 5:
+              _context3.p = 5;
+              (0,_image_paste_buffer__WEBPACK_IMPORTED_MODULE_2__.removeImagePasteBuffer)(document);
+              if (!_this3.disposed) _this3.finishUpload();
+              return _context3.f(5);
+            case 6:
+              return _context3.a(2, true);
+          }
+        }, _callee3, null, [[2, 4, 5, 6]]);
+      }))();
+    },
+    showPasteUploadError: function showPasteUploadError(error) {
+      var _this4 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+        var details;
+        return _regenerator().w(function (_context4) {
+          while (1) switch (_context4.n) {
+            case 0:
+              _context4.n = 1;
+              return (0,_image_upload__WEBPACK_IMPORTED_MODULE_3__.imageUploadError)(error, _this4.messages.responseError);
+            case 1:
+              details = _context4.v;
+              if (!_this4.disposed) Admin.Messages.error(details.title, details.message);
+            case 2:
+              return _context4.a(2);
+          }
+        }, _callee4);
+      }))();
     }
   }
 }));
@@ -27234,6 +27507,138 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "hidden",
     value: _ctx.val
   }, null, 8 /* PROPS */, _hoisted_8)]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/assets/js_owl/admin/form/image.vue?vue&type=template&id=69e35c1d":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/assets/js_owl/admin/form/image.vue?vue&type=template&id=69e35c1d ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/@vue/compat/dist/vue.cjs.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+var _hoisted_1 = {
+  key: 0,
+  "class": "alert alert-warning"
+};
+var _hoisted_2 = {
+  key: 1,
+  "class": "form-element-files clearfix"
+};
+var _hoisted_3 = {
+  "class": "form-element-files__item"
+};
+var _hoisted_4 = ["href"];
+var _hoisted_5 = ["src"];
+var _hoisted_6 = {
+  "class": "form-element-files__info"
+};
+var _hoisted_7 = ["href", "title"];
+var _hoisted_8 = ["title"];
+var _hoisted_9 = ["title"];
+var _hoisted_10 = {
+  key: 2
+};
+var _hoisted_11 = {
+  key: 0,
+  ref: "uploadButton",
+  type: "button",
+  "class": "btn btn-primary upload-button btn-sm"
+};
+var _hoisted_12 = ["title"];
+var _hoisted_13 = ["name", "value"];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [_ctx.errors.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "close",
+    "aria-label": "Close",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return _ctx.closeAlert && _ctx.closeAlert.apply(_ctx, arguments);
+    })
+  }, _toConsumableArray(_cache[4] || (_cache[4] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "aria-hidden": "true"
+  }, "×", -1 /* CACHED */)]))), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.errors, function (error, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
+      key: "".concat(error, "-").concat(index)
+    }, [_cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+      "class": "fa-fw fas fa-image",
+      "aria-hidden": "true"
+    }, null, -1 /* CACHED */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error), 1 /* TEXT */)]);
+  }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.hasValue ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: _ctx.previewUrl,
+    "class": "form-element-files__image",
+    "data-toggle": "lightbox"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: _ctx.previewUrl,
+    alt: "",
+    "data-soa-image-preview": ""
+  }, null, 8 /* PROPS */, _hoisted_5)], 8 /* PROPS */, _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: _ctx.previewUrl,
+    "class": "btn btn-default btn-sm pull-right",
+    "data-soa-image-download": "",
+    "data-toggle": "tooltip",
+    download: "",
+    target: "_blank",
+    title: _ctx.labels.download
+  }, _toConsumableArray(_cache[6] || (_cache[6] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-fw fas fa-cloud-upload-alt"
+  }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_7), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    key: 0,
+    type: "button",
+    "class": "btn btn-default btn-sm pull-right mr-1",
+    "data-soa-image-insert-current": "",
+    "data-toggle": "tooltip",
+    title: _ctx.labels.insertLink,
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.insert(true);
+    })
+  }, _toConsumableArray(_cache[7] || (_cache[7] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-fw fas fa-link"
+  }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_8)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    key: 1,
+    type: "button",
+    "class": "btn btn-danger btn-xs",
+    "data-soa-image-remove": "",
+    "data-toggle": "tooltip",
+    title: _ctx.labels.remove,
+    onClick: _cache[2] || (_cache[2] = function () {
+      return _ctx.remove && _ctx.remove.apply(_ctx, arguments);
+    })
+  }, _toConsumableArray(_cache[8] || (_cache[8] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-fw fas fa-times"
+  }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_9)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.readonly ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [!_ctx.onlyLink ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.uploadClass)
+  }, null, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.browse), 1 /* TEXT */)], 512 /* NEED_PATCH */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "btn btn-default btn-sm",
+    "data-soa-image-insert-new": "",
+    "data-toggle": "tooltip",
+    title: _ctx.labels.insertLink,
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return _ctx.insert(false);
+    })
+  }, _toConsumableArray(_cache[9] || (_cache[9] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "fa-fw fas fa-link"
+  }, null, -1 /* CACHED */)])), 8 /* PROPS */, _hoisted_12)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "data-soa-image-value": "",
+    name: _ctx.name,
+    type: "hidden",
+    value: _ctx.val
+  }, null, 8 /* PROPS */, _hoisted_13)]);
 }
 
 /***/ }),
@@ -28233,8 +28638,7 @@ window.Multiselect = _multiselect_compat__WEBPACK_IMPORTED_MODULE_2__.NativeMult
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createFileUpload": () => (/* binding */ createFileUpload),
-/* harmony export */   "fileUploadOptions": () => (/* binding */ fileUploadOptions),
-/* harmony export */   "responseErrors": () => (/* binding */ responseErrors)
+/* harmony export */   "fileUploadOptions": () => (/* binding */ fileUploadOptions)
 /* harmony export */ });
 function createFileUpload(Upload, element, config) {
   return new Upload(element, fileUploadOptions(config));
@@ -28261,9 +28665,6 @@ function fileUploadOptions(config) {
     },
     complete: config.onComplete
   };
-}
-function responseErrors(response) {
-  return Array.isArray(response === null || response === void 0 ? void 0 : response.errors) ? response.errors : [];
 }
 
 /***/ }),
@@ -28485,226 +28886,259 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js_owl/admin/form/image.js":
-/*!*****************************************************!*\
-  !*** ./resources/assets/js_owl/admin/form/image.js ***!
-  \*****************************************************/
+/***/ "./resources/assets/js_owl/admin/form/image-paste-buffer.js":
+/*!******************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/image-paste-buffer.js ***!
+  \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "createImagePasteBody": () => (/* binding */ createImagePasteBody),
+/* harmony export */   "dataUrlToFile": () => (/* binding */ dataUrlToFile),
+/* harmony export */   "readImagePasteBuffer": () => (/* binding */ readImagePasteBuffer),
+/* harmony export */   "removeImagePasteBuffer": () => (/* binding */ removeImagePasteBuffer)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/@vue/compat/dist/vue.cjs.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _libs_vue_inline_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../libs/vue-inline-template */ "./resources/assets/js_owl/libs/vue-inline-template.js");
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_libs_vue_inline_template__WEBPACK_IMPORTED_MODULE_1__.withLegacyInlineTemplate)((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
-  props: {
-    url: {
-      required: true
-    },
-    value: {
-      "default": ''
-    },
-    readonly: {
-      type: Boolean,
-      "default": false
-    },
-    onlylink: {
-      type: Boolean,
-      "default": false
-    },
-    name: {
-      type: String,
-      required: true
-    },
-    asset_prefix: {
-      type: String
-    }
-  },
-  data: function data() {
-    return {
-      errors: [],
-      uploading: false,
-      uploadingImage: false,
-      val: '',
-      prefix: ''
-    };
-  },
-  mounted: function mounted() {
-    this.val = this.value;
-    this.initUpload();
-    this.prefix = this.asset_prefix;
-  },
-  methods: {
-    initUpload: function initUpload() {
-      var self = this,
-        container = $(self.$el.parentNode),
-        button = container.find('.upload-button');
-      if (self.onlylink) {
-        return false;
-      }
-      button.dropzone({
-        url: this.url,
-        method: 'POST',
-        uploadMultiple: false,
-        maxFilesize: Admin.Config.get('max_file_size'),
-        dictFileTooBig: trans('lang.ckeditor.upload.error.filesize_limit_m', {
-          size: Admin.Config.get('max_file_size')
-        }),
-        dictInvalidFileType: trans('lang.ckeditor.upload.error.wrong_extension', {
-          file: self.name
-        }),
-        dictResponseError: trans('lang.ckeditor.upload.error.common'),
-        previewsContainer: false,
-        acceptedFiles: 'image/*',
-        dictDefaultMessage: '',
-        sending: function sending() {
-          self.uploading = true;
-          self.closeAlert();
-          self.uploadingImage = false;
-        },
-        success: function success(file, response) {
-          self.val = response.value;
-        },
-        error: function error(file, response) {
-          if (_.isArray(response.errors)) {
-            if (response.errors[0]) {
-              Admin.Messages.error(response.message, response.errors[0]);
-            }
-            self.errors = response.errors;
-          }
-        },
-        complete: function complete() {
-          self.uploading = false;
-          self.uploadingImage = true;
-        }
-      });
-    },
-    image: function image(uri) {
-      return uri.indexOf('http') === 0 || uri.indexOf('blob:') === 0 ? uri : Admin.Url.upload(uri);
-    },
-    remove: function remove() {
-      var self = this;
-      Admin.Messages.confirm(trans('lang.message.are_you_sure')).then(function (result) {
-        if (result.value) self.val = '';else return false;
-      });
-    },
-    uploadImage: function uploadImage() {
-      var self = this;
-      var input = document.getElementById('image-paste-in-buffer');
-      var dataURLtoFile = function dataURLtoFile(dataurl, filename) {
-        var arr = dataurl.split(',');
-        var mime = arr[0].match(/:(.*?);/)[1];
-        var bstr = atob(arr[1]);
-        var n = bstr.length;
-        var u8arr = new Uint8Array(n);
-        while (n) {
-          u8arr[n - 1] = bstr.charCodeAt(n - 1);
-          n -= 1; // to make eslint happy
-        }
-        return new File([u8arr], Date.now(), {
-          type: mime
-        });
-      };
-      var url = input.src;
-      var ext = input.dataset.ext ? input.dataset.ext : 'jpg';
-      var file = dataURLtoFile(url);
-      var formData = new FormData();
-      formData.append('file', file, Date.now() + '.' + ext);
-      var config = {
-        header: {
-          'Content-Type': 'multipart/form-data',
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      };
-
-      // indicate upload in progress for blob paste
-      self.uploadingImage = true;
-      self.uploading = true;
-      axios.post(this.url, formData, config).then(function (response) {
-        if (response.data.path) {
-          self.val = response.data.path;
-          self.$forceUpdate();
-        }
-        self.uploadingImage = false;
-        self.uploading = false;
-      })["catch"](function (error) {
-        if (error.response && error.response.data && error.response.data.errors) {
-          Admin.Messages.error(error.response.data.message, error.response.data.errors[0]);
-        } else {
-          Admin.Messages.error(error.response ? error.response.statusText + ' (' + error.response.status + ')' : 'Upload error', error.response ? error.response.data.message : '');
-        }
-        self.uploadingImage = false;
-        self.uploading = false;
-      });
-
-      // clean temporary input
-      input = document.getElementById('image-paste-in-buffer');
-      if (input) {
-        if (input.name) {
-          window.URL.revokeObjectURL(input.name);
-        }
-        input.remove();
-      }
-      return true;
-    },
-    insert: function insert(image) {
-      var _this = this;
-      var self = this;
-      var url = null;
-      var link = null;
-      if (typeof image !== 'undefined') {
-        url = self.val;
-        link = this.image(url);
-      }
-      Admin.Messages.cliptobuffer(trans('lang.file.insert_link'), null, null, url, link).then(function (result) {
-        if (result && result.value) {
-          var input = document.getElementById('image-paste-in-buffer');
-          if (self.onlylink && result.value.indexOf('blob:') === 0) {
-            if (input) {
-              input.remove();
-            }
-            return false;
-          }
-          if (result.value.indexOf('blob:') === 0) {
-            _this.uploadImage();
-          } else {
-            if (input) {
-              input.remove();
-            }
-            self.val = result.value;
-          }
-        } else {
-          return false;
-        }
-      });
-    },
-    closeAlert: function closeAlert() {
-      this.errors = [];
-    }
-  },
-  computed: {
-    uploadClass: function uploadClass() {
-      if (!this.uploading) {
-        return 'fas fa-image';
-      }
-      return 'fas fa-spinner fa-spin';
-    },
-    has_value: function has_value() {
-      return this.val.length > 0;
-    },
-    createdimage: function createdimage() {
-      if (this.prefix && (this.val.indexOf('http') !== 0 || this.val.indexOf('blob:') === 0) && !this.uploadingImage) {
-        return this.prefix + this.val;
-      }
-      return this.val.indexOf('http') === 0 || this.val.indexOf('blob:') === 0 ? this.val : Admin.Url.upload(this.val);
-    }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+var PASTE_BUFFER_ID = 'image-paste-in-buffer';
+function readImagePasteBuffer(document) {
+  var element = findImagePasteBuffer(document);
+  if (!(element !== null && element !== void 0 && element.src)) return null;
+  return {
+    dataUrl: element.src,
+    extension: element.dataset.ext || 'jpg'
+  };
+}
+function createImagePasteBody(buffer) {
+  var _dependencies$now, _dependencies$FormDat;
+  var dependencies = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var now = (_dependencies$now = dependencies.now) !== null && _dependencies$now !== void 0 ? _dependencies$now : Date.now;
+  var FormDataType = (_dependencies$FormDat = dependencies.FormDataType) !== null && _dependencies$FormDat !== void 0 ? _dependencies$FormDat : globalThis.FormData;
+  var filename = "".concat(now(), ".").concat(buffer.extension || 'jpg');
+  var file = dataUrlToFile(buffer.dataUrl, filename, dependencies);
+  var body = new FormDataType();
+  body.append('file', file, filename);
+  return body;
+}
+function dataUrlToFile(dataUrl, filename) {
+  var _dependencies$decode, _dependencies$FileTyp, _metadata$match;
+  var dependencies = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var decode = (_dependencies$decode = dependencies.decode) !== null && _dependencies$decode !== void 0 ? _dependencies$decode : globalThis.atob;
+  var FileType = (_dependencies$FileTyp = dependencies.FileType) !== null && _dependencies$FileTyp !== void 0 ? _dependencies$FileTyp : globalThis.File;
+  var _String$split = String(dataUrl).split(',', 2),
+    _String$split2 = _slicedToArray(_String$split, 2),
+    metadata = _String$split2[0],
+    payload = _String$split2[1];
+  var mime = (_metadata$match = metadata.match(/^data:([^;]+);base64$/)) === null || _metadata$match === void 0 ? void 0 : _metadata$match[1];
+  if (!mime || payload === undefined) throw new TypeError('Invalid image data URL.');
+  var binary = decode(payload);
+  var bytes = Uint8Array.from(binary, function (character) {
+    return character.charCodeAt(0);
+  });
+  return new FileType([bytes], filename, {
+    type: mime
+  });
+}
+function removeImagePasteBuffer(document) {
+  var revokeObjectUrl = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultRevoke;
+  var element = findImagePasteBuffer(document);
+  if (!element) return false;
+  if (element.name && typeof revokeObjectUrl === 'function') {
+    revokeObjectUrl(element.name);
   }
-})));
+  element.remove();
+  return true;
+}
+function findImagePasteBuffer(document) {
+  var _document$getElementB;
+  return (_document$getElementB = document === null || document === void 0 ? void 0 : document.getElementById(PASTE_BUFFER_ID)) !== null && _document$getElementB !== void 0 ? _document$getElementB : null;
+}
+function defaultRevoke(url) {
+  var _globalThis$URL, _globalThis$URL$revok;
+  (_globalThis$URL = globalThis.URL) === null || _globalThis$URL === void 0 || (_globalThis$URL$revok = _globalThis$URL.revokeObjectURL) === null || _globalThis$URL$revok === void 0 || _globalThis$URL$revok.call(_globalThis$URL, url);
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js_owl/admin/form/image-upload.js":
+/*!************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/image-upload.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createImageUpload": () => (/* binding */ createImageUpload),
+/* harmony export */   "imageUploadError": () => (/* binding */ imageUploadError),
+/* harmony export */   "imageUploadOptions": () => (/* binding */ imageUploadOptions),
+/* harmony export */   "postPastedImage": () => (/* binding */ postPastedImage)
+/* harmony export */ });
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function createImageUpload(Upload, element, config) {
+  return new Upload(element, imageUploadOptions(config));
+}
+function imageUploadOptions(config) {
+  return {
+    url: config.url,
+    method: 'POST',
+    uploadMultiple: false,
+    previewsContainer: false,
+    acceptedFiles: 'image/*',
+    dictDefaultMessage: '',
+    maxFilesize: config.maxFileSize,
+    dictFileTooBig: config.fileTooBigText,
+    dictInvalidFileType: config.invalidFileTypeText,
+    dictResponseError: config.responseErrorText,
+    headers: {
+      'X-CSRF-TOKEN': config.csrfToken
+    },
+    sending: config.onSending,
+    success: function success(_file, response) {
+      return config.onSuccess(response);
+    },
+    error: function error(_file, response) {
+      return config.onError(response);
+    },
+    complete: config.onComplete
+  };
+}
+function postPastedImage(_x, _x2, _x3) {
+  return _postPastedImage.apply(this, arguments);
+}
+function _postPastedImage() {
+  _postPastedImage = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(http, url, body) {
+    var response;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          _context.n = 1;
+          return http.post(url, body);
+        case 1:
+          response = _context.v;
+          return _context.a(2, response.json());
+      }
+    }, _callee);
+  }));
+  return _postPastedImage.apply(this, arguments);
+}
+function imageUploadError(_x4, _x5) {
+  return _imageUploadError.apply(this, arguments);
+}
+function _imageUploadError() {
+  _imageUploadError = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(error, fallbackTitle) {
+    var response, data, validationError;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          response = error === null || error === void 0 ? void 0 : error.response;
+          _context2.n = 1;
+          return responseData(response);
+        case 1:
+          data = _context2.v;
+          validationError = Array.isArray(data.errors) ? data.errors[0] : null;
+          if (!validationError) {
+            _context2.n = 2;
+            break;
+          }
+          return _context2.a(2, {
+            title: data.message || fallbackTitle,
+            message: validationError
+          });
+        case 2:
+          if (response) {
+            _context2.n = 3;
+            break;
+          }
+          return _context2.a(2, {
+            title: fallbackTitle,
+            message: ''
+          });
+        case 3:
+          return _context2.a(2, {
+            title: statusTitle(response, fallbackTitle),
+            message: data.message || ''
+          });
+      }
+    }, _callee2);
+  }));
+  return _imageUploadError.apply(this, arguments);
+}
+function responseData(_x6) {
+  return _responseData.apply(this, arguments);
+}
+function _responseData() {
+  _responseData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(response) {
+    var _t;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.p = _context3.n) {
+        case 0:
+          if (!(typeof (response === null || response === void 0 ? void 0 : response.json) !== 'function')) {
+            _context3.n = 1;
+            break;
+          }
+          return _context3.a(2, {});
+        case 1:
+          _context3.p = 1;
+          _context3.n = 2;
+          return response.json();
+        case 2:
+          return _context3.a(2, _context3.v);
+        case 3:
+          _context3.p = 3;
+          _t = _context3.v;
+          return _context3.a(2, {});
+      }
+    }, _callee3, null, [[1, 3]]);
+  }));
+  return _responseData.apply(this, arguments);
+}
+function statusTitle(response, fallbackTitle) {
+  var status = response.status ? "(".concat(response.status, ")") : '';
+  return [response.statusText || fallbackTitle, status].filter(Boolean).join(' ');
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js_owl/admin/form/image-value.js":
+/*!***********************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/image-value.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "imagePreviewUrl": () => (/* binding */ imagePreviewUrl),
+/* harmony export */   "isBlobImageValue": () => (/* binding */ isBlobImageValue),
+/* harmony export */   "normalizeImageValue": () => (/* binding */ normalizeImageValue)
+/* harmony export */ });
+function normalizeImageValue(value) {
+  return value === null || value === undefined ? '' : String(value);
+}
+function isBlobImageValue(value) {
+  return normalizeImageValue(value).startsWith('blob:');
+}
+function imagePreviewUrl(value, options) {
+  var normalized = normalizeImageValue(value);
+  if (isExternalImageValue(normalized)) return normalized;
+  if (options.useAssetPrefix && options.assetPrefix) {
+    return "".concat(options.assetPrefix).concat(normalized);
+  }
+  return options.createUploadUrl(normalized);
+}
+function isExternalImageValue(value) {
+  return value.startsWith('http') || value.startsWith('blob:');
+}
 
 /***/ }),
 
@@ -29456,6 +29890,23 @@ Admin.Modules.register('form.elements.text', function () {
 
 /***/ }),
 
+/***/ "./resources/assets/js_owl/admin/form/upload-response.js":
+/*!***************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/upload-response.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "responseErrors": () => (/* binding */ responseErrors)
+/* harmony export */ });
+function responseErrors(response) {
+  return Array.isArray(response === null || response === void 0 ? void 0 : response.errors) ? response.errors : [];
+}
+
+/***/ }),
+
 /***/ "./resources/assets/js_owl/admin/form/wysiwyg.js":
 /*!*******************************************************!*\
   !*** ./resources/assets/js_owl/admin/form/wysiwyg.js ***!
@@ -29577,7 +30028,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _display_env_editor_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./display/env-editor.vue */ "./resources/assets/js_owl/admin/display/env-editor.vue");
 /* harmony import */ var _form_deselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form/deselect */ "./resources/assets/js_owl/admin/form/deselect.js");
 /* harmony import */ var _form_file_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form/file.vue */ "./resources/assets/js_owl/admin/form/file.vue");
-/* harmony import */ var _form_image__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form/image */ "./resources/assets/js_owl/admin/form/image.js");
+/* harmony import */ var _form_image_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form/image.vue */ "./resources/assets/js_owl/admin/form/image.vue");
 /* harmony import */ var _form_images__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form/images */ "./resources/assets/js_owl/admin/form/images.js");
 /* harmony import */ var _form_multiselect_compat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./form/multiselect-compat */ "./resources/assets/js_owl/admin/form/multiselect-compat.js");
 /* harmony import */ var _form_related__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./form/related */ "./resources/assets/js_owl/admin/form/related/index.js");
@@ -29593,7 +30044,7 @@ __webpack_require__.r(__webpack_exports__);
 var legacyVueComponents = Object.freeze({
   deselect: _form_deselect__WEBPACK_IMPORTED_MODULE_1__["default"],
   'element-file': (0,_libs_vue_compat_config__WEBPACK_IMPORTED_MODULE_7__.asNativeVue3Component)(_form_file_vue__WEBPACK_IMPORTED_MODULE_2__["default"]),
-  'element-image': _form_image__WEBPACK_IMPORTED_MODULE_3__["default"],
+  'element-image': (0,_libs_vue_compat_config__WEBPACK_IMPORTED_MODULE_7__.asNativeVue3Component)(_form_image_vue__WEBPACK_IMPORTED_MODULE_3__["default"]),
   'element-images': _form_images__WEBPACK_IMPORTED_MODULE_4__["default"],
   env_editor: (0,_libs_vue_compat_config__WEBPACK_IMPORTED_MODULE_7__.asNativeVue3Component)(_display_env_editor_vue__WEBPACK_IMPORTED_MODULE_0__["default"]),
   multiselect: _form_multiselect_compat__WEBPACK_IMPORTED_MODULE_5__.LegacyMultiselect,
@@ -132546,6 +132997,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/assets/js_owl/admin/form/image.vue":
+/*!******************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/image.vue ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _image_vue_vue_type_template_id_69e35c1d__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./image.vue?vue&type=template&id=69e35c1d */ "./resources/assets/js_owl/admin/form/image.vue?vue&type=template&id=69e35c1d");
+/* harmony import */ var _image_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./image.vue?vue&type=script&lang=js */ "./resources/assets/js_owl/admin/form/image.vue?vue&type=script&lang=js");
+/* harmony import */ var D_domains_packages_SleepingOwlAdmin_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,D_domains_packages_SleepingOwlAdmin_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_image_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_image_vue_vue_type_template_id_69e35c1d__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/assets/js_owl/admin/form/image.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/assets/js_owl/admin/display/env-editor.vue?vue&type=script&lang=js":
 /*!**************************************************************************************!*\
   !*** ./resources/assets/js_owl/admin/display/env-editor.vue?vue&type=script&lang=js ***!
@@ -132578,6 +133057,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/assets/js_owl/admin/form/image.vue?vue&type=script&lang=js":
+/*!******************************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/image.vue?vue&type=script&lang=js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_image_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_image_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./image.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/assets/js_owl/admin/form/image.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/assets/js_owl/admin/display/env-editor.vue?vue&type=template&id=5c305387":
 /*!********************************************************************************************!*\
   !*** ./resources/assets/js_owl/admin/display/env-editor.vue?vue&type=template&id=5c305387 ***!
@@ -132606,6 +133101,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_file_vue_vue_type_template_id_0b89f1ac__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_file_vue_vue_type_template_id_0b89f1ac__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./file.vue?vue&type=template&id=0b89f1ac */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/assets/js_owl/admin/form/file.vue?vue&type=template&id=0b89f1ac");
+
+
+/***/ }),
+
+/***/ "./resources/assets/js_owl/admin/form/image.vue?vue&type=template&id=69e35c1d":
+/*!************************************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/image.vue?vue&type=template&id=69e35c1d ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_image_vue_vue_type_template_id_69e35c1d__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_image_vue_vue_type_template_id_69e35c1d__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./image.vue?vue&type=template&id=69e35c1d */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/assets/js_owl/admin/form/image.vue?vue&type=template&id=69e35c1d");
 
 
 /***/ }),

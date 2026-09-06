@@ -58,6 +58,28 @@ const readonlyFileProps = {
     url: '/api/upload',
     value: 'docs/readonly.pdf',
 }
+const readonlyImageProps = {
+    assetPrefix: '/cdn/',
+    csrfToken: 'fixture-token',
+    labels: {
+        browse: 'Upload image',
+        download: 'Download',
+        insertLink: 'Insert link',
+        remove: 'Remove image',
+    },
+    maxFileSize: 2,
+    messages: {
+        confirmRemove: 'Remove image?',
+        fileTooBig: 'File is too large',
+        invalidFileType: 'Wrong image type',
+        responseError: 'Upload error',
+    },
+    name: 'readonly-image',
+    onlyLink: false,
+    readonly: true,
+    url: '/api/upload',
+    value: 'fixtures/readonly.svg',
+}
 
 function capturePageErrors(page) {
     const errors = []
@@ -117,6 +139,56 @@ async function inspectReadonlyFile(page) {
 
         return result
     }, readonlyFileProps)
+}
+
+async function inspectReadonlyImage(page) {
+    return page.evaluate((props) => {
+        const host = globalThis.document.createElement('section')
+        host.dataset.soaVueApp = ''
+        host.dataset.soaVueComponent = 'element-image'
+        host.dataset.soaVueProps = JSON.stringify(props)
+        globalThis.document.body.append(host)
+        globalThis.Admin.VueApps.mount(host)
+
+        const result = {
+            hasInsert: Boolean(host.querySelector('[data-soa-image-insert-current]')),
+            hasRemove: Boolean(host.querySelector('[data-soa-image-remove]')),
+            hasUpload: Boolean(host.querySelector('.upload-button')),
+            preview: host.querySelector('[data-soa-image-preview]').getAttribute('src'),
+            value: host.querySelector('[data-soa-image-value]').value,
+        }
+
+        globalThis.Admin.VueApps.unmount(host)
+        host.remove()
+
+        return result
+    }, readonlyImageProps)
+}
+
+async function mountOnlyLinkImage(page) {
+    await page.evaluate((baseProps) => {
+        const host = globalThis.document.createElement('section')
+        host.id = 'only-link-image'
+        host.dataset.soaVueApp = ''
+        host.dataset.soaVueComponent = 'element-image'
+        host.dataset.soaVueProps = JSON.stringify({
+            ...baseProps,
+            name: 'only-link-image',
+            onlyLink: true,
+            readonly: false,
+            value: '',
+        })
+        globalThis.document.body.append(host)
+        globalThis.Admin.VueApps.mount(host)
+        globalThis.Admin.Messages.cliptobuffer = () => {
+            const buffer = globalThis.document.createElement('img')
+            buffer.id = 'image-paste-in-buffer'
+            buffer.src = 'data:image/png;base64,QQ=='
+            globalThis.document.querySelector('#vueApp').append(buffer)
+
+            return Promise.resolve({ value: 'blob:link-only' })
+        }
+    }, readonlyImageProps)
 }
 
 async function selectedValues(locator) {
@@ -236,13 +308,16 @@ test('file, image and images components expose values and upload callbacks', asy
     await page.locator('#file-wrapper [data-soa-file-remove]').click()
     await expect(fileValue).toHaveValue('')
 
-    await expect(page.locator('#image-preview')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
+    const imageValue = page.locator('#image-wrapper [data-soa-image-value]')
+    const imagePreview = page.locator('#image-wrapper [data-soa-image-preview]')
+    await expect(imagePreview).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
     await runUploadCallback(page, '#image-wrapper .upload-button', 'fixtures/uploaded.svg')
-    await expect(page.locator('#image-value')).toHaveValue('fixtures/uploaded.svg')
-    await expect(page.locator('#image-preview')).toHaveAttribute(
-        'src',
-        /\/fixtures\/uploaded\.svg$/,
-    )
+    await expect(imageValue).toHaveValue('fixtures/uploaded.svg')
+    await expect(imagePreview).toHaveAttribute('src', /\/fixtures\/uploaded\.svg$/)
+    await page.locator('#image-wrapper [data-soa-image-insert-current]').click()
+    await expect(imageValue).toHaveValue('fixtures/linked.svg')
+    await page.locator('#image-wrapper [data-soa-image-remove]').click()
+    await expect(imageValue).toHaveValue('')
 
     await expect(page.locator('#images-value')).toHaveValue(
         'fixtures/pixel.svg,fixtures/second.svg',
@@ -292,6 +367,104 @@ test('readonly file island renders without mounting an upload driver', async ({ 
         hasDownload: true,
         hasRemove: false,
         hasUpload: false,
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('image island destroys its upload driver before unmount', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+
+    const result = await page.evaluate(() => {
+        const host = globalThis.document.querySelector('#image-wrapper')
+        const button = host.querySelector('.upload-button')
+        const existed = Boolean(button.dropzone)
+        const unmounted = globalThis.Admin.VueApps.unmount(host)
+
+        return {
+            destroyed: !button.dropzone,
+            existed,
+            remainingApps: globalThis.Admin.VueApps.size,
+            unmounted,
+        }
+    })
+
+    expect(result).toEqual({
+        destroyed: true,
+        existed: true,
+        remainingApps: 6,
+        unmounted: true,
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('readonly image island keeps prefixed preview without edit controls', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    const state = await inspectReadonlyImage(page)
+
+    expect(state).toEqual({
+        hasInsert: false,
+        hasRemove: false,
+        hasUpload: false,
+        preview: '/cdn/fixtures/readonly.svg',
+        value: 'fixtures/readonly.svg',
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('link-only image island rejects blob values without creating an uploader', async ({
+    page,
+}) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    await mountOnlyLinkImage(page)
+
+    await expect(page.locator('#only-link-image .upload-button')).toHaveCount(0)
+    await page.locator('#only-link-image [data-soa-image-insert-new]').click()
+    await expect(page.locator('#only-link-image [data-soa-image-value]')).toHaveValue('')
+    await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)
+    expect(
+        await page.evaluate(() => {
+            const host = globalThis.document.querySelector('#only-link-image')
+            const unmounted = globalThis.Admin.VueApps.unmount(host)
+            host.remove()
+
+            return unmounted
+        }),
+    ).toBe(true)
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('image island uploads a pasted blob through native Admin.Http', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    let uploadRequest
+    await page.route('**/api/upload', async (route) => {
+        uploadRequest = route.request()
+        await route.fulfill({ json: { path: 'fixtures/pasted.svg' } })
+    })
+    await openFixture(page)
+    await page.evaluate(() => {
+        globalThis.Admin.Messages.cliptobuffer = () => {
+            const buffer = globalThis.document.createElement('img')
+            buffer.id = 'image-paste-in-buffer'
+            buffer.dataset.ext = 'svg'
+            buffer.src = 'data:image/svg+xml;base64,PHN2Zy8+'
+            globalThis.document.querySelector('#vueApp').append(buffer)
+
+            return Promise.resolve({ value: 'blob:pasted-image' })
+        }
+    })
+
+    await page.locator('#image-wrapper [data-soa-image-insert-new]').click()
+    await expect(page.locator('#image-wrapper [data-soa-image-value]')).toHaveValue(
+        'fixtures/pasted.svg',
+    )
+    await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)
+    expect(uploadRequest.method()).toBe('POST')
+    expect(await uploadRequest.allHeaders()).toMatchObject({
+        'x-csrf-token': 'browser-fixture-token',
+        'x-requested-with': 'XMLHttpRequest',
     })
     expectNoUnexpectedPageErrors(pageErrors)
 })
