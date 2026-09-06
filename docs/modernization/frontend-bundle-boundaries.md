@@ -12,7 +12,7 @@ The modernization build publishes independent entrypoints while the existing UI 
 | `theme:legacy-adminlte` | `js/themes/legacy-adminlte.js` | `css/themes/legacy-adminlte.css` | transitional AdminLTE 3/Bootstrap 4 presentation |
 | `theme:tailwind` | `js/themes/tailwind.js` | `css/themes/tailwind.css` | Tailwind presentation |
 
-The source/output mapping is declared once in `build/frontend-entries.json` and consumed by Laravel Mix. The same file is a build-time contract test fixture; it is not the future runtime/versioned asset manifest.
+The source/output mapping is declared once in `build/frontend-entries.json` and consumed by Laravel Mix. The same file is a build-time contract; after compilation it generates `public/default/asset-manifest.json`, which maps logical ids to validated runtime files, content versions and SHA-256 checksums. The schema and PHP resolver are documented in `asset-manifest.md`.
 
 The new Sass entries declare cascade-layer boundaries:
 
@@ -36,7 +36,7 @@ The following outputs remain available and unchanged during incremental migratio
 - `js/vue.js`;
 - `js/modules.js`.
 
-`TemplateDefault` continues to load only these legacy assets until the versioned manifest resolver is implemented. The legacy aggregate temporarily includes the runtime theme properties and sidebar consumer, so `sidebar_background_color` works without waiting for the resolver. A page must not load both the legacy aggregate and its migrated modern replacements once a feature is switched over, because that would initialize behavior twice.
+`TemplateDefault` continues to load only these legacy assets while the new resolver is integrated with both profiles and the first-party asset registry. The legacy aggregate temporarily includes the runtime theme properties and sidebar consumer, so `sidebar_background_color` works before that controlled switch. A page must not load both the legacy aggregate and its migrated modern replacements once a feature is switched over, because that would initialize behavior twice.
 
 ## Dependency rules
 
@@ -44,4 +44,4 @@ The following outputs remain available and unchanged during incremental migratio
 - Features may import core contracts but not concrete themes.
 - Themes may import public core/feature contracts but features and core never import a concrete theme.
 - No new entry may rely on an implicit global other than the transitional root `window.Admin` contract.
-- Production and development profiles will map the same logical ids to different physical files; profile resolution belongs to the versioned manifest milestone, not to this build mapping.
+- The manifest schema already isolates entries by profile. The current production profile is generated and resolved; the next milestone adds the complete development profile and config-driven selection without changing logical ids.

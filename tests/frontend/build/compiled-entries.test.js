@@ -5,6 +5,7 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 const root = resolve(import.meta.dirname, '../../..')
+const assetManifest = readJson('public/default/asset-manifest.json')
 const buildEntries = readJson('build/frontend-entries.json')
 const mixManifest = readJson('public/default/mix-manifest.json')
 
@@ -22,6 +23,10 @@ function manifestPath(output) {
 
 function contentHash(path) {
     return createHash('md5').update(readFileSync(path)).digest('hex')
+}
+
+function checksum(path) {
+    return `sha256:${createHash('sha256').update(readFileSync(path)).digest('hex')}`
 }
 
 describe('compiled frontend entries', () => {
@@ -60,6 +65,28 @@ describe('compiled frontend entries', () => {
         expect(forms).toContain(selector)
         expect(legacy).toContain(selector)
     })
+})
+
+describe('logical asset manifest', () => {
+    it('publishes schema and build metadata', () => {
+        expect(assetManifest.schema_version).toBe(1)
+        expect(assetManifest.package_version).toMatch(/\S+/)
+        expect(assetManifest.build_id).toMatch(/^sha256:[a-f0-9]{64}$/)
+        expect(Object.keys(assetManifest.profiles)).toEqual(['production'])
+    })
+
+    it.each([...modernEntries('scripts'), ...modernEntries('styles')])(
+        'maps $logicalId to a versioned and checksummed $output',
+        ({ logicalId, output }) => {
+            const type = output.endsWith('.js') ? 'scripts' : 'styles'
+            const publicPath = resolve(root, 'public/default', output)
+            const assets = assetManifest.profiles.production.entries[logicalId][type]
+            const asset = assets.find(({ file }) => file === output)
+
+            expect(asset.version).toBe(contentHash(publicPath))
+            expect(asset.checksum).toBe(checksum(publicPath))
+        },
+    )
 })
 
 describe('compiled runtime properties', () => {

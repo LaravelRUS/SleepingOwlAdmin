@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: добавить versioned asset manifest и PHP resolver для precompiled core/theme/feature bundles.
+- Точка возобновления: реализовать два полных production/development asset profiles с одинаковыми logical ids и выбор через `sleeping_owl.dev_assets`.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -536,7 +536,7 @@ No-build consumer contract является release-blocking:
 - [x] Создать Sass entrypoints и отдельные `_variables.scss`/`_colors.scss` для core, features и themes.
 - [x] Перевести затронутые plain CSS sources в SCSS partials; generated vendor/Tailwind CSS не редактировать вручную.
 - [x] Ввести публичные `:root` custom properties с префиксом `--soa-*` для runtime/no-build настройки цветов и основных theme values.
-- [ ] Добавить versioned asset manifest и PHP resolver для precompiled core/theme/feature bundles.
+- [x] Добавить versioned asset manifest и PHP resolver для precompiled core/theme/feature bundles.
 - [ ] Реализовать в manifest и resolver два полных профиля с одинаковыми logical ids: `production` и `development`, выбираемые существующим `sleeping_owl.dev_assets`.
 - [ ] Реализовать минимальные first-party asset value object, dependency sorter/registry, package registry и meta renderer в `SleepingOwl\Admin`, не смешивая их обязанности с manifest resolver.
 - [ ] Перевести внутренние `Templates\Assets`, `Templates\Meta`, trait `Assets`, provider bindings, facades и stubs с `KodiCMS\Assets` на first-party classes.
@@ -953,3 +953,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 3 / Sass modules | Каждый modern core/feature/theme entry загружает только соседние `_variables.scss` и `_colors.scss` через `@use`; размеры/типографика/motion отделены от цветов, все build-time tokens объявлены с `!default`, включая независимые sidebar defaults обеих тем. Contract tests проверяют наличие локальных partials и overridable declarations. Production build успешен; полный PHP gate: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 39 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / handwritten CSS | Единственный handwritten plain CSS source `files.css` перенесён в owner-local `feature:forms` Sass и разложен на небольшие label/grid/icon/action/name/vertical partials. Параметризованный aggregate mixin сохраняет публичные file-element selectors в modern forms bundle и legacy aggregate, цвета вынесены в bundle-local `_colors.scss`; guard запрещает новые handwritten `.css` вне явных generated/vendor roots. Production build успешен; полный PHP gate: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 41 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / runtime tokens | Core, forms, table, AdminLTE и Tailwind публикуют owner-local `:root` properties только в namespace `--soa-*`; темы меняют palette через `data-soa-color-scheme`, а component fallback берётся из Sass tokens. Добавлены строгий `CssColor`, allowlisted `ThemeCssVariables`, config key `sidebar_background_color` и общий runtime-properties view; legacy aggregate уже потребляет `--soa-sidebar-bg` без rebuild. Browser test подтвердил computed color в light/dark и исправил первый toggle при пустом localStorage. Production build и обе config validations успешны; полный PHP gate: 402 tests, 1495 assertions, 2 прежних TODO-skip; frontend gate: 44 Vitest + 13 Playwright | текущий commit |
+| 2026-09-06 | Этап 3 / asset manifest | Production build теперь атомарно генерирует schema-1 `asset-manifest.json` из единой build matrix: Composer package version, build id, logical core/feature/theme entries, content versions и SHA-256. Узкие PHP value objects валидируют logical ids и безопасные relative paths; отдельные loader/resolver дают versioned CDN-aware URLs и диагностируют missing/corrupt/incompatible manifest через `sleepingowl:update`. `TemplateDefault` пока остаётся на legacy aggregate до profile/registry milestones. Production build успешен; полный PHP gate: 410 tests, 1521 assertions, 2 прежних TODO-skip; frontend gate: 55 Vitest + 13 Playwright | текущий commit |

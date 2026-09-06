@@ -36,7 +36,7 @@ public function assets(): array
 
 `ThemeAssetManifest::fromTheme($theme)` проверяет ownership каждого entry, запрещает физические пути и дубликаты и всегда возвращает base theme entry первым. `entriesFor($activeFeatures)` добавляет только объявленные adapters фактически активных features, сохраняя порядок запрошенных features и не загружая остальные chunks.
 
-Пустой список временно разрешён для legacy template adapter. Встроенные и новые custom themes должны объявлять `theme:<id>`. Позднее runtime manifest resolver сопоставит эти ids с production/development entries, versioned filenames и checksums; theme contract сам файловую систему не читает.
+Пустой список временно разрешён для legacy template adapter. Встроенные и новые custom themes должны объявлять `theme:<id>`. Runtime `AssetManifestResolver` сопоставляет ids с versioned filenames и checksums выбранного профиля; theme contract сам файловую систему не читает. Полная schema описана в `asset-manifest.md`.
 
 ## Capability API
 
@@ -64,7 +64,7 @@ Capability говорит только о presentation support. Он не озн
 
 ## Legacy AdminLTE metadata
 
-Текущая extracted legacy theme объявляет логический entry `theme:legacy-adminlte` и все семь capabilities, которые уже присутствуют в её Bootstrap/AdminLTE presentation. До появления versioned resolver фактическую регистрацию старых файлов продолжает выполнять `TemplateDefault`; декларация manifest не меняет runtime asset URLs и не смешивает переходный adapter с будущим resolver.
+Текущая extracted legacy theme объявляет логический entry `theme:legacy-adminlte` и все семь capabilities, которые уже присутствуют в её Bootstrap/AdminLTE presentation. До контролируемого переключения coordinator/registry фактическую регистрацию старых файлов продолжает выполнять `TemplateDefault`; наличие resolver не меняет legacy runtime asset URLs и не смешивает переходный adapter с незавершёнными modern bundles.
 
 ## Выбор темы и config values
 

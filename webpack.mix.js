@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const { execFileSync } = require('node:child_process');
 const frontendEntries = require('./build/frontend-entries.json');
 
 mix.setPublicPath('./public/default/');
@@ -13,6 +14,8 @@ mix.webpackConfig({
 })
 
 registerEntries(frontendEntries);
+
+mix.then(() => generateAssetManifest());
 
 mix.options({
     processCssUrls: true,
@@ -42,5 +45,14 @@ function registerScripts(group) {
 
 function registerStyles(group) {
     group.styles.forEach(({ source, output }) => mix.sass(source, output));
+}
+
+function generateAssetManifest() {
+    const profile = mix.inProduction() ? 'production' : 'development';
+
+    execFileSync('php', ['scripts/modernization/generate-asset-manifest.php', profile], {
+        cwd: __dirname,
+        stdio: 'inherit',
+    });
 }
 

@@ -1,0 +1,91 @@
+{
+    "schema_version": 1,
+    "package_version": "dev-master",
+    "profiles": {
+        "production": {
+            "entries": {
+                "core": {
+                    "scripts": [
+                        {
+                            "file": "js/admin-core.js",
+                            "version": "f5d387540235443141917d352abe4d71",
+                            "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "css/admin-core.css",
+                            "version": "cf1f19d121dd73ef037c531c7b68c61f",
+                            "checksum": "sha256:debab0c0349e658d217d3151b758f7da9ebe905203342a7954dc6458013472b0"
+                        }
+                    ]
+                },
+                "feature:forms": {
+                    "scripts": [
+                        {
+                            "file": "js/features/forms.js",
+                            "version": "f5d387540235443141917d352abe4d71",
+                            "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "css/features/forms.css",
+                            "version": "ce247f8dcfc6d7791a31b0ca74689221",
+                            "checksum": "sha256:1132e5e127eb13dd93bc31013dbeef330bdefeb1a528bc94a90f51c38b89b9c1"
+                        }
+                    ]
+                },
+                "feature:table": {
+                    "scripts": [
+                        {
+                            "file": "js/features/table.js",
+                            "version": "f5d387540235443141917d352abe4d71",
+                            "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "css/features/table.css",
+                            "version": "0486f14bd03357524d6cb5a97dc6e459",
+                            "checksum": "sha256:44246d5b8bbcf14e3e1d43d5daa922051e682565176ec8228e879a403bee391b"
+                        }
+                    ]
+                },
+                "theme:legacy-adminlte": {
+                    "scripts": [
+                        {
+                            "file": "js/themes/legacy-adminlte.js",
+                            "version": "f5d387540235443141917d352abe4d71",
+                            "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "css/themes/legacy-adminlte.css",
+                            "version": "9459de14897d739c753678e558348f17",
+                            "checksum": "sha256:0f749b1ce9c8bdc8164b100632d8d0dc050ce252491a5c939ec5788fcd66f975"
+                        }
+                    ]
+                },
+                "theme:tailwind": {
+                    "scripts": [
+                        {
+                            "file": "js/themes/tailwind.js",
+                            "version": "f5d387540235443141917d352abe4d71",
+                            "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "css/themes/tailwind.css",
+                            "version": "e40d8be5bf203a1dc405a60ce5539ed0",
+                            "checksum": "sha256:ea18753c912aebf30bf1e167dbcd82f7c012d2b26e5490455525d2d841d5f593"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "build_id": "sha256:a554cc2bb10b4bc1c0411b33bdaa05d6028a5cc715c59a389bc0333cc0f47218"
+}
