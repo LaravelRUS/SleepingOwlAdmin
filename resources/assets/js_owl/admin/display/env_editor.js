@@ -5,16 +5,16 @@ Vue.component('env_editor', Vue.extend({
             default: []
         },
         errorText: {
-            type: Text
+            type: String
         }
     },
     mounted() {
-        for (k in this.data) {
+        for (const key in this.data) {
             this.values.push({
-                key: k,
-                value: this.data[k].value,
-                deletable: this.data[k].deletable,
-                editable: this.data[k].editable,
+                key,
+                value: this.data[key].value,
+                deletable: this.data[key].deletable,
+                editable: this.data[key].editable,
             });
         }
     },

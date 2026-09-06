@@ -60,6 +60,23 @@ test('global Vue 2 root mounts env editor and preserves add/remove rules', async
     expectNoUnexpectedPageErrors(pageErrors)
 })
 
+test('legacy tab state restores and updates without leaking globals', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await page.addInitScript(() => {
+        globalThis.localStorage.setItem('Tabbed_/legacy-vue', JSON.stringify({ 0: 'second-tab' }))
+    })
+    await openFixture(page)
+
+    await expect(page.locator('#second-tab-control')).toHaveClass(/active/)
+    await page.locator('#first-tab-control').click()
+    await expect
+        .poll(() =>
+            page.evaluate(() => JSON.parse(globalThis.localStorage.getItem('Tabbed_/legacy-vue'))),
+        )
+        .toEqual({ 0: 'first-tab' })
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
 test('file, image and images components expose values and upload callbacks', async ({ page }) => {
     await openFixture(page)
     await expect(page.locator('#file-value')).toHaveValue('docs/start.pdf')

@@ -10,6 +10,47 @@ const modernJavaScript = [
     'vitest.config.mjs',
 ]
 
+const legacyFirstPartyJavaScript = [
+    'resources/assets/js_owl/*.js',
+    'resources/assets/js_owl/admin/**/*.js',
+    'resources/assets/js_owl/components/**/*.js',
+    'resources/assets/js_owl/wysiwyg/**/*.js',
+]
+
+const legacyRuntimeGlobals = {
+    $: 'readonly',
+    _: 'readonly',
+    Admin: 'readonly',
+    atob: 'readonly',
+    axios: 'readonly',
+    CKEDITOR: 'readonly',
+    ClassicEditor: 'readonly',
+    console: 'readonly',
+    Cookies: 'readonly',
+    document: 'readonly',
+    File: 'readonly',
+    FileReader: 'readonly',
+    FormData: 'readonly',
+    globalThis: 'readonly',
+    Image: 'readonly',
+    jQuery: 'readonly',
+    lazyload: 'readonly',
+    localStorage: 'readonly',
+    location: 'readonly',
+    module: 'readonly',
+    require: 'readonly',
+    setInterval: 'readonly',
+    setTimeout: 'readonly',
+    SimpleMDE: 'readonly',
+    Swal: 'readonly',
+    tinymce: 'readonly',
+    trans: 'readonly',
+    URL: 'readonly',
+    URLSearchParams: 'readonly',
+    Vue: 'readonly',
+    window: 'readonly',
+}
+
 export default [
     {
         ...js.configs.recommended,
@@ -63,6 +104,19 @@ export default [
                     ],
                 },
             ],
+        },
+    },
+    {
+        files: legacyFirstPartyJavaScript,
+        languageOptions: {
+            ecmaVersion: 'latest',
+            globals: legacyRuntimeGlobals,
+            sourceType: 'module',
+        },
+        rules: {
+            'no-global-assign': 'error',
+            'no-implicit-globals': ['error', { lexicalBindings: true }],
+            'no-undef': 'error',
         },
     },
 ]

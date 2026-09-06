@@ -38,7 +38,7 @@ Admin.Modules.register('form.elements.selectajax', () => {
                         let vPar = JSON.parse(depends);
                         if (!isEmptyVal(vPar)) {
                             let params_num = [], params_key = {};
-                            for (i = 0; i < vPar.length; i++) {
+                            for (let i = 0; i < vPar.length; i++) {
                                 let key = vPar[i];
                                 let val = $('#' + key).val();
                                 params_num[i] = val;

@@ -134,9 +134,18 @@ async function handleTable(request, response, url) {
 async function handleMutation(kind, request, response, url) {
     const parameters = await readParameters(request, url)
     recordRequest(kind, request, parameters)
-    const result = kind === 'inline-edit' ? { status: true, newValue: 'Server normalized' } : {}
+    sendJson(response, mutationResult(kind))
+}
 
-    sendJson(response, result)
+function mutationResult(kind) {
+    if (kind === 'inline-edit') {
+        return { status: true, newValue: 'Server normalized' }
+    }
+    if (kind === 'action-form') {
+        return { message: 'Rows updated', text: 'Custom action complete', type: 'success' }
+    }
+
+    return {}
 }
 
 function resetFixture(response) {

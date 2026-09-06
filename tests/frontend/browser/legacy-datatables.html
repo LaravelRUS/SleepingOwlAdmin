@@ -133,6 +133,7 @@
         <script src="/public/default/js/admin-app.js"></script>
         <script>
             window.__legacyEvents = []
+            window.__swalCalls = []
             window.__lazyloadCalls = 0
 
             const originalLazyload = window.lazyload
@@ -151,7 +152,10 @@
             })
 
             Admin.Messages.confirm = () => Promise.resolve({ value: true })
-            Swal.fire = () => Promise.resolve({ value: true })
+            Swal.fire = (settings) => {
+                window.__swalCalls.push(settings)
+                return Promise.resolve({ value: true })
+            }
         </script>
         <script src="/public/default/js/modules.js"></script>
         <script>

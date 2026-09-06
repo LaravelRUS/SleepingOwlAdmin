@@ -212,6 +212,7 @@ test('bulk and custom actions submit checked rows and fire lifecycle events', as
     page,
     request,
 }) => {
+    const pageErrors = capturePageErrors(page)
     await openFixture(page)
     await page.locator('.adminCheckboxRow').first().check()
     expect(
@@ -236,9 +237,16 @@ test('bulk and custom actions submit checked rows and fire lifecycle events', as
     expect(latest(await recordedRequests(request, 'action')).parameters['_id[]']).toBe('1')
     const custom = latest(await recordedRequests(request, 'action-form')).parameters
     expect(custom).toMatchObject({ '_id[]': '1', reason: 'fixture' })
+    expect(await page.evaluate(() => globalThis.__swalCalls)).toContainEqual({
+        icon: 'success',
+        text: 'Rows updated',
+        timer: 5000,
+        title: 'Custom action complete',
+    })
     const events = await page.evaluate(() => globalThis.__legacyEvents)
     expect(events.filter((event) => event === 'datatables::actions::submitting')).toHaveLength(2)
     expect(events.filter((event) => event === 'datatables::actions::submitted')).toHaveLength(2)
+    expect(pageErrors).toEqual([])
 })
 
 test('inline edit posts its value and is rebound after a draw', async ({ page, request }) => {

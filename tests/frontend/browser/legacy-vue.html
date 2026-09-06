@@ -20,7 +20,7 @@
                 date_format: 'DD.MM.YYYY',
                 state_datatables: false,
                 datatables_highlight: false,
-                state_tabs: false,
+                state_tabs: true,
                 state_filters: false,
                 wysiwyg: {},
                 lang: {
@@ -51,6 +51,37 @@
         </script>
     </head>
     <body>
+        <nav>
+            <div class="nav nav-tabs" role="tablist">
+                <a
+                    aria-controls="first-tab"
+                    aria-selected="true"
+                    class="nav-item nav-link active"
+                    data-toggle="tab"
+                    href="#first-tab"
+                    id="first-tab-control"
+                    role="tab"
+                >
+                    First
+                </a>
+                <a
+                    aria-controls="second-tab"
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-toggle="tab"
+                    href="#second-tab"
+                    id="second-tab-control"
+                    role="tab"
+                >
+                    Second
+                </a>
+            </div>
+        </nav>
+        <div class="tab-content">
+            <div class="tab-pane active" id="first-tab" role="tabpanel">First panel</div>
+            <div class="tab-pane" id="second-tab" role="tabpanel">Second panel</div>
+        </div>
+
         <div id="vueApp">
             <section id="env-fixture">
                 <env_editor

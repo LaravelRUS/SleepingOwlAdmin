@@ -149,9 +149,9 @@ module.exports = (function () {
                           {ext: 'wbmp', mime: 'image/vnd.wap.wbmp'},
                           {ext: 'webp', mime: 'image/webp'},
                         ]
-                        extention = arr.find(el => el.mime == items[i].type)
-                        if (extention) {
-                          input.setAttribute('data-ext', extention.ext)
+                        const extension = arr.find(el => el.mime == items[i].type)
+                        if (extension) {
+                          input.setAttribute('data-ext', extension.ext)
                         }
 
                       }
@@ -180,7 +180,7 @@ module.exports = (function () {
                 }
             }).then((result) => {
               if (result.isDismissed) {
-                input = document.getElementById('image-paste-in-buffer')
+                const input = document.getElementById('image-paste-in-buffer')
                 if (input) {
                   if (input.name) {
                     window.URL.revokeObjectURL(input.name)

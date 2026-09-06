@@ -27,7 +27,12 @@ Admin.Modules.register('display.actions_form', () => {
             $.ajax(settings).done(function (msg) {
                 if (msg.hasOwnProperty('text')) {
                     if (result !== 'false' && result !== false && result !== '0' && result !== 0) {
-                        swal({title: msg.text, text: msg.message, type: msg.type, timer: result_timeout})
+                        Swal.fire({
+                            title: msg.text,
+                            text: msg.message,
+                            icon: msg.type,
+                            timer: result_timeout,
+                        })
                     } else {
                         console.log(msg);
                     }

@@ -1,19 +1,11 @@
 Admin.Modules.register('storage.tabbed', () => {
   const stateTabs = Admin.Config.get('state_tabs')
+  const tabbed = document.getElementsByClassName('nav-tabs')
+  const storageKey = stateTabs && tabbed.length > 0 ? getName() : null
 
-  if (stateTabs) {
-    var tabbed = document.getElementsByClassName('nav-tabs')
-
-    //Check if have tabs
-    if (tabbed.length > 0) {
-      url = getName()
-
-      //Check in localStorage
-      if (localStorage.getItem(url)) {
-        activeTabs = localStorage.getItem(url)
-        setActiveTabs(activeTabs)
-      }
-    }
+  if (storageKey) {
+    const activeTabs = localStorage.getItem(storageKey)
+    if (activeTabs) setActiveTabs(activeTabs)
   }
 
 
@@ -24,8 +16,8 @@ Admin.Modules.register('storage.tabbed', () => {
       let tab = $(e.target).attr('aria-controls')
       Admin.Events.fire('bootstrap::tab::shown', tab)
 
-      if (stateTabs) {
-        fillActiveTabs(url, tabbed)
+      if (storageKey) {
+        fillActiveTabs(storageKey, tabbed)
       }
       jQuery('[data-toggle="tooltip"]').tooltip()
     })
@@ -70,8 +62,8 @@ Admin.Modules.register('storage.tabbed', () => {
 
   //Set all tabs active
   function setActiveTabs(activeTabs) {
-    array = JSON.parse(activeTabs);
-    jQuery.each(array, function(index, item){
+    const tabs = JSON.parse(activeTabs);
+    jQuery.each(tabs, function(index, item){
       jQuery('[aria-controls=' + item + ']').tab('show')
       jQuery('[data-toggle="tooltip"]').tooltip()
     })

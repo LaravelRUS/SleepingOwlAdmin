@@ -12,7 +12,7 @@
         "check:ci": "npm run check && npm run test:e2e",
         "format": "prettier --write \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "format:check": "prettier --check \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
-        "lint": "eslint resources/frontend tests/frontend scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
+        "lint": "eslint resources/frontend resources/assets/js_owl/*.js resources/assets/js_owl/admin resources/assets/js_owl/components resources/assets/js_owl/wysiwyg tests/frontend scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "lint:fix": "npm run lint -- --fix",
         "lint:styles": "stylelint \"resources/frontend/**/*.scss\" --allow-empty-input",
         "test": "vitest run",
