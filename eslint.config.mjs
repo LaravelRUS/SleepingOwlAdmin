@@ -47,4 +47,21 @@ export default [
             ],
         },
     },
+    {
+        files: ['resources/frontend/features/**/*.js'],
+        rules: {
+            'no-restricted-imports': [
+                'error',
+                {
+                    patterns: [
+                        {
+                            group: ['**/themes/**'],
+                            message:
+                                'Frontend features cannot import concrete theme implementations.',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
 ]

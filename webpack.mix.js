@@ -1,4 +1,5 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+const frontendEntries = require('./build/frontend-entries.json');
 
 mix.setPublicPath('./public/default/');
 
@@ -11,26 +12,35 @@ mix.webpackConfig({
     }
 })
 
-mix.sass('resources/assets/scss/admin-app.scss', 'css/admin-app.css')
-    .js('resources/assets/js_owl/vue_init.js', 'js/vue.js')
-    .js('resources/assets/js_owl/app.js', 'js/admin-app.js')
-    .js('resources/assets/js_owl/app-dev.js', 'js/admin-app-dev.js')
-    .js('resources/assets/js_owl/modules_load.js', 'js/modules.js')
-    // .alias({
-    //     'vue$': 'vue/dist/vue.esm.js',
-    // })
-    .options({
-        processCssUrls: true,
-        resourceRoot: '../',
-        imgLoaderOptions: {
-            enabled: false,
-        },
-        progress: false
-    })
+registerEntries(frontendEntries);
+
+mix.options({
+    processCssUrls: true,
+    resourceRoot: '../',
+    imgLoaderOptions: {
+        enabled: false,
+    },
+    progress: false
+});
 
 if (mix.inProduction()) {
-    mix.version()
+    mix.version();
 }
 
-mix.disableNotifications()
+mix.disableNotifications();
+
+function registerEntries(groups) {
+    const entries = Object.values(groups);
+
+    entries.forEach(registerScripts);
+    entries.forEach(registerStyles);
+}
+
+function registerScripts(group) {
+    group.scripts.forEach(({ source, output }) => mix.js(source, output));
+}
+
+function registerStyles(group) {
+    group.styles.forEach(({ source, output }) => mix.sass(source, output));
+}
 

@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: разделить сборку на `admin-core.js`, `admin-core.css`, feature chunks и независимые theme bundles.
+- Точка возобновления: создать отдельные Sass `_variables.scss`/`_colors.scss` для core, features и themes и подключить их только к своим entrypoints.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -532,7 +532,7 @@ No-build consumer contract является release-blocking:
 
 ### Этап 3. Подготовить минимальный native frontend foundation
 
-- [ ] Разделить сборку на `admin-core.js`, `admin-core.css`, feature chunks и независимые theme bundles.
+- [x] Разделить сборку на `admin-core.js`, `admin-core.css`, feature chunks и независимые theme bundles.
 - [ ] Создать Sass entrypoints и отдельные `_variables.scss`/`_colors.scss` для core, features и themes.
 - [ ] Перевести затронутые plain CSS sources в SCSS partials; generated vendor/Tailwind CSS не редактировать вручную.
 - [ ] Ввести публичные `:root` custom properties с префиксом `--soa-*` для runtime/no-build настройки цветов и основных theme values.
@@ -949,3 +949,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 2 / theme config rendering | Legacy render contract проверяет body/favicon/brand/menu/footer/version/mode visibility и обе стороны трёх card flags на фактической разметке/view modes; direct custom theme потребляет тот же полный `ThemeConfiguration` без переименования, включая nullable/planned sidebar value. Полный PHP gate с PDO SQLite: 391 test, 1448 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / dependency guards | PHPUnit запрещает PHP core references на concrete AdminLTE/Tailwind/Legacy namespaces, физические theme paths из shared/feature Blade и frontend core imports из features/themes; self-check доказывает, что patterns ловят каждый тип нарушения. ESLint дублирует JS boundary через `no-restricted-imports`. Полный PHP gate с PDO SQLite: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / завершение | Headless PHP boundary, extracted legacy theme, stable direct attribute API, cross-theme rendering, metadata/config contracts, selector adapters и dependency guards зафиксированы; текущий AdminLTE 3 UI остаётся рабочим через isolated legacy theme. Точка возобновления перенесена на независимые core/feature/theme bundles этапа 3 | текущий commit |
+| 2026-09-06 | Этап 3 / bundle topology | Laravel Mix читает единую декларативную build matrix и выпускает отдельные `core`, `feature:forms`, `feature:table`, `theme:legacy-adminlte` и `theme:tailwind` JS/CSS entries, сохраняя пять legacy outputs до переключения resolver. Новые Sass roots задают только cascade layers и не импортируют старый монолит; compiled-contract проверяет content hashes и отсутствие jQuery/Vue/Bootstrap/AdminLTE/DataTables в core. Production build успешен; полный PHP gate: 395 tests, 1456 assertions, 2 прежних TODO-skip; frontend gate: 29 Vitest + 12 Playwright | текущий commit |

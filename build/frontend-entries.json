@@ -1,0 +1,84 @@
+{
+    "legacy": {
+        "scripts": [
+            {
+                "source": "resources/assets/js_owl/vue_init.js",
+                "output": "js/vue.js"
+            },
+            {
+                "source": "resources/assets/js_owl/app.js",
+                "output": "js/admin-app.js"
+            },
+            {
+                "source": "resources/assets/js_owl/app-dev.js",
+                "output": "js/admin-app-dev.js"
+            },
+            {
+                "source": "resources/assets/js_owl/modules_load.js",
+                "output": "js/modules.js"
+            }
+        ],
+        "styles": [
+            {
+                "source": "resources/assets/scss/admin-app.scss",
+                "output": "css/admin-app.css"
+            }
+        ]
+    },
+    "modern": {
+        "scripts": [
+            {
+                "logicalId": "core",
+                "source": "resources/frontend/core/index.js",
+                "output": "js/admin-core.js"
+            },
+            {
+                "logicalId": "feature:forms",
+                "source": "resources/frontend/features/forms/index.js",
+                "output": "js/features/forms.js"
+            },
+            {
+                "logicalId": "feature:table",
+                "source": "resources/frontend/features/table/index.js",
+                "output": "js/features/table.js"
+            },
+            {
+                "logicalId": "theme:legacy-adminlte",
+                "source": "resources/frontend/themes/legacy-adminlte/index.js",
+                "output": "js/themes/legacy-adminlte.js"
+            },
+            {
+                "logicalId": "theme:tailwind",
+                "source": "resources/frontend/themes/tailwind/index.js",
+                "output": "js/themes/tailwind.js"
+            }
+        ],
+        "styles": [
+            {
+                "logicalId": "core",
+                "source": "resources/frontend/core/styles/admin-core.scss",
+                "output": "css/admin-core.css"
+            },
+            {
+                "logicalId": "feature:forms",
+                "source": "resources/frontend/features/forms/styles/forms.scss",
+                "output": "css/features/forms.css"
+            },
+            {
+                "logicalId": "feature:table",
+                "source": "resources/frontend/features/table/styles/table.scss",
+                "output": "css/features/table.css"
+            },
+            {
+                "logicalId": "theme:legacy-adminlte",
+                "source": "resources/frontend/themes/legacy-adminlte/styles/theme.scss",
+                "output": "css/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "theme:tailwind",
+                "source": "resources/frontend/themes/tailwind/styles/theme.scss",
+                "output": "css/themes/tailwind.css"
+            }
+        ]
+    }
+}
