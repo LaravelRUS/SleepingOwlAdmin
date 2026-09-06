@@ -80,10 +80,24 @@ class ThemeSelectionTest extends TestCase
         $this->assertSame($configuration, $view->getData()['themeConfig']);
 
         $html = $view->render();
-        $this->assertStringContainsString('data-theme="selector-theme"', $html);
-        $this->assertStringContainsString('data-body-class="custom-layout compact"', $html);
-        $this->assertStringContainsString('data-footer-visible="yes"', $html);
-        $this->assertStringContainsString('Custom footer', $html);
+        $this->assertContainsAll($html, [
+            'data-theme="selector-theme"',
+            'data-body-class="custom-layout compact"',
+            'data-breadcrumbs="no"',
+            'data-favicon="/custom/favicon.svg"',
+            'data-footer-visible="yes"',
+            'data-has-many-card="yes"',
+            'data-logo-mini="CU"',
+            'data-menu-top="Custom menu"',
+            'data-mode-visible="no"',
+            'data-relation-card="no"',
+            'data-sidebar-color="#102030"',
+            'data-version="2026.9"',
+            'data-version-visible="yes"',
+            'data-wysiwyg-card="yes"',
+            '&lt;svg data-logo=&quot;custom&quot;&gt;&lt;/svg&gt;',
+            'Custom footer',
+        ]);
     }
 
     public function test_selector_rejects_classes_without_a_theme_or_template_contract(): void
@@ -94,6 +108,13 @@ class ThemeSelectionTest extends TestCase
         );
 
         (new ThemeResolver($this->app))->resolve(stdClass::class);
+    }
+
+    private function assertContainsAll(string $html, array $fragments): void
+    {
+        foreach ($fragments as $fragment) {
+            $this->assertStringContainsString($fragment, $html);
+        }
     }
 }
 
