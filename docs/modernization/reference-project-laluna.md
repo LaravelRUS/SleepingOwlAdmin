@@ -50,6 +50,13 @@
 - module Blade views не содержат собственного jQuery/Vue-кода, но 8 views всё ещё используют Bootstrap 4 `data-toggle`; общий custom frontend действительно вынесен в application resources;
 - 23 из 26 модулей уже имеют парные `MODULE.md`/`MODULE.AI.md`; отсутствующие пары у `Callback`, `Rozetka` и `Taxation` не копируются в package, а отмечают полезные сценарии для будущей документации.
 
+Два module views являются полезными lifecycle references, но не копируются буквально:
+
+- `Todo::todo-stat` запускает polling timers и подписку `storage`; нейтральный stub должен показать возврат cleanup, который снимает listener и очищает каждый timer;
+- Cloudflare analytics идемпотентно помечает Chart.js canvases через `data-*`, но не хранит и не уничтожает chart instances; fixture должен регистрировать один component на widget root и вызывать `chart.destroy()` при удалении subtree.
+
+Module views выводятся раньше footer assets legacy layout. Поэтому no-build Blade example регистрирует component через `@push('footer-scripts')` и после поздней регистрации явно вызывает `Admin.Components.scan(document)`. Для динамически вставленного subtree вызывается `scan(insertedRoot)`, а перед удалением — `destroy(removedRoot)`.
+
 Следствие для theme migration: пользовательские HTML classes/attributes и placement names считаются прямым публичным API. Legacy theme обязана объединять свои defaults с ними без потерь; PHP core не должен заменять пользовательские классы semantic resolver-ом. Generator stubs берут из этих sections структуру и API, но не копируют длинные монолитные методы или прикладные правила.
 
 ### Config compatibility

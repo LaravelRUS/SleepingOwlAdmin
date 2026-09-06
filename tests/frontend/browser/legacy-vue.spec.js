@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test'
 
 // The published bundle disables discovery on the CommonJS wrapper, not its Dropzone constructor.
 const knownLegacyPageErrors = ['Dropzone already attached.']
+const relatedLifecycleComponents = ['existing-related-group', 'new-related-group-2']
 
 function capturePageErrors(page) {
     const errors = []
@@ -136,8 +137,16 @@ test('related elements rewrite new field names and initialize dynamic controls',
     page,
 }) => {
     await openFixture(page)
+    await expect(page.locator('#existing-related-group')).toHaveAttribute(
+        'data-lifecycle-mounted',
+        'true',
+    )
     await expect(page.locator('#related-name_0')).toHaveAttribute('name', 'name')
     await page.locator('#add-related-group').click()
+    await expect(page.locator('#new-related-group-2')).toHaveAttribute(
+        'data-lifecycle-mounted',
+        'true',
+    )
     await expect(page.locator('#related-title_2')).toHaveAttribute('name', 'items[new_2][title]')
     await expect(page.locator('#related-status_2')).toHaveAttribute('name', 'items[new_2][status]')
     await expect(page.locator('#related-status_2')).toHaveClass(/select2-hidden-accessible/)
@@ -150,8 +159,17 @@ test('related elements rewrite new field names and initialize dynamic controls',
             'form.elements.wysiwyg',
         ]),
     )
+    expect(await page.evaluate(() => globalThis.Admin.Components.scan(globalThis.document))).toBe(0)
+    expect(await page.evaluate(() => globalThis.__componentMounts)).toEqual(
+        relatedLifecycleComponents,
+    )
     await page.locator('#remove-existing-group').click()
     await expect(page.locator('.existing-related-group')).toHaveCount(0)
     await expect(page.locator('.removed-related')).toHaveValue('42')
     await expect(page.locator('.removed-related')).toHaveAttribute('name', 'items[remove][]')
+    await page.locator('.remove-new-group').click()
+    await expect(page.locator('.new-related-group')).toHaveCount(0)
+    expect(await page.evaluate(() => globalThis.__componentDestroys)).toEqual(
+        relatedLifecycleComponents,
+    )
 })

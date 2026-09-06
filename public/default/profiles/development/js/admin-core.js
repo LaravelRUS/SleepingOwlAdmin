@@ -579,6 +579,221 @@ function assertCallback(callback) {
 
 /***/ }),
 
+/***/ "./resources/frontend/core/lifecycle/component-lifecycle.js":
+/*!******************************************************************!*\
+  !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ComponentLifecycle": () => (/* binding */ ComponentLifecycle),
+/* harmony export */   "createComponentLifecycle": () => (/* binding */ createComponentLifecycle)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var ComponentLifecycle = /*#__PURE__*/function () {
+  function ComponentLifecycle() {
+    _classCallCheck(this, ComponentLifecycle);
+    this.definitions = [];
+    this.definitionsByName = new Map();
+    this.records = new Set();
+    this.recordsByElement = new WeakMap();
+  }
+  return _createClass(ComponentLifecycle, [{
+    key: "register",
+    value: function register(definition) {
+      var _this = this;
+      var normalized = normalizeDefinition(definition);
+      if (this.definitionsByName.has(normalized.name)) {
+        throw new Error("Component ".concat(normalized.name, " is already registered."));
+      }
+      this.definitions.push(normalized);
+      this.definitionsByName.set(normalized.name, normalized);
+      return function () {
+        return _this.unregister(normalized.name);
+      };
+    }
+  }, {
+    key: "unregister",
+    value: function unregister(name) {
+      var definition = this.definitionsByName.get(name);
+      if (!definition) return false;
+      this.definitions = this.definitions.filter(function (item) {
+        return item !== definition;
+      });
+      this.definitionsByName["delete"](name);
+      this.destroyRecords(recordsForDefinition(this.records, definition));
+      return true;
+    }
+  }, {
+    key: "scan",
+    value: function scan() {
+      var _this2 = this;
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis.document;
+      assertRoot(root);
+      return this.definitions.reduce(function (count, definition) {
+        return count + matchingElements(root, definition.selector).reduce(function (mounted, element) {
+          return mounted + _this2.mountDefinition(element, definition);
+        }, 0);
+      }, 0);
+    }
+  }, {
+    key: "mount",
+    value: function mount(element) {
+      var _this3 = this;
+      assertElement(element);
+      return this.definitions.reduce(function (count, definition) {
+        return count + (element.matches(definition.selector) ? _this3.mountDefinition(element, definition) : 0);
+      }, 0);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy(root) {
+      assertRoot(root);
+      return this.destroyRecords(recordsInside(this.records, root));
+    }
+  }, {
+    key: "get",
+    value: function get(element, name) {
+      var _this$recordsByElemen;
+      return (_this$recordsByElemen = this.recordsByElement.get(element)) === null || _this$recordsByElemen === void 0 || (_this$recordsByElemen = _this$recordsByElemen.get(name)) === null || _this$recordsByElemen === void 0 ? void 0 : _this$recordsByElemen.instance;
+    }
+  }, {
+    key: "mountDefinition",
+    value: function mountDefinition(element, definition) {
+      var _this$recordsByElemen2;
+      if ((_this$recordsByElemen2 = this.recordsByElement.get(element)) !== null && _this$recordsByElemen2 !== void 0 && _this$recordsByElemen2.has(definition.name)) return 0;
+      var record = {
+        definition: definition,
+        element: element,
+        instance: undefined
+      };
+      this.track(record);
+      try {
+        record.instance = definition.mount(element);
+      } catch (error) {
+        this.untrack(record);
+        throw error;
+      }
+      return 1;
+    }
+  }, {
+    key: "destroyRecords",
+    value: function destroyRecords(records) {
+      var _this4 = this;
+      var errors = [];
+      records.forEach(function (record) {
+        if (!_this4.records.has(record)) return;
+        _this4.untrack(record);
+        try {
+          destroyRecord(record);
+        } catch (error) {
+          errors.push(error);
+        }
+      });
+      throwCleanupErrors(errors);
+      return records.length;
+    }
+  }, {
+    key: "track",
+    value: function track(record) {
+      var _this$recordsByElemen3;
+      var elementRecords = (_this$recordsByElemen3 = this.recordsByElement.get(record.element)) !== null && _this$recordsByElemen3 !== void 0 ? _this$recordsByElemen3 : new Map();
+      elementRecords.set(record.definition.name, record);
+      this.recordsByElement.set(record.element, elementRecords);
+      this.records.add(record);
+    }
+  }, {
+    key: "untrack",
+    value: function untrack(record) {
+      var elementRecords = this.recordsByElement.get(record.element);
+      elementRecords === null || elementRecords === void 0 || elementRecords["delete"](record.definition.name);
+      if ((elementRecords === null || elementRecords === void 0 ? void 0 : elementRecords.size) === 0) this.recordsByElement["delete"](record.element);
+      this.records["delete"](record);
+    }
+  }]);
+}();
+function createComponentLifecycle() {
+  return new ComponentLifecycle();
+}
+function normalizeDefinition(definition) {
+  var _definition$destroy;
+  if (!definition || _typeof(definition) !== 'object') {
+    throw new TypeError('Component definition must be an object.');
+  }
+  assertNonEmptyString(definition.name, 'name');
+  assertNonEmptyString(definition.selector, 'selector');
+  if (typeof definition.mount !== 'function') {
+    throw new TypeError('Component definition mount must be a function.');
+  }
+  if (definition.destroy !== undefined && typeof definition.destroy !== 'function') {
+    throw new TypeError('Component definition destroy must be a function when provided.');
+  }
+  return Object.freeze({
+    destroy: (_definition$destroy = definition.destroy) !== null && _definition$destroy !== void 0 ? _definition$destroy : null,
+    mount: definition.mount,
+    name: definition.name,
+    selector: definition.selector
+  });
+}
+function matchingElements(root, selector) {
+  var descendants = _toConsumableArray(root.querySelectorAll(selector));
+  if (typeof root.matches === 'function' && root.matches(selector)) descendants.unshift(root);
+  return descendants;
+}
+function recordsInside(records, root) {
+  return _toConsumableArray(records).filter(function (record) {
+    return root === record.element || root.contains(record.element);
+  }).reverse();
+}
+function recordsForDefinition(records, definition) {
+  return _toConsumableArray(records).filter(function (record) {
+    return record.definition === definition;
+  }).reverse();
+}
+function destroyRecord(_ref) {
+  var definition = _ref.definition,
+    element = _ref.element,
+    instance = _ref.instance;
+  if (definition.destroy) return definition.destroy(element, instance);
+  if (typeof instance === 'function') return instance();
+  if (typeof (instance === null || instance === void 0 ? void 0 : instance.destroy) === 'function') return instance.destroy();
+}
+function throwCleanupErrors(errors) {
+  if (errors.length === 1) throw errors[0];
+  if (errors.length > 1) {
+    throw new AggregateError(errors, 'Multiple component destroy callbacks failed.');
+  }
+}
+function assertRoot(root) {
+  if (typeof (root === null || root === void 0 ? void 0 : root.querySelectorAll) !== 'function' || typeof (root === null || root === void 0 ? void 0 : root.contains) !== 'function') {
+    throw new TypeError('Component lifecycle root must be a DOM query root.');
+  }
+}
+function assertElement(element) {
+  if (!element || element.nodeType !== 1 || typeof element.matches !== 'function') {
+    throw new TypeError('Component lifecycle mount requires an Element.');
+  }
+}
+function assertNonEmptyString(value, field) {
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new TypeError("Component definition ".concat(field, " must be a non-empty string."));
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/core/tables/table-registry.js":
 /*!**********************************************************!*\
   !*** ./resources/frontend/core/tables/table-registry.js ***!
@@ -791,12 +1006,14 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AdminEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__.AdminEventBus),
-/* harmony export */   "TableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__.TableRegistry),
-/* harmony export */   "assertTableAdapter": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__.assertTableAdapter),
+/* harmony export */   "ComponentLifecycle": () => (/* reexport safe */ _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_5__.ComponentLifecycle),
+/* harmony export */   "TableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__.TableRegistry),
+/* harmony export */   "assertTableAdapter": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__.assertTableAdapter),
+/* harmony export */   "createComponentLifecycle": () => (/* reexport safe */ _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_5__.createComponentLifecycle),
 /* harmony export */   "createEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__.createEventBus),
 /* harmony export */   "createPostForm": () => (/* reexport safe */ _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.createPostForm),
 /* harmony export */   "createRuntimeAssetLoader": () => (/* reexport safe */ _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__.createRuntimeAssetLoader),
-/* harmony export */   "createTableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__.createTableRegistry),
+/* harmony export */   "createTableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__.createTableRegistry),
 /* harmony export */   "delegate": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.delegate),
 /* harmony export */   "listen": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.listen),
 /* harmony export */   "parseBoolean": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseBoolean),
@@ -811,7 +1028,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom/forms.js */ "./resources/frontend/core/dom/forms.js");
 /* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
 /* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
-/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tables/table-registry.js */ "./resources/frontend/core/tables/table-registry.js");
+/* harmony import */ var _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tables/table-registry.js */ "./resources/frontend/core/tables/table-registry.js");
+
 
 
 

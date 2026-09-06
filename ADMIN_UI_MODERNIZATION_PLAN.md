@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: реализовать единый lifecycle для динамических компонентов: `scan(root)`, `mount(element)`, `destroy(element)`.
+- Точка возобновления: не включать в core reset, layout framework, DataTables, Vue или theme-specific CSS.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -550,7 +550,7 @@ No-build consumer contract является release-blocking:
 - [x] Перевести общий reload, selected rows и clear state на `Admin.Tables`.
 - [x] Перевести `Admin.Asset`, buttons, checkbox/control events и простые DOM-модули на native API.
 - [x] Устранить неявные глобалы (`urlName`, `activeFilters`, `array`, присваивания внутри условий и подобные места).
-- [ ] Реализовать единый lifecycle для динамических компонентов: `scan(root)`, `mount(element)`, `destroy(element)`.
+- [x] Реализовать единый lifecycle для динамических компонентов: `scan(root)`, `mount(element)`, `destroy(element)`.
 - [ ] Не включать в core reset, layout framework, DataTables, Vue или theme-specific CSS.
 
 Критерий завершения: минимальный core bundle не зависит от jQuery, Bootstrap, AdminLTE, Tailwind, Vue или DataTables; legacy UI работает через подключаемые adapters.
@@ -966,3 +966,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 3 / shared table operations | Registry получил явные scoped `reload`, `clearState` и `selectedRows`, а reload/clear без element выполняются для всех зарегистрированных adapters. Bulk/custom actions сериализуют выбранные строки через `URLSearchParams`, bulk action выбирается внутри текущей формы, action reload и auto-update обращаются только к `Admin.Tables`; `.card` lookup остаётся изолированной legacy theme boundary. В общих consumers больше нет прямого DataTables API, единственный factory call остаётся в legacy engine adapter. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 118 Vitest + 16 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / native DOM controls | `Admin.Asset` переведён на native Promise loader с URL-aware deduplication/retry для JS/CSS; form, table и tree actions создают/отправляют формы через DOM API и передают в сохранённые события native elements. Delegated checkbox controls поддерживают динамические строки, ограничивают select-all ближайшей таблицей и публикуют `data-soa-selected`/`aria-selected`; legacy `info` остаётся adapter-owned class. Plugin-dependent tooltip/select/date/treeview adapters не смешаны с этим пунктом. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 131 Vitest + 20 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / implicit globals | Обязательный ESLint scope расширен на все first-party legacy JS entries/admin/components/WYSIWYG с явным read-only allowlist текущих browser/plugin runtimes; vendor wrappers исключены. Исправлены утечки iterator/tab/clipboard variables, неверный Vue prop constructor `Text` и несуществующий lowercase `swal`; `urlName`/`activeFilters` уже были удалены table decomposition. Browser regressions проверяют Vue env editor, восстановление/запись tab state и custom action feedback без `ReferenceError`. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 131 Vitest + 21 Playwright | текущий commit |
+| 2026-09-06 | Этап 3 / component lifecycle | Добавлен theme/engine-neutral `Admin.Components` с уникальными definitions и симметричными `scan(root)`, `mount(element)`, `destroy(root)`, `get` и `unregister`; repeated/re-entrant mount и destroy идемпотентны, cleanup выполняется в обратном порядке и не прекращается после первой ошибки. Initial document scan выполняется после legacy modules boot, а related groups сканируют вставленный root и уничтожают subtree до Vue removal. Read-only inventory `laluna.kit\Modules` подтвердил no-build Blade extension pattern и дал реальные teardown references для polling/storage listeners и Chart.js; документация требует footer registration, явный поздний scan и cleanup. Оба asset-профиля пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 138 Vitest + 21 Playwright | текущий commit |

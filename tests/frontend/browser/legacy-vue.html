@@ -278,7 +278,12 @@
                                 @remove="removeGroup"
                                 inline-template
                             >
-                                <div class="existing-related-group" v-if="!removed">
+                                <div
+                                    class="existing-related-group"
+                                    data-lifecycle-fixture
+                                    id="existing-related-group"
+                                    v-if="!removed"
+                                >
                                     <input id="related-name" name="name" />
                                     <button
                                         id="remove-existing-group"
@@ -301,7 +306,11 @@
                                     @remove="removeGroup"
                                     inline-template
                                 >
-                                    <div class="new-related-group">
+                                    <div
+                                        class="new-related-group"
+                                        data-lifecycle-fixture
+                                        :id="'new-related-group-' + index"
+                                    >
                                         <input id="related-title" name="title" />
                                         <select
                                             id="related-status"
@@ -345,8 +354,25 @@
         <script src="/public/default/js/admin-app.js"></script>
         <script>
             window.__clipboardValue = 'fixtures/linked.svg'
+            window.__componentDestroys = []
+            window.__componentMounts = []
             window.__moduleCalls = []
             window.__toasts = []
+
+            Admin.Components.register({
+                name: 'fixture.related',
+                selector: '[data-lifecycle-fixture]',
+                mount(element) {
+                    const mountedId = element.id
+                    window.__componentMounts.push(mountedId)
+                    element.dataset.lifecycleMounted = 'true'
+
+                    return () => {
+                        window.__componentDestroys.push(mountedId)
+                        delete element.dataset.lifecycleMounted
+                    }
+                },
+            })
 
             const originalModuleCall = Admin.Modules.call.bind(Admin.Modules)
             Admin.Modules.call = (name) => {

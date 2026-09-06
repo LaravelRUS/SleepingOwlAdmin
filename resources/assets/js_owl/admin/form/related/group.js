@@ -58,8 +58,19 @@ Vue.component('related-group', {
     },
 
     methods: {
+        destroyAdminComponents() {
+            if (this.$el?.nodeType === 1) {
+                Admin.Components.destroy(this.$el);
+            }
+        },
+
         handleRemove() {
+            this.destroyAdminComponents();
             this.$emit('remove', this.primary, this.index);
         },
+    },
+
+    beforeDestroy() {
+        this.destroyAdminComponents();
     },
 });

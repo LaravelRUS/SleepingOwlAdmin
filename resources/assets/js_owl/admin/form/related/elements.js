@@ -72,6 +72,7 @@ Vue.component('related-elements', {
                 Admin.Modules.call('form.elements.select');
                 Admin.Modules.call('form.elements.selectajax');
                 Admin.Modules.call('form.elements.wysiwyg');
+                Admin.Components.scan(this.$el);
             });
         },
 

@@ -1,1 +1,1 @@
-Admin.Modules.boot();
+Admin.Modules.boot(),Admin.Components.scan(document);

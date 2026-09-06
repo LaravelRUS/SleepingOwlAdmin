@@ -49,6 +49,7 @@ require('admin-lte');
 
 
 window.Admin.Events = require('./components/events');
+window.Admin.Components = require('./components/lifecycle');
 window.Admin.Tables = require('./components/tables');
 window.Admin.Messages = require('./components/messages');
 window.Admin.Storage = require('./components/storage');
