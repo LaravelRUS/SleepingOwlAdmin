@@ -55,10 +55,6 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-/*! Magnific Popup - v1.2.0 - 2024-06-08
-* http://dimsemenov.com/plugins/magnific-popup/
-* Copyright (c) 2024 Dmytro Semenov; */
-
 /*! Responsive 3.0.8
  * © SpryMedia Ltd - datatables.net/license
  */

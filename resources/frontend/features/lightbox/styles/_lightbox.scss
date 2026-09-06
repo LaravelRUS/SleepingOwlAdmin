@@ -1,0 +1,15 @@
+@use 'sass:meta';
+
+@mixin styles {
+    @include meta.load-css('../../../../../node_modules/glightbox/dist/css/glightbox.css');
+
+    .goverlay {
+        background: var(--soa-lightbox-backdrop);
+        opacity: var(--soa-lightbox-backdrop-opacity);
+    }
+
+    .gslide-image img[src$='.svg'] {
+        min-inline-size: var(--soa-lightbox-svg-min-size);
+        min-block-size: var(--soa-lightbox-svg-min-size);
+    }
+}

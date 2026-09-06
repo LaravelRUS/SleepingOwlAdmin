@@ -1,0 +1,23 @@
+@mixin styles {
+    .glightbox-container .gbtn {
+        inline-size: var(--soa-lightbox-control-size);
+        block-size: var(--soa-lightbox-control-size);
+        border-radius: var(--soa-lightbox-control-radius);
+        background: var(--soa-lightbox-control-surface);
+        transition: background var(--soa-lightbox-transition-duration);
+    }
+
+    .glightbox-container .gbtn:hover {
+        background: var(--soa-lightbox-control-surface-hover);
+    }
+
+    .glightbox-container .gbtn path {
+        fill: var(--soa-lightbox-control-text);
+    }
+
+    .glightbox-container .gslide-description {
+        border-radius: var(--soa-lightbox-caption-radius);
+        background: var(--soa-lightbox-caption-surface);
+        color: var(--soa-lightbox-caption-text);
+    }
+}

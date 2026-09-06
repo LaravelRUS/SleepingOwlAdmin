@@ -16,6 +16,9 @@ class AssetManifestLoaderTest extends TestCase
         $this->assertSame([
             'core',
             'feature:forms',
+            'feature:lightbox',
+            'feature:lightbox:theme:legacy-adminlte',
+            'feature:lightbox:theme:tailwind',
             'feature:table',
             'feature:table:theme:legacy-adminlte',
             'feature:table:theme:tailwind',

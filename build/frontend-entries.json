@@ -42,6 +42,11 @@
                 "output": "js/features/forms.js"
             },
             {
+                "logicalId": "feature:lightbox",
+                "source": "resources/frontend/features/lightbox/index.js",
+                "output": "js/features/lightbox.js"
+            },
+            {
                 "logicalId": "feature:table",
                 "source": "resources/frontend/features/table/index.js",
                 "output": "js/features/table.js"
@@ -74,6 +79,11 @@
                 "output": "css/features/forms.css"
             },
             {
+                "logicalId": "feature:lightbox",
+                "source": "resources/frontend/features/lightbox/styles/lightbox-base.scss",
+                "output": "css/features/lightbox.css"
+            },
+            {
                 "logicalId": "feature:table",
                 "source": "resources/frontend/features/table/styles/table.scss",
                 "output": "css/features/table.css"
@@ -92,6 +102,16 @@
                 "logicalId": "feature:table:theme:tailwind",
                 "source": "resources/frontend/features/table/themes/tailwind/styles/datatables.scss",
                 "output": "css/features/table/themes/tailwind.css"
+            },
+            {
+                "logicalId": "feature:lightbox:theme:legacy-adminlte",
+                "source": "resources/frontend/features/lightbox/themes/legacy-adminlte/styles/lightbox-adminlte.scss",
+                "output": "css/features/lightbox/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:lightbox:theme:tailwind",
+                "source": "resources/frontend/features/lightbox/themes/tailwind/styles/lightbox-tailwind.scss",
+                "output": "css/features/lightbox/themes/tailwind.css"
             },
             {
                 "logicalId": "feature:tree:theme:legacy-adminlte",

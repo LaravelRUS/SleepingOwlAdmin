@@ -1,7 +1,7 @@
 <div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
   @if ($visibled)
     @if (!empty($value))
-      <a href="{{ $value }}" data-toggle="lightbox">
+      <a href="{{ $value }}" data-soa-lightbox>
         <img class="thumbnail" src="{{ $value }}">
       </a>
     @endif

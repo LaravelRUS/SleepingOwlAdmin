@@ -1,0 +1,10 @@
+@use 'colors';
+@use 'custom-properties';
+@use 'lightbox';
+@use 'variables';
+@layer sleepingowl-feature.lightbox;
+@include custom-properties.define;
+
+@layer sleepingowl-feature.lightbox {
+    @include lightbox.styles;
+}

@@ -44,6 +44,11 @@ const staticRoutes = new Map([
         '/inline-editors',
         [join(browserDirectory, 'inline-editors.html'), 'text/html; charset=utf-8'],
     ],
+    ['/lightboxes', [join(browserDirectory, 'lightboxes.html'), 'text/html; charset=utf-8']],
+    [
+        '/lightbox-presentation',
+        [join(browserDirectory, 'lightbox-presentation.html'), 'text/html; charset=utf-8'],
+    ],
     ['/trees', [join(browserDirectory, 'trees.html'), 'text/html; charset=utf-8']],
     [
         '/tree-presentation',
@@ -106,6 +111,42 @@ const staticRoutes = new Map([
     [
         '/public/default/css/features/table.css',
         [join(projectRoot, 'public', 'default', 'css', 'features', 'table.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/lightbox.css',
+        [join(projectRoot, 'public', 'default', 'css', 'features', 'lightbox.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/lightbox/themes/legacy-adminlte.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'lightbox',
+                'themes',
+                'legacy-adminlte.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/lightbox/themes/tailwind.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'lightbox',
+                'themes',
+                'tailwind.css',
+            ),
+            'text/css',
+        ],
     ],
     [
         '/public/default/css/features/table/themes/datatables-legacy-adminlte.css',

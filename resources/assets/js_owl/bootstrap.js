@@ -21,7 +21,6 @@ require('./libs/jquery');
 require('./libs/bootstrap');
 require('./libs/i18next');
 
-require('./libs/magnific-popup');
 require('./libs/dropzone');
 const {
     dataTables2Runtime,
@@ -76,6 +75,7 @@ require('./admin/display/autoupdate');
 
 require('./admin/display/actions');
 require('./admin/display/actions_form');
+require('./admin/display/lightbox');
 require('./admin/display/treeview');
 require('./admin/display/columns/checkbox');
 require('./admin/display/columns/control');

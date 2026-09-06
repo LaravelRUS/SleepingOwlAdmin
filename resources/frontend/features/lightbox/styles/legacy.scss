@@ -1,0 +1,7 @@
+@use 'custom-properties';
+@use 'lightbox';
+
+@mixin styles {
+    @include custom-properties.define;
+    @include lightbox.styles;
+}

@@ -45,6 +45,7 @@ describe('frontend build entries', () => {
     it.each([
         'core',
         'feature:forms',
+        'feature:lightbox',
         'feature:table',
         'feature:tree',
         'theme:legacy-adminlte',
@@ -92,6 +93,18 @@ describe('tree presentation entries', () => {
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:tree:theme:${theme}`
+
+            expect(modernEntry(logicalId, 'styles')).toBeDefined()
+            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+        },
+    )
+})
+
+describe('lightbox presentation entries', () => {
+    it.each(['legacy-adminlte', 'tailwind'])(
+        'publishes the %s adapter as an independent stylesheet',
+        (theme) => {
+            const logicalId = `feature:lightbox:theme:${theme}`
 
             expect(modernEntry(logicalId, 'styles')).toBeDefined()
             expect(modernEntry(logicalId, 'scripts')).toBeUndefined()

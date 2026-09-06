@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="lightbox-token" />
+        <title>Lightbox browser fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'lightboxes',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', save: 'Save', yes: 'Yes' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: { error: 'Request failed', no_action: 'No action' },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <main>
+            <a
+                id="single"
+                href="/fixtures/pixel.svg?slide=single"
+                data-soa-lightbox
+                data-title="&lt;img src=x onerror=alert(1)&gt;"
+            >
+                <img src="/fixtures/pixel.svg" alt="Single preview" />
+            </a>
+            <a
+                id="gallery-first"
+                href="/fixtures/pixel.svg?slide=first"
+                data-soa-lightbox
+                data-gallery="catalog"
+            >
+                <img src="/fixtures/pixel.svg" alt="First preview" />
+            </a>
+            <a
+                id="gallery-second"
+                href="/fixtures/pixel.svg?slide=second"
+                data-toggle="lightbox"
+                data-gallery="catalog"
+            >
+                <img src="/fixtures/pixel.svg" alt="Second preview" />
+            </a>
+        </main>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__lightboxEvents = []
+            ;['lightbox:opened', 'lightbox:closed'].forEach((name) => {
+                document.addEventListener(name, (event) => {
+                    window.__lightboxEvents.push({
+                        id: event.target.id,
+                        name,
+                        size: event.detail.size,
+                    })
+                })
+            })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-soa-color-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/features/lightbox.css" />
+        <script>
+            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
+            const supported = ['legacy-adminlte', 'tailwind']
+            if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
+
+            for (const href of [
+                `/public/default/css/themes/${theme}.css`,
+                `/public/default/css/features/lightbox/themes/${theme}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
+        </script>
+    </head>
+    <body>
+        <div class="glightbox-container">
+            <button class="gbtn" type="button">
+                <svg><path></path></svg>
+            </button>
+            <div class="gslide-description">Caption</div>
+        </div>
+    </body>
+</html>

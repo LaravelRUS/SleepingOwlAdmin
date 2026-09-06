@@ -12,7 +12,7 @@
 
         <div v-if="hasValue" class="form-element-files clearfix">
             <div class="form-element-files__item">
-                <a :href="previewUrl" class="form-element-files__image" data-toggle="lightbox">
+                <a :href="previewUrl" class="form-element-files__image" data-soa-lightbox>
                     <img :src="previewUrl" alt="" data-soa-image-preview />
                 </a>
                 <div class="form-element-files__info">

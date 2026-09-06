@@ -36,6 +36,42 @@
                         }
                     ]
                 },
+                "feature:lightbox": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/lightbox.js",
+                            "version": "10da8d876c334d23dd1f4b912da65d87",
+                            "checksum": "sha256:718d404a918ade63c353d8354aa58d6f50fb160a82636f653c63fc21d765fade"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/lightbox.css",
+                            "version": "ca781dbf82d26da58ceb5ce08477e5f6",
+                            "checksum": "sha256:b011366e3274ebc10b22c13a9a08885351cdab59c0701e3f42136b1aeb7fda7f"
+                        }
+                    ]
+                },
+                "feature:lightbox:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/lightbox/themes/legacy-adminlte.css",
+                            "version": "90305ac70d49e0ae1dd1c7268f1c0486",
+                            "checksum": "sha256:cb69e7f7ef2110975180a1ef5f5819754d2ed13a9ba9f206cdd356badf98b0e9"
+                        }
+                    ]
+                },
+                "feature:lightbox:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/lightbox/themes/tailwind.css",
+                            "version": "5a1882b166d986c61825c1eaae1175be",
+                            "checksum": "sha256:aba420b5bbfd9dd3638cae7aa80674e0148e3fb2de2a61fd545261c764b83c21"
+                        }
+                    ]
+                },
                 "feature:table": {
                     "scripts": [
                         {
@@ -176,6 +212,42 @@
                         }
                     ]
                 },
+                "feature:lightbox": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/lightbox.js",
+                            "version": "9afdc41afadc97d3e51902b68059f867",
+                            "checksum": "sha256:bedaf5632915ffa67d209baf0d238bececf22cf8d17a8c6bfc1b6ab6f5900a15"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/lightbox.css",
+                            "version": "028775bc3fe605ed4f187c368f73579b",
+                            "checksum": "sha256:9d306ea141b4d183b24d1eda6d54195c21b2366ff001c3a82f1a1ae31ad50de3"
+                        }
+                    ]
+                },
+                "feature:lightbox:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/lightbox/themes/legacy-adminlte.css",
+                            "version": "0697ac71cfa875f0ed3fa06c7b4f0138",
+                            "checksum": "sha256:47532839b0a404b93a6c6fdd0c9c5f730608307050a1c332dae2c278f9181697"
+                        }
+                    ]
+                },
+                "feature:lightbox:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/lightbox/themes/tailwind.css",
+                            "version": "4dd4a8370390b6e87136c3880398c2c3",
+                            "checksum": "sha256:b73dc3b2c0dc0cf047a7d54c73d401d727fccc1da3db087e9019075ce46b3901"
+                        }
+                    ]
+                },
                 "feature:table": {
                     "scripts": [
                         {
@@ -283,5 +355,5 @@
             }
         }
     },
-    "build_id": "sha256:847cecf479922c6f9bb49e4cdde2f026f0824d981f51791d0b30d848b7112113"
+    "build_id": "sha256:557a78a24b04e32988248292d824de8df02c757721de0ba64f378fbf5a98281f"
 }
