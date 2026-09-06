@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: зафиксировать границы `core`, feature drivers, themes и пользовательских extensions.
+- Точка возобновления: подтвердить первые темы и выбрать default theme нового major.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -152,7 +152,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - `admin-core.js` содержит только HTTP/CSRF, native events, module lifecycle, feature registries, storage и узкие DOM helpers.
 - `admin-core.css` содержит только accessibility/behavior rules (`hidden`, cloak, loading, drag placeholders) и не включает reset, typography или layout framework.
 - Загружается ровно один theme bundle: `theme-adminlte` либо `theme-tailwind`; custom theme может предоставить собственный asset manifest.
-- Существующий `TemplateInterface` расширяется до небольшого стабильного `ThemeInterface`: id, view namespace, assets, icons и capabilities. Class resolver и отдельный semantic styling API не вводятся.
+- Рядом с существующим `TemplateInterface` вводится небольшой стабильный `ThemeInterface`: id, view namespace, assets, icons и capabilities. Старый широкий contract не получает новых обязанностей и временно поддерживается adapter-слоем. Class resolver и отдельный semantic styling API не вводятся.
 - Стандартные framework-классы встроенных компонентов задаются непосредственно в Blade views выбранной темы, а не в PHP core.
 - Обычный публичный API HTML attributes/classes сохраняется: пользователь знает выбранную тему и передаёт нужные Bootstrap, AdminLTE, Tailwind или custom classes напрямую. Core не переводит, не валидирует и не переименовывает их.
 - Сложные компоненты рендерятся theme-owned Blade components/partials; общие views остаются только там, где их разметка действительно не зависит от темы.
@@ -165,6 +165,31 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - Компоненты активируются по нейтральным атрибутам (`data-admin-component`, `data-driver`) и могут загружаться отдельными chunks.
 - Driver отвечает за поведение, theme adapter — за presentation; пользовательская тема может переопределить presentation без копирования бизнес-логики.
 - Базовый PHP API таблиц постепенно обобщается до `TableDisplay`; `AdminDisplay::datatables()` остаётся удобным alias выбранного table driver.
+
+### Контракт архитектурных границ
+
+| Слой | Владеет | Не должен содержать |
+| --- | --- | --- |
+| PHP/core | PHP DSL и contracts, config normalization, routes/auth, server payloads, feature/theme registries, manifest resolution | framework-specific classes, concrete theme views, vendor widget initialization |
+| Frontend core | lifecycle, native events, HTTP/CSRF, storage, manifest-driven boot, узкие DOM helpers и registries | Vue runtime, DataTables, Bootstrap/AdminLTE/Tailwind, feature business logic |
+| Feature driver | поведение одного widget, его state/transport/lifecycle, third-party library и нейтральный DOM contract | page layout, navigation, classes конкретной темы, прямые импорты внутренних файлов темы |
+| Theme | layout/navigation views, presentation Blade partials, icons, visual SCSS и собственные framework dependencies | query/transport/state feature, PHP DSL rules, assets другой темы |
+| Feature theme adapter | только разметка/стили presentation для пары feature + theme | копия driver logic или загрузка feature без фактического использования |
+| User extension | регистрация через публичные PHP/JS contracts, собственные classes/views/assets/manifest entries | импорт внутренних source paths или monkey patch private state |
+
+Правила зависимостей:
+
+- frontend core ничего не импортирует из features и themes;
+- feature driver импортирует только публичный core API;
+- theme импортирует только публичный core API и не активирует необязательные features;
+- feature/theme adapter связывается с driver по публичному id/registry, без circular imports;
+- PHP renderer собирает страницу как `core + selected theme + detected features + matching presentation adapters`;
+- один feature имеет один lifecycle и не инициализируется повторно при Vue island mount, tab activation или динамической вставке DOM;
+- пользовательские classes и HTML attributes проходят через core без преобразования; встроенные framework classes принадлежат theme views.
+
+Текущий `TemplateInterface` не расширяется новыми обязанностями: он уже объединяет presentation с meta, breadcrumbs и navigation. Вводится отдельный узкий `ThemeInterface`, а server-side coordinator использует core-сервисы и выбранную тему. Значение существующего ключа `template` сохраняется; legacy implementation `TemplateInterface` подключается через явно deprecated adapter на переходный период. Это позволяет мигрировать custom templates без class resolver и без переименования config key.
+
+Логические manifest ids фиксируются заранее: `core`, `theme:<id>`, `feature:<id>` и `feature:<id>:theme:<id>`. Физические имена с hash/version берутся только из manifest; PHP и пользовательские extensions не строят пути к собранным файлам вручную.
 
 ### Поставка без frontend-сборки у пользователя
 
@@ -279,7 +304,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - [x] Выбрать базовый или строгий критерий удаления jQuery.
 - [x] Проверить актуальные DataTables 2 packages и их production dependency tree.
 - [x] Зафиксировать список поддерживаемых браузеров.
-- [ ] Зафиксировать границы `core`, `feature driver`, `theme` и пользовательских extensions.
+- [x] Зафиксировать границы `core`, `feature driver`, `theme` и пользовательских extensions.
 - [ ] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
 - [ ] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
 - [ ] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
@@ -659,3 +684,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / DataTables packages | Проверены npm metadata и чистая production-установка: DataTables `2.3.8` + Responsive `3.0.8` обязательно включают jQuery; DataTables `3.0.3` отмечен только как отдельная будущая major-альтернатива | текущий commit |
 | 2026-09-06 | Этап 0 / критерий jQuery | Выбран базовый критерий: first-party и публичный runtime API полностью без jQuery; транзитивный jQuery разрешён только как изолированная внутренняя зависимость DataTables 2 с точным allowlist | текущий commit |
 | 2026-09-06 | Этап 0 / браузеры | Зафиксирована modern-only матрица: последние 2 Chrome/Edge/Firefox, Firefox ESR, Safari/iOS `>= 16.4`; IE и legacy Edge не поддерживаются | текущий commit |
+| 2026-09-06 | Этап 0 / границы | Разделены PHP/frontend core, feature drivers, themes, presentation adapters и user extensions; сохранён ключ `template`, legacy `TemplateInterface` получает переходный adapter | текущий commit |
