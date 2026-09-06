@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: зафиксировать список поддерживаемых браузеров.
+- Точка возобновления: зафиксировать границы `core`, feature drivers, themes и пользовательских extensions.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -95,6 +95,17 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - хранить template компонента в SFC/JS либо в theme-owned template, а не в `inline-template`;
 - использовать compiler-included Vue build только там, где временно остаётся серверный in-DOM template;
 - применить `@vue/compat` только как промежуточный инструмент и удалить его до завершения миграции.
+
+### Поддерживаемые браузеры
+
+Админка ориентируется на современные браузеры; Internet Explorer и legacy Edge не поддерживаются. Production target:
+
+- последние две стабильные major-версии Chrome, Edge и Firefox;
+- актуальный Firefox ESR;
+- Safari `>= 16.4` и iOS Safari `>= 16.4`;
+- Chromium WebView поддерживается только при соответствии одной из перечисленных Chromium-версий.
+
+Эта политика будет записана в `package.json` как `browserslist`. Версии `caniuse-lite` и build dependencies фиксируются lock-файлом, чтобы результат сборки был воспроизводим. Синтаксис может транспилироваться под target, но глобальные legacy polyfills не включаются автоматически: необходимый Web API получает локальный fallback внутри feature либо явно документированное требование.
 
 ## Текущее состояние
 
@@ -267,7 +278,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 
 - [x] Выбрать базовый или строгий критерий удаления jQuery.
 - [x] Проверить актуальные DataTables 2 packages и их production dependency tree.
-- [ ] Зафиксировать список поддерживаемых браузеров.
+- [x] Зафиксировать список поддерживаемых браузеров.
 - [ ] Зафиксировать границы `core`, `feature driver`, `theme` и пользовательских extensions.
 - [ ] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
 - [ ] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
@@ -647,3 +658,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / запуск | План закреплён в Git как источник истины; ветка и чистое рабочее дерево проверены; выполнение переведено в активный статус | `2029528c` |
 | 2026-09-06 | Этап 0 / DataTables packages | Проверены npm metadata и чистая production-установка: DataTables `2.3.8` + Responsive `3.0.8` обязательно включают jQuery; DataTables `3.0.3` отмечен только как отдельная будущая major-альтернатива | текущий commit |
 | 2026-09-06 | Этап 0 / критерий jQuery | Выбран базовый критерий: first-party и публичный runtime API полностью без jQuery; транзитивный jQuery разрешён только как изолированная внутренняя зависимость DataTables 2 с точным allowlist | текущий commit |
+| 2026-09-06 | Этап 0 / браузеры | Зафиксирована modern-only матрица: последние 2 Chrome/Edge/Firefox, Firefox ESR, Safari/iOS `>= 16.4`; IE и legacy Edge не поддерживаются | текущий commit |
