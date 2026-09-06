@@ -117,6 +117,10 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
     await openFixture(page)
 
     await expect(page.locator('#legacy-table tbody tr').first()).toHaveClass(/fixture-row/)
+    await expect(page.locator('#legacy-table_wrapper .dt-length')).toBeVisible()
+    await expect(page.locator('#legacy-table_wrapper .dt-search')).toBeVisible()
+    await expect(page.locator('#legacy-table_wrapper .dt-info')).toBeVisible()
+    await expect(page.locator('#legacy-table_wrapper .dt-paging')).toBeVisible()
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
     const runtime = await page.evaluate(() => ({
         draws: globalThis.__legacyEvents.filter((event) => event === 'datatables::draw').length,

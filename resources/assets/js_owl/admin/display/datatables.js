@@ -101,7 +101,7 @@ function buildOptions(element, definition, stateFilters) {
         applyStateOptions(options, stateFilters)
     }
 
-    options.fnDrawCallback = createDrawHook({
+    options.drawCallback = createDrawHook({
         events: Admin.Events,
         highlight: (engineContext) => bindHighlight(element, engineContext),
         lazyload: () => globalThis.lazyload(),
@@ -114,7 +114,7 @@ function buildOptions(element, definition, stateFilters) {
 
 function applyStateOptions(options, stateFilters) {
     if (Admin.Config.get('state_datatables')) {
-        options.bStateSave = true
+        options.stateSave = true
     }
 
     if (!stateFilters) {

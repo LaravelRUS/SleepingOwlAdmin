@@ -1,1 +1,1 @@
-(()=>{"use strict"})();
+(()=>{"use strict";Object.freeze([["sDom","dom"],["bStateSave","stateSave"],["fnDrawCallback","drawCallback"]])})();

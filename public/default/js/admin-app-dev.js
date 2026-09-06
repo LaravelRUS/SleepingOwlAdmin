@@ -4577,7 +4577,7 @@ function buildOptions(element, definition, stateFilters) {
     });
     applyStateOptions(options, stateFilters);
   }
-  options.fnDrawCallback = createDrawHook({
+  options.drawCallback = createDrawHook({
     events: Admin.Events,
     highlight: function highlight(engineContext) {
       return bindHighlight(element, engineContext);
@@ -4594,7 +4594,7 @@ function buildOptions(element, definition, stateFilters) {
 }
 function applyStateOptions(options, stateFilters) {
   if (Admin.Config.get('state_datatables')) {
-    options.bStateSave = true;
+    options.stateSave = true;
   }
   if (!stateFilters) {
     options.stateSaveParams = clearSavedTableSearch;
@@ -9064,6 +9064,49 @@ function assertMountDependencies(createEngine, registry) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/options/option-aliases.js":
+/*!*********************************************************************!*\
+  !*** ./resources/frontend/features/table/options/option-aliases.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "normalizeDataTables2Options": () => (/* binding */ normalizeDataTables2Options)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var LEGACY_OPTION_ALIASES = Object.freeze([['sDom', 'dom'], ['bStateSave', 'stateSave'], ['fnDrawCallback', 'drawCallback']]);
+function normalizeDataTables2Options(options) {
+  var normalized = _objectSpread({}, options);
+  LEGACY_OPTION_ALIASES.forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      legacyName = _ref2[0],
+      currentName = _ref2[1];
+    moveOption(normalized, legacyName, currentName);
+  });
+  return normalized;
+}
+function moveOption(options, legacyName, currentName) {
+  if (options[currentName] === undefined && options[legacyName] !== undefined) {
+    options[currentName] = options[legacyName];
+  }
+  delete options[legacyName];
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/options/table-options.js":
 /*!********************************************************************!*\
   !*** ./resources/frontend/features/table/options/table-options.js ***!
@@ -9075,14 +9118,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "applyServerOptions": () => (/* binding */ applyServerOptions),
 /* harmony export */   "readTableDefinition": () => (/* binding */ readTableDefinition),
-/* harmony export */   "tableDomLayout": () => (/* binding */ tableDomLayout)
+/* harmony export */   "tableLayout": () => (/* binding */ tableLayout)
 /* harmony export */ });
+/* harmony import */ var _option_aliases_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 function readTableDefinition(element) {
   assertElement(element);
   return {
@@ -9096,20 +9141,26 @@ function readTableDefinition(element) {
   };
 }
 function applyServerOptions(options, definition) {
+  var normalized = (0,_option_aliases_js__WEBPACK_IMPORTED_MODULE_0__.normalizeDataTables2Options)(options);
   if (!definition.url) {
-    return options;
+    return normalized;
   }
-  return _objectSpread(_objectSpread({}, options), {}, {
+  delete normalized.dom;
+  return _objectSpread(_objectSpread({}, normalized), {}, {
+    layout: tableLayout(definition),
     processing: true,
-    serverSide: true,
-    sDom: tableDomLayout(definition)
+    serverSide: true
   });
 }
-function tableDomLayout(_ref) {
+function tableLayout(_ref) {
   var showLength = _ref.showLength,
     showSearch = _ref.showSearch;
-  var controls = "".concat(showLength ? 'l' : '').concat(showSearch ? 'f' : '');
-  return "<\"H\"".concat(controls, "r>t<\"F\"ip>");
+  return {
+    bottomEnd: 'paging',
+    bottomStart: 'info',
+    topEnd: showSearch ? 'search' : null,
+    topStart: showLength ? 'pageLength' : null
+  };
 }
 function parseOptions(source) {
   var options = parseJson(source, {});

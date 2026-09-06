@@ -1,3 +1,5 @@
+import { normalizeDataTables2Options } from './option-aliases.js'
+
 export function readTableDefinition(element) {
     assertElement(element)
 
@@ -13,22 +15,29 @@ export function readTableDefinition(element) {
 }
 
 export function applyServerOptions(options, definition) {
+    const normalized = normalizeDataTables2Options(options)
+
     if (!definition.url) {
-        return options
+        return normalized
     }
 
+    delete normalized.dom
+
     return {
-        ...options,
+        ...normalized,
+        layout: tableLayout(definition),
         processing: true,
         serverSide: true,
-        sDom: tableDomLayout(definition),
     }
 }
 
-export function tableDomLayout({ showLength, showSearch }) {
-    const controls = `${showLength ? 'l' : ''}${showSearch ? 'f' : ''}`
-
-    return `<"H"${controls}r>t<"F"ip>`
+export function tableLayout({ showLength, showSearch }) {
+    return {
+        bottomEnd: 'paging',
+        bottomStart: 'info',
+        topEnd: showSearch ? 'search' : null,
+        topStart: showLength ? 'pageLength' : null,
+    }
 }
 
 function parseOptions(source) {

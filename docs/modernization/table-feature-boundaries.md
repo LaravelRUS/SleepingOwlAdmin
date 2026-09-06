@@ -17,6 +17,7 @@ registry.
 | `selection/selected-rows.js`       | checked row identifiers scoped to one table element                      |
 | `hooks/table-hooks.js`             | draw hook order and server-provided row classes                          |
 | `lifecycle/data-table-adapter.js`  | engine creation, registry registration and adapter lifecycle             |
+| `options/option-aliases.js`        | legacy option aliases at the server/config compatibility boundary        |
 
 `resources/assets/js_owl/admin/display/datatables.js` is transitional
 orchestration: it reads config, composes the modules, delegates DataTables 2
@@ -24,6 +25,13 @@ creation to the engine factory and binds legacy controls. The previous 413-line
 closure, implicit globals and inline state/filter implementations are removed.
 
 The server-side DataTables wire protocol is unchanged. Filter storage keeps its existing `Filters_/...` key and edit-route normalization. State cleanup no longer clears unrelated local storage. Repeated module boot resolves the registered adapter instead of initializing a second engine for the same table.
+
+First-party runtime options use the DataTables 2 names `layout`, `stateSave`
+and `drawCallback`. Async tables receive a layout object with conditional
+`pageLength`/`search` controls and stable `info`/`paging` regions. Published
+config and `setDatatableAttributes()` values using `sDom`, `bStateSave` or
+`fnDrawCallback` pass through a small compatibility normalizer; an explicitly
+provided current option wins over its legacy alias.
 
 The engine module under `features/table/engine` imports only DataTables core and
 Responsive. The legacy AdminLTE feature adapter separately imports the
@@ -40,6 +48,6 @@ Shared reload, state and selection consumers no longer call the DataTables API
 directly. Bulk actions and custom action forms resolve the adapter for their
 table and read `Admin.Tables.selectedRows(element)`; action submission and the
 auto-update view use `Admin.Tables.reload(...)`. No first-party runtime path
-creates a table through `$(element).DataTable(...)`. Legacy option aliases and
-the remaining jQuery-based global extension/filter/control bindings are tracked
-as separate migration checkpoints.
+creates a table through `$(element).DataTable(...)`. The remaining jQuery-based
+global extension/filter/control bindings are tracked as separate migration
+checkpoints.

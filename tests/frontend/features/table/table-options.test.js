@@ -3,7 +3,7 @@ import { expect, it } from 'vitest'
 import {
     applyServerOptions,
     readTableDefinition,
-    tableDomLayout,
+    tableLayout,
 } from '../../../../resources/frontend/features/table/options/table-options.js'
 
 function element(dataset) {
@@ -47,7 +47,7 @@ it('keeps a non-JSON payload string and defaults optional values', () => {
     })
 })
 
-it('applies server flags and legacy control layout only to async tables', () => {
+it('applies server flags and DataTables 2 control layout only to async tables', () => {
     const options = { pageLength: 10 }
     const configured = applyServerOptions(options, {
         showLength: true,
@@ -56,13 +56,23 @@ it('applies server flags and legacy control layout only to async tables', () => 
     })
 
     expect(configured).toEqual({
+        layout: {
+            bottomEnd: 'paging',
+            bottomStart: 'info',
+            topEnd: 'search',
+            topStart: 'pageLength',
+        },
         pageLength: 10,
         processing: true,
         serverSide: true,
-        sDom: '<"H"lfr>t<"F"ip>',
     })
-    expect(applyServerOptions(options, { url: null })).toBe(options)
-    expect(tableDomLayout({ showLength: false, showSearch: true })).toBe('<"H"fr>t<"F"ip>')
+    expect(applyServerOptions(options, { url: null })).toEqual(options)
+    expect(tableLayout({ showLength: false, showSearch: true })).toEqual({
+        bottomEnd: 'paging',
+        bottomStart: 'info',
+        topEnd: 'search',
+        topStart: null,
+    })
 })
 
 it('rejects invalid table option JSON', () => {
