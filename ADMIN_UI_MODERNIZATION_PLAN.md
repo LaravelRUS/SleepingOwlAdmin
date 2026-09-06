@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: составить machine-readable inventory config keys и их consumers.
+- Точка возобновления: заполнить config migration matrix на основе `docs/modernization/baseline/config-inventory.json`.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -487,7 +487,7 @@ No-build consumer contract является release-blocking:
 - [x] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
 - [x] Сохранить baseline production bundle size и перечень лицензий.
 - [x] Составить перечень эталонных экранов для каждой темы: layout/navigation, async table, sync table, filters, bulk actions, inline edit, tree, select, date/time, single/multiple file upload.
-- [ ] Составить полный machine-readable inventory top-level/nested config keys и найти их consumers в PHP, Blade и JavaScript.
+- [x] Составить полный machine-readable inventory top-level/nested config keys и найти их consumers в PHP, Blade и JavaScript.
 - [ ] Заполнить config migration matrix (`unchanged`, `same key/new implementation`, `theme-owned`, `deprecated`, `removed`) с правилом сохранения по умолчанию.
 - [ ] Подготовить fixture старого опубликованного конфига и fixture минимального конфига с отсутствующими новыми ключами.
 
@@ -909,3 +909,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / dependency lock | Добавлен npm lockfile v3; чистый `npm ci` и dependency tree проверены, зафиксированы 1376 entries и legacy Bootstrap 3 peer conflict внутри AdminLTE 3 | текущий commit |
 | 2026-09-06 | Этап 0 / asset baseline | Добавлены воспроизводимый generator и JSON baseline: 2 585 357 raw / 587 787 gzip bytes, SHA-256 assets/lock и license inventory 869 runtime packages с 12 явными `UNKNOWN` | текущий commit |
 | 2026-09-06 | Этап 0 / reference screens | В `docs/modernization/reference-screens.md` зафиксированы 9 стабильных scenarios, fixtures, states, viewport/scheme matrix и обязательное AdminLTE/Tailwind coverage | текущий commit |
+| 2026-09-06 | Этап 0 / config inventory | Добавлен воспроизводимый JSON inventory: 59 top-level/113 named keys, прямые и parent-scope consumers, 3 namespace reads, 7 derived JS values; отдельно выявлен отсутствующий в published config ключ `policies_namespace` | текущий commit |

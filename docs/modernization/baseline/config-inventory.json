@@ -1,0 +1,2339 @@
+{
+    "formatVersion": 1,
+    "source": "config/sleeping_owl.php",
+    "summary": {
+        "topLevelKeys": 59,
+        "allNamedKeys": 113,
+        "keysWithDirectConsumers": 59,
+        "keysWithAncestorConsumers": 48,
+        "namespaceConsumers": 3,
+        "derivedScriptConsumers": 7,
+        "unmappedConsumers": 1
+    },
+    "keys": [
+        {
+            "key": "aliases",
+            "type": "map",
+            "consumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "aliases.A",
+            "type": "string",
+            "default": "Spatie\\Html\\Elements\\A",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminColumn",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\TableColumn",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminColumnEditable",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\TableColumnEditable",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminColumnFilter",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\TableColumnFilter",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminDisplay",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\Display",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminDisplayFilter",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\DisplayFilter",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminForm",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\Form",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminFormElement",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\FormElement",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminNavigation",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\Navigation",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminSection",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\Admin",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminTemplate",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\Template",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.AdminWidgets",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\Widgets",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.Assets",
+            "type": "string",
+            "default": "KodiCMS\\Assets\\Facades\\Assets",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.Form",
+            "type": "string",
+            "default": "Spatie\\Html\\Facades\\Html",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.HTML",
+            "type": "string",
+            "default": "Spatie\\Html\\Elements\\Element",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.MessagesStack",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\MessageStack",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.Meta",
+            "type": "string",
+            "default": "KodiCMS\\Assets\\Facades\\Meta",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.PackageManager",
+            "type": "string",
+            "default": "KodiCMS\\Assets\\Facades\\PackageManager",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "aliases.WysiwygManager",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Facades\\WysiwygManager",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "aliases",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 239,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ]
+        },
+        {
+            "key": "auth_provider",
+            "type": "string",
+            "default": "users",
+            "consumers": [
+                {
+                    "key": "auth_provider",
+                    "file": "src/Console/Commands/UserManagerCommand.php",
+                    "line": 79,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "body_default_class",
+            "type": "string",
+            "default": "hold-transition sidebar-mini sidebar-open",
+            "consumers": [
+                {
+                    "key": "body_default_class",
+                    "file": "resources/views/default/_layout/base.blade.php",
+                    "line": 17,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "bootstrapDirectory",
+            "type": "string",
+            "default": "<project-root>/app/Admin",
+            "consumers": [
+                {
+                    "key": "bootstrapDirectory",
+                    "file": "src/Console/Installation/CreateBootstrapDirectory.php",
+                    "line": 42,
+                    "source": "php",
+                    "accessor": "scoped-config"
+                },
+                {
+                    "key": "bootstrapDirectory",
+                    "file": "src/Console/Installation/CreateBootstrapFile.php",
+                    "line": 42,
+                    "source": "php",
+                    "accessor": "scoped-config"
+                },
+                {
+                    "key": "bootstrapDirectory",
+                    "file": "src/Console/Installation/CreateNavigationFile.php",
+                    "line": 42,
+                    "source": "php",
+                    "accessor": "scoped-config"
+                },
+                {
+                    "key": "bootstrapDirectory",
+                    "file": "src/Console/Installation/CreateRoutesFile.php",
+                    "line": 42,
+                    "source": "php",
+                    "accessor": "scoped-config"
+                },
+                {
+                    "key": "bootstrapDirectory",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 126,
+                    "source": "php",
+                    "accessor": "provider-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "breadcrumbs",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "breadcrumbs",
+                    "file": "src/Templates/Template.php",
+                    "line": 182,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "datatables",
+            "type": "list",
+            "default": [],
+            "consumers": [
+                {
+                    "key": "datatables",
+                    "file": "src/Display/DisplayDatatables.php",
+                    "line": 66,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "datatables_highlight",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "datatables_highlight",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 55,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "datatables_highlight",
+                    "file": "resources/assets/js_owl/admin/display/datatables.js",
+                    "line": 107,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "datatables_highlight"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "dateFormat",
+            "type": "string",
+            "default": "d-m-Y",
+            "consumers": [
+                {
+                    "key": "dateFormat",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 53,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "dateFormat",
+                    "file": "src/Display/Column/Editable/Date.php",
+                    "line": 29,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "dateFormat",
+                    "file": "src/Display/Column/Editable/Date.php",
+                    "line": 38,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "dateFormat",
+                    "file": "src/Display/Column/Filter/Date.php",
+                    "line": 40,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "dateFormat",
+                    "file": "src/Form/Element/Date.php",
+                    "line": 22,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "dateFormat",
+                    "file": "resources/assets/js_owl/admin/display/columns/inline_edit.js",
+                    "line": 53,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "date_format"
+                },
+                {
+                    "key": "dateFormat",
+                    "file": "resources/assets/js_owl/admin/form/daterange.js",
+                    "line": 4,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "date_format"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "datetimeFormat",
+            "type": "string",
+            "default": "d-m-Y H:i",
+            "consumers": [
+                {
+                    "key": "datetimeFormat",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 52,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "datetimeFormat",
+                    "file": "src/Display/Column/Editable/DateTime.php",
+                    "line": 63,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "datetimeFormat",
+                    "file": "src/Display/Column/Editable/DateTime.php",
+                    "line": 241,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "datetimeFormat",
+                    "file": "src/Form/Element/DateTime.php",
+                    "line": 105,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "datetimeFormat",
+                    "file": "src/Traits/DateFormat.php",
+                    "line": 13,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "datetimeFormat",
+                    "file": "resources/assets/js_owl/admin/display/columns/inline_edit.js",
+                    "line": 35,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "datetime_format"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "default_datatables_method",
+            "type": "string",
+            "default": "GET",
+            "consumers": [
+                {
+                    "key": "default_datatables_method",
+                    "file": "src/Display/DisplayDatatablesAsync.php",
+                    "line": 86,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "dev_assets",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "dev_assets",
+                    "file": "src/Templates/TemplateDefault.php",
+                    "line": 45,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "dev_assets",
+                    "file": "src/Templates/TemplateDefault.php",
+                    "line": 58,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "domain",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "domain",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 275,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "domain",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 304,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "dt_autoupdate",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "dt_autoupdate",
+                    "file": "resources/views/default/helper/autoupdate.blade.php",
+                    "line": 2,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "dt_autoupdate_class",
+            "type": "string",
+            "default": "",
+            "consumers": [
+                {
+                    "key": "dt_autoupdate_class",
+                    "file": "resources/views/default/helper/autoupdate.blade.php",
+                    "line": 8,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "dt_autoupdate_color",
+            "type": "string",
+            "default": "#dc3545",
+            "consumers": [
+                {
+                    "key": "dt_autoupdate_color",
+                    "file": "resources/views/default/helper/autoupdate.blade.php",
+                    "line": 11,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "dt_autoupdate_interval",
+            "type": "int",
+            "default": 5,
+            "consumers": [
+                {
+                    "key": "dt_autoupdate_interval",
+                    "file": "resources/views/default/helper/autoupdate.blade.php",
+                    "line": 4,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "enable_editor",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "enable_editor",
+                    "file": "src/Http/routes.php",
+                    "line": 64,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "enable_editor",
+                    "file": "src/Widgets/EnvEditor.php",
+                    "line": 14,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "env_can_add",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "env_can_add",
+                    "file": "resources/views/default/env_editor.blade.php",
+                    "line": 65,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "env_can_delete",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "env_can_delete",
+                    "file": "resources/views/default/env_editor.blade.php",
+                    "line": 53,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "env_editor_excluded_keys",
+            "type": "list",
+            "default": [
+                "APP_KEY",
+                "DB_*"
+            ],
+            "consumers": [
+                {
+                    "key": "env_editor_excluded_keys",
+                    "file": "src/Http/Controllers/AdminController.php",
+                    "line": 148,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "env_editor_excluded_keys",
+                    "file": "src/Http/Controllers/AdminController.php",
+                    "line": 205,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "env_editor_excluded_keys",
+                    "file": "src/Http/Controllers/AdminController.php",
+                    "line": 219,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "env_editor_excluded_keys",
+                    "file": "src/Http/Controllers/AdminController.php",
+                    "line": 245,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "env_editor_middlewares",
+            "type": "list",
+            "default": [],
+            "consumers": [
+                {
+                    "key": "env_editor_middlewares",
+                    "file": "src/Http/routes.php",
+                    "line": 65,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "env_editor_policy",
+            "type": "string",
+            "default": "",
+            "consumers": [
+                {
+                    "key": "env_editor_policy",
+                    "file": "src/Http/Controllers/AdminController.php",
+                    "line": 78,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "env_editor_url",
+            "type": "string",
+            "default": "env/editor",
+            "consumers": [
+                {
+                    "key": "env_editor_url",
+                    "file": "src/Http/routes.php",
+                    "line": 66,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "env_editor_url",
+                    "file": "src/Http/routes.php",
+                    "line": 70,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "env_keys_readonly",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "env_keys_readonly",
+                    "file": "resources/views/default/env_editor.blade.php",
+                    "line": 37,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "favicon",
+            "type": "string",
+            "default": "/packages/sleepingowl/default/images/favicon.ico",
+            "consumers": [
+                {
+                    "key": "favicon",
+                    "file": "resources/views/default/_layout/base.blade.php",
+                    "line": 5,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "filesAllowedExtensions",
+            "type": "list",
+            "default": [],
+            "consumers": [
+                {
+                    "key": "filesAllowedExtensions",
+                    "file": "src/Http/Controllers/UploadController.php",
+                    "line": 126,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "filesUploadDirectory",
+            "type": "string",
+            "default": "files/uploads",
+            "consumers": [
+                {
+                    "key": "filesUploadDirectory",
+                    "file": "src/Form/Element/File.php",
+                    "line": 335,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "filesUploadDirectory",
+                    "file": "src/Form/Element/Files.php",
+                    "line": 309,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "filesUploadDirectory",
+                    "file": "src/Http/Controllers/UploadController.php",
+                    "line": 130,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "filesUploadFilenameBehavior",
+            "type": "string",
+            "default": "UPLOAD_HASH",
+            "consumers": [
+                {
+                    "key": "filesUploadFilenameBehavior",
+                    "file": "src/Http/Controllers/UploadController.php",
+                    "line": 131,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "footer_text",
+            "type": "string",
+            "default": "All rights reserved",
+            "consumers": [
+                {
+                    "key": "footer_text",
+                    "file": "resources/views/default/_layout/inner.blade.php",
+                    "line": 43,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "imageLazyLoad",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "imageLazyLoad",
+                    "file": "src/Display/Column/Image.php",
+                    "line": 81,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "imageLazyLoadFile",
+            "type": "string",
+            "default": "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",
+            "consumers": [
+                {
+                    "key": "imageLazyLoadFile",
+                    "file": "resources/views/default/column/image.blade.php",
+                    "line": 6,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "imagesAllowSvg",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "imagesAllowSvg",
+                    "file": "src/Form/Element/Image.php",
+                    "line": 57,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "imagesAllowedExtensions",
+            "type": "list",
+            "default": [
+                "jpg",
+                "jpeg",
+                "png",
+                "gif",
+                "bmp",
+                "svg",
+                "webp",
+                "ico",
+                "jpe"
+            ],
+            "consumers": [
+                {
+                    "key": "imagesAllowedExtensions",
+                    "file": "src/Http/Controllers/UploadController.php",
+                    "line": 116,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "imagesAllowedExtensions",
+                    "file": "src/Rules/ImageExtended.php",
+                    "line": 21,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "imagesUploadDirectory",
+            "type": "string",
+            "default": "images/uploads",
+            "consumers": [
+                {
+                    "key": "imagesUploadDirectory",
+                    "file": "src/Form/Element/Image.php",
+                    "line": 187,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "imagesUploadDirectory",
+                    "file": "src/Http/Controllers/UploadController.php",
+                    "line": 120,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "imagesUploadFilenameBehavior",
+            "type": "string",
+            "default": "UPLOAD_HASH",
+            "consumers": [
+                {
+                    "key": "imagesUploadFilenameBehavior",
+                    "file": "src/Http/Controllers/UploadController.php",
+                    "line": 121,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "logo",
+            "type": "string",
+            "default": "<svg class=\"brand-image\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"0 0 216.123 216.123\" style=\"enable-background:new 0 0 216.123 216.123;\" xml:space=\"preserve\" width=\"48px\" height=\"48px\"><g><path d=\"M173.65,106.51c6.549-7.024,10.567-16.436,10.567-26.774c0-8.585-2.775-16.529-7.464-23.001   c5.319-16.633,5.063-34.71-0.795-51.16L173.974,0l-5.827,1.03c-12.002,2.121-23.325,6.931-33.201,14.037H81.537v0.252   C71.577,8.071,60.122,3.176,47.977,1.03L42.149,0l-1.985,5.575c-5.858,16.45-6.114,34.527-0.795,51.16   c-4.689,6.472-7.464,14.417-7.464,23.001c0,10.338,4.018,19.75,10.567,26.773c-1.028,0.797-1.846,1.88-2.308,3.179   c-10.874,30.534-2.352,64.292,21.71,86c1.048,0.945,2.171,1.862,3.332,2.761v10.673c0,3.866,3.134,7,7,7s7-3.134,7-7v-2.194   c8.347,3.957,17.834,6.887,27.532,8.373c0.352,0.054,0.706,0.081,1.06,0.081s0.708-0.027,1.06-0.081   c4.446-0.681,16.123-2.878,28.059-8.434v2.255c0,3.866,3.134,7,7,7s7-3.134,7-7v-10.656c1.139-0.883,2.254-1.805,3.332-2.777   c24.062-21.709,32.583-55.466,21.71-86C175.496,108.389,174.678,107.306,173.65,106.51z M107.969,152.066   c-4.506-10.226-11.165-19.465-19.743-27.206c-2.717-2.451-5.583-4.7-8.571-6.748c13.12-2.887,23.804-12.341,28.406-24.734   c4.602,12.393,15.286,21.847,28.406,24.734c-2.988,2.048-5.854,4.297-8.57,6.748C119.346,132.575,112.595,141.88,107.969,152.066z    M71.206,54.436c13.951,0,25.301,11.35,25.301,25.301s-11.35,25.301-25.301,25.301s-25.301-11.35-25.301-25.301   S57.255,54.436,71.206,54.436z M170.218,79.736c0,13.951-11.35,25.301-25.301,25.301s-25.301-11.35-25.301-25.301   s11.35-25.301,25.301-25.301S170.218,65.786,170.218,79.736z M108.041,48.088c-3.04-6.825-7.023-13.231-11.845-19.021h23.699   C115.052,34.867,111.074,41.273,108.041,48.088z M164.562,16.17c2.468,9.767,2.65,20.018,0.566,29.875   c-5.909-3.558-12.824-5.61-20.21-5.61c-7.254,0-14.05,1.983-19.889,5.425c3.327-5.397,7.423-10.367,12.248-14.72   C145.142,24.043,154.479,18.934,164.562,16.17z M51.562,16.17c10.082,2.763,19.419,7.872,27.286,14.97   c4.792,4.324,8.877,9.293,12.205,14.695c-5.83-3.426-12.61-5.401-19.847-5.401c-7.386,0-14.301,2.051-20.21,5.61   C48.912,36.188,49.094,25.937,51.562,16.17z M51.555,120.283c10.084,2.763,19.425,7.873,27.293,14.972   c13.908,12.549,21.704,29.884,21.95,48.812v15.742c-10.093-2.564-21.543-7.294-29.546-14.514   C52.951,168.783,45.553,143.818,51.555,120.283z M144.871,185.295c-7.99,7.21-19.708,11.96-30.073,14.539v-15.766   c0.239-18.349,8.431-36.14,22.478-48.813c7.868-7.1,17.209-12.209,27.293-14.972C170.57,143.818,163.172,168.783,144.871,185.295z\" fill=\"#FFFFFF\"/><circle cx=\"71.206\" cy=\"79.736\" r=\"9.757\" fill=\"#FFFFFF\"/><circle cx=\"144.917\" cy=\"79.736\" r=\"9.757\" fill=\"#FFFFFF\"/></g></svg>",
+            "consumers": [
+                {
+                    "key": "logo",
+                    "file": "src/Templates/TemplateDefault.php",
+                    "line": 125,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "logo_mini",
+            "type": "string",
+            "default": "SO",
+            "consumers": [
+                {
+                    "key": "logo_mini",
+                    "file": "src/Templates/TemplateDefault.php",
+                    "line": 141,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "menu_top",
+            "type": "string",
+            "default": "Main menu",
+            "consumers": [
+                {
+                    "key": "menu_top",
+                    "file": "src/Templates/TemplateDefault.php",
+                    "line": 133,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "middleware",
+            "type": "list",
+            "default": [
+                "web"
+            ],
+            "consumers": [
+                {
+                    "key": "middleware",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 277,
+                    "source": "php",
+                    "accessor": "provider-helper"
+                },
+                {
+                    "key": "middleware",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 307,
+                    "source": "php",
+                    "accessor": "provider-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "scroll_to_bottom",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "scroll_to_bottom",
+                    "file": "resources/views/default/helper/scrolltotop.blade.php",
+                    "line": 7,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "scroll_to_top",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "scroll_to_top",
+                    "file": "resources/views/default/helper/scrolltotop.blade.php",
+                    "line": 1,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "search_operator",
+            "type": "string",
+            "default": "ilike",
+            "consumers": [
+                {
+                    "key": "search_operator",
+                    "file": "src/Display/DisplayDatatablesAsync.php",
+                    "line": 279,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "search_operator",
+                    "file": "src/Display/DisplayTable.php",
+                    "line": 315,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "search_operator",
+                    "file": "src/Http/Controllers/FormElementController.php",
+                    "line": 220,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "search_operator",
+                    "file": "src/Traits/SqlQueryOperators.php",
+                    "line": 70,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "show_footer",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "show_footer",
+                    "file": "resources/views/default/_layout/inner.blade.php",
+                    "line": 41,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "show_mode",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "show_mode",
+                    "file": "resources/views/default/_partials/header.blade.php",
+                    "line": 14,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "show_version",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "show_version",
+                    "file": "resources/views/default/_layout/inner.blade.php",
+                    "line": 45,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "state_datatables",
+            "type": "bool",
+            "default": true,
+            "consumers": [
+                {
+                    "key": "state_datatables",
+                    "file": "resources/views/default/_partials/header.blade.php",
+                    "line": 6,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "state_datatables",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 37,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "state_datatables",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 54,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "state_datatables",
+                    "file": "resources/assets/js_owl/admin/display/datatables.js",
+                    "line": 69,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "state_datatables"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "state_filters",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "state_filters",
+                    "file": "resources/views/default/_partials/header.blade.php",
+                    "line": 6,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "state_filters",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 36,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "state_filters",
+                    "file": "resources/assets/js_owl/admin/display/datatables.js",
+                    "line": 2,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "state_filters"
+                },
+                {
+                    "key": "state_filters",
+                    "file": "resources/assets/js_owl/admin/display/datatables.js",
+                    "line": 73,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "state_filters"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "state_tabs",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "state_tabs",
+                    "file": "resources/views/default/_partials/header.blade.php",
+                    "line": 6,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "state_tabs",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 56,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "state_tabs",
+                    "file": "resources/assets/js_owl/admin/localstorage/tabs.js",
+                    "line": 2,
+                    "source": "javascript",
+                    "accessor": "admin-config",
+                    "exportedAs": "state_tabs"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "template",
+            "type": "string",
+            "default": "SleepingOwl\\Admin\\Templates\\TemplateDefault",
+            "consumers": [
+                {
+                    "key": "template",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 95,
+                    "source": "php",
+                    "accessor": "provider-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "timeFormat",
+            "type": "string",
+            "default": "H:i",
+            "consumers": [
+                {
+                    "key": "timeFormat",
+                    "file": "src/Form/Element/Time.php",
+                    "line": 22,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "timezone",
+            "type": "string",
+            "default": "UTC",
+            "consumers": [
+                {
+                    "key": "timezone",
+                    "file": "src/Traits/DateFormat.php",
+                    "line": 36,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "title",
+            "type": "string",
+            "default": "Sleeping Owl",
+            "consumers": [
+                {
+                    "key": "title",
+                    "file": "src/Templates/Template.php",
+                    "line": 121,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "url_prefix",
+            "type": "string",
+            "default": "admin",
+            "consumers": [
+                {
+                    "key": "url_prefix",
+                    "file": "resources/views/default/_partials/navigation.blade.php",
+                    "line": 5,
+                    "source": "blade",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "url_prefix",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 47,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "url_prefix",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 279,
+                    "source": "php",
+                    "accessor": "provider-helper"
+                },
+                {
+                    "key": "url_prefix",
+                    "file": "src/Providers/AdminServiceProvider.php",
+                    "line": 306,
+                    "source": "php",
+                    "accessor": "provider-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "useHasManyLocalCard",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "useHasManyLocalCard",
+                    "file": "src/Form/Related/Forms/HasManyLocal.php",
+                    "line": 212,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "useRelationCard",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "useRelationCard",
+                    "file": "src/Form/Related/Elements.php",
+                    "line": 172,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "useWysiwygCard",
+            "type": "bool",
+            "default": false,
+            "consumers": [
+                {
+                    "key": "useWysiwygCard",
+                    "file": "src/Form/Element/Wysiwyg.php",
+                    "line": 60,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "version_text",
+            "type": "string",
+            "default": "",
+            "consumers": [
+                {
+                    "key": "version_text",
+                    "file": "src/Templates/Template.php",
+                    "line": 235,
+                    "source": "php",
+                    "accessor": "config-helper"
+                },
+                {
+                    "key": "version_text",
+                    "file": "src/Templates/Template.php",
+                    "line": 236,
+                    "source": "php",
+                    "accessor": "config-helper"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg",
+            "type": "map",
+            "consumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg.ckeditor",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor.allowedContent",
+            "type": "bool",
+            "default": true,
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor.defaultLanguage",
+            "type": "string",
+            "default": "en",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor.extraPlugins",
+            "type": "string",
+            "default": "uploadimage,image2,justify,youtube,uploadfile",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor.height",
+            "type": "int",
+            "default": 200,
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.alignment",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.alignment.options",
+            "type": "list",
+            "default": [
+                "left",
+                "center",
+                "right"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.filebrowserUploadUrl",
+            "type": "string",
+            "default": "/storage/images_admin",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.files",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.files.editor",
+            "type": "string",
+            "default": "/packages/sleepingowl/ckeditor5/build/ckeditor.js",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.files.translation",
+            "type": "string",
+            "default": "/packages/sleepingowl/ckeditor5/build/translations/en.js",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.image",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.image.styles",
+            "type": "list",
+            "default": [
+                "alignLeft",
+                "alignCenter",
+                "alignRight",
+                "side",
+                "full"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.image.toolbar",
+            "type": "list",
+            "default": [
+                "imageStyle:alignLeft",
+                "imageStyle:alignCenter",
+                "imageStyle:alignRight",
+                "|",
+                "imageTextAlternative",
+                "|",
+                "link"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.language",
+            "type": "string",
+            "default": "en",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.mediaEmbed",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.mediaEmbed.previewsInData",
+            "type": "bool",
+            "default": true,
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.mediaEmbed.removeProviders",
+            "type": "list",
+            "default": [
+                "instagram",
+                "twitter",
+                "googleMaps",
+                "flickr",
+                "facebook"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.mediaEmbed.toolbar",
+            "type": "list",
+            "default": [
+                "mediaEmbed"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.removePlugins",
+            "type": "list",
+            "default": [
+                "Title",
+                "ListStyle",
+                "Markdown"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.table",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.table.contentToolbar",
+            "type": "list",
+            "default": [
+                "tableColumn",
+                "tableRow",
+                "mergeTableCells",
+                "tableProperties",
+                "tableCellProperties"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.toolbar",
+            "type": "list",
+            "default": [
+                "undo",
+                "redo",
+                "|",
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "alignment",
+                "fontColor",
+                "blockQuote",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "removeFormat",
+                "|",
+                "insertImage",
+                "mediaEmbed",
+                "insertTable",
+                "|"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.ckeditor5.uploadUrl",
+            "type": "string",
+            "default": "/storage/images_admin",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.default",
+            "type": "string",
+            "default": "ckeditor",
+            "consumers": [
+                {
+                    "key": "wysiwyg.default",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 52,
+                    "source": "php",
+                    "accessor": "scoped-config"
+                }
+            ],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.simplemde",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.simplemde.hideIcons",
+            "type": "list",
+            "default": [
+                "side-by-side",
+                "fullscreen"
+            ],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg.tinymce",
+            "type": "list",
+            "default": [],
+            "consumers": [],
+            "ancestorConsumers": [
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Configuration/ProvidesScriptVariables.php",
+                    "line": 48,
+                    "source": "php",
+                    "accessor": "config-array"
+                },
+                {
+                    "key": "wysiwyg",
+                    "file": "src/Wysiwyg/Manager.php",
+                    "line": 43,
+                    "source": "php",
+                    "accessor": "config-repository"
+                }
+            ]
+        },
+        {
+            "key": "wysiwyg_cdn",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg_cdn.ckeditor5",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg_cdn.ckeditor5.useCdn",
+            "type": "bool",
+            "default": false,
+            "consumers": [],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg_cdn.ckeditor5.ver",
+            "type": "string",
+            "default": "36.0.1",
+            "consumers": [],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg_cdn.tinymce",
+            "type": "map",
+            "consumers": [],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg_cdn.tinymce.api",
+            "type": "string",
+            "default": "no-api-key",
+            "consumers": [],
+            "ancestorConsumers": []
+        },
+        {
+            "key": "wysiwyg_cdn.tinymce.ver",
+            "type": "int",
+            "default": 4,
+            "consumers": [],
+            "ancestorConsumers": []
+        }
+    ],
+    "namespaceConsumers": [
+        {
+            "key": "*",
+            "file": "src/Admin.php",
+            "line": 73,
+            "source": "php",
+            "accessor": "config-repository"
+        },
+        {
+            "key": "*",
+            "file": "src/Console/Installation/Command.php",
+            "line": 44,
+            "source": "php",
+            "accessor": "config-repository"
+        },
+        {
+            "key": "*",
+            "file": "src/Console/Installation/Command.php",
+            "line": 71,
+            "source": "php",
+            "accessor": "config-repository"
+        }
+    ],
+    "derivedScriptConsumers": [
+        {
+            "key": "",
+            "file": "resources/assets/js_owl/admin/form/file.js",
+            "line": 41,
+            "source": "javascript",
+            "accessor": "admin-config",
+            "exportedAs": "max_file_size",
+            "derivedFrom": "runtime: upload_max_filesize"
+        },
+        {
+            "key": "",
+            "file": "resources/assets/js_owl/admin/form/file.js",
+            "line": 42,
+            "source": "javascript",
+            "accessor": "admin-config",
+            "exportedAs": "max_file_size",
+            "derivedFrom": "runtime: upload_max_filesize"
+        },
+        {
+            "key": "",
+            "file": "resources/assets/js_owl/admin/form/image.js",
+            "line": 53,
+            "source": "javascript",
+            "accessor": "admin-config",
+            "exportedAs": "max_file_size",
+            "derivedFrom": "runtime: upload_max_filesize"
+        },
+        {
+            "key": "",
+            "file": "resources/assets/js_owl/admin/form/image.js",
+            "line": 54,
+            "source": "javascript",
+            "accessor": "admin-config",
+            "exportedAs": "max_file_size",
+            "derivedFrom": "runtime: upload_max_filesize"
+        },
+        {
+            "key": "",
+            "file": "resources/assets/js_owl/admin/form/images.js",
+            "line": 71,
+            "source": "javascript",
+            "accessor": "admin-config",
+            "exportedAs": "max_file_size",
+            "derivedFrom": "runtime: upload_max_filesize"
+        },
+        {
+            "key": "",
+            "file": "resources/assets/js_owl/admin/form/images.js",
+            "line": 72,
+            "source": "javascript",
+            "accessor": "admin-config",
+            "exportedAs": "max_file_size",
+            "derivedFrom": "runtime: upload_max_filesize"
+        },
+        {
+            "key": "",
+            "file": "resources/assets/js_owl/libs/i18next.js",
+            "line": 15,
+            "source": "javascript",
+            "accessor": "admin-config",
+            "exportedAs": "lang",
+            "derivedFrom": "translation: sleeping_owl::lang"
+        }
+    ],
+    "unmappedConsumers": [
+        {
+            "key": "policies_namespace",
+            "file": "src/Providers/AdminSectionsServiceProvider.php",
+            "line": 53,
+            "source": "php",
+            "accessor": "config-helper"
+        }
+    ]
+}
