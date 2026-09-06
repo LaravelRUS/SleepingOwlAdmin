@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: определить packaging strategy для core и встроенных тем.
+- Точка возобновления: утвердить no-build consumer contract.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -204,6 +204,12 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 
 ### Поставка без frontend-сборки у пользователя
 
+- Первый major поставляется одним Composer package `laravelrus/sleepingowl`: PHP core, обе встроенные темы, standard feature drivers, views, manifest и готовые production assets версионируются совместно.
+- Исходники разделяются внутри монорепозитория по `core/features/themes`, а build создаёт независимые entries; монорепозиторий не означает один монолитный browser bundle.
+- Composer archive содержит готовые assets обеих встроенных тем. Лишняя тема занимает место только в vendor/public после публикации, но не загружается браузером и не влияет на runtime.
+- В первой итерации встроенные темы не выносятся в отдельные Composer packages: атомарная версия исключает несовместимые сочетания PHP contracts, Blade views и assets и сохраняет одну update-команду.
+- Внешняя custom theme может поставляться отдельным Composer package с service provider, views и готовым manifest fragment; Node.js нужен автору такой темы, но не её потребителю.
+- Выделение официальных тем в отдельные packages допускается только после стабилизации `ThemeInterface` и manifest schema и требует отдельного compatibility решения.
 - Репозиторий и релизные archives содержат готовые versioned production bundles: core, feature chunks и bundles поддерживаемых тем.
 - Composer-пользователь не получает frontend toolchain как обязательное условие работы админки. `npm` используется только maintainers и авторами распространяемых тем/features.
 - Первичная установка использует существующий `sleepingowl:install`, а обновление готовых assets — существующий `php artisan sleepingowl:update`. Сейчас update-команда выполняет `vendor:publish --tag=assets --force`; её контракт расширяется проверкой manifest/version/theme без запуска frontend toolchain.
@@ -317,7 +323,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - [x] Зафиксировать список поддерживаемых браузеров.
 - [x] Зафиксировать границы `core`, `feature driver`, `theme` и пользовательских extensions.
 - [x] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
-- [ ] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
+- [x] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
 - [ ] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
 - [ ] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
 - [ ] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
@@ -697,3 +703,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / браузеры | Зафиксирована modern-only матрица: последние 2 Chrome/Edge/Firefox, Firefox ESR, Safari/iOS `>= 16.4`; IE и legacy Edge не поддерживаются | текущий commit |
 | 2026-09-06 | Этап 0 / границы | Разделены PHP/frontend core, feature drivers, themes, presentation adapters и user extensions; сохранён ключ `template`, legacy `TemplateInterface` получает переходный adapter | текущий commit |
 | 2026-09-06 | Этап 0 / темы | Подтверждены AdminLTE 4/Bootstrap 5 и Tailwind 4; AdminLTE остаётся default ради upgrade/config compatibility, но загружается только как выбранная опциональная тема | текущий commit |
+| 2026-09-06 | Этап 0 / packaging | Выбран единый Composer package и монорепозиторий с независимо собираемыми core/feature/theme entries; внешние custom themes могут поставляться отдельными готовыми packages | текущий commit |
