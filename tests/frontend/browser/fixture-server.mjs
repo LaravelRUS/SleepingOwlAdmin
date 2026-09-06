@@ -59,6 +59,10 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'vue.js'), 'text/javascript'],
     ],
     [
+        '/public/default/js/vue-dev.js',
+        [join(projectRoot, 'public', 'default', 'js', 'vue-dev.js'), 'text/javascript'],
+    ],
+    [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
     ],

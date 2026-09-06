@@ -57,8 +57,8 @@
 
 <script>
 import { defineComponent, nextTick } from 'vue'
+import Multiselect from 'vue-multiselect'
 
-import { NativeMultiselect } from './multiselect-compat'
 import {
     appendSelectTag,
     copySelectOptions,
@@ -71,7 +71,7 @@ import {
 
 export default defineComponent({
     name: 'ElementSelect',
-    components: { Multiselect: NativeMultiselect },
+    components: { Multiselect },
     props: {
         attributes: { type: Object, required: true },
         labels: { type: Object, required: true },

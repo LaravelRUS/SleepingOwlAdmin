@@ -1,4 +1,6 @@
 # Compiled profile assets preserve the bundler's generated formatting.
 /public/default/profiles/** -whitespace
-/public/default/js/admin-app-dev.js -diff -whitespace
-/public/default/js/admin-app-dev.js.map -diff -whitespace
+/public/default/js/admin-app-dev.js binary -whitespace
+/public/default/js/admin-app-dev.js.map binary -whitespace
+/public/default/js/vue-dev.js binary -whitespace
+/public/default/js/vue-dev.js.map binary -whitespace

@@ -125,12 +125,6 @@
 * @website: http://www.daterangepicker.com/
 */
 
-/**
-* @vue/compat v3.5.42
-* (c) 2018-present Yuxi (Evan) You and Vue contributors
-* @license MIT
-**/
-
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
  * @version 1.16.1

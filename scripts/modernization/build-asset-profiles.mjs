@@ -9,9 +9,9 @@ const root = resolve(fileURLToPath(new URL('../..', import.meta.url)))
 const mixCli = resolve(root, 'node_modules/laravel-mix/bin/cli.js')
 
 buildProfile('development')
-const developmentApp = captureDevelopmentApp()
+const developmentAssets = captureDevelopmentAssets()
 buildProfile('production', ['--production'])
-restoreDevelopmentApp(developmentApp)
+restoreDevelopmentAssets(developmentAssets)
 
 function buildProfile(profile, arguments_ = []) {
     const result = spawnSync(execPath, [mixCli, ...arguments_], {
@@ -29,25 +29,37 @@ function buildProfile(profile, arguments_ = []) {
     }
 }
 
-function captureDevelopmentApp() {
+function captureDevelopmentAssets() {
     return {
-        bundle: readPublicFile('js/admin-app-dev.js'),
-        sourceMap: readPublicFile('js/admin-app-dev.js.map'),
+        app: captureAsset('js/admin-app-dev.js'),
+        vue: captureAsset('js/vue-dev.js'),
     }
 }
 
-function restoreDevelopmentApp(app) {
-    writePublicFile('js/admin-app-dev.js', app.bundle)
-    writePublicFile('js/admin-app-dev.js.map', app.sourceMap)
-    updateDevelopmentVersion(app.bundle)
+function captureAsset(path) {
+    return {
+        bundle: readPublicFile(path),
+        path,
+        sourceMap: readPublicFile(`${path}.map`),
+    }
 }
 
-function updateDevelopmentVersion(bundle) {
+function restoreDevelopmentAssets(assets) {
+    Object.values(assets).forEach(restoreDevelopmentAsset)
+}
+
+function restoreDevelopmentAsset(asset) {
+    writePublicFile(asset.path, asset.bundle)
+    writePublicFile(`${asset.path}.map`, asset.sourceMap)
+    updateDevelopmentVersion(asset.path, asset.bundle)
+}
+
+function updateDevelopmentVersion(assetPath, bundle) {
     const path = resolve(root, 'public/default/mix-manifest.json')
     const manifest = JSON.parse(readFileSync(path, 'utf8'))
     const version = createHash('md5').update(bundle).digest('hex')
 
-    manifest['/js/admin-app-dev.js'] = `/js/admin-app-dev.js?id=${version}`
+    manifest[`/${assetPath}`] = `/${assetPath}?id=${version}`
     writeFileSync(path, `${JSON.stringify(manifest, null, 4)}\n`)
 }
 

@@ -5,12 +5,6 @@ import { existsSync, readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
-import {
-    asNativeVue3Component,
-    configureVueCompat,
-    vueCompatFeatures,
-} from '../../../resources/assets/js_owl/libs/vue-compat-config'
-
 const root = resolve(import.meta.dirname, '../../..')
 const require = createRequire(import.meta.url)
 const { resolveVueRuntime, runtimeFiles } = require('../../../build/vue-runtime')
@@ -25,8 +19,6 @@ const legacyVueViews = [
     'resources/views/themes/legacy/default/form/element/related/inner_element.blade.php',
 ]
 
-const expectedCompatFeatures = []
-
 function readJson(path) {
     return JSON.parse(readFileSync(resolve(root, path), 'utf8'))
 }
@@ -39,16 +31,14 @@ function md5(path) {
     return createHash('md5').update(readFileSync(path)).digest('hex')
 }
 
-describe('Vue 3 compat dependencies', () => {
+describe('Vue 3 runtime dependencies', () => {
     it('pins one matching Vue runtime and compiler line', () => {
         expect(packageJson.dependencies.vue).toBe('3.5.42')
-        expect(packageJson.dependencies['@vue/compat']).toBe(packageJson.dependencies.vue)
+        expect(packageJson.dependencies).not.toHaveProperty('@vue/compat')
         expect(packageJson.devDependencies['@vue/compiler-sfc']).toBe(packageJson.dependencies.vue)
         expect(packageJson.devDependencies['vue-loader']).toMatch(/^\^16\./)
         expect(packageLock.packages['node_modules/vue'].version).toBe(packageJson.dependencies.vue)
-        expect(packageLock.packages['node_modules/@vue/compat'].version).toBe(
-            packageJson.dependencies.vue,
-        )
+        expect(packageLock.packages).not.toHaveProperty('node_modules/@vue/compat')
     })
 
     it('removes the Vue 2 compiler and selects Vue Multiselect 3', () => {
@@ -70,52 +60,46 @@ describe('Vue 3 compat dependencies', () => {
     })
 })
 
-describe('explicit Vue compatibility boundary', () => {
-    it('uses MODE 3 with an audited allowlist', () => {
-        const calls = []
-
-        configureVueCompat({ configureCompat: (config) => calls.push(config) })
-
-        expect(calls).toHaveLength(1)
-        expect(calls[0].MODE).toBe(3)
-        expect(Object.keys(vueCompatFeatures).sort()).toEqual(expectedCompatFeatures.sort())
-        expect(vueCompatFeatures).not.toHaveProperty('COMPILER_INLINE_TEMPLATE')
-    })
-
-    it('disables every legacy feature for native Vue 3 components', () => {
-        const component = asNativeVue3Component({ name: 'Fixture' })
-
-        expect(component.compatConfig.MODE).toBe(3)
-        expectedCompatFeatures.forEach((feature) => {
-            expect(component.compatConfig[feature]).toBe(false)
-        })
-    })
-})
-
 describe('Vue asset profiles', () => {
-    it('aliases package imports to the selected compat runtime', () => {
+    it('aliases package imports to the runtime-only Vue build', () => {
+        const development = resolveVueRuntime(root, 'development').replaceAll('\\', '/')
+
         expect(runtimeFiles).toEqual({
-            development: 'vue.cjs.js',
-            production: 'vue.cjs.prod.js',
+            development: 'vue.runtime.esm-bundler.js',
+            production: 'vue.runtime.esm-bundler.js',
         })
-        expect(basename(resolveVueRuntime(root, 'development'))).toBe('vue.cjs.js')
-        expect(basename(resolveVueRuntime(root, 'production'))).toBe('vue.cjs.prod.js')
+        expect(basename(development)).toBe('vue.runtime.esm-bundler.js')
+        expect(basename(resolveVueRuntime(root, 'production'))).toBe('vue.runtime.esm-bundler.js')
+        expect(development).toContain('/node_modules/vue/dist/vue.runtime.esm-bundler.js')
+        expect(development).not.toContain('/node_modules/@vue/compat/')
         expect(() => resolveVueRuntime(root, 'preview')).toThrow(/Unsupported Vue asset profile/)
     })
 
-    it('publishes a restorable development bundle beside production', () => {
-        const development = resolve(root, 'public/default/js/admin-app-dev.js')
-        const production = resolve(root, 'public/default/js/admin-app.js')
+    it('publishes restorable development app and Vue bundles beside production', () => {
+        const developmentApp = resolve(root, 'public/default/js/admin-app-dev.js')
+        const developmentVue = resolve(root, 'public/default/js/vue-dev.js')
+        const productionApp = resolve(root, 'public/default/js/admin-app.js')
+        const productionVue = resolve(root, 'public/default/js/vue.js')
         const manifest = readJson('public/default/mix-manifest.json')
 
-        expect(readFileSync(development, 'utf8')).toContain('sourceMappingURL=admin-app-dev.js.map')
-        expect(existsSync(`${development}.map`)).toBe(true)
-        expect(readFileSync(production, 'utf8')).not.toContain('sourceMappingURL=')
-        expect(readFileSync(production).byteLength).toBeLessThan(
-            readFileSync(development).byteLength,
+        expectDevelopmentAsset(developmentApp, manifest)
+        expectDevelopmentAsset(developmentVue, manifest)
+        expectProductionAsset(productionApp, manifest)
+        expectProductionAsset(productionVue, manifest)
+        expect(readFileSync(productionVue).byteLength).toBeLessThan(
+            readFileSync(developmentVue).byteLength,
         )
-        expect(manifest['/js/admin-app-dev.js']).toBe(`/js/admin-app-dev.js?id=${md5(development)}`)
-        expect(manifest['/js/admin-app.js']).toBe(`/js/admin-app.js?id=${md5(production)}`)
+    })
+
+    it('keeps Vue ownership out of the application aggregate', () => {
+        const developmentApp = readSource('public/default/js/admin-app-dev.js')
+        const productionApp = readSource('public/default/js/admin-app.js')
+        const productionVue = readSource('public/default/js/vue.js')
+
+        expect(developmentApp).not.toContain('3.5.42')
+        expect(productionApp).not.toContain('3.5.42')
+        expect(productionVue).toContain('3.5.42')
+        expect(productionVue).not.toMatch(/@vue\/compat|compileToFunction|window\.Vue/)
     })
 })
 
@@ -142,16 +126,16 @@ describe('bounded legacy Vue apps', () => {
         expect(initializer).toContain('createVueTranslation')
         expect(initializer).toContain('installVueTranslation')
         expect(bootstrap).not.toMatch(/libs\/vuejs|Vue\.use|Vue\.prototype/)
-        expect(vueCompatFeatures).not.toHaveProperty('GLOBAL_PROTOTYPE')
+        expect(initializer).not.toMatch(/window\.Vue|globalThis\.Vue|Vue\.prototype/)
     })
 
     it('contains no package-owned global component registration', () => {
         const sources = readSource('resources/assets/js_owl/bootstrap.js')
 
         expect(readSource('resources/assets/js_owl/admin/vue-components.js')).toContain(
-            'legacyVueComponents',
+            'vueComponents',
         )
-        expect(readSource('resources/assets/js_owl/bootstrap.js')).toContain(
+        expect(readSource('resources/assets/js_owl/bootstrap.js')).not.toContain(
             'Admin.LegacyVueComponents',
         )
         expect(sources).not.toMatch(/Vue\.(?:component|extend)/)
@@ -224,7 +208,7 @@ it('uses precompiled related state, native Sortable and shared lifecycle modules
     expect(component).toContain("import Sortable from 'sortablejs'")
     expect(component).toContain('initializeRelatedGroup(Admin, element)')
     expect(component).not.toMatch(/\$\(|vuedraggable|withLegacyInlineTemplate/)
-    expect(catalog).toContain("'related-elements': asNativeVue3Component(RelatedElements)")
+    expect(catalog).toContain("'related-elements': RelatedElements")
     expect(catalog).not.toContain("'related-group'")
     expect(packageJson.dependencies).not.toHaveProperty('vuedraggable')
     expect(packageLock.packages).not.toHaveProperty('node_modules/vuedraggable')
@@ -248,7 +232,6 @@ describe('precompiled select island', () => {
             'resources/views/themes/legacy/default/form/element/partials/select_island.blade.php',
         )
         const component = readSource('resources/assets/js_owl/admin/form/select.vue')
-        const compatibility = readSource('resources/assets/js_owl/admin/form/multiselect-compat.js')
         const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
 
         expect(partial).toContain('data-soa-vue-component="element-select"')
@@ -257,11 +240,13 @@ describe('precompiled select island', () => {
         expect(component).toContain('<template>')
         expect(component).toContain('v-bind="attributes"')
         expect(component).toContain("new EventConstructor('change', { bubbles: true })")
+        expect(component).toContain("import Multiselect from 'vue-multiselect'")
         expect(component).not.toMatch(/\$\(|withLegacyInlineTemplate/)
-        expect(compatibility).toContain('NativeMultiselect')
-        expect(compatibility).not.toContain('LegacyMultiselect')
-        expect(catalog).toContain("'element-select': asNativeVue3Component(ElementSelect)")
+        expect(catalog).toContain("'element-select': ElementSelect")
         expect(catalog).not.toMatch(/\bdeselect\b|\bmultiselect:/)
+        expect(
+            existsSync(resolve(root, 'resources/assets/js_owl/admin/form/multiselect-compat.js')),
+        ).toBe(false)
         expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/deselect.js'))).toBe(
             false,
         )
@@ -284,7 +269,7 @@ describe('precompiled image island', () => {
         expect(component).toContain('<template>')
         expect(component).toContain('postPastedImage(Admin.Http')
         expect(component).not.toMatch(/\$\(|axios|withLegacyInlineTemplate/)
-        expect(catalog).toContain("'element-image': asNativeVue3Component(ElementImage)")
+        expect(catalog).toContain("'element-image': ElementImage")
     })
 })
 
@@ -306,6 +291,23 @@ describe('precompiled images island', () => {
         expect(component).toContain('<template>')
         expect(component).toContain('postPastedImage(')
         expect(component).not.toMatch(/\$\(|axios|vuedraggable|withLegacyInlineTemplate/)
-        expect(catalog).toContain("'element-images': asNativeVue3Component(ElementImages)")
+        expect(catalog).toContain("'element-images': ElementImages")
     })
 })
+
+function expectDevelopmentAsset(path, manifest) {
+    const name = basename(path)
+    const manifestKey = `/js/${name}`
+
+    expect(readFileSync(path, 'utf8')).toContain(`sourceMappingURL=${name}.map`)
+    expect(existsSync(`${path}.map`)).toBe(true)
+    expect(manifest[manifestKey]).toBe(`${manifestKey}?id=${md5(path)}`)
+}
+
+function expectProductionAsset(path, manifest) {
+    const name = basename(path)
+    const manifestKey = `/js/${name}`
+
+    expect(readFileSync(path, 'utf8')).not.toContain('sourceMappingURL=')
+    expect(manifest[manifestKey]).toBe(`${manifestKey}?id=${md5(path)}`)
+}

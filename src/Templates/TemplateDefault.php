@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Templates;
 
 use Exception;
-use Illuminate\Support\Facades\Vite;
 
 class TemplateDefault extends Template
 {
@@ -39,64 +38,42 @@ class TemplateDefault extends Template
 
     public function initialize()
     {
+        $paths = $this->assetPaths();
+
         try {
-            // New version - with versioning tags. Travis was crashed with error:
-            // Exception: The Mix manifest does not exist.
-            if (config('sleeping_owl.dev_assets')) {
-                $this->meta()->addJs('admin-default', mix('/js/admin-app-dev.js', $this->assetDir()));
-            } else {
-                $this->meta()->addJs('admin-default', mix('/js/admin-app.js', $this->assetDir()));
-            }
-
-            $this->meta()
-                ->addJs('admin-vue-init', mix('/js/vue.js', $this->assetDir()))
-                ->addJs('admin-modules-load', mix('/js/modules.js', $this->assetDir()))
-                ->addCss('admin-default', mix('/css/admin-app.css', $this->assetDir()));
+            $assets = $this->resolveAssets($paths, fn ($path) => mix('/'.$path, $this->assetDir()));
         } catch (Exception $e) {
-            // Old version - without versioning tags
-
-            if (config('sleeping_owl.dev_assets')) {
-                $this->meta()->addJs('admin-default', $this->assetPath('js/admin-app-dev.js'));
-            } else {
-                $this->meta()->addJs('admin-default', $this->assetPath('js/admin-app.js'));
-            }
-
-            $this->meta()
-                ->addJs('admin-vue-init', $this->assetPath('js/vue.js'))
-                ->addJs('admin-modules-load', $this->assetPath('js/modules.js'))
-                ->addCss('admin-default', $this->assetPath('css/admin-app.css'));
+            $assets = $this->resolveAssets($paths, fn ($path) => $this->assetPath($path));
         }
+
+        $this->registerAssets($assets);
     }
 
-    /**
-     * @param  string  $mixPath
-     * @param  string  $vitePath
-     * @return string
-     */
-//    protected function getAssetUrl(string $mixPath, string $vitePath): string
-//    {
-//        if (class_exists(Vite::class)) {
-//            $buildDir = $this->assetDir();
-//            $vite = Vite::useBuildDirectory($buildDir);
-//
-//            if (is_file(public_path($buildDir.'/hot')) ||
-//                is_file(public_path($buildDir.'/.vite/manifest.json')) ||
-//                is_file(public_path($buildDir.'/manifest.json'))
-//            ) {
-//                try {
-//                    return $vite->asset($vitePath);
-//                } catch (Exception $e) {
-//                    //
-//                }
-//            }
-//        }
-//
-//        try {
-//            return mix($mixPath, $this->assetDir());
-//        } catch (Exception $e) {
-//            return $this->assetPath($mixPath);
-//        }
-//    }
+    private function assetPaths(): array
+    {
+        $suffix = config('sleeping_owl.dev_assets') ? '-dev' : '';
+
+        return [
+            'app' => "js/admin-app{$suffix}.js",
+            'vue' => "js/vue{$suffix}.js",
+            'modules' => 'js/modules.js',
+            'css' => 'css/admin-app.css',
+        ];
+    }
+
+    private function resolveAssets(array $paths, callable $resolve): array
+    {
+        return array_map($resolve, $paths);
+    }
+
+    private function registerAssets(array $assets): void
+    {
+        $this->meta()
+            ->addJs('admin-default', $assets['app'])
+            ->addJs('admin-vue-init', $assets['vue'])
+            ->addJs('admin-modules-load', $assets['modules'])
+            ->addCss('admin-default', $assets['css']);
+    }
 
     /**
      * @return string

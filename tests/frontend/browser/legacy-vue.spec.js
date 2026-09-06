@@ -3,20 +3,9 @@ import { URL } from 'node:url'
 import { expect, test } from '@playwright/test'
 
 const vueWarnings = new WeakMap()
-const expectedCompatWarnings = []
-
-function compatWarningId(message) {
-    return message.match(/\(deprecation ([A-Z_]+)\)/)?.[1]
-}
-
-function compatWarningIds(page) {
-    return [...new Set(vueWarnings.get(page).map(compatWarningId).filter(Boolean))]
-}
 
 function unexpectedVueWarnings(page) {
-    return vueWarnings
-        .get(page)
-        .filter((message) => !expectedCompatWarnings.includes(compatWarningId(message)))
+    return vueWarnings.get(page)
 }
 
 test.beforeEach(async ({ page }) => {
@@ -150,8 +139,17 @@ async function openFixture(page) {
 }
 
 async function useProductionBundle(page) {
-    await page.route('**/public/default/js/admin-app-dev.js', (route) => {
-        const url = new URL('/public/default/js/admin-app.js', route.request().url())
+    const replacements = new Map([
+        ['/public/default/js/admin-app-dev.js', '/public/default/js/admin-app.js'],
+        ['/public/default/js/vue-dev.js', '/public/default/js/vue.js'],
+    ])
+
+    await page.route('**/public/default/js/*-dev.js', (route) => {
+        const requestUrl = new URL(route.request().url())
+        const replacement = replacements.get(requestUrl.pathname)
+        if (!replacement) return route.continue()
+
+        const url = new URL(replacement, requestUrl)
 
         return route.continue({ url: url.href })
     })
@@ -388,9 +386,6 @@ async function readBoundedVueOwnership(page) {
         const hosts = [...globalThis.document.querySelectorAll('[data-soa-vue-app]')]
         const mountedHosts = hosts.filter((element) => element.__vue_app__)
         const firstApp = globalThis.Admin.VueApps.get(mountedHosts[0])
-        const translation = firstApp.runWithContext(() =>
-            globalThis.Vue.inject(Symbol.for('sleepingowl.admin.vue.translation'), null),
-        )
 
         return {
             componentsAreLocal: mountedHosts.every((element) =>
@@ -403,8 +398,8 @@ async function readBoundedVueOwnership(page) {
             nestedMounted: Boolean(
                 globalThis.document.querySelector('#nested-image-wrapper').__vue_app__,
             ),
-            prototypeTranslation: Boolean(globalThis.Vue.prototype?.$trans),
-            translation: translation?.trans('lang.button.cancel'),
+            globalVue: typeof globalThis.Vue,
+            runtimeVersion: firstApp.version,
         }
     }, legacyVueComponentNames)
 }
@@ -424,8 +419,8 @@ async function expectBoundedVueApps(page) {
             'nested-image-wrapper',
         ],
         nestedMounted: true,
-        prototypeTranslation: false,
-        translation: 'Cancel',
+        globalVue: 'undefined',
+        runtimeVersion: expect.stringMatching(/^3\.5\./),
     })
 }
 
@@ -517,11 +512,10 @@ async function removeAndExpectRelatedGroups(page) {
     )
 }
 
-test('bounded Vue 3 compat apps preserve env editor behavior', async ({ page }) => {
+test('bounded runtime-only Vue 3 apps preserve env editor behavior', async ({ page }) => {
     const pageErrors = capturePageErrors(page)
     await openFixture(page)
-    expect(await page.evaluate(() => globalThis.Vue.version)).toMatch(/^3\.5\./)
-    expect(compatWarningIds(page)).toEqual(expectedCompatWarnings)
+    expect(await page.evaluate(() => typeof globalThis.Vue)).toBe('undefined')
     await expectBoundedVueApps(page)
 
     await page.locator('#env-fixture .env-remove').nth(1).click()
@@ -540,11 +534,18 @@ test('bounded Vue 3 compat apps preserve env editor behavior', async ({ page }) 
     expectNoUnexpectedPageErrors(pageErrors)
 })
 
-test('production Vue 3 compat bundle mounts bounded apps', async ({ page }) => {
+test('production runtime-only Vue 3 bundle mounts bounded apps', async ({ page }) => {
     await useProductionBundle(page)
     await openFixture(page)
 
-    expect(await page.evaluate(() => globalThis.Vue.version)).toMatch(/^3\.5\./)
+    expect(await page.evaluate(() => typeof globalThis.Vue)).toBe('undefined')
+    expect(
+        await page.evaluate(() => {
+            const host = globalThis.document.querySelector('#env-fixture')
+
+            return globalThis.Admin.VueApps.get(host).version
+        }),
+    ).toMatch(/^3\.5\./)
     await expect(page.locator('#single-select')).toHaveValue('2')
     await expect(page.locator('#existing-related-group')).toHaveAttribute(
         'data-lifecycle-mounted',

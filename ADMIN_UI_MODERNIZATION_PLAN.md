@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 4 — Vue 3 islands**.
-- Точка возобновления: удалить `@vue/compat` и compiler-capable aliases, переключить production/development профили на runtime-only Vue 3 и убрать временный `window.Vue`; все 9 package `inline-template` уже перенесены.
+- Точка возобновления: предоставить публичный Vue 3 custom-island extension API поверх единственной runtime instance выбранного asset-профиля; runtime-only production/development chunks и удаление `@vue/compat` уже завершены.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -580,9 +580,9 @@ No-build consumer contract является release-blocking:
 - [x] На каждый island реализовать `mount`/`unmount`, повторную инициализацию и защиту от двойного mount.
 - [x] Вынести upload, serialization, HTTP/error mapping и sortable logic из Vue components в отдельные composables/services; components оставить orchestration/presentation слоем.
 - [x] Проверить Blade escaping, `@{{ }}`, JSON props, CSP nonce и отсутствие исполнения пользовательского HTML как Vue template.
-- [ ] Удалить `@vue/compat`, compat flags, Vue 2 packages и глобальный `Vue` до завершения этапа.
-- [ ] Переключить финальную сборку на runtime-only Vue 3 после переноса всех runtime templates в заранее компилируемые components.
-- [ ] Собрать Vue 3 в двух отдельных runtime-only chunks: production/minified без dev diagnostics и development/unminified с warnings, devtools и source maps.
+- [x] Удалить `@vue/compat`, compat flags, Vue 2 packages и глобальный `Vue` до завершения этапа.
+- [x] Переключить финальную сборку на runtime-only Vue 3 после переноса всех runtime templates в заранее компилируемые components.
+- [x] Собрать Vue 3 в двух отдельных runtime-only chunks: production/minified без dev diagnostics и development/unminified с warnings, devtools и source maps.
 - [ ] Предоставить публичный extension API, через который custom modules регистрируют islands и используют единственную Vue runtime instance выбранного профиля.
 
 Критерий завершения: production bundle использует Vue 3 без compatibility build и `inline-template`; server-rendered Blade безопасно передаёт данные изолированным islands.
@@ -769,24 +769,24 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 
 ### Vue 3
 
-- [ ] каждый stateful widget монтируется как отдельный island;
-- [ ] server data передаётся как корректный JSON/props без выполнения непроверенного HTML;
-- [ ] отсутствует `inline-template`;
-- [ ] отсутствуют глобальные `Vue`, `Vue.component`, `Vue.extend`, `Vue.http` и `Vue.prototype`;
-- [ ] отсутствует `@vue/compat` в production dependencies/bundle;
+- [x] каждый stateful widget монтируется как отдельный island;
+- [x] server data передаётся как корректный JSON/props без выполнения непроверенного HTML;
+- [x] отсутствует `inline-template`;
+- [x] отсутствуют глобальные `Vue`, `Vue.component`, `Vue.extend`, `Vue.http` и `Vue.prototype`;
+- [x] отсутствует `@vue/compat` в production dependencies/bundle;
 - [x] динамически добавленные related groups монтируют и демонтируют вложенные widgets ровно один раз;
-- [ ] file/image uploads, multiselect, sorting и validation корректно обновляют reactive state;
-- [ ] несколько одинаковых islands на странице не разделяют состояние.
+- [x] file/image uploads, multiselect, sorting и validation корректно обновляют reactive state;
+- [x] несколько одинаковых islands на странице не разделяют состояние.
 
 ### Production/development assets
 
-- [ ] `ADMIN_DEV_ASSETS=false` загружает только production entries, minified код и production runtime-only Vue 3;
-- [ ] `ADMIN_DEV_ASSETS=true` загружает только development entries, unminified код, source maps и development runtime-only Vue 3;
+- [x] `ADMIN_DEV_ASSETS=false` загружает только production entries, minified код и production runtime-only Vue 3;
+- [x] `ADMIN_DEV_ASSETS=true` загружает только development entries, unminified код, source maps и development runtime-only Vue 3;
 - [ ] Vue warnings, component stacks и Vue Devtools доступны для штатных и пользовательских islands в development profile;
-- [ ] production HTML/manifest resolution не ссылается на development Vue, development chunks или source maps;
-- [ ] logical ids и runtime behavior совпадают между профилями; отличаются только оптимизация и diagnostics;
+- [x] production HTML/manifest resolution не ссылается на development Vue, development chunks или source maps;
+- [x] logical ids и runtime behavior совпадают между профилями; отличаются только оптимизация и diagnostics;
 - [ ] все islands/custom modules страницы используют одну Vue runtime instance выбранного профиля;
-- [ ] изменение `ADMIN_DEV_ASSETS` не требует Node.js, npm или пересборки assets;
+- [x] изменение `ADMIN_DEV_ASSETS` не требует Node.js, npm или пересборки assets;
 - [ ] `sleepingowl:update --check` валидирует наличие и checksums обоих профилей.
 
 ### Темы
@@ -995,3 +995,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 4 / nested island lifecycle | Временный `VueApps` registry интегрирован с единым `Admin.Components`: первоначальный top-level Vue mount сохраняет legacy boot order, затем lifecycle принимает parent apps и сканирует их фактически отрендерированное subtree. Direct hosts защищены `v-pre` от компиляции legacy parent template. Unit contracts доказывают idempotent adoption, динамический nested mount и reverse `child -> parent` teardown; browser fixture воспроизводит реальный Laluna `hasMany(image)`, монтирует initial/dynamic Image islands и удаляет их из registry до Vue DOM removal. Документация переводит динамических consumers на `Admin.Components.scan/destroy`; глобальный поиск подтвердил отсутствие `$set`, поэтому лишний `INSTANCE_SET` удалён из оставшихся 11 compat flags. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 433 tests, 1620 assertions, 2 прежних TODO-skip; frontend gate: 221 Vitest + 35 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / select islands | Select и MultiSelect перенесены из двух `inline-template` в один precompiled `ElementSelect` поверх Vue Multiselect 3.5 native `modelValue/update:modelValue`. Чистый `select-values.js` сохраняет numeric/string/null ids, option order и immutable props; single отправляет hidden input, multiple — hidden native select. Итоговый PHP `attributesArray` передаётся прямым `v-bind` без semantic class resolver, поэтому name/id/custom classes/data attributes и disabled сохраняются. Required, readonly, limit, max и tagging покрыты browser behavior; наружу уходит native bubbling `change` без jQuery. Удалены `deselect.js`, `LegacyMultiselect` и `window.Multiselect`; осталось 3 `inline-template` и 2 bridge definitions. Laluna `Modules` подтвердил 53 select, 3 multiselect, static/model options, string/numeric usage keys и nested forms. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 437 tests, 1663 assertions, 2 прежних TODO-skip; frontend gate: 223 Vitest + 35 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / related islands | Related card/no-card shells и все пользовательские classes/attributes оставлены в theme-owned Blade; один precompiled `RelatedElements` управляет только группами, add/remove и прямым SortableJS. Server-rendered group HTML передаётся как data через `application/json` и `Illuminate\Support\Js::encode`, registry валидирует referenced payload. State, DOM/name/id rewrite, lifecycle и Sortable driver разложены на малые modules. Исправлены дубли индексов при двух последовательных add и namespace вложенных direct islands до mount; browser fixture покрывает inline/referenced props, existing/dynamic `hasMany(image)`, Select2 re-init и child-first teardown. Инертный JSON payload проверен под CSP `script-src 'none'` без nonce и не компилируется как Vue template. Удалены последние 3 `inline-template`, 2 bridge definitions, `vue-inline-template.js`, `vuedraggable` и все глобальные compat flags; package inventory теперь 0/0. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 439 tests, 1684 assertions, 2 прежних TODO-skip; frontend gate: 234 Vitest + 36 Playwright | текущий commit |
+| 2026-09-06 | Этап 4 / runtime-only Vue 3 | Удалены `@vue/compat` из dependency/lock, compat config и component wrappers, compiler-capable aliases и временный `window.Vue`. Все Vue imports теперь разрешаются в одну `vue.runtime.esm-bundler.js` instance; `createApp`, frozen precompiled catalog и Vue Multiselect 3 находятся в отдельном Vue entry, а `admin-app(.dev).js` не владеет Vue. `ADMIN_DEV_ASSETS=false` загружает `admin-app.js` + minified `vue.js`, `true` — `admin-app-dev.js` + unminified `vue-dev.js`; build script сохраняет обе dev source maps и пересчитывает оба Mix hash. Browser contracts получают версию через owned app, подтверждают отсутствие global `Vue` и одинаковое поведение всех islands в dev/prod. Production Vue: 321176 bytes, development Vue: 1251112 bytes + 1346422-byte source map. Документация переименована в `vue-runtime.md`; следующая точка — публичный custom-island API без возврата browser global. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 439 tests, 1682 assertions, 2 прежних TODO-skip; frontend gate: 233 Vitest + 36 Playwright | текущий commit |

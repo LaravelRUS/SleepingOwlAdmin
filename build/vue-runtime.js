@@ -1,8 +1,8 @@
 const { resolve } = require('node:path')
 
 const runtimeFiles = Object.freeze({
-    development: 'vue.cjs.js',
-    production: 'vue.cjs.prod.js',
+    development: 'vue.runtime.esm-bundler.js',
+    production: 'vue.runtime.esm-bundler.js',
 })
 
 function resolveVueRuntime(root, profile) {
@@ -12,7 +12,7 @@ function resolveVueRuntime(root, profile) {
         throw new Error(`Unsupported Vue asset profile [${profile}].`)
     }
 
-    return resolve(root, 'node_modules', '@vue', 'compat', 'dist', file)
+    return resolve(root, 'node_modules', 'vue', 'dist', file)
 }
 
 module.exports = {

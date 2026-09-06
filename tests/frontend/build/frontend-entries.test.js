@@ -32,7 +32,8 @@ describe('frontend build entries', () => {
     it('keeps the transitional legacy outputs intact', () => {
         expect(entries.legacy).toEqual({
             scripts: [
-                sourceEntry('resources/assets/js_owl/vue_init.js', 'js/vue.js'),
+                sourceEntry('resources/assets/js_owl/vue-runtime.js', 'js/vue.js'),
+                sourceEntry('resources/assets/js_owl/vue-runtime-dev.js', 'js/vue-dev.js'),
                 sourceEntry('resources/assets/js_owl/app.js', 'js/admin-app.js'),
                 sourceEntry('resources/assets/js_owl/app-dev.js', 'js/admin-app-dev.js'),
                 sourceEntry('resources/assets/js_owl/modules_load.js', 'js/modules.js'),

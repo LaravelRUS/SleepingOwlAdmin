@@ -106,5 +106,3 @@ require('./admin/form/wysiwyg');
 require('./admin/form/dependent-select');
 require('./admin/form/password');
 require('./admin/form/text');
-
-window.Admin.LegacyVueComponents = require('./admin/vue-components').legacyVueComponents

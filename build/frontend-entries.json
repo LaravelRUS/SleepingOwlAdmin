@@ -2,8 +2,12 @@
     "legacy": {
         "scripts": [
             {
-                "source": "resources/assets/js_owl/vue_init.js",
+                "source": "resources/assets/js_owl/vue-runtime.js",
                 "output": "js/vue.js"
+            },
+            {
+                "source": "resources/assets/js_owl/vue-runtime-dev.js",
+                "output": "js/vue-dev.js"
             },
             {
                 "source": "resources/assets/js_owl/app.js",

@@ -1,39 +1,47 @@
-# Temporary Vue 3 compatibility boundary
+# Vue 3 runtime and bounded island contract
 
 ## Status
 
-SleepingOwlAdmin currently runs the legacy aggregate through Vue `3.5.42` and
-`@vue/compat` `3.5.42`. This is a bounded migration state, not the extension
-API or the release architecture. New code must use Vue 3 APIs and isolated
-islands; it must not add `inline-template`, `new Vue`, `Vue.component`,
-`Vue.extend`, `Vue.prototype`, `Vue.http`, `$set` or new compat flags.
+SleepingOwlAdmin runs its package-owned widgets as bounded islands on native
+Vue `3.5.42`. Every server template has been moved to a precompiled component;
+`@vue/compat`, the runtime compiler, Vue 2 packages and `window.Vue` are absent
+from dependencies and published runtime bundles. New code must use Vue 3 APIs
+and isolated islands; it must not add `inline-template`, `new Vue`, global
+component registration, prototype plugins or runtime template strings.
 
-The stage is complete only after every legacy template is moved to a
-precompiled island and `@vue/compat`, the runtime compiler and `window.Vue`
-are absent from production assets.
+`Admin.VueApps` remains an internal lifecycle registry while the public custom
+island registration API is designed. It is not permission to expose Vue as a
+browser global.
 
 ## Runtime and dependency contract
 
-- `vue`, `@vue/compat` and `@vue/compiler-sfc` are pinned to the same exact
-  version. A mixed runtime/compiler patch is not permitted.
+- `vue` and the development-only `@vue/compiler-sfc` are pinned to the same
+  exact version. A mixed runtime/compiler patch is not permitted.
+- `@vue/compat` is removed and must not return.
 - `vue-template-compiler` is removed. It belongs to Vue 2 and must not return.
 - `vue-multiselect` uses the stable Vue 3 line (`3.5.x`).
 - Webpack aliases every `vue` import, including dependency imports, to one
-  selected compat runtime. This prevents Vue 3 components from carrying a
-  second renderer/reactivity instance.
-- The development asset profile uses `vue.cjs.js`; production uses
-  `vue.cjs.prod.js`. `npm run production` restores the real development
-  `admin-app-dev.js` and its source map after building the production bundle,
-  then recalculates its Mix hash.
+  `vue.runtime.esm-bundler.js`. The catalog, `createApp` and every component
+  therefore share one renderer/reactivity instance.
+- `admin-app.js` and `admin-app-dev.js` own the legacy non-Vue aggregate. They
+  do not import Vue or the component catalog.
+- `vue.js` is the minified production runtime and precompiled catalog;
+  `vue-dev.js` is its unminified development counterpart with diagnostics and
+  a source map. Neither profile contains the runtime compiler.
+- `npm run production` builds both profiles, restores `admin-app-dev.js`,
+  `vue-dev.js` and their maps after the production pass, then recalculates both
+  development Mix hashes.
+- The template loads `admin-app(.dev).js`, then the matching `vue(.dev).js`,
+  then `modules.js`. This guarantees that the core `Admin` namespace exists
+  before islands register and that custom modules run afterwards.
 - Consumers select these committed assets with `ADMIN_DEV_ASSETS`; they do not
   install Node.js or rebuild the package.
 
 ## Bounded legacy app registry
 
-The page-wide `new Vue({ el: '#vueApp' })` root has been removed. During the
-compatibility phase, `vue_init.js` creates one small compat app for every
-top-level `[data-soa-vue-app]` host and exposes their temporary lifecycle as
-`Admin.VueApps`:
+The page-wide `new Vue({ el: '#vueApp' })` root has been removed. The Vue entry
+creates one small native app for every top-level `[data-soa-vue-app]` host and
+exposes their temporary lifecycle as `Admin.VueApps`:
 
 - `mount(element)` and `mountAll(root)` are idempotent;
 - `get(element)` and `size` make ownership observable without reading Vue
@@ -51,10 +59,10 @@ file, image, images, shared single/multiple select and related elements are all
 precompiled SFCs. No package definition owns a runtime-compiled template.
 `ElementSelect` imports the native Vue Multiselect dependency directly, so
 neither `deselect` nor a runtime-compiled Multiselect adapter remains in the
-catalog. The package does not call global `Vue.component` or `Vue.extend`. A
-consumer's existing global compat components can still be inherited from the
-selected runtime during this temporary stage; the final custom-module API
-replaces that path.
+catalog. The package does not call global `Vue.component` or `Vue.extend`, and
+no consumer component is inherited from a browser global. Custom modules will
+register precompiled definitions through the public extension API in the next
+checkpoint.
 
 `data-soa-vue-app` and `Admin.VueApps` are migration-only contracts, not the
 final custom-module API. Until a legacy custom component is migrated, its Blade
@@ -94,19 +102,14 @@ does not execute a script-looking value and needs no CSP nonce. Executable
 custom islands still load through published external bundles and the future
 extension API rather than inline script bodies.
 
-## Explicit allowlist
+## Runtime-only boundary
 
-The global boundary starts in `MODE: 3` with an empty Vue 2 feature allowlist.
-All former flags were removed with their package owners. Any Vue compatibility
-warning now fails the browser fixture; a new global suppression is not an
-acceptable migration fix.
-
-`NativeMultiselect` has one component-local
-`ATTR_ENUMERATED_COERCION: 'suppress-warning'` override for the dependency's
-explicit `spellcheck="false"` markup. It does not enable that behavior for any
-other island. The remaining `@vue/compat` package and compiler-capable runtime
-are removed in the next checkpoint, after the runtime-only build aliases and
-custom-island registration path are switched together.
+There is no compatibility allowlist or component-local compatibility config.
+Every Vue warning fails the browser fixture. Build contracts assert that the
+dependency graph and both Vue bundles exclude `@vue/compat`, that package
+imports resolve to the runtime-only distribution and that `window.Vue` is not
+created. Runtime behavior obtains the Vue version from an owned app instance,
+never from a global namespace.
 
 ## Transitional bridges
 
@@ -167,11 +170,8 @@ covered in the browser fixture. The old jQuery `trigger('change')`, `deselect`
 component, `LegacyMultiselect` adapter and `window.Multiselect` global are
 removed.
 
-`NativeMultiselect` retains one narrow `ATTR_ENUMERATED_COERCION` override to
-preserve the dependency's explicit `spellcheck="false"` result while
-suppressing the compat build's unavoidable development warning. Every
-unrelated compat feature is disabled, and browser tests fail on any unlisted
-Vue warning.
+No wrapper or compatibility configuration sits between `ElementSelect` and
+Vue Multiselect. Browser tests fail on every Vue warning.
 
 ### HTTP
 
@@ -193,13 +193,13 @@ to non-Vue legacy modules during the broader frontend migration.
 
 ## Verification and change policy
 
-For every compat removal:
+For every island or runtime change:
 
 1. add or retain a behavior-level browser test for the owner;
 2. migrate one bounded component/island;
-3. remove its global API and relevant flag in the same commit;
+3. avoid globals and keep registration app-scoped;
 4. run production build, frontend checks, Playwright and PHPUnit;
 5. update the plan journal and the next resume point.
 
-Do not fix migration warnings with an unaudited global suppression. A new flag
-requires an owner, a removal condition and a contract test update.
+Do not fix migration warnings with global suppression. A warning must be fixed
+at its component or dependency boundary and covered by a behavior contract.

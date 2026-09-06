@@ -1,7 +1,8 @@
 {
-    "/js/vue.js": "/js/vue.js?id=a6fb19be976b4fa8dbdf9bf9a13e4c13",
-    "/js/admin-app.js": "/js/admin-app.js?id=e402d9c2cff13697f4abaebd8e80e851",
-    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=2fe5016ab0db5d7277f1c4f8d2c2f84e",
+    "/js/vue.js": "/js/vue.js?id=5e1c0cb8c1ad7bcee05e6d3c277278c6",
+    "/js/vue-dev.js": "/js/vue-dev.js?id=209b92b7ea28b7d84a957f4536e33eab",
+    "/js/admin-app.js": "/js/admin-app.js?id=a3db81135660fb8dd7c5743d42b5a29c",
+    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=e7dec3dc07d811c96240bc8420848b9d",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
     "/js/admin-core.js": "/js/admin-core.js?id=429960d49c4d7552355c39d8d120a273",
     "/js/features/forms.js": "/js/features/forms.js?id=551f10dc6985104d789aca732b69c227",
