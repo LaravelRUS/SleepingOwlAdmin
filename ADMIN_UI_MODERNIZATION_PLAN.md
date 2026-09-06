@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: реализовать `Admin.Tables` registry и adapter interface.
+- Точка возобновления: разделить table implementation минимум на lifecycle, options, transport, filters, state, selection и hooks.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -545,7 +545,7 @@ No-build consumer contract является release-blocking:
 - [x] Сохранить обратную совместимость `sleepingowl:update` как минимум на уровне неинтерактивного forced asset publish, пригодного для deployment scripts.
 - [x] Переписать внутреннюю реализацию `Admin.Events` на native events, сохранив текущий публичный интерфейс.
 - [x] Добавить узкие DOM helpers только для реально повторяющихся операций.
-- [ ] Реализовать `Admin.Tables` registry и adapter interface.
+- [x] Реализовать `Admin.Tables` registry и adapter interface.
 - [ ] Разделить table implementation минимум на lifecycle, options, transport, filters, state, selection и hooks; registry не содержит реализацию этих обязанностей.
 - [ ] Перевести общий reload, selected rows и clear state на `Admin.Tables`.
 - [ ] Перевести `Admin.Asset`, buttons, checkbox/control events и простые DOM-модули на native API.
@@ -961,3 +961,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 3 / no-build asset publication | Общий `PublishAssets` для install/update выполняет только forced Laravel vendor publish и затем проверяет выбранный готовый профиль: manifest schema, Composer package version, наличие 10 JS/CSS, MD5 versions и SHA-256 checksums. `sleepingowl:update` повторно перезаписывает намеренно повреждённый файл и остаётся пригодным для неинтерактивных deployment scripts; regression guard запрещает вызовы npm/node/Vite/Webpack/Mix из обоих command paths. Полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |
 | 2026-09-06 | Этап 3 / native events | `Admin.Events` сохраняет `on`/`off`/`fire`, positional arguments, context и duplicate registrations, но использует нативный `EventTarget`; browser target — `document`, а `fire` отправляет настоящий `CustomEvent` с массивом аргументов в `detail`. Legacy `datatables::*` names пока сохранены, native listeners и старые callbacks работают через одну шину без jQuery. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 80 Vitest + 14 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / DOM helpers | В core добавлены только `listen` и `delegate`: обе подписки возвращают явный teardown, а delegation ограничивает `closest`-match переданным root. Инвентаризация подтвердила повторение delegated handlers в table/tree/file controls и потребность teardown для будущего `mount`/`destroy`; обёртки над `querySelector`, `classList`, `dataset`, forms и feature-specific DOM намеренно не создавались. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 84 Vitest + 15 Playwright | текущий commit |
+| 2026-09-06 | Этап 3 / table registry | Добавлен engine-neutral `TableRegistry`, опубликованный как `Admin.Tables`. Структурный adapter contract ограничен `element`, `engineInstance`, `reload`, `destroy`, `clearState` и `selectedRows`; registry даёт lookup/all/unregister, допускает идемпотентную регистрацию того же adapter и диагностирует double mount другого adapter без скрытого destroy. DataTables 1 пока не регистрируется и остаётся legacy implementation до декомпозиции feature. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 96 Vitest + 16 Playwright | текущий commit |

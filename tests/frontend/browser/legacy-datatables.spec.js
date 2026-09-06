@@ -82,6 +82,42 @@ test('Admin.Events dispatches native document events', async ({ page }) => {
     })
 })
 
+test('published bundle exposes the engine-neutral Admin.Tables registry', async ({ page }) => {
+    await openFixture(page)
+
+    const registry = await page.evaluate(() => {
+        const element = globalThis.document.querySelector('#legacy-table')
+        const adapter = {
+            clearState() {},
+            destroy() {},
+            element,
+            engineInstance: { name: 'fixture-engine' },
+            reload() {},
+            selectedRows: () => ['row-1'],
+        }
+
+        globalThis.Admin.Tables.register(adapter)
+        const registered = globalThis.Admin.Tables.get(element)
+        const result = {
+            adapterCount: globalThis.Admin.Tables.all().length,
+            engine: registered.engineInstance.name,
+            sameAdapter: registered === adapter,
+            selectedRows: registered.selectedRows(),
+        }
+        globalThis.Admin.Tables.unregister(element)
+
+        return { ...result, removed: globalThis.Admin.Tables.get(element) === null }
+    })
+
+    expect(registry).toEqual({
+        adapterCount: 1,
+        engine: 'fixture-engine',
+        removed: true,
+        sameAdapter: true,
+        selectedRows: ['row-1'],
+    })
+})
+
 test('published legacy bundle initializes DataTables and runs draw hooks', async ({
     page,
     request,

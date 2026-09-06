@@ -92,8 +92,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/admin-core.js",
-                            "version": "9a1e933abb435ab8907a7e1950f69f8a",
-                            "checksum": "sha256:027aa699564b7f1dd01149c14d033af19af00f97fc10cc7d14664db5e09f73c7"
+                            "version": "811b3aec8deab348d90e1b2daf4ff185",
+                            "checksum": "sha256:cd14d025227381f81e6dab7551e3b3de314e46251553f49416318c191be6a4df"
                         }
                     ],
                     "styles": [
@@ -171,5 +171,5 @@
             }
         }
     },
-    "build_id": "sha256:316cfc3dd31ef40ff594dbfcdfa85118afeb33640339962fd90190e58f3dd652"
+    "build_id": "sha256:c0294f3d48ea3d023ed5f1368788347f0c12d192a240573a7116c41bfc88a148"
 }
