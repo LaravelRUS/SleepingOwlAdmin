@@ -22,7 +22,19 @@ sleepingowl-core < sleepingowl-feature < sleepingowl-theme
 
 They intentionally do not import the legacy stylesheet. Core contains no reset, layout framework or feature/theme presentation. Feature and theme styles move from the legacy tree only with characterization coverage.
 
-Every Sass entry loads sibling `_variables.scss`, `_colors.scss` and `_custom-properties.scss` modules through `@use`. Variables are local to their owner and use `!default`, so maintainers and external theme authors can configure a source build without cross-bundle globals. Color values live in `_colors.scss`; dimensions, typography, spacing and motion live in `_variables.scss`. The supported runtime/no-build subset is emitted under `:root` as public `--soa-*` custom properties. Dark values are property-only overrides on `:root[data-soa-color-scheme="dark"]`; the detailed contract is documented in `runtime-theme-properties.md`.
+The JavaScript core has a dedicated browser entry. Loading the production or development
+`admin-core.js` installs the same narrow services on the existing `Admin` object without replacing
+already installed adapters: `Asset`, `Components`, `Data`, `DOM`, `Events`, `Http`, `Storage` and
+`Tables`. The package's pure `core/index.js` remains the import boundary for feature and theme
+sources. This split keeps tests and source imports side-effect free while preventing production
+tree-shaking from turning the published browser entry into an empty file.
+
+`Http` is a native Fetch wrapper with same-origin credentials, `X-Requested-With`, CSRF metadata
+for mutation methods and typed non-success errors. `Storage` preserves the existing
+`SleepingOwl::` prefix and scalar/object/array API without lodash, and its `clear()` removes only
+owned keys. Neither service contains feature transport or presentation behavior.
+
+Every Sass entry loads sibling `_variables.scss`, `_colors.scss` and `_custom-properties.scss` modules through `@use`. Variables are local to their owner and use `!default`, so maintainers and external theme authors can configure a source build without cross-bundle globals. Color values live in `_colors.scss`; dimensions, typography, spacing and motion live in `_variables.scss`. Core intentionally has no palette: its `_colors.scss` documents that boundary, while the selected theme supplies text, surface, focus and typography properties. Core CSS contains only cloak/loading/reduced-motion and visually-hidden behavior. The supported runtime/no-build subset is emitted under `:root` as public `--soa-*` custom properties. Dark values are property-only overrides on `:root[data-soa-color-scheme="dark"]`; the detailed contract is documented in `runtime-theme-properties.md`.
 
 The former handwritten `resources/assets/scss/css/files.css` is split into owner-local form feature partials. A parameterized `files.styles(...)` mixin lets both the legacy aggregate and modern forms entry emit the same stable selectors while taking colors from their own `_colors.scss`. No handwritten plain CSS remains under `resources`; generated and vendor directories are explicit exceptions and are never edited as first-party Sass.
 

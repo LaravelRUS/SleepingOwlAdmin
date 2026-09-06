@@ -31,7 +31,10 @@ class UpdateCommandTest extends TestCase
 
         $assetRoot = $this->publishedRoot.'/packages/sleepingowl/default';
         $asset = $assetRoot.'/profiles/production/js/admin-core.js';
+        $license = $asset.'.LICENSE.txt';
         $this->assertFileExists($assetRoot.'/asset-manifest.json');
+        $this->assertFileExists($license);
+        $this->assertStringContainsString(basename($license), (new Filesystem())->get($asset));
         $this->assertSame(10, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());
 
         (new Filesystem())->put($asset, 'corrupt');

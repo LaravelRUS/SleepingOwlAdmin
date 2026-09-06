@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { dirname, resolve } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
@@ -50,13 +50,34 @@ describe('compiled frontend entries', () => {
         },
     )
 
-    it('keeps the compiled core free of frontend frameworks and feature engines', () => {
-        const core = readFileSync(resolve(root, 'public/default/js/admin-core.js'), 'utf8')
+    it('publishes multiple-file styles in the forms feature and legacy aggregate', () => {
+        const forms = readFileSync(resolve(root, 'public/default/css/features/forms.css'), 'utf8')
+        const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
+        const selector = '.fileUploadMultiple .files-group .fileThumbnail'
 
-        expect(core).not.toMatch(
-            /jquery|jQuery|bootstrap|admin-lte|AdminLTE|DataTable|\bVue\b|@vue/,
-        )
+        expect(forms).toContain('@layer sleepingowl-feature.forms')
+        expect(forms).toContain(selector)
+        expect(legacy).toContain(selector)
     })
+})
+
+describe('compiled core boundaries', () => {
+    it.each(['production', 'development'])(
+        'keeps the %s core useful and free of frontend frameworks or feature engines',
+        (profile) => {
+            const core = readFileSync(
+                resolve(root, `public/default/profiles/${profile}/js/admin-core.js`),
+                'utf8',
+            )
+
+            for (const service of ['Components', 'Events', 'Http', 'Storage', 'Tables']) {
+                expect(core).toContain(service)
+            }
+            expect(core).not.toMatch(
+                /jquery|jQuery|bootstrap|admin-lte|AdminLTE|DataTable|\bVue\b|@vue/,
+            )
+        },
+    )
 
     it('keeps the transitional jQuery filter driver out of modern table profiles', () => {
         for (const profile of ['production', 'development']) {
@@ -73,17 +94,9 @@ describe('compiled frontend entries', () => {
         const core = readFileSync(resolve(root, 'public/default/css/admin-core.css'), 'utf8')
 
         expect(core).toContain('@layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme')
+        expect(core).toContain('[data-soa-cloak]')
+        expect(core).toContain('[data-soa-visually-hidden]')
         expect(core).not.toMatch(/bootstrap|adminlte|tailwind|dataTables/i)
-    })
-
-    it('publishes multiple-file styles in the forms feature and legacy aggregate', () => {
-        const forms = readFileSync(resolve(root, 'public/default/css/features/forms.css'), 'utf8')
-        const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
-        const selector = '.fileUploadMultiple .files-group .fileThumbnail'
-
-        expect(forms).toContain('@layer sleepingowl-feature.forms')
-        expect(forms).toContain(selector)
-        expect(legacy).toContain(selector)
     })
 })
 
@@ -129,17 +142,45 @@ describe('logical asset manifest', () => {
     )
 })
 
+describe('production asset companions', () => {
+    it('copies every referenced license sidecar beside its script', () => {
+        let references = 0
+
+        for (const { output } of modernEntries('scripts')) {
+            const script = resolve(root, 'public/default/profiles/production', output)
+            const source = readFileSync(script, 'utf8')
+            const match = source.match(/For license information please see ([^\s*]+)/)
+
+            if (!match) continue
+
+            references += 1
+            const license = resolve(dirname(script), match[1])
+            expect(readFileSync(license, 'utf8').trim()).not.toBe('')
+        }
+
+        expect(references).toBeGreaterThan(0)
+    })
+})
+
 describe('compiled runtime properties', () => {
     it('publishes bundle-owned runtime custom properties', () => {
         const expectations = {
-            'css/admin-core.css': ['--soa-text-color', '--soa-motion-duration-normal'],
+            'css/admin-core.css': ['--soa-focus-ring-width', '--soa-motion-duration-normal'],
             'css/features/forms.css': [
                 '--soa-form-control-text-color',
                 '--soa-form-file-thumbnail-border-color',
             ],
             'css/features/table.css': ['--soa-table-text-color', '--soa-table-row-selected-color'],
-            'css/themes/legacy-adminlte.css': ['--soa-sidebar-bg', '--soa-sidebar-width'],
-            'css/themes/tailwind.css': ['--soa-sidebar-bg', '--soa-sidebar-width'],
+            'css/themes/legacy-adminlte.css': [
+                '--soa-sidebar-bg',
+                '--soa-sidebar-width',
+                '--soa-font-family-sans',
+            ],
+            'css/themes/tailwind.css': [
+                '--soa-sidebar-bg',
+                '--soa-sidebar-width',
+                '--soa-font-family-sans',
+            ],
         }
 
         for (const [path, properties] of Object.entries(expectations)) {

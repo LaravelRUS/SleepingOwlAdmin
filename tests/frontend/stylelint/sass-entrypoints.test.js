@@ -32,12 +32,16 @@ describe('Sass entrypoint boundaries', () => {
         ).toBeGreaterThan(0)
     })
 
-    it.each(entries)('$logicalId exposes overridable build-time tokens', (entry) => {
+    it.each(entries)('$logicalId exposes owner-local overridable build-time tokens', (entry) => {
         const variables = readFileSync(siblingPath(entry, '_variables.scss'), 'utf8')
         const colors = readFileSync(siblingPath(entry, '_colors.scss'), 'utf8')
 
         expect(variableDeclarations(variables)).not.toHaveLength(0)
-        expect(variableDeclarations(colors)).not.toHaveLength(0)
+        if (entry.logicalId === 'core') {
+            expect(variableDeclarations(colors)).toEqual([])
+        } else {
+            expect(variableDeclarations(colors)).not.toHaveLength(0)
+        }
         expect(nonDefaultDeclarations(variables)).toEqual([])
         expect(nonDefaultDeclarations(colors)).toEqual([])
     })
@@ -58,6 +62,23 @@ describe('Sass entrypoint boundaries', () => {
 
         expect(declarations.length).toBeGreaterThan(0)
         expect(declarations.filter((name) => !name.startsWith('--soa-'))).toEqual([])
+    })
+})
+
+describe('Core Sass boundary', () => {
+    it('is limited to accessibility and behavior', () => {
+        const coreRoot = resolve(root, 'resources/frontend/core/styles')
+        const source = readdirSync(coreRoot)
+            .filter((path) => path.endsWith('.scss'))
+            .map((path) => readFileSync(resolve(coreRoot, path), 'utf8'))
+            .join('\n')
+
+        expect(source).toContain('[data-soa-cloak]')
+        expect(source).toContain('[data-soa-visually-hidden]')
+        expect(source).not.toMatch(/bootstrap|adminlte|tailwind|datatable|normalize|reset/i)
+        expect(source).not.toMatch(
+            /(^|[},]\s*)(html|body|main|header|nav|section|table|button|input|select|textarea|\*)\s*[{,]/m,
+        )
     })
 })
 

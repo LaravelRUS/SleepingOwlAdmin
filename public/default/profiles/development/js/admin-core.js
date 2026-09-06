@@ -579,6 +579,212 @@ function assertCallback(callback) {
 
 /***/ }),
 
+/***/ "./resources/frontend/core/http/csrf-token.js":
+/*!****************************************************!*\
+  !*** ./resources/frontend/core/http/csrf-token.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "readCsrfToken": () => (/* binding */ readCsrfToken)
+/* harmony export */ });
+function readCsrfToken() {
+  var _document$querySelect;
+  var document = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis.document;
+  var content = document === null || document === void 0 || (_document$querySelect = document.querySelector) === null || _document$querySelect === void 0 || (_document$querySelect = _document$querySelect.call(document, 'meta[name="csrf-token"]')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.getAttribute('content');
+  return typeof content === 'string' && content.length > 0 ? content : null;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/core/http/http-client.js":
+/*!*****************************************************!*\
+  !*** ./resources/frontend/core/http/http-client.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "HttpClient": () => (/* binding */ HttpClient),
+/* harmony export */   "HttpError": () => (/* binding */ HttpError),
+/* harmony export */   "createHttpClient": () => (/* binding */ createHttpClient)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _wrapNativeSuper(t) { var r = "function" == typeof Map ? new Map() : void 0; return _wrapNativeSuper = function _wrapNativeSuper(t) { if (null === t || !_isNativeFunction(t)) return t; if ("function" != typeof t) throw new TypeError("Super expression must either be null or a function"); if (void 0 !== r) { if (r.has(t)) return r.get(t); r.set(t, Wrapper); } function Wrapper() { return _construct(t, arguments, _getPrototypeOf(this).constructor); } return Wrapper.prototype = Object.create(t.prototype, { constructor: { value: Wrapper, enumerable: !1, writable: !0, configurable: !0 } }), _setPrototypeOf(Wrapper, t); }, _wrapNativeSuper(t); }
+function _construct(t, e, r) { if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && _setPrototypeOf(p, r.prototype), p; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _isNativeFunction(t) { try { return -1 !== Function.toString.call(t).indexOf("[native code]"); } catch (n) { return "function" == typeof t; } }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+var SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+var HttpError = /*#__PURE__*/function (_Error) {
+  function HttpError(response) {
+    var _response$status;
+    var _this;
+    _classCallCheck(this, HttpError);
+    _this = _callSuper(this, HttpError, [httpErrorMessage(response)]);
+    _this.name = 'HttpError';
+    _this.response = response;
+    _this.status = (_response$status = response === null || response === void 0 ? void 0 : response.status) !== null && _response$status !== void 0 ? _response$status : 0;
+    return _this;
+  }
+  _inherits(HttpError, _Error);
+  return _createClass(HttpError);
+}(/*#__PURE__*/_wrapNativeSuper(Error));
+var HttpClient = /*#__PURE__*/function () {
+  function HttpClient() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$fetch = _ref.fetch,
+      fetch = _ref$fetch === void 0 ? globalThis.fetch : _ref$fetch,
+      _ref$csrfToken = _ref.csrfToken,
+      csrfToken = _ref$csrfToken === void 0 ? null : _ref$csrfToken;
+    _classCallCheck(this, HttpClient);
+    assertFetch(fetch);
+    this.fetch = fetch;
+    this.csrfToken = csrfToken;
+  }
+  return _createClass(HttpClient, [{
+    key: "request",
+    value: function () {
+      var _request = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(url) {
+        var _options$credentials;
+        var options,
+          method,
+          response,
+          _args = arguments;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+              assertUrl(url);
+              assertOptions(options);
+              method = normalizeMethod(options.method);
+              _context.n = 1;
+              return this.fetch(url, _objectSpread(_objectSpread({}, options), {}, {
+                credentials: (_options$credentials = options.credentials) !== null && _options$credentials !== void 0 ? _options$credentials : 'same-origin',
+                headers: requestHeaders(options.headers, method, this.csrfToken),
+                method: method
+              }));
+            case 1:
+              response = _context.v;
+              if (response !== null && response !== void 0 && response.ok) {
+                _context.n = 2;
+                break;
+              }
+              throw new HttpError(response);
+            case 2:
+              return _context.a(2, response);
+          }
+        }, _callee, this);
+      }));
+      function request(_x) {
+        return _request.apply(this, arguments);
+      }
+      return request;
+    }()
+  }, {
+    key: "get",
+    value: function get(url, options) {
+      return this.request(url, _objectSpread(_objectSpread({}, options), {}, {
+        method: 'GET'
+      }));
+    }
+  }, {
+    key: "post",
+    value: function post(url, body, options) {
+      return this.request(url, _objectSpread(_objectSpread({}, options), {}, {
+        body: body,
+        method: 'POST'
+      }));
+    }
+  }, {
+    key: "put",
+    value: function put(url, body, options) {
+      return this.request(url, _objectSpread(_objectSpread({}, options), {}, {
+        body: body,
+        method: 'PUT'
+      }));
+    }
+  }, {
+    key: "patch",
+    value: function patch(url, body, options) {
+      return this.request(url, _objectSpread(_objectSpread({}, options), {}, {
+        body: body,
+        method: 'PATCH'
+      }));
+    }
+  }, {
+    key: "delete",
+    value: function _delete(url, options) {
+      return this.request(url, _objectSpread(_objectSpread({}, options), {}, {
+        method: 'DELETE'
+      }));
+    }
+  }]);
+}();
+function createHttpClient(options) {
+  return new HttpClient(options);
+}
+function requestHeaders(input, method, csrfToken) {
+  var headers = new globalThis.Headers(input);
+  setDefaultHeader(headers, 'Accept', 'application/json');
+  setDefaultHeader(headers, 'X-Requested-With', 'XMLHttpRequest');
+  if (!SAFE_METHODS.has(method) && csrfToken) {
+    setDefaultHeader(headers, 'X-CSRF-TOKEN', csrfToken);
+  }
+  return headers;
+}
+function setDefaultHeader(headers, name, value) {
+  if (!headers.has(name)) headers.set(name, value);
+}
+function normalizeMethod() {
+  var method = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'GET';
+  if (typeof method !== 'string' || method.length === 0) {
+    throw new TypeError('HTTP method must be a non-empty string.');
+  }
+  return method.toUpperCase();
+}
+function httpErrorMessage(response) {
+  var _response$status2;
+  var status = (_response$status2 = response === null || response === void 0 ? void 0 : response.status) !== null && _response$status2 !== void 0 ? _response$status2 : 0;
+  var text = response !== null && response !== void 0 && response.statusText ? " ".concat(response.statusText) : '';
+  return "HTTP request failed with status ".concat(status).concat(text, ".");
+}
+function assertFetch(fetch) {
+  if (typeof fetch !== 'function') {
+    throw new TypeError('HTTP client requires a fetch function.');
+  }
+}
+function assertUrl(url) {
+  if (typeof url !== 'string' || url.length === 0) {
+    throw new TypeError('HTTP request URL must be a non-empty string.');
+  }
+}
+function assertOptions(options) {
+  if (!options || _typeof(options) !== 'object' || Array.isArray(options)) {
+    throw new TypeError('HTTP request options must be an object.');
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/core/lifecycle/component-lifecycle.js":
 /*!******************************************************************!*\
   !*** ./resources/frontend/core/lifecycle/component-lifecycle.js ***!
@@ -794,6 +1000,274 @@ function assertNonEmptyString(value, field) {
 
 /***/ }),
 
+/***/ "./resources/frontend/core/runtime/admin-core.js":
+/*!*******************************************************!*\
+  !*** ./resources/frontend/core/runtime/admin-core.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createAdminCore": () => (/* binding */ createAdminCore),
+/* harmony export */   "installAdminCore": () => (/* binding */ installAdminCore)
+/* harmony export */ });
+/* harmony import */ var _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/runtime-assets.js */ "./resources/frontend/core/assets/runtime-assets.js");
+/* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/island-props.js */ "./resources/frontend/core/data/island-props.js");
+/* harmony import */ var _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../dom/forms.js */ "./resources/frontend/core/dom/forms.js");
+/* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
+/* harmony import */ var _http_csrf_token_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../http/csrf-token.js */ "./resources/frontend/core/http/csrf-token.js");
+/* harmony import */ var _http_http_client_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../http/http-client.js */ "./resources/frontend/core/http/http-client.js");
+/* harmony import */ var _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _storage_storage_repository_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../storage/storage-repository.js */ "./resources/frontend/core/storage/storage-repository.js");
+/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../tables/table-registry.js */ "./resources/frontend/core/tables/table-registry.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+
+
+
+
+
+
+var DATA_API = Object.freeze({
+  parseBoolean: _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseBoolean,
+  parseJsonProps: _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseJsonProps,
+  parseNumber: _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseNumber,
+  readDataset: _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.readDataset
+});
+var DOM_API = Object.freeze({
+  createPostForm: _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.createPostForm,
+  delegate: _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.delegate,
+  listen: _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.listen,
+  submitForm: _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.submitForm,
+  submitPostForm: _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.submitPostForm
+});
+function createAdminCore() {
+  var _options$document, _options$csrfToken, _options$fetch, _options$storage;
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var document = (_options$document = options.document) !== null && _options$document !== void 0 ? _options$document : globalThis.document;
+  return {
+    Asset: (0,_assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__.createRuntimeAssetLoader)({
+      createImage: options.createImage,
+      document: document,
+      log: options.assetLog
+    }),
+    Components: (0,_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_7__.createComponentLifecycle)(),
+    Data: DATA_API,
+    DOM: DOM_API,
+    Events: (0,_events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__.createEventBus)(document),
+    Http: (0,_http_http_client_js__WEBPACK_IMPORTED_MODULE_6__.createHttpClient)({
+      csrfToken: (_options$csrfToken = options.csrfToken) !== null && _options$csrfToken !== void 0 ? _options$csrfToken : (0,_http_csrf_token_js__WEBPACK_IMPORTED_MODULE_5__.readCsrfToken)(document),
+      fetch: (_options$fetch = options.fetch) !== null && _options$fetch !== void 0 ? _options$fetch : globalThis.fetch
+    }),
+    Storage: (0,_storage_storage_repository_js__WEBPACK_IMPORTED_MODULE_8__.createStorageRepository)((_options$storage = options.storage) !== null && _options$storage !== void 0 ? _options$storage : globalThis.localStorage),
+    Tables: (0,_tables_table_registry_js__WEBPACK_IMPORTED_MODULE_9__.createTableRegistry)()
+  };
+}
+function installAdminCore() {
+  var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis;
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  assertTarget(target);
+  var admin = adminNamespace(target);
+  var services = createAdminCore(_objectSpread(_objectSpread({}, targetOptions(target)), options));
+  Object.entries(services).forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      name = _ref2[0],
+      service = _ref2[1];
+    if (!(name in admin)) admin[name] = service;
+  });
+  target.Admin = admin;
+  return admin;
+}
+function adminNamespace(target) {
+  var _target$Admin;
+  var admin = (_target$Admin = target.Admin) !== null && _target$Admin !== void 0 ? _target$Admin : {};
+  if ((_typeof(admin) !== 'object' || admin === null) && typeof admin !== 'function') {
+    throw new TypeError('Existing Admin namespace must be an object.');
+  }
+  return admin;
+}
+function targetOptions(target) {
+  var Image = safeProperty(target, 'Image');
+  var fetch = safeProperty(target, 'fetch');
+  return {
+    createImage: typeof Image === 'function' ? function () {
+      return new Image();
+    } : undefined,
+    document: safeProperty(target, 'document'),
+    fetch: typeof fetch === 'function' ? fetch.bind(target) : fetch,
+    storage: safeProperty(target, 'localStorage')
+  };
+}
+function safeProperty(target, name) {
+  try {
+    return target[name];
+  } catch (_unused) {
+    return undefined;
+  }
+}
+function assertTarget(target) {
+  if (!target || _typeof(target) !== 'object' && typeof target !== 'function') {
+    throw new TypeError('Admin core target must be an object.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/core/storage/storage-repository.js":
+/*!***************************************************************!*\
+  !*** ./resources/frontend/core/storage/storage-repository.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "StorageRepository": () => (/* binding */ StorageRepository),
+/* harmony export */   "createStorageRepository": () => (/* binding */ createStorageRepository)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var DEFAULT_PREFIX = 'SleepingOwl::';
+var StorageRepository = /*#__PURE__*/function () {
+  function StorageRepository() {
+    var storage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis.localStorage;
+    var prefix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_PREFIX;
+    _classCallCheck(this, StorageRepository);
+    assertStorage(storage);
+    assertPrefix(prefix);
+    this.storage = storage;
+    this.prefix = prefix;
+  }
+  return _createClass(StorageRepository, [{
+    key: "set",
+    value: function set(key, value) {
+      var _this = this;
+      if (isRecord(key)) {
+        Object.entries(key).forEach(function (_ref) {
+          var _ref2 = _slicedToArray(_ref, 2),
+            name = _ref2[0],
+            item = _ref2[1];
+          return _this.write(name, item);
+        });
+        return this;
+      }
+      this.write(key, value);
+      return this;
+    }
+  }, {
+    key: "get",
+    value: function get(key) {
+      var _this2 = this;
+      if (Array.isArray(key)) {
+        return Object.fromEntries(key.map(function (name) {
+          return [name, _this2.read(name)];
+        }));
+      }
+      return this.read(key);
+    }
+  }, {
+    key: "remove",
+    value: function remove(key) {
+      var _this3 = this;
+      normalizeKeys(key).forEach(function (name) {
+        return _this3.storage.removeItem(_this3.storageKey(name));
+      });
+      return this;
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      var _this4 = this;
+      var keys = this.ownedKeys();
+      keys.forEach(function (key) {
+        return _this4.storage.removeItem(key);
+      });
+      return keys.length;
+    }
+  }, {
+    key: "read",
+    value: function read(key) {
+      return this.storage.getItem(this.storageKey(key));
+    }
+  }, {
+    key: "write",
+    value: function write(key, value) {
+      this.storage.setItem(this.storageKey(key), value);
+    }
+  }, {
+    key: "storageKey",
+    value: function storageKey(key) {
+      assertKey(key);
+      return "".concat(this.prefix).concat(key);
+    }
+  }, {
+    key: "ownedKeys",
+    value: function ownedKeys() {
+      var _this5 = this;
+      return Array.from({
+        length: this.storage.length
+      }, function (_, index) {
+        return _this5.storage.key(index);
+      }).filter(function (key) {
+        return typeof key === 'string' && key.startsWith(_this5.prefix);
+      });
+    }
+  }]);
+}();
+function createStorageRepository(storage, prefix) {
+  return new StorageRepository(storage, prefix);
+}
+function normalizeKeys(key) {
+  return Array.isArray(key) ? key : [key];
+}
+function isRecord(value) {
+  return value !== null && _typeof(value) === 'object' && !Array.isArray(value);
+}
+function assertStorage(storage) {
+  var methods = ['getItem', 'setItem', 'removeItem', 'key'];
+  if (!storage || methods.some(function (method) {
+    return typeof storage[method] !== 'function';
+  })) {
+    throw new TypeError('Storage repository requires the Web Storage interface.');
+  }
+}
+function assertPrefix(prefix) {
+  if (typeof prefix !== 'string' || prefix.length === 0) {
+    throw new TypeError('Storage prefix must be a non-empty string.');
+  }
+}
+function assertKey(key) {
+  if (typeof key !== 'string' || key.length === 0) {
+    throw new TypeError('Storage key must be a non-empty string.');
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/core/tables/table-registry.js":
 /*!**********************************************************!*\
   !*** ./resources/frontend/core/tables/table-registry.js ***!
@@ -1000,43 +1474,13 @@ function invokeAdapters(registry, method, element) {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!******************************************!*\
-  !*** ./resources/frontend/core/index.js ***!
-  \******************************************/
+/*!********************************************!*\
+  !*** ./resources/frontend/core/browser.js ***!
+  \********************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AdminEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__.AdminEventBus),
-/* harmony export */   "ComponentLifecycle": () => (/* reexport safe */ _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_5__.ComponentLifecycle),
-/* harmony export */   "TableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__.TableRegistry),
-/* harmony export */   "assertTableAdapter": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__.assertTableAdapter),
-/* harmony export */   "createComponentLifecycle": () => (/* reexport safe */ _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_5__.createComponentLifecycle),
-/* harmony export */   "createEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__.createEventBus),
-/* harmony export */   "createPostForm": () => (/* reexport safe */ _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.createPostForm),
-/* harmony export */   "createRuntimeAssetLoader": () => (/* reexport safe */ _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__.createRuntimeAssetLoader),
-/* harmony export */   "createTableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__.createTableRegistry),
-/* harmony export */   "delegate": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.delegate),
-/* harmony export */   "listen": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.listen),
-/* harmony export */   "parseBoolean": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseBoolean),
-/* harmony export */   "parseJsonProps": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseJsonProps),
-/* harmony export */   "parseNumber": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseNumber),
-/* harmony export */   "readDataset": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.readDataset),
-/* harmony export */   "submitForm": () => (/* reexport safe */ _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.submitForm),
-/* harmony export */   "submitPostForm": () => (/* reexport safe */ _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.submitPostForm)
-/* harmony export */ });
-/* harmony import */ var _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./assets/runtime-assets.js */ "./resources/frontend/core/assets/runtime-assets.js");
-/* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/island-props.js */ "./resources/frontend/core/data/island-props.js");
-/* harmony import */ var _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom/forms.js */ "./resources/frontend/core/dom/forms.js");
-/* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
-/* harmony import */ var _lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
-/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tables/table-registry.js */ "./resources/frontend/core/tables/table-registry.js");
+/* harmony import */ var _runtime_admin_core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./runtime/admin-core.js */ "./resources/frontend/core/runtime/admin-core.js");
 
-
-
-
-
-
-
+if (globalThis.document) (0,_runtime_admin_core_js__WEBPACK_IMPORTED_MODULE_0__.installAdminCore)(globalThis);
 })();
 
 /******/ })()

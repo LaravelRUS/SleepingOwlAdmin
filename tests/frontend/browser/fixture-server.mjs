@@ -8,6 +8,7 @@ const projectRoot = join(browserDirectory, '..', '..', '..')
 const origin = 'http://127.0.0.1:4173'
 const staticRoutes = new Map([
     ['/', [join(browserDirectory, 'island-props.html'), 'text/html; charset=utf-8']],
+    ['/admin-core', [join(browserDirectory, 'admin-core.html'), 'text/html; charset=utf-8']],
     ['/dom-listeners', [join(browserDirectory, 'dom-listeners.html'), 'text/html; charset=utf-8']],
     [
         '/legacy-datatables',
@@ -32,6 +33,10 @@ const staticRoutes = new Map([
             join(projectRoot, 'resources', 'frontend', 'core', 'dom', 'listeners.js'),
             'text/javascript',
         ],
+    ],
+    [
+        '/public/default/js/admin-core.js',
+        [join(projectRoot, 'public', 'default', 'js', 'admin-core.js'), 'text/javascript'],
     ],
     [
         '/public/default/js/admin-app.js',

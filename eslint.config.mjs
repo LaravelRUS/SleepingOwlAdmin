@@ -80,9 +80,18 @@ export default [
                 {
                     patterns: [
                         {
-                            group: ['**/features/**', '**/themes/**'],
+                            group: [
+                                '**/features/**',
+                                '**/themes/**',
+                                '@vue/**',
+                                'admin-lte',
+                                'bootstrap',
+                                'datatables.net*',
+                                'jquery',
+                                'vue',
+                            ],
                             message:
-                                'Frontend core cannot import feature or theme implementations.',
+                                'Frontend core cannot import feature, theme, framework or engine implementations.',
                         },
                     ],
                 },

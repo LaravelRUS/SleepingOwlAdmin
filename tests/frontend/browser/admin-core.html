@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="browser-csrf-token" />
+        <title>Admin core browser fixture</title>
+    </head>
+    <body>
+        <section id="component" data-core-component>
+            <button id="component-action" type="button">Run</button>
+        </section>
+
+        <script src="/public/default/js/admin-core.js"></script>
+        <script>
+            globalThis.__coreEvents = []
+            globalThis.__coreMounts = 0
+
+            Admin.Components.register({
+                name: 'fixture.core',
+                selector: '[data-core-component]',
+                mount(element) {
+                    globalThis.__coreMounts += 1
+                    element.dataset.coreMounted = 'true'
+
+                    return () => delete element.dataset.coreMounted
+                },
+            })
+            Admin.Components.scan(document)
+            Admin.Events.on('fixture:core', (value) => globalThis.__coreEvents.push(value))
+            Admin.Events.fire('fixture:core', 'ready')
+            Admin.Storage.set('fixture', 'stored')
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

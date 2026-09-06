@@ -60,7 +60,7 @@ function assetRecord(string $output, string $root, string $profile): array
     $file = "profiles/{$profile}/{$output}";
     $target = "{$root}/public/default/{$file}";
 
-    copyCompiledAsset($source, $target, $profile === 'development');
+    copyCompiledAsset($source, $target, $profile);
 
     return [
         'file' => $file,
@@ -69,7 +69,7 @@ function assetRecord(string $output, string $root, string $profile): array
     ];
 }
 
-function copyCompiledAsset(string $source, string $target, bool $includeSourceMap): void
+function copyCompiledAsset(string $source, string $target, string $profile): void
 {
     if (! is_file($source)) {
         throw new RuntimeException("Compiled asset [{$source}] is missing.");
@@ -79,13 +79,30 @@ function copyCompiledAsset(string $source, string $target, bool $includeSourceMa
     $files->ensureDirectoryExists(dirname($target));
     copyFile($files, $source, $target);
 
-    if ($includeSourceMap && is_file("{$source}.map")) {
+    if ($profile === 'development' && is_file("{$source}.map")) {
         copyFile($files, "{$source}.map", "{$target}.map");
     }
 
-    if (! $includeSourceMap) {
+    if ($profile === 'production') {
         $files->delete("{$source}.map");
     }
+
+    copyReferencedLicense($files, $source, $target);
+}
+
+function copyReferencedLicense(Filesystem $files, string $source, string $target): void
+{
+    $licenseName = basename($source).'.LICENSE.txt';
+    if (! str_contains($files->get($source), $licenseName)) {
+        return;
+    }
+
+    $licenseSource = dirname($source).'/'.$licenseName;
+    if (! is_file($licenseSource)) {
+        throw new RuntimeException("Referenced license file [{$licenseSource}] is missing.");
+    }
+
+    copyFile($files, $licenseSource, dirname($target).'/'.$licenseName);
 }
 
 function copyFile(Filesystem $files, string $source, string $target): void

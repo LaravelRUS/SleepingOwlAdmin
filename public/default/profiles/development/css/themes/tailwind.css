@@ -6,6 +6,10 @@
   --soa-text-color: #0f172a;
   --soa-muted-text-color: #64748b;
   --soa-border-color: #e2e8f0;
+  --soa-focus-color: #2563eb;
+  --soa-font-family-sans: ui-sans-serif, system-ui, sans-serif;
+  --soa-font-size-base: 1rem;
+  --soa-line-height-base: 1.5;
   --soa-sidebar-bg: #0f172a;
   --soa-sidebar-text-color: #e2e8f0;
   --soa-sidebar-width: 16rem;

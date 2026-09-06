@@ -1,4 +1,5 @@
 import Admin from './components/admin';
+import { installAdminCore } from '../../frontend/core/runtime/admin-core';
 
 window._ = require('lodash');
 
@@ -48,12 +49,8 @@ require('./libs/lazyload');
 require('admin-lte');
 
 
-window.Admin.Events = require('./components/events');
-window.Admin.Components = require('./components/lifecycle');
-window.Admin.Tables = require('./components/tables');
+installAdminCore(window);
 window.Admin.Messages = require('./components/messages');
-window.Admin.Storage = require('./components/storage');
-window.Admin.Asset = require('./components/asset');
 window.Admin.Modules = require('./components/modules');
 
 

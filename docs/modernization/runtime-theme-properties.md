@@ -6,7 +6,7 @@ Precompiled frontend bundles expose their runtime-adjustable values as CSS custo
 
 The cascade order is intentional:
 
-1. `core` publishes framework-neutral defaults;
+1. `core` publishes only behavior/accessibility defaults;
 2. each feature publishes only its `--soa-<feature>-*` defaults;
 3. the selected theme assigns the shared palette and layout defaults;
 4. validated runtime config is rendered after linked stylesheets and overrides both light and dark theme defaults.
@@ -17,8 +17,9 @@ Sass variables remain the source-build defaults and fallbacks. A component consu
 
 | Group | Examples | Owner |
 |---|---|---|
-| shared palette | `--soa-primary-color`, `--soa-text-color`, `--soa-surface-color`, `--soa-border-color`, `--soa-focus-color` | core defaults, selected theme values |
-| typography and motion | `--soa-font-family-sans`, `--soa-font-size-base`, `--soa-line-height-base`, `--soa-motion-duration-*` | core |
+| shared palette | `--soa-primary-color`, `--soa-text-color`, `--soa-surface-color`, `--soa-border-color`, `--soa-focus-color` | selected theme |
+| typography | `--soa-font-family-sans`, `--soa-font-size-base`, `--soa-line-height-base` | selected theme |
+| accessibility and motion | `--soa-focus-ring-width`, `--soa-motion-duration-*` | core |
 | form feature | `--soa-form-control-*`, `--soa-form-file-*` | `feature:forms` |
 | table feature | `--soa-table-*` | `feature:table` |
 | theme layout | `--soa-sidebar-bg`, `--soa-sidebar-*`, `--soa-content-padding`, `--soa-border-radius`, `--soa-layout-transition-duration` | selected theme |

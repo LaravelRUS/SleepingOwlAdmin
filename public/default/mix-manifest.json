@@ -1,17 +1,17 @@
 {
     "/js/vue.js": "/js/vue.js?id=a589ddaaedb77bff6b181ea71c2797db",
-    "/js/admin-app.js": "/js/admin-app.js?id=90e844d4b2cf55baeb9f495c0a45f02b",
-    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=ecd7cf71b73ee4ff2976181141bd5109",
+    "/js/admin-app.js": "/js/admin-app.js?id=5d164cc9c53f0fb4a691617ea7b2dc45",
+    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=6df8264e6a4c6bb857afa90b5e5a89c9",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
-    "/js/admin-core.js": "/js/admin-core.js?id=a9ede53b5d659267bb62f509a5155d60",
+    "/js/admin-core.js": "/js/admin-core.js?id=429960d49c4d7552355c39d8d120a273",
     "/js/features/forms.js": "/js/features/forms.js?id=551f10dc6985104d789aca732b69c227",
     "/js/features/table.js": "/js/features/table.js?id=f5d387540235443141917d352abe4d71",
     "/js/themes/legacy-adminlte.js": "/js/themes/legacy-adminlte.js?id=f5d387540235443141917d352abe4d71",
     "/js/themes/tailwind.js": "/js/themes/tailwind.js?id=f5d387540235443141917d352abe4d71",
-    "/css/admin-app.css": "/css/admin-app.css?id=ea8352dea37ec56202977653723c9bb4",
-    "/css/themes/legacy-adminlte.css": "/css/themes/legacy-adminlte.css?id=9459de14897d739c753678e558348f17",
+    "/css/admin-app.css": "/css/admin-app.css?id=1031b0ea09293ed718e9e81f67a9ed62",
+    "/css/themes/legacy-adminlte.css": "/css/themes/legacy-adminlte.css?id=c79925f10d025d8f325267ca0496d6f0",
     "/css/features/table.css": "/css/features/table.css?id=0486f14bd03357524d6cb5a97dc6e459",
     "/css/features/forms.css": "/css/features/forms.css?id=ce247f8dcfc6d7791a31b0ca74689221",
-    "/css/admin-core.css": "/css/admin-core.css?id=cf1f19d121dd73ef037c531c7b68c61f",
-    "/css/themes/tailwind.css": "/css/themes/tailwind.css?id=e40d8be5bf203a1dc405a60ce5539ed0"
+    "/css/admin-core.css": "/css/admin-core.css?id=0ab8b34c6e46477fc5066f206cf3da97",
+    "/css/themes/tailwind.css": "/css/themes/tailwind.css?id=95b77fa958e4c6c1554b3f74f75f9cb0"
 }

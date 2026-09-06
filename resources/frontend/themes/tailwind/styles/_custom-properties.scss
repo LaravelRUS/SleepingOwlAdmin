@@ -9,6 +9,10 @@
     --soa-text-color: #{colors.$text};
     --soa-muted-text-color: #{colors.$text-muted};
     --soa-border-color: #{colors.$border};
+    --soa-focus-color: #{colors.$primary};
+    --soa-font-family-sans: #{variables.$font-family-sans};
+    --soa-font-size-base: #{variables.$font-size-base};
+    --soa-line-height-base: #{variables.$line-height-base};
     --soa-sidebar-bg: #{colors.$sidebar-background};
     --soa-sidebar-text-color: #{colors.$sidebar-text};
     --soa-sidebar-width: #{variables.$sidebar-width};

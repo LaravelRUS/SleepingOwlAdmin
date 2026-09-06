@@ -29,7 +29,7 @@
         "scripts": [
             {
                 "logicalId": "core",
-                "source": "resources/frontend/core/index.js",
+                "source": "resources/frontend/core/browser.js",
                 "output": "js/admin-core.js"
             },
             {

@@ -1,5 +1,7 @@
+@use 'behaviors';
 @use 'colors';
 @use 'custom-properties';
 @use 'variables';
 @layer sleepingowl-core, sleepingowl-feature, sleepingowl-theme;
 @include custom-properties.define;
+@include behaviors.define;
