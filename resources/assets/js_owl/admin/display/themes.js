@@ -6,11 +6,15 @@ Admin.Modules.register('display.theme', () => {
     const theme_icon = document.querySelector('#theme-icon')
 
     const setColorMode = (mode) => {
-        if (mode == 'dark') {
+        mode = mode === 'dark' ? 'dark' : 'light'
+
+        if (mode === 'dark') {
             document.body.classList.add('dark-mode')
+            document.documentElement.dataset.soaColorScheme = 'dark'
             theme_icon.classList = 'fa-regular fa-lightbulb'
         } else {
             document.body.classList.remove('dark-mode')
+            document.documentElement.dataset.soaColorScheme = 'light'
             theme_icon.classList = 'fa-solid fa-moon'
         }
 
@@ -20,7 +24,7 @@ Admin.Modules.register('display.theme', () => {
     }
 
     document.querySelector('#theme-mode').addEventListener('click', () => {
-        if (theme_mode.getAttribute('data-mode') == 'light') {
+        if (theme_mode.getAttribute('data-mode') === 'light') {
             setColorMode('dark')
         } else {
             setColorMode('light')

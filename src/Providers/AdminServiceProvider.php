@@ -20,6 +20,7 @@ use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Templates\Assets;
 use SleepingOwl\Admin\Templates\Meta;
 use SleepingOwl\Admin\Themes\ThemeConfiguration;
+use SleepingOwl\Admin\Themes\ThemeCssVariables;
 use SleepingOwl\Admin\Themes\ThemeResolver;
 use SleepingOwl\Admin\Themes\ThemeSelection;
 use SleepingOwl\Admin\Widgets\EnvEditor;
@@ -98,6 +99,10 @@ class AdminServiceProvider extends ServiceProvider
             return new ThemeConfiguration($app['config']);
         });
         $this->app->alias('sleeping_owl.theme.config', ThemeConfiguration::class);
+
+        $this->app->singleton(ThemeCssVariables::class, function (Application $app) {
+            return new ThemeCssVariables($app->make(ThemeConfiguration::class));
+        });
 
         $this->app->singleton(ThemeSelection::class, function (Application $app) {
             return (new ThemeResolver($app))->resolve($this->getConfig('template'));

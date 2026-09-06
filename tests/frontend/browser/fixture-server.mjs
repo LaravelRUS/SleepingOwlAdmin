@@ -13,6 +13,7 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'legacy-datatables.html'), 'text/html; charset=utf-8'],
     ],
     ['/legacy-vue', [join(browserDirectory, 'legacy-vue.html'), 'text/html; charset=utf-8']],
+    ['/runtime-theme', [join(browserDirectory, 'runtime-theme.html'), 'text/html; charset=utf-8']],
     [
         '/resources/frontend/core/data/island-props.js',
         [

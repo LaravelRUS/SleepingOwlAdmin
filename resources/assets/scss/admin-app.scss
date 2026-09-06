@@ -1,4 +1,6 @@
 @use '../../frontend/features/forms/styles/files' as form-files;
+@use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
+@use '../../frontend/themes/legacy-adminlte/styles/sidebar' as theme-sidebar;
 
 //Core
 @import "variables";
@@ -17,6 +19,8 @@
   $thumbnail-surface: $file-thumbnail-surface,
   $file-name-text: $file-name-text,
 );
+@include theme-properties.define;
+@include theme-sidebar.styles;
 
 
 //fontawesome 6

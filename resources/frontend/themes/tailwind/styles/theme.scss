@@ -1,3 +1,5 @@
 @use 'colors';
+@use 'custom-properties';
 @use 'variables';
 @layer sleepingowl-theme;
+@include custom-properties.define;

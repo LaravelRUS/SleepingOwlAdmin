@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-soa-color-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="runtime-theme-token" />
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <style data-soa-runtime-properties>
+            :root,
+            :root[data-soa-color-scheme='dark'] {
+                --soa-sidebar-bg: #123456;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="theme-mode" type="button" data-mode="light">
+            <span id="theme-icon"></span>
+        </button>
+        <aside id="sidebar" class="main-sidebar sidebar-dark-primary"></aside>
+        <script>
+            window.GlobalConfig = { locale: 'en' }
+        </script>
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            Admin.Modules.call('display.theme')
+        </script>
+    </body>
+</html>

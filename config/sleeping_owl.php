@@ -64,6 +64,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Sidebar background color
+    |--------------------------------------------------------------------------
+    | Set a hexadecimal, rgb/rgba or hsl/hsla color. Null uses the selected
+    | theme default. The value is applied at runtime without rebuilding assets.
+    */
+    'sidebar_background_color' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Admin Logo
     |--------------------------------------------------------------------------
     |

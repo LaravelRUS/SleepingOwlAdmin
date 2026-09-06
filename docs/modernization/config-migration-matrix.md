@@ -18,7 +18,7 @@ Machine-readable source: `docs/modernization/config-migration-matrix.json`.
 | `same key/new implementation` | aliases `Assets`, `Meta`, `PackageManager` | Legacy KodiCMS class strings нормализуются на first-party facades после удаления Composer package. |
 | `theme-owned` | layout/logo/footer/card/mode keys | Ключи сохраняются и без преобразования передаются выбранной теме. Пользователь задаёт classes выбранной темы напрямую. |
 
-В текущих 113 именованных paths нет ключей со статусом `removed`; это сознательное следствие compatibility-first policy.
+В baseline находятся 113 ранее существовавших именованных paths без ключей со статусом `removed`; это сознательное следствие compatibility-first policy. `sidebar_background_color` добавляется отдельным новым optional key с default `null`.
 
 ## Legacy и неявные keys
 

@@ -30,7 +30,7 @@ function validateLegacy(array $config): void
     assertFixture(isset($config['show_editor']), 'Legacy fixture must contain show_editor.');
     assertFixture(! isset($config['enable_editor']), 'Legacy fixture must omit enable_editor.');
     assertFixture(! isset($config['dev_assets']), 'Legacy fixture must omit dev_assets.');
-    assertFixture(! isset($config['sidebar_background_color']), 'Legacy fixture must omit the planned sidebar color.');
+    assertFixture(! isset($config['sidebar_background_color']), 'Legacy fixture must omit the new optional sidebar color.');
 
     foreach (['Assets', 'Meta', 'PackageManager'] as $alias) {
         $target = $config['aliases'][$alias] ?? '';

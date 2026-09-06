@@ -1,0 +1,22 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+  :root {
+    --soa-form-control-text-color: #{colors.$control-text};
+    --soa-form-control-placeholder-color: #{colors.$control-placeholder};
+    --soa-form-control-surface-color: #{colors.$control-surface};
+    --soa-form-control-border-color: #{colors.$control-border};
+    --soa-form-control-focus-color: #{colors.$control-focus};
+    --soa-form-control-invalid-color: #{colors.$control-invalid};
+    --soa-form-file-thumbnail-border-color: #{colors.$file-thumbnail-border};
+    --soa-form-file-thumbnail-surface-color: #{colors.$file-thumbnail-surface};
+    --soa-form-file-name-color: #{colors.$file-name-text};
+    --soa-form-control-min-height: #{variables.$control-min-height};
+    --soa-form-control-padding-block: #{variables.$control-padding-block};
+    --soa-form-control-padding-inline: #{variables.$control-padding-inline};
+    --soa-form-control-border-width: #{variables.$control-border-width};
+    --soa-form-control-border-radius: #{variables.$control-border-radius};
+    --soa-form-control-transition-duration: #{variables.$control-transition-duration};
+  }
+}

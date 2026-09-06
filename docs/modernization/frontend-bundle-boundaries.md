@@ -14,15 +14,15 @@ The modernization build publishes independent entrypoints while the existing UI 
 
 The source/output mapping is declared once in `build/frontend-entries.json` and consumed by Laravel Mix. The same file is a build-time contract test fixture; it is not the future runtime/versioned asset manifest.
 
-The new Sass entries currently declare only cascade-layer boundaries:
+The new Sass entries declare cascade-layer boundaries:
 
 ```text
 sleepingowl-core < sleepingowl-feature < sleepingowl-theme
 ```
 
-They intentionally do not import the legacy stylesheet. Core contains no reset, layout framework or feature/theme presentation. Feature and theme styles will move from the legacy tree only with characterization coverage.
+They intentionally do not import the legacy stylesheet. Core contains no reset, layout framework or feature/theme presentation. Feature and theme styles move from the legacy tree only with characterization coverage.
 
-Every Sass entry loads sibling `_variables.scss` and `_colors.scss` modules through `@use`. Variables are local to their owner and use `!default`, so maintainers and external theme authors can configure a source build without cross-bundle globals. Color values live in `_colors.scss`; dimensions, typography, spacing and motion live in `_variables.scss`. The future runtime/no-build surface will expose the supported subset as `--soa-*` custom properties rather than Sass variables.
+Every Sass entry loads sibling `_variables.scss`, `_colors.scss` and `_custom-properties.scss` modules through `@use`. Variables are local to their owner and use `!default`, so maintainers and external theme authors can configure a source build without cross-bundle globals. Color values live in `_colors.scss`; dimensions, typography, spacing and motion live in `_variables.scss`. The supported runtime/no-build subset is emitted under `:root` as public `--soa-*` custom properties. Dark values are property-only overrides on `:root[data-soa-color-scheme="dark"]`; the detailed contract is documented in `runtime-theme-properties.md`.
 
 The former handwritten `resources/assets/scss/css/files.css` is split into owner-local form feature partials. A parameterized `files.styles(...)` mixin lets both the legacy aggregate and modern forms entry emit the same stable selectors while taking colors from their own `_colors.scss`. No handwritten plain CSS remains under `resources`; generated and vendor directories are explicit exceptions and are never edited as first-party Sass.
 
@@ -36,7 +36,7 @@ The following outputs remain available and unchanged during incremental migratio
 - `js/vue.js`;
 - `js/modules.js`.
 
-`TemplateDefault` continues to load only these legacy assets until the versioned manifest resolver is implemented. A page must not load both the legacy aggregate and its migrated modern replacements once a feature is switched over, because that would initialize behavior twice.
+`TemplateDefault` continues to load only these legacy assets until the versioned manifest resolver is implemented. The legacy aggregate temporarily includes the runtime theme properties and sidebar consumer, so `sidebar_background_color` works without waiting for the resolver. A page must not load both the legacy aggregate and its migrated modern replacements once a feature is switched over, because that would initialize behavior twice.
 
 ## Dependency rules
 

@@ -1,0 +1,30 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+  :root {
+    --soa-primary-color: #{colors.$primary};
+    --soa-surface-color: #{colors.$surface};
+    --soa-page-background-color: #{colors.$page-background};
+    --soa-text-color: #{colors.$text};
+    --soa-muted-text-color: #{colors.$text-muted};
+    --soa-border-color: #{colors.$border};
+    --soa-sidebar-bg: #{colors.$sidebar-background};
+    --soa-sidebar-text-color: #{colors.$sidebar-text};
+    --soa-sidebar-width: #{variables.$sidebar-width};
+    --soa-sidebar-collapsed-width: #{variables.$sidebar-collapsed-width};
+    --soa-content-padding: #{variables.$content-padding};
+    --soa-border-radius: #{variables.$border-radius};
+    --soa-layout-transition-duration: #{variables.$layout-transition-duration};
+  }
+
+  :root[data-soa-color-scheme='dark'] {
+    --soa-surface-color: #{colors.$dark-surface};
+    --soa-page-background-color: #{colors.$dark-page-background};
+    --soa-text-color: #{colors.$dark-text};
+    --soa-muted-text-color: #{colors.$dark-text-muted};
+    --soa-border-color: #{colors.$dark-border};
+    --soa-sidebar-bg: #{colors.$dark-sidebar-background};
+    --soa-sidebar-text-color: #{colors.$dark-sidebar-text};
+  }
+}

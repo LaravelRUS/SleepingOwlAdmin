@@ -77,4 +77,6 @@ Capability говорит только о presentation support. Он не озн
 
 `ThemeConfiguration` передаёт выбранной теме только зафиксированные theme-owned keys под исходными именами. Значения не приводятся к строкам, не переименовываются и не преобразуются в semantic classes. В каждый view, созданный через transitional template renderer, передаются зарезервированные переменные `$theme` и `$themeConfig` вместе с прежним `$template`.
 
-В набор входят 14 существующих keys из config migration matrix и запланированный `sidebar_background_color`. Старый опубликованный config может не содержать новый ключ: в этом случае значение остаётся `null`, и theme default применяется без пересборки assets.
+В набор входят 14 существующих keys из config migration matrix и `sidebar_background_color`. Старый опубликованный config может не содержать новый ключ: в этом случае package default `null` не выводит override, и theme default применяется без пересборки assets.
+
+Runtime theme colors не передаются как произвольный CSS. `ThemeCssVariables` отображает allowlisted config keys в публичные `--soa-*`, а `CssColor` проверяет значение до render. Общий view `sleeping_owl::shared.theme.runtime_properties` должен находиться в `<head>` после подключённых stylesheets; AdminLTE layout уже выполняет этот contract. Полный перечень и правила custom theme описаны в `runtime-theme-properties.md`.

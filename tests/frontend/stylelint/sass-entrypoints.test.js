@@ -24,8 +24,12 @@ describe('Sass entrypoint boundaries', () => {
 
         expect(source).toContain("@use 'variables';")
         expect(source).toContain("@use 'colors';")
+        expect(source).toContain("@use 'custom-properties';")
         expect(readFileSync(siblingPath(entry, '_variables.scss')).byteLength).toBeGreaterThan(0)
         expect(readFileSync(siblingPath(entry, '_colors.scss')).byteLength).toBeGreaterThan(0)
+        expect(
+            readFileSync(siblingPath(entry, '_custom-properties.scss')).byteLength,
+        ).toBeGreaterThan(0)
     })
 
     it.each(entries)('$logicalId exposes overridable build-time tokens', (entry) => {
@@ -43,6 +47,18 @@ describe('Sass entrypoint boundaries', () => {
 
         expect(files.filter(isHandwrittenCss)).toEqual([])
     })
+
+    it('uses the public --soa-* namespace for every declared custom property', () => {
+        const stylesRoot = resolve(root, 'resources/frontend')
+        const declarations = readdirSync(stylesRoot, { recursive: true })
+            .filter((path) => path.endsWith('.scss'))
+            .flatMap((path) =>
+                customPropertyDeclarations(readFileSync(resolve(stylesRoot, path), 'utf8')),
+            )
+
+        expect(declarations.length).toBeGreaterThan(0)
+        expect(declarations.filter((name) => !name.startsWith('--soa-'))).toEqual([])
+    })
 })
 
 function variableDeclarations(source) {
@@ -57,4 +73,8 @@ function isHandwrittenCss(path) {
     const normalized = path.replaceAll('\\', '/')
 
     return normalized.endsWith('.css') && !/(^|\/)(generated|vendor)\//.test(normalized)
+}
+
+function customPropertyDeclarations(source) {
+    return [...source.matchAll(/(--[a-z0-9-]+)\s*:/gi)].map((match) => match[1])
 }

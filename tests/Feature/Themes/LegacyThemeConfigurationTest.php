@@ -2,6 +2,7 @@
 
 use Illuminate\Session\ArraySessionHandler;
 use Illuminate\Session\Store;
+use Illuminate\View\ViewException;
 use SleepingOwl\Admin\Form\Element\Wysiwyg;
 use SleepingOwl\Admin\Form\Related\Forms\HasMany;
 use SleepingOwl\Admin\Form\Related\Forms\HasManyLocal;
@@ -31,7 +32,12 @@ class LegacyThemeConfigurationTest extends TestCase
         $html = $this->renderLayout($template);
 
         $this->assertContainsAll($html, [
+            '<html lang="en" data-soa-color-scheme="light">',
+            '<link rel="stylesheet" href="/legacy-theme.css">',
             '<link rel="icon" href="/favicon.svg?tenant=main&amp;size=small">',
+            '<style data-soa-runtime-properties>',
+            ':root[data-soa-color-scheme="dark"] {',
+            '--soa-sidebar-bg: #102030;',
             '<body class="legacy-layout compact">',
             '<svg data-contract="logo"></svg>',
             '<span class="logo-mini">',
@@ -42,6 +48,10 @@ class LegacyThemeConfigurationTest extends TestCase
             '<strong>Legacy footer</strong>',
             '<em>Legacy version</em>',
         ]);
+        $this->assertGreaterThan(
+            strpos($html, '<link rel="stylesheet" href="/legacy-theme.css">'),
+            strpos($html, '<style data-soa-runtime-properties>')
+        );
     }
 
     public function test_legacy_layout_honours_hidden_optional_blocks(): void
@@ -58,6 +68,27 @@ class LegacyThemeConfigurationTest extends TestCase
         $this->assertStringNotContainsString('<link rel="icon"', $html);
         $this->assertStringNotContainsString('<footer class="main-footer small">', $html);
         $this->assertStringNotContainsString('id="theme-mode"', $html);
+    }
+
+    public function test_null_sidebar_color_does_not_emit_a_runtime_override(): void
+    {
+        $this->configureLegacyLayout();
+        config()->set('sleeping_owl.sidebar_background_color', null);
+
+        $html = $this->renderLayout($this->bindLayoutTemplate());
+
+        $this->assertStringNotContainsString('data-soa-runtime-properties', $html);
+    }
+
+    public function test_invalid_sidebar_color_is_rejected_before_css_rendering(): void
+    {
+        $this->configureLegacyLayout();
+        config()->set('sleeping_owl.sidebar_background_color', '#fff; } body { color: red');
+
+        $this->expectException(ViewException::class);
+        $this->expectExceptionMessage('[sleeping_owl.sidebar_background_color]');
+
+        $this->renderLayout($this->bindLayoutTemplate());
     }
 
     public function test_legacy_template_getters_keep_existing_config_keys(): void
@@ -114,6 +145,7 @@ class LegacyThemeConfigurationTest extends TestCase
             'sleeping_owl.show_footer' => true,
             'sleeping_owl.show_mode' => true,
             'sleeping_owl.show_version' => true,
+            'sleeping_owl.sidebar_background_color' => '#102030',
             'sleeping_owl.state_datatables' => false,
             'sleeping_owl.state_filters' => false,
             'sleeping_owl.state_tabs' => false,
@@ -175,7 +207,7 @@ final class LegacyThemeConfigurationTemplateStub
 
     public function renderMeta(string $title): string
     {
-        return '<meta data-contract="meta">';
+        return '<meta data-contract="meta"><link rel="stylesheet" href="/legacy-theme.css">';
     }
 
     public function renderBreadcrumbs(string $key): string
