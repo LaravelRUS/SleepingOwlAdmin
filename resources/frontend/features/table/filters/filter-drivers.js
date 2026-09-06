@@ -38,11 +38,15 @@ export function isNumberInRange(fromValue, toValue, value) {
 
 export function isDateInRange(fromValue, toValue, value) {
     if (!fromValue && !toValue) return true
-    if (!value.isValid()) return false
-    if (!fromValue) return value.isSameOrBefore(toValue)
-    if (!toValue) return value.isSameOrAfter(fromValue)
+    const timestamp = dateTimestamp(value)
+    if (!Number.isFinite(timestamp)) return false
 
-    return value.isBetween(fromValue, toValue)
+    const fromTimestamp = dateTimestamp(fromValue)
+    const toTimestamp = dateTimestamp(toValue)
+    if (!fromValue) return timestamp <= toTimestamp
+    if (!toValue) return timestamp >= fromTimestamp
+
+    return timestamp >= fromTimestamp && timestamp <= toTimestamp
 }
 
 function bindDateFilter(input, _table, column, events) {
@@ -182,4 +186,12 @@ function normalizeCompatibilityEvents(events) {
 
 function unsupportedDateParser() {
     throw new TypeError('Client-side date filters require a date parser.')
+}
+
+function dateTimestamp(value) {
+    if (typeof value?.isValid === 'function' && !value.isValid()) return Number.NaN
+
+    const timestamp = value instanceof Date ? value.getTime() : Number(value?.valueOf?.())
+
+    return Number.isFinite(timestamp) ? timestamp : Number.NaN
 }

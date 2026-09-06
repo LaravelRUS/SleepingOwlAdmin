@@ -15,8 +15,11 @@ const {
     installDataTables2Extensions,
 } = require('../../../../frontend/features/table/engine/extensions')
 const {
-    createLegacyFilterEventBridge,
-} = require('../../../../frontend/features/table/themes/legacy-adminlte/filter-events')
+    createDateFilterSupport,
+} = require('../../../../frontend/features/table/filters/date-filter-support')
+const {
+    resolveDatePickerLocale,
+} = require('../../../../frontend/features/forms/date/date-locales')
 const {
     createLegacyTableTooltips,
 } = require('../../../../frontend/features/table/themes/legacy-adminlte/tooltips')
@@ -61,7 +64,7 @@ globalThis.checkNumberRange = isNumberInRange
 globalThis.checkDateRange = isDateInRange
 globalThis.columnFilters = createTableFilterDrivers(
     dataTables2Runtime(),
-    createLegacyFilterEventBridge(),
+    createDateFilterSupport(resolveDatePickerLocale(Admin.locale)),
 )
 
 Admin.Modules.register('display.datatables', () => {

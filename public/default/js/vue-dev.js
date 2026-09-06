@@ -16567,7 +16567,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "initializeRelatedGroup": () => (/* binding */ initializeRelatedGroup),
 /* harmony export */   "relatedModuleNames": () => (/* binding */ relatedModuleNames)
 /* harmony export */ });
-var relatedModuleNames = Object.freeze(['form.elements.date', 'form.elements.datetime', 'form.elements.daterange', 'form.elements.dependent-select', 'form.elements.wysiwyg']);
+var relatedModuleNames = Object.freeze(['form.elements.dependent-select', 'form.elements.wysiwyg']);
 function initializeRelatedGroup(admin, element) {
   relatedModuleNames.forEach(function (name) {
     return admin.Modules.call(name);

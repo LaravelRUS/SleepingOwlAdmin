@@ -24,15 +24,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/forms.js",
-                            "version": "551f10dc6985104d789aca732b69c227",
-                            "checksum": "sha256:86643aeb57e09aa0b11c78998ec56cd5862f4bef4724ae849f0c132da6bc28da"
+                            "version": "605954adb457cc5490c7e67754bda3cb",
+                            "checksum": "sha256:b853e8d900c9d07fc0b9bd1974339bc4b62a77fa7f9a6ae7fcb44dd31481fa3e"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/features/forms.css",
-                            "version": "ce247f8dcfc6d7791a31b0ca74689221",
-                            "checksum": "sha256:1132e5e127eb13dd93bc31013dbeef330bdefeb1a528bc94a90f51c38b89b9c1"
+                            "version": "dddffe8833518428c6de5c6aff5dda27",
+                            "checksum": "sha256:2239aaf08deb2c1d3c3f9a47cc23570db7619e0dcaf7fa5f29c722ab2482bef7"
                         }
                     ]
                 },
@@ -40,8 +40,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "8b6999813a7ee04060cdbf4dd9c757aa",
-                            "checksum": "sha256:ec68b016e8937b1ddea0557bf7a7a8b9f1c0e37dee74dd0fa7793c2049758522"
+                            "version": "2dd57410b0de724a8f7c3788ab95cd39",
+                            "checksum": "sha256:8a87a521d8d64e74efe4cc889cfa12a872f2e1f000d0cd27ee329ffb05420d8d"
                         }
                     ],
                     "styles": [
@@ -128,15 +128,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/forms.js",
-                            "version": "dc4625bd973e7afb186907faea104d39",
-                            "checksum": "sha256:a552807506b9016455d399852ecc52a63e416158dcd387434575bc765f9f1a1d"
+                            "version": "ca81cd91c2c98977decba655b97ecaf4",
+                            "checksum": "sha256:5ca4f20350e450ab47bdb84c971ed1b950114aafdf16f4d2a7b7668c331eb6d3"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/features/forms.css",
-                            "version": "d75f169105d39f732c5c5018bc5b1605",
-                            "checksum": "sha256:ee5f836e803f0e46b87a8a95dd4590fc11c58e0f9d2e0ddc3e64ca5351f5a3d4"
+                            "version": "bc6ecc6baa07cb84319d48c990926970",
+                            "checksum": "sha256:ca205030a261e4f9c5737d7337e1617757eb44fa2852364984b191bd59773463"
                         }
                     ]
                 },
@@ -144,8 +144,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "1ad79d7b00af23ac4ba97e93fc03f29a",
-                            "checksum": "sha256:84b6ae51542f49cf3cab3b2c61e9cab27369019a55df61bbc18a99a4075714f1"
+                            "version": "d326002d18015f9396772fb0bf41b15a",
+                            "checksum": "sha256:bf44c096d0e2a0b2ffcf176e3ad5f4f8974c780c4d7326e7fc7f0c8bd324d75f"
                         }
                     ],
                     "styles": [
@@ -211,5 +211,5 @@
             }
         }
     },
-    "build_id": "sha256:1dd8f729c37ad5df2958509ebf0b192049be1416f949e6bec8a2750fda7952b1"
+    "build_id": "sha256:12bda1b1b2dd7dd2990968cb86232b69a25fe46642d83b834d1afd1e5b774f0f"
 }

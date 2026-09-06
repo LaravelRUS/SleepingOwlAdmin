@@ -7,15 +7,6 @@ import {
     isNumberInRange,
 } from '../../../../resources/frontend/features/table/filters/filter-drivers.js'
 
-function date({ after = false, before = false, between = false, valid = true } = {}) {
-    return {
-        isBetween: () => between,
-        isSameOrAfter: () => after,
-        isSameOrBefore: () => before,
-        isValid: () => valid,
-    }
-}
-
 it('preserves numeric range boundary behavior', () => {
     expect(isNumberInRange(Number.NaN, Number.NaN, 10)).toBe(true)
     expect(isNumberInRange(Number.NaN, 20, 10)).toBe(true)
@@ -25,11 +16,16 @@ it('preserves numeric range boundary behavior', () => {
 })
 
 it('preserves date range boundary behavior', () => {
-    expect(isDateInRange(false, false, date())).toBe(true)
-    expect(isDateInRange({}, {}, date({ valid: false }))).toBe(false)
-    expect(isDateInRange(false, {}, date({ before: true }))).toBe(true)
-    expect(isDateInRange({}, false, date({ after: true }))).toBe(true)
-    expect(isDateInRange({}, {}, date({ between: true }))).toBe(true)
+    const start = new Date(2026, 8, 1)
+    const middle = new Date(2026, 8, 6)
+    const end = new Date(2026, 8, 10)
+
+    expect(isDateInRange(false, false, middle)).toBe(true)
+    expect(isDateInRange(start, end, new Date('invalid'))).toBe(false)
+    expect(isDateInRange(false, end, middle)).toBe(true)
+    expect(isDateInRange(start, false, middle)).toBe(true)
+    expect(isDateInRange(start, end, middle)).toBe(true)
+    expect(isDateInRange(start, end, end)).toBe(true)
 })
 
 it('resolves custom search registration from the active engine', () => {

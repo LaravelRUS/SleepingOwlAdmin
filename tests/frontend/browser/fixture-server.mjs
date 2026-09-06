@@ -36,6 +36,7 @@ const staticRoutes = new Map([
         '/select-controls',
         [join(browserDirectory, 'select-controls.html'), 'text/html; charset=utf-8'],
     ],
+    ['/date-controls', [join(browserDirectory, 'date-controls.html'), 'text/html; charset=utf-8']],
     [
         '/resources/frontend/core/data/island-props.js',
         [

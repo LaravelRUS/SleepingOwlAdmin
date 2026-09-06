@@ -30,6 +30,7 @@ class Date extends Text
     {
         parent::initialize();
         $this->setHtmlAttribute('data-type', 'date');
+        $this->setHtmlAttribute('data-soa-date-control', $this->getPickerControlType());
     }
 
     /**
@@ -48,6 +49,11 @@ class Date extends Text
         return parent::toArray() + [
             'pickerFormat' => $this->getJsPickerFormat(),
         ];
+    }
+
+    protected function getPickerControlType(): string
+    {
+        return 'date';
     }
 
     /**

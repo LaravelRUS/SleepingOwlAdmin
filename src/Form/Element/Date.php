@@ -21,4 +21,9 @@ class Date extends DateTime
     {
         return $this->pickerFormat ?: config('sleeping_owl.dateFormat');
     }
+
+    protected function getPickerControlType(): string
+    {
+        return 'date';
+    }
 }

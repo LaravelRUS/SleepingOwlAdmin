@@ -86,6 +86,7 @@ class DateTime extends NamedFormElement
             'data-date-pickdate' => 'true',
             'data-date-picktime' => 'false',
             'data-date-useseconds' => $this->hasSeconds() ? 'true' : 'false',
+            'data-soa-date-control' => $this->getPickerControlType(),
             'type' => 'text',
         ]);
 
@@ -102,6 +103,11 @@ class DateTime extends NamedFormElement
     public function getPickerFormat()
     {
         return $this->pickerFormat ?: config('sleeping_owl.datetimeFormat');
+    }
+
+    protected function getPickerControlType(): string
+    {
+        return 'datetime';
     }
 
     /**

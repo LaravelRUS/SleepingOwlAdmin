@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="browser-fixture-token" />
+        <title>Air Datepicker controls fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'date-controls',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    select: { no_items: 'No items' },
+                    table: {},
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <div class="input-group input-date date" id="date-wrapper">
+            <input
+                id="published-on"
+                name="published_on"
+                value="06.09.2026"
+                data-date-format="DD.MM.YYYY"
+                data-soa-date-control="date"
+            />
+            <button class="input-group-prepend input-group-addon" type="button">Calendar</button>
+        </div>
+
+        <div class="input-group input-date datetime">
+            <input
+                id="published-at"
+                name="published_at"
+                value="06.09.2026 14:25"
+                data-date-format="DD.MM.YYYY HH:mm"
+                data-soa-date-control="datetime"
+            />
+        </div>
+
+        <div class="input-group input-date datetime">
+            <input
+                id="starts-at"
+                name="starts_at"
+                value="14:25:09"
+                data-date-format="HH:mm:ss"
+                data-soa-date-control="time"
+            />
+        </div>
+
+        <div class="input-group input-date">
+            <input
+                id="report-range"
+                name="report_range"
+                value="01.09.2026 - 06.09.2026"
+                data-auto-apply="true"
+                data-date-format="DD.MM.YYYY"
+                data-max-span='{"days":7}'
+                data-soa-date-control="daterange"
+            />
+        </div>
+
+        <div class="input-group input-date date">
+            <input
+                id="readonly-date"
+                readonly
+                value="06.09.2026"
+                data-date-format="DD.MM.YYYY"
+                data-soa-date-control="date"
+            />
+        </div>
+
+        <div id="dynamic-date-host"></div>
+
+        <script src="/public/default/js/admin-app-dev.js"></script>
+        <script src="/public/default/js/modules.js"></script>
+        <script>
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

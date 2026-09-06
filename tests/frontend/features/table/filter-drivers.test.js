@@ -112,14 +112,7 @@ it('delegates client-side date parsing without adding a date library to the driv
     const from = control({ closest: wrapper, value: '10' })
     const to = control({ closest: wrapper, value: '20' })
     from.dataset.dateFormat = 'fixture'
-    const comparable = (value) => ({
-        isBetween: (start, end) => value > start.value && value < end.value,
-        isSameOrAfter: (start) => value >= start.value,
-        isSameOrBefore: (end) => value <= end.value,
-        isValid: () => true,
-        value,
-    })
-    events.parseDate.mockImplementation((value) => comparable(Number(value)))
+    events.parseDate.mockImplementation((value) => new Date(2026, 0, Number(value)))
     const table = { settings: () => [{ sTableId: 'orders' }] }
 
     createTableFilterDrivers(runtime, events).range(

@@ -28,6 +28,7 @@
         "@flowjs/flow.js": "^2.14.1",
         "@fortawesome/fontawesome-free": "^7.2.0",
         "admin-lte": "^3.2.0",
+        "air-datepicker": "3.6.0",
         "autoprefixer": "^10.4.7",
         "axios": "^0.27.2",
         "bootstrap": "^4.6.1",

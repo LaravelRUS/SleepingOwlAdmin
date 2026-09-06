@@ -1,0 +1,60 @@
+@use 'sass:meta';
+
+@mixin styles {
+  @include meta.load-css('../../../../../node_modules/air-datepicker/air-datepicker.css');
+
+  /* stylelint-disable selector-class-pattern -- Air Datepicker owns these selectors. */
+  .air-datepicker {
+    --adp-background-color: var(--soa-form-date-picker-surface-color);
+    --adp-background-color-hover: var(--soa-form-date-picker-hover-color);
+    --adp-background-color-active: var(--soa-form-date-picker-active-color);
+    --adp-background-color-in-range: var(--soa-form-date-picker-range-color);
+    --adp-background-color-in-range-focused: var(
+      --soa-form-date-picker-range-focus-color
+    );
+    --adp-background-color-selected-other-month-focused: var(
+      --soa-form-date-picker-selected-hover-color
+    );
+    --adp-background-color-selected-other-month: var(
+      --soa-form-date-picker-selected-color
+    );
+    --adp-color: var(--soa-form-date-picker-text-color);
+    --adp-color-secondary: var(--soa-form-date-picker-muted-color);
+    --adp-accent-color: var(--soa-form-date-picker-accent-color);
+    --adp-color-other-month: var(--soa-form-date-picker-other-month-color);
+    --adp-color-disabled: var(--soa-form-date-picker-disabled-color);
+    --adp-color-disabled-in-range: var(--soa-form-date-picker-disabled-color);
+    --adp-color-other-month-hover: var(--soa-form-date-picker-muted-color);
+    --adp-border-color: var(--soa-form-date-picker-border-color);
+    --adp-border-color-inner: var(--soa-form-date-picker-border-color);
+    --adp-border-color-inline: var(--soa-form-date-picker-border-color);
+    --adp-day-name-color: var(--soa-form-date-picker-accent-color);
+    --adp-day-name-color-hover: var(--soa-form-date-picker-selected-hover-color);
+    --adp-cell-background-color-selected: var(--soa-form-date-picker-selected-color);
+    --adp-cell-background-color-selected-hover: var(
+      --soa-form-date-picker-selected-hover-color
+    );
+    --adp-cell-background-color-in-range: var(--soa-form-date-picker-range-color);
+    --adp-cell-background-color-in-range-hover: var(
+      --soa-form-date-picker-range-focus-color
+    );
+    --adp-time-track-color: var(--soa-form-date-picker-border-color);
+    --adp-time-track-color-hover: var(--soa-form-date-picker-muted-color);
+
+    box-shadow: 0 0.25rem 0.75rem var(--soa-form-date-picker-shadow-color);
+  }
+
+  .air-datepicker-cell.-selected-,
+  .air-datepicker-cell.-selected-.-current-,
+  .air-datepicker-cell.-year-.-other-decade-.-selected-,
+  .air-datepicker-cell.-day-.-other-month-.-selected- {
+    color: var(--soa-form-date-picker-selected-text-color);
+  }
+
+  .air-datepicker--pointer::after,
+  .air-datepicker-time--row input[type='range']::-webkit-slider-thumb,
+  .air-datepicker-time--row input[type='range']::-moz-range-thumb {
+    background: var(--soa-form-date-picker-surface-color);
+  }
+  /* stylelint-enable selector-class-pattern */
+}

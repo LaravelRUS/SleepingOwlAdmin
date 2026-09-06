@@ -51,17 +51,23 @@ describe('Sass entrypoint boundaries', () => {
 
         expect(files.filter(isHandwrittenCss)).toEqual([])
     })
+})
 
-    it('uses the public --soa-* namespace for every declared custom property', () => {
+describe('Sass custom property namespaces', () => {
+    it('uses the public --soa-* namespace outside explicit vendor adapters', () => {
         const stylesRoot = resolve(root, 'resources/frontend')
         const declarations = readdirSync(stylesRoot, { recursive: true })
             .filter((path) => path.endsWith('.scss'))
             .flatMap((path) =>
-                customPropertyDeclarations(readFileSync(resolve(stylesRoot, path), 'utf8')),
+                customPropertyDeclarations(readFileSync(resolve(stylesRoot, path), 'utf8')).map(
+                    (name) => ({ name, path: path.replaceAll('\\', '/') }),
+                ),
             )
 
         expect(declarations.length).toBeGreaterThan(0)
-        expect(declarations.filter((name) => !name.startsWith('--soa-'))).toEqual([])
+        expect(declarations.filter((declaration) => !allowedCustomProperty(declaration))).toEqual(
+            [],
+        )
     })
 })
 
@@ -97,5 +103,11 @@ function isHandwrittenCss(path) {
 }
 
 function customPropertyDeclarations(source) {
-    return [...source.matchAll(/(--[a-z0-9-]+)\s*:/gi)].map((match) => match[1])
+    return [...source.matchAll(/(?:^|\n|[;{])\s*(--[a-z0-9-]+)\s*:/gi)].map((match) => match[1])
+}
+
+function allowedCustomProperty({ name, path }) {
+    if (name.startsWith('--soa-')) return true
+
+    return path.endsWith('/_date-picker.scss') && name.startsWith('--adp-')
 }

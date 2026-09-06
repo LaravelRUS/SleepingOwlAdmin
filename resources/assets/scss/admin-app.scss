@@ -1,4 +1,6 @@
 @use '../../frontend/features/forms/styles/files' as form-files;
+@use '../../frontend/features/forms/styles/date-picker' as form-date-picker;
+@use '../../frontend/features/forms/styles/custom-properties' as form-properties;
 @use '../../frontend/features/table/themes/legacy-adminlte/styles/legacy' as legacy-datatables;
 @use '../../frontend/themes/legacy-adminlte/styles/custom-properties' as theme-properties;
 @use '../../frontend/themes/legacy-adminlte/styles/sidebar' as theme-sidebar;
@@ -21,6 +23,8 @@
   $thumbnail-surface: $file-thumbnail-surface,
   $file-name-text: $file-name-text,
 );
+@include form-properties.define;
+@include form-date-picker.styles;
 @include theme-properties.define;
 @include theme-sidebar.styles;
 

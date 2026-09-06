@@ -36,9 +36,7 @@ async function setFilters(page) {
     await page.locator('#text-filter').fill(filterValues.text)
     await page.locator('#text-filter').dispatchEvent('change')
     await page.locator('#date-filter').fill(filterValues.date)
-    await page.evaluate(() =>
-        globalThis.jQuery('#date-filter').closest('.input-date').trigger('dp.change'),
-    )
+    await page.locator('#date-filter').dispatchEvent('change')
     await page.locator('#range-from').fill(filterValues.rangeFrom)
     await page.locator('#range-from').dispatchEvent('change')
     await page.locator('#range-to').fill(filterValues.rangeTo)

@@ -59,6 +59,17 @@ describe('compiled frontend entries', () => {
         expect(forms).toContain(selector)
         expect(legacy).toContain(selector)
     })
+
+    it('publishes theme-token driven Air Datepicker styles in both form bundles', () => {
+        const forms = readFileSync(resolve(root, 'public/default/css/features/forms.css'), 'utf8')
+        const legacy = readFileSync(resolve(root, 'public/default/css/admin-app.css'), 'utf8')
+
+        for (const css of [forms, legacy]) {
+            expect(css).toContain('.air-datepicker')
+            expect(css).toContain('--soa-form-date-picker-surface-color')
+            expect(css).toContain('var(--soa-form-date-picker-selected-color)')
+        }
+    })
 })
 
 describe('compiled core boundaries', () => {
@@ -169,6 +180,7 @@ describe('compiled runtime properties', () => {
             'css/features/forms.css': [
                 '--soa-form-control-text-color',
                 '--soa-form-file-thumbnail-border-color',
+                '--soa-form-date-picker-surface-color',
             ],
             'css/features/table.css': ['--soa-table-text-color', '--soa-table-row-selected-color'],
             'css/themes/legacy-adminlte.css': [

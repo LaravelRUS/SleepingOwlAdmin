@@ -63,6 +63,11 @@ class DateRange extends Date
         return $this->mode;
     }
 
+    protected function getPickerControlType(): string
+    {
+        return 'daterange';
+    }
+
     /**
      * @return $this
      */

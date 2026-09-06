@@ -18,12 +18,9 @@ require('./libs/noty');
 
 require('./libs/jquery');
 // require('./libs/jquery-form');
-require('./libs/moment');
 require('./libs/bootstrap');
 require('./libs/i18next');
 
-require('./libs/datetimepicker');
-require('./libs/daterangepicker');
 require('./libs/magnific-popup');
 require('./libs/dropzone');
 const {
@@ -33,6 +30,9 @@ const {
     installLegacyDataTablesPresentation,
 } = require('../../frontend/features/table/themes/legacy-adminlte/datatables');
 installLegacyDataTablesPresentation(dataTables2Runtime());
+// Temporary legacy ownership: removed together with X-editable later in stage 6.
+require('./libs/moment');
+require('./libs/datetimepicker');
 require('./libs/xeditable');
 require('./libs/nestable');
 require('./libs/sweetalert');
@@ -97,9 +97,7 @@ require('./admin/localstorage/tabs');
 /**
  * Initialize form
  */
- require('./admin/form/date');
- require('./admin/form/datetime');
- require('./admin/form/daterange');
+ require('./admin/form/date-controls');
  require('./admin/form/files');
  // require('./components/trix');
 

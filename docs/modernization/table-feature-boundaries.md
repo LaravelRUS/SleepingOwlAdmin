@@ -60,11 +60,11 @@ through the injected engine. Filter execute, clear and Enter-key behavior is a
 separate native module. The modern table profile contains neither jQuery nor
 Moment.
 
-The current Bootstrap DateTimePicker, Daterangepicker and Select2 integrations
-still produce jQuery-only synthetic events. A small legacy AdminLTE bridge
-forwards only those compatibility events and injects Moment date parsing; the
-bridge is excluded from modern table profiles and is removed with the plugins
-in stage 6.
+The date, datetime, range, and Vue Multiselect controls now dispatch native
+`change` events. Table date filters share the Air Datepicker format parser, so
+the former AdminLTE jQuery/Moment event bridge has been removed. Moment remains
+outside the reusable table feature and is temporarily owned only by the legacy
+X-editable adapter.
 
 Shared reload, state and selection consumers no longer call the DataTables API
 directly. Bulk actions and custom action forms resolve the adapter for their

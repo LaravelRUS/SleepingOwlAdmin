@@ -20,6 +20,7 @@ class DateTest extends TestCase
 
         $this->assertTrue($filter->hasClassProperty('column-filter'));
         $this->assertEquals('date', $filter->getHtmlAttribute('data-type'));
+        $this->assertEquals('date', $filter->getHtmlAttribute('data-soa-date-control'));
     }
 
     public function test_gets_or_sets_format()
