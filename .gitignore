@@ -5,7 +5,6 @@ composer.lock
 .phpunit.result.cache
 /.idea
 yarn.lock
-package-lock.json
 /build/logs
 /public/default/css/*.map
 /public/default/js/*.map

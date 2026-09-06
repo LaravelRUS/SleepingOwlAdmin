@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
+- Точка возобновления: сохранить baseline production bundle size и перечень лицензий.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -185,6 +185,15 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - в Blade найдено 9 использований удалённого в Vue 3 атрибута `inline-template`;
 - текущие Blade/PHP views жёстко связаны с Bootstrap/AdminLTE: 113 Blade-файлов, Bootstrap-классы также создаются непосредственно в PHP form/display classes.
 - основной `config/sleeping_owl.php` содержит около 500 строк и управляет core, routes/auth, uploads, date/time, WYSIWYG, tables, UI state, template и aliases; его нельзя заменять новым минимальным конфигом целиком.
+
+Dependency baseline, закреплённый после составления плана:
+
+- `package-lock.json` lockfile v3 создан npm `11.17.0` на Node.js `24.19.0`; `.gitignore` больше не исключает lock-файл;
+- lock содержит 1376 package entries, 34 top-level runtime dependencies и 7 top-level dev dependencies;
+- чистый `npm ci --ignore-scripts --no-audit --no-fund` завершился с exit code `0` и установил 1370 packages;
+- `npm ls --depth=0` и `npm ls jquery --all` завершились с exit code `0`;
+- npm сообщает legacy peer conflict: `bootstrap-switch@3.3.4` из AdminLTE 3 требует Bootstrap 3, тогда как root использует Bootstrap 4.6.2;
+- `admin-lte@3.2.0` транзитивно устанавливает множество jQuery plugins и DataTables extensions, включая отдельные ветки DataTables 2; эти зависимости не считаются используемыми features и исчезнут вместе с монолитной AdminLTE 3 dependency.
 
 Основные зоны jQuery-связности:
 
@@ -436,7 +445,7 @@ No-build consumer contract является release-blocking:
 - [x] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
 - [x] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
 - [x] Выбрать replacements для Select2, date/time controls и lightbox.
-- [ ] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
+- [x] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
 - [ ] Сохранить baseline production bundle size и перечень лицензий.
 - [ ] Составить перечень эталонных экранов для каждой темы: layout/navigation, async table, sync table, filters, bulk actions, inline edit, tree, select, date/time, single/multiple file upload.
 - [ ] Составить полный machine-readable inventory top-level/nested config keys и найти их consumers в PHP, Blade и JavaScript.
@@ -817,3 +826,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / colors | Color literals ограничены `_colors.scss` и узкими vendor/generated/brand exceptions; dark mode меняет только `--soa-*` в root selector, sidebar config проходит validation | текущий commit |
 | 2026-09-06 | Этап 0 / plugin replacements | Изначально предложены Tom Select, Air Datepicker и GLightbox; выбор select пересмотрен после обсуждения | `359de337` |
 | 2026-09-06 | Этап 0 / select correction | Vue Multiselect сохранён и обновляется до стабильной Vue 3-ветки 3.5.x; Select2/AJAX/dependent behavior переносится в тот же island через отдельные composables, Tom Select исключён | текущий commit |
+| 2026-09-06 | Этап 0 / dependency lock | Добавлен npm lockfile v3; чистый `npm ci` и dependency tree проверены, зафиксированы 1376 entries и legacy Bootstrap 3 peer conflict внутри AdminLTE 3 | текущий commit |
