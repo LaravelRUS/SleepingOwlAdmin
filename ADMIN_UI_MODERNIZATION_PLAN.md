@@ -205,22 +205,24 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 
 | Текущая реализация | Новая реализация | Причина и граница |
 | --- | --- | --- |
-| Select2, `dependent-dropdown`, Vue Multiselect | Tom Select 2.6.x + отдельный native dependent-select controller | single/multiple, search, AJAX, tagging и custom rendering без jQuery; controller отвечает только за зависимости полей |
+| Vue Multiselect 2.x, Select2, `dependent-dropdown` | Vue Multiselect 3.5.x island + отдельные async/dependent composables | сохраняет удобный current UX, single/multiple, search, AJAX, tagging и limits; transport и зависимости полей не смешиваются с presentation component |
 | `bootstrap4-datetimepicker`, `daterangepicker`, Moment integration | Air Datepicker 3.6.x | один dependency-free driver поддерживает date, time и range; parsing/serialization остаются отдельным модулем |
 | Magnific Popup | GLightbox 3.3.x | dependency-free image/gallery lightbox с небольшим публичным adapter |
 
-На 2026-09-06 проверены npm metadata: `tom-select@2.6.2` (Apache-2.0; две scoped production dependencies), `air-datepicker@3.6.0` (MIT; без dependencies) и `glightbox@3.3.1` (MIT; без dependencies). Точные версии будут закреплены lock-файлом.
+На 2026-09-06 проверены npm metadata: стабильный `vue-multiselect@3.5.0` для Vue 3 (MIT; без объявленных production dependencies), `air-datepicker@3.6.0` (MIT; без dependencies) и `glightbox@3.3.1` (MIT; без dependencies). Точные версии будут закреплены lock-файлом.
 
 Правила миграции:
 
 - public PHP DSL по возможности сохраняется: `setSelect2()` становится deprecated compatibility alias нового select driver, а несовместимые raw Select2 options проходят migration matrix, а не молча игнорируются;
-- текущий AJAX endpoint/payload сохраняется через transport adapter; debounce, cancellation, dependency values, loading/empty/error states получают contract tests;
+- обычный Select и MultiSelect сохраняют Vue Multiselect UX, но каждый экземпляр монтируется как независимый Vue 3 island; один глобальный Vue app для формы не создаётся;
+- текущий AJAX endpoint/payload сохраняется через composable transport; debounce, cancellation, dependency values, loading/empty/error states получают contract tests;
 - произвольный HTML label не разрешён по умолчанию. Legacy `data-select2-allow-html` deprecated; custom renderer принимает DOM node либо явно sanitized HTML через отдельный opt-in API;
 - date value, display format и server serialization разделяются; driver не хранит бизнес-дату только в локализованной строке;
 - date, datetime и range используют один lifecycle, но отдельные маленькие option normalizers;
 - lightbox активируется нейтральным component marker и корректно обновляет динамические DataTables/file gallery elements;
 - vendor CSS не импортируется в core: structural feature styles и presentation adapters распределяются по ранее утверждённым Sass boundaries;
-- не использовать Vue для select/date/lightbox, если native driver полностью покрывает состояние: Vue 3 остаётся для действительно сложных islands.
+- Air Datepicker и GLightbox остаются native drivers; Vue используется для select/multiselect, где существующий reactive UX действительно полезен.
+- Tom Select не входит в standard dependencies. Вернуться к нему можно только при подтверждённом feature gap Vue Multiselect в characterization/pilot tests, отдельным записанным решением.
 
 ## Целевая архитектура
 
@@ -386,12 +388,13 @@ No-build consumer contract является release-blocking:
 | Vue 2 global build | Vue 3 islands | Временный `@vue/compat` допустим; в финальном bundle отсутствует |
 | `vue-resource` | Axios/`fetch` | CSRF и error handling централизовать в core HTTP client |
 | `vue-template-compiler` | Совместимый Vue 3 compiler/runtime build | In-DOM root templates допустимы, `inline-template` удаляется |
-| `vue-multiselect` 2.x, `vuedraggable` 2.x | Vue 3-compatible версии либо feature drivers | Для drag/drop предпочтителен прямой SortableJS, если Vue wrapper не нужен |
-| Select2 | Tom Select либо существующий Vue multiselect | Выбрать один подход для обычного и AJAX select до начала этой фазы |
-| `bootstrap4-datetimepicker`, `tempusdominus-core`, Moment | Flatpickr или актуальный Tempus Dominus без jQuery | После миграции удалить Moment, если он больше нигде не нужен |
+| `vue-multiselect` 2.x | Vue Multiselect 3.5.x | Каждый select/multiselect — отдельный Vue 3 island; async/dependent behavior вынесено в composables |
+| `vuedraggable` 2.x | Прямой SortableJS | Не держать Vue wrapper там, где достаточно узкого drag/drop driver |
+| Select2 и `dependent-dropdown` | Vue Multiselect island + async/dependent composables | `setSelect2()` временно остаётся compatibility alias; raw plugin options проходят migration matrix |
+| `bootstrap4-datetimepicker`, `daterangepicker`, `tempusdominus-core`, Moment | Air Datepicker 3.6.x | Один driver покрывает date/datetime/range; Moment удаляется, если больше нигде не нужен |
 | `x-editable-bs4` | Собственный небольшой headless `InlineEditor` | Сохранить backend endpoint; внешний вид предоставляет тема |
 | `nestable2` | Уже установленный SortableJS с nested-конфигурацией | Сохранить max depth, expand/collapse и сериализацию порядка |
-| Magnific Popup | GLightbox или native `<dialog>` | Выбор зависит от требований gallery/navigation |
+| Magnific Popup | GLightbox 3.3.x | Сохраняет gallery/navigation; driver обновляет динамически добавленные элементы через публичный lifecycle |
 | `dependent-dropdown` | Небольшой native module поверх Axios/fetch | Сохранить существующие data attributes и события совместимости |
 | Bootstrap jQuery tooltip/tab APIs | Theme capabilities либо native implementation | Bootstrap API используется только внутри AdminLTE theme adapter |
 | jQuery DOM-код файловых компонентов | Native DOM внутри Vue 3 islands | Убрать поиск parent/container через jQuery и jQuery Dropzone plugin API |
@@ -812,4 +815,5 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / Vue props | Зафиксирован typed `data-*` contract для скаляров и безопасный `application/json` payload через `Js::encode()` для сложных props; выполнение server data как template/code запрещено | текущий commit |
 | 2026-09-06 | Этап 0 / Sass structure | Определены независимые Sass entries и локальные `_variables.scss`/`_colors.scss` для core/features/themes; first-party modules переходят на `@use`/`@forward`, Tailwind output остаётся generated exception | текущий commit |
 | 2026-09-06 | Этап 0 / colors | Color literals ограничены `_colors.scss` и узкими vendor/generated/brand exceptions; dark mode меняет только `--soa-*` в root selector, sidebar config проходит validation | текущий commit |
-| 2026-09-06 | Этап 0 / plugin replacements | Выбраны Tom Select, Air Datepicker и GLightbox; dependent select остаётся отдельным native controller, а простые widgets не переносятся во Vue без необходимости | текущий commit |
+| 2026-09-06 | Этап 0 / plugin replacements | Изначально предложены Tom Select, Air Datepicker и GLightbox; выбор select пересмотрен после обсуждения | `359de337` |
+| 2026-09-06 | Этап 0 / select correction | Vue Multiselect сохранён и обновляется до стабильной Vue 3-ветки 3.5.x; Select2/AJAX/dependent behavior переносится в тот же island через отдельные composables, Tom Select исключён | текущий commit |
