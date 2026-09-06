@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: утвердить no-build consumer contract.
+- Точка возобновления: определить стабильное поведение `sleepingowl:install`/`sleepingowl:update` и asset version mismatch.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -204,6 +204,17 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 
 ### Поставка без frontend-сборки у пользователя
 
+No-build consumer contract является release-blocking:
+
+- production consumer выполняет только Composer/PHP/Artisan-команды; отсутствие `node`, `npm`, Vite, Mix и Tailwind CLI не ограничивает штатные displays/forms/features/themes;
+- Composer artifact обязательно содержит manifest, precompiled core, все standard feature bundles, обе встроенные темы и их статические ресурсы;
+- `sleepingowl:install` публикует готовые assets при первой установке, а `sleepingowl:update` атомарно обновляет только package-owned published assets;
+- смена `template` между встроенными темами после публикации не требует новой frontend-сборки;
+- создание section/model/display/form/column/filter через PHP DSL не меняет bundle и не запускает генератор frontend-кода;
+- пользовательские CSS/JS подключаются отдельными файлами через публичный asset API и не требуют fork/rebuild core;
+- custom theme package поставляет собственные готовые assets; требование build toolchain относится только к её автору;
+- CI устанавливает release artifact в чистое Laravel-приложение, где Node.js/npm отсутствуют, и выполняет smoke tests обеих встроенных тем.
+
 - Первый major поставляется одним Composer package `laravelrus/sleepingowl`: PHP core, обе встроенные темы, standard feature drivers, views, manifest и готовые production assets версионируются совместно.
 - Исходники разделяются внутри монорепозитория по `core/features/themes`, а build создаёт независимые entries; монорепозиторий не означает один монолитный browser bundle.
 - Composer archive содержит готовые assets обеих встроенных тем. Лишняя тема занимает место только в vendor/public после публикации, но не загружается браузером и не влияет на runtime.
@@ -324,7 +335,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - [x] Зафиксировать границы `core`, `feature driver`, `theme` и пользовательских extensions.
 - [x] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
 - [x] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
-- [ ] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
+- [x] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
 - [ ] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
 - [ ] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
 - [ ] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
@@ -704,3 +715,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / границы | Разделены PHP/frontend core, feature drivers, themes, presentation adapters и user extensions; сохранён ключ `template`, legacy `TemplateInterface` получает переходный adapter | текущий commit |
 | 2026-09-06 | Этап 0 / темы | Подтверждены AdminLTE 4/Bootstrap 5 и Tailwind 4; AdminLTE остаётся default ради upgrade/config compatibility, но загружается только как выбранная опциональная тема | текущий commit |
 | 2026-09-06 | Этап 0 / packaging | Выбран единый Composer package и монорепозиторий с независимо собираемыми core/feature/theme entries; внешние custom themes могут поставляться отдельными готовыми packages | текущий commit |
+| 2026-09-06 | Этап 0 / no-build | No-build consumer UX принят как release-blocking contract и будущий CI smoke scenario без Node.js/npm; все стандартные assets обязаны входить в Composer artifact | текущий commit |
