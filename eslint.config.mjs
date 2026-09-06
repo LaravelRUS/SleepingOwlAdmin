@@ -12,10 +12,23 @@ const modernJavaScript = [
 
 const legacyFirstPartyJavaScript = [
     'resources/assets/js_owl/*.js',
+    'resources/assets/js_owl/libs/vue-*.js',
     'resources/assets/js_owl/admin/**/*.js',
     'resources/assets/js_owl/components/**/*.js',
     'resources/assets/js_owl/wysiwyg/**/*.js',
 ]
+
+const qualityRules = {
+    complexity: ['error', 8],
+    'max-lines-per-function': [
+        'error',
+        { IIFEs: true, max: 40, skipBlankLines: true, skipComments: true },
+    ],
+    'max-statements': ['error', 25],
+    'no-global-assign': 'error',
+    'no-implicit-globals': ['error', { lexicalBindings: true }],
+    'no-undef': 'error',
+}
 
 const legacyRuntimeGlobals = {
     $: 'readonly',
@@ -61,15 +74,19 @@ export default [
         },
         rules: {
             ...js.configs.recommended.rules,
-            complexity: ['error', 8],
-            'max-lines-per-function': [
-                'error',
-                { IIFEs: true, max: 40, skipBlankLines: true, skipComments: true },
-            ],
-            'max-statements': ['error', 25],
-            'no-global-assign': 'error',
-            'no-implicit-globals': ['error', { lexicalBindings: true }],
-            'no-undef': 'error',
+            ...qualityRules,
+        },
+    },
+    {
+        ...js.configs.recommended,
+        files: ['build/**/*.js'],
+        languageOptions: {
+            ecmaVersion: 'latest',
+            sourceType: 'commonjs',
+        },
+        rules: {
+            ...js.configs.recommended.rules,
+            ...qualityRules,
         },
     },
     {

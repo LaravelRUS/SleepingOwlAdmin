@@ -45,12 +45,6 @@
  */
 
 /*!
- * Vue.js v2.7.16
- * (c) 2014-2023 Evan You
- * Released under the MIT License.
- */
-
-/*!
  * dependent-dropdown v1.4.9
  * http://plugins.krajee.com/dependent-dropdown
  *
@@ -130,6 +124,12 @@
 * @license: Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
 * @website: http://www.daterangepicker.com/
 */
+
+/**
+* @vue/compat v3.5.42
+* (c) 2018-present Yuxi (Evan) You and Vue contributors
+* @license MIT
+**/
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.

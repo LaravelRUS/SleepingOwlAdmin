@@ -12,7 +12,7 @@
         "check:ci": "npm run check && npm run test:e2e",
         "format": "prettier --write \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "format:check": "prettier --check \"resources/frontend/**/*.js\" \"tests/frontend/**/*.{html,js,mjs}\" scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
-        "lint": "eslint resources/frontend resources/assets/js_owl/*.js resources/assets/js_owl/admin resources/assets/js_owl/components resources/assets/js_owl/wysiwyg tests/frontend scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
+        "lint": "eslint build resources/frontend resources/assets/js_owl/*.js resources/assets/js_owl/libs/vue-*.js resources/assets/js_owl/admin resources/assets/js_owl/components resources/assets/js_owl/wysiwyg tests/frontend scripts/modernization/build-asset-profiles.mjs eslint.config.mjs playwright.config.mjs stylelint.config.mjs vitest.config.mjs",
         "lint:fix": "npm run lint -- --fix",
         "lint:styles": "stylelint \"resources/frontend/**/*.scss\" --allow-empty-input",
         "test": "vitest run",
@@ -27,6 +27,7 @@
     "dependencies": {
         "@flowjs/flow.js": "^2.14.1",
         "@fortawesome/fontawesome-free": "^7.2.0",
+        "@vue/compat": "3.5.42",
         "admin-lte": "^3.2.0",
         "autoprefixer": "^10.4.7",
         "axios": "^0.27.2",
@@ -54,8 +55,8 @@
         "sortablejs": "^1.15.0",
         "sweetalert2": "^11.4.8",
         "tempusdominus-core": "^5.19.3",
-        "vue": "^2.6.14",
-        "vue-multiselect": "^2.1.6",
+        "vue": "3.5.42",
+        "vue-multiselect": "3.5.0",
         "vue-resource": "^1.5.2",
         "vuedraggable": "^2.24.1",
         "x-editable-bs4": "^1.5.5"
@@ -63,6 +64,7 @@
     "devDependencies": {
         "@eslint/js": "10.0.1",
         "@playwright/test": "1.63.0",
+        "@vue/compiler-sfc": "3.5.42",
         "cross-env": "^7.0.3",
         "eslint": "10.10.0",
         "laravel-mix": "^6.0.43",
@@ -74,7 +76,6 @@
         "stylelint-config-standard-scss": "17.0.0",
         "stylelint-scss": "7.2.0",
         "vitest": "5.0.0",
-        "vue-template-compiler": "^2.6.14",
         "webpack": "^5.76.0"
     },
     "overrides": {

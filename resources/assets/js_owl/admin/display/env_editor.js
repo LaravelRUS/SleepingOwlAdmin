@@ -1,4 +1,6 @@
-Vue.component('env_editor', Vue.extend({
+import { withLegacyInlineTemplate } from '../../libs/vue-inline-template'
+
+Vue.component('env_editor', withLegacyInlineTemplate(Vue.extend({
     props: {
         data: {
             type: Array,
@@ -47,4 +49,4 @@ Vue.component('env_editor', Vue.extend({
             values: [],
         }
     }
-}));
+})));

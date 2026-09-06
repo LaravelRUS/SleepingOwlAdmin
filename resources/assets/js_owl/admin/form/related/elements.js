@@ -1,6 +1,7 @@
 import draggable from 'vuedraggable'
+import { withLegacyInlineTemplate } from '../../../libs/vue-inline-template'
 
-Vue.component('related-elements', {
+Vue.component('related-elements', withLegacyInlineTemplate({
     props: {
         limit: {
             type: Number,
@@ -96,4 +97,4 @@ Vue.component('related-elements', {
     components: {
         draggable
     },
-});
+}));

@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 4 — Vue 3 islands**.
-- Точка возобновления: временно подключить `@vue/compat` с явным перечнем compat flags либо сразу Vue 3, согласно решению этапа 0.
+- Точка возобновления: заменить `new Vue({ el: '#vueApp' })` на factory небольших app instances для отдельных islands.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -132,7 +132,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 
 Выбрана короткая migration strategy через `@vue/compat`:
 
-- после characterization tests Vue обновляется до Vue 3 с compat build в `MODE: 2`; `COMPILER_INLINE_TEMPLATE` разрешается только для уже существующих legacy views;
+- после characterization tests Vue обновляется до Vue 3 с compat build в строгом `MODE: 3`; только явно перечисленные Vue 2 behaviors временно включаются для существующих legacy views, а `COMPILER_INLINE_TEMPLATE` ограничен их исходным набором;
 - compat mode не является новой архитектурой: новые и мигрированные widgets сразу создаются как отдельные Vue 3 islands через `createApp`;
 - миграция идёт по одному bounded widget: env editor, select/multiselect, file/image(s), затем related elements/groups;
 - для каждого island сначала фиксируются входные данные и события, затем template переносится из Blade в precompiled component, после чего удаляется соответствующий global registration/`inline-template`;
@@ -557,12 +557,12 @@ No-build consumer contract является release-blocking:
 
 ### Этап 4. Перейти на Vue 3 islands
 
-- [ ] Временно подключить `@vue/compat` с явным перечнем compat flags либо сразу Vue 3, согласно решению этапа 0.
+- [x] Временно подключить `@vue/compat` с явным перечнем compat flags либо сразу Vue 3, согласно решению этапа 0.
 - [ ] Заменить `new Vue({ el: '#vueApp' })` на factory небольших app instances для отдельных islands.
 - [ ] Заменить глобальную регистрацию `Vue.component`/`Vue.extend` на `createApp`/`defineComponent` и локальную регистрацию.
 - [ ] Заменить `Vue.http`/`vue-resource` на core HTTP client поверх Axios/`fetch`.
 - [ ] Заменить `Vue.prototype.$trans` на injection/composable без глобального mutable API.
-- [ ] Перенести все 10 `inline-template`: env editor, file/image/images, select/multiselect, related elements.
+- [ ] Перенести все 9 `inline-template`: env editor, file/image/images, select/multiselect, related elements.
 - [ ] Перевести `$set` на обычные reactive assignments и проверить array updates.
 - [ ] Обновить/заменить Vue wrappers для multiselect и drag/drop.
 - [ ] На каждый island реализовать `mount`/`unmount`, повторную инициализацию и защиту от двойного mount.
@@ -969,3 +969,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 3 / component lifecycle | Добавлен theme/engine-neutral `Admin.Components` с уникальными definitions и симметричными `scan(root)`, `mount(element)`, `destroy(root)`, `get` и `unregister`; repeated/re-entrant mount и destroy идемпотентны, cleanup выполняется в обратном порядке и не прекращается после первой ошибки. Initial document scan выполняется после legacy modules boot, а related groups сканируют вставленный root и уничтожают subtree до Vue removal. Read-only inventory `laluna.kit\Modules` подтвердил no-build Blade extension pattern и дал реальные teardown references для polling/storage listeners и Chart.js; документация требует footer registration, явный поздний scan и cleanup. Оба asset-профиля пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 138 Vitest + 21 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / headless browser core | Опубликованный `admin-core.js` теперь является реальным browser runtime, а не вычищаемым tree-shaking export entry: он устанавливает на существующий `Admin` узкие `Asset`, `Components`, `Data`, `DOM`, `Events`, `Http`, `Storage` и `Tables`, не заменяя legacy adapters. Добавлены native Fetch/CSRF client, first-party Web Storage repository с прежним `SleepingOwl::` prefix и namespace-safe `clear`, отдельный pure import boundary и browser smoke без `$`, jQuery, Vue и DataTable. Core CSS сокращён до cloak/loading/visually-hidden/reduced-motion behavior; palette и typography принадлежат выбранной теме. Production copier переносит каждый фактически упомянутый license sidecar рядом с bundle, а update regression подтверждает его публикацию. Production core: 39 KiB JS / 534 bytes CSS; development: 80 KiB JS / 722 bytes CSS. `npm run production` успешен; полный PHP gate: 428 tests, 1582 assertions, 2 прежних TODO-skip; frontend gate: 149 Vitest + 23 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / завершение | Минимальный browser core, независимые feature/theme bundles, Sass/runtime tokens, versioned production/development profiles, first-party assets, no-build publication, native events/DOM/registries и lifecycle зафиксированы. Core не импортирует и не публикует reset, layout framework, DataTables, Vue, Bootstrap, AdminLTE, Tailwind или theme-specific CSS; legacy UI остаётся подключаемым adapter-слоем. Точка возобновления перенесена на Vue 3 migration этапа 4 | текущий commit |
+| 2026-09-06 | Этап 4 / Vue 3 compat boundary | Legacy aggregate обновлён до одной Vue 3.5.42 runtime через `@vue/compat` в строгом `MODE: 3` с тестируемым allowlist из 15 временных flags; Vue 2 compiler удалён, Vue Multiselect обновлён до 3.5.0 и изолирован за `value/input` bridge. Отдельные production/development aliases гарантируют prod runtime и настоящий dev runtime с публикуемой source map; build script восстанавливает dev bundle и его Mix hash после production build. Временный inline-template bridge предотвращает reuse первого server template между экземплярами и удаляется с последним из 9 owners. Документированы владельцы/exit conditions и 8 module Vue hosts read-only Laluna. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 428 tests, 1582 assertions, 2 прежних TODO-skip; frontend gate: 155 Vitest + 24 Playwright | текущий commit |

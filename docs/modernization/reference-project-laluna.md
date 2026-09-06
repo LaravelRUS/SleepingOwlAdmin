@@ -48,6 +48,9 @@
 - особенно часто используются стабильные placements `card.heading` и `card.heading.actions`; также встречаются `before.card`, `before` и `after`;
 - sections напрямую используют `ControlLink`, `ControlButton`, `FormCard`, `FormElements`, form buttons, `DisplayTabbed`, `OrderTreeType` и `Initializable`;
 - module Blade views не содержат собственного jQuery/Vue-кода, но 8 views всё ещё используют Bootstrap 4 `data-toggle`; общий custom frontend действительно вынесен в application resources;
+- 8 module views являются Vue hosts для общих application components: `check-person`, `stock-component`, `fake-check`, `basket-count`, `inventarisation`, `relocation`, `ttn-check` и `np-service`;
+- 6 из этих hosts записаны как self-closing custom elements: все перечисленные, кроме `check-person` и `stock-component`; compatibility fixture и migration guide обязаны учитывать browser HTML parsing таких тегов;
+- Blade передаёт props напрямую Vue expressions, включая Eloquent/collection payloads (`:persondata="{{ $person }}"`, `:categories="{{ $categories }}"`, `:fops="{{ $fops }}"`); будущий island stub должен заменить это на безопасный typed payload contract, сохранив простой no-build Blade UX;
 - 23 из 26 модулей уже имеют парные `MODULE.md`/`MODULE.AI.md`; отсутствующие пары у `Callback`, `Rozetka` и `Taxation` не копируются в package, а отмечают полезные сценарии для будущей документации.
 
 Два module views являются полезными lifecycle references, но не копируются буквально:

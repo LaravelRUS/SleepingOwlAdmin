@@ -11,4 +11,5 @@ yarn.lock
 /build/logs
 /public/default/css/*.map
 /public/default/js/*.map
+!/public/default/js/admin-app-dev.js.map
 /public/packages/sleepingowl/*

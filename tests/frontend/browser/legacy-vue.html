@@ -295,9 +295,8 @@
                                 </div>
                             </related-group>
 
-                            <template v-for="newIndex in newGroups">
+                            <template v-for="newIndex in newGroups" :key="newIndex">
                                 <related-group
-                                    :key="newIndex"
                                     name="items"
                                     :index="totalGroupsCount"
                                     primary=""
@@ -351,7 +350,7 @@
             </section>
         </div>
 
-        <script src="/public/default/js/admin-app.js"></script>
+        <script src="/public/default/js/admin-app-dev.js"></script>
         <script>
             window.__clipboardValue = 'fixtures/linked.svg'
             window.__componentDestroys = []

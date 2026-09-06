@@ -1,4 +1,6 @@
-Vue.component('element-image', Vue.extend({
+import { withLegacyInlineTemplate } from '../../libs/vue-inline-template'
+
+Vue.component('element-image', withLegacyInlineTemplate(Vue.extend({
     props: {
         url: {
             required: true
@@ -209,4 +211,4 @@ Vue.component('element-image', Vue.extend({
             return ((this.val.indexOf('http') === 0 || this.val.indexOf('blob:') === 0) ? this.val : Admin.Url.upload(this.val))
         },
     }
-}));
+})));

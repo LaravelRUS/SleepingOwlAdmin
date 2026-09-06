@@ -1,2 +1,6 @@
-import Vue from 'vue/dist/vue.common.js'
+import Vue from 'vue'
+
+import { configureVueCompat } from './vue-compat-config'
+
+configureVueCompat(Vue)
 window.Vue = Vue

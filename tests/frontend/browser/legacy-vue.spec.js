@@ -1,4 +1,37 @@
+import { URL } from 'node:url'
+
 import { expect, test } from '@playwright/test'
+
+const vueWarnings = new WeakMap()
+const expectedCompatWarnings = ['COMPILER_INLINE_TEMPLATE']
+
+function compatWarningId(message) {
+    return message.match(/\(deprecation ([A-Z_]+)\)/)?.[1]
+}
+
+function compatWarningIds(page) {
+    return [...new Set(vueWarnings.get(page).map(compatWarningId).filter(Boolean))]
+}
+
+function unexpectedVueWarnings(page) {
+    return vueWarnings
+        .get(page)
+        .filter((message) => !expectedCompatWarnings.includes(compatWarningId(message)))
+}
+
+test.beforeEach(async ({ page }) => {
+    const warnings = []
+    page.on('console', (message) => {
+        if (message.type() === 'warning' && message.text().startsWith('[Vue warn]')) {
+            warnings.push(message.text())
+        }
+    })
+    vueWarnings.set(page, warnings)
+})
+
+test.afterEach(async ({ page }) => {
+    expect(unexpectedVueWarnings(page)).toEqual([])
+})
 
 // The published bundle disables discovery on the CommonJS wrapper, not its Dropzone constructor.
 const knownLegacyPageErrors = ['Dropzone already attached.']
@@ -6,20 +39,34 @@ const relatedLifecycleComponents = ['existing-related-group', 'new-related-group
 
 function capturePageErrors(page) {
     const errors = []
-    page.on('pageerror', (error) => errors.push(error.message))
+    page.on('pageerror', (error) => errors.push(error.stack || error.message))
     return errors
 }
 
 function expectNoUnexpectedPageErrors(errors) {
-    const unexpectedErrors = errors.filter((error) => !knownLegacyPageErrors.includes(error))
+    const unexpectedErrors = errors.filter(
+        (error) => !knownLegacyPageErrors.includes(pageErrorMessage(error)),
+    )
 
     expect(unexpectedErrors).toEqual([])
+}
+
+function pageErrorMessage(error) {
+    return error.split('\n', 1)[0].replace(/^Error:\s*/, '')
 }
 
 async function openFixture(page) {
     await page.goto('/legacy-vue')
     await expect(page.locator('html')).toHaveAttribute('data-ready', 'true')
     await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
+}
+
+async function useProductionBundle(page) {
+    await page.route('**/public/default/js/admin-app-dev.js', (route) => {
+        const url = new URL('/public/default/js/admin-app.js', route.request().url())
+
+        return route.continue({ url: url.href })
+    })
 }
 
 async function runUploadCallback(page, selector, value) {
@@ -40,10 +87,11 @@ async function selectedValues(locator) {
     )
 }
 
-test('global Vue 2 root mounts env editor and preserves add/remove rules', async ({ page }) => {
+test('Vue 3 compat root mounts env editor and preserves add/remove rules', async ({ page }) => {
     const pageErrors = capturePageErrors(page)
     await openFixture(page)
-    expect(await page.evaluate(() => globalThis.Vue.version)).toMatch(/^2\./)
+    expect(await page.evaluate(() => globalThis.Vue.version)).toMatch(/^3\.5\./)
+    expect(compatWarningIds(page)).toEqual(expectedCompatWarnings)
 
     await page.locator('#env-fixture .env-remove').nth(1).click()
     await expect(page.locator('#env-fixture .env-row')).toHaveCount(2)
@@ -59,6 +107,18 @@ test('global Vue 2 root mounts env editor and preserves add/remove rules', async
         'variables[NEW_KEY][key]',
     )
     expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('production Vue 3 compat bundle mounts the legacy root', async ({ page }) => {
+    await useProductionBundle(page)
+    await openFixture(page)
+
+    expect(await page.evaluate(() => globalThis.Vue.version)).toMatch(/^3\.5\./)
+    await expect(page.locator('#single-select')).toHaveValue('2')
+    await expect(page.locator('#existing-related-group')).toHaveAttribute(
+        'data-lifecycle-mounted',
+        'true',
+    )
 })
 
 test('legacy tab state restores and updates without leaking globals', async ({ page }) => {

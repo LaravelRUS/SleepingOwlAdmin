@@ -43,6 +43,10 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'admin-app.js'), 'text/javascript'],
     ],
     [
+        '/public/default/js/admin-app-dev.js',
+        [join(projectRoot, 'public', 'default', 'js', 'admin-app-dev.js'), 'text/javascript'],
+    ],
+    [
         '/public/default/js/modules.js',
         [join(projectRoot, 'public', 'default', 'js', 'modules.js'), 'text/javascript'],
     ],
