@@ -86,6 +86,10 @@ class TableHeaderColumnTest extends TestCase
 
         $this->assertEquals([
             'attributes' => ' class="row-header" data-orderable="false"',
+            'attributesArray' => [
+                'class' => 'row-header',
+                'data-orderable' => 'false',
+            ],
             'title' => $header->getTitle(),
             'isOrderable' => $header->isOrderable(),
         ], $header->toArray());
@@ -100,6 +104,10 @@ class TableHeaderColumnTest extends TestCase
 
         $this->getTemplateMock()->shouldReceive('view')->once()->with($header->getView(), [
             'attributes' => ' class="row-header" data-orderable="false"',
+            'attributesArray' => [
+                'class' => 'row-header',
+                'data-orderable' => 'false',
+            ],
             'title' => $header->getTitle(),
             'isOrderable' => $header->isOrderable(),
         ])->andReturn('html');
@@ -118,6 +126,10 @@ class TableHeaderColumnTest extends TestCase
 
         $this->getTemplateMock()->shouldReceive('view')->once()->with($header->getView(), [
             'attributes' => ' class="row-header" data-orderable="true"',
+            'attributesArray' => [
+                'class' => 'row-header',
+                'data-orderable' => 'true',
+            ],
             'title' => $header->getTitle(),
             'isOrderable' => $header->isOrderable(),
         ])->andReturn('html');

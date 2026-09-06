@@ -776,6 +776,7 @@ abstract class Elements extends FormElements
             'newEntitiesCount' => $this->new,
             'limit' => $this->limit,
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'helpText' => $this->getHelpText(),
             'collapsed' => $this->getCollapsed(),
             'deletable' => $this->isDeletable(),

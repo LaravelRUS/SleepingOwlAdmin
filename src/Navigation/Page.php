@@ -605,14 +605,6 @@ class Page extends NavigationBase implements PageInterface
      */
     public function toArray()
     {
-        if ($this->isActive() and ! $this->hasClassProperty($class = config('navigation.class.active', 'active'))) {
-            $this->setHtmlAttribute('class', $class);
-        }
-
-        if ($this->hasChild() and ! $this->hasClassProperty($class = config('navigation.class.has_child', 'has-child'))) {
-            $this->setHtmlAttribute('class', $class);
-        }
-
         return parent::toArray() + [
             'hasChild' => $this->hasChild(),
             'id' => $this->getId(),
@@ -623,6 +615,7 @@ class Page extends NavigationBase implements PageInterface
             'path' => $this->getPath(),
             'isActive' => $this->isActive(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'badges' => $this->getBadges()->sortBy(function (BadgeInterface $badge) {
                 return $badge->getPriority();
             }),
@@ -635,10 +628,6 @@ class Page extends NavigationBase implements PageInterface
      */
     public function render($view = null)
     {
-        if ($this->hasChild() && ! $this->hasClassProperty($class = config('navigation.class.has_child', 'treeview'))) {
-            $this->setHtmlAttribute('class', $class);
-        }
-
         if ($this->getTarget()) {
             $this->setHtmlAttribute('target', $this->getTarget());
         }

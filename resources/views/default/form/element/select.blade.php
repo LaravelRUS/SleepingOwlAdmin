@@ -45,7 +45,7 @@
                 </multiselect>
 
                 <input type="hidden"
-                    {!! (new \Illuminate\View\ComponentAttributeBag($attributes_array))->class(['form-control']) !!}
+                    {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributes_array))->class(['form-control']) !!}
                     id="{{ $id }}"
                     name="{{ $name }}"
                     v-model="preparedVal"

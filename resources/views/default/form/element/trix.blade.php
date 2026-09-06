@@ -43,12 +43,12 @@
 
 
         <div class="card-body pad pt-0" v-pre>
-          <input type="hidden" {!! $attributes !!} value="{{$value}}" v-pre>
+          <input type="hidden" {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!} value="{{$value}}" v-pre>
           <a id="add">Add editor</a>
           @if ($readonly)
-            <div {!! $attributes !!} v-pre>{!! $value !!}</div>
+            <div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!} v-pre>{!! $value !!}</div>
           @else
-            <trix-editor input="{{$name}}" {!! $attributes !!} v-pre></trix-editor>
+            <trix-editor input="{{$name}}" {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!} v-pre></trix-editor>
           @endif
         </div>
 

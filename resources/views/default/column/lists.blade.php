@@ -1,4 +1,4 @@
-<div {!! $attributes !!}>
+<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
   @if ($visibled)
     @if ($maxLists && count($values) > $maxLists)
       @php

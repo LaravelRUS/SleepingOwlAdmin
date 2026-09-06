@@ -83,6 +83,7 @@ class TableHeaderColumn implements TableHeaderColumnInterface
 
         return [
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'title' => $this->getTitle(),
             'isOrderable' => $this->isOrderable(),
         ];

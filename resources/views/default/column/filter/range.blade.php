@@ -1,5 +1,5 @@
 @if ($visibled)
-<div {!! $attributes !!} {!! $width !!}>
+<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!} {!! $width !!}>
 	{!! $from !!}
 	{!! $to !!}
 </div>

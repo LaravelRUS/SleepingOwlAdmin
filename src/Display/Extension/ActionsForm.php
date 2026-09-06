@@ -136,6 +136,7 @@ class ActionsForm extends Extension implements Initializable, Placable
             'action_form' => $this->action_form,
             'placement' => $this->getPlacement(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 

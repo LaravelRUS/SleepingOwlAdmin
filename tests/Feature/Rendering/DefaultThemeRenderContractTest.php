@@ -45,7 +45,11 @@ class DefaultThemeRenderContractTest extends TestCase
         $child = $this->renderable('<li data-contract="child">Child</li>');
 
         $html = $this->renderNavigationPage([
-            'attributes' => 'data-contract="parent" aria-label="Catalog"',
+            'attributesArray' => [
+                'class' => 'user-parent',
+                'data-contract' => 'parent',
+                'aria-label' => 'Catalog',
+            ],
             'badges' => collect([$badge]),
             'hasChild' => true,
             'icon' => '<i class="contract-icon"></i>',
@@ -57,7 +61,9 @@ class DefaultThemeRenderContractTest extends TestCase
 
         $this->assertContainsAll($html, [
             '<li class="nav-item has-treeview menu-open">',
-            'data-contract="parent" aria-label="Catalog"',
+            'class="nav-link active has-child user-parent"',
+            'data-contract="parent"',
+            'aria-label="Catalog"',
             'title="Catalog management screen"',
             '<span class="badge">7</span>',
             '<ul class="nav nav-treeview">',
@@ -68,7 +74,10 @@ class DefaultThemeRenderContractTest extends TestCase
     public function test_navigation_leaf_keeps_url_active_state_and_user_classes(): void
     {
         $html = $this->renderNavigationPage([
-            'attributes' => 'data-contract="leaf" class="user-attribute"',
+            'attributesArray' => [
+                'class' => 'user-attribute',
+                'data-contract' => 'leaf',
+            ],
             'badges' => collect(),
             'hasChild' => false,
             'icon' => '',
@@ -81,10 +90,82 @@ class DefaultThemeRenderContractTest extends TestCase
         $this->assertContainsAll($html, [
             '<li class="nav-item">',
             'href="/admin/orders"',
-            'class="nav-link active"',
-            'data-contract="leaf" class="user-attribute"',
+            'class="nav-link active user-attribute"',
+            'data-contract="leaf"',
             '<p class="">',
             'Orders',
+        ]);
+    }
+
+    public function test_actions_form_view_keeps_wrapper_attributes(): void
+    {
+        $action = $this->renderable('<button data-contract="action">Run</button>');
+
+        $html = view('sleeping_owl::default.display.extensions.actions_form', [
+            'action_form' => collect([$action]),
+            'attributesArray' => [
+                'class' => 'project-actions',
+                'data-placement' => 'heading',
+                'aria-label' => 'Actions',
+            ],
+        ])->render();
+
+        $this->assertContainsAll($html, [
+            'class="project-actions"',
+            'data-placement="heading"',
+            'aria-label="Actions"',
+            '<button data-contract="action">Run</button>',
+        ]);
+    }
+
+    public function test_links_view_keeps_wrapper_and_link_attributes(): void
+    {
+        $link = \SleepingOwl\Admin\Display\Link::create('/catalog', 'Catalog');
+        $link->setHtmlAttributes([
+            'class' => 'project-link',
+            'data-link-id' => 'catalog',
+        ]);
+
+        $html = view('sleeping_owl::default.display.extensions.links', [
+            'attributesArray' => [
+                'class' => 'project-links',
+                'aria-label' => 'Catalog links',
+            ],
+            'links' => [$link],
+        ])->render();
+
+        $this->assertContainsAll($html, [
+            'class="project-links"',
+            'aria-label="Catalog links"',
+            'class="project-link"',
+            'data-link-id="catalog"',
+            'href="/catalog"',
+        ]);
+    }
+
+    public function test_simple_column_keeps_arbitrary_and_boolean_attributes(): void
+    {
+        $html = view('sleeping_owl::default.column.text', [
+            'append' => null,
+            'attributesArray' => [
+                'class' => 'project-column',
+                'data-label' => 'Sales & "support"',
+                'aria-describedby' => 'sales-help',
+                'style' => '--project-accent: #123456',
+                'hidden' => 'hidden',
+            ],
+            'small' => null,
+            'value' => 'Sales',
+            'visibled' => true,
+        ])->render();
+
+        $this->assertContainsAll($html, [
+            'class="project-column"',
+            'data-label="Sales &amp; &quot;support&quot;"',
+            'aria-describedby="sales-help"',
+            'style="--project-accent: #123456"',
+            'hidden="hidden"',
+            'Sales',
         ]);
     }
 
@@ -257,7 +338,10 @@ class DefaultThemeRenderContractTest extends TestCase
     private function tableColumn(object $model)
     {
         $header = m::mock();
-        $header->shouldReceive('htmlAttributesToString')->once()->andReturn('class="user-heading" data-sort="id"');
+        $header->shouldReceive('getHtmlAttributes')->once()->andReturn([
+            'class' => 'user-heading',
+            'data-sort' => 'id',
+        ]);
         $header->shouldReceive('render')->once()->andReturn('<span>ID</span>');
 
         $column = m::mock();

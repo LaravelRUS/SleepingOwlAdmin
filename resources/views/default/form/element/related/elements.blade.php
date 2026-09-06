@@ -35,7 +35,7 @@
       </div>
 
       <div class="card-body pad pt-0">
-        <div {!! $attributes !!}>
+        <div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
           @include(AdminTemplate::getViewPath('form.element.related.inner_element'))
         </div>
       </div>

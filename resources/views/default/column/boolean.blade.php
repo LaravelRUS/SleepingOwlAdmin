@@ -1,4 +1,4 @@
-<div {!! $attributes !!}>
+<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
   @if ($visibled)
     <div class="text-center">
       {!! $value ? '<i class="fas fa-check"></i>' : '<i class="fas fa-minus"></i>' !!}

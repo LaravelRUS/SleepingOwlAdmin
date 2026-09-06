@@ -1,5 +1,5 @@
 @php
-    $tabAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))
+    $tabAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))
         ->merge(['data-toggle' => 'tab'])
         ->class(['nav-item', 'nav-link', 'active' => $active]);
 @endphp

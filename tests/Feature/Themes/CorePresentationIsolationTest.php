@@ -74,6 +74,28 @@ class CorePresentationIsolationTest extends TestCase
         $this->assertSame([], $errors);
     }
 
+    public function test_default_theme_renders_html_attributes_from_arrays(): void
+    {
+        $patterns = [
+            '~\{!!\s*\$(?:attributes|htmlStringAttributes)\s*!!\}~',
+            '~->(?:attributes|htmlAttributesToString)\(\)~',
+        ];
+        $violations = [];
+
+        foreach ($this->defaultThemeViews() as $path) {
+            $source = preg_replace('~\{\{--.*?--\}\}~s', '', file_get_contents($path));
+
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $source) === 1) {
+                    $violations[] = $this->relativePath($path);
+                    break;
+                }
+            }
+        }
+
+        $this->assertSame([], $violations);
+    }
+
     private function phpSourceFiles(): iterable
     {
         $root = realpath(__DIR__.'/../../../src');

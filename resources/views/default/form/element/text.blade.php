@@ -9,7 +9,7 @@
         </label>
 
         <div class="position-relative">
-            <input v-pre {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control']) !!} value="{{$value}}"
+            <input v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control']) !!} value="{{$value}}"
                    @if($readonly) readonly @endif
                    @if($canGenerate)
                         data-generate-length="{{ $generateLength }}"

@@ -1,4 +1,4 @@
-<div {!! $attributes !!}>
+<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
   @foreach($buttons as $button)
     {!! $button->render() !!}
   @endforeach

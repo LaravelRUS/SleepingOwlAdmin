@@ -1,4 +1,4 @@
-@php($filterAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['table', 'table-default']))
+@php($filterAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['table', 'table-default']))
 <div {!! $filterAttributes !!}>
     @foreach ($filters as $index => $filter)
         @if ($filter)

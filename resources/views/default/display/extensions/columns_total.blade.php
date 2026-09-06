@@ -1,11 +1,11 @@
-<{{ $tag }} {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['table-hover']) !!}>
+<{{ $tag }} {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['table-hover']) !!}>
     <tr>
         @foreach ($elements as $element)
-            <td {!! $element->htmlAttributesToString() !!}>
+            <td {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($element->getHtmlAttributes()) !!}>
                 @if($element instanceof SleepingOwl\Admin\Display\Link)
-                    <a  {!! $element->attributes() !!} href="{!! $element->getUrl() !!}">{!! $element->getTitle() !!}</a>
+                    <a {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($element->getHtmlAttributes()) !!} href="{!! $element->getUrl() !!}">{!! $element->getTitle() !!}</a>
                 @else
-                    <{!! $element->getTag() !!} {!!  $element->attributes() !!}>{!! $element->getText() !!}</{!! $element->getTag() !!}>
+                    <{!! $element->getTag() !!} {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($element->getHtmlAttributes()) !!}>{!! $element->getText() !!}</{!! $element->getTag() !!}>
                 @endif
             </td>
         @endforeach

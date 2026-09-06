@@ -8,7 +8,7 @@
     :initial-groups-count="{{ (int)$groups->count() }}"
     :removed="{{ $remove->toJson() }}"
 >
-    <div {!! $attributes !!}>
+    <div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
       <h4 v-if="label">@{{ label }}</h4>
       @if (isset($helpText) && $helpText)
         <div class="mb-2">

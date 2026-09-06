@@ -1,4 +1,4 @@
-@php($columnGroupAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['row']))
+@php($columnGroupAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['row']))
 <div {!! $columnGroupAttributes !!}>
 	@foreach ($columns as $column)
 		{!! $column->render() !!}

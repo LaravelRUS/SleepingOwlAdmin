@@ -1,4 +1,4 @@
-@php($formAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['card', $cardClass]))
+@php($formAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['card', $cardClass]))
 <form {!! $formAttributes !!}>
 
   @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $items])

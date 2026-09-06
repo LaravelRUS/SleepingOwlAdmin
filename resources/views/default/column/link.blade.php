@@ -1,4 +1,4 @@
-<div {!! $attributes !!}>
+<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
   @if ($visibled)
     @if($isEditable)
       {!! app('A')->attributes($linkAttributes)->href($link)->text($value) !!}

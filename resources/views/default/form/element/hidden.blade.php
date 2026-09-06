@@ -1,3 +1,3 @@
 @if ($visibled)
-  <input v-pre {!! $attributes !!} value="{{ $value }}" />
+  <input v-pre {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!} value="{{ $value }}" />
 @endif

@@ -1,4 +1,4 @@
-<{{ $tag }} {!! new \Illuminate\View\ComponentAttributeBag($attributesArray) !!}>
+<{{ $tag }} {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray) !!}>
     <tr>
         @foreach ($filters as $index => $filter)
             <td data-index="{{ $index }}">

@@ -1,13 +1,29 @@
 @php
-  $tooltip = '';
-  if (strlen (strip_tags($title)) > 15) {
-    $tooltip = 'title="' . strip_tags($title) . '"';
+  $linkClasses = ['nav-link'];
+  $activeClass = config('navigation.class.active', 'active');
+  $hasChildClass = config('navigation.class.has_child', 'has-child');
+  $treeviewClass = config('navigation.class.has_child', 'treeview');
+
+  if ($isActive && $activeClass) {
+    $linkClasses[] = $activeClass;
+  }
+  if ($hasChild && $hasChildClass) {
+    $linkClasses[] = $hasChildClass;
+  }
+  if ($hasChild && $treeviewClass && $treeviewClass !== $hasChildClass) {
+    $linkClasses[] = $treeviewClass;
+  }
+
+  $linkAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))->class($linkClasses);
+  $plainTitle = strip_tags($title);
+  if (strlen($plainTitle) > 15 && !$linkAttributes->has('title')) {
+    $linkAttributes = $linkAttributes->merge(['title' => $plainTitle]);
   }
 @endphp
 
 @if($hasChild)
   <li class="nav-item has-treeview {!! ($isActive) ? 'menu-open' : '' !!}">
-    <a href="#" class="nav-link" {!! $attributes !!} {!! $tooltip !!}>
+    <a href="#" {!! $linkAttributes !!}>
       {!! $icon !!}
       <p class="{{ $icon ? 'ml-2':'' }}">
         {!! $title !!}
@@ -32,7 +48,7 @@
   </li>
 @else
   <li class="nav-item">
-    <a href="{{ $url }}" class="nav-link {!! ($isActive) ? 'active' : '' !!}" {!! $attributes !!} {!! $tooltip !!}>
+    <a href="{{ $url }}" {!! $linkAttributes !!}>
       {!! $icon !!}
       <p class="{{ $icon ? 'ml-2':'' }}">
         {!! $title !!}

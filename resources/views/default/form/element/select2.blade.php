@@ -8,7 +8,7 @@
     </label>
 
     <div>
-        @php($selectAttributes = (new \Illuminate\View\ComponentAttributeBag($attributes_array))->class(['form-control'])->getAttributes())
+        @php($selectAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributes_array))->class(['form-control'])->getAttributes())
         {!! html()->select($name, collect($options)->pluck('text', 'id'), $value)->attributes($selectAttributes) !!}
 {{--        {!! Form::select($name, collect($options)->pluck('text', 'id'), $value, $attributes_array) !!}--}}
 

@@ -1,4 +1,4 @@
-@php($formAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['card', 'card-default', $cardClass]))
+@php($formAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['card', 'card-default', $cardClass]))
 <form {!! $formAttributes !!}>
 
     <input type="hidden" name="_redirectBack" value="{{ $backUrl }}"/>

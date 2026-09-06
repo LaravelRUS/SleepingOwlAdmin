@@ -1,10 +1,11 @@
 @if ($visibled)
 <div class="input-group input-date date" {!! $width !!}>
-    <input
-        data-date-format="{{ $pickerFormat }}"
-        class="form-control column-filter"
-        type="text"
-        {!! $attributes !!} />
+    @php
+        $filterAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
+            ->merge(['data-date-format' => $pickerFormat, 'type' => 'text'])
+            ->class(['form-control', 'column-filter']);
+    @endphp
+    <input {!! $filterAttributes !!} />
 
     <div class="input-group-prepend input-group-addon">
         <div class="input-group-text">

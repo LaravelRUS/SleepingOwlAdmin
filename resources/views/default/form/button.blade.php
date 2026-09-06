@@ -7,7 +7,7 @@
         'cancel', 'restore' => ['btn', 'btn-warning'],
         default => ['btn'],
     };
-    $buttonAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class($themeClasses);
+    $buttonAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class($themeClasses);
 @endphp
 @if(!$url)
     <button {!! $buttonAttributes !!} value="{{$name}}">

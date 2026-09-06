@@ -1,7 +1,10 @@
-<div {!! $attributes !!}>
+@php($columnAttributes = new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
+<div {!! $columnAttributes !!}>
   @if ($visibled)
     <div class="icheck-primary text-center">
-      <input type="checkbox" class="adminCheckboxRow" id="check_{{ $value }}" name="_id[]" value="{{ $value }}" {!! $attributes !!}/>
+      <input {!! $columnAttributes
+        ->merge(['type' => 'checkbox', 'id' => "check_{$value}", 'name' => '_id[]', 'value' => $value])
+        ->class(['adminCheckboxRow']) !!}/>
       {!! $append !!}
       <label for="check_{{ $value }}"></label>
     </div>

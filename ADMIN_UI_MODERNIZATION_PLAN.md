@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 2 — headless core и theme contract**.
-- Точка возобновления: сохранить прямой API пользовательских HTML attributes/classes и проверить theme rendering без преобразований и потерь.
+- Точка возобновления: разделить общие Blade views, theme-owned layout/views и feature-owned views.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -519,7 +519,7 @@ No-build consumer contract является release-blocking:
 - [x] Расширить существующий `TemplateInterface` до `ThemeInterface`, сохранив адаптер для старого `TemplateDefault` на время миграции.
 - [x] Отвязать first-party `AssetsInterface`/`MetaInterface` от contracts `KodiCMS\Assets` и зафиксировать собственный узкий contract.
 - [x] Перенести стандартные Bootstrap/AdminLTE-классы встроенных button, form, card/panel, grid, navigation, table, alert, badge и validation components из PHP core в Blade views legacy theme.
-- [ ] Сохранить прямой API пользовательских HTML attributes/classes и проверить, что theme rendering передаёт их без преобразований и потерь.
+- [x] Сохранить прямой API пользовательских HTML attributes/classes и проверить, что theme rendering передаёт их без преобразований и потерь.
 - [ ] Разделить общие Blade views, theme-owned layout/views и feature-owned views.
 - [ ] Извлечь текущую AdminLTE 3/Bootstrap 4 реализацию как временную reference/legacy theme без изменения поведения.
 - [ ] Добавить contract tests, которые рендерят один и тот же PHP display/form через разные test themes.
@@ -940,3 +940,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 2 / theme contract | Введён узкий `ThemeInterface` (`id`, view namespace, logical assets, icons, capabilities), container entry `sleeping_owl.theme` и deprecated `LegacyTemplateThemeAdapter`; текущий `TemplateDefault` и `sleeping_owl.template` остаются без изменения lifecycle/API. Полный PHP gate: 338 tests, 1096 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / asset contracts | First-party `AssetsInterface`/`MetaInterface` больше не наследуют KodiCMS contracts; зафиксированы только используемые registration/render/meta operations, container aliases и явные небольшие делегаты `Meta` вместо magic-only API. Vendor implementation пока остаётся за contract boundary до отдельной замены. Полный PHP gate: 342 tests, 1107 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 2 / presentation defaults | Bootstrap/AdminLTE defaults встроенных buttons, forms, cards, grid, tabs, badges, tables, filters и controls перенесены из PHP core в legacy Blade views; behavior hooks сохранены. `ComponentAttributeBag` объединяет theme defaults с пользовательскими attributes, отдельные tests фиксируют variants/grid/tabs/controls, PHP guard запрещает возврат framework class defaults и проверяет синтаксис всех legacy Blade views. Уточнён read-only inventory `Laluna/Modules`: 72 sections, 74 datatables displays, 444 прямых class attributes и 72 placement-вхождения. Полный PHP gate: 357 tests, 1140 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
+| 2026-09-06 | Этап 2 / user attributes | Прямой API пользовательских classes/attributes сохранён без semantic resolver: raw arrays доступны темам, прежние строковые keys оставлены для custom views. Все default theme views используют first-party `HtmlAttributeBag`, который объединяет theme/user classes и безопасно экранирует values только при HTML-выводе; static guard запрещает возврат к raw attribute strings. Покрыты navigation, headers, extensions, columns, `data-*`, `aria-*`, inline style и boolean attributes. Полный PHP gate: 366 tests, 1171 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |

@@ -116,6 +116,29 @@ class PageTest extends TestCase
         $this->assertEquals('http://domain.com/admin/test', $page->getUrl());
     }
 
+    public function test_to_array_keeps_user_attributes_outside_theme_presentation(): void
+    {
+        $page = $this->getPage();
+        $page->setTitle('Catalog');
+        $page->setIsActive(true);
+        $page->addPage((new Page())->setTitle('Products'));
+        $page->setHtmlAttributes([
+            'class' => 'project-navigation',
+            'data-label' => 'Sales & support',
+        ]);
+
+        $data = $page->toArray();
+
+        $this->assertSame([
+            'class' => 'project-navigation',
+            'data-label' => 'Sales & support',
+        ], $data['attributesArray']);
+        $this->assertSame(
+            ' class="project-navigation" data-label="Sales &amp; support"',
+            $data['attributes']
+        );
+    }
+
     public function test_fixes_relative_url_when_app_url_is_https()
     {
         Config::set('app.url', 'https://domain.com');

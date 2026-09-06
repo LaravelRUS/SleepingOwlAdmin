@@ -1,10 +1,11 @@
 @if ($visibled)
 <div class="input-group input-date" {!! $width !!}>
-	<input
-		data-date-format="{{ $pickerFormat }}"
-		class="form-control column-filter input-daterange"
-		type="text"
-		{!! $attributes !!} />
+	@php
+		$filterAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
+			->merge(['data-date-format' => $pickerFormat, 'type' => 'text'])
+			->class(['form-control', 'column-filter', 'input-daterange']);
+	@endphp
+	<input {!! $filterAttributes !!} />
 
 	{{-- Trying to save table filter column width space --}}
 	{{--

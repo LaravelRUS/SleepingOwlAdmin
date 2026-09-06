@@ -852,6 +852,7 @@ class HasManyLocal extends FormElements
             'newEntitiesCount' => $this->new,
             'limit' => $this->limit,
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'helpText' => $this->getHelpText(),
             'draggable' => $this->getDraggable(),
             'collapsed' => $this->getCollapsed(),

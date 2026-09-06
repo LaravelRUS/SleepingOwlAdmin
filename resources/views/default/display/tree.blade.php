@@ -33,7 +33,12 @@
             </menu>
         @endif
         <div class="card-body mt-3 p-0 b-0">
-            <div class="dd nestable pb-3" {!! $attributes !!} data-url="{{ $url }}/reorder" data-parameters="{{ json_encode($parameters) }}">
+            @php
+                $treeAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
+                    ->except(['data-url', 'data-parameters'])
+                    ->class(['dd', 'nestable', 'pb-3']);
+            @endphp
+            <div {!! $treeAttributes !!} data-url="{{ $url }}/reorder" data-parameters="{{ json_encode($parameters) }}">
                 <ol class="dd-list">
                     @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
                 </ol>

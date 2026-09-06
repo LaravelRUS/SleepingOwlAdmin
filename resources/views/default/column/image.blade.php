@@ -1,4 +1,4 @@
-<div {!! $attributes !!}>
+<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
 	@if ($visibled)
 		@if (!empty($value))
 			<a href="{{ $value }}" data-toggle="lightbox">

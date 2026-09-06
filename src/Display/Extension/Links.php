@@ -144,6 +144,7 @@ class Links extends Extension implements Placable
         return [
             'links' => $this->getLinks(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 }

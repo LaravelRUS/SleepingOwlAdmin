@@ -11,10 +11,15 @@
         @foreach ($options as $option)
             <div class="radio">
                 <label>
-                    <input {!! ($value == $option['id']) ? 'checked ' : '' !!}{!! $htmlStringAttributes !!}
-                           name="{{ $name }}"
-                           value="{{ $option['id'] }}"
-                    />
+                    @php
+                        $radioAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
+                            ->merge([
+                                'checked' => $value == $option['id'],
+                                'name' => $name,
+                                'value' => $option['id'],
+                            ]);
+                    @endphp
+                    <input {!! $radioAttributes !!} />
                     {!! $option['text'] !!}
                 </label>
             </div>

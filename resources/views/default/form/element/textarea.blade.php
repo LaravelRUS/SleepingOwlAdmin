@@ -10,7 +10,7 @@
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
-        <textarea v-pre {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control']) !!}
+        <textarea v-pre {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control']) !!}
                   @if($readonly) readonly @endif
 		>{!! $value !!}</textarea>
         @include(AdminTemplate::getViewPath('form.element.partials.errors'))

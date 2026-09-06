@@ -1,5 +1,5 @@
 @php
-    $buttonGroupAttributes = new \Illuminate\View\ComponentAttributeBag($attributesArray ?? []);
+    $buttonGroupAttributes = new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []);
     $buttonGroupAttributes = $buttonGroupAttributes->class($themeClasses ?? []);
 @endphp
 @if($placements)

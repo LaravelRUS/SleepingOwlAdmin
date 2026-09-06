@@ -1,7 +1,7 @@
 <div class="panel-table card-body pt-0 pl-0 pr-0">
 
     @php
-        $tableAttributes = new \Illuminate\View\ComponentAttributeBag($attributesArray ?? []);
+        $tableAttributes = new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []);
         $tableAttributes = $tableAttributes->class(array_merge(['table'], $themeClasses ?? []));
     @endphp
     <table {!! $tableAttributes !!}>
@@ -14,7 +14,7 @@
         <thead>
         <tr>
             @foreach ($columns as $column)
-                <th {!! $column->getHeader()->htmlAttributesToString() !!}>
+                <th {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($column->getHeader()->getHtmlAttributes()) !!}>
                     {!! $column->getHeader()->render() !!}
                 </th>
             @endforeach
