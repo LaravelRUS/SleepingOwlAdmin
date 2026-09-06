@@ -54,3 +54,10 @@ it('removes the handwritten Bootstrap 3 renderer and owns vendor CSS in the adap
     expect(styles).toContain('datatables.net-bs4/css/dataTables.bootstrap4.css')
     expect(styles).toContain('datatables.net-responsive-bs4/css/responsive.bootstrap4.css')
 })
+
+it('mounts live tables through the DataTables 2 constructor boundary', () => {
+    const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+
+    expect(orchestration).toContain('createEngine: createDataTables2')
+    expect(orchestration).not.toContain('$(table).DataTable(engineOptions)')
+})

@@ -4495,24 +4495,26 @@ var _require = __webpack_require__(/*! ../../../../frontend/features/table/filte
   createLegacyFilterDrivers = _require.createLegacyFilterDrivers,
   isDateInRange = _require.isDateInRange,
   isNumberInRange = _require.isNumberInRange;
-var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-elements */ "./resources/frontend/features/table/filters/filter-elements.js"),
-  forEachColumnFilter = _require2.forEachColumnFilter;
-var _require3 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/table-hooks */ "./resources/frontend/features/table/hooks/table-hooks.js"),
-  applyCreatedRowClass = _require3.applyCreatedRowClass,
-  createDrawHook = _require3.createDrawHook;
-var _require4 = __webpack_require__(/*! ../../../../frontend/features/table/lifecycle/data-table-adapter */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"),
-  mountDataTable = _require4.mountDataTable;
-var _require5 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
-  applyServerOptions = _require5.applyServerOptions,
-  readTableDefinition = _require5.readTableDefinition;
-var _require6 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
-  clearFilterState = _require6.clearFilterState,
-  clearSavedTableSearch = _require6.clearSavedTableSearch,
-  filterStateKey = _require6.filterStateKey,
-  loadFilterState = _require6.loadFilterState,
-  saveFilterState = _require6.saveFilterState;
-var _require7 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
-  createTableAjax = _require7.createTableAjax;
+var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/engine/datatables2 */ "./resources/frontend/features/table/engine/datatables2.js"),
+  createDataTables2 = _require2.createDataTables2;
+var _require3 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-elements */ "./resources/frontend/features/table/filters/filter-elements.js"),
+  forEachColumnFilter = _require3.forEachColumnFilter;
+var _require4 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/table-hooks */ "./resources/frontend/features/table/hooks/table-hooks.js"),
+  applyCreatedRowClass = _require4.applyCreatedRowClass,
+  createDrawHook = _require4.createDrawHook;
+var _require5 = __webpack_require__(/*! ../../../../frontend/features/table/lifecycle/data-table-adapter */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"),
+  mountDataTable = _require5.mountDataTable;
+var _require6 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
+  applyServerOptions = _require6.applyServerOptions,
+  readTableDefinition = _require6.readTableDefinition;
+var _require7 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
+  clearFilterState = _require7.clearFilterState,
+  clearSavedTableSearch = _require7.clearSavedTableSearch,
+  filterStateKey = _require7.filterStateKey,
+  loadFilterState = _require7.loadFilterState,
+  saveFilterState = _require7.saveFilterState;
+var _require8 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
+  createTableAjax = _require8.createTableAjax;
 globalThis.checkNumberRange = isNumberInRange;
 globalThis.checkDateRange = isDateInRange;
 globalThis.columnFilters = createLegacyFilterDrivers();
@@ -4553,9 +4555,7 @@ function mountLegacyTable(element, context) {
   var definition = readTableDefinition(element);
   var options = buildOptions(element, definition, context.stateFilters);
   var adapter = mountDataTable({
-    createEngine: function createEngine(table, engineOptions) {
-      return $(table).DataTable(engineOptions);
-    },
+    createEngine: createDataTables2,
     element: element,
     options: options,
     registry: Admin.Tables

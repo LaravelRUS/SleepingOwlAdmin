@@ -2,9 +2,10 @@
 
 The published legacy runtime now loads pinned DataTables `2.3.8` and Responsive
 `3.0.8` through the same decomposed feature boundary that will become the
-standalone table driver. The concrete engine is still created at the legacy
-edge with the DataTables jQuery compatibility API during the next migration
-checkpoint; no jQuery object crosses into `Admin.Tables` or the core registry.
+standalone table driver. The concrete engine is created through
+`createDataTables2(element, options)`, which owns the `new DataTable(...)`
+constructor call; no jQuery object crosses into `Admin.Tables` or the core
+registry.
 
 | Module                             | Responsibility                                                           |
 | ---------------------------------- | ------------------------------------------------------------------------ |
@@ -18,10 +19,9 @@ checkpoint; no jQuery object crosses into `Admin.Tables` or the core registry.
 | `lifecycle/data-table-adapter.js`  | engine creation, registry registration and adapter lifecycle             |
 
 `resources/assets/js_owl/admin/display/datatables.js` is transitional
-orchestration: it reads config, composes the modules, initializes DataTables 2
-at one explicit compatibility line and binds legacy controls. The previous
-413-line closure, implicit globals and inline state/filter implementations are
-removed.
+orchestration: it reads config, composes the modules, delegates DataTables 2
+creation to the engine factory and binds legacy controls. The previous 413-line
+closure, implicit globals and inline state/filter implementations are removed.
 
 The server-side DataTables wire protocol is unchanged. Filter storage keeps its existing `Filters_/...` key and edit-route normalization. State cleanup no longer clears unrelated local storage. Repeated module boot resolves the registered adapter instead of initializing a second engine for the same table.
 
@@ -39,7 +39,7 @@ or use only the public adapter surface.
 Shared reload, state and selection consumers no longer call the DataTables API
 directly. Bulk actions and custom action forms resolve the adapter for their
 table and read `Admin.Tables.selectedRows(element)`; action submission and the
-auto-update view use `Admin.Tables.reload(...)`. The only remaining
-`$(element).DataTable(...)` call in the display implementation is the explicit
-DataTables 2 compatibility factory. The next checkpoint replaces it with the
-already isolated `createDataTables2(element, options)` constructor boundary.
+auto-update view use `Admin.Tables.reload(...)`. No first-party runtime path
+creates a table through `$(element).DataTable(...)`. Legacy option aliases and
+the remaining jQuery-based global extension/filter/control bindings are tracked
+as separate migration checkpoints.

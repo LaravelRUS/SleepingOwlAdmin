@@ -4,6 +4,9 @@ const {
     isNumberInRange,
 } = require('../../../../frontend/features/table/filters/legacy-filter-drivers')
 const {
+    createDataTables2,
+} = require('../../../../frontend/features/table/engine/datatables2')
+const {
     forEachColumnFilter,
 } = require('../../../../frontend/features/table/filters/filter-elements')
 const {
@@ -71,7 +74,7 @@ function mountLegacyTable(element, context) {
     const definition = readTableDefinition(element)
     const options = buildOptions(element, definition, context.stateFilters)
     const adapter = mountDataTable({
-        createEngine: (table, engineOptions) => $(table).DataTable(engineOptions),
+        createEngine: createDataTables2,
         element,
         options,
         registry: Admin.Tables,
