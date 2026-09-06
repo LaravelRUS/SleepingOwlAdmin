@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: выбрать replacements для legacy UI plugins.
+- Точка возобновления: добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -200,6 +200,27 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - файловые и image-компоненты;
 - sidebar/AdminLTE PushMenu;
 - отдельные вспомогательные DOM-операции и динамическая загрузка assets.
+
+### Выбранные замены legacy UI plugins
+
+| Текущая реализация | Новая реализация | Причина и граница |
+| --- | --- | --- |
+| Select2, `dependent-dropdown`, Vue Multiselect | Tom Select 2.6.x + отдельный native dependent-select controller | single/multiple, search, AJAX, tagging и custom rendering без jQuery; controller отвечает только за зависимости полей |
+| `bootstrap4-datetimepicker`, `daterangepicker`, Moment integration | Air Datepicker 3.6.x | один dependency-free driver поддерживает date, time и range; parsing/serialization остаются отдельным модулем |
+| Magnific Popup | GLightbox 3.3.x | dependency-free image/gallery lightbox с небольшим публичным adapter |
+
+На 2026-09-06 проверены npm metadata: `tom-select@2.6.2` (Apache-2.0; две scoped production dependencies), `air-datepicker@3.6.0` (MIT; без dependencies) и `glightbox@3.3.1` (MIT; без dependencies). Точные версии будут закреплены lock-файлом.
+
+Правила миграции:
+
+- public PHP DSL по возможности сохраняется: `setSelect2()` становится deprecated compatibility alias нового select driver, а несовместимые raw Select2 options проходят migration matrix, а не молча игнорируются;
+- текущий AJAX endpoint/payload сохраняется через transport adapter; debounce, cancellation, dependency values, loading/empty/error states получают contract tests;
+- произвольный HTML label не разрешён по умолчанию. Legacy `data-select2-allow-html` deprecated; custom renderer принимает DOM node либо явно sanitized HTML через отдельный opt-in API;
+- date value, display format и server serialization разделяются; driver не хранит бизнес-дату только в локализованной строке;
+- date, datetime и range используют один lifecycle, но отдельные маленькие option normalizers;
+- lightbox активируется нейтральным component marker и корректно обновляет динамические DataTables/file gallery elements;
+- vendor CSS не импортируется в core: structural feature styles и presentation adapters распределяются по ранее утверждённым Sass boundaries;
+- не использовать Vue для select/date/lightbox, если native driver полностью покрывает состояние: Vue 3 остаётся для действительно сложных islands.
 
 ## Целевая архитектура
 
@@ -411,7 +432,7 @@ No-build consumer contract является release-blocking:
 - [x] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
 - [x] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
 - [x] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
-- [ ] Выбрать replacements для Select2, date/time controls и lightbox.
+- [x] Выбрать replacements для Select2, date/time controls и lightbox.
 - [ ] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
 - [ ] Сохранить baseline production bundle size и перечень лицензий.
 - [ ] Составить перечень эталонных экранов для каждой темы: layout/navigation, async table, sync table, filters, bulk actions, inline edit, tree, select, date/time, single/multiple file upload.
@@ -791,3 +812,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / Vue props | Зафиксирован typed `data-*` contract для скаляров и безопасный `application/json` payload через `Js::encode()` для сложных props; выполнение server data как template/code запрещено | текущий commit |
 | 2026-09-06 | Этап 0 / Sass structure | Определены независимые Sass entries и локальные `_variables.scss`/`_colors.scss` для core/features/themes; first-party modules переходят на `@use`/`@forward`, Tailwind output остаётся generated exception | текущий commit |
 | 2026-09-06 | Этап 0 / colors | Color literals ограничены `_colors.scss` и узкими vendor/generated/brand exceptions; dark mode меняет только `--soa-*` в root selector, sidebar config проходит validation | текущий commit |
+| 2026-09-06 | Этап 0 / plugin replacements | Выбраны Tom Select, Air Datepicker и GLightbox; dependent select остаётся отдельным native controller, а простые widgets не переносятся во Vue без необходимости | текущий commit |
