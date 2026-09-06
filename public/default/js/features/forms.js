@@ -1,1 +1,1 @@
-(()=>{"use strict"})();
+(()=>{"use strict";[".form-buttons button.btn-delete",".form-buttons button.btn-destroy",".form-buttons button.btn-restore"].join(", ")})();

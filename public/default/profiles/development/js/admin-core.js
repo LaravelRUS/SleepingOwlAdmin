@@ -2,6 +2,168 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/frontend/core/assets/runtime-assets.js":
+/*!**********************************************************!*\
+  !*** ./resources/frontend/core/assets/runtime-assets.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createRuntimeAssetLoader": () => (/* binding */ createRuntimeAssetLoader)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var SUPPORTED_ASSET_TYPES = new Set(['css', 'img', 'js']);
+function createRuntimeAssetLoader() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    _ref$document = _ref.document,
+    document = _ref$document === void 0 ? globalThis.document : _ref$document,
+    _ref$createImage = _ref.createImage,
+    createImage = _ref$createImage === void 0 ? function () {
+      return new globalThis.Image();
+    } : _ref$createImage,
+    _ref$log = _ref.log,
+    log = _ref$log === void 0 ? function () {} : _ref$log;
+  assertDocument(document);
+  assertFunction(createImage, 'Image factory');
+  assertFunction(log, 'Asset logger');
+  var pending = new Map();
+  var loader = {
+    css: function css(url) {
+      return loadStylesheet(document, url, log, pending);
+    },
+    img: function img(url) {
+      return loadImage(createImage, url);
+    },
+    js: function js(url) {
+      return loadScript(document, url, log, pending);
+    },
+    register: function register(assets) {
+      return registerAssets(loader, assets);
+    }
+  };
+  return loader;
+}
+function registerAssets(loader, assets) {
+  if (!assets || _typeof(assets) !== 'object') {
+    return Promise.resolve([]);
+  }
+  return Promise.all(Object.entries(assets).map(function (_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 2),
+      type = _ref3[0],
+      url = _ref3[1];
+    if (!SUPPORTED_ASSET_TYPES.has(type)) {
+      throw new TypeError("Unsupported runtime asset type: ".concat(type, "."));
+    }
+    return loader[type](url);
+  }));
+}
+function loadScript(document, url, log, pending) {
+  assertUrl(url);
+  var key = assetKey(document, 'js', url);
+  if (pending.has(key)) {
+    return pending.get(key);
+  }
+  if (hasMatchingUrl(document, 'script[src]', 'src', url)) {
+    log("Script file ".concat(url, " is loaded."));
+    return Promise.resolve(url);
+  }
+  var script = document.createElement('script');
+  script.src = url;
+  return trackPending(pending, key, appendAndWait(document.head, script, url));
+}
+function loadStylesheet(document, url, log, pending) {
+  assertUrl(url);
+  var key = assetKey(document, 'css', url);
+  if (pending.has(key)) {
+    return pending.get(key);
+  }
+  if (hasMatchingUrl(document, 'link[href]', 'href', url)) {
+    log("CSS file ".concat(url, " is loaded."));
+    return Promise.resolve(url);
+  }
+  var link = document.createElement('link');
+  link.href = url;
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  return trackPending(pending, key, appendAndWait(document.head, link, url));
+}
+function loadImage(createImage, url) {
+  assertUrl(url);
+  var image = createImage();
+  var loaded = waitForLoad(image, url);
+  image.src = url;
+  return loaded;
+}
+function appendAndWait(parent, element, url) {
+  var loaded = waitForLoad(element, url);
+  parent.appendChild(element);
+  return loaded;
+}
+function waitForLoad(element, url) {
+  return new Promise(function (resolve, reject) {
+    element.onload = function () {
+      return resolve(url);
+    };
+    element.onerror = function () {
+      var _element$remove;
+      (_element$remove = element.remove) === null || _element$remove === void 0 || _element$remove.call(element);
+      reject(url);
+    };
+  });
+}
+function trackPending(pending, key, promise) {
+  pending.set(key, promise);
+  void promise.then(function () {
+    return pending["delete"](key);
+  }, function () {
+    return pending["delete"](key);
+  });
+  return promise;
+}
+function assetKey(document, type, url) {
+  return "".concat(type, ":").concat(absoluteUrl(document, url));
+}
+function hasMatchingUrl(document, selector, property, url) {
+  var expected = absoluteUrl(document, url);
+  return _toConsumableArray(document.querySelectorAll(selector)).some(function (element) {
+    return absoluteUrl(document, element[property]) === expected;
+  });
+}
+function absoluteUrl(document, url) {
+  return new globalThis.URL(url, document.baseURI).href;
+}
+function assertDocument(document) {
+  if (!(document !== null && document !== void 0 && document.head) || typeof document.createElement !== 'function') {
+    throw new TypeError('Runtime assets require a document with a head element.');
+  }
+  if (typeof document.querySelectorAll !== 'function') {
+    throw new TypeError('Runtime assets require document.querySelectorAll().');
+  }
+}
+function assertUrl(url) {
+  if (typeof url !== 'string' || url.length === 0) {
+    throw new TypeError('Runtime asset URL must be a non-empty string.');
+  }
+}
+function assertFunction(value, label) {
+  if (typeof value !== 'function') {
+    throw new TypeError("".concat(label, " must be a function."));
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/core/data/island-props.js":
 /*!******************************************************!*\
   !*** ./resources/frontend/core/data/island-props.js ***!
@@ -73,6 +235,82 @@ function parseDatasetValue(value, type, name) {
     throw new TypeError("Unsupported dataset type for ".concat(name, ": ").concat(type, "."));
   }
   return parser(value, name);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/core/dom/forms.js":
+/*!**********************************************!*\
+  !*** ./resources/frontend/core/dom/forms.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createPostForm": () => (/* binding */ createPostForm),
+/* harmony export */   "submitForm": () => (/* binding */ submitForm),
+/* harmony export */   "submitPostForm": () => (/* binding */ submitPostForm)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function createPostForm(document, url) {
+  var parameters = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  assertDocument(document);
+  assertUrl(url);
+  assertParameters(parameters);
+  var form = document.createElement('form');
+  form.setAttribute('method', 'POST');
+  form.setAttribute('action', url);
+  Object.entries(parameters).forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      name = _ref2[0],
+      value = _ref2[1];
+    form.appendChild(createHiddenInput(document, name, value));
+  });
+  return form;
+}
+function submitPostForm(document, url) {
+  var parameters = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var form = createPostForm(document, url, parameters);
+  document.body.appendChild(form);
+  submitForm(form);
+  return form;
+}
+function submitForm(form) {
+  if (typeof (form === null || form === void 0 ? void 0 : form.requestSubmit) === 'function') {
+    return form.requestSubmit();
+  }
+  if (typeof (form === null || form === void 0 ? void 0 : form.submit) === 'function') {
+    return form.submit();
+  }
+  throw new TypeError('Form submission requires requestSubmit() or submit().');
+}
+function createHiddenInput(document, name, value) {
+  var input = document.createElement('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', name);
+  input.setAttribute('value', String(value));
+  return input;
+}
+function assertDocument(document) {
+  if (!(document !== null && document !== void 0 && document.body) || typeof document.createElement !== 'function') {
+    throw new TypeError('Form creation requires a document with a body element.');
+  }
+}
+function assertUrl(url) {
+  if (typeof url !== 'string' || url.length === 0) {
+    throw new TypeError('Form action URL must be a non-empty string.');
+  }
+}
+function assertParameters(parameters) {
+  if (!parameters || _typeof(parameters) !== 'object' || Array.isArray(parameters)) {
+    throw new TypeError('Form parameters must be an object.');
+  }
 }
 
 /***/ }),
@@ -552,22 +790,30 @@ var __webpack_exports__ = {};
   \******************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AdminEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_2__.AdminEventBus),
-/* harmony export */   "TableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_3__.TableRegistry),
-/* harmony export */   "assertTableAdapter": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_3__.assertTableAdapter),
-/* harmony export */   "createEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_2__.createEventBus),
-/* harmony export */   "createTableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_3__.createTableRegistry),
-/* harmony export */   "delegate": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__.delegate),
-/* harmony export */   "listen": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__.listen),
-/* harmony export */   "parseBoolean": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.parseBoolean),
-/* harmony export */   "parseJsonProps": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.parseJsonProps),
-/* harmony export */   "parseNumber": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.parseNumber),
-/* harmony export */   "readDataset": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__.readDataset)
+/* harmony export */   "AdminEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__.AdminEventBus),
+/* harmony export */   "TableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__.TableRegistry),
+/* harmony export */   "assertTableAdapter": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__.assertTableAdapter),
+/* harmony export */   "createEventBus": () => (/* reexport safe */ _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__.createEventBus),
+/* harmony export */   "createPostForm": () => (/* reexport safe */ _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.createPostForm),
+/* harmony export */   "createRuntimeAssetLoader": () => (/* reexport safe */ _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__.createRuntimeAssetLoader),
+/* harmony export */   "createTableRegistry": () => (/* reexport safe */ _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__.createTableRegistry),
+/* harmony export */   "delegate": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.delegate),
+/* harmony export */   "listen": () => (/* reexport safe */ _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__.listen),
+/* harmony export */   "parseBoolean": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseBoolean),
+/* harmony export */   "parseJsonProps": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseJsonProps),
+/* harmony export */   "parseNumber": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.parseNumber),
+/* harmony export */   "readDataset": () => (/* reexport safe */ _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__.readDataset),
+/* harmony export */   "submitForm": () => (/* reexport safe */ _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.submitForm),
+/* harmony export */   "submitPostForm": () => (/* reexport safe */ _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__.submitPostForm)
 /* harmony export */ });
-/* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data/island-props.js */ "./resources/frontend/core/data/island-props.js");
-/* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
-/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
-/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tables/table-registry.js */ "./resources/frontend/core/tables/table-registry.js");
+/* harmony import */ var _assets_runtime_assets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./assets/runtime-assets.js */ "./resources/frontend/core/assets/runtime-assets.js");
+/* harmony import */ var _data_island_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/island-props.js */ "./resources/frontend/core/data/island-props.js");
+/* harmony import */ var _dom_forms_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom/forms.js */ "./resources/frontend/core/dom/forms.js");
+/* harmony import */ var _dom_listeners_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _events_event_bus_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./events/event-bus.js */ "./resources/frontend/core/events/event-bus.js");
+/* harmony import */ var _tables_table_registry_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tables/table-registry.js */ "./resources/frontend/core/tables/table-registry.js");
+
+
 
 
 

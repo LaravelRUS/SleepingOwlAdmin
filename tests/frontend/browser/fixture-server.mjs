@@ -14,6 +14,10 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'legacy-datatables.html'), 'text/html; charset=utf-8'],
     ],
     ['/legacy-vue', [join(browserDirectory, 'legacy-vue.html'), 'text/html; charset=utf-8']],
+    [
+        '/native-controls',
+        [join(browserDirectory, 'native-controls.html'), 'text/html; charset=utf-8'],
+    ],
     ['/runtime-theme', [join(browserDirectory, 'runtime-theme.html'), 'text/html; charset=utf-8']],
     [
         '/resources/frontend/core/data/island-props.js',
@@ -145,6 +149,32 @@ function sendPixel(response) {
     response.end('<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>')
 }
 
+function sendRuntimeAsset(response, path) {
+    if (path.endsWith('.js')) {
+        response.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' })
+        response.end(
+            `window.__runtimeAssetLoads = [...(window.__runtimeAssetLoads || []), ${JSON.stringify(path)}]`,
+        )
+        return
+    }
+
+    response.writeHead(200, { 'Content-Type': 'text/css; charset=utf-8' })
+    response.end(':root { --fixture-runtime-asset: 1; }')
+}
+
+function serveFixtureAsset(response, path) {
+    if (path === '/fixtures/pixel.svg') {
+        sendPixel(response)
+        return true
+    }
+    if (path.startsWith('/fixtures/') && /\.(css|js)$/.test(path)) {
+        sendRuntimeAsset(response, path)
+        return true
+    }
+
+    return false
+}
+
 async function respond(request, response) {
     const url = new URL(request.url, origin)
     const route = staticRoutes.get(url.pathname)
@@ -181,8 +211,7 @@ async function respond(request, response) {
         return
     }
 
-    if (url.pathname === '/fixtures/pixel.svg') {
-        sendPixel(response)
+    if (serveFixtureAsset(response, url.pathname)) {
         return
     }
 

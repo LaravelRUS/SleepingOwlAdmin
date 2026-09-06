@@ -1,4 +1,6 @@
+export { createRuntimeAssetLoader } from './assets/runtime-assets.js'
 export { parseBoolean, parseJsonProps, parseNumber, readDataset } from './data/island-props.js'
+export { createPostForm, submitForm, submitPostForm } from './dom/forms.js'
 export { delegate, listen } from './dom/listeners.js'
 export { AdminEventBus, createEventBus } from './events/event-bus.js'
 export { assertTableAdapter, createTableRegistry, TableRegistry } from './tables/table-registry.js'

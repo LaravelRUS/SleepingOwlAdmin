@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: перевести `Admin.Asset`, buttons, checkbox/control events и простые DOM-модули на native API.
+- Точка возобновления: устранить неявные глобалы (`urlName`, `activeFilters`, `array`, присваивания внутри условий и подобные места).
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -548,7 +548,7 @@ No-build consumer contract является release-blocking:
 - [x] Реализовать `Admin.Tables` registry и adapter interface.
 - [x] Разделить table implementation минимум на lifecycle, options, transport, filters, state, selection и hooks; registry не содержит реализацию этих обязанностей.
 - [x] Перевести общий reload, selected rows и clear state на `Admin.Tables`.
-- [ ] Перевести `Admin.Asset`, buttons, checkbox/control events и простые DOM-модули на native API.
+- [x] Перевести `Admin.Asset`, buttons, checkbox/control events и простые DOM-модули на native API.
 - [ ] Устранить неявные глобалы (`urlName`, `activeFilters`, `array`, присваивания внутри условий и подобные места).
 - [ ] Реализовать единый lifecycle для динамических компонентов: `scan(root)`, `mount(element)`, `destroy(element)`.
 - [ ] Не включать в core reset, layout framework, DataTables, Vue или theme-specific CSS.
@@ -964,3 +964,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 3 / table registry | Добавлен engine-neutral `TableRegistry`, опубликованный как `Admin.Tables`. Структурный adapter contract ограничен `element`, `engineInstance`, `reload`, `destroy`, `clearState` и `selectedRows`; registry даёт lookup/all/unregister, допускает идемпотентную регистрацию того же adapter и диагностирует double mount другого adapter без скрытого destroy. DataTables 1 пока не регистрируется и остаётся legacy implementation до декомпозиции feature. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 96 Vitest + 16 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / table decomposition | Legacy DataTables orchestration переведён с 413-строчного closure на отдельные lifecycle/options/transport/filters/state/selection/hooks modules; registry остаётся только lookup boundary. DataTables 1 создаётся на одной legacy-границе и регистрируется через общий adapter, серверный wire protocol и filter storage key сохранены, repeated boot не создаёт второй engine, а state cleanup больше не очищает чужой localStorage. jQuery-based filter/date compatibility изолирован и не попадает в modern table profiles. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 116 Vitest + 16 Playwright | текущий commit |
 | 2026-09-06 | Этап 3 / shared table operations | Registry получил явные scoped `reload`, `clearState` и `selectedRows`, а reload/clear без element выполняются для всех зарегистрированных adapters. Bulk/custom actions сериализуют выбранные строки через `URLSearchParams`, bulk action выбирается внутри текущей формы, action reload и auto-update обращаются только к `Admin.Tables`; `.card` lookup остаётся изолированной legacy theme boundary. В общих consumers больше нет прямого DataTables API, единственный factory call остаётся в legacy engine adapter. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 118 Vitest + 16 Playwright | текущий commit |
+| 2026-09-06 | Этап 3 / native DOM controls | `Admin.Asset` переведён на native Promise loader с URL-aware deduplication/retry для JS/CSS; form, table и tree actions создают/отправляют формы через DOM API и передают в сохранённые события native elements. Delegated checkbox controls поддерживают динамические строки, ограничивают select-all ближайшей таблицей и публикуют `data-soa-selected`/`aria-selected`; legacy `info` остаётся adapter-owned class. Plugin-dependent tooltip/select/date/treeview adapters не смешаны с этим пунктом. Production/development assets пересобраны; полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 131 Vitest + 20 Playwright | текущий commit |

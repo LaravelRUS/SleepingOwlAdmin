@@ -1,1 +1,1 @@
-(()=>{"use strict";new WeakMap})();
+(()=>{"use strict";new Set(["css","img","js"]);new WeakMap})();

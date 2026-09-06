@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="native-controls-token" />
+        <title>Native controls browser fixture</title>
+        <script>
+            window.GlobalConfig = {
+                debug: false,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'native-controls',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: {
+                        action_confirm: 'Confirm action',
+                        delete_confirm: 'Delete?',
+                        destroy_confirm: 'Destroy?',
+                        error: 'Table error',
+                        loadingRecords: 'Loading',
+                        no_action: 'No action',
+                    },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <button id="theme-mode" data-mode="light" type="button">
+            <i id="theme-icon"></i>
+        </button>
+
+        <section class="form-buttons">
+            <button
+                class="btn-delete"
+                data-redirect="/forms"
+                data-url="/forms/10"
+                id="form-delete"
+                type="button"
+            >
+                Delete form model
+            </button>
+            <button
+                class="btn-destroy"
+                data-redirect="/forms"
+                data-url="/forms/10/destroy"
+                id="form-destroy"
+                type="button"
+            >
+                Destroy form model
+            </button>
+            <button
+                class="btn-restore"
+                data-redirect="/forms/10/edit"
+                data-url="/forms/10/restore"
+                id="form-restore"
+                type="button"
+            >
+                Restore form model
+            </button>
+        </section>
+
+        <table id="control-table">
+            <thead>
+                <tr>
+                    <th><input class="adminCheckboxAll" id="select-all" type="checkbox" /></th>
+                    <th>Controls</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="row-one">
+                    <td>
+                        <input
+                            class="adminCheckboxRow"
+                            id="row-one-checkbox"
+                            name="_id[]"
+                            type="checkbox"
+                            value="1"
+                        />
+                    </td>
+                    <td>
+                        <form action="/table/1" method="POST">
+                            <input name="_method" type="hidden" value="DELETE" />
+                            <button class="btn-delete" id="table-delete" type="submit">
+                                Delete row
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tr id="row-two">
+                    <td>
+                        <input
+                            class="adminCheckboxRow"
+                            id="row-two-checkbox"
+                            name="_id[]"
+                            type="checkbox"
+                            value="2"
+                        />
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="dd3-content">
+            <form action="/tree/5" method="POST">
+                <input name="_method" type="hidden" value="DELETE" />
+                <button class="btn-destroy" id="tree-destroy" type="submit">
+                    Destroy tree node
+                </button>
+            </form>
+        </div>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__confirmValue = true
+            window.__controlEvents = []
+            window.__submissions = []
+
+            document.addEventListener('submit', (event) => {
+                event.preventDefault()
+                window.__submissions.push({
+                    action: event.target.getAttribute('action'),
+                    method: event.target.getAttribute('method'),
+                    parameters: Object.fromEntries(new FormData(event.target)),
+                })
+            })
+
+            Admin.Messages.confirm = () => Promise.resolve({ value: window.__confirmValue })
+            ;[
+                'datatables::confirm::submitting',
+                'datatables::confirm::submitted',
+                'datatables::confirm::cancel',
+            ].forEach((name) => {
+                Admin.Events.on(name, (target, selector) => {
+                    window.__controlEvents.push({
+                        name,
+                        selector: selector || null,
+                        targetIsElement: target instanceof Element,
+                        targetTag: target?.tagName || null,
+                    })
+                })
+            })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+    </body>
+</html>
