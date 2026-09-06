@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 1 — страховочная сетка тестов**.
-- Точка возобновления: зафиксировать Vue 2 browser-сценарии до обновления.
+- Точка возобновления: добавить render snapshots/contract assertions текущей темы.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -505,7 +505,7 @@ No-build consumer contract является release-blocking:
 - [x] Добавить Playwright smoke suite либо минимальный browser fixture, пригодный для проверки compiled assets.
 - [x] Покрыть PHP feature-тестами DataTables async request/response: pagination, global search, ordering, column filters, payload, distinct и row class.
 - [x] Зафиксировать browser-сценарии DataTables 1 до обновления: state restore/clear, range/date/select/text filters, actions, inline edit, auto-update, tooltip/lazyload after draw.
-- [ ] Зафиксировать Vue 2 browser-сценарии: env editor, file/image/images, select/multiselect и related elements, включая динамическое добавление групп.
+- [x] Зафиксировать Vue 2 browser-сценарии: env editor, file/image/images, select/multiselect и related elements, включая динамическое добавление групп.
 - [ ] Добавить render snapshots/contract assertions для layout, navigation, forms, displays, validation и messages текущей темы.
 - [ ] Добавить tests, загружающие пакет с прежним полным опубликованным конфигом и с конфигом, в котором отсутствуют новые keys.
 - [ ] Добавить CI-команды для PHP и frontend тестов.
@@ -930,3 +930,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 1 / PHPUnit baseline | PHPUnit bootstrap и legacy tests адаптированы к PHPUnit 12/Testbench 11: 304 tests, 879 assertions, 0 errors/failures/notices; сохранены 2 явно помеченных TODO-skip | `4262e0b1` |
 | 2026-09-06 | Этап 1 / async DataTables PHP | Добавлены 8 SQLite/Eloquent feature tests для pagination/`length=-1`, search, ordering, column filter, payload/controller, distinct, row class и полного response shape; полный прогон с PDO SQLite: 312 tests, 903 assertions | текущий commit |
 | 2026-09-06 | Этап 1 / DataTables 1 browser | Готовый опубликованный DataTables 1.13.11 bundle покрыт 7 Playwright-сценариями: POST/payload, state restore/clear, text/date/range/select/daterange filters, bulk/custom actions, inline edit/rebind, auto-update stop и tooltip/lazyload draw hooks; подтверждён legacy range wire format `from::to` без отдельных `search[from]`/`search[to]` | текущий commit |
+| 2026-09-06 | Этап 1 / Vue 2 browser | Опубликованные `admin-app.js`/`vue.js`/`modules.js` покрыты 4 Playwright-сценариями: env editor, file/image/images upload callbacks, Vue Multiselect single/multiple/taggable values и related groups с динамическим Select2 rebind; зафиксирован известный legacy-дефект Dropzone CommonJS wrapper, оставляющий auto-discovery включённым на внутреннем constructor | текущий commit |

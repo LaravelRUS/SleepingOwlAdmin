@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="browser-fixture-token" />
+        <title>Legacy Vue browser fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'legacy-vue',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 2,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    ckeditor: {
+                        upload: {
+                            error: {
+                                common: 'Upload error',
+                                filesize_limit_m: 'File is too large',
+                                wrong_extension: 'Wrong extension',
+                            },
+                        },
+                    },
+                    file: { insert_link: 'Insert link' },
+                    message: {
+                        are_you_sure: 'Are you sure?',
+                        something_went_wrong: 'Something went wrong',
+                    },
+                    select: { no_items: 'No items', short: 'Type more' },
+                    table: {
+                        error: 'Table error',
+                        infoEmpty: 'No results',
+                        loadingRecords: 'Loading',
+                        search: 'Search',
+                    },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <div id="vueApp">
+            <section id="env-fixture">
+                <env_editor
+                    :data='[{"value":"one","deletable":true,"editable":true},{"value":"locked","deletable":false,"editable":false}]'
+                    :error-text="'Access denied'"
+                    inline-template
+                >
+                    <div>
+                        <div class="env-row" v-for="(value, key) in values">
+                            <input
+                                class="env-key"
+                                type="text"
+                                :name="'variables[' + value.key + '][key]'"
+                                v-model="value.key"
+                                :readonly="!value.editable"
+                            />
+                            <input
+                                class="env-value"
+                                type="text"
+                                :name="'variables[' + value.key + '][value]'"
+                                v-model="value.value"
+                                :readonly="!value.editable"
+                            />
+                            <button class="env-remove" type="button" @click="removeEnv(key)">
+                                Remove
+                            </button>
+                        </div>
+                        <button
+                            id="env-add-entry"
+                            type="button"
+                            @click="values.push({key:null, value:null, deletable:true, editable:true})"
+                        >
+                            Add
+                        </button>
+                    </div>
+                </env_editor>
+            </section>
+
+            <section id="file-wrapper">
+                <element-file
+                    url="/api/upload"
+                    value="docs/start.pdf"
+                    :readonly="false"
+                    name="document"
+                    inline-template
+                >
+                    <div>
+                        <a id="file-link" v-if="has_value" :href="file">Current file</a>
+                        <button
+                            id="file-remove"
+                            v-if="has_value"
+                            type="button"
+                            @click.prevent="remove()"
+                        >
+                            Remove file
+                        </button>
+                        <div class="upload-button">Upload file</div>
+                        <input id="file-value" :name="name" type="hidden" :value="val" />
+                    </div>
+                </element-file>
+            </section>
+
+            <section id="image-wrapper">
+                <element-image
+                    url="/api/upload"
+                    value="fixtures/pixel.svg"
+                    :readonly="false"
+                    :onlylink="false"
+                    name="avatar"
+                    inline-template
+                >
+                    <div>
+                        <img id="image-preview" v-if="has_value" :src="createdimage" alt="" />
+                        <button
+                            id="image-remove"
+                            v-if="has_value"
+                            type="button"
+                            @click.prevent="remove()"
+                        >
+                            Remove image
+                        </button>
+                        <div class="upload-button">Upload image</div>
+                        <input id="image-value" :name="name" type="hidden" :value="val" />
+                    </div>
+                </element-image>
+            </section>
+
+            <section id="images-wrapper">
+                <element-images
+                    url="/api/upload"
+                    :values='["fixtures/pixel.svg","fixtures/second.svg"]'
+                    :readonly="false"
+                    :onlylink="false"
+                    :draggable="true"
+                    name="gallery"
+                    inline-template
+                >
+                    <div>
+                        <div class="dropzone">
+                            <draggable class="draggable" v-model="vals">
+                                <div class="gallery-item" v-for="(uri, index) in vals" :key="uri">
+                                    <img :src="image(uri)" alt="" />
+                                    <button
+                                        class="gallery-remove"
+                                        type="button"
+                                        @click.prevent="remove(index)"
+                                    >
+                                        Remove image
+                                    </button>
+                                </div>
+                            </draggable>
+                        </div>
+                        <div class="upload-button">Upload images</div>
+                        <input
+                            id="images-value"
+                            :name="name"
+                            type="hidden"
+                            :value="serializedValues"
+                        />
+                    </div>
+                </element-images>
+            </section>
+
+            <section id="single-select-fixture">
+                <deselect
+                    :value="2"
+                    :id="'single-select'"
+                    :multiple="false"
+                    :options='[{"id":1,"text":"One"},{"id":2,"text":"Two"},{"id":3,"text":"Three"}]'
+                    inline-template
+                >
+                    <div>
+                        <multiselect
+                            v-model="val"
+                            track-by="id"
+                            label="text"
+                            :multiple="multiple"
+                            :options="options"
+                        ></multiselect>
+                        <input id="single-select" type="hidden" v-model="preparedVal" />
+                    </div>
+                </deselect>
+            </section>
+
+            <section id="multi-select-fixture">
+                <deselect
+                    :value="[1,3]"
+                    :id="'multi-select'"
+                    :multiple="true"
+                    :options='[{"id":1,"text":"One"},{"id":2,"text":"Two"},{"id":3,"text":"Three"}]'
+                    inline-template
+                >
+                    <div>
+                        <multiselect
+                            v-model="val"
+                            track-by="id"
+                            label="text"
+                            :multiple="multiple"
+                            :options="options"
+                            :taggable="true"
+                            @tag="addTag"
+                        ></multiselect>
+                        <select id="multi-select" multiple>
+                            <option
+                                v-for="option in options"
+                                :key="option.id"
+                                :value="option.id"
+                                :selected="hasOption(option.id)"
+                            >
+                                @{{ option.text }}
+                            </option>
+                        </select>
+                    </div>
+                </deselect>
+            </section>
+
+            <section id="related-fixture">
+                <related-elements
+                    inline-template
+                    name="items"
+                    label="Items"
+                    :limit="3"
+                    :initial-groups-count="1"
+                    :removed="[]"
+                >
+                    <div>
+                        <div class="related-groups">
+                            <related-group
+                                name="items"
+                                :index="0"
+                                primary="42"
+                                label="Existing"
+                                :removed="removed.indexOf('42') !== -1"
+                                @remove="removeGroup"
+                                inline-template
+                            >
+                                <div class="existing-related-group" v-if="!removed">
+                                    <input id="related-name" name="name" />
+                                    <button
+                                        id="remove-existing-group"
+                                        type="button"
+                                        @click="handleRemove"
+                                    >
+                                        Remove existing
+                                    </button>
+                                </div>
+                            </related-group>
+
+                            <template v-for="newIndex in newGroups">
+                                <related-group
+                                    :key="newIndex"
+                                    name="items"
+                                    :index="totalGroupsCount"
+                                    primary=""
+                                    label="New"
+                                    :removed="false"
+                                    @remove="removeGroup"
+                                    inline-template
+                                >
+                                    <div class="new-related-group">
+                                        <input id="related-title" name="title" />
+                                        <select
+                                            id="related-status"
+                                            name="status"
+                                            class="input-select"
+                                        >
+                                            <option value="draft">Draft</option>
+                                            <option value="ready">Ready</option>
+                                        </select>
+                                        <button
+                                            class="remove-new-group"
+                                            type="button"
+                                            @click="handleRemove"
+                                        >
+                                            Remove new
+                                        </button>
+                                    </div>
+                                </related-group>
+                            </template>
+                        </div>
+                        <button
+                            id="add-related-group"
+                            v-if="canAddMore"
+                            type="button"
+                            @click="addNewGroup"
+                        >
+                            Add related
+                        </button>
+                        <input
+                            class="removed-related"
+                            v-for="id in removedExistingGroups"
+                            type="hidden"
+                            :name="`${name}[remove][]`"
+                            :value="id"
+                        />
+                    </div>
+                </related-elements>
+            </section>
+        </div>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__clipboardValue = 'fixtures/linked.svg'
+            window.__moduleCalls = []
+            window.__toasts = []
+
+            const originalModuleCall = Admin.Modules.call.bind(Admin.Modules)
+            Admin.Modules.call = (name) => {
+                window.__moduleCalls.push(name)
+                return originalModuleCall(name)
+            }
+            Admin.Messages.confirm = () => Promise.resolve({ value: true })
+            Admin.Messages.cliptobuffer = () => Promise.resolve({ value: window.__clipboardValue })
+            Swal.mixin = () => ({
+                fire: ({ title }) => {
+                    window.__toasts.push(title)
+                    return Promise.resolve()
+                },
+            })
+        </script>
+        <script src="/public/default/js/vue.js"></script>
+        <script src="/public/default/js/modules.js"></script>
+        <script>
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>
