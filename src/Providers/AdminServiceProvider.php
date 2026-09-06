@@ -18,8 +18,10 @@ use SleepingOwl\Admin\Assets\AssetPackageRegistry;
 use SleepingOwl\Admin\Assets\AssetProfileSelector;
 use SleepingOwl\Admin\Assets\AssetRegistry;
 use SleepingOwl\Admin\Assets\AssetRenderer;
+use SleepingOwl\Admin\Assets\ComposerPackageVersion;
 use SleepingOwl\Admin\Assets\HtmlAttributes;
 use SleepingOwl\Admin\Assets\MetaRenderer;
+use SleepingOwl\Admin\Assets\PublishedAssetVerifier;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
@@ -109,6 +111,16 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton(AssetProfileSelector::class, function (Application $app) {
             return new AssetProfileSelector($app['config']);
+        });
+
+        $this->app->singleton(ComposerPackageVersion::class);
+        $this->app->singleton(PublishedAssetVerifier::class, function (Application $app) {
+            return new PublishedAssetVerifier(
+                $app['files'],
+                $app->make(AssetManifestLoader::class),
+                $app->make(AssetProfileSelector::class),
+                $app->make(ComposerPackageVersion::class)
+            );
         });
 
         $this->app->singleton(AssetManifestResolver::class, function (Application $app) {

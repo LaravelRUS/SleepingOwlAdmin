@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 3 — минимальный native frontend foundation**.
-- Точка возобновления: расширить `sleepingowl:install` и `sleepingowl:update` для публикации и проверки готовых manifest-based assets без npm/rebuild.
+- Точка возобновления: переписать внутреннюю реализацию `Admin.Events` на native events, сохранив текущий публичный интерфейс.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -541,8 +541,8 @@ No-build consumer contract является release-blocking:
 - [x] Реализовать минимальные first-party asset value object, dependency sorter/registry, package registry и meta renderer в `SleepingOwl\Admin`, не смешивая их обязанности с manifest resolver.
 - [x] Перевести внутренние `Templates\Assets`, `Templates\Meta`, trait `Assets`, provider bindings, facades и stubs с `KodiCMS\Assets` на first-party classes.
 - [x] Нормализовать legacy config aliases `KodiCMS\Assets\Facades\*` в first-party aliases и покрыть это fixture старого опубликованного конфига.
-- [ ] Расширить существующие `sleepingowl:install` и `sleepingowl:update`: публиковать выбранные precompiled theme/feature assets, проверять manifest/version, не вызывать npm и не компилировать frontend.
-- [ ] Сохранить обратную совместимость `sleepingowl:update` как минимум на уровне неинтерактивного forced asset publish, пригодного для deployment scripts.
+- [x] Расширить существующие `sleepingowl:install` и `sleepingowl:update`: публиковать выбранные precompiled theme/feature assets, проверять manifest/version, не вызывать npm и не компилировать frontend.
+- [x] Сохранить обратную совместимость `sleepingowl:update` как минимум на уровне неинтерактивного forced asset publish, пригодного для deployment scripts.
 - [ ] Переписать внутреннюю реализацию `Admin.Events` на native events, сохранив текущий публичный интерфейс.
 - [ ] Добавить узкие DOM helpers только для реально повторяющихся операций.
 - [ ] Реализовать `Admin.Tables` registry и adapter interface.
@@ -958,3 +958,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 3 / first-party asset foundation | Добавлены независимые `Asset`, стабильный dependency sorter/registry, package registry и отдельные HTML/meta renderers без наследования или imports из `KodiCMS\Assets`. Unknown/circular dependencies не теряют элементы, duplicate handles заменяются, head/footer изолированы, пользовательские attributes экранируются на render boundary. Manifest resolver остаётся отдельной подсистемой; переключение public adapters/provider отложено до следующего пункта. Полный PHP gate: 419 tests, 1544 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |
 | 2026-09-06 | Этап 3 / first-party asset adapters | `Templates\Assets`, `Templates\Meta`, asset trait, WYSIWYG package PHPDoc, provider bindings, first-party facades и installation stub переведены на composition поверх собственного registry/renderers. Сохранены container keys, fluent Meta API, handles/dependencies, head/footer, packages, global config и last-registration-wins; исправлена старая передача CSS attributes как dependencies в trait. В runtime `src`/resources/stubs больше нет `KodiCMS\Assets`; legacy config aliases остаются отдельным compatibility-пунктом. Полный PHP gate: 421 tests, 1554 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |
 | 2026-09-06 | Этап 3 / legacy asset aliases | Default config переведён на first-party `Assets`, `Meta` и `PackageManager` facades. Узкий `AssetAliasNormalizer` до Laravel AliasLoader заменяет только три точных старых `KodiCMS\Assets\Facades\*` значения, сохраняя имена и все custom aliases. Полный long-lived config fixture загружается без перепубликации; исходные compatibility strings не исполняются как классы. Полный PHP gate: 423 tests, 1563 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |
+| 2026-09-06 | Этап 3 / no-build asset publication | Общий `PublishAssets` для install/update выполняет только forced Laravel vendor publish и затем проверяет выбранный готовый профиль: manifest schema, Composer package version, наличие 10 JS/CSS, MD5 versions и SHA-256 checksums. `sleepingowl:update` повторно перезаписывает намеренно повреждённый файл и остаётся пригодным для неинтерактивных deployment scripts; regression guard запрещает вызовы npm/node/Vite/Webpack/Mix из обоих command paths. Полный PHP gate: 428 tests, 1580 assertions, 2 прежних TODO-skip; frontend gate: 75 Vitest | текущий commit |

@@ -60,7 +60,7 @@ ADMIN_DEV_ASSETS=false
 - `AssetManifestLoader` отвечает только за filesystem/JSON boundary и преобразует любую ошибку чтения или schema в `AssetManifestException`;
 - `AssetProfileSelector` преобразует только существующий config flag в `production` или `development`;
 - `AssetManifestResolver` выбирает logical bundles только внутри этого профиля, сохраняет их порядок, удаляет дубликаты и строит URL через Laravel `UrlGenerator`;
-- `ResolvedAssetBundle` возвращает отдельные списки scripts и styles будущему coordinator/asset registry.
+- `ResolvedAssetBundle` возвращает отдельные списки scripts и styles first-party asset registry.
 
 Resolver зарегистрирован в container, но `TemplateDefault` пока продолжает загружать legacy aggregate. Переключение template на `core + selected theme + detected features` выполняется только после готовности обоих профилей и first-party asset registry, чтобы не смешать незавершённые modern entries с рабочим legacy runtime.
 
@@ -71,3 +71,21 @@ php artisan sleepingowl:update
 ```
 
 Silent fallback на unversioned legacy path не используется.
+
+## No-build publish/update
+
+Обычный пользователь не запускает npm, Mix или Vite. Оба готовых профиля входят в Composer package и публикуются стандартными командами:
+
+```bash
+php artisan sleepingowl:install
+php artisan sleepingowl:update
+```
+
+Обе команды используют один `PublishAssets` installer. Он выполняет forced `vendor:publish --tag=assets`, затем `PublishedAssetVerifier` проверяет выбранный через `ADMIN_DEV_ASSETS` профиль:
+
+- manifest читается из опубликованного `packages/sleepingowl/default`;
+- `package_version` совпадает с установленной Composer-версией пакета;
+- каждый JS/CSS существует;
+- MD5 content version и SHA-256 checksum совпадают.
+
+`sleepingowl:update` остаётся неинтерактивным forced publish, поэтому существующие deployment scripts продолжают обновлять уже опубликованные файлы. Повреждение или неполная публикация завершают команду ошибкой вместо запуска старых assets или frontend toolchain.

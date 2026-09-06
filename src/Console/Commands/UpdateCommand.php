@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Console\Commands;
 
+use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
 use SleepingOwl\Admin\Console\Installation;
 
@@ -41,7 +42,13 @@ class UpdateCommand extends Installation\Command
 
     protected function runInstaller()
     {
-        $this->call('vendor:publish', ['--tag' => 'assets', '--force' => true]);
+        $installer = new Installation\PublishAssets(
+            $this,
+            new Repository($this->laravel['config']->get('sleeping_owl', []))
+        );
+
+        $installer->install();
+        $installer->showInfo();
 //        $this->callSilent('sleepingowl:ide:generate');
 
         $this->comment('SleepingOwl Framework successfully updated.');

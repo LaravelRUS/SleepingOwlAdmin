@@ -2,11 +2,21 @@
 
 namespace SleepingOwl\Admin\Console\Installation;
 
+use SleepingOwl\Admin\Assets\AssetPublicationReport;
+use SleepingOwl\Admin\Assets\PublishedAssetVerifier;
+
 class PublishAssets extends Installator
 {
+    private ?AssetPublicationReport $report = null;
+
     public function showInfo()
     {
-        $this->command->line('Publish assets: <info>✔</info>');
+        $profile = $this->report?->profile() ?? 'unknown';
+        $files = $this->report?->fileCount() ?? 0;
+
+        $this->command->line(
+            "Publish asset profile [{$profile}], {$files} files verified: <info>✔</info>"
+        );
     }
 
     /**
@@ -16,6 +26,13 @@ class PublishAssets extends Installator
      */
     public function install()
     {
-        $this->command->call('vendor:publish', ['--tag' => 'assets', '--force']);
+        $this->command->call('vendor:publish', [
+            '--tag' => 'assets',
+            '--force' => true,
+        ]);
+
+        $this->report = app(PublishedAssetVerifier::class)->verify(
+            public_path('packages/sleepingowl/default')
+        );
     }
 }
