@@ -76,11 +76,22 @@ it('uses current DataTables 2 option names in first-party runtime code', () => {
 
 it('registers errors, ordering and search through the active engine API', () => {
     const extensions = readSource('resources/frontend/features/table/engine/extensions.js')
-    const filters = readSource('resources/frontend/features/table/filters/legacy-filter-drivers.js')
+    const filters = readSource('resources/frontend/features/table/filters/filter-drivers.js')
     const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
 
     expect(extensions).toContain('engine.ext.errMode')
     expect(extensions).toContain('engine.ext.order[DATE_TIME_ORDER]')
     expect(filters).toContain('engine.ext.search')
     expect(`${orchestration}\n${filters}`).not.toMatch(/(?:\$|jQuery)\.fn\.dataTable/)
+})
+
+it('keeps the reusable filter modules on native DOM APIs', () => {
+    const controls = readSource('resources/frontend/features/table/filters/filter-controls.js')
+    const drivers = readSource('resources/frontend/features/table/filters/filter-drivers.js')
+
+    expect(`${controls}\n${drivers}`).not.toMatch(/(?:\$|jQuery)\s*\(/)
+    expect(`${controls}\n${drivers}`).not.toContain("from 'jquery'")
+    expect(`${controls}\n${drivers}`).not.toContain("from 'moment'")
+    expect(controls).toContain('addEventListener')
+    expect(drivers).toContain('addEventListener')
 })

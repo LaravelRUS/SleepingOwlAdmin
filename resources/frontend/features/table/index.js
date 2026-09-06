@@ -1,6 +1,13 @@
 export const TABLE_FEATURE_ID = 'table'
 
 export { bindConfirmedControls } from './controls/confirm-submit.js'
+export { bindFilterControls, clearFilterControls } from './filters/filter-controls.js'
+export {
+    createTableFilterDrivers,
+    dataTables2SearchExtensions,
+    isDateInRange,
+    isNumberInRange,
+} from './filters/filter-drivers.js'
 export { forEachColumnFilter, readControlValue } from './filters/filter-elements.js'
 export { applyCreatedRowClass, createDrawHook } from './hooks/table-hooks.js'
 export { DataTableAdapter, mountDataTable } from './lifecycle/data-table-adapter.js'

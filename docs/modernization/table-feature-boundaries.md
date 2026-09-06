@@ -13,7 +13,8 @@ registry.
 | `options/table-options.js`         | typed DOM definition, table options and control layout                   |
 | `transport/table-ajax.js`          | unchanged server request payload and named filter data                   |
 | `filters/filter-elements.js`       | filter discovery and native control values                               |
-| `filters/legacy-filter-drivers.js` | isolated jQuery/date-picker compatibility handlers                       |
+| `filters/filter-drivers.js`        | native text, select, date, daterange and range behavior                   |
+| `filters/filter-controls.js`       | native execute, clear and Enter-key controls                             |
 | `state/filter-state.js`            | filter persistence key, serialization, restore and search-state clearing |
 | `selection/selected-rows.js`       | checked row identifiers scoped to one table element                      |
 | `hooks/table-hooks.js`             | draw hook order and server-provided row classes                          |
@@ -45,15 +46,21 @@ the extension registries exposed by the active engine. Date ordering creates a
 public `DataTable.Api` instance and reads native `dataset.value`; first-party
 runtime code no longer reaches the extension API through `$.fn.dataTable`.
 
-The isolated legacy filter driver intentionally remains jQuery-based until the
-native-filter checkpoint. It is not exported from the modern feature entry and
-is loaded only by the legacy aggregate. All other modules are engine-neutral
-or use only the public adapter surface.
+Reusable filter drivers read values and selected options from native controls,
+bind DOM events with `addEventListener`, and register client range predicates
+through the injected engine. Filter execute, clear and Enter-key behavior is a
+separate native module. The modern table profile contains neither jQuery nor
+Moment.
+
+The current Bootstrap DateTimePicker, Daterangepicker and Select2 integrations
+still produce jQuery-only synthetic events. A small legacy AdminLTE bridge
+forwards only those compatibility events and injects Moment date parsing; the
+bridge is excluded from modern table profiles and is removed with the plugins
+in stage 6.
 
 Shared reload, state and selection consumers no longer call the DataTables API
 directly. Bulk actions and custom action forms resolve the adapter for their
 table and read `Admin.Tables.selectedRows(element)`; action submission and the
 auto-update view use `Admin.Tables.reload(...)`. No first-party runtime path
 creates a table through `$(element).DataTable(...)`. The remaining jQuery-based
-filter/control bindings are isolated in the legacy filter driver and tracked by
-the native-filter checkpoint.
+tooltip and highlight bindings are tracked by the draw-hooks checkpoint.

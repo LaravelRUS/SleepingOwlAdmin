@@ -1,8 +1,12 @@
 const {
-    createLegacyFilterDrivers,
+    createTableFilterDrivers,
     isDateInRange,
     isNumberInRange,
-} = require('../../../../frontend/features/table/filters/legacy-filter-drivers')
+} = require('../../../../frontend/features/table/filters/filter-drivers')
+const {
+    bindFilterControls,
+    clearFilterControls,
+} = require('../../../../frontend/features/table/filters/filter-controls')
 const {
     createDataTables2,
     dataTables2Runtime,
@@ -10,6 +14,9 @@ const {
 const {
     installDataTables2Extensions,
 } = require('../../../../frontend/features/table/engine/extensions')
+const {
+    createLegacyFilterEventBridge,
+} = require('../../../../frontend/features/table/themes/legacy-adminlte/filter-events')
 const {
     forEachColumnFilter,
 } = require('../../../../frontend/features/table/filters/filter-elements')
@@ -37,7 +44,10 @@ const {
 
 globalThis.checkNumberRange = isNumberInRange
 globalThis.checkDateRange = isDateInRange
-globalThis.columnFilters = createLegacyFilterDrivers(dataTables2Runtime())
+globalThis.columnFilters = createTableFilterDrivers(
+    dataTables2Runtime(),
+    createLegacyFilterEventBridge(),
+)
 
 Admin.Modules.register('display.datatables', () => {
     const stateFilters = Boolean(Admin.Config.get('state_filters'))
@@ -83,7 +93,7 @@ function mountLegacyTable(element, context) {
     })
 
     bindColumnFilters(definition.id, adapter.engineInstance, options.serverSide)
-    bindFilterControls(definition.id, adapter, context)
+    bindTableFilterControls(definition.id, adapter, context)
 
     return adapter
 }
@@ -134,19 +144,13 @@ function bindColumnFilters(id, table, serverSide) {
     })
 }
 
-function bindFilterControls(id, adapter, context) {
+function bindTableFilterControls(id, adapter, context) {
     matchingContainers(id).forEach((container) => {
-        $(container)
-            .find('#filters-exec')
-            .on('click', () => executeFilters(adapter, context))
-        $(container)
-            .find('#filters-cancel')
-            .on('click', () => clearFilters(adapter, context))
-        $(container)
-            .find('[data-index] input')
-            .on('keyup', (event) => {
-                if (event.key === 'Enter' || event.keyCode === 13) adapter.reload()
-            })
+        bindFilterControls(container, {
+            clear: () => clearFilters(adapter, context),
+            execute: () => executeFilters(adapter, context),
+            reload: () => adapter.reload(),
+        })
     })
 }
 
@@ -158,10 +162,8 @@ function executeFilters(adapter, { filterContainers, stateFilters, stateKey }) {
     adapter.reload()
 }
 
-function clearFilters(adapter, { stateKey }) {
-    $('.display-filters [data-index] input, .display-filters [data-index] select')
-        .val(null)
-        .trigger('change')
+function clearFilters(adapter, { filterContainers, stateKey }) {
+    clearFilterControls(filterContainers)
     adapter.clearState()
     clearFilterState(localStorage, stateKey)
     adapter.reload()

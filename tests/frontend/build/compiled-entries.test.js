@@ -79,14 +79,14 @@ describe('compiled core boundaries', () => {
         },
     )
 
-    it('keeps the transitional jQuery filter driver out of modern table profiles', () => {
+    it('keeps the legacy jQuery event bridge out of modern table profiles', () => {
         for (const profile of ['production', 'development']) {
             const table = readFileSync(
                 resolve(root, `public/default/profiles/${profile}/js/features/table.js`),
                 'utf8',
             )
 
-            expect(table).not.toMatch(/jquery|jQuery|legacy-filter-drivers/)
+            expect(table).not.toMatch(/jquery|jQuery|moment|legacy-adminlte\/filter-events/)
         }
     })
 

@@ -269,6 +269,311 @@ function assertQuestion(value, action) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/filters/filter-controls.js":
+/*!**********************************************************************!*\
+  !*** ./resources/frontend/features/table/filters/filter-controls.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bindFilterControls": () => (/* binding */ bindFilterControls),
+/* harmony export */   "clearFilterControls": () => (/* binding */ clearFilterControls)
+/* harmony export */ });
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function bindFilterControls(container, _ref) {
+  var clear = _ref.clear,
+    execute = _ref.execute,
+    reload = _ref.reload;
+  assertCallbacks(clear, execute, reload);
+  bindClick(container, '#filters-exec', execute);
+  bindClick(container, '#filters-cancel', clear);
+  var _iterator = _createForOfIteratorHelper(container.querySelectorAll('[data-index] input')),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var input = _step.value;
+      input.addEventListener('keyup', function (event) {
+        if (isEnter(event)) reload();
+      });
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+}
+function clearFilterControls(containers) {
+  var _iterator2 = _createForOfIteratorHelper(containers),
+    _step2;
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var container = _step2.value;
+      var _iterator3 = _createForOfIteratorHelper(container.querySelectorAll('[data-index] input, [data-index] select')),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var control = _step3.value;
+          resetControl(control);
+          dispatchChange(control);
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+}
+function bindClick(container, selector, listener) {
+  var _iterator4 = _createForOfIteratorHelper(container.querySelectorAll(selector)),
+    _step4;
+  try {
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      var control = _step4.value;
+      control.addEventListener('click', listener);
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
+}
+function resetControl(control) {
+  if (control.options) {
+    var _iterator5 = _createForOfIteratorHelper(control.options),
+      _step5;
+    try {
+      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+        var option = _step5.value;
+        option.selected = false;
+      }
+    } catch (err) {
+      _iterator5.e(err);
+    } finally {
+      _iterator5.f();
+    }
+    control.selectedIndex = -1;
+  } else {
+    control.value = '';
+  }
+}
+function dispatchChange(control) {
+  var _control$ownerDocumen, _control$ownerDocumen2;
+  var EventConstructor = (_control$ownerDocumen = (_control$ownerDocumen2 = control.ownerDocument) === null || _control$ownerDocumen2 === void 0 || (_control$ownerDocumen2 = _control$ownerDocumen2.defaultView) === null || _control$ownerDocumen2 === void 0 ? void 0 : _control$ownerDocumen2.Event) !== null && _control$ownerDocumen !== void 0 ? _control$ownerDocumen : globalThis.Event;
+  control.dispatchEvent(new EventConstructor('change', {
+    bubbles: true
+  }));
+}
+function isEnter(event) {
+  return event.key === 'Enter' || event.keyCode === 13;
+}
+function assertCallbacks(clear, execute, reload) {
+  if (![clear, execute, reload].every(function (callback) {
+    return typeof callback === 'function';
+  })) {
+    throw new TypeError('Table filter controls require clear, execute and reload callbacks.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/filters/filter-drivers.js":
+/*!*********************************************************************!*\
+  !*** ./resources/frontend/features/table/filters/filter-drivers.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createTableFilterDrivers": () => (/* binding */ createTableFilterDrivers),
+/* harmony export */   "dataTables2SearchExtensions": () => (/* binding */ dataTables2SearchExtensions),
+/* harmony export */   "isDateInRange": () => (/* binding */ isDateInRange),
+/* harmony export */   "isNumberInRange": () => (/* binding */ isNumberInRange)
+/* harmony export */ });
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+var NO_COMPATIBILITY_EVENTS = Object.freeze({
+  bindDateChange: function bindDateChange() {},
+  bindSyntheticChange: function bindSyntheticChange() {},
+  parseDate: unsupportedDateParser
+});
+function createTableFilterDrivers(engine) {
+  var compatibilityEvents = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : NO_COMPATIBILITY_EVENTS;
+  var searchExtensions = dataTables2SearchExtensions(engine);
+  var events = normalizeCompatibilityEvents(compatibilityEvents);
+  return {
+    date: function date(input, table, column) {
+      return bindDateFilter(input, table, column, events);
+    },
+    daterange: function daterange(input, table, column) {
+      return bindDateRangeFilter(input, table, column, events);
+    },
+    range: function range(container, table, column, index, serverSide) {
+      return bindRangeFilter(container, table, column, index, serverSide, searchExtensions, events);
+    },
+    select: function select(input, table, column, index, serverSide) {
+      return bindSelectFilter(input, table, column, index, serverSide, events);
+    },
+    text: bindTextFilter
+  };
+}
+function dataTables2SearchExtensions(engine) {
+  var _engine$ext;
+  if (!Array.isArray(engine === null || engine === void 0 || (_engine$ext = engine.ext) === null || _engine$ext === void 0 ? void 0 : _engine$ext.search)) {
+    throw new TypeError('Table range filters require a DataTables search registry.');
+  }
+  return engine.ext.search;
+}
+function isNumberInRange(fromValue, toValue, value) {
+  if (Number.isNaN(fromValue) && Number.isNaN(toValue)) return true;
+  if (Number.isNaN(value)) return false;
+  if (Number.isNaN(fromValue)) return value <= toValue;
+  if (Number.isNaN(toValue)) return value >= fromValue;
+  return value >= fromValue && value <= toValue;
+}
+function isDateInRange(fromValue, toValue, value) {
+  if (!fromValue && !toValue) return true;
+  if (!value.isValid()) return false;
+  if (!fromValue) return value.isSameOrBefore(toValue);
+  if (!toValue) return value.isSameOrAfter(fromValue);
+  return value.isBetween(fromValue, toValue);
+}
+function bindDateFilter(input, _table, column, events) {
+  var search = function search() {
+    return column.search(input.value);
+  };
+  bindEvents(input, ['change'], search);
+  events.bindDateChange(input, search);
+}
+function bindDateRangeFilter(input, _table, column, events) {
+  bindTextFilter(input, _table, column);
+  events.bindSyntheticChange(input, function () {
+    return column.search(input.value);
+  });
+}
+function bindTextFilter(input, _table, column) {
+  bindEvents(input, ['keyup', 'change'], function () {
+    return column.search(input.value);
+  });
+}
+function bindSelectFilter(input, _table, column, _index, serverSide, events) {
+  var search = function search() {
+    return searchSelectedValues(column, selectedValues(input), serverSide);
+  };
+  bindEvents(input, ['change'], search);
+  events.bindSyntheticChange(input, search);
+}
+function selectedValues(input) {
+  return _toConsumableArray(input.selectedOptions).map(function (option) {
+    return option.value;
+  }).filter(Boolean);
+}
+function searchSelectedValues(column, selected, serverSide) {
+  if (serverSide) {
+    column.search(selected.join(':::'));
+  } else {
+    column.search(selected.join('|'), true, false, true);
+  }
+}
+function bindRangeFilter(container, table, column, index, serverSide, searchExtensions, events) {
+  var _rangeInputs = rangeInputs(container),
+    from = _rangeInputs.from,
+    to = _rangeInputs.to;
+  var isDateRange = hasDatePickers(from, to);
+  var search = function search() {
+    return searchRange(from, to, table, column, serverSide);
+  };
+  bindEvents(from, ['keyup', 'change'], search);
+  bindEvents(to, ['keyup', 'change'], search);
+  bindDateRangeEvents(from, to, search, isDateRange, events);
+  if (!serverSide) {
+    searchExtensions.push(function (settings, data) {
+      return filterRange(settings, data, table, index, from, to, isDateRange, events.parseDate);
+    });
+  }
+}
+function rangeInputs(container) {
+  var inputs = container.querySelectorAll('input');
+  var from = inputs[0];
+  var to = inputs[inputs.length - 1];
+  if (!from || !to || from === to) {
+    throw new TypeError('Table range filters require two input controls.');
+  }
+  from.dataset.ajaxDataName = 'from';
+  to.dataset.ajaxDataName = 'to';
+  return {
+    from: from,
+    to: to
+  };
+}
+function hasDatePickers(from, to) {
+  return Boolean(from.closest('.input-date') && to.closest('.input-date'));
+}
+function bindDateRangeEvents(from, to, search, isDateRange, events) {
+  if (!isDateRange) return;
+  events.bindDateChange(from, search);
+  events.bindDateChange(to, search);
+}
+function searchRange(from, to, table, column, serverSide) {
+  if (serverSide) {
+    column.search("".concat(from.value, "::").concat(to.value));
+  } else {
+    table.draw();
+  }
+}
+function filterRange(settings, data, table, index, from, to, isDateRange, parseDate) {
+  if (table.settings()[0].sTableId !== settings.sTableId) return true;
+  var value = orderedValue(data[index]);
+  return isDateRange ? filterDateRange(value, from, to, parseDate) : isNumberInRange(Number.parseInt(from.value), Number.parseInt(to.value), Number.parseInt(value));
+}
+function orderedValue(value) {
+  return value && value['@data-order'] !== undefined ? value['@data-order'] : value;
+}
+function filterDateRange(value, from, to, parseDate) {
+  var format = from.dataset.dateFormat;
+  return isDateInRange(inputDate(from, format, parseDate), inputDate(to, format, parseDate), parseDate(value, format));
+}
+function inputDate(input, format, parseDate) {
+  return input.value.length > 0 ? parseDate(input.value, format) : false;
+}
+function bindEvents(control, types, listener) {
+  var _iterator = _createForOfIteratorHelper(types),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var type = _step.value;
+      control.addEventListener(type, listener);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+}
+function normalizeCompatibilityEvents(events) {
+  if (typeof (events === null || events === void 0 ? void 0 : events.bindDateChange) !== 'function' || typeof (events === null || events === void 0 ? void 0 : events.bindSyntheticChange) !== 'function' || typeof (events === null || events === void 0 ? void 0 : events.parseDate) !== 'function') {
+    throw new TypeError('Table filters require valid compatibility event bindings.');
+  }
+  return events;
+}
+function unsupportedDateParser() {
+  throw new TypeError('Client-side date filters require a date parser.');
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/filters/filter-elements.js":
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/filters/filter-elements.js ***!
@@ -983,40 +1288,50 @@ var __webpack_exports__ = {};
   \****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DataTableAdapter": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_3__.DataTableAdapter),
+/* harmony export */   "DataTableAdapter": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_5__.DataTableAdapter),
 /* harmony export */   "TABLE_FEATURE_ID": () => (/* binding */ TABLE_FEATURE_ID),
-/* harmony export */   "appendNamedFilterData": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_9__.appendNamedFilterData),
-/* harmony export */   "applyCreatedRowClass": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_2__.applyCreatedRowClass),
-/* harmony export */   "applyServerOptions": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_5__.applyServerOptions),
+/* harmony export */   "appendNamedFilterData": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_11__.appendNamedFilterData),
+/* harmony export */   "applyCreatedRowClass": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.applyCreatedRowClass),
+/* harmony export */   "applyServerOptions": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.applyServerOptions),
 /* harmony export */   "bindConfirmedControls": () => (/* reexport safe */ _controls_confirm_submit_js__WEBPACK_IMPORTED_MODULE_0__.bindConfirmedControls),
-/* harmony export */   "bindTableCheckboxes": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_7__.bindTableCheckboxes),
-/* harmony export */   "clearFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_8__.clearFilterState),
-/* harmony export */   "clearSavedTableSearch": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_8__.clearSavedTableSearch),
-/* harmony export */   "createDrawHook": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_2__.createDrawHook),
-/* harmony export */   "createTableAjax": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_9__.createTableAjax),
-/* harmony export */   "filterStateKey": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_8__.filterStateKey),
-/* harmony export */   "forEachColumnFilter": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__.forEachColumnFilter),
-/* harmony export */   "loadFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_8__.loadFilterState),
-/* harmony export */   "mountDataTable": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_3__.mountDataTable),
-/* harmony export */   "normalizeDataTables2Options": () => (/* reexport safe */ _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_4__.normalizeDataTables2Options),
-/* harmony export */   "readControlValue": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__.readControlValue),
-/* harmony export */   "readTableDefinition": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_5__.readTableDefinition),
-/* harmony export */   "saveFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_8__.saveFilterState),
-/* harmony export */   "selectedRowValues": () => (/* reexport safe */ _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_6__.selectedRowValues),
-/* harmony export */   "tableLayout": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_5__.tableLayout),
-/* harmony export */   "updateRowSelection": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_7__.updateRowSelection)
+/* harmony export */   "bindFilterControls": () => (/* reexport safe */ _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_1__.bindFilterControls),
+/* harmony export */   "bindTableCheckboxes": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_9__.bindTableCheckboxes),
+/* harmony export */   "clearFilterControls": () => (/* reexport safe */ _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_1__.clearFilterControls),
+/* harmony export */   "clearFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.clearFilterState),
+/* harmony export */   "clearSavedTableSearch": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.clearSavedTableSearch),
+/* harmony export */   "createDrawHook": () => (/* reexport safe */ _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__.createDrawHook),
+/* harmony export */   "createTableAjax": () => (/* reexport safe */ _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_11__.createTableAjax),
+/* harmony export */   "createTableFilterDrivers": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.createTableFilterDrivers),
+/* harmony export */   "dataTables2SearchExtensions": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.dataTables2SearchExtensions),
+/* harmony export */   "filterStateKey": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.filterStateKey),
+/* harmony export */   "forEachColumnFilter": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_3__.forEachColumnFilter),
+/* harmony export */   "isDateInRange": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.isDateInRange),
+/* harmony export */   "isNumberInRange": () => (/* reexport safe */ _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__.isNumberInRange),
+/* harmony export */   "loadFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.loadFilterState),
+/* harmony export */   "mountDataTable": () => (/* reexport safe */ _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_5__.mountDataTable),
+/* harmony export */   "normalizeDataTables2Options": () => (/* reexport safe */ _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_6__.normalizeDataTables2Options),
+/* harmony export */   "readControlValue": () => (/* reexport safe */ _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_3__.readControlValue),
+/* harmony export */   "readTableDefinition": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.readTableDefinition),
+/* harmony export */   "saveFilterState": () => (/* reexport safe */ _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__.saveFilterState),
+/* harmony export */   "selectedRowValues": () => (/* reexport safe */ _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_8__.selectedRowValues),
+/* harmony export */   "tableLayout": () => (/* reexport safe */ _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.tableLayout),
+/* harmony export */   "updateRowSelection": () => (/* reexport safe */ _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_9__.updateRowSelection)
 /* harmony export */ });
 /* harmony import */ var _controls_confirm_submit_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controls/confirm-submit.js */ "./resources/frontend/features/table/controls/confirm-submit.js");
-/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
-/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
-/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
-/* harmony import */ var _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./options/option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
-/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
-/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
-/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./selection/checkbox-controls.js */ "./resources/frontend/features/table/selection/checkbox-controls.js");
-/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
-/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
+/* harmony import */ var _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filters/filter-controls.js */ "./resources/frontend/features/table/filters/filter-controls.js");
+/* harmony import */ var _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filters/filter-drivers.js */ "./resources/frontend/features/table/filters/filter-drivers.js");
+/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
+/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
+/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
+/* harmony import */ var _options_option_aliases_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./options/option-aliases.js */ "./resources/frontend/features/table/options/option-aliases.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _selection_selected_rows_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./selection/selected-rows.js */ "./resources/frontend/features/table/selection/selected-rows.js");
+/* harmony import */ var _selection_checkbox_controls_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./selection/checkbox-controls.js */ "./resources/frontend/features/table/selection/checkbox-controls.js");
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
 var TABLE_FEATURE_ID = 'table';
+
+
 
 
 

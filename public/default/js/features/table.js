@@ -1,1 +1,1 @@
-(()=>{"use strict";Object.freeze([["sDom","dom"],["bStateSave","stateSave"],["fnDrawCallback","drawCallback"]])})();
+(()=>{"use strict";Object.freeze({bindDateChange:function(){},bindSyntheticChange:function(){},parseDate:function(){throw new TypeError("Client-side date filters require a date parser.")}});Object.freeze([["sDom","dom"],["bStateSave","stateSave"],["fnDrawCallback","drawCallback"]])})();

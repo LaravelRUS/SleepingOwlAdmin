@@ -1,11 +1,11 @@
 import { expect, it } from 'vitest'
 
 import {
-    createLegacyFilterDrivers,
+    createTableFilterDrivers,
     dataTables2SearchExtensions,
     isDateInRange,
     isNumberInRange,
-} from '../../../../resources/frontend/features/table/filters/legacy-filter-drivers.js'
+} from '../../../../resources/frontend/features/table/filters/filter-drivers.js'
 
 function date({ after = false, before = false, between = false, valid = true } = {}) {
     return {
@@ -37,9 +37,9 @@ it('resolves custom search registration from the active engine', () => {
     const engine = { ext: { search } }
 
     expect(dataTables2SearchExtensions(engine)).toBe(search)
-    expect(createLegacyFilterDrivers(engine)).toMatchObject({
+    expect(createTableFilterDrivers(engine)).toMatchObject({
         date: expect.any(Function),
         range: expect.any(Function),
     })
-    expect(() => createLegacyFilterDrivers({})).toThrow('search registry')
+    expect(() => createTableFilterDrivers({})).toThrow('search registry')
 })
