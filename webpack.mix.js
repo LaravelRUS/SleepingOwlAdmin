@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 const { execFileSync } = require('node:child_process');
 const frontendEntries = require('./build/frontend-entries.json');
+const assetProfile = resolveAssetProfile();
 
 mix.setPublicPath('./public/default/');
 
@@ -15,7 +16,7 @@ mix.webpackConfig({
 
 registerEntries(frontendEntries);
 
-mix.then(() => generateAssetManifest());
+mix.then(() => generateAssetManifest(assetProfile));
 
 mix.options({
     processCssUrls: true,
@@ -25,6 +26,10 @@ mix.options({
     },
     progress: false
 });
+
+if (assetProfile === 'development') {
+    mix.sourceMaps(false, 'source-map');
+}
 
 if (mix.inProduction()) {
     mix.version();
@@ -47,12 +52,21 @@ function registerStyles(group) {
     group.styles.forEach(({ source, output }) => mix.sass(source, output));
 }
 
-function generateAssetManifest() {
-    const profile = mix.inProduction() ? 'production' : 'development';
-
+function generateAssetManifest(profile) {
     execFileSync('php', ['scripts/modernization/generate-asset-manifest.php', profile], {
         cwd: __dirname,
         stdio: 'inherit',
     });
+}
+
+function resolveAssetProfile() {
+    const profile = process.env.SOA_ASSET_PROFILE
+        || (mix.inProduction() ? 'production' : 'development');
+
+    if (!['production', 'development'].includes(profile)) {
+        throw new Error(`Unsupported SOA_ASSET_PROFILE [${profile}].`);
+    }
+
+    return profile;
 }
 

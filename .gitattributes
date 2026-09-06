@@ -1,0 +1,2 @@
+# Compiled profile assets preserve the bundler's generated formatting.
+/public/default/profiles/** -whitespace

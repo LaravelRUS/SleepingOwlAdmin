@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
@@ -15,6 +15,15 @@ function readJson(path) {
 
 function modernEntries(type) {
     return buildEntries.modern[type]
+}
+
+function profileCases() {
+    return ['production', 'development'].flatMap((profile) =>
+        [...modernEntries('scripts'), ...modernEntries('styles')].map((entry) => ({
+            profile,
+            ...entry,
+        })),
+    )
 }
 
 function manifestPath(output) {
@@ -72,19 +81,39 @@ describe('logical asset manifest', () => {
         expect(assetManifest.schema_version).toBe(1)
         expect(assetManifest.package_version).toMatch(/\S+/)
         expect(assetManifest.build_id).toMatch(/^sha256:[a-f0-9]{64}$/)
-        expect(Object.keys(assetManifest.profiles)).toEqual(['production'])
+        expect(Object.keys(assetManifest.profiles)).toEqual(['production', 'development'])
+        expect(Object.keys(assetManifest.profiles.production.entries)).toEqual(
+            Object.keys(assetManifest.profiles.development.entries),
+        )
     })
 
-    it.each([...modernEntries('scripts'), ...modernEntries('styles')])(
-        'maps $logicalId to a versioned and checksummed $output',
-        ({ logicalId, output }) => {
+    it.each(profileCases())(
+        'maps $profile $logicalId to a versioned and checksummed $output',
+        ({ profile, logicalId, output }) => {
             const type = output.endsWith('.js') ? 'scripts' : 'styles'
-            const publicPath = resolve(root, 'public/default', output)
-            const assets = assetManifest.profiles.production.entries[logicalId][type]
-            const asset = assets.find(({ file }) => file === output)
+            const file = `profiles/${profile}/${output}`
+            const publicPath = resolve(root, 'public/default', file)
+            const assets = assetManifest.profiles[profile].entries[logicalId][type]
+            const asset = assets.find((candidate) => candidate.file === file)
 
             expect(asset.version).toBe(contentHash(publicPath))
             expect(asset.checksum).toBe(checksum(publicPath))
+        },
+    )
+
+    it.each([...modernEntries('scripts'), ...modernEntries('styles')])(
+        'ships source maps only for the development $output',
+        ({ output }) => {
+            const development = resolve(root, 'public/default/profiles/development', output)
+            const production = resolve(root, 'public/default/profiles/production', output)
+            const developmentSource = readFileSync(development, 'utf8')
+            const productionSource = readFileSync(production, 'utf8')
+
+            expect(developmentSource).toContain('sourceMappingURL=')
+            expect(existsSync(`${development}.map`)).toBe(true)
+            expect(productionSource).not.toContain('sourceMappingURL=')
+            expect(existsSync(`${production}.map`)).toBe(false)
+            expect(productionSource.length).toBeLessThan(developmentSource.length)
         },
     )
 })

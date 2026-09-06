@@ -44,4 +44,4 @@ The following outputs remain available and unchanged during incremental migratio
 - Features may import core contracts but not concrete themes.
 - Themes may import public core/feature contracts but features and core never import a concrete theme.
 - No new entry may rely on an implicit global other than the transitional root `window.Admin` contract.
-- The manifest schema already isolates entries by profile. The current production profile is generated and resolved; the next milestone adds the complete development profile and config-driven selection without changing logical ids.
+- Production and development map the same logical ids to isolated files under `profiles/<profile>`. `ADMIN_DEV_ASSETS` selects one complete profile; development files include external source maps while production files are minified and contain no source map reference.

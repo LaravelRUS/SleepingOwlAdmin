@@ -12,7 +12,7 @@ class AssetManifestLoaderTest extends TestCase
             dirname(__DIR__, 3).'/public/default/asset-manifest.json'
         );
 
-        $this->assertSame(['production'], $manifest->profileIds());
+        $this->assertSame(['production', 'development'], $manifest->profileIds());
         $this->assertSame([
             'core',
             'feature:forms',
@@ -20,6 +20,10 @@ class AssetManifestLoaderTest extends TestCase
             'theme:legacy-adminlte',
             'theme:tailwind',
         ], $manifest->profile('production')->entryIds());
+        $this->assertSame(
+            $manifest->profile('production')->entryIds(),
+            $manifest->profile('development')->entryIds()
+        );
     }
 
     public function test_missing_manifest_has_an_actionable_diagnostic(): void

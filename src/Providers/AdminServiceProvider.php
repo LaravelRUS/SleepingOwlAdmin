@@ -12,6 +12,7 @@ use Illuminate\Support\ServiceProvider;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
+use SleepingOwl\Admin\Assets\AssetProfileSelector;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
@@ -111,6 +112,10 @@ class AdminServiceProvider extends ServiceProvider
             return new AssetManifestLoader($app['files']);
         });
 
+        $this->app->singleton(AssetProfileSelector::class, function (Application $app) {
+            return new AssetProfileSelector($app['config']);
+        });
+
         $this->app->singleton(AssetManifestResolver::class, function (Application $app) {
             $manifestPath = $app->publicPath(
                 'packages/sleepingowl/default/asset-manifest.json'
@@ -119,7 +124,8 @@ class AdminServiceProvider extends ServiceProvider
             return new AssetManifestResolver(
                 $app->make(AssetManifestLoader::class)->load($manifestPath),
                 $app->make(UrlGenerator::class),
-                'packages/sleepingowl/default'
+                'packages/sleepingowl/default',
+                $app->make(AssetProfileSelector::class)->selected()
             );
         });
 

@@ -1,0 +1,14 @@
+@layer sleepingowl-feature.table;
+:root {
+  --soa-table-text-color: #1f2937;
+  --soa-table-surface-color: #fff;
+  --soa-table-border-color: #d1d5db;
+  --soa-table-row-hover-color: #f3f4f6;
+  --soa-table-row-selected-color: #dbeafe;
+  --soa-table-cell-padding-block: 0.625rem;
+  --soa-table-cell-padding-inline: 0.75rem;
+  --soa-table-border-width: 0.0625rem;
+  --soa-table-row-transition-duration: 150ms;
+}
+
+/*# sourceMappingURL=table.css.map*/

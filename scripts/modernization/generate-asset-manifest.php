@@ -7,21 +7,25 @@ use SleepingOwl\Admin\Assets\AssetManifest;
 require dirname(__DIR__, 2).'/vendor/autoload.php';
 
 $root = dirname(__DIR__, 2);
-$profile = $argv[1] ?? 'production';
-$entries = buildEntries(readJson("{$root}/build/frontend-entries.json"), $root);
-$manifest = manifest($profile, $entries);
+$profile = profileArgument($argv[1] ?? 'production');
+$manifestPath = "{$root}/public/default/asset-manifest.json";
+$packageVersion = packageVersion();
+
+prepareProfileDirectory($root, $profile);
+$entries = buildEntries(readJson("{$root}/build/frontend-entries.json"), $root, $profile);
+$profiles = existingProfiles($manifestPath, $packageVersion);
+$profiles[$profile] = ['entries' => $entries];
+$manifest = manifest($packageVersion, orderedProfiles($profiles));
 
 AssetManifest::fromArray($manifest);
-writeManifest("{$root}/public/default/asset-manifest.json", $manifest);
+writeManifest($manifestPath, $manifest);
 
-function manifest(string $profile, array $entries): array
+function manifest(string $packageVersion, array $profiles): array
 {
     $manifest = [
         'schema_version' => AssetManifest::SCHEMA_VERSION,
-        'package_version' => packageVersion(),
-        'profiles' => [
-            $profile => ['entries' => $entries],
-        ],
+        'package_version' => $packageVersion,
+        'profiles' => $profiles,
     ];
 
     $manifest['build_id'] = 'sha256:'.hash('sha256', encodeJson($manifest));
@@ -29,14 +33,18 @@ function manifest(string $profile, array $entries): array
     return $manifest;
 }
 
-function buildEntries(array $matrix, string $root): array
+function buildEntries(array $matrix, string $root, string $profile): array
 {
     $entries = [];
     foreach (['scripts', 'styles'] as $type) {
         foreach ($matrix['modern'][$type] ?? [] as $entry) {
             $logicalId = $entry['logicalId'];
             $entries[$logicalId] ??= ['scripts' => [], 'styles' => []];
-            $entries[$logicalId][$type][] = assetRecord($entry['output'], $root);
+            $entries[$logicalId][$type][] = assetRecord(
+                $entry['output'],
+                $root,
+                $profile
+            );
         }
     }
 
@@ -45,20 +53,94 @@ function buildEntries(array $matrix, string $root): array
     return $entries;
 }
 
-function assetRecord(string $output, string $root): array
+function assetRecord(string $output, string $root, string $profile): array
 {
-    $file = str_replace('\\', '/', $output);
-    $path = "{$root}/public/default/{$file}";
+    $output = str_replace('\\', '/', $output);
+    $source = "{$root}/public/default/{$output}";
+    $file = "profiles/{$profile}/{$output}";
+    $target = "{$root}/public/default/{$file}";
 
-    if (! is_file($path)) {
-        throw new RuntimeException("Compiled asset [{$file}] is missing.");
-    }
+    copyCompiledAsset($source, $target, $profile === 'development');
 
     return [
         'file' => $file,
-        'version' => hash_file('md5', $path),
-        'checksum' => 'sha256:'.hash_file('sha256', $path),
+        'version' => hash_file('md5', $target),
+        'checksum' => 'sha256:'.hash_file('sha256', $target),
     ];
+}
+
+function copyCompiledAsset(string $source, string $target, bool $includeSourceMap): void
+{
+    if (! is_file($source)) {
+        throw new RuntimeException("Compiled asset [{$source}] is missing.");
+    }
+
+    $files = new Filesystem();
+    $files->ensureDirectoryExists(dirname($target));
+    copyFile($files, $source, $target);
+
+    if ($includeSourceMap && is_file("{$source}.map")) {
+        copyFile($files, "{$source}.map", "{$target}.map");
+    }
+
+    if (! $includeSourceMap) {
+        $files->delete("{$source}.map");
+    }
+}
+
+function copyFile(Filesystem $files, string $source, string $target): void
+{
+    if (! $files->copy($source, $target)) {
+        throw new RuntimeException("Unable to copy compiled asset to [{$target}].");
+    }
+}
+
+function prepareProfileDirectory(string $root, string $profile): void
+{
+    $directory = "{$root}/public/default/profiles/{$profile}";
+    $files = new Filesystem();
+
+    $files->deleteDirectory($directory);
+    $files->ensureDirectoryExists($directory);
+}
+
+function existingProfiles(string $path, string $packageVersion): array
+{
+    if (! is_file($path)) {
+        return [];
+    }
+
+    try {
+        $data = readJson($path);
+        $manifest = AssetManifest::fromArray($data);
+    } catch (Throwable) {
+        return [];
+    }
+
+    return $manifest->packageVersion() === $packageVersion
+        ? $data['profiles']
+        : [];
+}
+
+function orderedProfiles(array $profiles): array
+{
+    $ordered = [];
+    foreach (['production', 'development'] as $profile) {
+        if (isset($profiles[$profile])) {
+            $ordered[$profile] = $profiles[$profile];
+        }
+    }
+
+    return $ordered;
+}
+
+function profileArgument(string $profile): string
+{
+    if (! in_array($profile, ['production', 'development'], true)) {
+        throw new InvalidArgumentException("Unsupported asset profile [{$profile}].");
+    }
+
+    return $profile;
 }
 
 function packageVersion(): string

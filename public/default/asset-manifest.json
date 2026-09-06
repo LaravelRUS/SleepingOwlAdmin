@@ -7,14 +7,14 @@
                 "core": {
                     "scripts": [
                         {
-                            "file": "js/admin-core.js",
+                            "file": "profiles/production/js/admin-core.js",
                             "version": "f5d387540235443141917d352abe4d71",
                             "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
                         }
                     ],
                     "styles": [
                         {
-                            "file": "css/admin-core.css",
+                            "file": "profiles/production/css/admin-core.css",
                             "version": "cf1f19d121dd73ef037c531c7b68c61f",
                             "checksum": "sha256:debab0c0349e658d217d3151b758f7da9ebe905203342a7954dc6458013472b0"
                         }
@@ -23,14 +23,14 @@
                 "feature:forms": {
                     "scripts": [
                         {
-                            "file": "js/features/forms.js",
+                            "file": "profiles/production/js/features/forms.js",
                             "version": "f5d387540235443141917d352abe4d71",
                             "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
                         }
                     ],
                     "styles": [
                         {
-                            "file": "css/features/forms.css",
+                            "file": "profiles/production/css/features/forms.css",
                             "version": "ce247f8dcfc6d7791a31b0ca74689221",
                             "checksum": "sha256:1132e5e127eb13dd93bc31013dbeef330bdefeb1a528bc94a90f51c38b89b9c1"
                         }
@@ -39,14 +39,14 @@
                 "feature:table": {
                     "scripts": [
                         {
-                            "file": "js/features/table.js",
+                            "file": "profiles/production/js/features/table.js",
                             "version": "f5d387540235443141917d352abe4d71",
                             "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
                         }
                     ],
                     "styles": [
                         {
-                            "file": "css/features/table.css",
+                            "file": "profiles/production/css/features/table.css",
                             "version": "0486f14bd03357524d6cb5a97dc6e459",
                             "checksum": "sha256:44246d5b8bbcf14e3e1d43d5daa922051e682565176ec8228e879a403bee391b"
                         }
@@ -55,14 +55,14 @@
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
-                            "file": "js/themes/legacy-adminlte.js",
+                            "file": "profiles/production/js/themes/legacy-adminlte.js",
                             "version": "f5d387540235443141917d352abe4d71",
                             "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
                         }
                     ],
                     "styles": [
                         {
-                            "file": "css/themes/legacy-adminlte.css",
+                            "file": "profiles/production/css/themes/legacy-adminlte.css",
                             "version": "9459de14897d739c753678e558348f17",
                             "checksum": "sha256:0f749b1ce9c8bdc8164b100632d8d0dc050ce252491a5c939ec5788fcd66f975"
                         }
@@ -71,21 +71,105 @@
                 "theme:tailwind": {
                     "scripts": [
                         {
-                            "file": "js/themes/tailwind.js",
+                            "file": "profiles/production/js/themes/tailwind.js",
                             "version": "f5d387540235443141917d352abe4d71",
                             "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
                         }
                     ],
                     "styles": [
                         {
-                            "file": "css/themes/tailwind.css",
+                            "file": "profiles/production/css/themes/tailwind.css",
                             "version": "e40d8be5bf203a1dc405a60ce5539ed0",
                             "checksum": "sha256:ea18753c912aebf30bf1e167dbcd82f7c012d2b26e5490455525d2d841d5f593"
                         }
                     ]
                 }
             }
+        },
+        "development": {
+            "entries": {
+                "core": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/admin-core.js",
+                            "version": "02b36ade7a6e4af616de6056d5d96a0d",
+                            "checksum": "sha256:a4dfb9ccc25259f7ea8ec4946a7cfc295344b699b6cbf82e16ff21a5b05cd212"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/admin-core.css",
+                            "version": "8936753ab76d566e1a7c893d1492a87c",
+                            "checksum": "sha256:8576c1415ea926da21ad52c245fae03c60f856487fa331917c5bc864125b52ed"
+                        }
+                    ]
+                },
+                "feature:forms": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/forms.js",
+                            "version": "3f2e41e79062469d14ab10493804061e",
+                            "checksum": "sha256:aab71741e797d03f83d84e67f309c77de77608cbf24aadbf62ae5bf0b5b5f830"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/forms.css",
+                            "version": "d75f169105d39f732c5c5018bc5b1605",
+                            "checksum": "sha256:ee5f836e803f0e46b87a8a95dd4590fc11c58e0f9d2e0ddc3e64ca5351f5a3d4"
+                        }
+                    ]
+                },
+                "feature:table": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/table.js",
+                            "version": "a06d74493522a5e33d1f2116ab955da9",
+                            "checksum": "sha256:1274c1da2511050ab15b5e7dd1f942479f3d49be1bae5196178253ac997cbea6"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/table.css",
+                            "version": "9c40a4455c2418169a0958df564a3215",
+                            "checksum": "sha256:d8226a02d088e43a09063c80f118b4ca6042c9008cad9c5c7b8ec7109410a7b4"
+                        }
+                    ]
+                },
+                "theme:legacy-adminlte": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/themes/legacy-adminlte.js",
+                            "version": "a9b6eab5cc2542c11a32f185005a61e3",
+                            "checksum": "sha256:fa3cff95bb4751b81d7c1a6ab17a3ba6790c7547d421397993d644ea9655ce4c"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/themes/legacy-adminlte.css",
+                            "version": "5eb59ee7c26f38a7eb01ffbea03f227f",
+                            "checksum": "sha256:a35c0e04f3a40acf497addb66fa219640c784ddd5430d8990071825f099661d8"
+                        }
+                    ]
+                },
+                "theme:tailwind": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/themes/tailwind.js",
+                            "version": "cfbce1f775c930fa04aae584e095c053",
+                            "checksum": "sha256:115e28da9d9e03d99a0473260cb40469eb4a971fae9933e27206303accee07ff"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/themes/tailwind.css",
+                            "version": "cb120e333bff30416349796b7239af12",
+                            "checksum": "sha256:0f52940d49b6c0b513c6d5db4f58c8402b8335ef5e4a3ba14385cfec33adf762"
+                        }
+                    ]
+                }
+            }
         }
     },
-    "build_id": "sha256:a554cc2bb10b4bc1c0411b33bdaa05d6028a5cc715c59a389bc0333cc0f47218"
+    "build_id": "sha256:6e22eb02dfe4ed3d09c74e834b678d8bcf0af5e35df3f9131b875ea5058d0b0d"
 }

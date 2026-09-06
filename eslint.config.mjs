@@ -4,6 +4,7 @@ const modernJavaScript = [
     'resources/frontend/**/*.js',
     'tests/frontend/**/*.js',
     'tests/frontend/**/*.mjs',
+    'scripts/modernization/build-asset-profiles.mjs',
     'playwright.config.mjs',
     'stylelint.config.mjs',
     'vitest.config.mjs',

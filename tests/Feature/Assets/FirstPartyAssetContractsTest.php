@@ -1,6 +1,7 @@
 <?php
 
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
+use SleepingOwl\Admin\Assets\AssetProfileSelector;
 use SleepingOwl\Admin\Contracts\Template\AssetsInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 
@@ -44,6 +45,7 @@ class FirstPartyAssetContractsTest extends TestCase
     public function test_container_exposes_first_party_contracts(): void
     {
         $this->assertTrue($this->app->bound(AssetManifestResolver::class));
+        $this->assertTrue($this->app->bound(AssetProfileSelector::class));
         $this->assertSame(
             $this->app->make('assets'),
             $this->app->make(AssetsInterface::class)
