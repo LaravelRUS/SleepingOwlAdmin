@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 1 — страховочная сетка тестов**.
-- Точка возобновления: настроить ESLint guards длины функций и cyclomatic complexity.
+- Точка возобновления: добавить formatter/check-команду и единый style для нового JavaScript.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -499,7 +499,7 @@ No-build consumer contract является release-blocking:
 
 - [x] Добавить Vitest для чистых JS-модулей и сериализации данных.
 - [x] Добавить ESLint с запретом неявных глобалов.
-- [ ] Настроить ESLint guards для длины функций и cyclomatic complexity с локальными обоснованными исключениями.
+- [x] Настроить ESLint guards для длины функций и cyclomatic complexity с локальными обоснованными исключениями.
 - [ ] Добавить formatter/check-команду и единый style для нового JavaScript.
 - [ ] Добавить Stylelint/`stylelint-scss` и правила, запрещающие color literals вне variables/color files.
 - [ ] Добавить Playwright smoke suite либо минимальный browser fixture, пригодный для проверки compiled assets.
@@ -923,3 +923,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / завершение | Все решения, inventories, reference scenarios, dependency/asset baselines, config matrix и fixtures зафиксированы; точка возобновления перенесена на Vitest этапа 1 | текущий commit |
 | 2026-09-06 | Этап 1 / Vitest | Добавлен Vitest 5 и первые 5 tests чистого island props parser: строгие boolean/number `data-*`, schema filtering и JSON object payload; Node environment не требует DOM | текущий commit |
 | 2026-09-06 | Этап 1 / ESLint globals | Добавлен ESLint 10 flat config для нового frontend/tests с error-level `no-undef`, `no-global-assign`, `no-implicit-globals` и проверкой unused disables; legacy JS подключается по мере миграции | текущий commit |
+| 2026-09-06 | Этап 1 / decomposition guards | Новый JavaScript ограничен complexity 8, 25 statements и 40 непустыми/некомментарийными строками на функцию; исключения допускаются только точечно с review-обоснованием | текущий commit |
