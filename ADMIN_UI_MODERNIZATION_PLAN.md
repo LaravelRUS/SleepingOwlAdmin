@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 1 — страховочная сетка тестов**.
-- Точка возобновления: покрыть PHP feature tests async DataTables request/response.
+- Точка возобновления: зафиксировать browser-сценарии DataTables 1 до обновления.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -503,7 +503,7 @@ No-build consumer contract является release-blocking:
 - [x] Добавить formatter/check-команду и единый style для нового JavaScript.
 - [x] Добавить Stylelint/`stylelint-scss` и правила, запрещающие color literals вне variables/color files.
 - [x] Добавить Playwright smoke suite либо минимальный browser fixture, пригодный для проверки compiled assets.
-- [ ] Покрыть PHP feature-тестами DataTables async request/response: pagination, global search, ordering, column filters, payload, distinct и row class.
+- [x] Покрыть PHP feature-тестами DataTables async request/response: pagination, global search, ordering, column filters, payload, distinct и row class.
 - [ ] Зафиксировать browser-сценарии DataTables 1 до обновления: state restore/clear, range/date/select/text filters, actions, inline edit, auto-update, tooltip/lazyload after draw.
 - [ ] Зафиксировать Vue 2 browser-сценарии: env editor, file/image/images, select/multiselect и related elements, включая динамическое добавление групп.
 - [ ] Добавить render snapshots/contract assertions для layout, navigation, forms, displays, validation и messages текущей темы.
@@ -927,4 +927,5 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 1 / formatter | Добавлен Prettier 3 для нового frontend/tests/config и единая `npm run check` (format check, ESLint, Vitest); legacy assets исключены до их поэтапной миграции | текущий commit |
 | 2026-09-06 | Этап 1 / Stylelint | Добавлены Stylelint 17/stylelint-scss и standard SCSS rules; executable tests запрещают named/hex/color functions вне `_colors.scss`/`_variables.scss` и разрешают `--soa-*` consumers | текущий commit |
 | 2026-09-06 | Этап 1 / Playwright | Добавлены Playwright 1.63, Chromium fixture server и первый real-browser ES-module smoke test typed `data-*`/JSON props; browser binaries остаются CI/maintainer dependency | текущий commit |
-| 2026-09-06 | Этап 1 / PHPUnit baseline | PHPUnit bootstrap и legacy tests адаптированы к PHPUnit 12/Testbench 11: 304 tests, 879 assertions, 0 errors/failures/notices; сохранены 2 явно помеченных TODO-skip | текущий commit |
+| 2026-09-06 | Этап 1 / PHPUnit baseline | PHPUnit bootstrap и legacy tests адаптированы к PHPUnit 12/Testbench 11: 304 tests, 879 assertions, 0 errors/failures/notices; сохранены 2 явно помеченных TODO-skip | `4262e0b1` |
+| 2026-09-06 | Этап 1 / async DataTables PHP | Добавлены 8 SQLite/Eloquent feature tests для pagination/`length=-1`, search, ordering, column filter, payload/controller, distinct, row class и полного response shape; полный прогон с PDO SQLite: 312 tests, 903 assertions | текущий commit |
