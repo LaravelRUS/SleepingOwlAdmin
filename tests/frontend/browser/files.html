@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="files-meta-token" />
+        <title>Native files fixture</title>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'files',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    ckeditor: { upload: { error: { common: 'Upload error' } } },
+                    file: { insert_link: 'Insert link' },
+                    message: {
+                        are_you_sure: 'Are you sure?',
+                        something_went_wrong: 'Something went wrong',
+                    },
+                    table: { error: 'Table error' },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <section
+            class="form-group form-element-file fileUploadMultiple fixture-custom-class"
+            data-target="/api/files-upload"
+            data-token="files-form-token"
+            id="files-fixture"
+        >
+            <script type="text/html" class="RenderFile">
+                <div class="fileThumbnail">
+                    <div class="thumbnail">
+                        <div class="fileicon">
+                            <div class="fileicon-inner" style="background-image:url('[%=img%]')">
+                                <span class="file-extension">[%=ext%]</span>
+                                <span class="file-mime">[%=mime%]</span>
+                                <a
+                                    href="[%=img%]"
+                                    data-soa-lightbox
+                                    style="[%=lightbox_style%]"
+                                    class="file-image"
+                                ></a>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <div
+                                class="fileinfo hidden"
+                                data-id="file"
+                                data-src="[%=src%]"
+                                data-url="[%=url%]"
+                            >
+                                [%=basename%]
+                            </div>
+                            <input class="tit" data-id="title" value="[%=title%]" />
+                            <textarea class="desc" data-id="description">[%=desc%]</textarea>
+                            <input class="orig" data-id="original_name" value="[%=orig%]" />
+                            <button class="fileRemove" type="button">Remove</button>
+                            <a class="drag-handle" href="#">Move</a>
+                            <a href="[%=url%]" download>Download</a>
+                        </div>
+                        <div class="file-original_name">[%=orig%]</div>
+                    </div>
+                </div>
+            </script>
+
+            <div class="files-group dropzone files-group-vertical" data-draggable="true">
+                <div class="fileThumbnail" id="initial-file">
+                    <div class="thumbnail">
+                        <div class="fileicon">
+                            <div class="fileicon-inner"></div>
+                        </div>
+                        <div class="file-actions">
+                            <div
+                                class="fileinfo hidden"
+                                data-id="file"
+                                data-src="documents/start.pdf"
+                                data-url="/documents/start.pdf"
+                            >
+                                start
+                            </div>
+                            <input class="tit" data-id="title" value="Start" />
+                            <textarea class="desc" data-id="description">Initial</textarea>
+                            <input class="orig" data-id="original_name" value="start.pdf" />
+                            <a class="fileLink" href="/documents/start.pdf">Edit link</a>
+                            <button class="fileRemove" type="button">Remove</button>
+                            <a class="drag-handle" href="#">Move</a>
+                            <a href="/documents/start.pdf" download>Download</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fileBrowse">
+                <i class="fa-spin" style="display: none"></i>
+                Browse files
+            </div>
+            <input class="fileValue" name="attachments" type="hidden" value="" />
+        </section>
+
+        <script src="/public/default/js/admin-app-dev.js"></script>
+        <script>
+            window.__fileErrors = []
+            Admin.Messages.error = (...args) => window.__fileErrors.push(args)
+            Admin.Messages.prompt = () =>
+                Promise.resolve({ value: 'https://cdn.example.test/relinked.pdf' })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+        <script>
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

@@ -31,7 +31,6 @@ const {
 installLegacyDataTablesPresentation(dataTables2Runtime());
 require('./libs/sweetalert');
 require('./libs/progressbar');
-require('@flowjs/flow.js');
 require('./libs/noty');
 require('./libs/lazyload');
 

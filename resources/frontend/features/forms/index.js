@@ -16,3 +16,21 @@ export {
     parseDateRangeValue,
 } from './date/date-range-options.js'
 export { installDateControls, LEGACY_DATE_MODULES } from './date/install-date-controls.js'
+export {
+    createFilesDefinition,
+    FILES_COMPONENT,
+    FILES_SELECTOR,
+    mountFiles,
+} from './files/files-controller.js'
+export { installFiles, LEGACY_FILES_MODULE } from './files/install-files.js'
+export { createFileItem, cssUrl } from './files/files-template.js'
+export { createFilesUploader } from './files/files-uploader.js'
+export {
+    baseName,
+    collectFiles,
+    fileExtension,
+    filePresentation,
+    isImageExtension,
+    readFile,
+    serializeFiles,
+} from './files/files-values.js'

@@ -19,6 +19,7 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'legacy-datatables.html'), 'text/html; charset=utf-8'],
     ],
     ['/legacy-vue', [join(browserDirectory, 'legacy-vue.html'), 'text/html; charset=utf-8']],
+    ['/files', [join(browserDirectory, 'files.html'), 'text/html; charset=utf-8']],
     [
         '/custom-vue-island',
         [join(browserDirectory, 'custom-vue-island.html'), 'text/html; charset=utf-8'],
@@ -577,6 +578,34 @@ async function handleTreeReorder(request, response, url) {
     response.writeHead(204).end()
 }
 
+async function handleFilesUpload(request, response) {
+    const body = await readBody(request)
+    const filename = body.match(/filename="([^"]+)"/)?.[1] ?? ''
+    const validCsrf =
+        request.headers['x-csrf-token'] === 'files-meta-token' && body.includes('files-form-token')
+
+    if (!validCsrf) {
+        response.writeHead(419, { 'Content-Type': 'application/json' })
+        response.end(JSON.stringify({ errors: ['Invalid CSRF token'], message: 'Expired' }))
+        return
+    }
+    if (filename === 'broken.txt') {
+        response.writeHead(422, { 'Content-Type': 'application/json' })
+        response.end(JSON.stringify({ errors: ['Broken fixture file'], message: 'Invalid upload' }))
+        return
+    }
+
+    sendJson(response, {
+        desc: `Description ${filename}`,
+        original_name: filename,
+        path: filename.toLowerCase().endsWith('.svg')
+            ? '/fixtures/pixel.svg'
+            : `/downloads/${filename}`,
+        title: `Title ${filename}`,
+        value: `uploads/${filename}`,
+    })
+}
+
 async function readInlineEditParameters(request, url) {
     if (request.method === 'GET') return Object.fromEntries(url.searchParams)
 
@@ -647,6 +676,7 @@ const apiHandlers = new Map([
     ['/api/inline-edit', handleInlineEdit],
     ['/api/tree/reorder', handleTreeReorder],
     ['/api/select-search', handleSelectSearch],
+    ['/api/files-upload', handleFilesUpload],
 ])
 
 async function serveApi(request, response, url) {

@@ -60,8 +60,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/forms.js",
-                            "version": "605954adb457cc5490c7e67754bda3cb",
-                            "checksum": "sha256:b853e8d900c9d07fc0b9bd1974339bc4b62a77fa7f9a6ae7fcb44dd31481fa3e"
+                            "version": "8f47c626584fe75ca7d79a9568c501a6",
+                            "checksum": "sha256:09202515bf82d02179f8671ae680a31bd5cc8877abc477e1792978f7952861ec"
                         }
                     ],
                     "styles": [
@@ -374,8 +374,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/forms.js",
-                            "version": "ca81cd91c2c98977decba655b97ecaf4",
-                            "checksum": "sha256:5ca4f20350e450ab47bdb84c971ed1b950114aafdf16f4d2a7b7668c331eb6d3"
+                            "version": "b78175154819f035cbe7da903746f80c",
+                            "checksum": "sha256:d344c44a340a5ab0c9d9182d5ba3723389c63d7d3a7f85d85393375ed84e792c"
                         }
                     ],
                     "styles": [
@@ -631,5 +631,5 @@
             }
         }
     },
-    "build_id": "sha256:5ce263d87e928cb97e2804bcfd129df56f9ddedf545351e86d12e8306e396803"
+    "build_id": "sha256:8406e61136aae16247e7e40890538861237acaf18d547cd756c761ac5bd61b32"
 }
