@@ -12,6 +12,12 @@ use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
  */
 final class LegacyTemplateThemeAdapter implements ThemeInterface
 {
+    private array $assets;
+
+    private array $icons;
+
+    private array $capabilities;
+
     /**
      * @param  list<string>  $assets
      * @param  array<string, string>  $icons
@@ -20,10 +26,13 @@ final class LegacyTemplateThemeAdapter implements ThemeInterface
     public function __construct(
         private TemplateInterface $template,
         private string $id = 'legacy-template',
-        private array $assets = [],
-        private array $icons = [],
-        private array $capabilities = []
+        array $assets = [],
+        array $icons = [],
+        array $capabilities = []
     ) {
+        $this->assets = (new ThemeAssetManifest($id, $assets))->entries();
+        $this->icons = (new ThemeIcons($icons))->all();
+        $this->capabilities = (new ThemeCapabilities($capabilities))->ids();
     }
 
     public function id(): string
