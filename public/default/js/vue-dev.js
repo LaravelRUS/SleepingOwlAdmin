@@ -14931,10 +14931,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.esm.js");
 /* harmony import */ var _select_values__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./select-values */ "./resources/assets/js_owl/admin/form/select-values.js");
+/* harmony import */ var _select_remote_options__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./select-remote-options */ "./resources/assets/js_owl/admin/form/select-remote-options.js");
+/* harmony import */ var _select_remote_search__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./select-remote-search */ "./resources/assets/js_owl/admin/form/select-remote-search.js");
+/* harmony import */ var _select2_option_migration__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./select2-option-migration */ "./resources/assets/js_owl/admin/form/select2-option-migration.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
 
 
 
@@ -14947,6 +14959,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     attributes: {
       type: Object,
       required: true
+    },
+    legacyOptions: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
     },
     labels: {
       type: Object,
@@ -14967,6 +14985,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         return [];
       }
     },
+    remote: {
+      type: Object,
+      "default": null
+    },
     readonly: Boolean,
     required: Boolean,
     taggable: Boolean,
@@ -14978,19 +15000,54 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
   data: function data() {
     var localOptions = (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.copySelectOptions)(this.options);
     return {
+      legacy: (0,_select2_option_migration__WEBPACK_IMPORTED_MODULE_5__.normalizeLegacySelect2Options)(this.legacyOptions),
+      loading: false,
       localOptions: localOptions,
+      remoteError: false,
+      remoteSearch: null,
+      searchQuery: '',
       selection: (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.initialSelectValue)(localOptions, this.value, this.multiple)
     };
   },
   computed: {
+    allowEmpty: function allowEmpty() {
+      var _this$legacy$allowEmp;
+      return (_this$legacy$allowEmp = this.legacy.allowEmpty) !== null && _this$legacy$allowEmp !== void 0 ? _this$legacy$allowEmp : !this.required;
+    },
+    effectiveReadonly: function effectiveReadonly() {
+      var _this$legacy$readonly;
+      return (_this$legacy$readonly = this.legacy.readonly) !== null && _this$legacy$readonly !== void 0 ? _this$legacy$readonly : this.readonly;
+    },
+    effectiveTaggable: function effectiveTaggable() {
+      var _this$legacy$taggable;
+      return (_this$legacy$taggable = this.legacy.taggable) !== null && _this$legacy$taggable !== void 0 ? _this$legacy$taggable : this.taggable;
+    },
+    emptyMessage: function emptyMessage() {
+      return this.remoteError ? this.labels.error : this.labels.noItems;
+    },
+    minimumSearchLength: function minimumSearchLength() {
+      var _this$legacy$minSymbo, _this$remote$minSymbo, _this$remote;
+      return (_this$legacy$minSymbo = this.legacy.minSymbols) !== null && _this$legacy$minSymbo !== void 0 ? _this$legacy$minSymbo : Number((_this$remote$minSymbo = (_this$remote = this.remote) === null || _this$remote === void 0 ? void 0 : _this$remote.minSymbols) !== null && _this$remote$minSymbo !== void 0 ? _this$remote$minSymbo : 0);
+    },
     placeholder: function placeholder() {
-      return this.localOptions.length ? this.labels.placeholder : this.labels.noItems;
+      if (this.legacy.placeholder !== null) return this.legacy.placeholder;
+      return this.localOptions.length || this.remote ? this.labels.placeholder : this.labels.noItems;
+    },
+    remoteStatusMessage: function remoteStatusMessage() {
+      if (this.remoteError) return this.labels.error;
+      if (this.loading) return this.labels.searching;
+      if (this.searchQuery && this.searchQuery.length < this.minimumSearchLength) {
+        return this.labels.tooShort;
+      }
+      return '';
     },
     resolvedLimit: function resolvedLimit() {
       return this.limit > 0 ? this.limit : 99999;
     },
     resolvedMax: function resolvedMax() {
-      return this.max > 0 ? this.max : false;
+      var _this$legacy$max;
+      var maximum = (_this$legacy$max = this.legacy.max) !== null && _this$legacy$max !== void 0 ? _this$legacy$max : this.max;
+      return maximum > 0 ? maximum : false;
     },
     selectedIds: function selectedIds() {
       return (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.selectedOptionIds)(this.selection, this.multiple);
@@ -14999,12 +15056,24 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.selectFormValue)(this.selectedIds[0]);
     }
   },
+  mounted: function mounted() {
+    this.mountRemoteSearch();
+  },
+  beforeUnmount: function beforeUnmount() {
+    var _this$remoteSearch;
+    (_this$remoteSearch = this.remoteSearch) === null || _this$remoteSearch === void 0 || _this$remoteSearch.destroy();
+    this.remoteSearch = null;
+  },
   methods: {
     addTag: function addTag(value) {
-      if (!this.multiple || this.reachedMaximum()) return;
-      var next = (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.appendSelectTag)(this.localOptions, this.selection, value);
+      if (!this.effectiveTaggable || this.reachedMaximum()) return;
+      var next = (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.appendSelectTag)(this.localOptions, this.selection, value, this.multiple);
       this.localOptions = next.options;
       this.selectionChanged(next.selection);
+    },
+    applyRemoteOptions: function applyRemoteOptions(options) {
+      this.remoteError = false;
+      this.localOptions = (0,_select_remote_options__WEBPACK_IMPORTED_MODULE_3__.mergeRemoteSelectOptions)(this.selection, options, this.multiple);
     },
     dispatchChange: function dispatchChange() {
       var control = this.$refs.nativeControl;
@@ -15024,20 +15093,42 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     optionSelected: function optionSelected(id) {
       return (0,_select_values__WEBPACK_IMPORTED_MODULE_2__.isSelectOptionSelected)(this.selection, id, this.multiple);
     },
+    mountRemoteSearch: function mountRemoteSearch() {
+      var _this = this;
+      if (!this.remote) return;
+      this.remoteSearch = (0,_select_remote_search__WEBPACK_IMPORTED_MODULE_4__.createRemoteSelectSearch)(_objectSpread(_objectSpread({}, this.remote), {}, {
+        document: this.$el.ownerDocument,
+        http: globalThis.Admin.Http,
+        minSymbols: this.minimumSearchLength,
+        onError: function onError() {
+          _this.remoteError = true;
+        },
+        onLoading: function onLoading(loading) {
+          _this.loading = loading;
+          if (loading) _this.remoteError = false;
+        },
+        onResults: this.applyRemoteOptions
+      }));
+    },
     reachedMaximum: function reachedMaximum() {
       return this.resolvedMax !== false && this.selectedIds.length >= this.resolvedMax;
     },
+    searchOptions: function searchOptions(query) {
+      var _this$remoteSearch2;
+      this.searchQuery = String(query !== null && query !== void 0 ? query : '').trim();
+      (_this$remoteSearch2 = this.remoteSearch) === null || _this$remoteSearch2 === void 0 || _this$remoteSearch2.search(this.searchQuery);
+    },
     selectionChanged: function selectionChanged(value) {
-      var _this = this;
+      var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
         return _regenerator().w(function (_context) {
           while (1) switch (_context.n) {
             case 0:
-              _this.selection = value;
+              _this2.selection = value;
               _context.n = 1;
               return (0,vue__WEBPACK_IMPORTED_MODULE_0__.nextTick)();
             case 1:
-              _this.dispatchChange();
+              _this2.dispatchChange();
             case 2:
               return _context.a(2);
           }
@@ -15707,10 +15798,16 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "data-soa-select-root": ""
 };
-var _hoisted_2 = ["value"];
-var _hoisted_3 = ["selected", "value"];
-var _hoisted_4 = {
-  key: 2,
+var _hoisted_2 = {
+  key: 0,
+  "data-soa-select-status": "",
+  "aria-live": "polite"
+};
+var _hoisted_3 = ["disabled", "value"];
+var _hoisted_4 = ["disabled"];
+var _hoisted_5 = ["selected", "value"];
+var _hoisted_6 = {
+  key: 3,
   "class": "text-danger pt-2 pb-3"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -15718,10 +15815,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
     "track-by": "id",
     label: "text",
-    "allow-empty": !_ctx.required,
+    "allow-empty": _ctx.allowEmpty,
     "deselect-label": _ctx.required ? '' : _ctx.labels.deselect,
-    disabled: _ctx.readonly,
+    disabled: _ctx.effectiveReadonly,
+    "internal-search": !_ctx.remote,
     limit: _ctx.resolvedLimit,
+    loading: _ctx.loading,
     max: _ctx.resolvedMax,
     multiple: _ctx.multiple,
     options: _ctx.localOptions,
@@ -15729,39 +15828,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     searchable: true,
     "select-label": _ctx.labels.select,
     "selected-label": _ctx.labels.selected,
-    taggable: _ctx.taggable,
+    taggable: _ctx.effectiveTaggable,
     "model-value": _ctx.selection,
+    onSearchChange: _ctx.searchOptions,
     onTag: _ctx.addTag,
     "onUpdate:modelValue": _ctx.selectionChanged
   }, {
     noResult: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.noItems), 1 /* TEXT */)];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.emptyMessage), 1 /* TEXT */)];
     }),
     noOptions: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.noItems), 1 /* TEXT */)];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.emptyMessage), 1 /* TEXT */)];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["allow-empty", "deselect-label", "disabled", "limit", "max", "multiple", "options", "placeholder", "select-label", "selected-label", "taggable", "model-value", "onTag", "onUpdate:modelValue"]), !_ctx.multiple ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
-    key: 0,
-    ref: "nativeControl"
-  }, _ctx.attributes, {
-    "data-soa-select-native": "",
-    type: "hidden",
-    value: _ctx.singleValue
-  }), null, 16 /* FULL_PROPS */, _hoisted_2)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+  }, 8 /* PROPS */, ["allow-empty", "deselect-label", "disabled", "internal-search", "limit", "loading", "max", "multiple", "options", "placeholder", "select-label", "selected-label", "taggable", "model-value", "onSearchChange", "onTag", "onUpdate:modelValue"]), _ctx.remoteStatusMessage ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.remoteStatusMessage), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !_ctx.multiple ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
     key: 1,
     ref: "nativeControl"
   }, _ctx.attributes, {
     "data-soa-select-native": "",
+    type: "hidden",
+    disabled: _ctx.effectiveReadonly,
+    value: _ctx.singleValue
+  }), null, 16 /* FULL_PROPS */, _hoisted_3)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+    key: 2,
+    ref: "nativeControl"
+  }, _ctx.attributes, {
+    "data-soa-select-native": "",
     hidden: "",
-    multiple: ""
+    multiple: "",
+    disabled: _ctx.effectiveReadonly
   }), [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.localOptions, function (option, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: _ctx.optionKey(option, index),
       selected: _ctx.optionSelected(option.id),
       value: _ctx.formValue(option.id)
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.text), 9 /* TEXT, PROPS */, _hoisted_3);
-  }), 128 /* KEYED_FRAGMENT */))], 16 /* FULL_PROPS */)), _ctx.required && _ctx.multiple && !_ctx.selectedIds.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.required), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.text), 9 /* TEXT, PROPS */, _hoisted_5);
+  }), 128 /* KEYED_FRAGMENT */))], 16 /* FULL_PROPS */, _hoisted_4)), _ctx.required && _ctx.multiple && !_ctx.selectedIds.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.labels.required), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -16465,7 +16567,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "initializeRelatedGroup": () => (/* binding */ initializeRelatedGroup),
 /* harmony export */   "relatedModuleNames": () => (/* binding */ relatedModuleNames)
 /* harmony export */ });
-var relatedModuleNames = Object.freeze(['form.elements.date', 'form.elements.datetime', 'form.elements.daterange', 'form.elements.dependent-select', 'form.elements.select', 'form.elements.selectajax', 'form.elements.wysiwyg']);
+var relatedModuleNames = Object.freeze(['form.elements.date', 'form.elements.datetime', 'form.elements.daterange', 'form.elements.dependent-select', 'form.elements.wysiwyg']);
 function initializeRelatedGroup(admin, element) {
   relatedModuleNames.forEach(function (name) {
     return admin.Modules.call(name);
@@ -16572,6 +16674,300 @@ function newPrimaryIndex(primary) {
 
 /***/ }),
 
+/***/ "./resources/assets/js_owl/admin/form/select-dependencies.js":
+/*!*******************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/select-dependencies.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "appendSelectDependencies": () => (/* binding */ appendSelectDependencies),
+/* harmony export */   "readSelectDependencies": () => (/* binding */ readSelectDependencies)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function readSelectDependencies(ids) {
+  var document = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : globalThis.document;
+  assertDocument(document);
+  return normalizeIds(ids).map(function (id) {
+    return {
+      id: id,
+      value: readControlValue(document, id)
+    };
+  });
+}
+function appendSelectDependencies(parameters, dependencies) {
+  if (!dependencies.length) return parameters;
+  parameters.set('depends', JSON.stringify(dependencies.map(function (_ref) {
+    var id = _ref.id;
+    return id;
+  })));
+  dependencies.forEach(function (_ref2, index) {
+    var id = _ref2.id,
+      value = _ref2.value;
+    appendValue(parameters, "depdrop_parents[".concat(index, "]"), value);
+    appendValue(parameters, "depdrop_all_params[".concat(id, "]"), value);
+  });
+  return parameters;
+}
+function readControlValue(document, id) {
+  var _control$value;
+  var control = document.getElementById(id);
+  if (!control) return '';
+  if (control.type === 'radio') return checkedRadioValue(document, control);
+  if (control.type === 'checkbox') return control.checked;
+  if (control.multiple) return _toConsumableArray(control.selectedOptions).map(function (_ref3) {
+    var value = _ref3.value;
+    return value;
+  });
+  return (_control$value = control.value) !== null && _control$value !== void 0 ? _control$value : '';
+}
+function checkedRadioValue(document, control) {
+  var _checked$value;
+  var checked = _toConsumableArray(document.querySelectorAll('input[type="radio"]')).find(function (candidate) {
+    return candidate.name === control.name && candidate.checked;
+  });
+  return (_checked$value = checked === null || checked === void 0 ? void 0 : checked.value) !== null && _checked$value !== void 0 ? _checked$value : '';
+}
+function appendValue(parameters, name, value) {
+  if (Array.isArray(value)) {
+    value.forEach(function (item) {
+      return parameters.append("".concat(name, "[]"), String(item));
+    });
+    return;
+  }
+  parameters.append(name, String(value !== null && value !== void 0 ? value : ''));
+}
+function normalizeIds(ids) {
+  return Array.isArray(ids) ? ids.filter(function (id) {
+    return typeof id === 'string' && id.length > 0;
+  }) : [];
+}
+function assertDocument(document) {
+  if (typeof (document === null || document === void 0 ? void 0 : document.getElementById) !== 'function') {
+    throw new TypeError('Select dependencies require a document.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js_owl/admin/form/select-remote-options.js":
+/*!*********************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/select-remote-options.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "mergeRemoteSelectOptions": () => (/* binding */ mergeRemoteSelectOptions),
+/* harmony export */   "normalizeRemoteSelectOptions": () => (/* binding */ normalizeRemoteSelectOptions)
+/* harmony export */ });
+/* harmony import */ var _select_values_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./select-values.js */ "./resources/assets/js_owl/admin/form/select-values.js");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+function normalizeRemoteSelectOptions(items) {
+  if (!Array.isArray(items)) {
+    throw new TypeError('Remote select response must be an array.');
+  }
+  return items.map(function (item) {
+    return {
+      id: item.id,
+      text: optionText(item)
+    };
+  });
+}
+function mergeRemoteSelectOptions(selection, items, multiple) {
+  var selected = selectedOptions(selection, multiple);
+  return items.reduce(function (options, item) {
+    if (!(0,_select_values_js__WEBPACK_IMPORTED_MODULE_0__.findSelectOption)(options, item.id)) options.push(item);
+    return options;
+  }, _toConsumableArray(selected));
+}
+function optionText(item) {
+  var value = item.custom_name || item.tag_name || item.text || '';
+  return String(value);
+}
+function selectedOptions(selection, multiple) {
+  if (multiple) return Array.isArray(selection) ? selection : [];
+  return selection ? [selection] : [];
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js_owl/admin/form/select-remote-search.js":
+/*!********************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/select-remote-search.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createRemoteSelectSearch": () => (/* binding */ createRemoteSelectSearch),
+/* harmony export */   "remoteSelectParameters": () => (/* binding */ remoteSelectParameters)
+/* harmony export */ });
+/* harmony import */ var _select_dependencies_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./select-dependencies.js */ "./resources/assets/js_owl/admin/form/select-dependencies.js");
+/* harmony import */ var _select_remote_options_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./select-remote-options.js */ "./resources/assets/js_owl/admin/form/select-remote-options.js");
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+
+function createRemoteSelectSearch(input) {
+  var settings = normalizeSettings(input);
+  var state = createSearchState();
+  return {
+    destroy: function destroy() {
+      return destroySearch(state, settings);
+    },
+    search: function search(query) {
+      return scheduleSearch(query, state, settings);
+    }
+  };
+}
+function remoteSelectParameters(query, dependencyIds, document) {
+  var parameters = new globalThis.URLSearchParams({
+    page: '1',
+    q: query
+  });
+  var dependencies = (0,_select_dependencies_js__WEBPACK_IMPORTED_MODULE_0__.readSelectDependencies)(dependencyIds, document);
+  return (0,_select_dependencies_js__WEBPACK_IMPORTED_MODULE_0__.appendSelectDependencies)(parameters, dependencies);
+}
+function scheduleSearch(input, state, settings) {
+  var query = String(input !== null && input !== void 0 ? input : '').trim();
+  cancelPending(state);
+  state.requestId += 1;
+  if (state.destroyed || query.length < settings.minSymbols) {
+    settings.onLoading(false);
+    return false;
+  }
+  settings.onLoading(true);
+  var requestId = state.requestId;
+  state.timer = globalThis.setTimeout(function () {
+    return loadOptions(query, requestId, state, settings);
+  }, settings.delay);
+  return true;
+}
+function loadOptions(_x, _x2, _x3, _x4) {
+  return _loadOptions.apply(this, arguments);
+}
+function _loadOptions() {
+  _loadOptions = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(query, requestId, state, settings) {
+    var body, response, items, _t, _t2;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.p = _context.n) {
+        case 0:
+          state.timer = null;
+          state.controller = new globalThis.AbortController();
+          _context.p = 1;
+          body = remoteSelectParameters(query, settings.dependencies, settings.document);
+          _context.n = 2;
+          return settings.http.post(settings.url, body, {
+            signal: state.controller.signal
+          });
+        case 2:
+          response = _context.v;
+          _t = _select_remote_options_js__WEBPACK_IMPORTED_MODULE_1__.normalizeRemoteSelectOptions;
+          _context.n = 3;
+          return response.json();
+        case 3:
+          items = _t(_context.v);
+          if (isCurrentRequest(requestId, state)) settings.onResults(items);
+          _context.n = 5;
+          break;
+        case 4:
+          _context.p = 4;
+          _t2 = _context.v;
+          if (isCurrentRequest(requestId, state) && (_t2 === null || _t2 === void 0 ? void 0 : _t2.name) !== 'AbortError') {
+            settings.onError(_t2);
+          }
+        case 5:
+          _context.p = 5;
+          if (isCurrentRequest(requestId, state)) finishRequest(state, settings);
+          return _context.f(5);
+        case 6:
+          return _context.a(2);
+      }
+    }, _callee, null, [[1, 4, 5, 6]]);
+  }));
+  return _loadOptions.apply(this, arguments);
+}
+function finishRequest(state, settings) {
+  state.controller = null;
+  settings.onLoading(false);
+}
+function destroySearch(state, settings) {
+  state.destroyed = true;
+  state.requestId += 1;
+  cancelPending(state);
+  settings.onLoading(false);
+}
+function cancelPending(state) {
+  var _state$controller;
+  if (state.timer !== null) globalThis.clearTimeout(state.timer);
+  (_state$controller = state.controller) === null || _state$controller === void 0 || _state$controller.abort();
+  state.timer = null;
+  state.controller = null;
+}
+function isCurrentRequest(requestId, state) {
+  return !state.destroyed && requestId === state.requestId;
+}
+function createSearchState() {
+  return {
+    controller: null,
+    destroyed: false,
+    requestId: 0,
+    timer: null
+  };
+}
+function normalizeSettings(input) {
+  var _input$http, _input$document;
+  if (!input || _typeof(input) !== 'object' || typeof ((_input$http = input.http) === null || _input$http === void 0 ? void 0 : _input$http.post) !== 'function') {
+    throw new TypeError('Remote select search requires an HTTP client.');
+  }
+  if (typeof input.url !== 'string' || input.url.length === 0) {
+    throw new TypeError('Remote select search requires a URL.');
+  }
+  return {
+    delay: positiveNumber(input.delay, 250),
+    dependencies: Array.isArray(input.dependencies) ? input.dependencies : [],
+    document: (_input$document = input.document) !== null && _input$document !== void 0 ? _input$document : globalThis.document,
+    http: input.http,
+    minSymbols: nonNegativeNumber(input.minSymbols, 3),
+    onError: callback(input.onError),
+    onLoading: callback(input.onLoading),
+    onResults: callback(input.onResults),
+    url: input.url
+  };
+}
+function positiveNumber(value, fallback) {
+  var number = Number(value);
+  return Number.isFinite(number) && number > 0 ? number : fallback;
+}
+function nonNegativeNumber(value, fallback) {
+  var number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : fallback;
+}
+function callback(value) {
+  return typeof value === 'function' ? value : function () {};
+}
+
+/***/ }),
+
 /***/ "./resources/assets/js_owl/admin/form/select-values.js":
 /*!*************************************************************!*\
   !*** ./resources/assets/js_owl/admin/form/select-values.js ***!
@@ -16631,6 +17027,7 @@ function isSelectOptionSelected(selection, id, multiple) {
   });
 }
 function appendSelectTag(options, selection, value) {
+  var multiple = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
   var current = findSelectOption(options, value);
   var option = current !== null && current !== void 0 ? current : {
     id: value,
@@ -16638,7 +17035,7 @@ function appendSelectTag(options, selection, value) {
   };
   return {
     options: current ? options : [].concat(_toConsumableArray(options), [option]),
-    selection: isSelectOptionSelected(selection, option.id, true) ? selection : [].concat(_toConsumableArray(selection), [option])
+    selection: appendTagSelection(selection, option, multiple)
   };
 }
 function selectFormValue(value) {
@@ -16659,6 +17056,80 @@ function sameSelectId(left, right) {
   if (left === right) return true;
   if (left === null || left === undefined || right === null || right === undefined) return false;
   return String(left) === String(right);
+}
+function appendTagSelection(selection, option, multiple) {
+  if (!multiple) return option;
+  return isSelectOptionSelected(selection, option.id, true) ? selection : [].concat(_toConsumableArray(selection), [option]);
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js_owl/admin/form/select2-option-migration.js":
+/*!************************************************************************!*\
+  !*** ./resources/assets/js_owl/admin/form/select2-option-migration.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "normalizeLegacySelect2Options": () => (/* binding */ normalizeLegacySelect2Options)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var SUPPORTED_OPTIONS = new Set(['allowClear', 'disabled', 'maximumSelectionLength', 'minimumInputLength', 'placeholder', 'tags']);
+var OPTION_MIGRATIONS = Object.freeze({
+  ajax: 'Use SelectAjax or MultiSelectAjax.',
+  escapeMarkup: 'HTML labels are no longer executed; use text labels or a custom Vue island.',
+  multiple: 'Use MultiSelect or MultiSelectAjax.',
+  templateResult: 'Use a custom Vue island component.',
+  templateSelection: 'Use a custom Vue island component.'
+});
+function normalizeLegacySelect2Options(options) {
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    _ref$warn = _ref.warn,
+    warn = _ref$warn === void 0 ? warnOption : _ref$warn;
+  var source = validOptions(options);
+  warnUnsupportedOptions(source, warn);
+  return {
+    allowEmpty: optionalBoolean(source.allowClear),
+    max: optionalCount(source.maximumSelectionLength),
+    minSymbols: optionalCount(source.minimumInputLength),
+    placeholder: optionalString(source.placeholder),
+    readonly: optionalBoolean(source.disabled),
+    taggable: optionalBoolean(source.tags)
+  };
+}
+function warnUnsupportedOptions(options, warn) {
+  Object.keys(options).filter(function (name) {
+    return !SUPPORTED_OPTIONS.has(name);
+  }).forEach(function (name) {
+    return warn(optionWarning(name));
+  });
+}
+function optionWarning(name) {
+  var _OPTION_MIGRATIONS$na;
+  var migration = (_OPTION_MIGRATIONS$na = OPTION_MIGRATIONS[name]) !== null && _OPTION_MIGRATIONS$na !== void 0 ? _OPTION_MIGRATIONS$na : 'Use the Vue Multiselect or custom-island API.';
+  return "[SleepingOwl Admin] Select2 option \"".concat(name, "\" is not supported. ").concat(migration);
+}
+function optionalBoolean(value) {
+  if (value === undefined || value === null) return null;
+  if (value === 'false' || value === '0') return false;
+  return Boolean(value);
+}
+function optionalCount(value) {
+  if (value === undefined || value === null) return null;
+  var number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : null;
+}
+function optionalString(value) {
+  return value === undefined || value === null ? null : String(value);
+}
+function validOptions(options) {
+  return options && _typeof(options) === 'object' && !Array.isArray(options) ? options : {};
+}
+function warnOption(message) {
+  var _globalThis$console;
+  (_globalThis$console = globalThis.console) === null || _globalThis$console === void 0 || _globalThis$console.warn(message);
 }
 
 /***/ }),

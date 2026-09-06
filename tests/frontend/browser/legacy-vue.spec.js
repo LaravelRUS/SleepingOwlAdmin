@@ -457,7 +457,8 @@ async function addAndExpectRelatedGroup(page) {
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
     await expect(page.locator('#related-title_2')).toHaveAttribute('name', 'items[new_2][title]')
     await expect(page.locator('#related-status_2')).toHaveAttribute('name', 'items[new_2][status]')
-    await expect(page.locator('#related-status_2')).toHaveClass(/select2-hidden-accessible/)
+    await expect(page.locator('#related-status_2')).toHaveClass('input-select')
+    await expect(page.locator('[data-soa-related-index="2"] .select2-container')).toHaveCount(0)
     await expect(
         page.locator('[data-soa-related-index="2"] .raw-related-template-probe'),
     ).toHaveText('Server HTML stays inert')
@@ -484,10 +485,12 @@ async function expectRelatedLifecycleCalls(page) {
     expect(calls).toEqual(
         expect.arrayContaining([
             'form.elements.date',
-            'form.elements.select',
+            'form.elements.dependent-select',
             'form.elements.wysiwyg',
         ]),
     )
+    expect(calls).not.toContain('form.elements.select')
+    expect(calls).not.toContain('form.elements.selectajax')
     expect(await page.evaluate(() => globalThis.Admin.Components.scan(globalThis.document))).toBe(0)
     expect(await page.evaluate(() => globalThis.__componentMounts)).toEqual(
         relatedLifecycleComponents,

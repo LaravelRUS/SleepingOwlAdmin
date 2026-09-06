@@ -33,6 +33,10 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'table-presentation.html'), 'text/html; charset=utf-8'],
     ],
     [
+        '/select-controls',
+        [join(browserDirectory, 'select-controls.html'), 'text/html; charset=utf-8'],
+    ],
+    [
         '/resources/frontend/core/data/island-props.js',
         [
             join(projectRoot, 'resources', 'frontend', 'core', 'data', 'island-props.js'),
@@ -207,6 +211,22 @@ async function handleTable(request, response, url) {
     })
 }
 
+async function handleSelectSearch(request, response, url) {
+    const parameters = await readParameters(request, url)
+    recordRequest('select-search', request, parameters)
+
+    if (parameters.q === 'error') {
+        response.writeHead(500, { 'Content-Type': 'application/json' })
+        response.end(JSON.stringify({ message: 'Search unavailable' }))
+        return
+    }
+
+    sendJson(response, [
+        { custom_name: null, id: 'borealis', tag_name: 'Borealis' },
+        { custom_name: '<strong>Aurora</strong>', id: 'aurora', tag_name: 'Aurora' },
+    ])
+}
+
 async function handleMutation(kind, request, response, url) {
     const parameters = await readParameters(request, url)
     recordRequest(kind, request, parameters)
@@ -271,6 +291,11 @@ async function respond(request, response) {
 
     if (url.pathname === '/api/datatables') {
         await handleTable(request, response, url)
+        return
+    }
+
+    if (url.pathname === '/api/select-search') {
+        await handleSelectSearch(request, response, url)
         return
     }
 

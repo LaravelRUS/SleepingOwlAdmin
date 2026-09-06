@@ -1,7 +1,9 @@
 <?php
 
 use SleepingOwl\Admin\Form\Element\MultiSelect;
+use SleepingOwl\Admin\Form\Element\MultiSelectAjax;
 use SleepingOwl\Admin\Form\Element\Select;
+use SleepingOwl\Admin\Form\Element\SelectAjax;
 
 class FormElementSelectTest extends TestCase
 {
@@ -53,5 +55,43 @@ class FormElementSelectTest extends TestCase
         $this->assertSame(4, $data['max']);
         $this->assertTrue($data['taggable']);
         $this->assertSame([1, '3'], $data['value']);
+    }
+
+    public function test_select2_is_a_compatibility_alias_for_the_vue_select_view(): void
+    {
+        $element = new Select('status', 'Status');
+        $element->setHtmlAttribute('class', 'project-select');
+        $element->setSelect2(true, [
+            'placeholder' => 'Choose status',
+            'theme' => 'bootstrap4',
+        ]);
+
+        $this->assertTrue($element->getSelect2());
+        $this->assertSame('form.element.select', $element->getView());
+        $this->assertSame('project-select', $element->getHtmlAttribute('class'));
+        $this->assertSame([
+            'placeholder' => 'Choose status',
+            'theme' => 'bootstrap4',
+        ], $element->getSelect2Options());
+    }
+
+    public function test_ajax_selects_publish_the_same_remote_driver_contract(): void
+    {
+        $single = (new SelectAjax('city'))->setSearchUrl('/search/cities');
+        $single->setMinSymbols(2)->setDataDepends(['country.id']);
+        $multiple = (new MultiSelectAjax('tags'))->setSearchUrl('/search/tags');
+
+        $this->assertSame([
+            'delay' => 250,
+            'dependencies' => ['country__id'],
+            'minSymbols' => 2,
+            'url' => '/search/cities',
+        ], $single->getRemoteSelectConfiguration());
+        $this->assertSame([
+            'delay' => 250,
+            'dependencies' => [],
+            'minSymbols' => 3,
+            'url' => '/search/tags',
+        ], $multiple->getRemoteSelectConfiguration());
     }
 }

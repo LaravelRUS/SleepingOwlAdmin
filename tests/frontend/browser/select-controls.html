@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="browser-fixture-token" />
+        <title>Vue Multiselect remote fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'select-controls',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    message: { something_went_wrong: 'Something went wrong' },
+                    select: { no_items: 'No items', short: 'Type at least 2 characters' },
+                    table: { loadingRecords: 'Loading' },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <label for="country">Country</label>
+        <input id="country" name="country" value="fr" />
+
+        <section
+            id="ajax-select-fixture"
+            v-pre
+            data-soa-vue-app
+            data-soa-vue-component="element-select"
+            data-soa-vue-props='{"attributes":{"class":"project-ajax-select","id":"project","name":"project"},"labels":{"deselect":"Deselect","error":"Something went wrong","noItems":"No items","placeholder":"Find project","required":"Project is required","searching":"Loading","select":"Select","selected":"Selected","tooShort":"Type at least 2 characters"},"legacyOptions":{},"limit":0,"max":0,"multiple":false,"options":[{"id":"current","text":"Current project"}],"readonly":false,"remote":{"delay":25,"dependencies":["country"],"minSymbols":2,"url":"/api/select-search"},"required":false,"taggable":false,"value":"current"}'
+        ></section>
+
+        <section
+            id="select2-alias-fixture"
+            v-pre
+            data-soa-vue-app
+            data-soa-vue-component="element-select"
+            data-soa-vue-props='{"attributes":{"class":"project-alias-select","id":"alias","name":"alias"},"labels":{"deselect":"Deselect","error":"Something went wrong","noItems":"No items","placeholder":"Default placeholder","required":"Alias is required","searching":"Loading","select":"Select","selected":"Selected","tooShort":"Type more"},"legacyOptions":{"placeholder":"Compatibility placeholder","tags":true},"limit":0,"max":0,"multiple":false,"options":[],"readonly":false,"remote":null,"required":false,"taggable":false,"value":null}'
+        ></section>
+
+        <section
+            id="select2-disabled-fixture"
+            v-pre
+            data-soa-vue-app
+            data-soa-vue-component="element-select"
+            data-soa-vue-props='{"attributes":{"class":"project-disabled-select","id":"disabled-project","name":"disabled-project"},"labels":{"deselect":"Deselect","error":"Something went wrong","noItems":"No items","placeholder":"Default placeholder","required":"Project is required","searching":"Loading","select":"Select","selected":"Selected","tooShort":"Type more"},"legacyOptions":{"disabled":true},"limit":0,"max":0,"multiple":false,"options":[{"id":"current","text":"Current project"}],"readonly":false,"remote":null,"required":false,"taggable":false,"value":"current"}'
+        ></section>
+
+        <script src="/public/default/js/admin-app-dev.js"></script>
+        <script src="/public/default/js/vue-dev.js"></script>
+        <script src="/public/default/js/modules.js"></script>
+        <script>
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

@@ -266,6 +266,32 @@ describe('precompiled select island', () => {
     })
 })
 
+describe('Select2 migration boundary', () => {
+    it('uses the shared remote Vue driver without first-party Select2 assets', () => {
+        const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
+        const component = readSource('resources/assets/js_owl/admin/form/select.vue')
+        const ajaxView = readSource(
+            'resources/views/themes/legacy/default/form/element/selectajax.blade.php',
+        )
+
+        expect(packageJson.dependencies).not.toHaveProperty('select2')
+        expect(packageLock.packages[''].dependencies).not.toHaveProperty('select2')
+        expect(bootstrap).not.toMatch(/select2|admin\/form\/selectajax/)
+        expect(component).toContain(
+            "import { createRemoteSelectSearch } from './select-remote-search'",
+        )
+        expect(component).not.toMatch(/\$\(|jQuery|\.select2\(/)
+        expect(ajaxView).toContain("'selectExtraProps' => ['remote' => $remoteSelect]")
+        expect(existsSync(resolve(root, 'resources/assets/js_owl/libs/select2.js'))).toBe(false)
+        expect(existsSync(resolve(root, 'resources/assets/scss/components/select2.scss'))).toBe(
+            false,
+        )
+        expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/selectajax.js'))).toBe(
+            false,
+        )
+    })
+})
+
 describe('precompiled image island', () => {
     it('mounts the image element directly without jQuery or Axios', () => {
         const view = readSource(

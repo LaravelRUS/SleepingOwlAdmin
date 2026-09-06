@@ -138,6 +138,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
      */
     public function allowClear(): self
     {
+        $this->setSelect2Options('allowClear', true);
         $this->setHtmlAttribute('data-allow-clear', 'true');
 
         return $this;
@@ -152,35 +153,16 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
 
         $this->setHtmlAttributes([
             'id' => $this->getId(),
-            'class' => 'js-data-ajax',
             'data-select-type' => 'single',
-            'data-language' => $this->getLanguage(),
-            //'model' => get_class($this->getModelForOptions()),
-            //'field' => $this->getDisplay(),
-            //'search' => $this->getSearch(),
-            'search_url' => $this->getSearchUrl(),
-            'data-min-symbols' => $this->getMinSymbols(),
         ]);
 
         if ($this->readonly) {
             $this->setHtmlAttribute('disabled', 'disabled');
         }
 
-        if (count($this->getDataDependsArray())) {
-            $depends = $this->getDataDependsArray();
-            $depends = array_map(function ($el) {
-                return strtr($el, ['.' => '__']);
-            }, $depends);
-            $depends = json_encode($depends);
-
-            $this->setHtmlAttributes([
-                'data-language' => $this->getLanguage(),
-                'data-depends' => $depends,
-                'data-url' => $this->getSearchUrl(),
-                'class' => 'input-select input-select-dependent',
-            ]);
-        }
-
-        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray();
+        return [
+            'attributes' => $this->getHtmlAttributes(),
+            'remoteSelect' => $this->getRemoteSelectConfiguration(),
+        ] + parent::toArray();
     }
 }

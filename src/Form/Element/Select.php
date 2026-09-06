@@ -44,14 +44,16 @@ class Select extends NamedFormElement
     protected $view = 'form.element.select';
 
     /**
-     * @var string
-     */
-    protected $view_select2 = 'form.element.select2';
-
-    /**
      * @var bool
      */
     protected $select2_mode = false;
+
+    /**
+     * Raw Select2 options kept for the Vue driver migration layer.
+     *
+     * @var array
+     */
+    protected $select2_options = [];
 
     /**
      * Select constructor.
@@ -226,26 +228,21 @@ class Select extends NamedFormElement
      */
     public function setSelect2($mode, array $select2_options = []): self
     {
-        $this->select2_mode = $mode;
-
-        $class = 'input-select';
-        $class_escaped = strtr($class, ['-' => '\-']);
+        $this->select2_mode = (bool) $mode;
 
         if ($this->select2_mode) {
-            $this->setView($this->view_select2);
-            $this->setHtmlAttribute('class', $class);
             $this->setSelect2Options($select2_options);
-        } else {
-            $attrs = $this->getHtmlAttribute('class');
-            $pattern = "~(?:^{$class_escaped}$|^{$class_escaped}\s|s\{$class_escaped}$|\s{$class_escaped}\s)~s";
-            $replace = trim(preg_replace($pattern, ' ', $attrs));
-
-            $this->setView($this->view);
-            $this->removeHtmlAttribute('class');
-            $this->setHtmlAttribute('class', $replace);
         }
 
         return $this;
+    }
+
+    /**
+     * Raw options supplied through the deprecated Select2 API.
+     */
+    public function getSelect2Options(): array
+    {
+        return $this->select2_options;
     }
 
     /**
@@ -260,6 +257,7 @@ class Select extends NamedFormElement
                 $this->setSelect2Options($k, $v);
             }
         } else {
+            $this->select2_options[$key] = $value;
             $key = 'data-'.preg_replace_callback('~[A-Z]~su', function ($matches) {
                 return '-'.mb_strtolower($matches[0]);
             }, $key);
@@ -279,6 +277,7 @@ class Select extends NamedFormElement
      */
     public function disableSelect2EscapeMarkup(): self
     {
+        $this->select2_options['escapeMarkup'] = false;
         $this->setHtmlAttribute('data-select2-allow-html', 'true');
 
         return $this;
@@ -353,6 +352,7 @@ class Select extends NamedFormElement
         return [
             'attributes' => $this->htmlAttributesToString(),
             'attributes_array' => $this->getHtmlAttributes(),
+            'select2Options' => $this->getSelect2Options(),
         ] + parent::toArray() + [
             'options' => $options,
             'limit' => $this->getLimit(),

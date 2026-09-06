@@ -8,12 +8,13 @@
             @endif
         </label>
 
-        <div>
-            {{--            {!! Form::select($name, $options, $value, $attributes) !!}--}}
-            @php($selectAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray))->class(['form-control'])->getAttributes())
-            @php($select = html()->select($name, $options, $value)->attributes($selectAttributes))
-            {!! $select->hasAttribute('multiple') ? $select->multiple() : $select !!}
-        </div>
+        @include(AdminTemplate::getViewPath('form.element.partials.select_island'), [
+            'selectAttributesArray' => $attributesArray,
+            'selectExtraProps' => ['remote' => $remoteSelect],
+            'selectMax' => $max ?? 0,
+            'selectMultiple' => array_key_exists('multiple', $attributesArray),
+            'selectTaggable' => false,
+        ])
 
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
         @include(AdminTemplate::getViewPath('form.element.partials.errors'))

@@ -30,14 +30,6 @@
  */
 
 /*!
- * Select2 4.0.13
- * https://select2.github.io
- *
- * Released under the MIT license
- * https://github.com/select2/select2/blob/master/LICENSE.md
- */
-
-/*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <http://feross.org>
@@ -64,14 +56,6 @@
  * https://jquery.org/license
  *
  * Date: 2023-08-28T13:37Z
- */
-
-/*!
- * jQuery Mousewheel 3.1.13
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license
- * http://jquery.org/license
  */
 
 /*! Bootstrap 4 integration for DataTables' Responsive
@@ -122,11 +106,6 @@
 
 /**
  * @license MIT
- */
-
-/**
- * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
- * Released under MIT license, http://github.com/requirejs/almond/LICENSE
  */
 
 /**

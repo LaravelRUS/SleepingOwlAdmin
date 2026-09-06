@@ -3,10 +3,12 @@
         <Multiselect
             track-by="id"
             label="text"
-            :allow-empty="!required"
+            :allow-empty="allowEmpty"
             :deselect-label="required ? '' : labels.deselect"
-            :disabled="readonly"
+            :disabled="effectiveReadonly"
+            :internal-search="!remote"
             :limit="resolvedLimit"
+            :loading="loading"
             :max="resolvedMax"
             :multiple="multiple"
             :options="localOptions"
@@ -14,14 +16,19 @@
             :searchable="true"
             :select-label="labels.select"
             :selected-label="labels.selected"
-            :taggable="taggable"
+            :taggable="effectiveTaggable"
             :model-value="selection"
+            @search-change="searchOptions"
             @tag="addTag"
             @update:model-value="selectionChanged"
         >
-            <template #noResult>{{ labels.noItems }}</template>
-            <template #noOptions>{{ labels.noItems }}</template>
+            <template #noResult>{{ emptyMessage }}</template>
+            <template #noOptions>{{ emptyMessage }}</template>
         </Multiselect>
+
+        <span v-if="remoteStatusMessage" data-soa-select-status aria-live="polite">
+            {{ remoteStatusMessage }}
+        </span>
 
         <input
             v-if="!multiple"
@@ -29,6 +36,7 @@
             v-bind="attributes"
             data-soa-select-native
             type="hidden"
+            :disabled="effectiveReadonly"
             :value="singleValue"
         />
         <select
@@ -38,6 +46,7 @@
             data-soa-select-native
             hidden
             multiple
+            :disabled="effectiveReadonly"
         >
             <option
                 v-for="(option, index) in localOptions"
@@ -68,17 +77,22 @@ import {
     selectOptionKey,
     selectedOptionIds,
 } from './select-values'
+import { mergeRemoteSelectOptions } from './select-remote-options'
+import { createRemoteSelectSearch } from './select-remote-search'
+import { normalizeLegacySelect2Options } from './select2-option-migration'
 
 export default defineComponent({
     name: 'ElementSelect',
     components: { Multiselect },
     props: {
         attributes: { type: Object, required: true },
+        legacyOptions: { type: Object, default: () => ({}) },
         labels: { type: Object, required: true },
         limit: { type: Number, default: 0 },
         max: { type: Number, default: 0 },
         multiple: Boolean,
         options: { type: Array, default: () => [] },
+        remote: { type: Object, default: null },
         readonly: Boolean,
         required: Boolean,
         taggable: Boolean,
@@ -88,19 +102,54 @@ export default defineComponent({
         const localOptions = copySelectOptions(this.options)
 
         return {
+            legacy: normalizeLegacySelect2Options(this.legacyOptions),
+            loading: false,
             localOptions,
+            remoteError: false,
+            remoteSearch: null,
+            searchQuery: '',
             selection: initialSelectValue(localOptions, this.value, this.multiple),
         }
     },
     computed: {
+        allowEmpty() {
+            return this.legacy.allowEmpty ?? !this.required
+        },
+        effectiveReadonly() {
+            return this.legacy.readonly ?? this.readonly
+        },
+        effectiveTaggable() {
+            return this.legacy.taggable ?? this.taggable
+        },
+        emptyMessage() {
+            return this.remoteError ? this.labels.error : this.labels.noItems
+        },
+        minimumSearchLength() {
+            return this.legacy.minSymbols ?? Number(this.remote?.minSymbols ?? 0)
+        },
         placeholder() {
-            return this.localOptions.length ? this.labels.placeholder : this.labels.noItems
+            if (this.legacy.placeholder !== null) return this.legacy.placeholder
+
+            return this.localOptions.length || this.remote
+                ? this.labels.placeholder
+                : this.labels.noItems
+        },
+        remoteStatusMessage() {
+            if (this.remoteError) return this.labels.error
+            if (this.loading) return this.labels.searching
+            if (this.searchQuery && this.searchQuery.length < this.minimumSearchLength) {
+                return this.labels.tooShort
+            }
+
+            return ''
         },
         resolvedLimit() {
             return this.limit > 0 ? this.limit : 99999
         },
         resolvedMax() {
-            return this.max > 0 ? this.max : false
+            const maximum = this.legacy.max ?? this.max
+
+            return maximum > 0 ? maximum : false
         },
         selectedIds() {
             return selectedOptionIds(this.selection, this.multiple)
@@ -109,13 +158,24 @@ export default defineComponent({
             return selectFormValue(this.selectedIds[0])
         },
     },
+    mounted() {
+        this.mountRemoteSearch()
+    },
+    beforeUnmount() {
+        this.remoteSearch?.destroy()
+        this.remoteSearch = null
+    },
     methods: {
         addTag(value) {
-            if (!this.multiple || this.reachedMaximum()) return
+            if (!this.effectiveTaggable || this.reachedMaximum()) return
 
-            const next = appendSelectTag(this.localOptions, this.selection, value)
+            const next = appendSelectTag(this.localOptions, this.selection, value, this.multiple)
             this.localOptions = next.options
             this.selectionChanged(next.selection)
+        },
+        applyRemoteOptions(options) {
+            this.remoteError = false
+            this.localOptions = mergeRemoteSelectOptions(this.selection, options, this.multiple)
         },
         dispatchChange() {
             const control = this.$refs.nativeControl
@@ -133,8 +193,30 @@ export default defineComponent({
         optionSelected(id) {
             return isSelectOptionSelected(this.selection, id, this.multiple)
         },
+        mountRemoteSearch() {
+            if (!this.remote) return
+
+            this.remoteSearch = createRemoteSelectSearch({
+                ...this.remote,
+                document: this.$el.ownerDocument,
+                http: globalThis.Admin.Http,
+                minSymbols: this.minimumSearchLength,
+                onError: () => {
+                    this.remoteError = true
+                },
+                onLoading: (loading) => {
+                    this.loading = loading
+                    if (loading) this.remoteError = false
+                },
+                onResults: this.applyRemoteOptions,
+            })
+        },
         reachedMaximum() {
             return this.resolvedMax !== false && this.selectedIds.length >= this.resolvedMax
+        },
+        searchOptions(query) {
+            this.searchQuery = String(query ?? '').trim()
+            this.remoteSearch?.search(this.searchQuery)
         },
         async selectionChanged(value) {
             this.selection = value

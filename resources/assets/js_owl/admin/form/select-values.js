@@ -24,15 +24,13 @@ export function isSelectOptionSelected(selection, id, multiple) {
     return selectedOptionIds(selection, multiple).some((value) => sameSelectId(value, id))
 }
 
-export function appendSelectTag(options, selection, value) {
+export function appendSelectTag(options, selection, value, multiple = true) {
     const current = findSelectOption(options, value)
     const option = current ?? { id: value, text: value }
 
     return {
         options: current ? options : [...options, option],
-        selection: isSelectOptionSelected(selection, option.id, true)
-            ? selection
-            : [...selection, option],
+        selection: appendTagSelection(selection, option, multiple),
     }
 }
 
@@ -55,4 +53,10 @@ function sameSelectId(left, right) {
     if (left === null || left === undefined || right === null || right === undefined) return false
 
     return String(left) === String(right)
+}
+
+function appendTagSelection(selection, option, multiple) {
+    if (!multiple) return option
+
+    return isSelectOptionSelected(selection, option.id, true) ? selection : [...selection, option]
 }

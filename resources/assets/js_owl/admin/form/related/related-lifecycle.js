@@ -3,8 +3,6 @@ export const relatedModuleNames = Object.freeze([
     'form.elements.datetime',
     'form.elements.daterange',
     'form.elements.dependent-select',
-    'form.elements.select',
-    'form.elements.selectajax',
     'form.elements.wysiwyg',
 ])
 

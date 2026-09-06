@@ -14,7 +14,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //
 // window.Trix = require('trix');
 
-require('./libs/select2');
 require('./libs/noty');
 
 require('./libs/jquery');
@@ -107,8 +106,6 @@ require('./admin/localstorage/tabs');
 
 //OLD need test
 require('./admin/form/buttons');
-require('./admin/form/select');
-require('./admin/form/selectajax');
 require('./admin/form/wysiwyg');
 require('./admin/form/dependent-select');
 require('./admin/form/password');

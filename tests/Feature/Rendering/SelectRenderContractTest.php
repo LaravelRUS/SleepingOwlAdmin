@@ -36,6 +36,40 @@ class SelectRenderContractTest extends TestCase
         $this->assertSame('disabled', $props['attributes']['disabled']);
     }
 
+    public function test_ajax_select_renders_remote_configuration_as_inert_props(): void
+    {
+        $data = array_replace($this->baseData(), [
+            'attributesArray' => [
+                'class' => 'project-ajax-select',
+                'id' => 'project',
+                'name' => 'project',
+            ],
+            'limit' => 0,
+            'max' => 0,
+            'name' => 'project',
+            'options' => [['id' => 7, 'text' => 'Current project']],
+            'remoteSelect' => [
+                'delay' => 250,
+                'dependencies' => ['country'],
+                'minSymbols' => 2,
+                'url' => '/admin/project/search',
+            ],
+            'select2Options' => ['placeholder' => 'Find a project'],
+            'taggable' => false,
+            'value' => 7,
+        ]);
+        $html = $this->renderSelect('selectajax', $data);
+        $props = $this->extractIslandProps($html);
+
+        $this->assertIslandHost($html);
+        $this->assertSame('/admin/project/search', $props['remote']['url']);
+        $this->assertSame(['country'], $props['remote']['dependencies']);
+        $this->assertSame(2, $props['remote']['minSymbols']);
+        $this->assertSame('Find a project', $props['legacyOptions']['placeholder']);
+        $this->assertStringNotContainsString('js-data-ajax', $html);
+        $this->assertStringNotContainsString('search_url=', $html);
+    }
+
     private function renderSelect(string $view, array $data): string
     {
         $template = new SelectRenderTemplateStub();

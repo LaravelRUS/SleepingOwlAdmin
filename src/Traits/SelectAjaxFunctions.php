@@ -88,6 +88,21 @@ trait SelectAjaxFunctions
     }
 
     /**
+     * Frontend configuration for the Vue Multiselect remote driver.
+     */
+    public function getRemoteSelectConfiguration(): array
+    {
+        return [
+            'delay' => 250,
+            'dependencies' => array_map(function ($dependency) {
+                return strtr($dependency, ['.' => '__']);
+            }, $this->getDataDependsArray()),
+            'minSymbols' => (int) $this->getMinSymbols(),
+            'url' => $this->getSearchUrl(),
+        ];
+    }
+
+    /**
      * Set min symbols to search.
      *
      * @param  $symbols

@@ -144,25 +144,13 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
         $this->setHtmlAttributes([
             'id' => $this->getId(),
-            'class' => 'js-data-ajax',
             'multiple',
-            //'model' => get_class($this->getModelForOptions()),
-            //'field' => $this->getDisplay(),
-            //'search' => $this->getSearch(),
-            'search_url' => $this->getSearchUrl(),
-            'data-min-symbols' => $this->getMinSymbols(),
         ]);
 
-        if ($this->getDataDepends() != '[]') {
-            $this->setHtmlAttributes([
-                'data-language' => $this->getLanguage(),
-                'data-depends' => $this->getDataDepends(),
-                'data-url' => $this->getSearchUrl(),
-                'class' => 'input-select input-select-dependent',
-            ]);
-        }
-
-        return ['attributes' => $this->getHtmlAttributes()] + parent::toArray();
+        return [
+            'attributes' => $this->getHtmlAttributes(),
+            'remoteSelect' => $this->getRemoteSelectConfiguration(),
+        ] + parent::toArray();
     }
 
     /**

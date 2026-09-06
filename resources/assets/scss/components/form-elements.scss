@@ -130,7 +130,7 @@ $arrow-size: 6px;
 .form-element-multiselect,
 .form-element-select {
     &.has-error {
-        .select2-selection {
+        .multiselect__tags {
             border-color: $danger !important;
         }
     }

@@ -62,3 +62,11 @@ describe('select values', () => {
         expect(duplicate.selection).toBe(tagged.selection)
     })
 })
+
+it('supports a tagged single select without changing the submitted value shape', () => {
+    const tagged = appendSelectTag(options, options[1], 'custom', false)
+
+    expect(tagged.options.at(-1)).toEqual({ id: 'custom', text: 'custom' })
+    expect(tagged.selection).toEqual({ id: 'custom', text: 'custom' })
+    expect(selectedOptionIds(tagged.selection, false)).toEqual(['custom'])
+})
