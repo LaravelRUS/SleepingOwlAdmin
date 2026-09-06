@@ -339,8 +339,6 @@ class Select extends NamedFormElement
             'data-select-type' => 'single',
         ]);
 
-        $this->setHtmlAttribute('class', 'form-control');
-
         if ($this->isReadonly()) {
             $this->setHtmlAttribute('disabled', 'disabled');
         }

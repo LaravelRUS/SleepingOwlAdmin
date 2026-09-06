@@ -13,7 +13,7 @@
                     <span class="input-group-text">{!! $addon !!}</span>
                 </div>
             @endif
-            <input v-pre {!! $attributes !!} value="{{ $value }}">
+            <input v-pre {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control']) !!} value="{{ $value }}">
             @if ($placement == 'after')
                 <div class="input-group-append">
                     <span class="input-group-text">{!! $addon !!}</span>

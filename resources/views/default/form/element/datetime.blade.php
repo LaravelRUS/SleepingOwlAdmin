@@ -10,8 +10,7 @@
 
         <div class="input-date input-group datetime">
             <input
-                    {!! $attributes !!}
-                    class="form-control"
+                    {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control']) !!}
                     value="{{ $value }}"
                     @if($readonly) readonly @endif
             >

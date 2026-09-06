@@ -17,7 +17,6 @@ class SaveAndCreate extends FormButton
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
             'type' => 'submit',
             'name' => 'next_action',
-            'class' => 'btn btn-info',
         ]);
     }
 

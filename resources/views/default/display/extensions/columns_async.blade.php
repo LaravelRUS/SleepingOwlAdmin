@@ -1,6 +1,7 @@
 <div class="panel-table card-body pt-0 pl-0 pr-0">
 
-    <table {!! $attributes !!}>
+    @php($tableAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['table']))
+    <table {!! $tableAttributes !!}>
         <colgroup>
             @foreach ($columns as $column)
                 @continue(!$column->isVisible())

@@ -27,7 +27,7 @@ class Tree extends Extension implements Initializable, Renderable
     /**
      * @var string|View
      */
-    protected $view = 'display.columns';
+    protected $view = 'display.extensions.tree_columns';
 
     /**
      * @var Control
@@ -131,6 +131,7 @@ class Tree extends Extension implements Initializable, Renderable
         return [
             'columns' => $this->allWithControl(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 
@@ -140,6 +141,5 @@ class Tree extends Extension implements Initializable, Renderable
             $column->initialize();
         });
 
-        $this->setHtmlAttribute('class', 'table table-striped');
     }
 }

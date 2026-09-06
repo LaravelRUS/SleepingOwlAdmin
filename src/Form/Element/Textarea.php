@@ -44,7 +44,6 @@ class Textarea extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'class' => 'form-control',
             'rows' => $this->getRows(),
         ]);
 

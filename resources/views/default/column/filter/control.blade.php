@@ -1,7 +1,7 @@
 <div class="btn-group">
     @yield('filter.button')
 
-    <button {!! $attributes !!}>
+    <button {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['btn', 'btn-sm', 'btn-primary']) !!}>
         {{ trans('sleeping_owl::lang.table.filters.control') }}
     </button>
 

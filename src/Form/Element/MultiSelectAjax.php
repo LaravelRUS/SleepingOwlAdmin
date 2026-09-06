@@ -144,7 +144,7 @@ class MultiSelectAjax extends MultiSelect implements Initializable, WithRoutesIn
 
         $this->setHtmlAttributes([
             'id' => $this->getId(),
-            'class' => 'form-control js-data-ajax',
+            'class' => 'js-data-ajax',
             'multiple',
             //'model' => get_class($this->getModelForOptions()),
             //'field' => $this->getDisplay(),

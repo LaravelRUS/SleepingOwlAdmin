@@ -93,8 +93,6 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             $this->setBadge($badge);
         }
 
-        $this->setHtmlAttribute('data-toggle', 'tab');
-        $this->setHtmlAttribute('class', 'nav-item nav-link');
     }
 
     /**
@@ -158,10 +156,6 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
     public function setActive($active = true)
     {
         $this->active = (bool) $active;
-
-        if ($active) {
-            $this->setHtmlAttribute('class', 'active');
-        }
 
         return $this;
     }
@@ -559,6 +553,7 @@ class DisplayTab implements TabInterface, DisplayInterface, FormInterface
             'icon' => $this->getIcon(),
             'badge' => $this->getBadge(),
             'arrayAttributes' => $this->getHtmlAttributes(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'attributes' => $this->htmlAttributesToString(),
         ];
     }

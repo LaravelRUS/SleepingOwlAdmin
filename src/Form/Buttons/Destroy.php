@@ -25,7 +25,7 @@ class Destroy extends FormButton
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
             'name' => 'next_action',
-            'class' => 'btn btn-danger btn-destroy',
+            'class' => 'btn-destroy',
             'data-url' => $this->getModelConfiguration()->getDestroyUrl($this->getModel()->getKey()),
             'data-redirect' => $this->getModelConfiguration()->getDisplayUrl(),
         ]);

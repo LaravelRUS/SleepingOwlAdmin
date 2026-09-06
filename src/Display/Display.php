@@ -241,6 +241,7 @@ abstract class Display implements DisplayInterface
             'title' => $this->getTitle(),
             'extensions' => $this->getExtensions()->toArray(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 

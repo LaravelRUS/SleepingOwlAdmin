@@ -10,7 +10,8 @@
 
         <div>
 {{--            {!! Form::select($name, $options, $value, $attributes) !!}--}}
-            {!! html()->select($name, $options, $value)->attributes($attributes) !!}
+            @php($selectAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control'])->getAttributes())
+            {!! html()->select($name, $options, $value)->attributes($selectAttributes) !!}
         </div>
 
 

@@ -1,4 +1,4 @@
-<{{ $tag }} {!! $attributes !!}>
+<{{ $tag }} {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['table-hover']) !!}>
     <tr>
         @foreach ($elements as $element)
             <td {!! $element->htmlAttributesToString() !!}>

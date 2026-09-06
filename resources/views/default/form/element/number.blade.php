@@ -7,7 +7,7 @@
                 <span class="form-element-required">*</span>
             @endif
         </label>
-        <input v-pre {!! $attributes !!}
+        <input v-pre {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control']) !!}
                value="{{ $value }}"
                @if($readonly) readonly @endif
         >

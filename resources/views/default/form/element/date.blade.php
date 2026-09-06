@@ -9,7 +9,7 @@
         </label>
 
         <div class="input-group input-date date">
-            <input {!! $attributes !!} value="{{$value}}"
+            <input {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control']) !!} value="{{$value}}"
                    @if($readonly) readonly @endif />
 
             <div class="input-group-prepend input-group-addon">

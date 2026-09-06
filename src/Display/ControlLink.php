@@ -36,7 +36,7 @@ class ControlLink implements ControlButtonInterface
     /**
      * @var string
      */
-    protected $class = 'btn btn-xs';
+    protected $class;
 
     /**
      * @var Closure|string
@@ -222,9 +222,9 @@ class ControlLink implements ControlButtonInterface
             ]);
         }
 
-        $this->setHtmlAttributes([
-            'class' => $this->class,
-        ]);
+        if (! empty($this->class)) {
+            $this->setHtmlAttribute('class', $this->class);
+        }
 
         return $text;
     }
@@ -334,9 +334,13 @@ class ControlLink implements ControlButtonInterface
      */
     public function toArray()
     {
+        $text = $this->getText($this->getModel());
+        $this->getConditionAttributes($this->model);
+
         return [
-            'text' => $this->getText($this->getModel()),
-            'attributes' => $this->getConditionAttributes($this->model)->htmlAttributesToString(),
+            'text' => $text,
+            'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'url' => $this->getUrl($this->getModel()),
             'position' => $this->getPosition(),
             'icon' => $this->getIcon(),

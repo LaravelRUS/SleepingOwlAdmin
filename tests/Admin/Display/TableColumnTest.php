@@ -209,6 +209,7 @@ class TableColumnTest extends TestCase
 
         $this->assertEquals([
             'attributes' => ' class="test"',
+            'attributesArray' => ['class' => 'test'],
             'model' => $model,
             'append' => $append,
         ], $column->toArray());

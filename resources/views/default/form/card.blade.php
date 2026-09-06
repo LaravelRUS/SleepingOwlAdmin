@@ -1,4 +1,5 @@
-<form {!! $attributes !!}>
+@php($formAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['card', $cardClass]))
+<form {!! $formAttributes !!}>
 
   @include(AdminTemplate::getViewPath('form.partials.elements'), ['items' => $items])
 
@@ -6,6 +7,6 @@
   <input type="hidden" name="_redirectBack" value="{{ $backUrl }}" />
   <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   
-  {!! $buttons->render() !!}
+  @include(AdminTemplate::getViewPath('form.card.buttons'), ['buttons' => $buttons])
 
 </form>

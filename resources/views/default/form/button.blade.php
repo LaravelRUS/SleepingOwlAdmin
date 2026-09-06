@@ -1,9 +1,20 @@
+@php
+    $themeClasses = match ($name) {
+        'save_and_continue' => ['btn', 'btn-primary'],
+        'save_and_close' => ['btn', 'btn-success'],
+        'save_and_create' => ['btn', 'btn-info'],
+        'delete', 'destroy' => ['btn', 'btn-danger'],
+        'cancel', 'restore' => ['btn', 'btn-warning'],
+        default => ['btn'],
+    };
+    $buttonAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class($themeClasses);
+@endphp
 @if(!$url)
-    <button {!! $attributes !!} value="{{$name}}">
+    <button {!! $buttonAttributes !!} value="{{$name}}">
         @if($iconClass)<i class="{{ $iconClass }}"></i>@endif {{$text}}
     </button>
 @else
-    <a href="{{$url}}" {!! $attributes !!}>
+    <a href="{{$url}}" {!! $buttonAttributes !!}>
         @if($iconClass)<i class="{{$iconClass}}"></i>@endif {{ $text }}
     </a>
 @endif

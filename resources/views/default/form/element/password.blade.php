@@ -8,7 +8,7 @@
             @endif
         </label>
         <div class="password-field">
-            <input v-pre {!! $attributes !!}
+            <input v-pre {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control', 'pr-5']) !!}
             value="{{$value}}"
                    @if($readonly) readonly @endif
                    autocomplete="off"

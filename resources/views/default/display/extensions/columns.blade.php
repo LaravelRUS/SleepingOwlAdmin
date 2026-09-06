@@ -1,6 +1,10 @@
 <div class="panel-table card-body pt-0 pl-0 pr-0">
 
-    <table {!! $attributes !!}>
+    @php
+        $tableAttributes = new \Illuminate\View\ComponentAttributeBag($attributesArray ?? []);
+        $tableAttributes = $tableAttributes->class(array_merge(['table'], $themeClasses ?? []));
+    @endphp
+    <table {!! $tableAttributes !!}>
         <colgroup>
             @foreach ($columns as $column)
                 <col width="{!! $column->getWidth() !!}"/>

@@ -11,7 +11,7 @@ class Password extends NamedFormElement
         parent::__construct($path, $label);
 
         $this->setHtmlAttributes([
-            'class' => 'passwd form-control pr-5',
+            'class' => 'passwd',
             'type' => 'password',
         ]);
     }

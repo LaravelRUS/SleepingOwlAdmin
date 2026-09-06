@@ -105,7 +105,10 @@ class DefaultThemeRenderContractTest extends TestCase
         $column = $this->tableColumn($model);
 
         $html = view('sleeping_owl::default.display.extensions.columns', [
-            'attributes' => 'class="table user-table" data-contract="display"',
+            'attributesArray' => [
+                'class' => 'user-table',
+                'data-contract' => 'display',
+            ],
             'collection' => [$model],
             'columns' => [$column],
             'pagination' => '<nav data-contract="pagination">Next</nav>',
@@ -209,7 +212,12 @@ class DefaultThemeRenderContractTest extends TestCase
     private function textElementData(): array
     {
         return [
-            'attributes' => 'name="name" id="profile_name" class="form-control user-class" data-contract="kept"',
+            'attributesArray' => [
+                'name' => 'name',
+                'id' => 'profile_name',
+                'class' => 'user-class',
+                'data-contract' => 'kept',
+            ],
             'canGenerate' => true,
             'datalistOptions' => ['Alice', 'Bob'],
             'errors' => $this->validationErrors('name', 'Name is required'),
@@ -232,7 +240,10 @@ class DefaultThemeRenderContractTest extends TestCase
             'form-group form-element-text has-error',
             'class="control-label required"',
             '<span class="form-element-required">*</span>',
-            'class="form-control user-class" data-contract="kept"',
+            'name="name"',
+            'id="profile_name"',
+            'class="form-control user-class"',
+            'data-contract="kept"',
             'value="Alice &amp; Bob"',
             'readonly',
             'data-generate-length="16"',

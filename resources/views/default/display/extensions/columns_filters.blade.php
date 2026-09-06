@@ -1,4 +1,5 @@
-<div {!! $attributes !!}>
+@php($filterAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['table', 'table-default']))
+<div {!! $filterAttributes !!}>
     @foreach ($filters as $index => $filter)
         @if ($filter)
             <div data-index="{{ $index }}" class="mb-2">

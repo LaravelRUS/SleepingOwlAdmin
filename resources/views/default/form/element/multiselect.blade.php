@@ -54,7 +54,7 @@
                     id="{{ $id }}"
                     multiple
                     name="{{ $name }}"
-                    {!! $attributes !!}
+                    {!! (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control']) !!}
                 >
                     <option
                         :selected="hasOption(opt.id)"

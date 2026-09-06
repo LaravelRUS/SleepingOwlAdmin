@@ -13,19 +13,7 @@ class Body extends FormElements implements CardInterface
     /**
      * @var string
      */
-    protected $view = 'form.card.element';
-
-    /**
-     * @var string
-     */
-    protected $class = 'card-body';
-
-    public function initialize()
-    {
-        parent::initialize();
-
-        $this->setHtmlAttribute('class', $this->class);
-    }
+    protected $view = 'form.card.body';
 
     /**
      * @return array
@@ -35,6 +23,7 @@ class Body extends FormElements implements CardInterface
         return parent::toArray() + [
             'elements' => $this->getElements()->onlyVisible(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 }

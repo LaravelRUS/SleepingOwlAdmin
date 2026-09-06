@@ -87,7 +87,6 @@ class Number extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'class' => 'form-control',
             'type' => 'number',
             'max' => $this->getMax(),
             'min' => $this->getMin(),

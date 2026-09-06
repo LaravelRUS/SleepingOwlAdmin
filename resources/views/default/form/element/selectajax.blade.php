@@ -10,7 +10,8 @@
 
         <div>
             {{--            {!! Form::select($name, $options, $value, $attributes) !!}--}}
-            @php($select = html()->select($name, $options, $value)->attributes($attributes))
+            @php($selectAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['form-control'])->getAttributes())
+            @php($select = html()->select($name, $options, $value)->attributes($selectAttributes))
             {!! $select->hasAttribute('multiple') ? $select->multiple() : $select !!}
         </div>
 

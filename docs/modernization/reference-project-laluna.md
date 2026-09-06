@@ -41,6 +41,17 @@
 
 Ориентировочная плотность использования в `Modules`: 93 вызова `AdminDisplay::*`, 668 `AdminFormElement::*`, 449 `AdminColumn::*`, 117 `AdminColumnFilter::*` и 26 `AdminColumnEditable::*`. Эти числа используются как сигнал покрытия, а не как значения для копирования в tests.
 
+Уточнённый просмотр `Modules` показывает критичные compatibility signals:
+
+- 74 из 93 display factory calls — `AdminDisplay::datatables()`; остальные покрывают 10 tabs, 6 tabbed containers и 3 tree displays;
+- найдено 444 прямых вызова `setHtmlAttribute('class', ...)`, 39 row class callbacks и 72 вхождения placement API;
+- особенно часто используются стабильные placements `card.heading` и `card.heading.actions`; также встречаются `before.card`, `before` и `after`;
+- sections напрямую используют `ControlLink`, `ControlButton`, `FormCard`, `FormElements`, form buttons, `DisplayTabbed`, `OrderTreeType` и `Initializable`;
+- module Blade views не содержат собственного jQuery/Vue-кода, но 8 views всё ещё используют Bootstrap 4 `data-toggle`; общий custom frontend действительно вынесен в application resources;
+- 23 из 26 модулей уже имеют парные `MODULE.md`/`MODULE.AI.md`; отсутствующие пары у `Callback`, `Rozetka` и `Taxation` не копируются в package, а отмечают полезные сценарии для будущей документации.
+
+Следствие для theme migration: пользовательские HTML classes/attributes и placement names считаются прямым публичным API. Legacy theme обязана объединять свои defaults с ними без потерь; PHP core не должен заменять пользовательские классы semantic resolver-ом. Generator stubs берут из этих sections структуру и API, но не копируют длинные монолитные методы или прикладные правила.
+
 ### Config compatibility
 
 Проект использует старый вручную поддерживаемый `config/sleeping_owl.php`, а не свежую копию package config. Значимы:

@@ -86,8 +86,6 @@ class Columns extends FormElements implements ColumnInterface
 
     public function initialize()
     {
-        $this->setHtmlAttribute('class', 'row');
-
         $count = $this->getElements()->filter(function (ColumnInterface $column) {
             return ! $column->getWidth();
         })->count();
@@ -113,6 +111,7 @@ class Columns extends FormElements implements ColumnInterface
         return parent::toArray() + [
             'columns' => $this->getElements()->onlyVisible(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 

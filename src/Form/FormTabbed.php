@@ -25,15 +25,10 @@ class FormTabbed extends FormDefault
         $this->setCardClass('card-form-tabbed');
     }
 
-    /**
-     * Initialize form.
-     */
-    public function initialize()
+    public function toArray()
     {
-        $this->getButtons()->setHtmlAttribute('class', 'card-footer');
-
-        $this->setHtmlAttribute('class', 'card card-default '.$this->getCardClass());
-
-        parent::initialize();
+        return parent::toArray() + [
+            'cardClass' => $this->getCardClass(),
+        ];
     }
 }

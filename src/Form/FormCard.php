@@ -32,20 +32,6 @@ class FormCard extends FormDefault
     public function __construct(array $elements = [])
     {
         parent::__construct($elements);
-
-        $this->setCardClass('card');
-    }
-
-    /**
-     * Initialize form.
-     */
-    public function initialize()
-    {
-        $this->getButtons()->setHtmlAttribute('class', 'card-footer');
-
-        $this->setHtmlAttribute('class', 'card '.$this->getCardClass());
-
-        parent::initialize();
     }
 
     /**
@@ -126,5 +112,12 @@ class FormCard extends FormDefault
         $this->addElement(new Footer($items));
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return parent::toArray() + [
+            'cardClass' => $this->getCardClass(),
+        ];
     }
 }

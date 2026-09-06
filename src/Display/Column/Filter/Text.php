@@ -23,7 +23,7 @@ class Text extends BaseColumnFilter
     {
         parent::initialize();
 
-        $this->setHtmlAttribute('class', 'form-control column-filter');
+        $this->setHtmlAttribute('class', 'column-filter');
         $this->setHtmlAttribute('data-type', 'text');
         $this->setHtmlAttribute('type', 'text');
         $this->setHtmlAttribute('placeholder', $this->getPlaceholder());

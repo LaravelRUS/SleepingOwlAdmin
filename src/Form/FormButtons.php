@@ -510,6 +510,7 @@ class FormButtons implements FormButtonsInterface
     {
         return [
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'backUrl' => $this->getModelConfiguration()->getCancelUrl(),
             'editUrl' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
             'deleteUrl' => $this->getModelConfiguration()->getDeleteUrl($this->getModel()->getKey()),

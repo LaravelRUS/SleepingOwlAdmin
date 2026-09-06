@@ -88,7 +88,6 @@ class DisplayTable extends Display
             });
         }
 
-        $this->setHtmlAttribute('class', 'table');
     }
 
     /**

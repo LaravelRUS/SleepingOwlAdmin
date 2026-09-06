@@ -1,4 +1,5 @@
-<form {!! $attributes !!}>
+@php($formAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['card', 'card-default', $cardClass]))
+<form {!! $formAttributes !!}>
 
     <input type="hidden" name="_redirectBack" value="{{ $backUrl }}"/>
     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
@@ -30,5 +31,5 @@
         </div>
     </div>
 
-    {!! $buttons->render() !!}
+    @include(AdminTemplate::getViewPath('form.card.buttons'), ['buttons' => $buttons])
 </form>

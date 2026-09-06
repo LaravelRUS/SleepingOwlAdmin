@@ -33,7 +33,7 @@ class Text extends NamedFormElement
         parent::__construct($path, $label);
 
         $this->setHtmlAttributes([
-            'class' => 'form-control text-element',
+            'class' => 'text-element',
             'type' => 'text',
         ]);
     }

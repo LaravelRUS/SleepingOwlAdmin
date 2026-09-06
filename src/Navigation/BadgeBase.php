@@ -34,7 +34,6 @@ class BadgeBase implements BadgeInterface
 
         $this->setPriority($priority);
 
-        $this->setHtmlAttribute('class', 'label pull-right');
     }
 
     /**
@@ -87,6 +86,7 @@ class BadgeBase implements BadgeInterface
         return [
             'value' => $this->getValue(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 

@@ -260,6 +260,7 @@ class FormButton implements FormButtonsInterface, Initializable
     {
         return [
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'groupElements' => $this->getGroupElements(),
             'text' => $this->getText(),
             'name' => $this->getName(),

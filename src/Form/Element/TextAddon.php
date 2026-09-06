@@ -83,7 +83,6 @@ class TextAddon extends NamedFormElement
     public function toArray()
     {
         $this->setHtmlAttributes([
-            'class' => 'form-control',
             'type' => 'text',
         ]);
 

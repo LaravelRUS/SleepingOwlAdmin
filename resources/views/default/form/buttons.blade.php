@@ -1,8 +1,12 @@
+@php
+    $buttonGroupAttributes = new \Illuminate\View\ComponentAttributeBag($attributesArray ?? []);
+    $buttonGroupAttributes = $buttonGroupAttributes->class($themeClasses ?? []);
+@endphp
 @if($placements)
     @foreach($placements as $key => $val)
         @foreach($val as $section)
             @section(implode('.', [$key, $section]))
-                <div {!! $attributes !!}>
+                <div {!! $buttonGroupAttributes !!}>
                     <div class="btn-group" role="group">
                         @foreach($buttons as $button)
                             @if($button instanceof \SleepingOwl\Admin\Form\Buttons\FormButton && $button->canShow())
@@ -15,7 +19,7 @@
         @endforeach
     @endforeach
 
-<div {!! $attributes !!}>
+<div {!! $buttonGroupAttributes !!}>
     <div class="btn-group" role="group">
         @foreach($buttons as $button)
             @if($button instanceof \SleepingOwl\Admin\Form\Buttons\FormButton && $button->canShow())
@@ -26,7 +30,7 @@
 </div>
 
 @else
-    <div {!! $attributes !!}>
+    <div {!! $buttonGroupAttributes !!}>
         <div class="btn-group" role="group">
             @foreach($buttons as $button)
                 @if($button instanceof \SleepingOwl\Admin\Form\Buttons\FormButton && $button->canShow())

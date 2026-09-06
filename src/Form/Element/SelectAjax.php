@@ -152,7 +152,7 @@ class SelectAjax extends Select implements Initializable, WithRoutesInterface
 
         $this->setHtmlAttributes([
             'id' => $this->getId(),
-            'class' => 'form-control js-data-ajax',
+            'class' => 'js-data-ajax',
             'data-select-type' => 'single',
             'data-language' => $this->getLanguage(),
             //'model' => get_class($this->getModelForOptions()),

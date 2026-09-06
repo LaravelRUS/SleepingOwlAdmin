@@ -453,6 +453,7 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             'items' => $this->getElements()->onlyVisible(),
             'instance' => $this->getModel(),
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'buttons' => $this->getButtons(),
             'backUrl' => session('_redirectBack', \URL::previous()),
         ];

@@ -18,7 +18,6 @@ class Badge extends BadgeBase
 
         $this->setPriority($priority);
 
-        $this->setHtmlAttribute('class', 'badge');
     }
 
     // end fix
@@ -35,13 +34,10 @@ class Badge extends BadgeBase
     {
         $value = $this->getValue();
 
-        if (! $this->hasClassProperty('badge-', 'bg-')) {
-            $this->setHtmlAttribute('class', 'badge-primary');
-        }
-
         return [
             'value' => $value,
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 

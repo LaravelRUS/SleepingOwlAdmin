@@ -55,11 +55,10 @@ class ColumnsTotal extends Extension implements Placable
 
     public function toArray(): array
     {
-        $this->setHtmlAttribute('class', 'table-hover');
-
         return [
             'elements' => $this->elements,
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'tag' => $this->getTag(),
         ];
     }

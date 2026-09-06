@@ -232,7 +232,7 @@ class DependentSelect extends Select implements WithRoutesInterface
             'data-depends' => $this->getDataDepends(),
             'data-language' => $this->getLanguage(),
             'data-initialize' => $this->isInitializable() ? 'true' : 'false',
-            'class' => 'form-control input-select input-select-dependent',
+            'class' => 'input-select input-select-dependent',
         ]);
 
         if ($this->isReadonly()) {
@@ -257,6 +257,7 @@ class DependentSelect extends Select implements WithRoutesInterface
             'helpText' => $this->getHelpText(),
             'required' => in_array('required', $this->validationRules),
             'attributes' => $this->getHtmlAttributes(),
+            'attributesArray' => $this->getHtmlAttributes(),
         ];
     }
 }

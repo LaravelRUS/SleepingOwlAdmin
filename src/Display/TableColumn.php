@@ -354,6 +354,7 @@ abstract class TableColumn implements ColumnInterface
     {
         return [
             'attributes' => $this->htmlAttributesToString(),
+            'attributesArray' => $this->getHtmlAttributes(),
             'model' => $this->getModel(),
             'append' => $this->getAppends(),
         ];

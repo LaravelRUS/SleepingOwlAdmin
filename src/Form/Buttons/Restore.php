@@ -25,7 +25,7 @@ class Restore extends FormButton
 
         $this->setHtmlAttributes($this->getHtmlAttributes() + [
             'name' => 'next_action',
-            'class' => 'btn btn-warning btn-restore',
+            'class' => 'btn-restore',
             'data-url' => $this->getModelConfiguration()->getRestoreUrl($this->getModel()->getKey()),
             'data-redirect' => $this->getModelConfiguration()->getEditUrl($this->getModel()->getKey()),
         ]);

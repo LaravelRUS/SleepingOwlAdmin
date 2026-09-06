@@ -86,7 +86,7 @@ class Select extends BaseColumnFilter
     {
         parent::initialize();
 
-        $this->setHtmlAttribute('class', 'form-control input-select column-filter');
+        $this->setHtmlAttribute('class', 'input-select column-filter');
         $this->setHtmlAttribute('data-type', 'select');
 
         if ($this->multiple) {

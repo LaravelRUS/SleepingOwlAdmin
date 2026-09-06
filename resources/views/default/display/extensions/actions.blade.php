@@ -1,5 +1,6 @@
 @if(count($actions) > 0)
-    <form {!! $attributes !!} id="action_form">
+    @php($actionAttributes = (new \Illuminate\View\ComponentAttributeBag($attributesArray))->class(['card-footer' => in_array($placement, ['card.footer', 'panel.footer'])]))
+    <form {!! $actionAttributes !!} id="action_form">
         {{ csrf_field() }}
 
         {{-- @sngrl merge: bs4 to dev --}}
