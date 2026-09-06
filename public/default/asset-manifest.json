@@ -8,8 +8,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/admin-core.js",
-                            "version": "f5d387540235443141917d352abe4d71",
-                            "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
+                            "version": "3f0f117c0b3d2eec7c9f523a9748e452",
+                            "checksum": "sha256:03ef8436473d63db0e0810ace2f6422316113852eaa0c6d1f10875773584a932"
                         }
                     ],
                     "styles": [
@@ -92,8 +92,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/admin-core.js",
-                            "version": "02b36ade7a6e4af616de6056d5d96a0d",
-                            "checksum": "sha256:a4dfb9ccc25259f7ea8ec4946a7cfc295344b699b6cbf82e16ff21a5b05cd212"
+                            "version": "c4e0d91a8347a4f95e5dad34552695a2",
+                            "checksum": "sha256:e74c433002733c6c81eaed025cf0ea41329620cf7c252fe2e05930755c9dacf9"
                         }
                     ],
                     "styles": [
@@ -171,5 +171,5 @@
             }
         }
     },
-    "build_id": "sha256:6e22eb02dfe4ed3d09c74e834b678d8bcf0af5e35df3f9131b875ea5058d0b0d"
+    "build_id": "sha256:382237c4961883ea170dd18072121bebd598704569a4e4ef31e35c8b9b297fc4"
 }

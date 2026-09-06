@@ -55,6 +55,33 @@ test.beforeEach(async ({ request }) => {
     await request.post('/__fixture/reset')
 })
 
+test('Admin.Events dispatches native document events', async ({ page }) => {
+    await openFixture(page)
+
+    const received = await page.evaluate(() => {
+        let capturedEvent = null
+        const listener = (event) => {
+            capturedEvent = event
+        }
+
+        globalThis.document.addEventListener('fixture::native', listener)
+        globalThis.Admin.Events.fire('fixture::native', 'orders', { page: 2 })
+        globalThis.document.removeEventListener('fixture::native', listener)
+
+        return {
+            detail: capturedEvent?.detail,
+            isCustomEvent: capturedEvent instanceof globalThis.CustomEvent,
+            targetIsDocument: capturedEvent?.target === globalThis.document,
+        }
+    })
+
+    expect(received).toEqual({
+        detail: ['orders', { page: 2 }],
+        isCustomEvent: true,
+        targetIsDocument: true,
+    })
+})
+
 test('published legacy bundle initializes DataTables and runs draw hooks', async ({
     page,
     request,
