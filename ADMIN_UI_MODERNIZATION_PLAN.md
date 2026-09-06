@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: утвердить Sass entrypoints и границы variables core/features/themes.
+- Точка возобновления: зафиксировать исключения color literals и dark-mode strategy.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -56,6 +56,26 @@
 - `!important` не используется как стандартный способ победить тему; исключения допустимы только для документированного vendor override.
 - Stylelint + `stylelint-scss` проверяет literals, дублирование и базовые правила качества SCSS. Исключения локальны и обоснованы.
 - TailwindTheme является техническим исключением только для сгенерированного Tailwind/PostCSS utility layer. Все first-party handwritten overrides и общие tokens ведутся централизованно; сгенерированный CSS вручную не редактируется.
+
+Целевая структура source entrypoints:
+
+```text
+resources/frontend/
+  core/{index.js,styles/admin-core.scss,styles/_variables.scss,styles/_colors.scss}
+  features/<id>/{index.js,styles/feature.scss,styles/_variables.scss,styles/_colors.scss}
+  themes/adminlte/{index.js,styles/theme.scss,styles/_variables.scss,styles/_colors.scss}
+  themes/tailwind/{index.js,styles/theme.scss,styles/_variables.scss,styles/_colors.scss,tailwind.input.css}
+```
+
+- `admin-core.scss`, каждый `feature.scss` и каждый `theme.scss` являются самостоятельными build entries и попадают в отдельные manifest entries.
+- First-party Sass modules используют `@use`/`@forward`; legacy `@import` допускается временно только на migration boundary или когда vendor package не поддерживает module system.
+- Core variables содержат только framework-independent behavior/accessibility tokens; core не знает Bootstrap, AdminLTE, Tailwind и visual component palette.
+- Feature variables принадлежат одному driver и определяют только его layout/behavior defaults и публичные `--soa-<feature>-*` hooks; feature не импортирует private variables темы.
+- Theme variables владеют typography, spacing, radius, shadows, layout и palette темы, а также назначают значения публичным core/feature CSS custom properties.
+- `_colors.scss` каждого слоя является единственным first-party местом color literals этого слоя; `_variables.scss` содержит остальные Sass defaults с `!default` там, где нужен build-time override.
+- Theme-specific feature presentation хранится рядом с темой либо в явном adapter entry, но не возвращается в generic feature stylesheet.
+- `tailwind.input.css` содержит только необходимые Tailwind/PostCSS directives/config и считается build-tool input; все написанные вручную overrides остаются в `theme.scss`. Generated Tailwind CSS существует только в output и вручную не редактируется.
+- Текущие `resources/assets/scss/admin-app.scss`, глобальные `_variables.scss`/`colors.scss` и component aggregators разбираются по этим владельцам постепенно; монолит удаляется после parity обеих тем.
 
 ## Важное техническое ограничение
 
@@ -376,7 +396,7 @@ No-build consumer contract является release-blocking:
 - [x] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
 - [x] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
 - [x] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
-- [ ] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
+- [x] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
 - [ ] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
 - [ ] Выбрать replacements для Select2, date/time controls и lightbox.
 - [ ] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
@@ -756,3 +776,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / update command | Зафиксирован staging/validation/manifest-last протокол, `--check`, fail-fast runtime diagnostic и запрет изменения опубликованного config/application files | текущий commit |
 | 2026-09-06 | Этап 0 / Vue strategy | Выбран короткий `@vue/compat` этап с миграцией по одному island и обязательным удалением compat до release; baseline уточнён до 9 `inline-template` и 7 global components | текущий commit |
 | 2026-09-06 | Этап 0 / Vue props | Зафиксирован typed `data-*` contract для скаляров и безопасный `application/json` payload через `Js::encode()` для сложных props; выполнение server data как template/code запрещено | текущий commit |
+| 2026-09-06 | Этап 0 / Sass structure | Определены независимые Sass entries и локальные `_variables.scss`/`_colors.scss` для core/features/themes; first-party modules переходят на `@use`/`@forward`, Tailwind output остаётся generated exception | текущий commit |
