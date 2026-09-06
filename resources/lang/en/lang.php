@@ -91,6 +91,8 @@ return [
     'tree' => [
         'expand' => 'Expand all',
         'collapse' => 'Collapse all',
+        'move' => 'Move item',
+        'reorderCompleted' => 'Item moved',
     ],
 
     'editable' => [

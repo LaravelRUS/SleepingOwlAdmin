@@ -341,7 +341,6 @@ class DisplayTree extends Display implements WithRoutesInterface
     public function toArray()
     {
         $model = $this->getModelConfiguration();
-        $this->setHtmlAttribute('class', 'dd nestable');
         $parameters = $this->getParameters() + Request::all();
 
         return parent::toArray() + [

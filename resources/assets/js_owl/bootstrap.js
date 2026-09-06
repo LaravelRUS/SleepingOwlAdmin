@@ -30,7 +30,6 @@ const {
     installLegacyDataTablesPresentation,
 } = require('../../frontend/features/table/themes/legacy-adminlte/datatables');
 installLegacyDataTablesPresentation(dataTables2Runtime());
-require('./libs/nestable');
 require('./libs/sweetalert');
 require('./libs/js-cookie');
 require('./libs/progressbar');

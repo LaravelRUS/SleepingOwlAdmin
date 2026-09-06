@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-soa-color-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/public/default/css/features/tree.css" />
+        <script>
+            const theme = new URLSearchParams(location.search).get('theme') || 'tailwind'
+            const supported = ['legacy-adminlte', 'tailwind']
+            if (!supported.includes(theme)) throw new Error(`Unsupported fixture theme: ${theme}`)
+
+            for (const href of [
+                `/public/default/css/themes/${theme}.css`,
+                `/public/default/css/features/tree/themes/${theme}.css`,
+            ]) {
+                const link = document.createElement('link')
+                link.rel = 'stylesheet'
+                link.href = href
+                document.head.append(link)
+            }
+        </script>
+    </head>
+    <body>
+        <main class="soa-tree" data-soa-tree>
+            <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
+                <li class="soa-tree-item" data-soa-tree-item data-id="1">
+                    <button class="soa-tree-handle" data-soa-tree-handle type="button">≡</button>
+                    <div class="soa-tree-content">Catalog</div>
+                    <ol class="soa-tree-list" data-soa-tree-list>
+                        <li class="soa-tree-item" data-soa-tree-item data-id="2">
+                            <div class="soa-tree-content">Phones</div>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </main>
+    </body>
+</html>

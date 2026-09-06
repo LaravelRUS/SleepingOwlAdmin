@@ -1,0 +1,36 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+    :root {
+        --soa-tree-surface: #{colors.$surface};
+        --soa-tree-text: #{colors.$text};
+        --soa-tree-border: #{colors.$border};
+        --soa-tree-handle: #{colors.$handle};
+        --soa-tree-handle-hover: #{colors.$handle-hover};
+        --soa-tree-hover: #{colors.$hover};
+        --soa-tree-ghost: #{colors.$ghost};
+        --soa-tree-on-handle: #{colors.$on-handle};
+        --soa-tree-shadow: #{colors.$shadow};
+        --soa-tree-indent: #{variables.$indent};
+        --soa-tree-item-gap: #{variables.$item-gap};
+        --soa-tree-content-padding-block: #{variables.$content-padding-block};
+        --soa-tree-content-padding-inline: #{variables.$content-padding-inline};
+        --soa-tree-control-size: #{variables.$control-size};
+        --soa-tree-control-gap: #{variables.$control-gap};
+        --soa-tree-menu-gap: #{variables.$menu-gap};
+        --soa-tree-border-width: #{variables.$border-width};
+        --soa-tree-radius: #{variables.$radius};
+        --soa-tree-transition-duration: #{variables.$transition-duration};
+        --soa-tree-ghost-opacity: #{variables.$ghost-opacity};
+        --soa-tree-shadow-offset: #{variables.$shadow-offset};
+        --soa-tree-shadow-blur: #{variables.$shadow-blur};
+    }
+
+    :root[data-soa-color-scheme='dark'] {
+        --soa-tree-surface: #{colors.$dark-surface};
+        --soa-tree-text: #{colors.$dark-text};
+        --soa-tree-border: #{colors.$dark-border};
+        --soa-tree-hover: #{colors.$dark-hover};
+    }
+}

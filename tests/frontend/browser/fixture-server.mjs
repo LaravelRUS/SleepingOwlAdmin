@@ -44,6 +44,11 @@ const staticRoutes = new Map([
         '/inline-editors',
         [join(browserDirectory, 'inline-editors.html'), 'text/html; charset=utf-8'],
     ],
+    ['/trees', [join(browserDirectory, 'trees.html'), 'text/html; charset=utf-8']],
+    [
+        '/tree-presentation',
+        [join(browserDirectory, 'tree-presentation.html'), 'text/html; charset=utf-8'],
+    ],
     ['/date-controls', [join(browserDirectory, 'date-controls.html'), 'text/html; charset=utf-8']],
     [
         '/resources/frontend/core/data/island-props.js',
@@ -128,6 +133,42 @@ const staticRoutes = new Map([
                 'css',
                 'features',
                 'table',
+                'themes',
+                'tailwind.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/tree.css',
+        [join(projectRoot, 'public', 'default', 'css', 'features', 'tree.css'), 'text/css'],
+    ],
+    [
+        '/public/default/css/features/tree/themes/legacy-adminlte.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'tree',
+                'themes',
+                'legacy-adminlte.css',
+            ),
+            'text/css',
+        ],
+    ],
+    [
+        '/public/default/css/features/tree/themes/tailwind.css',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'css',
+                'features',
+                'tree',
                 'themes',
                 'tailwind.css',
             ),
@@ -294,6 +335,19 @@ async function handleInlineEdit(request, response, url) {
     })
 }
 
+async function handleTreeReorder(request, response, url) {
+    const parameters = await readParameters(request, url)
+    recordRequest('tree-reorder', request, parameters)
+
+    if (url.searchParams.has('fail')) {
+        response.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' })
+        response.end('Unable to save tree')
+        return
+    }
+
+    response.writeHead(204).end()
+}
+
 async function readInlineEditParameters(request, url) {
     if (request.method === 'GET') return Object.fromEntries(url.searchParams)
 
@@ -362,6 +416,7 @@ const apiHandlers = new Map([
     ['/api/datatables', handleTable],
     ['/api/dependent-options', handleDependentSelect],
     ['/api/inline-edit', handleInlineEdit],
+    ['/api/tree/reorder', handleTreeReorder],
     ['/api/select-search', handleSelectSearch],
 ])
 

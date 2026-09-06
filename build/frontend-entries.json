@@ -47,6 +47,11 @@
                 "output": "js/features/table.js"
             },
             {
+                "logicalId": "feature:tree",
+                "source": "resources/frontend/features/tree/index.js",
+                "output": "js/features/tree.js"
+            },
+            {
                 "logicalId": "theme:legacy-adminlte",
                 "source": "resources/frontend/themes/legacy-adminlte/index.js",
                 "output": "js/themes/legacy-adminlte.js"
@@ -74,6 +79,11 @@
                 "output": "css/features/table.css"
             },
             {
+                "logicalId": "feature:tree",
+                "source": "resources/frontend/features/tree/styles/tree.scss",
+                "output": "css/features/tree.css"
+            },
+            {
                 "logicalId": "feature:table:theme:legacy-adminlte",
                 "source": "resources/frontend/features/table/themes/legacy-adminlte/styles/datatables.scss",
                 "output": "css/features/table/themes/datatables-legacy-adminlte.css"
@@ -82,6 +92,16 @@
                 "logicalId": "feature:table:theme:tailwind",
                 "source": "resources/frontend/features/table/themes/tailwind/styles/datatables.scss",
                 "output": "css/features/table/themes/tailwind.css"
+            },
+            {
+                "logicalId": "feature:tree:theme:legacy-adminlte",
+                "source": "resources/frontend/features/tree/themes/legacy-adminlte/styles/tree-adminlte.scss",
+                "output": "css/features/tree/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:tree:theme:tailwind",
+                "source": "resources/frontend/features/tree/themes/tailwind/styles/tree-tailwind.scss",
+                "output": "css/features/tree/themes/tailwind.css"
             },
             {
                 "logicalId": "theme:legacy-adminlte",

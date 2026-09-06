@@ -91,6 +91,8 @@ return [
     'tree' => [
         'expand' => '展开全部',
         'collapse' => '全部收缩',
+        'move' => '移动项目',
+        'reorderCompleted' => '项目已移动',
     ],
 
     'editable' => [

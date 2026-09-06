@@ -92,6 +92,7 @@ return [
         'expand' => 'Развернуть все',
         'reorderCompleted' => 'Раздел перемещен',
         'collapse' => 'Свернуть все',
+        'move' => 'Переместить раздел',
     ],
 
     'editable' => [

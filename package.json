@@ -45,7 +45,6 @@
         "lazyload": "^2.0.0-rc.2",
         "lodash": "^4.17.20",
         "magnific-popup": "^1.1.0",
-        "nestable2": "^1.6.0",
         "popper": "^1.0.1",
         "postcss-loader": "^7.0.0",
         "progressbar.js": "^1.1.0",

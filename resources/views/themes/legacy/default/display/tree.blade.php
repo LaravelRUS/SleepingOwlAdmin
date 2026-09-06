@@ -24,25 +24,32 @@
     </div>
 
     <div class="card-body p-0 b-0">
-        @if($max_depth > 1)
-            <menu id="nestable-menu" class="no-gutters p-3">
-                <button type="button" data-action="expand-all"
-                        class="btn btn-primary btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
-                <button type="button" data-action="collapse-all"
-                        class="btn btn-secondary btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
-            </menu>
-        @endif
-        <div class="card-body mt-3 p-0 b-0">
-            @php
-                $treeAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
-                    ->except(['data-url', 'data-parameters'])
-                    ->class(['dd', 'nestable', 'pb-3']);
-            @endphp
-            <div {!! $treeAttributes !!} data-url="{{ $url }}/reorder" data-parameters="{{ json_encode($parameters) }}">
-                <ol class="dd-list">
-                    @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $items])
-                </ol>
-            </div>
+        @php
+            $treeParametersId = 'soa-tree-parameters-'.\Illuminate\Support\Str::uuid();
+            $treeAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
+                ->except(['data-url', 'data-parameters'])
+                ->class(['soa-tree', 'pb-3']);
+        @endphp
+        <div {!! $treeAttributes !!}
+             data-soa-tree
+             data-soa-tree-parameters-id="{{ $treeParametersId }}"
+             data-url="{{ $url }}/reorder"
+             data-reorderable="{{ $reorderable ? 'true' : 'false' }}">
+            @if($max_depth > 1)
+                <menu class="soa-tree-menu no-gutters p-3">
+                    <button type="button" data-soa-tree-action="expand-all"
+                            class="btn btn-primary btn-sm">@lang('sleeping_owl::lang.tree.expand')</button>
+                    <button type="button" data-soa-tree-action="collapse-all"
+                            class="btn btn-secondary btn-sm">@lang('sleeping_owl::lang.tree.collapse')</button>
+                </menu>
+            @endif
+            <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
+                @include(AdminTemplate::getViewPath('display.tree_children'), [
+                    'children' => $items,
+                    'depth' => 1,
+                ])
+            </ol>
+            <script id="{{ $treeParametersId }}" type="application/json">{!! \Illuminate\Support\Js::encode($parameters) !!}</script>
         </div>
         @yield('card.footer')
         @yield('panel.footer')

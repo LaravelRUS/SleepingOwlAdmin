@@ -1,0 +1,7 @@
+@use 'custom-properties';
+@use 'tree';
+
+@mixin styles {
+    @include custom-properties.define;
+    @include tree.styles;
+}

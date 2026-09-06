@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="tree-token" />
+        <title>Tree browser fixture</title>
+        <link rel="stylesheet" href="/public/default/css/admin-app.css" />
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'trees',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 1,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: {
+                    button: { cancel: 'Cancel', save: 'Save', yes: 'Yes' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: { error: 'Request failed', no_action: 'No action' },
+                    tree: {
+                        collapse: 'Collapse all',
+                        expand: 'Expand all',
+                        reorderCompleted: 'Item moved',
+                    },
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <main>
+            <section
+                id="tree-primary"
+                class="soa-tree"
+                data-soa-tree
+                data-max-depth="3"
+                data-reorderable="true"
+                data-url="/api/tree/reorder"
+                data-soa-tree-parameters-id="tree-primary-parameters"
+            >
+                <menu class="soa-tree-menu">
+                    <button type="button" data-soa-tree-action="expand-all">Expand all</button>
+                    <button type="button" data-soa-tree-action="collapse-all">Collapse all</button>
+                </menu>
+                <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
+                    <li class="soa-tree-item" data-soa-tree-item data-id="1">
+                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                            ≡
+                        </button>
+                        <div class="soa-tree-content">Catalog</div>
+                        <ol class="soa-tree-list" data-soa-tree-list>
+                            <li class="soa-tree-item" data-soa-tree-item data-id="2">
+                                <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                                    ≡
+                                </button>
+                                <div class="soa-tree-content">Phones</div>
+                                <ol class="soa-tree-list" data-soa-tree-list></ol>
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="soa-tree-item" data-soa-tree-item data-id="3">
+                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                            ≡
+                        </button>
+                        <div class="soa-tree-content">Archive</div>
+                        <ol class="soa-tree-list" data-soa-tree-list>
+                            <li class="soa-tree-item" data-soa-tree-item data-id="5">
+                                <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                                    ≡
+                                </button>
+                                <div class="soa-tree-content">Old phones</div>
+                                <ol class="soa-tree-list" data-soa-tree-list></ol>
+                            </li>
+                        </ol>
+                    </li>
+                    <li class="soa-tree-item" data-soa-tree-item data-id="4">
+                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                            ≡
+                        </button>
+                        <div class="soa-tree-content">Accessories</div>
+                        <ol class="soa-tree-list" data-soa-tree-list></ol>
+                    </li>
+                </ol>
+                <script id="tree-primary-parameters" type="application/json">
+                    { "scope": "catalog" }
+                </script>
+            </section>
+
+            <section
+                id="tree-secondary"
+                class="soa-tree"
+                data-soa-tree
+                data-max-depth="2"
+                data-reorderable="true"
+                data-url="/api/tree/reorder?fail=1"
+            >
+                <ol class="soa-tree-list" data-soa-tree-list data-soa-tree-root>
+                    <li class="soa-tree-item" data-soa-tree-item data-id="10">
+                        <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                            ≡
+                        </button>
+                        <div class="soa-tree-content">Secondary</div>
+                        <ol class="soa-tree-list" data-soa-tree-list>
+                            <li class="soa-tree-item" data-soa-tree-item data-id="11">
+                                <button type="button" class="soa-tree-handle" data-soa-tree-handle>
+                                    ≡
+                                </button>
+                                <div class="soa-tree-content">Secondary child</div>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </section>
+        </main>
+
+        <script src="/public/default/js/admin-app.js"></script>
+        <script>
+            window.__treeEvents = []
+            ;['tree:changed', 'tree:failed', 'display.tree::changed'].forEach((name) => {
+                document.addEventListener(name, () => window.__treeEvents.push(name))
+            })
+        </script>
+        <script src="/public/default/js/modules.js"></script>
+    </body>
+</html>

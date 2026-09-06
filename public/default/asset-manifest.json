@@ -72,6 +72,42 @@
                         }
                     ]
                 },
+                "feature:tree": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/tree.js",
+                            "version": "64240d1b383cf4ede43d2a08cf1ce788",
+                            "checksum": "sha256:5241bf40ca6f4e3feb0c0883b9ce5f09d15fdba731fad6a27a35adbf58ada4cc"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/tree.css",
+                            "version": "39845e6738864a229a7844d89d22954a",
+                            "checksum": "sha256:b858bc85cffd1f6b318ec6d540e3bad4cb3289f9bcd5084f90d42401a9a87632"
+                        }
+                    ]
+                },
+                "feature:tree:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/tree/themes/legacy-adminlte.css",
+                            "version": "b68e7f2b889b064cb14404582490323a",
+                            "checksum": "sha256:8bfa22065779ef1229678d36c33885686e4339dd8ce4d668908c924e88d473f6"
+                        }
+                    ]
+                },
+                "feature:tree:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/tree/themes/tailwind.css",
+                            "version": "a849fe964e171fccec4f6f586bf45b7e",
+                            "checksum": "sha256:cfeeb6115e71550931fbe7008e0159d532a0aedda12ddb896f9c59151a14d52f"
+                        }
+                    ]
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -176,6 +212,42 @@
                         }
                     ]
                 },
+                "feature:tree": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/tree.js",
+                            "version": "26826057b3540dbc0dcc574cadb230f4",
+                            "checksum": "sha256:b75cfd70695aca18c7620e2f796d985df612e2a0ba881574115e8accde69bf7c"
+                        }
+                    ],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/tree.css",
+                            "version": "22c45ffe0fdc22d7fdc0e16c79626d61",
+                            "checksum": "sha256:5dd2e4d843ac5b8270ab19d8c44dd21f71670a84460a7c4cb42d09733135457d"
+                        }
+                    ]
+                },
+                "feature:tree:theme:legacy-adminlte": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/tree/themes/legacy-adminlte.css",
+                            "version": "4c605556defb84e346ae669eb433e644",
+                            "checksum": "sha256:15cdf7ec77c3afff4599b09c024f72bc2ee1e1baf07257222181a74afac2e319"
+                        }
+                    ]
+                },
+                "feature:tree:theme:tailwind": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/tree/themes/tailwind.css",
+                            "version": "b0e10a58de95c906bbc7d51bc7e26a1f",
+                            "checksum": "sha256:e98acf432437e652542df02de2c4a4c8267d6d3c306d261d8395a62b3efd4b94"
+                        }
+                    ]
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -211,5 +283,5 @@
             }
         }
     },
-    "build_id": "sha256:78ee34f965e38924367f6f4502c814143450299f15ca24fc6df2d7de21961800"
+    "build_id": "sha256:847cecf479922c6f9bb49e4cdde2f026f0824d981f51791d0b30d848b7112113"
 }

@@ -91,6 +91,8 @@ return [
     'tree' => [
         'expand' => 'Alle ausklappen',
         'collapse' => 'Alle einklappen',
+        'move' => 'Eintrag verschieben',
+        'reorderCompleted' => 'Eintrag verschoben',
     ],
 
     'editable' => [

@@ -42,13 +42,17 @@ describe('frontend build entries', () => {
         })
     })
 
-    it.each(['core', 'feature:forms', 'feature:table', 'theme:legacy-adminlte', 'theme:tailwind'])(
-        'defines independent script and style outputs for %s',
-        (logicalId) => {
-            expect(modernEntry(logicalId, 'scripts')).toBeDefined()
-            expect(modernEntry(logicalId, 'styles')).toBeDefined()
-        },
-    )
+    it.each([
+        'core',
+        'feature:forms',
+        'feature:table',
+        'feature:tree',
+        'theme:legacy-adminlte',
+        'theme:tailwind',
+    ])('defines independent script and style outputs for %s', (logicalId) => {
+        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
+        expect(modernEntry(logicalId, 'styles')).toBeDefined()
+    })
 
     it('keeps modern source ownership aligned with logical ids', () => {
         Object.values(entries.modern)
@@ -57,7 +61,9 @@ describe('frontend build entries', () => {
                 expect(source.startsWith(expectedSourceRoot(logicalId))).toBe(true)
             })
     })
+})
 
+describe('frontend build entry files', () => {
     it('uses existing sources and unique output paths', () => {
         const configured = allEntries()
         const outputs = configured.map(({ output }) => output)
@@ -74,6 +80,18 @@ describe('table presentation entries', () => {
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:table:theme:${theme}`
+
+            expect(modernEntry(logicalId, 'styles')).toBeDefined()
+            expect(modernEntry(logicalId, 'scripts')).toBeUndefined()
+        },
+    )
+})
+
+describe('tree presentation entries', () => {
+    it.each(['legacy-adminlte', 'tailwind'])(
+        'publishes the %s adapter as an independent stylesheet',
+        (theme) => {
+            const logicalId = `feature:tree:theme:${theme}`
 
             expect(modernEntry(logicalId, 'styles')).toBeDefined()
             expect(modernEntry(logicalId, 'scripts')).toBeUndefined()

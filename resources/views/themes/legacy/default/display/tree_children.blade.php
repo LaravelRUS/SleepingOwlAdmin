@@ -1,11 +1,20 @@
 @foreach ($children as $entry)
-
-    <li class="dd-item dd3-item{{ $reorderable ? '' : ' dd3-not-reorderable' }}{{ (isset($entry->level) && $entry->level >= $collapsedLevel) || $collapsedLevel == 0 ? ' dd-collapsed' : '' }}"
+    @php
+        $hasChildren = $entry->children && $entry->children->count() > 0;
+        $collapsed = (isset($entry->level) && $entry->level >= $collapsedLevel) || $collapsedLevel == 0;
+    @endphp
+    <li class="soa-tree-item{{ $reorderable ? '' : ' soa-tree-item-static' }}"
+        data-soa-tree-item
+        data-soa-tree-collapsed="{{ $hasChildren && $collapsed ? 'true' : 'false' }}"
         data-id="{{ $entry->id }}">
         @if ($reorderable)
-            <div class="dd-handle dd3-handle" @if (!is_callable($value)) title="{{ $entry->{$value} }}" @endif></div>
+            <button type="button"
+                    class="soa-tree-handle"
+                    data-soa-tree-handle
+                    aria-label="@lang('sleeping_owl::lang.tree.move')"
+                    @if (!is_callable($value)) title="{{ $entry->{$value} }}" @endif>≡</button>
         @endif
-        <div class="dd3-content">
+        <div class="soa-tree-content">
 
             @if (is_callable($value))
                 {!! $value($entry) !!}
@@ -26,9 +35,12 @@
             </div>
         </div>
 
-        @if ($entry->children && $entry->children->count() > 0)
-            <ol class="dd-list">
-                @include(AdminTemplate::getViewPath('display.tree_children'), ['children' => $entry->children])
+        @if ($hasChildren || $depth < $max_depth)
+            <ol class="soa-tree-list" data-soa-tree-list @if($hasChildren && $collapsed) hidden @endif>
+                @include(AdminTemplate::getViewPath('display.tree_children'), [
+                    'children' => $entry->children ?? collect(),
+                    'depth' => $depth + 1,
+                ])
             </ol>
         @endif
     </li>
