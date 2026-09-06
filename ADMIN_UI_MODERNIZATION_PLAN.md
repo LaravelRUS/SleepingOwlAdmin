@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: подтвердить первые темы и выбрать default theme нового major.
+- Точка возобновления: определить packaging strategy для core и встроенных тем.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -191,6 +191,17 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 
 Логические manifest ids фиксируются заранее: `core`, `theme:<id>`, `feature:<id>` и `feature:<id>:theme:<id>`. Физические имена с hash/version берутся только из manifest; PHP и пользовательские extensions не строят пути к собранным файлам вручную.
 
+### Темы первого major-релиза
+
+- Встроенные темы: `adminlte` и `tailwind`; третья обязательная acceptance implementation — минимальная тестовая custom theme через публичный `ThemeInterface`.
+- Default theme — `adminlte`, чтобы существующий `template` config и привычная структура upgrade-проектов получили минимально неожиданный результат.
+- Встроенная AdminLTE theme переходит на AdminLTE 4 + Bootstrap 5.3 и не поддерживает legacy AdminLTE 3/Bootstrap 4 JavaScript. На 2026-09-06 актуальная `admin-lte@4.9.1` объявляет только peer dependency `bootstrap ^5.3.8` и не требует jQuery.
+- Tailwind theme строится на Tailwind 4.x (на дату проверки `4.3.3`) и поставляется как заранее собранный полный bundle для стандартных views/components.
+- `TemplateDefault` сохраняется как deprecated compatibility alias/adapter к AdminLTE theme, поэтому прежнее значение опубликованного `template` не вызывает fatal error.
+- Выбор `tailwind` полностью исключает Bootstrap/AdminLTE assets; выбор `adminlte` полностью исключает Tailwind assets.
+- Custom theme явно задаётся существующим ключом `template`, реализует `ThemeInterface` и предоставляет готовые manifest entries; core не делает автоматический fallback к AdminLTE при ошибке custom theme.
+- Тема выбирается для панели при bootstrap приложения. Runtime theme switch на уже отрисованной странице не входит в первый релиз.
+
 ### Поставка без frontend-сборки у пользователя
 
 - Репозиторий и релизные archives содержат готовые versioned production bundles: core, feature chunks и bundles поддерживаемых тем.
@@ -305,7 +316,7 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - [x] Проверить актуальные DataTables 2 packages и их production dependency tree.
 - [x] Зафиксировать список поддерживаемых браузеров.
 - [x] Зафиксировать границы `core`, `feature driver`, `theme` и пользовательских extensions.
-- [ ] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
+- [x] Подтвердить AdminLTE и Tailwind как две первые опциональные темы; выбрать default theme нового major.
 - [ ] Определить стратегию распространения: единый Composer package с theme bundles или отдельные theme packages. На первой итерации предпочтителен монорепозиторий с независимыми bundles и стабильными contracts.
 - [ ] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
 - [ ] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
@@ -685,3 +696,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / критерий jQuery | Выбран базовый критерий: first-party и публичный runtime API полностью без jQuery; транзитивный jQuery разрешён только как изолированная внутренняя зависимость DataTables 2 с точным allowlist | текущий commit |
 | 2026-09-06 | Этап 0 / браузеры | Зафиксирована modern-only матрица: последние 2 Chrome/Edge/Firefox, Firefox ESR, Safari/iOS `>= 16.4`; IE и legacy Edge не поддерживаются | текущий commit |
 | 2026-09-06 | Этап 0 / границы | Разделены PHP/frontend core, feature drivers, themes, presentation adapters и user extensions; сохранён ключ `template`, legacy `TemplateInterface` получает переходный adapter | текущий commit |
+| 2026-09-06 | Этап 0 / темы | Подтверждены AdminLTE 4/Bootstrap 5 и Tailwind 4; AdminLTE остаётся default ради upgrade/config compatibility, но загружается только как выбранная опциональная тема | текущий commit |
