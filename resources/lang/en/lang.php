@@ -118,6 +118,11 @@ return [
         'browseMultiple' => 'Select Images',
         'remove' => 'Remove Image',
         'removeMultiple' => 'Remove Images',
+        'preview' => 'Preview image',
+        'closePreview' => 'Close preview',
+        'previous' => 'Previous image',
+        'next' => 'Next image',
+        'reorder' => 'Change image order',
     ],
 
     'file' => [

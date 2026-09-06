@@ -80,6 +80,30 @@ const readonlyImageProps = {
     url: '/api/upload',
     value: 'fixtures/readonly.svg',
 }
+const imagesLabels = {
+    browse: 'Upload images',
+    close: 'Close preview',
+    download: 'Download',
+    insertLink: 'Insert link',
+    next: 'Next image',
+    preview: 'Preview image',
+    previous: 'Previous image',
+    remove: 'Remove image',
+    reorder: 'Change image order',
+}
+const readonlyImagesProps = {
+    assetPrefix: '/cdn/',
+    csrfToken: 'fixture-token',
+    draggable: true,
+    labels: imagesLabels,
+    maxFileSize: 2,
+    messages: readonlyImageProps.messages,
+    name: 'readonly-gallery',
+    onlyLink: false,
+    readonly: true,
+    url: '/api/upload',
+    values: ['fixtures/readonly.svg', 'fixtures/second.svg'],
+}
 
 function capturePageErrors(page) {
     const errors = []
@@ -165,6 +189,31 @@ async function inspectReadonlyImage(page) {
     }, readonlyImageProps)
 }
 
+async function inspectReadonlyImages(page) {
+    return page.evaluate((props) => {
+        const host = globalThis.document.createElement('section')
+        host.dataset.soaVueApp = ''
+        host.dataset.soaVueComponent = 'element-images'
+        host.dataset.soaVueProps = JSON.stringify(props)
+        globalThis.document.body.append(host)
+        globalThis.Admin.VueApps.mount(host)
+
+        const result = {
+            dragHandles: host.querySelectorAll('[data-soa-images-drag-handle]').length,
+            editControls: host.querySelectorAll('[data-soa-images-insert]').length,
+            firstPreview: host.querySelector('[data-soa-images-preview] img').src,
+            removeControls: host.querySelectorAll('[data-soa-images-remove]').length,
+            uploadControls: host.querySelectorAll('[data-soa-images-upload]').length,
+            value: host.querySelector('[data-soa-images-value]').value,
+        }
+
+        globalThis.Admin.VueApps.unmount(host)
+        host.remove()
+
+        return result
+    }, readonlyImagesProps)
+}
+
 async function mountOnlyLinkImage(page) {
     await page.evaluate((baseProps) => {
         const host = globalThis.document.createElement('section')
@@ -189,6 +238,32 @@ async function mountOnlyLinkImage(page) {
             return Promise.resolve({ value: 'blob:link-only' })
         }
     }, readonlyImageProps)
+}
+
+async function mountOnlyLinkImages(page) {
+    await page.evaluate((baseProps) => {
+        const host = globalThis.document.createElement('section')
+        host.id = 'only-link-images'
+        host.dataset.soaVueApp = ''
+        host.dataset.soaVueComponent = 'element-images'
+        host.dataset.soaVueProps = JSON.stringify({
+            ...baseProps,
+            name: 'only-link-images',
+            onlyLink: true,
+            readonly: false,
+            values: [],
+        })
+        globalThis.document.body.append(host)
+        globalThis.Admin.VueApps.mount(host)
+        globalThis.Admin.Messages.cliptobuffer = () => {
+            const buffer = globalThis.document.createElement('img')
+            buffer.id = 'image-paste-in-buffer'
+            buffer.src = 'data:image/png;base64,QQ=='
+            globalThis.document.querySelector('#vueApp').append(buffer)
+
+            return Promise.resolve({ value: 'blob:link-only-gallery' })
+        }
+    }, readonlyImagesProps)
 }
 
 async function selectedValues(locator) {
@@ -319,17 +394,140 @@ test('file, image and images components expose values and upload callbacks', asy
     await page.locator('#image-wrapper [data-soa-image-remove]').click()
     await expect(imageValue).toHaveValue('')
 
-    await expect(page.locator('#images-value')).toHaveValue(
+    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
         'fixtures/pixel.svg,fixtures/second.svg',
     )
     await runUploadCallback(page, '#images-wrapper .dropzone', 'fixtures/third.svg')
-    await expect(page.locator('#images-value')).toHaveValue(
+    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
         'fixtures/pixel.svg,fixtures/second.svg,fixtures/third.svg',
     )
     await page.locator('#images-wrapper .gallery-remove').first().click()
-    await expect(page.locator('#images-value')).toHaveValue(
+    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
         'fixtures/second.svg,fixtures/third.svg',
     )
+})
+
+test('images island opens and navigates its native image preview', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+
+    await page.locator('#images-wrapper [data-soa-images-preview]').first().click()
+    const dialog = page.locator('[data-soa-images-dialog]')
+    await expect(dialog).toBeVisible()
+    await expect(dialog.locator('.soa-images-dialog__position')).toHaveText('1 / 2')
+    await dialog.locator('[data-soa-images-dialog-next]').click()
+    await expect(dialog.locator('.soa-images-dialog__image')).toHaveAttribute(
+        'src',
+        /\/fixtures\/second\.svg$/,
+    )
+    await expect(dialog.locator('.soa-images-dialog__position')).toHaveText('2 / 2')
+    await dialog.locator('[data-soa-images-dialog-close]').click()
+    await expect(dialog).not.toBeVisible()
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('images island applies sortable order and destroys both drivers', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    await page.evaluate(() => {
+        const host = globalThis.document.querySelector('#images-wrapper')
+        const gallery = host.querySelector('[data-soa-images-gallery]')
+        const sortableKey = Object.keys(gallery).find((key) => key.startsWith('Sortable'))
+        gallery[sortableKey].options.onEnd({ newDraggableIndex: 1, oldDraggableIndex: 0 })
+    })
+    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
+        'fixtures/second.svg,fixtures/pixel.svg',
+    )
+    const result = await page.evaluate(() => {
+        const host = globalThis.document.querySelector('#images-wrapper')
+        const gallery = host.querySelector('[data-soa-images-gallery]')
+        const sortableKey = Object.keys(gallery).find((key) => key.startsWith('Sortable'))
+        const existed = Boolean(gallery.dropzone && gallery[sortableKey])
+        const unmounted = globalThis.Admin.VueApps.unmount(host)
+
+        return {
+            destroyed: !gallery.dropzone && !gallery[sortableKey],
+            existed,
+            remainingApps: globalThis.Admin.VueApps.size,
+            unmounted,
+        }
+    })
+
+    expect(result).toEqual({
+        destroyed: true,
+        existed: true,
+        remainingApps: 6,
+        unmounted: true,
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('readonly images island mounts neither editing nor sortable drivers', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+
+    expect(await inspectReadonlyImages(page)).toEqual({
+        dragHandles: 0,
+        editControls: 0,
+        firstPreview: 'http://127.0.0.1:4173/cdn/fixtures/readonly.svg',
+        removeControls: 0,
+        uploadControls: 0,
+        value: 'fixtures/readonly.svg,fixtures/second.svg',
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('link-only images island rejects blobs without creating an uploader', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    await mountOnlyLinkImages(page)
+
+    await expect(page.locator('#only-link-images [data-soa-images-upload]')).toHaveCount(0)
+    await page.locator('#only-link-images [data-soa-images-insert-new]').click()
+    await expect(page.locator('#only-link-images [data-soa-images-value]')).toHaveValue('')
+    await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)
+    expect(
+        await page.evaluate(() => {
+            const host = globalThis.document.querySelector('#only-link-images')
+            const unmounted = globalThis.Admin.VueApps.unmount(host)
+            host.remove()
+
+            return unmounted
+        }),
+    ).toBe(true)
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('images island uploads a pasted blob into the selected position', async ({ page }) => {
+    const pageErrors = capturePageErrors(page)
+    let uploadRequest
+    await page.route('**/api/upload', async (route) => {
+        uploadRequest = route.request()
+        await route.fulfill({ json: { path: 'fixtures/replaced.svg' } })
+    })
+    await openFixture(page)
+    await page.evaluate(() => {
+        globalThis.Admin.Messages.cliptobuffer = () => {
+            const buffer = globalThis.document.createElement('img')
+            buffer.id = 'image-paste-in-buffer'
+            buffer.dataset.ext = 'svg'
+            buffer.src = 'data:image/svg+xml;base64,PHN2Zy8+'
+            globalThis.document.querySelector('#vueApp').append(buffer)
+
+            return Promise.resolve({ value: 'blob:replacement' })
+        }
+    })
+
+    await page.locator('#images-wrapper [data-soa-images-insert]').first().click()
+    await expect(page.locator('#images-wrapper [data-soa-images-value]')).toHaveValue(
+        'fixtures/replaced.svg,fixtures/second.svg',
+    )
+    await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)
+    expect(await uploadRequest.allHeaders()).toMatchObject({
+        'x-csrf-token': 'browser-fixture-token',
+        'x-requested-with': 'XMLHttpRequest',
+    })
+    expectNoUnexpectedPageErrors(pageErrors)
 })
 
 test('file island destroys its upload driver before unmount', async ({ page }) => {

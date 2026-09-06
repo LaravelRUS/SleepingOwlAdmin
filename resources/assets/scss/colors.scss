@@ -15,3 +15,11 @@ $colors_palette: (
 $file-thumbnail-border: #d8d8d8 !default;
 $file-thumbnail-surface: #f4f4f4 !default;
 $file-name-text: #aaa !default;
+
+$images-dialog-backdrop: rgba($black, 0.84) !default;
+$images-dialog-surface: $gray-900 !default;
+$images-dialog-text: $white !default;
+$images-dialog-border: $gray-600 !default;
+$images-dialog-image-surface: $black !default;
+$images-order-surface: rgba($black, 0.72) !default;
+$images-order-text: $white !default;

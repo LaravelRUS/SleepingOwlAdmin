@@ -118,6 +118,11 @@ return [
         'browseMultiple' => '选择图片',
         'remove' => '移除图片',
         'removeMultiple' => '移除',
+        'preview' => '预览图片',
+        'closePreview' => '关闭预览',
+        'previous' => '上一张图片',
+        'next' => '下一张图片',
+        'reorder' => '调整图片顺序',
     ],
 
     'file' => [

@@ -118,6 +118,11 @@ return [
         'browseMultiple' => 'Bilder auswählen',
         'remove' => 'Bild löschen',
         'removeMultiple' => 'Bilder löschen',
+        'preview' => 'Bild ansehen',
+        'closePreview' => 'Vorschau schließen',
+        'previous' => 'Vorheriges Bild',
+        'next' => 'Nächstes Bild',
+        'reorder' => 'Bildreihenfolge ändern',
     ],
 
     'file' => [

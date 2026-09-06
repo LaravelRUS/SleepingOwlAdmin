@@ -11,7 +11,7 @@ export const legacyVueComponents = Object.freeze({
     deselect: Deselect,
     'element-file': asNativeVue3Component(ElementFile),
     'element-image': asNativeVue3Component(ElementImage),
-    'element-images': ElementImages,
+    'element-images': asNativeVue3Component(ElementImages),
     env_editor: asNativeVue3Component(EnvEditor),
     multiselect: LegacyMultiselect,
     'related-elements': RelatedElements,
