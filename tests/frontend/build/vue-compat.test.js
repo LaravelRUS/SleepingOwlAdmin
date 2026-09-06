@@ -21,19 +21,15 @@ const legacyVueViews = [
     'resources/views/themes/legacy/default/form/element/file.blade.php',
     'resources/views/themes/legacy/default/form/element/image.blade.php',
     'resources/views/themes/legacy/default/form/element/images.blade.php',
-    'resources/views/themes/legacy/default/form/element/select.blade.php',
-    'resources/views/themes/legacy/default/form/element/multiselect.blade.php',
+    'resources/views/themes/legacy/default/form/element/partials/select_island.blade.php',
     'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
     'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
 ]
 const legacyVueDefinitions = [
-    'resources/assets/js_owl/admin/form/deselect.js',
     'resources/assets/js_owl/admin/form/related/elements.js',
     'resources/assets/js_owl/admin/form/related/group.js',
 ]
 const legacyInlineTemplateViews = [
-    'resources/views/themes/legacy/default/form/element/select.blade.php',
-    'resources/views/themes/legacy/default/form/element/multiselect.blade.php',
     'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
     'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
     'resources/views/themes/legacy/default/form/element/related/group.blade.php',
@@ -225,6 +221,32 @@ describe('precompiled Vue islands', () => {
         expect(component).not.toMatch(/\$\(|withLegacyInlineTemplate/)
         expect(dropzone).toContain('dropzoneModule.Dropzone')
         expect(dropzone).not.toContain("window.Dropzone = require('dropzone')")
+    })
+})
+
+describe('precompiled select island', () => {
+    it('mounts single and multiple modes through one native Vue 3 component', () => {
+        const partial = readSource(
+            'resources/views/themes/legacy/default/form/element/partials/select_island.blade.php',
+        )
+        const component = readSource('resources/assets/js_owl/admin/form/select.vue')
+        const compatibility = readSource('resources/assets/js_owl/admin/form/multiselect-compat.js')
+        const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
+
+        expect(partial).toContain('data-soa-vue-component="element-select"')
+        expect(partial).toContain('data-soa-vue-props=')
+        expect(partial).toContain('v-pre')
+        expect(component).toContain('<template>')
+        expect(component).toContain('v-bind="attributes"')
+        expect(component).toContain("new EventConstructor('change', { bubbles: true })")
+        expect(component).not.toMatch(/\$\(|withLegacyInlineTemplate/)
+        expect(compatibility).toContain('NativeMultiselect')
+        expect(compatibility).not.toContain('LegacyMultiselect')
+        expect(catalog).toContain("'element-select': asNativeVue3Component(ElementSelect)")
+        expect(catalog).not.toMatch(/\bdeselect\b|\bmultiselect:/)
+        expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/deselect.js'))).toBe(
+            false,
+        )
     })
 })
 

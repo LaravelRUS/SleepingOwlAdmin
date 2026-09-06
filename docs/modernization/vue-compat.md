@@ -45,15 +45,16 @@ top-level `[data-soa-vue-app]` host and exposes their temporary lifecycle as
   rendered DOM exactly once.
 
 `#vueApp` remains a legacy layout id for non-Vue DOM integrations, but it is no
-longer a Vue root. The eight package-owned component definitions are exported
-with `defineComponent` and registered from one frozen catalog on every app
-before mount. Three definitions still own runtime-compiled legacy templates;
-the env editor, file, image and images elements are precompiled SFCs. The Vue Multiselect
-compatibility wrapper is registered from the same catalog because runtime
-compilation resolves its tag in the app context. The package does not call
-global `Vue.component` or `Vue.extend`. A consumer's existing global compat
-components can still be inherited from the selected runtime during this
-temporary stage; the final custom-module API replaces that path.
+longer a Vue root. The seven package-owned component definitions are exported
+from one frozen catalog and registered on every app before mount. Two
+definitions still own runtime-compiled related-form templates; the env editor,
+file, image, images and shared single/multiple select are precompiled SFCs.
+`ElementSelect` imports the native Vue Multiselect dependency directly, so
+neither `deselect` nor a runtime-compiled Multiselect adapter remains in the
+catalog. The package does not call global `Vue.component` or `Vue.extend`. A
+consumer's existing global compat components can still be inherited from the
+selected runtime during this temporary stage; the final custom-module API
+replaces that path.
 
 `data-soa-vue-app` and `Admin.VueApps` are migration-only contracts, not the
 final custom-module API. Until a legacy custom component is migrated, its Blade
@@ -69,8 +70,9 @@ self-closing examples that must be updated during its pilot migration.
 ### Precompiled root contract
 
 The env editor establishes the migration contract for a precompiled island;
-the file, image and images elements follow it. A Blade view renders an empty
-host with one compiler guard and three lifecycle attributes:
+the file, image, images, select and multiselect elements follow it. A Blade
+view renders an empty host with one compiler guard and three lifecycle
+attributes:
 
 - `v-pre` protects the empty host when it is nested in a legacy compiled template;
 - `data-soa-vue-app` marks lifecycle ownership;
@@ -81,8 +83,8 @@ The registry resolves the component and parses the props before it creates an
 app. Unknown names, malformed JSON, arrays and scalar props fail explicitly.
 Vue receives the selected SFC and its props through `createApp(component,
 props)`; it does not compile server markup. PHP render contracts prove that
-quotes and HTML inside env, file, image and images values remain data after the Blade
-attribute is decoded.
+quotes and HTML inside env, file, image, images and select values remain data
+after the Blade attribute is decoded.
 
 ## Explicit allowlist
 
@@ -93,8 +95,8 @@ another legacy use.
 
 | Flag | Temporary owner | Removal condition |
 | --- | --- | --- |
-| `COMPILER_INLINE_TEMPLATE` | Five remaining legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
-| `COMPONENT_V_MODEL` | Legacy `v-model` in select views and Vue 2 draggable | Each owner uses the Vue 3 model contract |
+| `COMPILER_INLINE_TEMPLATE` | Three remaining related-form Blade `inline-template` views | Last inline template becomes a precompiled island |
+| `COMPONENT_V_MODEL` | Vue 2 draggable used by related forms | Related islands use the Vue 3 model contract or direct SortableJS |
 | `INSTANCE_CHILDREN`, `INSTANCE_SCOPED_SLOTS`, `OPTIONS_BEFORE_DESTROY`, `RENDER_FUNCTION`, `PRIVATE_APIS` | `vuedraggable@2` compatibility surface | Related islands use the selected Vue 3 drag driver |
 | `WATCH_ARRAY` | Related-elements array mutation watcher | Island uses an explicit deep watcher or direct state transition |
 | `ATTR_ENUMERATED_COERCION`, `CONFIG_WHITESPACE`, `INSTANCE_ATTRS_CLASS_STYLE` | Server-compiled legacy templates and dependency markup | No runtime-compiled legacy template remains |
@@ -114,7 +116,7 @@ instance's server template. `withLegacyInlineTemplate()` clears that cached
 render just before each legacy instance is created. The current instance keeps
 its already selected render function.
 
-This bridge is applied only to the three remaining legacy catalog definitions. Remove
+This bridge is applied only to the two remaining legacy catalog definitions. Remove
 it together with the last `inline-template`; do not use it for new components.
 
 ### File and image uploads
@@ -136,16 +138,26 @@ keyboard navigation without Magnific Popup.
 
 ### Vue Multiselect
 
-Vue Multiselect 3 is a native Vue 3 component using
-`modelValue`/`update:modelValue`. Runtime-compiled legacy templates still emit
-the Vue 2 `value`/`input` contract. `LegacyMultiselect` translates only that
-boundary and delegates rendering to `NativeMultiselect`, for which every
-unrelated compat feature is disabled.
+Vue Multiselect 3 is used directly through its native
+`modelValue`/`update:modelValue` contract by one precompiled `ElementSelect`
+SFC. The component owns presentation/orchestration only: typed numeric, string
+and null id matching, immutable option copies, selected-id extraction,
+form-value serialization and tag insertion live in `select-values.js`.
 
-The one `ATTR_ENUMERATED_COERCION` override preserves the package's explicit
-`spellcheck="false"` result while suppressing the compat build's unavoidable
-development warning. Browser tests cover single, multiple and taggable fields
-and fail on any unlisted Vue warning.
+Single mode submits through a hidden input; multiple mode keeps a hidden native
+`<select multiple>`. Both receive the PHP element's final HTML attributes
+through direct `v-bind`, preserve its id/name/classes/data attributes and
+dispatch one native bubbling `change` after Vue updates the submit control.
+Required, readonly, display limit, selection maximum and tagging behavior is
+covered in the browser fixture. The old jQuery `trigger('change')`, `deselect`
+component, `LegacyMultiselect` adapter and `window.Multiselect` global are
+removed.
+
+`NativeMultiselect` retains one narrow `ATTR_ENUMERATED_COERCION` override to
+preserve the dependency's explicit `spellcheck="false"` result while
+suppressing the compat build's unavoidable development warning. Every
+unrelated compat feature is disabled, and browser tests fail on any unlisted
+Vue warning.
 
 ### HTTP
 

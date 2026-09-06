@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 4 — Vue 3 islands**.
-- Точка возобновления: перенести Select и Multiselect `inline-template` в общий precompiled Vue 3 island; lifecycle вложенных islands, env editor, file, image и images завершены.
+- Точка возобновления: перенести Related elements с card, Related elements без card и Related group из трёх оставшихся `inline-template` в precompiled Vue 3 islands; Select и Multiselect завершены.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -568,13 +568,15 @@ No-build consumer contract является release-blocking:
   - [x] File.
   - [x] Image.
   - [x] Images.
-  - [ ] Select.
-  - [ ] Multiselect.
+  - [x] Select.
+  - [x] Multiselect.
   - [ ] Related elements с card.
   - [ ] Related elements без card.
   - [ ] Related group.
 - [x] Перевести `$set` на обычные reactive assignments и проверить array updates.
 - [ ] Обновить/заменить Vue wrappers для multiselect и drag/drop.
+  - [x] Удалить Vue 2 `value/input` wrapper вокруг Vue Multiselect и использовать native Vue 3 contract.
+  - [ ] Удалить Vue 2 wrapper `vuedraggable` из Related islands.
 - [ ] На каждый island реализовать `mount`/`unmount`, повторную инициализацию и защиту от двойного mount.
 - [ ] Вынести upload, serialization, HTTP/error mapping и sortable logic из Vue components в отдельные composables/services; components оставить orchestration/presentation слоем.
 - [ ] Проверить Blade escaping, `@{{ }}`, JSON props, CSP nonce и отсутствие исполнения пользовательского HTML как Vue template.
@@ -755,6 +757,8 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] tabs и восстановление активной вкладки;
 - [ ] tooltips, dropdowns, alerts и messages;
 - [ ] select/multiselect/AJAX/dependent select;
+  - [x] static/model-backed select и multiselect;
+  - [ ] AJAX и dependent select;
 - [ ] date/time/daterange;
 - [ ] single/multiple file и image upload;
 - [ ] drag-and-drop сортировка файлов/images;
@@ -989,3 +993,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 4 / image island | Image element перенесён из server `inline-template` в native Vue 3 SFC/direct host. Blade передаёт escaped typed props, включая `setAssetPrefix`, `setOnlyLink`, readonly, upload limit, route/CSRF и локализованные labels/messages. Preview/value, Dropzone adapter, data-URL/paste-buffer и native `Admin.Http` transport разделены на малые modules; общий разбор upload errors вынесен из File. jQuery `.dropzone()` и Axios удалены из Image, uploader уничтожается при unmount, временный blob очищается/revoke, readonly не создаёт driver, а only-link режим отвергает blob. Осталось 6 `inline-template` и 4 bridge definitions. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 432 tests, 1607 assertions, 2 прежних TODO-skip; frontend gate: 212 Vitest + 30 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / images island | Images element перенесён из server `inline-template` в native Vue 3 SFC/direct host с escaped props для `setAssetPrefix`, `setOnlyLink`, `setDraggable`, readonly, upload limit, route/CSRF, values и локализованного UI. Array normalization/add/replace/remove/reorder/serialization, Dropzone и Sortable adapters вынесены в малые modules; jQuery, Axios, `vuedraggable` и Magnific Popup удалены из island. Нативный `<dialog>` даёт keyboard-friendly preview с previous/next/close и порядковым счётчиком, а Dropzone/Sortable/dialog уничтожаются при unmount; readonly не создаёт drivers, only-link не создаёт uploader. Исправлен подтверждённый Laluna-дефект: вставленный blob при редактировании загружается через `Admin.Http` и заменяет выбранный индекс. Визуально проверены gallery и dialog на собранном fixture. Осталось 5 `inline-template` и 3 bridge definitions. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 433 tests, 1620 assertions, 2 прежних TODO-skip; frontend gate: 219 Vitest + 35 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / nested island lifecycle | Временный `VueApps` registry интегрирован с единым `Admin.Components`: первоначальный top-level Vue mount сохраняет legacy boot order, затем lifecycle принимает parent apps и сканирует их фактически отрендерированное subtree. Direct hosts защищены `v-pre` от компиляции legacy parent template. Unit contracts доказывают idempotent adoption, динамический nested mount и reverse `child -> parent` teardown; browser fixture воспроизводит реальный Laluna `hasMany(image)`, монтирует initial/dynamic Image islands и удаляет их из registry до Vue DOM removal. Документация переводит динамических consumers на `Admin.Components.scan/destroy`; глобальный поиск подтвердил отсутствие `$set`, поэтому лишний `INSTANCE_SET` удалён из оставшихся 11 compat flags. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 433 tests, 1620 assertions, 2 прежних TODO-skip; frontend gate: 221 Vitest + 35 Playwright | текущий commit |
+| 2026-09-06 | Этап 4 / select islands | Select и MultiSelect перенесены из двух `inline-template` в один precompiled `ElementSelect` поверх Vue Multiselect 3.5 native `modelValue/update:modelValue`. Чистый `select-values.js` сохраняет numeric/string/null ids, option order и immutable props; single отправляет hidden input, multiple — hidden native select. Итоговый PHP `attributesArray` передаётся прямым `v-bind` без semantic class resolver, поэтому name/id/custom classes/data attributes и disabled сохраняются. Required, readonly, limit, max и tagging покрыты browser behavior; наружу уходит native bubbling `change` без jQuery. Удалены `deselect.js`, `LegacyMultiselect` и `window.Multiselect`; осталось 3 `inline-template` и 2 bridge definitions. Laluna `Modules` подтвердил 53 select, 3 multiselect, static/model options, string/numeric usage keys и nested forms. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 437 tests, 1663 assertions, 2 прежних TODO-skip; frontend gate: 223 Vitest + 35 Playwright | текущий commit |

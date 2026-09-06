@@ -34,12 +34,11 @@ test.afterEach(async ({ page }) => {
 })
 
 const legacyVueComponentNames = [
-    'deselect',
     'element-file',
     'element-image',
     'element-images',
+    'element-select',
     'env_editor',
-    'multiselect',
     'related-elements',
     'related-group',
 ]
@@ -103,6 +102,31 @@ const readonlyImagesProps = {
     readonly: true,
     url: '/api/upload',
     values: ['fixtures/readonly.svg', 'fixtures/second.svg'],
+}
+const readonlyRequiredSelectProps = {
+    attributes: {
+        class: 'form-control project-readonly',
+        disabled: 'disabled',
+        id: 'readonly-select',
+        multiple: 'multiple',
+        name: 'readonly[]',
+    },
+    labels: {
+        deselect: 'Deselect',
+        noItems: 'No items',
+        placeholder: 'Choose',
+        required: 'Readonly selection is required',
+        select: 'Select',
+        selected: 'Selected',
+    },
+    limit: 1,
+    max: 2,
+    multiple: true,
+    options: [{ id: 'one', text: 'One' }],
+    readonly: true,
+    required: true,
+    taggable: false,
+    value: [],
 }
 
 function capturePageErrors(page) {
@@ -214,6 +238,32 @@ async function inspectReadonlyImages(page) {
     }, readonlyImagesProps)
 }
 
+async function inspectReadonlyRequiredSelect(page) {
+    return page.evaluate((props) => {
+        const host = globalThis.document.createElement('section')
+        host.dataset.soaVueApp = ''
+        host.dataset.soaVueComponent = 'element-select'
+        host.dataset.soaVueProps = JSON.stringify(props)
+        globalThis.document.body.append(host)
+        globalThis.Admin.Components.scan(host)
+
+        const control = host.querySelector('[data-soa-select-native]')
+        const result = {
+            className: control.className,
+            disabled: control.disabled,
+            error: host.querySelector('.text-danger')?.textContent.trim(),
+            widgetDisabled: host
+                .querySelector('.multiselect')
+                .classList.contains('multiselect--disabled'),
+        }
+
+        globalThis.Admin.Components.destroy(host)
+        host.remove()
+
+        return result
+    }, readonlyRequiredSelectProps)
+}
+
 async function mountOnlyLinkImage(page) {
     await page.evaluate((baseProps) => {
         const host = globalThis.document.createElement('section')
@@ -270,6 +320,64 @@ async function selectedValues(locator) {
     return locator.evaluate((select) =>
         Array.from(select.selectedOptions, (option) => option.value),
     )
+}
+
+async function chooseSelectOption(page, fixture, text) {
+    await page.locator(`${fixture} .multiselect`).click()
+    await page.locator(`${fixture} .multiselect__option`).filter({ hasText: text }).click()
+}
+
+async function expectSingleSelectBehavior(page) {
+    const control = page.locator('#single-select')
+    await expect(control).toHaveValue('2')
+    await expect(control).toHaveClass(/project-select/)
+    await expect(control).toHaveAttribute('data-contract', 'single')
+    await expect(control).toHaveAttribute('aria-label', 'Status')
+
+    await chooseSelectOption(page, '#single-select-fixture', 'Code')
+    await expect(control).toHaveValue('sku')
+    await chooseSelectOption(page, '#single-select-fixture', 'None')
+    await expect(control).toHaveValue('')
+}
+
+async function enterSelectTag(page, value) {
+    await page.locator('#multi-select-fixture .multiselect').click()
+    const input = page.locator('#multi-select-fixture .multiselect__input')
+    await input.fill(value)
+    await input.press('Enter')
+}
+
+async function expectMultipleSelectBehavior(page) {
+    const control = page.locator('#multi-select')
+    expect(await selectedValues(control)).toEqual(['1', '3'])
+    await expect(control).toHaveClass(/project-multiselect/)
+    await expect(control).toHaveAttribute('name', 'categories[]')
+
+    await chooseSelectOption(page, '#multi-select-fixture', 'Two')
+    expect(await selectedValues(control)).toEqual(['1', '2', '3'])
+    await expect(page.locator('#multi-select-fixture .multiselect__strong')).toContainText('1')
+    await enterSelectTag(page, 'Custom')
+    expect(await selectedValues(control)).toEqual(['1', '2', '3', 'Custom'])
+    await enterSelectTag(page, 'Overflow')
+    expect(await selectedValues(control)).toEqual(['1', '2', '3', 'Custom'])
+}
+
+async function expectSelectChangeEvents(page) {
+    expect(await page.evaluate(() => globalThis.__selectChanges)).toEqual([
+        { id: 'single-select', values: ['sku'] },
+        { id: 'single-select', values: [''] },
+        { id: 'multi-select', values: ['1', '2', '3'] },
+        { id: 'multi-select', values: ['1', '2', '3', 'Custom'] },
+    ])
+}
+
+async function expectReadonlyRequiredSelect(page) {
+    expect(await inspectReadonlyRequiredSelect(page)).toEqual({
+        className: 'form-control project-readonly',
+        disabled: true,
+        error: 'Readonly selection is required',
+        widgetDisabled: true,
+    })
 }
 
 async function readBoundedVueOwnership(page) {
@@ -729,27 +837,10 @@ test('single and multiple Vue Multiselect fields synchronize submitted values', 
     page,
 }) => {
     await openFixture(page)
-    await expect(page.locator('#single-select')).toHaveValue('2')
-    await page.locator('#single-select-fixture .multiselect').click()
-    await page
-        .locator('#single-select-fixture .multiselect__option')
-        .filter({ hasText: 'Three' })
-        .click()
-    await expect(page.locator('#single-select')).toHaveValue('3')
-
-    expect(await selectedValues(page.locator('#multi-select'))).toEqual(['1', '3'])
-    await page.locator('#multi-select-fixture .multiselect').click()
-    await page
-        .locator('#multi-select-fixture .multiselect__option')
-        .filter({ hasText: 'Two' })
-        .click()
-    expect(await selectedValues(page.locator('#multi-select'))).toEqual(['1', '2', '3'])
-
-    const input = page.locator('#multi-select-fixture .multiselect__input')
-    await page.locator('#multi-select-fixture .multiselect').click()
-    await input.fill('Custom')
-    await input.press('Enter')
-    expect(await selectedValues(page.locator('#multi-select'))).toEqual(['1', '2', '3', 'Custom'])
+    await expectSingleSelectBehavior(page)
+    await expectMultipleSelectBehavior(page)
+    await expectSelectChangeEvents(page)
+    await expectReadonlyRequiredSelect(page)
 })
 
 test('related elements rewrite new field names and initialize dynamic controls', async ({
