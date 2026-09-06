@@ -65,9 +65,10 @@ ADMIN_DEV_ASSETS=false
 - `AssetManifestLoader` отвечает только за filesystem/JSON boundary и преобразует любую ошибку чтения или schema в `AssetManifestException`;
 - `AssetProfileSelector` преобразует только существующий config flag в `production` или `development`;
 - `AssetManifestResolver` выбирает logical bundles только внутри этого профиля, сохраняет их порядок, удаляет дубликаты и строит URL через Laravel `UrlGenerator`;
-- `ResolvedAssetBundle` возвращает отдельные списки scripts и styles first-party asset registry.
+- `ResolvedAssetBundle` возвращает отдельные списки scripts и styles;
+- `LogicalAssetRegistrar` передаёт эти URL в first-party meta/asset registry со стабильными handles и явной цепочкой зависимостей внутри CSS и JS, не читая manifest самостоятельно.
 
-Resolver зарегистрирован в container, но `TemplateDefault` пока продолжает загружать legacy aggregate. Переключение template на `core + selected theme + detected features` выполняется только после готовности обоих профилей и first-party asset registry, чтобы не смешать незавершённые modern entries с рабочим legacy runtime.
+Resolver и registrar зарегистрированы в container, но `TemplateDefault` пока продолжает загружать legacy aggregate. Переключение template на `core + selected theme + detected features` выполняется только после готовности самодостаточных browser entries, чтобы не смешать незавершённые modern entries с рабочим legacy runtime.
 
 Если опубликованный manifest отсутствует, повреждён или не содержит запрошенный entry/profile, loader/resolver выбрасывает `AssetManifestException` с единственным штатным способом восстановления:
 

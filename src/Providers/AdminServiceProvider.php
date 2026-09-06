@@ -20,6 +20,7 @@ use SleepingOwl\Admin\Assets\AssetRegistry;
 use SleepingOwl\Admin\Assets\AssetRenderer;
 use SleepingOwl\Admin\Assets\ComposerPackageVersion;
 use SleepingOwl\Admin\Assets\HtmlAttributes;
+use SleepingOwl\Admin\Assets\LogicalAssetRegistrar;
 use SleepingOwl\Admin\Assets\MetaRenderer;
 use SleepingOwl\Admin\Assets\PublishedAssetVerifier;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
@@ -135,6 +136,7 @@ class AdminServiceProvider extends ServiceProvider
                 $app->make(AssetProfileSelector::class)->selected()
             );
         });
+        $this->app->singleton(LogicalAssetRegistrar::class);
 
         $this->app->singleton(ThemeSelection::class, function (Application $app) {
             return (new ThemeResolver($app))->resolve($this->getConfig('template'));
