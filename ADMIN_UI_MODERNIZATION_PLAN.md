@@ -6,6 +6,7 @@
 - Текущий этап: **Этап 0 — решения и baseline**.
 - Точка возобновления: заполнить config migration matrix на основе `docs/modernization/baseline/config-inventory.json`.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
+- Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
 - Основная цель: выделить независимый от CSS/JS-фреймворков SleepingOwlAdmin core, удалить прямое использование jQuery и jQuery-плагинов, обновить DataTables до версии 2 и перейти с Vue 2 на Vue 3.
@@ -487,6 +488,7 @@ No-build consumer contract является release-blocking:
 - [x] Добавить npm lock-файл и зафиксировать исходное дерево зависимостей.
 - [x] Сохранить baseline production bundle size и перечень лицензий.
 - [x] Составить перечень эталонных экранов для каждой темы: layout/navigation, async table, sync table, filters, bulk actions, inline edit, tree, select, date/time, single/multiple file upload.
+- [x] Снять обезличенный inventory реального read-only проекта Laluna как источник сценариев для compatibility tests, документации и generator stubs.
 - [x] Составить полный machine-readable inventory top-level/nested config keys и найти их consumers в PHP, Blade и JavaScript.
 - [ ] Заполнить config migration matrix (`unchanged`, `same key/new implementation`, `theme-owned`, `deprecated`, `removed`) с правилом сохранения по умолчанию.
 - [ ] Подготовить fixture старого опубликованного конфига и fixture минимального конфига с отсутствующими новыми ключами.
@@ -642,6 +644,7 @@ No-build consumer contract является release-blocking:
 ### Этап 9. Проверить миграцию на крупном pilot-проекте
 
 - [ ] До обновления снять inventory используемых displays, forms, columns, filters, actions, widgets, editors, uploads, tree и navigation.
+- [ ] Использовать `docs/modernization/reference-project-laluna.md` как reference catalog; не считать доступ на чтение разрешением создать ветку или менять `D:\domains\laluna.kit`.
 - [ ] Найти опубликованные/переопределённые Blade views, пользовательские CSS-классы, jQuery hooks, DataTables options/events и прямые imports assets.
 - [ ] Зафиксировать исходные screenshots и критические пользовательские сценарии.
 - [ ] Создать отдельную migration branch в pilot-проекте; не смешивать её с прикладными feature changes.
@@ -662,6 +665,9 @@ No-build consumer contract является release-blocking:
 - [ ] Добавить в migration guide таблицу замен прямых `KodiCMS\Assets` imports/facades и примеры нового first-party asset API.
 - [ ] Опубликовать config migration matrix и примеры только новых/изменённых keys вместо требования перепубликовать весь конфиг.
 - [ ] Добавить руководство по выбору AdminLTE/Tailwind theme и созданию custom theme.
+- [ ] Подготовить нейтральные проверенные примеры по сценариям reference project: section/table/DataTables, card form, custom form element, widget, policy, module Admin service provider, navigation/route, custom assets и Vue 3 island.
+- [ ] Обновить generator stubs для section, custom form element, widget, policy и module Admin service provider; после стабилизации contracts добавить отдельные stubs Vue island и custom theme.
+- [ ] Проверить сгенерированные stubs в test application: PHP-only stubs работают без Node.js, frontend stubs используют public extension/manifest API и не создают jQuery/Vue globals.
 - [ ] Обновить PHPDoc/facades/interfaces для актуального API.
 - [ ] Добавить CHANGELOG с перечнем breaking changes.
 - [ ] Обновить опубликованные assets через `npm run production`.
@@ -872,6 +878,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - production assets собраны воспроизводимо по lock-файлу;
 - выбранный критерий присутствия jQuery в dependency tree выполнен;
 - migration guide перечисляет все пользовательские breaking changes;
+- документация и generator stubs основаны на обезличенных реальных сценариях и проходят smoke tests на публичном API;
 - крупный pilot-проект успешно обновлён по migration guide, а найденные общие регрессии закреплены тестами пакета;
 - PHP, frontend и browser тесты проходят в чистой среде.
 
@@ -909,4 +916,5 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / dependency lock | Добавлен npm lockfile v3; чистый `npm ci` и dependency tree проверены, зафиксированы 1376 entries и legacy Bootstrap 3 peer conflict внутри AdminLTE 3 | текущий commit |
 | 2026-09-06 | Этап 0 / asset baseline | Добавлены воспроизводимый generator и JSON baseline: 2 585 357 raw / 587 787 gzip bytes, SHA-256 assets/lock и license inventory 869 runtime packages с 12 явными `UNKNOWN` | текущий commit |
 | 2026-09-06 | Этап 0 / reference screens | В `docs/modernization/reference-screens.md` зафиксированы 9 стабильных scenarios, fixtures, states, viewport/scheme matrix и обязательное AdminLTE/Tailwind coverage | текущий commit |
+| 2026-09-06 | Этап 0 / reference project | `D:\domains\laluna.kit` принят только для чтения; снят обезличенный inventory sections/forms/widgets/config/custom assets/Vue/jQuery для будущих docs, fixtures и generator stubs | текущий commit |
 | 2026-09-06 | Этап 0 / config inventory | Добавлен воспроизводимый JSON inventory: 59 top-level/113 named keys, прямые и parent-scope consumers, 3 namespace reads, 7 derived JS values; отдельно выявлен отсутствующий в published config ключ `policies_namespace` | текущий commit |

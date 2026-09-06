@@ -1,0 +1,99 @@
+# Laluna read-only reference inventory
+
+## Назначение и границы
+
+Локальный проект `D:\domains\laluna.kit` используется как read-only источник реальных сценариев SleepingOwlAdmin. Он помогает проверить migration contracts, подготовить документацию и спроектировать полезные generator stubs.
+
+До отдельного разрешения запрещены любые изменения файлов, установка/обновление зависимостей, запуск migrations/seeders, изменение Git state и запуск команд с прикладными побочными эффектами в reference project.
+
+В SleepingOwlAdmin не копируются модели, запросы, названия предметной области, данные, credentials и прикладные правила Laluna. Примеры и stubs должны быть нейтральными, небольшими и воспроизводимыми в test application пакета.
+
+## Снимок сценариев на 2026-09-06
+
+### PHP/admin structure
+
+- в application-level `app/Admin`: 3 model sections с `initialize`, `onDisplay`, create/edit/delete hooks;
+- 8 custom `NamedFormElement` classes с отдельными Blade views;
+- 2 custom widgets;
+- 3 section model policies;
+- собственные `app/Admin/bootstrap.php`, `navigation.php` и `routes.php`;
+- custom admin CSS/JS подключаются через `Meta::addCss` и `Meta::addJs` с dependency `admin-default`.
+
+Основной compatibility corpus находится в `Modules`:
+
+- 26 прикладных модулей и 825 файлов;
+- 72 module admin sections;
+- 72 section model policies;
+- 26 module Admin service providers;
+- 66 module Blade views;
+- providers независимо регистрируют policies, routes и navigation, включая добавление страниц в уже существующие navigation groups;
+- module-код не содержит собственных JS/Vue/SCSS entries: общий custom frontend находится в application `resources`.
+
+Найденный PHP DSL минимум:
+
+- displays: `AdminDisplay::datatables`, `AdminDisplay::table`, `AdminDisplay::tab`, `AdminDisplay::tabbed`, `AdminDisplay::tree`;
+- forms: `AdminForm::card`;
+- elements: checkbox, columns, date/datetime, dependent select, has-many, html/view, image/images, multiselect, number, password, select/AJAX select, text/text-addon/textarea и зарегистрированные custom elements;
+- columns: boolean, checkbox, count, custom, datetime, image, link, lists, text;
+- filters: date, range, select;
+- inline editable columns: checkbox, number, select, text, textarea;
+- meta: addCss, addJs, loadPackage; setFavicon присутствует как закомментированный пример.
+
+Ориентировочная плотность использования в `Modules`: 93 вызова `AdminDisplay::*`, 668 `AdminFormElement::*`, 449 `AdminColumn::*`, 117 `AdminColumnFilter::*` и 26 `AdminColumnEditable::*`. Эти числа используются как сигнал покрытия, а не как значения для копирования в tests.
+
+### Config compatibility
+
+Проект использует старый вручную поддерживаемый `config/sleeping_owl.php`, а не свежую копию package config. Значимы:
+
+- state keys DataTables/tabs/filters и POST как default DataTables method;
+- `body_default_class`, title/logo/footer/version/favicon и menu text;
+- route domain/middleware/prefix и `bootstrapDirectory`;
+- upload, lazy image, date/time/timezone и WYSIWYG settings;
+- form card flags, breadcrumbs, scroll helpers и DataTables auto-update settings;
+- deprecated `show_editor` вместо нового `enable_editor`;
+- legacy aliases `KodiCMS\Assets\Facades\Assets`, `PackageManager` и `Meta`.
+
+Этот config становится обязательным типом fixture для migration matrix: отсутствующие новые keys получают package defaults, legacy keys проходят явную normalization/deprecation policy, а весь файл не требует повторной публикации.
+
+### Custom frontend
+
+Первичный статический inventory нашёл:
+
+- более 30 регистраций глобальных Vue 2 components, включая закомментированные legacy строки;
+- 2 создания глобального Vue root app;
+- 2 Blade `inline-template`;
+- отдельный custom admin entrypoint и множество `.vue` components;
+- собственные Sass admin partials;
+- более 30 совпадений jQuery API и более 30 упоминаний `jQuery` в admin resources.
+
+Это проверяет необходимость документированного Vue 3 custom-island API, development Vue profile, source maps, migration guide для globals/prototype helpers/Vuex и публичных native lifecycle/events вместо jQuery hooks.
+
+## Документация, которую нужно вывести из сценариев
+
+- создание model section с sync table и async DataTables display;
+- card form с типовыми fields, validation и select/multiselect;
+- создание небольшого custom form element: PHP class, Blade view, регистрация и assets;
+- navigation, widget, section policy и custom admin route;
+- модульный Admin service provider, который регистрирует sections/policies/routes/navigation и не зависит от concrete theme;
+- подключение готового custom CSS/JS через first-party `Meta`/asset registry;
+- создание и регистрация Vue 3 island/custom module, отладка с `ADMIN_DEV_ASSETS=true` и production-проверка с `false`;
+- обновление старого опубликованного config без полной перепубликации;
+- замена legacy `KodiCMS\Assets` facades, Vue 2 globals и jQuery hooks.
+
+Каждый пример должен запускаться на поддерживаемом Laravel, использовать только публичный API и явно указывать, требуется ли frontend toolchain автору расширения. Обычные PHP section/form/widget examples не требуют Node.js.
+
+## Кандидаты для generator stubs
+
+- section: metadata, display, create/edit form и небольшие методы с одной ответственностью;
+- custom form element: PHP class + Blade view + регистрация;
+- widget: placement, view и минимальный data provider;
+- section policy: стандартные view/create/update/delete decisions;
+- module Admin service provider: изолированные методы регистрации policies, routes и navigation;
+- Vue 3 island/custom module: отдельные mount/unmount, typed props/JSON payload и регистрация через public extension API;
+- custom theme skeleton после стабилизации `ThemeInterface` и asset manifest.
+
+Stubs не должны генерировать монолитный section, глобальный Vue app, jQuery, Bootstrap/AdminLTE hardcoded dependencies в core-facing коде или ручные пути к hashed assets. Сгенерированный код проверяется smoke tests и линтерами пакета.
+
+## Использование при pilot migration
+
+Reference inventory можно расширять read-only проверками и использовать для проектирования regression tests. Полная миграция самого Laluna, создание в нём ветки или изменение его config/assets выполняются только после отдельного явного разрешения пользователя.
