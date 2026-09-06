@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 0 — решения и baseline**.
-- Точка возобновления: выбрать контракт передачи данных в Vue islands.
+- Точка возобновления: утвердить Sass entrypoints и границы variables core/features/themes.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
@@ -107,6 +107,18 @@ Vue 3 по-прежнему поддерживает in-DOM root templates: ес
 - обязательный exit gate до release: удалить `@vue/compat` из dependencies и production bundles, переключиться на runtime-only Vue 3 и пройти поиск/тесты из acceptance matrix.
 
 Повторный inventory на 2026-09-06 нашёл 9, а не 10 использований `inline-template` в 9 Blade views, 7 глобально регистрируемых components, один глобальный `new Vue(...)`, `Vue.http` interceptor и prototype translation helper. Эти числа становятся проверяемым исходным baseline.
+
+Контракт данных Vue islands:
+
+- mount node помечается `data-admin-component="<feature-id>"`; один registry находит его и гарантирует ровно один mount/unmount;
+- короткие строки, ids, booleans и числовые параметры передаются только через HTML-escaped `data-*`; decoder feature явно преобразует и валидирует типы, не полагаясь на JavaScript truthiness;
+- массивы, objects и длинные payload передаются соседним `<script type="application/json" id="<unique-props-id>">`, а mount node ссылается на него через `data-admin-props-id`;
+- чистый JSON для script block создаётся `Illuminate\Support\Js::encode()`, доступным во всех поддерживаемых Laravel; `json_encode()` внутри HTML attributes и Vue expressions больше не используется;
+- общий parser отвечает только за безопасное чтение JSON и понятную ошибку синтаксиса; schema/defaults конкретного payload нормализует сам feature;
+- данные не исполняются через `eval`, `new Function`, inline handler или динамический Vue template; пользовательские строки выводятся обычным escaped text, если API явно не требует sanitized HTML;
+- server endpoint URLs, CSRF и translation strings являются обычными props, а результаты/изменения наружу передаются через native `CustomEvent` и стандартные form controls;
+- props id уникален в пределах документа, чтобы несколько одинаковых islands и динамические related groups не разделяли состояние;
+- JSON payload не считается местом хранения секретов: всё, переданное в DOM, доступно пользователю браузера.
 
 ### Поддерживаемые браузеры
 
@@ -363,7 +375,7 @@ No-build consumer contract является release-blocking:
 - [x] Утвердить no-build consumer contract: чистое Laravel-приложение без Node.js может установить пакет, опубликовать assets и использовать все стандартные components/themes.
 - [x] Зафиксировать `sleepingowl:install`/`sleepingowl:update` как стабильный no-build UX и определить поведение при несовпадении версии PHP package и asset manifest.
 - [x] Выбрать Vue 3 migration strategy: прямой переход или временный `@vue/compat`; рекомендуемый вариант — короткий compat-этап с обязательным удалением до release.
-- [ ] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
+- [x] Выбрать способ передачи данных в Vue islands: props + `data-*` для малых payload и `<script type="application/json">` для сложных структур.
 - [ ] Утвердить структуру Sass entrypoints/partials, префикс CSS custom properties `--soa-*` и границы variables core/features/themes.
 - [ ] Зафиксировать разрешённые исключения color literals и стратегию dark mode через переопределение root variables.
 - [ ] Выбрать replacements для Select2, date/time controls и lightbox.
@@ -743,3 +755,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 0 / no-build | No-build consumer UX принят как release-blocking contract и будущий CI smoke scenario без Node.js/npm; все стандартные assets обязаны входить в Composer artifact | текущий commit |
 | 2026-09-06 | Этап 0 / update command | Зафиксирован staging/validation/manifest-last протокол, `--check`, fail-fast runtime diagnostic и запрет изменения опубликованного config/application files | текущий commit |
 | 2026-09-06 | Этап 0 / Vue strategy | Выбран короткий `@vue/compat` этап с миграцией по одному island и обязательным удалением compat до release; baseline уточнён до 9 `inline-template` и 7 global components | текущий commit |
+| 2026-09-06 | Этап 0 / Vue props | Зафиксирован typed `data-*` contract для скаляров и безопасный `application/json` payload через `Js::encode()` для сложных props; выполнение server data как template/code запрещено | текущий commit |
