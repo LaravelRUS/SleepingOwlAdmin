@@ -3,7 +3,7 @@ import { URL } from 'node:url'
 import { expect, test } from '@playwright/test'
 
 const vueWarnings = new WeakMap()
-const expectedCompatWarnings = ['COMPILER_INLINE_TEMPLATE']
+const expectedCompatWarnings = []
 
 function compatWarningId(message) {
     return message.match(/\(deprecation ([A-Z_]+)\)/)?.[1]
@@ -40,9 +40,12 @@ const legacyVueComponentNames = [
     'element-select',
     'env_editor',
     'related-elements',
-    'related-group',
 ]
-const relatedLifecycleComponents = ['existing-related-group', 'new-related-group-2']
+const relatedLifecycleComponents = [
+    'existing-related-group',
+    'new-related-group-2',
+    'new-related-group-3',
+]
 const readonlyFileProps = {
     csrfToken: 'fixture-token',
     labels: { browse: 'Upload file', download: 'Download' },
@@ -434,22 +437,51 @@ async function expectInitialRelatedGroup(page) {
     await expect(page.locator('#nested-image-wrapper [data-soa-image-value]')).toHaveValue(
         'fixtures/pixel.svg',
     )
-    await expect(page.locator('#related-name_0')).toHaveAttribute('name', 'name')
+    await expect(page.locator('#nested-image-wrapper [data-soa-image-value]')).toHaveAttribute(
+        'name',
+        'items[42][image]',
+    )
+    await expect(page.locator('#related-name_0')).toHaveAttribute('name', 'items[42][name]')
 }
 
 async function addAndExpectRelatedGroup(page) {
-    await page.locator('#add-related-group').click()
-    await expect(page.locator('#new-related-group-2')).toHaveAttribute(
+    await page.locator('[data-soa-related-add]').click()
+    await expect(page.locator('[data-soa-related-index="2"]')).toHaveAttribute(
         'data-lifecycle-mounted',
         'true',
     )
-    await expect(page.locator('#dynamic-nested-image [data-soa-image-value]')).toHaveValue(
+    await expect(page.locator('[data-soa-related-index="2"] [data-soa-image-value]')).toHaveValue(
         'fixtures/second.svg',
     )
+    await expect(
+        page.locator('[data-soa-related-index="2"] [data-soa-image-value]'),
+    ).toHaveAttribute('name', 'items[new_2][image]')
+    await expect(
+        page.locator('[data-soa-related-index="2"] .dynamic-nested-image'),
+    ).toHaveAttribute('data-soa-vue-props-id', 'dynamic-image-props--new-2-0')
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
     await expect(page.locator('#related-title_2')).toHaveAttribute('name', 'items[new_2][title]')
     await expect(page.locator('#related-status_2')).toHaveAttribute('name', 'items[new_2][status]')
     await expect(page.locator('#related-status_2')).toHaveClass(/select2-hidden-accessible/)
+    await expect(
+        page.locator('[data-soa-related-index="2"] .raw-related-template-probe'),
+    ).toHaveText('Server HTML stays inert')
+
+    await page.locator('[data-soa-related-add]').click()
+    await expect(page.locator('[data-soa-related-index="3"]')).toHaveAttribute(
+        'data-lifecycle-mounted',
+        'true',
+    )
+    await expect(page.locator('#related-title_3')).toHaveAttribute('name', 'items[new_3][title]')
+    await expect(page.locator('#related-status_3')).toHaveAttribute('name', 'items[new_3][status]')
+    await expect(
+        page.locator('[data-soa-related-index="3"] [data-soa-image-value]'),
+    ).toHaveAttribute('name', 'items[new_3][image]')
+    await expect(
+        page.locator('[data-soa-related-index="3"] .dynamic-nested-image'),
+    ).toHaveAttribute('data-soa-vue-props-id', 'dynamic-image-props--new-3-0')
+    await expect(page.locator('[data-soa-related-add]')).toHaveCount(0)
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(10)
 }
 
 async function expectRelatedLifecycleCalls(page) {
@@ -470,9 +502,13 @@ async function expectRelatedLifecycleCalls(page) {
 async function removeAndExpectRelatedGroups(page) {
     await page.locator('#remove-existing-group').click()
     await expect(page.locator('.existing-related-group')).toHaveCount(0)
-    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(8)
-    await expect(page.locator('.removed-related')).toHaveValue('42')
-    await expect(page.locator('.removed-related')).toHaveAttribute('name', 'items[remove][]')
+    await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(9)
+    await expect(page.locator('[data-soa-related-removed]')).toHaveValue('42')
+    await expect(page.locator('[data-soa-related-removed]')).toHaveAttribute(
+        'name',
+        'items[remove][]',
+    )
+    await page.locator('.remove-new-group').first().click()
     await page.locator('.remove-new-group').click()
     await expect(page.locator('.new-related-group')).toHaveCount(0)
     await expect.poll(() => page.evaluate(() => globalThis.Admin.VueApps.size)).toBe(7)

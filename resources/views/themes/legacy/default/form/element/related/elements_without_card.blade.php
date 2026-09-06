@@ -1,16 +1,7 @@
-<div data-soa-vue-app>
-<related-elements
-    inline-template
-    name="{{ $name }}"
-    label="{{ $label }}"
-    @if (!is_null($limit))
-        :limit="{{ (int) $limit }}"
-    @endif
-    :initial-groups-count="{{ (int)$groups->count() }}"
-    :removed="{{ $remove->toJson() }}"
->
-    <div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
-      <h4 v-if="label">@{{ label }}</h4>
+<div {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []) !!}>
+      @if ($label)
+        <h4>{{ $label }}</h4>
+      @endif
       @if (isset($helpText) && $helpText)
         <div class="mb-2">
           @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
@@ -18,7 +9,4 @@
       @endif
 
       @include(AdminTemplate::getViewPath('form.element.related.inner_element'))
-    </div>
-
-</related-elements>
 </div>

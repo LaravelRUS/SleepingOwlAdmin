@@ -1,37 +1,38 @@
+@php
+    $relatedGroupView = AdminTemplate::getViewPath('form.element.related.group');
+    $relatedGroupContext = [
+        'deletable' => (bool) $deletable,
+        'draggable' => (bool) ($draggable ?? false),
+        'readonly' => (bool) $readonly,
+    ];
+    $relatedGroups = [];
 
-  <div class='grouped-elements clearfix'>
-      <draggable class="related-elements__draggable" :disabled="{{ isset($draggable) && $draggable ? 'false': 'true' }}" handle=".drag-handle">
-          @foreach($groups as $key => $group)
-              @include(AdminTemplate::getViewPath('form.element.related.group'), [
-                  'name' => $name,
-                  'group' => $group,
-                  'index' => $key,
-                  'draggable' => isset($draggable) ? $draggable : false,
-              ])
-          @endforeach
+    foreach ($groups as $key => $group) {
+        $relatedGroups[] = [
+            'html' => view($relatedGroupView, [...$relatedGroupContext, 'group' => $group])->render(),
+            'index' => $key,
+            'primary' => trim((string) $group->getPrimary()),
+        ];
+    }
 
-          <template v-for="index in newGroups">
-              @include(AdminTemplate::getViewPath('form.element.related.group'), [
-                  'name' => $name,
-                  'group' => new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all()),
-                  'index' => "totalGroupsCount",
-              ])
-          </template>
-      </draggable>
+    $stubGroup = new \SleepingOwl\Admin\Form\Related\Group(null, $stub->all());
+    $relatedProps = [
+        'draggable' => (bool) ($draggable ?? false),
+        'groups' => $relatedGroups,
+        'labels' => ['add' => trans('sleeping_owl::lang.button.add')],
+        'limit' => is_null($limit) ? null : (int) $limit,
+        'name' => (string) $name,
+        'readonly' => (bool) $readonly,
+        'removed' => array_values(array_map('strval', $remove->all())),
+        'stubHtml' => view($relatedGroupView, [...$relatedGroupContext, 'group' => $stubGroup])->render(),
+    ];
+    $relatedPropsId = 'soa-related-props-' . \Illuminate\Support\Str::uuid();
+@endphp
 
-      @if (!$readonly)
-        <div class="d-block clearfix">
-          <button
-            v-if="canAddMore"
-            type='button'
-            @click="addNewGroup"
-            class='grouped-elements__action pull-right related-action_add btn btn-success btn-sm'
-          >
-            <i class='fas fa-plus'></i>
-              {{ trans('sleeping_owl::lang.button.add') }}
-          </button>
-        </div>
-      @endif
-
-  </div>
-  <input v-for="id in removedExistingGroups" type='hidden' :name="`${name}[remove][]`" :value='id'>
+<script id="{{ $relatedPropsId }}" type="application/json">{!! \Illuminate\Support\Js::encode($relatedProps) !!}</script>
+<div
+    v-pre
+    data-soa-vue-app
+    data-soa-vue-component="related-elements"
+    data-soa-vue-props-id="{{ $relatedPropsId }}"
+></div>

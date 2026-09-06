@@ -1,16 +1,4 @@
-export const vueCompatFeatures = Object.freeze({
-    ATTR_ENUMERATED_COERCION: 'suppress-warning',
-    COMPILER_INLINE_TEMPLATE: true,
-    COMPONENT_V_MODEL: 'suppress-warning',
-    CONFIG_WHITESPACE: 'suppress-warning',
-    INSTANCE_ATTRS_CLASS_STYLE: 'suppress-warning',
-    INSTANCE_CHILDREN: 'suppress-warning',
-    INSTANCE_SCOPED_SLOTS: 'suppress-warning',
-    OPTIONS_BEFORE_DESTROY: 'suppress-warning',
-    PRIVATE_APIS: 'suppress-warning',
-    RENDER_FUNCTION: 'suppress-warning',
-    WATCH_ARRAY: 'suppress-warning',
-})
+export const vueCompatFeatures = Object.freeze({})
 
 export function configureVueCompat(Vue) {
     Vue.configureCompat({

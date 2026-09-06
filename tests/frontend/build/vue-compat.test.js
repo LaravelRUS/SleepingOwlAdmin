@@ -22,32 +22,10 @@ const legacyVueViews = [
     'resources/views/themes/legacy/default/form/element/image.blade.php',
     'resources/views/themes/legacy/default/form/element/images.blade.php',
     'resources/views/themes/legacy/default/form/element/partials/select_island.blade.php',
-    'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
-    'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
-]
-const legacyVueDefinitions = [
-    'resources/assets/js_owl/admin/form/related/elements.js',
-    'resources/assets/js_owl/admin/form/related/group.js',
-]
-const legacyInlineTemplateViews = [
-    'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
-    'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
-    'resources/views/themes/legacy/default/form/element/related/group.blade.php',
+    'resources/views/themes/legacy/default/form/element/related/inner_element.blade.php',
 ]
 
-const expectedCompatFeatures = [
-    'ATTR_ENUMERATED_COERCION',
-    'COMPILER_INLINE_TEMPLATE',
-    'COMPONENT_V_MODEL',
-    'CONFIG_WHITESPACE',
-    'INSTANCE_ATTRS_CLASS_STYLE',
-    'INSTANCE_CHILDREN',
-    'INSTANCE_SCOPED_SLOTS',
-    'OPTIONS_BEFORE_DESTROY',
-    'PRIVATE_APIS',
-    'RENDER_FUNCTION',
-    'WATCH_ARRAY',
-]
+const expectedCompatFeatures = []
 
 function readJson(path) {
     return JSON.parse(readFileSync(resolve(root, path), 'utf8'))
@@ -101,7 +79,7 @@ describe('explicit Vue compatibility boundary', () => {
         expect(calls).toHaveLength(1)
         expect(calls[0].MODE).toBe(3)
         expect(Object.keys(vueCompatFeatures).sort()).toEqual(expectedCompatFeatures.sort())
-        expect(vueCompatFeatures.COMPILER_INLINE_TEMPLATE).toBe(true)
+        expect(vueCompatFeatures).not.toHaveProperty('COMPILER_INLINE_TEMPLATE')
     })
 
     it('disables every legacy feature for native Vue 3 components', () => {
@@ -167,18 +145,8 @@ describe('bounded legacy Vue apps', () => {
         expect(vueCompatFeatures).not.toHaveProperty('GLOBAL_PROTOTYPE')
     })
 
-    it.each(legacyVueDefinitions)('exports an app-local definition from %s', (path) => {
-        const source = readSource(path)
-
-        expect(source).toContain('defineComponent')
-        expect(source).toContain('export default')
-        expect(source).not.toMatch(/Vue\.(?:component|extend)/)
-    })
-
     it('contains no package-owned global component registration', () => {
-        const sources = [...legacyVueDefinitions, 'resources/assets/js_owl/bootstrap.js']
-            .map(readSource)
-            .join('\n')
+        const sources = readSource('resources/assets/js_owl/bootstrap.js')
 
         expect(readSource('resources/assets/js_owl/admin/vue-components.js')).toContain(
             'legacyVueComponents',
@@ -204,10 +172,6 @@ describe('precompiled Vue islands', () => {
         expect(component).not.toContain('withLegacyInlineTemplate')
     })
 
-    it.each(legacyInlineTemplateViews)('keeps the audited inline template in %s', (path) => {
-        expect(readSource(path).match(/inline-template/g)).toHaveLength(1)
-    })
-
     it('mounts the file element directly and uses the Dropzone constructor', () => {
         const view = readSource('resources/views/themes/legacy/default/form/element/file.blade.php')
         const component = readSource('resources/assets/js_owl/admin/form/file.vue')
@@ -222,6 +186,60 @@ describe('precompiled Vue islands', () => {
         expect(dropzone).toContain('dropzoneModule.Dropzone')
         expect(dropzone).not.toContain("window.Dropzone = require('dropzone')")
     })
+})
+
+it('keeps both related theme shells in Blade', () => {
+    const card = readSource(
+        'resources/views/themes/legacy/default/form/element/related/elements.blade.php',
+    )
+    const plain = readSource(
+        'resources/views/themes/legacy/default/form/element/related/elements_without_card.blade.php',
+    )
+    const group = readSource(
+        'resources/views/themes/legacy/default/form/element/related/group.blade.php',
+    )
+
+    expect(card).toContain('card card-outline card-info')
+    expect(plain).toContain('HtmlAttributeBag')
+    expect(group).toContain('data-soa-related-remove')
+    expect([card, plain, group].join('\n')).not.toContain('inline-template')
+})
+
+it('passes trusted related group HTML through referenced JSON props', () => {
+    const island = readSource(
+        'resources/views/themes/legacy/default/form/element/related/inner_element.blade.php',
+    )
+
+    expect(island).toContain('data-soa-vue-component="related-elements"')
+    expect(island).toContain('data-soa-vue-props-id=')
+    expect(island).toContain('Illuminate\\Support\\Js::encode')
+    expect(island).not.toContain('inline-template')
+})
+
+it('uses precompiled related state, native Sortable and shared lifecycle modules', () => {
+    const component = readSource('resources/assets/js_owl/admin/form/related/elements.vue')
+    const catalog = readSource('resources/assets/js_owl/admin/vue-components.js')
+
+    expect(component).toContain('<template>')
+    expect(component).toContain("import Sortable from 'sortablejs'")
+    expect(component).toContain('initializeRelatedGroup(Admin, element)')
+    expect(component).not.toMatch(/\$\(|vuedraggable|withLegacyInlineTemplate/)
+    expect(catalog).toContain("'related-elements': asNativeVue3Component(RelatedElements)")
+    expect(catalog).not.toContain("'related-group'")
+    expect(packageJson.dependencies).not.toHaveProperty('vuedraggable')
+    expect(packageLock.packages).not.toHaveProperty('node_modules/vuedraggable')
+})
+
+it('removes every package inline-template bridge owner', () => {
+    expect(existsSync(resolve(root, 'resources/assets/js_owl/libs/vue-inline-template.js'))).toBe(
+        false,
+    )
+    expect(
+        existsSync(resolve(root, 'resources/assets/js_owl/admin/form/related/elements.js')),
+    ).toBe(false)
+    expect(existsSync(resolve(root, 'resources/assets/js_owl/admin/form/related/group.js'))).toBe(
+        false,
+    )
 })
 
 describe('precompiled select island', () => {

@@ -45,10 +45,10 @@ top-level `[data-soa-vue-app]` host and exposes their temporary lifecycle as
   rendered DOM exactly once.
 
 `#vueApp` remains a legacy layout id for non-Vue DOM integrations, but it is no
-longer a Vue root. The seven package-owned component definitions are exported
-from one frozen catalog and registered on every app before mount. Two
-definitions still own runtime-compiled related-form templates; the env editor,
-file, image, images and shared single/multiple select are precompiled SFCs.
+longer a Vue root. The six package-owned component definitions are exported
+from one frozen catalog and registered on every app before mount. Env editor,
+file, image, images, shared single/multiple select and related elements are all
+precompiled SFCs. No package definition owns a runtime-compiled template.
 `ElementSelect` imports the native Vue Multiselect dependency directly, so
 neither `deselect` nor a runtime-compiled Multiselect adapter remains in the
 catalog. The package does not call global `Vue.component` or `Vue.extend`. A
@@ -70,54 +70,68 @@ self-closing examples that must be updated during its pilot migration.
 ### Precompiled root contract
 
 The env editor establishes the migration contract for a precompiled island;
-the file, image, images, select and multiselect elements follow it. A Blade
-view renders an empty host with one compiler guard and three lifecycle
+the file, image, images, select, multiselect and related elements follow it. A
+Blade view renders an empty host with one compiler guard and lifecycle
 attributes:
 
 - `v-pre` protects the empty host when it is nested in a legacy compiled template;
 - `data-soa-vue-app` marks lifecycle ownership;
 - `data-soa-vue-component` names a definition from the app-local catalog;
-- `data-soa-vue-props` contains one HTML-escaped JSON object.
+- `data-soa-vue-props` contains one HTML-escaped JSON object; or
+- `data-soa-vue-props-id` references a sibling
+  `<script type="application/json">` for a payload too large for an attribute.
 
 The registry resolves the component and parses the props before it creates an
-app. Unknown names, malformed JSON, arrays and scalar props fail explicitly.
-Vue receives the selected SFC and its props through `createApp(component,
-props)`; it does not compile server markup. PHP render contracts prove that
-quotes and HTML inside env, file, image, images and select values remain data
-after the Blade attribute is decoded.
+app. Referenced payloads must exist and use the exact `application/json` script
+type. Unknown names, missing/wrong script nodes, malformed JSON, arrays and
+scalar props fail explicitly. Vue receives the selected SFC and its props
+through `createApp(component, props)`; it does not compile server markup. PHP
+render contracts prove that quotes and HTML inside env, file, image, images,
+select and related values remain data after the Blade boundary is decoded.
+The referenced node is an inert JSON data block, not executable inline code;
+a browser fixture under `script-src 'none'` proves that it remains readable,
+does not execute a script-looking value and needs no CSP nonce. Executable
+custom islands still load through published external bundles and the future
+extension API rather than inline script bodies.
 
 ## Explicit allowlist
 
-The global boundary starts in `MODE: 3`. Vue 2 behavior is enabled only by the
-following audited flags. `suppress-warning` retains that one behavior without
-turning the console into an unactionable list; it is not permission to add
-another legacy use.
+The global boundary starts in `MODE: 3` with an empty Vue 2 feature allowlist.
+All former flags were removed with their package owners. Any Vue compatibility
+warning now fails the browser fixture; a new global suppression is not an
+acceptable migration fix.
 
-| Flag | Temporary owner | Removal condition |
-| --- | --- | --- |
-| `COMPILER_INLINE_TEMPLATE` | Three remaining related-form Blade `inline-template` views | Last inline template becomes a precompiled island |
-| `COMPONENT_V_MODEL` | Vue 2 draggable used by related forms | Related islands use the Vue 3 model contract or direct SortableJS |
-| `INSTANCE_CHILDREN`, `INSTANCE_SCOPED_SLOTS`, `OPTIONS_BEFORE_DESTROY`, `RENDER_FUNCTION`, `PRIVATE_APIS` | `vuedraggable@2` compatibility surface | Related islands use the selected Vue 3 drag driver |
-| `WATCH_ARRAY` | Related-elements array mutation watcher | Island uses an explicit deep watcher or direct state transition |
-| `ATTR_ENUMERATED_COERCION`, `CONFIG_WHITESPACE`, `INSTANCE_ATTRS_CLASS_STYLE` | Server-compiled legacy templates and dependency markup | No runtime-compiled legacy template remains |
-
-`COMPILER_INLINE_TEMPLATE` is intentionally boolean `true`: Vue `3.5.42`
-checks this compiler feature strictly and does not enable it for the string
-`suppress-warning`. Its single deprecation warning is asserted by the browser
-fixture. Every other unexpected Vue warning fails that fixture.
+`NativeMultiselect` has one component-local
+`ATTR_ENUMERATED_COERCION: 'suppress-warning'` override for the dependency's
+explicit `spellcheck="false"` markup. It does not enable that behavior for any
+other island. The remaining `@vue/compat` package and compiler-capable runtime
+are removed in the next checkpoint, after the runtime-only build aliases and
+custom-island registration path are switched together.
 
 ## Transitional bridges
 
-### Repeated inline templates
+### Related forms
 
-The compat compiler caches an `inline-template` render function on the shared
-component options object. Different instances can therefore reuse the first
-instance's server template. `withLegacyInlineTemplate()` clears that cached
-render just before each legacy instance is created. The current instance keeps
-its already selected render function.
+The card and no-card shells remain theme-owned Blade views, including all
+consumer classes and attributes. One precompiled `RelatedElements` island owns
+only group state, add/remove controls and direct SortableJS orchestration. Each
+group remains trusted server-rendered form HTML and is carried as data in a
+referenced JSON script encoded with `Illuminate\Support\Js::encode`; Vue never
+compiles that HTML as a template.
 
-This bridge is applied only to the two remaining legacy catalog definitions. Remove
-it together with the last `inline-template`; do not use it for new components.
+Group parsing, field rewriting, lifecycle calls, index allocation and Sortable
+construction are separate modules. New indexes are monotonic even after two
+consecutive additions or a validation retry containing `new_N`. Before a
+dynamic group is scanned, ordinary form controls and nested direct-island props
+receive the final `relation[new_N][field]` names and indexed ids. Both inline
+props and referenced JSON props are supported; cloned referenced scripts get a
+unique id. Removal calls `Admin.Components.destroy(group)` before detaching the
+DOM, while initial and dynamic nested islands are mounted through the shared
+lifecycle. This covers the read-only Laluna `hasMany(image)` scenario.
+
+The three related `inline-template` views, their two compatibility definitions,
+the render-cache bridge and `vuedraggable@2` dependency are removed. Direct
+SortableJS preserves handle-only ordering without a Vue 2 wrapper.
 
 ### File and image uploads
 

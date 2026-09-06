@@ -103,6 +103,42 @@ it('mounts a named precompiled component with JSON props', () => {
     })
 })
 
+it('reads large precompiled props from a referenced JSON script', () => {
+    const host = createElement('precompiled', true)
+    const component = { name: 'PrecompiledFixture' }
+    const factory = fakeAppFactory([])
+    const script = {
+        tagName: 'SCRIPT',
+        textContent: '{"html":"<fieldset>Trusted fields</fieldset>"}',
+        type: 'application/json',
+    }
+    host.dataset = { soaVueComponent: 'fixture', soaVuePropsId: 'fixture-props' }
+    host.ownerDocument = { getElementById: vi.fn(() => script) }
+
+    createVueAppRegistry(factory, { fixture: component }).mount(host)
+
+    expect(host.ownerDocument.getElementById).toHaveBeenCalledWith('fixture-props')
+    expect(factory).toHaveBeenCalledWith(component, {
+        html: '<fieldset>Trusted fields</fieldset>',
+    })
+})
+
+it('rejects missing and incorrectly typed referenced props scripts', () => {
+    const registry = createVueAppRegistry(fakeAppFactory([]), { fixture: {} })
+    const host = createElement('precompiled', true)
+    host.dataset = { soaVueComponent: 'fixture', soaVuePropsId: 'fixture-props' }
+    host.ownerDocument = { getElementById: vi.fn(() => null) }
+
+    expect(() => registry.mount(host)).toThrow('props script [fixture-props] was not found')
+
+    host.ownerDocument.getElementById = vi.fn(() => ({
+        tagName: 'DIV',
+        textContent: '{}',
+        type: 'application/json',
+    }))
+    expect(() => registry.mount(host)).toThrow('must reference an application/json script')
+})
+
 it('rejects unknown precompiled components and invalid props before creating an app', () => {
     const factory = fakeAppFactory([])
     const registry = createVueAppRegistry(factory, { fixture: {} })

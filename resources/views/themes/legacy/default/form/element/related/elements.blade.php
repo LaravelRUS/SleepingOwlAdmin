@@ -1,18 +1,8 @@
-<div data-soa-vue-app>
-<related-elements
-    inline-template
-    name="{{ $name }}"
-    label="{{ $label }}"
-    @if (!is_null($limit))
-        :limit="{{ (int) $limit }}"
-    @endif
-    :initial-groups-count="{{ (int)$groups->count() }}"
-    :removed="{{ $remove->toJson() }}"
->
-
-  <div class="card card-outline card-info {{ $collapsed ? 'collapsed-card':'' }} {{ $errors->has($name) ? 'has-error' : '' }}">
+<div class="card card-outline card-info {{ $collapsed ? 'collapsed-card':'' }} {{ $errors->has($name) ? 'has-error' : '' }}">
       <div class="card-header">
-        <h4 class="card-title form-group" v-if="label">@{{ label }}</h4>
+        @if ($label)
+          <h4 class="card-title form-group">{{ $label }}</h4>
+        @endif
         @if (isset($helpText) && $helpText)
             <div class="mb-2">
                 @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
@@ -40,7 +30,4 @@
           @include(AdminTemplate::getViewPath('form.element.related.inner_element'))
         </div>
       </div>
-  </div>
-
-</related-elements>
 </div>

@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 4 — Vue 3 islands**.
-- Точка возобновления: перенести Related elements с card, Related elements без card и Related group из трёх оставшихся `inline-template` в precompiled Vue 3 islands; Select и Multiselect завершены.
+- Точка возобновления: удалить `@vue/compat` и compiler-capable aliases, переключить production/development профили на runtime-only Vue 3 и убрать временный `window.Vue`; все 9 package `inline-template` уже перенесены.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -563,23 +563,23 @@ No-build consumer contract является release-blocking:
 - [x] Заменить `Vue.http`/`vue-resource` на core HTTP client поверх Axios/`fetch`.
 - [x] Заменить `Vue.prototype.$trans` на injection/composable без глобального mutable API.
 - [x] Интегрировать direct Vue hosts с `Admin.Components`: после top-level mount находить вложенные islands в отрендерированном DOM, поддерживать динамические related groups и уничтожать child раньше parent.
-- [ ] Перенести все 9 `inline-template` в precompiled Vue 3 islands.
+- [x] Перенести все 9 `inline-template` в precompiled Vue 3 islands.
   - [x] Env editor.
   - [x] File.
   - [x] Image.
   - [x] Images.
   - [x] Select.
   - [x] Multiselect.
-  - [ ] Related elements с card.
-  - [ ] Related elements без card.
-  - [ ] Related group.
+  - [x] Related elements с card.
+  - [x] Related elements без card.
+  - [x] Related group.
 - [x] Перевести `$set` на обычные reactive assignments и проверить array updates.
-- [ ] Обновить/заменить Vue wrappers для multiselect и drag/drop.
+- [x] Обновить/заменить Vue wrappers для multiselect и drag/drop.
   - [x] Удалить Vue 2 `value/input` wrapper вокруг Vue Multiselect и использовать native Vue 3 contract.
-  - [ ] Удалить Vue 2 wrapper `vuedraggable` из Related islands.
-- [ ] На каждый island реализовать `mount`/`unmount`, повторную инициализацию и защиту от двойного mount.
-- [ ] Вынести upload, serialization, HTTP/error mapping и sortable logic из Vue components в отдельные composables/services; components оставить orchestration/presentation слоем.
-- [ ] Проверить Blade escaping, `@{{ }}`, JSON props, CSP nonce и отсутствие исполнения пользовательского HTML как Vue template.
+  - [x] Удалить Vue 2 wrapper `vuedraggable` из Related islands.
+- [x] На каждый island реализовать `mount`/`unmount`, повторную инициализацию и защиту от двойного mount.
+- [x] Вынести upload, serialization, HTTP/error mapping и sortable logic из Vue components в отдельные composables/services; components оставить orchestration/presentation слоем.
+- [x] Проверить Blade escaping, `@{{ }}`, JSON props, CSP nonce и отсутствие исполнения пользовательского HTML как Vue template.
 - [ ] Удалить `@vue/compat`, compat flags, Vue 2 packages и глобальный `Vue` до завершения этапа.
 - [ ] Переключить финальную сборку на runtime-only Vue 3 после переноса всех runtime templates в заранее компилируемые components.
 - [ ] Собрать Vue 3 в двух отдельных runtime-only chunks: production/minified без dev diagnostics и development/unminified с warnings, devtools и source maps.
@@ -994,3 +994,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 4 / images island | Images element перенесён из server `inline-template` в native Vue 3 SFC/direct host с escaped props для `setAssetPrefix`, `setOnlyLink`, `setDraggable`, readonly, upload limit, route/CSRF, values и локализованного UI. Array normalization/add/replace/remove/reorder/serialization, Dropzone и Sortable adapters вынесены в малые modules; jQuery, Axios, `vuedraggable` и Magnific Popup удалены из island. Нативный `<dialog>` даёт keyboard-friendly preview с previous/next/close и порядковым счётчиком, а Dropzone/Sortable/dialog уничтожаются при unmount; readonly не создаёт drivers, only-link не создаёт uploader. Исправлен подтверждённый Laluna-дефект: вставленный blob при редактировании загружается через `Admin.Http` и заменяет выбранный индекс. Визуально проверены gallery и dialog на собранном fixture. Осталось 5 `inline-template` и 3 bridge definitions. Production/development assets пересобраны; config matrix: 113 keys; полный PHP gate с PDO SQLite: 433 tests, 1620 assertions, 2 прежних TODO-skip; frontend gate: 219 Vitest + 35 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / nested island lifecycle | Временный `VueApps` registry интегрирован с единым `Admin.Components`: первоначальный top-level Vue mount сохраняет legacy boot order, затем lifecycle принимает parent apps и сканирует их фактически отрендерированное subtree. Direct hosts защищены `v-pre` от компиляции legacy parent template. Unit contracts доказывают idempotent adoption, динамический nested mount и reverse `child -> parent` teardown; browser fixture воспроизводит реальный Laluna `hasMany(image)`, монтирует initial/dynamic Image islands и удаляет их из registry до Vue DOM removal. Документация переводит динамических consumers на `Admin.Components.scan/destroy`; глобальный поиск подтвердил отсутствие `$set`, поэтому лишний `INSTANCE_SET` удалён из оставшихся 11 compat flags. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 433 tests, 1620 assertions, 2 прежних TODO-skip; frontend gate: 221 Vitest + 35 Playwright | текущий commit |
 | 2026-09-06 | Этап 4 / select islands | Select и MultiSelect перенесены из двух `inline-template` в один precompiled `ElementSelect` поверх Vue Multiselect 3.5 native `modelValue/update:modelValue`. Чистый `select-values.js` сохраняет numeric/string/null ids, option order и immutable props; single отправляет hidden input, multiple — hidden native select. Итоговый PHP `attributesArray` передаётся прямым `v-bind` без semantic class resolver, поэтому name/id/custom classes/data attributes и disabled сохраняются. Required, readonly, limit, max и tagging покрыты browser behavior; наружу уходит native bubbling `change` без jQuery. Удалены `deselect.js`, `LegacyMultiselect` и `window.Multiselect`; осталось 3 `inline-template` и 2 bridge definitions. Laluna `Modules` подтвердил 53 select, 3 multiselect, static/model options, string/numeric usage keys и nested forms. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 437 tests, 1663 assertions, 2 прежних TODO-skip; frontend gate: 223 Vitest + 35 Playwright | текущий commit |
+| 2026-09-06 | Этап 4 / related islands | Related card/no-card shells и все пользовательские classes/attributes оставлены в theme-owned Blade; один precompiled `RelatedElements` управляет только группами, add/remove и прямым SortableJS. Server-rendered group HTML передаётся как data через `application/json` и `Illuminate\Support\Js::encode`, registry валидирует referenced payload. State, DOM/name/id rewrite, lifecycle и Sortable driver разложены на малые modules. Исправлены дубли индексов при двух последовательных add и namespace вложенных direct islands до mount; browser fixture покрывает inline/referenced props, existing/dynamic `hasMany(image)`, Select2 re-init и child-first teardown. Инертный JSON payload проверен под CSP `script-src 'none'` без nonce и не компилируется как Vue template. Удалены последние 3 `inline-template`, 2 bridge definitions, `vue-inline-template.js`, `vuedraggable` и все глобальные compat flags; package inventory теперь 0/0. Production/development assets пересобраны; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate с PDO SQLite: 439 tests, 1684 assertions, 2 прежних TODO-skip; frontend gate: 234 Vitest + 36 Playwright | текущий commit |

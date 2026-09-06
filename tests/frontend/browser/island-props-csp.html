@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; script-src 'none'"
+        />
+        <title>Inert island props CSP fixture</title>
+    </head>
+    <body>
+        <script id="island-csp-payload" type="application/json">
+            {
+                "value": "\u003Cscript\u003EglobalThis.__islandPayloadExecuted = true\u003C/script\u003E"
+            }
+        </script>
+    </body>
+</html>

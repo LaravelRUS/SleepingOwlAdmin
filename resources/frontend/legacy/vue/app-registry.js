@@ -89,8 +89,29 @@ function resolveRootComponent(element, components) {
 
     return {
         component,
-        props: parseJsonProps(element.dataset.soaVueProps || '{}'),
+        props: parseJsonProps(readPropsSource(element)),
     }
+}
+
+function readPropsSource(element) {
+    const propsId = element.dataset?.soaVuePropsId
+    if (!propsId) return element.dataset?.soaVueProps || '{}'
+
+    return readReferencedProps(element, propsId)
+}
+
+function readReferencedProps(element, propsId) {
+    const script = element.ownerDocument?.getElementById(propsId)
+    if (!script) throw new Error(`Vue app props script [${propsId}] was not found.`)
+    assertJsonPropsScript(script, propsId)
+
+    return script.textContent || '{}'
+}
+
+function assertJsonPropsScript(script, propsId) {
+    if (script.tagName === 'SCRIPT' && script.type === 'application/json') return
+
+    throw new TypeError(`Vue app props [${propsId}] must reference an application/json script.`)
 }
 
 function componentEntries(components) {
