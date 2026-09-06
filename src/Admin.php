@@ -18,6 +18,7 @@ use SleepingOwl\Admin\Contracts\ModelConfigurationInterface;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Http\Controllers\AdminController;
 use SleepingOwl\Admin\Model\ModelCollection;
 use SleepingOwl\Admin\Model\ModelConfiguration;
@@ -227,6 +228,11 @@ class Admin implements AdminInterface
         return $this->template;
     }
 
+    public function theme(): ThemeInterface
+    {
+        return $this->app[ThemeInterface::class];
+    }
+
     /**
      * @param  $class
      * @param  int  $priority
@@ -283,6 +289,7 @@ class Admin implements AdminInterface
         $aliases = [
             'sleeping_owl' => ['SleepingOwl\Admin\Admin', 'SleepingOwl\Admin\Contracts\AdminInterface'],
             'sleeping_owl.template' => ['SleepingOwl\Admin\Contracts\Template\TemplateInterface'],
+            'sleeping_owl.theme' => [ThemeInterface::class],
             'sleeping_owl.breadcrumbs' => ['SleepingOwl\Admin\Contracts\Template\BreadcrumbsInterface'],
             'sleeping_owl.widgets' => ['SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface', 'SleepingOwl\Admin\Widgets\WidgetsRegistry'],
             'sleeping_owl.message' => ['SleepingOwl\Admin\Widgets\Messages\MessageStack'],

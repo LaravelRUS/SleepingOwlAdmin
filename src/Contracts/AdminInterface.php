@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Navigation\NavigationInterface;
 use SleepingOwl\Admin\Contracts\Template\MetaInterface;
 use SleepingOwl\Admin\Contracts\Template\TemplateInterface;
+use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 
 interface AdminInterface extends Initializable
 {
@@ -66,6 +67,11 @@ interface AdminInterface extends Initializable
      * @return TemplateInterface
      */
     public function template();
+
+    /**
+     * @return ThemeInterface
+     */
+    public function theme();
 
     /**
      * @return NavigationInterface

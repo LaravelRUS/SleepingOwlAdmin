@@ -12,6 +12,7 @@ use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\TableHeaderColumnInterface;
 use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Contracts\Repositories\RepositoryInterface;
+use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Contracts\Widgets\WidgetsRegistryInterface;
 use SleepingOwl\Admin\Exceptions\TemplateException;
 use SleepingOwl\Admin\Model\ModelConfigurationManager;
@@ -19,6 +20,7 @@ use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Templates\Assets;
 use SleepingOwl\Admin\Templates\Meta;
+use SleepingOwl\Admin\Themes\LegacyTemplateThemeAdapter;
 use SleepingOwl\Admin\Widgets\EnvEditor;
 use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
 use SleepingOwl\Admin\Widgets\Messages\InfoMessages;
@@ -98,6 +100,11 @@ class AdminServiceProvider extends ServiceProvider
 
             return $app->make($class);
         });
+
+        $this->app->singleton('sleeping_owl.theme', function (Application $app) {
+            return new LegacyTemplateThemeAdapter($app['sleeping_owl.template']);
+        });
+        $this->app->alias('sleeping_owl.theme', ThemeInterface::class);
 
         if (file_exists($assetsFile = __DIR__.'/../../resources/assets.php')) {
             include $assetsFile;

@@ -4,7 +4,7 @@
 
 - Статус: выполняется.
 - Текущий этап: **Этап 2 — headless core и theme contract**.
-- Точка возобновления: расширить существующий `TemplateInterface` до `ThemeInterface`, сохранив переходный адаптер для `TemplateDefault`.
+- Точка возобновления: отвязать first-party `AssetsInterface`/`MetaInterface` от contracts `KodiCMS\Assets` и зафиксировать собственный узкий contract.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; не изменять и не запускать в нём команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -516,7 +516,7 @@ No-build consumer contract является release-blocking:
 
 ### Этап 2. Выделить headless core и theme contract
 
-- [ ] Расширить существующий `TemplateInterface` до `ThemeInterface`, сохранив адаптер для старого `TemplateDefault` на время миграции.
+- [x] Расширить существующий `TemplateInterface` до `ThemeInterface`, сохранив адаптер для старого `TemplateDefault` на время миграции.
 - [ ] Отвязать first-party `AssetsInterface`/`MetaInterface` от contracts `KodiCMS\Assets` и зафиксировать собственный узкий contract.
 - [ ] Перенести стандартные Bootstrap/AdminLTE-классы встроенных button, form, card/panel, grid, navigation, table, alert, badge и validation components из PHP core в Blade views legacy theme.
 - [ ] Сохранить прямой API пользовательских HTML attributes/classes и проверить, что theme rendering передаёт их без преобразований и потерь.
@@ -937,3 +937,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-06 | Этап 1 / asset profiles | Добавлены contract tests реального Mix manifest и `TemplateDefault`: production/development выбирают ровно один `admin-app` profile, не смешиваются, сохраняют порядок общих `vue.js`/`modules.js`/CSS handles, а source entries связывают profiles с `vue-prod`/`vue-dev`. Полный PHP gate: 328 tests, 1029 assertions, 2 прежних TODO-skip | текущий commit |
 | 2026-09-06 | Этап 1 / legacy PHP assets | Добавлены 7 characterization tests используемого `kodicms/laravel-assets`: shared container services, handles/dependencies/order, JS attributes и head/footer, CSS attributes, recursive packages, meta tags, global config и last-registration-wins. Полный PHP gate: 335 tests, 1078 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
 | 2026-09-06 | Этап 1 / завершение | Страховочная сетка закрывает PHP async DataTables, legacy DataTables/Vue browser behavior, render/config/assets contracts и оба CI gate; точка возобновления перенесена на `ThemeInterface` этапа 2 | текущий commit |
+| 2026-09-06 | Этап 2 / theme contract | Введён узкий `ThemeInterface` (`id`, view namespace, logical assets, icons, capabilities), container entry `sleeping_owl.theme` и deprecated `LegacyTemplateThemeAdapter`; текущий `TemplateDefault` и `sleeping_owl.template` остаются без изменения lifecycle/API. Полный PHP gate: 338 tests, 1096 assertions, 2 прежних TODO-skip; frontend gate: 9 Vitest + 12 Playwright | текущий commit |
