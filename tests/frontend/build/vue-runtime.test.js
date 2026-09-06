@@ -109,7 +109,8 @@ describe('bounded legacy Vue apps', () => {
     })
 
     it('mounts bounded hosts through the tolerant shared lifecycle', () => {
-        const initializer = readSource('resources/assets/js_owl/vue_init.js')
+        const initializer = readSource('resources/frontend/shared/vue/browser.js')
+        const legacyBridge = readSource('resources/assets/js_owl/vue_init.js')
 
         expect(initializer).toContain('createVueAppRegistry')
         expect(initializer).toContain('registerVueAppLifecycle')
@@ -117,10 +118,11 @@ describe('bounded legacy Vue apps', () => {
             initializer.indexOf('registerVueAppLifecycle(Admin.Components, vueApps)'),
         ).toBeLessThan(initializer.indexOf('Admin.Vue.scan(document)'))
         expect(initializer).not.toMatch(/vueApps\.mountAll|new Vue|#vueApp/)
+        expect(legacyBridge).toContain("import '../../frontend/shared/vue/browser'")
     })
 
     it('provides translations per app without a global Vue prototype plugin', () => {
-        const initializer = readSource('resources/assets/js_owl/vue_init.js')
+        const initializer = readSource('resources/frontend/shared/vue/browser.js')
         const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
 
         expect(initializer).toContain('createVueTranslation')
@@ -143,7 +145,7 @@ describe('bounded legacy Vue apps', () => {
 })
 
 it('publishes a namespaced extension API and a shared runtime external stub', () => {
-    const initializer = readSource('resources/assets/js_owl/vue_init.js')
+    const initializer = readSource('resources/frontend/shared/vue/browser.js')
     const extension = readSource('resources/frontend/legacy/vue/extension-api.js')
     const stub = readSource('docs/modernization/examples/custom-vue-island/webpack.mix.js')
 

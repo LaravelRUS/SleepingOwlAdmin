@@ -28,6 +28,7 @@ class AdminLTEThemeTest extends TestCase
 
         $this->assertSame([
             'shared:icons',
+            'shared:vue',
             'theme:legacy-adminlte',
             'feature:dropdown:theme:legacy-adminlte',
             'feature:lightbox:theme:legacy-adminlte',
@@ -39,6 +40,7 @@ class AdminLTEThemeTest extends TestCase
         ], $manifest->entries());
         $this->assertSame([
             'shared:icons',
+            'shared:vue',
             'theme:legacy-adminlte',
             'feature:tabs:theme:legacy-adminlte',
             'feature:table:theme:legacy-adminlte',

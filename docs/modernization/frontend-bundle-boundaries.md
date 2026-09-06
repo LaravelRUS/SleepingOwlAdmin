@@ -7,6 +7,7 @@ The modernization build publishes independent entrypoints while the existing UI 
 | Logical id | JavaScript | Sass/CSS | Owner |
 |---|---|---|---|
 | `core` | `js/admin-core.js` | `css/admin-core.css` | framework-neutral runtime and shared primitives |
+| `shared:vue` | `js/shared/vue.js` | — | Vue 3 runtime, precompiled package islands and public extension API |
 | `feature:forms` | `js/features/forms.js` | `css/features/forms.css` | form behavior independent of a concrete theme |
 | `feature:table` | `js/features/table.js` | `css/features/table.css` | table registry and drivers independent of presentation |
 | `feature:table:theme:legacy-adminlte` | — | `css/features/table/themes/datatables-legacy-adminlte.css` | Bootstrap 4/DataTables presentation owned by the AdminLTE table adapter |

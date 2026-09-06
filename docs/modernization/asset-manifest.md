@@ -6,15 +6,13 @@
 
 Manifest создаётся после Laravel Mix build из `build/frontend-entries.json`. Версия пакета берётся из `Composer\InstalledVersions`, поэтому она не дублируется в config. Для каждого файла generator вычисляет MD5 content version для cache URL и SHA-256 checksum для последующей проверки publish/update workflow.
 
-Текущий набор logical ids:
+Текущие группы logical ids:
 
 - `core`;
-- `feature:forms`;
-- `feature:table`;
-- `feature:table:theme:legacy-adminlte`;
-- `feature:table:theme:tailwind`;
-- `theme:legacy-adminlte`;
-- `theme:tailwind`.
+- общие `shared:icons` и profile-aware `shared:vue`;
+- behavior entries `feature:<feature-id>`;
+- presentation adapters `feature:<feature-id>:theme:<theme-id>`;
+- встроенные `theme:legacy-adminlte` и `theme:tailwind`.
 
 Table driver не содержит presentation CSS. Встроенные table adapters публикуются отдельными
 feature/theme entries и загружаются только вместе с выбранной темой и активным table feature.

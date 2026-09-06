@@ -302,6 +302,16 @@
                         }
                     ]
                 },
+                "shared:vue": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/shared/vue.js",
+                            "version": "fbf6b42f5ceb7e17df7d84e6d8e536e8",
+                            "checksum": "sha256:b710d65fb9db52676bc15519eeff5cfa849071f3176e46119057531516410082"
+                        }
+                    ],
+                    "styles": []
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -636,6 +646,16 @@
                         }
                     ]
                 },
+                "shared:vue": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/shared/vue.js",
+                            "version": "a671d30c3ed83d7b9509d18c07f4b9eb",
+                            "checksum": "sha256:ac041b28df4c3a295a378150c954755697be3a6e67f0536867877930db8123d0"
+                        }
+                    ],
+                    "styles": []
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -671,5 +691,5 @@
             }
         }
     },
-    "build_id": "sha256:4c60d4417c6fc5f40d9d41540c4cbc58edbacdfdf23dcc43a0836fb3e7639c5a"
+    "build_id": "sha256:44bbc669963739755986054272b557cbde34d56f8512c0397cc00cd855bc672f"
 }

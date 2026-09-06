@@ -65,7 +65,7 @@ Capability говорит только о presentation support. Он не озн
 
 ## Встроенная AdminLTE theme
 
-`AdminLTETheme` является прямой реализацией `ThemeInterface` и одновременно наследует `TemplateDefault`, пока legacy rendering API остаётся публичным. Она владеет namespace `sleeping_owl::default`, объявляет `shared:icons`, `theme:legacy-adminlte`, все существующие feature presentation adapters и восемь capabilities. Icon classes не преобразуются в PHP: существующие Blade views и пользовательские расширения продолжают задавать нужные Font Awesome classes напрямую.
+`AdminLTETheme` является прямой реализацией `ThemeInterface` и одновременно наследует `TemplateDefault`, пока legacy rendering API остаётся публичным. Она владеет namespace `sleeping_owl::default`, объявляет общие `shared:icons`/`shared:vue`, `theme:legacy-adminlte`, все существующие feature presentation adapters и восемь capabilities. Icon classes не преобразуются в PHP: существующие Blade views и пользовательские расширения продолжают задавать нужные Font Awesome classes напрямую.
 
 Новый package config выбирает `AdminLTETheme::class`. Опубликованный config, в котором сохранён `TemplateDefault::class`, продолжает работать через `LegacyTemplateThemeAdapter`. До контролируемого переключения browser entries фактическую регистрацию compatibility aggregate выполняет унаследованный `TemplateDefault::initialize()`; standalone `theme:legacy-adminlte` CSS уже содержит Bootstrap/AdminLTE, но не содержит отдельный `shared:icons` bundle.
 

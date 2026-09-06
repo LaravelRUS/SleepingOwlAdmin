@@ -17556,41 +17556,8 @@ module.exports = Dropzone;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
-/* harmony import */ var _frontend_legacy_vue_app_plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-plugins */ "./resources/frontend/legacy/vue/app-plugins.js");
-/* harmony import */ var _frontend_legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-registry */ "./resources/frontend/legacy/vue/app-registry.js");
-/* harmony import */ var _frontend_legacy_vue_component_catalog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../frontend/legacy/vue/component-catalog */ "./resources/frontend/legacy/vue/component-catalog.js");
-/* harmony import */ var _frontend_legacy_vue_extension_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../frontend/legacy/vue/extension-api */ "./resources/frontend/legacy/vue/extension-api.js");
-/* harmony import */ var _frontend_legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../frontend/legacy/vue/app-lifecycle */ "./resources/frontend/legacy/vue/app-lifecycle.js");
-/* harmony import */ var _frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../frontend/legacy/vue/translation */ "./resources/frontend/legacy/vue/translation.js");
-/* harmony import */ var _admin_vue_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./admin/vue-components */ "./resources/assets/js_owl/admin/vue-components.js");
+/* harmony import */ var _frontend_shared_vue_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../frontend/shared/vue/browser */ "./resources/frontend/shared/vue/browser.js");
 
-
-
-
-
-
-
-
-var translation = (0,_frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_6__.createVueTranslation)(trans);
-var components = (0,_frontend_legacy_vue_component_catalog__WEBPACK_IMPORTED_MODULE_3__.createVueComponentCatalog)(_admin_vue_components__WEBPACK_IMPORTED_MODULE_7__.vueComponents);
-var plugins = (0,_frontend_legacy_vue_app_plugins__WEBPACK_IMPORTED_MODULE_1__.createVueAppPlugins)();
-function createAdminVueApp(component, props) {
-  var app = vue__WEBPACK_IMPORTED_MODULE_0__.createApp(component, props);
-  (0,_frontend_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_6__.installVueTranslation)(app, translation);
-  return plugins.install(app);
-}
-var vueApps = (0,_frontend_legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_2__.createVueAppRegistry)(createAdminVueApp, components);
-(0,_frontend_legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_5__.registerVueAppLifecycle)(Admin.Components, vueApps);
-Admin.VueApps = vueApps;
-Admin.Vue = (0,_frontend_legacy_vue_extension_api__WEBPACK_IMPORTED_MODULE_4__.createVueExtensionApi)({
-  catalog: components,
-  lifecycle: Admin.Components,
-  plugins: plugins,
-  root: document,
-  runtime: vue__WEBPACK_IMPORTED_MODULE_0__
-});
-Admin.Vue.scan(document);
 
 /***/ }),
 
@@ -18414,6 +18381,63 @@ function assertFunction(value, name) {
   if (typeof value !== 'function') {
     throw new TypeError("".concat(name, " must be a function."));
   }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/shared/vue/browser.js":
+/*!**************************************************!*\
+  !*** ./resources/frontend/shared/vue/browser.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bootVue": () => (/* binding */ bootVue)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
+/* harmony import */ var _assets_js_owl_admin_vue_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../assets/js_owl/admin/vue-components */ "./resources/assets/js_owl/admin/vue-components.js");
+/* harmony import */ var _legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../legacy/vue/app-lifecycle */ "./resources/frontend/legacy/vue/app-lifecycle.js");
+/* harmony import */ var _legacy_vue_app_plugins__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../legacy/vue/app-plugins */ "./resources/frontend/legacy/vue/app-plugins.js");
+/* harmony import */ var _legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../legacy/vue/app-registry */ "./resources/frontend/legacy/vue/app-registry.js");
+/* harmony import */ var _legacy_vue_component_catalog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../legacy/vue/component-catalog */ "./resources/frontend/legacy/vue/component-catalog.js");
+/* harmony import */ var _legacy_vue_extension_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../legacy/vue/extension-api */ "./resources/frontend/legacy/vue/extension-api.js");
+/* harmony import */ var _legacy_vue_translation__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../legacy/vue/translation */ "./resources/frontend/legacy/vue/translation.js");
+
+
+
+
+
+
+
+
+if (globalThis.document) bootVue(globalThis);
+function bootVue(target) {
+  var Admin = target.Admin;
+  var document = target.document;
+  var translation = (0,_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_7__.createVueTranslation)(target.trans);
+  var components = (0,_legacy_vue_component_catalog__WEBPACK_IMPORTED_MODULE_5__.createVueComponentCatalog)(_assets_js_owl_admin_vue_components__WEBPACK_IMPORTED_MODULE_1__.vueComponents);
+  var plugins = (0,_legacy_vue_app_plugins__WEBPACK_IMPORTED_MODULE_3__.createVueAppPlugins)();
+  var vueApps = (0,_legacy_vue_app_registry__WEBPACK_IMPORTED_MODULE_4__.createVueAppRegistry)(createAppFactory(translation, plugins), components);
+  (0,_legacy_vue_app_lifecycle__WEBPACK_IMPORTED_MODULE_2__.registerVueAppLifecycle)(Admin.Components, vueApps);
+  Admin.VueApps = vueApps;
+  Admin.Vue = (0,_legacy_vue_extension_api__WEBPACK_IMPORTED_MODULE_6__.createVueExtensionApi)({
+    catalog: components,
+    lifecycle: Admin.Components,
+    plugins: plugins,
+    root: document,
+    runtime: vue__WEBPACK_IMPORTED_MODULE_0__
+  });
+  Admin.Vue.scan(document);
+  return Admin.Vue;
+}
+function createAppFactory(translation, plugins) {
+  return function (component, props) {
+    var app = vue__WEBPACK_IMPORTED_MODULE_0__.createApp(component, props);
+    (0,_legacy_vue_translation__WEBPACK_IMPORTED_MODULE_7__.installVueTranslation)(app, translation);
+    return plugins.install(app);
+  };
 }
 
 /***/ }),

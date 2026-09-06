@@ -39,6 +39,7 @@ class AssetManifestLoaderTest extends TestCase
             'feature:tree:theme:legacy-adminlte',
             'feature:tree:theme:tailwind',
             'shared:icons',
+            'shared:vue',
             'theme:legacy-adminlte',
             'theme:tailwind',
         ], $manifest->profile('production')->entryIds());

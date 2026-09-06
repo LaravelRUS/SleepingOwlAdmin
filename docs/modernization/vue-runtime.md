@@ -28,6 +28,10 @@ Vue as a browser global.
 - `vue.js` is the minified production runtime and precompiled catalog;
   `vue-dev.js` is its unminified development counterpart with diagnostics and
   a source map. Neither profile contains the runtime compiler.
+- `shared:vue` publishes the same catalog as a logical bundle for the modern
+  pipeline: production and development use one `js/shared/vue.js` path inside
+  their isolated manifest profiles, while `ADMIN_DEV_ASSETS` selects the
+  minified or debuggable build without PHP filename branching.
 - `npm run production` builds both profiles, restores `admin-app-dev.js`,
   `vue-dev.js` and their maps after the production pass, then recalculates both
   development Mix hashes.

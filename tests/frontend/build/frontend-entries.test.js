@@ -85,6 +85,15 @@ it('publishes shared icons as a standalone stylesheet', () => {
     })
 })
 
+it('publishes the Vue 3 islands as one profile-selected shared script', () => {
+    expect(modernEntry('shared:vue', 'scripts')).toEqual({
+        logicalId: 'shared:vue',
+        source: 'resources/frontend/shared/vue/browser.js',
+        output: 'js/shared/vue.js',
+    })
+    expect(modernEntry('shared:vue', 'styles')).toBeUndefined()
+})
+
 describe('behavior-only entries', () => {
     it('keeps alerts free of a generic presentation stylesheet', () => {
         expect(modernEntry('feature:alert', 'scripts')).toBeDefined()

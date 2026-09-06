@@ -150,6 +150,38 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'vue-dev.js'), 'text/javascript'],
     ],
     [
+        '/public/default/profiles/development/js/shared/vue.js',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'profiles',
+                'development',
+                'js',
+                'shared',
+                'vue.js',
+            ),
+            'text/javascript',
+        ],
+    ],
+    [
+        '/public/default/profiles/production/js/shared/vue.js',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'profiles',
+                'production',
+                'js',
+                'shared',
+                'vue.js',
+            ),
+            'text/javascript',
+        ],
+    ],
+    [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
     ],

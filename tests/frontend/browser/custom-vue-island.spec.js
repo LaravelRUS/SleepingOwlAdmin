@@ -18,6 +18,15 @@ async function useProductionBundle(page) {
     })
 }
 
+async function useLogicalVueBundle(page, profile) {
+    await page.route('**/public/default/js/vue-dev.js', (route) => {
+        const requestUrl = new URL(route.request().url())
+        const path = `/public/default/profiles/${profile}/js/shared/vue.js`
+
+        return route.continue({ url: new URL(path, requestUrl).href })
+    })
+}
+
 for (const profile of ['development', 'production']) {
     test(`${profile} runtime mounts a late custom island through the public API`, async ({
         page,
@@ -50,6 +59,23 @@ for (const profile of ['development', 'production']) {
         })
         await expectPublicLifecycle(page)
         expect(warnings).toEqual([])
+    })
+}
+
+for (const profile of ['development', 'production']) {
+    test(`${profile} logical shared Vue bundle mounts the same islands`, async ({ page }) => {
+        await useLogicalVueBundle(page, profile)
+        await page.goto('/custom-vue-island')
+        await expect(page.locator('html')).toHaveAttribute('data-ready', 'true')
+
+        expect(await inspectRuntime(page)).toEqual({
+            appCount: 3,
+            globalVue: 'undefined',
+            packageAppPreserved: true,
+            pluginInstalls: 2,
+            rescanCount: 0,
+            version: expect.stringMatching(/^3\.5\./),
+        })
     })
 }
 
