@@ -29236,7 +29236,6 @@ __webpack_require__(/*! ./libs/jquery */ "./resources/assets/js_owl/libs/jquery.
 __webpack_require__(/*! ./libs/moment */ "./resources/assets/js_owl/libs/moment.js");
 __webpack_require__(/*! ./libs/bootstrap */ "./resources/assets/js_owl/libs/bootstrap.js");
 __webpack_require__(/*! ./libs/i18next */ "./resources/assets/js_owl/libs/i18next.js");
-__webpack_require__(/*! ./libs/vuejs */ "./resources/assets/js_owl/libs/vuejs.js");
 __webpack_require__(/*! ./libs/datetimepicker */ "./resources/assets/js_owl/libs/datetimepicker.js");
 __webpack_require__(/*! ./libs/daterangepicker */ "./resources/assets/js_owl/libs/daterangepicker.js");
 __webpack_require__(/*! ./libs/magnific-popup */ "./resources/assets/js_owl/libs/magnific-popup.js");
@@ -30742,7 +30741,6 @@ var vueCompatFeatures = Object.freeze({
   COMPILER_INLINE_TEMPLATE: true,
   COMPONENT_V_MODEL: 'suppress-warning',
   CONFIG_WHITESPACE: 'suppress-warning',
-  GLOBAL_PROTOTYPE: 'suppress-warning',
   INSTANCE_ATTRS_CLASS_STYLE: 'suppress-warning',
   INSTANCE_CHILDREN: 'suppress-warning',
   INSTANCE_SCOPED_SLOTS: 'suppress-warning',
@@ -30824,22 +30822,6 @@ function resetCachedRender(options) {
     delete options.render;
   };
 }
-
-/***/ }),
-
-/***/ "./resources/assets/js_owl/libs/vuejs.js":
-/*!***********************************************!*\
-  !*** ./resources/assets/js_owl/libs/vuejs.js ***!
-  \***********************************************/
-/***/ (() => {
-
-Vue.use({
-  install: function install(Vue, options) {
-    Vue.prototype.$trans = function (key) {
-      return i18next.t(key);
-    };
-  }
-});
 
 /***/ }),
 
@@ -181313,9 +181295,8 @@ var __webpack_exports__ = {};
   !*** ./resources/assets/js_owl/app-dev.js ***!
   \********************************************/
 /**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
+ * Load the development Vue compatibility runtime before the legacy
+ * application dependencies.
  */
 
 // Select build

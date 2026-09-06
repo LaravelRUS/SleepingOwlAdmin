@@ -102,6 +102,10 @@ async function expectBoundedVueApps(page) {
     const ownership = await page.evaluate((componentNames) => {
         const hosts = [...globalThis.document.querySelectorAll('[data-soa-vue-app]')]
         const mountedHosts = hosts.filter((element) => element.__vue_app__)
+        const firstApp = globalThis.Admin.VueApps.get(mountedHosts[0])
+        const translation = firstApp.runWithContext(() =>
+            globalThis.Vue.inject(Symbol.for('sleepingowl.admin.vue.translation'), null),
+        )
 
         return {
             componentsAreLocal: mountedHosts.every((element) =>
@@ -114,6 +118,8 @@ async function expectBoundedVueApps(page) {
             nestedMounted: Boolean(
                 globalThis.document.querySelector('#nested-vue-marker').__vue_app__,
             ),
+            prototypeTranslation: Boolean(globalThis.Vue.prototype?.$trans),
+            translation: translation?.trans('lang.button.cancel'),
         }
     }, legacyVueComponentNames)
 
@@ -130,6 +136,8 @@ async function expectBoundedVueApps(page) {
             'related-fixture',
         ],
         nestedMounted: false,
+        prototypeTranslation: false,
+        translation: 'Cancel',
     })
 }
 

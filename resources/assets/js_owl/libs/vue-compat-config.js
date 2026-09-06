@@ -3,7 +3,6 @@ export const vueCompatFeatures = Object.freeze({
     COMPILER_INLINE_TEMPLATE: true,
     COMPONENT_V_MODEL: 'suppress-warning',
     CONFIG_WHITESPACE: 'suppress-warning',
-    GLOBAL_PROTOTYPE: 'suppress-warning',
     INSTANCE_ATTRS_CLASS_STYLE: 'suppress-warning',
     INSTANCE_CHILDREN: 'suppress-warning',
     INSTANCE_SCOPED_SLOTS: 'suppress-warning',

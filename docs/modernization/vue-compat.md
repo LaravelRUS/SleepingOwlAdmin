@@ -72,7 +72,6 @@ another legacy use.
 | Flag | Temporary owner | Removal condition |
 | --- | --- | --- |
 | `COMPILER_INLINE_TEMPLATE` | Nine legacy Blade `inline-template` views | Last inline template becomes a precompiled island |
-| `GLOBAL_PROTOTYPE` | `$trans` plugin in `libs/vuejs.js` | Translation composable/injection is used |
 | `COMPONENT_V_MODEL` | Legacy `v-model` in select/images views and Vue 2 draggable | Each owner uses the Vue 3 model contract |
 | `INSTANCE_SET` | Two array replacements in the images component | Ordinary reactive assignment replaces `$set` |
 | `INSTANCE_CHILDREN`, `INSTANCE_SCOPED_SLOTS`, `OPTIONS_BEFORE_DESTROY`, `RENDER_FUNCTION`, `PRIVATE_APIS` | `vuedraggable@2` compatibility surface | Images/related islands use the selected Vue 3 drag driver |
@@ -117,6 +116,16 @@ package had no `$http` consumers, so no compatibility facade is retained.
 Vue islands use the existing `Admin.Http` service, which is backed by native
 Fetch, supplies same-origin credentials and CSRF/request headers, preserves
 caller headers and throws a typed `HttpError` for unsuccessful responses.
+
+### Translations
+
+The global `Vue.prototype.$trans` plugin and its `GLOBAL_PROTOTYPE` compat flag
+have been removed. Every bounded app receives a frozen `{ trans }` service
+through `app.provide`; setup components obtain the same app-local service with
+`useTranslation()`. The provider captures the existing legacy `trans` function
+when the Vue registry is initialized, without adding `globalProperties` or a
+new mutable `window` API. The existing `window.trans` helper remains available
+to non-Vue legacy modules during the broader frontend migration.
 
 ## Verification and change policy
 

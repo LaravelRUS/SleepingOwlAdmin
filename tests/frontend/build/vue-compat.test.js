@@ -41,7 +41,6 @@ const expectedCompatFeatures = [
     'COMPILER_INLINE_TEMPLATE',
     'COMPONENT_V_MODEL',
     'CONFIG_WHITESPACE',
-    'GLOBAL_PROTOTYPE',
     'INSTANCE_ATTRS_CLASS_STYLE',
     'INSTANCE_CHILDREN',
     'INSTANCE_SCOPED_SLOTS',
@@ -83,11 +82,11 @@ describe('Vue 3 compat dependencies', () => {
     })
 
     it('uses Admin.Http instead of vue-resource', () => {
-        const legacyPlugin = readSource('resources/assets/js_owl/libs/vuejs.js')
+        const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
 
         expect(packageJson.dependencies).not.toHaveProperty('vue-resource')
         expect(packageLock.packages).not.toHaveProperty('node_modules/vue-resource')
-        expect(legacyPlugin).not.toMatch(/vue-resource|Vue\.http|\$http/)
+        expect(bootstrap).not.toMatch(/vue-resource|Vue\.http|\$http/)
         expect(readSource('resources/frontend/core/runtime/admin-core.js')).toContain(
             'Http: createHttpClient',
         )
@@ -153,6 +152,16 @@ describe('bounded legacy Vue apps', () => {
 
         expect(initializer).toContain('createVueAppRegistry')
         expect(initializer).not.toMatch(/new Vue|#vueApp/)
+    })
+
+    it('provides translations per app without a global Vue prototype plugin', () => {
+        const initializer = readSource('resources/assets/js_owl/vue_init.js')
+        const bootstrap = readSource('resources/assets/js_owl/bootstrap.js')
+
+        expect(initializer).toContain('createVueTranslation')
+        expect(initializer).toContain('installVueTranslation')
+        expect(bootstrap).not.toMatch(/libs\/vuejs|Vue\.use|Vue\.prototype/)
+        expect(vueCompatFeatures).not.toHaveProperty('GLOBAL_PROTOTYPE')
     })
 
     it.each(legacyVueDefinitions)('exports an app-local definition from %s', (path) => {

@@ -22,7 +22,6 @@ require('./libs/jquery');
 require('./libs/moment');
 require('./libs/bootstrap');
 require('./libs/i18next');
-require('./libs/vuejs');
 
 require('./libs/datetimepicker');
 require('./libs/daterangepicker');
