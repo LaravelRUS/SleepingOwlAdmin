@@ -35,6 +35,7 @@ class DefaultThemeRenderContractTest extends TestCase
             '<strong>Layout success</strong>',
             '<section data-contract="content">Body</section>',
             '<footer class="main-footer small">',
+            '<div id="sidebar-overlay"></div>',
             '<span data-contract="scripts"></span>',
         ]);
     }

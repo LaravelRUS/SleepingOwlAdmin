@@ -191,18 +191,8 @@ function scanSidebar(state, root) {
     state.treeRoots = collectTreeRoots(state.root)
     state.treeRoots.forEach(normalizeTree)
     normalizeSidebar(state, state.expanded)
-    ensureSidebarOverlay(state)
 
     return collectPushMenuToggles(root).length + collectTreeRoots(root).length
-}
-
-function ensureSidebarOverlay(state) {
-    if (state.root.querySelector('#sidebar-overlay')) return
-    const wrapper = state.root.querySelector('.wrapper')
-    if (!wrapper) return
-    const overlay = state.document.createElement('div')
-    overlay.id = 'sidebar-overlay'
-    wrapper.append(overlay)
 }
 
 function destroySidebar(state, listeners) {

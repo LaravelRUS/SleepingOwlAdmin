@@ -122,8 +122,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/sidebar.js",
-                            "version": "710de912777206b899153eb06ac2fadb",
-                            "checksum": "sha256:6e3a75268790cf37bc4671d1fe947d9170a4c6c5ec9e3866770f78903c6bd05c"
+                            "version": "94fe0a237ecbad8ebf3d05893d973b5a",
+                            "checksum": "sha256:47e17e5a321336024f0fe7d40b8b65d947c6aa55cd25ca25ea572b1450225db4"
                         }
                     ],
                     "styles": [
@@ -476,8 +476,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/sidebar.js",
-                            "version": "c3c73efe43aef7c41c64961d8571ae5b",
-                            "checksum": "sha256:6b1ca957cb38f4ffa1da3edc4b03803bc8634b0bcbd022ad093fc8603d4de28e"
+                            "version": "19d316ae5140739e655370ecc61dd2f2",
+                            "checksum": "sha256:e497831ae64502bec1fe55364c7e487f4256843529dc8607274bafee66ced4c9"
                         }
                     ],
                     "styles": [
@@ -711,5 +711,5 @@
             }
         }
     },
-    "build_id": "sha256:bcf7d5a757d14255e6e60ab00292ad811fc272d0d84a014c25d4ff08f1bb4bf0"
+    "build_id": "sha256:4a8186bcf84a4534d7ea70f0e2b1f4fae32ea0bc0bc7e44f4a3ed04c5496f9f2"
 }

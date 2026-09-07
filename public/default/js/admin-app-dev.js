@@ -9321,16 +9321,7 @@ function scanSidebar(state, root) {
   state.treeRoots = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeRoots)(state.root);
   state.treeRoots.forEach(_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.normalizeTree);
   (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, state.expanded);
-  ensureSidebarOverlay(state);
   return (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectPushMenuToggles)(root).length + (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeRoots)(root).length;
-}
-function ensureSidebarOverlay(state) {
-  if (state.root.querySelector('#sidebar-overlay')) return;
-  var wrapper = state.root.querySelector('.wrapper');
-  if (!wrapper) return;
-  var overlay = state.document.createElement('div');
-  overlay.id = 'sidebar-overlay';
-  wrapper.append(overlay);
 }
 function destroySidebar(state, listeners) {
   (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.clearCollapsedDone)(state);

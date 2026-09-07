@@ -18,14 +18,20 @@ it('replaces AdminLTE PushMenu and Treeview execution with a native feature', ()
 
 it('keeps existing PushMenu and Treeview markers without replacement attributes', () => {
     const header = read('resources/views/themes/legacy/default/_partials/header.blade.php')
+    const layout = read('resources/views/themes/legacy/default/_layout/inner.blade.php')
     const navigation = read('resources/views/themes/legacy/default/_partials/navigation.blade.php')
     const elements = read('resources/frontend/features/sidebar/sidebar-elements.js')
+    const sidebar = read('resources/frontend/features/sidebar/sidebars.js')
 
     expect(header).toContain('data-widget="pushmenu"')
+    expect(layout).toContain('id="sidebar-overlay"')
     expect(navigation).toContain('data-widget="treeview"')
     expect(elements).toContain('[data-widget="pushmenu"]')
     expect(elements).toContain('[data-widget="treeview"]')
-    expect(`${header}\n${navigation}\n${elements}`).not.toContain('data-soa-sidebar')
+    expect(sidebar).not.toContain('createElement(')
+    expect(`${header}\n${layout}\n${navigation}\n${elements}\n${sidebar}`).not.toContain(
+        'data-soa-sidebar',
+    )
 })
 
 it('ships independent behavior and AdminLTE/Tailwind Sass adapters', () => {

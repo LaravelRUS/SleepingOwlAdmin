@@ -49,5 +49,7 @@
                 @endif
             </footer>
         @endif
+
+        <div id="sidebar-overlay"></div>
     </div>
 @stop

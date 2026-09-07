@@ -28,11 +28,13 @@ translation.
 
 ## State and accessibility
 
-PushMenu synchronizes `aria-expanded` on every existing toggle. On compact
-viewports it creates the established `#sidebar-overlay`, closes on overlay click
-or Escape, and restores focus to the toggle. The explicit user preference is
-stored under the existing `sidebar-state` local-storage and cookie key. A
-temporary responsive collapse does not overwrite the desktop preference.
+PushMenu synchronizes `aria-expanded` on every existing toggle. The theme
+layout renders the established `#sidebar-overlay` inside `.wrapper`; on compact
+viewports the controller shows it, closes on overlay click or Escape, and
+restores focus to the toggle. JavaScript does not create presentation markup.
+The explicit user preference is stored under the existing `sidebar-state`
+local-storage and cookie key. A temporary responsive collapse does not
+overwrite the desktop preference.
 
 Navigation branches synchronize `aria-haspopup`, `aria-expanded`, `hidden` and
 `menu-open`. Enter/Space toggle a branch; Arrow Right/Left expand, collapse and
@@ -63,3 +65,9 @@ Both Sass adapters keep colors in `_colors.scss`, dimensions in
 `_variables.scss` and runtime values in `--soa-sidebar-*` properties. The
 existing validated `sidebar_background_color` config override continues to set
 `--soa-sidebar-bg` without rebuilding frontend assets.
+
+The default logical owner of the overlay markup is
+`default._layout.inner`. A project may override that Blade layout and change
+the overlay's classes or surrounding structure while preserving the stable
+`#sidebar-overlay` behavior hook. Tailwind and future custom theme layouts must
+render the same hook when they enable compact PushMenu behavior.
