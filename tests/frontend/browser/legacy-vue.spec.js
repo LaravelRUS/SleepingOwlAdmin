@@ -182,6 +182,30 @@ async function expectFilePresentationClasses(file) {
     await expect(file.locator('[data-file-upload-icon]')).toHaveClass('project-file-upload-icon')
 }
 
+async function expectImagePresentationClasses(image) {
+    await expect(image.locator('[data-image-current]')).toHaveClass('project-image-current')
+    await expect(image.locator('[data-image-item]')).toHaveClass('project-image-item')
+    await expect(image.locator('[data-image-preview-link]')).toHaveClass(
+        'project-image-preview-link',
+    )
+    await expect(image.locator('[data-image-info]')).toHaveClass('project-image-info')
+    await expect(image.locator('[data-image-download]')).toHaveClass('project-image-download')
+    await expect(image.locator('[data-image-download] i')).toHaveClass(
+        'project-image-download-icon',
+    )
+    await expect(image.locator('[data-image-insert-current]')).toHaveClass(
+        'project-image-insert-current',
+    )
+    await expect(image.locator('[data-image-remove]')).toHaveClass('project-image-remove')
+    await expect(image.locator('[data-image-remove] i')).toHaveClass('project-image-remove-icon')
+    await expect(image.locator('[data-image-upload]')).toHaveClass(/\bproject-image-upload\b/)
+    await expect(image.locator('[data-image-upload-icon]')).toHaveClass('project-image-upload-icon')
+    await expect(image.locator('[data-image-insert-new]')).toHaveClass('project-image-insert-new')
+    await expect(image.locator('[data-image-insert-new] i')).toHaveClass(
+        'project-image-insert-icon',
+    )
+}
+
 async function inspectReadonlyFile(page) {
     return page.evaluate((props) => {
         const host = globalThis.document.createElement('section')
@@ -217,7 +241,7 @@ async function inspectReadonlyImage(page) {
         const result = {
             hasInsert: Boolean(host.querySelector('[data-image-insert-current]')),
             hasRemove: Boolean(host.querySelector('[data-image-remove]')),
-            hasUpload: Boolean(host.querySelector('.upload-button')),
+            hasUpload: Boolean(host.querySelector('[data-image-upload]')),
             preview: host.querySelector('[data-image-preview]').getAttribute('src'),
             value: host.querySelector('[data-image-value]').value,
         }
@@ -643,7 +667,7 @@ test('file, image and images components expose values and upload callbacks', asy
     const imageValue = page.locator('#image-wrapper [data-image-value]')
     const imagePreview = page.locator('#image-wrapper [data-image-preview]')
     await expect(imagePreview).toHaveAttribute('src', /\/fixtures\/pixel\.svg$/)
-    await runUploadCallback(page, '#image-wrapper .upload-button', 'fixtures/uploaded.svg')
+    await runUploadCallback(page, '#image-wrapper [data-image-upload]', 'fixtures/uploaded.svg')
     await expect(imageValue).toHaveValue('fixtures/uploaded.svg')
     await expect(imagePreview).toHaveAttribute('src', /\/fixtures\/uploaded\.svg$/)
     await page.locator('#image-wrapper [data-image-insert-current]').click()
@@ -695,6 +719,42 @@ test('file island consumes Blade-owned classes without an AdminLTE class contrac
     await expect(file.locator('[data-file-upload-icon]')).toHaveClass('project-file-upload-icon')
     await file.locator('[data-file-alert-close]').click()
     await expect(file.locator('[data-file-alert]')).toHaveCount(0)
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
+test('image island consumes Blade-owned classes without an AdminLTE class contract', async ({
+    page,
+}) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    const image = page.locator('#image-wrapper')
+
+    await expectImagePresentationClasses(image)
+
+    await page.evaluate(() => {
+        globalThis.Admin.Messages.error = () => undefined
+        const upload = globalThis.document.querySelector(
+            '#image-wrapper [data-image-upload]',
+        ).dropzone
+        upload.options.sending.call(upload)
+    })
+    await expect(image.locator('[data-image-upload-icon]')).toHaveClass(
+        'project-image-uploading-icon',
+    )
+
+    await page.evaluate(() => {
+        const upload = globalThis.document.querySelector(
+            '#image-wrapper [data-image-upload]',
+        ).dropzone
+        upload.options.error.call(upload, {}, { errors: ['Image rejected'] })
+        upload.options.complete.call(upload)
+    })
+    await expect(image.locator('[data-image-alert]')).toHaveClass('project-image-alert')
+    await expect(image.locator('[data-image-alert-close]')).toHaveClass('project-image-alert-close')
+    await expect(image.locator('[data-image-error-icon]')).toHaveClass('project-image-error-icon')
+    await expect(image.locator('[data-image-upload-icon]')).toHaveClass('project-image-upload-icon')
+    await image.locator('[data-image-alert-close]').click()
+    await expect(image.locator('[data-image-alert]')).toHaveCount(0)
     expectNoUnexpectedPageErrors(pageErrors)
 })
 
@@ -866,7 +926,7 @@ test('image island destroys its upload driver before unmount', async ({ page }) 
 
     const result = await page.evaluate(() => {
         const host = globalThis.document.querySelector('#image-wrapper')
-        const button = host.querySelector('.upload-button')
+        const button = host.querySelector('[data-image-upload]')
         const existed = Boolean(button.dropzone)
         const lifecycleDestroyed = globalThis.Admin.Components.destroy(host)
 
@@ -909,7 +969,7 @@ test('link-only image island rejects blob values without creating an uploader', 
     await openFixture(page)
     await mountOnlyLinkImage(page)
 
-    await expect(page.locator('#only-link-image .upload-button')).toHaveCount(0)
+    await expect(page.locator('#only-link-image [data-image-upload]')).toHaveCount(0)
     await page.locator('#only-link-image [data-image-insert-new]').click()
     await expect(page.locator('#only-link-image [data-image-value]')).toHaveValue('')
     await expect(page.locator('#image-paste-in-buffer')).toHaveCount(0)

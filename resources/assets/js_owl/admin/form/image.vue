@@ -1,53 +1,68 @@
 <template>
     <div>
-        <div v-if="errors.length" class="alert alert-warning">
-            <button type="button" class="close" aria-label="Close" @click="closeAlert">
+        <div v-if="errors.length" data-image-alert :class="classes.alert">
+            <button
+                type="button"
+                data-image-alert-close
+                :class="classes.alertClose"
+                aria-label="Close"
+                @click="closeAlert"
+            >
                 <span aria-hidden="true">&times;</span>
             </button>
 
             <p v-for="(error, index) in errors" :key="`${error}-${index}`">
-                <i class="fa-fw fas fa-image" aria-hidden="true"></i> {{ error }}
+                <i data-image-error-icon :class="classes.errorIcon" aria-hidden="true"></i>
+                {{ error }}
             </p>
         </div>
 
-        <div v-if="hasValue" class="form-element-files clearfix">
-            <div class="form-element-files__item">
-                <a :href="previewUrl" class="form-element-files__image" data-lightbox>
+        <div v-if="hasValue" data-image-current :class="classes.current">
+            <div data-image-item :class="classes.item">
+                <a
+                    :href="previewUrl"
+                    data-image-preview-link
+                    data-lightbox
+                    :class="classes.previewLink"
+                >
                     <img :src="previewUrl" alt="" data-image-preview />
                 </a>
-                <div class="form-element-files__info">
+                <div data-image-info :class="classes.info">
                     <a
                         :href="previewUrl"
-                        class="btn btn-default btn-sm pull-right"
                         data-image-download
+                        :class="classes.downloadButton"
                         data-toggle="tooltip"
                         download
                         target="_blank"
                         :title="labels.download"
+                        :aria-label="labels.download"
                     >
-                        <i class="fa-fw fas fa-cloud-upload-alt"></i>
+                        <i :class="classes.downloadIcon" aria-hidden="true"></i>
                     </a>
                     <button
                         v-if="!readonly"
                         type="button"
-                        class="btn btn-default btn-sm pull-right mr-1"
                         data-image-insert-current
+                        :class="classes.insertCurrentButton"
                         data-toggle="tooltip"
                         :title="labels.insertLink"
+                        :aria-label="labels.insertLink"
                         @click="insert(true)"
                     >
-                        <i class="fa-fw fas fa-link"></i>
+                        <i :class="classes.insertIcon" aria-hidden="true"></i>
                     </button>
                     <button
                         v-if="!readonly"
                         type="button"
-                        class="btn btn-danger btn-xs"
                         data-image-remove
+                        :class="classes.removeButton"
                         data-toggle="tooltip"
                         :title="labels.remove"
+                        :aria-label="labels.remove"
                         @click="remove"
                     >
-                        <i class="fa-fw fas fa-times"></i>
+                        <i :class="classes.removeIcon" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
@@ -58,19 +73,22 @@
                 v-if="!onlyLink"
                 ref="uploadButton"
                 type="button"
-                class="btn btn-primary upload-button btn-sm"
+                data-image-upload
+                :class="classes.uploadButton"
             >
-                <i :class="uploadClass"></i> {{ labels.browse }}
+                <i data-image-upload-icon :class="uploadIconClass" aria-hidden="true"></i>
+                {{ labels.browse }}
             </button>
             <button
                 type="button"
-                class="btn btn-default btn-sm"
                 data-image-insert-new
+                :class="classes.insertNewButton"
                 data-toggle="tooltip"
                 :title="labels.insertLink"
+                :aria-label="labels.insertLink"
                 @click="insert(false)"
             >
-                <i class="fa-fw fas fa-link"></i>
+                <i :class="classes.insertIcon" aria-hidden="true"></i>
             </button>
         </div>
 
@@ -95,6 +113,7 @@ export default defineComponent({
     name: 'ElementImage',
     props: {
         assetPrefix: { type: String, default: '' },
+        classes: { type: Object, default: () => ({}) },
         csrfToken: { type: String, required: true },
         labels: { type: Object, required: true },
         maxFileSize: { type: Number, required: true },
@@ -127,8 +146,8 @@ export default defineComponent({
                 useAssetPrefix: this.useAssetPrefix,
             })
         },
-        uploadClass() {
-            return this.uploading ? 'fas fa-spinner fa-spin' : 'fas fa-image'
+        uploadIconClass() {
+            return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon
         },
     },
     mounted() {

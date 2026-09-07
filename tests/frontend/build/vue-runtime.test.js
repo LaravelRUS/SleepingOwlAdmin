@@ -330,9 +330,17 @@ describe('precompiled image island', () => {
         expect(view).toContain('data-vue-component="element-image"')
         expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
+        expect(view).toContain("'alert' => 'alert alert-warning'")
+        expect(view).toContain("'uploadingIcon' => 'fas fa-spinner fa-spin'")
+        expect(view).toContain('$imageExtraProps ?? []')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
         expect(component).toContain('postPastedImage(Admin.Http')
+        expect(component).toContain('data-image-upload')
+        expect(component).toContain(':class="uploadIconClass"')
+        expect(component).not.toMatch(
+            /class="(?:alert|close|form-element-files|btn|fa-fw|fas|upload-button)/,
+        )
         expect(component).not.toMatch(/\$\(|axios|withLegacyInlineTemplate/)
         expect(catalog).toContain("'element-image': ElementImage")
     })

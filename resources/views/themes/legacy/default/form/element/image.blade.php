@@ -11,8 +11,27 @@
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
         @php
-            $imageProps = [
+            $imageProps = array_replace([
                 'assetPrefix' => (string) $asset_prefix,
+                'classes' => [
+                    'alert' => 'alert alert-warning',
+                    'alertClose' => 'close',
+                    'current' => 'form-element-files clearfix',
+                    'downloadButton' => 'btn btn-default btn-sm pull-right',
+                    'downloadIcon' => 'fa-fw fas fa-cloud-upload-alt',
+                    'errorIcon' => 'fa-fw fas fa-image',
+                    'info' => 'form-element-files__info',
+                    'insertCurrentButton' => 'btn btn-default btn-sm pull-right mr-1',
+                    'insertIcon' => 'fa-fw fas fa-link',
+                    'insertNewButton' => 'btn btn-default btn-sm',
+                    'item' => 'form-element-files__item',
+                    'previewLink' => 'form-element-files__image',
+                    'removeButton' => 'btn btn-danger btn-xs',
+                    'removeIcon' => 'fa-fw fas fa-times',
+                    'uploadButton' => 'btn btn-primary upload-button btn-sm',
+                    'uploadIcon' => 'fas fa-image',
+                    'uploadingIcon' => 'fas fa-spinner fa-spin',
+                ],
                 'csrfToken' => csrf_token(),
                 'labels' => [
                     'browse' => trans('sleeping_owl::lang.image.browse'),
@@ -40,7 +59,7 @@
                     'id' => $model->getKey(),
                 ], false),
                 'value' => $value,
-            ];
+            ], $imageExtraProps ?? []);
         @endphp
 
         <div

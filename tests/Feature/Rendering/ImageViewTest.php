@@ -26,7 +26,38 @@ class ImageViewTest extends TestCase
         $this->assertTrue($props['onlyLink']);
         $this->assertFalse($props['readonly']);
         $this->assertSame('/admin/products/image/avatar/7', $props['url']);
+        $this->assertSame('alert alert-warning', $props['classes']['alert']);
+        $this->assertSame('fas fa-image', $props['classes']['uploadIcon']);
+        $this->assertSame('fas fa-spinner fa-spin', $props['classes']['uploadingIcon']);
         $this->assertStringNotContainsString('<script>', $html);
+    }
+
+    public function test_image_island_accepts_concrete_theme_classes(): void
+    {
+        $this->registerUploadRoute();
+        $model = $this->model();
+        $this->bindViewFacades($model);
+        $imageExtraProps = [
+            'classes' => [
+                'alert' => 'project-alert',
+                'current' => 'project-current',
+                'downloadButton' => 'project-download',
+                'insertCurrentButton' => 'project-insert-current',
+                'insertNewButton' => 'project-insert-new',
+                'removeButton' => 'project-remove',
+                'uploadButton' => 'project-upload',
+                'uploadIcon' => 'project-upload-icon',
+                'uploadingIcon' => 'project-uploading-icon',
+            ],
+        ];
+        $html = view(
+            'sleeping_owl::default.form.element.image',
+            $this->viewData($model) + compact('imageExtraProps')
+        )->render();
+        $props = $this->extractJsonProps($html);
+
+        $this->assertSame($imageExtraProps['classes'], $props['classes']);
+        $this->assertStringNotContainsString('class="project-alert"', $html);
     }
 
     private function bindViewFacades(Model $model): void
