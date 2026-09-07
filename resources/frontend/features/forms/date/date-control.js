@@ -28,6 +28,7 @@ export function mountDateControl(input, Datepicker, locale) {
     }
 
     addon?.addEventListener('click', show)
+    if (input.ownerDocument?.activeElement === input) picker.show()
 
     return {
         destroy() {

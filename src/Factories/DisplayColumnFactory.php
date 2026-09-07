@@ -18,6 +18,7 @@ use SleepingOwl\Admin\Display\Column;
  * @method Column\Filter filter($name, $label = null, $small = null)
  * @method Column\Image image($name, $label = null, $small = null)
  * @method Column\Lists lists($name, $label = null, $small = null)
+ * @method Column\Number number($name, $label = null, $small = null)
  * @method Column\Order order()
  * @method Column\Text|Column\Boolean text($name, $label = null, $small = null)
  * @method Column\Link link($name, $label = null, $small = null)
@@ -49,6 +50,7 @@ class DisplayColumnFactory extends AliasBinder implements DisplayColumnFactoryIn
             'image' => Column\Image::class,
             'gravatar' => Column\Gravatar::class,
             'lists' => Column\Lists::class,
+            'number' => Column\Number::class,
             'order' => Column\Order::class,
             'text' => Column\Text::class,
             'boolean' => Column\Boolean::class,

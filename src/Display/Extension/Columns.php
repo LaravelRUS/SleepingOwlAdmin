@@ -215,8 +215,6 @@ class Columns extends Extension implements Initializable, Renderable
             $orders = [$orders];
         }
 
-        $_model = $query->getModel();
-
         foreach ($orders as $order) {
             $columnIndex = Arr::get($order, 'column');
             $direction = Arr::get($order, 'dir', 'asc');
@@ -240,10 +238,6 @@ class Columns extends Extension implements Initializable, Renderable
                         $callback($column, $query, $direction);
                         continue;
                     }
-                }
-
-                if ($_model->getAttribute($column->getName())) {
-                    continue;
                 }
 
                 $column->orderBy($query, $direction);

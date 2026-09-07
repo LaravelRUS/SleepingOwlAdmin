@@ -17,7 +17,7 @@ class Checkbox extends EditableColumn implements ColumnEditableInterface
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected $orderable = true;
 
     /**
      * @var bool

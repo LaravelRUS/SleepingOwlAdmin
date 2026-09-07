@@ -15,6 +15,8 @@ export function createDatePickerOptions(input, locale) {
         locale,
         selectedDates: selectedDate ? [selectedDate] : false,
     }
+    const dialog = input.closest?.('dialog[open]')
+    if (dialog) options.container = dialog
 
     if (type === 'daterange') {
         return { ...options, ...createDateRangeOptions(input, format, locale) }

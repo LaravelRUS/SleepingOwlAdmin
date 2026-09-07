@@ -1,4 +1,5 @@
 export const INLINE_EDITOR_TYPES = Object.freeze([
+    'boolean',
     'checkbox',
     'checklist',
     'date',
@@ -10,7 +11,7 @@ export const INLINE_EDITOR_TYPES = Object.freeze([
     'textarea',
 ])
 
-const MULTIPLE_TYPES = new Set(['checkbox', 'checklist'])
+const MULTIPLE_TYPES = new Set(['boolean', 'checkbox', 'checklist'])
 
 export function readInlineEditorConfig(element) {
     const type = element.dataset.inlineEditor

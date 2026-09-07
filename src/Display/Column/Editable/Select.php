@@ -23,7 +23,7 @@ class Select extends EditableColumn implements ColumnEditableInterface
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected $orderable = true;
 
     /**
      * @var bool
@@ -74,11 +74,30 @@ class Select extends EditableColumn implements ColumnEditableInterface
     {
         parent::__construct($name, $label, $small);
 
+        $this->setDisplay(function ($option) {
+            return data_get($option, 'name') ?? data_get($option, 'title');
+        });
+
         if (is_array($options)) {
             $this->setOptions($options);
         } elseif (($options instanceof Model) || is_string($options)) {
             $this->setModelForOptions($options);
         }
+    }
+
+    /**
+     * Keep the legacy API for configuring options while preserving row binding.
+     *
+     * @param  Model|string  $model
+     * @return $this
+     */
+    public function setModel($model)
+    {
+        if (is_string($model)) {
+            return $this->setModelForOptions($model);
+        }
+
+        return parent::setModel($model);
     }
 
     public function getModifierValue()

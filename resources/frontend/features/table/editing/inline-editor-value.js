@@ -1,4 +1,4 @@
-const MULTIPLE_TYPES = new Set(['checkbox', 'checklist'])
+const MULTIPLE_TYPES = new Set(['boolean', 'checkbox', 'checklist'])
 
 export function applyInlineEditorValue(element, config, value) {
     const normalized = normalizeInlineEditorValue(value, config.type)

@@ -11,14 +11,32 @@
     align-items: center;
     justify-content: flex-start;
     gap: variables.$control-gap;
-    margin-bottom: 1rem;
+    margin: 0.5rem 1.25rem;
 
     label {
       margin-bottom: 0;
     }
 
     input {
+      display: block;
+      width: auto;
+      min-height: 1.9375rem;
+      padding: 0.25rem 0.5rem;
       margin-left: 0.5rem;
+      color: var(--soa-text-color);
+      font: inherit;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      background-color: var(--soa-surface-color);
+      background-clip: padding-box;
+      border: 0.0625rem solid var(--soa-border-color);
+      border-radius: var(--soa-border-radius);
+
+      &:focus {
+        border-color: var(--soa-focus-color);
+        outline: 0.125rem solid var(--soa-focus-color);
+        outline-offset: 0.0625rem;
+      }
     }
   }
 
@@ -26,6 +44,10 @@
     padding-left: 1.25rem;
     font-size: 85%;
     font-weight: 500;
+  }
+
+  select.form-control.input-select.column-filter {
+    appearance: auto;
   }
 
   .dt-processing {

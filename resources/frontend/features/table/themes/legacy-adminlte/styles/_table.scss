@@ -7,6 +7,22 @@
 
     thead th {
       line-height: 1.2;
+
+      &:active {
+        outline: 0.125rem solid transparent;
+      }
+    }
+
+    thead > tr > th.dt-type-numeric,
+    thead > tr > th.dt-type-date {
+      .dt-column-header {
+        flex-direction: row;
+      }
+
+      .dt-column-order {
+        right: 0.25rem;
+        left: auto;
+      }
     }
   }
 

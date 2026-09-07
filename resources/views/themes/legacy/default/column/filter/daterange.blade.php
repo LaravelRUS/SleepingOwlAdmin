@@ -16,4 +16,7 @@
 	</div>
 	--}}
 </div>
+@if(!empty($helpText))
+    <small class="form-text text-muted">{!! $helpText !!}</small>
+@endif
 @endif

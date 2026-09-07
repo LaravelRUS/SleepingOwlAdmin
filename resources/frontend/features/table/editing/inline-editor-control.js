@@ -3,7 +3,7 @@ const RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]'
 const RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]'
 
 export function bindInlineEditorControl(element, config) {
-    if (config.type === 'checkbox' || config.type === 'checklist') {
+    if (config.type === 'boolean' || config.type === 'checkbox' || config.type === 'checklist') {
         return bindChecklist(element, config.value)
     }
     if (config.type === 'range') return bindRange(element, config)

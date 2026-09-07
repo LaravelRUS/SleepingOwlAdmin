@@ -14,7 +14,7 @@
         <thead>
         <tr>
             @foreach ($columns as $column)
-                <th {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag($column->getHeader()->getHtmlAttributes()) !!}>
+                <th {!! (new \SleepingOwl\Admin\Support\HtmlAttributeBag($column->getHeader()->getHtmlAttributes()))->class([$column->getHtmlAttribute('class')]) !!}>
                     {!! $column->getHeader()->render() !!}
                 </th>
             @endforeach

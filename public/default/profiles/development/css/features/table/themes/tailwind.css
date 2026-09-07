@@ -150,11 +150,24 @@
     color: var(--soa-inline-editor-text);
   }
   .soa-inline-editor-popup {
+    width: min(30rem, 100vw - 2rem);
+    max-width: none;
     padding: 0.875rem;
+    margin: auto;
     background: var(--soa-inline-editor-surface);
     border: 0.0625rem solid var(--soa-inline-editor-border);
     border-radius: 0.5rem;
     box-shadow: 0 0.5rem 1rem var(--soa-inline-editor-shadow);
+  }
+  .soa-inline-editor-popup:not([open]) {
+    display: none;
+  }
+  .soa-inline-editor-popup[open] {
+    display: block;
+  }
+  .soa-inline-editor-popup::backdrop {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(1px);
   }
   .soa-inline-editor-form,
   .soa-inline-editor-checklist,

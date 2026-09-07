@@ -16,6 +16,7 @@ use SleepingOwl\Admin\Display\Column;
  * @method Column\Image image($name, $label = null, $small = null)
  * @method Column\Gravatar gravatar($name, $label = null, $small = null)
  * @method Column\Lists lists($name, $label = null, $small = null)
+ * @method Column\Number number($name, $label = null, $small = null)
  * @method Column\Order order()
  * @method Column\Text text($name, $label = null, $small = null)
  * @method Column\Link link($name, $label = null, $small = null)

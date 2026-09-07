@@ -19,8 +19,16 @@ final class InlineEditHandler
         $id = $request->input('pk');
         $column = $this->columns->find($model->fireDisplay(), $field);
         $item = $model->getRepository()->find($id);
-        $this->assertEditable($model, $column, $item);
+
+        if (! $column instanceof ColumnEditableInterface || is_null($item)) {
+            throw new NotFoundHttpException;
+        }
+
         $column->setModel($item);
+        $this->assertEditable($model, $column, $item);
+        if (is_callable([$column, 'validate'])) {
+            $column->validate($request);
+        }
 
         if ($model->fireEvent('updating', true, $item, $request) === false) {
             return $this->rejectedPayload();
@@ -74,7 +82,11 @@ final class InlineEditHandler
 
     private function assertEditable(ModelConfigurationInterface $model, $column, $item): void
     {
-        if (! $column instanceof ColumnEditableInterface || is_null($item) || ! $model->isEditable($item)) {
+        if (
+            ! $model->isEditable($item)
+            || ! $column->getVisibled()
+            || $column->isColumnReadonly()
+        ) {
             throw new NotFoundHttpException;
         }
     }

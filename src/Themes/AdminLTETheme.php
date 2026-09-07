@@ -94,8 +94,13 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
         $entries = ['core', ...$base];
 
         foreach (self::FEATURES as $feature) {
+            if ($feature === 'table' && ($adapter = $manifest->featureEntry($feature))) {
+                $entries[] = $adapter;
+            }
+
             $entries[] = "feature:{$feature}";
-            if ($adapter = $manifest->featureEntry($feature)) {
+
+            if ($feature !== 'table' && ($adapter = $manifest->featureEntry($feature))) {
                 $entries[] = $adapter;
             }
         }

@@ -1,6 +1,15 @@
-import BootstrapDataTable from 'datatables.net-bs4'
+import BootstrapDataTable from 'datatables.net-bs5'
+import 'datatables.net-responsive-bs5'
 
-export const DATATABLES_PRESENTATION_ID = 'legacy-adminlte.bootstrap4'
+export const DATATABLES_PRESENTATION_ID = 'legacy-adminlte.bootstrap5'
+
+export function createLegacyDataTableEngine(element, options) {
+    return new BootstrapDataTable(element, options)
+}
+
+export function legacyDataTableEngineRuntime() {
+    return BootstrapDataTable
+}
 
 export function installLegacyDataTablesPresentation(engine) {
     if (engine !== BootstrapDataTable) {

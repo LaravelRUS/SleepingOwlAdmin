@@ -1,10 +1,17 @@
+@php
+    $editorRootTag = $mode === 'popup' ? 'dialog' : 'div';
+    $editorControlId = $editorTemplateId.'-control';
+    $editorTitleId = $editorTemplateId.'-title';
+@endphp
 <template id="{{ $editorTemplateId }}" data-inline-editor-template="{{ $editorType }}">
-    <div class="soa-inline-editor soa-inline-editor-{{ $mode }}"
+    <{{ $editorRootTag }} class="soa-inline-editor soa-inline-editor-{{ $mode }} soa-inline-editor-type-{{ $editorType }}"
          data-inline-editor-root
-         role="{{ $mode === 'popup' ? 'dialog' : 'group' }}">
+         role="{{ $mode === 'popup' ? 'dialog' : 'group' }}"
+         @if($mode === 'popup') aria-modal="true" @endif
+         @if($editorTitle) aria-labelledby="{{ $editorTitleId }}" @endif>
         <form class="soa-inline-editor-form" data-inline-editor-form>
             @if($editorTitle)
-                <div class="soa-inline-editor-title">{{ $editorTitle }}</div>
+                <div class="soa-inline-editor-title" id="{{ $editorTitleId }}">{{ $editorTitle }}</div>
             @endif
             <div class="soa-inline-editor-input">
                 @include(AdminTemplate::getViewPath('column.editable.partials.controls.'.$editorType))
@@ -22,5 +29,5 @@
                  role="alert"
                  hidden></div>
         </form>
-    </div>
+    </{{ $editorRootTag }}>
 </template>

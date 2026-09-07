@@ -22,6 +22,20 @@ export function clearFilterControls(containers) {
     }
 }
 
+export function assignFilterControlIds(containers, tableId) {
+    const tablePart = normalizeIdPart(tableId)
+
+    containers.forEach((container, containerIndex) => {
+        for (const column of container.querySelectorAll('[data-index]')) {
+            const columnPart = normalizeIdPart(column.dataset.index)
+
+            column.querySelectorAll('input, select').forEach((control, controlIndex) => {
+                control.id ||= `datatable-${tablePart}-filter-${containerIndex}-${columnPart}-${controlIndex}`
+            })
+        }
+    })
+}
+
 function bindClick(container, selector, listener) {
     for (const control of container.querySelectorAll(selector)) {
         control.addEventListener('click', listener)
@@ -29,14 +43,42 @@ function bindClick(container, selector, listener) {
 }
 
 function resetControl(control) {
-    if (control.options) {
-        for (const option of control.options) {
-            option.selected = false
-        }
-        control.selectedIndex = -1
-    } else {
-        control.value = ''
+    if (control.dataset.filterDefault !== undefined) {
+        restoreControlValue(control, JSON.parse(control.dataset.filterDefault))
+        return
     }
+
+    if (control.options) {
+        let hasDefault = false
+
+        for (const option of control.options) {
+            option.selected = option.defaultSelected
+            hasDefault ||= option.defaultSelected
+        }
+
+        if (!hasDefault) control.selectedIndex = control.multiple ? -1 : 0
+    } else if (control.type === 'checkbox' || control.type === 'radio') {
+        control.checked = control.defaultChecked
+    } else {
+        control.value = control.defaultValue
+    }
+}
+
+function restoreControlValue(control, value) {
+    if (!control.options) {
+        control.value = value ?? ''
+        return
+    }
+
+    const values = (Array.isArray(value) ? value : [value]).map(String)
+
+    for (const option of control.options) {
+        option.selected = values.includes(option.value)
+    }
+}
+
+function normalizeIdPart(value) {
+    return String(value ?? 'unknown').replace(/[^a-zA-Z0-9_-]+/g, '-')
 }
 
 function dispatchChange(control) {

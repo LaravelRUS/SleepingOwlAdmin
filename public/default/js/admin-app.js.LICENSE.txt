@@ -24,7 +24,7 @@
  * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
-/*! DataTables Bootstrap 4 integration
+/*! DataTables Bootstrap 5 integration
  * © SpryMedia Ltd - datatables.net/license
  */
 

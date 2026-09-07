@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Display\Column\Filter;
 
 use Closure;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,6 +36,11 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
      * @var string|null
      */
     protected $columnRawName;
+
+    /**
+     * @var Closure|string|Htmlable|null
+     */
+    protected $helpText;
 
     public function __construct()
     {
@@ -83,6 +89,26 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
     public function setColumnRawName($name)
     {
         $this->columnRawName = $name;
+
+        return $this;
+    }
+
+    public function getHelpText()
+    {
+        if (is_callable($this->helpText)) {
+            return call_user_func($this->helpText, $this);
+        }
+
+        if ($this->helpText instanceof Htmlable) {
+            return $this->helpText->toHtml();
+        }
+
+        return $this->helpText;
+    }
+
+    public function setHelpText($helpText)
+    {
+        $this->helpText = $helpText;
 
         return $this;
     }
@@ -203,6 +229,7 @@ abstract class BaseColumnFilter implements Renderable, ColumnFilterInterface, Ar
             'width' => $width,
             'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
+            'helpText' => $this->getHelpText(),
             'visibled' => $this->getVisibled(),
         ];
     }

@@ -22,7 +22,7 @@ export function mountInlineEditor(element, dependencies) {
     const state = { config, dependencies: settings, element, request: null, view: null }
     const open = (event) => {
         event?.preventDefault()
-        openEditor(state)
+        activateEditor(state)
     }
 
     element.addEventListener('click', open)
@@ -31,6 +31,12 @@ export function mountInlineEditor(element, dependencies) {
         destroy: () => destroyEditor(state, open),
         open: () => openEditor(state),
     }
+}
+
+function activateEditor(state) {
+    state.config = readInlineEditorConfig(state.element)
+
+    return state.config.type === 'boolean' ? toggleBoolean(state) : openEditor(state)
 }
 
 function openEditor(state) {
@@ -78,6 +84,40 @@ async function submitValue(state, value) {
     }
 }
 
+async function toggleBoolean(state) {
+    if (state.request) return
+
+    const checkedValue = state.config.options[0]?.value ?? '1'
+    const value = state.config.value.includes(checkedValue) ? [] : [checkedValue]
+    const request = new globalThis.AbortController()
+    state.request = request
+    setTriggerBusy(state.element, true)
+    dispatch(state, 'inline-edit:submitting', { value })
+
+    try {
+        const saved = await submitInlineEdit(
+            state.dependencies.http,
+            state.config,
+            value,
+            request.signal,
+        )
+        if (state.request !== request) return
+        state.request = null
+        applyInlineEditorValue(state.element, state.config, saved)
+        dispatch(state, 'inline-edit:submitted', { value: saved })
+    } catch (error) {
+        if (state.request !== request || error?.name === 'AbortError') return
+        const message = await inlineEditErrorMessage(error, state.dependencies.labels.error)
+        if (state.request !== request) return
+        state.request = null
+        state.dependencies.messages?.error?.(state.dependencies.labels.error, message)
+        dispatch(state, 'inline-edit:failed', { error })
+    } finally {
+        if (state.request === request) state.request = null
+        setTriggerBusy(state.element, false)
+    }
+}
+
 async function handleSubmitError(state, request, error) {
     if (state.request !== request || error?.name === 'AbortError') return
 
@@ -103,7 +143,13 @@ function closeEditor(state) {
 
 function destroyEditor(state, open) {
     state.element.removeEventListener('click', open)
+    state.request?.abort()
     closeEditor(state)
+}
+
+function setTriggerBusy(element, busy) {
+    element.disabled = busy
+    element.setAttribute('aria-busy', String(busy))
 }
 
 function dispatch(state, name, extra = {}) {
@@ -125,6 +171,7 @@ function normalizeDependencies(input) {
         createView: input.createView ?? createInlineEditorView,
         http: input.http,
         labels: normalizeLabels(input.labels),
+        messages: input.messages,
     }
 }
 

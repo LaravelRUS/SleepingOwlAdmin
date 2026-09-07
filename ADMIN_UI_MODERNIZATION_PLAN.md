@@ -15,6 +15,7 @@
 - Compatibility-цель: по возможности сохранить PHP DSL (`AdminDisplay`, колонки, фильтры, actions), но считать этот релиз major и явно документировать frontend breaking changes.
 - Config-цель: считать опубликованный `config/sleeping_owl.php` публичным контрактом и сохранить большинство существующих ключей, значений по умолчанию и поведения даже при полной замене frontend implementation.
 - Вне текущего scope: обязательный переход с Laravel Mix на Vite, изменение серверной модели репозиториев и визуальный редизайн всех тем. Смена build tool допустима только если окажется необходимой для Vue 3/theme bundles и будет оформлена отдельным решением.
+- Отложенный инфраструктурный этап после срочных post-update исправлений: заменить Laravel Mix на Vite, сохранив logical entries, production/development profiles, готовые assets для Composer-пользователей и генерацию versioned asset manifest. Миграцию оформить отдельным checkpoint; до него build pipeline больше не усложнять.
 
 ## Правило №1: декомпозиция и читаемость
 

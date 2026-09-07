@@ -6,6 +6,7 @@ export function installInlineEditors(admin, options = {}) {
         components: admin.Components,
         http: admin.Http,
         labels: options.labels,
+        messages: admin.Messages,
     })
     admin.Components.register(definition)
     const scan = (root = options.root ?? globalThis.document) =>

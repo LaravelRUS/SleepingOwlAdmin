@@ -211,6 +211,10 @@ class Select extends BaseColumnFilter
      */
     public function toArray()
     {
+        if (! is_null($this->getDefault())) {
+            $this->setHtmlAttribute('data-filter-default', json_encode($this->getDefault()));
+        }
+
         return parent::toArray() + [
             'options' => $this->getOptions(),
             'default' => $this->getDefault(),

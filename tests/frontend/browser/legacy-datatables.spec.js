@@ -201,7 +201,7 @@ test('published legacy bundle initializes DataTables and runs draw hooks', async
         jquery: 'undefined',
         responsive: true,
         tooltip: true,
-        wrapperClass: expect.stringContaining('dt-bootstrap4'),
+        wrapperClass: expect.stringContaining('dt-bootstrap5'),
     })
     await expect(page.locator('#lazy-image-1')).toHaveAttribute('loading', 'lazy')
     expect(requests[0].method).toBe('POST')

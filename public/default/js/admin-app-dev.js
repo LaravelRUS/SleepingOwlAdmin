@@ -6496,6 +6496,7 @@ function createDateControlDefinition(Datepicker, locale) {
   };
 }
 function mountDateControl(input, Datepicker, locale) {
+  var _input$ownerDocument;
   if (input.disabled || input.readOnly) return _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__.componentMountSkipped;
   var picker = new Datepicker(input, (0,_date_options_js__WEBPACK_IMPORTED_MODULE_1__.createDatePickerOptions)(input, locale));
   var addon = findAddon(input);
@@ -6505,6 +6506,7 @@ function mountDateControl(input, Datepicker, locale) {
     picker.show();
   };
   addon === null || addon === void 0 || addon.addEventListener('click', show);
+  if (((_input$ownerDocument = input.ownerDocument) === null || _input$ownerDocument === void 0 ? void 0 : _input$ownerDocument.activeElement) === input) picker.show();
   return {
     destroy: function destroy() {
       addon === null || addon === void 0 || addon.removeEventListener('click', show);
@@ -6792,6 +6794,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 var DATE_CONTROL_TYPES = Object.freeze(['date', 'datetime', 'time', 'daterange']);
 function createDatePickerOptions(input, locale) {
+  var _input$closest;
   var type = input.dataset.dateControl;
   assertControlType(type);
   var format = input.dataset.dateFormat || defaultFormat(type);
@@ -6804,6 +6807,8 @@ function createDatePickerOptions(input, locale) {
     locale: locale,
     selectedDates: selectedDate ? [selectedDate] : false
   };
+  var dialog = (_input$closest = input.closest) === null || _input$closest === void 0 ? void 0 : _input$closest.call(input, 'dialog[open]');
+  if (dialog) options.container = dialog;
   if (type === 'daterange') {
     return _objectSpread(_objectSpread({}, options), (0,_date_range_options_js__WEBPACK_IMPORTED_MODULE_1__.createDateRangeOptions)(input, format, locale));
   }
@@ -10140,8 +10145,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "readInlineEditorConfig": () => (/* binding */ readInlineEditorConfig)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var INLINE_EDITOR_TYPES = Object.freeze(['checkbox', 'checklist', 'date', 'datetime', 'number', 'range', 'select', 'text', 'textarea']);
-var MULTIPLE_TYPES = new Set(['checkbox', 'checklist']);
+var INLINE_EDITOR_TYPES = Object.freeze(['boolean', 'checkbox', 'checklist', 'date', 'datetime', 'number', 'range', 'select', 'text', 'textarea']);
+var MULTIPLE_TYPES = new Set(['boolean', 'checkbox', 'checklist']);
 function readInlineEditorConfig(element) {
   var _element$dataset$date, _element$dataset$empt, _element$dataset$max, _element$dataset$min, _element$dataset$step, _element$dataset$titl;
   var type = element.dataset.inlineEditor;
@@ -10234,7 +10239,7 @@ var CHECK_INPUT_SELECTOR = '[data-inline-editor-check-input]';
 var RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]';
 var RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]';
 function bindInlineEditorControl(element, config) {
-  if (config.type === 'checkbox' || config.type === 'checklist') {
+  if (config.type === 'boolean' || config.type === 'checkbox' || config.type === 'checklist') {
     return bindChecklist(element, config.value);
   }
   if (config.type === 'range') return bindRange(element, config);
@@ -10583,7 +10588,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "normalizeInlineEditorValue": () => (/* binding */ normalizeInlineEditorValue),
 /* harmony export */   "serializeInlineEditorValue": () => (/* binding */ serializeInlineEditorValue)
 /* harmony export */ });
-var MULTIPLE_TYPES = new Set(['checkbox', 'checklist']);
+var MULTIPLE_TYPES = new Set(['boolean', 'checkbox', 'checklist']);
 function applyInlineEditorValue(element, config, value) {
   var normalized = normalizeInlineEditorValue(value, config.type);
   element.dataset.value = serializeInlineEditorValue(normalized);
@@ -10641,13 +10646,15 @@ function createInlineEditorView(trigger, config, labels, handlers) {
   var elements = (0,_inline_editor_template_js__WEBPACK_IMPORTED_MODULE_1__.cloneInlineEditorTemplate)(trigger);
   var control = (0,_inline_editor_control_js__WEBPACK_IMPORTED_MODULE_0__.bindInlineEditorControl)(elements.control, config);
   var removeListeners = bindViewEvents(elements, control, handlers);
-  trigger.hidden = true;
+  var popup = config.mode === 'popup';
+  trigger.hidden = !popup;
   trigger.setAttribute('aria-expanded', 'true');
   trigger.insertAdjacentElement('afterend', elements.root);
+  openPopup(elements.root, popup);
   focusControl(control.focusElement);
   return {
     destroy: function destroy() {
-      return destroyView(trigger, elements.root, control, removeListeners);
+      return destroyView(trigger, elements.root, control, removeListeners, popup);
     },
     readValue: control.read,
     root: elements.root,
@@ -10670,13 +10677,24 @@ function bindViewEvents(elements, control, handlers) {
   var keydown = function keydown(event) {
     if (event.key === 'Escape') handlers.cancel();
   };
+  var dialogCancel = function dialogCancel(event) {
+    event.preventDefault();
+    handlers.cancel();
+  };
+  var backdropClick = function backdropClick(event) {
+    if (event.target === elements.root && elements.root.tagName === 'DIALOG') handlers.cancel();
+  };
   elements.form.addEventListener('submit', submit);
   elements.form.addEventListener('keydown', keydown);
   elements.cancel.addEventListener('click', cancel);
+  elements.root.addEventListener('cancel', dialogCancel);
+  elements.root.addEventListener('click', backdropClick);
   return function () {
     elements.form.removeEventListener('submit', submit);
     elements.form.removeEventListener('keydown', keydown);
     elements.cancel.removeEventListener('click', cancel);
+    elements.root.removeEventListener('cancel', dialogCancel);
+    elements.root.removeEventListener('click', backdropClick);
   };
 }
 function _setBusy(elements, busy) {
@@ -10689,13 +10707,18 @@ function _setError(element, message) {
   element.textContent = message;
   element.hidden = !message;
 }
-function destroyView(trigger, root, control, removeListeners) {
+function destroyView(trigger, root, control, removeListeners, popup) {
   var _control$destroy;
   removeListeners();
   (_control$destroy = control.destroy) === null || _control$destroy === void 0 || _control$destroy.call(control);
+  if (popup && root.open && typeof root.close === 'function') root.close();
   root.remove();
-  trigger.hidden = false;
+  if (!popup) trigger.hidden = false;
   trigger.setAttribute('aria-expanded', 'false');
+}
+function openPopup(root, popup) {
+  if (!popup) return;
+  if (typeof root.showModal === 'function') root.showModal();else root.setAttribute('open', '');
 }
 function focusControl(element) {
   element === null || element === void 0 || element.focus();
@@ -10759,7 +10782,7 @@ function mountInlineEditor(element, dependencies) {
   };
   var open = function open(event) {
     event === null || event === void 0 || event.preventDefault();
-    openEditor(state);
+    activateEditor(state);
   };
   element.addEventListener('click', open);
   return {
@@ -10770,6 +10793,10 @@ function mountInlineEditor(element, dependencies) {
       return openEditor(state);
     }
   };
+}
+function activateEditor(state) {
+  state.config = (0,_inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__.readInlineEditorConfig)(state.element);
+  return state.config.type === 'boolean' ? toggleBoolean(state) : openEditor(state);
 }
 function openEditor(state) {
   if (state.view) return state.view;
@@ -10839,30 +10866,108 @@ function _submitValue() {
   }));
   return _submitValue.apply(this, arguments);
 }
-function handleSubmitError(_x3, _x4, _x5) {
-  return _handleSubmitError.apply(this, arguments);
+function toggleBoolean(_x3) {
+  return _toggleBoolean.apply(this, arguments);
 }
-function _handleSubmitError() {
-  _handleSubmitError = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(state, request, error) {
-    var message;
+function _toggleBoolean() {
+  _toggleBoolean = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(state) {
+    var _state$config$options, _state$config$options2;
+    var checkedValue, value, request, saved, _state$dependencies$m, _state$dependencies$m2, message, _t2;
     return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.n) {
+      while (1) switch (_context2.p = _context2.n) {
         case 0:
-          if (!(state.request !== request || (error === null || error === void 0 ? void 0 : error.name) === 'AbortError')) {
+          if (!state.request) {
             _context2.n = 1;
             break;
           }
           return _context2.a(2);
         case 1:
-          _context2.n = 2;
-          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.inlineEditErrorMessage)(error, state.dependencies.labels.error);
-        case 2:
-          message = _context2.v;
+          checkedValue = (_state$config$options = (_state$config$options2 = state.config.options[0]) === null || _state$config$options2 === void 0 ? void 0 : _state$config$options2.value) !== null && _state$config$options !== void 0 ? _state$config$options : '1';
+          value = state.config.value.includes(checkedValue) ? [] : [checkedValue];
+          request = new globalThis.AbortController();
+          state.request = request;
+          setTriggerBusy(state.element, true);
+          dispatch(state, 'inline-edit:submitting', {
+            value: value
+          });
+          _context2.p = 2;
+          _context2.n = 3;
+          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.submitInlineEdit)(state.dependencies.http, state.config, value, request.signal);
+        case 3:
+          saved = _context2.v;
           if (!(state.request !== request)) {
-            _context2.n = 3;
+            _context2.n = 4;
             break;
           }
           return _context2.a(2);
+        case 4:
+          state.request = null;
+          (0,_inline_editor_value_js__WEBPACK_IMPORTED_MODULE_2__.applyInlineEditorValue)(state.element, state.config, saved);
+          dispatch(state, 'inline-edit:submitted', {
+            value: saved
+          });
+          _context2.n = 9;
+          break;
+        case 5:
+          _context2.p = 5;
+          _t2 = _context2.v;
+          if (!(state.request !== request || (_t2 === null || _t2 === void 0 ? void 0 : _t2.name) === 'AbortError')) {
+            _context2.n = 6;
+            break;
+          }
+          return _context2.a(2);
+        case 6:
+          _context2.n = 7;
+          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.inlineEditErrorMessage)(_t2, state.dependencies.labels.error);
+        case 7:
+          message = _context2.v;
+          if (!(state.request !== request)) {
+            _context2.n = 8;
+            break;
+          }
+          return _context2.a(2);
+        case 8:
+          state.request = null;
+          (_state$dependencies$m = state.dependencies.messages) === null || _state$dependencies$m === void 0 || (_state$dependencies$m2 = _state$dependencies$m.error) === null || _state$dependencies$m2 === void 0 || _state$dependencies$m2.call(_state$dependencies$m, state.dependencies.labels.error, message);
+          dispatch(state, 'inline-edit:failed', {
+            error: _t2
+          });
+        case 9:
+          _context2.p = 9;
+          if (state.request === request) state.request = null;
+          setTriggerBusy(state.element, false);
+          return _context2.f(9);
+        case 10:
+          return _context2.a(2);
+      }
+    }, _callee2, null, [[2, 5, 9, 10]]);
+  }));
+  return _toggleBoolean.apply(this, arguments);
+}
+function handleSubmitError(_x4, _x5, _x6) {
+  return _handleSubmitError.apply(this, arguments);
+}
+function _handleSubmitError() {
+  _handleSubmitError = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(state, request, error) {
+    var message;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.n) {
+        case 0:
+          if (!(state.request !== request || (error === null || error === void 0 ? void 0 : error.name) === 'AbortError')) {
+            _context3.n = 1;
+            break;
+          }
+          return _context3.a(2);
+        case 1:
+          _context3.n = 2;
+          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.inlineEditErrorMessage)(error, state.dependencies.labels.error);
+        case 2:
+          message = _context3.v;
+          if (!(state.request !== request)) {
+            _context3.n = 3;
+            break;
+          }
+          return _context3.a(2);
         case 3:
           state.request = null;
           state.view.setBusy(false);
@@ -10871,9 +10976,9 @@ function _handleSubmitError() {
             error: error
           });
         case 4:
-          return _context2.a(2);
+          return _context3.a(2);
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _handleSubmitError.apply(this, arguments);
 }
@@ -10888,8 +10993,14 @@ function closeEditor(state) {
   dispatch(state, 'inline-edit:closed');
 }
 function destroyEditor(state, open) {
+  var _state$request2;
   state.element.removeEventListener('click', open);
+  (_state$request2 = state.request) === null || _state$request2 === void 0 || _state$request2.abort();
   closeEditor(state);
+}
+function setTriggerBusy(element, busy) {
+  element.disabled = busy;
+  element.setAttribute('aria-busy', String(busy));
 }
 function dispatch(state, name) {
   var extra = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -10910,7 +11021,8 @@ function normalizeDependencies(input) {
     components: input.components,
     createView: (_input$createView = input.createView) !== null && _input$createView !== void 0 ? _input$createView : _inline_editor_view_js__WEBPACK_IMPORTED_MODULE_3__.createInlineEditorView,
     http: input.http,
-    labels: normalizeLabels(input.labels)
+    labels: normalizeLabels(input.labels),
+    messages: input.messages
   };
 }
 function normalizeLabels() {
@@ -10947,7 +11059,8 @@ function installInlineEditors(admin) {
   var definition = (0,_inline_editor_js__WEBPACK_IMPORTED_MODULE_0__.createInlineEditorDefinition)({
     components: admin.Components,
     http: admin.Http,
-    labels: options.labels
+    labels: options.labels,
+    messages: admin.Messages
   });
   admin.Components.register(definition);
   var scan = function scan() {
@@ -11084,6 +11197,7 @@ function createDateFilterSupport() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "assignFilterControlIds": () => (/* binding */ assignFilterControlIds),
 /* harmony export */   "bindFilterControls": () => (/* binding */ bindFilterControls),
 /* harmony export */   "clearFilterControls": () => (/* binding */ clearFilterControls)
 /* harmony export */ });
@@ -11138,38 +11252,91 @@ function clearFilterControls(containers) {
     _iterator2.f();
   }
 }
+function assignFilterControlIds(containers, tableId) {
+  var tablePart = normalizeIdPart(tableId);
+  containers.forEach(function (container, containerIndex) {
+    var _iterator4 = _createForOfIteratorHelper(container.querySelectorAll('[data-index]')),
+      _step4;
+    try {
+      var _loop = function _loop() {
+        var column = _step4.value;
+        var columnPart = normalizeIdPart(column.dataset.index);
+        column.querySelectorAll('input, select').forEach(function (control, controlIndex) {
+          control.id || (control.id = "datatable-".concat(tablePart, "-filter-").concat(containerIndex, "-").concat(columnPart, "-").concat(controlIndex));
+        });
+      };
+      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+        _loop();
+      }
+    } catch (err) {
+      _iterator4.e(err);
+    } finally {
+      _iterator4.f();
+    }
+  });
+}
 function bindClick(container, selector, listener) {
-  var _iterator4 = _createForOfIteratorHelper(container.querySelectorAll(selector)),
-    _step4;
+  var _iterator5 = _createForOfIteratorHelper(container.querySelectorAll(selector)),
+    _step5;
   try {
-    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-      var control = _step4.value;
+    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+      var control = _step5.value;
       control.addEventListener('click', listener);
     }
   } catch (err) {
-    _iterator4.e(err);
+    _iterator5.e(err);
   } finally {
-    _iterator4.f();
+    _iterator5.f();
   }
 }
 function resetControl(control) {
+  if (control.dataset.filterDefault !== undefined) {
+    restoreControlValue(control, JSON.parse(control.dataset.filterDefault));
+    return;
+  }
   if (control.options) {
-    var _iterator5 = _createForOfIteratorHelper(control.options),
-      _step5;
+    var hasDefault = false;
+    var _iterator6 = _createForOfIteratorHelper(control.options),
+      _step6;
     try {
-      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-        var option = _step5.value;
-        option.selected = false;
+      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+        var option = _step6.value;
+        option.selected = option.defaultSelected;
+        hasDefault || (hasDefault = option.defaultSelected);
       }
     } catch (err) {
-      _iterator5.e(err);
+      _iterator6.e(err);
     } finally {
-      _iterator5.f();
+      _iterator6.f();
     }
-    control.selectedIndex = -1;
+    if (!hasDefault) control.selectedIndex = control.multiple ? -1 : 0;
+  } else if (control.type === 'checkbox' || control.type === 'radio') {
+    control.checked = control.defaultChecked;
   } else {
-    control.value = '';
+    control.value = control.defaultValue;
   }
+}
+function restoreControlValue(control, value) {
+  if (!control.options) {
+    control.value = value !== null && value !== void 0 ? value : '';
+    return;
+  }
+  var values = (Array.isArray(value) ? value : [value]).map(String);
+  var _iterator7 = _createForOfIteratorHelper(control.options),
+    _step7;
+  try {
+    for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+      var option = _step7.value;
+      option.selected = values.includes(option.value);
+    }
+  } catch (err) {
+    _iterator7.e(err);
+  } finally {
+    _iterator7.f();
+  }
+}
+function normalizeIdPart(value) {
+  return String(value !== null && value !== void 0 ? value : 'unknown').replace(/[^a-zA-Z0-9_-]+/g, '-');
 }
 function dispatchChange(control) {
   var _control$ownerDocumen, _control$ownerDocumen2;
@@ -12095,8 +12262,10 @@ function prepareFilterState(settings) {
   (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.migrateLegacyFilterState)(settings.storage, settings.path, allFilterContainers(settings.root));
 }
 function createFilterContext(settings, id) {
+  var filterContainers = matchingContainers(settings.root, id);
+  (0,_filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__.assignFilterControlIds)(filterContainers, id);
   return {
-    filterContainers: matchingContainers(settings.root, id),
+    filterContainers: filterContainers,
     stateFilters: settings.stateFilters,
     stateKey: (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.filterStateKey)(settings.path, id)
   };
@@ -12570,13 +12739,23 @@ function parseState(serialized) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DATATABLES_PRESENTATION_ID": () => (/* binding */ DATATABLES_PRESENTATION_ID),
-/* harmony export */   "installLegacyDataTablesPresentation": () => (/* binding */ installLegacyDataTablesPresentation)
+/* harmony export */   "createLegacyDataTableEngine": () => (/* binding */ createLegacyDataTableEngine),
+/* harmony export */   "installLegacyDataTablesPresentation": () => (/* binding */ installLegacyDataTablesPresentation),
+/* harmony export */   "legacyDataTableEngineRuntime": () => (/* binding */ legacyDataTableEngineRuntime)
 /* harmony export */ });
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.mjs");
+/* harmony import */ var datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables.net-bs5 */ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.mjs");
+/* harmony import */ var datatables_net_responsive_bs5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! datatables.net-responsive-bs5 */ "./node_modules/datatables.net-responsive-bs5/js/responsive.bootstrap5.mjs");
 
-var DATATABLES_PRESENTATION_ID = 'legacy-adminlte.bootstrap4';
+
+var DATATABLES_PRESENTATION_ID = 'legacy-adminlte.bootstrap5';
+function createLegacyDataTableEngine(element, options) {
+  return new datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"](element, options);
+}
+function legacyDataTableEngineRuntime() {
+  return datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"];
+}
 function installLegacyDataTablesPresentation(engine) {
-  if (engine !== datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0__["default"]) {
+  if (engine !== datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"]) {
     throw new Error('The DataTables Bootstrap adapter must use the active table engine.');
   }
   return engine;
@@ -55948,9 +56127,9 @@ function _unsupportedIterableToArray(r, a) {
 
 /***/ }),
 
-/***/ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.mjs":
+/***/ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.mjs":
 /*!**********************************************************************!*\
-  !*** ./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.mjs ***!
+  !*** ./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.mjs ***!
   \**********************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -55964,7 +56143,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "util": () => (/* reexport safe */ datatables_net__WEBPACK_IMPORTED_MODULE_0__.util)
 /* harmony export */ });
 /* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/dataTables.mjs");
-/*! DataTables Bootstrap 4 integration
+/*! DataTables Bootstrap 5 integration
  * © SpryMedia Ltd - datatables.net/license
  */
 
@@ -55976,22 +56155,22 @@ datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].util.object.assignDeep(da
 });
 /* Default class modification */
 datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].util.object.assignDeep(datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].ext.classes, {
-    container: 'dt-container dt-bootstrap4',
+    container: 'dt-container dt-bootstrap5',
     search: {
         input: 'form-control form-control-sm'
     },
     length: {
-        select: 'custom-select custom-select-sm form-control form-control-sm'
+        select: 'form-select form-select-sm'
     },
     processing: {
         container: 'dt-processing card'
     },
     layout: {
-        row: 'row justify-content-between',
+        row: 'row mt-2 justify-content-between',
         cell: 'd-md-flex justify-content-between align-items-center',
         tableCell: 'col-12',
-        start: 'dt-layout-start col-md-auto mr-auto',
-        end: 'dt-layout-end col-md-auto ml-auto',
+        start: 'dt-layout-start col-md-auto me-auto',
+        end: 'dt-layout-end col-md-auto ms-auto',
         full: 'dt-layout-full col-md'
     }
 });
@@ -56005,9 +56184,10 @@ datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].ext.renderer.pagingButton
         btnClasses.push('disabled');
     }
     var li = datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].Dom.c('li').classAdd(btnClasses.join(' '));
-    var a = datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].Dom.c('a')
-        .attr('href', disabled ? null : '#')
+    var a = datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].Dom.c('button')
         .classAdd('page-link')
+        .attr('role', 'link')
+        .attr('type', 'button')
         .html(content)
         .appendTo(li);
     return {
@@ -56024,6 +56204,160 @@ datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"].ext.renderer.pagingContai
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (datatables_net__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/datatables.net-responsive-bs5/js/responsive.bootstrap5.mjs":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/datatables.net-responsive-bs5/js/responsive.bootstrap5.mjs ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables.net-bs5 */ "./node_modules/datatables.net-bs5/js/dataTables.bootstrap5.mjs");
+/* harmony import */ var datatables_net_responsive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! datatables.net-responsive */ "./node_modules/datatables.net-responsive/js/dataTables.responsive.mjs");
+/*! Responsive Bootstrap 5 styling 4.0.3 for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
+ */
+
+
+
+
+
+var Dom = datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"].Dom;
+var _display = datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"].Responsive.display;
+var _original = _display.modal;
+
+var _modal = Dom
+	.c('div')
+	.classAdd('modal fade dtr-bs-modal')
+	.attr('role', 'dialog')
+	.append(
+		Dom
+			.c('div')
+			.classAdd('modal-dialog')
+			.attr('role', 'document')
+			.append(
+				Dom
+					.c('div')
+					.classAdd('modal-content')
+					.append(
+						Dom
+							.c('div')
+							.classAdd('modal-header')
+							.append(
+								Dom
+									.c('button')
+									.attr('type', 'button')
+									.attr('data-bs-dismiss', 'modal')
+									.attr('aria-label', 'Close')
+									.classAdd('btn-close')
+							)
+					)
+					.append(Dom.c('div').classAdd('modal-body'))
+			)
+	)
+	.append(Dom.c('div').classAdd('content'));
+
+var modal;
+
+// Note this could be undefined at the time of initialisation - the
+// DataTable.Responsive.bootstrap function can be used to set a different
+// bootstrap object
+var _bs = window.bootstrap;
+
+datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"].Responsive.bootstrap = function (bs) {
+	_bs = bs;
+};
+
+// Get the Bootstrap library from locally set (legacy) or from DT.
+function getBs() {
+	let dtBs = datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"].use('bootstrap');
+
+	if (dtBs) {
+		return dtBs;
+	}
+
+	if (_bs) {
+		return _bs;
+	}
+
+	throw new Error(
+		'No Bootstrap library. Set it with `DataTable.use(bootstrap);`'
+	);
+}
+
+_display.modal = function (options) {
+	if (!modal && _bs.Modal) {
+		let localBs = getBs();
+		modal = new localBs.Modal(_modal.get(0));
+	}
+
+	return function (row, update, render, closeCallback) {
+		if (!modal) {
+			return _original(row, update, render, closeCallback);
+		}
+		else {
+			var rendered = render();
+
+			if (rendered === false) {
+				return false;
+			}
+
+			if (!update) {
+				if (options && options.header) {
+					var header = _modal.find('div.modal-header');
+					var button = header.find('button').detach();
+
+					header
+						.empty()
+						.append(
+							Dom
+								.c('h4')
+								.classAdd('modal-title')
+								.html(options.header(row))
+						)
+						.append(button);
+				}
+
+				_modal.find('div.modal-body').empty().append(rendered);
+
+				_modal
+					.attr('data-dtr-index', row.index())
+					.appendTo('body');
+
+				_modal.get(0).addEventListener('hidden.bs.modal', closeCallback, {
+					once: true
+				});
+
+				modal.show();
+			}
+			else {
+				if (
+					_modal.isAttached() &&
+					row.index() === _modal.attr('data-dtr-index')
+				) {
+					_modal.find('div.modal-body').empty().append(rendered);
+				}
+				else {
+					// Modal not shown for this row - do nothing
+					return null;
+				}
+			}
+
+			return true;
+		}
+	};
+};
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (datatables_net_bs5__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 

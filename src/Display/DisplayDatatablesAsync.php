@@ -59,7 +59,7 @@ class DisplayDatatablesAsync extends DisplayDatatables implements WithRoutesInte
     /**
      * @var
      */
-    protected $displaySearch = false;
+    protected $displaySearch = true;
 
     /**
      * @var

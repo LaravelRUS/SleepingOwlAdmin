@@ -5,6 +5,7 @@ namespace SleepingOwl\Admin\Factories;
 use Illuminate\Contracts\Foundation\Application;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
+use SleepingOwl\Admin\Display\Column\Editable\Boolean;
 use SleepingOwl\Admin\Display\Column\Editable\Checkbox;
 use SleepingOwl\Admin\Display\Column\Editable\Checklist;
 use SleepingOwl\Admin\Display\Column\Editable\Date;
@@ -30,6 +31,7 @@ class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnE
         parent::__construct($application);
 
         $this->register([
+            'boolean' => Boolean::class,
             'checkbox' => Checkbox::class,
             'checklist' => Checklist::class,
             'date' => Date::class,

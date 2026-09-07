@@ -1,8 +1,8 @@
 @use 'custom-properties';
 @use 'inline-editor';
 @use 'presentation';
-@import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
-@import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.css';
+@import 'datatables.net-bs5/css/dataTables.bootstrap5.css';
+@import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.css';
 
 @mixin styles {
   @include custom-properties.define;

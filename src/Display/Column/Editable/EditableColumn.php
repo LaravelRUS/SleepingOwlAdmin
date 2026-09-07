@@ -3,7 +3,10 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
 use SleepingOwl\Admin\Display\Column\NamedColumn;
 
 class EditableColumn extends NamedColumn
@@ -32,6 +35,16 @@ class EditableColumn extends NamedColumn
      * @var mixed
      */
     protected $modifier = null;
+
+    /**
+     * @var array
+     */
+    protected $validationRules = [];
+
+    /**
+     * @var array
+     */
+    protected $validationMessages = [];
 
     /**
      * Text constructor.
@@ -80,6 +93,116 @@ class EditableColumn extends NamedColumn
         $this->modifier = $modifier;
 
         return $this;
+    }
+
+    public function getValidationRules(): array
+    {
+        return $this->validationRules;
+    }
+
+    public function addValidationRule($rule, $message = null)
+    {
+        $this->validationRules[] = $rule;
+
+        if (! is_null($message)) {
+            $this->addValidationMessage($rule, $message);
+        }
+
+        return $this;
+    }
+
+    public function setValidationRules($validationRules)
+    {
+        if (! is_array($validationRules)) {
+            $validationRules = func_get_args();
+        }
+
+        $this->validationRules = [];
+        foreach ($validationRules as $rule) {
+            foreach (is_string($rule) ? explode('|', $rule) : [$rule] as $item) {
+                $this->addValidationRule($item);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getValidationMessages(): array
+    {
+        return $this->validationMessages;
+    }
+
+    public function addValidationMessage($rule, $message)
+    {
+        if (is_string($rule) && ($position = strpos($rule, ':')) !== false) {
+            $rule = substr($rule, 0, $position);
+        }
+
+        $this->validationMessages[$rule] = $message;
+
+        return $this;
+    }
+
+    public function setValidationMessages(array $validationMessages)
+    {
+        $this->validationMessages = $validationMessages;
+
+        return $this;
+    }
+
+    public function required($message = null)
+    {
+        return $this->addValidationRule('required', $message);
+    }
+
+    public function validate(Request $request): void
+    {
+        if (empty($this->validationRules)) {
+            return;
+        }
+
+        Validator::make(
+            ['value' => $request->input('value')],
+            ['value' => $this->validationRules],
+            $this->validationMessagesForInput(),
+            ['value' => $this->getTitle()]
+        )->validate();
+    }
+
+    public function isRequired(): bool
+    {
+        foreach ($this->validationRules as $rule) {
+            if (is_string($rule) && explode(':', $rule, 2)[0] === 'required') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function validationMessagesForInput(): array
+    {
+        $messages = [];
+        $localizedMessages = trans('sleeping_owl::validation');
+
+        if (is_array($localizedMessages)) {
+            foreach ($this->validationRules as $rule) {
+                if (! is_string($rule)) {
+                    continue;
+                }
+
+                $ruleName = Str::snake(explode(':', $rule, 2)[0]);
+                if (array_key_exists($ruleName, $localizedMessages)) {
+                    $messages['value.'.$ruleName] = $localizedMessages[$ruleName];
+                }
+            }
+        }
+
+        foreach ($this->validationMessages as $rule => $message) {
+            $messages['value.'.$rule] = $message;
+        }
+
+        return $messages;
     }
 
     /**
@@ -162,16 +285,25 @@ class EditableColumn extends NamedColumn
      */
     public function isReadonly()
     {
+        if (! $this->getModel()) {
+            return true;
+        }
+
         // Add policy
         if ($this->getModelConfiguration()->isEditable($this->getModel())) {
-            if (is_callable($this->readonlyEditable)) {
-                return (bool) call_user_func($this->readonlyEditable, $this->getModel());
-            }
-
-            return (bool) $this->readonlyEditable;
+            return $this->isColumnReadonly();
         }
 
         return true;
+    }
+
+    public function isColumnReadonly()
+    {
+        if (is_callable($this->readonlyEditable)) {
+            return (bool) call_user_func($this->readonlyEditable, $this->getModel());
+        }
+
+        return (bool) $this->readonlyEditable;
     }
 
     /**
@@ -197,6 +329,7 @@ class EditableColumn extends NamedColumn
             'url' => $this->getUrl(),
             'title' => $this->getTitle(),
             'mode' => $this->getEditableMode(),
+            'required' => $this->isRequired(),
             'text' => $this->getModifierValue(),
         ];
     }

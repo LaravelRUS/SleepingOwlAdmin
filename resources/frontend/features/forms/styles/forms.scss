@@ -20,3 +20,20 @@
     $file-name-text: var(--soa-form-file-name-color, #{colors.$file-name-text}),
   );
 }
+
+/* stylelint-disable selector-class-pattern -- Air Datepicker owns these selectors. */
+.air-datepicker-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.air-datepicker-nav--title {
+  flex: 1 1 auto;
+}
+
+.air-datepicker-nav--action {
+  flex: 0 0 auto;
+}
+/* stylelint-enable selector-class-pattern */

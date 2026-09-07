@@ -70,15 +70,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/forms.js",
-                            "version": "e9a6810926f20e95ce926c821b0e22f4",
-                            "checksum": "sha256:6a483468580ceecab312306d39521e8bf8f5d676ef11f14f157c94ecff15fedf"
+                            "version": "b19aacb45b7d2358e6fe61603a9c3e3e",
+                            "checksum": "sha256:5a18fcd38e9eaff786af157b596d37d8091c7a9a054d2ae8b11fcc2fb95c375f"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/features/forms.css",
-                            "version": "dddffe8833518428c6de5c6aff5dda27",
-                            "checksum": "sha256:2239aaf08deb2c1d3c3f9a47cc23570db7619e0dcaf7fa5f29c722ab2482bef7"
+                            "version": "d0417b028ec43b8f5a1f0e83ac7224fb",
+                            "checksum": "sha256:2549c369078ea33254d401f30fff603e3bbb4f09528b07567027946247c0a7a4"
                         }
                     ]
                 },
@@ -158,8 +158,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "e3a516cb459c326f68c30ead76794eb2",
-                            "checksum": "sha256:2ce2b4d2830a91de89cc047cd10eb4ddeceb0e674cc7bfb82585144fb32492f3"
+                            "version": "4a2ce2011eb15b7186c8fc3957b41993",
+                            "checksum": "sha256:5abe40923aeba914004003b31e090b437db8746bbf186a316b022f8acce90086"
                         }
                     ],
                     "styles": [
@@ -171,12 +171,18 @@
                     ]
                 },
                 "feature:table:theme:legacy-adminlte": {
-                    "scripts": [],
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/features/table/themes/legacy-adminlte.js",
+                            "version": "98490b77ef86872caf2a6d468e6b639d",
+                            "checksum": "sha256:6aa64c5ac5ef6889b6ab001d6c52ce8e6fef036a15acd4af74ba0d2d92258bb1"
+                        }
+                    ],
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "5a23be26f9cf586c2e93bcf2461689fc",
-                            "checksum": "sha256:bdc8409c409fb06d5e1a2eacd10752646f371e5b824f1957ba2f23d0a3ee2b11"
+                            "version": "c4e62d99264e11ca13c7a4361f056864",
+                            "checksum": "sha256:e91e8c31f434a0d3951024183d7fcfbdc7e459fd9cf0c31fb0506e1c84efda39"
                         }
                     ]
                 },
@@ -185,8 +191,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/tailwind.css",
-                            "version": "b6ba9aaf62b94ac5bea668aa61418e3d",
-                            "checksum": "sha256:56a9af450b3213691ae9f9c35c6a7ad720048e0d300da37425a2a873884e93dc"
+                            "version": "fefe81145e6dede753dd6b1918a8ccf7",
+                            "checksum": "sha256:faa6b032a9a7e8292e93ba3fd1e3d99e8203a486fd47c1362cea3c8072958e44"
                         }
                     ]
                 },
@@ -440,15 +446,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/forms.js",
-                            "version": "9d8ad521dda0c1efb8ef2b9da0371a10",
-                            "checksum": "sha256:6d91d29667fba465969a39b81a204135323f5b2112a9f01adecdd48e5e2f8dce"
+                            "version": "d225296c0de5536844c151845c0dbeae",
+                            "checksum": "sha256:ba662d243db70073fc7e0825340315ef7ec2cafd9a2710581873163f8286ffe7"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/features/forms.css",
-                            "version": "bc6ecc6baa07cb84319d48c990926970",
-                            "checksum": "sha256:ca205030a261e4f9c5737d7337e1617757eb44fa2852364984b191bd59773463"
+                            "version": "c7edf11218ce18dc01e310fc3a9a1ed8",
+                            "checksum": "sha256:ce84588fa258ff8271ae83d02d07a14d701691f072646d191b38a265cb06aec1"
                         }
                     ]
                 },
@@ -528,8 +534,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "7e46ceab3de021468e54db64028e9f85",
-                            "checksum": "sha256:8f129a6435a297605a6eab8ca1dbcbf7469f558591e541ab6fb2174025ec2fe6"
+                            "version": "d60f96de3651e1f0dac7e33e5c6e97e2",
+                            "checksum": "sha256:71b911cc145a2b4315f7cba2bfa1502566c364934e1519e84c8b4cc8941c2a91"
                         }
                     ],
                     "styles": [
@@ -541,12 +547,18 @@
                     ]
                 },
                 "feature:table:theme:legacy-adminlte": {
-                    "scripts": [],
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/features/table/themes/legacy-adminlte.js",
+                            "version": "5d4f8f346ebb4b3951d890754c931dac",
+                            "checksum": "sha256:39261a90058d7401020e01f100258de95831ec549e342a9596df7e6eb7dbdfd6"
+                        }
+                    ],
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "61d37cad54c6c70bcf7b6ed6daee5979",
-                            "checksum": "sha256:3fb0b1525845aa98d8ce5967ca5f028c603ad42ef30bd3233f57698c565f1999"
+                            "version": "41e3c4280ce973bb4c9386d4e6981261",
+                            "checksum": "sha256:530d501ad997d0d7006b57f68932cd48048b30abd6b995fc78718fe17947dfdd"
                         }
                     ]
                 },
@@ -555,8 +567,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/features/table/themes/tailwind.css",
-                            "version": "681eb2223a54fd6687e0378029703de4",
-                            "checksum": "sha256:66c60a126ed306ccaba3ba6ad4814a7ec532e1d0f98662f0b65682bb9a8c1e01"
+                            "version": "ae6992c7fc95b810e9bca9a6fd51f3d6",
+                            "checksum": "sha256:ceb513e5c96a48e2c7ee67b015a0e9811d93ea32640c370f6f0d001674ec4026"
                         }
                     ]
                 },
@@ -743,5 +755,5 @@
             }
         }
     },
-    "build_id": "sha256:e56e1180c539fa65ec27e200af187053f65c5c7e500e65489182709bfd17575c"
+    "build_id": "sha256:f0d3bf1e5ce1dbc28e0178cb2788d34d6f70809e19320c0fa47fa4e3832ec32b"
 }

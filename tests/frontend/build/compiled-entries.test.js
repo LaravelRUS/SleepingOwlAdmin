@@ -132,7 +132,7 @@ describe('compiled table boundaries', () => {
         expect(sources.some((source) => source.includes('/node_modules/jquery/'))).toBe(false)
         expect(
             sources.some((source) =>
-                source.includes('/node_modules/datatables.net-responsive-bs4/js/'),
+                source.includes('/node_modules/datatables.net-responsive-bs5/js/'),
             ),
         ).toBe(false)
         expect(license).not.toMatch(/jQuery JavaScript Library|OpenJS Foundation/i)

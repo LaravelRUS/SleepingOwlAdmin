@@ -1,7 +1,8 @@
 @if ($visibled)
     @php
         $checkboxAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag($attributesArray ?? []))
-            ->merge(['type' => 'checkbox', 'value' => 1]);
+            ->merge(['type' => 'checkbox', 'value' => 1])
+            ->class(['custom-control-input']);
 
         if ($readonly) {
             $checkboxAttributes = $checkboxAttributes->except('disabled')->merge(['disabled' => true]);
@@ -11,10 +12,9 @@
         }
     @endphp
     <div class="form-group form-element-checkbox {{ $class ? ' ' . $class : '' }} {{ $errors->has($name) ? 'has-error' : '' }}"{!! $style ? ' style="' . $style . '"' : '' !!}>
-        <div class="checkbox">
-            <label class="{{ $required ? 'required' : '' }}">
-                <input {!! $checkboxAttributes !!} />
-
+        <div class="custom-control custom-checkbox">
+            <input {!! $checkboxAttributes !!} />
+            <label class="custom-control-label {{ $required ? 'required' : '' }}" for="{{ $checkboxAttributes->get('id') }}">
                 {!! $label !!}
                 @if($required)
                     <span class="form-element-required">*</span>

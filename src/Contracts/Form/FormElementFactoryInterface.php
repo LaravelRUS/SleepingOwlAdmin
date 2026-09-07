@@ -9,6 +9,7 @@ use SleepingOwl\Admin\Form\Related\Forms;
 
 /**
  * @method Element\Text text($name, $label = null)
+ * @method Element\Email email($name, $label = null)
  * @method Element\Image image($name, $label = null)
  * @method Element\Images images($name, $label = null)
  * @method Element\File file($name, $label = null)

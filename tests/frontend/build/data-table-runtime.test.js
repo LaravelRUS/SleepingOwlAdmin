@@ -18,9 +18,9 @@ function readSource(path) {
 it('pins the dependency-free DataTables 3 and Responsive 4 package lines', () => {
     expect(packageJson.dependencies).toMatchObject({
         'datatables.net': '3.0.3',
-        'datatables.net-bs4': '3.0.3',
+        'datatables.net-bs5': '3.0.3',
         'datatables.net-responsive': '4.0.3',
-        'datatables.net-responsive-bs4': '4.0.3',
+        'datatables.net-responsive-bs5': '4.0.3',
     })
     expect(packageLock.packages['node_modules/datatables.net'].version).toBe('3.0.3')
     expect(packageLock.packages['node_modules/datatables.net'].dependencies).toBeUndefined()
@@ -39,8 +39,8 @@ it('keeps the engine independent from the legacy theme presentation adapter', ()
     expect(engine).toContain("from 'datatables.net'")
     expect(engine).toContain("import 'datatables.net-responsive'")
     expect(engine).not.toMatch(/bootstrap|adminlte|jquery|jQuery|\$\(/i)
-    expect(presentation).toContain("from 'datatables.net-bs4'")
-    expect(presentation).not.toContain('datatables.net-responsive-bs4')
+    expect(presentation).toContain("from 'datatables.net-bs5'")
+    expect(presentation).toContain("import 'datatables.net-responsive-bs5'")
     expect(presentation).not.toMatch(/oApi|pageButton|\$\(/)
 })
 
@@ -55,8 +55,8 @@ it('removes the handwritten Bootstrap 3 renderer and owns vendor CSS in the adap
     expect(bootstrap.indexOf('dataTableEngineRuntime')).toBeLessThan(
         bootstrap.indexOf('installLegacyDataTablesPresentation'),
     )
-    expect(styles).toContain('datatables.net-bs4/css/dataTables.bootstrap4.css')
-    expect(styles).toContain('datatables.net-responsive-bs4/css/responsive.bootstrap4.css')
+    expect(styles).toContain('datatables.net-bs5/css/dataTables.bootstrap5.css')
+    expect(styles).toContain('datatables.net-responsive-bs5/css/responsive.bootstrap5.css')
 })
 
 it('mounts live tables through the engine-neutral constructor boundary', () => {

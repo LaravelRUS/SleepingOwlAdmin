@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \SleepingOwl\Admin\Form\Element\Text text($name, $label = null)
- * @method static \SleepingOwl\Admin\Form\Element\Trix trix($name, $label = null)
+ * @method static \SleepingOwl\Admin\Form\Element\Email email($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Image image($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\Images images($name, $label = null)
  * @method static \SleepingOwl\Admin\Form\Element\File file($name, $label = null)

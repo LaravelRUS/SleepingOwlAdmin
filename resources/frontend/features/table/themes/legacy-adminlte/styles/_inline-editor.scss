@@ -19,11 +19,46 @@
   }
 
   .soa-inline-editor-popup {
-    padding: variables.$inline-editor-padding;
+    width: min(30rem, calc(100vw - 2rem));
+    max-width: none;
+    overflow: visible;
+    padding: 0;
+    margin: auto;
     background: var(--soa-inline-editor-surface);
     border: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
     border-radius: variables.$inline-editor-radius;
     box-shadow: variables.$inline-editor-shadow var(--soa-inline-editor-shadow);
+  }
+
+  .soa-inline-editor-popup:not([open]) {
+    display: none;
+  }
+
+  .soa-inline-editor-popup[open] {
+    display: block;
+  }
+
+  .soa-inline-editor-popup::backdrop {
+    background: rgb(0 0 0 / 55%);
+    backdrop-filter: blur(1px);
+  }
+
+  .soa-inline-editor-popup .soa-inline-editor-form {
+    padding: 1.25rem;
+  }
+
+  .soa-inline-editor-popup.soa-inline-editor-type-checkbox {
+    width: fit-content;
+    min-width: 0;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .soa-inline-editor-popup:is(
+      .soa-inline-editor-type-date,
+      .soa-inline-editor-type-datetime
+    ) {
+    width: fit-content;
+    max-width: calc(100vw - 2rem);
   }
 
   .soa-inline-editor-form,
@@ -35,7 +70,10 @@
   }
 
   .soa-inline-editor-title {
+    padding-bottom: 0.75rem;
     font-weight: 600;
+    font-size: 1.125rem;
+    border-bottom: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
   }
 
   .soa-inline-editor-control {
@@ -48,9 +86,28 @@
     border-radius: variables.$inline-editor-radius;
   }
 
+  textarea.soa-inline-editor-control {
+    min-height: 7rem;
+    resize: vertical;
+  }
+
+  .soa-inline-editor-control:focus {
+    border-color: var(--soa-inline-editor-accent);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 20%);
+  }
+
   .soa-inline-editor-actions {
     display: flex;
     gap: variables.$inline-editor-gap;
+    justify-content: flex-end;
+    padding-top: 0.75rem;
+    border-top: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
+  }
+
+  .soa-inline-editor-type-checkbox .soa-inline-editor-actions {
+    padding-top: 0;
+    border-top: 0;
   }
 
   .soa-inline-editor-submit,
@@ -87,6 +144,19 @@
     gap: variables.$inline-editor-gap;
     align-items: center;
     font-weight: 400;
+    cursor: pointer;
+  }
+
+  .soa-inline-editor-check-input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--soa-inline-editor-accent);
+  }
+
+  .soa-inline-editor-type-range .soa-inline-editor-control {
+    padding: 0;
+    border: 0;
+    box-shadow: none;
   }
 
   .soa-inline-editor-range-value {

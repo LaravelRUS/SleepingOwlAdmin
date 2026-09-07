@@ -42,12 +42,14 @@ class DisplayDatatables extends DisplayTable
 
         $attributes = $this->getDatatableAttributes();
 
+        $attributes['autoWidth'] ??= false;
         $attributes['pageLength'] = $this->paginate;
 
         $attributes['language'] = trans('sleeping_owl::lang.table');
 
         foreach ($this->getColumns()->all() as $column) {
             $attributes['columns'][] = [
+                'className' => $column->getHtmlAttribute('class'),
                 'orderable' => $column->isOrderable(),
                 'visible' => $column->isVisible(),
                 'width' => $column->getWidth(),

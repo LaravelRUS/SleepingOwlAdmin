@@ -63,7 +63,7 @@ class Range extends BaseColumnFilter
      */
     public function getFrom()
     {
-        return $this->from;
+        return $this->from ??= new Number();
     }
 
     /**
@@ -82,7 +82,7 @@ class Range extends BaseColumnFilter
      */
     public function getTo()
     {
-        return $this->to;
+        return $this->to ??= new Number();
     }
 
     /**
@@ -119,8 +119,8 @@ class Range extends BaseColumnFilter
             return;
         }
 
-        $from = $this->from->parseValue(explode('::', $range, 2)[0]);
-        $to = $this->to->parseValue(explode('::', $range, 2)[1]);
+        $from = $this->getFrom()->parseValue(explode('::', $range, 2)[0]);
+        $to = $this->getTo()->parseValue(explode('::', $range, 2)[1]);
 
         if (! empty($from) && ! empty($to)) {
             $this->setOperator('between');

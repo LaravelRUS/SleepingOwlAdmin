@@ -72,8 +72,9 @@ class Text extends BaseColumnFilter
      */
     public function toArray()
     {
-        if ($this->getDefault()) {
+        if (! is_null($this->getDefault())) {
             $this->setHtmlAttribute('value', $this->getDefault());
+            $this->setHtmlAttribute('data-filter-default', json_encode($this->getDefault()));
         }
 
         return parent::toArray() + [

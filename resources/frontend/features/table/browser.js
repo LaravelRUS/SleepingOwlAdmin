@@ -24,8 +24,11 @@ export function bootTables(target) {
 
 function installFeatures(target, admin, options) {
     const root = target.document
+    const presentation = admin.TablePresentation ?? {}
     const inlineEditor = installInlineEditors(admin, { ...options.inlineEditor, root })
     const tables = installDataTables(admin, {
+        createEngine: presentation.createEngine,
+        engine: presentation.engine,
         inlineEditor,
         onError: options.onError,
         root,

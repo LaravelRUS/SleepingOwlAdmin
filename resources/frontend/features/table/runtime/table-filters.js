@@ -1,4 +1,8 @@
-import { bindFilterControls, clearFilterControls } from '../filters/filter-controls.js'
+import {
+    assignFilterControlIds,
+    bindFilterControls,
+    clearFilterControls,
+} from '../filters/filter-controls.js'
 import { forEachColumnFilter } from '../filters/filter-elements.js'
 import {
     clearFilterState,
@@ -30,8 +34,11 @@ function prepareFilterState(settings) {
 }
 
 function createFilterContext(settings, id) {
+    const filterContainers = matchingContainers(settings.root, id)
+    assignFilterControlIds(filterContainers, id)
+
     return {
-        filterContainers: matchingContainers(settings.root, id),
+        filterContainers,
         stateFilters: settings.stateFilters,
         stateKey: filterStateKey(settings.path, id),
     }

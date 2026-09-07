@@ -840,6 +840,7 @@ function createDateControlDefinition(Datepicker, locale) {
   };
 }
 function mountDateControl(input, Datepicker, locale) {
+  var _input$ownerDocument;
   if (input.disabled || input.readOnly) return _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__.componentMountSkipped;
   var picker = new Datepicker(input, (0,_date_options_js__WEBPACK_IMPORTED_MODULE_1__.createDatePickerOptions)(input, locale));
   var addon = findAddon(input);
@@ -849,6 +850,7 @@ function mountDateControl(input, Datepicker, locale) {
     picker.show();
   };
   addon === null || addon === void 0 || addon.addEventListener('click', show);
+  if (((_input$ownerDocument = input.ownerDocument) === null || _input$ownerDocument === void 0 ? void 0 : _input$ownerDocument.activeElement) === input) picker.show();
   return {
     destroy: function destroy() {
       addon === null || addon === void 0 || addon.removeEventListener('click', show);
@@ -1136,6 +1138,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 var DATE_CONTROL_TYPES = Object.freeze(['date', 'datetime', 'time', 'daterange']);
 function createDatePickerOptions(input, locale) {
+  var _input$closest;
   var type = input.dataset.dateControl;
   assertControlType(type);
   var format = input.dataset.dateFormat || defaultFormat(type);
@@ -1148,6 +1151,8 @@ function createDatePickerOptions(input, locale) {
     locale: locale,
     selectedDates: selectedDate ? [selectedDate] : false
   };
+  var dialog = (_input$closest = input.closest) === null || _input$closest === void 0 ? void 0 : _input$closest.call(input, 'dialog[open]');
+  if (dialog) options.container = dialog;
   if (type === 'daterange') {
     return _objectSpread(_objectSpread({}, options), (0,_date_range_options_js__WEBPACK_IMPORTED_MODULE_1__.createDateRangeOptions)(input, format, locale));
   }

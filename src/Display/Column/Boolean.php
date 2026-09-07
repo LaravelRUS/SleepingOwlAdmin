@@ -22,7 +22,7 @@ class Boolean extends NamedColumn
     /**
      * @var bool
      */
-    protected $orderable = false;
+    protected $orderable = true;
 
     /**
      * @return array
