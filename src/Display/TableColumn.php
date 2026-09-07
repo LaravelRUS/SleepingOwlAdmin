@@ -59,7 +59,7 @@ abstract class TableColumn implements ColumnInterface
     /**
      * Failed callbacks hide the column and log a warning once per condition.
      *
-     * @param Closure|bool $visibleCondition Callback receives this column.
+     * @param  Closure|bool  $visibleCondition  Callback receives this column.
      * @return $this
      */
     public function setVisible($visibleCondition)
