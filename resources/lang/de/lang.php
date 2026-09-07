@@ -157,7 +157,10 @@ return [
         'add' => 'Hinzufügen',
         'remove' => 'Entfernen',
         'clear' => 'Löschen',
+        'clear_all' => 'Alles leeren',
         'theme' => 'Thema ändern',
+        'pause_auto_update' => 'Automatische Aktualisierung pausieren',
+        'resume_auto_update' => 'Automatische Aktualisierung fortsetzen',
     ],
 
     'message' => [

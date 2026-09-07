@@ -177,8 +177,13 @@ export default defineComponent({
     mounted() {
         this.mountRemoteSearch()
         this.mountDependentSelect()
+        this.$refs.nativeControl?.addEventListener('soa:inline-editor-clear', this.clearSelection)
     },
     beforeUnmount() {
+        this.$refs.nativeControl?.removeEventListener(
+            'soa:inline-editor-clear',
+            this.clearSelection,
+        )
         this.dependentLoad?.destroy()
         this.dependentLoad = null
         this.remoteSearch?.destroy()
@@ -195,6 +200,9 @@ export default defineComponent({
         applyRemoteOptions(options) {
             this.loadError = false
             this.localOptions = mergeRemoteSelectOptions(this.selection, options, this.multiple)
+        },
+        clearSelection() {
+            this.selectionChanged(this.multiple ? [] : null)
         },
         async applyDependentOptions(result, context) {
             this.loadError = false

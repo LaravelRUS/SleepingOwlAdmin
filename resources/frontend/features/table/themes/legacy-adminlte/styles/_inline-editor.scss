@@ -39,7 +39,7 @@
   }
 
   .soa-inline-editor-popup::backdrop {
-    background: rgb(0 0 0 / 55%);
+    background: var(--soa-inline-editor-backdrop);
     backdrop-filter: blur(1px);
   }
 
@@ -94,7 +94,65 @@
   .soa-inline-editor-control:focus {
     border-color: var(--soa-inline-editor-accent);
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 20%);
+    box-shadow: 0 0 0 0.2rem var(--soa-inline-editor-focus-ring);
+  }
+
+  .soa-inline-editor-input {
+    position: relative;
+  }
+
+  .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 2.75rem;
+  }
+
+  .soa-inline-editor-clear {
+    position: absolute;
+    top: 0.25rem;
+    inset-inline-end: 0.25rem;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    color: var(--soa-inline-editor-muted);
+    line-height: 1;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    opacity: 0.65;
+  }
+
+  .soa-inline-editor-clear:hover,
+  .soa-inline-editor-clear:focus-visible {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-border);
+    outline: 0;
+    opacity: 1;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-input > [data-inline-editor-control],
+  .soa-inline-editor-type-number .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 4rem;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 0;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern -- Vue Multiselect owns this selector. */
+  .soa-inline-editor-type-select .multiselect__tags {
+    padding-inline-end: 4.5rem;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-clear,
+  .soa-inline-editor-type-number .soa-inline-editor-clear {
+    inset-inline-end: 1.5rem;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-clear {
+    inset-inline-end: 2.5rem;
   }
 
   .soa-inline-editor-actions {
@@ -105,13 +163,9 @@
     border-top: variables.$inline-editor-border-width solid var(--soa-inline-editor-border);
   }
 
-  .soa-inline-editor-type-checkbox .soa-inline-editor-actions {
-    padding-top: 0;
-    border-top: 0;
-  }
-
   .soa-inline-editor-submit,
-  .soa-inline-editor-cancel {
+  .soa-inline-editor-cancel,
+  .soa-inline-editor-clear-all {
     padding: 0.25rem 0.5rem;
     cursor: pointer;
     border: variables.$inline-editor-border-width solid transparent;
@@ -133,6 +187,19 @@
     border-color: var(--soa-inline-editor-border);
   }
 
+  .soa-inline-editor-clear-all {
+    margin-inline-end: auto;
+    color: var(--soa-inline-editor-muted);
+    background: transparent;
+  }
+
+  .soa-inline-editor-clear-all:hover,
+  .soa-inline-editor-clear-all:focus-visible {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-border);
+    outline: 0;
+  }
+
   .soa-inline-editor-error {
     max-width: variables.$inline-editor-min-width;
     color: var(--soa-inline-editor-error);
@@ -147,21 +214,49 @@
     cursor: pointer;
   }
 
+  .soa-inline-editor-checklist {
+    max-height: min(18rem, 50vh);
+    padding-inline-end: 0.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
   .soa-inline-editor-check-input {
     width: 1rem;
     height: 1rem;
     accent-color: var(--soa-inline-editor-accent);
   }
 
-  .soa-inline-editor-type-range .soa-inline-editor-control {
+  .soa-inline-editor-type-range [data-inline-editor-range-input] {
     padding: 0;
     border: 0;
     box-shadow: none;
   }
 
+  .soa-inline-editor-type-range .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 0;
+  }
+
   .soa-inline-editor-range-value {
     color: var(--soa-inline-editor-muted);
     text-align: center;
+  }
+
+  .soa-inline-editor-range-number-wrap {
+    position: relative;
+    width: min(100%, 8rem);
+    justify-self: center;
+  }
+
+  .soa-inline-editor-range-number {
+    padding-inline-end: 4rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  .soa-inline-editor-range-number-wrap .soa-inline-editor-clear {
+    inset-inline-end: 1.5rem;
   }
 
   .soa-inline-editor-form[aria-busy='true'] {

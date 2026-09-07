@@ -157,7 +157,10 @@ return [
         'add' => 'Add',
         'remove' => 'Remove',
         'clear' => 'Clear',
+        'clear_all' => 'Clear all',
         'theme' => 'Change theme',
+        'pause_auto_update' => 'Pause auto-update',
+        'resume_auto_update' => 'Resume auto-update',
     ],
 
     'message' => [

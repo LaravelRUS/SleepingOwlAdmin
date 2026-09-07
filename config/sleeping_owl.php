@@ -520,9 +520,10 @@ return [
         // Supported values: 'row', 'table', false.
         'datatables_inline_edit_refresh' => 'table',
 
-        // Automatic refresh. The interval is expressed in minutes and must be >= 1.
+        // Automatic refresh. The interval is expressed in seconds and must be >= 1.
         'dt_autoupdate' => false,
-        'dt_autoupdate_interval' => 5,
+        'dt_autoupdate_interval' => 300,
+        // Additional class name(s); the common "autoupdate" marker is always included.
         'dt_autoupdate_class' => '',
         'dt_autoupdate_color' => '#dc3545',
     ],

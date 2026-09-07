@@ -93,14 +93,25 @@ creates a table through `$(element).DataTable(...)`.
 The historical `default.helper.autoupdate` logical view still owns the feature
 host through `features.datatables.autoupdate`. It now renders a
 `template[data-admin-table-autoupdate-control]` containing exactly one root and
-a descendant marked with `data-admin-table-autoupdate-close`. The table runtime
-clones that root for each matching table and binds the timer teardown to the
-close hook. It does not create the button, text, icon or presentation classes.
+a descendant marked with `data-admin-table-autoupdate-toggle`. The table runtime
+clones that root for each matching table, inserts it immediately before the
+table and binds pause/resume behavior to the toggle hook. It does not create the
+button, text, icon or presentation classes. The legacy
+`data-admin-table-autoupdate-close` hook is still accepted by project overrides.
 
 A project view override may replace the element type, classes and internal
-nesting while retaining the template and close hooks. Existing auto-update
-config keys, table-class matching, labels, interval, color property, reload
-behavior and server-side table flow remain unchanged.
+nesting while retaining the template and toggle hooks. The configured class may
+be one string or an array; a table matches when it has the common `autoupdate`
+marker or any additionally configured class. The explicit
+`dt_autoupdate_interval` value is expressed in seconds and converted to
+milliseconds only at the Blade/runtime boundary. The progress color remains
+controlled by `dt_autoupdate_color` and accepts safe CSS color keywords such as
+`black` in addition to hexadecimal, rgb/rgba and hsl/hsla values.
+
+The host scan is repeated after `DOMContentLoaded` because the historical base
+layout renders the Blade host after its scripts. The controller also subscribes
+to `Admin.Tables`, so matching tables registered later receive an independent
+timer and unregistering a table tears its timer and progress bar down.
 
 ## Blade-owned inline editor
 

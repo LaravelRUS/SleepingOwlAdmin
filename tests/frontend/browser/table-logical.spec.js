@@ -81,13 +81,15 @@ function inspectRuntime(page) {
     return page.evaluate(() => {
         const table = globalThis.document.querySelector('#logical-table')
         const adapter = globalThis.Admin.Tables.get(table)
+        const autoUpdateControl = table.previousElementSibling
 
         return {
             adapter: Boolean(adapter?.engineInstance),
             autoUpdate: table.classList.contains('autoupdater'),
             autoUpdateControl: {
-                label: table.querySelector('.project-auto-update-label')?.textContent,
-                nested: Boolean(table.querySelector(':scope > .project-auto-update-shell')),
+                beforeTable: autoUpdateControl?.nextElementSibling === table,
+                label: autoUpdateControl?.querySelector('.project-auto-update-label')?.textContent,
+                state: autoUpdateControl?.dataset.state,
             },
             compatibility: {
                 checkDateRange: typeof globalThis.checkDateRange,
@@ -120,7 +122,11 @@ function expectedRuntime() {
     return {
         adapter: true,
         autoUpdate: true,
-        autoUpdateControl: { label: 'Pause', nested: true },
+        autoUpdateControl: {
+            beforeTable: true,
+            label: 'Pause project updates',
+            state: 'running',
+        },
         compatibility: {
             checkDateRange: 'function',
             checkNumberRange: 'function',
@@ -162,29 +168,49 @@ async function exerciseFilter(page, request) {
     expect(requests.at(-1).parameters['columns[1][search][value]']).toBe('Alice')
 }
 
-async function exerciseDynamicLifecycle(page) {
-    const result = await page.evaluate(() => {
-        const host = globalThis.document.querySelector('#dynamic-table-host')
-        host.innerHTML = `
-            <table class="datatables" data-id="dynamic-table" data-attributes='{"order":[]}'>
-                <thead><tr><th>Name</th></tr></thead>
-                <tbody><tr><td>Dynamic row</td></tr></tbody>
-            </table>
-        `
-        const table = host.querySelector('table')
-        const mounted = globalThis.Admin.Tables.scan(host)
-        const registered = globalThis.Admin.Tables.has(table)
-        const destroyed = globalThis.Admin.Components.destroy(host, 'data-table')
-
-        return {
-            destroyed,
-            mounted,
-            registered,
-            registrySize: globalThis.Admin.Tables.all().length,
-        }
+function runDynamicLifecycle() {
+    const inspectAutoUpdate = (table) => ({
+        control: Boolean(
+            table.previousElementSibling?.classList.contains('project-auto-update-shell'),
+        ),
+        enabled: table.classList.contains('autoupdater'),
     })
+    const host = globalThis.document.querySelector('#dynamic-table-host')
+    host.innerHTML = `
+        <table class="datatables autorefresh" data-id="dynamic-table" data-attributes='{"order":[]}'>
+            <thead><tr><th>Name</th></tr></thead>
+            <tbody><tr><td>Dynamic row</td></tr></tbody>
+        </table>
+    `
+    const table = host.querySelector('table')
+    const mounted = globalThis.Admin.Tables.scan(host)
+    const registered = globalThis.Admin.Tables.has(table)
+    const autoUpdateBeforeDestroy = inspectAutoUpdate(table)
+    const destroyed = globalThis.Admin.Components.destroy(host, 'data-table')
+    const autoUpdateAfterDestroy = inspectAutoUpdate(table)
 
-    expect(result).toEqual({ destroyed: 1, mounted: 1, registered: true, registrySize: 1 })
+    return {
+        autoUpdate: { after: autoUpdateAfterDestroy, before: autoUpdateBeforeDestroy },
+        destroyed,
+        mounted,
+        registered,
+        registrySize: globalThis.Admin.Tables.all().length,
+    }
+}
+
+async function exerciseDynamicLifecycle(page) {
+    const result = await page.evaluate(runDynamicLifecycle)
+
+    expect(result).toEqual({
+        autoUpdate: {
+            after: { control: false, enabled: false },
+            before: { control: true, enabled: true },
+        },
+        destroyed: 1,
+        mounted: 1,
+        registered: true,
+        registrySize: 1,
+    })
 }
 
 async function exerciseInlineEditor(page) {

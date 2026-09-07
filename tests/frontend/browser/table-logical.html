@@ -86,27 +86,6 @@
             </table>
         </main>
 
-        <span
-            data-admin-table-autoupdate
-            data-close-label="Stop auto-update"
-            data-interval="60000"
-            data-table-class="autorefresh"
-            hidden
-            style="--soa-datatables-autoupdate-color: currentColor"
-        >
-            <template data-admin-table-autoupdate-control>
-                <span class="project-auto-update-shell">
-                    <button
-                        class="autoupdater-close project-auto-update-close"
-                        data-admin-table-autoupdate-close
-                        type="button"
-                        aria-label="Pause project updates"
-                    >
-                        <strong class="project-auto-update-label">Pause</strong>
-                    </button>
-                </span>
-            </template>
-        </span>
         <div id="dynamic-table-host"></div>
 
         <script src="/public/default/profiles/development/js/admin-core.js"></script>
@@ -132,5 +111,36 @@
             }
         </script>
         <script src="/public/default/profiles/development/js/features/table.js"></script>
+        <span
+            data-admin-table-autoupdate
+            data-pause-label="Pause project updates"
+            data-resume-label="Resume project updates"
+            data-interval="60000"
+            data-table-classes='["autorefresh","scheduled-refresh"]'
+            hidden
+            style="--soa-datatables-autoupdate-color: currentColor"
+        >
+            <template data-admin-table-autoupdate-control>
+                <span class="autoupdater-bar project-auto-update-shell">
+                    <button
+                        class="autoupdater-toggle autoupdater-close project-auto-update-close"
+                        data-admin-table-autoupdate-toggle
+                        type="button"
+                        aria-label="Pause project updates"
+                        aria-pressed="false"
+                    >
+                        <span data-admin-table-autoupdate-pause-icon aria-hidden="true">Ⅱ</span>
+                        <span data-admin-table-autoupdate-resume-icon aria-hidden="true" hidden
+                            >▶</span
+                        >
+                        <strong
+                            class="autoupdater-label project-auto-update-label"
+                            data-admin-table-autoupdate-label
+                            >Pause project updates</strong
+                        >
+                    </button>
+                </span>
+            </template>
+        </span>
     </body>
 </html>

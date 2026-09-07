@@ -52,7 +52,8 @@ function openEditor(state) {
             submit: (value) => submitValue(state, value),
         },
     )
-    state.dependencies.components.scan(state.view.root, 'date-control')
+    state.dependencies.components.scan(state.view.root)
+    state.view.focus?.()
     dispatch(state, 'inline-edit:opened')
 
     return state.view
@@ -135,7 +136,7 @@ function closeEditor(state) {
 
     state.request?.abort()
     state.request = null
-    state.dependencies.components.destroy(state.view.root, 'date-control')
+    state.dependencies.components.destroy(state.view.root)
     state.view.destroy()
     state.view = null
     dispatch(state, 'inline-edit:closed')

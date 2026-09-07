@@ -62,7 +62,7 @@
             },
             "status": "same key/new implementation",
             "owner": "feature:tables",
-            "contract": "Keep the PHP/config surface while native modules and the DataTables 3 engine replace the legacy implementation. Incompatible raw DataTables 1 options are listed in docs/modernization/data-table-options.md."
+            "contract": "Keep the PHP/config surface while native modules and the DataTables 3 engine replace the legacy implementation. dt_autoupdate_interval is now expressed in seconds. Incompatible raw DataTables 1 options are listed in docs/modernization/data-table-options.md."
         },
         {
             "selector": {

@@ -14,6 +14,9 @@ class CssColorTest extends TestCase
             'rgb(10, 20, 30)',
             'rgb(10 20 30 / 50%)',
             'hsl(120deg 50% 25%)',
+            'black',
+            'rebeccapurple',
+            'currentColor',
             'transparent',
         ];
 
@@ -29,7 +32,6 @@ class CssColorTest extends TestCase
             null,
             [],
             '',
-            'red',
             '#12',
             '#12345g',
             'rgb(10)',

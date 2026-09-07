@@ -157,7 +157,10 @@ return [
         'add' => '加',
         'remove' => '删除',
         'clear' => '清',
+        'clear_all' => '清除全部',
         'theme' => '改变主题',
+        'pause_auto_update' => '暂停自动更新',
+        'resume_auto_update' => '继续自动更新',
     ],
 
     'message' => [

@@ -11,6 +11,8 @@
   --soa-inline-editor-muted: #6c757d;
   --soa-inline-editor-error: #d73925;
   --soa-inline-editor-shadow: rgba(0, 0, 0, 0.18);
+  --soa-inline-editor-backdrop: rgba(0, 0, 0, 0.55);
+  --soa-inline-editor-focus-ring: rgba(0, 123, 255, 0.2);
 }
 
 :root[data-color-scheme=dark] {
@@ -939,7 +941,7 @@
     display: block;
   }
   .soa-inline-editor-popup::backdrop {
-    background: rgba(0, 0, 0, 0.55);
+    background: var(--soa-inline-editor-backdrop);
     backdrop-filter: blur(1px);
   }
   .soa-inline-editor-popup .soa-inline-editor-form {
@@ -986,7 +988,56 @@
   .soa-inline-editor-control:focus {
     border-color: var(--soa-inline-editor-accent);
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.2);
+    box-shadow: 0 0 0 0.2rem var(--soa-inline-editor-focus-ring);
+  }
+  .soa-inline-editor-input {
+    position: relative;
+  }
+  .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 2.75rem;
+  }
+  .soa-inline-editor-clear {
+    position: absolute;
+    top: 0.25rem;
+    inset-inline-end: 0.25rem;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    color: var(--soa-inline-editor-muted);
+    line-height: 1;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    opacity: 0.65;
+  }
+  .soa-inline-editor-clear:hover,
+  .soa-inline-editor-clear:focus-visible {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-border);
+    outline: 0;
+    opacity: 1;
+  }
+  .soa-inline-editor-type-select .soa-inline-editor-input > [data-inline-editor-control],
+  .soa-inline-editor-type-number .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 4rem;
+  }
+  .soa-inline-editor-type-select .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 0;
+  }
+  /* stylelint-disable-next-line selector-class-pattern -- Vue Multiselect owns this selector. */
+  .soa-inline-editor-type-select .multiselect__tags {
+    padding-inline-end: 4.5rem;
+  }
+  .soa-inline-editor-type-select .soa-inline-editor-clear,
+  .soa-inline-editor-type-number .soa-inline-editor-clear {
+    inset-inline-end: 1.5rem;
+  }
+  .soa-inline-editor-type-select .soa-inline-editor-clear {
+    inset-inline-end: 2.5rem;
   }
   .soa-inline-editor-actions {
     display: flex;
@@ -995,12 +1046,9 @@
     padding-top: 0.75rem;
     border-top: 0.0625rem solid var(--soa-inline-editor-border);
   }
-  .soa-inline-editor-type-checkbox .soa-inline-editor-actions {
-    padding-top: 0;
-    border-top: 0;
-  }
   .soa-inline-editor-submit,
-  .soa-inline-editor-cancel {
+  .soa-inline-editor-cancel,
+  .soa-inline-editor-clear-all {
     padding: 0.25rem 0.5rem;
     cursor: pointer;
     border: 0.0625rem solid transparent;
@@ -1018,6 +1066,17 @@
     background: var(--soa-inline-editor-surface);
     border-color: var(--soa-inline-editor-border);
   }
+  .soa-inline-editor-clear-all {
+    margin-inline-end: auto;
+    color: var(--soa-inline-editor-muted);
+    background: transparent;
+  }
+  .soa-inline-editor-clear-all:hover,
+  .soa-inline-editor-clear-all:focus-visible {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-border);
+    outline: 0;
+  }
   .soa-inline-editor-error {
     max-width: 14rem;
     color: var(--soa-inline-editor-error);
@@ -1030,19 +1089,42 @@
     font-weight: 400;
     cursor: pointer;
   }
+  .soa-inline-editor-checklist {
+    max-height: min(18rem, 50vh);
+    padding-inline-end: 0.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
   .soa-inline-editor-check-input {
     width: 1rem;
     height: 1rem;
     accent-color: var(--soa-inline-editor-accent);
   }
-  .soa-inline-editor-type-range .soa-inline-editor-control {
+  .soa-inline-editor-type-range [data-inline-editor-range-input] {
     padding: 0;
     border: 0;
     box-shadow: none;
   }
+  .soa-inline-editor-type-range .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 0;
+  }
   .soa-inline-editor-range-value {
     color: var(--soa-inline-editor-muted);
     text-align: center;
+  }
+  .soa-inline-editor-range-number-wrap {
+    position: relative;
+    width: min(100%, 8rem);
+    justify-self: center;
+  }
+  .soa-inline-editor-range-number {
+    padding-inline-end: 4rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+  .soa-inline-editor-range-number-wrap .soa-inline-editor-clear {
+    inset-inline-end: 1.5rem;
   }
   .soa-inline-editor-form[aria-busy=true] {
     opacity: 0.65;
@@ -1075,35 +1157,66 @@
   .lightcolumn.table td.highlight {
     background-color: var(--soa-table-row-hover-color) !important;
   }
-  .datatables {
-    position: relative;
-  }
-  .datatables.autoupdater .autoupdater-close {
+  .autoupdater-bar {
     position: absolute;
+    width: calc(100% - 2em);
+    top: -0.95em;
     z-index: 2;
-    top: -1.3rem;
-    right: -0.6rem;
-    padding: 0.2rem;
-    border: 0;
-    color: var(--soa-muted-text-color);
-    background: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: color var(--soa-table-row-transition-duration);
+    height: 1.75rem;
   }
-  .datatables.autoupdater .autoupdater-close:hover, .datatables.autoupdater .autoupdater-close:focus-visible {
-    color: var(--soa-danger-color);
-  }
-  .datatables > svg {
+  .autoupdater-bar > svg {
     position: absolute;
-    top: 0;
-    width: 100%;
+    top: 50%;
+    left: 0;
+    width: calc(100% - 2.25rem);
     height: 0.125rem;
+    overflow: visible;
+    transform: translateY(-50%);
+    transition: opacity var(--soa-table-row-transition-duration);
+  }
+  .autoupdater-bar[data-state=paused] > svg {
+    opacity: 0.45;
+  }
+  .autoupdater-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    display: inline-grid;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 0.0625rem solid var(--soa-border-color);
+    border-radius: 50%;
+    color: var(--soa-muted-text-color);
+    background: var(--soa-surface-color);
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color var(--soa-table-row-transition-duration), color var(--soa-table-row-transition-duration);
+    place-items: center;
+  }
+  .autoupdater-toggle:hover, .autoupdater-toggle:focus-visible {
+    border-color: var(--soa-datatables-autoupdate-color);
+    color: var(--soa-datatables-autoupdate-color);
+    outline: none;
+  }
+  .autoupdater-toggle > [aria-hidden=true] {
+    grid-area: 1/1;
+  }
+  .autoupdater-label {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
   @media (width <= 48rem) {
-    .datatables.autoupdater .autoupdater-close {
-      top: -0.5rem;
-      right: 0;
+    .autoupdater-bar {
+      height: 1.5rem;
     }
   }
 }

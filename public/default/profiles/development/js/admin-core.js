@@ -1314,6 +1314,7 @@ var TableRegistry = /*#__PURE__*/function () {
   function TableRegistry() {
     _classCallCheck(this, TableRegistry);
     this.adapters = new Map();
+    this.listeners = new Set();
   }
   return _createClass(TableRegistry, [{
     key: "register",
@@ -1323,7 +1324,9 @@ var TableRegistry = /*#__PURE__*/function () {
       if (current && current !== adapter) {
         throw new Error('A table adapter is already registered for this element.');
       }
+      if (current === adapter) return adapter;
       this.adapters.set(adapter.element, adapter);
+      this.notify('registered', adapter);
       return adapter;
     }
   }, {
@@ -1333,6 +1336,7 @@ var TableRegistry = /*#__PURE__*/function () {
       assertElement(element);
       var adapter = (_this$adapters$get = this.adapters.get(element)) !== null && _this$adapters$get !== void 0 ? _this$adapters$get : null;
       this.adapters["delete"](element);
+      if (adapter) this.notify('unregistered', adapter);
       return adapter;
     }
   }, {
@@ -1363,6 +1367,18 @@ var TableRegistry = /*#__PURE__*/function () {
       return _toConsumableArray(this.adapters.values());
     }
   }, {
+    key: "subscribe",
+    value: function subscribe(listener) {
+      var _this = this;
+      if (typeof listener !== 'function') {
+        throw new TypeError('Table registry listener must be a function.');
+      }
+      this.listeners.add(listener);
+      return function () {
+        return _this.listeners["delete"](listener);
+      };
+    }
+  }, {
     key: "reload",
     value: function reload(element) {
       return invokeAdapters(this, 'reload', element);
@@ -1380,6 +1396,16 @@ var TableRegistry = /*#__PURE__*/function () {
         throw new TypeError('Table adapter selectedRows() must return an array.');
       }
       return rows;
+    }
+  }, {
+    key: "notify",
+    value: function notify(type, adapter) {
+      this.listeners.forEach(function (listener) {
+        return listener({
+          adapter: adapter,
+          type: type
+        });
+      });
     }
   }]);
 }();

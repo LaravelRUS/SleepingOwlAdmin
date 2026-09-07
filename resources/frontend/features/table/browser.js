@@ -38,6 +38,7 @@ function installFeatures(target, admin, options) {
 
     return {
         autoUpdates: installTableAutoUpdates(admin, {
+            now: () => target.performance.now(),
             ProgressBar,
             root,
             scheduler: target,

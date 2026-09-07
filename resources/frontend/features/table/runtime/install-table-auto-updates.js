@@ -8,6 +8,7 @@ export function installTableAutoUpdates(admin, options) {
     const definition = {
         mount: (host) =>
             mountTableAutoUpdates(host, {
+                now: options.now,
                 ProgressBar: options.ProgressBar,
                 scheduler: options.scheduler,
                 tables: admin.Tables,
@@ -18,8 +19,15 @@ export function installTableAutoUpdates(admin, options) {
     const scan = (root = options.root) => admin.Components.scan(root, TABLE_AUTO_UPDATES_COMPONENT)
 
     admin.Components.register(definition)
+    scanAfterDocumentReady(options.root, scan)
 
     return { definition, scan }
+}
+
+function scanAfterDocumentReady(root, scan) {
+    if (root.readyState !== 'loading' || typeof root.addEventListener !== 'function') return
+
+    root.addEventListener('DOMContentLoaded', () => scan(root), { once: true })
 }
 
 function assertOptions(admin, options) {

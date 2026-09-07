@@ -3,6 +3,7 @@ const ADAPTER_METHODS = ['reload', 'destroy', 'clearState', 'selectedRows']
 export class TableRegistry {
     constructor() {
         this.adapters = new Map()
+        this.listeners = new Set()
     }
 
     register(adapter) {
@@ -12,8 +13,10 @@ export class TableRegistry {
         if (current && current !== adapter) {
             throw new Error('A table adapter is already registered for this element.')
         }
+        if (current === adapter) return adapter
 
         this.adapters.set(adapter.element, adapter)
+        this.notify('registered', adapter)
 
         return adapter
     }
@@ -23,6 +26,7 @@ export class TableRegistry {
 
         const adapter = this.adapters.get(element) ?? null
         this.adapters.delete(element)
+        if (adapter) this.notify('unregistered', adapter)
 
         return adapter
     }
@@ -53,6 +57,16 @@ export class TableRegistry {
         return [...this.adapters.values()]
     }
 
+    subscribe(listener) {
+        if (typeof listener !== 'function') {
+            throw new TypeError('Table registry listener must be a function.')
+        }
+
+        this.listeners.add(listener)
+
+        return () => this.listeners.delete(listener)
+    }
+
     reload(element) {
         return invokeAdapters(this, 'reload', element)
     }
@@ -69,6 +83,10 @@ export class TableRegistry {
         }
 
         return rows
+    }
+
+    notify(type, adapter) {
+        this.listeners.forEach((listener) => listener({ adapter, type }))
     }
 }
 

@@ -28473,6 +28473,12 @@
   .drag-cursor {
     cursor: grab !important;
   }
+  /**
+  Fix Datatable css
+   */
+  .dataTable .dt-column-order {
+    margin-left: 0.5em;
+  }
   [class*=sidebar-dark-] .nav-sidebar > .nav-item > .nav-treeview {
     background-color: rgba(255, 255, 255, 0.03);
     padding-left: 1rem;

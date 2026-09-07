@@ -1,1 +1,77 @@
-:root{--soa-dropdown-surface:#fff;--soa-dropdown-text:#212529;--soa-dropdown-border:#dee2e6;--soa-dropdown-hover-surface:#f8f9fa;--soa-dropdown-focus:#007bff;--soa-dropdown-shadow-color:rgba(0,0,0,.175);--soa-dropdown-min-width:10rem;--soa-dropdown-offset:0.125rem;--soa-dropdown-padding-block:0.5rem;--soa-dropdown-padding-inline:0;--soa-dropdown-item-padding-block:0.25rem;--soa-dropdown-item-padding-inline:1.5rem;--soa-dropdown-border-width:1px;--soa-dropdown-radius:0.25rem;--soa-dropdown-font-size:1rem;--soa-dropdown-line-height:1.5;--soa-dropdown-focus-width:2px;--soa-dropdown-shadow:0 0.5rem 1rem rgba(0,0,0,.175)}.dark-mode,:root[data-color-scheme=dark]{--soa-dropdown-surface:#343a40;--soa-dropdown-text:#f8f9fa;--soa-dropdown-border:#4b545c;--soa-dropdown-hover-surface:#3f474e}@layer sleepingowl-theme.dropdown{.dropdown-menu{background:var(--soa-dropdown-surface);border:var(--soa-dropdown-border-width) solid var(--soa-dropdown-border);border-radius:var(--soa-dropdown-radius);box-shadow:var(--soa-dropdown-shadow);color:var(--soa-dropdown-text);font-size:var(--soa-dropdown-font-size);inset-block-start:calc(100% + var(--soa-dropdown-offset));inset-inline-end:0;line-height:var(--soa-dropdown-line-height);min-inline-size:var(--soa-dropdown-min-width);padding:var(--soa-dropdown-padding-block) var(--soa-dropdown-padding-inline)}.dropdown-item{background:transparent;border:0;color:inherit;display:block;inline-size:100%;padding:var(--soa-dropdown-item-padding-block) var(--soa-dropdown-item-padding-inline);text-align:start;text-decoration:none;white-space:nowrap}.dropdown-item:hover{background:var(--soa-dropdown-hover-surface);color:inherit}.dropdown-item:focus-visible{outline:var(--soa-dropdown-focus-width) solid var(--soa-dropdown-focus);outline-offset:calc(var(--soa-dropdown-focus-width)*-1)}.dropdown-menu.btn-actions{background:transparent;border:0;box-shadow:none;padding:0}.dropup>.dropdown-menu{inset-block:auto calc(100% + var(--soa-dropdown-offset))}.dropdown-menu-left{inset-inline:0 auto}}
+:root {
+  --soa-dropdown-surface: #fff;
+  --soa-dropdown-text: #212529;
+  --soa-dropdown-border: #dee2e6;
+  --soa-dropdown-hover-surface: #f8f9fa;
+  --soa-dropdown-focus: #007bff;
+  --soa-dropdown-shadow-color: rgba(0, 0, 0, 0.175);
+  --soa-dropdown-min-width: 10rem;
+  --soa-dropdown-offset: 0.125rem;
+  --soa-dropdown-padding-block: 0.5rem;
+  --soa-dropdown-padding-inline: 0;
+  --soa-dropdown-item-padding-block: 0.25rem;
+  --soa-dropdown-item-padding-inline: 1.5rem;
+  --soa-dropdown-border-width: 1px;
+  --soa-dropdown-radius: 0.25rem;
+  --soa-dropdown-font-size: 1rem;
+  --soa-dropdown-line-height: 1.5;
+  --soa-dropdown-focus-width: 2px;
+  --soa-dropdown-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+:root[data-color-scheme=dark],
+.dark-mode {
+  --soa-dropdown-surface: #343a40;
+  --soa-dropdown-text: #f8f9fa;
+  --soa-dropdown-border: #4b545c;
+  --soa-dropdown-hover-surface: #3f474e;
+}
+
+@layer sleepingowl-theme.dropdown {
+  .dropdown-menu {
+    inset-block-start: calc(100% + var(--soa-dropdown-offset));
+    inset-inline-end: 0;
+    min-inline-size: var(--soa-dropdown-min-width);
+    padding: var(--soa-dropdown-padding-block) var(--soa-dropdown-padding-inline);
+    border: var(--soa-dropdown-border-width) solid var(--soa-dropdown-border);
+    border-radius: var(--soa-dropdown-radius);
+    background: var(--soa-dropdown-surface);
+    box-shadow: var(--soa-dropdown-shadow);
+    color: var(--soa-dropdown-text);
+    font-size: var(--soa-dropdown-font-size);
+    line-height: var(--soa-dropdown-line-height);
+  }
+  .dropdown-item {
+    display: block;
+    inline-size: 100%;
+    padding: var(--soa-dropdown-item-padding-block) var(--soa-dropdown-item-padding-inline);
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: start;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .dropdown-item:hover {
+    background: var(--soa-dropdown-hover-surface);
+    color: inherit;
+  }
+  .dropdown-item:focus-visible {
+    outline: var(--soa-dropdown-focus-width) solid var(--soa-dropdown-focus);
+    outline-offset: calc(-1 * var(--soa-dropdown-focus-width));
+  }
+  .dropdown-menu.btn-actions {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .dropup > .dropdown-menu {
+    inset-block: auto calc(100% + var(--soa-dropdown-offset));
+  }
+  .dropdown-menu-left {
+    inset-inline: 0 auto;
+  }
+}
+
+/*# sourceMappingURL=legacy-adminlte.css.map*/

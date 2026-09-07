@@ -3,114 +3,37 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Form\FormDefault;
+use SleepingOwl\Admin\Display\Column\Editable\Concerns\InteractsWithEditableColumn;
+use SleepingOwl\Admin\Form\Element\Number as FormNumber;
 
-class Number extends EditableColumn implements ColumnEditableInterface
+class Number extends FormNumber implements ColumnEditableInterface
 {
-    /**
-     * @var string
-     */
+    use InteractsWithEditableColumn;
+
     protected $view = 'column.editable.number';
 
-    /**
-     * @var int
-     */
-    protected $min;
-
-    /**
-     * @var int
-     */
-    protected $max;
-
-    /**
-     * @var int
-     */
-    protected $step;
-
-    /**
-     * Number constructor.
-     *
-     * @param  $name
-     * @param  $label
-     */
     public function __construct($name, $label = null, $small = null)
     {
-        parent::__construct($name, $label, $small);
+        parent::__construct($name, $label);
+        $this->initializeEditableColumn($label, $small);
     }
 
-    /**
-     * @param  int  $min
-     * @return $this
-     */
-    public function setMin($min)
+    public function toArray(): array
     {
-        $this->min = $min;
-
-        return $this;
-    }
-
-    /**
-     * @param  int  $max
-     * @return $this
-     */
-    public function setMax($max)
-    {
-        $this->max = $max;
-
-        return $this;
-    }
-
-    /**
-     * @param  int  $step
-     * @return $this
-     */
-    public function setStep($step)
-    {
-        $this->step = $step;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return parent::toArray() + [
-            'min' => $this->min,
-            'max' => $this->max,
-            'step' => $this->step,
+        return $this->editableColumnToArray() + [
+            'min' => $this->getMin(),
+            'max' => $this->getMax(),
+            'step' => $this->getStep(),
         ];
     }
 
-    /**
-     * @param  Request  $request
-     * @return void
-     *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
-     */
     public function save(Request $request)
     {
-        $form = new FormDefault([
-            new \SleepingOwl\Admin\Form\Element\Number(
-                $this->getName()
-            ),
-        ]);
-
-        $model = $this->getModel();
-
-        $array = [];
-        Arr::set($array, $this->getName(), $request->input('value', null));
-
-        $request->merge($array);
-
-        $form->setModelClass(get_class($model));
-        $form->initialize();
-        $form->setId($model->getKey());
-
-        $form->saveForm($request);
+        return $this->persistInlineFormValue(
+            $request,
+            fn (Request $mappedRequest) => parent::save($mappedRequest),
+            fn (Request $mappedRequest) => parent::afterSave($mappedRequest)
+        );
     }
 }

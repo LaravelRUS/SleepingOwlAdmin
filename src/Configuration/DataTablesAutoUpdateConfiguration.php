@@ -9,23 +9,26 @@ final class DataTablesAutoUpdateConfiguration
 {
     private const DEFAULT_COLOR = '#dc3545';
 
-    private const DEFAULT_INTERVAL_MINUTES = 5;
+    private const DEFAULT_INTERVAL_SECONDS = 300;
+
+    private const DEFAULT_TABLE_CLASS = 'autoupdate';
 
     private bool $enabled;
 
-    private int $intervalMinutes;
+    private int $intervalSeconds;
 
-    private ?string $tableClass;
+    /** @var list<string> */
+    private array $tableClasses;
 
     private string $color;
 
     public function __construct(Repository $config)
     {
         $this->enabled = (bool) $config->get('sleeping_owl.datatables_settings.dt_autoupdate', false);
-        $this->intervalMinutes = $this->normalizeInterval(
+        $this->intervalSeconds = $this->normalizeIntervalSeconds(
             $config->get('sleeping_owl.datatables_settings.dt_autoupdate_interval')
         );
-        $this->tableClass = $this->normalizeClass(
+        $this->tableClasses = $this->normalizeClasses(
             $config->get('sleeping_owl.datatables_settings.dt_autoupdate_class')
         );
         $this->color = $this->normalizeColor(
@@ -38,24 +41,43 @@ final class DataTablesAutoUpdateConfiguration
         return $this->enabled;
     }
 
+    /** @deprecated Use intervalSeconds() for the configured interval. */
     public function intervalMinutes(): int
     {
-        return $this->intervalMinutes;
+        return (int) ceil($this->intervalSeconds / 60);
+    }
+
+    public function intervalSeconds(): int
+    {
+        return $this->intervalSeconds;
     }
 
     public function intervalMilliseconds(): int
     {
-        return $this->intervalMinutes * 60 * 1000;
+        return $this->intervalSeconds * 1000;
     }
 
     public function tableClass(): ?string
     {
-        return $this->tableClass;
+        return $this->tableClasses[0] ?? null;
+    }
+
+    /** @return list<string> */
+    public function tableClasses(): array
+    {
+        return $this->tableClasses;
     }
 
     public function tableSelector(): string
     {
-        return '.datatables'.($this->tableClass === null ? '' : '.'.$this->tableClass);
+        if ($this->tableClasses === []) {
+            return '.datatables';
+        }
+
+        return implode(', ', array_map(
+            static fn (string $class): string => '.datatables.'.$class,
+            $this->tableClasses
+        ));
     }
 
     public function color(): string
@@ -63,18 +85,47 @@ final class DataTablesAutoUpdateConfiguration
         return $this->color;
     }
 
-    private function normalizeInterval(mixed $value): int
+    private function normalizeIntervalSeconds(mixed $value): int
     {
-        $minutes = (int) $value;
+        $seconds = (int) $value;
 
-        return $minutes >= 1 ? $minutes : self::DEFAULT_INTERVAL_MINUTES;
+        return $seconds >= 1 ? $seconds : self::DEFAULT_INTERVAL_SECONDS;
     }
 
-    private function normalizeClass(mixed $value): ?string
+    /** @return list<string> */
+    private function normalizeClasses(mixed $value): array
     {
-        $class = trim((string) $value);
+        if ($value === null || $value === false || $value === '') {
+            return [self::DEFAULT_TABLE_CLASS];
+        }
 
-        return $class === '' ? null : $class;
+        if (! is_string($value) && ! is_array($value)) {
+            throw new \InvalidArgumentException(
+                '[sleeping_owl.datatables_settings.dt_autoupdate_class] must be a string or an array.'
+            );
+        }
+
+        $values = is_array($value) ? $value : [$value];
+        $classes = [];
+
+        foreach ($values as $item) {
+            if (! is_string($item)) {
+                throw new \InvalidArgumentException(
+                    '[sleeping_owl.datatables_settings.dt_autoupdate_class] must contain only strings.'
+                );
+            }
+
+            foreach (preg_split('/[\s,]+/u', trim($item), -1, PREG_SPLIT_NO_EMPTY) ?: [] as $class) {
+                $class = ltrim($class, '.');
+                if ($class !== '') {
+                    $classes[] = $class;
+                }
+            }
+        }
+
+        $classes[] = self::DEFAULT_TABLE_CLASS;
+
+        return array_values(array_unique($classes));
     }
 
     private function normalizeColor(mixed $value): string

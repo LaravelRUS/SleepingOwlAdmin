@@ -1,1 +1,21 @@
-:root{--soa-sidebar-transition-duration:0.3s}@layer sleepingowl-feature.sidebar{[data-widget=pushmenu]{cursor:pointer}.nav-treeview[hidden]{display:none!important}.content-wrapper,.main-footer,.main-header,.main-sidebar{transition-duration:var(--soa-sidebar-transition-duration);transition-property:margin,transform,width}}
+:root {
+  --soa-sidebar-transition-duration: 0.3s;
+}
+
+@layer sleepingowl-feature.sidebar {
+  [data-widget=pushmenu] {
+    cursor: pointer;
+  }
+  .nav-treeview[hidden] {
+    display: none !important;
+  }
+  .main-sidebar,
+  .content-wrapper,
+  .main-header,
+  .main-footer {
+    transition-duration: var(--soa-sidebar-transition-duration);
+    transition-property: margin, transform, width;
+  }
+}
+
+/*# sourceMappingURL=sidebar.css.map*/

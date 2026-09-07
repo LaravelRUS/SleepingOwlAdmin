@@ -1244,11 +1244,22 @@ function invokeNamedCallback(root, message, parameters) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AUTO_UPDATE_COLOR_PROPERTY": () => (/* binding */ AUTO_UPDATE_COLOR_PROPERTY),
+/* harmony export */   "matchesAutoUpdateTable": () => (/* binding */ matchesAutoUpdateTable),
 /* harmony export */   "mountTableAutoUpdate": () => (/* binding */ mountTableAutoUpdate),
 /* harmony export */   "mountTableAutoUpdates": () => (/* binding */ mountTableAutoUpdates),
-/* harmony export */   "readAutoUpdateConfig": () => (/* binding */ readAutoUpdateConfig)
+/* harmony export */   "readAutoUpdateConfig": () => (/* binding */ readAutoUpdateConfig),
+/* harmony export */   "readAutoUpdateControlTemplate": () => (/* binding */ readAutoUpdateControlTemplate)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
@@ -1256,61 +1267,215 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var AUTO_UPDATE_COLOR_PROPERTY = '--soa-datatables-autoupdate-color';
 var CONTROL_TEMPLATE_SELECTOR = 'template[data-admin-table-autoupdate-control]';
-var CLOSE_CONTROL_SELECTOR = '[data-admin-table-autoupdate-close]';
+var TOGGLE_CONTROL_SELECTOR = '[data-admin-table-autoupdate-toggle], [data-admin-table-autoupdate-close]';
+var LABEL_SELECTOR = '[data-admin-table-autoupdate-label]';
+var PAUSE_ICON_SELECTOR = '[data-admin-table-autoupdate-pause-icon]';
+var RESUME_ICON_SELECTOR = '[data-admin-table-autoupdate-resume-icon]';
 function mountTableAutoUpdates(host, dependencies) {
   assertTableCollection(dependencies.tables);
-  var config = readAutoUpdateConfig(host);
-  var controlTemplate = readControlTemplate(host);
-  var controllers = matchingTables(dependencies.tables, config.tableClass).map(function (table) {
-    return mountTableAutoUpdate(table, config, _objectSpread(_objectSpread({}, dependencies), {}, {
-      controlTemplate: controlTemplate
-    }));
-  });
-  return {
-    destroy: function destroy() {
-      controllers.forEach(function (controller) {
-        return controller.destroy();
-      });
-    }
-  };
+  return new TableAutoUpdateCollection(host, dependencies);
 }
 function mountTableAutoUpdate(table, config, dependencies) {
+  var _dependencies$now;
   assertDependencies(dependencies);
-  var view = cloneControl(dependencies.controlTemplate);
-  var bar = createProgressBar(table, config, dependencies.ProgressBar);
-  var timer = null;
-  var stopped = false;
-  table.classList.add('autoupdater');
-  table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, config.color);
-  table.appendChild(view.root);
-  var schedule = function schedule() {
-    bar.animate(1);
-    timer = dependencies.scheduler.setTimeout(refresh, config.interval);
-  };
-  var refresh = function refresh() {
-    bar.set(0);
-    if (stopped) return;
-    dependencies.tables.reload(table);
-    schedule();
-  };
-  var _destroy = function destroy() {
-    var _bar$destroy;
-    if (stopped) return;
-    stopped = true;
-    dependencies.scheduler.clearTimeout(timer);
-    view.close.removeEventListener('click', _destroy);
-    view.root.remove();
-    bar.set(0);
-    (_bar$destroy = bar.destroy) === null || _bar$destroy === void 0 || _bar$destroy.call(bar);
-    table.classList.remove('autoupdater');
-    table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY);
-  };
-  view.close.addEventListener('click', _destroy);
-  schedule();
-  return {
-    destroy: _destroy
-  };
+  var settings = normalizeMountConfig(config);
+  var mounted = mountProgressView(table, settings, dependencies);
+  var controller = new TableAutoUpdateController(_objectSpread(_objectSpread({}, mounted), {}, {
+    now: (_dependencies$now = dependencies.now) !== null && _dependencies$now !== void 0 ? _dependencies$now : Date.now,
+    scheduler: dependencies.scheduler,
+    settings: settings,
+    table: table,
+    tables: dependencies.tables
+  }));
+  return controller.start();
 }
+var TableAutoUpdateCollection = /*#__PURE__*/function () {
+  function TableAutoUpdateCollection(host, dependencies) {
+    var _this = this;
+    _classCallCheck(this, TableAutoUpdateCollection);
+    this.config = readAutoUpdateConfig(host);
+    this.controllers = new Map();
+    this.dependencies = _objectSpread(_objectSpread({}, dependencies), {}, {
+      controlTemplate: readAutoUpdateControlTemplate(host)
+    });
+    this.unsubscribe = dependencies.tables.subscribe(function (event) {
+      return _this.registryChanged(event);
+    });
+    try {
+      dependencies.tables.all().forEach(function (adapter) {
+        return _this.mount(adapter);
+      });
+    } catch (error) {
+      this.destroy();
+      throw error;
+    }
+  }
+  return _createClass(TableAutoUpdateCollection, [{
+    key: "registryChanged",
+    value: function registryChanged(_ref) {
+      var adapter = _ref.adapter,
+        type = _ref.type;
+      if (type === 'registered') this.mount(adapter);
+      if (type === 'unregistered') this.unmount(adapter);
+    }
+  }, {
+    key: "mount",
+    value: function mount(adapter) {
+      var table = adapter.element;
+      if (!this.matches(table)) return;
+      var controller = mountTableAutoUpdate(table, this.config, this.dependencies);
+      this.controllers.set(table, controller);
+    }
+  }, {
+    key: "matches",
+    value: function matches(table) {
+      return !this.controllers.has(table) && !table.classList.contains('autoupdater') && matchesAutoUpdateTable(table, this.config.tableClasses);
+    }
+  }, {
+    key: "unmount",
+    value: function unmount(adapter) {
+      var _this$controllers$get;
+      (_this$controllers$get = this.controllers.get(adapter.element)) === null || _this$controllers$get === void 0 || _this$controllers$get.destroy();
+      this.controllers["delete"](adapter.element);
+    }
+  }, {
+    key: "pause",
+    value: function pause() {
+      this.controllers.forEach(function (controller) {
+        return controller.pause();
+      });
+    }
+  }, {
+    key: "resume",
+    value: function resume() {
+      this.controllers.forEach(function (controller) {
+        return controller.resume();
+      });
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.unsubscribe();
+      this.controllers.forEach(function (controller) {
+        return controller.destroy();
+      });
+      this.controllers.clear();
+    }
+  }]);
+}();
+var TableAutoUpdateController = /*#__PURE__*/function () {
+  function TableAutoUpdateController(_ref2) {
+    var bar = _ref2.bar,
+      now = _ref2.now,
+      scheduler = _ref2.scheduler,
+      settings = _ref2.settings,
+      table = _ref2.table,
+      tables = _ref2.tables,
+      view = _ref2.view;
+    _classCallCheck(this, TableAutoUpdateController);
+    this.bar = bar;
+    this.now = now;
+    this.scheduler = scheduler;
+    this.settings = settings;
+    this.table = table;
+    this.tables = tables;
+    this.view = view;
+    this.deadline = 0;
+    this.destroyed = false;
+    this._paused = false;
+    this.remaining = settings.interval;
+    this.timer = null;
+    this.refresh = this.refresh.bind(this);
+    this.toggle = this.toggle.bind(this);
+  }
+  return _createClass(TableAutoUpdateController, [{
+    key: "start",
+    value: function start() {
+      this.view.toggle.addEventListener('click', this.toggle);
+      this.bar.set(0);
+      this.sync();
+      this.schedule(this.settings.interval);
+      return this;
+    }
+  }, {
+    key: "schedule",
+    value: function schedule(delay) {
+      var resumeProgress = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      this.remaining = delay;
+      this.deadline = this.now() + delay;
+      if (resumeProgress && typeof this.bar.resume === 'function') this.bar.resume();else this.bar.animate(1, {
+        duration: delay
+      });
+      this.timer = this.scheduler.setTimeout(this.refresh, delay);
+    }
+  }, {
+    key: "refresh",
+    value: function refresh() {
+      this.timer = null;
+      this.bar.set(0);
+      if (this._paused || this.destroyed) return;
+      this.tables.reload(this.table);
+      this.schedule(this.settings.interval);
+    }
+  }, {
+    key: "pause",
+    value: function pause() {
+      var _this$bar$stop, _this$bar;
+      if (this._paused || this.destroyed) return false;
+      this.remaining = Math.max(0, this.deadline - this.now());
+      this.clearTimer();
+      if (typeof this.bar.pause === 'function') this.bar.pause();else (_this$bar$stop = (_this$bar = this.bar).stop) === null || _this$bar$stop === void 0 || _this$bar$stop.call(_this$bar);
+      this._paused = true;
+      this.sync();
+      return true;
+    }
+  }, {
+    key: "resume",
+    value: function resume() {
+      if (!this._paused || this.destroyed) return false;
+      this._paused = false;
+      this.sync();
+      if (this.remaining <= 0) this.refresh();else this.schedule(this.remaining, true);
+      return true;
+    }
+  }, {
+    key: "toggle",
+    value: function toggle() {
+      return this._paused ? this.resume() : this.pause();
+    }
+  }, {
+    key: "sync",
+    value: function sync() {
+      syncControlState(this.table, this.view, this.settings, this._paused);
+    }
+  }, {
+    key: "clearTimer",
+    value: function clearTimer() {
+      if (this.timer === null) return;
+      this.scheduler.clearTimeout(this.timer);
+      this.timer = null;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      var _this$bar$destroy, _this$bar2;
+      if (this.destroyed) return;
+      this.destroyed = true;
+      this.clearTimer();
+      this.view.toggle.removeEventListener('click', this.toggle);
+      this.bar.set(0);
+      (_this$bar$destroy = (_this$bar2 = this.bar).destroy) === null || _this$bar$destroy === void 0 || _this$bar$destroy.call(_this$bar2);
+      this.view.root.remove();
+      this.table.classList.remove('autoupdater', 'autoupdater-paused');
+      this.table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY);
+    }
+  }, {
+    key: "paused",
+    get: function get() {
+      return this._paused;
+    }
+  }]);
+}();
 function readAutoUpdateConfig(host) {
   var interval = Number(host.dataset.interval);
   var color = host.style.getPropertyValue(AUTO_UPDATE_COLOR_PROPERTY).trim();
@@ -1321,20 +1486,14 @@ function readAutoUpdateConfig(host) {
     throw new TypeError('Table auto-update requires a configured color.');
   }
   return {
-    closeLabel: host.dataset.closeLabel || 'Stop auto-update',
     color: color,
     interval: interval,
-    tableClass: host.dataset.tableClass || null
+    pauseLabel: host.dataset.pauseLabel || host.dataset.closeLabel || 'Pause auto-update',
+    resumeLabel: host.dataset.resumeLabel || 'Resume auto-update',
+    tableClasses: readTableClasses(host)
   };
 }
-function matchingTables(tables, tableClass) {
-  return tables.all().map(function (adapter) {
-    return adapter.element;
-  }).filter(function (table) {
-    return !tableClass || table.classList.contains(tableClass);
-  });
-}
-function readControlTemplate(host) {
+function readAutoUpdateControlTemplate(host) {
   var _host$querySelector, _template$content;
   var template = (_host$querySelector = host.querySelector) === null || _host$querySelector === void 0 ? void 0 : _host$querySelector.call(host, CONTROL_TEMPLATE_SELECTOR);
   if (typeof (template === null || template === void 0 || (_template$content = template.content) === null || _template$content === void 0 ? void 0 : _template$content.cloneNode) !== 'function') {
@@ -1342,34 +1501,123 @@ function readControlTemplate(host) {
   }
   return template;
 }
+function matchesAutoUpdateTable(table, tableClasses) {
+  return tableClasses.length === 0 || tableClasses.some(function (name) {
+    return table.classList.contains(name);
+  });
+}
+function readTableClasses(host) {
+  var serialized = host.dataset.tableClasses;
+  if (!serialized) return normalizeTableClasses([host.dataset.tableClass]);
+  var classes;
+  try {
+    classes = JSON.parse(serialized);
+  } catch (_unused) {
+    throw new TypeError('Table auto-update classes must be a JSON array.');
+  }
+  if (!Array.isArray(classes)) {
+    throw new TypeError('Table auto-update classes must be a JSON array.');
+  }
+  return normalizeTableClasses(classes);
+}
+function normalizeTableClasses(classes) {
+  if (classes.some(function (name) {
+    return name !== undefined && typeof name !== 'string';
+  })) {
+    throw new TypeError('Table auto-update classes must contain only strings.');
+  }
+  return _toConsumableArray(new Set(classes.filter(Boolean).flatMap(function (name) {
+    return name.trim().split(/[\t-\r ,\xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+/);
+  }).map(function (name) {
+    return name.replace(/^\.+/, '');
+  }).filter(Boolean)));
+}
+function normalizeMountConfig(config) {
+  return {
+    color: config.color,
+    interval: config.interval,
+    pauseLabel: config.pauseLabel || config.closeLabel || 'Pause auto-update',
+    resumeLabel: config.resumeLabel || 'Resume auto-update'
+  };
+}
+function mountProgressView(table, settings, dependencies) {
+  var _view$root$style;
+  var view = cloneControl(dependencies.controlTemplate);
+  insertControlBeforeTable(table, view.root);
+  table.classList.add('autoupdater');
+  table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color);
+  (_view$root$style = view.root.style) === null || _view$root$style === void 0 || _view$root$style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color);
+  try {
+    var bar = createProgressBar(view.root, settings, dependencies.ProgressBar);
+    return {
+      bar: bar,
+      view: view
+    };
+  } catch (error) {
+    view.root.remove();
+    table.classList.remove('autoupdater');
+    table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY);
+    throw error;
+  }
+}
 function cloneControl(template) {
-  var _fragment$children, _root$matches, _root$querySelector;
+  var _fragment$children;
   var fragment = template.content.cloneNode(true);
-  if (((_fragment$children = fragment.children) === null || _fragment$children === void 0 ? void 0 : _fragment$children.length) !== 1) {
+  var roots = (_fragment$children = fragment.children) !== null && _fragment$children !== void 0 ? _fragment$children : [];
+  if (roots.length !== 1) {
     throw new TypeError('Table auto-update control template requires one root element.');
   }
   var root = fragment.firstElementChild;
-  var close = (_root$matches = root.matches) !== null && _root$matches !== void 0 && _root$matches.call(root, CLOSE_CONTROL_SELECTOR) ? root : (_root$querySelector = root.querySelector) === null || _root$querySelector === void 0 ? void 0 : _root$querySelector.call(root, CLOSE_CONTROL_SELECTOR);
-  if (!close) {
-    throw new TypeError('Table auto-update control template requires a close control.');
+  var toggle = findToggle(root);
+  if (!toggle) {
+    throw new TypeError('Table auto-update control template requires a toggle control.');
   }
   return {
-    close: close,
-    root: root
+    label: findElement(root, LABEL_SELECTOR),
+    pauseIcon: findElement(root, PAUSE_ICON_SELECTOR),
+    resumeIcon: findElement(root, RESUME_ICON_SELECTOR),
+    root: root,
+    toggle: toggle
   };
 }
-function createProgressBar(table, config, ProgressBar) {
-  return new ProgressBar.Line(table, {
+function findToggle(root) {
+  if (typeof root.matches === 'function' && root.matches(TOGGLE_CONTROL_SELECTOR)) return root;
+  return findElement(root, TOGGLE_CONTROL_SELECTOR);
+}
+function findElement(root, selector) {
+  if (typeof root.querySelector !== 'function') return null;
+  return root.querySelector(selector);
+}
+function insertControlBeforeTable(table, root) {
+  var _table$parentNode;
+  if (typeof ((_table$parentNode = table.parentNode) === null || _table$parentNode === void 0 ? void 0 : _table$parentNode.insertBefore) !== 'function') {
+    throw new TypeError('Table auto-update requires the table to be attached to the DOM.');
+  }
+  table.parentNode.insertBefore(root, table);
+}
+function syncControlState(table, view, config, paused) {
+  var label = paused ? config.resumeLabel : config.pauseLabel;
+  if (paused) table.classList.add('autoupdater-paused');else table.classList.remove('autoupdater-paused');
+  if (view.root.dataset) view.root.dataset.state = paused ? 'paused' : 'running';
+  view.toggle.setAttribute('aria-label', label);
+  view.toggle.setAttribute('aria-pressed', String(paused));
+  view.toggle.setAttribute('title', label);
+  if (view.label) view.label.textContent = label;
+  if (view.pauseIcon) view.pauseIcon.hidden = paused;
+  if (view.resumeIcon) view.resumeIcon.hidden = !paused;
+}
+function createProgressBar(container, config, ProgressBar) {
+  return new ProgressBar.Line(container, {
     color: "var(".concat(AUTO_UPDATE_COLOR_PROPERTY, ")"),
     duration: config.interval,
     strokeWidth: 2,
     svgStyle: null
   });
 }
-function assertDependencies(_ref) {
-  var ProgressBar = _ref.ProgressBar,
-    scheduler = _ref.scheduler,
-    tables = _ref.tables;
+function assertDependencies(_ref3) {
+  var ProgressBar = _ref3.ProgressBar,
+    scheduler = _ref3.scheduler,
+    tables = _ref3.tables;
   if (typeof (ProgressBar === null || ProgressBar === void 0 ? void 0 : ProgressBar.Line) !== 'function') {
     throw new TypeError('Table auto-update requires ProgressBar.Line.');
   }
@@ -1384,7 +1632,7 @@ function assertScheduler(scheduler) {
   }
 }
 function assertTableCollection(tables) {
-  if (typeof (tables === null || tables === void 0 ? void 0 : tables.all) !== 'function') {
+  if (typeof (tables === null || tables === void 0 ? void 0 : tables.all) !== 'function' || typeof (tables === null || tables === void 0 ? void 0 : tables.subscribe) !== 'function') {
     throw new TypeError('Table auto-update requires the Admin.Tables collection.');
   }
 }
@@ -1668,12 +1916,22 @@ function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 var CHECK_INPUT_SELECTOR = '[data-inline-editor-check-input]';
 var RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]';
+var RANGE_NUMBER_SELECTOR = '[data-inline-editor-range-number]';
 var RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]';
+var RANGE_EMPTY_VALUE = '0';
+var SELECT_CLEAR_EVENT = 'soa:inline-editor-clear';
+var SELECT_CONTROL_SELECTOR = '[data-inline-editor-select]';
+var SELECT_FOCUS_SELECTOR = '.multiselect__input, .multiselect';
+var SELECT_NATIVE_SELECTOR = '[data-inline-editor-select-native]';
 function bindInlineEditorControl(element, config) {
+  var _element$matches;
   if (config.type === 'boolean' || config.type === 'checkbox' || config.type === 'checklist') {
     return bindChecklist(element, config.value);
   }
   if (config.type === 'range') return bindRange(element, config);
+  if (config.type === 'select' && (_element$matches = element.matches) !== null && _element$matches !== void 0 && _element$matches.call(element, SELECT_CONTROL_SELECTOR)) {
+    return bindSelect(element);
+  }
   return bindScalar(element, config);
 }
 function bindScalar(element, config) {
@@ -1681,6 +1939,9 @@ function bindScalar(element, config) {
   syncNumberAttributes(element, config);
   syncDateAttributes(element, config);
   return {
+    clear: function clear() {
+      return clearScalar(element);
+    },
     focusElement: element,
     read: function read() {
       return element.value;
@@ -1694,6 +1955,11 @@ function bindChecklist(element, value) {
     input.checked = selected.has(input.value);
   });
   return {
+    clear: function clear() {
+      return inputs.forEach(function (input) {
+        return input.checked = false;
+      });
+    },
     focusElement: inputs[0],
     read: function read() {
       return inputs.filter(function (input) {
@@ -1706,24 +1972,78 @@ function bindChecklist(element, value) {
 }
 function bindRange(element, config) {
   var input = requiredRangePart(element, RANGE_INPUT_SELECTOR, 'input');
+  var number = element.querySelector(RANGE_NUMBER_SELECTOR);
   var output = requiredRangePart(element, RANGE_OUTPUT_SELECTOR, 'output');
-  var update = function update() {
-    output.value = input.value;
-    output.textContent = input.value;
+  var updateFromRange = function updateFromRange() {
+    if (number) number.value = input.value;
+    setRangeOutput(output, input.value);
+  };
+  var updateFromNumber = function updateFromNumber() {
+    var value = number.value === '' ? RANGE_EMPTY_VALUE : number.value;
+    number.value = value;
+    input.value = value;
+    setRangeOutput(output, value);
   };
   input.value = config.value;
   syncNumberAttributes(input, config);
-  input.addEventListener('input', update);
-  update();
+  input.addEventListener('input', updateFromRange);
+  if (number) {
+    number.value = config.value;
+    syncNumberAttributes(number, config);
+    number.addEventListener('input', updateFromNumber);
+  }
+  updateFromRange();
   return {
+    clear: function clear() {
+      input.value = RANGE_EMPTY_VALUE;
+      if (number) number.value = RANGE_EMPTY_VALUE;
+      setRangeOutput(output, RANGE_EMPTY_VALUE);
+    },
     destroy: function destroy() {
-      return input.removeEventListener('input', update);
+      input.removeEventListener('input', updateFromRange);
+      number === null || number === void 0 || number.removeEventListener('input', updateFromNumber);
     },
     focusElement: input,
     read: function read() {
-      return input.value;
+      var _number$value;
+      return (number === null || number === void 0 ? void 0 : number.value) === '' ? RANGE_EMPTY_VALUE : (_number$value = number === null || number === void 0 ? void 0 : number.value) !== null && _number$value !== void 0 ? _number$value : input.value;
     }
   };
+}
+function bindSelect(element) {
+  var nativeControl = function nativeControl() {
+    return element.querySelector(SELECT_NATIVE_SELECTOR);
+  };
+  return {
+    clear: function clear() {
+      var _control$ownerDocumen, _control$ownerDocumen2;
+      var control = nativeControl();
+      var EventConstructor = (_control$ownerDocumen = control === null || control === void 0 || (_control$ownerDocumen2 = control.ownerDocument) === null || _control$ownerDocumen2 === void 0 || (_control$ownerDocumen2 = _control$ownerDocumen2.defaultView) === null || _control$ownerDocumen2 === void 0 ? void 0 : _control$ownerDocumen2.Event) !== null && _control$ownerDocumen !== void 0 ? _control$ownerDocumen : globalThis.Event;
+      if (control && EventConstructor) {
+        control.dispatchEvent(new EventConstructor(SELECT_CLEAR_EVENT));
+      }
+    },
+    focusElement: function focusElement() {
+      return element.querySelector(SELECT_FOCUS_SELECTOR);
+    },
+    read: function read() {
+      var _nativeControl$value, _nativeControl;
+      return (_nativeControl$value = (_nativeControl = nativeControl()) === null || _nativeControl === void 0 ? void 0 : _nativeControl.value) !== null && _nativeControl$value !== void 0 ? _nativeControl$value : '';
+    }
+  };
+}
+function setRangeOutput(output, value) {
+  output.value = value;
+  output.textContent = value;
+}
+function clearScalar(element) {
+  element.value = '';
+  element.dispatchEvent(new globalThis.Event('input', {
+    bubbles: true
+  }));
+  element.dispatchEvent(new globalThis.Event('change', {
+    bubbles: true
+  }));
 }
 function syncNumberAttributes(input, config) {
   if (config.type !== 'number' && config.type !== 'range') return;
@@ -2023,13 +2343,16 @@ var TEMPLATE_SELECTOR = '[data-inline-editor-template]';
 var ROOT_SELECTOR = '[data-inline-editor-root]';
 var FORM_SELECTOR = '[data-inline-editor-form]';
 var CONTROL_SELECTOR = '[data-inline-editor-control]';
+var CLEAR_SELECTOR = '[data-inline-editor-clear]';
 var CANCEL_SELECTOR = '[data-inline-editor-cancel]';
 var ERROR_SELECTOR = '[data-inline-editor-error]';
 function cloneInlineEditorTemplate(trigger) {
+  var _root$querySelector, _root$querySelector2;
   var template = readTemplate(trigger);
   var root = cloneSingleRoot(template);
   return {
     cancel: requiredDescendant(root, CANCEL_SELECTOR, 'cancel control'),
+    clear: (_root$querySelector = (_root$querySelector2 = root.querySelector) === null || _root$querySelector2 === void 0 ? void 0 : _root$querySelector2.call(root, CLEAR_SELECTOR)) !== null && _root$querySelector !== void 0 ? _root$querySelector : null,
     control: requiredDescendant(root, CONTROL_SELECTOR, 'value control'),
     error: requiredDescendant(root, ERROR_SELECTOR, 'error region'),
     form: requiredDescendant(root, FORM_SELECTOR, 'form'),
@@ -2056,8 +2379,8 @@ function cloneSingleRoot(template) {
   return root;
 }
 function requiredDescendant(root, selector, label) {
-  var _root$matches2, _root$querySelector;
-  var element = (_root$matches2 = root.matches) !== null && _root$matches2 !== void 0 && _root$matches2.call(root, selector) ? root : (_root$querySelector = root.querySelector) === null || _root$querySelector === void 0 ? void 0 : _root$querySelector.call(root, selector);
+  var _root$matches2, _root$querySelector3;
+  var element = (_root$matches2 = root.matches) !== null && _root$matches2 !== void 0 && _root$matches2.call(root, selector) ? root : (_root$querySelector3 = root.querySelector) === null || _root$querySelector3 === void 0 ? void 0 : _root$querySelector3.call(root, selector);
   if (!element) throw new TypeError("Inline editor template requires a ".concat(label, "."));
   return element;
 }
@@ -2141,10 +2464,12 @@ function createInlineEditorView(trigger, config, labels, handlers) {
   trigger.setAttribute('aria-expanded', 'true');
   trigger.insertAdjacentElement('afterend', elements.root);
   openPopup(elements.root, popup);
-  focusControl(control.focusElement);
   return {
     destroy: function destroy() {
       return destroyView(trigger, elements.root, control, removeListeners, popup);
+    },
+    focus: function focus() {
+      return focusControl(control.focusElement);
     },
     readValue: control.read,
     root: elements.root,
@@ -2157,12 +2482,17 @@ function createInlineEditorView(trigger, config, labels, handlers) {
   };
 }
 function bindViewEvents(elements, control, handlers) {
+  var _elements$clear;
   var submit = function submit(event) {
     event.preventDefault();
     handlers.submit(control.read());
   };
   var cancel = function cancel() {
     return handlers.cancel();
+  };
+  var clear = function clear() {
+    control.clear();
+    focusControl(control.focusElement);
   };
   var keydown = function keydown(event) {
     if (event.key === 'Escape') handlers.cancel();
@@ -2175,11 +2505,14 @@ function bindViewEvents(elements, control, handlers) {
   elements.form.addEventListener('submit', submit);
   elements.form.addEventListener('keydown', keydown);
   elements.cancel.addEventListener('click', cancel);
+  (_elements$clear = elements.clear) === null || _elements$clear === void 0 || _elements$clear.addEventListener('click', clear);
   elements.root.addEventListener('cancel', dialogCancel);
   return function () {
+    var _elements$clear2;
     elements.form.removeEventListener('submit', submit);
     elements.form.removeEventListener('keydown', keydown);
     elements.cancel.removeEventListener('click', cancel);
+    (_elements$clear2 = elements.clear) === null || _elements$clear2 === void 0 || _elements$clear2.removeEventListener('click', clear);
     elements.root.removeEventListener('cancel', dialogCancel);
     removeBackdropEvents();
   };
@@ -2237,7 +2570,8 @@ function openPopup(root, popup) {
   if (typeof root.showModal === 'function') root.showModal();else root.setAttribute('open', '');
 }
 function focusControl(element) {
-  element === null || element === void 0 || element.focus();
+  var focusElement = typeof element === 'function' ? element() : element;
+  focusElement === null || focusElement === void 0 || focusElement.focus();
 }
 
 /***/ }),
@@ -2315,6 +2649,7 @@ function activateEditor(state) {
   return state.config.type === 'boolean' ? toggleBoolean(state) : openEditor(state);
 }
 function openEditor(state) {
+  var _state$view$focus, _state$view;
   if (state.view) return state.view;
   state.config = (0,_inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__.readInlineEditorConfig)(state.element);
   state.view = state.dependencies.createView(state.element, state.config, state.dependencies.labels, {
@@ -2325,7 +2660,8 @@ function openEditor(state) {
       return submitValue(state, value);
     }
   });
-  state.dependencies.components.scan(state.view.root, 'date-control');
+  state.dependencies.components.scan(state.view.root);
+  (_state$view$focus = (_state$view = state.view).focus) === null || _state$view$focus === void 0 || _state$view$focus.call(_state$view);
   dispatch(state, 'inline-edit:opened');
   return state.view;
 }
@@ -2503,7 +2839,7 @@ function closeEditor(state) {
   if (!state.view) return;
   (_state$request = state.request) === null || _state$request === void 0 || _state$request.abort();
   state.request = null;
-  state.dependencies.components.destroy(state.view.root, 'date-control');
+  state.dependencies.components.destroy(state.view.root);
   state.view.destroy();
   state.view = null;
   dispatch(state, 'inline-edit:closed');
@@ -3796,6 +4132,7 @@ function installTableAutoUpdates(admin, options) {
   var definition = {
     mount: function mount(host) {
       return (0,_autoupdate_table_auto_update_js__WEBPACK_IMPORTED_MODULE_0__.mountTableAutoUpdates)(host, {
+        now: options.now,
         ProgressBar: options.ProgressBar,
         scheduler: options.scheduler,
         tables: admin.Tables
@@ -3809,10 +4146,19 @@ function installTableAutoUpdates(admin, options) {
     return admin.Components.scan(root, TABLE_AUTO_UPDATES_COMPONENT);
   };
   admin.Components.register(definition);
+  scanAfterDocumentReady(options.root, scan);
   return {
     definition: definition,
     scan: scan
   };
+}
+function scanAfterDocumentReady(root, scan) {
+  if (root.readyState !== 'loading' || typeof root.addEventListener !== 'function') return;
+  root.addEventListener('DOMContentLoaded', function () {
+    return scan(root);
+  }, {
+    once: true
+  });
 }
 function assertOptions(admin, options) {
   var dependencies = [admin === null || admin === void 0 ? void 0 : admin.Components, admin === null || admin === void 0 ? void 0 : admin.Tables, options === null || options === void 0 ? void 0 : options.ProgressBar, options === null || options === void 0 ? void 0 : options.root, options === null || options === void 0 ? void 0 : options.scheduler];
@@ -21661,6 +22007,9 @@ function installFeatures(target, admin, options) {
   });
   return {
     autoUpdates: (0,_runtime_install_table_auto_updates_js__WEBPACK_IMPORTED_MODULE_5__.installTableAutoUpdates)(admin, {
+      now: function now() {
+        return target.performance.now();
+      },
       ProgressBar: (progressbar_js__WEBPACK_IMPORTED_MODULE_0___default()),
       root: root,
       scheduler: target

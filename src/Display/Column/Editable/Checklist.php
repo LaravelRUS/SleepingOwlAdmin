@@ -3,144 +3,88 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Form\Element\MultiSelect;
 use SleepingOwl\Admin\Form\FormDefault;
 
 class Checklist extends Select implements ColumnEditableInterface
 {
-    /**
-     * @var string
-     */
     protected $view = 'column.editable.checklist';
 
-    protected $forceSaveRelation = null;
+    protected $forceSaveRelation;
 
-    /**
-     * @return mixed|null
-     */
     public function getModifierValue()
     {
-        if (is_callable($this->modifier)) {
-            return call_user_func($this->modifier, $this);
-        }
-
-        return $this->modifier;
+        return is_callable($this->modifier)
+            ? call_user_func($this->modifier, $this)
+            : $this->modifier;
     }
 
-    /**
-     * @return array|\Illuminate\Database\Eloquent\Collection|mixed|string|null
-     */
     public function getModelValue()
     {
-        $return = parent::getModelValue();
+        $value = parent::getModelValue();
 
-        if ($return instanceof \Illuminate\Database\Eloquent\Collection) {
-            if ($return->count()) {
-                /**
-                 * Primary key of the Eloquent model always must be a simple, not composite: string, but not array.
-                 *
-                 * @see https://github.com/laravel/framework/issues/5517#issuecomment-170035596
-                 */
-                try {
-                    $key_name = $return->first()->getKeyName();
-                } catch (Exception $e) {
-                    $key_name = 'id';
-                }
-                /**
-                 * Let's try not to break the whole application.
-                 */
-                try {
-                    $return = $return->pluck($key_name)->toArray();
-                } catch (Exception $e) {
-                    $return = [];
-                }
+        if ($value instanceof EloquentCollection) {
+            if ($value->isEmpty()) {
+                $value = [];
             } else {
-                $return = [];
+                try {
+                    $value = $value->pluck($value->first()->getKeyName())->all();
+                } catch (Exception $exception) {
+                    $value = [];
+                }
             }
-        } elseif ($return instanceof \Illuminate\Support\Collection) {
-            $return = $return->toArray();
+        } elseif ($value instanceof Collection) {
+            $value = $value->all();
         }
 
-        if (is_array($return)) {
-            $return = implode(',', $return);
-        }
-
-        return $return;
+        return is_array($value) ? implode(',', $value) : $value;
     }
 
-    /**
-     * @param  Request  $request
-     * @return string|void
-     *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\Element\SelectException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
-     * @throws \SleepingOwl\Admin\Exceptions\RepositoryException
-     * @throws Exception
-     */
     public function save(Request $request)
     {
-        $model = $this->getModel();
-
-        $element = new \SleepingOwl\Admin\Form\Element\MultiSelect($this->getName());
-
-        /**
-         * Detect relation.
-         */
-        if ($this->getModelForOptions()) {
-            $element->setModelForOptions($this->getModelForOptions());
-        } elseif (null !== ($forceSaveRelation = $this->getForceSaveRelation())) {
-            if ($forceSaveRelation instanceof Model) {
-                $element->setModelForOptions(get_class($forceSaveRelation));
-            } elseif (is_callable($forceSaveRelation)) {
-                $modelClassName = call_user_func($forceSaveRelation, $this);
-                if ($modelClassName instanceof Model) {
-                    $modelClassName = get_class($modelClassName);
-                }
-                if (! is_string($modelClassName)) {
-                    throw new Exception('For properly relation saving you must provide Model class name (string) or Model instance');
-                }
-                $element->setModelForOptions($modelClassName);
-            } elseif ($forceSaveRelation) {
-                if (method_exists($model, $this->getName()) && ($rel = $model->{$this->getName()}()) && ($rel instanceof BelongsToMany || $rel instanceof HasMany)) {
-                    $element->setModelForOptions(get_class($rel->getModel()));
-                }
-            }
+        if (! $this->getForceSaveRelation()) {
+            return parent::save($request);
         }
 
+        $model = $this->getModel();
+        $relationName = $this->getModelAttributeKey();
+        if (! method_exists($model, $relationName)) {
+            return parent::save($request);
+        }
+
+        $relation = $model->{$relationName}();
+        if (! $relation instanceof BelongsToMany && ! $relation instanceof HasMany) {
+            return parent::save($request);
+        }
+
+        $element = new MultiSelect($this->getPath());
+        $element->setModelForOptions(get_class($relation->getModel()));
+
+        $input = [];
+        Arr::set($input, $this->getPath(), $request->input('value', $this->getDefaultValue()));
+        $request->merge($input);
+
         $form = new FormDefault([$element]);
-
-        $array = [];
-        Arr::set($array, $this->getName(), $request->input('value', $this->getDefaultValue()));
-
-        $request->merge($array);
-
         $form->setModelClass(get_class($model));
         $form->initialize();
         $form->setId($model->getKey());
-
         $form->saveForm($request);
 
         return $request->input('value', $this->getDefaultValue());
     }
 
-    /**
-     * @return mixed
-     */
     public function getForceSaveRelation()
     {
         return $this->forceSaveRelation;
     }
 
-    /**
-     * @param  bool|Model|callable|null  $forceSaveRelation
-     * @return Checklist
-     */
     public function setForceSaveRelation($forceSaveRelation = true)
     {
         $this->forceSaveRelation = $forceSaveRelation;

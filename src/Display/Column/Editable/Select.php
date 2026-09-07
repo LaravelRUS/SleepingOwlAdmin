@@ -2,102 +2,29 @@
 
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Exceptions\Form\Element\SelectException;
-use SleepingOwl\Admin\Exceptions\Form\FormElementException;
-use SleepingOwl\Admin\Form\FormDefault;
-use SleepingOwl\Admin\Traits\SelectOptionsFromModel;
+use SleepingOwl\Admin\Display\Column\Editable\Concerns\InteractsWithEditableColumn;
+use SleepingOwl\Admin\Form\Element\Select as FormSelect;
 
-class Select extends EditableColumn implements ColumnEditableInterface
+class Select extends FormSelect implements ColumnEditableInterface
 {
-    use SelectOptionsFromModel;
+    use InteractsWithEditableColumn;
 
-    /**
-     * @var string
-     */
     protected $view = 'column.editable.select';
 
-    /**
-     * @var bool
-     */
-    protected $orderable = true;
+    protected $relationKey;
 
-    /**
-     * @var bool
-     */
-    protected $isSearchable = false;
-
-    /**
-     * @var null
-     */
-    protected $relationKey = null;
-
-    /**
-     * @var array
-     */
-    protected $options = [];
-
-    /**
-     * @var array
-     */
     protected $optionList = [];
 
-    /**
-     * @var array
-     */
-    protected $exclude = [];
-
-    /**
-     * @var bool
-     */
-    protected $sortable = true;
-
-    /**
-     * @var null
-     */
-    protected $defaultValue = null;
-
-    /**
-     * Select constructor.
-     *
-     * @param  $name
-     * @param  null  $label
-     * @param  array  $options
-     * @param  null  $small
-     *
-     * @throws SelectException
-     */
     public function __construct($name, $label = null, $options = [], $small = null)
     {
-        parent::__construct($name, $label, $small);
+        parent::__construct($name, $label, $options);
+        $this->initializeEditableColumn($label, $small);
 
         $this->setDisplay(function ($option) {
             return data_get($option, 'name') ?? data_get($option, 'title');
         });
-
-        if (is_array($options)) {
-            $this->setOptions($options);
-        } elseif (($options instanceof Model) || is_string($options)) {
-            $this->setModelForOptions($options);
-        }
-    }
-
-    /**
-     * Keep the legacy API for configuring options while preserving row binding.
-     *
-     * @param  Model|string  $model
-     * @return $this
-     */
-    public function setModel($model)
-    {
-        if (is_string($model)) {
-            return $this->setModelForOptions($model);
-        }
-
-        return parent::setModel($model);
     }
 
     public function getModifierValue()
@@ -106,17 +33,11 @@ class Select extends EditableColumn implements ColumnEditableInterface
             return call_user_func($this->modifier, $this);
         }
 
-        if (is_null($this->modifier)) {
-            return $this->getOptionName($this->getModelValue());
-        }
-
-        return $this->modifier;
+        return is_null($this->modifier)
+            ? $this->getOptionName($this->getModelValue())
+            : $this->modifier;
     }
 
-    /**
-     * @param  $relationKey
-     * @return $this
-     */
     public function setRelationKey($relationKey)
     {
         $this->relationKey = $relationKey;
@@ -124,172 +45,60 @@ class Select extends EditableColumn implements ColumnEditableInterface
         return $this;
     }
 
-    /**
-     * @return null
-     */
     public function getRelationKey()
     {
         return $this->relationKey;
     }
 
-    /**
-     * @param  $defaultValue
-     * @return $this
-     */
-    public function setDefaultValue($defaultValue)
-    {
-        $this->defaultValue = $defaultValue;
-
-        return $this;
-    }
-
-    /**
-     * @return null
-     */
-    public function getDefaultValue()
-    {
-        return $this->defaultValue;
-    }
-
-    /**
-     * @param  bool  $sortable
-     * @return $this
-     */
-    public function setSortable($sortable)
-    {
-        $this->sortable = (bool) $sortable;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSortable(): bool
-    {
-        return $this->sortable;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        if (! is_null($this->getModelForOptions()) && ! is_null($this->getDisplay())) {
-            $this->setOptions(
-                $this->loadOptions()
-            );
-        }
-
-        $options = Arr::except($this->options, $this->exclude);
-        if ($this->isSortable()) {
-            asort($options);
-        }
-
-        return $options;
-    }
-
-    /**
-     * @return array
-     */
     public function mutateOptions(): array
     {
-        $options = [];
-
         $this->optionList = $this->getOptions();
 
-        foreach ($this->optionList as $key => $value) {
-            $options[] = ['value' => $key, 'text' => $value];
-        }
-
-        return $options;
+        return collect($this->optionList)
+            ->map(fn ($text, $value) => ['value' => $value, 'text' => $text])
+            ->values()
+            ->all();
     }
 
-    /**
-     * @param  $value
-     * @return mixed|null|void
-     */
     public function getOptionName($value)
     {
-        if (isset($value)) {
-            if (isset($this->optionList[$value])) {
-                return $this->optionList[$value];
-            }
-
-            return $value;
+        if (! isset($value)) {
+            return null;
         }
+
+        return $this->optionList[$value] ?? $value;
     }
 
-    /**
-     * @param  array  $options
-     * @return $this
-     */
-    public function setOptions(array $options)
+    public function toArray(): array
     {
-        $this->options = $options;
+        $options = $this->mutateOptions();
+        if ($this->isNullable()) {
+            array_unshift($options, [
+                'value' => null,
+                'text' => trans('sleeping_owl::lang.select.nothing'),
+            ]);
+        }
 
-        return $this;
+        return $this->editableColumnToArray() + [
+            'options' => $options,
+            'limit' => $this->getLimit(),
+            'nullable' => $this->isNullable(),
+            'select2Options' => $this->getSelect2Options(),
+        ];
     }
 
-    /**
-     * @param  array  $values
-     * @return $this
-     */
-    public function setEnum(array $values)
-    {
-        return $this->setOptions(array_combine($values, $values));
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return array_merge(parent::toArray(), [
-            'options' => $this->mutateOptions(),
-            /*
-             * Param "optionName" do not used anywhere
-             */
-            //'optionName' => $this->getOptionName($this->getModelValue()),
-            'text' => $this->getModifierValue(),
-        ]);
-    }
-
-    /**
-     * @param  Request  $request
-     *
-     * @throws SelectException
-     * @throws FormElementException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
-     */
     public function save(Request $request)
     {
-        $model = $this->getModel();
-
-        if (strpos($this->getName(), '.') !== false) {
-            if ($this->getRelationKey()) {
-                $this->setName($this->getRelationKey());
-            } else {
-                //@TODO Make Relation Resolver
-                $relationName = explode('.', $this->getName());
-            }
+        if (str_contains($this->getPath(), '.') && $this->getRelationKey()) {
+            $this->setPath($this->getRelationKey());
+            $this->setName($this->getRelationKey());
+            $this->setModelAttributeKey($this->getRelationKey());
         }
 
-        $form = new FormDefault([
-            new \SleepingOwl\Admin\Form\Element\Select(
-                $this->getName()
-            ),
-        ]);
-
-        $array = [];
-        Arr::set($array, $this->getName(), $request->input('value', $this->getDefaultValue()));
-
-        $request->merge($array);
-
-        $form->setModelClass(get_class($model));
-        $form->initialize();
-        $form->setId($model->getKey());
-
-        $form->saveForm($request);
+        return $this->persistInlineFormValue(
+            $request,
+            fn (Request $mappedRequest) => parent::save($mappedRequest),
+            fn (Request $mappedRequest) => parent::afterSave($mappedRequest)
+        );
     }
 }

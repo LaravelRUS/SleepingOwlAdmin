@@ -1,63 +1,193 @@
 export const AUTO_UPDATE_COLOR_PROPERTY = '--soa-datatables-autoupdate-color'
 
 const CONTROL_TEMPLATE_SELECTOR = 'template[data-admin-table-autoupdate-control]'
-const CLOSE_CONTROL_SELECTOR = '[data-admin-table-autoupdate-close]'
+const TOGGLE_CONTROL_SELECTOR =
+    '[data-admin-table-autoupdate-toggle], [data-admin-table-autoupdate-close]'
+const LABEL_SELECTOR = '[data-admin-table-autoupdate-label]'
+const PAUSE_ICON_SELECTOR = '[data-admin-table-autoupdate-pause-icon]'
+const RESUME_ICON_SELECTOR = '[data-admin-table-autoupdate-resume-icon]'
 
 export function mountTableAutoUpdates(host, dependencies) {
     assertTableCollection(dependencies.tables)
-    const config = readAutoUpdateConfig(host)
-    const controlTemplate = readControlTemplate(host)
-    const controllers = matchingTables(dependencies.tables, config.tableClass).map((table) =>
-        mountTableAutoUpdate(table, config, { ...dependencies, controlTemplate }),
-    )
 
-    return {
-        destroy() {
-            controllers.forEach((controller) => controller.destroy())
-        },
-    }
+    return new TableAutoUpdateCollection(host, dependencies)
 }
 
 export function mountTableAutoUpdate(table, config, dependencies) {
     assertDependencies(dependencies)
 
-    const view = cloneControl(dependencies.controlTemplate)
-    const bar = createProgressBar(table, config, dependencies.ProgressBar)
-    let timer = null
-    let stopped = false
+    const settings = normalizeMountConfig(config)
+    const mounted = mountProgressView(table, settings, dependencies)
+    const controller = new TableAutoUpdateController({
+        ...mounted,
+        now: dependencies.now ?? Date.now,
+        scheduler: dependencies.scheduler,
+        settings,
+        table,
+        tables: dependencies.tables,
+    })
 
-    table.classList.add('autoupdater')
-    table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, config.color)
-    table.appendChild(view.root)
+    return controller.start()
+}
 
-    const schedule = () => {
-        bar.animate(1)
-        timer = dependencies.scheduler.setTimeout(refresh, config.interval)
+class TableAutoUpdateCollection {
+    constructor(host, dependencies) {
+        this.config = readAutoUpdateConfig(host)
+        this.controllers = new Map()
+        this.dependencies = {
+            ...dependencies,
+            controlTemplate: readAutoUpdateControlTemplate(host),
+        }
+        this.unsubscribe = dependencies.tables.subscribe((event) => this.registryChanged(event))
+
+        try {
+            dependencies.tables.all().forEach((adapter) => this.mount(adapter))
+        } catch (error) {
+            this.destroy()
+            throw error
+        }
     }
-    const refresh = () => {
-        bar.set(0)
-        if (stopped) return
 
-        dependencies.tables.reload(table)
-        schedule()
-    }
-    const destroy = () => {
-        if (stopped) return
-
-        stopped = true
-        dependencies.scheduler.clearTimeout(timer)
-        view.close.removeEventListener('click', destroy)
-        view.root.remove()
-        bar.set(0)
-        bar.destroy?.()
-        table.classList.remove('autoupdater')
-        table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY)
+    registryChanged({ adapter, type }) {
+        if (type === 'registered') this.mount(adapter)
+        if (type === 'unregistered') this.unmount(adapter)
     }
 
-    view.close.addEventListener('click', destroy)
-    schedule()
+    mount(adapter) {
+        const table = adapter.element
+        if (!this.matches(table)) return
 
-    return { destroy }
+        const controller = mountTableAutoUpdate(table, this.config, this.dependencies)
+        this.controllers.set(table, controller)
+    }
+
+    matches(table) {
+        return (
+            !this.controllers.has(table) &&
+            !table.classList.contains('autoupdater') &&
+            matchesAutoUpdateTable(table, this.config.tableClasses)
+        )
+    }
+
+    unmount(adapter) {
+        this.controllers.get(adapter.element)?.destroy()
+        this.controllers.delete(adapter.element)
+    }
+
+    pause() {
+        this.controllers.forEach((controller) => controller.pause())
+    }
+
+    resume() {
+        this.controllers.forEach((controller) => controller.resume())
+    }
+
+    destroy() {
+        this.unsubscribe()
+        this.controllers.forEach((controller) => controller.destroy())
+        this.controllers.clear()
+    }
+}
+
+class TableAutoUpdateController {
+    constructor({ bar, now, scheduler, settings, table, tables, view }) {
+        this.bar = bar
+        this.now = now
+        this.scheduler = scheduler
+        this.settings = settings
+        this.table = table
+        this.tables = tables
+        this.view = view
+        this.deadline = 0
+        this.destroyed = false
+        this._paused = false
+        this.remaining = settings.interval
+        this.timer = null
+        this.refresh = this.refresh.bind(this)
+        this.toggle = this.toggle.bind(this)
+    }
+
+    start() {
+        this.view.toggle.addEventListener('click', this.toggle)
+        this.bar.set(0)
+        this.sync()
+        this.schedule(this.settings.interval)
+
+        return this
+    }
+
+    schedule(delay, resumeProgress = false) {
+        this.remaining = delay
+        this.deadline = this.now() + delay
+        if (resumeProgress && typeof this.bar.resume === 'function') this.bar.resume()
+        else this.bar.animate(1, { duration: delay })
+        this.timer = this.scheduler.setTimeout(this.refresh, delay)
+    }
+
+    refresh() {
+        this.timer = null
+        this.bar.set(0)
+        if (this._paused || this.destroyed) return
+
+        this.tables.reload(this.table)
+        this.schedule(this.settings.interval)
+    }
+
+    pause() {
+        if (this._paused || this.destroyed) return false
+
+        this.remaining = Math.max(0, this.deadline - this.now())
+        this.clearTimer()
+        if (typeof this.bar.pause === 'function') this.bar.pause()
+        else this.bar.stop?.()
+        this._paused = true
+        this.sync()
+
+        return true
+    }
+
+    resume() {
+        if (!this._paused || this.destroyed) return false
+
+        this._paused = false
+        this.sync()
+        if (this.remaining <= 0) this.refresh()
+        else this.schedule(this.remaining, true)
+
+        return true
+    }
+
+    toggle() {
+        return this._paused ? this.resume() : this.pause()
+    }
+
+    sync() {
+        syncControlState(this.table, this.view, this.settings, this._paused)
+    }
+
+    clearTimer() {
+        if (this.timer === null) return
+
+        this.scheduler.clearTimeout(this.timer)
+        this.timer = null
+    }
+
+    destroy() {
+        if (this.destroyed) return
+
+        this.destroyed = true
+        this.clearTimer()
+        this.view.toggle.removeEventListener('click', this.toggle)
+        this.bar.set(0)
+        this.bar.destroy?.()
+        this.view.root.remove()
+        this.table.classList.remove('autoupdater', 'autoupdater-paused')
+        this.table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY)
+    }
+
+    get paused() {
+        return this._paused
+    }
 }
 
 export function readAutoUpdateConfig(host) {
@@ -72,21 +202,15 @@ export function readAutoUpdateConfig(host) {
     }
 
     return {
-        closeLabel: host.dataset.closeLabel || 'Stop auto-update',
         color,
         interval,
-        tableClass: host.dataset.tableClass || null,
+        pauseLabel: host.dataset.pauseLabel || host.dataset.closeLabel || 'Pause auto-update',
+        resumeLabel: host.dataset.resumeLabel || 'Resume auto-update',
+        tableClasses: readTableClasses(host),
     }
 }
 
-function matchingTables(tables, tableClass) {
-    return tables
-        .all()
-        .map((adapter) => adapter.element)
-        .filter((table) => !tableClass || table.classList.contains(tableClass))
-}
-
-function readControlTemplate(host) {
+export function readAutoUpdateControlTemplate(host) {
     const template = host.querySelector?.(CONTROL_TEMPLATE_SELECTOR)
     if (typeof template?.content?.cloneNode !== 'function') {
         throw new TypeError('Table auto-update requires a Blade-rendered control template.')
@@ -95,25 +219,131 @@ function readControlTemplate(host) {
     return template
 }
 
+export function matchesAutoUpdateTable(table, tableClasses) {
+    return tableClasses.length === 0 || tableClasses.some((name) => table.classList.contains(name))
+}
+
+function readTableClasses(host) {
+    const serialized = host.dataset.tableClasses
+    if (!serialized) return normalizeTableClasses([host.dataset.tableClass])
+
+    let classes
+    try {
+        classes = JSON.parse(serialized)
+    } catch {
+        throw new TypeError('Table auto-update classes must be a JSON array.')
+    }
+
+    if (!Array.isArray(classes)) {
+        throw new TypeError('Table auto-update classes must be a JSON array.')
+    }
+
+    return normalizeTableClasses(classes)
+}
+
+function normalizeTableClasses(classes) {
+    if (classes.some((name) => name !== undefined && typeof name !== 'string')) {
+        throw new TypeError('Table auto-update classes must contain only strings.')
+    }
+
+    return [
+        ...new Set(
+            classes
+                .filter(Boolean)
+                .flatMap((name) => name.trim().split(/[\s,]+/u))
+                .map((name) => name.replace(/^\.+/u, ''))
+                .filter(Boolean),
+        ),
+    ]
+}
+
+function normalizeMountConfig(config) {
+    return {
+        color: config.color,
+        interval: config.interval,
+        pauseLabel: config.pauseLabel || config.closeLabel || 'Pause auto-update',
+        resumeLabel: config.resumeLabel || 'Resume auto-update',
+    }
+}
+
+function mountProgressView(table, settings, dependencies) {
+    const view = cloneControl(dependencies.controlTemplate)
+
+    insertControlBeforeTable(table, view.root)
+    table.classList.add('autoupdater')
+    table.style.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color)
+    view.root.style?.setProperty(AUTO_UPDATE_COLOR_PROPERTY, settings.color)
+
+    try {
+        const bar = createProgressBar(view.root, settings, dependencies.ProgressBar)
+
+        return { bar, view }
+    } catch (error) {
+        view.root.remove()
+        table.classList.remove('autoupdater')
+        table.style.removeProperty(AUTO_UPDATE_COLOR_PROPERTY)
+        throw error
+    }
+}
+
 function cloneControl(template) {
     const fragment = template.content.cloneNode(true)
-    if (fragment.children?.length !== 1) {
+    const roots = fragment.children ?? []
+    if (roots.length !== 1) {
         throw new TypeError('Table auto-update control template requires one root element.')
     }
 
     const root = fragment.firstElementChild
-    const close = root.matches?.(CLOSE_CONTROL_SELECTOR)
-        ? root
-        : root.querySelector?.(CLOSE_CONTROL_SELECTOR)
-    if (!close) {
-        throw new TypeError('Table auto-update control template requires a close control.')
+    const toggle = findToggle(root)
+    if (!toggle) {
+        throw new TypeError('Table auto-update control template requires a toggle control.')
     }
 
-    return { close, root }
+    return {
+        label: findElement(root, LABEL_SELECTOR),
+        pauseIcon: findElement(root, PAUSE_ICON_SELECTOR),
+        resumeIcon: findElement(root, RESUME_ICON_SELECTOR),
+        root,
+        toggle,
+    }
 }
 
-function createProgressBar(table, config, ProgressBar) {
-    return new ProgressBar.Line(table, {
+function findToggle(root) {
+    if (typeof root.matches === 'function' && root.matches(TOGGLE_CONTROL_SELECTOR)) return root
+
+    return findElement(root, TOGGLE_CONTROL_SELECTOR)
+}
+
+function findElement(root, selector) {
+    if (typeof root.querySelector !== 'function') return null
+
+    return root.querySelector(selector)
+}
+
+function insertControlBeforeTable(table, root) {
+    if (typeof table.parentNode?.insertBefore !== 'function') {
+        throw new TypeError('Table auto-update requires the table to be attached to the DOM.')
+    }
+
+    table.parentNode.insertBefore(root, table)
+}
+
+function syncControlState(table, view, config, paused) {
+    const label = paused ? config.resumeLabel : config.pauseLabel
+
+    if (paused) table.classList.add('autoupdater-paused')
+    else table.classList.remove('autoupdater-paused')
+    if (view.root.dataset) view.root.dataset.state = paused ? 'paused' : 'running'
+    view.toggle.setAttribute('aria-label', label)
+    view.toggle.setAttribute('aria-pressed', String(paused))
+    view.toggle.setAttribute('title', label)
+    if (view.label) view.label.textContent = label
+    if (view.pauseIcon) view.pauseIcon.hidden = paused
+    if (view.resumeIcon) view.resumeIcon.hidden = !paused
+}
+
+function createProgressBar(container, config, ProgressBar) {
+    return new ProgressBar.Line(container, {
         color: `var(${AUTO_UPDATE_COLOR_PROPERTY})`,
         duration: config.interval,
         strokeWidth: 2,
@@ -141,7 +371,7 @@ function assertScheduler(scheduler) {
 }
 
 function assertTableCollection(tables) {
-    if (typeof tables?.all !== 'function') {
+    if (typeof tables?.all !== 'function' || typeof tables?.subscribe !== 'function') {
         throw new TypeError('Table auto-update requires the Admin.Tables collection.')
     }
 }

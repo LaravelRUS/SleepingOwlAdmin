@@ -1,12 +1,21 @@
 const CHECK_INPUT_SELECTOR = '[data-inline-editor-check-input]'
 const RANGE_INPUT_SELECTOR = '[data-inline-editor-range-input]'
+const RANGE_NUMBER_SELECTOR = '[data-inline-editor-range-number]'
 const RANGE_OUTPUT_SELECTOR = '[data-inline-editor-range-output]'
+const RANGE_EMPTY_VALUE = '0'
+const SELECT_CLEAR_EVENT = 'soa:inline-editor-clear'
+const SELECT_CONTROL_SELECTOR = '[data-inline-editor-select]'
+const SELECT_FOCUS_SELECTOR = '.multiselect__input, .multiselect'
+const SELECT_NATIVE_SELECTOR = '[data-inline-editor-select-native]'
 
 export function bindInlineEditorControl(element, config) {
     if (config.type === 'boolean' || config.type === 'checkbox' || config.type === 'checklist') {
         return bindChecklist(element, config.value)
     }
     if (config.type === 'range') return bindRange(element, config)
+    if (config.type === 'select' && element.matches?.(SELECT_CONTROL_SELECTOR)) {
+        return bindSelect(element)
+    }
 
     return bindScalar(element, config)
 }
@@ -16,7 +25,11 @@ function bindScalar(element, config) {
     syncNumberAttributes(element, config)
     syncDateAttributes(element, config)
 
-    return { focusElement: element, read: () => element.value }
+    return {
+        clear: () => clearScalar(element),
+        focusElement: element,
+        read: () => element.value,
+    }
 }
 
 function bindChecklist(element, value) {
@@ -27,6 +40,7 @@ function bindChecklist(element, value) {
     })
 
     return {
+        clear: () => inputs.forEach((input) => (input.checked = false)),
         focusElement: inputs[0],
         read: () => inputs.filter((input) => input.checked).map((input) => input.value),
     }
@@ -34,22 +48,68 @@ function bindChecklist(element, value) {
 
 function bindRange(element, config) {
     const input = requiredRangePart(element, RANGE_INPUT_SELECTOR, 'input')
+    const number = element.querySelector(RANGE_NUMBER_SELECTOR)
     const output = requiredRangePart(element, RANGE_OUTPUT_SELECTOR, 'output')
-    const update = () => {
-        output.value = input.value
-        output.textContent = input.value
+    const updateFromRange = () => {
+        if (number) number.value = input.value
+        setRangeOutput(output, input.value)
     }
-
+    const updateFromNumber = () => {
+        const value = number.value === '' ? RANGE_EMPTY_VALUE : number.value
+        number.value = value
+        input.value = value
+        setRangeOutput(output, value)
+    }
     input.value = config.value
     syncNumberAttributes(input, config)
-    input.addEventListener('input', update)
-    update()
+    input.addEventListener('input', updateFromRange)
+    if (number) {
+        number.value = config.value
+        syncNumberAttributes(number, config)
+        number.addEventListener('input', updateFromNumber)
+    }
+    updateFromRange()
 
     return {
-        destroy: () => input.removeEventListener('input', update),
+        clear: () => {
+            input.value = RANGE_EMPTY_VALUE
+            if (number) number.value = RANGE_EMPTY_VALUE
+            setRangeOutput(output, RANGE_EMPTY_VALUE)
+        },
+        destroy: () => {
+            input.removeEventListener('input', updateFromRange)
+            number?.removeEventListener('input', updateFromNumber)
+        },
         focusElement: input,
-        read: () => input.value,
+        read: () => (number?.value === '' ? RANGE_EMPTY_VALUE : (number?.value ?? input.value)),
     }
+}
+
+function bindSelect(element) {
+    const nativeControl = () => element.querySelector(SELECT_NATIVE_SELECTOR)
+
+    return {
+        clear: () => {
+            const control = nativeControl()
+            const EventConstructor = control?.ownerDocument?.defaultView?.Event ?? globalThis.Event
+            if (control && EventConstructor) {
+                control.dispatchEvent(new EventConstructor(SELECT_CLEAR_EVENT))
+            }
+        },
+        focusElement: () => element.querySelector(SELECT_FOCUS_SELECTOR),
+        read: () => nativeControl()?.value ?? '',
+    }
+}
+
+function setRangeOutput(output, value) {
+    output.value = value
+    output.textContent = value
+}
+
+function clearScalar(element) {
+    element.value = ''
+    element.dispatchEvent(new globalThis.Event('input', { bubbles: true }))
+    element.dispatchEvent(new globalThis.Event('change', { bubbles: true }))
 }
 
 function syncNumberAttributes(input, config) {

@@ -543,27 +543,40 @@ test('inline edit can refresh the whole containing table by project config', asy
     expect(await page.evaluate(() => globalThis.__tableRefreshCalls)).toBe(1)
 })
 
-test('auto-update redraws the table and its close control stops the timer', async ({
+test('auto-update redraws the selected table and can be paused and resumed', async ({
     page,
     request,
 }) => {
     await openFixture(page, '?autoupdate=1')
     await expect(page.locator('#legacy-table')).toHaveClass(/autoupdater/)
-    await expect(page.locator('#legacy-table > .fixture-autoupdate-shell')).toHaveCount(1)
+    await expect(page.locator('.fixture-autoupdate-shell')).toHaveCount(1)
     await expect(page.locator('.fixture-autoupdate-close')).toHaveAttribute(
         'aria-label',
-        'Stop auto-update',
+        'Pause auto-update',
     )
-    await expect(page.locator('.fixture-autoupdate-label')).toHaveText('Stop')
+    await expect(page.locator('.fixture-autoupdate-label')).toHaveText('Pause auto-update')
     await expect
         .poll(async () => (await recordedRequests(request, 'datatable')).length)
         .toBeGreaterThan(1)
     await page.locator('.autoupdater-close').click()
+    await expect(page.locator('#legacy-table')).toHaveClass(/autoupdater-paused/)
+    await expect(page.locator('.fixture-autoupdate-close')).toHaveAttribute(
+        'aria-label',
+        'Resume auto-update',
+    )
+    await expect(page.locator('.fixture-autoupdate-close')).toHaveAttribute('aria-pressed', 'true')
+    await expect(page.locator('.fixture-autoupdate-label')).toHaveText('Resume auto-update')
     await page.waitForTimeout(100)
     const stoppedAt = (await recordedRequests(request, 'datatable')).length
 
     await page.waitForTimeout(500)
     expect((await recordedRequests(request, 'datatable')).length).toBe(stoppedAt)
-    await expect(page.locator('.autoupdater-close')).toHaveCount(0)
-    await expect(page.locator('.fixture-autoupdate-shell')).toHaveCount(0)
+    await expect(page.locator('.autoupdater-close')).toHaveCount(1)
+
+    await page.locator('.autoupdater-close').click()
+    await expect(page.locator('#legacy-table')).not.toHaveClass(/autoupdater-paused/)
+    await expect(page.locator('.fixture-autoupdate-close')).toHaveAttribute('aria-pressed', 'false')
+    await expect
+        .poll(async () => (await recordedRequests(request, 'datatable')).length)
+        .toBeGreaterThan(stoppedAt)
 })

@@ -47,6 +47,24 @@
             </div>
             <div class="dt-layout-row">
                 <div class="dt-layout-cell dt-layout-full">
+                    <div
+                        class="autoupdater-bar"
+                        data-state="paused"
+                        style="--soa-datatables-autoupdate-color: #123456"
+                    >
+                        <button class="autoupdater-toggle" type="button" aria-label="Resume">
+                            ▶
+                        </button>
+                        <svg viewBox="0 0 100 2" preserveAspectRatio="none">
+                            <path
+                                id="autoupdate-progress"
+                                d="M 0,1 L 100,1"
+                                fill="none"
+                                stroke="var(--soa-datatables-autoupdate-color)"
+                                stroke-width="2"
+                            ></path>
+                        </svg>
+                    </div>
                     <table class="table dataTable lightcolumn" id="records">
                         <thead>
                             <tr>

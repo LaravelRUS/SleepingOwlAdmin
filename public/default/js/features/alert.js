@@ -1,1 +1,438 @@
-(()=>{"use strict";function n(n,t,o,i){return e(n),function(n){if("string"!=typeof n||0===n.length)throw new TypeError("Event type must be a non-empty string.")}(t),r(o),n.addEventListener(t,o,i),function(){return n.removeEventListener(t,o,i)}}function t(t,o,i,l,u){return function(n){if(e(n),"function"!=typeof n.contains)throw new TypeError("Delegation root must support contains().")}(t),function(n){if("string"!=typeof n||0===n.length)throw new TypeError("Delegated selector must be a non-empty string.")}(i),r(l),n(t,o,function(n){return function(n,t,e,r){var o=function(n,t,e){var r=function(n){var t;if("function"==typeof(null==n?void 0:n.closest))return n;return null!==(t=null==n?void 0:n.parentElement)&&void 0!==t?t:null}(n),o=null==r?void 0:r.closest(e);return o&&t.contains(o)?o:null}(n.target,t,e);o&&r.call(o,n,o)}(n,t,i,l)},u)}function e(n){if("function"!=typeof(null==n?void 0:n.addEventListener)||"function"!=typeof(null==n?void 0:n.removeEventListener))throw new TypeError("Event target must support addEventListener and removeEventListener.")}function r(n){if("function"!=typeof n)throw new TypeError("Event listener must be a function.")}var o=".alert";function i(n,t){var e,r,i=null!==(e=null!==(r=function(n){var t;return null!=n&&null!==(t=n.matches)&&void 0!==t&&t.call(n,o)?n:null}(t))&&void 0!==r?r:function(n){var t,e,r,o,i=null!==(t=null!==(e=null==n||null===(r=n.getAttribute)||void 0===r?void 0:r.call(n,"data-target"))&&void 0!==e?e:null==n||null===(o=n.getAttribute)||void 0===o?void 0:o.call(n,"href"))&&void 0!==t?t:"";return i.startsWith("#")?n.ownerDocument.getElementById(i.slice(1)):null}(t))&&void 0!==e?e:function(n){var t,e;return null!==(t=null==n||null===(e=n.closest)||void 0===e?void 0:e.call(n,o))&&void 0!==t?t:null}(t);return function(n,t){return t&&n.contains(t)?t:null}(n,i)}function l(n,t,e){var r=arguments.length>3&&void 0!==arguments[3]&&arguments[3],o=n.ownerDocument.defaultView.CustomEvent;return n.dispatchEvent(new o(t,{bubbles:!0,cancelable:r,detail:{alert:n,trigger:e}}))}function u(n){return function(n){if(Array.isArray(n))return a(n)}(n)||function(n){if("undefined"!=typeof Symbol&&null!=n[Symbol.iterator]||null!=n["@@iterator"])return Array.from(n)}(n)||function(n,t){if(n){if("string"==typeof n)return a(n,t);var e={}.toString.call(n).slice(8,-1);return"Object"===e&&n.constructor&&(e=n.constructor.name),"Map"===e||"Set"===e?Array.from(n):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?a(n,t):void 0}}(n)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function a(n,t){(null==t||t>n.length)&&(t=n.length);for(var e=0,r=Array(t);e<t;e++)r[e]=n[e];return r}function c(n,t){var e,r,o,i,l,a=arguments.length>2&&void 0!==arguments[2]?arguments[2]:globalThis.setTimeout,c=n.classList.contains("fade")?(r=(e=n).ownerDocument.defaultView.getComputedStyle(e),o=s(r.transitionDuration),i=s(r.transitionDelay),l=Math.max(o.length,i.length),Math.max.apply(Math,[0].concat(u(Array.from({length:l},function(n,t){return o[t%o.length]+i[t%i.length]}))))):0;if(c<=0)return t(),function(){};var f=a(t,c+50),d=function(e){e.target===n&&(globalThis.clearTimeout(f),f=null,t())};return n.addEventListener("transitionend",d,{once:!0}),function(){null!==f&&globalThis.clearTimeout(f),n.removeEventListener("transitionend",d)}}function s(n){return n.split(",").map(f)}function f(n){var t=Number.parseFloat(n);return Number.isFinite(t)?n.trim().endsWith("ms")?t:1e3*t:0}function d(n){!function(n){if("function"!=typeof(null==n?void 0:n.addEventListener)||"function"!=typeof(null==n?void 0:n.contains))throw new TypeError("Alerts require a DOM query root.")}(n);var e=new Map,r=t(n,"click",'[data-dismiss="alert"]',function(t,r){var o;(function(n){var t;return!0===(null==n||null===(t=n.hasAttribute)||void 0===t?void 0:t.call(n,"disabled"))})(o=r)||function(n){var t,e;return"true"===(null==n||null===(t=n.getAttribute)||void 0===t?void 0:t.call(n,"aria-disabled"))||!0===(null==n||null===(e=n.classList)||void 0===e?void 0:e.contains("disabled"))}(o)||(t.preventDefault(),v(n,e,r))});return{close:function(t){return v(n,e,t)},destroy:function(){return function(n,t){t(),n.forEach(function(n){return n()}),n.clear()}(e,r)}}}function v(n,t,e){var r=i(n,e);if(!r||t.has(r)||!function(n,t){return l(n,"alert:close",t,!0)&&l(n,"close.bs.alert",t,!0)}(r,e))return!1;r.classList.remove("show");t.set(r,function(){});var o=c(r,function(){return function(n,t,e){var r;null===(r=n.get(t))||void 0===r||r(),n.delete(t),t.remove(),function(n,t){l(n,"alert:closed",t),l(n,"closed.bs.alert",t)}(t,e)}(t,r,e)});return t.has(r)&&t.set(r,o),!0}var m,p,y="alerts";function h(n){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};!function(n){var t;if("function"!=typeof(null==n||null===(t=n.Components)||void 0===t?void 0:t.register))throw new TypeError("Alerts require Admin.Components.");if("function"!=typeof n.Components.scan)throw new TypeError("Alerts require Admin.Components.scan().")}(n);var e=null;return n.Components.register({mount:function(n){return e=d(n),{destroy:function(){var n;return null===(n=e)||void 0===n?void 0:n.destroy()}}},name:y,selector:"body"}),{close:function(n){var t,r;return null!==(t=null===(r=e)||void 0===r?void 0:r.close(n))&&void 0!==t&&t},scan:function(){var e,r=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null!==(e=t.root)&&void 0!==e?e:globalThis.document;return n.Components.scan(r,y)}}}globalThis.document&&(m=globalThis,p=h(m.Admin,{root:m.document}),m.Admin.Alerts=p,p.scan())})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./resources/frontend/core/dom/listeners.js":
+/*!**************************************************!*\
+  !*** ./resources/frontend/core/dom/listeners.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "delegate": () => (/* binding */ delegate),
+/* harmony export */   "listen": () => (/* binding */ listen)
+/* harmony export */ });
+function listen(target, type, listener, options) {
+  assertEventTarget(target);
+  assertEventType(type);
+  assertListener(listener);
+  target.addEventListener(type, listener, options);
+  return function () {
+    return target.removeEventListener(type, listener, options);
+  };
+}
+function delegate(root, type, selector, listener, options) {
+  assertDelegationRoot(root);
+  assertSelector(selector);
+  assertListener(listener);
+  return listen(root, type, function (event) {
+    return invokeDelegate(event, root, selector, listener);
+  }, options);
+}
+function invokeDelegate(event, root, selector, listener) {
+  var matched = findDelegateTarget(event.target, root, selector);
+  if (matched) {
+    listener.call(matched, event, matched);
+  }
+}
+function findDelegateTarget(target, root, selector) {
+  var element = closestElement(target);
+  var matched = element === null || element === void 0 ? void 0 : element.closest(selector);
+  return matched && root.contains(matched) ? matched : null;
+}
+function closestElement(target) {
+  var _target$parentElement;
+  if (typeof (target === null || target === void 0 ? void 0 : target.closest) === 'function') {
+    return target;
+  }
+  return (_target$parentElement = target === null || target === void 0 ? void 0 : target.parentElement) !== null && _target$parentElement !== void 0 ? _target$parentElement : null;
+}
+function assertEventTarget(target) {
+  if (typeof (target === null || target === void 0 ? void 0 : target.addEventListener) !== 'function' || typeof (target === null || target === void 0 ? void 0 : target.removeEventListener) !== 'function') {
+    throw new TypeError('Event target must support addEventListener and removeEventListener.');
+  }
+}
+function assertDelegationRoot(root) {
+  assertEventTarget(root);
+  if (typeof root.contains !== 'function') {
+    throw new TypeError('Delegation root must support contains().');
+  }
+}
+function assertEventType(type) {
+  if (typeof type !== 'string' || type.length === 0) {
+    throw new TypeError('Event type must be a non-empty string.');
+  }
+}
+function assertSelector(selector) {
+  if (typeof selector !== 'string' || selector.length === 0) {
+    throw new TypeError('Delegated selector must be a non-empty string.');
+  }
+}
+function assertListener(listener) {
+  if (typeof listener !== 'function') {
+    throw new TypeError('Event listener must be a function.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/alert/alert-elements.js":
+/*!*************************************************************!*\
+  !*** ./resources/frontend/features/alert/alert-elements.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ALERT_DISMISS_SELECTOR": () => (/* binding */ ALERT_DISMISS_SELECTOR),
+/* harmony export */   "ALERT_SELECTOR": () => (/* binding */ ALERT_SELECTOR),
+/* harmony export */   "findAlert": () => (/* binding */ findAlert),
+/* harmony export */   "findAlertDismiss": () => (/* binding */ findAlertDismiss),
+/* harmony export */   "isAlertDismissDisabled": () => (/* binding */ isAlertDismissDisabled)
+/* harmony export */ });
+var ALERT_SELECTOR = '.alert';
+var ALERT_DISMISS_SELECTOR = '[data-dismiss="alert"]';
+function findAlert(root, element) {
+  var _ref, _directAlert;
+  var target = (_ref = (_directAlert = directAlert(element)) !== null && _directAlert !== void 0 ? _directAlert : targetedAlert(element)) !== null && _ref !== void 0 ? _ref : closestAlert(element);
+  return containedAlert(root, target);
+}
+function findAlertDismiss(root, target) {
+  var _target$closest;
+  var dismiss = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, ALERT_DISMISS_SELECTOR);
+  return dismiss && root.contains(dismiss) ? dismiss : null;
+}
+function isAlertDismissDisabled(element) {
+  return hasDisabledAttribute(element) || hasDisabledState(element);
+}
+function directAlert(element) {
+  var _element$matches;
+  return element !== null && element !== void 0 && (_element$matches = element.matches) !== null && _element$matches !== void 0 && _element$matches.call(element, ALERT_SELECTOR) ? element : null;
+}
+function closestAlert(element) {
+  var _element$closest, _element$closest2;
+  return (_element$closest = element === null || element === void 0 || (_element$closest2 = element.closest) === null || _element$closest2 === void 0 ? void 0 : _element$closest2.call(element, ALERT_SELECTOR)) !== null && _element$closest !== void 0 ? _element$closest : null;
+}
+function containedAlert(root, alert) {
+  return alert && root.contains(alert) ? alert : null;
+}
+function hasDisabledAttribute(element) {
+  var _element$hasAttribute;
+  return (element === null || element === void 0 || (_element$hasAttribute = element.hasAttribute) === null || _element$hasAttribute === void 0 ? void 0 : _element$hasAttribute.call(element, 'disabled')) === true;
+}
+function hasDisabledState(element) {
+  var _element$getAttribute, _element$classList;
+  return (element === null || element === void 0 || (_element$getAttribute = element.getAttribute) === null || _element$getAttribute === void 0 ? void 0 : _element$getAttribute.call(element, 'aria-disabled')) === 'true' || (element === null || element === void 0 || (_element$classList = element.classList) === null || _element$classList === void 0 ? void 0 : _element$classList.contains('disabled')) === true;
+}
+function targetedAlert(element) {
+  var _ref2, _element$getAttribute2, _element$getAttribute3, _element$getAttribute4;
+  var target = (_ref2 = (_element$getAttribute2 = element === null || element === void 0 || (_element$getAttribute3 = element.getAttribute) === null || _element$getAttribute3 === void 0 ? void 0 : _element$getAttribute3.call(element, 'data-target')) !== null && _element$getAttribute2 !== void 0 ? _element$getAttribute2 : element === null || element === void 0 || (_element$getAttribute4 = element.getAttribute) === null || _element$getAttribute4 === void 0 ? void 0 : _element$getAttribute4.call(element, 'href')) !== null && _ref2 !== void 0 ? _ref2 : '';
+  return target.startsWith('#') ? element.ownerDocument.getElementById(target.slice(1)) : null;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/alert/alert-events.js":
+/*!***********************************************************!*\
+  !*** ./resources/frontend/features/alert/alert-events.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "dispatchAlertEvent": () => (/* binding */ dispatchAlertEvent),
+/* harmony export */   "notifyAlertClosed": () => (/* binding */ notifyAlertClosed),
+/* harmony export */   "permitAlertClose": () => (/* binding */ permitAlertClose)
+/* harmony export */ });
+function dispatchAlertEvent(alert, name, trigger) {
+  var cancelable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var CustomEvent = alert.ownerDocument.defaultView.CustomEvent;
+  return alert.dispatchEvent(new CustomEvent(name, {
+    bubbles: true,
+    cancelable: cancelable,
+    detail: {
+      alert: alert,
+      trigger: trigger
+    }
+  }));
+}
+function permitAlertClose(alert, trigger) {
+  return dispatchAlertEvent(alert, 'alert:close', trigger, true) && dispatchAlertEvent(alert, 'close.bs.alert', trigger, true);
+}
+function notifyAlertClosed(alert, trigger) {
+  dispatchAlertEvent(alert, 'alert:closed', trigger);
+  dispatchAlertEvent(alert, 'closed.bs.alert', trigger);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/alert/alert-transition.js":
+/*!***************************************************************!*\
+  !*** ./resources/frontend/features/alert/alert-transition.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "transitionMilliseconds": () => (/* binding */ transitionMilliseconds),
+/* harmony export */   "waitForAlertTransition": () => (/* binding */ waitForAlertTransition)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function transitionMilliseconds(element) {
+  var styles = element.ownerDocument.defaultView.getComputedStyle(element);
+  var durations = timeList(styles.transitionDuration);
+  var delays = timeList(styles.transitionDelay);
+  var length = Math.max(durations.length, delays.length);
+  return Math.max.apply(Math, [0].concat(_toConsumableArray(Array.from({
+    length: length
+  }, function (_, index) {
+    return durations[index % durations.length] + delays[index % delays.length];
+  }))));
+}
+function waitForAlertTransition(alert, callback) {
+  var timeout = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : globalThis.setTimeout;
+  var duration = alert.classList.contains('fade') ? transitionMilliseconds(alert) : 0;
+  if (duration <= 0) {
+    callback();
+    return function () {};
+  }
+  var timer = timeout(callback, duration + 50);
+  var finish = function finish(event) {
+    if (event.target !== alert) return;
+    globalThis.clearTimeout(timer);
+    timer = null;
+    callback();
+  };
+  alert.addEventListener('transitionend', finish, {
+    once: true
+  });
+  return function () {
+    if (timer !== null) globalThis.clearTimeout(timer);
+    alert.removeEventListener('transitionend', finish);
+  };
+}
+function timeList(value) {
+  return value.split(',').map(timeMilliseconds);
+}
+function timeMilliseconds(value) {
+  var number = Number.parseFloat(value);
+  if (!Number.isFinite(number)) return 0;
+  return value.trim().endsWith('ms') ? number : number * 1000;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/alert/alerts.js":
+/*!*****************************************************!*\
+  !*** ./resources/frontend/features/alert/alerts.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "mountAlerts": () => (/* binding */ mountAlerts)
+/* harmony export */ });
+/* harmony import */ var _core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/dom/listeners.js */ "./resources/frontend/core/dom/listeners.js");
+/* harmony import */ var _alert_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert-elements.js */ "./resources/frontend/features/alert/alert-elements.js");
+/* harmony import */ var _alert_events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert-events.js */ "./resources/frontend/features/alert/alert-events.js");
+/* harmony import */ var _alert_transition_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert-transition.js */ "./resources/frontend/features/alert/alert-transition.js");
+
+
+
+
+function mountAlerts(root) {
+  assertRoot(root);
+  var pending = new Map();
+  var unbind = (0,_core_dom_listeners_js__WEBPACK_IMPORTED_MODULE_0__.delegate)(root, 'click', '[data-dismiss="alert"]', function (event, trigger) {
+    if ((0,_alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.isAlertDismissDisabled)(trigger)) return;
+    event.preventDefault();
+    closeAlert(root, pending, trigger);
+  });
+  return {
+    close: function close(element) {
+      return closeAlert(root, pending, element);
+    },
+    destroy: function destroy() {
+      return destroyAlerts(pending, unbind);
+    }
+  };
+}
+function closeAlert(root, pending, element) {
+  var alert = (0,_alert_elements_js__WEBPACK_IMPORTED_MODULE_1__.findAlert)(root, element);
+  if (!alert || pending.has(alert) || !(0,_alert_events_js__WEBPACK_IMPORTED_MODULE_2__.permitAlertClose)(alert, element)) return false;
+  alert.classList.remove('show');
+  var finish = function finish() {
+    return removeAlert(pending, alert, element);
+  };
+  pending.set(alert, function () {});
+  var cancel = (0,_alert_transition_js__WEBPACK_IMPORTED_MODULE_3__.waitForAlertTransition)(alert, finish);
+  if (pending.has(alert)) pending.set(alert, cancel);
+  return true;
+}
+function removeAlert(pending, alert, trigger) {
+  var _pending$get;
+  (_pending$get = pending.get(alert)) === null || _pending$get === void 0 || _pending$get();
+  pending["delete"](alert);
+  alert.remove();
+  (0,_alert_events_js__WEBPACK_IMPORTED_MODULE_2__.notifyAlertClosed)(alert, trigger);
+}
+function destroyAlerts(pending, unbind) {
+  unbind();
+  pending.forEach(function (cancel) {
+    return cancel();
+  });
+  pending.clear();
+}
+function assertRoot(root) {
+  if (typeof (root === null || root === void 0 ? void 0 : root.addEventListener) !== 'function' || typeof (root === null || root === void 0 ? void 0 : root.contains) !== 'function') {
+    throw new TypeError('Alerts require a DOM query root.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/alert/install-alerts.js":
+/*!*************************************************************!*\
+  !*** ./resources/frontend/features/alert/install-alerts.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ALERT_COMPONENT": () => (/* binding */ ALERT_COMPONENT),
+/* harmony export */   "ALERT_ROOT_SELECTOR": () => (/* binding */ ALERT_ROOT_SELECTOR),
+/* harmony export */   "installAlerts": () => (/* binding */ installAlerts)
+/* harmony export */ });
+/* harmony import */ var _alerts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alerts.js */ "./resources/frontend/features/alert/alerts.js");
+
+var ALERT_COMPONENT = 'alerts';
+var ALERT_ROOT_SELECTOR = 'body';
+function installAlerts(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  assertAdmin(admin);
+  var controller = null;
+  admin.Components.register({
+    mount: function mount(body) {
+      controller = (0,_alerts_js__WEBPACK_IMPORTED_MODULE_0__.mountAlerts)(body);
+      return {
+        destroy: function destroy() {
+          var _controller;
+          return (_controller = controller) === null || _controller === void 0 ? void 0 : _controller.destroy();
+        }
+      };
+    },
+    name: ALERT_COMPONENT,
+    selector: ALERT_ROOT_SELECTOR
+  });
+  return {
+    close: function close(element) {
+      var _controller$close, _controller2;
+      return (_controller$close = (_controller2 = controller) === null || _controller2 === void 0 ? void 0 : _controller2.close(element)) !== null && _controller$close !== void 0 ? _controller$close : false;
+    },
+    scan: function scan() {
+      var _options$root;
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+      return admin.Components.scan(root, ALERT_COMPONENT);
+    }
+  };
+}
+function assertAdmin(admin) {
+  var _admin$Components;
+  if (typeof (admin === null || admin === void 0 || (_admin$Components = admin.Components) === null || _admin$Components === void 0 ? void 0 : _admin$Components.register) !== 'function') {
+    throw new TypeError('Alerts require Admin.Components.');
+  }
+  if (typeof admin.Components.scan !== 'function') {
+    throw new TypeError('Alerts require Admin.Components.scan().');
+  }
+}
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!******************************************************!*\
+  !*** ./resources/frontend/features/alert/browser.js ***!
+  \******************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bootAlerts": () => (/* binding */ bootAlerts)
+/* harmony export */ });
+/* harmony import */ var _install_alerts_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-alerts.js */ "./resources/frontend/features/alert/install-alerts.js");
+
+if (globalThis.document) bootAlerts(globalThis);
+function bootAlerts(target) {
+  var alerts = (0,_install_alerts_js__WEBPACK_IMPORTED_MODULE_0__.installAlerts)(target.Admin, {
+    root: target.document
+  });
+  target.Admin.Alerts = alerts;
+  alerts.scan();
+  return alerts;
+}
+})();
+
+/******/ })()
+;
+//# sourceMappingURL=alert.js.map

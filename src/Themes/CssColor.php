@@ -9,6 +9,8 @@ final class CssColor implements Stringable
 {
     private const HEX_PATTERN = '/\A#(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})\z/i';
 
+    private const SAFE_KEYWORD_PATTERN = '/\A[a-z]+\z/i';
+
     private function __construct(private string $value)
     {
     }
@@ -40,7 +42,7 @@ final class CssColor implements Stringable
 
     private static function isSupported(string $value): bool
     {
-        return strcasecmp($value, 'transparent') === 0
+        return preg_match(self::SAFE_KEYWORD_PATTERN, $value) === 1
             || preg_match(self::HEX_PATTERN, $value) === 1
             || self::isSupportedFunction($value);
     }
@@ -72,7 +74,7 @@ final class CssColor implements Stringable
     {
         return new InvalidArgumentException(
             "Invalid CSS color configured for [{$source}]. "
-            .'Use hexadecimal, rgb/rgba, hsl/hsla, or transparent.'
+            .'Use a named color, hexadecimal, rgb/rgba, or hsl/hsla.'
         );
     }
 }

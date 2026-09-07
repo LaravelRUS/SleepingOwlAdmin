@@ -15187,11 +15187,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     }
   },
   mounted: function mounted() {
+    var _this$$refs$nativeCon;
     this.mountRemoteSearch();
     this.mountDependentSelect();
+    (_this$$refs$nativeCon = this.$refs.nativeControl) === null || _this$$refs$nativeCon === void 0 || _this$$refs$nativeCon.addEventListener('soa:inline-editor-clear', this.clearSelection);
   },
   beforeUnmount: function beforeUnmount() {
-    var _this$dependentLoad, _this$remoteSearch;
+    var _this$$refs$nativeCon2, _this$dependentLoad, _this$remoteSearch;
+    (_this$$refs$nativeCon2 = this.$refs.nativeControl) === null || _this$$refs$nativeCon2 === void 0 || _this$$refs$nativeCon2.removeEventListener('soa:inline-editor-clear', this.clearSelection);
     (_this$dependentLoad = this.dependentLoad) === null || _this$dependentLoad === void 0 || _this$dependentLoad.destroy();
     this.dependentLoad = null;
     (_this$remoteSearch = this.remoteSearch) === null || _this$remoteSearch === void 0 || _this$remoteSearch.destroy();
@@ -15207,6 +15210,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     applyRemoteOptions: function applyRemoteOptions(options) {
       this.loadError = false;
       this.localOptions = (0,_select_remote_options__WEBPACK_IMPORTED_MODULE_5__.mergeRemoteSelectOptions)(this.selection, options, this.multiple);
+    },
+    clearSelection: function clearSelection() {
+      this.selectionChanged(this.multiple ? [] : null);
     },
     applyDependentOptions: function applyDependentOptions(result, context) {
       var _this = this;

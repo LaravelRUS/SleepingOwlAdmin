@@ -3,38 +3,22 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
+use SleepingOwl\Admin\Display\Column\Editable\Concerns\InteractsWithEditableColumn;
+use SleepingOwl\Admin\Display\Column\Editable\Concerns\InteractsWithEditableDateTime;
+use SleepingOwl\Admin\Form\Element\Date as FormDate;
 
-class Date extends DateTime implements ColumnEditableInterface
+class Date extends FormDate implements ColumnEditableInterface
 {
-    /**
-     * @var string
-     */
-    protected $format = 'Y-m-d';
-
-    /**
-     * @var string
-     */
-    protected $view = 'column.editable.date';
-
-    /**
-     * Text constructor.
-     *
-     * @param  $name
-     * @param  $label
-     */
-    public function __construct($name, $label = null, $small = null)
-    {
-        parent::__construct($name, $label, $small);
-
-        $this->setFormat(config('sleeping_owl.dateFormat'));
-        $this->setCombodateValue(['maxYear' => now()->addYears(100)->format('Y')]);
+    use InteractsWithEditableColumn, InteractsWithEditableDateTime {
+        InteractsWithEditableDateTime::getModifierValue insteadof InteractsWithEditableColumn;
     }
 
-    /**
-     * @return string
-     */
-    public function getPickerFormat()
+    protected $view = 'column.editable.date';
+
+    public function __construct($name, $label = null, $small = null)
     {
-        return $this->pickerFormat ?: config('sleeping_owl.dateFormat');
+        parent::__construct($name, $label);
+        $this->initializeEditableColumn($label, $small);
+        $this->setCombodateValue(['maxYear' => now()->addYears(100)->format('Y')]);
     }
 }

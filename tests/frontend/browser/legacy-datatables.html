@@ -288,21 +288,31 @@
         <span
             id="autoupdate-fixture"
             data-admin-table-autoupdate
-            data-close-label="Stop auto-update"
+            data-pause-label="Pause auto-update"
+            data-resume-label="Resume auto-update"
             data-interval="250"
-            data-table-class="autorefresh"
+            data-table-classes='["autorefresh","scheduled-refresh"]'
             style="--soa-datatables-autoupdate-color: currentColor"
             hidden
         >
             <template data-admin-table-autoupdate-control>
-                <span class="fixture-autoupdate-shell">
+                <span class="autoupdater-bar fixture-autoupdate-shell">
                     <button
-                        class="autoupdater-close fixture-autoupdate-close"
-                        data-admin-table-autoupdate-close
+                        class="autoupdater-toggle autoupdater-close fixture-autoupdate-close"
+                        data-admin-table-autoupdate-toggle
                         type="button"
-                        aria-label="Stop auto-update"
+                        aria-label="Pause auto-update"
+                        aria-pressed="false"
                     >
-                        <span class="fixture-autoupdate-label">Stop</span>
+                        <span data-admin-table-autoupdate-pause-icon aria-hidden="true">Ⅱ</span>
+                        <span data-admin-table-autoupdate-resume-icon aria-hidden="true" hidden
+                            >▶</span
+                        >
+                        <span
+                            class="autoupdater-label fixture-autoupdate-label"
+                            data-admin-table-autoupdate-label
+                            >Pause auto-update</span
+                        >
                     </button>
                 </span>
             </template>

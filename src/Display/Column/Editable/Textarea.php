@@ -3,53 +3,35 @@
 namespace SleepingOwl\Admin\Display\Column\Editable;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Form\FormDefault;
+use SleepingOwl\Admin\Display\Column\Editable\Concerns\InteractsWithEditableColumn;
+use SleepingOwl\Admin\Form\Element\Textarea as FormTextarea;
 
-class Textarea extends EditableColumn implements ColumnEditableInterface
+class Textarea extends FormTextarea implements ColumnEditableInterface
 {
-    /**
-     * @var string
-     */
+    use InteractsWithEditableColumn;
+
     protected $view = 'column.editable.textarea';
 
-    /**
-     * Text constructor.
-     *
-     * @param  $name
-     * @param  $label
-     */
     public function __construct($name, $label = null, $small = null)
     {
-        parent::__construct($name, $label, $small);
+        parent::__construct($name, $label);
+        $this->initializeEditableColumn($label, $small);
     }
 
-    /**
-     * @param  Request  $request
-     * @return void
-     *
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormElementException
-     * @throws \SleepingOwl\Admin\Exceptions\Form\FormException
-     */
+    public function toArray(): array
+    {
+        return $this->editableColumnToArray() + [
+            'rows' => $this->getRows(),
+        ];
+    }
+
     public function save(Request $request)
     {
-        $form = new FormDefault([
-            new \SleepingOwl\Admin\Form\Element\Textarea(
-                $this->getName()
-            ),
-        ]);
-
-        $model = $this->getModel();
-
-        $array = [];
-        Arr::set($array, $this->getName(), $request->input('value', null));
-
-        $request->merge($array);
-        $form->setModelClass(get_class($model));
-        $form->initialize();
-        $form->setId($model->getKey());
-
-        $form->saveForm($request);
+        return $this->persistInlineFormValue(
+            $request,
+            fn (Request $mappedRequest) => parent::save($mappedRequest),
+            fn (Request $mappedRequest) => parent::afterSave($mappedRequest)
+        );
     }
 }

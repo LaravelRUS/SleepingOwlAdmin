@@ -4,7 +4,7 @@ namespace SleepingOwl\Admin\Contracts\Display;
 
 use Illuminate\Http\Request;
 
-interface ColumnEditableInterface extends ColumnInterface
+interface ColumnEditableInterface extends ColumnInterface, NamedColumnInterface
 {
     /**
      * @param  \Illuminate\Http\Request  $request

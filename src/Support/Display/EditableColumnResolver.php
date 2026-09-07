@@ -3,7 +3,6 @@
 namespace SleepingOwl\Admin\Support\Display;
 
 use SleepingOwl\Admin\Contracts\Display\ColumnEditableInterface;
-use SleepingOwl\Admin\Display\Column\NamedColumn;
 use SleepingOwl\Admin\Display\DisplayTabbed;
 use SleepingOwl\Admin\Form\Columns\Column;
 use SleepingOwl\Admin\Form\FormElements;
@@ -56,7 +55,6 @@ final class EditableColumnResolver
     private function matches($column, string $field): bool
     {
         return $column instanceof ColumnEditableInterface
-            && $column instanceof NamedColumn
             && $column->getName() === $field;
     }
 }

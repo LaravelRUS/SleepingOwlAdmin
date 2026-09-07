@@ -1,40 +1,76 @@
 @use 'variables';
 
 @mixin styles {
-  .datatables {
-    position: relative;
+    .autoupdater-bar {
+        position: absolute;
+        width: calc(100% - 2em);
+        top: -0.95em;
+        z-index: 2;
+        height: 1.75rem;
 
-    &.autoupdater .autoupdater-close {
-      position: absolute;
-      z-index: 2;
-      top: -1.3rem;
-      right: -0.6rem;
-      padding: 0.2rem;
-      border: 0;
-      color: var(--soa-muted-text-color);
-      background: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: color var(--soa-table-row-transition-duration);
+        & > svg {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: calc(100% - 2.25rem);
+            height: 0.125rem;
+            overflow: visible;
+            transform: translateY(-50%);
+            transition: opacity var(--soa-table-row-transition-duration);
+        }
 
-      &:hover,
-      &:focus-visible {
-        color: var(--soa-danger-color);
-      }
+        &[data-state='paused'] > svg {
+            opacity: 0.45;
+        }
     }
 
-    & > svg {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 0.125rem;
-    }
-  }
+    .autoupdater-toggle {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        display: inline-grid;
+        width: 1.75rem;
+        height: 1.75rem;
+        padding: 0;
+        transform: translateY(-50%);
+        border: 0.0625rem solid var(--soa-border-color);
+        border-radius: 50%;
+        color: var(--soa-muted-text-color);
+        background: var(--soa-surface-color);
+        font-size: 0.75rem;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+            border-color var(--soa-table-row-transition-duration),
+            color var(--soa-table-row-transition-duration);
+        place-items: center;
 
-  @media (width <= variables.$mobile-breakpoint) {
-    .datatables.autoupdater .autoupdater-close {
-      top: -0.5rem;
-      right: 0;
+        &:hover,
+        &:focus-visible {
+            border-color: var(--soa-datatables-autoupdate-color);
+            color: var(--soa-datatables-autoupdate-color);
+            outline: none;
+        }
+
+        & > [aria-hidden='true'] {
+            grid-area: 1 / 1;
+        }
     }
-  }
+
+    .autoupdater-label {
+        position: absolute;
+        width: 0.0625rem;
+        height: 0.0625rem;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    @media (width <= variables.$mobile-breakpoint) {
+        .autoupdater-bar {
+            height: 1.5rem;
+        }
+    }
 }

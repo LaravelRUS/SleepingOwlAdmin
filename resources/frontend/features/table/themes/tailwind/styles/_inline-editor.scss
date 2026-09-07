@@ -43,7 +43,7 @@
   }
 
   .soa-inline-editor-popup::backdrop {
-    background: rgb(15 23 42 / 55%);
+    background: var(--soa-inline-editor-backdrop);
     backdrop-filter: blur(1px);
   }
 
@@ -69,13 +69,72 @@
     border-radius: variables.$inline-editor-radius;
   }
 
+  .soa-inline-editor-input {
+    position: relative;
+  }
+
+  .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 3rem;
+  }
+
+  .soa-inline-editor-clear {
+    position: absolute;
+    top: 0.3125rem;
+    inset-inline-end: 0.3125rem;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    color: var(--soa-inline-editor-muted);
+    line-height: 1;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    opacity: 0.65;
+  }
+
+  .soa-inline-editor-clear:hover,
+  .soa-inline-editor-clear:focus-visible {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-border);
+    outline: 0;
+    opacity: 1;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-input > [data-inline-editor-control],
+  .soa-inline-editor-type-number .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 4.25rem;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 0;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern -- Vue Multiselect owns this selector. */
+  .soa-inline-editor-type-select .multiselect__tags {
+    padding-inline-end: 4.75rem;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-clear,
+  .soa-inline-editor-type-number .soa-inline-editor-clear {
+    inset-inline-end: 1.625rem;
+  }
+
+  .soa-inline-editor-type-select .soa-inline-editor-clear {
+    inset-inline-end: 2.75rem;
+  }
+
   .soa-inline-editor-actions {
     display: flex;
     gap: variables.$inline-editor-gap;
   }
 
   .soa-inline-editor-submit,
-  .soa-inline-editor-cancel {
+  .soa-inline-editor-cancel,
+  .soa-inline-editor-clear-all {
     padding: 0.375rem 0.75rem;
     font-weight: 600;
     cursor: pointer;
@@ -98,6 +157,19 @@
     border-color: var(--soa-inline-editor-border);
   }
 
+  .soa-inline-editor-clear-all {
+    margin-inline-end: auto;
+    color: var(--soa-inline-editor-muted);
+    background: transparent;
+  }
+
+  .soa-inline-editor-clear-all:hover,
+  .soa-inline-editor-clear-all:focus-visible {
+    color: var(--soa-inline-editor-text);
+    background: var(--soa-inline-editor-border);
+    outline: 0;
+  }
+
   .soa-inline-editor-error {
     max-width: variables.$inline-editor-min-width;
     color: var(--soa-inline-editor-error);
@@ -110,9 +182,37 @@
     align-items: center;
   }
 
+  .soa-inline-editor-checklist {
+    max-height: min(18rem, 50vh);
+    padding-inline-end: 0.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
   .soa-inline-editor-range-value {
     color: var(--soa-inline-editor-muted);
     text-align: center;
+  }
+
+  .soa-inline-editor-type-range .soa-inline-editor-input > [data-inline-editor-control] {
+    padding-inline-end: 0;
+  }
+
+  .soa-inline-editor-range-number-wrap {
+    position: relative;
+    width: min(100%, 8rem);
+    justify-self: center;
+  }
+
+  .soa-inline-editor-range-number {
+    padding-inline-end: 4.25rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  .soa-inline-editor-range-number-wrap .soa-inline-editor-clear {
+    inset-inline-end: 1.625rem;
   }
 
   .soa-inline-editor-form[aria-busy='true'] {

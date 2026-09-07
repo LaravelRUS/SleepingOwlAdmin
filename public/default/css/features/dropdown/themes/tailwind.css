@@ -1,1 +1,71 @@
-:root{--soa-dropdown-surface:#fff;--soa-dropdown-text:#0f172a;--soa-dropdown-border:#cbd5e1;--soa-dropdown-hover-surface:#f1f5f9;--soa-dropdown-focus:#2563eb;--soa-dropdown-shadow-color:rgba(15,23,42,.14);--soa-dropdown-min-width:12rem;--soa-dropdown-offset:0.375rem;--soa-dropdown-padding-block:0.375rem;--soa-dropdown-padding-inline:0.375rem;--soa-dropdown-item-padding-block:0.5rem;--soa-dropdown-item-padding-inline:0.75rem;--soa-dropdown-border-width:1px;--soa-dropdown-radius:0.5rem;--soa-dropdown-font-size:0.875rem;--soa-dropdown-line-height:1.25rem;--soa-dropdown-focus-width:2px;--soa-dropdown-shadow:0 0.75rem 1.75rem rgba(15,23,42,.14)}:root[data-color-scheme=dark]{--soa-dropdown-surface:#0f172a;--soa-dropdown-text:#f8fafc;--soa-dropdown-border:#334155;--soa-dropdown-hover-surface:#1e293b}@layer sleepingowl-theme.dropdown{.dropdown-menu{background:var(--soa-dropdown-surface);border:var(--soa-dropdown-border-width) solid var(--soa-dropdown-border);border-radius:var(--soa-dropdown-radius);box-shadow:var(--soa-dropdown-shadow);color:var(--soa-dropdown-text);font-size:var(--soa-dropdown-font-size);inset-block-start:calc(100% + var(--soa-dropdown-offset));inset-inline-end:0;line-height:var(--soa-dropdown-line-height);min-inline-size:var(--soa-dropdown-min-width);padding:var(--soa-dropdown-padding-block) var(--soa-dropdown-padding-inline)}.dropdown-item{background:transparent;border:0;border-radius:calc(var(--soa-dropdown-radius)/2);color:inherit;display:block;inline-size:100%;padding:var(--soa-dropdown-item-padding-block) var(--soa-dropdown-item-padding-inline);text-align:start;text-decoration:none;white-space:nowrap}.dropdown-item:hover{background:var(--soa-dropdown-hover-surface);color:inherit}.dropdown-item:focus-visible{outline:var(--soa-dropdown-focus-width) solid var(--soa-dropdown-focus);outline-offset:calc(var(--soa-dropdown-focus-width)*-1)}.dropup>.dropdown-menu{inset-block:auto calc(100% + var(--soa-dropdown-offset))}.dropdown-menu-left{inset-inline:0 auto}}
+:root {
+  --soa-dropdown-surface: #fff;
+  --soa-dropdown-text: #0f172a;
+  --soa-dropdown-border: #cbd5e1;
+  --soa-dropdown-hover-surface: #f1f5f9;
+  --soa-dropdown-focus: #2563eb;
+  --soa-dropdown-shadow-color: rgba(15, 23, 42, 0.14);
+  --soa-dropdown-min-width: 12rem;
+  --soa-dropdown-offset: 0.375rem;
+  --soa-dropdown-padding-block: 0.375rem;
+  --soa-dropdown-padding-inline: 0.375rem;
+  --soa-dropdown-item-padding-block: 0.5rem;
+  --soa-dropdown-item-padding-inline: 0.75rem;
+  --soa-dropdown-border-width: 1px;
+  --soa-dropdown-radius: 0.5rem;
+  --soa-dropdown-font-size: 0.875rem;
+  --soa-dropdown-line-height: 1.25rem;
+  --soa-dropdown-focus-width: 2px;
+  --soa-dropdown-shadow: 0 0.75rem 1.75rem rgba(15, 23, 42, 0.14);
+}
+
+:root[data-color-scheme=dark] {
+  --soa-dropdown-surface: #0f172a;
+  --soa-dropdown-text: #f8fafc;
+  --soa-dropdown-border: #334155;
+  --soa-dropdown-hover-surface: #1e293b;
+}
+
+@layer sleepingowl-theme.dropdown {
+  .dropdown-menu {
+    inset-block-start: calc(100% + var(--soa-dropdown-offset));
+    inset-inline-end: 0;
+    min-inline-size: var(--soa-dropdown-min-width);
+    padding: var(--soa-dropdown-padding-block) var(--soa-dropdown-padding-inline);
+    border: var(--soa-dropdown-border-width) solid var(--soa-dropdown-border);
+    border-radius: var(--soa-dropdown-radius);
+    background: var(--soa-dropdown-surface);
+    box-shadow: var(--soa-dropdown-shadow);
+    color: var(--soa-dropdown-text);
+    font-size: var(--soa-dropdown-font-size);
+    line-height: var(--soa-dropdown-line-height);
+  }
+  .dropdown-item {
+    display: block;
+    inline-size: 100%;
+    padding: var(--soa-dropdown-item-padding-block) var(--soa-dropdown-item-padding-inline);
+    border: 0;
+    border-radius: calc(var(--soa-dropdown-radius) / 2);
+    background: transparent;
+    color: inherit;
+    text-align: start;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .dropdown-item:hover {
+    background: var(--soa-dropdown-hover-surface);
+    color: inherit;
+  }
+  .dropdown-item:focus-visible {
+    outline: var(--soa-dropdown-focus-width) solid var(--soa-dropdown-focus);
+    outline-offset: calc(-1 * var(--soa-dropdown-focus-width));
+  }
+  .dropup > .dropdown-menu {
+    inset-block: auto calc(100% + var(--soa-dropdown-offset));
+  }
+  .dropdown-menu-left {
+    inset-inline: 0 auto;
+  }
+}
+
+/*# sourceMappingURL=tailwind.css.map*/

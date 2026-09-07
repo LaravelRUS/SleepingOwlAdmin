@@ -57,6 +57,28 @@ describe('TableRegistry', () => {
     })
 })
 
+describe('TableRegistry subscriptions', () => {
+    it('notifies when adapters are registered and unregistered', () => {
+        const registry = createTableRegistry()
+        const listener = vi.fn()
+        const adapter = createAdapter()
+        const unsubscribe = registry.subscribe(listener)
+
+        registry.register(adapter)
+        registry.register(adapter)
+        registry.unregister(adapter.element)
+
+        expect(listener.mock.calls).toEqual([
+            [{ adapter, type: 'registered' }],
+            [{ adapter, type: 'unregistered' }],
+        ])
+
+        unsubscribe()
+        registry.register(adapter)
+        expect(listener).toHaveBeenCalledTimes(2)
+    })
+})
+
 describe('TableRegistry operations', () => {
     it('runs reload and clear state for one adapter or all registered adapters', () => {
         const registry = createTableRegistry()

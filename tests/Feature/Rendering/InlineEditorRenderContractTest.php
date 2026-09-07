@@ -18,6 +18,11 @@ class InlineEditorRenderContractTest extends TestCase
         $this->assertStringContainsString('data-inline-editor-root', $html);
         $this->assertStringContainsString('data-inline-editor-form', $html);
         $this->assertStringContainsString('data-inline-editor-control', $html);
+        if (in_array($type, ['boolean', 'checkbox'], true)) {
+            $this->assertStringNotContainsString('data-inline-editor-clear', $html);
+        } else {
+            $this->assertStringContainsString('data-inline-editor-clear', $html);
+        }
         $this->assertStringContainsString('data-inline-editor-cancel', $html);
         $this->assertStringContainsString('data-inline-editor-error', $html);
         $this->assertStringContainsString('class="project-column"', $html);
@@ -58,6 +63,52 @@ class InlineEditorRenderContractTest extends TestCase
         $this->assertStringContainsString('<strong>Draft</strong>', $html);
     }
 
+    public function test_required_column_renders_no_clear_control(): void
+    {
+        $html = $this->renderEditor('text', ['required' => true]);
+
+        $this->assertStringNotContainsString('data-inline-editor-clear', $html);
+    }
+
+    public function test_empty_checklist_renders_no_clear_control(): void
+    {
+        $html = $this->renderEditor('checklist', ['value' => '']);
+
+        $this->assertStringNotContainsString('data-inline-editor-clear', $html);
+    }
+
+    public function test_checklist_renders_localized_clear_all_action(): void
+    {
+        app()->setLocale('ru');
+
+        $html = $this->renderEditor('checklist', ['value' => '1']);
+
+        $this->assertStringContainsString('class="soa-inline-editor-clear-all"', $html);
+        $this->assertStringContainsString('>Очистить всё</button>', $html);
+    }
+
+    public function test_range_renders_synced_number_control_with_constraints(): void
+    {
+        $html = $this->renderEditor('range', ['required' => true]);
+
+        $this->assertStringContainsString('data-inline-editor-range-number', $html);
+        $this->assertStringContainsString('soa-inline-editor-range-number-wrap', $html);
+        $this->assertMatchesRegularExpression(
+            '/data-inline-editor-range-number[^>]+max="100"[^>]+min="0"[^>]+required[^>]+step="1"[^>]+type="number"/',
+            $html
+        );
+    }
+
+    public function test_developer_owned_editor_title_renders_as_html(): void
+    {
+        $html = $this->renderEditor('select', [
+            'title' => '<i class="project-icon"></i> Status',
+        ]);
+
+        $this->assertStringContainsString('<i class="project-icon"></i> Status', $html);
+        $this->assertStringNotContainsString('-title">&lt;i class=', $html);
+    }
+
     #[DataProvider('editorControlMarkers')]
     public function test_each_editor_type_renders_its_control_in_blade(
         string $view,
@@ -86,6 +137,7 @@ class InlineEditorRenderContractTest extends TestCase
     public static function editorViews(): array
     {
         return [
+            ['boolean', 'boolean'],
             ['checkbox', 'checkbox'],
             ['checklist', 'checklist'],
             ['date', 'date'],
@@ -101,13 +153,14 @@ class InlineEditorRenderContractTest extends TestCase
     public static function editorControlMarkers(): array
     {
         return [
+            ['boolean', 'data-inline-editor-check-input'],
             ['checkbox', 'data-inline-editor-check-input'],
             ['checklist', 'data-inline-editor-check-input'],
             ['date', 'data-date-control="date"'],
             ['datetime', 'data-date-control="datetime"'],
             ['number', 'type="number"'],
             ['range', 'data-inline-editor-range-input'],
-            ['select', '<select class="soa-inline-editor-control"'],
+            ['select', 'data-inline-editor-select'],
             ['text', 'type="text"'],
             ['textarea', '<textarea class="soa-inline-editor-control"'],
         ];

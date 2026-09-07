@@ -3,6 +3,7 @@
 namespace SleepingOwl\Admin\Factories;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Model;
 use SleepingOwl\Admin\AliasBinder;
 use SleepingOwl\Admin\Contracts\Display\DisplayColumnEditableFactoryInterface;
 use SleepingOwl\Admin\Display\Column\Editable\Boolean;
@@ -17,7 +18,9 @@ use SleepingOwl\Admin\Display\Column\Editable\Text;
 use SleepingOwl\Admin\Display\Column\Editable\Textarea;
 
 /**
- * @method Checkbox checkbox($name, $checkedLabel = null, $uncheckedLabel = null, $columnLabel = null)
+ * @method Checklist checklist($name, $label = null, array|callable|Model|string $options = [], $small = null)
+ * @method Select select($name, $label = null, array|callable|Model|string $options = [], $small = null)
+ * @method Checkbox checkbox($name, $columnLabel = null, $small = null, $uncheckedLabel = null, $checkedLabel = null)
  */
 class DisplayColumnEditableFactory extends AliasBinder implements DisplayColumnEditableFactoryInterface
 {

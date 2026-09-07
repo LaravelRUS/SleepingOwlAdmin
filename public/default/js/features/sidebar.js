@@ -1,1 +1,796 @@
-(()=>{"use strict";function n(n){return function(n){if(Array.isArray(n))return e(n)}(n)||function(n){if("undefined"!=typeof Symbol&&null!=n[Symbol.iterator]||null!=n["@@iterator"])return Array.from(n)}(n)||function(n,t){if(n){if("string"==typeof n)return e(n,t);var r={}.toString.call(n).slice(8,-1);return"Object"===r&&n.constructor&&(r=n.constructor.name),"Map"===r||"Set"===r?Array.from(n):"Arguments"===r||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)?e(n,t):void 0}}(n)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function e(n,e){(null==e||e>n.length)&&(e=n.length);for(var t=0,r=Array(e);t<e;t++)r[t]=n[t];return r}var t='[data-widget="pushmenu"]',r='[data-widget="treeview"]',o=".nav-item",i=".nav-link",u=".nav-treeview";function l(n){return m(n,t)}function a(n){return m(n,r)}function c(n,e){var r,o=null==e||null===(r=e.closest)||void 0===r?void 0:r.call(e,t);return o&&n.contains(o)?o:null}function s(n,e){var t,l=null==e||null===(t=e.closest)||void 0===t?void 0:t.call(e,i);if(!l)return null;var a=function(n){var e,t=n.closest(o),i=null==t||null===(e=t.closest)||void 0===e?void 0:e.call(t,r),l=p(t,u);return t&&i&&l?{item:t,link:n,menu:l,tree:i}:null}(l);return function(n,e){return Boolean(e&&n.contains(e.tree)&&p(e.item,i)===e.link)}(n,a)?a:null}function d(e){return n(e.querySelectorAll(o)).map(function(n){return v(e,n)}).filter(Boolean)}function f(n){var e,t,r;return[null==n||null===(e=n.hasAttribute)||void 0===e?void 0:e.call(n,"disabled"),"true"===(null==n||null===(t=n.getAttribute)||void 0===t?void 0:t.call(n,"aria-disabled")),null==n||null===(r=n.classList)||void 0===r?void 0:r.contains("disabled")].some(Boolean)}function v(n,e){if(e.closest(r)!==n)return null;var t=p(e,i),o=p(e,u);return t&&o?{item:e,link:t,menu:o,tree:n}:null}function p(e,t){var r,o;return null!==(r=n(null!==(o=null==e?void 0:e.children)&&void 0!==o?o:[]).find(function(n){return n.matches(t)}))&&void 0!==r?r:null}function m(e,t){var r,o,i,u=n(null!==(r=null===(o=e.querySelectorAll)||void 0===o?void 0:o.call(e,t))&&void 0!==r?r:[]);return null!==(i=e.matches)&&void 0!==i&&i.call(e,t)&&u.unshift(e),u}function b(n){var e;n.setAttribute("role",null!==(e=n.getAttribute("role"))&&void 0!==e?e:"menu"),d(n).forEach(function(n){w(n,n.item.classList.contains("menu-open"))})}function g(e){return!e.item.classList.contains("menu-open")&&(!!S(e,"navigation:expand",!0)&&(!!function(e){return"false"===e.tree.getAttribute("data-accordion")||function(e){var t,r;return n(null!==(t=null===(r=e.item.parentElement)||void 0===r?void 0:r.children)&&void 0!==t?t:[]).map(function(n){return v(e.tree,n)}).filter(Boolean)}(e).filter(function(n){return n.item!==e.item}).filter(function(n){return n.item.classList.contains("menu-open")}).every(y)}(e)&&(w(e,!0),A(e,["navigation:expanded","expanded.lte.treeview"]),!0)))}function y(n){return!!n.item.classList.contains("menu-open")&&(!!S(n,"navigation:collapse",!0)&&(function(n){w(n,!1),d(n.menu).forEach(function(n){return w(n,!1)})}(n),A(n,["navigation:collapsed","collapsed.lte.treeview"]),!0))}function h(n){return n.item.classList.contains("menu-open")?y(n):g(n)}function w(n,e){n.item.classList.toggle("menu-open",e),n.item.classList.remove("menu-is-opening"),n.menu.hidden=!e,n.link.setAttribute("aria-expanded",String(e)),n.link.setAttribute("aria-haspopup","true")}function A(n,e){e.forEach(function(e){return S(n,e)})}function S(n,e){var t=arguments.length>2&&void 0!==arguments[2]&&arguments[2];return n.tree.dispatchEvent(new n.tree.ownerDocument.defaultView.CustomEvent(e,{bubbles:!0,cancelable:t,detail:n}))}function k(n){return function(n){if(Array.isArray(n))return E(n)}(n)||function(n){if("undefined"!=typeof Symbol&&null!=n[Symbol.iterator]||null!=n["@@iterator"])return Array.from(n)}(n)||function(n,e){if(n){if("string"==typeof n)return E(n,e);var t={}.toString.call(n).slice(8,-1);return"Object"===t&&n.constructor&&(t=n.constructor.name),"Map"===t||"Set"===t?Array.from(n):"Arguments"===t||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t)?E(n,e):void 0}}(n)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function E(n,e){(null==e||e>n.length)&&(e=n.length);for(var t=0,r=Array(e);t<e;t++)r[t]=n[t];return r}var x=new Set(["ArrowDown","ArrowLeft","ArrowRight","ArrowUp","End","Home"]);function L(n,e){if("ArrowRight"===e)return function(n){if(!n.item.classList.contains("menu-open"))return g(n);var e=O(n.menu)[0];return null==e||e.focus(),Boolean(e)}(n);if("ArrowLeft"===e)return function(n){if(n.item.classList.contains("menu-open"))return y(n);var e=function(n){var e,t,r=null===(e=n.item.parentElement)||void 0===e||null===(t=e.closest)||void 0===t?void 0:t.call(e,o);return r?v(n.tree,r):null}(n);return null==e||e.link.focus(),Boolean(e)}(n);var t=O(n.tree),r=t.indexOf(n.link),i=function(n,e,t){if("Home"===t)return n[0];if("End"===t)return n.at(-1);var r="ArrowUp"===t?-1:1;return n[(e+r+n.length)%n.length]}(t,r,e);return null==i||i.focus(),Boolean(i)}function O(n){return k(n.querySelectorAll(".nav-link")).filter(function(n){return!function(n){var e=n.closest(".nav-treeview");for(;e;){var t,r;if(e.hidden)return!0;e=null===(t=e.parentElement)||void 0===t||null===(r=t.closest)||void 0===r?void 0:r.call(t,".nav-treeview")}return!1}(n)&&!n.matches('[disabled], [aria-disabled="true"]')}).filter(function(n){return n.closest(".nav-item")})}var j="sidebar-collapse",D="sidebar-open",I="sidebar-state";function P(n){try{var e;return C(null==n||null===(e=n.getItem)||void 0===e?void 0:e.call(n,I))}catch(n){return null}}function T(n,e,t){var r=C(t);return!!r&&(function(n,e){try{var t;null==n||null===(t=n.setItem)||void 0===t||t.call(n,I,e)}catch(n){}}(n,r),function(n,e){var t;if(!n||"string"!=typeof n.cookie)return;var r="https:"===(null===(t=n.location)||void 0===t?void 0:t.protocol)?"; Secure":"";n.cookie="".concat(I,"=").concat(encodeURIComponent(e),"; Path=/; SameSite=Lax").concat(r)}(e,r),!0)}function C(n){return[j,D].includes(n)?n:null}var B=["sidebar:collapsed","collapsed.lte.pushmenu"],q=["sidebar:shown","shown.lte.pushmenu"];function R(n,e){n.expanded=e,H(n,e),M(n)}function z(n){return K(n,!0,arguments.length>1&&void 0!==arguments[1]?arguments[1]:{})}function U(n){return K(n,!1,arguments.length>1&&void 0!==arguments[1]?arguments[1]:{})}function K(n,e,t){var r,o;if(n.expanded===e)return!1;var i=null!==(r=null!==(o=t.target)&&void 0!==o?o:n.toggles[0])&&void 0!==r?r:n.body;return!!$(i,e?"sidebar:show":"sidebar:collapse",n,!0)&&(V(n),n.expanded=e,H(n,e),M(n),function(n,e,t){e.forEach(function(e){return $(n,e,t)})}(i,e?q:B,n),e||function(n,e){e.collapseTimer=e.window.setTimeout(function(){return function(n,e){e.collapseTimer=null,$(n,"collapsed-done.lte.pushmenu",e)}(n,e)},e.animationDuration)}(i,n),!0)}function H(n,e){n.body.classList.toggle("sidebar-collapse",!e),n.body.classList.toggle("sidebar-closed",!e&&n.compact),n.body.classList.toggle("sidebar-open",e||!n.compact)}function M(n){n.toggles.forEach(function(e){e.setAttribute("aria-expanded",String(n.expanded)),e.hasAttribute("href")||e.setAttribute("role","button"),e.hasAttribute("href")||e.hasAttribute("tabindex")||e.setAttribute("tabindex","0")})}function V(n){null!==n.collapseTimer&&(n.window.clearTimeout(n.collapseTimer),n.collapseTimer=null)}function $(n,e,t){var r=arguments.length>3&&void 0!==arguments[3]&&arguments[3];return n.dispatchEvent(new t.window.CustomEvent(e,{bubbles:!0,cancelable:r,detail:{body:t.body,expanded:t.expanded}}))}function N(n){return N="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(n){return typeof n}:function(n){return n&&"function"==typeof Symbol&&n.constructor===Symbol&&n!==Symbol.prototype?"symbol":typeof n},N(n)}function W(n,e){var t=Object.keys(n);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(n);e&&(r=r.filter(function(e){return Object.getOwnPropertyDescriptor(n,e).enumerable})),t.push.apply(t,r)}return t}function F(n){for(var e=1;e<arguments.length;e++){var t=null!=arguments[e]?arguments[e]:{};e%2?W(Object(t),!0).forEach(function(e){G(n,e,t[e])}):Object.getOwnPropertyDescriptors?Object.defineProperties(n,Object.getOwnPropertyDescriptors(t)):W(Object(t)).forEach(function(e){Object.defineProperty(n,e,Object.getOwnPropertyDescriptor(t,e))})}return n}function G(n,e,t){return(e=function(n){var e=function(n,e){if("object"!=N(n)||!n)return n;var t=n[Symbol.toPrimitive];if(void 0!==t){var r=t.call(n,e||"default");if("object"!=N(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===e?String:Number)(n)}(n,"string");return"symbol"==N(e)?e:e+""}(e))in n?Object.defineProperty(n,e,{value:t,enumerable:!0,configurable:!0,writable:!0}):n[e]=t,n}var J=1200;function Q(n){var e=function(n,e){var t,r,o;!function(n){if(null==n||!n.ownerDocument||"function"!=typeof n.addEventListener)throw new TypeError("Sidebar requires a document body root.")}(n);var i=n.ownerDocument,u=i.defaultView;return{animationDuration:null!==(t=e.animationDuration)&&void 0!==t?t:300,body:n,breakpoint:null!==(r=e.breakpoint)&&void 0!==r?r:J,compact:_(u,null!==(o=e.breakpoint)&&void 0!==o?o:J),collapseTimer:null,document:i,expanded:!n.classList.contains("sidebar-collapse"),preference:P(u.localStorage),root:n,toggles:[],treeRoots:[],window:u}}(n,arguments.length>1&&void 0!==arguments[1]?arguments[1]:{}),t=function(n){var e={click:function(e){return function(n,e){var t,r,o=c(n.root,e.target);if(o)return function(n,e,t){return!(!nn(e)||f(t))&&(e.preventDefault(),e.stopPropagation(),X(n,{target:t}))}(n,e,o);if(null!==(t=(r=e.target).closest)&&void 0!==t&&t.call(r,"#sidebar-overlay"))return function(n,e){return e.preventDefault(),e.stopPropagation(),Y(n,!1,{persist:!0})}(n,e);var i=s(n.root,e.target);return!(!i||!nn(e)||f(i.link))&&(e.preventDefault(),e.stopPropagation(),h(i))}(n,e)},keydown:function(e){return function(n,e){if("Escape"===e.key)return function(n,e){return!(!n.compact||!n.expanded)&&function(n,e){var t;e.preventDefault();var r=Y(n,!1,{persist:!0});r&&(null===(t=n.toggles[0])||void 0===t||t.focus());return r}(n,e)}(n,e);var t=c(n.root,e.target);if(t)return function(n,e,t){return!!["Enter"," "].includes(e.key)&&function(n,e,t){return e.preventDefault(),e.stopPropagation(),X(n,{target:t})}(n,e,t)}(n,e,t);var r=s(n.root,e.target);return!!r&&function(n,e){return!f(e.link)&&(["Enter"," "].includes(n.key)?function(n,e){return n.preventDefault(),n.stopPropagation(),h(e)}(n,e):!!x.has(n.key)&&(n.preventDefault(),L(e,n.key)))}(e,r)}(n,e)},resize:function(){return function(n){var e=_(n.window,n.breakpoint);if(e===n.compact)return!1;n.compact=e;var t=!e&&n.preference!==j;return R(n,t),!0}(n)}};return n.root.addEventListener("click",e.click),n.root.addEventListener("keydown",e.keydown),n.window.addEventListener("resize",e.resize),e}(e);return Z(e,n),function(n){var e=!n.compact&&n.preference!==j;R(n,e)}(e),function(n,e){return{collapse:function(e){return Y(n,!1,e)},collapseItem:y,destroy:function(){return function(n,e){V(n),n.root.removeEventListener("click",e.click),n.root.removeEventListener("keydown",e.keydown),n.window.removeEventListener("resize",e.resize)}(n,e)},expand:function(e){return Y(n,!0,e)},expandItem:g,scan:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:n.root;return Z(n,e)},toggle:function(e){return X(n,e)},toggleItem:h}}(e,t)}function X(n){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return Y(n,!n.expanded,F(F({},e),{},{persist:!0}))}function Y(n,e){var t=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{},r=e?z(n,t):U(n,t);return r&&t.persist?(n.preference=function(n){return n?D:j}(e),T(n.window.localStorage,n.document,n.preference),!0):r}function Z(n,e){return n.toggles=l(n.root),n.treeRoots=a(n.root),n.treeRoots.forEach(b),R(n,n.expanded),l(e).length+a(e).length}function _(n,e){return n.innerWidth<=e}function nn(n){return!(n.defaultPrevented||0!==n.button||n.altKey||n.ctrlKey||n.metaKey||n.shiftKey)}var en,tn,rn="sidebar-navigation";function on(n){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};!function(n){var e;if("function"!=typeof(null==n||null===(e=n.Components)||void 0===e?void 0:e.register))throw new TypeError("Sidebar requires Admin.Components.");if("function"!=typeof n.Components.scan)throw new TypeError("Sidebar requires Admin.Components.scan().")}(n);var t=null;return n.Components.register({mount:function(n){return t=Q(n,e),{destroy:function(){var n;return null===(n=t)||void 0===n?void 0:n.destroy()}}},name:rn,selector:"body"}),{collapse:function(n){var e,r;return null!==(e=null===(r=t)||void 0===r?void 0:r.collapse(n))&&void 0!==e&&e},collapseItem:function(n){var e,r;return null!==(e=null===(r=t)||void 0===r?void 0:r.collapseItem(n))&&void 0!==e&&e},expand:function(n){var e,r;return null!==(e=null===(r=t)||void 0===r?void 0:r.expand(n))&&void 0!==e&&e},expandItem:function(n){var e,r;return null!==(e=null===(r=t)||void 0===r?void 0:r.expandItem(n))&&void 0!==e&&e},scan:function(){var r,o=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null!==(r=e.root)&&void 0!==r?r:globalThis.document;return function(n,e,t){var r;return n.Components.scan(t,rn),null!==(r=null==e?void 0:e.scan(t))&&void 0!==r?r:0}(n,t,o)},toggle:function(n){var e,r;return null!==(e=null===(r=t)||void 0===r?void 0:r.toggle(n))&&void 0!==e&&e},toggleItem:function(n){var e,r;return null!==(e=null===(r=t)||void 0===r?void 0:r.toggleItem(n))&&void 0!==e&&e}}}globalThis.document&&(en=globalThis,tn=on(en.Admin,{root:en.document}),en.Admin.Sidebar=tn,tn.scan())})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./resources/frontend/features/sidebar/install-sidebar.js":
+/*!****************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/install-sidebar.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SIDEBAR_COMPONENT": () => (/* binding */ SIDEBAR_COMPONENT),
+/* harmony export */   "SIDEBAR_ROOT_SELECTOR": () => (/* binding */ SIDEBAR_ROOT_SELECTOR),
+/* harmony export */   "installSidebar": () => (/* binding */ installSidebar)
+/* harmony export */ });
+/* harmony import */ var _sidebars_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebars.js */ "./resources/frontend/features/sidebar/sidebars.js");
+
+var SIDEBAR_COMPONENT = 'sidebar-navigation';
+var SIDEBAR_ROOT_SELECTOR = 'body';
+function installSidebar(admin) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  assertAdmin(admin);
+  var controller = null;
+  admin.Components.register({
+    mount: function mount(body) {
+      controller = (0,_sidebars_js__WEBPACK_IMPORTED_MODULE_0__.mountSidebar)(body, options);
+      return {
+        destroy: function destroy() {
+          var _controller;
+          return (_controller = controller) === null || _controller === void 0 ? void 0 : _controller.destroy();
+        }
+      };
+    },
+    name: SIDEBAR_COMPONENT,
+    selector: SIDEBAR_ROOT_SELECTOR
+  });
+  return {
+    collapse: function collapse(settings) {
+      var _controller$collapse, _controller2;
+      return (_controller$collapse = (_controller2 = controller) === null || _controller2 === void 0 ? void 0 : _controller2.collapse(settings)) !== null && _controller$collapse !== void 0 ? _controller$collapse : false;
+    },
+    collapseItem: function collapseItem(context) {
+      var _controller$collapseI, _controller3;
+      return (_controller$collapseI = (_controller3 = controller) === null || _controller3 === void 0 ? void 0 : _controller3.collapseItem(context)) !== null && _controller$collapseI !== void 0 ? _controller$collapseI : false;
+    },
+    expand: function expand(settings) {
+      var _controller$expand, _controller4;
+      return (_controller$expand = (_controller4 = controller) === null || _controller4 === void 0 ? void 0 : _controller4.expand(settings)) !== null && _controller$expand !== void 0 ? _controller$expand : false;
+    },
+    expandItem: function expandItem(context) {
+      var _controller$expandIte, _controller5;
+      return (_controller$expandIte = (_controller5 = controller) === null || _controller5 === void 0 ? void 0 : _controller5.expandItem(context)) !== null && _controller$expandIte !== void 0 ? _controller$expandIte : false;
+    },
+    scan: function scan() {
+      var _options$root;
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (_options$root = options.root) !== null && _options$root !== void 0 ? _options$root : globalThis.document;
+      return _scan(admin, controller, root);
+    },
+    toggle: function toggle(settings) {
+      var _controller$toggle, _controller6;
+      return (_controller$toggle = (_controller6 = controller) === null || _controller6 === void 0 ? void 0 : _controller6.toggle(settings)) !== null && _controller$toggle !== void 0 ? _controller$toggle : false;
+    },
+    toggleItem: function toggleItem(context) {
+      var _controller$toggleIte, _controller7;
+      return (_controller$toggleIte = (_controller7 = controller) === null || _controller7 === void 0 ? void 0 : _controller7.toggleItem(context)) !== null && _controller$toggleIte !== void 0 ? _controller$toggleIte : false;
+    }
+  };
+}
+function _scan(admin, controller, root) {
+  var _controller$scan;
+  admin.Components.scan(root, SIDEBAR_COMPONENT);
+  return (_controller$scan = controller === null || controller === void 0 ? void 0 : controller.scan(root)) !== null && _controller$scan !== void 0 ? _controller$scan : 0;
+}
+function assertAdmin(admin) {
+  var _admin$Components;
+  if (typeof (admin === null || admin === void 0 || (_admin$Components = admin.Components) === null || _admin$Components === void 0 ? void 0 : _admin$Components.register) !== 'function') {
+    throw new TypeError('Sidebar requires Admin.Components.');
+  }
+  if (typeof admin.Components.scan !== 'function') {
+    throw new TypeError('Sidebar requires Admin.Components.scan().');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-elements.js":
+/*!*****************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-elements.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PUSH_MENU_SELECTOR": () => (/* binding */ PUSH_MENU_SELECTOR),
+/* harmony export */   "TREE_ITEM_SELECTOR": () => (/* binding */ TREE_ITEM_SELECTOR),
+/* harmony export */   "TREE_LINK_SELECTOR": () => (/* binding */ TREE_LINK_SELECTOR),
+/* harmony export */   "TREE_MENU_SELECTOR": () => (/* binding */ TREE_MENU_SELECTOR),
+/* harmony export */   "TREE_ROOT_SELECTOR": () => (/* binding */ TREE_ROOT_SELECTOR),
+/* harmony export */   "collectPushMenuToggles": () => (/* binding */ collectPushMenuToggles),
+/* harmony export */   "collectTreeContexts": () => (/* binding */ collectTreeContexts),
+/* harmony export */   "collectTreeRoots": () => (/* binding */ collectTreeRoots),
+/* harmony export */   "findPushMenuToggle": () => (/* binding */ findPushMenuToggle),
+/* harmony export */   "findTreeContext": () => (/* binding */ findTreeContext),
+/* harmony export */   "isControlDisabled": () => (/* binding */ isControlDisabled),
+/* harmony export */   "parentTreeContext": () => (/* binding */ parentTreeContext),
+/* harmony export */   "siblingTreeContexts": () => (/* binding */ siblingTreeContexts)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+var PUSH_MENU_SELECTOR = '[data-widget="pushmenu"]';
+var TREE_ROOT_SELECTOR = '[data-widget="treeview"]';
+var TREE_ITEM_SELECTOR = '.nav-item';
+var TREE_LINK_SELECTOR = '.nav-link';
+var TREE_MENU_SELECTOR = '.nav-treeview';
+function collectPushMenuToggles(root) {
+  return collectMatching(root, PUSH_MENU_SELECTOR);
+}
+function collectTreeRoots(root) {
+  return collectMatching(root, TREE_ROOT_SELECTOR);
+}
+function findPushMenuToggle(root, target) {
+  var _target$closest;
+  var toggle = target === null || target === void 0 || (_target$closest = target.closest) === null || _target$closest === void 0 ? void 0 : _target$closest.call(target, PUSH_MENU_SELECTOR);
+  return toggle && root.contains(toggle) ? toggle : null;
+}
+function findTreeContext(root, target) {
+  var _target$closest2;
+  var link = target === null || target === void 0 || (_target$closest2 = target.closest) === null || _target$closest2 === void 0 ? void 0 : _target$closest2.call(target, TREE_LINK_SELECTOR);
+  if (!link) return null;
+  var context = contextForLink(link);
+  return isTreeContextInside(root, context) ? context : null;
+}
+function collectTreeContexts(tree) {
+  return _toConsumableArray(tree.querySelectorAll(TREE_ITEM_SELECTOR)).map(function (item) {
+    return treeContextForItem(tree, item);
+  }).filter(Boolean);
+}
+function siblingTreeContexts(context) {
+  var _context$item$parentE, _context$item$parentE2;
+  return _toConsumableArray((_context$item$parentE = (_context$item$parentE2 = context.item.parentElement) === null || _context$item$parentE2 === void 0 ? void 0 : _context$item$parentE2.children) !== null && _context$item$parentE !== void 0 ? _context$item$parentE : []).map(function (item) {
+    return treeContextForItem(context.tree, item);
+  }).filter(Boolean);
+}
+function parentTreeContext(context) {
+  var _context$item$parentE3, _context$item$parentE4;
+  var parentItem = (_context$item$parentE3 = context.item.parentElement) === null || _context$item$parentE3 === void 0 || (_context$item$parentE4 = _context$item$parentE3.closest) === null || _context$item$parentE4 === void 0 ? void 0 : _context$item$parentE4.call(_context$item$parentE3, TREE_ITEM_SELECTOR);
+  return parentItem ? treeContextForItem(context.tree, parentItem) : null;
+}
+function isControlDisabled(element) {
+  var _element$hasAttribute, _element$getAttribute, _element$classList;
+  var checks = [element === null || element === void 0 || (_element$hasAttribute = element.hasAttribute) === null || _element$hasAttribute === void 0 ? void 0 : _element$hasAttribute.call(element, 'disabled'), (element === null || element === void 0 || (_element$getAttribute = element.getAttribute) === null || _element$getAttribute === void 0 ? void 0 : _element$getAttribute.call(element, 'aria-disabled')) === 'true', element === null || element === void 0 || (_element$classList = element.classList) === null || _element$classList === void 0 ? void 0 : _element$classList.contains('disabled')];
+  return checks.some(Boolean);
+}
+function contextForLink(link) {
+  var _item$closest;
+  var item = link.closest(TREE_ITEM_SELECTOR);
+  var tree = item === null || item === void 0 || (_item$closest = item.closest) === null || _item$closest === void 0 ? void 0 : _item$closest.call(item, TREE_ROOT_SELECTOR);
+  var menu = directChild(item, TREE_MENU_SELECTOR);
+  return item && tree && menu ? {
+    item: item,
+    link: link,
+    menu: menu,
+    tree: tree
+  } : null;
+}
+function isTreeContextInside(root, context) {
+  return Boolean(context && root.contains(context.tree) && directChild(context.item, TREE_LINK_SELECTOR) === context.link);
+}
+function treeContextForItem(tree, item) {
+  if (item.closest(TREE_ROOT_SELECTOR) !== tree) return null;
+  var link = directChild(item, TREE_LINK_SELECTOR);
+  var menu = directChild(item, TREE_MENU_SELECTOR);
+  return link && menu ? {
+    item: item,
+    link: link,
+    menu: menu,
+    tree: tree
+  } : null;
+}
+function directChild(element, selector) {
+  var _find, _element$children;
+  return (_find = _toConsumableArray((_element$children = element === null || element === void 0 ? void 0 : element.children) !== null && _element$children !== void 0 ? _element$children : []).find(function (child) {
+    return child.matches(selector);
+  })) !== null && _find !== void 0 ? _find : null;
+}
+function collectMatching(root, selector) {
+  var _root$querySelectorAl, _root$querySelectorAl2, _root$matches;
+  var elements = _toConsumableArray((_root$querySelectorAl = (_root$querySelectorAl2 = root.querySelectorAll) === null || _root$querySelectorAl2 === void 0 ? void 0 : _root$querySelectorAl2.call(root, selector)) !== null && _root$querySelectorAl !== void 0 ? _root$querySelectorAl : []);
+  if ((_root$matches = root.matches) !== null && _root$matches !== void 0 && _root$matches.call(root, selector)) elements.unshift(root);
+  return elements;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-navigation.js":
+/*!*******************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-navigation.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TREE_NAVIGATION_KEYS": () => (/* binding */ TREE_NAVIGATION_KEYS),
+/* harmony export */   "navigateTree": () => (/* binding */ navigateTree)
+/* harmony export */ });
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
+/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/frontend/features/sidebar/sidebar-tree.js");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+var TREE_NAVIGATION_KEYS = new Set(['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home']);
+function navigateTree(context, key) {
+  if (key === 'ArrowRight') return navigateRight(context);
+  if (key === 'ArrowLeft') return navigateLeft(context);
+  var links = visibleTreeLinks(context.tree);
+  var current = links.indexOf(context.link);
+  var target = navigationTarget(links, current, key);
+  target === null || target === void 0 || target.focus();
+  return Boolean(target);
+}
+function navigateRight(context) {
+  if (!context.item.classList.contains('menu-open')) return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__.expandTreeItem)(context);
+  var child = visibleTreeLinks(context.menu)[0];
+  child === null || child === void 0 || child.focus();
+  return Boolean(child);
+}
+function navigateLeft(context) {
+  if (context.item.classList.contains('menu-open')) return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_1__.collapseTreeItem)(context);
+  var parent = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.parentTreeContext)(context);
+  parent === null || parent === void 0 || parent.link.focus();
+  return Boolean(parent);
+}
+function navigationTarget(links, current, key) {
+  if (key === 'Home') return links[0];
+  if (key === 'End') return links.at(-1);
+  var offset = key === 'ArrowUp' ? -1 : 1;
+  return links[(current + offset + links.length) % links.length];
+}
+function visibleTreeLinks(root) {
+  return _toConsumableArray(root.querySelectorAll('.nav-link')).filter(function (link) {
+    return !isInsideHiddenMenu(link) && !link.matches('[disabled], [aria-disabled="true"]');
+  }).filter(function (link) {
+    return link.closest('.nav-item');
+  });
+}
+function isInsideHiddenMenu(link) {
+  var menu = link.closest('.nav-treeview');
+  while (menu) {
+    var _menu$parentElement, _menu$parentElement$c;
+    if (menu.hidden) return true;
+    menu = (_menu$parentElement = menu.parentElement) === null || _menu$parentElement === void 0 || (_menu$parentElement$c = _menu$parentElement.closest) === null || _menu$parentElement$c === void 0 ? void 0 : _menu$parentElement$c.call(_menu$parentElement, '.nav-treeview');
+  }
+  return false;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-state.js":
+/*!**************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-state.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clearCollapsedDone": () => (/* binding */ clearCollapsedDone),
+/* harmony export */   "collapseSidebar": () => (/* binding */ collapseSidebar),
+/* harmony export */   "expandSidebar": () => (/* binding */ expandSidebar),
+/* harmony export */   "normalizeSidebar": () => (/* binding */ normalizeSidebar),
+/* harmony export */   "sidebarPreference": () => (/* binding */ sidebarPreference),
+/* harmony export */   "toggleSidebar": () => (/* binding */ toggleSidebar)
+/* harmony export */ });
+/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/frontend/features/sidebar/sidebar-storage.js");
+
+var COLLAPSED_EVENTS = ['sidebar:collapsed', 'collapsed.lte.pushmenu'];
+var EXPANDED_EVENTS = ['sidebar:shown', 'shown.lte.pushmenu'];
+function normalizeSidebar(state, expanded) {
+  state.expanded = expanded;
+  applySidebarClasses(state, expanded);
+  syncPushMenuToggles(state);
+}
+function expandSidebar(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return changeSidebarState(state, true, options);
+}
+function collapseSidebar(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return changeSidebarState(state, false, options);
+}
+function toggleSidebar(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return state.expanded ? collapseSidebar(state, options) : expandSidebar(state, options);
+}
+function sidebarPreference(expanded) {
+  return expanded ? _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__.SIDEBAR_EXPANDED : _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_0__.SIDEBAR_COLLAPSED;
+}
+function changeSidebarState(state, expanded, options) {
+  var _ref, _options$target;
+  if (state.expanded === expanded) return false;
+  var target = (_ref = (_options$target = options.target) !== null && _options$target !== void 0 ? _options$target : state.toggles[0]) !== null && _ref !== void 0 ? _ref : state.body;
+  var before = expanded ? 'sidebar:show' : 'sidebar:collapse';
+  if (!dispatchSidebarEvent(target, before, state, true)) return false;
+  clearCollapsedDone(state);
+  state.expanded = expanded;
+  applySidebarClasses(state, expanded);
+  syncPushMenuToggles(state);
+  dispatchSidebarEvents(target, expanded ? EXPANDED_EVENTS : COLLAPSED_EVENTS, state);
+  if (!expanded) dispatchCollapsedDone(target, state);
+  return true;
+}
+function applySidebarClasses(state, expanded) {
+  state.body.classList.toggle('sidebar-collapse', !expanded);
+  state.body.classList.toggle('sidebar-closed', !expanded && state.compact);
+  state.body.classList.toggle('sidebar-open', expanded || !state.compact);
+}
+function syncPushMenuToggles(state) {
+  state.toggles.forEach(function (toggle) {
+    toggle.setAttribute('aria-expanded', String(state.expanded));
+    if (!toggle.hasAttribute('href')) toggle.setAttribute('role', 'button');
+    if (!toggle.hasAttribute('href') && !toggle.hasAttribute('tabindex')) {
+      toggle.setAttribute('tabindex', '0');
+    }
+  });
+}
+function dispatchSidebarEvents(target, names, state) {
+  names.forEach(function (name) {
+    return dispatchSidebarEvent(target, name, state);
+  });
+}
+function dispatchCollapsedDone(target, state) {
+  state.collapseTimer = state.window.setTimeout(function () {
+    return completeCollapsedEvent(target, state);
+  }, state.animationDuration);
+}
+function completeCollapsedEvent(target, state) {
+  state.collapseTimer = null;
+  dispatchSidebarEvent(target, 'collapsed-done.lte.pushmenu', state);
+}
+function clearCollapsedDone(state) {
+  if (state.collapseTimer === null) return;
+  state.window.clearTimeout(state.collapseTimer);
+  state.collapseTimer = null;
+}
+function dispatchSidebarEvent(target, name, state) {
+  var cancelable = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  return target.dispatchEvent(new state.window.CustomEvent(name, {
+    bubbles: true,
+    cancelable: cancelable,
+    detail: {
+      body: state.body,
+      expanded: state.expanded
+    }
+  }));
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-storage.js":
+/*!****************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-storage.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SIDEBAR_COLLAPSED": () => (/* binding */ SIDEBAR_COLLAPSED),
+/* harmony export */   "SIDEBAR_EXPANDED": () => (/* binding */ SIDEBAR_EXPANDED),
+/* harmony export */   "SIDEBAR_STORAGE_KEY": () => (/* binding */ SIDEBAR_STORAGE_KEY),
+/* harmony export */   "normalizeSidebarPreference": () => (/* binding */ normalizeSidebarPreference),
+/* harmony export */   "readSidebarPreference": () => (/* binding */ readSidebarPreference),
+/* harmony export */   "writeSidebarPreference": () => (/* binding */ writeSidebarPreference)
+/* harmony export */ });
+var SIDEBAR_COLLAPSED = 'sidebar-collapse';
+var SIDEBAR_EXPANDED = 'sidebar-open';
+var SIDEBAR_STORAGE_KEY = 'sidebar-state';
+function readSidebarPreference(storage) {
+  try {
+    var _storage$getItem;
+    return normalizeSidebarPreference(storage === null || storage === void 0 || (_storage$getItem = storage.getItem) === null || _storage$getItem === void 0 ? void 0 : _storage$getItem.call(storage, SIDEBAR_STORAGE_KEY));
+  } catch (_unused) {
+    return null;
+  }
+}
+function writeSidebarPreference(storage, document, value) {
+  var preference = normalizeSidebarPreference(value);
+  if (!preference) return false;
+  writeStorage(storage, preference);
+  writeCookie(document, preference);
+  return true;
+}
+function normalizeSidebarPreference(value) {
+  return [SIDEBAR_COLLAPSED, SIDEBAR_EXPANDED].includes(value) ? value : null;
+}
+function writeStorage(storage, value) {
+  try {
+    var _storage$setItem;
+    storage === null || storage === void 0 || (_storage$setItem = storage.setItem) === null || _storage$setItem === void 0 || _storage$setItem.call(storage, SIDEBAR_STORAGE_KEY, value);
+  } catch (_unused2) {
+    // Storage can be unavailable in privacy-restricted browsing contexts.
+  }
+}
+function writeCookie(document, value) {
+  var _document$location;
+  if (!document || typeof document.cookie !== 'string') return;
+  var secure = ((_document$location = document.location) === null || _document$location === void 0 ? void 0 : _document$location.protocol) === 'https:' ? '; Secure' : '';
+  document.cookie = "".concat(SIDEBAR_STORAGE_KEY, "=").concat(encodeURIComponent(value), "; Path=/; SameSite=Lax").concat(secure);
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebar-tree.js":
+/*!*************************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebar-tree.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "collapseTreeItem": () => (/* binding */ collapseTreeItem),
+/* harmony export */   "expandTreeItem": () => (/* binding */ expandTreeItem),
+/* harmony export */   "normalizeTree": () => (/* binding */ normalizeTree),
+/* harmony export */   "toggleTreeItem": () => (/* binding */ toggleTreeItem)
+/* harmony export */ });
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
+
+function normalizeTree(tree) {
+  var _tree$getAttribute;
+  tree.setAttribute('role', (_tree$getAttribute = tree.getAttribute('role')) !== null && _tree$getAttribute !== void 0 ? _tree$getAttribute : 'menu');
+  (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeContexts)(tree).forEach(function (context) {
+    applyTreeItemState(context, context.item.classList.contains('menu-open'));
+  });
+}
+function expandTreeItem(context) {
+  if (context.item.classList.contains('menu-open')) return false;
+  if (!dispatchTreeEvent(context, 'navigation:expand', true)) return false;
+  if (!collapseAccordionSiblings(context)) return false;
+  applyTreeItemState(context, true);
+  dispatchTreeEvents(context, ['navigation:expanded', 'expanded.lte.treeview']);
+  return true;
+}
+function collapseTreeItem(context) {
+  if (!context.item.classList.contains('menu-open')) return false;
+  if (!dispatchTreeEvent(context, 'navigation:collapse', true)) return false;
+  closeTreeBranch(context);
+  dispatchTreeEvents(context, ['navigation:collapsed', 'collapsed.lte.treeview']);
+  return true;
+}
+function toggleTreeItem(context) {
+  return context.item.classList.contains('menu-open') ? collapseTreeItem(context) : expandTreeItem(context);
+}
+function collapseAccordionSiblings(context) {
+  if (context.tree.getAttribute('data-accordion') === 'false') return true;
+  return (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.siblingTreeContexts)(context).filter(function (sibling) {
+    return sibling.item !== context.item;
+  }).filter(function (sibling) {
+    return sibling.item.classList.contains('menu-open');
+  }).every(collapseTreeItem);
+}
+function closeTreeBranch(context) {
+  applyTreeItemState(context, false);
+  (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeContexts)(context.menu).forEach(function (nested) {
+    return applyTreeItemState(nested, false);
+  });
+}
+function applyTreeItemState(context, expanded) {
+  context.item.classList.toggle('menu-open', expanded);
+  context.item.classList.remove('menu-is-opening');
+  context.menu.hidden = !expanded;
+  context.link.setAttribute('aria-expanded', String(expanded));
+  context.link.setAttribute('aria-haspopup', 'true');
+}
+function dispatchTreeEvents(context, names) {
+  names.forEach(function (name) {
+    return dispatchTreeEvent(context, name);
+  });
+}
+function dispatchTreeEvent(context, name) {
+  var cancelable = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  return context.tree.dispatchEvent(new context.tree.ownerDocument.defaultView.CustomEvent(name, {
+    bubbles: true,
+    cancelable: cancelable,
+    detail: context
+  }));
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/sidebar/sidebars.js":
+/*!*********************************************************!*\
+  !*** ./resources/frontend/features/sidebar/sidebars.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "mountSidebar": () => (/* binding */ mountSidebar)
+/* harmony export */ });
+/* harmony import */ var _sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar-elements.js */ "./resources/frontend/features/sidebar/sidebar-elements.js");
+/* harmony import */ var _sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar-navigation.js */ "./resources/frontend/features/sidebar/sidebar-navigation.js");
+/* harmony import */ var _sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sidebar-state.js */ "./resources/frontend/features/sidebar/sidebar-state.js");
+/* harmony import */ var _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sidebar-storage.js */ "./resources/frontend/features/sidebar/sidebar-storage.js");
+/* harmony import */ var _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar-tree.js */ "./resources/frontend/features/sidebar/sidebar-tree.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+
+var DEFAULT_BREAKPOINT = 1200;
+var DEFAULT_ANIMATION_DURATION = 300;
+function mountSidebar(root) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var state = createSidebarState(root, options);
+  var listeners = bindSidebarListeners(state);
+  scanSidebar(state, root);
+  restoreSidebar(state);
+  return sidebarController(state, listeners);
+}
+function sidebarController(state, listeners) {
+  return {
+    collapse: function collapse(options) {
+      return setSidebar(state, false, options);
+    },
+    collapseItem: _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.collapseTreeItem,
+    destroy: function destroy() {
+      return destroySidebar(state, listeners);
+    },
+    expand: function expand(options) {
+      return setSidebar(state, true, options);
+    },
+    expandItem: _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.expandTreeItem,
+    scan: function scan() {
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : state.root;
+      return scanSidebar(state, root);
+    },
+    toggle: function toggle(options) {
+      return toggleAndPersist(state, options);
+    },
+    toggleItem: _sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.toggleTreeItem
+  };
+}
+function createSidebarState(root, options) {
+  var _options$animationDur, _options$breakpoint, _options$breakpoint2;
+  assertRoot(root);
+  var document = root.ownerDocument;
+  var window = document.defaultView;
+  return {
+    animationDuration: (_options$animationDur = options.animationDuration) !== null && _options$animationDur !== void 0 ? _options$animationDur : DEFAULT_ANIMATION_DURATION,
+    body: root,
+    breakpoint: (_options$breakpoint = options.breakpoint) !== null && _options$breakpoint !== void 0 ? _options$breakpoint : DEFAULT_BREAKPOINT,
+    compact: isCompact(window, (_options$breakpoint2 = options.breakpoint) !== null && _options$breakpoint2 !== void 0 ? _options$breakpoint2 : DEFAULT_BREAKPOINT),
+    collapseTimer: null,
+    document: document,
+    expanded: !root.classList.contains('sidebar-collapse'),
+    preference: (0,_sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.readSidebarPreference)(window.localStorage),
+    root: root,
+    toggles: [],
+    treeRoots: [],
+    window: window
+  };
+}
+function bindSidebarListeners(state) {
+  var listeners = {
+    click: function click(event) {
+      return handleSidebarClick(state, event);
+    },
+    keydown: function keydown(event) {
+      return handleSidebarKeydown(state, event);
+    },
+    resize: function resize() {
+      return handleSidebarResize(state);
+    }
+  };
+  state.root.addEventListener('click', listeners.click);
+  state.root.addEventListener('keydown', listeners.keydown);
+  state.window.addEventListener('resize', listeners.resize);
+  return listeners;
+}
+function handleSidebarClick(state, event) {
+  var _event$target$closest, _event$target;
+  var toggle = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findPushMenuToggle)(state.root, event.target);
+  if (toggle) return handlePushMenuClick(state, event, toggle);
+  if ((_event$target$closest = (_event$target = event.target).closest) !== null && _event$target$closest !== void 0 && _event$target$closest.call(_event$target, '#sidebar-overlay')) return handleOverlayClick(state, event);
+  var context = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTreeContext)(state.root, event.target);
+  if (!context || !isPlainPrimaryClick(event) || (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.isControlDisabled)(context.link)) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.toggleTreeItem)(context);
+}
+function handlePushMenuClick(state, event, toggle) {
+  if (!isPlainPrimaryClick(event) || (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.isControlDisabled)(toggle)) return false;
+  event.preventDefault();
+  event.stopPropagation();
+  return toggleAndPersist(state, {
+    target: toggle
+  });
+}
+function handleOverlayClick(state, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  return setSidebar(state, false, {
+    persist: true
+  });
+}
+function handleSidebarKeydown(state, event) {
+  if (event.key === 'Escape') return handleSidebarEscape(state, event);
+  var toggle = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findPushMenuToggle)(state.root, event.target);
+  if (toggle) return handlePushMenuKeydown(state, event, toggle);
+  var context = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.findTreeContext)(state.root, event.target);
+  return context ? handleTreeKeydown(event, context) : false;
+}
+function handlePushMenuKeydown(state, event, toggle) {
+  return ['Enter', ' '].includes(event.key) ? handleKeyboardToggle(state, event, toggle) : false;
+}
+function handleSidebarEscape(state, event) {
+  return state.compact && state.expanded ? closeOnEscape(state, event) : false;
+}
+function handleTreeKeydown(event, context) {
+  if ((0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.isControlDisabled)(context.link)) return false;
+  if (['Enter', ' '].includes(event.key)) return handleKeyboardTreeToggle(event, context);
+  if (!_sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__.TREE_NAVIGATION_KEYS.has(event.key)) return false;
+  event.preventDefault();
+  return (0,_sidebar_navigation_js__WEBPACK_IMPORTED_MODULE_1__.navigateTree)(context, event.key);
+}
+function handleKeyboardToggle(state, event, toggle) {
+  event.preventDefault();
+  event.stopPropagation();
+  return toggleAndPersist(state, {
+    target: toggle
+  });
+}
+function handleKeyboardTreeToggle(event, context) {
+  event.preventDefault();
+  event.stopPropagation();
+  return (0,_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.toggleTreeItem)(context);
+}
+function closeOnEscape(state, event) {
+  var _state$toggles$;
+  event.preventDefault();
+  var changed = setSidebar(state, false, {
+    persist: true
+  });
+  if (changed) (_state$toggles$ = state.toggles[0]) === null || _state$toggles$ === void 0 || _state$toggles$.focus();
+  return changed;
+}
+function handleSidebarResize(state) {
+  var compact = isCompact(state.window, state.breakpoint);
+  if (compact === state.compact) return false;
+  state.compact = compact;
+  var expanded = compact ? false : state.preference !== _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.SIDEBAR_COLLAPSED;
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, expanded);
+  return true;
+}
+function restoreSidebar(state) {
+  var expanded = state.compact ? false : state.preference !== _sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.SIDEBAR_COLLAPSED;
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, expanded);
+}
+function toggleAndPersist(state) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var expanded = !state.expanded;
+  return setSidebar(state, expanded, _objectSpread(_objectSpread({}, options), {}, {
+    persist: true
+  }));
+}
+function setSidebar(state, expanded) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var changed = expanded ? (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.expandSidebar)(state, options) : (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.collapseSidebar)(state, options);
+  if (!changed || !options.persist) return changed;
+  state.preference = (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.sidebarPreference)(expanded);
+  (0,_sidebar_storage_js__WEBPACK_IMPORTED_MODULE_3__.writeSidebarPreference)(state.window.localStorage, state.document, state.preference);
+  return true;
+}
+function scanSidebar(state, root) {
+  state.toggles = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectPushMenuToggles)(state.root);
+  state.treeRoots = (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeRoots)(state.root);
+  state.treeRoots.forEach(_sidebar_tree_js__WEBPACK_IMPORTED_MODULE_4__.normalizeTree);
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.normalizeSidebar)(state, state.expanded);
+  return (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectPushMenuToggles)(root).length + (0,_sidebar_elements_js__WEBPACK_IMPORTED_MODULE_0__.collectTreeRoots)(root).length;
+}
+function destroySidebar(state, listeners) {
+  (0,_sidebar_state_js__WEBPACK_IMPORTED_MODULE_2__.clearCollapsedDone)(state);
+  state.root.removeEventListener('click', listeners.click);
+  state.root.removeEventListener('keydown', listeners.keydown);
+  state.window.removeEventListener('resize', listeners.resize);
+}
+function isCompact(window, breakpoint) {
+  return window.innerWidth <= breakpoint;
+}
+function isPlainPrimaryClick(event) {
+  return !event.defaultPrevented && event.button === 0 && !event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey;
+}
+function assertRoot(root) {
+  if (!(root !== null && root !== void 0 && root.ownerDocument) || typeof root.addEventListener !== 'function') {
+    throw new TypeError('Sidebar requires a document body root.');
+  }
+}
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!********************************************************!*\
+  !*** ./resources/frontend/features/sidebar/browser.js ***!
+  \********************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bootSidebar": () => (/* binding */ bootSidebar)
+/* harmony export */ });
+/* harmony import */ var _install_sidebar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-sidebar.js */ "./resources/frontend/features/sidebar/install-sidebar.js");
+
+if (globalThis.document) bootSidebar(globalThis);
+function bootSidebar(target) {
+  var sidebar = (0,_install_sidebar_js__WEBPACK_IMPORTED_MODULE_0__.installSidebar)(target.Admin, {
+    root: target.document
+  });
+  target.Admin.Sidebar = sidebar;
+  sidebar.scan();
+  return sidebar;
+}
+})();
+
+/******/ })()
+;
+//# sourceMappingURL=sidebar.js.map

@@ -3,6 +3,7 @@ const TEMPLATE_SELECTOR = '[data-inline-editor-template]'
 const ROOT_SELECTOR = '[data-inline-editor-root]'
 const FORM_SELECTOR = '[data-inline-editor-form]'
 const CONTROL_SELECTOR = '[data-inline-editor-control]'
+const CLEAR_SELECTOR = '[data-inline-editor-clear]'
 const CANCEL_SELECTOR = '[data-inline-editor-cancel]'
 const ERROR_SELECTOR = '[data-inline-editor-error]'
 
@@ -12,6 +13,7 @@ export function cloneInlineEditorTemplate(trigger) {
 
     return {
         cancel: requiredDescendant(root, CANCEL_SELECTOR, 'cancel control'),
+        clear: root.querySelector?.(CLEAR_SELECTOR) ?? null,
         control: requiredDescendant(root, CONTROL_SELECTOR, 'value control'),
         error: requiredDescendant(root, ERROR_SELECTOR, 'error region'),
         form: requiredDescendant(root, FORM_SELECTOR, 'form'),

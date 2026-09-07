@@ -12,5 +12,29 @@
         'value' => $value,
     ]) !!}>
     <output class="soa-inline-editor-range-value"
-            data-inline-editor-range-output>{{ $value }}</output>
+            data-inline-editor-range-output
+            hidden>{{ $value }}</output>
+    <div class="soa-inline-editor-range-number-wrap">
+        <input {!! new \SleepingOwl\Admin\Support\HtmlAttributeBag([
+            'aria-label' => strip_tags($title ?? $name),
+            'class' => 'soa-inline-editor-control soa-inline-editor-range-number',
+            'data-inline-editor-range-number' => true,
+            'id' => $editorControlId.'-number',
+            'max' => $max ?? null,
+            'min' => $min ?? null,
+            'required' => ($required ?? false) ? true : null,
+            'step' => $step ?? null,
+            'type' => 'number',
+            'value' => $value,
+        ]) !!}>
+        @if($editorCanClear)
+            <button class="soa-inline-editor-clear"
+                    data-inline-editor-clear
+                    type="button"
+                    aria-label="@lang('sleeping_owl::lang.button.clear')"
+                    title="@lang('sleeping_owl::lang.button.clear')">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        @endif
+    </div>
 </div>

@@ -11,10 +11,10 @@ export function createInlineEditorView(trigger, config, labels, handlers) {
     trigger.setAttribute('aria-expanded', 'true')
     trigger.insertAdjacentElement('afterend', elements.root)
     openPopup(elements.root, popup)
-    focusControl(control.focusElement)
 
     return {
         destroy: () => destroyView(trigger, elements.root, control, removeListeners, popup),
+        focus: () => focusControl(control.focusElement),
         readValue: control.read,
         root: elements.root,
         setBusy: (busy) => setBusy(elements, busy),
@@ -28,6 +28,10 @@ function bindViewEvents(elements, control, handlers) {
         handlers.submit(control.read())
     }
     const cancel = () => handlers.cancel()
+    const clear = () => {
+        control.clear()
+        focusControl(control.focusElement)
+    }
     const keydown = (event) => {
         if (event.key === 'Escape') handlers.cancel()
     }
@@ -40,12 +44,14 @@ function bindViewEvents(elements, control, handlers) {
     elements.form.addEventListener('submit', submit)
     elements.form.addEventListener('keydown', keydown)
     elements.cancel.addEventListener('click', cancel)
+    elements.clear?.addEventListener('click', clear)
     elements.root.addEventListener('cancel', dialogCancel)
 
     return () => {
         elements.form.removeEventListener('submit', submit)
         elements.form.removeEventListener('keydown', keydown)
         elements.cancel.removeEventListener('click', cancel)
+        elements.clear?.removeEventListener('click', clear)
         elements.root.removeEventListener('cancel', dialogCancel)
         removeBackdropEvents()
     }
@@ -113,5 +119,6 @@ function openPopup(root, popup) {
 }
 
 function focusControl(element) {
-    element?.focus()
+    const focusElement = typeof element === 'function' ? element() : element
+    focusElement?.focus()
 }
