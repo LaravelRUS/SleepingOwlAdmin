@@ -32,6 +32,9 @@ test('all PHP editor types mount native controls without X-editable', async ({ p
     for (const [type, selector] of Object.entries(expectations)) {
         await page.locator(`#editor-${type}`).click()
         await expect(page.locator(`.soa-inline-editor-input ${selector}`)).toBeVisible()
+        if (type === 'text') {
+            await expect(page.locator('.project-editor-shell .project-text-control')).toBeVisible()
+        }
         await page.locator('.soa-inline-editor-cancel').click()
     }
 
@@ -45,6 +48,9 @@ test('text, select and checklist preserve payloads and update display values', a
 }) => {
     await editScalar(page, '#editor-text', 'Published')
     await expect(page.locator('#editor-text')).toHaveText('Published')
+    await page.locator('#editor-text').click()
+    await expect(page.locator('.project-text-control')).toHaveValue('Published')
+    await page.locator('.project-cancel').click()
 
     await page.locator('#editor-select').click()
     await page.locator('.soa-inline-editor-control').selectOption('published')

@@ -158,8 +158,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "4573c78907819043d1f58084743bbe63",
-                            "checksum": "sha256:d02ee89a9becc2c070ad6bd049e11be4746af01e62885208600ce918c6b9b338"
+                            "version": "38bfadc18bf00437797005fd4fadfbeb",
+                            "checksum": "sha256:bace66706f9f181ab640f2978e0b18b6489e81da53e8d9304b3f88b4c0e4fe52"
                         }
                     ],
                     "styles": [
@@ -512,8 +512,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "dea2840099a625a86bccce33aed438ff",
-                            "checksum": "sha256:8154410bc330055d1cae77a914c452202d516fd84be01fa7bdd27b05c84f339a"
+                            "version": "980a55397955d829fc57ae4423174b5a",
+                            "checksum": "sha256:f040a833480def3b14b4869bbb911923f62fa518fbfc299431cfffc609de482f"
                         }
                     ],
                     "styles": [
@@ -711,5 +711,5 @@
             }
         }
     },
-    "build_id": "sha256:bc49d700ca85af63e0c0bba05286acc6f6eebdc6690f8ed3038dcc1a26a02628"
+    "build_id": "sha256:bcf7d5a757d14255e6e60ab00292ad811fc272d0d84a014c25d4ff08f1bb4bf0"
 }

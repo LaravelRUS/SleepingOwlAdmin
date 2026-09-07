@@ -101,3 +101,38 @@ A project view override may replace the element type, classes and internal
 nesting while retaining the template and close hooks. Existing auto-update
 config keys, table-class matching, labels, interval, color property, reload
 behavior and server-side table flow remain unchanged.
+
+## Blade-owned inline editor
+
+Inline editing remains a small SleepingOwl feature over the DataTables 3 core;
+it does not depend on the separately licensed DataTables Editor product or its
+server protocol. The existing `AdminDisplay::datatables()` and
+`/async-inline` PHP flow therefore remain unchanged for synchronous and
+server-side displays.
+
+The historical `default.column.editable.partials.editor` logical owner renders
+the trigger, inert options JSON and a referenced Blade `<template>`. Its
+`partials.editor_template` view owns the editor shell, form, title, actions,
+labels and error region. Nine independently overrideable views below
+`column.editable.partials.controls` own `text`, `textarea`, `number`, `range`,
+`select`, `checkbox`, `checklist`, `date` and `datetime` controls.
+
+JavaScript requires only the following structural hooks:
+
+```text
+data-soa-inline-editor-template-id
+data-soa-inline-editor-template
+data-soa-inline-editor-root
+data-soa-inline-editor-form
+data-soa-inline-editor-control
+data-soa-inline-editor-cancel
+data-soa-inline-editor-error
+```
+
+Checklist inputs and range input/output elements have type-specific hooks.
+Classes are not behavior hooks. A project may replace elements, icons, labels,
+classes and nesting while preserving one template root and the required hooks.
+The runtime clones the template, synchronizes the latest saved value, binds
+events, manages busy/error/focus state and delegates date controls to the
+shared component lifecycle. It does not construct editor presentation through
+`createElement()`.

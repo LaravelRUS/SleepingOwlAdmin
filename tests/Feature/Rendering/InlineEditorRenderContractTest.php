@@ -13,6 +13,13 @@ class InlineEditorRenderContractTest extends TestCase
         $this->assertStringContainsString('data-name="status"', $html);
         $this->assertStringContainsString('data-pk="17"', $html);
         $this->assertStringContainsString('data-url="/admin/orders/async-inline"', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-template-id="soa-inline-editor-template-', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-template="'.$type.'"', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-root', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-form', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-control', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-cancel', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-error', $html);
         $this->assertStringContainsString('class="project-column"', $html);
         $this->assertStringContainsString('data-project="orders"', $html);
         $this->assertStringNotContainsString('class="inline-editable"', $html);
@@ -51,6 +58,31 @@ class InlineEditorRenderContractTest extends TestCase
         $this->assertStringContainsString('<strong>Draft</strong>', $html);
     }
 
+    #[DataProvider('editorControlMarkers')]
+    public function test_each_editor_type_renders_its_control_in_blade(
+        string $view,
+        string $marker
+    ): void {
+        $this->assertStringContainsString($marker, $this->renderEditor($view));
+    }
+
+    public function test_project_can_override_editor_shell_and_one_control_partial(): void
+    {
+        view()->prependNamespace(
+            'sleeping_owl',
+            __DIR__.'/../../Fixtures/views/inline-editor-overrides'
+        );
+
+        $html = $this->renderEditor('text');
+
+        $this->assertStringContainsString('class="project-editor-shell"', $html);
+        $this->assertStringContainsString('class="project-editor-nesting"', $html);
+        $this->assertStringContainsString('class="project-text-control"', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-root', $html);
+        $this->assertStringContainsString('data-soa-inline-editor-control', $html);
+        $this->assertStringNotContainsString('class="soa-inline-editor soa-inline-editor-popup"', $html);
+    }
+
     public static function editorViews(): array
     {
         return [
@@ -63,6 +95,21 @@ class InlineEditorRenderContractTest extends TestCase
             ['select', 'select'],
             ['text', 'text'],
             ['textarea', 'textarea'],
+        ];
+    }
+
+    public static function editorControlMarkers(): array
+    {
+        return [
+            ['checkbox', 'data-soa-inline-editor-check-input'],
+            ['checklist', 'data-soa-inline-editor-check-input'],
+            ['date', 'data-soa-date-control="date"'],
+            ['datetime', 'data-soa-date-control="datetime"'],
+            ['number', 'type="number"'],
+            ['range', 'data-soa-inline-editor-range-input'],
+            ['select', '<select class="soa-inline-editor-control"'],
+            ['text', 'type="text"'],
+            ['textarea', '<textarea class="soa-inline-editor-control"'],
         ];
     }
 

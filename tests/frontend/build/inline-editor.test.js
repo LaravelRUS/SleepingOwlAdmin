@@ -25,10 +25,13 @@ it('keeps the headless runtime free of jQuery and plugin wrappers', () => {
         source('resources/frontend/features/table/editing/inline-editor.js'),
         source('resources/frontend/features/table/editing/inline-editor-config.js'),
         source('resources/frontend/features/table/editing/inline-editor-request.js'),
+        source('resources/frontend/features/table/editing/inline-editor-control.js'),
+        source('resources/frontend/features/table/editing/inline-editor-template.js'),
         source('resources/frontend/features/table/editing/inline-editor-view.js'),
     ].join('\n')
 
     expect(runtime).not.toMatch(/jquery|jQuery|\$\(|\.editable\(|datetimepicker|moment/i)
+    expect(runtime).not.toMatch(/createElement\s*\(/)
     expect(source('resources/assets/js_owl/bootstrap.js')).not.toMatch(
         /libs\/(?:xeditable|datetimepicker|moment)/,
     )

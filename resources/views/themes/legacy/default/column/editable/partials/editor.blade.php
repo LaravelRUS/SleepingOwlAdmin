@@ -2,8 +2,10 @@
     $editorOptions = $editorOptions ?? [];
     $editorEmptyText = $editorEmptyText ?? trans('sleeping_owl::lang.select.empty');
     $editorTextHtml = $editorTextHtml ?? false;
+    $editorTitle = $editorTitle ?? null;
     $editorDisplay = ($text ?? '') !== '' ? $text : $editorEmptyText;
     $editorOptionsId = 'soa-inline-editor-options-'.\Illuminate\Support\Str::uuid();
+    $editorTemplateId = 'soa-inline-editor-template-'.\Illuminate\Support\Str::uuid();
     $editorAttributes = (new \SleepingOwl\Admin\Support\HtmlAttributeBag([
         'aria-expanded' => 'false',
         'aria-haspopup' => $mode === 'popup' ? 'dialog' : false,
@@ -18,6 +20,7 @@
         'data-pk' => $id,
         'data-soa-inline-editor' => $editorType,
         'data-soa-inline-editor-options-id' => $editorOptionsId,
+        'data-soa-inline-editor-template-id' => $editorTemplateId,
         'data-step' => $step ?? null,
         'data-title' => $editorTitle ?? null,
         'data-url' => $url,
@@ -37,6 +40,7 @@
                 @endif
             </button>
             <script id="{{ $editorOptionsId }}" type="application/json">{!! \Illuminate\Support\Js::encode($editorOptions) !!}</script>
+            @include(AdminTemplate::getViewPath('column.editable.partials.editor_template'))
         @else
             <span v-pre>{!! $text !!}</span>
         @endif

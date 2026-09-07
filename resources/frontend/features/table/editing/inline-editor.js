@@ -36,6 +36,7 @@ export function mountInlineEditor(element, dependencies) {
 function openEditor(state) {
     if (state.view) return state.view
 
+    state.config = readInlineEditorConfig(state.element)
     state.view = state.dependencies.createView(
         state.element,
         state.config,

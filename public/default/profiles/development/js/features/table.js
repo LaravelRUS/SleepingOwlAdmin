@@ -1649,6 +1649,105 @@ function assertType(type) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/editing/inline-editor-control.js":
+/*!****************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-control.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "bindInlineEditorControl": () => (/* binding */ bindInlineEditorControl)
+/* harmony export */ });
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+var CHECK_INPUT_SELECTOR = '[data-soa-inline-editor-check-input]';
+var RANGE_INPUT_SELECTOR = '[data-soa-inline-editor-range-input]';
+var RANGE_OUTPUT_SELECTOR = '[data-soa-inline-editor-range-output]';
+function bindInlineEditorControl(element, config) {
+  if (config.type === 'checkbox' || config.type === 'checklist') {
+    return bindChecklist(element, config.value);
+  }
+  if (config.type === 'range') return bindRange(element, config);
+  return bindScalar(element, config);
+}
+function bindScalar(element, config) {
+  element.value = config.value;
+  syncNumberAttributes(element, config);
+  syncDateAttributes(element, config);
+  return {
+    focusElement: element,
+    read: function read() {
+      return element.value;
+    }
+  };
+}
+function bindChecklist(element, value) {
+  var selected = new Set(value);
+  var inputs = _toConsumableArray(element.querySelectorAll(CHECK_INPUT_SELECTOR));
+  inputs.forEach(function (input) {
+    input.checked = selected.has(input.value);
+  });
+  return {
+    focusElement: inputs[0],
+    read: function read() {
+      return inputs.filter(function (input) {
+        return input.checked;
+      }).map(function (input) {
+        return input.value;
+      });
+    }
+  };
+}
+function bindRange(element, config) {
+  var input = requiredRangePart(element, RANGE_INPUT_SELECTOR, 'input');
+  var output = requiredRangePart(element, RANGE_OUTPUT_SELECTOR, 'output');
+  var update = function update() {
+    output.value = input.value;
+    output.textContent = input.value;
+  };
+  input.value = config.value;
+  syncNumberAttributes(input, config);
+  input.addEventListener('input', update);
+  update();
+  return {
+    destroy: function destroy() {
+      return input.removeEventListener('input', update);
+    },
+    focusElement: input,
+    read: function read() {
+      return input.value;
+    }
+  };
+}
+function syncNumberAttributes(input, config) {
+  if (config.type !== 'number' && config.type !== 'range') return;
+  for (var _i = 0, _arr = ['min', 'max', 'step']; _i < _arr.length; _i++) {
+    var name = _arr[_i];
+    syncOptionalAttribute(input, name, config[name]);
+  }
+}
+function syncDateAttributes(input, config) {
+  if (config.type !== 'date' && config.type !== 'datetime') return;
+  input.dataset.soaDateControl = config.type;
+  input.dataset.dateFormat = config.dateFormat;
+}
+function syncOptionalAttribute(element, name, value) {
+  if (value === null) element.removeAttribute(name);else element.setAttribute(name, value);
+}
+function requiredRangePart(element, selector, label) {
+  var part = element.querySelector(selector);
+  if (!part) throw new TypeError("Inline editor range template requires an ".concat(label, "."));
+  return part;
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/editing/inline-editor-request.js":
 /*!****************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-request.js ***!
@@ -1849,6 +1948,63 @@ function assertHttp(http) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/editing/inline-editor-template.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/frontend/features/table/editing/inline-editor-template.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cloneInlineEditorTemplate": () => (/* binding */ cloneInlineEditorTemplate)
+/* harmony export */ });
+var TEMPLATE_ID_ATTRIBUTE = 'soaInlineEditorTemplateId';
+var TEMPLATE_SELECTOR = '[data-soa-inline-editor-template]';
+var ROOT_SELECTOR = '[data-soa-inline-editor-root]';
+var FORM_SELECTOR = '[data-soa-inline-editor-form]';
+var CONTROL_SELECTOR = '[data-soa-inline-editor-control]';
+var CANCEL_SELECTOR = '[data-soa-inline-editor-cancel]';
+var ERROR_SELECTOR = '[data-soa-inline-editor-error]';
+function cloneInlineEditorTemplate(trigger) {
+  var template = readTemplate(trigger);
+  var root = cloneSingleRoot(template);
+  return {
+    cancel: requiredDescendant(root, CANCEL_SELECTOR, 'cancel control'),
+    control: requiredDescendant(root, CONTROL_SELECTOR, 'value control'),
+    error: requiredDescendant(root, ERROR_SELECTOR, 'error region'),
+    form: requiredDescendant(root, FORM_SELECTOR, 'form'),
+    root: root
+  };
+}
+function readTemplate(trigger) {
+  var _trigger$dataset, _trigger$ownerDocumen, _template$matches;
+  var id = (_trigger$dataset = trigger.dataset) === null || _trigger$dataset === void 0 ? void 0 : _trigger$dataset[TEMPLATE_ID_ATTRIBUTE];
+  var template = id ? (_trigger$ownerDocumen = trigger.ownerDocument) === null || _trigger$ownerDocumen === void 0 ? void 0 : _trigger$ownerDocumen.getElementById(id) : null;
+  if (template !== null && template !== void 0 && (_template$matches = template.matches) !== null && _template$matches !== void 0 && _template$matches.call(template, TEMPLATE_SELECTOR) && template.content) return template;
+  throw new TypeError('Inline editor requires a referenced Blade template.');
+}
+function cloneSingleRoot(template) {
+  var _fragment$children, _root$matches;
+  var fragment = template.content.cloneNode(true);
+  if (((_fragment$children = fragment.children) === null || _fragment$children === void 0 ? void 0 : _fragment$children.length) !== 1) {
+    throw new TypeError('Inline editor template requires one root element.');
+  }
+  var root = fragment.firstElementChild;
+  if (!(root !== null && root !== void 0 && (_root$matches = root.matches) !== null && _root$matches !== void 0 && _root$matches.call(root, ROOT_SELECTOR))) {
+    throw new TypeError('Inline editor template requires a marked root element.');
+  }
+  return root;
+}
+function requiredDescendant(root, selector, label) {
+  var _root$matches2, _root$querySelector;
+  var element = (_root$matches2 = root.matches) !== null && _root$matches2 !== void 0 && _root$matches2.call(root, selector) ? root : (_root$querySelector = root.querySelector) === null || _root$querySelector === void 0 ? void 0 : _root$querySelector.call(root, selector);
+  if (!element) throw new TypeError("Inline editor template requires a ".concat(label, "."));
+  return element;
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/editing/inline-editor-value.js":
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/editing/inline-editor-value.js ***!
@@ -1913,22 +2069,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createInlineEditorView": () => (/* binding */ createInlineEditorView)
 /* harmony export */ });
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var CONTROL_CLASS = 'soa-inline-editor-control';
+/* harmony import */ var _inline_editor_control_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inline-editor-control.js */ "./resources/frontend/features/table/editing/inline-editor-control.js");
+/* harmony import */ var _inline_editor_template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inline-editor-template.js */ "./resources/frontend/features/table/editing/inline-editor-template.js");
+
+
 function createInlineEditorView(trigger, config, labels, handlers) {
-  var document = trigger.ownerDocument;
-  var control = createControl(document, config);
-  var elements = createEditorElements(document, config, labels, control.element);
+  var elements = (0,_inline_editor_template_js__WEBPACK_IMPORTED_MODULE_1__.cloneInlineEditorTemplate)(trigger);
+  var control = (0,_inline_editor_control_js__WEBPACK_IMPORTED_MODULE_0__.bindInlineEditorControl)(elements.control, config);
   var removeListeners = bindViewEvents(elements, control, handlers);
   trigger.hidden = true;
   trigger.setAttribute('aria-expanded', 'true');
   trigger.insertAdjacentElement('afterend', elements.root);
-  focusControl(control.element);
+  focusControl(control.focusElement);
   return {
     destroy: function destroy() {
       return destroyView(trigger, elements.root, control, removeListeners);
@@ -1941,28 +2093,6 @@ function createInlineEditorView(trigger, config, labels, handlers) {
     setError: function setError(message) {
       return _setError(elements.error, message);
     }
-  };
-}
-function createEditorElements(document, config, labels, control) {
-  var root = createElement(document, 'div', "soa-inline-editor soa-inline-editor-".concat(config.mode));
-  var form = createElement(document, 'form', 'soa-inline-editor-form');
-  var title = createTitle(document, config.title);
-  var input = createElement(document, 'div', 'soa-inline-editor-input');
-  var actions = createElement(document, 'div', 'soa-inline-editor-actions');
-  var submit = createButton(document, 'submit', 'soa-inline-editor-submit', labels.save);
-  var cancel = createButton(document, 'button', 'soa-inline-editor-cancel', labels.cancel);
-  var error = createElement(document, 'div', 'soa-inline-editor-error');
-  input.append(control);
-  actions.append(submit, cancel);
-  form.append.apply(form, _toConsumableArray([title, input, actions, error].filter(Boolean)));
-  root.append(form);
-  root.setAttribute('role', config.mode === 'popup' ? 'dialog' : 'group');
-  return {
-    cancel: cancel,
-    error: error,
-    form: form,
-    root: root,
-    submit: submit
   };
 }
 function bindViewEvents(elements, control, handlers) {
@@ -1985,116 +2115,6 @@ function bindViewEvents(elements, control, handlers) {
     elements.cancel.removeEventListener('click', cancel);
   };
 }
-function createControl(document, config) {
-  if (config.type === 'select') return createSelect(document, config);
-  if (config.type === 'checklist' || config.type === 'checkbox') {
-    return createChecklist(document, config);
-  }
-  if (config.type === 'textarea') return createTextarea(document, config);
-  if (config.type === 'range') return createRange(document, config);
-  return createInput(document, config);
-}
-function createInput(document, config) {
-  var input = createElement(document, 'input', CONTROL_CLASS);
-  input.type = config.type === 'number' ? 'number' : 'text';
-  input.value = config.value;
-  applyNumberAttributes(input, config);
-  applyDateAttributes(input, config);
-  return {
-    element: input,
-    read: function read() {
-      return input.value;
-    }
-  };
-}
-function createTextarea(document, config) {
-  var textarea = createElement(document, 'textarea', CONTROL_CLASS);
-  textarea.value = config.value;
-  return {
-    element: textarea,
-    read: function read() {
-      return textarea.value;
-    }
-  };
-}
-function createSelect(document, config) {
-  var select = createElement(document, 'select', CONTROL_CLASS);
-  config.options.forEach(function (option) {
-    return select.append(createOption(document, option, config.value));
-  });
-  return {
-    element: select,
-    read: function read() {
-      return select.value;
-    }
-  };
-}
-function createChecklist(document, config) {
-  var fieldset = createElement(document, 'fieldset', 'soa-inline-editor-checklist');
-  config.options.forEach(function (option) {
-    return fieldset.append(createCheckOption(document, option, config));
-  });
-  return {
-    element: fieldset,
-    read: function read() {
-      return _toConsumableArray(fieldset.querySelectorAll('input:checked')).map(function (input) {
-        return input.value;
-      });
-    }
-  };
-}
-function createRange(document, config) {
-  var wrapper = createElement(document, 'div', 'soa-inline-editor-range');
-  var input = createElement(document, 'input', CONTROL_CLASS);
-  var output = createElement(document, 'output', 'soa-inline-editor-range-value');
-  var update = function update() {
-    output.value = input.value;
-  };
-  input.type = 'range';
-  input.value = config.value;
-  applyNumberAttributes(input, config);
-  input.addEventListener('input', update);
-  update();
-  wrapper.append(input, output);
-  return {
-    destroy: function destroy() {
-      return input.removeEventListener('input', update);
-    },
-    element: wrapper,
-    read: function read() {
-      return input.value;
-    }
-  };
-}
-function createCheckOption(document, option, config) {
-  var label = createElement(document, 'label', 'soa-inline-editor-check-option');
-  var input = createElement(document, 'input', 'soa-inline-editor-check-input');
-  var text = createElement(document, 'span', 'soa-inline-editor-check-label');
-  input.type = 'checkbox';
-  input.value = option.value;
-  input.checked = config.value.includes(option.value);
-  text.textContent = option.text;
-  label.append(input, text);
-  return label;
-}
-function createOption(document, option, value) {
-  var element = document.createElement('option');
-  element.value = option.value;
-  element.textContent = option.text;
-  element.selected = option.value === String(value !== null && value !== void 0 ? value : '');
-  return element;
-}
-function applyNumberAttributes(input, config) {
-  for (var _i = 0, _arr = ['min', 'max', 'step']; _i < _arr.length; _i++) {
-    var name = _arr[_i];
-    if (config[name] !== null) input.setAttribute(name, config[name]);
-  }
-}
-function applyDateAttributes(input, config) {
-  if (config.type !== 'date' && config.type !== 'datetime') return;
-  input.dataset.soaDateControl = config.type;
-  input.dataset.dateFormat = config.dateFormat;
-}
 function _setBusy(elements, busy) {
   elements.form.setAttribute('aria-busy', String(busy));
   elements.form.querySelectorAll('input, textarea, select, button').forEach(function (control) {
@@ -2113,26 +2133,8 @@ function destroyView(trigger, root, control, removeListeners) {
   trigger.hidden = false;
   trigger.setAttribute('aria-expanded', 'false');
 }
-function focusControl(control) {
-  var input = control.matches('input, textarea, select') ? control : control.querySelector('input, textarea, select');
-  input === null || input === void 0 || input.focus();
-}
-function createButton(document, type, className, label) {
-  var button = createElement(document, 'button', className);
-  button.type = type;
-  button.textContent = label;
-  return button;
-}
-function createTitle(document, title) {
-  if (!title) return null;
-  var element = createElement(document, 'div', 'soa-inline-editor-title');
-  element.textContent = title;
-  return element;
-}
-function createElement(document, tag, className) {
-  var element = document.createElement(tag);
-  element.className = className;
-  return element;
+function focusControl(element) {
+  element === null || element === void 0 || element.focus();
 }
 
 /***/ }),
@@ -2207,6 +2209,7 @@ function mountInlineEditor(element, dependencies) {
 }
 function openEditor(state) {
   if (state.view) return state.view;
+  state.config = (0,_inline_editor_config_js__WEBPACK_IMPORTED_MODULE_0__.readInlineEditorConfig)(state.element);
   state.view = state.dependencies.createView(state.element, state.config, state.dependencies.labels, {
     cancel: function cancel() {
       return closeEditor(state);
