@@ -36,10 +36,12 @@ SleepingOwl Admin — это мощный конструктор админис�
 | `title` | Название в заголовке и хедере | `Sleeping Owl` |
 | `middleware` | Middleware для маршрутов админки | `['web']` |
 | `auth_provider` | Провайдер аутентификации | `users` |
-| `template` | Класс шаблона UI | `TemplateDefault::class` (AdminLTE) |
+| `template` | Класс темы/шаблона UI | `AdminLTETheme::class` |
 | `wysiwyg` | Редактор по умолчанию | `ckeditor` |
 | `imagesUploadDirectory` | Директория для загрузки изображений | `images/uploads` |
 | `aliases` | Список алиасов для фасадов | См. файл |
+
+Выбор `ThemeInterface`, подключение отдельного CSS/JS, поддерживаемые `--soa-*` properties и service-provider hook внешней готовой темы описаны в [no-build theme customization](docs/modernization/theme-customization.md). Эти операции не требуют npm или пересборки core/theme bundles.
 
 ## 4. Ядро (Admin Core)
 

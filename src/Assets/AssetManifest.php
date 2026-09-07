@@ -23,10 +23,20 @@ final class AssetManifest
 
     public static function fromArray(array $manifest): self
     {
+        return self::create($manifest, true);
+    }
+
+    public static function fromFragment(array $manifest): self
+    {
+        return self::create($manifest, false);
+    }
+
+    private static function create(array $manifest, bool $requiresCore): self
+    {
         self::assertSchemaVersion($manifest['schema_version'] ?? null);
         $packageVersion = self::normalizePackageVersion($manifest['package_version'] ?? null);
         $buildId = self::normalizeBuildId($manifest['build_id'] ?? null);
-        $profiles = self::profiles($manifest['profiles'] ?? null);
+        $profiles = self::profiles($manifest['profiles'] ?? null, $requiresCore);
 
         return new self($packageVersion, $buildId, $profiles);
     }
@@ -96,7 +106,7 @@ final class AssetManifest
     /**
      * @return array<string, AssetProfile>
      */
-    private static function profiles(mixed $profiles): array
+    private static function profiles(mixed $profiles, bool $requiresCore): array
     {
         if (! is_array($profiles) || $profiles === []) {
             throw new InvalidArgumentException('Asset manifest profiles are required.');
@@ -108,7 +118,7 @@ final class AssetManifest
                 throw new InvalidArgumentException('Invalid asset profile name.');
             }
 
-            $result[$name] = AssetProfile::fromArray($profile);
+            $result[$name] = AssetProfile::fromArray($profile, $requiresCore);
         }
 
         return $result;

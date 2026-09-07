@@ -25,6 +25,8 @@ Manifest classes остаются отдельной подсистемой. `As
 
 `Templates\Assets` и `Templates\Meta` используют foundation через композицию и сохраняют узкие `AssetsInterface`/`MetaInterface`. Container keys `assets`, `assets.packages` и `sleeping_owl.meta` оставлены для совместимости, но теперь указывают только на first-party services. Facades находятся в `SleepingOwl\Admin\Facades`; installation stub импортирует их явно и не зависит от опубликованного списка aliases.
 
+Проверенный no-build consumer recipe для `MetaInterface::addCss()`/`addJs()`, гарантированного порядка после выбранной темы и хранения application files вне package-owned publish root приведён в [`theme-customization.md`](theme-customization.md).
+
 Default config указывает на first-party facades. `AssetAliasNormalizer` заменяет только три точных legacy-значения `KodiCMS\Assets\Facades\Assets`, `Meta` и `PackageManager` в старом опубликованном config; имена aliases и любые пользовательские facade classes не меняются. Нормализованный массив сохраняется обратно в runtime config до регистрации Laravel aliases.
 
 Composer dependency удаляется отдельным пунктом после обновления publish/update flow и проверки, что compatibility data остаётся обычными строками и не требует загрузки vendor classes.

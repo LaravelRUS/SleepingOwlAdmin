@@ -9,6 +9,7 @@ use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery as m;
 use SleepingOwl\Admin\Assets\AssetManifest;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
+use SleepingOwl\Admin\Assets\AssetManifestRegistry;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
 use SleepingOwl\Admin\Assets\AssetProfileSelector;
 use SleepingOwl\Admin\Providers\SleepingOwlServiceProvider;
@@ -199,7 +200,8 @@ final class TestAssetManifestServiceProvider extends ServiceProvider
                 $app->make(AssetManifest::class),
                 $app->make(UrlGenerator::class),
                 'packages/sleepingowl/default',
-                $app->make(AssetProfileSelector::class)->selected()
+                $app->make(AssetProfileSelector::class)->selected(),
+                $app->make(AssetManifestRegistry::class)
             );
         });
     }

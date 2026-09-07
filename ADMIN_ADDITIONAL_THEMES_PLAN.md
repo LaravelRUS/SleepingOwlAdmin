@@ -6,6 +6,8 @@
 
 Tailwind ведётся отдельно в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md). Основной release checklist находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md).
 
+Для промежуточных checkpoints новой темы запускаются узкие contract tests и lint/format только изменённых sources; готовые assets пересобираются лишь при изменении theme/frontend sources. Полная PHP/frontend/browser/accessibility матрица выполняется один раз на финальном release gate конкретной темы.
+
 ## Gate перед началом новой темы
 
 - [ ] Название, аудитория, single job админ-интерфейса и визуальное направление согласованы.
@@ -17,7 +19,7 @@ Tailwind ведётся отдельно в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADM
 ## Публичный PHP contract
 
 - [ ] Theme class реализует только публичный `ThemeInterface`: стабильный id, view namespace, logical assets, icons и capabilities.
-- [ ] Существующий `sleeping_owl.template` выбирает тему; для package theme документирован service-provider registration hook.
+- [x] Существующий `sleeping_owl.template` выбирает тему; для package theme документирован service-provider registration hook.
 - [ ] Неверный class/capability/asset manifest даёт диагностическую ошибку без fallback к другой теме.
 - [ ] Theme assets используют `theme:<id>` и `feature:<feature>:theme:<id>`; physical paths не попадают в PHP API.
 - [ ] Theme получает нейтральный asset health status и сама владеет footer presentation.
@@ -67,3 +69,4 @@ Tailwind ведётся отдельно в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADM
 | --- | --- | --- |
 | 2026-09-07 | Разделение планов | Создан единый reusable contract; конкретные новые темы пока не выбраны и не входят в основной release scope. |
 | 2026-09-08 | Framework-free acceptance fixture | Test-only тема без UI framework прошла публичный `ThemeInterface`, Blade/render, production/development asset и browser-isolation contracts на шести capabilities основной темы. Reusable checklist намеренно оставлен незакрытым: fixture не является утверждённой продуктовой темой и не заменяет отдельный план её поставки. |
+| 2026-09-08 | External package registration contract | `ThemeRegistry` даёт provider-у публичный hook готового двухпрофильного manifest fragment и optional replacement class из неизменного `sleeping_owl.template`; внешние sources scoped выбранной темой, повторная регистрация заменяет только её entries, а `core`/package feature drivers подменить нельзя. Полный consumer recipe, settings, extra CSS/JS и `--soa-*` surface документированы без требования Node.js. Остальные пункты checklist остаются per-theme acceptance будущего продукта. |

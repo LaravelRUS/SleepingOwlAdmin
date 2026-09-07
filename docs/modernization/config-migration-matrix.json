@@ -110,7 +110,7 @@
             },
             "status": "same key/new implementation",
             "owner": "core:themes",
-            "contract": "Keep the selector key. Resolve AdminLTE, Tailwind or a custom ThemeInterface; adapt legacy TemplateDefault during migration."
+            "contract": "Keep the class-string selector key. Resolve AdminLTE or a custom ThemeInterface, adapt legacy TemplateDefault, and allow an external provider to register ready assets and explicitly replace the configured class through ThemeRegistry."
         },
         {
             "selector": {

@@ -12,9 +12,10 @@ final class AssetManifestResolver
         private AssetManifest $manifest,
         private UrlGenerator $url,
         private string $publicRoot,
-        private string $profile = 'production'
+        private string $profile = 'production',
+        private ?AssetManifestRegistry $registry = null
     ) {
-        $this->publicRoot = $this->normalizePublicRoot($publicRoot);
+        $this->publicRoot = (new AssetManifestSource($manifest, $publicRoot))->publicRoot();
     }
 
     public function resolve(string $logicalId): ResolvedAssetBundle
@@ -31,18 +32,23 @@ final class AssetManifestResolver
         $styles = [];
 
         foreach ($this->uniqueLogicalIds($logicalIds) as $logicalId) {
-            $bundle = $this->bundle($logicalId);
-            $scripts = $this->append($scripts, $bundle->scripts());
-            $styles = $this->append($styles, $bundle->styles());
+            [$bundle, $source] = $this->bundle($logicalId);
+            $scripts = $this->append($scripts, $bundle->scripts(), $source);
+            $styles = $this->append($styles, $bundle->styles(), $source);
         }
 
         return new ResolvedAssetBundle($scripts, $styles);
     }
 
-    private function bundle(string $logicalId): AssetBundle
+    /**
+     * @return array{AssetBundle, AssetManifestSource}
+     */
+    private function bundle(string $logicalId): array
     {
         try {
-            return $this->manifest->profile($this->profile)->bundle($logicalId);
+            $source = $this->source($logicalId);
+
+            return [$source->manifest()->profile($this->profile)->bundle($logicalId), $source];
         } catch (InvalidArgumentException $exception) {
             throw new AssetManifestException(
                 $exception->getMessage().' Run `php artisan sleepingowl:update` '
@@ -58,18 +64,18 @@ final class AssetManifestResolver
      * @param  list<ManifestAsset>  $assets
      * @return list<string>
      */
-    private function append(array $urls, array $assets): array
+    private function append(array $urls, array $assets, AssetManifestSource $source): array
     {
         foreach ($assets as $asset) {
-            $urls[] = $this->assetUrl($asset);
+            $urls[] = $this->assetUrl($asset, $source);
         }
 
         return array_values(array_unique($urls));
     }
 
-    private function assetUrl(ManifestAsset $asset): string
+    private function assetUrl(ManifestAsset $asset, AssetManifestSource $source): string
     {
-        $path = $this->publicRoot.'/'.$asset->file();
+        $path = $source->publicRoot().'/'.$asset->file();
 
         return $this->url->asset($path).'?id='.$asset->version();
     }
@@ -92,13 +98,9 @@ final class AssetManifestResolver
         return array_values($unique);
     }
 
-    private function normalizePublicRoot(string $publicRoot): string
+    private function source(string $logicalId): AssetManifestSource
     {
-        $publicRoot = trim($publicRoot, '/');
-        if ($publicRoot === '' || str_contains($publicRoot, '..') || str_contains($publicRoot, '\\')) {
-            throw new InvalidArgumentException('Asset public root must be a relative URL path.');
-        }
-
-        return $publicRoot;
+        return $this->registry?->find($this->profile, $logicalId)
+            ?? new AssetManifestSource($this->manifest, $this->publicRoot);
     }
 }

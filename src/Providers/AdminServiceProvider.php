@@ -14,6 +14,7 @@ use SleepingOwl\Admin\Assets\AssetAliasNormalizer;
 use SleepingOwl\Admin\Assets\AssetDependencySorter;
 use SleepingOwl\Admin\Assets\AssetManifest;
 use SleepingOwl\Admin\Assets\AssetManifestLoader;
+use SleepingOwl\Admin\Assets\AssetManifestRegistry;
 use SleepingOwl\Admin\Assets\AssetManifestResolver;
 use SleepingOwl\Admin\Assets\AssetPackageRegistry;
 use SleepingOwl\Admin\Assets\AssetProfileSelector;
@@ -36,9 +37,11 @@ use SleepingOwl\Admin\Navigation;
 use SleepingOwl\Admin\Routing\ModelRouter;
 use SleepingOwl\Admin\Templates\Assets;
 use SleepingOwl\Admin\Templates\Meta;
+use SleepingOwl\Admin\Themes\ExternalThemeAssets;
 use SleepingOwl\Admin\Themes\ThemeConfiguration;
 use SleepingOwl\Admin\Themes\ThemeCssVariables;
 use SleepingOwl\Admin\Themes\ThemeResolver;
+use SleepingOwl\Admin\Themes\ThemeRegistry;
 use SleepingOwl\Admin\Themes\ThemeSelection;
 use SleepingOwl\Admin\Widgets\EnvEditor;
 use SleepingOwl\Admin\Widgets\Messages\ErrorMessages;
@@ -117,6 +120,10 @@ class AdminServiceProvider extends ServiceProvider
             return new AssetProfileSelector($app['config']);
         });
 
+        $this->app->singleton(AssetManifestRegistry::class);
+        $this->app->singleton(ExternalThemeAssets::class);
+        $this->app->singleton(ThemeRegistry::class);
+
         $this->app->singleton(ComposerPackageVersion::class);
         $this->app->singleton(AssetVersionMatcher::class);
         $this->app->singleton(AssetManifest::class, function (Application $app) {
@@ -140,13 +147,15 @@ class AdminServiceProvider extends ServiceProvider
                 $app->make(AssetManifest::class),
                 $app->make(UrlGenerator::class),
                 'packages/sleepingowl/default',
-                $app->make(AssetProfileSelector::class)->selected()
+                $app->make(AssetProfileSelector::class)->selected(),
+                $app->make(AssetManifestRegistry::class)
             );
         });
         $this->app->singleton(LogicalAssetRegistrar::class);
 
         $this->app->singleton(ThemeSelection::class, function (Application $app) {
-            return (new ThemeResolver($app))->resolve($this->getConfig('template'));
+            return (new ThemeResolver($app, $app->make(ThemeRegistry::class)))
+                ->resolve($this->getConfig('template'));
         });
 
         $this->app->singleton('sleeping_owl.template', function (Application $app) {

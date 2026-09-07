@@ -16,8 +16,10 @@ Manifest создаётся после Laravel Mix build из `build/frontend-en
 
 Table driver не содержит presentation CSS. Встроенные table adapters публикуются отдельными
 feature/theme entries и загружаются только вместе с выбранной темой и активным table feature.
-Фрагменты custom theme продолжают объявлять только `theme:<id>` и
-`feature:<feature-id>:theme:<id>`. Они не содержат URL или filenames.
+Массив `ThemeInterface::assets()` для custom theme объявляет только logical ids
+`shared:<id>`, `theme:<id>` и `feature:<feature-id>:theme:<id>`. Он не содержит
+URL или filenames. Отдельный готовый manifest fragment внешнего Composer
+package связывает эти ids с его собственными versioned файлами.
 
 ## Schema 1
 
@@ -49,6 +51,8 @@ feature/theme entries и загружаются только вместе с в�
 
 Tracked manifest одновременно содержит `production` и `development` profiles с одинаковыми logical ids. `npm run production` последовательно собирает оба набора: development сохраняется несжатым с внешними source maps, production — minified без source maps. `npm run development` обновляет только development profile для локальной работы и не требует пересборки production profile.
 
+Внешний theme package использует ту же schema через `AssetManifest::fromFragment()`, но не повторяет обязательный `core`. Его fragment обязан содержать оба профиля с одинаковыми entries; `ThemeRegistry` принимает только объявленные выбранной темой shared/theme/feature-adapter ids и запрещает подменять `core` либо package-owned `feature:<id>` drivers. Каждый file path остаётся относительным к public root, который регистрирует provider темы. Повторная явная регистрация того же logical id заменяет предыдущий источник; implicit fallback на другую тему отсутствует. Полный provider recipe находится в [`theme-customization.md`](theme-customization.md).
+
 Физические файлы находятся в `profiles/<profile>/...`; resolver никогда не объединяет их. Существующий `sleeping_owl.dev_assets`, заполняемый через `ADMIN_DEV_ASSETS`, выбирает один профиль целиком:
 
 ```env
@@ -60,9 +64,9 @@ ADMIN_DEV_ASSETS=false
 ## PHP responsibilities
 
 - `ManifestAsset`, `AssetBundle`, `AssetProfile` и `AssetManifest` валидируют данные и предоставляют immutable read API;
-- `AssetManifestLoader` отвечает только за filesystem/JSON boundary и преобразует любую ошибку чтения или schema в `AssetManifestException`;
+- `AssetManifestLoader` отвечает только за filesystem/JSON boundary, различает core manifest и внешний fragment и преобразует любую ошибку чтения или schema в `AssetManifestException`;
 - `AssetProfileSelector` преобразует только существующий config flag в `production` или `development`;
-- `AssetManifestResolver` выбирает logical bundles только внутри этого профиля, сохраняет их порядок, удаляет дубликаты и строит URL через Laravel `UrlGenerator`;
+- `AssetManifestResolver` выбирает logical bundles только внутри этого профиля, учитывает явно зарегистрированные external sources, сохраняет порядок, удаляет дубликаты и строит URL через Laravel `UrlGenerator`;
 - `ResolvedAssetBundle` возвращает отдельные списки scripts и styles;
 - `LogicalAssetRegistrar` передаёт эти URL в first-party meta/asset registry со стабильными handles и явной цепочкой зависимостей внутри CSS и JS, не читая manifest самостоятельно; точечные aliases logical entry сохраняют исторические public handles без привязки consumer-кода к filenames.
 

@@ -31,6 +31,30 @@ class AssetManifestTest extends TestCase
         }
     }
 
+    public function test_fragment_profiles_do_not_require_a_core_entry(): void
+    {
+        $fragment = $this->manifest();
+        unset($fragment['profiles']['production']['entries']['core']);
+
+        $manifest = AssetManifest::fromFragment($fragment);
+
+        $this->assertSame(
+            ['feature:forms'],
+            $manifest->profile('production')->entryIds()
+        );
+    }
+
+    public function test_fragment_profiles_cannot_be_empty(): void
+    {
+        $fragment = $this->manifest();
+        $fragment['profiles']['production']['entries'] = [];
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Manifest fragment profile must contain entries.');
+
+        AssetManifest::fromFragment($fragment);
+    }
+
     public function test_it_rejects_unsafe_or_mistyped_asset_paths(): void
     {
         foreach (['../admin-core.js', '/js/admin-core.js', 'https://example.test/app.js', 'js/app.css'] as $file) {

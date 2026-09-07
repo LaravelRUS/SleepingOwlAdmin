@@ -9,8 +9,11 @@ use SleepingOwl\Admin\Exceptions\TemplateException;
 
 final class ThemeResolver
 {
-    public function __construct(private Application $app)
+    private ThemeRegistry $themes;
+
+    public function __construct(private Application $app, ?ThemeRegistry $themes = null)
     {
+        $this->themes = $themes ?? $app->make(ThemeRegistry::class);
     }
 
     public function resolve(mixed $configuredClass): ThemeSelection
@@ -38,13 +41,18 @@ final class ThemeResolver
 
     private function makeImplementation(mixed $configuredClass): object
     {
-        if (! is_string($configuredClass) || ! class_exists($configuredClass)) {
+        if (! is_string($configuredClass)) {
             $value = is_scalar($configuredClass) ? (string) $configuredClass : get_debug_type($configuredClass);
 
             throw new TemplateException("Template class [{$value}] not found in config file");
         }
 
-        return $this->app->make($configuredClass);
+        $implementationClass = $this->themes->implementationClass($configuredClass);
+        if (! class_exists($implementationClass)) {
+            throw new TemplateException("Template class [{$configuredClass}] not found in config file");
+        }
+
+        return $this->app->make($implementationClass);
     }
 
     private function fromLegacyTemplate(TemplateInterface $template): ThemeSelection

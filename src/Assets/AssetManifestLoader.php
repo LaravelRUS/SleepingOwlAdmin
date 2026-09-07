@@ -15,8 +15,18 @@ final class AssetManifestLoader
 
     public function load(string $path): AssetManifest
     {
+        return $this->loadFile($path, false);
+    }
+
+    public function loadFragment(string $path): AssetManifest
+    {
+        return $this->loadFile($path, true);
+    }
+
+    private function loadFile(string $path, bool $fragment): AssetManifest
+    {
         if (! $this->files->isFile($path)) {
-            throw $this->failure($path, 'file is missing');
+            throw $this->failure($path, 'file is missing', $fragment);
         }
 
         try {
@@ -31,20 +41,27 @@ final class AssetManifestLoader
                 throw new JsonException('Manifest root must be an object.');
             }
 
-            return AssetManifest::fromArray($manifest);
+            return $fragment
+                ? AssetManifest::fromFragment($manifest)
+                : AssetManifest::fromArray($manifest);
         } catch (Throwable $exception) {
-            throw $this->failure($path, $exception->getMessage(), $exception);
+            throw $this->failure($path, $exception->getMessage(), $fragment, $exception);
         }
     }
 
     private function failure(
         string $path,
         string $reason,
+        bool $fragment = false,
         ?Throwable $previous = null
     ): AssetManifestException {
+        $type = $fragment ? 'manifest fragment' : 'manifest';
+        $instruction = $fragment
+            ? 'Publish or reinstall the external theme assets.'
+            : 'Run `php artisan sleepingowl:update` to publish a complete asset set.';
+
         return new AssetManifestException(
-            "Unable to load SleepingOwl asset manifest [{$path}]: {$reason}. "
-            .'Run `php artisan sleepingowl:update` to publish a complete asset set.',
+            "Unable to load SleepingOwl asset {$type} [{$path}]: {$reason}. {$instruction}",
             0,
             $previous
         );

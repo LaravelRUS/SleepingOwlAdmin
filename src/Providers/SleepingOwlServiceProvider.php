@@ -25,6 +25,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
      */
     public function boot(Admin $admin)
     {
+        $admin->setTemplate($this->app['sleeping_owl.template']);
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'sleeping_owl');
 
         if ($this->app->runningInConsole()) {
@@ -42,8 +43,7 @@ class SleepingOwlServiceProvider extends AdminSectionsServiceProvider
 
     protected function registerCore()
     {
-        $this->app->instance('sleeping_owl', $admin = new Admin($this->app));
-        $admin->setTemplate($this->app['sleeping_owl.template']);
+        $this->app->instance('sleeping_owl', new Admin($this->app));
     }
 
     /**

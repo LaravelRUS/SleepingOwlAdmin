@@ -16,7 +16,7 @@ final class AssetProfile
         $this->entries = $entries;
     }
 
-    public static function fromArray(mixed $profile): self
+    public static function fromArray(mixed $profile, bool $requiresCore = true): self
     {
         if (! is_array($profile) || ! is_array($profile['entries'] ?? null)) {
             throw new InvalidArgumentException('Manifest profile must contain entries.');
@@ -28,8 +28,12 @@ final class AssetProfile
             $entries[$logicalId] = AssetBundle::fromArray($bundle);
         }
 
-        if (! isset($entries['core'])) {
+        if ($requiresCore && ! isset($entries['core'])) {
             throw new InvalidArgumentException('Manifest profile must contain the [core] entry.');
+        }
+
+        if (! $requiresCore && $entries === []) {
+            throw new InvalidArgumentException('Manifest fragment profile must contain entries.');
         }
 
         return new self($entries);

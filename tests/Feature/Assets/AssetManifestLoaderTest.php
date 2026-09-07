@@ -76,6 +76,30 @@ class AssetManifestLoaderTest extends TestCase
         );
     }
 
+    public function test_it_loads_an_external_fragment_without_core(): void
+    {
+        $manifest = $this->loader()->loadFragment(
+            dirname(__DIR__, 2).'/Fixtures/assets/external-theme-manifest.json'
+        );
+
+        $this->assertSame(
+            ['theme:provider-test', 'feature:tooltip:theme:provider-test'],
+            $manifest->profile('production')->entryIds()
+        );
+    }
+
+    public function test_missing_external_fragment_has_theme_owned_recovery_guidance(): void
+    {
+        try {
+            $this->loader()->loadFragment(__DIR__.'/missing-external-fragment.json');
+            $this->fail('Missing external fragment was accepted.');
+        } catch (AssetManifestException $exception) {
+            $this->assertStringContainsString('manifest fragment', $exception->getMessage());
+            $this->assertStringContainsString('external theme assets', $exception->getMessage());
+            $this->assertStringNotContainsString('sleepingowl:update', $exception->getMessage());
+        }
+    }
+
     private function loader(): AssetManifestLoader
     {
         return new AssetManifestLoader(new Filesystem());

@@ -26,6 +26,8 @@ Sass variables remain the source-build defaults and fallbacks. A component consu
 
 The complete executable list is emitted by the `_custom-properties.scss` module beside each Sass entrypoint. New public properties must use the same prefix and remain owned by exactly one core/feature/theme layer.
 
+The current AdminLTE/core/feature list and application CSS examples are maintained in [`theme-customization.md`](theme-customization.md). That list is covered by a source-to-documentation contract test.
+
 ## Color scheme
 
 Light values are declared in `:root`. A theme changes only property values under `:root[data-color-scheme="dark"]`; it does not duplicate component rules. The legacy theme keeps its existing `dark-mode` body class during migration and mirrors the selected mode to `data-color-scheme` on the root element.

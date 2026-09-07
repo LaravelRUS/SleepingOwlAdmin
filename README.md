@@ -52,6 +52,8 @@ Powered by Laravel 5.5 - 10. (latest tested version 10.48.2)
 
 * [Docs Github](https://github.com/SleepingOwlAdmin/docs/tree/new)
 
+For the next major release, selecting a `ThemeInterface`, adding application CSS/JS, overriding supported `--soa-*` properties, and installing an external ready-built theme are all no-build workflows. See the [theme customization contract](docs/modernization/theme-customization.md).
+
 
 ## Install `ver 8.*` <small>(last Released)</small>
 

@@ -4,9 +4,9 @@
 
 - Статус: **активен; обязательный release gate основного major-релиза**.
 - Текущая реализация: `AdminLTETheme` уже использует versioned logical runtime и Blade-first contract, но dependency tree всё ещё содержит `admin-lte@3.2.x` и `bootstrap@4.6.x`; целевой upgrade на AdminLTE 4/Bootstrap 5 не считается выполненным.
-- Точка возобновления: дождаться общего checkpoint документации дополнительного CSS/theme settings/service-provider hook; исследование и upgrade AdminLTE 4/Bootstrap 5 начинать только отдельной задачей после него.
+- Точка возобновления: общий checkpoint extra CSS/theme settings/service-provider hook закрыт; в новой чистой задаче начать раздел 1 с фиксации стабильных версий, peer dependencies и license inventory AdminLTE 4/Bootstrap 5.
 - Общий platform/core scope находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md). Tailwind не входит в этот файл и ведётся в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
-- Каждый самостоятельный пункт: реализация, релевантные полные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево.
+- Каждый самостоятельный пункт: реализация, узкие tests затронутого contract, lint/format только изменённых sources, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево. Build выполняется только при изменении публикуемых assets; полный PHPUnit/Vitest/Playwright gate — один раз перед финальным release gate, не на каждом промежуточном checkpoint.
 
 ## 0. Стабилизировать текущий checkpoint
 
@@ -39,7 +39,7 @@
 - [x] Light/dark mode переопределяет `--soa-*` properties на theme root без копии component stylesheet.
 - [x] `sidebar_background_color` валидируется и задаёт `--soa-sidebar-bg` для light/dark mode; `null` оставляет default темы.
 - [x] Asset health warning находится в переопределяемом footer partial, имеет `role="status"`, локализацию и theme-owned Sass presentation.
-- [ ] Документировать подключение дополнительного CSS/JS и изменение поддерживаемых `--soa-*` properties без пересборки core/theme.
+- [x] Документировать подключение дополнительного CSS/JS и изменение поддерживаемых `--soa-*` properties без пересборки core/theme.
 - [x] Проверить, что выбирается только `theme:legacy-adminlte` и её adapters, без entries от Tailwind/custom themes.
 - [ ] Измерить отдельно core, shared, каждый feature, feature adapters и AdminLTE theme bundle; сравнить с baseline.
 
@@ -57,9 +57,9 @@
 
 ## 5. Config compatibility и no-build workflow
 
-- [ ] Existing published `sleeping_owl.php` with `TemplateDefault` still boots through the deprecated adapter.
-- [ ] New config default selects direct `AdminLTETheme` through unchanged `sleeping_owl.template`.
-- [ ] Document service-provider hook for selecting/overriding the primary theme without package source changes.
+- [x] Existing published `sleeping_owl.php` with `TemplateDefault` still boots through the deprecated adapter.
+- [x] New config default selects direct `AdminLTETheme` through unchanged `sleeping_owl.template`.
+- [x] Document service-provider hook for selecting/overriding the primary theme without package source changes.
 - [ ] Route/auth/env/upload/date-time/WYSIWYG/search/alias/table settings preserve keys and behavior.
 - [ ] `sleepingowl:update` publishes both ready profiles and never overwrites config/application files.
 - [ ] Clean Laravel application without Node.js installs the release artifact and runs AdminLTE through Composer/PHP/Artisan only.
@@ -88,3 +88,4 @@
 | --- | --- | --- | --- |
 | 2026-09-07 | Разделение планов | Основная тема получила отдельный release-blocking checklist; ранее закрытые logical runtime, tokens, dark/sidebar и asset-health checkpoints сохранены, фактический AdminLTE 3→4 upgrade отмечен незавершённым. | текущий commit |
 | 2026-09-08 | Framework-free contract baseline | Точный runtime `AdminLTETheme` закреплён как 16 scripts и 17 styles в порядке `core` → declared shared/theme entries → feature drivers и adapters (table adapter до self-booting driver) → завершающий `shared:modules`, с сохранёнными legacy handles. Production/development browser contract загружает только `legacy-adminlte` adapters/theme, исключает Tailwind/custom theme requests и подтверждает отсутствие jQuery, global Vue/DataTable, Bootstrap/AdminLTE JS globals и legacy aggregates. Оба asset-профиля содержат 36 logical entries и 48 файлов; полный PHP gate: 563 tests, 2407 assertions, 11 skipped; frontend gate: Prettier/ESLint/Stylelint, 684 Vitest + 137 Playwright. Framework upgrade не начат. | текущий commit |
+| 2026-09-08 | No-build customization и provider hook | `theme-customization.md` закрепляет существующий `sleeping_owl.template`, 15 theme-owned settings, точный source-verified AdminLTE/core/feature `--soa-*` surface, `MetaInterface::addCss()`/`addJs()` и Blade overrides. Новый `ThemeRegistry` регистрирует готовый внешний production/development fragment, scoped выбранной темой, и может явно заменить configured primary class; `TemplateDefault` добавляет отсутствующий MD5 version query к готовым legacy files. По сокращённой testing policy build не запускался: публикуемые assets не менялись; theme/manifest gate — 31 test, 253 assertions, финальный legacy template/config gate — 8 tests, 62 assertions. Framework upgrade не начат. | текущий commit |

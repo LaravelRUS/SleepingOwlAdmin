@@ -46,7 +46,7 @@ class TemplateDefault extends Template
             $assets = $this->resolveAssets($paths, fn ($path) => $this->assetPath($path));
         }
 
-        $this->registerAssets($assets);
+        $this->registerAssets($this->versionUnversionedAssets($paths, $assets));
     }
 
     private function assetPaths(): array
@@ -64,6 +64,25 @@ class TemplateDefault extends Template
     private function resolveAssets(array $paths, callable $resolve): array
     {
         return array_map($resolve, $paths);
+    }
+
+    private function versionUnversionedAssets(array $paths, array $assets): array
+    {
+        foreach ($assets as $name => $url) {
+            $url = (string) $url;
+            $publishedPath = public_path($this->assetPath($paths[$name]));
+
+            if (! str_contains($url, '?id=') && is_file($publishedPath)) {
+                $version = md5_file($publishedPath);
+                if ($version !== false) {
+                    $url .= '?id='.$version;
+                }
+            }
+
+            $assets[$name] = $url;
+        }
+
+        return $assets;
     }
 
     private function registerAssets(array $assets): void

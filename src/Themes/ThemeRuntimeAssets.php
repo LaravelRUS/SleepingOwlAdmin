@@ -2,6 +2,7 @@
 
 namespace SleepingOwl\Admin\Themes;
 
+use SleepingOwl\Admin\Assets\AssetManifestRegistry;
 use SleepingOwl\Admin\Assets\LogicalAssetRegistrar;
 use SleepingOwl\Admin\Assets\ResolvedAssetBundle;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
@@ -24,8 +25,10 @@ final class ThemeRuntimeAssets
 
     private const PRELOADED_ADAPTERS = ['table'];
 
-    public function __construct(private LogicalAssetRegistrar $registrar)
-    {
+    public function __construct(
+        private LogicalAssetRegistrar $registrar,
+        private AssetManifestRegistry $manifests
+    ) {
     }
 
     /**
@@ -33,6 +36,8 @@ final class ThemeRuntimeAssets
      */
     public function register(ThemeInterface $theme, array $aliases = []): ResolvedAssetBundle
     {
+        $this->manifests->select($theme->id());
+
         return $this->registrar->register($this->logicalEntries($theme), $aliases);
     }
 
