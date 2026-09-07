@@ -28,6 +28,7 @@ final class ThemeTemplateAdapter extends Template
 
     public function initialize(): void
     {
+        $this->app->make(ThemeRuntimeAssets::class)->register($this->theme);
     }
 
     public function name(): string

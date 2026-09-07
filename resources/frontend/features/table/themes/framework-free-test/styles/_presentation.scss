@@ -1,0 +1,30 @@
+@use 'variables';
+
+/* stylelint-disable selector-class-pattern -- DataTables owns the public dataTable selector. */
+@mixin styles {
+  [data-theme='framework-free-test'] .dt-container {
+    display: grid;
+    gap: variables.$control-gap;
+  }
+
+  [data-theme='framework-free-test'] table.dataTable {
+    border: 0.0625rem solid var(--soa-workbench-table-border-color);
+    border-collapse: separate;
+    border-radius: var(--soa-workbench-table-radius);
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  [data-theme='framework-free-test'] table.dataTable :where(th, td) {
+    border-block-end: 0.0625rem solid var(--soa-workbench-table-border-color);
+    padding: variables.$cell-padding;
+    text-align: start;
+  }
+
+  [data-theme='framework-free-test'] table.dataTable th {
+    color: var(--soa-workbench-table-heading-color);
+    font-family: var(--soa-font-family-monospace);
+    letter-spacing: variables.$header-letter-spacing;
+  }
+}
+/* stylelint-enable selector-class-pattern */

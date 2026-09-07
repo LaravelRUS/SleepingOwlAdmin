@@ -49,19 +49,31 @@ function resetControl(control) {
     }
 
     if (control.options) {
-        let hasDefault = false
-
-        for (const option of control.options) {
-            option.selected = option.defaultSelected
-            hasDefault ||= option.defaultSelected
-        }
-
-        if (!hasDefault) control.selectedIndex = control.multiple ? -1 : 0
-    } else if (control.type === 'checkbox' || control.type === 'radio') {
-        control.checked = control.defaultChecked
-    } else {
-        control.value = control.defaultValue
+        resetSelectControl(control)
+        return
     }
+
+    if (isCheckable(control)) {
+        control.checked = control.defaultChecked
+        return
+    }
+
+    control.value = control.defaultValue
+}
+
+function resetSelectControl(control) {
+    let hasDefault = false
+
+    for (const option of control.options) {
+        option.selected = option.defaultSelected
+        hasDefault ||= option.defaultSelected
+    }
+
+    if (!hasDefault) control.selectedIndex = control.multiple ? -1 : 0
+}
+
+function isCheckable(control) {
+    return control.type === 'checkbox' || control.type === 'radio'
 }
 
 function restoreControlValue(control, value) {

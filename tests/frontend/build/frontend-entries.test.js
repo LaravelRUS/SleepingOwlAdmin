@@ -143,7 +143,14 @@ describe('frontend build entry files', () => {
 })
 
 describe('table presentation entries', () => {
-    it.each(['legacy-adminlte', 'tailwind'])(
+    it('publishes the AdminLTE presentation and DataTables adapter together', () => {
+        const logicalId = 'feature:table:theme:legacy-adminlte'
+
+        expect(modernEntry(logicalId, 'styles')).toBeDefined()
+        expect(modernEntry(logicalId, 'scripts')).toBeDefined()
+    })
+
+    it.each(['framework-free-test', 'tailwind'])(
         'publishes the %s adapter as an independent stylesheet',
         (theme) => {
             const logicalId = `feature:table:theme:${theme}`

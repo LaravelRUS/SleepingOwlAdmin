@@ -11135,16 +11135,17 @@ function normalizeInlineEditorValue(value, type) {
 }
 function inlineEditorDisplayValue(config, value) {
   if (config.type === 'select') return optionText(config.options, value) || config.emptyText;
-  if (MULTIPLE_TYPES.has(config.type)) {
-    var labels = value.map(function (item) {
-      return optionText(config.options, item);
-    }).filter(Boolean);
-    if (config.type === 'checklist' && config.displayHtml && labels.length) {
-      return listDisplay(labels, config);
-    }
-    return labels.length ? labels.join(', ') : config.emptyText;
+  if (!MULTIPLE_TYPES.has(config.type)) return String(value !== null && value !== void 0 ? value : '') || config.emptyText;
+  return multipleDisplayValue(config, value);
+}
+function multipleDisplayValue(config, value) {
+  var labels = value.map(function (item) {
+    return optionText(config.options, item);
+  }).filter(Boolean);
+  if (config.type === 'checklist' && config.displayHtml && labels.length) {
+    return listDisplay(labels, config);
   }
-  return String(value !== null && value !== void 0 ? value : '') || config.emptyText;
+  return labels.length ? labels.join(', ') : config.emptyText;
 }
 function listDisplay(labels, config) {
   var limit = config.listLimit > 0 ? config.listLimit : labels.length;
@@ -11455,7 +11456,7 @@ function toggleBoolean(_x3) {
 function _toggleBoolean() {
   _toggleBoolean = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(state) {
     var _state$config$options, _state$config$options2;
-    var checkedValue, value, request, saved, _state$dependencies$m, _state$dependencies$m2, message, _t2;
+    var checkedValue, value, request, _t2;
     return _regenerator().w(function (_context2) {
       while (1) switch (_context2.p = _context2.n) {
         case 0:
@@ -11475,82 +11476,120 @@ function _toggleBoolean() {
           });
           _context2.p = 2;
           _context2.n = 3;
-          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.submitInlineEdit)(state.dependencies.http, state.config, value, request.signal);
+          return submitBooleanValue(state, request, value);
         case 3:
-          saved = _context2.v;
+          _context2.n = 5;
+          break;
+        case 4:
+          _context2.p = 4;
+          _t2 = _context2.v;
+          _context2.n = 5;
+          return handleBooleanError(state, request, _t2);
+        case 5:
+          _context2.p = 5;
+          if (state.request === request) state.request = null;
+          setTriggerBusy(state.element, false);
+          return _context2.f(5);
+        case 6:
+          return _context2.a(2);
+      }
+    }, _callee2, null, [[2, 4, 5, 6]]);
+  }));
+  return _toggleBoolean.apply(this, arguments);
+}
+function submitBooleanValue(_x4, _x5, _x6) {
+  return _submitBooleanValue.apply(this, arguments);
+}
+function _submitBooleanValue() {
+  _submitBooleanValue = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(state, request, value) {
+    var saved;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.n) {
+        case 0:
+          _context3.n = 1;
+          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.submitInlineEdit)(state.dependencies.http, state.config, value, request.signal);
+        case 1:
+          saved = _context3.v;
           if (!(state.request !== request)) {
-            _context2.n = 4;
+            _context3.n = 2;
             break;
           }
-          return _context2.a(2);
-        case 4:
+          return _context3.a(2);
+        case 2:
           state.request = null;
           (0,_inline_editor_value_js__WEBPACK_IMPORTED_MODULE_2__.applyInlineEditorValue)(state.element, state.config, saved);
           dispatch(state, 'inline-edit:submitted', {
             value: saved
           });
-          _context2.n = 9;
-          break;
-        case 5:
-          _context2.p = 5;
-          _t2 = _context2.v;
-          if (!(state.request !== request || (_t2 === null || _t2 === void 0 ? void 0 : _t2.name) === 'AbortError')) {
-            _context2.n = 6;
+        case 3:
+          return _context3.a(2);
+      }
+    }, _callee3);
+  }));
+  return _submitBooleanValue.apply(this, arguments);
+}
+function handleBooleanError(_x7, _x8, _x9) {
+  return _handleBooleanError.apply(this, arguments);
+}
+function _handleBooleanError() {
+  _handleBooleanError = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(state, request, error) {
+    var _state$dependencies$m, _state$dependencies$m2;
+    var message;
+    return _regenerator().w(function (_context4) {
+      while (1) switch (_context4.n) {
+        case 0:
+          if (!(state.request !== request || (error === null || error === void 0 ? void 0 : error.name) === 'AbortError')) {
+            _context4.n = 1;
             break;
           }
-          return _context2.a(2);
-        case 6:
-          _context2.n = 7;
-          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.inlineEditErrorMessage)(_t2, state.dependencies.labels.error);
-        case 7:
-          message = _context2.v;
+          return _context4.a(2);
+        case 1:
+          _context4.n = 2;
+          return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.inlineEditErrorMessage)(error, state.dependencies.labels.error);
+        case 2:
+          message = _context4.v;
           if (!(state.request !== request)) {
-            _context2.n = 8;
+            _context4.n = 3;
             break;
           }
-          return _context2.a(2);
-        case 8:
+          return _context4.a(2);
+        case 3:
           state.request = null;
           (_state$dependencies$m = state.dependencies.messages) === null || _state$dependencies$m === void 0 || (_state$dependencies$m2 = _state$dependencies$m.error) === null || _state$dependencies$m2 === void 0 || _state$dependencies$m2.call(_state$dependencies$m, state.dependencies.labels.error, message);
           dispatch(state, 'inline-edit:failed', {
-            error: _t2
+            error: error
           });
-        case 9:
-          _context2.p = 9;
-          if (state.request === request) state.request = null;
-          setTriggerBusy(state.element, false);
-          return _context2.f(9);
-        case 10:
-          return _context2.a(2);
+        case 4:
+          return _context4.a(2);
       }
-    }, _callee2, null, [[2, 5, 9, 10]]);
+    }, _callee4);
   }));
-  return _toggleBoolean.apply(this, arguments);
+  return _handleBooleanError.apply(this, arguments);
 }
-function handleSubmitError(_x4, _x5, _x6) {
+function handleSubmitError(_x0, _x1, _x10) {
   return _handleSubmitError.apply(this, arguments);
 }
 function _handleSubmitError() {
-  _handleSubmitError = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(state, request, error) {
+  _handleSubmitError = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(state, request, error) {
     var message;
-    return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.n) {
+    return _regenerator().w(function (_context5) {
+      while (1) switch (_context5.n) {
         case 0:
           if (!(state.request !== request || (error === null || error === void 0 ? void 0 : error.name) === 'AbortError')) {
-            _context3.n = 1;
+            _context5.n = 1;
             break;
           }
-          return _context3.a(2);
+          return _context5.a(2);
         case 1:
-          _context3.n = 2;
+          _context5.n = 2;
           return (0,_inline_editor_request_js__WEBPACK_IMPORTED_MODULE_1__.inlineEditErrorMessage)(error, state.dependencies.labels.error);
         case 2:
-          message = _context3.v;
+          message = _context5.v;
           if (!(state.request !== request)) {
-            _context3.n = 3;
+            _context5.n = 3;
             break;
           }
-          return _context3.a(2);
+          return _context5.a(2);
         case 3:
           state.request = null;
           state.view.setBusy(false);
@@ -11559,9 +11598,9 @@ function _handleSubmitError() {
             error: error
           });
         case 4:
-          return _context3.a(2);
+          return _context5.a(2);
       }
-    }, _callee3);
+    }, _callee5);
   }));
   return _handleSubmitError.apply(this, arguments);
 }
@@ -11892,26 +11931,34 @@ function resetControl(control) {
     return;
   }
   if (control.options) {
-    var hasDefault = false;
-    var _iterator6 = _createForOfIteratorHelper(control.options),
-      _step6;
-    try {
-      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-        var option = _step6.value;
-        option.selected = option.defaultSelected;
-        hasDefault || (hasDefault = option.defaultSelected);
-      }
-    } catch (err) {
-      _iterator6.e(err);
-    } finally {
-      _iterator6.f();
-    }
-    if (!hasDefault) control.selectedIndex = control.multiple ? -1 : 0;
-  } else if (control.type === 'checkbox' || control.type === 'radio') {
-    control.checked = control.defaultChecked;
-  } else {
-    control.value = control.defaultValue;
+    resetSelectControl(control);
+    return;
   }
+  if (isCheckable(control)) {
+    control.checked = control.defaultChecked;
+    return;
+  }
+  control.value = control.defaultValue;
+}
+function resetSelectControl(control) {
+  var hasDefault = false;
+  var _iterator6 = _createForOfIteratorHelper(control.options),
+    _step6;
+  try {
+    for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+      var option = _step6.value;
+      option.selected = option.defaultSelected;
+      hasDefault || (hasDefault = option.defaultSelected);
+    }
+  } catch (err) {
+    _iterator6.e(err);
+  } finally {
+    _iterator6.f();
+  }
+  if (!hasDefault) control.selectedIndex = control.multiple ? -1 : 0;
+}
+function isCheckable(control) {
+  return control.type === 'checkbox' || control.type === 'radio';
 }
 function restoreControlValue(control, value) {
   if (!control.options) {

@@ -1,0 +1,12 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+  :root[data-theme='framework-free-test'] {
+    --soa-workbench-tabs-border-color: #{colors.$border};
+    --soa-workbench-tabs-muted-color: #{colors.$muted};
+    --soa-workbench-tabs-marker-color: #{colors.$marker};
+    --soa-workbench-tabs-text-color: #{colors.$text};
+    --soa-workbench-tabs-marker-width: #{variables.$marker-width};
+  }
+}

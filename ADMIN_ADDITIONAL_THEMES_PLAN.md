@@ -66,3 +66,4 @@ Tailwind ведётся отдельно в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADM
 | Дата | Решение | Результат |
 | --- | --- | --- |
 | 2026-09-07 | Разделение планов | Создан единый reusable contract; конкретные новые темы пока не выбраны и не входят в основной release scope. |
+| 2026-09-08 | Framework-free acceptance fixture | Test-only тема без UI framework прошла публичный `ThemeInterface`, Blade/render, production/development asset и browser-isolation contracts на шести capabilities основной темы. Reusable checklist намеренно оставлен незакрытым: fixture не является утверждённой продуктовой темой и не заменяет отдельный план её поставки. |

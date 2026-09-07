@@ -22,17 +22,19 @@ export function normalizeInlineEditorValue(value, type) {
 
 export function inlineEditorDisplayValue(config, value) {
     if (config.type === 'select') return optionText(config.options, value) || config.emptyText
-    if (MULTIPLE_TYPES.has(config.type)) {
-        const labels = value.map((item) => optionText(config.options, item)).filter(Boolean)
+    if (!MULTIPLE_TYPES.has(config.type)) return String(value ?? '') || config.emptyText
 
-        if (config.type === 'checklist' && config.displayHtml && labels.length) {
-            return listDisplay(labels, config)
-        }
+    return multipleDisplayValue(config, value)
+}
 
-        return labels.length ? labels.join(', ') : config.emptyText
+function multipleDisplayValue(config, value) {
+    const labels = value.map((item) => optionText(config.options, item)).filter(Boolean)
+
+    if (config.type === 'checklist' && config.displayHtml && labels.length) {
+        return listDisplay(labels, config)
     }
 
-    return String(value ?? '') || config.emptyText
+    return labels.length ? labels.join(', ') : config.emptyText
 }
 
 function listDisplay(labels, config) {

@@ -14,6 +14,17 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'adminlte-logical-runtime.html'), 'text/html; charset=utf-8'],
     ],
     [
+        '/theme-capabilities-adminlte',
+        [join(browserDirectory, 'theme-capabilities-adminlte.html'), 'text/html; charset=utf-8'],
+    ],
+    [
+        '/theme-capabilities-framework-free',
+        [
+            join(browserDirectory, 'theme-capabilities-framework-free.html'),
+            'text/html; charset=utf-8',
+        ],
+    ],
+    [
         '/compatibility-runtime',
         [join(browserDirectory, 'compatibility-runtime.html'), 'text/html; charset=utf-8'],
     ],
@@ -215,6 +226,7 @@ const staticRoutes = new Map([
     ...profileThemeAdapterRoutes('development', [['tree', 'legacy-adminlte']]),
     ...profileThemeRoutes('development', ['legacy-adminlte']),
     ...profileSharedRoutes('development', ['modules']),
+    ...profileStyleRoutes('development', themeCapabilityStyles()),
     [
         '/public/default/profiles/production/js/shared/vue.js',
         [
@@ -252,6 +264,7 @@ const staticRoutes = new Map([
     ...profileThemeAdapterRoutes('production', [['tree', 'legacy-adminlte']]),
     ...profileThemeRoutes('production', ['legacy-adminlte']),
     ...profileSharedRoutes('production', ['modules']),
+    ...profileStyleRoutes('production', themeCapabilityStyles()),
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
@@ -560,6 +573,49 @@ function profileSharedRoutes(profile, entries) {
         `/public/default/profiles/${profile}/js/shared/${entry}.js`,
         [join(profileRoot, 'shared', `${entry}.js`), 'text/javascript'],
     ])
+}
+
+function profileStyleRoutes(profile, entries) {
+    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'css')
+
+    return entries.map((entry) => [
+        `/public/default/profiles/${profile}/css/${entry}`,
+        [join(profileRoot, ...entry.split('/')), 'text/css'],
+    ])
+}
+
+function themeCapabilityStyles() {
+    const base = [
+        'admin-core.css',
+        'icons.css',
+        'features/dropdown.css',
+        'features/forms.css',
+        'features/lightbox.css',
+        'features/sidebar.css',
+        'features/table.css',
+        'features/tooltip.css',
+        'features/tree.css',
+    ]
+    const legacy = [
+        'themes/legacy-adminlte.css',
+        'features/dropdown/themes/legacy-adminlte.css',
+        'features/lightbox/themes/legacy-adminlte.css',
+        'features/sidebar/themes/legacy-adminlte.css',
+        'features/table/themes/datatables-legacy-adminlte.css',
+        'features/tabs/themes/legacy-adminlte.css',
+        'features/tooltip/themes/legacy-adminlte.css',
+        'features/tree/themes/legacy-adminlte.css',
+    ]
+    const frameworkFree = [
+        'themes/framework-free-test.css',
+        'features/dropdown/themes/framework-free-test.css',
+        'features/sidebar/themes/framework-free-test.css',
+        'features/table/themes/framework-free-test.css',
+        'features/tabs/themes/framework-free-test.css',
+        'features/tooltip/themes/framework-free-test.css',
+    ]
+
+    return [...base, ...legacy, ...frameworkFree]
 }
 
 const fixtureRequests = new Map()

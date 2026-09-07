@@ -125,8 +125,8 @@ class AdminLTEThemeTest extends TestCase
         $scriptSources = array_map(fn ($asset) => $asset->source(), $scripts);
         $styleSources = array_map(fn ($asset) => $asset->source(), $styles);
 
-        $this->assertCount(15, $scripts);
-        $this->assertCount(17, $styles);
+        $this->assertSame($this->expectedScripts($profile), $this->profileSources($scriptSources, $profile));
+        $this->assertSame($this->expectedStyles($profile), $this->profileSources($styleSources, $profile));
         $this->assertLegacyHandles($scripts, $styles);
         $this->assertRuntimeProfile($scriptSources, "profiles/{$profile}");
         $this->assertRuntimeProfile($styleSources, "profiles/{$profile}");
@@ -162,5 +162,67 @@ class AdminLTEThemeTest extends TestCase
         $this->assertIsInt($firstIndex);
         $this->assertIsInt($secondIndex);
         $this->assertLessThan($secondIndex, $firstIndex);
+    }
+
+    private function profileSources(array $sources, string $profile): array
+    {
+        $marker = "profiles/{$profile}/";
+
+        return array_map(
+            static fn (string $source): string => strstr(
+                parse_url($source, PHP_URL_PATH) ?: $source,
+                $marker
+            ),
+            $sources
+        );
+    }
+
+    private function expectedScripts(string $profile): array
+    {
+        $root = "profiles/{$profile}/js";
+
+        return [
+            "{$root}/admin-core.js",
+            "{$root}/shared/compatibility.js",
+            "{$root}/shared/vue.js",
+            "{$root}/themes/legacy-adminlte.js",
+            "{$root}/features/alert.js",
+            "{$root}/features/tooltip.js",
+            "{$root}/features/dropdown.js",
+            "{$root}/features/sidebar.js",
+            "{$root}/features/lightbox.js",
+            "{$root}/features/table/themes/legacy-adminlte.js",
+            "{$root}/features/table.js",
+            "{$root}/features/tabs.js",
+            "{$root}/features/forms.js",
+            "{$root}/features/tree.js",
+            "{$root}/features/tree/themes/legacy-adminlte.js",
+            "{$root}/shared/modules.js",
+        ];
+    }
+
+    private function expectedStyles(string $profile): array
+    {
+        $root = "profiles/{$profile}/css";
+
+        return [
+            "{$root}/admin-core.css",
+            "{$root}/icons.css",
+            "{$root}/themes/legacy-adminlte.css",
+            "{$root}/features/tooltip.css",
+            "{$root}/features/tooltip/themes/legacy-adminlte.css",
+            "{$root}/features/dropdown.css",
+            "{$root}/features/dropdown/themes/legacy-adminlte.css",
+            "{$root}/features/sidebar.css",
+            "{$root}/features/sidebar/themes/legacy-adminlte.css",
+            "{$root}/features/lightbox.css",
+            "{$root}/features/lightbox/themes/legacy-adminlte.css",
+            "{$root}/features/table/themes/datatables-legacy-adminlte.css",
+            "{$root}/features/table.css",
+            "{$root}/features/tabs/themes/legacy-adminlte.css",
+            "{$root}/features/forms.css",
+            "{$root}/features/tree.css",
+            "{$root}/features/tree/themes/legacy-adminlte.css",
+        ];
     }
 }

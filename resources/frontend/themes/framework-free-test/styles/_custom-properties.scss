@@ -1,0 +1,29 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+  :root[data-theme='framework-free-test'] {
+    --soa-primary-color: #{colors.$accent};
+    --soa-danger-color: #{colors.$danger};
+    --soa-surface-color: #{colors.$paper};
+    --soa-page-background-color: #{colors.$canvas};
+    --soa-text-color: #{colors.$ink};
+    --soa-muted-text-color: #{colors.$ink-soft};
+    --soa-border-color: #{colors.$border};
+    --soa-focus-color: #{colors.$marker};
+    --soa-font-family-sans: #{variables.$font-family-body};
+    --soa-font-family-monospace: #{variables.$font-family-utility};
+    --soa-font-size-base: #{variables.$font-size-base};
+    --soa-line-height-base: #{variables.$line-height-base};
+    --soa-shadow-color: #{colors.$shadow};
+  }
+
+  :root[data-theme='framework-free-test'][data-color-scheme='dark'] {
+    --soa-surface-color: #{colors.$dark-paper};
+    --soa-page-background-color: #{colors.$dark-canvas};
+    --soa-text-color: #{colors.$dark-ink};
+    --soa-muted-text-color: #{colors.$dark-ink-soft};
+    --soa-border-color: #{colors.$dark-border};
+    --soa-shadow-color: #{colors.$dark-shadow};
+  }
+}

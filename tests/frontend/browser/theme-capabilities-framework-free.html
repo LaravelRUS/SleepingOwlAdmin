@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en" data-theme="framework-free-test">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="theme-capabilities-token" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Framework-free theme capability fixture</title>
+        <script>
+            window.GlobalConfig = {
+                datatables_settings: { state_datatables: false, state_filters: false },
+                debug: true,
+                env: 'testing',
+                lang: {
+                    button: { cancel: 'Cancel', save: 'Save', yes: 'Yes' },
+                    file: { insert_link: 'Insert link' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: {
+                        'delete-confirm': 'Delete?',
+                        'destroy-confirm': 'Destroy?',
+                        error: 'Table error',
+                        'no-action': 'No action',
+                    },
+                },
+                locale: 'en',
+                state_tabs: false,
+                template: { asset_dir: 'default' },
+                url: 'http://127.0.0.1:4173',
+                url_path: 'theme-capabilities-framework-free',
+                url_prefix: 'admin',
+                user_id: null,
+                wysiwyg: {},
+            }
+        </script>
+        <link rel="stylesheet" href="/public/default/profiles/development/css/admin-core.css" />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/themes/framework-free-test.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/dropdown.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/dropdown/themes/framework-free-test.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/sidebar.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/sidebar/themes/framework-free-test.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/lightbox.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/table/themes/framework-free-test.css"
+        />
+        <link rel="stylesheet" href="/public/default/profiles/development/css/features/table.css" />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/tabs/themes/framework-free-test.css"
+        />
+        <link rel="stylesheet" href="/public/default/profiles/development/css/features/forms.css" />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/tooltip.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/public/default/profiles/development/css/features/tooltip/themes/framework-free-test.css"
+        />
+        <link rel="stylesheet" href="/public/default/profiles/development/css/features/tree.css" />
+    </head>
+    <body class="sidebar-mini">
+        <div class="workbench-shell">
+            <div class="workbench-rail" aria-hidden="true"></div>
+            <main class="workbench-main">
+                <p class="workbench-kicker">Public ThemeInterface acceptance</p>
+                <h1>Framework-free workbench</h1>
+
+                <button
+                    class="workbench-button"
+                    data-widget="pushmenu"
+                    id="capability-sidebar"
+                    type="button"
+                >
+                    Toggle navigation
+                </button>
+                <aside class="workbench-sidebar">
+                    <ul class="nav-sidebar" data-widget="treeview">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#capability-child" id="capability-branch"
+                                >Capabilities</a
+                            >
+                            <ul class="nav-treeview" id="capability-tree">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#capability-table">Table</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </aside>
+                <div id="sidebar-overlay" hidden></div>
+
+                <section class="workbench-display">
+                    <div class="dropdown">
+                        <button
+                            class="workbench-button"
+                            data-toggle="dropdown"
+                            id="capability-dropdown"
+                            type="button"
+                        >
+                            Actions
+                        </button>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item" type="button">Archive</button>
+                        </div>
+                    </div>
+
+                    <button
+                        class="workbench-button"
+                        data-toggle="tooltip"
+                        id="capability-tooltip"
+                        title="Theme help"
+                        type="button"
+                    >
+                        Help
+                    </button>
+
+                    <div data-tablist>
+                        <button
+                            class="active"
+                            data-tab
+                            id="capability-first-tab"
+                            aria-controls="capability-first-panel"
+                        >
+                            Overview
+                        </button>
+                        <button
+                            data-tab
+                            id="capability-second-tab"
+                            aria-controls="capability-second-panel"
+                        >
+                            Details
+                        </button>
+                    </div>
+                    <section id="capability-first-panel">Overview panel</section>
+                    <section id="capability-second-panel">Details panel</section>
+
+                    <table
+                        class="datatables"
+                        data-attributes='{"order":[],"paging":false,"searching":false}'
+                        data-id="capability-table"
+                        id="capability-table"
+                    >
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Shared row</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert workbench-notice show" id="capability-alert">
+                        Saved
+                        <button data-dismiss="alert" id="capability-alert-close" type="button">
+                            Close
+                        </button>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <template data-tooltip-template>
+            <aside class="workbench-tooltip" data-tooltip-popup role="tooltip">
+                <strong data-tooltip-content></strong>
+            </aside>
+        </template>
+
+        <script src="/public/default/profiles/development/js/admin-core.js"></script>
+        <script src="/public/default/profiles/development/js/shared/compatibility.js"></script>
+        <script src="/public/default/profiles/development/js/shared/vue.js"></script>
+        <script src="/public/default/profiles/development/js/features/alert.js"></script>
+        <script src="/public/default/profiles/development/js/features/tooltip.js"></script>
+        <script src="/public/default/profiles/development/js/features/dropdown.js"></script>
+        <script src="/public/default/profiles/development/js/features/sidebar.js"></script>
+        <script src="/public/default/profiles/development/js/features/lightbox.js"></script>
+        <script src="/public/default/profiles/development/js/features/table.js"></script>
+        <script src="/public/default/profiles/development/js/features/tabs.js"></script>
+        <script src="/public/default/profiles/development/js/features/forms.js"></script>
+        <script src="/public/default/profiles/development/js/features/tree.js"></script>
+        <script src="/public/default/profiles/development/js/shared/modules.js"></script>
+    </body>
+</html>

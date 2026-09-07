@@ -96,27 +96,38 @@ async function toggleBoolean(state) {
     dispatch(state, 'inline-edit:submitting', { value })
 
     try {
-        const saved = await submitInlineEdit(
-            state.dependencies.http,
-            state.config,
-            value,
-            request.signal,
-        )
-        if (state.request !== request) return
-        state.request = null
-        applyInlineEditorValue(state.element, state.config, saved)
-        dispatch(state, 'inline-edit:submitted', { value: saved })
+        await submitBooleanValue(state, request, value)
     } catch (error) {
-        if (state.request !== request || error?.name === 'AbortError') return
-        const message = await inlineEditErrorMessage(error, state.dependencies.labels.error)
-        if (state.request !== request) return
-        state.request = null
-        state.dependencies.messages?.error?.(state.dependencies.labels.error, message)
-        dispatch(state, 'inline-edit:failed', { error })
+        await handleBooleanError(state, request, error)
     } finally {
         if (state.request === request) state.request = null
         setTriggerBusy(state.element, false)
     }
+}
+
+async function submitBooleanValue(state, request, value) {
+    const saved = await submitInlineEdit(
+        state.dependencies.http,
+        state.config,
+        value,
+        request.signal,
+    )
+    if (state.request !== request) return
+
+    state.request = null
+    applyInlineEditorValue(state.element, state.config, saved)
+    dispatch(state, 'inline-edit:submitted', { value: saved })
+}
+
+async function handleBooleanError(state, request, error) {
+    if (state.request !== request || error?.name === 'AbortError') return
+
+    const message = await inlineEditErrorMessage(error, state.dependencies.labels.error)
+    if (state.request !== request) return
+
+    state.request = null
+    state.dependencies.messages?.error?.(state.dependencies.labels.error, message)
+    dispatch(state, 'inline-edit:failed', { error })
 }
 
 async function handleSubmitError(state, request, error) {

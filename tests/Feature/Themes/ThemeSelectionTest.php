@@ -134,7 +134,7 @@ final class SelectableContractTheme implements ThemeInterface
 
     public function assets(): array
     {
-        return ['theme:selector-theme'];
+        return [];
     }
 
     public function icons(): array

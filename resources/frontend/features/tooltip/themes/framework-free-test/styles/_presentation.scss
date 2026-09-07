@@ -1,0 +1,14 @@
+@use 'variables';
+
+@mixin styles {
+  [data-theme='framework-free-test'] [data-tooltip-popup] {
+    background: var(--soa-workbench-tooltip-surface);
+    border-radius: var(--soa-workbench-tooltip-radius);
+    box-shadow: variables.$shadow var(--soa-workbench-tooltip-shadow-color);
+    color: var(--soa-workbench-tooltip-text-color);
+    max-width: variables.$max-width;
+    padding: variables.$padding;
+    position: fixed;
+    z-index: 40;
+  }
+}

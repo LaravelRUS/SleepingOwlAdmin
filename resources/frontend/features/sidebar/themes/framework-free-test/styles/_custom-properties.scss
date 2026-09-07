@@ -1,0 +1,12 @@
+@use 'colors';
+@use 'variables';
+
+@mixin define {
+  :root[data-theme='framework-free-test'] {
+    --soa-workbench-sidebar-surface: #{colors.$surface};
+    --soa-workbench-sidebar-border-color: #{colors.$border};
+    --soa-workbench-sidebar-text-color: #{colors.$text};
+    --soa-workbench-sidebar-overlay-color: #{colors.$overlay};
+    --soa-workbench-sidebar-width: #{variables.$sidebar-width};
+  }
+}

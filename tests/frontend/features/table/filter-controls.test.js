@@ -43,13 +43,20 @@ it('binds execute, clear and enter reload through native events', () => {
 it('clears inputs and selects and emits a bubbling native change', () => {
     const ownerDocument = { defaultView: { Event: globalThis.Event } }
     const input = {
+        dataset: {},
+        defaultValue: '',
         dispatchEvent: vi.fn(),
         ownerDocument,
         value: 'Alice',
     }
-    const options = [{ selected: true }, { selected: true }]
+    const options = [
+        { defaultSelected: false, selected: true },
+        { defaultSelected: false, selected: true },
+    ]
     const select = {
+        dataset: {},
         dispatchEvent: vi.fn(),
+        multiple: true,
         options,
         ownerDocument,
         selectedIndex: 1,

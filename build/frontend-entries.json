@@ -169,6 +169,11 @@
                 "output": "css/features/dropdown/themes/legacy-adminlte.css"
             },
             {
+                "logicalId": "feature:dropdown:theme:framework-free-test",
+                "source": "resources/frontend/features/dropdown/themes/framework-free-test/styles/dropdown-framework-free-test.scss",
+                "output": "css/features/dropdown/themes/framework-free-test.css"
+            },
+            {
                 "logicalId": "feature:dropdown:theme:tailwind",
                 "source": "resources/frontend/features/dropdown/themes/tailwind/styles/dropdown-tailwind.scss",
                 "output": "css/features/dropdown/themes/tailwind.css"
@@ -179,6 +184,11 @@
                 "output": "css/features/sidebar/themes/legacy-adminlte.css"
             },
             {
+                "logicalId": "feature:sidebar:theme:framework-free-test",
+                "source": "resources/frontend/features/sidebar/themes/framework-free-test/styles/sidebar-framework-free-test.scss",
+                "output": "css/features/sidebar/themes/framework-free-test.css"
+            },
+            {
                 "logicalId": "feature:sidebar:theme:tailwind",
                 "source": "resources/frontend/features/sidebar/themes/tailwind/styles/sidebar-tailwind.scss",
                 "output": "css/features/sidebar/themes/tailwind.css"
@@ -187,6 +197,11 @@
                 "logicalId": "feature:table:theme:legacy-adminlte",
                 "source": "resources/frontend/features/table/themes/legacy-adminlte/styles/datatables.scss",
                 "output": "css/features/table/themes/datatables-legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:table:theme:framework-free-test",
+                "source": "resources/frontend/features/table/themes/framework-free-test/styles/table-framework-free-test.scss",
+                "output": "css/features/table/themes/framework-free-test.css"
             },
             {
                 "logicalId": "feature:table:theme:tailwind",
@@ -209,6 +224,11 @@
                 "output": "css/features/tabs/themes/legacy-adminlte.css"
             },
             {
+                "logicalId": "feature:tabs:theme:framework-free-test",
+                "source": "resources/frontend/features/tabs/themes/framework-free-test/styles/tabs-framework-free-test.scss",
+                "output": "css/features/tabs/themes/framework-free-test.css"
+            },
+            {
                 "logicalId": "feature:tabs:theme:tailwind",
                 "source": "resources/frontend/features/tabs/themes/tailwind/styles/tabs-tailwind.scss",
                 "output": "css/features/tabs/themes/tailwind.css"
@@ -217,6 +237,11 @@
                 "logicalId": "feature:tooltip:theme:legacy-adminlte",
                 "source": "resources/frontend/features/tooltip/themes/legacy-adminlte/styles/tooltip-adminlte.scss",
                 "output": "css/features/tooltip/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "feature:tooltip:theme:framework-free-test",
+                "source": "resources/frontend/features/tooltip/themes/framework-free-test/styles/tooltip-framework-free-test.scss",
+                "output": "css/features/tooltip/themes/framework-free-test.css"
             },
             {
                 "logicalId": "feature:tooltip:theme:tailwind",
@@ -237,6 +262,11 @@
                 "logicalId": "theme:legacy-adminlte",
                 "source": "resources/frontend/themes/legacy-adminlte/styles/theme.scss",
                 "output": "css/themes/legacy-adminlte.css"
+            },
+            {
+                "logicalId": "theme:framework-free-test",
+                "source": "resources/frontend/themes/framework-free-test/styles/theme.scss",
+                "output": "css/themes/framework-free-test.css"
             },
             {
                 "logicalId": "theme:tailwind",

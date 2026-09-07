@@ -1,0 +1,84 @@
+@use 'variables';
+
+@mixin styles {
+  :root[data-theme='framework-free-test'] {
+    background: var(--soa-page-background-color);
+    color: var(--soa-text-color);
+    font-family: var(--soa-font-family-sans);
+    font-size: var(--soa-font-size-base);
+    line-height: var(--soa-line-height-base);
+  }
+
+  .workbench-shell {
+    box-sizing: border-box;
+    display: grid;
+    gap: variables.$space-4;
+    grid-template-columns: variables.$rail-width minmax(0, variables.$content-width);
+    margin-inline: auto;
+    max-width: calc(variables.$content-width + variables.$rail-width + variables.$space-4 * 2);
+    padding: variables.$space-4;
+  }
+
+  .workbench-rail {
+    background: var(--soa-primary-color);
+    border-radius: variables.$radius-small;
+  }
+
+  .workbench-main,
+  .workbench-display,
+  .workbench-form {
+    background: var(--soa-surface-color);
+    border: variables.$border-width solid var(--soa-border-color);
+    border-radius: variables.$radius-medium;
+    box-shadow: variables.$shadow var(--soa-shadow-color);
+  }
+
+  .workbench-main,
+  .workbench-display,
+  .workbench-form {
+    padding: variables.$space-4;
+  }
+
+  .workbench-kicker,
+  .workbench-form-label {
+    color: var(--soa-muted-text-color);
+    font-family: var(--soa-font-family-monospace);
+    font-size: 0.75em;
+    letter-spacing: 0.08em;
+    margin: 0 0 variables.$space-1;
+    text-transform: uppercase;
+  }
+
+  .workbench-display-title {
+    margin: 0;
+  }
+
+  .workbench-display-content,
+  .workbench-form-value {
+    display: block;
+    margin-block: variables.$space-3;
+  }
+
+  .workbench-button {
+    background: var(--soa-primary-color);
+    border: variables.$border-width solid var(--soa-primary-color);
+    border-radius: variables.$radius-small;
+    color: var(--soa-surface-color);
+    cursor: pointer;
+    font: inherit;
+    padding: variables.$space-1 variables.$space-3;
+  }
+
+  :where(a, button, input, select, textarea):focus-visible {
+    outline: variables.$focus-width solid var(--soa-focus-color);
+    outline-offset: variables.$space-1;
+  }
+
+  @media (width <= 40rem) {
+    .workbench-shell {
+      gap: variables.$space-2;
+      grid-template-columns: variables.$rail-width minmax(0, 1fr);
+      padding: variables.$space-2;
+    }
+  }
+}

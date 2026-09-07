@@ -5,7 +5,7 @@ test('AdminLTE table adapter owns Bootstrap DataTables presentation', async ({ p
 
     await expect(page.locator('#table-presentation')).toHaveCSS('min-height', '112px')
     await expect(page.locator('.dt-info')).toHaveCSS('padding-left', '20px')
-    await expect(page.locator('html')).toHaveCSS('--dt_background-selected', '2,117,216')
+    await expect(page.locator('html')).toHaveCSS('--dt_background-selected', '13,110,253')
     await expect(page.locator('td.highlight')).toHaveCSS('background-color', 'rgb(242, 242, 242)')
 })
 

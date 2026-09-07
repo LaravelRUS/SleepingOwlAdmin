@@ -376,6 +376,7 @@ class DefaultThemeRenderContractTest extends TestCase
         $column = m::mock();
         $column->shouldReceive('getWidth')->once()->andReturn('120px');
         $column->shouldReceive('getHeader')->twice()->andReturn($header);
+        $column->shouldReceive('getHtmlAttribute')->once()->with('class')->andReturn(null);
         $column->shouldReceive('setModel')->once()->with($model);
         $column->shouldReceive('render')->once()->andReturn('<a data-contract="cell">1001</a>');
 

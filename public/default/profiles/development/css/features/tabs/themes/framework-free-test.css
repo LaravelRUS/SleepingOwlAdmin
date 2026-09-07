@@ -1,0 +1,28 @@
+:root[data-theme=framework-free-test] {
+  --soa-workbench-tabs-border-color: var(--soa-border-color);
+  --soa-workbench-tabs-muted-color: var(--soa-muted-text-color);
+  --soa-workbench-tabs-marker-color: var(--soa-primary-color);
+  --soa-workbench-tabs-text-color: var(--soa-text-color);
+  --soa-workbench-tabs-marker-width: 0.1875rem;
+}
+
+@layer sleepingowl-theme.tabs {
+  [data-theme=framework-free-test] [role=tablist] {
+    border-block-end: 0.0625rem solid var(--soa-workbench-tabs-border-color);
+    display: flex;
+    gap: 0.25rem;
+  }
+  [data-theme=framework-free-test] [role=tab] {
+    background: transparent;
+    border: 0;
+    border-block-end: 0.1875rem solid transparent;
+    color: var(--soa-workbench-tabs-muted-color);
+    padding: 0.5rem 0.75rem;
+  }
+  [data-theme=framework-free-test] [role=tab][aria-selected=true] {
+    border-block-end-color: var(--soa-workbench-tabs-marker-color);
+    color: var(--soa-workbench-tabs-text-color);
+  }
+}
+
+/*# sourceMappingURL=framework-free-test.css.map*/

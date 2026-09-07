@@ -4,7 +4,7 @@
 
 - Статус: активен; основной release scope отделён от будущих встроенных тем.
 - Текущий этап: **этап 7 — завершение публичного theme extension contract**; реализация основной темы ведётся отдельным планом, этап 8 закрыт.
-- Точка возобновления: выполнить framework-free custom theme checkpoint и проверку изоляции выбранного theme bundle. Regression ожидания количества AdminLTE logical runtime assets записан первым незавершённым пунктом плана основной темы.
+- Точка возобновления: документировать подключение дополнительного CSS, простых theme settings/CSS variables и service-provider hook выбора темы без пересборки core. Полноценную Tailwind-тему и AdminLTE 4/Bootstrap 5 upgrade до отдельного checkpoint не начинать.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
@@ -716,9 +716,9 @@ No-build consumer contract является release-blocking:
 - [x] Перенести отложенную TailwindTheme и её acceptance criteria в отдельный [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md), чтобы она не блокировала основной релиз.
 - [ ] Завершить обязательный release gate основной темы по [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md).
 - [ ] Предоставить документированный способ подключить дополнительный CSS и при необходимости простые theme settings/CSS variables без пересборки core.
-- [ ] Реализовать test/custom theme без UI framework как проверку достаточности публичного контракта.
-- [ ] Проверить одинаковое функциональное поведение feature drivers в AdminLTE и framework-free test theme в пределах объявленных capabilities.
-- [ ] Проверить, что одновременно загружается только один theme bundle.
+- [x] Реализовать test/custom theme без UI framework как проверку достаточности публичного контракта.
+- [x] Проверить одинаковое функциональное поведение feature drivers в AdminLTE и framework-free test theme в пределах объявленных capabilities.
+- [x] Проверить, что одновременно загружается только один theme bundle.
 - [ ] Добавить theme selection через конфигурацию и документированный service provider hook.
 - [x] Добавить небольшой PHP asset health service: один раз за request сравнивать установленную Composer-версию пакета с `package_version` опубликованного manifest без frontend-запросов.
 - [x] При несовпадении валидных версий продолжать использовать последний целостный набор assets и передавать в footer status с точной командой `php artisan sleepingowl:update`; при совпадении status не рендерить.
@@ -882,12 +882,12 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 
 ### Темы
 
-- [ ] core работает без подключённого Bootstrap/AdminLTE CSS;
+- [x] core работает без подключённого Bootstrap/AdminLTE CSS;
 - [ ] Обязательный acceptance gate [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md) полностью закрыт;
-- [ ] custom test theme реализуется только через публичные contracts, без импортов внутренних файлов;
-- [ ] один PHP display/form даёт одинаковое поведение в AdminLTE и custom test theme в пределах объявленных capabilities;
-- [ ] theme selection не включает assets невыбранной темы;
-- [ ] пользовательские HTML attributes и theme-specific classes передаются без преобразований и не теряются;
+- [x] custom test theme реализуется только через публичные contracts, без импортов внутренних файлов;
+- [x] один PHP display/form даёт одинаковое поведение в AdminLTE и custom test theme в пределах объявленных capabilities;
+- [x] theme selection не включает assets невыбранной темы;
+- [x] пользовательские HTML attributes и theme-specific classes передаются без преобразований и не теряются;
 - [ ] конкретные buttons, controls, validation states и responsive grid принадлежат Blade views выбранной темы;
 - [ ] core не содержит class resolver и не пытается преобразовывать классы одной темы в классы другой;
 
@@ -897,7 +897,7 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 
 - [ ] чистое Laravel-приложение без Node.js устанавливает админку через Composer;
 - [ ] готовые assets публикуются/обновляются существующей `php artisan sleepingowl:update` без компиляции;
-- [ ] выбор AdminLTE или установленной custom theme выполняется конфигурацией и не требует изменения package sources;
+- [x] выбор AdminLTE или установленной custom theme выполняется конфигурацией и не требует изменения package sources;
 - [ ] создание новой модели, section, form и DataTable через PHP DSL не требует frontend build;
 - [ ] дополнительный CSS подключается без пересборки core;
 - [ ] пользовательский CSS или JS подключается отдельным asset, не пересобирая core/theme bundles;
@@ -1145,3 +1145,4 @@ Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_T
 | 2026-09-07 | Этап 8 / jQuery audit и orphan cleanup | Полноценная Tailwind-тема отложена одним TODO до выбора готового шаблона, а завершённые AdminLTE/Blade-first parent checkpoints отмечены. `npm ls jquery --all` подтверждает отсутствие root/DataTables 3 dependency; остаток ограничен разрешённым build-time деревом `admin-lte@3.2.0`/`bootstrap@4.6.2`. Все опубликованные JS source maps и license sidecars получили общий regression gate против jQuery package/runtime. Удалены две бесхозные картинки X-editable и неиспользуемый CKEditor 4 jQuery adapter; production rebuild их не возвращает. Полный AdminLTE production runtime: 2 269 790 bytes / 498 820 gzip против baseline 2 585 357 / 587 787 (`−12.2%` / `−15.1%`). `npm run production` успешен; полный PHP gate: 509 tests, 2174 assertions, 10 skipped; frontend gate: 616 Vitest + 128 Playwright. Следующая точка — удалить `kodicms/laravel-assets` из Composer tree | текущий commit |
 | 2026-09-07 | Этап 8 / удаление `kodicms/laravel-assets` | Прямая dependency удалена из `composer.json`; Composer пересчитал игнорируемый library lock с одной removal operation и физически удалил vendor package. `composer validate --strict` проходит, `composer why kodicms/laravel-assets` подтверждает отсутствие package. Runtime/contracts/default config/PHPDoc/stubs не импортируют vendor classes; три прежних facade FQCN остаются только строковыми ключами точного `AssetAliasNormalizer`, fixtures/tests и migration docs/data. `DOCUMENTATION.md` больше не объявляет удалённую зависимость, а package manifest получил regression contract. Полный PHP gate без vendor-кода: 510 tests, 2175 assertions, 10 skipped; неизменный frontend gate предыдущего checkpoint: 616 Vitest + 128 Playwright. Следующая точка — asset health service и нейтральный status contract | `660e3361` |
 | 2026-09-07 | Этап 7 / theme-independent asset health | Общий memoized request-scoped service сравнивает установленную Composer-версию с уже валидным опубликованным manifest через единый matcher, совместимый с release tags и `dev-*`; mismatch не блокирует resolver и предоставляет нейтральный immutable status с точной командой `php artisan sleepingowl:update`, match не создаёт warning. `Template` передаёт status любой выбранной теме без CSS-классов. AdminLTE владеет переопределяемым Blade footer partial, локализованным текстом, доступным `role="status"` и Sass presentation; warning виден даже при отключённом обычном footer. Все пять locales и English fallback проверены. Tailwind partial остаётся отложен вместе с самой Tailwind-темой. Production/development assets пересобраны; config matrix: 113 keys, legacy/minimal fixtures: 49/1; полный PHP gate: 525 tests, 2210 assertions, 10 skipped; frontend gate: Prettier/ESLint/Stylelint, 617 Vitest + 128 Playwright. Следующий пункт выбирается после перезапуска цели в чистом контексте | текущий commit |
+| 2026-09-08 | Этап 7 / framework-free public theme contract | Общий `ThemeRuntimeAssets` собирает runtime прямой реализации публичного `ThemeInterface`: `core`, объявленные shared/theme entries, стандартные feature drivers, adapters только выбранной темы, table adapter до self-booting driver и `shared:modules` последним; `AdminLTETheme` сохраняет legacy handles. Test-only framework-free fixture, не являющаяся новой продуктовой темой, реализует подмножество шести AdminLTE capabilities (`dropdown`, `notification`, `sidebar`, `table-presentation`, `tabs`, `tooltip`) через собственные Blade display/form и шесть CSS-only entries без theme JavaScript, UI-framework imports или icons. Chromium подтверждает одинаковое объявленное поведение в production/development, response-URL isolation выбранной темы, отсутствие forbidden globals и сохранение `data-toggle`/`data-dismiss`/`data-widget`. Каждый профиль содержит 36 logical entries и 48 файлов; framework-free CSS занимает production 6 850 bytes / 2 539 gzip и development 8 595 / 2 986. Обе сборки успешны; полный PHP gate: 563 tests, 2407 assertions, 11 skipped; frontend gate: Prettier/ESLint/Stylelint, 684 Vitest + 137 Playwright. Следующая точка — документированный extra CSS/theme settings/service-provider hook; Tailwind и AdminLTE framework upgrade не начинать | текущий commit |

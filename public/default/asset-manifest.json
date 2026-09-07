@@ -46,6 +46,16 @@
                         }
                     ]
                 },
+                "feature:dropdown:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/dropdown/themes/framework-free-test.css",
+                            "version": "275d5060de2e2b78fb3312a711cdf0ef",
+                            "checksum": "sha256:26bf5d6d3030ccea7b36cab169447047793f479159320e0c6c2ae574f10600b1"
+                        }
+                    ]
+                },
                 "feature:dropdown:theme:legacy-adminlte": {
                     "scripts": [],
                     "styles": [
@@ -134,6 +144,16 @@
                         }
                     ]
                 },
+                "feature:sidebar:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/sidebar/themes/framework-free-test.css",
+                            "version": "b3fb9b9bfb2695d89d92b09fd4071d2c",
+                            "checksum": "sha256:e7bf10fa19984a37268ae50f4314ac57a3fdf003c80ff5b850f64da48ebc7315"
+                        }
+                    ]
+                },
                 "feature:sidebar:theme:legacy-adminlte": {
                     "scripts": [],
                     "styles": [
@@ -158,8 +178,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/table.js",
-                            "version": "fa39d39253aee8e5f44e6c06ca12de8f",
-                            "checksum": "sha256:185b94d502d666c559a2af6f58af5fa9fdbe638123689728dd578faf6cea04ad"
+                            "version": "d93d36509717044e3eeab53b2d07fa3e",
+                            "checksum": "sha256:39570b62e2479a26d3e0eae601eed4967b24bd877c73e824af23a047cfeb2d3b"
                         }
                     ],
                     "styles": [
@@ -167,6 +187,16 @@
                             "file": "profiles/production/css/features/table.css",
                             "version": "0486f14bd03357524d6cb5a97dc6e459",
                             "checksum": "sha256:44246d5b8bbcf14e3e1d43d5daa922051e682565176ec8228e879a403bee391b"
+                        }
+                    ]
+                },
+                "feature:table:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/table/themes/framework-free-test.css",
+                            "version": "cfa2ba40befb8fa7d2eac1df2bd59a81",
+                            "checksum": "sha256:64d3c5bd85685299471939e82fd49631933bd7c2a434e9e58652e5e5b718abac"
                         }
                     ]
                 },
@@ -181,8 +211,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/datatables-legacy-adminlte.css",
-                            "version": "773c806a490690f0c46691677e92a80f",
-                            "checksum": "sha256:0762e3363dc32aec3e6a383cc402d567b2b5a2b0af28dab02225fed670e43066"
+                            "version": "8fc9b083bdcadf071273ca01d63df05c",
+                            "checksum": "sha256:fd398332f5b63ad7282584fc2a7a8436719c2ba8503ecfa8f8ffdd45fb8c70fe"
                         }
                     ]
                 },
@@ -191,8 +221,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/features/table/themes/tailwind.css",
-                            "version": "313a64c9ac6838a114512a498ef8b3c4",
-                            "checksum": "sha256:68bd1df9c601609693bdc9fa910691932fcb21ad7635b5fc2d5b1830d82e09d2"
+                            "version": "9e18eacbf50e7cae5e18375a6a4dd3f7",
+                            "checksum": "sha256:b54ee0f1563b2313c44d41b129505d34d29bff0b9ad6da64993d4d26b9b6b089"
                         }
                     ]
                 },
@@ -205,6 +235,16 @@
                         }
                     ],
                     "styles": []
+                },
+                "feature:tabs:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/tabs/themes/framework-free-test.css",
+                            "version": "68f77fe373413b2a73105d2461cff202",
+                            "checksum": "sha256:299a94053dd8623ad12db9f31f1a0b2f565e7985f301abe9266efac00f4ecbdc"
+                        }
+                    ]
                 },
                 "feature:tabs:theme:legacy-adminlte": {
                     "scripts": [],
@@ -239,6 +279,16 @@
                             "file": "profiles/production/css/features/tooltip.css",
                             "version": "cebef987087c2e9b1fa14c6b7331f24d",
                             "checksum": "sha256:fd034421d69dbda3748d5b996a4bb4e2b38e68a2b412736c05135549c2d4259a"
+                        }
+                    ]
+                },
+                "feature:tooltip:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/features/tooltip/themes/framework-free-test.css",
+                            "version": "303f11e99832e136b8b2c2379d1f212f",
+                            "checksum": "sha256:f8c4c4593e22d71e4eac5dfbd34e04c33402e4dc6751b13902a300bafeb5c918"
                         }
                     ]
                 },
@@ -338,11 +388,21 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/shared/vue.js",
-                            "version": "6f065f205a8dab4ff753e3891d2eeb86",
-                            "checksum": "sha256:ff2b264cd32bbe032961ca65c2ec764091111d6a46eff58f3ee188c91e49ecca"
+                            "version": "e66f8a593def4f88f0ee76bc16c9ce0e",
+                            "checksum": "sha256:5938fd217199def66c89583ad52e026e7b713f9073954642ba03345b9eec8122"
                         }
                     ],
                     "styles": []
+                },
+                "theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/production/css/themes/framework-free-test.css",
+                            "version": "9542520af26fec48b388acdac01e4847",
+                            "checksum": "sha256:d697a8fa3ab0af70e9a07342277aeb93cc1d914389af01d0d5bcd00f2cd731ec"
+                        }
+                    ]
                 },
                 "theme:legacy-adminlte": {
                     "scripts": [
@@ -419,6 +479,16 @@
                             "file": "profiles/development/css/features/dropdown.css",
                             "version": "e4ec0f204b219671cddff36dbc96d00b",
                             "checksum": "sha256:fbef547f50ec1e9cb73764d03f6f2c597b60ef255de25b91b09bc985394f0032"
+                        }
+                    ]
+                },
+                "feature:dropdown:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/dropdown/themes/framework-free-test.css",
+                            "version": "dbc586d52e6439407d06665dcc41d8f0",
+                            "checksum": "sha256:d4b9513a4013945fa7fb49717025dbd57750f238a21bd585de63b157cf5204f5"
                         }
                     ]
                 },
@@ -510,6 +580,16 @@
                         }
                     ]
                 },
+                "feature:sidebar:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/sidebar/themes/framework-free-test.css",
+                            "version": "48d99289dfc69c55c9e9a17ebcb1622d",
+                            "checksum": "sha256:18417c7dceef0ae769f0a3610be371c5feb8ca2fd0fb2f05d55f7078e3f86a0d"
+                        }
+                    ]
+                },
                 "feature:sidebar:theme:legacy-adminlte": {
                     "scripts": [],
                     "styles": [
@@ -534,8 +614,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/table.js",
-                            "version": "34edf82ecd80b0abb78f6386e5fe96ca",
-                            "checksum": "sha256:ba8efc7c254584f16f9009dd94188b172f40adc478991728304980582413f0d9"
+                            "version": "8b18ef058bffad372460eaf173196f80",
+                            "checksum": "sha256:4af74ee857c18379ad89369aa6c220a29eda858039c999a73b91d8bacde67461"
                         }
                     ],
                     "styles": [
@@ -543,6 +623,16 @@
                             "file": "profiles/development/css/features/table.css",
                             "version": "9c40a4455c2418169a0958df564a3215",
                             "checksum": "sha256:d8226a02d088e43a09063c80f118b4ca6042c9008cad9c5c7b8ec7109410a7b4"
+                        }
+                    ]
+                },
+                "feature:table:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/table/themes/framework-free-test.css",
+                            "version": "ac86a95a97ff4472ac603af77c73e8e5",
+                            "checksum": "sha256:6e9bad0594443f21bdccb3754f8ba8641a9fcd5ff6d537379d828f126e4f925c"
                         }
                     ]
                 },
@@ -582,6 +672,16 @@
                     ],
                     "styles": []
                 },
+                "feature:tabs:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/tabs/themes/framework-free-test.css",
+                            "version": "f3e6ca46f05bf2ec025e098b5e8eb7e6",
+                            "checksum": "sha256:c619e084aef5d17f6c45bf2a8f355fbd7defa544a6a39c54951bb65875af2cbb"
+                        }
+                    ]
+                },
                 "feature:tabs:theme:legacy-adminlte": {
                     "scripts": [],
                     "styles": [
@@ -615,6 +715,16 @@
                             "file": "profiles/development/css/features/tooltip.css",
                             "version": "47c702bd00ad8ca7a6f4d92b8bc7d20c",
                             "checksum": "sha256:746467087b4f4eb3f8fc5526404a5b4eddf9c347080151ea3161d13279ee0d1d"
+                        }
+                    ]
+                },
+                "feature:tooltip:theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/features/tooltip/themes/framework-free-test.css",
+                            "version": "07e0bff84f3e8f82193fa179ea00de27",
+                            "checksum": "sha256:1ed08cff384161cda4684b2f0e375610d10388059285ae90f7a5dd3adce3339e"
                         }
                     ]
                 },
@@ -720,6 +830,16 @@
                     ],
                     "styles": []
                 },
+                "theme:framework-free-test": {
+                    "scripts": [],
+                    "styles": [
+                        {
+                            "file": "profiles/development/css/themes/framework-free-test.css",
+                            "version": "123d46c009eb6ba71eb55f645e31786c",
+                            "checksum": "sha256:e0405ba88b8929912472c19453ce322aad9a94fce06fd75736a1a671e10919f2"
+                        }
+                    ]
+                },
                 "theme:legacy-adminlte": {
                     "scripts": [
                         {
@@ -755,5 +875,5 @@
             }
         }
     },
-    "build_id": "sha256:e7e907c2debda2c7eff716d1a5973e15e5bf52cf3fdbeac1ad4691e5dc618da6"
+    "build_id": "sha256:e069d493e5bae750dcbb3191374e6b22605c5cdb03627a171e88d505aab1d375"
 }

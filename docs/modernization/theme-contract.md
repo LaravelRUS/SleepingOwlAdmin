@@ -14,9 +14,10 @@
 
 ## Логический asset manifest
 
-Theme manifest fragment не содержит filenames, URLs, hashes или build profile. Допустимы только два вида entries:
+Theme manifest fragment не содержит filenames, URLs, hashes или build profile. Допустимы три вида entries:
 
 ```text
+shared:<shared-id>
 theme:<theme-id>
 feature:<feature-id>:theme:<theme-id>
 ```
@@ -27,6 +28,8 @@ feature:<feature-id>:theme:<theme-id>
 public function assets(): array
 {
     return [
+        'shared:compatibility',
+        'shared:vue',
         'theme:acme',
         'feature:table:theme:acme',
         'feature:tabs:theme:acme',
@@ -34,7 +37,7 @@ public function assets(): array
 }
 ```
 
-`ThemeAssetManifest::fromTheme($theme)` проверяет ownership каждого entry, запрещает физические пути и дубликаты и всегда возвращает base theme entry первым. `entriesFor($activeFeatures)` добавляет только объявленные adapters фактически активных features, сохраняя порядок запрошенных features и не загружая остальные chunks.
+`ThemeAssetManifest::fromTheme($theme)` проверяет ownership каждого theme/feature entry, запрещает физические пути и дубликаты и возвращает shared entries перед base theme entry. `entriesFor($activeFeatures)` добавляет только объявленные adapters фактически активных features, сохраняя порядок запрошенных features и не загружая остальные chunks.
 
 Пустой список временно разрешён для legacy template adapter. Встроенные и новые custom themes должны объявлять `theme:<id>`. Runtime `AssetManifestResolver` сопоставляет ids с versioned filenames и checksums выбранного профиля; theme contract сам файловую систему не читает. Полная schema описана в `asset-manifest.md`.
 
@@ -70,6 +73,14 @@ Capability говорит только о presentation support. Он не озн
 Новый package config выбирает `AdminLTETheme::class`. Её собственный `initialize()` регистрирует один versioned manifest profile: headless core, shared entries, standalone AdminLTE presentation, все feature drivers и только объявленные AdminLTE adapters. `shared:modules` загружается последним, после возможных project assets, и выполняет compatibility module boot с финальным component scan. Standalone `theme:legacy-adminlte` CSS содержит Bootstrap/AdminLTE, но не дублирует отдельный `shared:icons` bundle.
 
 Публичные dependency handles `admin-vue-init`, `admin-default` и `admin-modules-load` сохранены на соответствующих logical boundaries, поэтому существующие project CSS/JS продолжают подключаться без изменения API. Опубликованный config, в котором сохранён `TemplateDefault::class`, по-прежнему работает через `LegacyTemplateThemeAdapter` и старые aggregate-файлы; его lifecycle намеренно не переключён на новый runtime.
+
+## Runtime прямой custom theme
+
+Прямая реализация `ThemeInterface` не обязана наследовать package template или повторять его `initialize()`. Transitional `ThemeTemplateAdapter::initialize()` автоматически передаёт выбранную тему общему `ThemeRuntimeAssets`: он регистрирует `core`, объявленные shared/theme entries, стандартные package feature drivers и только adapters с тем же theme id. Table adapter ставится перед самозапускающимся table driver; объявленный `shared:modules` остаётся последним для финального module boot/scan. `AdminLTETheme` использует тот же assembler, добавляя только прежние публичные asset handles.
+
+Таким образом, `assets()` custom theme описывает лишь её shared dependencies, один `theme:<id>` и matching `feature:<feature>:theme:<id>` presentation adapters. Он не перечисляет package-owned `feature:<feature>` drivers и не получает неявные AdminLTE, Tailwind или icon assets. Отсутствующий либо повреждённый logical entry диагностируется manifest resolver; fallback к другой теме не выполняется. Готовые production/development файлы и checksums публикует автор темы, поэтому Composer-потребитель выбирает class через существующий `sleeping_owl.template` без Node.js и пересборки core.
+
+Test-only `FrameworkFreeTestTheme` является executable acceptance fixture этого контракта, а не новой встроенной продуктовой темой. Она реализует только публичный interface, владеет Blade-разметкой display/form и произвольными project attributes/classes, поставляет CSS-only Sass theme плюс dropdown/sidebar/table/tabs/tooltip adapters и не импортирует Bootstrap, AdminLTE, Tailwind или Font Awesome. Её шесть объявленных capabilities (`dropdown`, `notification`, `sidebar`, `table-presentation`, `tabs`, `tooltip`) являются проверяемым подмножеством capabilities AdminLTE; `modal` и `icons` намеренно не объявлены, icon bundle не загружается. Browser contract выполняет одинаковые операции обеих тем в production/development, проверяет отсутствие framework/global runtime и по фактическим response URLs доказывает загрузку только bundle/adapters выбранной темы.
 
 ## Выбор темы и config values
 

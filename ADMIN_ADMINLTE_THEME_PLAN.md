@@ -4,15 +4,15 @@
 
 - Статус: **активен; обязательный release gate основного major-релиза**.
 - Текущая реализация: `AdminLTETheme` уже использует versioned logical runtime и Blade-first contract, но dependency tree всё ещё содержит `admin-lte@3.2.x` и `bootstrap@4.6.x`; целевой upgrade на AdminLTE 4/Bootstrap 5 не считается выполненным.
-- Точка возобновления: исправить устаревшее ожидание количества logical runtime scripts после последних прикладных коммитов, затем зафиксировать baseline и начать upgrade framework dependencies отдельным checkpoint.
+- Точка возобновления: дождаться общего checkpoint документации дополнительного CSS/theme settings/service-provider hook; исследование и upgrade AdminLTE 4/Bootstrap 5 начинать только отдельной задачей после него.
 - Общий platform/core scope находится в [`ADMIN_UI_MODERNIZATION_PLAN.md`](ADMIN_UI_MODERNIZATION_PLAN.md). Tailwind не входит в этот файл и ведётся в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 - Каждый самостоятельный пункт: реализация, релевантные полные проверки, обновление этого файла, отдельный checkpoint-коммит и чистое рабочее дерево.
 
 ## 0. Стабилизировать текущий checkpoint
 
-- [ ] Обновить `AdminLTEThemeTest` под фактический logical runtime после последних feature entries, проверяя точный состав/порядок вместо хрупкого отдельного счётчика.
-- [ ] Прогнать полный PHP/frontend/browser gate и записать новый baseline до framework upgrade.
-- [ ] Проверить, что последние прикладные commits не вернули jQuery, global Vue/DataTable или legacy aggregate в прямой `AdminLTETheme` runtime.
+- [x] Обновить `AdminLTEThemeTest` под фактический logical runtime после последних feature entries, проверяя точный состав/порядок вместо хрупкого отдельного счётчика.
+- [x] Прогнать полный PHP/frontend/browser gate и записать новый baseline до framework upgrade.
+- [x] Проверить, что последние прикладные commits не вернули jQuery, global Vue/DataTable или legacy aggregate в прямой `AdminLTETheme` runtime.
 
 ## 1. Обновить framework boundary
 
@@ -40,7 +40,7 @@
 - [x] `sidebar_background_color` валидируется и задаёт `--soa-sidebar-bg` для light/dark mode; `null` оставляет default темы.
 - [x] Asset health warning находится в переопределяемом footer partial, имеет `role="status"`, локализацию и theme-owned Sass presentation.
 - [ ] Документировать подключение дополнительного CSS/JS и изменение поддерживаемых `--soa-*` properties без пересборки core/theme.
-- [ ] Проверить, что выбирается только `theme:legacy-adminlte` и её adapters, без entries от Tailwind/custom themes.
+- [x] Проверить, что выбирается только `theme:legacy-adminlte` и её adapters, без entries от Tailwind/custom themes.
 - [ ] Измерить отдельно core, shared, каждый feature, feature adapters и AdminLTE theme bundle; сравнить с baseline.
 
 ## 4. Functional acceptance
@@ -87,3 +87,4 @@
 | Дата | Checkpoint | Результат | Commit |
 | --- | --- | --- | --- |
 | 2026-09-07 | Разделение планов | Основная тема получила отдельный release-blocking checklist; ранее закрытые logical runtime, tokens, dark/sidebar и asset-health checkpoints сохранены, фактический AdminLTE 3→4 upgrade отмечен незавершённым. | текущий commit |
+| 2026-09-08 | Framework-free contract baseline | Точный runtime `AdminLTETheme` закреплён как 16 scripts и 17 styles в порядке `core` → declared shared/theme entries → feature drivers и adapters (table adapter до self-booting driver) → завершающий `shared:modules`, с сохранёнными legacy handles. Production/development browser contract загружает только `legacy-adminlte` adapters/theme, исключает Tailwind/custom theme requests и подтверждает отсутствие jQuery, global Vue/DataTable, Bootstrap/AdminLTE JS globals и legacy aggregates. Оба asset-профиля содержат 36 logical entries и 48 файлов; полный PHP gate: 563 tests, 2407 assertions, 11 skipped; frontend gate: Prettier/ESLint/Stylelint, 684 Vitest + 137 Playwright. Framework upgrade не начат. | текущий commit |

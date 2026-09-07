@@ -2,7 +2,6 @@
 
 namespace SleepingOwl\Admin\Themes;
 
-use SleepingOwl\Admin\Assets\LogicalAssetRegistrar;
 use SleepingOwl\Admin\Contracts\Theme\ThemeInterface;
 use SleepingOwl\Admin\Templates\TemplateDefault;
 
@@ -18,20 +17,6 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
         'tree',
     ];
 
-    private const FEATURES = [
-        'alert',
-        'tooltip',
-        'dropdown',
-        'sidebar',
-        'lightbox',
-        'table',
-        'tabs',
-        'forms',
-        'tree',
-    ];
-
-    private const DEFERRED_ASSETS = ['shared:modules'];
-
     private const LEGACY_HANDLES = [
         'shared:vue' => 'admin-vue-init',
         'feature:tree:theme:legacy-adminlte' => 'admin-default',
@@ -40,8 +25,8 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
 
     public function initialize(): void
     {
-        $this->app->make(LogicalAssetRegistrar::class)->register(
-            $this->runtimeAssets(),
+        $this->app->make(ThemeRuntimeAssets::class)->register(
+            $this,
             self::LEGACY_HANDLES
         );
     }
@@ -84,27 +69,4 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
         );
     }
 
-    /**
-     * @return list<string>
-     */
-    private function runtimeAssets(): array
-    {
-        $manifest = ThemeAssetManifest::fromTheme($this);
-        $base = array_values(array_diff($manifest->entriesFor([]), self::DEFERRED_ASSETS));
-        $entries = ['core', ...$base];
-
-        foreach (self::FEATURES as $feature) {
-            if ($feature === 'table' && ($adapter = $manifest->featureEntry($feature))) {
-                $entries[] = $adapter;
-            }
-
-            $entries[] = "feature:{$feature}";
-
-            if ($feature !== 'table' && ($adapter = $manifest->featureEntry($feature))) {
-                $entries[] = $adapter;
-            }
-        }
-
-        return [...$entries, ...self::DEFERRED_ASSETS];
-    }
 }
