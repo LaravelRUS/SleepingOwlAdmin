@@ -454,9 +454,35 @@ class FormDefault extends FormElements implements DisplayInterface, FormInterfac
             'instance' => $this->getModel(),
             'attributes' => $this->htmlAttributesToString(),
             'attributesArray' => $this->getHtmlAttributes(),
-            'buttons' => $this->getButtons(),
+            'buttons' => $this->getButtonsView(),
             'backUrl' => session('_redirectBack', \URL::previous()),
         ];
+    }
+
+    /**
+     * Build the buttons view before passing it through Laravel's view data.
+     *
+     * Laravel 13 renders top-level Renderable values while gathering view data.
+     * Passing FormButtons directly would therefore turn it into a string before
+     * the form template has a chance to apply its theme classes.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    protected function getButtonsView()
+    {
+        $buttons = $this->getButtons();
+        $data = $buttons->toArray();
+        $data['themeClasses'] = $this->getButtonThemeClasses();
+
+        return app('sleeping_owl.template')->view($buttons->getView(), $data);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getButtonThemeClasses()
+    {
+        return [];
     }
 
     /**

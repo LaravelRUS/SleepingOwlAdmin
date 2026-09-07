@@ -2,9 +2,11 @@
 
 use Mockery as m;
 use PHPUnit\Framework\Attributes\DataProvider;
+use SleepingOwl\Admin\Contracts\Form\FormButtonsInterface;
 use SleepingOwl\Admin\Form\Buttons\FormButton;
 use SleepingOwl\Admin\Form\Buttons\SaveAndClose;
 use SleepingOwl\Admin\Form\Columns\Column;
+use SleepingOwl\Admin\Form\FormCard;
 
 class LegacyThemePresentationTest extends TestCase
 {
@@ -149,16 +151,15 @@ class LegacyThemePresentationTest extends TestCase
 
     public function test_card_button_partial_keeps_a_single_themed_attribute_wrapper(): void
     {
-        $buttons = m::mock();
-        $buttons->shouldReceive('toArray')->once()->andReturn([
+        $buttons = view('sleeping_owl::default.form.buttons', [
             'attributesArray' => [
                 'class' => 'form-buttons user-buttons',
                 'data-contract' => 'buttons',
             ],
             'buttons' => [],
             'placements' => null,
+            'themeClasses' => ['card-footer'],
         ]);
-        $buttons->shouldReceive('getView')->once()->andReturn('form.buttons');
 
         $html = view('sleeping_owl::default.form.card.buttons', compact('buttons'))->render();
 
@@ -166,6 +167,25 @@ class LegacyThemePresentationTest extends TestCase
             '<div class="card-footer form-buttons user-buttons"',
             'data-contract="buttons"',
         ]);
+        $this->assertSame(1, substr_count($html, 'card-footer'));
+    }
+
+    public function test_card_form_renders_buttons_without_exposing_a_renderable_as_view_data(): void
+    {
+        $buttons = m::mock(FormButtonsInterface::class);
+        $buttons->shouldReceive('toArray')->once()->andReturn([
+            'attributesArray' => ['class' => 'form-buttons'],
+            'buttons' => [],
+            'placements' => null,
+        ]);
+        $buttons->shouldReceive('getView')->once()->andReturn('form.buttons');
+
+        $html = (new FormCard())
+            ->setButtons($buttons)
+            ->render()
+            ->render();
+
+        $this->assertStringContainsString('<div class="card-footer form-buttons"', $html);
         $this->assertSame(1, substr_count($html, 'card-footer'));
     }
 

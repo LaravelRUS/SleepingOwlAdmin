@@ -120,4 +120,12 @@ class FormCard extends FormDefault
             'cardClass' => $this->getCardClass(),
         ];
     }
+
+    /**
+     * @return array
+     */
+    protected function getButtonThemeClasses()
+    {
+        return ['card-footer'];
+    }
 }

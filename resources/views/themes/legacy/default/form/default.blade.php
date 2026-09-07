@@ -7,7 +7,7 @@
 		</div>
 
 		<div class="clear-form-footer">
-			{!! $buttons->render() !!}
+			{!! $buttons !!}
 		</div>
 	</form>
 </div>

@@ -12,8 +12,9 @@ $manifestPath = "{$root}/public/default/asset-manifest.json";
 $packageVersion = packageVersion();
 
 prepareProfileDirectory($root, $profile);
-$entries = buildEntries(readJson("{$root}/build/frontend-entries.json"), $root, $profile);
-copyProfileFonts($root, $profile);
+$matrix = readJson("{$root}/build/frontend-entries.json");
+normalizeCompiledFontUrls($matrix, $root);
+$entries = buildEntries($matrix, $root, $profile);
 $profiles = existingProfiles($manifestPath, $packageVersion);
 $profiles[$profile] = ['entries' => $entries];
 $manifest = manifest($packageVersion, orderedProfiles($profiles));
@@ -62,6 +63,7 @@ function assetRecord(string $output, string $root, string $profile): array
     $target = "{$root}/public/default/{$file}";
 
     copyCompiledAsset($source, $target, $profile);
+    rebaseStylesheetFontUrls($target, $file);
 
     return [
         'file' => $file,
@@ -122,15 +124,69 @@ function prepareProfileDirectory(string $root, string $profile): void
     $files->ensureDirectoryExists($directory);
 }
 
-function copyProfileFonts(string $root, string $profile): void
+function normalizeCompiledFontUrls(array $matrix, string $root): void
 {
-    $source = "{$root}/public/default/fonts";
-    $target = "{$root}/public/default/profiles/{$profile}/fonts";
-    $files = new Filesystem();
+    $changed = [];
 
-    if (! $files->copyDirectory($source, $target)) {
-        throw new RuntimeException("Unable to copy font assets to [{$target}].");
+    foreach ($matrix['modern']['styles'] ?? [] as $entry) {
+        $output = str_replace('\\', '/', $entry['output']);
+        $path = "{$root}/public/default/{$output}";
+        if (rebaseStylesheetFontUrls($path, $output)) {
+            $changed[] = $output;
+        }
     }
+
+    updateMixManifestVersions($root, $changed);
+}
+
+function rebaseStylesheetFontUrls(string $path, string $publicPath): bool
+{
+    if (pathinfo($path, PATHINFO_EXTENSION) !== 'css') {
+        return false;
+    }
+
+    $files = new Filesystem();
+    $contents = $files->get($path);
+    $fontPath = str_repeat('../', substr_count(dirname($publicPath), '/') + 1).'fonts/';
+    $updated = preg_replace_callback(
+        '#url\\(([\'\"]?)(?:\.\./)+fonts/(.+?)\\1\\)#',
+        static fn (array $matches): string =>
+            "url({$matches[1]}{$fontPath}{$matches[2]}{$matches[1]})",
+        $contents
+    );
+
+    if ($updated === null) {
+        throw new RuntimeException("Unable to rewrite font URLs in [{$path}].");
+    }
+
+    if ($updated === $contents) {
+        return false;
+    }
+
+    $files->replace($path, $updated);
+
+    return true;
+}
+
+function updateMixManifestVersions(string $root, array $outputs): void
+{
+    if ($outputs === []) {
+        return;
+    }
+
+    $path = "{$root}/public/default/mix-manifest.json";
+    $manifest = readJson($path);
+
+    foreach ($outputs as $output) {
+        $key = '/'.$output;
+        if (! isset($manifest[$key])) {
+            continue;
+        }
+
+        $manifest[$key] = $key.'?id='.hash_file('md5', "{$root}/public/default/{$output}");
+    }
+
+    writeJson($path, $manifest);
 }
 
 function existingProfiles(string $path, string $packageVersion): array
@@ -196,8 +252,13 @@ function readJson(string $path): array
 
 function writeManifest(string $path, array $manifest): void
 {
+    writeJson($path, $manifest);
+}
+
+function writeJson(string $path, array $data): void
+{
     $json = json_encode(
-        $manifest,
+        $data,
         JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR
     ).PHP_EOL;
 

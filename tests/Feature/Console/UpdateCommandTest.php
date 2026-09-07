@@ -33,6 +33,9 @@ class UpdateCommandTest extends TestCase
         $asset = $assetRoot.'/profiles/production/js/admin-core.js';
         $license = $asset.'.LICENSE.txt';
         $this->assertFileExists($assetRoot.'/asset-manifest.json');
+        $this->assertFileExists($assetRoot.'/fonts/OpenSans-Regular.ttf');
+        $this->assertDirectoryDoesNotExist($assetRoot.'/profiles/production/fonts');
+        $this->assertDirectoryDoesNotExist($assetRoot.'/profiles/production/css/fonts');
         $this->assertFileExists($license);
         $this->assertStringContainsString(basename($license), (new Filesystem())->get($asset));
         $this->assertSame(41, app(PublishedAssetVerifier::class)->verify($assetRoot)->fileCount());

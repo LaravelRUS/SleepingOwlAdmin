@@ -313,8 +313,8 @@
                     "styles": [
                         {
                             "file": "profiles/production/css/icons.css",
-                            "version": "ced3d042cd1037a9ba134d1964ad9547",
-                            "checksum": "sha256:524af6b185523895590606e1858f52fdb2ce25fac7715d7b443f462ce2a1e289"
+                            "version": "a01270600de8284f53f0a19303af3b54",
+                            "checksum": "sha256:3c76e0c67c23224b39352371e183d28cafadb7a00043aa091ece2201807628f3"
                         }
                     ]
                 },
@@ -342,15 +342,15 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/themes/legacy-adminlte.js",
-                            "version": "f5d387540235443141917d352abe4d71",
-                            "checksum": "sha256:ed9fdade86b4f391acc0de382027f7dcc31d6aecb9ba23cc16a3eac80aafc909"
+                            "version": "e78cb0a15b380e1b7cbb5ac258d21f75",
+                            "checksum": "sha256:4ebd093129c92a5f74492d79707fd3c92924118c65818218dbde5bdd7a3e6763"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/production/css/themes/legacy-adminlte.css",
-                            "version": "70261e2377253a0d0e21a28a43a3051f",
-                            "checksum": "sha256:89ad78b0608cb4e6c2bc75462e980c74068450e352ec76d1dcd79ea06e9ac0ff"
+                            "version": "b2a6a42d12e26bc8aac6b041b588ae43",
+                            "checksum": "sha256:bacdf8b9cbfa0cebf66920b52937b270945ab48275e970dd6df08cd4b798fe9f"
                         }
                     ]
                 },
@@ -683,8 +683,8 @@
                     "styles": [
                         {
                             "file": "profiles/development/css/icons.css",
-                            "version": "80f70287f5789213b45a1751209ca44f",
-                            "checksum": "sha256:605ac0ffba82e846aae224e503bee8cf2c5e5b0be676a073677500a36ef9029f"
+                            "version": "0f49c5e2d92a06baf68ec9d16f707fa2",
+                            "checksum": "sha256:b2345eb9ecee9967ea88506c74073f93eeb73d756845736771c24e2578eabcee"
                         }
                     ]
                 },
@@ -712,15 +712,15 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/themes/legacy-adminlte.js",
-                            "version": "a9b6eab5cc2542c11a32f185005a61e3",
-                            "checksum": "sha256:fa3cff95bb4751b81d7c1a6ab17a3ba6790c7547d421397993d644ea9655ce4c"
+                            "version": "66238e59ee99467c1fa4f8751a7cb135",
+                            "checksum": "sha256:e50ce406a451269b75b240be4720269a1a6d234915624ff47906602753681fd2"
                         }
                     ],
                     "styles": [
                         {
                             "file": "profiles/development/css/themes/legacy-adminlte.css",
-                            "version": "84008d55cad62e38bcd14b8ea2f6d1b2",
-                            "checksum": "sha256:f846fe4b52656fa335b5d9e3b488220ad0ada2e147941695f4b2adf5099aee11"
+                            "version": "b132a592d14eb94eb5770bc78fb5eed6",
+                            "checksum": "sha256:3d3a990ea184552344d8bf34c2777664aa3239a3e4c339396b6a6de224ef3da6"
                         }
                     ]
                 },
@@ -743,5 +743,5 @@
             }
         }
     },
-    "build_id": "sha256:fd0683a2fd1be420a033f24276a270c19c116e40999194eb25d6576ee481a8d3"
+    "build_id": "sha256:e56e1180c539fa65ec27e200af187053f65c5c7e500e65489182709bfd17575c"
 }

@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
+import { existsSync, readFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
 
 import { expect, it } from 'vitest'
 
@@ -74,6 +74,39 @@ it('builds a standalone AdminLTE theme without embedding shared icons', () => {
     expect(css).not.toContain('Font Awesome')
 })
 
+it('publishes font assets once and resolves them from every built stylesheet', () => {
+    const publicRoot = resolve(root, 'public/default')
+
+    for (const font of ['OpenSans-Bold.ttf', 'OpenSans-Italic.ttf', 'OpenSans-Regular.ttf']) {
+        expect(existsSync(resolve(publicRoot, 'fonts', font))).toBe(true)
+    }
+
+    for (const duplicate of [
+        'css/fonts',
+        'profiles/development/fonts',
+        'profiles/development/css/fonts',
+        'profiles/production/fonts',
+        'profiles/production/css/fonts',
+    ]) {
+        expect(existsSync(resolve(publicRoot, duplicate))).toBe(false)
+    }
+
+    for (const stylesheet of [
+        'css/admin-app.css',
+        'css/icons.css',
+        'css/themes/legacy-adminlte.css',
+        'profiles/development/css/icons.css',
+        'profiles/development/css/themes/legacy-adminlte.css',
+        'profiles/production/css/icons.css',
+        'profiles/production/css/themes/legacy-adminlte.css',
+    ]) {
+        const path = resolve(publicRoot, stylesheet)
+        for (const fontUrl of fontUrls(readFileSync(path, 'utf8'))) {
+            expect(existsSync(resolve(dirname(path), fontUrl))).toBe(true)
+        }
+    }
+})
+
 it('styles the asset health footer in standalone and compatibility bundles', () => {
     for (const css of [
         read('public/default/css/themes/legacy-adminlte.css'),
@@ -87,4 +120,8 @@ it('styles the asset health footer in standalone and compatibility bundles', () 
 
 function read(path) {
     return readFileSync(resolve(root, path), 'utf8')
+}
+
+function fontUrls(css) {
+    return [...css.matchAll(/url\(([^)?]+\.(?:ttf|woff2))[^)]*\)/g)].map((match) => match[1])
 }
