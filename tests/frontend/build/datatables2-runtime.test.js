@@ -56,14 +56,21 @@ it('removes the handwritten Bootstrap 3 renderer and owns vendor CSS in the adap
 })
 
 it('mounts live tables through the DataTables 2 constructor boundary', () => {
-    const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+    const bridge = readSource('resources/assets/js_owl/admin/display/datatables.js')
+    const orchestration = readSource(
+        'resources/frontend/features/table/runtime/install-data-tables.js',
+    )
 
-    expect(orchestration).toContain('createEngine: createDataTables2')
-    expect(orchestration).not.toContain('$(table).DataTable(engineOptions)')
+    expect(bridge).toContain('installDataTables(Admin')
+    expect(orchestration).toContain('createEngine: settings.createEngine')
+    expect(orchestration).toContain('options.createEngine ?? createDataTables2')
+    expect(`${bridge}\n${orchestration}`).not.toContain('$(table).DataTable(engineOptions)')
 })
 
 it('uses current DataTables 2 option names in first-party runtime code', () => {
-    const orchestration = readSource('resources/assets/js_owl/admin/display/datatables.js')
+    const orchestration = readSource(
+        'resources/frontend/features/table/runtime/table-runtime-options.js',
+    )
     const stateOptions = readSource('resources/frontend/features/table/options/state-options.js')
     const tableOptions = readSource('resources/frontend/features/table/options/table-options.js')
 

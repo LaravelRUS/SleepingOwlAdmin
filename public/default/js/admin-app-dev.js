@@ -2833,196 +2833,20 @@ Admin.Modules.register('display.columns.tree_control', function () {
 /*!*************************************************************!*\
   !*** ./resources/assets/js_owl/admin/display/datatables.js ***!
   \*************************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-var _require = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-drivers */ "./resources/frontend/features/table/filters/filter-drivers.js"),
-  createTableFilterDrivers = _require.createTableFilterDrivers,
-  isDateInRange = _require.isDateInRange,
-  isNumberInRange = _require.isNumberInRange;
-var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-controls */ "./resources/frontend/features/table/filters/filter-controls.js"),
-  bindFilterControls = _require2.bindFilterControls,
-  clearFilterControls = _require2.clearFilterControls;
-var _require3 = __webpack_require__(/*! ../../../../frontend/features/table/engine/datatables2 */ "./resources/frontend/features/table/engine/datatables2.js"),
-  createDataTables2 = _require3.createDataTables2,
-  dataTables2Runtime = _require3.dataTables2Runtime;
-var _require4 = __webpack_require__(/*! ../../../../frontend/features/table/engine/extensions */ "./resources/frontend/features/table/engine/extensions.js"),
-  installDataTables2Extensions = _require4.installDataTables2Extensions;
-var _require5 = __webpack_require__(/*! ../../../../frontend/features/table/filters/date-filter-support */ "./resources/frontend/features/table/filters/date-filter-support.js"),
-  createDateFilterSupport = _require5.createDateFilterSupport;
-var _require6 = __webpack_require__(/*! ../../../../frontend/features/forms/date/date-locales */ "./resources/frontend/features/forms/date/date-locales.js"),
-  resolveDatePickerLocale = _require6.resolveDatePickerLocale;
-var _require7 = __webpack_require__(/*! ../../../../frontend/features/table/themes/legacy-adminlte/tooltips */ "./resources/frontend/features/table/themes/legacy-adminlte/tooltips.js"),
-  createLegacyTableTooltips = _require7.createLegacyTableTooltips;
-var _require8 = __webpack_require__(/*! ../../../../frontend/features/table/filters/filter-elements */ "./resources/frontend/features/table/filters/filter-elements.js"),
-  forEachColumnFilter = _require8.forEachColumnFilter;
-var _require9 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/column-highlight */ "./resources/frontend/features/table/hooks/column-highlight.js"),
-  syncColumnHighlight = _require9.syncColumnHighlight;
-var _require0 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/lazy-images */ "./resources/frontend/features/table/hooks/lazy-images.js"),
-  loadLazyImages = _require0.loadLazyImages;
-var _require1 = __webpack_require__(/*! ../../../../frontend/features/table/hooks/table-hooks */ "./resources/frontend/features/table/hooks/table-hooks.js"),
-  applyCreatedRowClass = _require1.applyCreatedRowClass,
-  createDrawHook = _require1.createDrawHook;
-var _require10 = __webpack_require__(/*! ../../../../frontend/features/table/lifecycle/data-table-adapter */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js"),
-  mountDataTable = _require10.mountDataTable;
-var _require11 = __webpack_require__(/*! ../../../../frontend/features/table/options/table-options */ "./resources/frontend/features/table/options/table-options.js"),
-  applyServerOptions = _require11.applyServerOptions,
-  readTableDefinition = _require11.readTableDefinition;
-var _require12 = __webpack_require__(/*! ../../../../frontend/features/table/options/state-options */ "./resources/frontend/features/table/options/state-options.js"),
-  applyTableStateOptions = _require12.applyTableStateOptions;
-var _require13 = __webpack_require__(/*! ../../../../frontend/features/table/state/filter-state */ "./resources/frontend/features/table/state/filter-state.js"),
-  clearFilterState = _require13.clearFilterState,
-  filterStateKey = _require13.filterStateKey,
-  loadFilterState = _require13.loadFilterState,
-  migrateLegacyFilterState = _require13.migrateLegacyFilterState,
-  saveFilterState = _require13.saveFilterState;
-var _require14 = __webpack_require__(/*! ../../../../frontend/features/table/transport/table-ajax */ "./resources/frontend/features/table/transport/table-ajax.js"),
-  createTableAjax = _require14.createTableAjax;
-var _inlineEditor = __webpack_require__(/*! ./columns/inline_edit */ "./resources/assets/js_owl/admin/display/columns/inline_edit.js");
-var tableTooltips = createLegacyTableTooltips(Admin);
-globalThis.checkNumberRange = isNumberInRange;
-globalThis.checkDateRange = isDateInRange;
-globalThis.columnFilters = createTableFilterDrivers(dataTables2Runtime(), createDateFilterSupport(resolveDatePickerLocale(Admin.locale)));
-Admin.Modules.register('display.datatables', function () {
-  var stateFilters = Boolean(Admin.Config.get('state_filters'));
-  var path = Admin.Url.url_path;
-  if (stateFilters) {
-    migrateLegacyFilterState(localStorage, path, allFilterContainers());
-  }
-  configureDataTableExtensions();
-  document.querySelectorAll('.datatables').forEach(function (element) {
-    return mountLegacyTable(element, {
-      path: path,
-      stateFilters: stateFilters
-    });
-  });
+var _require = __webpack_require__(/*! ../../../../frontend/features/table/browser-options */ "./resources/frontend/features/table/browser-options.js"),
+  tableBrowserOptions = _require.tableBrowserOptions;
+var _require2 = __webpack_require__(/*! ../../../../frontend/features/table/runtime/install-data-tables */ "./resources/frontend/features/table/runtime/install-data-tables.js"),
+  installDataTables = _require2.installDataTables;
+var inlineEditor = __webpack_require__(/*! ./columns/inline_edit */ "./resources/assets/js_owl/admin/display/columns/inline_edit.js");
+module.exports = installDataTables(Admin, {
+  inlineEditor: inlineEditor,
+  onError: tableBrowserOptions(globalThis).onError,
+  root: document,
+  storage: localStorage,
+  target: globalThis
 });
-function configureDataTableExtensions() {
-  installDataTables2Extensions(dataTables2Runtime(), {
-    onError: reportDataTableError
-  });
-}
-function reportDataTableError(settings) {
-  var _settings$jqXHR;
-  var message = ((_settings$jqXHR = settings.jqXHR) === null || _settings$jqXHR === void 0 || (_settings$jqXHR = _settings$jqXHR.responseJSON) === null || _settings$jqXHR === void 0 ? void 0 : _settings$jqXHR.message) || trans('lang.table.error');
-  Admin.Messages.error(message);
-}
-function mountLegacyTable(element, context) {
-  if (Admin.Tables.has(element)) {
-    return Admin.Tables.get(element);
-  }
-  var definition = readTableDefinition(element);
-  var filterContext = createFilterContext(definition.id, context);
-  if (filterContext.stateFilters) {
-    loadFilterState(localStorage, filterContext.stateKey, filterContext.filterContainers);
-  }
-  var options = buildOptions(element, definition, context.stateFilters);
-  var adapter = mountDataTable({
-    createEngine: createDataTables2,
-    element: element,
-    options: options,
-    registry: Admin.Tables
-  });
-  bindColumnFilters(definition.id, adapter.engineInstance, options.serverSide);
-  bindTableFilterControls(definition.id, adapter, filterContext);
-  return adapter;
-}
-function createFilterContext(id, _ref) {
-  var path = _ref.path,
-    stateFilters = _ref.stateFilters;
-  return {
-    filterContainers: matchingContainers(id),
-    stateFilters: stateFilters,
-    stateKey: filterStateKey(path, id)
-  };
-}
-function buildOptions(element, definition, stateFilters) {
-  var options = applyServerOptions(definition.options, definition);
-  if (definition.url) {
-    options.ajax = createTableAjax({
-      events: Admin.Events,
-      id: definition.id,
-      method: definition.method,
-      payload: definition.payload,
-      root: document,
-      url: definition.url
-    });
-    applyTableStateOptions(options, {
-      stateDatatables: Boolean(Admin.Config.get('state_datatables')),
-      stateFilters: stateFilters
-    });
-  }
-  options.drawCallback = createDrawHook({
-    events: Admin.Events,
-    highlight: function highlight(engineContext) {
-      return syncColumnHighlight(element, engineContext.api(), Boolean(Admin.Config.get('datatables_highlight')));
-    },
-    inlineEditor: function inlineEditor() {
-      return _inlineEditor.scan(element);
-    },
-    lazyload: function lazyload() {
-      return loadLazyImages(element);
-    },
-    tooltips: function tooltips() {
-      return tableTooltips.scan(element);
-    }
-  });
-  options.createdRow = applyCreatedRowClass;
-  return options;
-}
-function bindColumnFilters(id, table, serverSide) {
-  forEachColumnFilter(document, id, function (filter, index, type) {
-    var driver = globalThis.columnFilters[type];
-    if (typeof driver === 'function') {
-      driver(filter, table, table.column(index), index, serverSide);
-    }
-  });
-}
-function bindTableFilterControls(id, adapter, context) {
-  matchingContainers(id).forEach(function (container) {
-    bindFilterControls(container, {
-      clear: function clear() {
-        return clearFilters(adapter, context);
-      },
-      execute: function execute() {
-        return executeFilters(adapter, context);
-      },
-      reload: function reload() {
-        return adapter.reload();
-      }
-    });
-  });
-}
-function executeFilters(adapter, _ref2) {
-  var filterContainers = _ref2.filterContainers,
-    stateFilters = _ref2.stateFilters,
-    stateKey = _ref2.stateKey;
-  if (stateFilters) {
-    saveFilterState(localStorage, stateKey, filterContainers);
-  }
-  adapter.reload();
-}
-function clearFilters(adapter, _ref3) {
-  var filterContainers = _ref3.filterContainers,
-    stateKey = _ref3.stateKey;
-  clearFilterControls(filterContainers);
-  adapter.clearState();
-  clearFilterState(localStorage, stateKey);
-  adapter.reload();
-}
-function matchingContainers(id) {
-  return allFilterContainers().filter(function (container) {
-    return container.dataset.datatablesId === String(id);
-  });
-}
-function allFilterContainers() {
-  return _toConsumableArray(document.querySelectorAll('.display-filters[data-display="DisplayDatatablesAsync"][data-datatables-id]'));
-}
 
 /***/ }),
 
@@ -10113,6 +9937,61 @@ function assertTableCollection(tables) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/browser-options.js":
+/*!**************************************************************!*\
+  !*** ./resources/frontend/features/table/browser-options.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "tableBrowserOptions": () => (/* binding */ tableBrowserOptions)
+/* harmony export */ });
+function tableBrowserOptions(target) {
+  var translate = function translate(key) {
+    return translated(target, key, key);
+  };
+  return {
+    actions: {
+      FormData: target.FormData,
+      location: target.location,
+      notify: function notify(settings) {
+        return target.Swal.fire(settings);
+      },
+      translate: translate
+    },
+    controls: {
+      questions: {
+        "delete": translated(target, 'lang.table.delete-confirm', 'Delete?'),
+        destroy: translated(target, 'lang.table.destroy-confirm', 'Destroy?')
+      }
+    },
+    inlineEditor: {
+      labels: {
+        cancel: translated(target, 'lang.button.cancel', 'Cancel'),
+        error: translated(target, 'lang.table.error', 'Table error'),
+        save: translated(target, 'lang.button.save', 'Save')
+      }
+    },
+    onError: function onError(settings) {
+      return reportTableError(target, settings);
+    }
+  };
+}
+function reportTableError(target, settings) {
+  var _settings$jqXHR$respo, _settings$jqXHR;
+  var message = (_settings$jqXHR$respo = settings === null || settings === void 0 || (_settings$jqXHR = settings.jqXHR) === null || _settings$jqXHR === void 0 || (_settings$jqXHR = _settings$jqXHR.responseJSON) === null || _settings$jqXHR === void 0 ? void 0 : _settings$jqXHR.message) !== null && _settings$jqXHR$respo !== void 0 ? _settings$jqXHR$respo : translated(target, 'lang.table.error', 'Table error');
+  return target.Admin.Messages.error(message);
+}
+function translated(target, key, fallback) {
+  if (typeof target.trans !== 'function') return fallback;
+  var value = target.trans(key);
+  return typeof value === 'string' && value !== key ? value : fallback;
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/controls/confirm-submit.js":
 /*!**********************************************************************!*\
   !*** ./resources/frontend/features/table/controls/confirm-submit.js ***!
@@ -12003,6 +11882,331 @@ function assertElement(element) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/table/runtime/install-data-tables.js":
+/*!**************************************************************************!*\
+  !*** ./resources/frontend/features/table/runtime/install-data-tables.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DATA_TABLE_COMPONENT": () => (/* binding */ DATA_TABLE_COMPONENT),
+/* harmony export */   "DATA_TABLE_SELECTOR": () => (/* binding */ DATA_TABLE_SELECTOR),
+/* harmony export */   "createDataTableDefinition": () => (/* binding */ createDataTableDefinition),
+/* harmony export */   "installDataTables": () => (/* binding */ installDataTables)
+/* harmony export */ });
+/* harmony import */ var _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/lifecycle/component-lifecycle.js */ "./resources/frontend/core/lifecycle/component-lifecycle.js");
+/* harmony import */ var _forms_date_date_locales_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../forms/date/date-locales.js */ "./resources/frontend/features/forms/date/date-locales.js");
+/* harmony import */ var _engine_datatables2_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../engine/datatables2.js */ "./resources/frontend/features/table/engine/datatables2.js");
+/* harmony import */ var _engine_extensions_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../engine/extensions.js */ "./resources/frontend/features/table/engine/extensions.js");
+/* harmony import */ var _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../filters/filter-drivers.js */ "./resources/frontend/features/table/filters/filter-drivers.js");
+/* harmony import */ var _filters_date_filter_support_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../filters/date-filter-support.js */ "./resources/frontend/features/table/filters/date-filter-support.js");
+/* harmony import */ var _lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../lifecycle/data-table-adapter.js */ "./resources/frontend/features/table/lifecycle/data-table-adapter.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _table_filters_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./table-filters.js */ "./resources/frontend/features/table/runtime/table-filters.js");
+/* harmony import */ var _table_runtime_options_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./table-runtime-options.js */ "./resources/frontend/features/table/runtime/table-runtime-options.js");
+
+
+
+
+
+
+
+
+
+
+var DATA_TABLE_COMPONENT = 'data-table';
+var DATA_TABLE_SELECTOR = '.datatables';
+function installDataTables(admin, options) {
+  var settings = normalizeOptions(admin, options);
+  var drivers = createFilterDrivers(settings);
+  var filters = (0,_table_filters_js__WEBPACK_IMPORTED_MODULE_8__.createTableFilters)({
+    drivers: drivers,
+    path: admin.Url.url_path,
+    root: settings.root,
+    stateFilters: settings.stateFilters,
+    storage: settings.storage
+  });
+  var definition = createDataTableDefinition(settings, filters);
+  var scan = function scan() {
+    var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : settings.root;
+    return scanTables(settings, filters, root);
+  };
+  (0,_engine_extensions_js__WEBPACK_IMPORTED_MODULE_3__.installDataTables2Extensions)(settings.engine, {
+    onError: settings.onError
+  });
+  publishCompatibility(settings.target, drivers);
+  admin.Components.register(definition);
+  admin.Modules.register('display.datatables', function () {
+    return scan();
+  });
+  return {
+    definition: definition,
+    drivers: drivers,
+    filters: filters,
+    scan: scan
+  };
+}
+function createDataTableDefinition(settings, filters) {
+  return {
+    mount: function mount(element) {
+      return mountTableElement(element, settings, filters);
+    },
+    name: DATA_TABLE_COMPONENT,
+    selector: DATA_TABLE_SELECTOR
+  };
+}
+function scanTables(settings, filters, root) {
+  filters.prepare();
+  return settings.admin.Components.scan(root, DATA_TABLE_COMPONENT);
+}
+function mountTableElement(element, settings, filters) {
+  if (settings.admin.Tables.has(element)) return _core_lifecycle_component_lifecycle_js__WEBPACK_IMPORTED_MODULE_0__.componentMountSkipped;
+  var definition = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_7__.readTableDefinition)(element);
+  var filterContext = filters.context(definition.id);
+  filters.restore(filterContext);
+  var options = (0,_table_runtime_options_js__WEBPACK_IMPORTED_MODULE_9__.createRuntimeTableOptions)(element, definition, settings);
+  var adapter = (0,_lifecycle_data_table_adapter_js__WEBPACK_IMPORTED_MODULE_6__.mountDataTable)({
+    createEngine: settings.createEngine,
+    element: element,
+    options: options,
+    registry: settings.admin.Tables
+  });
+  try {
+    filters.bind(definition, adapter, options.serverSide, filterContext);
+  } catch (error) {
+    adapter.destroy();
+    throw error;
+  }
+  return adapter;
+}
+function createFilterDrivers(settings) {
+  var locale = (0,_forms_date_date_locales_js__WEBPACK_IMPORTED_MODULE_1__.resolveDatePickerLocale)(settings.admin.locale);
+  return (0,_filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_4__.createTableFilterDrivers)(settings.engine, (0,_filters_date_filter_support_js__WEBPACK_IMPORTED_MODULE_5__.createDateFilterSupport)(locale));
+}
+function publishCompatibility(target, drivers) {
+  target.checkNumberRange = _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_4__.isNumberInRange;
+  target.checkDateRange = _filters_filter_drivers_js__WEBPACK_IMPORTED_MODULE_4__.isDateInRange;
+  target.columnFilters = drivers;
+}
+function normalizeOptions(admin) {
+  var _options$createEngine, _options$engine, _options$tooltips;
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  assertAdmin(admin);
+  assertOptions(options);
+  return {
+    admin: admin,
+    createEngine: (_options$createEngine = options.createEngine) !== null && _options$createEngine !== void 0 ? _options$createEngine : _engine_datatables2_js__WEBPACK_IMPORTED_MODULE_2__.createDataTables2,
+    engine: (_options$engine = options.engine) !== null && _options$engine !== void 0 ? _options$engine : (0,_engine_datatables2_js__WEBPACK_IMPORTED_MODULE_2__.dataTables2Runtime)(),
+    inlineEditor: options.inlineEditor,
+    onError: options.onError,
+    root: options.root,
+    stateFilters: Boolean(admin.Config.get('state_filters')),
+    storage: options.storage,
+    target: options.target,
+    tooltips: (_options$tooltips = options.tooltips) !== null && _options$tooltips !== void 0 ? _options$tooltips : function (root) {
+      var _admin$Tooltips$scan, _admin$Tooltips;
+      return (_admin$Tooltips$scan = (_admin$Tooltips = admin.Tooltips) === null || _admin$Tooltips === void 0 ? void 0 : _admin$Tooltips.scan(root)) !== null && _admin$Tooltips$scan !== void 0 ? _admin$Tooltips$scan : 0;
+    }
+  };
+}
+function assertAdmin(admin) {
+  var required = ['Components', 'Config', 'Events', 'Modules', 'Tables', 'Url'];
+  if (required.some(function (name) {
+    return !(admin !== null && admin !== void 0 && admin[name]);
+  })) {
+    throw new TypeError('DataTables require the SleepingOwl compatibility runtime.');
+  }
+}
+function assertOptions(options) {
+  var _options$inlineEditor;
+  if (!options.root || !options.storage || !options.target || typeof ((_options$inlineEditor = options.inlineEditor) === null || _options$inlineEditor === void 0 ? void 0 : _options$inlineEditor.scan) !== 'function' || typeof options.onError !== 'function') {
+    throw new TypeError('DataTables require DOM, storage, editor and error dependencies.');
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/runtime/table-filters.js":
+/*!********************************************************************!*\
+  !*** ./resources/frontend/features/table/runtime/table-filters.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createTableFilters": () => (/* binding */ createTableFilters)
+/* harmony export */ });
+/* harmony import */ var _filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filters/filter-controls.js */ "./resources/frontend/features/table/filters/filter-controls.js");
+/* harmony import */ var _filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../filters/filter-elements.js */ "./resources/frontend/features/table/filters/filter-elements.js");
+/* harmony import */ var _state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state/filter-state.js */ "./resources/frontend/features/table/state/filter-state.js");
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+
+var FILTER_SELECTOR = '.display-filters[data-display="DisplayDatatablesAsync"][data-datatables-id]';
+function createTableFilters(options) {
+  var settings = normalizeOptions(options);
+  return {
+    bind: function bind(definition, adapter, serverSide, context) {
+      return bindTableFilters(settings, definition, adapter, serverSide, context);
+    },
+    context: function context(id) {
+      return createFilterContext(settings, id);
+    },
+    prepare: function prepare() {
+      return prepareFilterState(settings);
+    },
+    restore: function restore(context) {
+      return restoreFilterState(settings, context);
+    }
+  };
+}
+function prepareFilterState(settings) {
+  if (!settings.stateFilters) return;
+  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.migrateLegacyFilterState)(settings.storage, settings.path, allFilterContainers(settings.root));
+}
+function createFilterContext(settings, id) {
+  return {
+    filterContainers: matchingContainers(settings.root, id),
+    stateFilters: settings.stateFilters,
+    stateKey: (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.filterStateKey)(settings.path, id)
+  };
+}
+function restoreFilterState(settings, context) {
+  if (!context.stateFilters) return;
+  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.loadFilterState)(settings.storage, context.stateKey, context.filterContainers);
+}
+function bindTableFilters(settings, definition, adapter, serverSide, context) {
+  bindColumnFilters(settings, definition.id, adapter.engineInstance, serverSide);
+  context.filterContainers.forEach(function (container) {
+    (0,_filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__.bindFilterControls)(container, {
+      clear: function clear() {
+        return clearFilters(settings, adapter, context);
+      },
+      execute: function execute() {
+        return executeFilters(settings, adapter, context);
+      },
+      reload: function reload() {
+        return adapter.reload();
+      }
+    });
+  });
+}
+function bindColumnFilters(settings, id, table, serverSide) {
+  (0,_filters_filter_elements_js__WEBPACK_IMPORTED_MODULE_1__.forEachColumnFilter)(settings.root, id, function (filter, index, type) {
+    var driver = settings.drivers[type];
+    if (typeof driver === 'function') {
+      driver(filter, table, table.column(index), index, serverSide);
+    }
+  });
+}
+function executeFilters(settings, adapter, context) {
+  if (context.stateFilters) {
+    (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.saveFilterState)(settings.storage, context.stateKey, context.filterContainers);
+  }
+  adapter.reload();
+}
+function clearFilters(settings, adapter, context) {
+  (0,_filters_filter_controls_js__WEBPACK_IMPORTED_MODULE_0__.clearFilterControls)(context.filterContainers);
+  adapter.clearState();
+  (0,_state_filter_state_js__WEBPACK_IMPORTED_MODULE_2__.clearFilterState)(settings.storage, context.stateKey);
+  adapter.reload();
+}
+function matchingContainers(root, id) {
+  return allFilterContainers(root).filter(function (container) {
+    return container.dataset.datatablesId === String(id);
+  });
+}
+function allFilterContainers(root) {
+  return _toConsumableArray(root.querySelectorAll(FILTER_SELECTOR));
+}
+function normalizeOptions(options) {
+  if (!(options !== null && options !== void 0 && options.drivers) || !options.root || !options.storage) {
+    throw new TypeError('Table filters require drivers, a document and storage.');
+  }
+  return {
+    drivers: options.drivers,
+    path: options.path,
+    root: options.root,
+    stateFilters: Boolean(options.stateFilters),
+    storage: options.storage
+  };
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/features/table/runtime/table-runtime-options.js":
+/*!****************************************************************************!*\
+  !*** ./resources/frontend/features/table/runtime/table-runtime-options.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createRuntimeTableOptions": () => (/* binding */ createRuntimeTableOptions)
+/* harmony export */ });
+/* harmony import */ var _transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../transport/table-ajax.js */ "./resources/frontend/features/table/transport/table-ajax.js");
+/* harmony import */ var _hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/column-highlight.js */ "./resources/frontend/features/table/hooks/column-highlight.js");
+/* harmony import */ var _hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/lazy-images.js */ "./resources/frontend/features/table/hooks/lazy-images.js");
+/* harmony import */ var _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/table-hooks.js */ "./resources/frontend/features/table/hooks/table-hooks.js");
+/* harmony import */ var _options_table_options_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../options/table-options.js */ "./resources/frontend/features/table/options/table-options.js");
+/* harmony import */ var _options_state_options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../options/state-options.js */ "./resources/frontend/features/table/options/state-options.js");
+
+
+
+
+
+
+function createRuntimeTableOptions(element, definition, settings) {
+  var options = (0,_options_table_options_js__WEBPACK_IMPORTED_MODULE_4__.applyServerOptions)(definition.options, definition);
+  if (definition.url) configureServerTable(options, definition, settings);
+  options.drawCallback = createRuntimeDrawHook(element, settings);
+  options.createdRow = _hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__.applyCreatedRowClass;
+  return options;
+}
+function configureServerTable(options, definition, settings) {
+  options.ajax = (0,_transport_table_ajax_js__WEBPACK_IMPORTED_MODULE_0__.createTableAjax)({
+    events: settings.admin.Events,
+    id: definition.id,
+    method: definition.method,
+    payload: definition.payload,
+    root: settings.root,
+    url: definition.url
+  });
+  (0,_options_state_options_js__WEBPACK_IMPORTED_MODULE_5__.applyTableStateOptions)(options, {
+    stateDatatables: Boolean(settings.admin.Config.get('state_datatables')),
+    stateFilters: settings.stateFilters
+  });
+}
+function createRuntimeDrawHook(element, settings) {
+  return (0,_hooks_table_hooks_js__WEBPACK_IMPORTED_MODULE_3__.createDrawHook)({
+    events: settings.admin.Events,
+    highlight: function highlight(engineContext) {
+      return (0,_hooks_column_highlight_js__WEBPACK_IMPORTED_MODULE_1__.syncColumnHighlight)(element, engineContext.api(), Boolean(settings.admin.Config.get('datatables_highlight')));
+    },
+    inlineEditor: function inlineEditor() {
+      return settings.inlineEditor.scan(element);
+    },
+    lazyload: function lazyload() {
+      return (0,_hooks_lazy_images_js__WEBPACK_IMPORTED_MODULE_2__.loadLazyImages)(element);
+    },
+    tooltips: function tooltips() {
+      return settings.tooltips(element);
+    }
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/table/selection/checkbox-controls.js":
 /*!**************************************************************************!*\
   !*** ./resources/frontend/features/table/selection/checkbox-controls.js ***!
@@ -12357,29 +12561,6 @@ function installLegacyDataTablesPresentation(engine) {
     throw new Error('The DataTables Bootstrap adapter must use the active table engine.');
   }
   return engine;
-}
-
-/***/ }),
-
-/***/ "./resources/frontend/features/table/themes/legacy-adminlte/tooltips.js":
-/*!******************************************************************************!*\
-  !*** ./resources/frontend/features/table/themes/legacy-adminlte/tooltips.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createLegacyTableTooltips": () => (/* binding */ createLegacyTableTooltips)
-/* harmony export */ });
-function createLegacyTableTooltips() {
-  var admin = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : globalThis.Admin;
-  return {
-    scan: function scan(container) {
-      var _admin$Tooltips$scan, _admin$Tooltips;
-      return (_admin$Tooltips$scan = admin === null || admin === void 0 || (_admin$Tooltips = admin.Tooltips) === null || _admin$Tooltips === void 0 ? void 0 : _admin$Tooltips.scan(container)) !== null && _admin$Tooltips$scan !== void 0 ? _admin$Tooltips$scan : 0;
-    }
-  };
 }
 
 /***/ }),

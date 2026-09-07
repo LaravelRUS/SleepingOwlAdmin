@@ -103,7 +103,7 @@ it('publishes the legacy API compatibility layer without presentation styles', (
     expect(modernEntry('shared:compatibility', 'styles')).toBeUndefined()
 })
 
-it.each(['forms', 'lightbox', 'tree'])(
+it.each(['forms', 'lightbox', 'table', 'tree'])(
     'publishes %s through an auto-boot browser entry',
     (feature) => {
         expect(modernEntry(`feature:${feature}`, 'scripts')).toEqual({

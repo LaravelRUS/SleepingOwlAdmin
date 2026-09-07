@@ -1,5 +1,6 @@
 export const TABLE_FEATURE_ID = 'table'
 
+export { tableBrowserOptions } from './browser-options.js'
 export {
     AUTO_UPDATE_COLOR_PROPERTY,
     mountTableAutoUpdate,
@@ -39,6 +40,23 @@ export {
     submitInlineEdit,
 } from './editing/inline-editor-request.js'
 export { DataTableAdapter, mountDataTable } from './lifecycle/data-table-adapter.js'
+export {
+    createDataTableDefinition,
+    DATA_TABLE_COMPONENT,
+    DATA_TABLE_SELECTOR,
+    installDataTables,
+} from './runtime/install-data-tables.js'
+export {
+    installTableAutoUpdates,
+    TABLE_AUTO_UPDATES_COMPONENT,
+    TABLE_AUTO_UPDATES_SELECTOR,
+} from './runtime/install-table-auto-updates.js'
+export {
+    createTableControlsDefinition,
+    installTableControls,
+    TABLE_CONTROLS_COMPONENT,
+    TABLE_CONTROLS_SELECTOR,
+} from './runtime/install-table-controls.js'
 export { normalizeDataTables2Options } from './options/option-aliases.js'
 export { applyServerOptions, readTableDefinition, tableLayout } from './options/table-options.js'
 export { selectedRowValues } from './selection/selected-rows.js'

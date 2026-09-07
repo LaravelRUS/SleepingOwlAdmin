@@ -73,7 +73,7 @@
             },
             {
                 "logicalId": "feature:table",
-                "source": "resources/frontend/features/table/index.js",
+                "source": "resources/frontend/features/table/browser.js",
                 "output": "js/features/table.js"
             },
             {

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="table-logical-token" />
+        <title>Logical table browser fixture</title>
+        <script>
+            window.GlobalConfig = {
+                datatables_highlight: true,
+                debug: true,
+                env: 'testing',
+                lang: {
+                    button: { cancel: 'Cancel', save: 'Save', yes: 'Yes' },
+                    select: { no_items: 'No items', nothing: 'Nothing selected' },
+                    table: {
+                        'action-confirm': 'Confirm action',
+                        'delete-confirm': 'Delete?',
+                        'destroy-confirm': 'Destroy?',
+                        error: 'Table error',
+                        'no-action': 'No action',
+                    },
+                },
+                locale: 'en',
+                state_datatables: true,
+                state_filters: true,
+                template: { asset_dir: 'default' },
+                url: 'http://127.0.0.1:4173',
+                url_path: 'table-logical',
+                url_prefix: 'admin',
+                user_id: null,
+                wysiwyg: {},
+            }
+        </script>
+    </head>
+    <body>
+        <main class="card">
+            <form data-type="display-actions" id="bulk-action-form">
+                <select class="sleepingOwlActionsStore" id="bulk-action-select">
+                    <option value="0">No action</option>
+                    <option data-method="POST" selected value="/api/action">Archive</option>
+                </select>
+                <button id="bulk-action-submit" type="submit">Apply</button>
+            </form>
+
+            <div
+                class="display-filters"
+                data-datatables-id="logical-table-fixture"
+                data-display="DisplayDatatablesAsync"
+            >
+                <div data-index="0">
+                    <div class="column-filter" data-type="control">
+                        <button id="filters-exec" type="button">Filter</button>
+                        <button id="filters-cancel" type="button">Clear</button>
+                    </div>
+                </div>
+                <div data-index="1">
+                    <input class="column-filter" data-type="text" id="text-filter" />
+                </div>
+            </div>
+
+            <table
+                class="autorefresh datatables lightcolumn"
+                data-attributes='{"autoWidth":false,"columns":[{"orderable":false},{"orderable":true},{"orderable":true},{"orderable":true},{"orderable":true},{"orderable":false},{"orderable":false}],"order":[[1,"asc"]],"pageLength":2,"responsive":false,"searchDelay":0}'
+                data-display-dtlength="1"
+                data-display-search="1"
+                data-id="logical-table-fixture"
+                data-method="POST"
+                data-payload='{"fixture":"logical"}'
+                data-url="/api/datatables"
+                id="logical-table"
+            >
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Window</th>
+                        <th>Preview</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </main>
+
+        <span
+            data-admin-table-autoupdate
+            data-close-label="Stop auto-update"
+            data-interval="60000"
+            data-table-class="autorefresh"
+            hidden
+            style="--soa-datatables-autoupdate-color: currentColor"
+        ></span>
+        <div id="dynamic-table-host"></div>
+
+        <script src="/public/default/profiles/development/js/admin-core.js"></script>
+        <script src="/public/default/profiles/development/js/shared/compatibility.js"></script>
+        <script>
+            window.__logicalTableEvents = []
+            window.__swalCalls = []
+            ;['datatables::draw', 'datatables::actions::submitted'].forEach((name) => {
+                Admin.Events.on(name, () => window.__logicalTableEvents.push(name))
+            })
+            Admin.Messages.confirm = () => Promise.resolve({ value: true })
+            Swal.fire = (settings) => {
+                window.__swalCalls.push(settings)
+                return Promise.resolve({ value: true })
+            }
+        </script>
+        <script src="/public/default/profiles/development/js/features/table.js"></script>
+    </body>
+</html>
