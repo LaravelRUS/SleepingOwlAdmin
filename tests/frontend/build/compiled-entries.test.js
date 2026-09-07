@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
@@ -36,6 +36,14 @@ function contentHash(path) {
 
 function checksum(path) {
     return `sha256:${createHash('sha256').update(readFileSync(path)).digest('hex')}`
+}
+
+function filesUnder(path) {
+    return readdirSync(resolve(root, path), { withFileTypes: true }).flatMap((entry) => {
+        const child = `${path}/${entry.name}`
+
+        return entry.isDirectory() ? filesUnder(child) : [child]
+    })
 }
 
 describe('compiled frontend entries', () => {
@@ -128,6 +136,36 @@ describe('compiled table boundaries', () => {
             ),
         ).toBe(false)
         expect(license).not.toMatch(/jQuery JavaScript Library|OpenJS Foundation/i)
+    })
+})
+
+describe('compiled jQuery boundary', () => {
+    it('keeps every published JavaScript source map free of the jQuery package', () => {
+        const maps = filesUnder('public/default').filter((path) => path.endsWith('.js.map'))
+
+        expect(maps.length).toBeGreaterThan(0)
+
+        for (const path of maps) {
+            const sources = readJson(path).sources.map((source) => source.replaceAll('\\', '/'))
+
+            expect(sources, path).not.toContainEqual(
+                expect.stringContaining('/node_modules/jquery/'),
+            )
+        }
+    })
+
+    it('keeps every published JavaScript license sidecar free of jQuery', () => {
+        const licenses = filesUnder('public/default').filter((path) =>
+            path.endsWith('.js.LICENSE.txt'),
+        )
+
+        expect(licenses.length).toBeGreaterThan(0)
+
+        for (const path of licenses) {
+            expect(readFileSync(resolve(root, path), 'utf8'), path).not.toMatch(
+                /jQuery JavaScript Library|jquery\.org\/license/i,
+            )
+        }
     })
 })
 

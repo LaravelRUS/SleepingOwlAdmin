@@ -18,6 +18,16 @@ it('removes direct X-editable, Moment and DateTimePicker dependencies', () => {
         expect(packageJson.dependencies).not.toHaveProperty(name)
         expect(packageLock.packages[''].dependencies).not.toHaveProperty(name)
     })
+
+    const orphanedAssets = [
+        'public/default/images/vendor/x-editable-bs4/dist/jquery-editable/clear.png',
+        'public/default/images/vendor/x-editable-bs4/dist/jquery-editable/loading.gif',
+        'public/ckeditor/adapters/jquery.js',
+    ]
+
+    orphanedAssets.forEach((path) => {
+        expect(existsSync(resolve(root, path)), path).toBe(false)
+    })
 })
 
 it('keeps the headless runtime free of jQuery and plugin wrappers', () => {
