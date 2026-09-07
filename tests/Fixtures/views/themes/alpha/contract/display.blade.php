@@ -2,4 +2,5 @@
 
 <section data-theme="alpha" data-instance="{{ $contractInstanceId }}" {{ $attributeBag->merge(['class' => 'alpha-display']) }}>
     <h2 data-role="display-title">{{ $title }}</h2>
+    @yield('before.card')
 </section>

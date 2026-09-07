@@ -7,6 +7,7 @@ use SleepingOwl\Admin\Display\ExtensionCollection;
 use SleepingOwl\Admin\Form\FormDefault;
 use SleepingOwl\Admin\Templates\TemplateDefault;
 use SleepingOwl\Admin\Themes\LegacyTemplateThemeAdapter;
+use SleepingOwl\Admin\Themes\ThemeResolver;
 
 class ThemeRenderingContractTest extends TestCase
 {
@@ -55,6 +56,32 @@ class ThemeRenderingContractTest extends TestCase
         $this->assertNotSame($alpha, $beta);
     }
 
+    public function test_direct_theme_keeps_set_view_and_namespaced_custom_view_apis(): void
+    {
+        view()->addNamespace(
+            'project-contract',
+            __DIR__.'/../../Fixtures/views/themes/project'
+        );
+        config()->set('sleeping_owl.logo_mini', 'SO');
+        $display = (new ThemeSettableContractDisplay())
+            ->setView('display')
+            ->setTitle('Direct theme')
+            ->addCustomView(
+                'project-contract::custom',
+                'before.card',
+                ['value' => 'Custom <content>']
+            );
+
+        $html = $this->renderWithDirectTheme($display);
+
+        $this->assertStringContainsString('data-theme="alpha"', $html);
+        $this->assertStringContainsString('data-contract="custom-view"', $html);
+        $this->assertStringContainsString('data-theme="contract-direct"', $html);
+        $this->assertStringContainsString('data-config-logo="SO"', $html);
+        $this->assertStringContainsString('Custom &lt;content&gt;', $html);
+        $this->assertSame('display', $display->getView());
+    }
+
     private function registerThemeViews(string $namespace, string $directory): void
     {
         view()->addNamespace(
@@ -76,6 +103,21 @@ class ThemeRenderingContractTest extends TestCase
 
         $this->assertSame($theme, $this->app->make(ThemeInterface::class));
         $this->assertSame($template->getViewNamespace(), $theme->viewNamespace());
+
+        return $renderable->render()->render();
+    }
+
+    private function renderWithDirectTheme(object $renderable): string
+    {
+        $selection = (new ThemeResolver($this->app))->resolve(DirectContractTheme::class);
+        $template = $selection->template();
+        $theme = $selection->theme();
+
+        $this->app->instance('sleeping_owl.template', $template);
+        $this->app->instance('sleeping_owl.theme', $theme);
+
+        $this->assertSame('contract-alpha::contract', $template->getViewNamespace());
+        $this->assertSame($theme, $this->app->make(ThemeInterface::class));
 
         return $renderable->render()->render();
     }
@@ -151,6 +193,25 @@ final class ThemeContractDisplay extends Display
     }
 }
 
+final class ThemeSettableContractDisplay extends Display
+{
+    protected $view = 'display';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->extensions = new ExtensionCollection();
+    }
+
+    public function toArray(): array
+    {
+        return parent::toArray() + [
+            'contractInstanceId' => spl_object_id($this),
+        ];
+    }
+}
+
 final class ThemeContractForm extends FormDefault
 {
     public function __construct(private string $contractValue)
@@ -184,5 +245,33 @@ final class BetaContractTemplate extends TemplateDefault
     public function getViewNamespace(): string
     {
         return 'contract-beta::contract';
+    }
+}
+
+final class DirectContractTheme implements ThemeInterface
+{
+    public function id(): string
+    {
+        return 'contract-direct';
+    }
+
+    public function viewNamespace(): string
+    {
+        return 'contract-alpha::contract';
+    }
+
+    public function assets(): array
+    {
+        return ['theme:contract-direct'];
+    }
+
+    public function icons(): array
+    {
+        return [];
+    }
+
+    public function capabilities(): array
+    {
+        return [];
     }
 }

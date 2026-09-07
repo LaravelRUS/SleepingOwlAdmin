@@ -12,6 +12,37 @@
 
 When a historical path now belongs to `shared` or `features`, its file inside the legacy theme is kept as a one-line bridge include. This preserves published view overrides and PHP view names while moving the implementation to its real owner.
 
+## Stable resolution and custom-view API
+
+The selected theme changes only the namespace prefix for relative logical
+views. Existing rendering APIs keep their established meaning:
+
+- `setView('display.table')` resolves relative to the selected theme's
+  `viewNamespace()`;
+- an already namespaced value such as `project-admin::orders.summary` passes
+  through unchanged;
+- `Display::addCustomView()` keeps its placement and data contract and accepts
+  the same fully namespaced project views;
+- `Illuminate\View\View` instances passed to `setView()` remain usable;
+- no theme id, PHP semantic class map, or physical package path is inserted
+  into a consumer's view name.
+
+Laravel's ordinary application override stays first in the lookup order:
+
+```text
+resources/views/vendor/sleeping_owl/<logical path>
+    -> resources/views/<shared or feature path>
+    -> resources/views/themes/legacy/<logical path>
+```
+
+`ApplicationViewOverrideTest` boots the package with a real simulated
+application `view.paths` root and proves that the vendor override wins over the
+package copy. `ThemeRenderingContractTest` proves both relative `setView()` and
+fully namespaced `addCustomView()` through a direct `ThemeInterface`, including
+unchanged data and escaped content. The contract therefore applies to the
+current AdminLTE theme and to Tailwind or project themes added through the same
+interface; those themes provide views, not a replacement rendering API.
+
 ## Dependency direction
 
 - A shared view must not depend on a theme, feature lifecycle, config-driven widget behavior, inline JavaScript or Vue directives.
@@ -56,5 +87,9 @@ The physical view move does not change logical view names, template config, publ
 - PHP outside concrete theme directories cannot reference `AdminLte`, `Tailwind` or `Legacy` theme subnamespaces;
 - shared and feature Blade roots cannot refer to physical theme paths;
 - frontend core module specifiers cannot point into `features` or `themes`.
+
+`ViewBoundaryTest` additionally walks every Blade file in the extracted legacy
+theme and proves that each file still resolves through its original
+`sleeping_owl::default.*` logical name.
 
 The modern frontend ESLint config repeats the `core → features/themes` restriction through `no-restricted-imports`, so a new JavaScript violation fails at lint time before the wider PHPUnit architecture gate. Theme selection remains data-driven through `sleeping_owl.template`; adding a theme does not authorize a core import of its implementation.
