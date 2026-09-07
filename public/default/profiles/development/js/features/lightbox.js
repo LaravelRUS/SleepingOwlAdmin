@@ -331,29 +331,24 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*******************************************************!*\
-  !*** ./resources/frontend/features/lightbox/index.js ***!
-  \*******************************************************/
+/*!*********************************************************!*\
+  !*** ./resources/frontend/features/lightbox/browser.js ***!
+  \*********************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LIGHTBOX_COMPONENT": () => (/* reexport safe */ _install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__.LIGHTBOX_COMPONENT),
-/* harmony export */   "LIGHTBOX_FEATURE_ID": () => (/* binding */ LIGHTBOX_FEATURE_ID),
-/* harmony export */   "LIGHTBOX_ROOT_SELECTOR": () => (/* reexport safe */ _install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__.LIGHTBOX_ROOT_SELECTOR),
-/* harmony export */   "LIGHTBOX_TRIGGER_SELECTOR": () => (/* reexport safe */ _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_1__.LIGHTBOX_TRIGGER_SELECTOR),
-/* harmony export */   "collectLightboxGallery": () => (/* reexport safe */ _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_1__.collectLightboxGallery),
-/* harmony export */   "createLightboxDefinition": () => (/* reexport safe */ _install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__.createLightboxDefinition),
-/* harmony export */   "escapeLightboxText": () => (/* reexport safe */ _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_1__.escapeLightboxText),
-/* harmony export */   "findLightboxTrigger": () => (/* reexport safe */ _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_1__.findLightboxTrigger),
-/* harmony export */   "installLightboxes": () => (/* reexport safe */ _install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__.installLightboxes),
-/* harmony export */   "mountLightbox": () => (/* reexport safe */ _lightbox_js__WEBPACK_IMPORTED_MODULE_2__.mountLightbox)
+/* harmony export */   "bootLightboxes": () => (/* binding */ bootLightboxes)
 /* harmony export */ });
 /* harmony import */ var _install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-lightboxes.js */ "./resources/frontend/features/lightbox/install-lightboxes.js");
-/* harmony import */ var _lightbox_elements_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lightbox-elements.js */ "./resources/frontend/features/lightbox/lightbox-elements.js");
-/* harmony import */ var _lightbox_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lightbox.js */ "./resources/frontend/features/lightbox/lightbox.js");
-var LIGHTBOX_FEATURE_ID = 'lightbox';
 
-
-
+if (globalThis.document) bootLightboxes(globalThis);
+function bootLightboxes(target) {
+  var lightboxes = (0,_install_lightboxes_js__WEBPACK_IMPORTED_MODULE_0__.installLightboxes)(target.Admin, {
+    root: target.document
+  });
+  target.Admin.Lightboxes = lightboxes;
+  lightboxes.scan();
+  return lightboxes;
+}
 })();
 
 /******/ })()

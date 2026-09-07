@@ -4049,49 +4049,36 @@ Sortable.mount(Remove, Revert);
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***************************************************!*\
-  !*** ./resources/frontend/features/tree/index.js ***!
-  \***************************************************/
+/*!*****************************************************!*\
+  !*** ./resources/frontend/features/tree/browser.js ***!
+  \*****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TREE_COMPONENT": () => (/* reexport safe */ _tree_js__WEBPACK_IMPORTED_MODULE_5__.TREE_COMPONENT),
-/* harmony export */   "TREE_FEATURE_ID": () => (/* binding */ TREE_FEATURE_ID),
-/* harmony export */   "TREE_SELECTOR": () => (/* reexport safe */ _tree_js__WEBPACK_IMPORTED_MODULE_5__.TREE_SELECTOR),
-/* harmony export */   "bindTreeControls": () => (/* reexport safe */ _tree_view_js__WEBPACK_IMPORTED_MODULE_6__.bindTreeControls),
-/* harmony export */   "canMoveTreeItem": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.canMoveTreeItem),
-/* harmony export */   "childTreeList": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.childTreeList),
-/* harmony export */   "createTreeDefinition": () => (/* reexport safe */ _tree_js__WEBPACK_IMPORTED_MODULE_5__.createTreeDefinition),
-/* harmony export */   "directTreeItems": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.directTreeItems),
-/* harmony export */   "installTrees": () => (/* reexport safe */ _install_trees_js__WEBPACK_IMPORTED_MODULE_0__.installTrees),
-/* harmony export */   "mountTree": () => (/* reexport safe */ _tree_js__WEBPACK_IMPORTED_MODULE_5__.mountTree),
-/* harmony export */   "mountTreeSortables": () => (/* reexport safe */ _tree_sortable_js__WEBPACK_IMPORTED_MODULE_4__.mountTreeSortables),
-/* harmony export */   "readTreeConfig": () => (/* reexport safe */ _tree_config_js__WEBPACK_IMPORTED_MODULE_1__.readTreeConfig),
-/* harmony export */   "rootTreeList": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.rootTreeList),
-/* harmony export */   "serializeTree": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.serializeTree),
-/* harmony export */   "serializeTreeList": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.serializeTreeList),
-/* harmony export */   "setAllTreeItemsCollapsed": () => (/* reexport safe */ _tree_view_js__WEBPACK_IMPORTED_MODULE_6__.setAllTreeItemsCollapsed),
-/* harmony export */   "sortableOptions": () => (/* reexport safe */ _tree_sortable_js__WEBPACK_IMPORTED_MODULE_4__.sortableOptions),
-/* harmony export */   "submitTreeOrder": () => (/* reexport safe */ _tree_request_js__WEBPACK_IMPORTED_MODULE_2__.submitTreeOrder),
-/* harmony export */   "syncTreeView": () => (/* reexport safe */ _tree_view_js__WEBPACK_IMPORTED_MODULE_6__.syncTreeView),
-/* harmony export */   "treeBranchDepth": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.treeBranchDepth),
-/* harmony export */   "treeListDepth": () => (/* reexport safe */ _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__.treeListDepth),
-/* harmony export */   "treeRequestParameters": () => (/* reexport safe */ _tree_request_js__WEBPACK_IMPORTED_MODULE_2__.treeRequestParameters)
+/* harmony export */   "bootTrees": () => (/* binding */ bootTrees)
 /* harmony export */ });
 /* harmony import */ var _install_trees_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./install-trees.js */ "./resources/frontend/features/tree/install-trees.js");
-/* harmony import */ var _tree_config_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree-config.js */ "./resources/frontend/features/tree/tree-config.js");
-/* harmony import */ var _tree_request_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tree-request.js */ "./resources/frontend/features/tree/tree-request.js");
-/* harmony import */ var _tree_structure_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tree-structure.js */ "./resources/frontend/features/tree/tree-structure.js");
-/* harmony import */ var _tree_sortable_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tree-sortable.js */ "./resources/frontend/features/tree/tree-sortable.js");
-/* harmony import */ var _tree_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tree.js */ "./resources/frontend/features/tree/tree.js");
-/* harmony import */ var _tree_view_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tree-view.js */ "./resources/frontend/features/tree/tree-view.js");
-var TREE_FEATURE_ID = 'tree';
 
-
-
-
-
-
-
+if (globalThis.document) bootTrees(globalThis);
+function bootTrees(target) {
+  var trees = (0,_install_trees_js__WEBPACK_IMPORTED_MODULE_0__.installTrees)(target.Admin, {
+    labels: treeLabels(target.trans),
+    root: target.document
+  });
+  target.Admin.Trees = trees;
+  trees.scan();
+  return trees;
+}
+function treeLabels(translate) {
+  return {
+    collapse: translated(translate, 'lang.tree.collapse', 'Collapse'),
+    expand: translated(translate, 'lang.tree.expand', 'Expand')
+  };
+}
+function translated(translate, key, fallback) {
+  if (typeof translate !== 'function') return fallback;
+  var value = translate(key);
+  return typeof value === 'string' && value !== key ? value : fallback;
+}
 })();
 
 /******/ })()

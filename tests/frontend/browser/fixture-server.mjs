@@ -130,6 +130,17 @@ const staticRoutes = new Map([
         [join(projectRoot, 'public', 'default', 'js', 'features', 'sidebar.js'), 'text/javascript'],
     ],
     [
+        '/public/default/js/features/lightbox.js',
+        [
+            join(projectRoot, 'public', 'default', 'js', 'features', 'lightbox.js'),
+            'text/javascript',
+        ],
+    ],
+    [
+        '/public/default/js/features/tree.js',
+        [join(projectRoot, 'public', 'default', 'js', 'features', 'tree.js'), 'text/javascript'],
+    ],
+    [
         '/public/default/js/features/tooltip.js',
         [join(projectRoot, 'public', 'default', 'js', 'features', 'tooltip.js'), 'text/javascript'],
     ],
@@ -185,6 +196,7 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
+    ...profileFeatureRoutes('development', ['lightbox', 'tree']),
     [
         '/public/default/profiles/production/js/shared/vue.js',
         [
@@ -217,6 +229,7 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
+    ...profileFeatureRoutes('production', ['lightbox', 'tree']),
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],
@@ -485,6 +498,20 @@ const staticRoutes = new Map([
         [join(browserDirectory, 'custom-vue-island.js'), 'text/javascript; charset=utf-8'],
     ],
 ])
+
+function profileFeatureRoutes(profile, features) {
+    const profileRoot = join(projectRoot, 'public', 'default', 'profiles', profile, 'js')
+    const core = [
+        `/public/default/profiles/${profile}/js/admin-core.js`,
+        [join(profileRoot, 'admin-core.js'), 'text/javascript'],
+    ]
+    const entries = features.map((feature) => [
+        `/public/default/profiles/${profile}/js/features/${feature}.js`,
+        [join(profileRoot, 'features', `${feature}.js`), 'text/javascript'],
+    ])
+
+    return [core, ...entries]
+}
 
 const fixtureRequests = new Map()
 const defaultFixtureScope = 'default'

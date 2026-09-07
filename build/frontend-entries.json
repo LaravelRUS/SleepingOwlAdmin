@@ -68,7 +68,7 @@
             },
             {
                 "logicalId": "feature:lightbox",
-                "source": "resources/frontend/features/lightbox/index.js",
+                "source": "resources/frontend/features/lightbox/browser.js",
                 "output": "js/features/lightbox.js"
             },
             {
@@ -88,7 +88,7 @@
             },
             {
                 "logicalId": "feature:tree",
-                "source": "resources/frontend/features/tree/index.js",
+                "source": "resources/frontend/features/tree/browser.js",
                 "output": "js/features/tree.js"
             },
             {
