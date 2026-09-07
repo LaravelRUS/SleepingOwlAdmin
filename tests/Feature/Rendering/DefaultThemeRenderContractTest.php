@@ -36,8 +36,36 @@ class DefaultThemeRenderContractTest extends TestCase
             '<section data-contract="content">Body</section>',
             '<footer class="main-footer small">',
             '<div id="sidebar-overlay"></div>',
+            '<template data-soa-tooltip-template>',
+            '<div data-soa-tooltip-popup role="tooltip">',
+            '<span data-soa-tooltip-content></span>',
             '<span data-contract="scripts"></span>',
         ]);
+    }
+
+    public function test_layout_uses_project_tooltip_template_override(): void
+    {
+        view()->prependNamespace(
+            'sleeping_owl',
+            __DIR__.'/../../Fixtures/views/tooltip-overrides'
+        );
+        $this->configureLayout();
+        $this->bindLayoutMessages();
+        $template = $this->bindLayoutTemplate();
+
+        $html = view('sleeping_owl::default._layout.inner', [
+            'breadcrumbKey' => 'tooltip-override',
+            'content' => '<section>Body</section>',
+            'template' => $template,
+            'title' => 'Tooltip override',
+        ])->render();
+
+        $this->assertContainsAll($html, [
+            '<aside class="project-tooltip-shell" data-soa-tooltip-popup role="tooltip">',
+            '<span class="project-tooltip-nesting">',
+            '<strong data-soa-tooltip-content></strong>',
+        ]);
+        $this->assertStringNotContainsString('<div data-soa-tooltip-popup', $html);
     }
 
     public function test_navigation_parent_keeps_nested_active_state_and_attributes(): void

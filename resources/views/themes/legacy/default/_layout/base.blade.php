@@ -18,6 +18,7 @@
 </head>
 <body class="{{ config('sleeping_owl.body_default_class', 'sidebar-mini sidebar-open') . (@$_COOKIE['sidebar-state'] == 'sidebar-collapse' ? ' sidebar-collapse' : '') . ($colorScheme === 'dark' ? ' dark-mode' : '') }}">
 	@yield('content')
+	@include(AdminTemplate::getViewPath('_partials.tooltip'))
 	@include(AdminTemplate::getViewPath('helper.scrolltotop'))
 
 	{!! $template->meta()->renderScripts(true) !!}

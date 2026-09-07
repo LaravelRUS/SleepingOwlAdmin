@@ -224,8 +224,8 @@
                     "scripts": [
                         {
                             "file": "profiles/production/js/features/tooltip.js",
-                            "version": "2ab71d7ca40efed19120dcf08684801b",
-                            "checksum": "sha256:12d5c6afaa7372810676a8cdd4010f79408923561ec6444cc1fc209e73fee688"
+                            "version": "13fd8d0a56fe53f19f4b1fe5d5f7d9c5",
+                            "checksum": "sha256:ac90c61369659c0abd74911a3d72512ce852a08615fb25a61d9ccf50f919b554"
                         }
                     ],
                     "styles": [
@@ -578,8 +578,8 @@
                     "scripts": [
                         {
                             "file": "profiles/development/js/features/tooltip.js",
-                            "version": "65f7cb998904f87ca1d9c35322a08cad",
-                            "checksum": "sha256:2b5f8bfd14e64015e30cc0c2c68db49ba89ab5005e97a5b56e22620089b2bce0"
+                            "version": "b1d2ae5fce34bf3fd492ef935e2ebabe",
+                            "checksum": "sha256:619820f74748df12d07d9f828428024198304274123985c27db66413881be86c"
                         }
                     ],
                     "styles": [
@@ -711,5 +711,5 @@
             }
         }
     },
-    "build_id": "sha256:4a8186bcf84a4534d7ea70f0e2b1f4fae32ea0bc0bc7e44f4a3ed04c5496f9f2"
+    "build_id": "sha256:6935859917b2e5073d8f2467d767a2cb62eee41f29fb3f32331a419c4fe04ed9"
 }

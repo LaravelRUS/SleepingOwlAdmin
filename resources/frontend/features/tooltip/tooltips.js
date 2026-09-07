@@ -5,6 +5,7 @@ import {
     TOOLTIP_TRIGGER_SELECTOR,
 } from './tooltip-elements.js'
 import { tooltipPosition } from './tooltip-position.js'
+import { createTooltipElement } from './tooltip-template.js'
 
 const ROOT_EVENT_NAMES = ['focusin', 'focusout', 'keydown', 'pointerout', 'pointerover']
 
@@ -99,14 +100,7 @@ function showTooltip(state, trigger, reason) {
 }
 
 function createTooltip(state, content, placement) {
-    const tooltip = state.root.ownerDocument.createElement('div')
-    tooltip.id = `soa-tooltip-${state.nextId++}`
-    tooltip.dataset.soaTooltipPopup = ''
-    tooltip.dataset.placement = placement
-    tooltip.setAttribute('role', 'tooltip')
-    tooltip.textContent = content
-
-    return tooltip
+    return createTooltipElement(state.root, content, placement, `soa-tooltip-${state.nextId++}`)
 }
 
 function createCurrent(trigger, tooltip, reason) {

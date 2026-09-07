@@ -13205,6 +13205,52 @@ function clamp(value, minimum, maximum) {
 
 /***/ }),
 
+/***/ "./resources/frontend/features/tooltip/tooltip-template.js":
+/*!*****************************************************************!*\
+  !*** ./resources/frontend/features/tooltip/tooltip-template.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createTooltipElement": () => (/* binding */ createTooltipElement)
+/* harmony export */ });
+var TOOLTIP_TEMPLATE_SELECTOR = 'template[data-soa-tooltip-template]';
+var TOOLTIP_POPUP_SELECTOR = '[data-soa-tooltip-popup]';
+var TOOLTIP_CONTENT_SELECTOR = '[data-soa-tooltip-content]';
+function createTooltipElement(root, content, placement, id) {
+  var _cloneTooltip;
+  var tooltip = (_cloneTooltip = cloneTooltip(root)) !== null && _cloneTooltip !== void 0 ? _cloneTooltip : createFallbackTooltip(root.ownerDocument);
+  prepareTooltip(tooltip, content, placement, id);
+  return tooltip;
+}
+function cloneTooltip(root) {
+  var _root$querySelector, _template$content, _template$content$clo, _fragment$querySelect, _fragment$querySelect2;
+  var template = (_root$querySelector = root.querySelector) === null || _root$querySelector === void 0 ? void 0 : _root$querySelector.call(root, TOOLTIP_TEMPLATE_SELECTOR);
+  var fragment = template === null || template === void 0 || (_template$content = template.content) === null || _template$content === void 0 || (_template$content$clo = _template$content.cloneNode) === null || _template$content$clo === void 0 ? void 0 : _template$content$clo.call(_template$content, true);
+  return (_fragment$querySelect = fragment === null || fragment === void 0 || (_fragment$querySelect2 = fragment.querySelector) === null || _fragment$querySelect2 === void 0 ? void 0 : _fragment$querySelect2.call(fragment, TOOLTIP_POPUP_SELECTOR)) !== null && _fragment$querySelect !== void 0 ? _fragment$querySelect : null;
+}
+function createFallbackTooltip(document) {
+  var tooltip = document.createElement('div');
+  tooltip.dataset.soaTooltipPopup = '';
+  return tooltip;
+}
+function prepareTooltip(tooltip, content, placement, id) {
+  tooltip.id = id;
+  tooltip.dataset.placement = placement;
+  tooltip.setAttribute('data-soa-tooltip-popup', '');
+  tooltip.setAttribute('role', 'tooltip');
+  findContentTarget(tooltip).textContent = content;
+}
+function findContentTarget(tooltip) {
+  var _tooltip$matches, _tooltip$querySelecto, _tooltip$querySelecto2;
+  if ((_tooltip$matches = tooltip.matches) !== null && _tooltip$matches !== void 0 && _tooltip$matches.call(tooltip, TOOLTIP_CONTENT_SELECTOR)) return tooltip;
+  return (_tooltip$querySelecto = (_tooltip$querySelecto2 = tooltip.querySelector) === null || _tooltip$querySelecto2 === void 0 ? void 0 : _tooltip$querySelecto2.call(tooltip, TOOLTIP_CONTENT_SELECTOR)) !== null && _tooltip$querySelecto !== void 0 ? _tooltip$querySelecto : tooltip;
+}
+
+/***/ }),
+
 /***/ "./resources/frontend/features/tooltip/tooltips.js":
 /*!*********************************************************!*\
   !*** ./resources/frontend/features/tooltip/tooltips.js ***!
@@ -13218,6 +13264,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _tooltip_elements_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tooltip-elements.js */ "./resources/frontend/features/tooltip/tooltip-elements.js");
 /* harmony import */ var _tooltip_position_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tooltip-position.js */ "./resources/frontend/features/tooltip/tooltip-position.js");
+/* harmony import */ var _tooltip_template_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tooltip-template.js */ "./resources/frontend/features/tooltip/tooltip-template.js");
+
 
 
 var ROOT_EVENT_NAMES = ['focusin', 'focusout', 'keydown', 'pointerout', 'pointerover'];
@@ -13324,13 +13372,7 @@ function showTooltip(state, trigger, reason) {
   return true;
 }
 function createTooltip(state, content, placement) {
-  var tooltip = state.root.ownerDocument.createElement('div');
-  tooltip.id = "soa-tooltip-".concat(state.nextId++);
-  tooltip.dataset.soaTooltipPopup = '';
-  tooltip.dataset.placement = placement;
-  tooltip.setAttribute('role', 'tooltip');
-  tooltip.textContent = content;
-  return tooltip;
+  return (0,_tooltip_template_js__WEBPACK_IMPORTED_MODULE_2__.createTooltipElement)(state.root, content, placement, "soa-tooltip-".concat(state.nextId++));
 }
 function createCurrent(trigger, tooltip, reason) {
   return {

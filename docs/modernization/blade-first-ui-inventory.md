@@ -60,7 +60,7 @@ direct theme runtime switch.
 | Complete | 1 | `features/tree/tree-view.js` | `.soa-tree-toggle` button and `+`/`−` presentation | `default.display.tree_children` renders a toggle for every item that can accept children | `data-soa-tree-toggle` remains the behavior hook. Blade renders both states/text or icons; JavaScript changes only `hidden`, `aria-expanded`, `aria-label` and collapsed state. Leaf toggles stay rendered but hidden so drag-and-drop can reveal them without creating markup. |
 | Complete | 2 | `features/table/editing/inline-editor-view.js` | Entire editor root, form, title, input area, actions, error block, buttons and all nine control shapes | Existing logical view `default.column.editable.partials.editor` emits the trigger and delegates its Blade `<template>` shell to `partials.editor_template`; each type owns a partial below `partials.controls` | Every editable-column PHP class and logical view path remains. Project overrides may replace the shell, one control, classes and nesting while retaining structural hooks. JavaScript clones the template, refreshes the current value, binds submit/cancel/Escape/date lifecycle, and never chooses presentation classes or creates visible elements. |
 | Complete | 3 | `features/sidebar/sidebars.js` | `#sidebar-overlay` | Theme layout, currently `default._layout.inner` | The layout renders the established id inside `.wrapper`; `data-widget="pushmenu"` stays unchanged and no `data-soa-sidebar*` marker is added. JavaScript only shows/hides the existing overlay and handles click/Escape/focus/persistence. Static, PHP render and legacy/headless browser contracts protect the boundary. |
-| Pending | 4 | `features/tooltip/tooltips.js` | Active `role="tooltip"` popup | A theme layout-level `<template>` supplied to the neutral tooltip feature | Keep `data-toggle="tooltip"`, `title`, `data-original-title` and `data-placement`. JavaScript clones the popup, assigns a unique id and text content, positions it, and manages focus/ARIA. A narrowly documented neutral fallback may remain for custom themes that omit the optional presentation template. |
+| Complete | 4 | `features/tooltip/tooltips.js` | Active `role="tooltip"` popup | Layout includes the individually overridable `default._partials.tooltip` Blade `<template>` | `data-toggle="tooltip"`, `title`, `data-original-title` and `data-placement` remain. JavaScript clones arbitrary hook-compatible markup, assigns a unique id and text content, positions it, and manages focus/ARIA. A narrowly documented, classless `<div>` fallback remains only for minimal custom themes that omit the optional template. PHP/browser contracts prove application override, changed tag/classes/nesting, escaped content and fallback behavior. |
 
 ### Inline editor template hooks
 
@@ -165,7 +165,7 @@ For each migrated candidate, tests must prove all of the following:
    templates; cover every editor type, arbitrary classes and changed nesting.
 3. [Complete] Render the sidebar overlay in the current theme layout and remove
    JavaScript DOM construction; require the same hook from each added theme.
-4. Add the optional layout-level tooltip popup template with a neutral fallback
-   contract for minimal custom themes.
+4. [Complete] Add the optional layout-level tooltip popup template with a
+   neutral fallback contract for minimal custom themes.
 5. Pass concrete classes/options from Blade into every precompiled Vue island
    and verify AdminLTE/Tailwind/custom render boundaries.
