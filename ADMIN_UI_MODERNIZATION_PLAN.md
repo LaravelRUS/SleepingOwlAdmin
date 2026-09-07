@@ -1,21 +1,29 @@
-# План миграции SleepingOwlAdmin на headless UI core, сменные темы, Vue 3 и DataTables 3
+# Основной платформенный план SleepingOwlAdmin: headless UI core, Vue 3 и DataTables 3
 
 ## Статус и границы
 
-- Статус: приостановлен после asset health checkpoint; продолжить в новой задаче после перезапуска цели.
-- Текущий этап: **пауза после checkpoint theme-independent asset health**; этап 8 закрыт, формирование полноценной Tailwind-темы отложено до выбора подходящего готового шаблона.
-- Точка возобновления: `AdminLTETheme` работает на versioned logical runtime, Blade-first contract закрыт, DataTables 3 Core скрыт за `data-table-engine`, реальные `data-dismiss`, `data-toggle` и `data-widget` markers сохранены, jQuery audit/orphan cleanup закрыты, а `kodicms/laravel-assets` удалён. Asset health сравнивает версии один раз за request, передаёт нейтральный status custom theme и показывает локализованное AdminLTE footer warning; Tailwind presentation остаётся частью отложенной Tailwind-темы. Следующий пункт выбирать в новой задаче с чистым контекстом.
+- Статус: активен; основной release scope отделён от будущих встроенных тем.
+- Текущий этап: **этап 7 — завершение публичного theme extension contract**; реализация основной темы ведётся отдельным планом, этап 8 закрыт.
+- Точка возобновления: выполнить framework-free custom theme checkpoint и проверку изоляции выбранного theme bundle. Regression ожидания количества AdminLTE logical runtime assets записан первым незавершённым пунктом плана основной темы.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
 - Основная цель: выделить независимый от CSS/JS-фреймворков SleepingOwlAdmin core, полностью удалить jQuery из табличного runtime, обновить DataTables до версии 3 и перейти с Vue 2 на Vue 3.
-- UI-цель: загружать минимальный core bundle и только одну выбранную тему — AdminLTE, Tailwind или пользовательскую реализацию `ThemeInterface`.
+- UI-цель основного плана: загружать минимальный core bundle и только одну выбранную реализацию `ThemeInterface`; готовность конкретной темы проверяется её собственным планом.
 - Distribution-цель: конечный пользователь устанавливает/обновляет пакет через Composer и не обязан устанавливать Node.js, запускать Vite/Laravel Mix/Tailwind или пересобирать assets при создании разделов, forms и displays.
 - Compatibility-цель: по возможности сохранить PHP DSL (`AdminDisplay`, колонки, фильтры, actions), но считать этот релиз major и явно документировать frontend breaking changes.
 - Config-цель: считать опубликованный `config/sleeping_owl.php` публичным контрактом и сохранить большинство существующих ключей, значений по умолчанию и поведения даже при полной замене frontend implementation.
 - Вне текущего scope: обязательный переход с Laravel Mix на Vite, изменение серверной модели репозиториев и визуальный редизайн всех тем. Смена build tool допустима только если окажется необходимой для Vue 3/theme bundles и будет оформлена отдельным решением.
 - Отложенный инфраструктурный этап после срочных post-update исправлений: заменить Laravel Mix на Vite, сохранив logical entries, production/development profiles, готовые assets для Composer-пользователей и генерацию versioned asset manifest. Миграцию оформить отдельным checkpoint; до него build pipeline больше не усложнять.
+
+## Разделение планов тем
+
+- Этот файл является единственным checklist основного major-релиза: headless core, `AdminLTETheme`, публичный `ThemeInterface`, Vue 3 islands, DataTables 3, удаление jQuery, config compatibility и no-build consumer workflow.
+- Основная встроенная тема и её upgrade с AdminLTE 3/Bootstrap 4 ведутся в [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md). Этот plan обязателен для основного release gate, но theme-specific задачи не дублируются здесь.
+- Полноценная встроенная Tailwind-тема не блокирует основной релиз и ведётся отдельно в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md). Её реализация начинается только после явного возобновления и выбора подходящего готового шаблона.
+- Каждая следующая официальная или внешняя тема получает собственный implementation plan; общий повторяемый contract и критерии находятся в [`ADMIN_ADDITIONAL_THEMES_PLAN.md`](ADMIN_ADDITIONAL_THEMES_PLAN.md).
+- В этом файле Tailwind может упоминаться только как уже проверенная архитектурная граница, исторический checkpoint или ссылка на отдельный план. Незавершённые Tailwind deliverables здесь не учитываются.
 
 ## Процесс выполнения пунктов: одна задача — один чистый контекст
 
@@ -326,30 +334,29 @@ Production asset/license baseline хранится в `docs/modernization/baseli
 
 Логические manifest ids фиксируются заранее: `core`, `theme:<id>`, `feature:<id>` и `feature:<id>:theme:<id>`. Физические имена с hash/version берутся только из manifest; PHP и пользовательские extensions не строят пути к собранным файлам вручную.
 
-### Темы первого major-релиза
+### Тема основного major-релиза и extension contract
 
-- Встроенные темы: `adminlte` и `tailwind`; третья обязательная acceptance implementation — минимальная тестовая custom theme через публичный `ThemeInterface`.
+- Встроенная тема основного релиза — `adminlte`; обязательная acceptance implementation — минимальная test/custom theme через публичный `ThemeInterface`.
 - Default theme — `adminlte`, чтобы существующий `template` config и привычная структура upgrade-проектов получили минимально неожиданный результат.
 - Встроенная AdminLTE theme переходит на AdminLTE 4 + Bootstrap 5.3 и не поддерживает legacy AdminLTE 3/Bootstrap 4 JavaScript. На 2026-09-06 актуальная `admin-lte@4.9.1` объявляет только peer dependency `bootstrap ^5.3.8` и не требует jQuery.
-- Tailwind theme строится на Tailwind 4.x (на дату проверки `4.3.3`) и поставляется как заранее собранный полный bundle для стандартных views/components.
 - `TemplateDefault` сохраняется как deprecated compatibility alias/adapter к AdminLTE theme, поэтому прежнее значение опубликованного `template` не вызывает fatal error.
-- Выбор `tailwind` полностью исключает Bootstrap/AdminLTE assets; выбор `adminlte` полностью исключает Tailwind assets.
 - Custom theme явно задаётся существующим ключом `template`, реализует `ThemeInterface` и предоставляет готовые manifest entries; core не делает автоматический fallback к AdminLTE при ошибке custom theme.
 - Тема выбирается для панели при bootstrap приложения. Runtime theme switch на уже отрисованной странице не входит в первый релиз.
+- Tailwind и следующие встроенные темы реализуются после стабилизации этого extension contract по отдельным планам и не меняют критерий готовности основного релиза.
 
 ### Поставка без frontend-сборки у пользователя
 
 No-build consumer contract является release-blocking:
 
-- production consumer выполняет только Composer/PHP/Artisan-команды; отсутствие `node`, `npm`, Vite, Mix и Tailwind CLI не ограничивает штатные displays/forms/features/themes;
-- Composer artifact обязательно содержит manifest, precompiled core, все standard feature bundles, обе встроенные темы и их статические ресурсы;
+- production consumer выполняет только Composer/PHP/Artisan-команды; отсутствие `node`, `npm`, Vite и Mix не ограничивает штатные displays/forms/features/AdminLTE;
+- Composer artifact обязательно содержит manifest, precompiled core, все standard feature bundles, `AdminLTETheme` и её статические ресурсы;
 - Composer artifact обязательно содержит два согласованных заранее собранных профиля assets: `production` и `development`; оба устанавливаются без Node.js/npm;
 - `sleepingowl:install` публикует готовые assets при первой установке, а `sleepingowl:update` атомарно обновляет только package-owned published assets;
-- смена `template` между встроенными темами после публикации не требует новой frontend-сборки;
+- выбор `AdminLTETheme` или установленной готовой custom theme через `template` не требует пересборки package core;
 - создание section/model/display/form/column/filter через PHP DSL не меняет bundle и не запускает генератор frontend-кода;
 - пользовательские CSS/JS подключаются отдельными файлами через публичный asset API и не требуют fork/rebuild core;
 - custom theme package поставляет собственные готовые assets; требование build toolchain относится только к её автору;
-- CI устанавливает release artifact в чистое Laravel-приложение, где Node.js/npm отсутствуют, и выполняет smoke tests обеих встроенных тем.
+- CI устанавливает release artifact в чистое Laravel-приложение, где Node.js/npm отсутствуют, и выполняет smoke tests AdminLTE и framework-free test theme.
 
 Контракт install/update и manifest mismatch:
 
@@ -362,14 +369,14 @@ No-build consumer contract является release-blocking:
 - Manifest содержит как минимум `schema_version`, `package_version`, `build_id`, логические entries, относительные filenames и checksums. PHP package version определяется через Composer metadata, а не дублируется вручную в config.
 - Runtime resolver проверяет manifest до render. Отсутствующий, повреждённый, несовместимый по schema или checksum manifest вызывает специализированную диагностическую ошибку с точной командой `php artisan sleepingowl:update`; silent fallback на unversioned files запрещён.
 - Если manifest структурно валиден и его файлы доступны, но `package_version` не совпадает с установленной Composer-версией PHP package, админка может загрузить этот последний целостный набор и обязана показать постоянное локализованное уведомление в footer с точной командой `php artisan sleepingowl:update`. Проверка выполняется один раз на request и не требует frontend-запроса.
-- Данные о mismatch принадлежат PHP asset health service, а presentation — footer partial выбранной темы: AdminLTE и Tailwind получают аккуратные собственные варианты через Sass/`--soa-*`; custom theme получает публичный status contract и сама решает разметку. PHP core не возвращает CSS-классы.
+- Данные о mismatch принадлежат PHP asset health service, а presentation — footer partial выбранной темы: AdminLTE получает собственный вариант через Sass/`--soa-*`; custom theme получает публичный status contract и сама решает разметку. PHP core не возвращает CSS-классы.
 - Добавляется `sleepingowl:update --check`: read-only проверка установленного manifest/files для deployment health check; успех и ошибка имеют стабильные exit codes.
 - Release CI проверяет идемпотентный повторный запуск update, recovery после искусственно оборванной staging copy и отсутствие изменений config/application files.
 
-- Первый major поставляется одним Composer package `laravelrus/sleepingowl`: PHP core, обе встроенные темы, standard feature drivers, views, manifest и готовые production/development assets версионируются совместно.
+- Основной major поставляется одним Composer package `laravelrus/sleepingowl`: PHP core, `AdminLTETheme`, standard feature drivers, views, manifest и готовые production/development assets версионируются совместно.
 - Исходники разделяются внутри монорепозитория по `core/features/themes`, а build создаёт независимые entries; монорепозиторий не означает один монолитный browser bundle.
-- Composer archive содержит готовые assets обеих встроенных тем. Лишняя тема занимает место только в vendor/public после публикации, но не загружается браузером и не влияет на runtime.
-- В первой итерации встроенные темы не выносятся в отдельные Composer packages: атомарная версия исключает несовместимые сочетания PHP contracts, Blade views и assets и сохраняет одну update-команду.
+- Composer archive содержит готовые assets AdminLTE. Добавляемая позже официальная тема обязана поставлять готовые assets и не загружаться браузером, пока не выбрана.
+- В первой итерации AdminLTE не выносится в отдельный Composer package: атомарная версия исключает несовместимые сочетания PHP contracts, Blade views и assets и сохраняет одну update-команду.
 - Внешняя custom theme может поставляться отдельным Composer package с service provider, views и готовым manifest fragment; Node.js нужен автору такой темы, но не её потребителю.
 - Выделение официальных тем в отдельные packages допускается только после стабилизации `ThemeInterface` и manifest schema и требует отдельного compatibility решения.
 - Репозиторий и релизные archives содержат готовые versioned production/development bundles: core, feature chunks и bundles поддерживаемых тем.
@@ -664,13 +671,11 @@ No-build consumer contract является release-blocking:
 
 Критерий завершения: в исходниках нет runtime-вызовов `$()`/`jQuery()` и ни один выбранный UI-плагин не требует глобального jQuery.
 
-### Этап 7. Реализовать готовые темы
+### Этап 7. Завершить theme platform и разнести реализации тем
 
 - [x] Перенести legacy Bootstrap/AdminLTE imports из общего `admin-app.scss` под Sass boundary темы, сохранив прежний порядок каскада и structural selectors.
 - [x] Вынести Font Awesome в отдельный готовый `shared:icons` bundle и обновить его до актуальной стабильной версии `7.3.1`; legacy aggregate продолжает включать иконки в прежней позиции.
-- [ ] Подключить один и тот же `shared:icons` entry в assets готовых `AdminLTETheme` и `TailwindTheme`, не встраивая его CSS в theme bundles.
-  - [x] `AdminLTETheme` явно объявляет `shared:icons`, а её standalone CSS не содержит Font Awesome.
-  - [ ] `TailwindTheme` явно объявляет тот же `shared:icons`.
+- [x] Подключить `shared:icons` отдельным entry в assets `AdminLTETheme`, не встраивая Font Awesome в theme bundle.
 - [x] Реализовать современную `AdminLTETheme`, инкапсулирующую собственные Bootstrap/AdminLTE assets, markup и component adapters.
   - [x] Добавить прямую `AdminLTETheme`, оставить существующий `sleeping_owl.template` selector и сделать её default для новых config без потери `TemplateInterface` compatibility.
   - [x] Объявить theme-owned logical manifest/capabilities и собрать самостоятельный AdminLTE CSS из theme Sass boundary; старый `TemplateDefault` остаётся рабочим для опубликованных config.
@@ -708,30 +713,21 @@ No-build consumer contract является release-blocking:
     - [x] Добавить PHP/browser contracts с переопределёнными Blade views, произвольными classes и изменённой вложенностью; consumer не запускает npm и не пересобирает assets.
   - [x] Перед переключением runtime подключить theme-owned notification adapter дерева, не встраивая AdminLTE/SweetAlert policy в theme-neutral feature.
   - [x] Переключить `AdminLTETheme::initialize()` с compatibility aggregate на `core + Vue + feature + selected theme adapters`, не меняя `TemplateDefault` до проверки нового runtime.
-- [ ] Отложено: подобрать подходящий готовый шаблон для Tailwind-темы, затем отдельно спланировать её реализацию без Bootstrap/AdminLTE и с готовым production CSS.
-- [ ] Для каждой темы определить собственные Sass variables и значения общих `--soa-*` custom properties без hardcoded colors в component partials.
-- [ ] Реализовать dark mode через переопределение variables на theme container/root, без дублирования component stylesheet.
-- [ ] Поддержать `sidebar_background_color` в AdminLTE и Tailwind themes через `--soa-sidebar-bg`; `null` использует собственный default темы.
-- [ ] Для Tailwind customisation предоставить preset/source/content instructions, чтобы пользовательские theme views попадали в CSS build.
-- [ ] Поставлять полный готовый Tailwind production CSS для стандартного режима без Tailwind CLI у пользователя.
+- [x] Перенести отложенную TailwindTheme и её acceptance criteria в отдельный [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md), чтобы она не блокировала основной релиз.
+- [ ] Завершить обязательный release gate основной темы по [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md).
 - [ ] Предоставить документированный способ подключить дополнительный CSS и при необходимости простые theme settings/CSS variables без пересборки core.
 - [ ] Реализовать test/custom theme без UI framework как проверку достаточности публичного контракта.
-- [ ] Проверить одинаковое функциональное поведение feature drivers в AdminLTE и Tailwind themes.
+- [ ] Проверить одинаковое функциональное поведение feature drivers в AdminLTE и framework-free test theme в пределах объявленных capabilities.
 - [ ] Проверить, что одновременно загружается только один theme bundle.
 - [ ] Добавить theme selection через конфигурацию и документированный service provider hook.
 - [x] Добавить небольшой PHP asset health service: один раз за request сравнивать установленную Composer-версию пакета с `package_version` опубликованного manifest без frontend-запросов.
 - [x] При несовпадении валидных версий продолжать использовать последний целостный набор assets и передавать в footer status с точной командой `php artisan sleepingowl:update`; при совпадении status не рендерить.
 - [x] Добавить отдельные translation keys сообщения и команды во все штатные locales с проверяемым fallback, не собирать пользовательский текст в JavaScript.
-- [ ] Оформить уведомление отдельными компактными footer partials для встроенных тем: Sass-only styles, цвета из `_colors.scss`, остальные параметры из `_variables.scss`/`--soa-*`, доступный `role="status"`, без modal/toast и без перекрытия рабочего интерфейса.
-  - [x] AdminLTE footer partial и Sass presentation.
-  - [ ] Tailwind footer partial — отложен вместе с формированием полноценной Tailwind-темы.
 - [x] Для custom theme предоставить нейтральный публичный asset health status без CSS-классов и оставить отображение теме.
-- [ ] Покрыть tests совпадение версий, mismatch, locale fallback, отсутствие лишней разметки и rendering уведомления во встроенных темах.
-  - [x] Общий PHP contract, locale fallback, отсутствие status при совпадении и AdminLTE rendering.
-  - [ ] Tailwind rendering — отложен вместе с формированием полноценной Tailwind-темы.
+- [x] Покрыть общий PHP contract asset version match/mismatch, locale fallback и отсутствие status при совпадении; presentation tests принадлежат плану каждой темы.
 - [ ] Измерить core, feature и theme bundles по отдельности.
 
-Критерий завершения: установка выбирает AdminLTE, Tailwind или custom theme без изменения core; Tailwind/custom не получают Bootstrap/AdminLTE assets транзитивно.
+Критерий завершения: установка выбирает реализацию `ThemeInterface` без изменения core, custom theme не получает чужие assets транзитивно, а обязательный [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md) закрыт. Tailwind и следующие темы проверяются отдельными планами поверх того же публичного контракта.
 
 ### Этап 8. Удалить jQuery и очистить сборку
 
@@ -756,8 +752,8 @@ No-build consumer contract является release-blocking:
 - [ ] Зафиксировать исходные screenshots и критические пользовательские сценарии.
 - [ ] Создать отдельную migration branch в pilot-проекте; не смешивать её с прикладными feature changes.
 - [ ] Подключить новую версию пакета воспроизводимым способом и пройти migration guide без скрытых ручных шагов.
-- [ ] Обновить pilot-проект без запуска npm/Vite/Tailwind, используя `php artisan sleepingowl:update`, и зафиксировать только PHP/Composer/Artisan шаги deployment.
-- [ ] Проверить pilot сначала на default theme, затем минимум на одной альтернативной теме для ключевых экранов.
+- [ ] Обновить pilot-проект без запуска npm/Vite, используя `php artisan sleepingowl:update`, и зафиксировать только PHP/Composer/Artisan шаги deployment.
+- [ ] Проверить pilot сначала на AdminLTETheme, затем на framework-free test theme для сценариев в пределах её capabilities.
 - [ ] Любую общую проблему исправлять в SleepingOwlAdmin и добавлять regression test; project-specific override оставлять только для действительно прикладной логики.
 - [ ] Дополнять migration guide по фактически найденным несовместимостям.
 - [ ] Запустить pilot с его существующим опубликованным `sleeping_owl.php`, не заменяя конфиг новым файлом; изменения вносить только для подтверждённых deprecated/removed keys.
@@ -771,7 +767,7 @@ No-build consumer contract является release-blocking:
 - [ ] Добавить migration guide с заменой пользовательских jQuery hooks, Bootstrap/AdminLTE classes/selectors, Vue 2 extensions, `inline-template` и DataTables 1 options.
 - [ ] Добавить в migration guide таблицу замен прямых `KodiCMS\Assets` imports/facades и примеры нового first-party asset API.
 - [ ] Опубликовать config migration matrix и примеры только новых/изменённых keys вместо требования перепубликовать весь конфиг.
-- [ ] Добавить руководство по выбору AdminLTE/Tailwind theme и созданию custom theme.
+- [ ] Добавить руководство по выбору основной темы и созданию custom theme; документация каждой будущей темы принадлежит её отдельному плану.
 - [ ] Подготовить нейтральные проверенные примеры по сценариям reference project: section/table/DataTables, card form, custom form element, widget, policy, module Admin service provider, navigation/route, custom assets и Vue 3 island.
 - [ ] Обновить generator stubs для section, custom form element, widget, policy и module Admin service provider; после стабилизации contracts добавить отдельные stubs Vue island и custom theme.
 - [ ] Проверить сгенерированные stubs в test application: PHP-only stubs работают без Node.js, frontend stubs используют public extension/manifest API и не создают jQuery/Vue globals.
@@ -782,7 +778,7 @@ No-build consumer contract является release-blocking:
 - [ ] Проверить, что versioned asset manifest содержит согласованные production/development entries, файлы и checksums.
 - [ ] Выполнить полный PHP/frontend/browser test suite.
 - [ ] Выполнить установку зависимостей и production build в чистой среде по lock-файлу.
-- [ ] Отдельно установить release artifact в чистое Laravel-приложение без Node.js/npm и проверить AdminLTE и Tailwind themes на готовых assets.
+- [ ] Отдельно установить release artifact в чистое Laravel-приложение без Node.js/npm и проверить AdminLTE и framework-free test theme на готовых assets.
 - [ ] Провести ручной smoke test эталонных экранов.
 
 Критерий завершения: ветка готова к major release и содержит инструкции обновления для поддерживаемых проектов.
@@ -886,28 +882,27 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 
 ### Темы
 
-- [ ] core работает без подключённого Bootstrap/AdminLTE/Tailwind CSS;
-- [ ] AdminLTE theme полностью функциональна и владеет всеми Bootstrap/AdminLTE dependencies;
-- [ ] Tailwind theme полностью функциональна и не загружает Bootstrap/AdminLTE;
+- [ ] core работает без подключённого Bootstrap/AdminLTE CSS;
+- [ ] Обязательный acceptance gate [`ADMIN_ADMINLTE_THEME_PLAN.md`](ADMIN_ADMINLTE_THEME_PLAN.md) полностью закрыт;
 - [ ] custom test theme реализуется только через публичные contracts, без импортов внутренних файлов;
-- [ ] один PHP display/form даёт одинаковое поведение во всех темах;
+- [ ] один PHP display/form даёт одинаковое поведение в AdminLTE и custom test theme в пределах объявленных capabilities;
 - [ ] theme selection не включает assets невыбранной темы;
 - [ ] пользовательские HTML attributes и theme-specific classes передаются без преобразований и не теряются;
-- [ ] встроенные buttons, controls, validation states и responsive grid получают штатные classes из Blade views каждой темы;
+- [ ] конкретные buttons, controls, validation states и responsive grid принадлежат Blade views выбранной темы;
 - [ ] core не содержит class resolver и не пытается преобразовывать классы одной темы в классы другой;
-- [ ] Tailwind custom views могут быть включены в пользовательский CSS scan по документированной инструкции.
+
+Tailwind acceptance matrix находится только в [`ADMIN_TAILWIND_THEME_PLAN.md`](ADMIN_TAILWIND_THEME_PLAN.md).
 
 ### No-build consumer experience
 
 - [ ] чистое Laravel-приложение без Node.js устанавливает админку через Composer;
 - [ ] готовые assets публикуются/обновляются существующей `php artisan sleepingowl:update` без компиляции;
-- [ ] выбор AdminLTE или Tailwind выполняется конфигурацией и не требует изменения package sources;
+- [ ] выбор AdminLTE или установленной custom theme выполняется конфигурацией и не требует изменения package sources;
 - [ ] создание новой модели, section, form и DataTable через PHP DSL не требует frontend build;
-- [ ] стандартная TailwindTheme работает без пользовательского Tailwind config/content scan;
-- [ ] дополнительный CSS подключается без пересборки core; ограничения произвольных Tailwind utilities явно документированы;
+- [ ] дополнительный CSS подключается без пересборки core;
 - [ ] пользовательский CSS или JS подключается отдельным asset, не пересобирая core/theme bundles;
 - [ ] отсутствующие/повреждённые published assets дают понятную диагностическую ошибку с командой обновления;
-- [ ] валидные, но несовпадающие версии PHP package/assets показывают локализованное footer-уведомление в AdminLTE и Tailwind без frontend rebuild; совпадающие версии не добавляют разметку;
+- [ ] валидные, но несовпадающие версии PHP package/assets показывают локализованное footer-уведомление в AdminLTE без frontend rebuild; совпадающие версии не добавляют разметку;
 - [ ] версии PHP package, asset manifest и published bundles согласованы;
 - [ ] оба готовых asset profiles публикуются одной `sleepingowl:update`, а `ADMIN_DEV_ASSETS` только выбирает уже опубликованный профиль;
 - [ ] production deployment документирован только через Composer/PHP/Artisan для обычного пользователя.
@@ -929,7 +924,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] прежний опубликованный `config/sleeping_owl.php` загружается без fatal errors и сохраняет ожидаемое поведение поддерживаемых keys;
 - [ ] `sleepingowl:update` не перезаписывает пользовательский config;
 - [ ] отсутствие новых keys покрывается defaults внутри пакета;
-- [ ] `template` выбирает AdminLTE, Tailwind или custom implementation без обязательного переименования ключа;
+- [ ] `template` выбирает AdminLTE или custom implementation без обязательного переименования ключа;
 - [ ] `bootstrapDirectory` продолжает указывать на application admin bootstrap files и не связано с выбранной CSS-темой;
 - [ ] route/auth/env/upload/date-time/WYSIWYG/search/alias settings не меняются из-за frontend migration;
 - [ ] table/state/autoupdate settings сохраняют ключи и документированное поведение;
@@ -947,7 +942,7 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] Vue islands используют небольшие components и composables/services для сложной логики;
 - [ ] theme Blade views не содержат бизнес-логику и большие inline scripts;
 - [ ] видимая package-owned разметка и classes остаются в переопределяемых Blade views/`<template>` везде, где это возможно; JavaScript не владеет theme presentation;
-- [ ] существующие logical view paths и project/vendor overrides покрыты contract tests для AdminLTE, Tailwind и custom themes;
+- [ ] существующие logical view paths и project/vendor overrides покрыты contract tests для AdminLTE и custom themes;
 - [ ] helpers расположены рядом с feature, если они не доказали общую применимость;
 - [ ] ESLint complexity/function-length/style checks проходят без глобальных disable directives;
 - [ ] публичные границы modules покрыты unit/contract tests и имеют понятные имена.
@@ -961,10 +956,10 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] dark mode переопределяет variables, а не дублирует component rules;
 - [ ] JavaScript не устанавливает theme colors напрямую;
 - [ ] динамический config color проходит валидацию и записывается в scoped CSS custom property;
-- [ ] `sidebar_background_color` меняет фон sidebar в AdminLTE/Tailwind без rebuild, а `null` возвращает default темы;
+- [ ] `sidebar_background_color` передаётся только через валидированную `--soa-sidebar-bg`; visual behavior проверяет план темы с sidebar capability;
 - [ ] inline styles не используются для theme styling;
 - [ ] Stylelint/`stylelint-scss` проходит без глобальных отключений правил;
-- [ ] generated Tailwind/vendor CSS собирается автоматически и не редактируется вручную.
+- [ ] generated/vendor CSS собирается автоматически и не редактируется вручную.
 
 ## Definition of Done
 
