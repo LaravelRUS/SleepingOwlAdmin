@@ -1,15 +1,15 @@
-# План миграции SleepingOwlAdmin на headless UI core, сменные темы, Vue 3 и DataTables 2
+# План миграции SleepingOwlAdmin на headless UI core, сменные темы, Vue 3 и DataTables 3
 
 ## Статус и границы
 
 - Статус: выполняется.
 - Текущий этап: **Этап 7 — готовые AdminLTE, Tailwind и custom themes**.
-- Точка возобновления: подключить theme-owned runtime notification adapter дерева, затем переключить `AdminLTETheme` с aggregate на versioned logical bundles и реализовать полноценную Tailwind presentation без транзитивной загрузки Bootstrap/AdminLTE. Browser entries forms/table/lightbox/tree и profile-aware `shared:compatibility`/`shared:vue` уже готовы вместе с `shared:icons`; новый config default указывает на прямую `AdminLTETheme`, её standalone CSS содержит Bootstrap/AdminLTE, а metadata явно объявляет общие assets и component adapters. Старые опубликованные config с `TemplateDefault` продолжают работать через legacy adapter. Этап 6 завершён: first-party runtime не содержит jQuery calls и не создаёт `$`/`jQuery` globals; DataTables 2 использует jQuery только внутри vendor bundle. Native alert сохранил `data-dismiss="alert"`, как dropdown/tooltip сохранили `data-toggle`, а sidebar — `data-widget`; replacement markers вроде `data-soa-dropdown*` и `data-soa-alert*` не вводятся.
+- Точка возобновления: обновить изолированную границу `data-table-engine` до стабильного DataTables 3, затем закрепить Blade-first rendering/override contract до реализации notification adapter и переключения `AdminLTETheme` с aggregate на versioned logical bundles. После этого реализовать полноценную Tailwind presentation без транзитивной загрузки Bootstrap/AdminLTE. Browser entries forms/table/lightbox/tree и profile-aware `shared:compatibility`/`shared:vue` уже готовы вместе с `shared:icons`; новый config default указывает на прямую `AdminLTETheme`, её standalone CSS содержит Bootstrap/AdminLTE, а metadata явно объявляет общие assets и component adapters. Старые опубликованные config с `TemplateDefault` продолжают работать через legacy adapter. Этап 6 завершён: first-party runtime не содержит jQuery calls и не создаёт `$`/`jQuery` globals; текущий DataTables 2 использует jQuery только внутри vendor bundle, а запланированный DataTables 3 должен удалить и эту runtime-зависимость. Native alert сохранил `data-dismiss="alert"`, как dropdown/tooltip сохранили `data-toggle`, а sidebar — `data-widget`; replacement markers вроде `data-soa-dropdown*` и `data-soa-alert*` не вводятся.
 - Рабочая ветка: `codex/remove-jquery-datatables2`.
 - Read-only reference project: `D:\domains\laluna.kit`; считать ранее собранный inventory достаточным, не сканировать проект/`Modules` повторно и обращаться только к конкретному файлу при точечной необходимости; не изменять и не запускать команды с побочными эффектами без отдельного разрешения.
 - База ветки: `ia11`, commit `17752e62`.
 - Тип релиза: major, с допустимыми frontend breaking changes.
-- Основная цель: выделить независимый от CSS/JS-фреймворков SleepingOwlAdmin core, удалить прямое использование jQuery и jQuery-плагинов, обновить DataTables до версии 2 и перейти с Vue 2 на Vue 3.
+- Основная цель: выделить независимый от CSS/JS-фреймворков SleepingOwlAdmin core, полностью удалить jQuery из табличного runtime, обновить DataTables до версии 3 и перейти с Vue 2 на Vue 3.
 - UI-цель: загружать минимальный core bundle и только одну выбранную тему — AdminLTE, Tailwind или пользовательскую реализацию `ThemeInterface`.
 - Distribution-цель: конечный пользователь устанавливает/обновляет пакет через Composer и не обязан устанавливать Node.js, запускать Vite/Laravel Mix/Tailwind или пересобирать assets при создании разделов, forms и displays.
 - Compatibility-цель: по возможности сохранить PHP DSL (`AdminDisplay`, колонки, фильтры, actions), но считать этот релиз major и явно документировать frontend breaking changes.
@@ -40,6 +40,21 @@
 - formatter и единый code style применяются автоматически;
 - CI запускает unit/contract tests по feature boundaries;
 - исключения из size/complexity rules допускаются только локально с коротким комментарием причины, не глобальным отключением правила.
+
+## Правило №2: Blade-first rendering и переопределяемые шаблоны
+
+Blade остаётся основным владельцем видимой first-party разметки, структуры и CSS-классов. Переход на общий JavaScript runtime означает централизацию behavior/state/lifecycle, но не перенос дизайна из переопределяемых Blade views в жёстко зашитые JS render-функции.
+
+- Существующие логические пути views элементов, колонок, displays, filters, actions и form layout сохраняются как публичный compatibility contract; выбранная тема предоставляет defaults, а project/vendor override имеет приоритет.
+- Пользователь по-прежнему может переопределить Blade конкретного элемента либо указать поддерживаемый custom view и напрямую задать классы выбранной темы; PHP core не переводит classes через semantic resolver.
+- First-party JavaScript привязывает поведение только к минимальному документированному DOM contract: существующим behavior markers, form field names, ARIA/standard attributes и локальным hooks. Остальная вложенность и CSS-классы могут меняться в Blade.
+- Новые `data-*` hooks вводятся только когда у элемента нет пригодного существующего behavior marker; запрещённые replacement markers (`data-soa-dropdown*`, `data-soa-alert*`, `data-soa-sidebar*`, `data-soa-files*`) не появляются.
+- Видимый динамический first-party UI по возможности описывается theme-owned Blade partial или Blade-rendered `<template>`, который JavaScript клонирует и наполняет данными. JS не зашивает Bootstrap/Tailwind classes и не собирает заменяемый дизайн длинной цепочкой `createElement()`.
+- Для Vue 3 islands Blade владеет outer structure, native submitted control, labels/help/errors и передаваемыми theme classes/options; precompiled Vue component владеет только интерактивной частью, которую нельзя безопасно собрать из runtime Blade template без возврата compiler build.
+- Vendor-owned ephemeral DOM (datepicker popup, DataTables internals, lightbox container и подобное) может создаваться библиотекой, но его presentation принадлежит выбранному theme adapter/Sass variables; это исключение не разрешает перенос package-owned controls в JS.
+- Не-UI DOM для HTTP submit, asset loading и технического lifecycle не требует Blade template.
+- Каждый JS-enhanced element сохраняет рабочий server-rendered/native fallback там, где он существовал и практически применим.
+- Contract tests рендерят override views с произвольными framework classes и изменённой безопасной вложенностью, затем доказывают в браузере, что behavior работает без frontend rebuild.
 
 ## Правило стилей: Sass и централизованные переменные
 
@@ -93,19 +108,19 @@ Color literals и dark mode:
 
 ## Важное техническое ограничение
 
-DataTables 2 поддерживает современную инициализацию через `new DataTable(...)`, но перед реализацией нужно проверить фактическое дерево зависимостей выбранного пакета и его extensions. Если `jquery` остаётся транзитивной зависимостью DataTables 2, возможны два разных критерия завершения:
+DataTables 2 был принят как переходная ступень и позволил вынести таблицы за `new DataTable(...)` boundary, но сохраняет jQuery внутри vendor bundle. После выхода стабильного DataTables 3 целевой движок изменён:
 
-1. **Базовый критерий:** в коде проекта нет `$`, `jQuery`, jQuery-плагинов и глобальных `window.$/window.jQuery`; jQuery может присутствовать только как закрытая транзитивная деталь DataTables 2.
-2. **Строгий критерий:** пакет `jquery` отсутствует и в production bundle, и в `npm` dependency tree. Если DataTables 2 не позволяет этого добиться, для строгого критерия придётся заменить DataTables на независимый grid (основной кандидат — Tabulator) либо принять базовый критерий отдельным решением.
+1. **Переходный критерий DataTables 2:** в коде проекта нет `$`, `jQuery`, jQuery-плагинов и глобальных `window.$/window.jQuery`; jQuery присутствует только как закрытая vendor-деталь изолированного table bundle.
+2. **Целевой критерий DataTables 3:** jQuery отсутствует в `data-table-engine`, его extensions и опубликованном `feature:table` runtime bundle; никакой jQuery API или объект не является частью публичного table contract.
 
-Выбран **базовый критерий**, поскольку целевой grid явно зафиксирован как DataTables 2:
+До завершения нового checkpoint действует переходный критерий; после него обязательным становится целевой критерий DataTables 3:
 
 - first-party JavaScript и inline scripts в Blade не используют jQuery API (`$()`, `jQuery`, jQuery plugins) или глобальные `window.$`/`window.jQuery`;
 - `jquery` удаляется из прямых dependencies SleepingOwlAdmin;
-- транзитивный jQuery допускается только под allowlist пакетов DataTables 2 и попадает только в изолированный table-feature bundle;
+- транзитивный jQuery временно допускается только под allowlist пакетов DataTables 2 и попадает только в изолированный table-feature bundle;
 - jQuery внутри DataTables не является публичным API: hooks, extensions и пользовательский код работают через публичный DataTables API и native events;
-- автоматическая проверка `npm ls jquery` завершается ошибкой, если jQuery появляется вне разрешённой DataTables-ветки;
-- переход на DataTables 3 ради строгого критерия рассматривается отдельно после стабилизации текущей миграции и не входит в неё незаметно.
+- автоматическая проверка compiled `feature:table` завершается ошибкой при наличии jQuery runtime после перехода на DataTables 3;
+- полный `npm ls jquery` оценивается отдельно от runtime gate, поскольку build-only dependency AdminLTE 3 до завершения theme extraction может сохранять собственное транзитивное дерево.
 
 #### Проверка npm packages от 2026-09-06
 
@@ -113,7 +128,7 @@ DataTables 2 поддерживает современную инициализ�
 - `datatables.net`, `datatables.net-bs4`, `datatables.net-bs5`, `datatables.net-dt` и Responsive packages этих major-веток объявляют production dependency `jquery >=1.7`.
 - Чистая временная установка `datatables.net@2.3.8`, `datatables.net-bs4@2.3.8`, `datatables.net-responsive@3.0.8` и `datatables.net-responsive-bs4@3.0.8` установила пять production packages, включая дедуплицированный `jquery@4.0.0`.
 - Следовательно, строгий критерий несовместим с DataTables 2 без замены grid либо неподдерживаемого вмешательства в package/bundle.
-- На дату проверки npm tag `latest` уже указывает на `datatables.net@3.0.3` и Responsive `4.0.3`; их metadata не содержит зависимости от jQuery. Это отдельная major-миграция и не меняет согласованную цель автоматически.
+- На дату проверки npm tag `latest` указывает на `datatables.net@3.0.3` и Responsive `4.0.3`; их metadata не содержит зависимости от jQuery. Эти версии приняты следующей целевой ступенью через отдельный проверяемый checkpoint.
 
 ### Ограничение Vue 3 и серверных шаблонов
 
@@ -387,7 +402,7 @@ No-build consumer contract является release-blocking:
 
 - Создать реестр `Admin.Tables`, который скрывает конкретный table engine.
 - Минимальный контракт instance: `reload()`, `destroy()`, `clearState()`, `selectedRows()`, `element`, `engineInstance`.
-- Инициализировать DataTables 2 через `new DataTable(element, options)`, без `$(element).DataTable()` в коде проекта.
+- Инициализировать DataTables 3 через engine-neutral границу `data-table-engine` и `new DataTable(element, options)`, без `$(element).DataTable()` в коде проекта.
 - На первом этапе сохранить текущий серверный wire protocol, чтобы не смешивать frontend-миграцию с переписыванием PHP query layer.
 - Перевести внешние consumers (actions, inline-edit, auto-update) с прямого DataTables API на `Admin.Tables`.
 - Удалить собственный renderer из `resources/assets/js_owl/libs/datatables.js`.
@@ -405,10 +420,10 @@ No-build consumer contract является release-blocking:
 
 ### PHP API
 
-- В рамках этой major-ветки `AdminDisplay::datatables()` переводится на новую реализацию DataTables 2; отдельный `datatables2()` больше не нужен, если обратная frontend-совместимость официально не является целью.
+- В рамках этой major-ветки `AdminDisplay::datatables()` переводится на новую реализацию DataTables 3; versioned PHP factories `datatables2()`/`datatables3()` не вводятся, конкретную библиотеку скрывает `data-table-engine`.
 - Сохранить по возможности методы конфигурации PHP: `setOrder`, `setDisplaySearch`, `setDisplayLength`, pagination, payload, row class callback, columns и filters.
 - Устаревшие произвольные DataTables 1 options из `setDatatableAttributes()` пропускать через нормализатор и документировать несовместимые ключи.
-- Server-side response оставить совместимым с DataTables 2. Нормализацию request/response вынести в отдельные классы только если тесты покажут, что текущая реализация мешает обновлению.
+- Server-side request/response оставить совместимым с сохранённым DataTables wire protocol. Нормализацию вынести в отдельные классы только если тесты покажут, что текущая реализация мешает обновлению.
 
 ### Совместимость `config/sleeping_owl.php`
 
@@ -433,7 +448,7 @@ No-build consumer contract является release-blocking:
 | Bootstrap 4 | Только внутри опциональной AdminLTE-темы; core без Bootstrap | Актуальную Bootstrap-версию выбирает и инкапсулирует AdminLTE theme package |
 | AdminLTE 3 | Опциональная `AdminLTETheme` | Default theme может остаться AdminLTE, но core не знает её layout/classes/events |
 | Tailwind | Опциональная `TailwindTheme` + готовый CSS | Для пользовательских utilities предоставить preset/source instructions без загрузки AdminLTE |
-| DataTables 1 + самописный renderer | DataTables 2 feature driver + theme adapters | Не использовать внутренние API DataTables или Bootstrap markup в driver core |
+| DataTables 1 + самописный renderer | DataTables 3 через `data-table-engine` + theme adapters | Не использовать внутренние API DataTables или Bootstrap markup в driver core |
 | Vue 2 global build | Vue 3 islands | Временный `@vue/compat` допустим; в финальном bundle отсутствует |
 | `vue-resource` | Axios/`fetch` | CSRF и error handling централизовать в core HTTP client |
 | `vue-template-compiler` | Совместимый Vue 3 compiler/runtime build | In-DOM root templates допустимы, `inline-template` удаляется |
@@ -646,6 +661,16 @@ No-build consumer contract является release-blocking:
   - [x] Сделать `feature:lightbox` и `feature:tree` самозапускающимися browser entries поверх headless core; library `index.js` оставить без side effects, а tree labels брать через optional `trans` с безопасным fallback.
   - [x] Сделать `feature:forms` самозапускающимся browser entry и проверить реальные consumer scenarios без legacy aggregate.
   - [x] Сделать `feature:table` самозапускающимся browser entry и проверить реальные consumer scenarios без legacy aggregate.
+  - [ ] Обновить изолированную границу таблиц до `data-table-engine` на стабильных `datatables.net`/`datatables.net-bs4` 3.0.3 и Responsive core/BS4 4.0.3.
+    - [ ] Переименовать version-specific source exports/files/tests в engine-neutral contract, не добавляя `AdminDisplay::datatables3()` и не меняя существующий PHP DSL.
+    - [ ] Удалить обращения к приватным settings, зафиксировать новый `DataTable.Dom` callback context и запретить jQuery-only selectors.
+    - [ ] Пересобрать оба готовых asset-профиля и доказать browser/static gates, что `feature:table` не содержит и не публикует jQuery, сохраняя wire protocol, state, filters, actions и lifecycle.
+  - [ ] Закрепить Blade-first rendering/override contract до дальнейшего переключения theme runtime.
+    - [ ] Составить inventory package-owned видимого UI, создаваемого через JavaScript, и разделить его на Blade-template candidates, Vue/vendor internals и технический не-UI DOM.
+    - [ ] Вернуть подходящий динамический first-party UI в theme-owned Blade partials или Blade-rendered `<template>`; начать с inline editor, table auto-update control, tree controls и других мест с зашитыми presentation classes.
+    - [ ] Сохранить существующие logical view paths, custom-view API и приоритет project/vendor overrides для AdminLTE, Tailwind и custom themes.
+    - [ ] Передавать theme classes/options Vue islands непосредственно из Blade там, где inner precompiled widget нельзя заменить Blade markup без runtime compiler.
+    - [ ] Добавить PHP/browser contracts с переопределёнными Blade views, произвольными classes и изменённой вложенностью; consumer не запускает npm и не пересобирает assets.
   - [ ] Перед переключением runtime подключить theme-owned notification adapter дерева, не встраивая AdminLTE/SweetAlert policy в theme-neutral feature.
   - [ ] Переключить `AdminLTETheme::initialize()` с compatibility aggregate на `core + Vue + feature + selected theme adapters`, не меняя `TemplateDefault` до проверки нового runtime.
 - [ ] Реализовать `TailwindTheme`, которая не загружает Bootstrap/AdminLTE и поставляется с готовым production CSS.
@@ -882,6 +907,8 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - [ ] table driver разделён на lifecycle/options/transport/filters/state/selection/hooks;
 - [ ] Vue islands используют небольшие components и composables/services для сложной логики;
 - [ ] theme Blade views не содержат бизнес-логику и большие inline scripts;
+- [ ] видимая package-owned разметка и classes остаются в переопределяемых Blade views/`<template>` везде, где это возможно; JavaScript не владеет theme presentation;
+- [ ] существующие logical view paths и project/vendor overrides покрыты contract tests для AdminLTE, Tailwind и custom themes;
 - [ ] helpers расположены рядом с feature, если они не доказали общую применимость;
 - [ ] ESLint complexity/function-length/style checks проходят без глобальных disable directives;
 - [ ] публичные границы modules покрыты unit/contract tests и имеют понятные имена.
@@ -914,9 +941,10 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 - `kodicms/laravel-assets` удалён; небольшой first-party asset/meta registry покрывает только используемый contract и работает с versioned manifest;
 - большинство существующих config keys сохранено, а старый опубликованный config является обязательным compatibility fixture;
 - PHP core не генерирует framework-specific CSS classes;
+- Blade остаётся владельцем переопределяемой first-party разметки/classes, а JS добавляет поведение через минимальный стабильный DOM contract;
 - AdminLTE, Tailwind и custom theme выбираются через стабильный публичный contract;
 - в страницу попадают assets только выбранной темы и востребованных features;
-- DataTables 2 использует только публичные API и явный theme presentation adapter;
+- DataTables 3 скрыт за `data-table-engine`, использует только публичные API и явный theme presentation adapter; jQuery отсутствует в опубликованном table runtime;
 - все jQuery-only плагины удалены либо заменены;
 - Vue 3 используется через изолированные islands; Vue 2, `inline-template`, `vue-resource` и `@vue/compat` отсутствуют в финальной сборке;
 - PHP API таблиц и серверный async flow покрыты тестами;
@@ -1062,3 +1090,4 @@ rg -n "btn-|form-control|form-group|card-|col-(sm|md|lg)|pull-right" src
 | 2026-09-07 | Этап 7 / lightbox и tree browser entries | `feature:lightbox` и `feature:tree` переведены с library-only `index.js` на отдельные side-effect browser entries, а публичные `index.js` остались чистыми для программного импорта. Оба entry сами устанавливают lifecycle definitions и выполняют initial scan поверх `admin-core`; доступны `Admin.Lightboxes`/`Admin.Trees`. Tree labels читаются через optional `trans` с английским fallback, но AdminLTE notification policy намеренно остаётся в legacy aggregate до отдельного theme runtime adapter. Прямые Chromium contracts загружают именно опубликованные production/development core + feature files, открывают lightbox, монтируют оба дерева и подтверждают отсутствие `$`/`jQuery`, Vue, DataTables и Bootstrap/AdminLTE globals. Production/development assets пересобраны и проверены как 39 файлов на профиль; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate: 485 tests, 1898 assertions, 10 skipped; frontend gate: 588 Vitest + 114 Playwright | текущий commit |
 | 2026-09-07 | Этап 7 / forms browser entry | `feature:forms` переведён с library-only entry на самостоятельный browser runtime поверх `admin-core + shared:compatibility`; чистый `index.js` остаётся API для программного импорта. Единый `Admin.Forms.scan(root)` устанавливает form buttons, Air Datepicker, Files, WYSIWYG и password/text generators; прежний `Admin.WYSIWYG.scan` сохранён. Form buttons и generators используют общий idempotent lifecycle, работают со всеми элементами, публикуют native `input`/`change` и сохраняют прежние markers/classes/options. CKEditor 4/5, SimpleMDE и TinyMCE регистрируются лениво, поэтому неиспользуемые editor globals не требуются. Browser fixture проверяет submit/CSRF, несколько генераторов, date, Files serialization, CKEditor lifecycle, dynamic scan/destroy и отсутствие `$`/`jQuery`, Vue, DataTables и Bootstrap/AdminLTE globals в обоих готовых профилях. Production/development assets пересобраны и проверены как 39 файлов на профиль; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate: 485 tests, 1898 assertions, 10 skipped; frontend gate: 591 Vitest + 116 Playwright | текущий commit |
 | 2026-09-07 | Этап 7 / table browser entry | `feature:table` переведён с library-only entry на самостоятельный browser runtime поверх `admin-core + shared:compatibility`; чистый `index.js` остаётся API для программного импорта, а прежний `display/datatables.js` стал тонким bridge к тому же runtime. Сохранены DataTables 2 constructor boundary, серверный wire protocol, filters/state/actions/inline editor/checkboxes/confirm controls/auto-update, `Admin.Modules` и `Admin.Tables`; добавлены `Admin.TableFeature`, idempotent `Admin.Tables.scan(root)` и общий lifecycle `Admin.Components`. First-party код не использует jQuery, ProgressBar импортируется закрыто, browser entry не публикует `$`/`jQuery`, DataTable, ProgressBar, Moment, Vue или Bootstrap/AdminLTE globals; jQuery остаётся только закрытой деталью официального DataTables bundle. Browser fixture проверяет полный runtime в обоих готовых профилях, включая динамический scan/destroy. Production/development assets пересобраны и проверены как 39 файлов на профиль; config matrix: 113 keys и legacy/minimal fixtures валидны; полный PHP gate: 485 tests, 1898 assertions, 10 skipped; frontend gate: 592 Vitest + 118 Playwright | текущий commit |
+| 2026-09-07 | Планирование / DataTables 3 и Blade-first views | После стабильного релиза DataTables 3 целевой table runtime изменён на dependency-free `datatables.net` 3.0.3 + Responsive 4.0.3 за engine-neutral границей `data-table-engine`; versioned PHP factories не вводятся. Перед notification adapter и runtime switch добавлен отдельный Blade-first checkpoint: существующие logical view paths/project overrides сохраняются, видимая first-party разметка и classes остаются в theme-owned Blade views или Blade-rendered `<template>` везде, где это возможно, а JS отвечает за behavior/state/lifecycle. Для precompiled Vue/vendor internals явно ограничено исключение; theme classes/options передаются из Blade, consumer rebuild не требуется. Реализация этих двух новых checkpoints ещё не начата | текущий commit |
