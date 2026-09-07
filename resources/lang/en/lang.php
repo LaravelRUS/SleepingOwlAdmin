@@ -64,7 +64,7 @@ return [
         'filter-goto' => 'Show',
         'save' => 'Save',
         'all' => 'All',
-        'processing' => '<i class="fas fa-spinner fa-5x fa-spin"></i>',
+        'processing' => '',
         'loadingRecords' => 'Loading...',
         'lengthMenu' => 'Show _MENU_ entries',
         'zeroRecords' => 'No matching records found.',

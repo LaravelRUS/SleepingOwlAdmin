@@ -64,7 +64,7 @@ return [
         'filter-goto' => 'Показать',
         'save' => 'Сохранить',
         'all' => 'Все',
-        'processing' => '<i class="fas fa-spinner fa-5x fa-spin"></i>',
+        'processing' => '',
         'loadingRecords' => 'Загрузка...',
         'lengthMenu' => 'Отображать _MENU_ записей',
         'zeroRecords' => 'Не найдено подходящих записей.',
