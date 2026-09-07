@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="override-token" />
+        <title>Application Blade overrides</title>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                locale: 'en',
+                url: 'http://127.0.0.1:4173',
+                url_path: 'application-blade-overrides',
+                url_prefix: 'admin',
+                template: { asset_dir: 'default' },
+                user_id: null,
+                max_file_size: 2,
+                datetime_format: 'DD.MM.YYYY HH:mm',
+                date_format: 'DD.MM.YYYY',
+                state_datatables: false,
+                datatables_highlight: false,
+                state_tabs: false,
+                state_filters: false,
+                wysiwyg: {},
+                lang: { button: {}, message: {}, select: {}, table: {} },
+            }
+        </script>
+    </head>
+    <body>
+        <button id="application-tooltip-trigger" data-toggle="tooltip" title="Override tooltip">
+            Tooltip
+        </button>
+
+        <template data-tooltip-template>
+            <aside class="application-tooltip-override" data-tooltip-popup role="tooltip">
+                <strong data-tooltip-content></strong>
+            </aside>
+        </template>
+
+        <section class="application-image-override" data-application-image-override>
+            <div class="application-image-nesting">
+                <article
+                    id="application-image"
+                    v-pre
+                    data-vue-app
+                    data-vue-component="element-image"
+                    data-vue-props='{"assetPrefix":"","classes":{"alert":"application-image-alert","alertClose":"application-image-alert-close","current":"application-image-current","downloadButton":"application-image-download","downloadIcon":"application-image-download-icon","errorIcon":"application-image-error-icon","info":"application-image-info","insertCurrentButton":"application-image-insert-current","insertIcon":"application-image-insert-icon","insertNewButton":"application-image-insert-new","item":"application-image-item","previewLink":"application-image-preview","removeButton":"application-image-remove","removeIcon":"application-image-remove-icon","uploadButton":"application-image-upload","uploadIcon":"application-image-upload-icon","uploadingIcon":"application-image-uploading-icon"},"csrfToken":"override-token","labels":{"browse":"Upload image","download":"Download","insertLink":"Insert link","remove":"Remove image"},"maxFileSize":2,"messages":{"confirmRemove":"Remove image?","fileTooBig":"File is too large","invalidFileType":"Wrong image type","responseError":"Upload error"},"name":"application_image","onlyLink":true,"readonly":false,"url":"/api/upload","value":"fixtures/pixel.svg"}'
+                ></article>
+            </div>
+        </section>
+
+        <script src="/public/default/profiles/development/js/admin-core.js"></script>
+        <script src="/public/default/profiles/development/js/shared/compatibility.js"></script>
+        <script>
+            Admin.Messages.cliptobuffer = () => Promise.resolve({ value: 'fixtures/replaced.svg' })
+            Admin.Messages.confirm = () => Promise.resolve({ value: true })
+        </script>
+        <script src="/public/default/profiles/development/js/shared/vue.js"></script>
+        <script src="/public/default/profiles/development/js/features/tooltip.js"></script>
+        <script>
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

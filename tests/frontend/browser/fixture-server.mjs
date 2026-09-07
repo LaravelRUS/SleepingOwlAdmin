@@ -13,6 +13,10 @@ const staticRoutes = new Map([
         '/compatibility-runtime',
         [join(browserDirectory, 'compatibility-runtime.html'), 'text/html; charset=utf-8'],
     ],
+    [
+        '/application-blade-overrides',
+        [join(browserDirectory, 'application-blade-overrides.html'), 'text/html; charset=utf-8'],
+    ],
     ['/alerts', [join(browserDirectory, 'alerts.html'), 'text/html; charset=utf-8']],
     ['/alerts-modern', [join(browserDirectory, 'alerts-modern.html'), 'text/html; charset=utf-8']],
     [
@@ -198,7 +202,7 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
-    ...profileFeatureRoutes('development', ['forms', 'lightbox', 'table', 'tree']),
+    ...profileFeatureRoutes('development', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
     [
         '/public/default/profiles/production/js/shared/vue.js',
         [
@@ -231,7 +235,7 @@ const staticRoutes = new Map([
             'text/javascript',
         ],
     ],
-    ...profileFeatureRoutes('production', ['forms', 'lightbox', 'table', 'tree']),
+    ...profileFeatureRoutes('production', ['forms', 'lightbox', 'table', 'tooltip', 'tree']),
     [
         '/public/default/css/admin-app.css',
         [join(projectRoot, 'public', 'default', 'css', 'admin-app.css'), 'text/css'],

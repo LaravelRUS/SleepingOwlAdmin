@@ -6,10 +6,10 @@ trait InteractsWithJsonProps
 {
     protected function extractJsonProps(string $html): array
     {
-        preg_match('/data-vue-props="([^"]*)"/', $html, $matches);
-        $this->assertArrayHasKey(1, $matches);
+        preg_match("/data-vue-props=([\"'])(.*?)\\1/s", $html, $matches);
+        $this->assertArrayHasKey(2, $matches);
 
-        $json = html_entity_decode($matches[1], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $json = html_entity_decode($matches[2], ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     }

@@ -167,7 +167,7 @@ For each migrated candidate, tests must prove all of the following:
    JavaScript DOM construction; require the same hook from each added theme.
 4. [Complete] Add the optional layout-level tooltip popup template with a
    neutral fallback contract for minimal custom themes.
-5. Pass concrete classes/options from Blade into every precompiled Vue island
+5. [Complete] Pass concrete classes/options from Blade into every precompiled Vue island
    and verify AdminLTE/Tailwind/custom render boundaries.
    - [Complete] `select`: the logical Blade partial owns the concrete required
      message class, while the precompiled component consumes `classes.required`.
@@ -182,4 +182,14 @@ For each migrated candidate, tests must prove all of the following:
    - [Complete] `file`: the logical field view supplies all alert, current-file,
      action and icon-state classes; Dropzone lifecycle uses a structural hook
      and does not depend on the legacy `upload-button` class.
-   - [Pending] `image` and `images`.
+   - [Complete] `image`: preview, upload, insert, download and remove controls
+     consume concrete Blade-owned classes; link and pasted-image flows remain
+     independent of presentation classes.
+   - [Complete] `images`: gallery, native dialog, reorder, upload, insert,
+     download and remove controls consume concrete Blade-owned classes,
+     including the Sortable ghost class.
+6. [Complete] Run the actual application override fragments through both
+   committed asset profiles. Laravel resolution, arbitrary classes, changed
+   hook-compatible nesting, Vue state changes and native tooltip behavior are
+   covered without jQuery, a global Vue object, a runtime compiler or a
+   consumer frontend build.
