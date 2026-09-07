@@ -206,6 +206,117 @@ async function expectImagePresentationClasses(image) {
     )
 }
 
+async function expectImagesGalleryPresentationClasses(images) {
+    const item = images.locator('[data-images-item]').first()
+
+    await expect(images.locator('[data-images-root]')).toHaveClass('project-images-root')
+    await expect(images.locator('[data-images-gallery]')).toHaveClass(/\bproject-images-gallery\b/)
+    await expect(item).toHaveClass('project-images-item')
+    await expect(item.locator('[data-images-preview]')).toHaveClass('project-images-preview')
+    await expect(item.locator('[data-images-order]')).toHaveClass('project-images-order')
+    await expect(item.locator('[data-images-info]')).toHaveClass('project-images-info')
+    await expect(item.locator('[data-images-drag-handle]')).toHaveClass('project-images-drag')
+    await expect(item.locator('[data-images-drag-icon]')).toHaveClass('project-images-drag-icon')
+    await expect(item.locator('[data-images-download]')).toHaveClass('project-images-download')
+    await expect(item.locator('[data-images-download-icon]')).toHaveClass(
+        'project-images-download-icon',
+    )
+    await expect(item.locator('[data-images-insert]')).toHaveClass('project-images-insert')
+    await expect(item.locator('[data-images-insert-icon]')).toHaveClass(
+        'project-images-insert-icon',
+    )
+    await expect(item.locator('[data-images-remove]')).toHaveClass('project-images-remove')
+    await expect(item.locator('[data-images-remove-icon]')).toHaveClass(
+        'project-images-remove-icon',
+    )
+}
+
+async function expectImagesActionPresentationClasses(images) {
+    await expect(images.locator('[data-images-actions]')).toHaveClass('project-images-actions')
+    await expect(images.locator('[data-images-upload]')).toHaveClass(/\bproject-images-upload\b/)
+    await expect(images.locator('[data-images-upload-icon]')).toHaveClass(
+        'project-images-upload-icon',
+    )
+    await expect(images.locator('[data-images-insert-new]')).toHaveClass(
+        'project-images-insert-new',
+    )
+    await expect(images.locator('[data-images-insert-new] [data-images-insert-icon]')).toHaveClass(
+        'project-images-insert-icon',
+    )
+}
+
+async function expectImagesDialogPresentationClasses(dialog) {
+    await expect(dialog).toHaveClass('project-images-dialog')
+    await expect(dialog.locator('[data-images-dialog-close]')).toHaveClass(
+        'project-images-dialog-close',
+    )
+    await expect(dialog.locator('[data-images-dialog-close-icon]')).toHaveClass(
+        'project-images-dialog-close-icon',
+    )
+    await expect(dialog.locator('[data-images-dialog-frame]')).toHaveClass(
+        'project-images-dialog-frame',
+    )
+    await expect(dialog.locator('[data-images-dialog-previous]')).toHaveClass(
+        'project-images-dialog-previous',
+    )
+    await expect(dialog.locator('[data-images-dialog-previous-icon]')).toHaveClass(
+        'project-images-dialog-previous-icon',
+    )
+    await expect(dialog.locator('[data-images-dialog-image]')).toHaveClass(
+        'project-images-dialog-image',
+    )
+    await expect(dialog.locator('[data-images-dialog-next]')).toHaveClass(
+        'project-images-dialog-next',
+    )
+    await expect(dialog.locator('[data-images-dialog-next-icon]')).toHaveClass(
+        'project-images-dialog-next-icon',
+    )
+    await expect(dialog.locator('[data-images-dialog-position]')).toHaveClass(
+        'project-images-dialog-position',
+    )
+}
+
+async function imagesSortableGhostClass(images) {
+    return images.locator('[data-images-gallery]').evaluate((gallery) => {
+        const sortableKey = Object.keys(gallery).find((key) => key.startsWith('Sortable'))
+
+        return gallery[sortableKey].options.ghostClass
+    })
+}
+
+async function startImagesUpload(page) {
+    await page.evaluate(() => {
+        globalThis.Admin.Messages.error = () => undefined
+        const upload = globalThis.document.querySelector(
+            '#images-wrapper [data-images-gallery]',
+        ).dropzone
+        upload.options.sending.call(upload)
+    })
+}
+
+async function rejectImagesUpload(page) {
+    await page.evaluate(() => {
+        const upload = globalThis.document.querySelector(
+            '#images-wrapper [data-images-gallery]',
+        ).dropzone
+        upload.options.error.call(upload, {}, { errors: ['Images rejected'] })
+        upload.options.complete.call(upload)
+    })
+}
+
+async function expectImagesUploadErrorClasses(images) {
+    await expect(images.locator('[data-images-alert]')).toHaveClass('project-images-alert')
+    await expect(images.locator('[data-images-alert-close]')).toHaveClass(
+        'project-images-alert-close',
+    )
+    await expect(images.locator('[data-images-error-icon]')).toHaveClass(
+        'project-images-error-icon',
+    )
+    await expect(images.locator('[data-images-upload-icon]')).toHaveClass(
+        'project-images-upload-icon',
+    )
+}
+
 async function inspectReadonlyFile(page) {
     return page.evaluate((props) => {
         const host = globalThis.document.createElement('section')
@@ -265,7 +376,7 @@ async function inspectReadonlyImages(page) {
         const result = {
             dragHandles: host.querySelectorAll('[data-images-drag-handle]').length,
             editControls: host.querySelectorAll('[data-images-insert]').length,
-            firstPreview: host.querySelector('[data-images-preview] img').src,
+            firstPreview: host.querySelector('[data-images-preview-image]').src,
             removeControls: host.querySelectorAll('[data-images-remove]').length,
             uploadControls: host.querySelectorAll('[data-images-upload]').length,
             value: host.querySelector('[data-images-value]').value,
@@ -678,11 +789,11 @@ test('file, image and images components expose values and upload callbacks', asy
     await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/pixel.svg,fixtures/second.svg',
     )
-    await runUploadCallback(page, '#images-wrapper .dropzone', 'fixtures/third.svg')
+    await runUploadCallback(page, '#images-wrapper [data-images-gallery]', 'fixtures/third.svg')
     await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/pixel.svg,fixtures/second.svg,fixtures/third.svg',
     )
-    await page.locator('#images-wrapper .gallery-remove').first().click()
+    await page.locator('#images-wrapper [data-images-remove]').first().click()
     await expect(page.locator('#images-wrapper [data-images-value]')).toHaveValue(
         'fixtures/second.svg,fixtures/third.svg',
     )
@@ -758,6 +869,33 @@ test('image island consumes Blade-owned classes without an AdminLTE class contra
     expectNoUnexpectedPageErrors(pageErrors)
 })
 
+test('images island consumes Blade-owned classes without an AdminLTE class contract', async ({
+    page,
+}) => {
+    const pageErrors = capturePageErrors(page)
+    await openFixture(page)
+    const images = page.locator('#images-wrapper')
+
+    await expectImagesGalleryPresentationClasses(images)
+    await expectImagesActionPresentationClasses(images)
+    expect(await imagesSortableGhostClass(images)).toBe('project-images-moving')
+
+    await startImagesUpload(page)
+    await expect(images.locator('[data-images-upload-icon]')).toHaveClass(
+        'project-images-uploading-icon',
+    )
+
+    await rejectImagesUpload(page)
+    await expectImagesUploadErrorClasses(images)
+    await images.locator('[data-images-alert-close]').click()
+
+    await images.locator('[data-images-preview]').first().click()
+    const dialog = page.locator('[data-images-dialog]')
+    await expectImagesDialogPresentationClasses(dialog)
+    await dialog.locator('[data-images-dialog-close]').click()
+    expectNoUnexpectedPageErrors(pageErrors)
+})
+
 test('images island opens and navigates its native image preview', async ({ page }) => {
     const pageErrors = capturePageErrors(page)
     await openFixture(page)
@@ -765,13 +903,13 @@ test('images island opens and navigates its native image preview', async ({ page
     await page.locator('#images-wrapper [data-images-preview]').first().click()
     const dialog = page.locator('[data-images-dialog]')
     await expect(dialog).toBeVisible()
-    await expect(dialog.locator('.soa-images-dialog__position')).toHaveText('1 / 2')
+    await expect(dialog.locator('[data-images-dialog-position]')).toHaveText('1 / 2')
     await dialog.locator('[data-images-dialog-next]').click()
-    await expect(dialog.locator('.soa-images-dialog__image')).toHaveAttribute(
+    await expect(dialog.locator('[data-images-dialog-image]')).toHaveAttribute(
         'src',
         /\/fixtures\/second\.svg$/,
     )
-    await expect(dialog.locator('.soa-images-dialog__position')).toHaveText('2 / 2')
+    await expect(dialog.locator('[data-images-dialog-position]')).toHaveText('2 / 2')
     await dialog.locator('[data-images-dialog-close]').click()
     await expect(dialog).not.toBeVisible()
     expectNoUnexpectedPageErrors(pageErrors)

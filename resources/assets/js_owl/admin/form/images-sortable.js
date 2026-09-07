@@ -1,12 +1,12 @@
-export function createImagesSortable(Sortable, element, onReorder) {
-    return new Sortable(element, imagesSortableOptions(onReorder))
+export function createImagesSortable(Sortable, element, ghostClass, onReorder) {
+    return new Sortable(element, imagesSortableOptions(ghostClass, onReorder))
 }
 
-export function imagesSortableOptions(onReorder) {
+export function imagesSortableOptions(ghostClass, onReorder) {
     return {
         animation: 150,
         draggable: '[data-images-item]',
-        ghostClass: 'soa-images__item--moving',
+        ...(ghostClass ? { ghostClass } : {}),
         handle: '[data-images-drag-handle]',
         onEnd: (event) => notifyReorder(event, onReorder),
     }

@@ -360,9 +360,18 @@ describe('precompiled images island', () => {
         expect(view).toContain('data-vue-component="element-images"')
         expect(view).toContain('data-vue-props=')
         expect(view).toContain('v-pre')
+        expect(view).toContain("'root' => 'soa-images'")
+        expect(view).toContain("'sortableGhost' => 'soa-images__item--moving'")
+        expect(view).toContain("'uploadingIcon' => 'fas fa-spinner fa-spin'")
+        expect(view).toContain('$imagesExtraProps ?? []')
         expect(view).not.toContain('inline-template')
         expect(component).toContain('<template>')
         expect(component).toContain('postPastedImage(')
+        expect(component).toContain('data-images-upload-icon')
+        expect(component).toContain(':class="uploadIconClass"')
+        expect(component).not.toMatch(
+            /class="(?:soa-images|alert|close|form-element-files|dropzone|btn|fa-fw|fas|upload-button|gallery-remove)/,
+        )
         expect(component).not.toMatch(/\$\(|axios|vuedraggable|withLegacyInlineTemplate/)
         expect(catalog).toContain("'element-images': ElementImages")
     })

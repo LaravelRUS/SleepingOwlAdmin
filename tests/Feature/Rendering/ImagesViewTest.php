@@ -27,8 +27,42 @@ class ImagesViewTest extends TestCase
         $this->assertTrue($props['onlyLink']);
         $this->assertFalse($props['readonly']);
         $this->assertSame('/admin/products/image/gallery/7', $props['url']);
+        $this->assertSame('soa-images', $props['classes']['root']);
+        $this->assertSame('soa-images__item--moving', $props['classes']['sortableGhost']);
+        $this->assertSame('fas fa-images', $props['classes']['uploadIcon']);
+        $this->assertSame('fas fa-spinner fa-spin', $props['classes']['uploadingIcon']);
         $this->assertStringContainsString('style="max-width: 50rem"', $html);
         $this->assertStringNotContainsString('<script>', $html);
+    }
+
+    public function test_images_island_accepts_concrete_theme_classes(): void
+    {
+        $this->registerUploadRoute();
+        $model = $this->model();
+        $this->bindViewFacades($model);
+        $imagesExtraProps = [
+            'classes' => [
+                'alert' => 'project-alert',
+                'dialog' => 'project-dialog',
+                'gallery' => 'project-gallery',
+                'insertButton' => 'project-insert',
+                'item' => 'project-item',
+                'removeButton' => 'project-remove',
+                'root' => 'project-root',
+                'sortableGhost' => 'project-moving',
+                'uploadButton' => 'project-upload',
+                'uploadIcon' => 'project-upload-icon',
+                'uploadingIcon' => 'project-uploading-icon',
+            ],
+        ];
+        $html = view(
+            'sleeping_owl::default.form.element.images',
+            $this->viewData($model) + compact('imagesExtraProps')
+        )->render();
+        $props = $this->extractJsonProps($html);
+
+        $this->assertSame($imagesExtraProps['classes'], $props['classes']);
+        $this->assertStringNotContainsString('class="project-root"', $html);
     }
 
     private function bindViewFacades(Model $model): void

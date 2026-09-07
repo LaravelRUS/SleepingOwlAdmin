@@ -11,8 +11,44 @@
         @include(AdminTemplate::getViewPath('form.element.partials.helptext'))
 
         @php
-            $imagesProps = [
+            $imagesProps = array_replace([
                 'assetPrefix' => (string) $asset_prefix,
+                'classes' => [
+                    'actions' => 'form-element-button-add w-100 order-2 mt-2',
+                    'alert' => 'alert alert-warning',
+                    'alertClose' => 'close',
+                    'dialog' => 'soa-images-dialog',
+                    'dialogCloseButton' => 'btn btn-default soa-images-dialog__close',
+                    'dialogCloseIcon' => 'fas fa-times',
+                    'dialogFrame' => 'soa-images-dialog__frame',
+                    'dialogImage' => 'soa-images-dialog__image',
+                    'dialogNextButton' => 'btn btn-default soa-images-dialog__next',
+                    'dialogNextIcon' => 'fas fa-chevron-right',
+                    'dialogPosition' => 'soa-images-dialog__position',
+                    'dialogPreviousButton' => 'btn btn-default soa-images-dialog__previous',
+                    'dialogPreviousIcon' => 'fas fa-chevron-left',
+                    'downloadButton' => 'btn btn-default btn-sm pull-right',
+                    'downloadIcon' => 'fa-fw fas fa-cloud-upload-alt',
+                    'dragButton' => 'btn btn-clear btn-sm pull-right drag-cursor',
+                    'dragIcon' => 'fa-fw fas fa-arrows-alt',
+                    'errorIcon' => 'fa-fw fas fa-images',
+                    'gallery' => 'form-element-files dropzone clearfix soa-images__grid',
+                    'galleryReadonly' => 'dropzone-disabled',
+                    'info' => 'form-element-files__info',
+                    'insertButton' => 'btn btn-default btn-sm pull-right mr-1',
+                    'insertIcon' => 'fa-fw fas fa-link',
+                    'insertNewButton' => 'btn btn-default btn-sm',
+                    'item' => 'form-element-files__item soa-images__item',
+                    'order' => 'soa-images__order',
+                    'previewButton' => 'form-element-files__image soa-images__preview',
+                    'removeButton' => 'btn btn-danger btn-xs gallery-remove',
+                    'removeIcon' => 'fa-fw fas fa-times',
+                    'root' => 'soa-images',
+                    'sortableGhost' => 'soa-images__item--moving',
+                    'uploadButton' => 'btn btn-primary upload-button btn-sm',
+                    'uploadIcon' => 'fas fa-images',
+                    'uploadingIcon' => 'fas fa-spinner fa-spin',
+                ],
                 'csrfToken' => csrf_token(),
                 'draggable' => (bool) $draggable,
                 'labels' => [
@@ -46,7 +82,7 @@
                     'id' => $model->getKey(),
                 ], false),
                 'values' => $value,
-            ];
+            ], $imagesExtraProps ?? []);
         @endphp
 
         <div

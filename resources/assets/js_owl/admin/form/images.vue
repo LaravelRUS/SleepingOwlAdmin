@@ -1,102 +1,127 @@
 <template>
-    <div class="soa-images" data-images-root>
-        <div v-if="errors.length" class="alert alert-warning">
-            <button type="button" class="close" aria-label="Close" @click="closeAlert">
+    <div data-images-root :class="classes.root">
+        <div v-if="errors.length" data-images-alert :class="classes.alert">
+            <button
+                type="button"
+                data-images-alert-close
+                :class="classes.alertClose"
+                :aria-label="labels.close"
+                @click="closeAlert"
+            >
                 <span aria-hidden="true">&times;</span>
             </button>
 
             <p v-for="(error, index) in errors" :key="`${error}-${index}`">
-                <i class="fa-fw fas fa-images" aria-hidden="true"></i> {{ error }}
+                <i data-images-error-icon :class="classes.errorIcon" aria-hidden="true"></i>
+                {{ error }}
             </p>
         </div>
 
         <div
             ref="gallery"
-            class="form-element-files dropzone clearfix soa-images__grid"
-            :class="{ 'dropzone-disabled': readonly }"
             data-images-gallery
+            :class="[classes.gallery, readonly && classes.galleryReadonly]"
         >
             <article
                 v-for="(uri, index) in vals"
                 :key="`${uri}-${index}`"
-                class="form-element-files__item soa-images__item"
                 data-images-item
+                :class="classes.item"
             >
                 <button
                     type="button"
-                    class="form-element-files__image soa-images__preview"
                     data-images-preview
+                    :class="classes.previewButton"
                     :aria-label="previewLabel(index)"
                     @click="openLightbox(index)"
                 >
-                    <img :src="imageUrl(uri)" alt="" />
-                    <span class="soa-images__order" aria-hidden="true">{{ index + 1 }}</span>
+                    <img :src="imageUrl(uri)" alt="" data-images-preview-image />
+                    <span data-images-order :class="classes.order" aria-hidden="true">
+                        {{ index + 1 }}
+                    </span>
                 </button>
 
-                <div class="form-element-files__info">
+                <div data-images-info :class="classes.info">
                     <button
                         v-if="!readonly && draggable"
                         type="button"
-                        class="btn btn-clear btn-sm pull-right drag-cursor"
                         data-images-drag-handle
+                        :class="classes.dragButton"
                         :aria-label="labels.reorder"
                         :title="labels.reorder"
                     >
-                        <i class="fa-fw fas fa-arrows-alt" aria-hidden="true"></i>
+                        <i data-images-drag-icon :class="classes.dragIcon" aria-hidden="true"></i>
                     </button>
                     <a
                         :href="imageUrl(uri)"
-                        class="btn btn-default btn-sm pull-right"
                         data-images-download
+                        :class="classes.downloadButton"
                         download
                         rel="noopener"
                         target="_blank"
                         :title="labels.download"
+                        :aria-label="labels.download"
                     >
-                        <i class="fa-fw fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                        <i
+                            data-images-download-icon
+                            :class="classes.downloadIcon"
+                            aria-hidden="true"
+                        ></i>
                     </a>
                     <button
                         v-if="!readonly"
                         type="button"
-                        class="btn btn-default btn-sm pull-right mr-1"
                         data-images-insert
+                        :class="classes.insertButton"
                         :title="labels.insertLink"
+                        :aria-label="labels.insertLink"
                         @click="insert(index)"
                     >
-                        <i class="fa-fw fas fa-link" aria-hidden="true"></i>
+                        <i
+                            data-images-insert-icon
+                            :class="classes.insertIcon"
+                            aria-hidden="true"
+                        ></i>
                     </button>
                     <button
                         v-if="!readonly"
                         type="button"
-                        class="btn btn-danger btn-xs gallery-remove"
                         data-images-remove
+                        :class="classes.removeButton"
                         :title="labels.remove"
+                        :aria-label="labels.remove"
                         @click="remove(index)"
                     >
-                        <i class="fa-fw fas fa-times" aria-hidden="true"></i>
+                        <i
+                            data-images-remove-icon
+                            :class="classes.removeIcon"
+                            aria-hidden="true"
+                        ></i>
                     </button>
                 </div>
             </article>
         </div>
 
-        <div v-if="!readonly" class="form-element-button-add w-100 order-2 mt-2">
+        <div v-if="!readonly" data-images-actions :class="classes.actions">
             <button
                 v-if="!onlyLink"
                 ref="uploadButton"
                 type="button"
-                class="btn btn-primary upload-button btn-sm"
                 data-images-upload
+                :class="classes.uploadButton"
             >
-                <i :class="uploadClass" aria-hidden="true"></i> {{ labels.browse }}
+                <i data-images-upload-icon :class="uploadIconClass" aria-hidden="true"></i>
+                {{ labels.browse }}
             </button>
             <button
                 type="button"
-                class="btn btn-default btn-sm"
                 data-images-insert-new
+                :class="classes.insertNewButton"
                 :title="labels.insertLink"
+                :aria-label="labels.insertLink"
                 @click="insert()"
             >
-                <i class="fa-fw fas fa-link" aria-hidden="true"></i>
+                <i data-images-insert-icon :class="classes.insertIcon" aria-hidden="true"></i>
             </button>
         </div>
 
@@ -106,8 +131,8 @@
             <dialog
                 v-if="hasValues"
                 ref="lightbox"
-                class="soa-images-dialog"
                 data-images-dialog
+                :class="classes.dialog"
                 :aria-label="labels.preview"
                 @cancel="resetLightbox"
                 @click.self="closeLightbox"
@@ -116,38 +141,55 @@
             >
                 <button
                     type="button"
-                    class="btn btn-default soa-images-dialog__close"
                     data-images-dialog-close
+                    :class="classes.dialogCloseButton"
                     :aria-label="labels.close"
                     :title="labels.close"
                     @click="closeLightbox"
                 >
-                    <i class="fas fa-times" aria-hidden="true"></i>
+                    <i
+                        data-images-dialog-close-icon
+                        :class="classes.dialogCloseIcon"
+                        aria-hidden="true"
+                    ></i>
                 </button>
-                <div class="soa-images-dialog__frame">
+                <div data-images-dialog-frame :class="classes.dialogFrame">
                     <button
                         type="button"
-                        class="btn btn-default soa-images-dialog__previous"
                         data-images-dialog-previous
+                        :class="classes.dialogPreviousButton"
                         :aria-label="labels.previous"
                         :title="labels.previous"
                         @click="showPreviousImage"
                     >
-                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                        <i
+                            data-images-dialog-previous-icon
+                            :class="classes.dialogPreviousIcon"
+                            aria-hidden="true"
+                        ></i>
                     </button>
-                    <img :src="lightboxUrl" alt="" class="soa-images-dialog__image" />
+                    <img
+                        :src="lightboxUrl"
+                        alt=""
+                        data-images-dialog-image
+                        :class="classes.dialogImage"
+                    />
                     <button
                         type="button"
-                        class="btn btn-default soa-images-dialog__next"
                         data-images-dialog-next
+                        :class="classes.dialogNextButton"
                         :aria-label="labels.next"
                         :title="labels.next"
                         @click="showNextImage"
                     >
-                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        <i
+                            data-images-dialog-next-icon
+                            :class="classes.dialogNextIcon"
+                            aria-hidden="true"
+                        ></i>
                     </button>
                 </div>
-                <p class="soa-images-dialog__position" aria-live="polite">
+                <p data-images-dialog-position :class="classes.dialogPosition" aria-live="polite">
                     {{ lightboxPosition }}
                 </p>
             </dialog>
@@ -183,6 +225,7 @@ export default defineComponent({
     name: 'ElementImages',
     props: {
         assetPrefix: { type: String, default: '' },
+        classes: { type: Object, default: () => ({}) },
         csrfToken: { type: String, required: true },
         draggable: { type: Boolean, default: true },
         labels: { type: Object, required: true },
@@ -221,8 +264,8 @@ export default defineComponent({
         serializedValues() {
             return serializeImagesValues(this.vals)
         },
-        uploadClass() {
-            return this.uploading ? 'fas fa-spinner fa-spin' : 'fas fa-images'
+        uploadIconClass() {
+            return this.uploading ? this.classes.uploadingIcon : this.classes.uploadIcon
         },
     },
     mounted() {
@@ -301,7 +344,12 @@ export default defineComponent({
             }
         },
         mountSortable() {
-            this.sortable = createImagesSortable(Sortable, this.$refs.gallery, this.reorder)
+            this.sortable = createImagesSortable(
+                Sortable,
+                this.$refs.gallery,
+                this.classes.sortableGhost,
+                this.reorder,
+            )
         },
         mountUpload() {
             this.uploader = createImagesUpload(Dropzone, this.$refs.gallery, {
