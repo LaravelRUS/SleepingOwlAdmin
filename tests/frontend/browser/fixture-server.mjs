@@ -9,6 +9,10 @@ const origin = 'http://127.0.0.1:4173'
 const staticRoutes = new Map([
     ['/', [join(browserDirectory, 'island-props.html'), 'text/html; charset=utf-8']],
     ['/admin-core', [join(browserDirectory, 'admin-core.html'), 'text/html; charset=utf-8']],
+    [
+        '/compatibility-runtime',
+        [join(browserDirectory, 'compatibility-runtime.html'), 'text/html; charset=utf-8'],
+    ],
     ['/alerts', [join(browserDirectory, 'alerts.html'), 'text/html; charset=utf-8']],
     ['/alerts-modern', [join(browserDirectory, 'alerts-modern.html'), 'text/html; charset=utf-8']],
     [
@@ -166,6 +170,22 @@ const staticRoutes = new Map([
         ],
     ],
     [
+        '/public/default/profiles/development/js/shared/compatibility.js',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'profiles',
+                'development',
+                'js',
+                'shared',
+                'compatibility.js',
+            ),
+            'text/javascript',
+        ],
+    ],
+    [
         '/public/default/profiles/production/js/shared/vue.js',
         [
             join(
@@ -177,6 +197,22 @@ const staticRoutes = new Map([
                 'js',
                 'shared',
                 'vue.js',
+            ),
+            'text/javascript',
+        ],
+    ],
+    [
+        '/public/default/profiles/production/js/shared/compatibility.js',
+        [
+            join(
+                projectRoot,
+                'public',
+                'default',
+                'profiles',
+                'production',
+                'js',
+                'shared',
+                'compatibility.js',
             ),
             'text/javascript',
         ],

@@ -3349,32 +3349,24 @@ Admin.Modules.register('helpers.tooltip', function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_admin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/admin */ "./resources/assets/js_owl/components/admin.js");
-/* harmony import */ var _frontend_core_runtime_admin_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../frontend/core/runtime/admin-core */ "./resources/frontend/core/runtime/admin-core.js");
+/* harmony import */ var _frontend_core_runtime_admin_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../frontend/core/runtime/admin-core */ "./resources/frontend/core/runtime/admin-core.js");
+/* harmony import */ var _frontend_shared_compatibility_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../frontend/shared/compatibility/runtime */ "./resources/frontend/shared/compatibility/runtime.js");
 
 
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-window.Admin = new _components_admin__WEBPACK_IMPORTED_MODULE_0__["default"](document.querySelector("meta[name=\"csrf-token\"]").getAttribute('content'), window.GlobalConfig || {});
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+(0,_frontend_core_runtime_admin_core__WEBPACK_IMPORTED_MODULE_0__.installAdminCore)(window);
+(0,_frontend_shared_compatibility_runtime__WEBPACK_IMPORTED_MODULE_1__.installCompatibilityRuntime)(window);
 
 //
 // window.Trix = require('trix');
 
-__webpack_require__(/*! ./libs/i18next */ "./resources/assets/js_owl/libs/i18next.js");
 __webpack_require__(/*! ./libs/dropzone */ "./resources/assets/js_owl/libs/dropzone.js");
 var _require = __webpack_require__(/*! ../../frontend/features/table/engine/datatables2 */ "./resources/frontend/features/table/engine/datatables2.js"),
   dataTables2Runtime = _require.dataTables2Runtime;
 var _require2 = __webpack_require__(/*! ../../frontend/features/table/themes/legacy-adminlte/datatables */ "./resources/frontend/features/table/themes/legacy-adminlte/datatables.js"),
   installLegacyDataTablesPresentation = _require2.installLegacyDataTablesPresentation;
 installLegacyDataTablesPresentation(dataTables2Runtime());
-__webpack_require__(/*! ./libs/sweetalert */ "./resources/assets/js_owl/libs/sweetalert.js");
 __webpack_require__(/*! ./libs/progressbar */ "./resources/assets/js_owl/libs/progressbar.js");
 __webpack_require__(/*! ./libs/lazyload */ "./resources/assets/js_owl/libs/lazyload.js");
-(0,_frontend_core_runtime_admin_core__WEBPACK_IMPORTED_MODULE_1__.installAdminCore)(window);
-window.Admin.Messages = __webpack_require__(/*! ./components/messages */ "./resources/assets/js_owl/components/messages.js");
-window.Admin.Modules = __webpack_require__(/*! ./components/modules */ "./resources/assets/js_owl/components/modules.js");
-window.Admin.WYSIWYG = __webpack_require__(/*! ./components/wysiwyg */ "./resources/assets/js_owl/components/wysiwyg.js");
 __webpack_require__(/*! ./admin/alert */ "./resources/assets/js_owl/admin/alert.js");
 __webpack_require__(/*! ./admin/tooltip */ "./resources/assets/js_owl/admin/tooltip.js");
 __webpack_require__(/*! ./admin/dropdown */ "./resources/assets/js_owl/admin/dropdown.js");
@@ -4222,23 +4214,6 @@ module.exports = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js_owl/components/wysiwyg.js":
-/*!*******************************************************!*\
-  !*** ./resources/assets/js_owl/components/wysiwyg.js ***!
-  \*******************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var _require = __webpack_require__(/*! ../../../frontend/features/forms/wysiwyg/wysiwyg-registry */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js"),
-  createWysiwygRegistry = _require.createWysiwygRegistry;
-module.exports = createWysiwygRegistry({
-  events: Admin.Events,
-  log: function log(message, scope) {
-    return Admin.log(message, scope);
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/assets/js_owl/libs/dropzone.js":
 /*!**************************************************!*\
   !*** ./resources/assets/js_owl/libs/dropzone.js ***!
@@ -4262,45 +4237,6 @@ if (Dropzone.prototype && Dropzone.prototype.defaultOptions) {
 }
 window.Dropzone = Dropzone;
 module.exports = Dropzone;
-
-/***/ }),
-
-/***/ "./resources/assets/js_owl/libs/i18next.js":
-/*!*************************************************!*\
-  !*** ./resources/assets/js_owl/libs/i18next.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var i18next__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! i18next */ "./node_modules/i18next/dist/esm/i18next.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-/**
- * i18next is a very popular internationalization library for
- * browser or any other javascript environment (eg. node.js).
- *
- * @see http://i18next.com/
- */
-
-
-i18next__WEBPACK_IMPORTED_MODULE_0__["default"].init({
-  lng: Admin.locale,
-  resources: _defineProperty({}, Admin.locale, {
-    translation: {
-      lang: Admin.Config.get('lang')
-    }
-  })
-});
-window.trans = function (key, args) {
-  var value = i18next__WEBPACK_IMPORTED_MODULE_0__["default"].t(key);
-  _.eachRight(args, function (paramVal, paramKey) {
-    value = _.replace(value, ":".concat(paramKey), paramVal);
-  });
-  return value;
-};
 
 /***/ }),
 
@@ -4329,21 +4265,6 @@ lazyload();
  */
 
 window.ProgressBar = __webpack_require__(/*! progressbar.js */ "./node_modules/progressbar.js/dist/progressbar.js");
-
-/***/ }),
-
-/***/ "./resources/assets/js_owl/libs/sweetalert.js":
-/*!****************************************************!*\
-  !*** ./resources/assets/js_owl/libs/sweetalert.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-/**
- * A beautiful and customizable replacement for javascript's popup boxes
- *
- * @see https://limonte.github.io/sweetalert2/
- */
-window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 
 /***/ }),
 
@@ -13766,6 +13687,102 @@ function normalizeLabels() {
 function normalizeNotifications() {
   var notifications = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return notifications;
+}
+
+/***/ }),
+
+/***/ "./resources/frontend/shared/compatibility/runtime.js":
+/*!************************************************************!*\
+  !*** ./resources/frontend/shared/compatibility/runtime.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "installCompatibilityRuntime": () => (/* binding */ installCompatibilityRuntime)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var i18next__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! i18next */ "./node_modules/i18next/dist/esm/i18next.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _assets_js_owl_components_admin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../assets/js_owl/components/admin */ "./resources/assets/js_owl/components/admin.js");
+/* harmony import */ var _assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../assets/js_owl/components/messages */ "./resources/assets/js_owl/components/messages.js");
+/* harmony import */ var _assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../assets/js_owl/components/modules */ "./resources/assets/js_owl/components/modules.js");
+/* harmony import */ var _assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _features_forms_wysiwyg_wysiwyg_registry__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../features/forms/wysiwyg/wysiwyg-registry */ "./resources/frontend/features/forms/wysiwyg/wysiwyg-registry.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+
+
+
+
+var INSTALLATION = Symbol["for"]('sleepingowl.shared.compatibility');
+function installCompatibilityRuntime(target) {
+  if (target[INSTALLATION]) return target.Admin;
+  var core = requireCore(target.Admin);
+  target._ = (lodash__WEBPACK_IMPORTED_MODULE_2___default());
+  target.axios = configuredAxios();
+  target.Swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default());
+  target.Admin = createLegacyAdmin(target, core);
+  target.trans = createTranslator(target.Admin);
+  installLegacyServices(target.Admin);
+  target[INSTALLATION] = true;
+  return target.Admin;
+}
+function createLegacyAdmin(target, core) {
+  var _target$document, _target$GlobalConfig;
+  var token = (_target$document = target.document) === null || _target$document === void 0 || (_target$document = _target$document.querySelector('meta[name="csrf-token"]')) === null || _target$document === void 0 ? void 0 : _target$document.getAttribute('content');
+  var admin = new _assets_js_owl_components_admin__WEBPACK_IMPORTED_MODULE_4__["default"](token !== null && token !== void 0 ? token : '', (_target$GlobalConfig = target.GlobalConfig) !== null && _target$GlobalConfig !== void 0 ? _target$GlobalConfig : {});
+  Object.assign(admin, core);
+  return admin;
+}
+function createTranslator(admin) {
+  i18next__WEBPACK_IMPORTED_MODULE_1__["default"].init({
+    lng: admin.locale,
+    resources: _defineProperty({}, admin.locale, {
+      translation: {
+        lang: admin.Config.get('lang')
+      }
+    })
+  });
+  return function (key, parameters) {
+    var value = i18next__WEBPACK_IMPORTED_MODULE_1__["default"].t(key);
+    lodash__WEBPACK_IMPORTED_MODULE_2___default().eachRight(parameters, function (parameter, name) {
+      value = lodash__WEBPACK_IMPORTED_MODULE_2___default().replace(value, ":".concat(name), parameter);
+    });
+    return value;
+  };
+}
+function installLegacyServices(admin) {
+  admin.Messages = (_assets_js_owl_components_messages__WEBPACK_IMPORTED_MODULE_5___default());
+  admin.Modules = (_assets_js_owl_components_modules__WEBPACK_IMPORTED_MODULE_6___default());
+  admin.WYSIWYG = (0,_features_forms_wysiwyg_wysiwyg_registry__WEBPACK_IMPORTED_MODULE_7__.createWysiwygRegistry)({
+    events: admin.Events,
+    log: function log(message, scope) {
+      return admin.log(message, scope);
+    }
+  });
+}
+function configuredAxios() {
+  (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-Requested-With"]) = 'XMLHttpRequest';
+  return (axios__WEBPACK_IMPORTED_MODULE_0___default());
+}
+function requireCore(admin) {
+  if (!(admin !== null && admin !== void 0 && admin.Components) || !(admin !== null && admin !== void 0 && admin.Events) || !(admin !== null && admin !== void 0 && admin.Http)) {
+    throw new TypeError('SleepingOwl compatibility runtime requires the headless core.');
+  }
+  return admin;
 }
 
 /***/ }),

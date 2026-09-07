@@ -94,6 +94,15 @@ it('publishes the Vue 3 islands as one profile-selected shared script', () => {
     expect(modernEntry('shared:vue', 'styles')).toBeUndefined()
 })
 
+it('publishes the legacy API compatibility layer without presentation styles', () => {
+    expect(modernEntry('shared:compatibility', 'scripts')).toEqual({
+        logicalId: 'shared:compatibility',
+        source: 'resources/frontend/shared/compatibility/browser.js',
+        output: 'js/shared/compatibility.js',
+    })
+    expect(modernEntry('shared:compatibility', 'styles')).toBeUndefined()
+})
+
 describe('behavior-only entries', () => {
     it('keeps alerts free of a generic presentation stylesheet', () => {
         expect(modernEntry('feature:alert', 'scripts')).toBeDefined()

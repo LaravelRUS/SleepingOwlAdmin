@@ -31,6 +31,7 @@ final class AdminLTETheme extends TemplateDefault implements ThemeInterface
     {
         return [
             'shared:icons',
+            'shared:compatibility',
             'shared:vue',
             'theme:'.$this->id(),
             ...array_map(

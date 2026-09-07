@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="csrf-token" content="compatibility-csrf-token" />
+        <title>Compatibility runtime browser fixture</title>
+        <script>
+            window.GlobalConfig = {
+                debug: true,
+                env: 'testing',
+                lang: {
+                    button: { cancel: 'Cancel', yes: 'Yes' },
+                    greeting: 'Hello :name',
+                },
+                locale: 'en',
+                template: { asset_dir: 'default' },
+                url: 'http://127.0.0.1:4173',
+                url_path: 'compatibility-runtime',
+                url_prefix: 'admin',
+                user_id: 7,
+                wysiwyg: {},
+            }
+        </script>
+    </head>
+    <body>
+        <script src="/public/default/js/admin-core.js"></script>
+        <script>
+            window.__coreServices = Object.fromEntries(
+                ['Asset', 'Components', 'Data', 'DOM', 'Events', 'Http', 'Storage', 'Tables'].map(
+                    (name) => [name, Admin[name]],
+                ),
+            )
+            window.__moduleCalls = []
+        </script>
+        <script src="/public/default/profiles/development/js/shared/compatibility.js"></script>
+        <script>
+            Admin.Modules.register('fixture.compatibility', () => {
+                window.__moduleCalls.push('called')
+            })
+            Admin.Modules.call('fixture.compatibility')
+            document.documentElement.dataset.ready = 'true'
+        </script>
+    </body>
+</html>

@@ -37,6 +37,11 @@
                 "output": "js/admin-core.js"
             },
             {
+                "logicalId": "shared:compatibility",
+                "source": "resources/frontend/shared/compatibility/browser.js",
+                "output": "js/shared/compatibility.js"
+            },
+            {
                 "logicalId": "shared:vue",
                 "source": "resources/frontend/shared/vue/browser.js",
                 "output": "js/shared/vue.js"

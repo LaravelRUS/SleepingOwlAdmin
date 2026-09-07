@@ -1,20 +1,11 @@
-import Admin from './components/admin';
 import { installAdminCore } from '../../frontend/core/runtime/admin-core';
+import { installCompatibilityRuntime } from '../../frontend/shared/compatibility/runtime';
 
-window._ = require('lodash');
-
-window.Admin = new Admin(
-    document.querySelector(`meta[name="csrf-token"]`).getAttribute('content'),
-    window.GlobalConfig || {},
-);
-
-window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+installAdminCore(window);
+installCompatibilityRuntime(window);
 
 //
 // window.Trix = require('trix');
-
-require('./libs/i18next');
 
 require('./libs/dropzone');
 const {
@@ -24,16 +15,8 @@ const {
     installLegacyDataTablesPresentation,
 } = require('../../frontend/features/table/themes/legacy-adminlte/datatables');
 installLegacyDataTablesPresentation(dataTables2Runtime());
-require('./libs/sweetalert');
 require('./libs/progressbar');
 require('./libs/lazyload');
-
-installAdminCore(window);
-window.Admin.Messages = require('./components/messages');
-window.Admin.Modules = require('./components/modules');
-
-
-window.Admin.WYSIWYG = require('./components/wysiwyg');
 
 require('./admin/alert');
 require('./admin/tooltip');

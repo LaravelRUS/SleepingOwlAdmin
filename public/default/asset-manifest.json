@@ -292,6 +292,16 @@
                         }
                     ]
                 },
+                "shared:compatibility": {
+                    "scripts": [
+                        {
+                            "file": "profiles/production/js/shared/compatibility.js",
+                            "version": "d79d153661e1aaeeee82c7a0855e800f",
+                            "checksum": "sha256:ee405ad92dc8a4fd188bd2309ab64e8ce3dc2b61532ed39da83ab31fb447e2f2"
+                        }
+                    ],
+                    "styles": []
+                },
                 "shared:icons": {
                     "scripts": [],
                     "styles": [
@@ -636,6 +646,16 @@
                         }
                     ]
                 },
+                "shared:compatibility": {
+                    "scripts": [
+                        {
+                            "file": "profiles/development/js/shared/compatibility.js",
+                            "version": "451eaaa82328ac2675d73c97785ba27f",
+                            "checksum": "sha256:05f43ba2837ab3712ef255b4d916f83d8e3e7ab0d9fb5daadbd2a21edae90c0f"
+                        }
+                    ],
+                    "styles": []
+                },
                 "shared:icons": {
                     "scripts": [],
                     "styles": [
@@ -691,5 +711,5 @@
             }
         }
     },
-    "build_id": "sha256:44bbc669963739755986054272b557cbde34d56f8512c0397cc00cd855bc672f"
+    "build_id": "sha256:5e94e05b0489900049e70c827e07c11a417d7d083f05405cbb56a046267be547"
 }

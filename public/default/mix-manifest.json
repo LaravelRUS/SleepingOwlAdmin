@@ -1,10 +1,11 @@
 {
     "/js/vue.js": "/js/vue.js?id=cbe3885709779f33585ffbac28761573",
     "/js/vue-dev.js": "/js/vue-dev.js?id=c5974b5f2b02c9a2403e269022da049b",
-    "/js/admin-app.js": "/js/admin-app.js?id=7d1e30f85e5f1c62e4390ddd426280ce",
-    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=9bed84e2057474a5d5a1ccfd73421b12",
+    "/js/admin-app.js": "/js/admin-app.js?id=400757f2e3902cce7eaf30b8cc1477b2",
+    "/js/admin-app-dev.js": "/js/admin-app-dev.js?id=51055c04301232eb60c3df5e7be291f6",
     "/js/modules.js": "/js/modules.js?id=4ee4c59b2bce0af5059c6f4046845a9f",
     "/js/admin-core.js": "/js/admin-core.js?id=b983a01323cd440b5502c8123c18a184",
+    "/js/shared/compatibility.js": "/js/shared/compatibility.js?id=d79d153661e1aaeeee82c7a0855e800f",
     "/js/shared/vue.js": "/js/shared/vue.js?id=fbf6b42f5ceb7e17df7d84e6d8e536e8",
     "/js/features/alert.js": "/js/features/alert.js?id=aa22149a82264dc180184070eb72ce8a",
     "/js/features/dropdown.js": "/js/features/dropdown.js?id=88a53f696508ba72da1e678a693faba2",

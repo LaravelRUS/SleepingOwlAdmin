@@ -22,12 +22,13 @@ class AdminLTEThemeTest extends TestCase
         $this->assertSame('sleeping_owl::default', $theme->viewNamespace());
     }
 
-    public function test_it_declares_shared_icons_theme_and_component_adapters(): void
+    public function test_it_declares_shared_runtime_theme_and_component_adapters(): void
     {
         $manifest = ThemeAssetManifest::fromTheme($this->app->make(AdminLTETheme::class));
 
         $this->assertSame([
             'shared:icons',
+            'shared:compatibility',
             'shared:vue',
             'theme:legacy-adminlte',
             'feature:dropdown:theme:legacy-adminlte',
@@ -40,6 +41,7 @@ class AdminLTEThemeTest extends TestCase
         ], $manifest->entries());
         $this->assertSame([
             'shared:icons',
+            'shared:compatibility',
             'shared:vue',
             'theme:legacy-adminlte',
             'feature:tabs:theme:legacy-adminlte',
